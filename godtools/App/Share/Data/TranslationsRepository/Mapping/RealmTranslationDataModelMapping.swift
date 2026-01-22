@@ -8,7 +8,7 @@
 
 import Foundation
 
-class RealmTranslationDataModelMapping: RepositorySyncMapping {
+class RealmTranslationDataModelMapping: GTRepositorySyncMapping {
     
     func toDataModel(externalObject: TranslationCodable) -> TranslationDataModel? {
         return TranslationDataModel(interface: externalObject)

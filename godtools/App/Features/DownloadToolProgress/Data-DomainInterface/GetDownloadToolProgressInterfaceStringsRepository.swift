@@ -28,7 +28,7 @@ class GetDownloadToolProgressInterfaceStringsRepository: GetDownloadToolProgress
         
         let resource: ResourceDataModel?
         
-        if let toolId = toolId, let resourceModel = resourcesRepository.persistence.getObject(id: toolId) {
+        if let toolId = toolId, let resourceModel = resourcesRepository.persistence.getDataModelNonThrowing(id: toolId) {
             resource = resourceModel
         }
         else {

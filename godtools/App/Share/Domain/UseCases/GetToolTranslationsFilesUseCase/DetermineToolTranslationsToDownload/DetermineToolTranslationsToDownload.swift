@@ -24,7 +24,7 @@ class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadIn
     }
     
     func getResource() -> ResourceDataModel? {
-        return resourcesRepository.persistence.getObject(id: resourceId)
+        return resourcesRepository.persistence.getDataModelNonThrowing(id: resourceId)
     }
     
     func determineToolTranslationsToDownload() -> Result<DetermineToolTranslationsToDownloadResult, DetermineToolTranslationsToDownloadError> {

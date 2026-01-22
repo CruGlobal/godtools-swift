@@ -19,7 +19,7 @@ class ShareablesDomainLayerDependencies {
     
     func getShareableImageUseCase() -> GetShareableImageUseCase {
         return GetShareableImageUseCase(
-            getShareableImageRepository: dataLayer.getShareableImageRepositoryInterface()
+            getShareableImageRepository: dataLayer.getShareableImageRepository()
         )
     }
     

@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import RequestOperation
 
-class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResourcesApi> {
+class ResourcesRepository: GTRepositorySync<ResourceDataModel, MobileContentResourcesApi> {
             
     private static let syncInvalidatorIdForResourcesPlustLatestTranslationsAndAttachments: String = "resourcesPlusLatestTranslationAttachments.syncInvalidator.id"
     
@@ -134,7 +134,7 @@ extension ResourcesRepository {
                     .getResourcesPlusLatestTranslationsAndAttachments()
                     .publisher
             )
-            .flatMap({ (languagesResponse: RepositorySyncResponse<LanguageDataModel>, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable) -> AnyPublisher<ResourcesCacheSyncResult, Error> in
+            .flatMap({ (languagesResponse: GTRepositorySyncResponse<LanguageDataModel>, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable) -> AnyPublisher<ResourcesCacheSyncResult, Error> in
                 
                 return self.cache.syncResources(
                     resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
@@ -174,7 +174,7 @@ extension ResourcesRepository {
                     .setFailureType(to: Error.self),
                 api.getResourcesPlusLatestTranslationsAndAttachments(requestPriority: requestPriority)
             )
-            .flatMap({ (languagesResponse: RepositorySyncResponse<LanguageDataModel>, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable) -> AnyPublisher<ResourcesCacheSyncResult, Error> in
+            .flatMap({ (languagesResponse: GTRepositorySyncResponse<LanguageDataModel>, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable) -> AnyPublisher<ResourcesCacheSyncResult, Error> in
                 
                 return self.cache.syncResources(
                     resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,

@@ -9,7 +9,7 @@
 import Foundation
 @testable import godtools
 
-class MockRealmRepositorySyncMapping: RepositorySyncMapping {
+class MockRealmRepositorySyncMapping: GTRepositorySyncMapping {
 
     func toDataModel(externalObject: MockRepositorySyncDataModel) -> MockRepositorySyncDataModel? {
         

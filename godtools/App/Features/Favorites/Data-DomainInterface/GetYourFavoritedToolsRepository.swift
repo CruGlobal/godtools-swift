@@ -40,7 +40,7 @@ class GetYourFavoritedToolsRepository: GetYourFavoritedToolsRepositoryInterface 
             let favoritedResources: [ResourceDataModel] = favoritedResourceModels
                 .prefix(maxCount ?? numberOfFavoritedTools)
                 .compactMap({
-                    self.resourcesRepository.persistence.getObject(id: $0.id)
+                    self.resourcesRepository.persistence.getDataModelNonThrowing(id: $0.id)
                 })
             
             let yourFavoritedTools: [YourFavoritedToolDomainModel] = favoritedResources

@@ -1,5 +1,5 @@
 //
-//  RepositorySyncGetObjectsType.swift
+//  GTRepositorySyncGetObjectsType.swift
 //  godtools
 //
 //  Created by Levi Eggert on 8/30/25.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum RepositorySyncGetObjectsType {
+public enum GTRepositorySyncGetObjectsType {
     case allObjects
     case object(id: String)
 }

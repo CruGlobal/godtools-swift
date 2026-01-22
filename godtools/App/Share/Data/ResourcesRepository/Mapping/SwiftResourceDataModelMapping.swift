@@ -9,7 +9,7 @@
 import Foundation
 
 @available(iOS 17.4, *)
-class SwiftResourceDataModelMapping: RepositorySyncMapping {
+class SwiftResourceDataModelMapping: GTRepositorySyncMapping {
     
     func toDataModel(externalObject: ResourceCodable) -> ResourceDataModel? {
         return ResourceDataModel(interface: externalObject)

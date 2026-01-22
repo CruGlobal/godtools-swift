@@ -294,11 +294,11 @@ extension GetTranslatedToolLanguageAvailabilityTests {
     }
     
     @MainActor private static func queryResource(id: String, testsDiContainer: TestsDiContainer) -> ResourceDataModel? {
-        return testsDiContainer.dataLayer.getResourcesRepository().persistence.getObject(id: id)
+        return testsDiContainer.dataLayer.getResourcesRepository().persistence.getDataModelNonThrowing(id: id)
     }
     
     @MainActor private static func queryLanguage(id: String, testsDiContainer: TestsDiContainer) -> LanguageDataModel? {
-        return testsDiContainer.dataLayer.getLanguagesRepository().persistence.getObject(id: id)
+        return testsDiContainer.dataLayer.getLanguagesRepository().persistence.getDataModelNonThrowing(id: id)
     }
     
     private static func getLocalizationServices() -> MockLocalizationServices {

@@ -9,7 +9,7 @@
 import Foundation
 
 @available(iOS 17.4, *)
-class SwiftDownloadedTranslationDataModelMapping: RepositorySyncMapping {
+class SwiftDownloadedTranslationDataModelMapping: GTRepositorySyncMapping {
     
     func toDataModel(externalObject: DownloadedTranslationDataModel) -> DownloadedTranslationDataModel? {
         return DownloadedTranslationDataModel(interface: externalObject)

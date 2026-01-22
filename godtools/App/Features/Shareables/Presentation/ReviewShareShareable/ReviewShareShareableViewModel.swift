@@ -62,10 +62,12 @@ import Combine
             .store(in: &cancellables)
         
         getShareableImageUseCase
-            .getShareableImagePublisher(shareable: shareable)
+            .execute(shareable: shareable)
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (domainModel: ShareableImageDomainModel?) in
-                                
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (domainModel: ShareableImageDomainModel?) in
+              
                 if let imageData = domainModel?.imageData, let uiImage = UIImage(data: imageData) {
                          
                     self?.imageToShare = uiImage
@@ -75,7 +77,7 @@ import Combine
                         imageIdForAnimationChange: domainModel?.dataModelId
                     )
                 }
-            }
+            })
             .store(in: &cancellables)
     }
     

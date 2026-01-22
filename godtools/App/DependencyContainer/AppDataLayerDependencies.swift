@@ -10,6 +10,7 @@ import Foundation
 import RequestOperation
 import SocialAuthentication
 import LocalizationServices
+import RepositorySync
 
 class AppDataLayerDependencies {
         
@@ -93,17 +94,40 @@ class AppDataLayerDependencies {
     }
     
     func getAttachmentsRepository() -> AttachmentsRepository {
-        return AttachmentsRepository(
-            api: MobileContentAttachmentsApi(
-                config: getAppConfig(),
-                urlSessionPriority: getSharedUrlSessionPriority(),
-                requestSender: getRequestSender()
-            ),
-            cache: AttachmentsCache(
-                resourcesFileCache: getResourcesFileCache(),
-                bundle: AttachmentsBundleCache(),
-                realmDatabase: getSharedLegacyRealmDatabase()
+                
+        let persistence: any Persistence<AttachmentDataModel, AttachmentCodable>
+        
+        if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                dataModelMapping: SwiftAttachmentDataModelMapping()
             )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                database: getSharedRealmDatabase(),
+                dataModelMapping: RealmAttachmentDataModelMapping()
+            )
+        }
+        
+        let api = MobileContentAttachmentsApi(
+            config: getAppConfig(),
+            urlSessionPriority: getSharedUrlSessionPriority(),
+            requestSender: getRequestSender()
+        )
+        
+        let cache = AttachmentsCache(
+            persistence: persistence,
+            resourcesFileCache: getResourcesFileCache(),
+            bundle: AttachmentsBundleCache()
+        )
+        
+        return AttachmentsRepository(
+            externalDataFetch: api,
+            persistence: persistence,
+            cache: cache
         )
     }
     
@@ -256,7 +280,9 @@ class AppDataLayerDependencies {
     }
     
     func getResourcesFileCache() -> ResourcesSHA256FileCache {
-        return ResourcesSHA256FileCache(realmDatabase: getSharedLegacyRealmDatabase())
+        return ResourcesSHA256FileCache(
+            realmDatabase: getSharedRealmDatabase()
+        )
     }
     
     func getResourcesRepository() -> ResourcesRepository {
@@ -310,6 +336,21 @@ class AppDataLayerDependencies {
     
     func getSharedLegacyRealmDatabase() -> LegacyRealmDatabase {
         return sharedLegacyRealmDatabase
+    }
+    
+    func getSharedRealmDatabase() -> RealmDatabase {
+        return getAppConfig().getRealmDatabase()
+    }
+    
+    @available(iOS 17.4, *)
+    func getSharedSwiftDatabase() -> SwiftDatabase? {
+        do {
+            return try getAppConfig().getSwiftDatabase()
+        }
+        catch let error {
+            assertionFailure("Failed to get swift database.")
+            return nil
+        }
     }
     
     func getStringWithLocaleCount() -> StringWithLocaleCountInterface {

@@ -35,7 +35,7 @@ class GetToolsRepository: GetToolsRepositoryInterface {
         let languageForAvailabilityTextModel: LanguageDataModel? 
         
         if let languageForAvailabilityTextId = languageIdForAvailabilityText {
-            languageForAvailabilityTextModel = languagesRepository.persistence.getObject(id: languageForAvailabilityTextId)
+            languageForAvailabilityTextModel = languagesRepository.persistence.getDataModelNonThrowing(id: languageForAvailabilityTextId)
         } else {
             languageForAvailabilityTextModel = nil
         }

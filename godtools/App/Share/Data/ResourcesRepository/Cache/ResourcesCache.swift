@@ -29,12 +29,12 @@ class ResourcesCache: SwiftElseRealmPersistence<ResourceDataModel, ResourceCodab
     }
     
     @available(iOS 17.4, *)
-    override func getAnySwiftPersistence(swiftDatabase: SwiftDatabase) -> (any RepositorySyncPersistence<ResourceDataModel, ResourceCodable>)? {
+    override func getAnySwiftPersistence(swiftDatabase: SwiftDatabase) -> (any GTRepositorySyncPersistence<ResourceDataModel, ResourceCodable>)? {
         return getSwiftPersistence(swiftDatabase: swiftDatabase)
     }
     
     @available(iOS 17.4, *)
-    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<ResourceDataModel, ResourceCodable, SwiftResource>? {
+    private func getSwiftPersistence() -> GTSwiftRepositorySyncPersistence<ResourceDataModel, ResourceCodable, SwiftResource>? {
         
         guard let swiftDatabase = super.getSwiftDatabase() else {
             return nil
@@ -44,13 +44,13 @@ class ResourcesCache: SwiftElseRealmPersistence<ResourceDataModel, ResourceCodab
     }
     
     @available(iOS 17.4, *)
-    private func getSwiftPersistence(swiftDatabase: SwiftDatabase) -> SwiftRepositorySyncPersistence<ResourceDataModel, ResourceCodable, SwiftResource>? {
+    private func getSwiftPersistence(swiftDatabase: SwiftDatabase) -> GTSwiftRepositorySyncPersistence<ResourceDataModel, ResourceCodable, SwiftResource>? {
         
         guard let swiftDatabase = super.getSwiftDatabase() else {
             return nil
         }
         
-        return SwiftRepositorySyncPersistence(
+        return GTSwiftRepositorySyncPersistence(
             swiftDatabase: swiftDatabase,
             dataModelMapping: SwiftResourceDataModelMapping()
         )

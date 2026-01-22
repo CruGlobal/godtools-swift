@@ -1,5 +1,5 @@
 //
-//  RepositorySyncResponse.swift
+//  GTRepositorySyncResponse.swift
 //  godtools
 //
 //  Created by Levi Eggert on 7/30/25.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct RepositorySyncResponse<DataModelType> {
+public struct GTRepositorySyncResponse<DataModelType> {
     
     public let objects: [DataModelType]
     public let errors: [Error]
@@ -19,9 +19,9 @@ public struct RepositorySyncResponse<DataModelType> {
         self.errors = errors
     }
     
-    public func copy(objects: [DataModelType]? = nil, errors: [Error]? = nil) -> RepositorySyncResponse<DataModelType> {
+    public func copy(objects: [DataModelType]? = nil, errors: [Error]? = nil) -> GTRepositorySyncResponse<DataModelType> {
         
-        let copy: RepositorySyncResponse<DataModelType> = RepositorySyncResponse(
+        let copy: GTRepositorySyncResponse<DataModelType> = GTRepositorySyncResponse(
             objects: objects ?? self.objects,
             errors: errors ?? self.errors
         )
