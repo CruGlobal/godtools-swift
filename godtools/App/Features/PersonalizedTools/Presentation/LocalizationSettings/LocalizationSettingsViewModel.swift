@@ -19,6 +19,7 @@ import Combine
     private let viewLocalizationSettingsUseCase: ViewLocalizationSettingsUseCase
     private let viewSearchBarUseCase: ViewSearchBarUseCase
 
+    private static var backgroundCancellables: Set<AnyCancellable> = Set()
     private var cancellables: Set<AnyCancellable> = Set()
 
     private weak var flowDelegate: FlowDelegate?
@@ -100,11 +101,11 @@ extension LocalizationSettingsViewModel {
     
     func countryTapped(country: LocalizationSettingsCountryDomainModel) {
 
+        selectedCountryIsoRegionCode = country.isoRegionCode
+        
         setLocalizationSettingsUseCase.execute(isoRegionCode: country.isoRegionCode)
-            .sink { [weak self] isoRegionCode in
-                self?.selectedCountryIsoRegionCode = isoRegionCode
-            }
-            .store(in: &cancellables)
+            .sink { _ in }
+            .store(in: &LocalizationSettingsViewModel.backgroundCancellables)
     }
     
     func getSearchBarViewModel() -> SearchBarViewModel {
