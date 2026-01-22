@@ -19,8 +19,8 @@ class ArticleAemWebArchiveFileCache: FileCache {
         do {
             try deleteLegacyArticlesDirectory()
         }
-        catch let error {
-            assertionFailure("Failed to delete legacy articles directory.")
+        catch _ {
+
         }
     }
     

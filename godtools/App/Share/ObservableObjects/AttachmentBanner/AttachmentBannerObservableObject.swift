@@ -11,29 +11,49 @@ import Combine
 
 @MainActor class AttachmentBannerObservableObject: ObservableObject {
     
+    private let attachmentsRepository: AttachmentsRepository
+    private let attachmentId: String
+    
     private var getBannerImageCancellable: AnyCancellable?
     
     @Published private(set) var bannerImageData: OptionalImageData?
     
     init(attachmentId: String, attachmentsRepository: AttachmentsRepository) {
         
+        self.attachmentsRepository = attachmentsRepository
+        self.attachmentId = attachmentId
+        
+        downloadAttachmentBanner(
+            attachmentId: attachmentId
+        )
+    }
+    
+    private func downloadAttachmentBanner(attachmentId: String) {
+        
         getBannerImageCancellable = nil
+        
+        do {
+            
+            let cachedAttachment: AttachmentDataModel? = try attachmentsRepository.cache.getAttachment(id: attachmentId)
+            
+            if let cachedImage = cachedAttachment?.getImage() {
                 
-        if let cachedAttachment = attachmentsRepository.cache.getAttachment(id: attachmentId),
-           let cachedImage = cachedAttachment.getImage() {
-            
-            bannerImageData = OptionalImageData(image: cachedImage, imageIdForAnimationChange: attachmentId)
+                bannerImageData = OptionalImageData(image: cachedImage, imageIdForAnimationChange: attachmentId)
+            }
+            else {
+                
+                getBannerImageCancellable = attachmentsRepository.getAttachmentFromCacheElseRemotePublisher(id: attachmentId, requestPriority: .high)
+                    .receive(on: DispatchQueue.main)
+                    .sink(receiveCompletion: { _ in
+                        
+                    }, receiveValue: { [weak self] (attachment: AttachmentDataModel?) in
+                       
+                        self?.bannerImageData = OptionalImageData(image: attachment?.getImage(), imageIdForAnimationChange: attachmentId)
+                    })
+            }
         }
-        else {
-            
-            getBannerImageCancellable = attachmentsRepository.getAttachmentFromCacheElseRemotePublisher(id: attachmentId, requestPriority: .high)
-                .receive(on: DispatchQueue.main)
-                .sink(receiveCompletion: { _ in
-                    
-                }, receiveValue: { [weak self] (attachment: AttachmentDataModel?) in
-                   
-                    self?.bannerImageData = OptionalImageData(image: attachment?.getImage(), imageIdForAnimationChange: attachmentId)
-                })
+        catch let error {
+            assertionFailure("Failed to download banner attachment with error: \(error)")
         }
     }
 }
