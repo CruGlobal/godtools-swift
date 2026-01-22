@@ -31,37 +31,24 @@ class FileCacheTests {
     func returnsDirectoryUrl() async throws {
         
         let fileCache = try getTestsFileCache()
-        let location = FileCacheLocation(relativeUrlString: Self.testsFileCacheRootDirectory)
         
-        switch fileCache.getDirectory(location: location) {
-        case .success(let url):
-            #expect(url.absoluteString.contains(Self.testsFileCacheRootDirectory))
-        case .failure(let error):
-            throw error
-        }
+        let location = FileCacheLocation(relativeUrlString: testsFileCacheRootDirectory)
+        
+        let url = try fileCache.getDirectory(location: location)
+        
+        #expect(url.absoluteString.contains(testsFileCacheRootDirectory))
     }
     
     @Test("")
     func isDirectory() async throws {
         
         let fileCache = try getTestsFileCache()
-        let rootDirectoryUrl: URL
+
+        let rootDirectoryUrl: URL = try fileCache.getRootDirectory()
+
+        let newDiretoryUrl: URL = rootDirectoryUrl.appendingPathComponent(tempDirectoryName)
         
-        switch fileCache.getRootDirectory() {
-        case .success(let url):
-            rootDirectoryUrl = url
-        case .failure(let error):
-            throw error
-        }
-        
-        let newDiretoryUrl: URL = rootDirectoryUrl.appendingPathComponent(Self.tempDirectoryName)
-        
-        switch fileCache.createDirectoryIfNotExists(directoryUrl: newDiretoryUrl) {
-        case .success( _):
-            break
-        case .failure(let error):
-            throw error
-        }
+        _ = try fileCache.createDirectoryIfNotExists(directoryUrl: newDiretoryUrl)
         
         let isDirectory: Bool = fileCache.getIsDirectory(url: newDiretoryUrl)
         
@@ -72,16 +59,10 @@ class FileCacheTests {
     func isNotDirectory() async throws {
         
         let fileCache = try getTestsFileCache()
-        let rootDirectoryUrl: URL
         
-        switch fileCache.getRootDirectory() {
-        case .success(let url):
-            rootDirectoryUrl = url
-        case .failure(let error):
-            throw error
-        }
+        let rootDirectoryUrl: URL = try fileCache.getRootDirectory()
         
-        let newDiretoryUrl: URL = rootDirectoryUrl.appendingPathComponent(Self.tempDirectoryName)
+        let newDiretoryUrl: URL = rootDirectoryUrl.appendingPathComponent(tempDirectoryName)
         
         let isDirectory: Bool = fileCache.getIsDirectory(url: newDiretoryUrl)
         
@@ -92,41 +73,19 @@ class FileCacheTests {
     func isFile() async throws {
         
         let fileCache = try getTestsFileCache()
-        
-        switch fileCache.getRootDirectory() {
-        case .success( _):
-            break
-        case .failure(let error):
-            throw error
-        }
-                
+              
         let optionalFileData: Data? = "text data".data(using: .utf8)
         let fileData: Data = try #require(optionalFileData)
         let fileName: String = "file.txt"
-        let fileLocation = FileCacheLocation(relativeUrlString: "\(Self.tempDirectoryName)/\(fileName)")
+        let fileLocation = FileCacheLocation(relativeUrlString: "\(tempDirectoryName)/\(fileName)")
         
-        switch fileCache.storeFile(location: fileLocation, data: fileData) {
-        case .success( _):
-            break
-        case .failure(let error):
-            throw error
-        }
+        _ = try fileCache.storeFile(location: fileLocation, data: fileData)
         
-        switch fileCache.getFileExists(location: fileLocation) {
-        case .success(let fileExists):
-            #expect(fileExists == true)
-        case .failure(let error):
-            throw error
-        }
+        let fileExists: Bool = try fileCache.getFileExists(location: fileLocation)
         
-        let fileUrl: URL
+        #expect(fileExists == true)
         
-        switch fileCache.getFile(location: fileLocation) {
-        case .success(let url):
-            fileUrl = url
-        case .failure(let error):
-            throw error
-        }
+        let fileUrl: URL = try fileCache.getFile(location: fileLocation)
         
         #expect(fileUrl.absoluteString.contains(fileName))
     }
@@ -135,30 +94,17 @@ class FileCacheTests {
     func removeDirectory() async throws {
         
         let fileCache = try getTestsFileCache()
-        let rootDirectoryUrl: URL
         
-        switch fileCache.getRootDirectory() {
-        case .success(let url):
-            rootDirectoryUrl = url
-        case .failure(let error):
-            throw error
-        }
+        let rootDirectoryUrl: URL = try fileCache.getRootDirectory()
         
-        let newDiretoryUrl: URL = rootDirectoryUrl.appendingPathComponent(Self.tempDirectoryName)
+        let newDiretoryUrl: URL = rootDirectoryUrl.appendingPathComponent(tempDirectoryName)
         
-        switch fileCache.createDirectoryIfNotExists(directoryUrl: newDiretoryUrl) {
-        case .success( _):
-            break
-        case .failure(let error):
-            throw error
-        }
-                
+        _ = try fileCache.createDirectoryIfNotExists(directoryUrl: newDiretoryUrl)
+             
         #expect(fileCache.getIsDirectory(url: newDiretoryUrl) == true)
         
-        if let error = fileCache.removeItem(url: newDiretoryUrl) {
-            throw error
-        }
-                
+        try fileCache.removeItem(url: newDiretoryUrl)
+               
         #expect(fileCache.getIsDirectory(url: newDiretoryUrl) == false)
     }
     
@@ -166,111 +112,54 @@ class FileCacheTests {
     func removeFile() async throws {
         
         let fileCache = try getTestsFileCache()
-        
-        switch fileCache.getRootDirectory() {
-        case .success( _):
-            break
-        case .failure(let error):
-            throw error
-        }
-                
+                 
         let optionalFileData: Data? = "text data".data(using: .utf8)
         let fileData: Data = try #require(optionalFileData)
         let fileName: String = "file.txt"
-        let fileLocation = FileCacheLocation(relativeUrlString: "\(Self.tempDirectoryName)/\(fileName)")
+        let fileLocation = FileCacheLocation(relativeUrlString: "\(tempDirectoryName)/\(fileName)")
         
-        switch fileCache.storeFile(location: fileLocation, data: fileData) {
-        case .success( _):
-            break
-        case .failure(let error):
-            throw error
-        }
+        _ = try fileCache.storeFile(location: fileLocation, data: fileData)
+                
+        #expect(try fileCache.getFileExists(location: fileLocation) == true)
         
-        switch fileCache.getFileExists(location: fileLocation) {
-        case .success(let fileExists):
-            #expect(fileExists == true)
-        case .failure(let error):
-            throw error
-        }
-        
-        if let error = fileCache.removeFile(location: fileLocation) {
-            throw error
-        }
-        
-        switch fileCache.getFileExists(location: fileLocation) {
-        case .success(let fileExists):
-            #expect(fileExists == false)
-        case .failure(let error):
-            throw error
-        }
+        try fileCache.removeFile(location: fileLocation)
+                
+        #expect(try fileCache.getFileExists(location: fileLocation) == false)
     }
     
     @Test("")
     func getData() async throws {
         
         let fileCache = try getTestsFileCache()
-        
-        switch fileCache.getRootDirectory() {
-        case .success( _):
-            break
-        case .failure(let error):
-            throw error
-        }
-                
+               
         let optionalFileData: Data? = "text data".data(using: .utf8)
         let fileData: Data = try #require(optionalFileData)
         let fileName: String = "file.txt"
-        let fileLocation = FileCacheLocation(relativeUrlString: "\(Self.tempDirectoryName)/\(fileName)")
+        let fileLocation = FileCacheLocation(relativeUrlString: "\(tempDirectoryName)/\(fileName)")
         
-        switch fileCache.storeFile(location: fileLocation, data: fileData) {
-        case .success( _):
-            break
-        case .failure(let error):
-            throw error
-        }
+        _ = try fileCache.storeFile(location: fileLocation, data: fileData)
         
-        switch fileCache.getData(location: fileLocation) {
-        case .success(let data):
-            #expect(data != nil)
-        case .failure(let error):
-            throw error
-        }
+        #expect(try fileCache.getData(location: fileLocation) != nil)
     }
     
     @Test("")
     func moveContentsOfDirectoryToDirectory() async throws {
         
         let fileCache = try getTestsFileCache()
-        let rootDirectoryUrl: URL
         
-        switch fileCache.getRootDirectory() {
-        case .success(let url):
-            rootDirectoryUrl = url
-        case .failure(let error):
-            throw error
-        }
+        let rootDirectoryUrl: URL = try fileCache.getRootDirectory()
         
         // add directory original and move to
         
         let originalFilesDirectoryName: String = "original_files"
         let originalFilesDirectory: URL = rootDirectoryUrl.appendingPathComponent(originalFilesDirectoryName)
         
-        switch fileCache.createDirectoryIfNotExists(directoryUrl: originalFilesDirectory) {
-        case .success( _):
-            break
-        case .failure(let error):
-            throw error
-        }
+        _ = try fileCache.createDirectoryIfNotExists(directoryUrl: originalFilesDirectory)
         
         let moveFilesToDirectoryName: String = "move_files_to"
         let moveFilesToDirectory: URL = rootDirectoryUrl.appendingPathComponent(moveFilesToDirectoryName)
         
-        switch fileCache.createDirectoryIfNotExists(directoryUrl: moveFilesToDirectory) {
-        case .success( _):
-            break
-        case .failure(let error):
-            throw error
-        }
+        _ = try fileCache.createDirectoryIfNotExists(directoryUrl: moveFilesToDirectory)
         
         try #require(fileCache.getIsDirectory(url: originalFilesDirectory))
         try #require(fileCache.getIsDirectory(url: moveFilesToDirectory))
@@ -286,54 +175,27 @@ class FileCacheTests {
             let fileRelativePath: String = originalFilesDirectoryName + "/" + file + fileExtension
             let fileLocation = FileCacheLocation(relativeUrlString: fileRelativePath)
             
-            switch fileCache.storeFile(location: fileLocation, data: fileData) {
-            case .success( _):
-                break
-            case .failure(let error):
-                throw error
-            }
+            _ = try fileCache.storeFile(location: fileLocation, data: fileData)
         }
         
         // check files exist in original directory and not move to directory
         
         for file in files {
             
-            switch fileCache.getFileExists(location: FileCacheLocation(relativeUrlString: originalFilesDirectoryName + "/" + file + fileExtension)) {
-            case .success(let fileExists):
-                #expect(fileExists == true)
-            case .failure(let error):
-                throw error
-            }
+            #expect(try fileCache.getFileExists(location: FileCacheLocation(relativeUrlString: originalFilesDirectoryName + "/" + file + fileExtension)) == true)
             
-            switch fileCache.getFileExists(location: FileCacheLocation(relativeUrlString: moveFilesToDirectoryName + "/" + file + fileExtension)) {
-            case .success(let fileExists):
-                #expect(fileExists == false)
-            case .failure(let error):
-                throw error
-            }
+            #expect(try fileCache.getFileExists(location: FileCacheLocation(relativeUrlString: moveFilesToDirectoryName + "/" + file + fileExtension)) == false)
         }
         
-        if let error = fileCache.moveContentsOfDirectory(directory: originalFilesDirectory, toDirectory: moveFilesToDirectory) {
-            throw error
-        }
+        try fileCache.moveContentsOfDirectory(directory: originalFilesDirectory, toDirectory: moveFilesToDirectory)
         
         // after move, check files do not exist in original directory and exist in move to directory
         
         for file in files {
             
-            switch fileCache.getFileExists(location: FileCacheLocation(relativeUrlString: originalFilesDirectoryName + "/" + file + fileExtension)) {
-            case .success(let fileExists):
-                #expect(fileExists == false)
-            case .failure(let error):
-                throw error
-            }
+            #expect(try fileCache.getFileExists(location: FileCacheLocation(relativeUrlString: originalFilesDirectoryName + "/" + file + fileExtension)) == false)
             
-            switch fileCache.getFileExists(location: FileCacheLocation(relativeUrlString: moveFilesToDirectoryName + "/" + file + fileExtension)) {
-            case .success(let fileExists):
-                #expect(fileExists == true)
-            case .failure(let error):
-                throw error
-            }
+            #expect(try fileCache.getFileExists(location: FileCacheLocation(relativeUrlString: moveFilesToDirectoryName + "/" + file + fileExtension)) == true)
         }
     }
     
@@ -341,38 +203,22 @@ class FileCacheTests {
     func moveContentsOfChildDirectoryToParentDirectory() async throws {
         
         let fileCache = try getTestsFileCache()
-        let rootDirectoryUrl: URL
         
-        switch fileCache.getRootDirectory() {
-        case .success(let url):
-            rootDirectoryUrl = url
-        case .failure(let error):
-            throw error
-        }
+        let rootDirectoryUrl: URL = try fileCache.getRootDirectory()
         
         // add parent directory
         
         let parentDirectoryName: String = "parent_directory"
         let parentDirectoryUrl: URL = rootDirectoryUrl.appendingPathComponent(parentDirectoryName)
         
-        switch fileCache.createDirectoryIfNotExists(directoryUrl: parentDirectoryUrl) {
-        case .success( _):
-            break
-        case .failure(let error):
-            throw error
-        }
+        _ = try fileCache.createDirectoryIfNotExists(directoryUrl: parentDirectoryUrl)
         
         // add child directory to parent directory
         
         let childDirectoryName: String = "child_directory"
         let childDirectoryUrl: URL = parentDirectoryUrl.appendingPathComponent(childDirectoryName)
         
-        switch fileCache.createDirectoryIfNotExists(directoryUrl: childDirectoryUrl) {
-        case .success( _):
-            break
-        case .failure(let error):
-            throw error
-        }
+        _ = try fileCache.createDirectoryIfNotExists(directoryUrl: childDirectoryUrl)
         
         // ensure directories are added
         
@@ -390,36 +236,19 @@ class FileCacheTests {
             let fileRelativePath: String = parentDirectoryName + "/" + childDirectoryName + "/" + file + fileExtension
             let fileLocation = FileCacheLocation(relativeUrlString: fileRelativePath)
             
-            switch fileCache.storeFile(location: fileLocation, data: fileData) {
-            case .success( _):
-                break
-            case .failure(let error):
-                throw error
-            }
+            _ = try fileCache.storeFile(location: fileLocation, data: fileData)
         }
         
         // check files exist in child directory and not parent directory
         
         for file in files {
             
-            switch fileCache.getFileExists(location: FileCacheLocation(relativeUrlString: parentDirectoryName + "/" + childDirectoryName + "/" + file + fileExtension)) {
-            case .success(let fileExists):
-                #expect(fileExists == true)
-            case .failure(let error):
-                throw error
-            }
+            #expect(try fileCache.getFileExists(location: FileCacheLocation(relativeUrlString: parentDirectoryName + "/" + childDirectoryName + "/" + file + fileExtension)) == true)
             
-            switch fileCache.getFileExists(location: FileCacheLocation(relativeUrlString: parentDirectoryName + "/" + file + fileExtension)) {
-            case .success(let fileExists):
-                #expect(fileExists == false)
-            case .failure(let error):
-                throw error
-            }
+            #expect(try fileCache.getFileExists(location: FileCacheLocation(relativeUrlString: parentDirectoryName + "/" + file + fileExtension)) == false)
         }
         
-        if let error = fileCache.moveChildDirectoryContentsIntoParent(parentDirectory: parentDirectoryUrl) {
-            throw error
-        }
+        try fileCache.moveChildDirectoryContentsIntoParent(parentDirectory: parentDirectoryUrl)
         
         // after move ensure child directory no longer exists in parent directory
         
@@ -429,19 +258,9 @@ class FileCacheTests {
         
         for file in files {
             
-            switch fileCache.getFileExists(location: FileCacheLocation(relativeUrlString: childDirectoryName + "/" + file + fileExtension)) {
-            case .success(let fileExists):
-                #expect(fileExists == false)
-            case .failure(let error):
-                throw error
-            }
+            #expect(try fileCache.getFileExists(location: FileCacheLocation(relativeUrlString: childDirectoryName + "/" + file + fileExtension)) == false)
             
-            switch fileCache.getFileExists(location: FileCacheLocation(relativeUrlString: parentDirectoryName + "/" + file + fileExtension)) {
-            case .success(let fileExists):
-                #expect(fileExists == true)
-            case .failure(let error):
-                throw error
-            }
+            #expect(try fileCache.getFileExists(location: FileCacheLocation(relativeUrlString: parentDirectoryName + "/" + file + fileExtension)) == true)
         }
     }
     
@@ -449,50 +268,29 @@ class FileCacheTests {
     func moveContentsOfChildDirectoryToParentDirectoryFailsWhenMoreContentsThanSingleDirectory() async throws {
         
         let fileCache = try getTestsFileCache()
-        let rootDirectoryUrl: URL
         
-        switch fileCache.getRootDirectory() {
-        case .success(let url):
-            rootDirectoryUrl = url
-        case .failure(let error):
-            throw error
-        }
+        let rootDirectoryUrl: URL = try fileCache.getRootDirectory()
         
         // add parent directory
         
         let parentDirectoryName: String = "parent_directory"
         let parentDirectoryUrl: URL = rootDirectoryUrl.appendingPathComponent(parentDirectoryName)
         
-        switch fileCache.createDirectoryIfNotExists(directoryUrl: parentDirectoryUrl) {
-        case .success( _):
-            break
-        case .failure(let error):
-            throw error
-        }
+        _ = try fileCache.createDirectoryIfNotExists(directoryUrl: parentDirectoryUrl)
         
         // add child directory to parent directory
         
         let childDirectoryName: String = "child_directory"
         let childDirectoryUrl: URL = parentDirectoryUrl.appendingPathComponent(childDirectoryName)
         
-        switch fileCache.createDirectoryIfNotExists(directoryUrl: childDirectoryUrl) {
-        case .success( _):
-            break
-        case .failure(let error):
-            throw error
-        }
+        _ = try fileCache.createDirectoryIfNotExists(directoryUrl: childDirectoryUrl)
         
         // add additional directory to parent directory
         
         let additionalDirectoryName: String = "additional_directory"
         let additionalDirectoryUrl: URL = parentDirectoryUrl.appendingPathComponent(additionalDirectoryName)
         
-        switch fileCache.createDirectoryIfNotExists(directoryUrl: additionalDirectoryUrl) {
-        case .success( _):
-            break
-        case .failure(let error):
-            throw error
-        }
+        _ = try fileCache.createDirectoryIfNotExists(directoryUrl: additionalDirectoryUrl)
         
         // ensure directories are added
         
@@ -511,36 +309,19 @@ class FileCacheTests {
             let fileRelativePath: String = parentDirectoryName + "/" + childDirectoryName + "/" + file + fileExtension
             let fileLocation = FileCacheLocation(relativeUrlString: fileRelativePath)
             
-            switch fileCache.storeFile(location: fileLocation, data: fileData) {
-            case .success( _):
-                break
-            case .failure(let error):
-                throw error
-            }
+            _ = try fileCache.storeFile(location: fileLocation, data: fileData)
         }
         
         // check files exist in child directory and not parent directory
         
         for file in files {
             
-            switch fileCache.getFileExists(location: FileCacheLocation(relativeUrlString: parentDirectoryName + "/" + childDirectoryName + "/" + file + fileExtension)) {
-            case .success(let fileExists):
-                #expect(fileExists == true)
-            case .failure(let error):
-                throw error
-            }
+            #expect(try fileCache.getFileExists(location: FileCacheLocation(relativeUrlString: parentDirectoryName + "/" + childDirectoryName + "/" + file + fileExtension)) == true)
             
-            switch fileCache.getFileExists(location: FileCacheLocation(relativeUrlString: parentDirectoryName + "/" + file + fileExtension)) {
-            case .success(let fileExists):
-                #expect(fileExists == false)
-            case .failure(let error):
-                throw error
-            }
+            #expect(try fileCache.getFileExists(location: FileCacheLocation(relativeUrlString: parentDirectoryName + "/" + file + fileExtension)) == false)
         }
         
-        if let error = fileCache.moveChildDirectoryContentsIntoParent(parentDirectory: parentDirectoryUrl) {
-            throw error
-        }
+        try fileCache.moveChildDirectoryContentsIntoParent(parentDirectory: parentDirectoryUrl)
         
         // ensure child directory still exists since move should fail
         
@@ -550,19 +331,9 @@ class FileCacheTests {
         
         for file in files {
             
-            switch fileCache.getFileExists(location: FileCacheLocation(relativeUrlString: parentDirectoryName + "/" + childDirectoryName + "/" + file + fileExtension)) {
-            case .success(let fileExists):
-                #expect(fileExists == true)
-            case .failure(let error):
-                throw error
-            }
+            #expect(try fileCache.getFileExists(location: FileCacheLocation(relativeUrlString: parentDirectoryName + "/" + childDirectoryName + "/" + file + fileExtension)) == true)
             
-            switch fileCache.getFileExists(location: FileCacheLocation(relativeUrlString: parentDirectoryName + "/" + file + fileExtension)) {
-            case .success(let fileExists):
-                #expect(fileExists == false)
-            case .failure(let error):
-                throw error
-            }
+            #expect(try fileCache.getFileExists(location: FileCacheLocation(relativeUrlString: parentDirectoryName + "/" + file + fileExtension)) == false)
         }
     }
     
@@ -571,13 +342,6 @@ class FileCacheTests {
         
         let fileCache = try getTestsFileCache()
         
-        switch fileCache.getRootDirectory() {
-        case .success( _):
-            break
-        case .failure(let error):
-            throw error
-        }
-        
         let imageFromPreviewAssets: UIImage = try #require(UIImage(named: "previewBannerImage", in: Bundle.main, with: nil))
         let imageData: Data = try #require(imageFromPreviewAssets.jpegData(compressionQuality: 0.8))
         
@@ -585,19 +349,9 @@ class FileCacheTests {
         
         let fileLocation = FileCacheLocation(relativeUrlString: imageName)
         
-        switch fileCache.storeFile(location: fileLocation, data: imageData) {
-        case .success( _):
-            break
-        case .failure(let error):
-            throw error
-        }
+        _ = try fileCache.storeFile(location: fileLocation, data: imageData)
         
-        switch fileCache.getUIImage(location: fileLocation) {
-        case .success(let uiImage):
-            #expect(uiImage != nil)
-        case .failure(let error):
-            throw error
-        }
+        #expect(try fileCache.getUIImage(location: fileLocation) != nil)
     }
     
     @Test("")
@@ -605,13 +359,6 @@ class FileCacheTests {
         
         let fileCache = try getTestsFileCache()
         
-        switch fileCache.getRootDirectory() {
-        case .success( _):
-            break
-        case .failure(let error):
-            throw error
-        }
-        
         let imageFromPreviewAssets: UIImage = try #require(UIImage(named: "previewBannerImage", in: Bundle.main, with: nil))
         let imageData: Data = try #require(imageFromPreviewAssets.jpegData(compressionQuality: 0.8))
         
@@ -619,19 +366,9 @@ class FileCacheTests {
         
         let fileLocation = FileCacheLocation(relativeUrlString: imageName)
         
-        switch fileCache.storeFile(location: fileLocation, data: imageData) {
-        case .success( _):
-            break
-        case .failure(let error):
-            throw error
-        }
+        _ = try fileCache.storeFile(location: fileLocation, data: imageData)
         
-        switch fileCache.getImage(location: fileLocation) {
-        case .success(let image):
-            #expect(image != nil)
-        case .failure(let error):
-            throw error
-        }
+        #expect(try fileCache.getImage(location: fileLocation) != nil)
     }
 }
 
@@ -639,7 +376,13 @@ extension FileCacheTests {
     
     private func getTestsFileCache() throws -> FileCache {
         
-        try FileCache(rootDirectory: testsFileCacheRootDirectory).removeRootDirectory()
+        do {
+            try FileCache(rootDirectory: testsFileCacheRootDirectory)
+                .removeRootDirectory()
+        }
+        catch _ {
+            
+        }
         
         return FileCache(
             rootDirectory: testsFileCacheRootDirectory
