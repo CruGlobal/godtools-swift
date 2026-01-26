@@ -22,21 +22,37 @@ class GetDownloadedLanguagesListRepository: GetDownloadedLanguagesListRepository
         self.getTranslatedLanguageName = getTranslatedLanguageName
     }
     
-    func getDownloadedLanguagesPublisher(currentAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[DownloadedLanguageListItemDomainModel], Never> {
+    func getDownloadedLanguagesPublisher(currentAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[DownloadedLanguageListItemDomainModel], Error> {
         
         return Publishers.CombineLatest(
-            languagesRepository.getObjectsPublisher(getObjectsType: .allObjects, cachePolicy: .returnCacheDataElseFetch(requestPriority: .high, observeChanges: true)),
-            downloadedLanguagesRepository.getDownloadedLanguagesChangedPublisher()
+            languagesRepository.getDataModelsPublisher(
+                getObjectsType: .allObjects,
+                cachePolicy: .returnCacheDataElseFetch,
+                context: RequestOperationFetchContext(requestPriority: .high)
+            ),
+            downloadedLanguagesRepository
+                .getDownloadedLanguagesChangedPublisher()
+                .setFailureType(to: Error.self)
         )
-        .flatMap { _ in
+        .flatMap { (languages: [LanguageDataModel], downloadLanguagesChanged: Void) -> AnyPublisher<[DownloadedLanguageDataModel], Error> in
             
-            return self.downloadedLanguagesRepository.getDownloadedLanguagesPublisher(completedDownloadsOnly: true)
+            return self.downloadedLanguagesRepository
+                .getDownloadedLanguagesPublisher(completedDownloadsOnly: true)
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
         }
-        .map { downloadedLanguageDataModels in
+        .flatMap { (downloadedLanguageDataModels: [DownloadedLanguageDataModel]) -> AnyPublisher<[LanguageDataModel], Error> in
+                            
+            let downloadedLanguageIds: [String] = downloadedLanguageDataModels.map { $0.languageId }
             
-            let downloadedLanguageIds = downloadedLanguageDataModels.map { $0.languageId }
+            return self.languagesRepository
+                .persistence
+                .getDataModelsPublisher(getOption: .objectsByIds(ids: downloadedLanguageIds))
+                .eraseToAnyPublisher()
+        }
+        .map { (languages: [LanguageDataModel]) in
             
-            return self.languagesRepository.persistence.getObjects(ids: downloadedLanguageIds).map { language in
+            let languagesList: [DownloadedLanguageListItemDomainModel] = languages.map { (language: LanguageDataModel) in
                 
                 let languageNameInOwnLanguage = self.getTranslatedLanguageName.getLanguageName(
                     language: language,
@@ -54,6 +70,8 @@ class GetDownloadedLanguagesListRepository: GetDownloadedLanguagesListRepository
                     languageNameInAppLanguage: languageNameInAppLanguage
                 )
             }
+            
+            return languagesList
         }
         .eraseToAnyPublisher()
     }

@@ -20,11 +20,14 @@ class ViewDownloadableLanguagesUseCase {
         self.getInterfaceStringsRepository = getInterfaceStringsRepository
     }
     
-    func viewPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewDownloadableLanguagesDomainModel, Never> {
+    func viewPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewDownloadableLanguagesDomainModel, Error> {
         
         return Publishers.CombineLatest(
-            getDownloadableLanguagesListRepository.getDownloadableLanguagesPublisher(currentAppLanguage: appLanguage),
-            getInterfaceStringsRepository.getStringsPublisher(translateInAppLanguage: appLanguage)
+            getDownloadableLanguagesListRepository
+                .getDownloadableLanguagesPublisher(currentAppLanguage: appLanguage),
+            getInterfaceStringsRepository
+                .getStringsPublisher(translateInAppLanguage: appLanguage)
+                .setFailureType(to: Error.self)
         )
         .map { (downloadableLanguages, interfaceStrings) in
             

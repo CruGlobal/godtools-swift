@@ -19,11 +19,14 @@ class ViewLessonFilterLanguagesUseCase {
         self.getInterfaceStringsRepository = getInterfaceStringsRepository
     }
     
-    func viewPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewLessonFilterLanguagesDomainModel, Never> {
-        
+    func viewPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewLessonFilterLanguagesDomainModel, Error> {
+            
         return Publishers.CombineLatest(
-            getInterfaceStringsRepository.getStringsPublisher(translateInAppLanguage: translatedInAppLanguage),
-            getLessonFilterLanguagesRepository.getLessonFilterLanguagesPublisher(translatedInAppLanguage: translatedInAppLanguage)
+            getInterfaceStringsRepository
+                .getStringsPublisher(translateInAppLanguage: translatedInAppLanguage)
+                .setFailureType(to: Error.self),
+            getLessonFilterLanguagesRepository
+                .getLessonFilterLanguagesPublisher(translatedInAppLanguage: translatedInAppLanguage)
         )
         .map { interfaceStrings, languageFilters in
             

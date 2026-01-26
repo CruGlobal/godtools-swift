@@ -1,5 +1,5 @@
 //
-//  SortByKeyPath.swift
+//  GTSortByKeyPath.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/19/25.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct SortByKeyPath {
+public struct GTSortByKeyPath {
     let keyPath: String
     let ascending: Bool
 }
