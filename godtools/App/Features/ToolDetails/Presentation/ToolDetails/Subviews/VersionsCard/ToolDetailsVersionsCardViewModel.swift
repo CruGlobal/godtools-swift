@@ -14,9 +14,8 @@ import RequestOperation
 @MainActor class ToolDetailsVersionsCardViewModel: ObservableObject {
     
     private let toolVersion: ToolVersionDomainModel
-    private let attachmentsRepository: AttachmentsRepository
-
-    let attachmentBanner: AttachmentBannerObservableObject
+    
+    private var cancellables: Set<AnyCancellable> = Set()
         
     let isSelected: Bool
     let name: String
@@ -27,10 +26,11 @@ import RequestOperation
     let toolParallelLanguageName: String?
     let toolParallelLanguageNameIsSupported: Bool?
     
-    init(toolVersion: ToolVersionDomainModel, attachmentsRepository: AttachmentsRepository, isSelected: Bool) {
+    @Published private(set) var banner: OptionalImageData?
+    
+    init(toolVersion: ToolVersionDomainModel, getToolBannerUseCase: GetToolBannerUseCase, isSelected: Bool) {
         
         self.toolVersion = toolVersion
-        self.attachmentsRepository = attachmentsRepository
         self.isSelected = isSelected
         
         name = toolVersion.name
@@ -41,9 +41,17 @@ import RequestOperation
         toolParallelLanguageName = toolVersion.toolParallelLanguageName
         toolParallelLanguageNameIsSupported = toolVersion.toolParallelLanguageNameIsSupported
         
-        attachmentBanner = AttachmentBannerObservableObject(
-            attachmentId: toolVersion.bannerImageId,
-            attachmentsRepository: attachmentsRepository
-        )
+        let attachmentId: String = toolVersion.bannerImageId
+        
+        getToolBannerUseCase
+            .execute(attachmentId:attachmentId)
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                
+            } receiveValue: { [weak self] (image: Image?) in
+                
+                self?.banner = OptionalImageData(image: image, imageIdForAnimationChange: attachmentId)
+            }
+            .store(in: &cancellables)
     }
 }

@@ -108,7 +108,7 @@ struct LessonsView_Preview: PreviewProvider {
             viewLessonsUseCase: appDiContainer.feature.lessons.domainLayer.getViewLessonsUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
-            attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository()
+            getToolBannerUseCase: appDiContainer.domainLayer.getToolBannerUseCase()
         )
         
         return viewModel

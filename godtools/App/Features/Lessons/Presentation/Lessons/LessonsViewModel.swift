@@ -18,7 +18,7 @@ import SwiftUI
     private let viewLessonsUseCase: ViewLessonsUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
-    private let attachmentsRepository: AttachmentsRepository
+    private let getToolBannerUseCase: GetToolBannerUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -34,7 +34,7 @@ import SwiftUI
     @Published var lessons: [LessonListItemDomainModel] = []
     @Published var isLoadingLessons: Bool = true
         
-    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase, viewLessonsUseCase: ViewLessonsUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, attachmentsRepository: AttachmentsRepository) {
+    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase, viewLessonsUseCase: ViewLessonsUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getToolBannerUseCase: GetToolBannerUseCase) {
         
         self.flowDelegate = flowDelegate
         self.resourcesRepository = resourcesRepository
@@ -43,7 +43,7 @@ import SwiftUI
         self.viewLessonsUseCase = viewLessonsUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
-        self.attachmentsRepository = attachmentsRepository
+        self.getToolBannerUseCase = getToolBannerUseCase
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
@@ -158,7 +158,7 @@ extension LessonsViewModel {
         
         return LessonCardViewModel(
             lessonListItem: lessonListItem,
-            attachmentsRepository: attachmentsRepository
+            getToolBannerUseCase: getToolBannerUseCase
         )
     }
     
