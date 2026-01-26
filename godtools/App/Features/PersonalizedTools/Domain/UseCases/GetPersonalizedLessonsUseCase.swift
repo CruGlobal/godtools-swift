@@ -11,14 +11,16 @@ import Combine
 
 class GetPersonalizedLessonsUseCase {
 
+    private let resourcesRepository: ResourcesRepository
     private let personalizedToolsRepository: PersonalizedToolsRepository
     private let languagesRepository: LanguagesRepository
     private let getTranslatedToolName: GetTranslatedToolName
     private let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability
     private let getLessonListItemProgressRepository: GetLessonListItemProgressRepository
 
-    init(personalizedToolsRepository: PersonalizedToolsRepository, languagesRepository: LanguagesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability, getLessonListItemProgressRepository: GetLessonListItemProgressRepository) {
+    init(resourcesRepository: ResourcesRepository, personalizedToolsRepository: PersonalizedToolsRepository, languagesRepository: LanguagesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability, getLessonListItemProgressRepository: GetLessonListItemProgressRepository) {
 
+        self.resourcesRepository = resourcesRepository
         self.personalizedToolsRepository = personalizedToolsRepository
         self.languagesRepository = languagesRepository
         self.getTranslatedToolName = getTranslatedToolName
@@ -28,8 +30,9 @@ class GetPersonalizedLessonsUseCase {
 
     func execute(appLanguage: AppLanguageDomainModel, country: String?, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<[LessonListItemDomainModel], Never> {
 
+        // TODO: - listen for changes on personalizedToolsRepository
         return Publishers.CombineLatest(
-            Just(()),   // TODO - observe realm changes for personalized lessons
+            resourcesRepository.persistence.observeCollectionChangesPublisher(),
             getLessonListItemProgressRepository.getLessonListItemProgressChanged()
         )
         .flatMap({ (resourcesDidChange: Void, lessonProgressDidChange: Void) -> AnyPublisher<[LessonListItemDomainModel], Never> in
