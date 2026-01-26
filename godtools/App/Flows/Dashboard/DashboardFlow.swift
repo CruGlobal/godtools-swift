@@ -342,9 +342,6 @@ extension DashboardFlow: UINavigationControllerDelegate {
             configureNavBarForDashboard()
         }
         
-        print("\n DashboardFlow willShow viewController")
-        print("  viewController: \(viewController)")
-        
         navigationController.setNavigationBarHidden(hidesNavigationBar, animated: false)
     }
 }
