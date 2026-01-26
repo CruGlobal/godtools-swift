@@ -335,11 +335,15 @@ extension DashboardFlow: UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         
         let isDashboard: Bool = viewController is AppHostingController<DashboardView>
-        let hidesNavigationBar: Bool = isDashboard
+        let isLesson: Bool = viewController is LessonView
+        let hidesNavigationBar: Bool = isDashboard || isLesson
         
         if isDashboard {
             configureNavBarForDashboard()
         }
+        
+        print("\n DashboardFlow willShow viewController")
+        print("  viewController: \(viewController)")
         
         navigationController.setNavigationBarHidden(hidesNavigationBar, animated: false)
     }
