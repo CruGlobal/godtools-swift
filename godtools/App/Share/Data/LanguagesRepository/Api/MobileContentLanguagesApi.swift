@@ -89,11 +89,11 @@ class MobileContentLanguagesApi {
     }
 }
 
-// MARK: - RepositorySyncExternalDataFetchInterface
+// MARK: - GTRepositorySyncExternalDataFetchInterface
 
-extension MobileContentLanguagesApi: RepositorySyncExternalDataFetchInterface {
+extension MobileContentLanguagesApi: GTRepositorySyncExternalDataFetchInterface {
     
-    func getObjectPublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<LanguageCodable>, Never> {
+    func getObjectPublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<GTRepositorySyncResponse<LanguageCodable>, Never> {
         
         return getLanguage(requestPriority: requestPriority, languageId: id)
             .map { (language: LanguageCodable?) in
@@ -106,23 +106,23 @@ extension MobileContentLanguagesApi: RepositorySyncExternalDataFetchInterface {
                     objects = []
                 }
                 
-                return RepositorySyncResponse(objects: objects, errors: [])
+                return GTRepositorySyncResponse(objects: objects, errors: [])
             }
             .catch { (error: Error) in
-                return Just(RepositorySyncResponse(objects: [], errors: [error]))
+                return Just(GTRepositorySyncResponse(objects: [], errors: [error]))
                     .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
     }
     
-    func getObjectsPublisher(requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<LanguageCodable>, Never> {
+    func getObjectsPublisher(requestPriority: RequestPriority) -> AnyPublisher<GTRepositorySyncResponse<LanguageCodable>, Never> {
         
         return getLanguages(requestPriority: requestPriority)
             .map { (languages: [LanguageCodable]) in
-                return RepositorySyncResponse(objects: languages, errors: [])
+                return GTRepositorySyncResponse(objects: languages, errors: [])
             }
             .catch { (error: Error) in
-                return Just(RepositorySyncResponse(objects: [], errors: [error]))
+                return Just(GTRepositorySyncResponse(objects: [], errors: [error]))
                     .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()

@@ -29,7 +29,7 @@ struct ToolDetailsVersionsCardView: View {
             VStack(alignment: .leading, spacing: 0) {
                 
                 OptionalImage(
-                    imageData: viewModel.attachmentBanner.bannerImageData,
+                    imageData: viewModel.banner,
                     imageSize: .aspectRatio(width: width, aspectRatio: CGSize(width: 335, height: 87)),
                     contentMode: .fill,
                     placeholderColor: ColorPalette.gtLightestGrey.color
@@ -113,7 +113,7 @@ struct ToolDetailsVersionsCardView_Preview: PreviewProvider {
         
         let viewModel = ToolDetailsVersionsCardViewModel(
             toolVersion: toolVersion,
-            attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),
+            getToolBannerUseCase: appDiContainer.domainLayer.getToolBannerUseCase(),
             isSelected: false
         )
         

@@ -119,15 +119,15 @@ class MobileContentResourcesApi {
     }
 }
 
-// MARK: - RepositorySyncExternalDataFetchInterface
+// MARK: - GTRepositorySyncExternalDataFetchInterface
 
-extension MobileContentResourcesApi: RepositorySyncExternalDataFetchInterface {
+extension MobileContentResourcesApi: GTRepositorySyncExternalDataFetchInterface {
     
-    func getObjectPublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<ResourceCodable>, Never> {
+    func getObjectPublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<GTRepositorySyncResponse<ResourceCodable>, Never> {
         return emptyResponsePublisher()
     }
     
-    func getObjectsPublisher(requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<ResourceCodable>, Never> {
+    func getObjectsPublisher(requestPriority: RequestPriority) -> AnyPublisher<GTRepositorySyncResponse<ResourceCodable>, Never> {
         return emptyResponsePublisher()
     }
 }

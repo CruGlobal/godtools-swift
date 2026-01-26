@@ -11,7 +11,7 @@ import Foundation
 import Combine
 import RequestOperation
 
-class MockRepositorySyncExternalDataFetch: RepositorySyncExternalDataFetchInterface {
+class MockRepositorySyncExternalDataFetch: GTRepositorySyncExternalDataFetchInterface {
             
     private let objects: [MockRepositorySyncDataModel]
     private let delayRequestSeconds: TimeInterval
@@ -22,10 +22,10 @@ class MockRepositorySyncExternalDataFetch: RepositorySyncExternalDataFetchInterf
         self.delayRequestSeconds = delayRequestSeconds
     }
     
-    func getObjectPublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<MockRepositorySyncDataModel>, Never> {
+    func getObjectPublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<GTRepositorySyncResponse<MockRepositorySyncDataModel>, Never> {
         
         return delayPublisher()
-            .flatMap { _ -> AnyPublisher<RepositorySyncResponse<MockRepositorySyncDataModel>, Never> in
+            .flatMap { _ -> AnyPublisher<GTRepositorySyncResponse<MockRepositorySyncDataModel>, Never> in
                 
                 let fetchedObjects: [MockRepositorySyncDataModel]
                 
@@ -36,19 +36,19 @@ class MockRepositorySyncExternalDataFetch: RepositorySyncExternalDataFetchInterf
                     fetchedObjects = Array()
                 }
                 
-                return Just(RepositorySyncResponse(objects: fetchedObjects, errors: []))
+                return Just(GTRepositorySyncResponse(objects: fetchedObjects, errors: []))
                     .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
     }
     
-    func getObjectsPublisher(requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<MockRepositorySyncDataModel>, Never> {
+    func getObjectsPublisher(requestPriority: RequestPriority) -> AnyPublisher<GTRepositorySyncResponse<MockRepositorySyncDataModel>, Never> {
         
         let allObjects: [MockRepositorySyncDataModel] = objects
         
         return delayPublisher()
-            .flatMap { _ -> AnyPublisher<RepositorySyncResponse<MockRepositorySyncDataModel>, Never> in
-                return Just(RepositorySyncResponse(objects: allObjects, errors: []))
+            .flatMap { _ -> AnyPublisher<GTRepositorySyncResponse<MockRepositorySyncDataModel>, Never> in
+                return Just(GTRepositorySyncResponse(objects: allObjects, errors: []))
                     .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()

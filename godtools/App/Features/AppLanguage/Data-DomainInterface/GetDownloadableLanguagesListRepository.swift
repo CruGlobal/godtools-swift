@@ -35,7 +35,7 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
             languagesRepository.getObjectsPublisher(getObjectsType: .allObjects, cachePolicy: .returnCacheDataElseFetch(requestPriority: .high, observeChanges: true)),
             downloadedLanguagesRepository.getDownloadedLanguagesChangedPublisher()
         )
-        .map { (languagesResponse: RepositorySyncResponse<LanguageDataModel>, downloadLanguagesChanged: Void) in
+        .map { (languagesResponse: GTRepositorySyncResponse<LanguageDataModel>, downloadLanguagesChanged: Void) in
             
             return languagesResponse.objects
                 .compactMap { language in

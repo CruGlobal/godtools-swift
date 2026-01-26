@@ -1,5 +1,5 @@
 //
-//  RepositorySync.swift
+//  GTRepositorySync.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/23/25.
@@ -10,15 +10,15 @@ import Foundation
 import Combine
 import RequestOperation
 
-class RepositorySync<DataModelType, ExternalDataFetchType: RepositorySyncExternalDataFetchInterface> {
+class GTRepositorySync<DataModelType, ExternalDataFetchType: GTRepositorySyncExternalDataFetchInterface> {
     
     private let externalDataFetch: ExternalDataFetchType
     
-    let persistence: any RepositorySyncPersistence<DataModelType, ExternalDataFetchType.DataModel>
+    let persistence: any GTRepositorySyncPersistence<DataModelType, ExternalDataFetchType.DataModel>
     
     private var cancellables: Set<AnyCancellable> = Set()
     
-    init(externalDataFetch: ExternalDataFetchType, persistence: any RepositorySyncPersistence<DataModelType, ExternalDataFetchType.DataModel>) {
+    init(externalDataFetch: ExternalDataFetchType, persistence: any GTRepositorySyncPersistence<DataModelType, ExternalDataFetchType.DataModel>) {
         
         self.externalDataFetch = externalDataFetch
         self.persistence = persistence
@@ -27,9 +27,9 @@ class RepositorySync<DataModelType, ExternalDataFetchType: RepositorySyncExterna
 
 // MARK: - External Data Fetch
 
-extension RepositorySync {
+extension GTRepositorySync {
     
-    private func fetchExternalObjects(getObjectsType: RepositorySyncGetObjectsType, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<ExternalDataFetchType.DataModel>, Never>  {
+    private func fetchExternalObjects(getObjectsType: GTRepositorySyncGetObjectsType, requestPriority: RequestPriority) -> AnyPublisher<GTRepositorySyncResponse<ExternalDataFetchType.DataModel>, Never>  {
         
         switch getObjectsType {
         case .allObjects:
@@ -44,22 +44,22 @@ extension RepositorySync {
         }
     }
     
-    private func makeSinkingfetchAndStoreObjectsFromExternalDataFetch(getObjectsType: RepositorySyncGetObjectsType, requestPriority: RequestPriority) {
+    private func makeSinkingfetchAndStoreObjectsFromExternalDataFetch(getObjectsType: GTRepositorySyncGetObjectsType, requestPriority: RequestPriority) {
         
         fetchAndStoreObjectsFromExternalDataFetchPublisher(
             getObjectsType: getObjectsType,
             requestPriority: requestPriority
         )
-        .sink { (response: RepositorySyncResponse<DataModelType>) in
+        .sink { (response: GTRepositorySyncResponse<DataModelType>) in
             
         }
         .store(in: &cancellables)
     }
     
-    private func fetchAndStoreObjectsFromExternalDataFetchPublisher(getObjectsType: RepositorySyncGetObjectsType, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
+    private func fetchAndStoreObjectsFromExternalDataFetchPublisher(getObjectsType: GTRepositorySyncGetObjectsType, requestPriority: RequestPriority) -> AnyPublisher<GTRepositorySyncResponse<DataModelType>, Never> {
                 
         return fetchExternalObjects(getObjectsType: getObjectsType, requestPriority: requestPriority)
-            .map { (getObjectsResponse: RepositorySyncResponse<ExternalDataFetchType.DataModel>) in
+            .map { (getObjectsResponse: GTRepositorySyncResponse<ExternalDataFetchType.DataModel>) in
                 return self.storeExternalObjectsToPersistence(
                     externalObjects: getObjectsResponse.objects
                 )
@@ -67,22 +67,22 @@ extension RepositorySync {
             .eraseToAnyPublisher()
     }
     
-    public func storeExternalObjectsToPersistence(externalObjects: [ExternalDataFetchType.DataModel], deleteObjectsNotFoundInExternalObjects: Bool = false) -> RepositorySyncResponse<DataModelType> {
+    public func storeExternalObjectsToPersistence(externalObjects: [ExternalDataFetchType.DataModel], deleteObjectsNotFoundInExternalObjects: Bool = false) -> GTRepositorySyncResponse<DataModelType> {
         
         let dataModels: [DataModelType] = persistence.writeObjects(
             externalObjects: externalObjects,
             deleteObjectsNotFoundInExternalObjects: deleteObjectsNotFoundInExternalObjects
         )
         
-        return RepositorySyncResponse<DataModelType>(objects: dataModels, errors: [])
+        return GTRepositorySyncResponse<DataModelType>(objects: dataModels, errors: [])
     }
 }
 
 // MARK: - Get Objects
 
-extension RepositorySync {
+extension GTRepositorySync {
     
-    private func getCachedDataModelsByGetObjectsType(getObjectsType: RepositorySyncGetObjectsType) -> [DataModelType] {
+    private func getCachedDataModelsByGetObjectsType(getObjectsType: GTRepositorySyncGetObjectsType) -> [DataModelType] {
         
         let dataModels: [DataModelType]
         
@@ -92,7 +92,7 @@ extension RepositorySync {
             dataModels = persistence.getObjects()
             
         case .object(let id):
-            if let dataModel = persistence.getObject(id: id) {
+            if let dataModel = persistence.getDataModelNonThrowing(id: id) {
                 dataModels = [dataModel]
             }
             else {
@@ -103,13 +103,13 @@ extension RepositorySync {
         return dataModels
     }
     
-    private func getCachedDataModelsByGetObjectsTypeToResponse(getObjectsType: RepositorySyncGetObjectsType) -> RepositorySyncResponse<DataModelType> {
+    private func getCachedDataModelsByGetObjectsTypeToResponse(getObjectsType: GTRepositorySyncGetObjectsType) -> GTRepositorySyncResponse<DataModelType> {
         
         let dataModels: [DataModelType] = getCachedDataModelsByGetObjectsType(
             getObjectsType: getObjectsType
         )
         
-        let response = RepositorySyncResponse<DataModelType>(
+        let response = GTRepositorySyncResponse<DataModelType>(
             objects: dataModels,
             errors: []
         )
@@ -117,7 +117,7 @@ extension RepositorySync {
         return response
     }
     
-    private func getCachedDataModelsByGetObjectsTypeToResponsePublisher(getObjectsType: RepositorySyncGetObjectsType) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
+    private func getCachedDataModelsByGetObjectsTypeToResponsePublisher(getObjectsType: GTRepositorySyncGetObjectsType) -> AnyPublisher<GTRepositorySyncResponse<DataModelType>, Never> {
         
         return Just(getCachedDataModelsByGetObjectsTypeToResponse(getObjectsType: getObjectsType))
             .eraseToAnyPublisher()
@@ -128,7 +128,7 @@ extension RepositorySync {
         - How do we handle more complex external data fetching?  For instance, a url request could contain query parameters and http body. Do we force that on subclasses of repository sync?  Do we provide methods for subclasses to hook into for observing, pushing data models for syncing, etc?
      */
     
-    public func getObjectsPublisher(getObjectsType: RepositorySyncGetObjectsType, cachePolicy: RepositorySyncCachePolicy) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
+    public func getObjectsPublisher(getObjectsType: GTRepositorySyncGetObjectsType, cachePolicy: GTRepositorySyncCachePolicy) -> AnyPublisher<GTRepositorySyncResponse<DataModelType>, Never> {
                 
         switch cachePolicy {
             
@@ -138,7 +138,7 @@ extension RepositorySync {
                 getObjectsType: getObjectsType,
                 requestPriority: requestPriority
             )
-            .map { (response: RepositorySyncResponse<DataModelType>) in
+            .map { (response: GTRepositorySyncResponse<DataModelType>) in
 
                 let dataModels: [DataModelType] = self.getCachedDataModelsByGetObjectsType(
                     getObjectsType: getObjectsType
@@ -200,7 +200,7 @@ extension RepositorySync {
                         getObjectsType: getObjectsType,
                         requestPriority: requestPriority
                     )
-                    .map { (response: RepositorySyncResponse<DataModelType>) in
+                    .map { (response: GTRepositorySyncResponse<DataModelType>) in
 
                         let dataModels: [DataModelType] = self.getCachedDataModelsByGetObjectsType(
                             getObjectsType: getObjectsType

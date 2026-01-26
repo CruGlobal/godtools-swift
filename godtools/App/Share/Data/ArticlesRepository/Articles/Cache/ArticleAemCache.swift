@@ -70,17 +70,16 @@ class ArticleAemCache {
         
         let cacheLocation = ArticleAemWebArchiveFileCacheLocation(filename: realmAemData.webArchiveFilename)
         
-        let cacheResult: Result<URL, Error> = fileCache.getFile(location: cacheLocation)
-        
-        switch cacheResult {
-        case .success(let url):
+        do {
+            
+            let url: URL = try fileCache.getFile(location: cacheLocation)
             
             let aemData = ArticleAemData(realmModel: realmAemData)
             let aemCacheObject = ArticleAemCacheObject(aemUri: aemUri, aemData: aemData, webArchiveFileUrl: url, fetchWebArchiveFileUrlError: nil)
             
             return aemCacheObject
-            
-        case .failure(let error):
+        }
+        catch let error {
             
             let aemData = ArticleAemData(realmModel: realmAemData)
             let aemCacheObject = ArticleAemCacheObject(aemUri: aemUri, aemData: aemData, webArchiveFileUrl: nil, fetchWebArchiveFileUrlError: error)
@@ -276,23 +275,33 @@ class ArticleAemCache {
     
     private func storeWebArchivePlistData(webArchiveFilename: String, webArchivePlistData: Data) -> ArticleAemCacheError? {
         
-        let cacheFileResult: Result<URL, Error> = fileCache.storeFile(
-            location: ArticleAemWebArchiveFileCacheLocation(filename: webArchiveFilename),
-            data: webArchivePlistData
-        )
-        
-        switch cacheFileResult {
-        case .success( _):
+        do {
+            _ = try fileCache.storeFile(
+                location: ArticleAemWebArchiveFileCacheLocation(filename: webArchiveFilename),
+                data: webArchivePlistData
+            )
+            
             return nil
-        case .failure(let error):
+        }
+        catch let error {
+            
             return .failedToCacheWebArchivePlistData(error: error)
         }
     }
     
     private func removeWebArchivePlistData(webArchiveFilename: String) -> ArticleAemCacheError? {
-        if let error = fileCache.removeFile(location: ArticleAemWebArchiveFileCacheLocation(filename: webArchiveFilename)) {
+        
+        do {
+            
+            try fileCache.removeFile(
+                location: ArticleAemWebArchiveFileCacheLocation(filename: webArchiveFilename)
+            )
+            
+            return nil
+        }
+        catch let error {
+            
             return .failedToRemoveWebArchivePlistData(error: error)
         }
-        return nil
     }
 }

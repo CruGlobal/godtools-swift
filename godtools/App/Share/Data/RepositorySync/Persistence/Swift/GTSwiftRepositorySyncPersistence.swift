@@ -1,5 +1,5 @@
 //
-//  SwiftRepositorySyncPersistence.swift
+//  GTSwiftRepositorySyncPersistence.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/23/25.
@@ -12,16 +12,16 @@ import Combine
 import RepositorySync
 
 @available(iOS 17.4, *)
-class SwiftRepositorySyncPersistence<DataModelType, ExternalObjectType, PersistObjectType: IdentifiableSwiftDataObject>: RepositorySyncPersistence {
+class GTSwiftRepositorySyncPersistence<DataModelType, ExternalObjectType, PersistObjectType: IdentifiableSwiftDataObject>: GTRepositorySyncPersistence {
     
-    private let dataModelMapping: any RepositorySyncMapping<DataModelType, ExternalObjectType, PersistObjectType>
+    private let dataModelMapping: any GTRepositorySyncMapping<DataModelType, ExternalObjectType, PersistObjectType>
     private let userInfoKeyPrependNotification: String = "RepositorySync.notificationKey.prepend"
     private let userInfoKeyEntityName: String = "RepositorySync.notificationKey.entityName"
     private let entityName: String
     
     let swiftDatabase: SwiftDatabase
     
-    init(swiftDatabase: SwiftDatabase, dataModelMapping: any RepositorySyncMapping<DataModelType, ExternalObjectType, PersistObjectType>) {
+    init(swiftDatabase: SwiftDatabase, dataModelMapping: any GTRepositorySyncMapping<DataModelType, ExternalObjectType, PersistObjectType>) {
         
         self.swiftDatabase = swiftDatabase
         self.dataModelMapping = dataModelMapping
@@ -39,7 +39,7 @@ class SwiftRepositorySyncPersistence<DataModelType, ExternalObjectType, PersistO
 // MARK: - Observe
 
 @available(iOS 17.4, *)
-extension SwiftRepositorySyncPersistence {
+extension GTSwiftRepositorySyncPersistence {
     
     func observeCollectionChangesPublisher() -> AnyPublisher<Void, Never> {
         
@@ -136,7 +136,7 @@ extension SwiftRepositorySyncPersistence {
 // MARK: Read
 
 @available(iOS 17.4, *)
-extension SwiftRepositorySyncPersistence {
+extension GTSwiftRepositorySyncPersistence {
     
     func getObjectCount() -> Int {
         return getNumberOfObjects(query: nil)
@@ -146,7 +146,7 @@ extension SwiftRepositorySyncPersistence {
         return getNumberOfObjects(query: query)
     }
     
-    func getObject(id: String) -> DataModelType? {
+    func getDataModelNonThrowing(id: String) -> DataModelType? {
         
         let idPredicate = #Predicate<PersistObjectType> { object in
             object.id == id
@@ -206,7 +206,7 @@ extension SwiftRepositorySyncPersistence {
 // MARK: - Write
 
 @available(iOS 17.4, *)
-extension SwiftRepositorySyncPersistence {
+extension GTSwiftRepositorySyncPersistence {
     
     func writeObjects(externalObjects: [ExternalObjectType], deleteObjectsNotFoundInExternalObjects: Bool = false) -> [DataModelType] {
                 
@@ -261,7 +261,7 @@ extension SwiftRepositorySyncPersistence {
 // MARK: - Delete
 
 @available(iOS 17.4, *)
-extension SwiftRepositorySyncPersistence {
+extension GTSwiftRepositorySyncPersistence {
     
     func deleteAllObjects() {
                 

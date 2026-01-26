@@ -50,6 +50,12 @@ class AppDomainLayerDependencies {
         return GetShouldShowLanguageSettingsBarButtonUseCase()
     }
     
+    func getToolBannerUseCase() -> GetToolBannerUseCase {
+        return GetToolBannerUseCase(
+            attachmentsRepository: dataLayer.getAttachmentsRepository()
+        )
+    }
+    
     func getToolTranslationsFilesUseCase() -> GetToolTranslationsFilesUseCase {
         return GetToolTranslationsFilesUseCase(
             resourcesRepository: dataLayer.getResourcesRepository(),

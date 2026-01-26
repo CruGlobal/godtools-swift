@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import RepositorySync
 
-class RealmAttachmentDataModelMapping: RepositorySyncMapping {
+final class RealmAttachmentDataModelMapping: Mapping {
     
     init() {
         

@@ -7,8 +7,9 @@
 //
 
 import Foundation
-import Combine
 import RequestOperation
+import RepositorySync
+import Combine
 
 class MobileContentAttachmentsApi {
     
@@ -23,7 +24,19 @@ class MobileContentAttachmentsApi {
         baseUrl = config.getMobileContentApiBaseUrl()
     }
     
-    func getAttachmentFile(url: URL, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
+    func getAttachmentFile(url: URL, requestPriority: RequestPriority) async throws -> RequestDataResponse {
+        
+        let urlRequest: URLRequest = URLRequest(url: url)
+        
+        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
+        
+        return try await requestSender.sendDataTask(
+            urlRequest: urlRequest,
+            urlSession: urlSession
+        )
+    }
+    
+    func getAttachmentFilePublisher(url: URL, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
         
         let urlRequest: URLRequest = URLRequest(url: url)
         
@@ -35,15 +48,23 @@ class MobileContentAttachmentsApi {
     }
 }
 
-// MARK: - RepositorySyncExternalDataFetchInterface
+// MARK: - ExternalDataFetchInterface
 
-extension MobileContentAttachmentsApi: RepositorySyncExternalDataFetchInterface {
+extension MobileContentAttachmentsApi: ExternalDataFetchInterface {
     
-    func getObjectPublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<AttachmentCodable>, Never> {
+    func getObject(id: String, context: ExternalDataFetchContext) async throws -> [AttachmentCodable] {
+        return Array()
+    }
+    
+    func getObjects(context: ExternalDataFetchContext) async throws -> [AttachmentCodable] {
+        return Array()
+    }
+    
+    func getObjectPublisher(id: String, context: RequestOperationFetchContext) -> AnyPublisher<[AttachmentCodable], Error> {
         return emptyResponsePublisher()
     }
     
-    func getObjectsPublisher(requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<AttachmentCodable>, Never> {
+    func getObjectsPublisher(context: RequestOperationFetchContext) -> AnyPublisher<[AttachmentCodable], Error> {
         return emptyResponsePublisher()
     }
 }

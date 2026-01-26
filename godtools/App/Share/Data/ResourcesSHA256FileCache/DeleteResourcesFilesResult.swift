@@ -11,6 +11,4 @@ import Foundation
 struct DeleteResourcesFilesResult {
     
     let filesRemoved: [FileCacheLocation]
-    let removeFileErrors: [Error]
-    let writeError: Error?
 }

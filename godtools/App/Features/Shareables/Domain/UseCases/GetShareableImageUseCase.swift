@@ -11,17 +11,29 @@ import Combine
 
 class GetShareableImageUseCase {
     
-    private let getShareableImageRepository: GetShareableImageRepositoryInterface
+    private let getShareableImageRepository: GetShareableImageRepository
     
-    init(getShareableImageRepository: GetShareableImageRepositoryInterface) {
+    init(getShareableImageRepository: GetShareableImageRepository) {
         
         self.getShareableImageRepository = getShareableImageRepository
     }
     
-    func getShareableImagePublisher(shareable: ShareableDomainModel) -> AnyPublisher<ShareableImageDomainModel?, Never> {
+    func execute(shareable: ShareableDomainModel) -> AnyPublisher<ShareableImageDomainModel?, Error> {
         
-        return getShareableImageRepository
-            .getImagePublisher(shareable: shareable)
-            .eraseToAnyPublisher()
+        do {
+            
+            let domainModel: ShareableImageDomainModel? = try getShareableImageRepository.getImageDomainModel(
+                shareable: shareable
+            )
+            
+            return Just(domainModel)
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        }
+        catch let error {
+            
+            return Fail(error: error)
+                .eraseToAnyPublisher()
+        }
     }
 }

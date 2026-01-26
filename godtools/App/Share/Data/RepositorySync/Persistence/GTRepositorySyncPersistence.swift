@@ -1,5 +1,5 @@
 //
-//  RepositorySyncPersistence.swift
+//  GTRepositorySyncPersistence.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/23/25.
@@ -9,14 +9,14 @@
 import Foundation
 import Combine
 
-public protocol RepositorySyncPersistence<DataModelType, ExternalObjectType> {
+public protocol GTRepositorySyncPersistence<DataModelType, ExternalObjectType> {
     
     associatedtype DataModelType
     associatedtype ExternalObjectType
     
     func observeCollectionChangesPublisher() -> AnyPublisher<Void, Never>
     func getObjectCount() -> Int
-    func getObject(id: String) -> DataModelType?
+    func getDataModelNonThrowing(id: String) -> DataModelType?
     func getObjects() -> [DataModelType]
     func getObjects(ids: [String]) -> [DataModelType]
     func writeObjects(externalObjects: [ExternalObjectType], deleteObjectsNotFoundInExternalObjects: Bool) -> [DataModelType]

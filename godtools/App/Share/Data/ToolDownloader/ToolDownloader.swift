@@ -39,21 +39,27 @@ class ToolDownloader {
             
             let isArticle: Bool
             
-            if let resource = resourcesRepository.persistence.getObject(id: tool.toolId) {
-                
-                if let resourceBanner = attachmentsRepository.cache.getAttachment(id: resource.attrBanner) {
-                    attachments.append(resourceBanner)
-                }
-                
-                if let resourceBannerAbout = attachmentsRepository.cache.getAttachment(id: resource.attrBannerAbout) {
-                    attachments.append(resourceBannerAbout)
-                }
-                
-                if let resourceAboutBannerAnimation = attachmentsRepository.cache.getAttachment(id: resource.attrAboutBannerAnimation) {
-                    attachments.append(resourceAboutBannerAnimation)
-                }
+            if let resource = resourcesRepository.persistence.getDataModelNonThrowing(id: tool.toolId) {
                 
                 isArticle = resource.resourceTypeEnum == .article
+                
+                do {
+                    
+                    if let resourceBanner = try attachmentsRepository.cache.getAttachment(id: resource.attrBanner) {
+                        attachments.append(resourceBanner)
+                    }
+                    
+                    if let resourceBannerAbout = try attachmentsRepository.cache.getAttachment(id: resource.attrBannerAbout) {
+                        attachments.append(resourceBannerAbout)
+                    }
+                    
+                    if let resourceAboutBannerAnimation = try attachmentsRepository.cache.getAttachment(id: resource.attrAboutBannerAnimation) {
+                        attachments.append(resourceAboutBannerAnimation)
+                    }
+                }
+                catch let error {
+                    assertionFailure("Failed to get attachment with error: \(error)")
+                }
             }
             else {
                 
@@ -126,11 +132,12 @@ class ToolDownloader {
         
         let downloadAttachmentsRequests: [AnyPublisher<Void, Error>] = attachments
             .map { (attachment: AttachmentDataModel) in
-                self.attachmentsRepository.downloadAndCacheAttachmentDataIfNeededPublisher(attachment: attachment, requestPriority: requestPriority)
+                
+                self.attachmentsRepository
+                    .downloadAndCacheAttachmentDataIfNeededPublisher(attachment: attachment, requestPriority: requestPriority)
                     .map { _ in
                         return Void()
                     }
-                    .setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             }
         

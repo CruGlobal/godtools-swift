@@ -12,7 +12,7 @@ import RealmSwift
 import RequestOperation
 import SwiftData
 
-class LanguagesRepository: RepositorySync<LanguageDataModel, MobileContentLanguagesApi> {
+class LanguagesRepository: GTRepositorySync<LanguageDataModel, MobileContentLanguagesApi> {
     
     private let api: MobileContentLanguagesApi
     
@@ -29,14 +29,14 @@ class LanguagesRepository: RepositorySync<LanguageDataModel, MobileContentLangua
         )
     }
     
-    func syncLanguagesFromRemote(requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<LanguageDataModel>, Never> {
+    func syncLanguagesFromRemote(requestPriority: RequestPriority) -> AnyPublisher<GTRepositorySyncResponse<LanguageDataModel>, Never> {
         
         return api.getObjectsPublisher(
             requestPriority: requestPriority
         )
-        .flatMap { (getObectsResponse: RepositorySyncResponse<LanguageCodable>) in
+        .flatMap { (getObectsResponse: GTRepositorySyncResponse<LanguageCodable>) in
             
-            let response: RepositorySyncResponse<LanguageDataModel> = super.storeExternalObjectsToPersistence(
+            let response: GTRepositorySyncResponse<LanguageDataModel> = super.storeExternalObjectsToPersistence(
                 externalObjects: getObectsResponse.objects,
                 deleteObjectsNotFoundInExternalObjects: true
             )
@@ -47,16 +47,16 @@ class LanguagesRepository: RepositorySync<LanguageDataModel, MobileContentLangua
         .eraseToAnyPublisher()
     }
     
-    func syncLanguagesFromJsonFileCache() -> AnyPublisher<RepositorySyncResponse<LanguageDataModel>, Never> {
+    func syncLanguagesFromJsonFileCache() -> AnyPublisher<GTRepositorySyncResponse<LanguageDataModel>, Never> {
         
         return LanguagesJsonFileCache(
             jsonServices: JsonServices()
         )
         .getLanguages()
         .publisher
-        .flatMap { (languages: [LanguageCodable]) -> AnyPublisher<RepositorySyncResponse<LanguageDataModel>, Never> in
+        .flatMap { (languages: [LanguageCodable]) -> AnyPublisher<GTRepositorySyncResponse<LanguageDataModel>, Never> in
             
-            let response: RepositorySyncResponse<LanguageDataModel> = super.storeExternalObjectsToPersistence(
+            let response: GTRepositorySyncResponse<LanguageDataModel> = super.storeExternalObjectsToPersistence(
                 externalObjects: languages,
                 deleteObjectsNotFoundInExternalObjects: false
             )
@@ -66,7 +66,7 @@ class LanguagesRepository: RepositorySync<LanguageDataModel, MobileContentLangua
         }
         .catch { (error: Error) in
             
-            let response = RepositorySyncResponse<LanguageDataModel>(
+            let response = GTRepositorySyncResponse<LanguageDataModel>(
                 objects: [],
                 errors: [error]
             )

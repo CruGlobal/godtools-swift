@@ -143,7 +143,7 @@ struct AllToolsView_Preview: PreviewProvider {
             toggleToolFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToggleFavoritedToolUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
-            attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository()
+            getToolBannerUseCase: appDiContainer.domainLayer.getToolBannerUseCase()
         )
         
         return viewModel

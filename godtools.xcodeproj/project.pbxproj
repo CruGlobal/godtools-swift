@@ -1845,7 +1845,7 @@
 			repositoryURL = "https://github.com/CruGlobal/repository-sync-ios";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.8.0;
+				minimumVersion = 0.8.1;
 			};
 		};
 		4581EAA12BFBE194008115FF /* XCRemoteSwiftPackageReference "realm-swift" */ = {

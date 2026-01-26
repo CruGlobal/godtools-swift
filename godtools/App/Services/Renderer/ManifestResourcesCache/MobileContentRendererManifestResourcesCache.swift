@@ -27,25 +27,42 @@ class MobileContentRendererManifestResourcesCache {
         return FileCacheLocation(relativeUrlString: localName)
     }
     
-    func getFile(resource: Resource) -> Result<URL, Error> {
+    func getFile(resource: Resource) throws -> URL {
         
         guard let location = getSHA256FileLocation(resource: resource) else {
-            return .failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to find file."]))
+            
+            let error = NSError(
+                domain: "",
+                code: -1,
+                userInfo: [NSLocalizedDescriptionKey: "Failed to find file."]
+            )
+            
+            throw error
         }
         
-        return resourcesFileCache.getFile(location: location)
+        return try resourcesFileCache.getFile(location: location)
     }
     
-    func getUIImage(resource: Resource) -> UIImage? {
+    func getUIImage(resource: Resource) throws -> UIImage? {
         
         guard let location = getSHA256FileLocation(resource: resource) else {
             return nil
         }
         
-        switch resourcesFileCache.getUIImage(location: location) {
-        case .success(let uiImage):
-            return uiImage
-        case .failure( _):
+        return try resourcesFileCache.getUIImage(location: location)
+    }
+    
+    func getNonThrowingUIImage(resource: Resource) -> UIImage? {
+        
+        guard let location = getSHA256FileLocation(resource: resource) else {
+            return nil
+        }
+        
+        do {
+            return try resourcesFileCache.getUIImage(location: location)
+        }
+        catch let error {
+            print("\n WARNING: Failed to get resource image: \(location.filenameWithPathExtension ?? "")")
             return nil
         }
     }

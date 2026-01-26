@@ -9,7 +9,7 @@
 import Foundation
 
 @available(iOS 17.4, *)
-class SwiftTranslationDataModelMapping: RepositorySyncMapping {
+class SwiftTranslationDataModelMapping: GTRepositorySyncMapping {
     
     func toDataModel(externalObject: TranslationCodable) -> TranslationDataModel? {
         return TranslationDataModel(interface: externalObject)

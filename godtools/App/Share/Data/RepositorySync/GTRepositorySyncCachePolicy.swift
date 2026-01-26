@@ -1,5 +1,5 @@
 //
-//  RepositorySyncCachePolicy.swift
+//  GTRepositorySyncCachePolicy.swift
 //  godtools
 //
 //  Created by Levi Eggert on 7/30/25.
@@ -9,7 +9,7 @@
 import Foundation
 import RequestOperation
 
-public enum RepositorySyncCachePolicy {
+public enum GTRepositorySyncCachePolicy {
     
     // Fetches remote data and stores remote data to cache.
     // Will not observe changes. Can use returnCacheDataAndFetch if observe changes is needed.
