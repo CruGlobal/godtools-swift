@@ -37,7 +37,7 @@ extension LanguagesRepository {
             return super.persistence.writeObjectsPublisher(
                 externalObjects: languages,
                 writeOption: .deleteObjectsNotInExternal,
-                getOption: nil
+                getOption: .allObjects
             )
             .eraseToAnyPublisher()
         }
@@ -56,7 +56,7 @@ extension LanguagesRepository {
             return super.persistence.writeObjectsPublisher(
                 externalObjects: languages,
                 writeOption: nil,
-                getOption: nil
+                getOption: .allObjects
             )
             .eraseToAnyPublisher()
         }
