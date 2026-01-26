@@ -30,7 +30,7 @@ class GetSpotlightToolsRepository: GetSpotlightToolsRepositoryInterface {
         self.getTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability
     }
     
-    func getSpotlightToolsPublisher(translatedInAppLanguage: AppLanguageDomainModel, languageIdForAvailabilityText: String?) -> AnyPublisher<[SpotlightToolListItemDomainModel], Never> {
+    @MainActor func getSpotlightToolsPublisher(translatedInAppLanguage: AppLanguageDomainModel, languageIdForAvailabilityText: String?) -> AnyPublisher<[SpotlightToolListItemDomainModel], Error> {
         
         let languageForAvailabilityTextModel: LanguageDataModel?
         
@@ -42,7 +42,9 @@ class GetSpotlightToolsRepository: GetSpotlightToolsRepositoryInterface {
         
         return Publishers.CombineLatest(
             resourcesRepository.persistence.observeCollectionChangesPublisher(),
-            getToolListItemInterfaceStringsRepository.getStringsPublisher(translateInLanguage: translatedInAppLanguage)
+            getToolListItemInterfaceStringsRepository
+                .getStringsPublisher(translateInLanguage: translatedInAppLanguage)
+                .setFailureType(to: Error.self)
         )
         .flatMap({ (resourcesChanged: Void, interfaceStrings: ToolListItemInterfaceStringsDomainModel) -> AnyPublisher<[SpotlightToolListItemDomainModel], Never> in
         

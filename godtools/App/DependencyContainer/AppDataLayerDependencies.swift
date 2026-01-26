@@ -306,6 +306,23 @@ class AppDataLayerDependencies {
     }
     
     func getResourcesRepository() -> ResourcesRepository {
+                
+        let persistence: any Persistence<ResourceDataModel, ResourceCodable>
+        
+        if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                dataModelMapping: SwiftResourceDataModelMapping()
+            )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                database: getSharedRealmDatabase(),
+                dataModelMapping: RealmResourceDataModelMapping()
+            )
+        }
         
         let api = MobileContentResourcesApi(
             config: getAppConfig(),
@@ -314,13 +331,13 @@ class AppDataLayerDependencies {
         )
         
         let cache = ResourcesCache(
-            realmDatabase: getSharedLegacyRealmDatabase(),
+            persistence: persistence,
             trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository()
         )
         
         return ResourcesRepository(
-            api: api,
-            realmDatabase: getSharedLegacyRealmDatabase(),
+            externalDataFetch: api,
+            persistence: persistence,
             cache: cache,
             attachmentsRepository: getAttachmentsRepository(),
             languagesRepository: getLanguagesRepository(),

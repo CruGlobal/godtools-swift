@@ -25,12 +25,12 @@ class GetLessonFilterLanguagesRepository: GetLessonFilterLanguagesRepositoryInte
         self.stringWithLocaleCount = stringWithLocaleCount
     }
     
-    func getLessonFilterLanguagesPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[LessonFilterLanguageDomainModel], Error> {
+    @MainActor func getLessonFilterLanguagesPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[LessonFilterLanguageDomainModel], Error> {
             
         return resourcesRepository
             .persistence
             .observeCollectionChangesPublisher()
-            .flatMap { _ in
+            .flatMap { (resourcesChanged: Void) in
                 
                 let languageIds = self.resourcesRepository.cache.getLessonsSupportedLanguageIds()
                 
