@@ -22,10 +22,10 @@ class GetDownloadedLanguagesListRepository: GetDownloadedLanguagesListRepository
         self.getTranslatedLanguageName = getTranslatedLanguageName
     }
     
-    func getDownloadedLanguagesPublisher(currentAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[DownloadedLanguageListItemDomainModel], Error> {
+    @MainActor func getDownloadedLanguagesPublisher(currentAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[DownloadedLanguageListItemDomainModel], Error> {
         
         return Publishers.CombineLatest(
-            languagesRepository.getDataModelsPublisher(
+            languagesRepository.observeDataModelsPublisher(
                 getObjectsType: .allObjects,
                 cachePolicy: .returnCacheDataElseFetch,
                 context: RequestOperationFetchContext(requestPriority: .high)

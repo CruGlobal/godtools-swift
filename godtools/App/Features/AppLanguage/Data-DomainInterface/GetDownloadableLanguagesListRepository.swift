@@ -29,10 +29,10 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
         self.stringWithLocaleCount = stringWithLocaleCount
     }
     
-    func getDownloadableLanguagesPublisher(currentAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[DownloadableLanguageListItemDomainModel], Error> {
+    @MainActor func getDownloadableLanguagesPublisher(currentAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[DownloadableLanguageListItemDomainModel], Error> {
         
         return Publishers.CombineLatest(
-            languagesRepository.getDataModelsPublisher(
+            languagesRepository.observeDataModelsPublisher(
                 getObjectsType: .allObjects,
                 cachePolicy: .returnCacheDataElseFetch,
                 context: RequestOperationFetchContext(requestPriority: .high)

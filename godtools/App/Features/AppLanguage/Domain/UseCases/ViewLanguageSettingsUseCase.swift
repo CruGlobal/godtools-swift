@@ -20,7 +20,7 @@ class ViewLanguageSettingsUseCase {
         self.getDownloadedLanguagesListRepositoryInterface = getDownloadedLanguagesListRepositoryInterface
     }
     
-    func viewPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewLanguageSettingsDomainModel, Error> {
+    @MainActor func viewPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewLanguageSettingsDomainModel, Error> {
         
         return Publishers.CombineLatest(
             getInterfaceStringsRepository
