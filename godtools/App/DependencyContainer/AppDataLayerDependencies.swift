@@ -411,10 +411,30 @@ class AppDataLayerDependencies {
     }
     
     func getTrackDownloadedTranslationsRepository() -> TrackDownloadedTranslationsRepository {
-        return TrackDownloadedTranslationsRepository(
-            cache: TrackDownloadedTranslationsCache(
-                realmDatabase: getSharedLegacyRealmDatabase()
+                
+        let persistence: any Persistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel>
+        
+        if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                dataModelMapping: SwiftDownloadedTranslationDataModelMapping()
             )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                database: getSharedRealmDatabase(),
+                dataModelMapping: RealmDownloadedTranslationDataModelMapping()
+            )
+        }
+        
+        let cache = TrackDownloadedTranslationsCache(
+            persistence: persistence
+        )
+        
+        return TrackDownloadedTranslationsRepository(
+            cache: cache
         )
     }
     
@@ -458,16 +478,38 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getTranslationsRepository() -> TranslationsRepository {        
+    func getTranslationsRepository() -> TranslationsRepository {
+                
+        let persistence: any Persistence<TranslationDataModel, TranslationCodable>
+        
+        if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                dataModelMapping: SwiftTranslationDataModelMapping()
+            )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                database: getSharedRealmDatabase(),
+                dataModelMapping: RealmTranslationDataModelMapping()
+            )
+        }
+        
+        let api = MobileContentTranslationsApi(
+            config: getAppConfig(),
+            urlSessionPriority: getSharedUrlSessionPriority(),
+            requestSender: getRequestSender()
+        )
+        
+        let cache = TranslationsCache(persistence: persistence)
+        
         return TranslationsRepository(
+            externalDataFetch: api,
+            persistence: persistence,
+            cache: cache,
             infoPlist: getInfoPlist(),
-            api: MobileContentTranslationsApi(
-                config: getAppConfig(),
-                urlSessionPriority: getSharedUrlSessionPriority(),
-                requestSender: getRequestSender()
-            ),
-            realmDatabase: getSharedLegacyRealmDatabase(),
-            cache: TranslationsCache(realmDatabase: getSharedLegacyRealmDatabase()),
             resourcesFileCache: getResourcesFileCache(),
             trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository(),
             remoteConfigRepository: getRemoteConfigRepository()
