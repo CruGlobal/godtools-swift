@@ -14,9 +14,10 @@ import RepositorySync
 
 class ResourcesCache {
     
-    private let persistence: any Persistence<ResourceDataModel, ResourceCodable>
     private let trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
-        
+    
+    let persistence: any Persistence<ResourceDataModel, ResourceCodable>
+    
     init(persistence: any Persistence<ResourceDataModel, ResourceCodable>, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository) {
         
         self.persistence = persistence
