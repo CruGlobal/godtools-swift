@@ -8,7 +8,7 @@
 
 import UIKit
 
-@MainActor class AppDiContainer {
+class AppDiContainer {
         
     private let failedFollowUpsCache: FailedFollowUpsCache
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
@@ -116,7 +116,7 @@ import UIKit
         return OpenUrlWithSwiftUI() // TODO: GT-2466 Return OpenUrlWithUIKit() once supporting FBSDK 17.3+ ~Levi
     }
     
-    func getMobileContentRenderer(type: MobileContentRendererPageViewFactoriesType, navigation: MobileContentRendererNavigation, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel) -> MobileContentRenderer {
+    @MainActor func getMobileContentRenderer(type: MobileContentRendererPageViewFactoriesType, navigation: MobileContentRendererNavigation, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel) -> MobileContentRenderer {
 
         let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
             type: type,
@@ -147,7 +147,7 @@ import UIKit
         return MobileContentRendererManifestResourcesCache(resourcesFileCache: dataLayer.getResourcesFileCache())
     }
     
-    func getMobileContentRendererNavigation(parentFlow: ToolNavigationFlow, navigationDelegate: MobileContentRendererNavigationDelegate, appLanguage: AppLanguageDomainModel) -> MobileContentRendererNavigation {
+    @MainActor func getMobileContentRendererNavigation(parentFlow: ToolNavigationFlow, navigationDelegate: MobileContentRendererNavigationDelegate, appLanguage: AppLanguageDomainModel) -> MobileContentRendererNavigation {
         
         return MobileContentRendererNavigation(
             parentFlow: parentFlow,
