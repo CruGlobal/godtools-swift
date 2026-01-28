@@ -14,7 +14,7 @@ import Foundation
 struct ProgressTimerTests {
     
     @Test("")
-    @MainActor func timerPublisherRunsForHalfSecond() async {
+    func timerPublisherRunsForHalfSecond() async {
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -50,7 +50,7 @@ struct ProgressTimerTests {
     }
     
     @Test("")
-    @MainActor func timerClosureRunsForHalfSecond() async {
+    func timerClosureRunsForHalfSecond() async {
         
         let progressTimer = ProgressTimer()
         

@@ -8,6 +8,7 @@
 
 import Testing
 @testable import godtools
+import RepositorySync
 
 struct GetTranslatedToolNameTests {
     
@@ -16,11 +17,12 @@ struct GetTranslatedToolNameTests {
         let expectedToolName: String
     }
     
-    private static let toolId: String = "0"
     private static let attrDefaultLocale: String = LanguageCodeDomainModel.spanish.rawValue
     private static let toolNameInEnglish: String = "Tract Zero"
     private static let toolNameInSpanish: String = "Tratado Zeri"
     private static let toolNameInVietnamese: String = "Đường Zeri"
+    
+    private let toolId: String = "0"
     
     @Test(
         """
@@ -34,16 +36,16 @@ struct GetTranslatedToolNameTests {
             TestArgument(translateInLanguage: LanguageCodeDomainModel.vietnamese.rawValue, expectedToolName: Self.toolNameInVietnamese)
         ]
     )
-    @MainActor func testToolNameIsTranslated(argument: TestArgument) {
+    @MainActor func testToolNameIsTranslated(argument: TestArgument) throws {
         
-        let testsDiContainer: TestsDiContainer = Self.getTestsDiContainer()
+        let testsDiContainer: TestsDiContainer = try getTestsDiContainer()
         
-        let getTranslatedToolName: GetTranslatedToolName = Self.getTranslatedToolName(
+        let getTranslatedToolName: GetTranslatedToolName = getTranslatedToolName(
             testsDiContainer: testsDiContainer
         )
         
         let translatedToolName: String = getTranslatedToolName.getToolName(
-            toolId: Self.toolId,
+            toolId: toolId,
             translateInLanguage: argument.translateInLanguage
         )
                             
@@ -62,16 +64,16 @@ struct GetTranslatedToolNameTests {
             TestArgument(translateInLanguage: LanguageCodeDomainModel.latvian.rawValue, expectedToolName: Self.toolNameInSpanish)
         ]
     )
-    @MainActor func testToolNameIsTranslatedInDefaultLocale(argument: TestArgument) {
+    @MainActor func testToolNameIsTranslatedInDefaultLocale(argument: TestArgument) throws {
         
-        let testsDiContainer: TestsDiContainer = Self.getTestsDiContainer()
+        let testsDiContainer: TestsDiContainer = try getTestsDiContainer()
         
-        let getTranslatedToolName: GetTranslatedToolName = Self.getTranslatedToolName(
+        let getTranslatedToolName: GetTranslatedToolName = getTranslatedToolName(
             testsDiContainer: testsDiContainer
         )
         
         let translatedToolName: String = getTranslatedToolName.getToolName(
-            toolId: Self.toolId,
+            toolId: toolId,
             translateInLanguage: argument.translateInLanguage
         )
                             
@@ -81,24 +83,22 @@ struct GetTranslatedToolNameTests {
 
 extension GetTranslatedToolNameTests {
     
-    @MainActor private static func getTestsDiContainer() -> TestsDiContainer {
-        return TestsDiContainer(
-            realmDatabase: getConfiguredRealmDatabase()
-        )
+    private func getTestsDiContainer() throws -> TestsDiContainer {
+        return try TestsDiContainer(addRealmObjects: getRealmObjects())
     }
     
-    @MainActor private static func getTranslatedToolName(testsDiContainer: TestsDiContainer) -> GetTranslatedToolName {
+    private func getTranslatedToolName(testsDiContainer: TestsDiContainer) -> GetTranslatedToolName {
         return GetTranslatedToolName(
             resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
             translationsRepository: testsDiContainer.dataLayer.getTranslationsRepository()
         )
     }
     
-    private static func getConfiguredRealmDatabase() -> TestsInMemoryRealmDatabase {
+    private func getRealmObjects() -> [IdentifiableRealmObject] {
         
         let englishLanguage = getRealmLanguage(languageCode: .english)
         let spanishLanguage: RealmLanguage = getRealmLanguage(languageCode: .spanish)
-        let vietnameseLanguage: RealmLanguage =  Self.getRealmLanguage(languageCode: .vietnamese)
+        let vietnameseLanguage: RealmLanguage =  getRealmLanguage(languageCode: .vietnamese)
         
         let allLanguages: [RealmLanguage] = [
             englishLanguage,
@@ -110,7 +110,7 @@ extension GetTranslatedToolNameTests {
             MockRealmResource.createTract(
                 addLanguages: [.english, .spanish, .vietnamese],
                 fromLanguages: allLanguages,
-                id: Self.toolId,
+                id: toolId,
                 attrDefaultLocale: Self.attrDefaultLocale
             )
         ]
@@ -133,14 +133,10 @@ extension GetTranslatedToolNameTests {
         tracts[0].addLatestTranslation(translation: tract0SpanishTranslation)
         tracts[0].addLatestTranslation(translation: tract0VietnameseTranslation)
         
-        let realmDatabase = TestsInMemoryRealmDatabase(
-            addObjectsToDatabase: allLanguages + tracts
-        )
-        
-        return realmDatabase
+        return allLanguages + tracts
     }
     
-    private static func getRealmLanguage(languageCode: LanguageCodeDomainModel) -> RealmLanguage {
+    private func getRealmLanguage(languageCode: LanguageCodeDomainModel) -> RealmLanguage {
         return MockRealmLanguage.createLanguage(
             language: languageCode,
             name: languageCode.rawValue + " Name",

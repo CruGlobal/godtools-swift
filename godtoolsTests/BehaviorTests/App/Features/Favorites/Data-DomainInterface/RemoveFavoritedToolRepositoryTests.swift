@@ -10,6 +10,7 @@ import Testing
 import Foundation
 @testable import godtools
 import Combine
+import RepositorySync
 
 struct RemoveFavoritedToolRepositoryTests {
     
@@ -32,11 +33,12 @@ struct RemoveFavoritedToolRepositoryTests {
             TestArgument(resourcesInRealmIdsAtPositions: ["A": 0, "B": 1, "C": 2, "D": 3, "E": 4], resourceIdToDelete: "F", expectedUpdatedIdsAtPositions: ["A": 0, "B": 1, "C": 2, "D": 3, "E": 4])
         ]
     )
-    @MainActor func testRemoveFavoritedTool(argument: TestArgument) async {
+    @MainActor func testRemoveFavoritedTool(argument: TestArgument) async throws {
         
         var cancellables: Set<AnyCancellable> = Set()
-                    
-        let realmDatabase = getConfiguredRealmDatabase(with: argument.resourcesInRealmIdsAtPositions)
+        
+        let testsDiContainer = try TestsDiContainer(addRealmObjects: getRealmObjects(with: argument.resourcesInRealmIdsAtPositions))
+        let realmDatabase: LegacyRealmDatabase = testsDiContainer.dataLayer.getSharedLegacyRealmDatabase()
         let removeFavoritedToolRepository = RemoveFavoritedToolRepository(favoritedResourcesRepository: FavoritedResourcesRepository(cache: RealmFavoritedResourcesCache(realmDatabase: realmDatabase)))
         
         var remainingResources: [FavoritedResourceDataModel] = Array()
@@ -64,7 +66,12 @@ struct RemoveFavoritedToolRepositoryTests {
         }
     }
     
-    private func getConfiguredRealmDatabase(with resources: [String: Int]) -> LegacyRealmDatabase {
+    
+}
+
+extension RemoveFavoritedToolRepositoryTests {
+    
+    private func getRealmObjects(with resources: [String: Int]) -> [IdentifiableRealmObject] {
         
         var resourceObjects = [RealmFavoritedResource]()
         
@@ -73,7 +80,6 @@ struct RemoveFavoritedToolRepositoryTests {
             resourceObjects.append(resource)
         }
         
-        return TestsInMemoryRealmDatabase(addObjectsToDatabase: resourceObjects)
+        return resourceObjects
     }
 }
-

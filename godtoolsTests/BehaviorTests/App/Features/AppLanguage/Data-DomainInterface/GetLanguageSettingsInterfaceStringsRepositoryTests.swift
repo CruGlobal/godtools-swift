@@ -19,11 +19,11 @@ struct GetLanguageSettingsInterfaceStringsRepositoryTests {
         Then: The interface strings should be translated into Spanish.
         """
     )
-    @MainActor func interfaceStringsAreTranslatedWhenAppLanguageChanges() async {
+    @MainActor func interfaceStringsAreTranslatedWhenAppLanguageChanges() async throws {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        let getLanguageSettingsInterfaceStringsRepository: GetLanguageSettingsInterfaceStringsRepository = getLanguageSettingsInterfaceStringsRepository()
+        let getLanguageSettingsInterfaceStringsRepository: GetLanguageSettingsInterfaceStringsRepository = try getLanguageSettingsInterfaceStringsRepository()
         
         let appLanguagePublisher: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
         
@@ -96,11 +96,11 @@ struct GetLanguageSettingsInterfaceStringsRepositoryTests {
             )
         ]
     )
-    @MainActor func chooseAppLanguageButtonTitleIsTranslatedInMyAppLanguage(argument: TestArgumentChooseAppLanguageButtonTitle) async {
+    @MainActor func chooseAppLanguageButtonTitleIsTranslatedInMyAppLanguage(argument: TestArgumentChooseAppLanguageButtonTitle) async throws {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        let getLanguageSettingsInterfaceStringsRepository: GetLanguageSettingsInterfaceStringsRepository = getLanguageSettingsInterfaceStringsRepository()
+        let getLanguageSettingsInterfaceStringsRepository: GetLanguageSettingsInterfaceStringsRepository = try getLanguageSettingsInterfaceStringsRepository()
         
         var interfaceStringsRef: LanguageSettingsInterfaceStringsDomainModel?
         
@@ -130,11 +130,11 @@ struct GetLanguageSettingsInterfaceStringsRepositoryTests {
         Then: I expect to see the number of app languages available translated in my app language.
         """
     )
-    @MainActor func chooseAppLanguageIsTranslatedInMyLanguageEnglish() async {
+    @MainActor func chooseAppLanguageIsTranslatedInMyLanguageEnglish() async throws {
         
         var cancellables: Set<AnyCancellable> = Set()
                 
-        let getLanguageSettingsInterfaceStringsRepository: GetLanguageSettingsInterfaceStringsRepository = getLanguageSettingsInterfaceStringsRepository()
+        let getLanguageSettingsInterfaceStringsRepository: GetLanguageSettingsInterfaceStringsRepository = try getLanguageSettingsInterfaceStringsRepository()
         
         let english: LanguageCodeDomainModel = .english
         
@@ -177,9 +177,9 @@ extension GetLanguageSettingsInterfaceStringsRepositoryTests {
         return appLanguages
     }
     
-    @MainActor private func getLanguageSettingsInterfaceStringsRepository() -> GetLanguageSettingsInterfaceStringsRepository {
+    private func getLanguageSettingsInterfaceStringsRepository() throws -> GetLanguageSettingsInterfaceStringsRepository {
         
-        let testsDiContainer = TestsDiContainer()
+        let testsDiContainer = try TestsDiContainer(addRealmObjects: [])
         
         let testsRealmDatabase: LegacyRealmDatabase = testsDiContainer.dataLayer.getSharedLegacyRealmDatabase()
         

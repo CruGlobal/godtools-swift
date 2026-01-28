@@ -9,6 +9,7 @@
 import Testing
 @testable import godtools
 import Combine
+import RepositorySync
 
 struct GetLessonsListRepositoryTests {
     
@@ -19,7 +20,7 @@ struct GetLessonsListRepositoryTests {
         Then: I expect to see lessons that only include the spanish language.
         """
     )
-    @MainActor func onlyShowLessonsThatSupportMyLessonLanguageFilter() async {
+    @MainActor func onlyShowLessonsThatSupportMyLessonLanguageFilter() async throws {
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -33,12 +34,10 @@ struct GetLessonsListRepositoryTests {
             lessonsAvailableCount: 0
         )
         
-        let getLessonsListRepository: GetLessonsListRepository = getLessonsListRepository()
+        let getLessonsListRepository: GetLessonsListRepository = try getLessonsListRepository()
         
         var lessonsRef: [LessonListItemDomainModel] = Array()
-        
-        var sinkCount: Int = 0
-        
+                
         await withCheckedContinuation { continuation in
             
             let timeoutTask = Task {
@@ -51,18 +50,15 @@ struct GetLessonsListRepositoryTests {
                     appLanguage: appLanguageEnglish,
                     filterLessonsByLanguage: spanishLanguageFilter
                 )
-                .sink { (lessons: [LessonListItemDomainModel]) in
-                                        
-                    sinkCount += 1
+                .sink(receiveCompletion: { _ in
                     
-                    if sinkCount == 1 {
-                        
-                        lessonsRef = lessons
-                        
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    }
-                }
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
+                    
+                }, receiveValue: { (lessons: [LessonListItemDomainModel]) in
+                    
+                    lessonsRef = lessons
+                })
                 .store(in: &cancellables)
         }
         
@@ -80,18 +76,16 @@ struct GetLessonsListRepositoryTests {
         Then: I expect the lesson names to be translated in arabic.
         """
     )
-    @MainActor func lessonNamesAreTranslatedInAppLanguageWhenNoLanguageFilterSelected() async {
+    @MainActor func lessonNamesAreTranslatedInAppLanguageWhenNoLanguageFilterSelected() async throws {
         
         var cancellables: Set<AnyCancellable> = Set()
         
         let appLanguageArabic: AppLanguageDomainModel = LanguageCodeDomainModel.arabic.rawValue
                                 
-        let getLessonsListRepository: GetLessonsListRepository = getLessonsListRepository()
+        let getLessonsListRepository: GetLessonsListRepository = try getLessonsListRepository()
         
         var lessonsRef: [LessonListItemDomainModel] = Array()
-        
-        var sinkCount: Int = 0
-        
+                
         await withCheckedContinuation { continuation in
             
             let timeoutTask = Task {
@@ -104,18 +98,15 @@ struct GetLessonsListRepositoryTests {
                     appLanguage: appLanguageArabic,
                     filterLessonsByLanguage: nil
                 )
-                .sink { (lessons: [LessonListItemDomainModel]) in
-                                        
-                    sinkCount += 1
+                .sink(receiveCompletion: { _ in
                     
-                    if sinkCount == 1 {
-                        
-                        lessonsRef = lessons
-                        
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    }
-                }
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
+                    
+                }, receiveValue: { (lessons: [LessonListItemDomainModel]) in
+                    
+                    lessonsRef = lessons
+                })
                 .store(in: &cancellables)
         }
         
@@ -132,7 +123,7 @@ struct GetLessonsListRepositoryTests {
         Then: I expect the lesson names to be translated in my lesson language filter spanish.
         """
     )
-    @MainActor func lessonNamesAreTranslatedInLessonLanguageFilter() async {
+    @MainActor func lessonNamesAreTranslatedInLessonLanguageFilter() async throws {
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -146,12 +137,10 @@ struct GetLessonsListRepositoryTests {
             lessonsAvailableCount: 0
         )
                                 
-        let getLessonsListRepository: GetLessonsListRepository = getLessonsListRepository()
+        let getLessonsListRepository: GetLessonsListRepository = try getLessonsListRepository()
         
         var lessonsRef: [LessonListItemDomainModel] = Array()
-        
-        var sinkCount: Int = 0
-        
+                
         await withCheckedContinuation { continuation in
             
             let timeoutTask = Task {
@@ -164,18 +153,15 @@ struct GetLessonsListRepositoryTests {
                     appLanguage: appLanguageEnglish,
                     filterLessonsByLanguage: spanishLanguageFilter
                 )
-                .sink { (lessons: [LessonListItemDomainModel]) in
-                                        
-                    sinkCount += 1
+                .sink(receiveCompletion: { _ in
                     
-                    if sinkCount == 1 {
-                        
-                        lessonsRef = lessons
-                        
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    }
-                }
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
+                    
+                }, receiveValue: { (lessons: [LessonListItemDomainModel]) in
+                    
+                    lessonsRef = lessons
+                })
                 .store(in: &cancellables)
         }
         
@@ -193,7 +179,7 @@ extension GetLessonsListRepositoryTests {
         return LanguageCodeDomainModel.spanish.rawValue
     }
     
-    private func getLegacyRealmDatabase() -> LegacyRealmDatabase {
+    private func getRealmObjects() -> [IdentifiableRealmObject] {
         
         let afrikaansLanguage: RealmLanguage = getRealmLanguage(languageCode: .afrikaans)
         let arabicLanguage: RealmLanguage =  getRealmLanguage(languageCode: .arabic)
@@ -311,16 +297,12 @@ extension GetLessonsListRepositoryTests {
         lessons[8].addLatestTranslation(translation: lesson8SpanishTranslation)
         lessons[8].addLatestTranslation(translation: lesson8VietnameseTranslation)
         
-        let realmDatabase: LegacyRealmDatabase = TestsInMemoryRealmDatabase(
-            addObjectsToDatabase: allLanguages + lessons
-        )
-        
-        return realmDatabase
+        return allLanguages + lessons
     }
     
-    @MainActor private func getLessonsListRepository() -> GetLessonsListRepository {
+    private func getLessonsListRepository() throws -> GetLessonsListRepository {
                 
-        let testsDiContainer = TestsDiContainer(realmDatabase: getLegacyRealmDatabase())
+        let testsDiContainer = try TestsDiContainer(addRealmObjects: getRealmObjects())
         
         return GetLessonsListRepository(
             resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
@@ -339,14 +321,14 @@ extension GetLessonsListRepositoryTests {
         )
     }
     
-    @MainActor private func getTranslatedToolName(testsDiContainer: TestsDiContainer) -> GetTranslatedToolName {
+    private func getTranslatedToolName(testsDiContainer: TestsDiContainer) -> GetTranslatedToolName {
         return GetTranslatedToolName(
             resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
             translationsRepository: testsDiContainer.dataLayer.getTranslationsRepository()
         )
     }
     
-    @MainActor private func getTranslatedToolLanguageAvailability(testsDiContainer: TestsDiContainer) -> GetTranslatedToolLanguageAvailability {
+    private func getTranslatedToolLanguageAvailability(testsDiContainer: TestsDiContainer) -> GetTranslatedToolLanguageAvailability {
         return GetTranslatedToolLanguageAvailability(
             localizationServices: getLocalizationServices(),
             resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),

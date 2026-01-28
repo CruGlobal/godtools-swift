@@ -10,6 +10,7 @@ import Testing
 import Foundation
 @testable import godtools
 import Combine
+import RepositorySync
 
 struct SetUserPreferredAppLanguageRepositoryTests {
         
@@ -20,17 +21,13 @@ struct SetUserPreferredAppLanguageRepositoryTests {
         Then: The user's lesson language filter should update to Spanish.
         """
     )
-    @MainActor func setUserPreferredAppLanguageRepositoryTest() async {
+    @MainActor func setUserPreferredAppLanguageRepositoryTest() async throws {
         
         var cancellables: Set<AnyCancellable> = Set()
         
         let allLanguages: [RealmLanguage] = getAllLanguages()
         
-        let realmDatabase: LegacyRealmDatabase = TestsInMemoryRealmDatabase(
-            addObjectsToDatabase: allLanguages
-        )
-        
-        let testsDiContainer = TestsDiContainer(realmDatabase: realmDatabase)
+        let testsDiContainer = try TestsDiContainer(addRealmObjects: allLanguages)
         
         let setUserPreferredAppLanguageRepository = SetUserPreferredAppLanguageRepository(
             userAppLanguageRepository: testsDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository(),
