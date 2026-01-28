@@ -11,6 +11,7 @@ import Testing
 import Combine
 import RepositorySync
 
+@Suite(.serialized)
 struct GetLessonFilterLanguagesRepositoryTests {
     
     private let englishLessonsAvailableText: String = "lessons available"
@@ -210,6 +211,14 @@ struct GetLessonFilterLanguagesRepositoryTests {
 
 extension GetLessonFilterLanguagesRepositoryTests {
     
+    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
+                
+        return try TestsDiContainer(
+            realmFileName: String(describing: GetLessonFilterLanguagesRepositoryTests.self),
+            addRealmObjects: addRealmObjects
+        )
+    }
+    
     private func getRealmObjects() -> [IdentifiableRealmObject] {
         
         let allLanguages: [RealmLanguage] = getAllLanguages()
@@ -240,7 +249,7 @@ extension GetLessonFilterLanguagesRepositoryTests {
     
     private func getLessonFilterLanguagesRepository() throws -> GetLessonFilterLanguagesRepository {
         
-        let testsDiContainer = try TestsDiContainer(addRealmObjects: getRealmObjects())
+        let testsDiContainer = try getTestsDiContainer(addRealmObjects: getRealmObjects())
         
         let getLessonFilterLanguagesRepository = GetLessonFilterLanguagesRepository(
             resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),

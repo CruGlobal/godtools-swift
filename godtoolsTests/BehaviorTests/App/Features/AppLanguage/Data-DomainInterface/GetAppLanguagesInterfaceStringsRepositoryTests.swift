@@ -21,8 +21,6 @@ struct GetAppLanguagesInterfaceStringsRepositoryTests {
     )
     func interfaceStringsTranslateWhenAppLanguageChanges() async {
         
-        var cancellables: Set<AnyCancellable> = Set()
-        
         let navTitleKey: String = "languageSettings.appLanguage.title"
         
         let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
@@ -40,6 +38,8 @@ struct GetAppLanguagesInterfaceStringsRepositoryTests {
         
         let appLanguagePublisher: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
         
+        var cancellables: Set<AnyCancellable> = Set()
+        
         var englishInterfaceStringsRef: AppLanguagesInterfaceStringsDomainModel?
         var spanishInterfaceStringsRef: AppLanguagesInterfaceStringsDomainModel?
         
@@ -47,29 +47,41 @@ struct GetAppLanguagesInterfaceStringsRepositoryTests {
         
         await confirmation(expectedCount: 2) { confirmation in
             
-            appLanguagePublisher
-                .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppLanguagesInterfaceStringsDomainModel, Never> in
-                    
-                    return getAppLanguagesInterfaceStringsRepository
-                        .getStringsPublisher(translateInLanguage: appLanguage)
-                        .eraseToAnyPublisher()
-                })
-                .sink { (interfaceStrings: AppLanguagesInterfaceStringsDomainModel) in
-                    
-                    sinkCount += 1
-                    confirmation()
-                    
-                    if sinkCount == 1 {
-                        
-                        englishInterfaceStringsRef = interfaceStrings
-                        appLanguagePublisher.send(LanguageCodeDomainModel.spanish.rawValue)
-                    }
-                    else if sinkCount == 2 {
-                        
-                        spanishInterfaceStringsRef = interfaceStrings
-                    }
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
                 }
-                .store(in: &cancellables)
+                
+                appLanguagePublisher
+                    .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppLanguagesInterfaceStringsDomainModel, Never> in
+                        
+                        return getAppLanguagesInterfaceStringsRepository
+                            .getStringsPublisher(translateInLanguage: appLanguage)
+                            .eraseToAnyPublisher()
+                    })
+                    .sink { (interfaceStrings: AppLanguagesInterfaceStringsDomainModel) in
+                        
+                        sinkCount += 1
+                        confirmation()
+                        
+                        if sinkCount == 1 {
+                            
+                            englishInterfaceStringsRef = interfaceStrings
+                            appLanguagePublisher.send(LanguageCodeDomainModel.spanish.rawValue)
+                        }
+                        else if sinkCount == 2 {
+                            
+                            spanishInterfaceStringsRef = interfaceStrings
+                            
+                            // When finished be sure to call:
+                            timeoutTask.cancel()
+                            continuation.resume(returning: ())
+                        }
+                    }
+                    .store(in: &cancellables)
+            }
         }
         
         #expect(englishInterfaceStringsRef?.navTitle == "App Language")

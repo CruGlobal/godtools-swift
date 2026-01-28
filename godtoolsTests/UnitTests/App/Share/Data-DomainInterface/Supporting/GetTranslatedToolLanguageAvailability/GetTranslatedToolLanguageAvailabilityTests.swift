@@ -10,6 +10,7 @@ import Testing
 @testable import godtools
 import RepositorySync
 
+@Suite(.serialized)
 struct GetTranslatedToolLanguageAvailabilityTests {
     
     struct TestArgument {
@@ -46,7 +47,7 @@ struct GetTranslatedToolLanguageAvailabilityTests {
             )
         ]
     )
-    @MainActor func testTranslateLanguageAvailabilityByToolIdAndLanguageModelIsAvailable(argument: TestArgument) async throws {
+    func testTranslateLanguageAvailabilityByToolIdAndLanguageModelIsAvailable(argument: TestArgument) async throws {
         
         let testsDiContainer: TestsDiContainer = try getTestsDiContainer()
         let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability(testsDiContainer: testsDiContainer)
@@ -205,7 +206,11 @@ extension GetTranslatedToolLanguageAvailabilityTests {
     }
     
     private func getTestsDiContainer() throws -> TestsDiContainer {
-        return try TestsDiContainer(addRealmObjects: getRealmObjects())
+        
+        return try TestsDiContainer(
+            realmFileName: String(describing: GetTranslatedToolLanguageAvailabilityTests.self),
+            addRealmObjects: getRealmObjects()
+        )
     }
     
     private func getTranslatedToolLanguageAvailability(testsDiContainer: TestsDiContainer) -> GetTranslatedToolLanguageAvailability {

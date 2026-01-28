@@ -10,6 +10,7 @@ import Testing
 @testable import godtools
 import RepositorySync
 
+@Suite(.serialized)
 struct GetTranslatedToolCategoryTests {
     
     struct TestArgument {
@@ -35,7 +36,7 @@ struct GetTranslatedToolCategoryTests {
             TestArgument(translateInLanguage: LanguageCodeDomainModel.vietnamese.rawValue, expectedToolCategory: Self.toolCategoryInVietnamese)
         ]
     )
-    @MainActor func testToolNameIsTranslated(argument: TestArgument) throws {
+    func testToolNameIsTranslated(argument: TestArgument) throws {
         
         let testsDiContainer: TestsDiContainer = try getTestsDiContainer()
         
@@ -55,7 +56,11 @@ struct GetTranslatedToolCategoryTests {
 extension GetTranslatedToolCategoryTests {
     
     private func getTestsDiContainer() throws -> TestsDiContainer {
-        return try TestsDiContainer(addRealmObjects: getRealmObjects())
+        
+        return try TestsDiContainer(
+            realmFileName: String(describing: GetTranslatedToolCategoryTests.self),
+            addRealmObjects: getRealmObjects()
+        )
     }
     
     private func getRealmObjects() -> [IdentifiableRealmObject] {

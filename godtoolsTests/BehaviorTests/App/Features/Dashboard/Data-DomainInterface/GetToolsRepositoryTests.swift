@@ -11,7 +11,9 @@ import Testing
 import Foundation
 import Combine
 import RealmSwift
+import RepositorySync
 
+@Suite(.serialized)
 struct GetToolsRepositoryTests {
     
     private let categoryConversationStarter: String = "conversation_starter"
@@ -45,22 +47,35 @@ struct GetToolsRepositoryTests {
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            toolsRepository
-                .getToolsPublisher(
-                    translatedInAppLanguage: "",
-                    languageIdForAvailabilityText: nil,
-                    filterToolsByCategory: nil,
-                    filterToolsByLanguage: nil
-                )
-                .sink(receiveCompletion: { _ in
-                    
-                }, receiveValue: { (tools: [ToolListItemDomainModel]) in
-                    
-                    toolsListRef = tools
-                    
-                    confirmation()
-                })
-                .store(in: &cancellables)
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
+                }
+                
+                toolsRepository
+                    .getToolsPublisher(
+                        translatedInAppLanguage: "",
+                        languageIdForAvailabilityText: nil,
+                        filterToolsByCategory: nil,
+                        filterToolsByLanguage: nil
+                    )
+                    .sink(receiveCompletion: { _ in
+                        
+                    }, receiveValue: { (tools: [ToolListItemDomainModel]) in
+                        
+                        toolsListRef = tools
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                                
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    })
+                    .store(in: &cancellables)
+            }
         }
         
         let toolsList: [String] = toolsListRef.map({$0.id}).sorted()
@@ -99,22 +114,35 @@ struct GetToolsRepositoryTests {
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            toolsRepository
-                .getToolsPublisher(
-                    translatedInAppLanguage: "",
-                    languageIdForAvailabilityText: nil,
-                    filterToolsByCategory: growthCategoryFilter,
-                    filterToolsByLanguage: anyLanguageFilter
-                )
-                .sink(receiveCompletion: { _ in
-                    
-                }, receiveValue: { (tools: [ToolListItemDomainModel]) in
-                    
-                    toolsListRef = tools
-                    
-                    confirmation()
-                })
-                .store(in: &cancellables)
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
+                }
+                
+                toolsRepository
+                    .getToolsPublisher(
+                        translatedInAppLanguage: "",
+                        languageIdForAvailabilityText: nil,
+                        filterToolsByCategory: growthCategoryFilter,
+                        filterToolsByLanguage: anyLanguageFilter
+                    )
+                    .sink(receiveCompletion: { _ in
+                        
+                    }, receiveValue: { (tools: [ToolListItemDomainModel]) in
+                        
+                        toolsListRef = tools
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                                
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    })
+                    .store(in: &cancellables)
+            }
         }
         
         let toolsList: [String] = toolsListRef.map({$0.id}).sorted()
@@ -155,22 +183,35 @@ struct GetToolsRepositoryTests {
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            toolsRepository
-                .getToolsPublisher(
-                    translatedInAppLanguage: "",
-                    languageIdForAvailabilityText: nil,
-                    filterToolsByCategory: anyCategoryFilter,
-                    filterToolsByLanguage: russianLanguageFilter
-                )
-                .sink(receiveCompletion: { _ in
-                    
-                }, receiveValue: { (tools: [ToolListItemDomainModel]) in
-                    
-                    toolsListRef = tools
-                    
-                    confirmation()
-                })
-                .store(in: &cancellables)
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
+                }
+                
+                toolsRepository
+                    .getToolsPublisher(
+                        translatedInAppLanguage: "",
+                        languageIdForAvailabilityText: nil,
+                        filterToolsByCategory: anyCategoryFilter,
+                        filterToolsByLanguage: russianLanguageFilter
+                    )
+                    .sink(receiveCompletion: { _ in
+                        
+                    }, receiveValue: { (tools: [ToolListItemDomainModel]) in
+                        
+                        toolsListRef = tools
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                                
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    })
+                    .store(in: &cancellables)
+            }
         }
         
         let toolsList: [String] = toolsListRef.map({$0.id}).sorted()
@@ -211,22 +252,35 @@ struct GetToolsRepositoryTests {
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            toolsRepository
-                .getToolsPublisher(
-                    translatedInAppLanguage: "",
-                    languageIdForAvailabilityText: nil,
-                    filterToolsByCategory: anyCategoryFilter,
-                    filterToolsByLanguage: spanishLanguageFilter
-                )
-                .sink(receiveCompletion: { _ in
-                    
-                }, receiveValue: { (tools: [ToolListItemDomainModel]) in
-                    
-                    toolsListRef = tools
-                    
-                    confirmation()
-                })
-                .store(in: &cancellables)
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
+                }
+                
+                toolsRepository
+                    .getToolsPublisher(
+                        translatedInAppLanguage: "",
+                        languageIdForAvailabilityText: nil,
+                        filterToolsByCategory: anyCategoryFilter,
+                        filterToolsByLanguage: spanishLanguageFilter
+                    )
+                    .sink(receiveCompletion: { _ in
+                        
+                    }, receiveValue: { (tools: [ToolListItemDomainModel]) in
+                        
+                        toolsListRef = tools
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                                
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    })
+                    .store(in: &cancellables)
+            }
         }
         
         let toolsList: [String] = toolsListRef.map({$0.id}).sorted()
@@ -357,9 +411,12 @@ struct GetToolsRepositoryTests {
 
 extension GetToolsRepositoryTests {
     
-    private func getTestsDiContainer() throws -> TestsDiContainer {
-        
-        return try TestsDiContainer(addRealmObjects: allTools)
+    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
+                
+        return try TestsDiContainer(
+            realmFileName: String(describing: GetToolsRepositoryTests.self),
+            addRealmObjects: allTools + addRealmObjects
+        )
     }
     
     private static func createLanguage(id: String, code: LanguageCodeDomainModel) -> RealmLanguage {

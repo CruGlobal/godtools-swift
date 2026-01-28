@@ -10,7 +10,9 @@ import Testing
 @testable import godtools
 import Combine
 import Foundation
+import RepositorySync
 
+@Suite(.serialized)
 struct GetUserAccountDetailsRepositoryTests {
     
     private static let userId = "test-user-id"
@@ -35,30 +37,45 @@ struct GetUserAccountDetailsRepositoryTests {
             TestArgument(appLanguage: .spanish, joinedOnString: "Unirse")
         ]
     )
-    @MainActor func testGetUserAccountDetailsInAppLanguage(argument: TestArgument) async {
+    @MainActor func testGetUserAccountDetailsInAppLanguage(argument: TestArgument) async throws {
         
-        let getUserAccountDetailsRepository = getUserDetailsRepository()
+        let getUserAccountDetailsRepository = try getUserDetailsRepository()
         
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            getUserAccountDetailsRepository.getUserAccountDetailsPublisher(appLanguage: argument.appLanguage.rawValue)
-                .sink { (result: UserAccountDetailsDomainModel) in
-                    
-                    confirmation()
-                    userAccountDetails = result
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
                 }
-                .store(in: &cancellables)
-            
-            let locale = Locale(identifier: argument.appLanguage.rawValue)
-            let createdAtDateString = getDateFormatter(locale: locale).string(from: Self.userCreatedAt)
-            let joinedOnStringExpected = "\(argument.joinedOnString) \(createdAtDateString)"
-            
-            #expect(userAccountDetails?.name == Self.userFullName)
-            #expect(userAccountDetails?.joinedOnString == joinedOnStringExpected)
+                
+                getUserAccountDetailsRepository
+                    .getUserAccountDetailsPublisher(appLanguage: argument.appLanguage.rawValue)
+                    .sink { (result: UserAccountDetailsDomainModel) in
+                        
+                        userAccountDetails = result
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                                
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    }
+                    .store(in: &cancellables)
+            }
         }
+        
+        let locale = Locale(identifier: argument.appLanguage.rawValue)
+        let createdAtDateString = getDateFormatter(locale: locale).string(from: Self.userCreatedAt)
+        let joinedOnStringExpected = "\(argument.joinedOnString) \(createdAtDateString)"
+        
+        #expect(userAccountDetails?.name == Self.userFullName)
+        #expect(userAccountDetails?.joinedOnString == joinedOnStringExpected)
     }
     
     @Test(
@@ -68,26 +85,41 @@ struct GetUserAccountDetailsRepositoryTests {
         Then: Activity page should populate with empty strings
         """
     )
-    @MainActor func testGetNilUserDetails() async {
+    @MainActor func testGetNilUserDetails() async throws {
         
-        let getUserAccountDetailsRepository = getUserDetailsRepository(emptyRealm: true)
+        let getUserAccountDetailsRepository = try getUserDetailsRepository(emptyRealm: true)
         
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            getUserAccountDetailsRepository.getUserAccountDetailsPublisher(appLanguage: LanguageCodeDomainModel.english.rawValue)
-                .sink { (result: UserAccountDetailsDomainModel) in
-                    
-                    confirmation()
-                    userAccountDetails = result
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
                 }
-                .store(in: &cancellables)
-            
-            #expect(userAccountDetails?.name == "")
-            #expect(userAccountDetails?.joinedOnString == "")
+                
+                getUserAccountDetailsRepository
+                    .getUserAccountDetailsPublisher(appLanguage: LanguageCodeDomainModel.english.rawValue)
+                    .sink { (result: UserAccountDetailsDomainModel) in
+                        
+                        userAccountDetails = result
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                                
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    }
+                    .store(in: &cancellables)
+            }
         }
+        
+        #expect(userAccountDetails?.name == "")
+        #expect(userAccountDetails?.joinedOnString == "")
     }
     
     @Test(
@@ -97,25 +129,40 @@ struct GetUserAccountDetailsRepositoryTests {
         Then: Activity page should populate the user's name using given and family names.
         """
     )
-    @MainActor func testGetUserDetailsWithNilName() async {
+    @MainActor func testGetUserDetailsWithNilName() async throws {
         
-        let getUserAccountDetailsRepository = getUserDetailsRepository(name: nil)
+        let getUserAccountDetailsRepository = try getUserDetailsRepository(name: nil)
         
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            getUserAccountDetailsRepository.getUserAccountDetailsPublisher(appLanguage: LanguageCodeDomainModel.english.rawValue)
-                .sink { (result: UserAccountDetailsDomainModel) in
-                    
-                    confirmation()
-                    userAccountDetails = result
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
                 }
-                .store(in: &cancellables)
-            
-            #expect(userAccountDetails?.name == "\(Self.userGivenName) \(Self.userFamilyName)")
+                
+                getUserAccountDetailsRepository
+                    .getUserAccountDetailsPublisher(appLanguage: LanguageCodeDomainModel.english.rawValue)
+                    .sink { (result: UserAccountDetailsDomainModel) in
+                        
+                        userAccountDetails = result
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                                
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    }
+                    .store(in: &cancellables)
+            }
         }
+        
+        #expect(userAccountDetails?.name == "\(Self.userGivenName) \(Self.userFamilyName)")
     }
     
     @Test(
@@ -125,25 +172,38 @@ struct GetUserAccountDetailsRepositoryTests {
         Then: Activity page should populate the user's name with the user's given name.
         """
     )
-    @MainActor func testGetUserDetailsWithNilFamilyAndFullNames() async {
+    @MainActor func testGetUserDetailsWithNilFamilyAndFullNames() async throws {
         
-        let getUserAccountDetailsRepository = getUserDetailsRepository(familyName: nil, name: nil)
+        let getUserAccountDetailsRepository = try getUserDetailsRepository(familyName: nil, name: nil)
         
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            getUserAccountDetailsRepository.getUserAccountDetailsPublisher(appLanguage: LanguageCodeDomainModel.english.rawValue)
-                .sink { (result: UserAccountDetailsDomainModel) in
-                    
-                    confirmation()
-                    userAccountDetails = result
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
                 }
-                .store(in: &cancellables)
-            
-            #expect(userAccountDetails?.name == Self.userGivenName)
+                
+                getUserAccountDetailsRepository.getUserAccountDetailsPublisher(appLanguage: LanguageCodeDomainModel.english.rawValue)
+                    .sink { (result: UserAccountDetailsDomainModel) in
+                                                userAccountDetails = result
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                                
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    }
+                    .store(in: &cancellables)
+            }
         }
+        
+        #expect(userAccountDetails?.name == Self.userGivenName)
     }
     
     @Test(
@@ -153,25 +213,40 @@ struct GetUserAccountDetailsRepositoryTests {
         Then: Activity page should populate the user's name with an empty string
         """
     )
-    @MainActor func testGetUserDetailsWithAllNilNames() async {
+    @MainActor func testGetUserDetailsWithAllNilNames() async throws {
         
-        let getUserAccountDetailsRepository = getUserDetailsRepository(familyName: nil, givenName: nil, name: nil)
+        let getUserAccountDetailsRepository = try getUserDetailsRepository(familyName: nil, givenName: nil, name: nil)
         
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            getUserAccountDetailsRepository.getUserAccountDetailsPublisher(appLanguage: LanguageCodeDomainModel.english.rawValue)
-                .sink { (result: UserAccountDetailsDomainModel) in
-                    
-                    confirmation()
-                    userAccountDetails = result
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
                 }
-                .store(in: &cancellables)
-            
-            #expect(userAccountDetails?.name == "")
+                
+                getUserAccountDetailsRepository
+                    .getUserAccountDetailsPublisher(appLanguage: LanguageCodeDomainModel.english.rawValue)
+                    .sink { (result: UserAccountDetailsDomainModel) in
+                        
+                        userAccountDetails = result
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                                
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    }
+                    .store(in: &cancellables)
+            }
         }
+        
+        #expect(userAccountDetails?.name == "")
     }
     
     @Test(
@@ -181,53 +256,78 @@ struct GetUserAccountDetailsRepositoryTests {
         Then: Activity page should populate the "joined on" string with an empty string
         """
     )
-    @MainActor func testGetUserDetailsWithNilJoinedOn() async {
+    @MainActor func testGetUserDetailsWithNilJoinedOn() async throws {
         
-        let getUserAccountDetailsRepository = getUserDetailsRepository(createdAt: nil)
+        let getUserAccountDetailsRepository = try getUserDetailsRepository(createdAt: nil)
         
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            getUserAccountDetailsRepository.getUserAccountDetailsPublisher(appLanguage: LanguageCodeDomainModel.english.rawValue)
-                .sink { (result: UserAccountDetailsDomainModel) in
-                    
-                    confirmation()
-                    userAccountDetails = result
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
                 }
-                .store(in: &cancellables)
-            
-            #expect(userAccountDetails?.joinedOnString == "")
+                
+                getUserAccountDetailsRepository.getUserAccountDetailsPublisher(appLanguage: LanguageCodeDomainModel.english.rawValue)
+                    .sink { (result: UserAccountDetailsDomainModel) in
+                        
+                        userAccountDetails = result
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                                
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    }
+                    .store(in: &cancellables)
+            }
         }
+        
+        #expect(userAccountDetails?.joinedOnString == "")
     }
 }
 
-// MARK: - Private
-
 extension GetUserAccountDetailsRepositoryTests {
     
-    private func getConfiguredRealmDatabase(emptyRealm: Bool, familyName: String?, givenName: String?, name: String?, createdAt: Date?) -> TestsInMemoryRealmDatabase {
+    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
+                
+        return try TestsDiContainer(
+            realmFileName: String(describing: GetUserAccountDetailsRepositoryTests.self),
+            addRealmObjects: addRealmObjects
+        )
+    }
+    
+    private func getConfiguredRealmDatabase(emptyRealm: Bool, familyName: String?, givenName: String?, name: String?, createdAt: Date?) throws -> LegacyRealmDatabase {
+        
+        let realmObjects: [IdentifiableRealmObject]
         
         if emptyRealm {
-            return TestsInMemoryRealmDatabase()
+            
+            realmObjects = Array()
+        }
+        else {
+            
+            let userDetails = RealmUserDetails()
+            userDetails.id = Self.userId
+            userDetails.familyName = familyName
+            userDetails.givenName = givenName
+            userDetails.name = name
+            userDetails.createdAt = createdAt
+            
+            let realmAuthTokenData = RealmMobileContentAuthToken()
+            realmAuthTokenData.userId = Self.userId
+            
+            realmObjects = [userDetails, realmAuthTokenData]
         }
         
-        let userDetails = RealmUserDetails()
-        userDetails.id = Self.userId
-        userDetails.familyName = familyName
-        userDetails.givenName = givenName
-        userDetails.name = name
-        userDetails.createdAt = createdAt
+        let testsDiContainer: TestsDiContainer = try getTestsDiContainer(addRealmObjects: realmObjects)
         
-        let realmAuthTokenData = RealmMobileContentAuthToken()
-        realmAuthTokenData.userId = Self.userId
-        
-        let realmDatabase = TestsInMemoryRealmDatabase(
-            addObjectsToDatabase: [userDetails, realmAuthTokenData]
-        )
-        
-        return realmDatabase
+        return testsDiContainer.dataLayer.getSharedLegacyRealmDatabase()
     }
 
     private func getLocalizationServices() -> MockLocalizationServices {
@@ -247,9 +347,9 @@ extension GetUserAccountDetailsRepositoryTests {
     }
 
     
-    private func getUserDetailsRepository(emptyRealm: Bool = false, familyName: String? = userFamilyName, givenName: String? = userGivenName, name: String? = userFullName, createdAt: Date? = userCreatedAt) -> GetUserAccountDetailsRepository {
+    private func getUserDetailsRepository(emptyRealm: Bool = false, familyName: String? = userFamilyName, givenName: String? = userGivenName, name: String? = userFullName, createdAt: Date? = userCreatedAt) throws -> GetUserAccountDetailsRepository {
         
-        let realmDatabase = getConfiguredRealmDatabase(emptyRealm: emptyRealm, familyName: familyName, givenName: givenName, name: name, createdAt: createdAt)
+        let realmDatabase = try getConfiguredRealmDatabase(emptyRealm: emptyRealm, familyName: familyName, givenName: givenName, name: name, createdAt: createdAt)
         
         let mockMobileContentAuthTokenKeychainAccessor = MockMobileContentAuthTokenKeychainAccessor()
         mockMobileContentAuthTokenKeychainAccessor.setUserId(Self.userId)

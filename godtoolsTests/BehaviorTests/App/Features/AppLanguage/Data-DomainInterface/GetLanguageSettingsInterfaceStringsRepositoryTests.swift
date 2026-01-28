@@ -10,6 +10,7 @@ import Testing
 @testable import godtools
 import Combine
 
+@Suite(.serialized)
 struct GetLanguageSettingsInterfaceStringsRepositoryTests {
     
     @Test(
@@ -179,7 +180,10 @@ extension GetLanguageSettingsInterfaceStringsRepositoryTests {
     
     private func getLanguageSettingsInterfaceStringsRepository() throws -> GetLanguageSettingsInterfaceStringsRepository {
         
-        let testsDiContainer = try TestsDiContainer(addRealmObjects: [])
+        let testsDiContainer = try TestsDiContainer(
+            realmFileName: String(describing: GetLanguageSettingsInterfaceStringsRepositoryTests.self),
+            addRealmObjects: []
+        )
         
         let testsRealmDatabase: LegacyRealmDatabase = testsDiContainer.dataLayer.getSharedLegacyRealmDatabase()
         

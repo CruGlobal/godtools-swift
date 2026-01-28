@@ -11,6 +11,7 @@ import Testing
 import Combine
 import RepositorySync
 
+@Suite(.serialized)
 struct GetLessonsListRepositoryTests {
     
     @Test(
@@ -21,8 +22,6 @@ struct GetLessonsListRepositoryTests {
         """
     )
     @MainActor func onlyShowLessonsThatSupportMyLessonLanguageFilter() async throws {
-        
-        var cancellables: Set<AnyCancellable> = Set()
         
         let appLanguageEnglish: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
                         
@@ -35,6 +34,8 @@ struct GetLessonsListRepositoryTests {
         )
         
         let getLessonsListRepository: GetLessonsListRepository = try getLessonsListRepository()
+        
+        var cancellables: Set<AnyCancellable> = Set()
         
         var lessonsRef: [LessonListItemDomainModel] = Array()
                 
@@ -77,12 +78,12 @@ struct GetLessonsListRepositoryTests {
         """
     )
     @MainActor func lessonNamesAreTranslatedInAppLanguageWhenNoLanguageFilterSelected() async throws {
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        
+                
         let appLanguageArabic: AppLanguageDomainModel = LanguageCodeDomainModel.arabic.rawValue
                                 
         let getLessonsListRepository: GetLessonsListRepository = try getLessonsListRepository()
+        
+        var cancellables: Set<AnyCancellable> = Set()
         
         var lessonsRef: [LessonListItemDomainModel] = Array()
                 
@@ -124,9 +125,7 @@ struct GetLessonsListRepositoryTests {
         """
     )
     @MainActor func lessonNamesAreTranslatedInLessonLanguageFilter() async throws {
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        
+                
         let appLanguageEnglish: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
                         
         let spanishLanguageFilter = LessonFilterLanguageDomainModel(
@@ -138,6 +137,8 @@ struct GetLessonsListRepositoryTests {
         )
                                 
         let getLessonsListRepository: GetLessonsListRepository = try getLessonsListRepository()
+        
+        var cancellables: Set<AnyCancellable> = Set()
         
         var lessonsRef: [LessonListItemDomainModel] = Array()
                 
@@ -300,9 +301,17 @@ extension GetLessonsListRepositoryTests {
         return allLanguages + lessons
     }
     
+    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
+                
+        return try TestsDiContainer(
+            realmFileName: String(describing: GetLessonsListRepositoryTests.self),
+            addRealmObjects: addRealmObjects
+        )
+    }
+    
     private func getLessonsListRepository() throws -> GetLessonsListRepository {
                 
-        let testsDiContainer = try TestsDiContainer(addRealmObjects: getRealmObjects())
+        let testsDiContainer = try getTestsDiContainer(addRealmObjects: getRealmObjects())
         
         return GetLessonsListRepository(
             resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),

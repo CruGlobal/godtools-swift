@@ -21,9 +21,13 @@ final class MockLegacyRealmDatabase {
         let identifier: String = identifier ?? UUID().uuidString
         let schemaVersion: UInt64 = schemaVersion ?? 1
         
+        let config = Realm.Configuration(
+            inMemoryIdentifier: identifier,
+            schemaVersion: schemaVersion
+        )
+        
         let database = LegacyRealmDatabase(
-            databaseConfiguration: RealmDatabaseConfiguration(cacheType: .inMemory(identifier: identifier), schemaVersion: schemaVersion),
-            realmInstanceCreationType: .usesASingleSharedRealmInstance
+            config: config
         )
         
         if !addObjects.isEmpty {

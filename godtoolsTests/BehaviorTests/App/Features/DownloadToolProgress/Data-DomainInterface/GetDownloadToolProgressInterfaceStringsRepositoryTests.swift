@@ -12,6 +12,7 @@ import Combine
 import RealmSwift
 import RepositorySync
 
+@Suite(.serialized)
 struct GetDownloadToolProgressInterfaceStringsRepositoryTests {
     
     private let favoritedToolId: String = "1"
@@ -27,7 +28,7 @@ struct GetDownloadToolProgressInterfaceStringsRepositoryTests {
         Then: The message should be the downloading tool message.
         """
     )
-    @MainActor func correctMessageShowsWhenDownloadingAFavoritedTool() async throws {
+    func correctMessageShowsWhenDownloadingAFavoritedTool() async throws {
         
         let downloadToolProgressInterfaceStringsRepository: GetDownloadToolProgressInterfaceStringsRepository = try getDownloadToolProgressInterfaceStringsRepository()
         
@@ -37,15 +38,28 @@ struct GetDownloadToolProgressInterfaceStringsRepositoryTests {
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            downloadToolProgressInterfaceStringsRepository
-                .getStringsPublisher(toolId: favoritedToolId, translateInAppLanguage: LanguageCodeDomainModel.english.value)
-                .sink { (interfaceStrings: DownloadToolProgressInterfaceStringsDomainModel) in
-                    
-                    confirmation()
-                    
-                    interfaceStringsRef = interfaceStrings
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
                 }
-                .store(in: &cancellables)
+                
+                downloadToolProgressInterfaceStringsRepository
+                    .getStringsPublisher(toolId: favoritedToolId, translateInAppLanguage: LanguageCodeDomainModel.english.value)
+                    .sink { (interfaceStrings: DownloadToolProgressInterfaceStringsDomainModel) in
+                                                
+                        interfaceStringsRef = interfaceStrings
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                                
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    }
+                    .store(in: &cancellables)
+            }
         }
         
         #expect(interfaceStringsRef?.downloadMessage == downloadToolMessage)
@@ -58,7 +72,7 @@ struct GetDownloadToolProgressInterfaceStringsRepositoryTests {
         Then: The message should be the downloading tool message with favorite this tool for offline use messaging.
         """
     )
-    @MainActor func correctMessageShowsWhenDownloadingAToolThatIsNotFavoritedButCanBeFavorited() async throws {
+    func correctMessageShowsWhenDownloadingAToolThatIsNotFavoritedButCanBeFavorited() async throws {
         
         let downloadToolProgressInterfaceStringsRepository: GetDownloadToolProgressInterfaceStringsRepository = try getDownloadToolProgressInterfaceStringsRepository()
         
@@ -68,15 +82,28 @@ struct GetDownloadToolProgressInterfaceStringsRepositoryTests {
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            downloadToolProgressInterfaceStringsRepository
-                .getStringsPublisher(toolId: unFavoritedToolId, translateInAppLanguage: LanguageCodeDomainModel.english.value)
-                .sink { (interfaceStrings: DownloadToolProgressInterfaceStringsDomainModel) in
-                    
-                    confirmation()
-                    
-                    interfaceStringsRef = interfaceStrings
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
                 }
-                .store(in: &cancellables)
+                
+                downloadToolProgressInterfaceStringsRepository
+                    .getStringsPublisher(toolId: unFavoritedToolId, translateInAppLanguage: LanguageCodeDomainModel.english.value)
+                    .sink { (interfaceStrings: DownloadToolProgressInterfaceStringsDomainModel) in
+                                                
+                        interfaceStringsRef = interfaceStrings
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                                
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    }
+                    .store(in: &cancellables)
+            }
         }
         
         #expect(interfaceStringsRef?.downloadMessage == favoriteThisToolForOfflineUseMessage)
@@ -89,7 +116,7 @@ struct GetDownloadToolProgressInterfaceStringsRepositoryTests {
         Then: The message should be the downloading tool message.
         """
     )
-    @MainActor func correctMessageShowsWhenDownloadingAToolThatCantBeFavorited() async throws {
+    func correctMessageShowsWhenDownloadingAToolThatCantBeFavorited() async throws {
         
         let downloadToolProgressInterfaceStringsRepository: GetDownloadToolProgressInterfaceStringsRepository = try getDownloadToolProgressInterfaceStringsRepository()
         
@@ -99,15 +126,28 @@ struct GetDownloadToolProgressInterfaceStringsRepositoryTests {
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            downloadToolProgressInterfaceStringsRepository
-                .getStringsPublisher(toolId: unFavoritableToolId, translateInAppLanguage: LanguageCodeDomainModel.english.value)
-                .sink { (interfaceStrings: DownloadToolProgressInterfaceStringsDomainModel) in
-                    
-                    confirmation()
-                    
-                    interfaceStringsRef = interfaceStrings
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
                 }
-                .store(in: &cancellables)
+                
+                downloadToolProgressInterfaceStringsRepository
+                    .getStringsPublisher(toolId: unFavoritableToolId, translateInAppLanguage: LanguageCodeDomainModel.english.value)
+                    .sink { (interfaceStrings: DownloadToolProgressInterfaceStringsDomainModel) in
+                                                
+                        interfaceStringsRef = interfaceStrings
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                                
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    }
+                    .store(in: &cancellables)
+            }
         }
         
         #expect(interfaceStringsRef?.downloadMessage == downloadToolMessage)
@@ -115,6 +155,14 @@ struct GetDownloadToolProgressInterfaceStringsRepositoryTests {
 }
 
 extension GetDownloadToolProgressInterfaceStringsRepositoryTests {
+    
+    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
+                
+        return try TestsDiContainer(
+            realmFileName: String(describing: GetDownloadToolProgressInterfaceStringsRepositoryTests.self),
+            addRealmObjects: addRealmObjects
+        )
+    }
     
     private func getRealmObjects() -> [IdentifiableRealmObject] {
         
@@ -139,7 +187,7 @@ extension GetDownloadToolProgressInterfaceStringsRepositoryTests {
  
     private func getDownloadToolProgressInterfaceStringsRepository() throws -> GetDownloadToolProgressInterfaceStringsRepository {
         
-        let testsDiContainer = try TestsDiContainer(addRealmObjects: getRealmObjects())
+        let testsDiContainer = try getTestsDiContainer(addRealmObjects: getRealmObjects())
         
         let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
             LanguageCodeDomainModel.english.value: [

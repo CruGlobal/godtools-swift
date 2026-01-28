@@ -12,6 +12,7 @@ import Foundation
 import Combine
 import RepositorySync
 
+@Suite(.serialized)
 struct SetUserPreferredAppLanguageRepositoryTests {
         
     @Test(
@@ -27,7 +28,9 @@ struct SetUserPreferredAppLanguageRepositoryTests {
         
         let allLanguages: [RealmLanguage] = getAllLanguages()
         
-        let testsDiContainer = try TestsDiContainer(addRealmObjects: allLanguages)
+        let testsDiContainer = try getTestsDiContainer(
+            addRealmObjects: allLanguages
+        )
         
         let setUserPreferredAppLanguageRepository = SetUserPreferredAppLanguageRepository(
             userAppLanguageRepository: testsDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository(),
@@ -64,6 +67,17 @@ struct SetUserPreferredAppLanguageRepositoryTests {
         #expect(realmLanguageSpanish != nil)
         #expect(lessonLanguageFilterRef?.languageId == realmLanguageSpanish?.id)
     }
+}
+
+extension SetUserPreferredAppLanguageRepositoryTests {
+    
+    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject]) throws -> TestsDiContainer {
+                
+        return try TestsDiContainer(
+            realmFileName: String(describing: SetUserPreferredAppLanguageRepositoryTests.self),
+            addRealmObjects: addRealmObjects
+        )
+    }
     
     private func getAllLanguages() -> [RealmLanguage] {
         
@@ -82,9 +96,6 @@ struct SetUserPreferredAppLanguageRepositoryTests {
             getRealmLanguage(languageCode: .vietnamese)
         ]
     }
-}
-
-extension SetUserPreferredAppLanguageRepositoryTests {
     
     private func getRealmLanguage(languageCode: LanguageCodeDomainModel) -> RealmLanguage {
         
