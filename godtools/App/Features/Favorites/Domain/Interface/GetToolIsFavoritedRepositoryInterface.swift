@@ -11,5 +11,5 @@ import Combine
 
 protocol GetToolIsFavoritedRepositoryInterface {
     
-    func getIsFavoritedPublisher(toolId: String) -> AnyPublisher<ToolIsFavoritedDomainModel, Never>
+    @MainActor func getIsFavoritedPublisher(toolId: String) -> AnyPublisher<ToolIsFavoritedDomainModel, Never>
 }

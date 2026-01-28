@@ -19,7 +19,7 @@ class UserLessonFiltersRepository {
         self.cache = cache
     }
     
-    func getUserLessonLanguageFilterChangedPublisher() -> AnyPublisher<Void, Never> {
+    @MainActor func getUserLessonLanguageFilterChangedPublisher() -> AnyPublisher<Void, Never> {
         return cache.getUserLessonLanguageFilterChangedPublisher()
     }
     

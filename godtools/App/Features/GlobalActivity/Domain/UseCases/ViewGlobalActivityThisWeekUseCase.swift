@@ -18,7 +18,7 @@ class ViewGlobalActivityThisWeekUseCase {
         self.getGlobalActivityRepository = getGlobalActivityRepository
     }
     
-    func viewPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewGlobalActivityThisWeekDomainModel, Never> {
+    @MainActor func viewPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewGlobalActivityThisWeekDomainModel, Never> {
         
         return getGlobalActivityRepository
             .getActivityPublisher(translateInLanguage: appLanguage)

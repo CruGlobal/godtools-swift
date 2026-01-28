@@ -19,7 +19,7 @@ class RealmDownloadedLanguagesCache {
         self.realmDatabase = realmDatabase
     }
     
-    func getDownloadedLanguagesChangedPublisher() -> AnyPublisher<Void, Never> {
+    @MainActor func getDownloadedLanguagesChangedPublisher() -> AnyPublisher<Void, Never> {
         
         return realmDatabase.openRealm()
             .objects(RealmDownloadedLanguage.self)

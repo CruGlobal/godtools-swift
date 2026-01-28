@@ -33,7 +33,7 @@ class UserCountersRepository {
         return UserCounterDomainModel(dataModel: userCounterDataModel)
     }
     
-    func getUserCountersChanged(reloadFromRemote: Bool, requestPriority: RequestPriority) -> AnyPublisher<Void, Never> {
+    @MainActor func getUserCountersChanged(reloadFromRemote: Bool, requestPriority: RequestPriority) -> AnyPublisher<Void, Never> {
         
         if reloadFromRemote {
             

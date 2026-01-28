@@ -18,7 +18,7 @@ class RealmUserLessonProgressCache {
         self.realmDatabase = realmDatabase
     }
     
-    func getUserLessonProgressChangedPublisher() -> AnyPublisher<Void, Never> {
+    @MainActor func getUserLessonProgressChangedPublisher() -> AnyPublisher<Void, Never> {
         
         return realmDatabase.openRealm()
             .objects(RealmUserLessonProgress.self)

@@ -19,9 +19,10 @@ class GetUserLessonFiltersRepository: GetUserLessonFiltersRepositoryInterface {
         self.getLessonFilterLanguagesRepository = getLessonFilterLanguagesRepository
     }
     
-    func getUserLessonLanguageFilterPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<LessonFilterLanguageDomainModel?, Never> {
+    @MainActor func getUserLessonLanguageFilterPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<LessonFilterLanguageDomainModel?, Never> {
         
-        return userLessonFiltersRepository.getUserLessonLanguageFilterChangedPublisher()
+        return userLessonFiltersRepository
+            .getUserLessonLanguageFilterChangedPublisher()
             .map {
                 
                 let languageId = self.userLessonFiltersRepository.getUserLessonLanguageFilter()?.languageId

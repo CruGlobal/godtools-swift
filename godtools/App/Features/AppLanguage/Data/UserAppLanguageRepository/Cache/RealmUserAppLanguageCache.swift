@@ -38,7 +38,7 @@ class RealmUserAppLanguageCache {
             .eraseToAnyPublisher()
     }
     
-    func getLanguageChangedPublisher() -> AnyPublisher<Void, Never> {
+    @MainActor func getLanguageChangedPublisher() -> AnyPublisher<Void, Never> {
                 
         return realmDatabase.openRealm()
             .objects(RealmUserAppLanguage.self)

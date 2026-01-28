@@ -19,7 +19,7 @@ class GetUserAccountDetailsRepository: GetUserAccountDetailsRepositoryInterface 
         self.localizationServices = localizationServices
     }
     
-    func getUserAccountDetailsPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<UserAccountDetailsDomainModel, Never> {
+    @MainActor func getUserAccountDetailsPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<UserAccountDetailsDomainModel, Never> {
         
         return Publishers.CombineLatest(
             userDetailsRepository
