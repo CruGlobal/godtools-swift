@@ -13,34 +13,19 @@ class RealmInstanceCreator {
     
     private let backgroundQueue: DispatchQueue = DispatchQueue(label: "realm.background_queue")
     private let config: Realm.Configuration
-    
-    private var sharedRealm: Realm?
-        
-    init(config: Realm.Configuration, creationType: RealmInstanceCreationType = .alwaysCreatesANewRealmInstance) {
+            
+    init(config: Realm.Configuration) {
         
         self.config = config
-        
-        if creationType == .usesASingleSharedRealmInstance {
-            sharedRealm = try! Realm(configuration: config)
-        }
     }
     
     func createRealm() -> Realm {
-        
-        if let sharedRealm = sharedRealm {
-            return sharedRealm
-        }
         
         return try! Realm(configuration: config)
     }
     
     func createBackgroundRealm(async: @escaping ((_ realm: Realm) -> Void)) {
              
-        if let sharedRealm = sharedRealm {
-            async(sharedRealm)
-            return
-        }
-        
         backgroundQueue.async {
             autoreleasepool {
                 

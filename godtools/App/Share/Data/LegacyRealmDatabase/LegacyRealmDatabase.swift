@@ -16,11 +16,11 @@ class LegacyRealmDatabase {
     private let config: Realm.Configuration
     private let realmInstanceCreator: RealmInstanceCreator
     
-    init(databaseConfiguration: RealmDatabaseConfiguration, realmInstanceCreationType: RealmInstanceCreationType = .alwaysCreatesANewRealmInstance) {
+    init(databaseConfiguration: RealmDatabaseConfiguration) {
         
         self.databaseConfiguration = databaseConfiguration
         config = databaseConfiguration.getRealmConfig()
-        realmInstanceCreator = RealmInstanceCreator(config: config, creationType: realmInstanceCreationType)
+        realmInstanceCreator = RealmInstanceCreator(config: config)
         
         _ = checkForUnsupportedFileFormatVersionAndDeleteRealmFilesIfNeeded(config: config)
     }
