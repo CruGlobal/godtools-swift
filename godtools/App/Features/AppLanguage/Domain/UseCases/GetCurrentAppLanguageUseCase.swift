@@ -18,7 +18,7 @@ class GetCurrentAppLanguageUseCase {
         self.getAppLanguageRepository = getAppLanguageRepository
     }
     
-    func getLanguagePublisher() -> AnyPublisher<AppLanguageDomainModel, Never> {
+    @MainActor func getLanguagePublisher() -> AnyPublisher<AppLanguageDomainModel, Never> {
         
         return getAppLanguageRepository
             .getLanguagePublisher()
