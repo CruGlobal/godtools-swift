@@ -46,10 +46,12 @@ struct SetUserPreferredAppLanguageRepositoryTests {
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            setUserPreferredAppLanguageRepository.setLanguagePublisher(appLanguage: LanguageCodeDomainModel.spanish.rawValue)
+            setUserPreferredAppLanguageRepository
+                .setLanguagePublisher(appLanguage: LanguageCodeDomainModel.spanish.rawValue)
                 .flatMap { _ in
                     
-                    return getUserLessonFiltersRepository.getUserLessonLanguageFilterPublisher(translatedInAppLanguage: appLanguageSpanish)
+                    return getUserLessonFiltersRepository
+                        .getUserLessonLanguageFilterPublisher(translatedInAppLanguage: appLanguageSpanish)
                 }
                 .sink { lessonFilterLanguage in
                     
