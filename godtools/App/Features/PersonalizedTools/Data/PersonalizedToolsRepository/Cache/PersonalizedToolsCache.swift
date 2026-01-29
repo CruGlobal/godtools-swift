@@ -20,7 +20,7 @@ class PersonalizedToolsCache {
         self.personalizedToolsSync = personalizedToolsSync
     }
     
-    func getPersonalizedToolsChanged() -> AnyPublisher<Void, Never> {
+    @MainActor func getPersonalizedToolsChanged() -> AnyPublisher<Void, Never> {
         
         return realmDatabase.openRealm()
             .objects(RealmPersonalizedTools.self)

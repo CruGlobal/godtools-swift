@@ -28,53 +28,37 @@ class GetPersonalizedLessonsUseCase {
         self.getLessonListItemProgressRepository = getLessonListItemProgressRepository
     }
 
-    func execute(appLanguage: AppLanguageDomainModel, country: String?, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<[LessonListItemDomainModel], Never> {
+    @MainActor func execute(appLanguage: AppLanguageDomainModel, country: String?, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<[LessonListItemDomainModel], Never> {
 
         // TODO: - if there's no country, get all the tools
         guard let country = country else {
             return Just([]).eraseToAnyPublisher()
         }
         
-        // TODO: - listen for changes on personalizedToolsRepository
-        return Publishers.CombineLatest(
+        // TODO: - make sure language id/app language is actually  right
+        let language = filterLessonsByLanguage?.languageId ?? appLanguage
+        
+        return Publishers.CombineLatest3(
+            personalizedToolsRepository.getPersonalizedToolsChanged(reloadFromRemote: true, requestPriority: .high, country: country, language: language, resourceType: .lesson),
             resourcesRepository.persistence.observeCollectionChangesPublisher(),
             getLessonListItemProgressRepository.getLessonListItemProgressChanged()
         )
-        .flatMap({ (resourcesDidChange: Void, lessonProgressDidChange: Void) -> AnyPublisher<[LessonListItemDomainModel], Never> in
+        .map({ (_, _, _) in
 
-            return self.personalizedToolsRepository
-                .getAllRankedResourcesPublisher(
-                    requestPriority: .high,
-                    country: country,
-                    language: filterLessonsByLanguage?.languageId ?? appLanguage,
-                    resourceType: .lesson
-                )
-                .catch { error -> AnyPublisher<[PersonalizedToolsDataModel], Never> in
-                    return Just([])
-                        .eraseToAnyPublisher()
-                }
-                .map { personalizedToolsDataModels -> [LessonListItemDomainModel] in
-
-                    let resources = self.fetchResources(for: personalizedToolsDataModels)
-
-                    return self.mapLessonsToListItems(
-                        lessons: resources,
-                        appLanguage: appLanguage,
-                        filterLessonsByLanguage: filterLessonsByLanguage
-                    )
-                }
-                .eraseToAnyPublisher()
+            let personalizedTools = self.personalizedToolsRepository.getPersonalizedTools(country: country, language: language, resourceType: .lesson)
+            
+            let resources = self.fetchResources(for: personalizedTools)
+            
+            return self.mapLessonsToListItems(lessons: resources, appLanguage: appLanguage, filterLessonsByLanguage: filterLessonsByLanguage)
+            
         })
         .eraseToAnyPublisher()
     }
 
-    private func fetchResources(for personalizedToolsDataModels: [PersonalizedToolsDataModel]) -> [ResourceDataModel] {
+    private func fetchResources(for personalizedToolsDataModel: PersonalizedToolsDataModel?) -> [ResourceDataModel] {
+        guard let personalizedToolsDataModel = personalizedToolsDataModel else { return [] }
         
-        guard let firstDataModel = personalizedToolsDataModels.first(where: { !$0.resourceIds.isEmpty }) else {
-            return []
-        }
-        
-        return firstDataModel.resourceIds.compactMap { resourceId in
+        return personalizedToolsDataModel.resourceIds.compactMap { resourceId in
             resourcesRepository.persistence.getObject(id: resourceId)
         }
     }

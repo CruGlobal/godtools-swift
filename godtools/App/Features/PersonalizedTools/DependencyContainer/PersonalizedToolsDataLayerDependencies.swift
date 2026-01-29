@@ -21,8 +21,20 @@ class PersonalizedToolsDataLayerDependencies {
 
         return LocalizationSettingsCountriesRepository()
     }
-    
-    func getPersonalizedToolsRepository() -> PersonalizedToolsRepository {
+
+    @MainActor func getPersonalizedToolsCache() -> PersonalizedToolsCache {
+
+        let personalizedToolsSync = RealmPersonalizedToolsCacheSync(
+            realmDatabase: coreDataLayer.getSharedLegacyRealmDatabase()
+        )
+
+        return PersonalizedToolsCache(
+            realmDatabase: coreDataLayer.getSharedLegacyRealmDatabase(),
+            personalizedToolsSync: personalizedToolsSync
+        )
+    }
+
+    @MainActor func getPersonalizedToolsRepository() -> PersonalizedToolsRepository {
 
         let api = PersonalizedToolsApi(
             config: coreDataLayer.getAppConfig(),
@@ -31,7 +43,8 @@ class PersonalizedToolsDataLayerDependencies {
         )
 
         return PersonalizedToolsRepository(
-            api: api
+            api: api,
+            cache: getPersonalizedToolsCache()
         )
     }
 

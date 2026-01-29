@@ -15,13 +15,36 @@ final class PersonalizedToolsRepository {
     private let api: PersonalizedToolsApi
     private let cache: PersonalizedToolsCache
     
+    private var cancellables: Set<AnyCancellable> = Set()
+    
     init(api: PersonalizedToolsApi, cache: PersonalizedToolsCache) {
         
         self.api = api
         self.cache = cache
     }
     
-    func getAllRankedResourcesPublisher(requestPriority: RequestPriority, country: String, language: String, resourceType: ResourceType?) -> AnyPublisher<[PersonalizedToolsDataModel], Error> {
+    @MainActor func getPersonalizedToolsChanged(reloadFromRemote: Bool, requestPriority: RequestPriority, country: String, language: String, resourceType: ResourceType?) -> AnyPublisher<Void, Never> {
+        
+        if reloadFromRemote {
+            
+            getAllRankedResourcesPublisher(requestPriority: requestPriority, country: country, language: language, resourceType: resourceType)
+                .sink { _ in
+                    
+                } receiveValue: { _ in
+                    
+                }
+                .store(in: &cancellables)
+        }
+        
+        return cache.getPersonalizedToolsChanged()
+    }
+    
+    func getPersonalizedTools(country: String, language: String, resourceType: ResourceType?) -> PersonalizedToolsDataModel? {
+        
+        return cache.getPersonalizedToolsFor(country: country, language: language)
+    }
+    
+    private func getAllRankedResourcesPublisher(requestPriority: RequestPriority, country: String, language: String, resourceType: ResourceType?) -> AnyPublisher<[PersonalizedToolsDataModel], Error> {
 
         return api
             .getAllRankedResourcesPublisher(requestPriority: requestPriority, country: country, language: language, resourceType: resourceType)
