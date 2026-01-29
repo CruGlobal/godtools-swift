@@ -47,29 +47,41 @@ struct GetLessonFilterLanguagesInterfaceStringsRepositoryTests {
         
         await confirmation(expectedCount: 2) { confirmation in
             
-            appLanguagePublisher
-                .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<LessonFilterLanguagesInterfaceStringsDomainModel, Never> in
-                    
-                    return getLessonFilterLanguagesInterfaceStringsRepository
-                        .getStringsPublisher(translateInAppLanguage: appLanguage)
-                        .eraseToAnyPublisher()
-                })
-                .sink { (interfaceStrings: LessonFilterLanguagesInterfaceStringsDomainModel) in
-                    
-                    sinkCount += 1
-                    confirmation()
-                    
-                    if sinkCount == 1 {
-                        
-                        englishInterfaceStringsRef = interfaceStrings
-                        appLanguagePublisher.send(LanguageCodeDomainModel.spanish.rawValue)
-                    }
-                    else if sinkCount == 2 {
-                        
-                        spanishInterfaceStringsRef = interfaceStrings
-                    }
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
                 }
-                .store(in: &cancellables)
+                
+                appLanguagePublisher
+                    .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<LessonFilterLanguagesInterfaceStringsDomainModel, Never> in
+                        
+                        return getLessonFilterLanguagesInterfaceStringsRepository
+                            .getStringsPublisher(translateInAppLanguage: appLanguage)
+                            .eraseToAnyPublisher()
+                    })
+                    .sink { (interfaceStrings: LessonFilterLanguagesInterfaceStringsDomainModel) in
+                        
+                        sinkCount += 1
+                        confirmation()
+                        
+                        if sinkCount == 1 {
+                            
+                            englishInterfaceStringsRef = interfaceStrings
+                            appLanguagePublisher.send(LanguageCodeDomainModel.spanish.rawValue)
+                        }
+                        else if sinkCount == 2 {
+                            
+                            spanishInterfaceStringsRef = interfaceStrings
+                            
+                            // When finished be sure to call:
+                            timeoutTask.cancel()
+                            continuation.resume(returning: ())
+                        }
+                    }
+                    .store(in: &cancellables)
+            }
         }
         
         #expect(englishInterfaceStringsRef?.navTitle == "Lesson language")

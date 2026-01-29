@@ -56,14 +56,16 @@ import Combine
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] domainModel in
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (domainModel: ViewDownloadableLanguagesDomainModel) in
                 
                 let interfaceStrings = domainModel.interfaceStrings
                 let downloadableLanguages = domainModel.downloadableLanguages
                 
                 self?.navTitle = interfaceStrings.navTitle
                 self?.allDownloadableLanguages = downloadableLanguages
-            }
+            })
             .store(in: &cancellables)
         
         Publishers.CombineLatest(

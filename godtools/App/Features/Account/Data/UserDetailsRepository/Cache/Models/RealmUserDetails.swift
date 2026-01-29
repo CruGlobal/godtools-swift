@@ -8,8 +8,9 @@
 
 import Foundation
 import RealmSwift
+import RepositorySync
 
-class RealmUserDetails: Object {
+class RealmUserDetails: Object, IdentifiableRealmObject {
     
     @objc dynamic var id: String = ""
     @objc dynamic var createdAt: Date?

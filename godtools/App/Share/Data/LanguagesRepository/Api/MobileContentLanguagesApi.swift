@@ -8,6 +8,7 @@
 
 import Foundation
 import RequestOperation
+import RepositorySync
 import Combine
 
 class MobileContentLanguagesApi {
@@ -56,7 +57,39 @@ class MobileContentLanguagesApi {
         )
     }
     
-    private func getLanguage(requestPriority: RequestPriority, languageId: String) -> AnyPublisher<LanguageCodable?, Error> {
+    private func getLanguage(requestPriority: RequestPriority, languageId: String) async throws -> LanguageCodable? {
+        
+        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
+        
+        let urlRequest: URLRequest = getLanguageRequest(urlSession: urlSession, languageId: languageId)
+        
+        let response: RequestDataResponse = try await requestSender.sendDataTask(
+            urlRequest: urlRequest,
+            urlSession: urlSession
+        )
+        
+        let decodeResponse: RequestCodableResponse<JsonApiResponseDataObject<LanguageCodable>, NoResponseCodable> = try response.decodeRequestDataResponseForSuccessCodable()
+        
+        return decodeResponse.successCodable?.dataObject
+    }
+    
+    private func getLanguages(requestPriority: RequestPriority) async throws -> [LanguageCodable] {
+        
+        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
+        
+        let urlRequest: URLRequest = getLanguagesRequest(urlSession: urlSession)
+        
+        let response: RequestDataResponse = try await requestSender.sendDataTask(
+            urlRequest: urlRequest,
+            urlSession: urlSession
+        )
+        
+        let decodeResponse: RequestCodableResponse<JsonApiResponseDataArray<LanguageCodable>, NoResponseCodable> = try response.decodeRequestDataResponseForSuccessCodable()
+        
+        return decodeResponse.successCodable?.dataArray ?? []
+    }
+    
+    private func getLanguagePublisher(requestPriority: RequestPriority, languageId: String) -> AnyPublisher<LanguageCodable?, Error> {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
@@ -72,7 +105,7 @@ class MobileContentLanguagesApi {
             .eraseToAnyPublisher()
     }
     
-    private func getLanguages(requestPriority: RequestPriority) -> AnyPublisher<[LanguageCodable], Error> {
+    private func getLanguagesPublisher(requestPriority: RequestPriority) -> AnyPublisher<[LanguageCodable], Error> {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
@@ -89,13 +122,32 @@ class MobileContentLanguagesApi {
     }
 }
 
-// MARK: - GTRepositorySyncExternalDataFetchInterface
+// MARK: - ExternalDataFetchInterface
 
-extension MobileContentLanguagesApi: GTRepositorySyncExternalDataFetchInterface {
+extension MobileContentLanguagesApi: ExternalDataFetchInterface {
     
-    func getObjectPublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<GTRepositorySyncResponse<LanguageCodable>, Never> {
+    func getObject(id: String, context: ExternalDataFetchContext) async throws -> [LanguageCodable] {
         
-        return getLanguage(requestPriority: requestPriority, languageId: id)
+        let language: LanguageCodable? = try await getLanguage(
+            requestPriority: context.requestPriority,
+            languageId: id
+        )
+        
+        guard let language = language else {
+            return Array()
+        }
+        
+        return [language]
+    }
+    
+    func getObjects(context: ExternalDataFetchContext) async throws -> [LanguageCodable] {
+        
+        return try await getLanguages(requestPriority: context.requestPriority)
+    }
+    
+    func getObjectPublisher(id: String, context: RequestOperationFetchContext) -> AnyPublisher<[LanguageCodable], Error> {
+        
+        return getLanguagePublisher(requestPriority: context.requestPriority, languageId: id)
             .map { (language: LanguageCodable?) in
                 
                 let objects: [LanguageCodable]
@@ -106,24 +158,16 @@ extension MobileContentLanguagesApi: GTRepositorySyncExternalDataFetchInterface 
                     objects = []
                 }
                 
-                return GTRepositorySyncResponse(objects: objects, errors: [])
-            }
-            .catch { (error: Error) in
-                return Just(GTRepositorySyncResponse(objects: [], errors: [error]))
-                    .eraseToAnyPublisher()
+                return objects
             }
             .eraseToAnyPublisher()
     }
     
-    func getObjectsPublisher(requestPriority: RequestPriority) -> AnyPublisher<GTRepositorySyncResponse<LanguageCodable>, Never> {
+    func getObjectsPublisher(context: RequestOperationFetchContext) -> AnyPublisher<[LanguageCodable], Error> {
         
-        return getLanguages(requestPriority: requestPriority)
+        return getLanguagesPublisher(requestPriority: context.requestPriority)
             .map { (languages: [LanguageCodable]) in
-                return GTRepositorySyncResponse(objects: languages, errors: [])
-            }
-            .catch { (error: Error) in
-                return Just(GTRepositorySyncResponse(objects: [], errors: [error]))
-                    .eraseToAnyPublisher()
+                return languages
             }
             .eraseToAnyPublisher()
     }

@@ -22,7 +22,7 @@ class GetToolFilterCategoriesRepository: GetToolFilterCategoriesRepositoryInterf
         self.stringWithLocaleCount = stringWithLocaleCount
     }
     
-    func getToolFilterCategoriesPublisher(translatedInAppLanguage: AppLanguageDomainModel, filteredByLanguageId: BCP47LanguageIdentifier?) -> AnyPublisher<[ToolFilterCategoryDomainModel], Never> {
+    @MainActor func getToolFilterCategoriesPublisher(translatedInAppLanguage: AppLanguageDomainModel, filteredByLanguageId: BCP47LanguageIdentifier?) -> AnyPublisher<[ToolFilterCategoryDomainModel], Error> {
         
         return resourcesRepository
             .persistence

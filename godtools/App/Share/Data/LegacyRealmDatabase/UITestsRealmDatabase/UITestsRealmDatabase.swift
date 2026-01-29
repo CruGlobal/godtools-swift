@@ -15,8 +15,8 @@ class UITestsRealmDatabase: LegacyRealmDatabase {
     
     init() {
         
-        super.init(databaseConfiguration: UITestsRealmDatabase.getConfig())
-        
+        super.init(config: UITestsRealmDatabase.getConfig().getRealmConfig())
+                
         // TODO: Will comment out for now until url requests are disabled in UITestsAppConfig.swift. ~Levi
         //addInitialObjects()
     }

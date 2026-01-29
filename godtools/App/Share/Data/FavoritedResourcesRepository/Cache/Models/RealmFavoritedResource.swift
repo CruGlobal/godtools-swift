@@ -8,10 +8,12 @@
 
 import Foundation
 import RealmSwift
+import RepositorySync
 
-class RealmFavoritedResource: Object {
+class RealmFavoritedResource: Object, IdentifiableRealmObject {
     
     @objc dynamic var createdAt: Date = Date()
+    @objc dynamic var id: String = ""
     @objc dynamic var resourceId: String = ""
     @objc dynamic var position: Int = 0
     
@@ -24,8 +26,8 @@ extension RealmFavoritedResource {
     convenience init(createdAt: Date, resourceId: String, position: Int) {
         self.init()
         self.createdAt = createdAt
+        self.id = resourceId
         self.resourceId = resourceId
         self.position = position
     }
 }
-

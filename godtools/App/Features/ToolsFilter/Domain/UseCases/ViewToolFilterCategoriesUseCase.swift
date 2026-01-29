@@ -20,11 +20,14 @@ class ViewToolFilterCategoriesUseCase {
         self.getToolFilterCategoriesRepository = getToolFilterCategoriesRepository
     }
     
-    func viewPublisher(filteredByLanguageId: String?, translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewToolFilterCategoriesDomainModel, Never> {
+    @MainActor func viewPublisher(filteredByLanguageId: String?, translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewToolFilterCategoriesDomainModel, Error> {
         
         return Publishers.CombineLatest(
-            getInterfaceStringsRepository.getStringsPublisher(translateInAppLanguage: translatedInAppLanguage),
-            getToolFilterCategoriesRepository.getToolFilterCategoriesPublisher(translatedInAppLanguage: translatedInAppLanguage, filteredByLanguageId: filteredByLanguageId)
+            getInterfaceStringsRepository
+                .getStringsPublisher(translateInAppLanguage: translatedInAppLanguage)
+                .setFailureType(to: Error.self),
+            getToolFilterCategoriesRepository
+                .getToolFilterCategoriesPublisher(translatedInAppLanguage: translatedInAppLanguage, filteredByLanguageId: filteredByLanguageId)
         )
         .map { interfaceStrings, categoryFilters in
             

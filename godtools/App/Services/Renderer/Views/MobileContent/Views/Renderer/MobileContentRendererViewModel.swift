@@ -79,9 +79,11 @@ import Combine
             .persistence
             .observeCollectionChangesPublisher()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] _ in
                 self?.updateTranslationsIfNeeded()
-            }
+            })
             .store(in: &cancellables)
         
         countLanguageUsage(localeId: currentPageRenderer.value.language.localeId)

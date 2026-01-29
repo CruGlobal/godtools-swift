@@ -20,11 +20,14 @@ class ViewToolFilterLanguagesUseCase {
         self.getInterfaceStringsRepository = getInterfaceStringsRepository
     }
     
-    func viewPublisher(filteredByCategoryId: String?, translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewToolFilterLanguagesDomainModel, Never> {
+    @MainActor func viewPublisher(filteredByCategoryId: String?, translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewToolFilterLanguagesDomainModel, Error> {
         
         return Publishers.CombineLatest(
-            getInterfaceStringsRepository.getStringsPublisher(translateInAppLanguage: translatedInAppLanguage),
-            getToolFilterLanguagesRepository.getToolFilterLanguagesPublisher(translatedInAppLanguage: translatedInAppLanguage, filteredByCategoryId: filteredByCategoryId)
+            getInterfaceStringsRepository
+                .getStringsPublisher(translateInAppLanguage: translatedInAppLanguage)
+                .setFailureType(to: Error.self),
+            getToolFilterLanguagesRepository
+                .getToolFilterLanguagesPublisher(translatedInAppLanguage: translatedInAppLanguage, filteredByCategoryId: filteredByCategoryId)
         )
         .map { interfaceStrings, languageFilters in
             

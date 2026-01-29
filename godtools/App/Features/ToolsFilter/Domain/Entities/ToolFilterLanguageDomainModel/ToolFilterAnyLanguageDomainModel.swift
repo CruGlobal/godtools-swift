@@ -10,7 +10,7 @@ import Foundation
 
 class ToolFilterAnyLanguageDomainModel: ToolFilterLanguageDomainModel {
         
-    init(text: String, toolsAvailableText: String) {
+    init(text: String, toolsAvailableText: String, numberOfToolsAvailable: Int) {
         
         super.init(
             id: nil,
@@ -21,7 +21,12 @@ class ToolFilterAnyLanguageDomainModel: ToolFilterLanguageDomainModel {
             primaryText: text,
             translatedName: nil,
             toolsAvailableText: toolsAvailableText,
-            searchableStrings: [text]
+            searchableStrings: [text],
+            numberOfToolsAvailable: numberOfToolsAvailable
         )
+    }
+    
+    static var emptyValue: ToolFilterAnyLanguageDomainModel {
+        return ToolFilterAnyLanguageDomainModel(text: "", toolsAvailableText: "", numberOfToolsAvailable: 0)
     }
 }

@@ -11,6 +11,6 @@ import Combine
 
 protocol GetUserAccountDetailsRepositoryInterface {
     
-    func getUserAccountDetailsPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<UserAccountDetailsDomainModel, Never>
+    @MainActor func getUserAccountDetailsPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<UserAccountDetailsDomainModel, Never>
 }
 

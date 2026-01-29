@@ -17,9 +17,10 @@ class GetUserLessonFiltersUseCase {
         self.getUserLessonFiltersRepositoryInterface = getUserLessonFiltersRepositoryInterface
     }
     
-    func getUserToolFiltersPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<UserLessonFiltersDomainModel, Never> {
+    @MainActor func getUserToolFiltersPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<UserLessonFiltersDomainModel, Never> {
         
-        return getUserLessonFiltersRepositoryInterface.getUserLessonLanguageFilterPublisher(translatedInAppLanguage: translatedInAppLanguage)
+        return getUserLessonFiltersRepositoryInterface
+            .getUserLessonLanguageFilterPublisher(translatedInAppLanguage: translatedInAppLanguage)
             .flatMap { languageFilter in
                 
                 let userFilters = UserLessonFiltersDomainModel(

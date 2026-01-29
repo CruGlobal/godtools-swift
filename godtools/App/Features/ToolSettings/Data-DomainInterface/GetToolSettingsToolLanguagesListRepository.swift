@@ -22,7 +22,7 @@ class GetToolSettingsToolLanguagesListRepository: GetToolSettingsToolLanguagesLi
         self.getTranslatedLanguageName = getTranslatedLanguageName
     }
     
-    func getToolLanguagesPublisher(listType: ToolSettingsToolLanguagesListTypeDomainModel, primaryLanguageId: String, parallelLanguageId: String?, toolId: String, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<[ToolSettingsToolLanguageDomainModel], Never> {
+    func getToolLanguagesPublisher(listType: ToolSettingsToolLanguagesListTypeDomainModel, primaryLanguageId: String, parallelLanguageId: String?, toolId: String, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<[ToolSettingsToolLanguageDomainModel], Error> {
         
         var filterOutLanguageIds: [String] = Array()
         
@@ -47,26 +47,29 @@ class GetToolSettingsToolLanguagesListRepository: GetToolSettingsToolLanguagesLi
             languageIds = Array()
         }
                     
-        let toolLanguages: [ToolSettingsToolLanguageDomainModel] = languagesRepository
+        return languagesRepository
             .persistence
-            .getObjects(ids: languageIds)
-            .map { (language: LanguageDataModel) in
-                                
-                let languageName: String = getTranslatedLanguageName.getLanguageName(
-                    language: language,
-                    translatedInLanguage: translateInLanguage
-                )
-                                
-                return ToolSettingsToolLanguageDomainModel(
-                    dataModelId: language.id,
-                    languageName: languageName
-                )
+            .getDataModelsPublisher(getOption: .objectsByIds(ids: languageIds))
+            .map { (languages: [LanguageDataModel]) in
+                
+                let toolSettingsToolLanguages: [ToolSettingsToolLanguageDomainModel] = languages.map { (language: LanguageDataModel) in
+                    
+                    let languageName: String = self.getTranslatedLanguageName.getLanguageName(
+                        language: language,
+                        translatedInLanguage: translateInLanguage
+                    )
+                    
+                    return ToolSettingsToolLanguageDomainModel(
+                        dataModelId: language.id,
+                        languageName: languageName
+                    )
+                }
+                
+                return toolSettingsToolLanguages
+                    .sorted {
+                        $0.languageName < $1.languageName
+                    }
             }
-            .sorted {
-                $0.languageName < $1.languageName
-            }
-        
-        return Just(toolLanguages)
             .eraseToAnyPublisher()
     }
 }

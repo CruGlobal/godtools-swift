@@ -52,7 +52,9 @@ import Combine
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (domainModel: ViewLanguageSettingsDomainModel) in
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (domainModel: ViewLanguageSettingsDomainModel) in
                 
                 let interfaceStrings: LanguageSettingsInterfaceStringsDomainModel = domainModel.interfaceStrings
                 
@@ -66,7 +68,7 @@ import Combine
                 self?.editDownloadedLanguagesButtonTitle = interfaceStrings.editDownloadedLanguagesButtonTitle
                 
                 self?.downloadedLanguages = domainModel.downloadedLanguages
-            }
+            })
             .store(in: &cancellables)
     }
     

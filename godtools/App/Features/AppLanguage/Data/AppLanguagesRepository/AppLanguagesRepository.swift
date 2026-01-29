@@ -22,7 +22,7 @@ class AppLanguagesRepository {
         self.sync = sync
     }
     
-    func observeNumberOfAppLanguagesPublisher() -> AnyPublisher<Int, Never> {
+    @MainActor func observeNumberOfAppLanguagesPublisher() -> AnyPublisher<Int, Never> {
         
         sync.syncPublisher()
             .sink { _ in
@@ -38,7 +38,7 @@ class AppLanguagesRepository {
             .eraseToAnyPublisher()
     }
     
-    func observeAppLanguagesPublisher() -> AnyPublisher<[AppLanguageDataModel], Never> {
+    @MainActor func observeAppLanguagesPublisher() -> AnyPublisher<[AppLanguageDataModel], Never> {
         
         sync.syncPublisher()
             .sink { _ in

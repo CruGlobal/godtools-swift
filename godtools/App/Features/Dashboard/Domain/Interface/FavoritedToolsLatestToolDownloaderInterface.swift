@@ -11,5 +11,5 @@ import Combine
 
 protocol FavoritedToolsLatestToolDownloaderInterface {
     
-    func downloadLatestToolsPublisher(inLanguages: [BCP47LanguageIdentifier]) -> AnyPublisher<Void, Never>
+    @MainActor func downloadLatestToolsPublisher(inLanguages: [BCP47LanguageIdentifier]) -> AnyPublisher<Void, Error>
 }

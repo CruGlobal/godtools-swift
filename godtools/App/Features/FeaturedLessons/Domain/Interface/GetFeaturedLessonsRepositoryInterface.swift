@@ -11,5 +11,5 @@ import Combine
 
 protocol GetFeaturedLessonsRepositoryInterface {
     
-    func getFeaturedLessonsPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[FeaturedLessonDomainModel], Never>
+    @MainActor func getFeaturedLessonsPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[FeaturedLessonDomainModel], Error>
 }

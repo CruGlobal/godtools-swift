@@ -21,7 +21,7 @@ class RealmUserDetailsCache {
         self.authTokenRepository = authTokenRepository
     }
     
-    func getAuthUserDetailsChangedPublisher() -> AnyPublisher<UserDetailsDataModel?, Never> {
+    @MainActor func getAuthUserDetailsChangedPublisher() -> AnyPublisher<UserDetailsDataModel?, Never> {
         
         return realmDatabase.openRealm()
             .objects(RealmUserDetails.self)
@@ -32,7 +32,7 @@ class RealmUserDetailsCache {
             .eraseToAnyPublisher()
     }
     
-    func getUserDetailsChangedPublisher(id: String) -> AnyPublisher<UserDetailsDataModel?, Never> {
+    @MainActor func getUserDetailsChangedPublisher(id: String) -> AnyPublisher<UserDetailsDataModel?, Never> {
         
         return realmDatabase.openRealm()
             .objects(RealmUserDetails.self)
