@@ -34,9 +34,8 @@ class GetPersonalizedLessonsUseCase {
         guard let country = country else {
             return Just([]).eraseToAnyPublisher()
         }
-        
-        // TODO: - make sure language id/app language is actually  right
-        let language = filterLessonsByLanguage?.languageId ?? appLanguage
+
+        let language = getLanguageCode(filterLessonsByLanguage: filterLessonsByLanguage, appLanguage: appLanguage)
         
         return Publishers.CombineLatest3(
             personalizedToolsRepository.getPersonalizedToolsChanged(reloadFromRemote: true, requestPriority: .high, country: country, language: language, resourceType: .lesson),
@@ -53,6 +52,22 @@ class GetPersonalizedLessonsUseCase {
             
         })
         .eraseToAnyPublisher()
+    }
+    
+    private func getLanguageCode(filterLessonsByLanguage: LessonFilterLanguageDomainModel?, appLanguage: AppLanguageDomainModel) -> BCP47LanguageIdentifier {
+        
+        let languageCode: BCP47LanguageIdentifier
+        
+        if let filterLanguageId = filterLessonsByLanguage?.languageId,
+           let filterLanguage = languagesRepository.persistence.getObject(id: filterLanguageId) {
+            
+            languageCode = filterLanguage.code
+            
+        } else {
+            languageCode = appLanguage
+        }
+        
+        return languageCode
     }
 
     private func fetchResources(for personalizedToolsDataModel: PersonalizedToolsDataModel?) -> [ResourceDataModel] {
