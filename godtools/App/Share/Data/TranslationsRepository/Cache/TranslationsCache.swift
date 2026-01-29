@@ -12,7 +12,7 @@ import RealmSwift
 
 class TranslationsCache {
          
-    private let persistence: any Persistence<TranslationDataModel, TranslationCodable>
+    let persistence: any Persistence<TranslationDataModel, TranslationCodable>
     
     init(persistence: any Persistence<TranslationDataModel, TranslationCodable>) {
         
