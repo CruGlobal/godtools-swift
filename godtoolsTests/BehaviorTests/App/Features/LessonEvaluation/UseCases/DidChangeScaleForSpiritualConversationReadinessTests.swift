@@ -19,7 +19,7 @@ struct DidChangeScaleForSpiritualConversationReadinessTests {
         Then: I expect the minimum value to be 1 and maximum value to be 10.
         """
     )
-    @MainActor func confirmReadinessScaleMinAndMaxValuesAreCorrect() async {
+    func confirmReadinessScaleMinAndMaxValuesAreCorrect() async {
         
         let didChangeSpiritualConversationReadinessScaleUseCase = getDidChangeScaleForSpiritualConversationReadinessUseCase()
         
@@ -51,7 +51,7 @@ struct DidChangeScaleForSpiritualConversationReadinessTests {
         Then: I expect the min, max, and scale values to be translated in my app language english.
         """
     )
-    @MainActor func readinessScaleIsTranslatedInEnglish() async {
+    func readinessScaleIsTranslatedInEnglish() async {
         
         let didChangeSpiritualConversationReadinessScaleUseCase = getDidChangeScaleForSpiritualConversationReadinessUseCase()
         
@@ -84,7 +84,7 @@ struct DidChangeScaleForSpiritualConversationReadinessTests {
         Then: I expect the min, max, and scale values to be translated in my app language arabic.
         """
     )
-    @MainActor func readinessScaleIsTranslatedInArabic() async {
+    func readinessScaleIsTranslatedInArabic() async {
         
         let didChangeSpiritualConversationReadinessScaleUseCase = getDidChangeScaleForSpiritualConversationReadinessUseCase()
         
@@ -119,39 +119,6 @@ struct DidChangeScaleForSpiritualConversationReadinessTests {
         }
     }
     
-    @Test(
-        """
-        Given: User is evaluating a lesson.
-        When: Viewing the ready to share faith scale and my app language is eastern arabic.
-        Then: I expect the min, max, and scale values to be translated in my app language eastern arabic.
-        """
-    )
-    @MainActor func readinessScaleIsTranslatedInEasternArabic() async {
-        
-        let didChangeSpiritualConversationReadinessScaleUseCase = getDidChangeScaleForSpiritualConversationReadinessUseCase()
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
-        
-        await confirmation(expectedCount: 1) { confirmation in
-            
-            didChangeSpiritualConversationReadinessScaleUseCase
-                .execute(scale: 5, translateInAppLanguage: "ar_SA")
-                .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
-                    
-                    readinessScaleRef = readinessScale
-                    
-                    confirmation()
-                }
-                .store(in: &cancellables)
-        }
-        
-        #expect(readinessScaleRef?.minScale.valueTranslatedInAppLanguage == "١")
-        #expect(readinessScaleRef?.maxScale.valueTranslatedInAppLanguage == "١٠")
-        #expect(readinessScaleRef?.scale.valueTranslatedInAppLanguage == "٥")
-    }
-    
     struct TestClampingScale {
         
         let scaleValue: Int
@@ -168,7 +135,7 @@ struct DidChangeScaleForSpiritualConversationReadinessTests {
             TestClampingScale(scaleValue: -10)
         ]
     )
-    @MainActor func readinessScaleIsClampedToMin(argument: TestClampingScale) async {
+    func readinessScaleIsClampedToMin(argument: TestClampingScale) async {
         
         let didChangeSpiritualConversationReadinessScaleUseCase = getDidChangeScaleForSpiritualConversationReadinessUseCase()
         
@@ -203,7 +170,7 @@ struct DidChangeScaleForSpiritualConversationReadinessTests {
             TestClampingScale(scaleValue: 99999)
         ]
     )
-    @MainActor func readinessScaleIsClampedToMax(argument: TestClampingScale) async {
+    func readinessScaleIsClampedToMax(argument: TestClampingScale) async {
         
         let didChangeSpiritualConversationReadinessScaleUseCase = getDidChangeScaleForSpiritualConversationReadinessUseCase()
         

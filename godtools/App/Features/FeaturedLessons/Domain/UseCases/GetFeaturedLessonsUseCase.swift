@@ -18,7 +18,7 @@ class GetFeaturedLessonsUseCase {
         self.getFeaturedLessonsRepository = getFeaturedLessonsRepository
     }
     
-    func getFeaturedLessonsPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[FeaturedLessonDomainModel], Never> {
+    @MainActor func getFeaturedLessonsPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[FeaturedLessonDomainModel], Error> {
         
         return getFeaturedLessonsRepository
             .getFeaturedLessonsPublisher(appLanguage: appLanguage)

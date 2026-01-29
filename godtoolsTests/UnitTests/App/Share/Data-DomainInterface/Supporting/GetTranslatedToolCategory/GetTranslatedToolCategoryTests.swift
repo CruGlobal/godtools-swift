@@ -8,7 +8,9 @@
 
 import Testing
 @testable import godtools
+import RepositorySync
 
+@Suite(.serialized)
 struct GetTranslatedToolCategoryTests {
     
     struct TestArgument {
@@ -34,11 +36,11 @@ struct GetTranslatedToolCategoryTests {
             TestArgument(translateInLanguage: LanguageCodeDomainModel.vietnamese.rawValue, expectedToolCategory: Self.toolCategoryInVietnamese)
         ]
     )
-    @MainActor func testToolNameIsTranslated(argument: TestArgument) {
+    func testToolNameIsTranslated(argument: TestArgument) throws {
         
-        let testsDiContainer: TestsDiContainer = Self.getTestsDiContainer()
+        let testsDiContainer: TestsDiContainer = try getTestsDiContainer()
         
-        let getTranslatedToolCategory: GetTranslatedToolCategory = Self.getTranslatedToolCategory(
+        let getTranslatedToolCategory: GetTranslatedToolCategory = getTranslatedToolCategory(
             testsDiContainer: testsDiContainer
         )
         
@@ -53,24 +55,19 @@ struct GetTranslatedToolCategoryTests {
 
 extension GetTranslatedToolCategoryTests {
     
-    @MainActor private static func getTestsDiContainer() -> TestsDiContainer {
-        return TestsDiContainer(
-            realmDatabase: getConfiguredRealmDatabase()
+    private func getTestsDiContainer() throws -> TestsDiContainer {
+        
+        return try TestsDiContainer(
+            realmFileName: String(describing: GetTranslatedToolCategoryTests.self),
+            addRealmObjects: getRealmObjects()
         )
     }
     
-    @MainActor private static func getTranslatedToolCategory(testsDiContainer: TestsDiContainer) -> GetTranslatedToolCategory {
-        return GetTranslatedToolCategory(
-            localizationServices: getLocalizationServices(),
-            resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository()
-        )
-    }
-    
-    private static func getConfiguredRealmDatabase() -> TestsInMemoryRealmDatabase {
+    private func getRealmObjects() -> [IdentifiableRealmObject] {
         
         let englishLanguage = getRealmLanguage(languageCode: .english)
         let spanishLanguage: RealmLanguage = getRealmLanguage(languageCode: .spanish)
-        let vietnameseLanguage: RealmLanguage =  Self.getRealmLanguage(languageCode: .vietnamese)
+        let vietnameseLanguage: RealmLanguage =  getRealmLanguage(languageCode: .vietnamese)
         
         let allLanguages: [RealmLanguage] = [
             englishLanguage,
@@ -86,15 +83,11 @@ extension GetTranslatedToolCategoryTests {
                 attrCategory: Self.attrCategory
             )
         ]
-        
-        let realmDatabase = TestsInMemoryRealmDatabase(
-            addObjectsToDatabase: allLanguages + tracts
-        )
-        
-        return realmDatabase
+
+        return allLanguages + tracts
     }
     
-    private static func getRealmLanguage(languageCode: LanguageCodeDomainModel) -> RealmLanguage {
+    private func getRealmLanguage(languageCode: LanguageCodeDomainModel) -> RealmLanguage {
         return MockRealmLanguage.createLanguage(
             language: languageCode,
             name: languageCode.rawValue + " Name",
@@ -102,7 +95,14 @@ extension GetTranslatedToolCategoryTests {
         )
     }
     
-    private static func getLocalizationServices() -> MockLocalizationServices {
+    private func getTranslatedToolCategory(testsDiContainer: TestsDiContainer) -> GetTranslatedToolCategory {
+        return GetTranslatedToolCategory(
+            localizationServices: getLocalizationServices(),
+            resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository()
+        )
+    }
+    
+    private func getLocalizationServices() -> MockLocalizationServices {
         
         let toolCategoryKey: String = GetTranslatedToolCategory.localizedKeyPrefix + Self.attrCategory
         

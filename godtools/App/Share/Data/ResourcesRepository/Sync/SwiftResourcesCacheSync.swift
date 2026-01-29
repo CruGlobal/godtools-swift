@@ -11,6 +11,11 @@ import Combine
 import SwiftData
 import RepositorySync
 
+import Foundation
+import Combine
+import SwiftData
+import RepositorySync
+
 @available(iOS 17.4, *)
 class SwiftResourcesCacheSync {
     

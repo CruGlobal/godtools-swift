@@ -19,7 +19,7 @@ class RealmGlobalAnalyticsCache {
         self.realmDatabase = realmDatabase
     }
     
-    func getGlobalAnalyticsChangedPublisher(id: String) -> AnyPublisher<GlobalAnalyticsDataModel?, Never> {
+    @MainActor func getGlobalAnalyticsChangedPublisher(id: String) -> AnyPublisher<GlobalAnalyticsDataModel?, Never> {
         
         return realmDatabase.openRealm()
             .objects(RealmGlobalAnalytics.self)

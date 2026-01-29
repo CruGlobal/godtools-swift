@@ -24,14 +24,11 @@ class GetLessonListItemProgressRepository {
         self.getTranslatedPercentage = getTranslatedPercentage
     }
     
-    func getLessonListItemProgressChanged() -> AnyPublisher<Void, Never> {
-        return lessonProgressRepository.getLessonProgressChangedPublisher()
-    }
-    
     func getLessonProgress(lesson: ResourceDataModel, appLanguage: AppLanguageDomainModel) -> LessonListItemProgressDomainModel {
         
         let lessonId = lesson.id
         let lessonCompletionUserCounterId = UserCounterNames.shared.LESSON_COMPLETION(tool: lesson.abbreviation)
+        
         if self.userCountersRepository.getUserCounter(id: lessonCompletionUserCounterId) != nil {
             
             let completeString = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage.localeId, key: "lessons.lessonCompleted")

@@ -18,7 +18,7 @@ class DownloadedLanguagesRepository {
         self.cache = cache
     }
     
-    func getDownloadedLanguagesChangedPublisher() -> AnyPublisher<Void, Never> {
+    @MainActor func getDownloadedLanguagesChangedPublisher() -> AnyPublisher<Void, Never> {
         
         return cache.getDownloadedLanguagesChangedPublisher()
     }

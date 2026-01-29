@@ -22,7 +22,7 @@ class GetUserToolFiltersRepository: GetUserToolFiltersRepositoryInterface {
         self.getToolFilterLanguagesRepository = getToolFilterLanguagesRepository
     }
     
-    func getUserCategoryFilterPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolFilterCategoryDomainModel, Never> {
+    @MainActor func getUserCategoryFilterPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolFilterCategoryDomainModel, Never> {
         
         return userToolFiltersRepository.getUserToolCategoryFilterChangedPublisher()
             .map {
@@ -44,7 +44,7 @@ class GetUserToolFiltersRepository: GetUserToolFiltersRepositoryInterface {
             .eraseToAnyPublisher()
     }
     
-    func getUserLanguageFilterPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolFilterLanguageDomainModel, Never> {
+    @MainActor func getUserLanguageFilterPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolFilterLanguageDomainModel, Never> {
         
         return userToolFiltersRepository.getUserToolLanguageFilterChangedPublisher()
             .map {

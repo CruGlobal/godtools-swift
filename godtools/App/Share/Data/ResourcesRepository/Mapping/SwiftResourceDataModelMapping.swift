@@ -7,9 +7,10 @@
 //
 
 import Foundation
+import RepositorySync
 
 @available(iOS 17.4, *)
-class SwiftResourceDataModelMapping: GTRepositorySyncMapping {
+final class SwiftResourceDataModelMapping: Mapping {
     
     func toDataModel(externalObject: ResourceCodable) -> ResourceDataModel? {
         return ResourceDataModel(interface: externalObject)

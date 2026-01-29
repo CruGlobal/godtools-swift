@@ -10,7 +10,9 @@ import Testing
 @testable import godtools
 import Foundation
 import Combine
+import RepositorySync
 
+@Suite(.serialized)
 struct StoreInitialAppLanguageTests {
     
     struct TestArgument {
@@ -39,9 +41,9 @@ struct StoreInitialAppLanguageTests {
             )
         ]
     )
-    @MainActor func noAppLanguageSetDefaultsToDeviceLanguageWhenSupported(argument: TestArgument) async {
+    func noAppLanguageSetDefaultsToDeviceLanguageWhenSupported(argument: TestArgument) async throws {
         
-        let testsDiContainer = TestsDiContainer()
+        let testsDiContainer = try getTestsDiContainer()
         
         let testsRealmDatabase: LegacyRealmDatabase = testsDiContainer.dataLayer.getSharedLegacyRealmDatabase()
         
@@ -79,18 +81,31 @@ struct StoreInitialAppLanguageTests {
         var resultRef: AppLanguageDomainModel?
         
         var cancellables: Set<AnyCancellable> = Set()
-                
+        
         await confirmation(expectedCount: 1) { confirmation in
             
-            storeInitialAppLanguage
-                .storeInitialAppLanguagePublisher()
-                .sink { (result: AppLanguageDomainModel) in
-                    
-                    confirmation()
-                    
-                    resultRef = result
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
                 }
-                .store(in: &cancellables)
+                
+                storeInitialAppLanguage
+                    .storeInitialAppLanguagePublisher()
+                    .sink { (result: AppLanguageDomainModel) in
+                                                
+                        resultRef = result
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                                
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    }
+                    .store(in: &cancellables)
+            }
         }
         
         #expect(resultRef == argument.expectedValue)
@@ -115,9 +130,9 @@ struct StoreInitialAppLanguageTests {
             )
         ]
     )
-    @MainActor func appLanguageSetAndSupportedShowsMyAppLanguage(argument: TestArgument) async {
+    func appLanguageSetAndSupportedShowsMyAppLanguage(argument: TestArgument) async throws {
         
-        let testsDiContainer = TestsDiContainer()
+        let testsDiContainer = try getTestsDiContainer()
         
         let testsRealmDatabase: LegacyRealmDatabase = testsDiContainer.dataLayer.getSharedLegacyRealmDatabase()
         
@@ -155,20 +170,33 @@ struct StoreInitialAppLanguageTests {
         var resultRef: AppLanguageDomainModel?
         
         var cancellables: Set<AnyCancellable> = Set()
-                
+        
         await confirmation(expectedCount: 1) { confirmation in
             
-            storeInitialAppLanguage
-                .storeInitialAppLanguagePublisher()
-                .sink { (result: AppLanguageDomainModel) in
-                    
-                    confirmation()
-                    
-                    resultRef = result
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
                 }
-                .store(in: &cancellables)
+                
+                storeInitialAppLanguage
+                    .storeInitialAppLanguagePublisher()
+                    .sink { (result: AppLanguageDomainModel) in
+                                                
+                        resultRef = result
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                                
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    }
+                    .store(in: &cancellables)
+            }
         }
-        
+                
         #expect(resultRef == argument.expectedValue)
     }
     
@@ -186,9 +214,9 @@ struct StoreInitialAppLanguageTests {
             )
         ]
     )
-    @MainActor func noAppLanguageSetAndDeviceLanguageIsNotASupportedAppLanguage(argument: TestArgument) async {
+    func noAppLanguageSetAndDeviceLanguageIsNotASupportedAppLanguage(argument: TestArgument) async throws {
         
-        let testsDiContainer = TestsDiContainer()
+        let testsDiContainer = try getTestsDiContainer()
         
         let testsRealmDatabase: LegacyRealmDatabase = testsDiContainer.dataLayer.getSharedLegacyRealmDatabase()
         
@@ -226,20 +254,44 @@ struct StoreInitialAppLanguageTests {
         var resultRef: AppLanguageDomainModel?
         
         var cancellables: Set<AnyCancellable> = Set()
-                
+        
         await confirmation(expectedCount: 1) { confirmation in
             
-            storeInitialAppLanguage
-                .storeInitialAppLanguagePublisher()
-                .sink { (result: AppLanguageDomainModel) in
-                    
-                    confirmation()
-                    
-                    resultRef = result
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
                 }
-                .store(in: &cancellables)
+                
+                storeInitialAppLanguage
+                    .storeInitialAppLanguagePublisher()
+                    .sink { (result: AppLanguageDomainModel) in
+                        
+                        resultRef = result
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                                
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    }
+                    .store(in: &cancellables)
+            }
         }
         
         #expect(resultRef == argument.expectedValue)
+    }
+}
+
+extension StoreInitialAppLanguageTests {
+    
+    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
+                
+        return try TestsDiContainer(
+            realmFileName: String(describing: StoreInitialAppLanguageTests.self),
+            addRealmObjects: addRealmObjects
+        )
     }
 }

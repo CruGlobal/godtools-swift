@@ -18,10 +18,10 @@ class ToolFilterLanguageDomainModel: StringSearchable {
     let primaryText: String
     let translatedName: String?
     let toolsAvailableText: String
-    
+    let numberOfToolsAvailable: Int
     let searchableStrings: [String]
     
-    convenience init(languageName: String, translatedName: String, toolsAvailableText: String, languageId: String, languageLocaleId: BCP47LanguageIdentifier) {
+    convenience init(languageName: String, translatedName: String, toolsAvailableText: String, languageId: String, languageLocaleId: BCP47LanguageIdentifier, numberOfToolsAvailable: Int) {
         
         self.init(
             id: languageId,
@@ -32,11 +32,12 @@ class ToolFilterLanguageDomainModel: StringSearchable {
             primaryText: languageName,
             translatedName: translatedName,
             toolsAvailableText: toolsAvailableText,
-            searchableStrings: [languageName, translatedName]
+            searchableStrings: [languageName, translatedName],
+            numberOfToolsAvailable: numberOfToolsAvailable
         )
     }
     
-    init(id: String?, filterId: String, languageDataModelId: String?, languageLocale: BCP47LanguageIdentifier?, languageButtonText: String, primaryText: String, translatedName: String?, toolsAvailableText: String, searchableStrings: [String]) {
+    init(id: String?, filterId: String, languageDataModelId: String?, languageLocale: BCP47LanguageIdentifier?, languageButtonText: String, primaryText: String, translatedName: String?, toolsAvailableText: String, searchableStrings: [String], numberOfToolsAvailable: Int) {
         
         self.id = id
         self.filterId = filterId
@@ -47,5 +48,6 @@ class ToolFilterLanguageDomainModel: StringSearchable {
         self.translatedName = translatedName
         self.toolsAvailableText = toolsAvailableText
         self.searchableStrings = searchableStrings
+        self.numberOfToolsAvailable = numberOfToolsAvailable
     }
 }

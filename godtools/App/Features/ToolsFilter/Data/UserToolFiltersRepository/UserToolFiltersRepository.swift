@@ -18,11 +18,11 @@ class UserToolFiltersRepository {
         self.cache = cache
     }
     
-    func getUserToolCategoryFilterChangedPublisher() -> AnyPublisher<Void, Never> {
+    @MainActor func getUserToolCategoryFilterChangedPublisher() -> AnyPublisher<Void, Never> {
         return cache.getUserToolCategoryFilterChangedPublisher()
     }
     
-    func getUserToolLanguageFilterChangedPublisher() -> AnyPublisher<Void, Never> {
+    @MainActor func getUserToolLanguageFilterChangedPublisher() -> AnyPublisher<Void, Never> {
         return cache.getUserToolLanguageFilterChangedPublisher()
     }
     

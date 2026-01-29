@@ -23,9 +23,10 @@ class GetToolShortcutLinksRepository: GetToolShortcutLinksRepositoryInterface {
         self.translationsRepository = translationsRepository
     }
     
-    func getLinksPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[ToolShortcutLinkDomainModel], Never> {
+    @MainActor func getLinksPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[ToolShortcutLinkDomainModel], Never> {
         
-        return favoritedResourcesRepository.getFavoritedResourcesSortedByPositionPublisher()
+        return favoritedResourcesRepository
+            .getFavoritedResourcesSortedByPositionPublisher()
             .flatMap({ (favoritedResources: [FavoritedResourceDataModel]) -> AnyPublisher<[ToolShortcutLinkDomainModel], Never> in
                 
                 let toolShortcutLinks: [ToolShortcutLinkDomainModel] = favoritedResources

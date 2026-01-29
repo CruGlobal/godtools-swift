@@ -56,12 +56,14 @@ import SwiftUI
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (domainModel: ViewAllYourFavoritedToolsDomainModel) in
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (domainModel: ViewAllYourFavoritedToolsDomainModel) in
                 
                 self?.sectionTitle = domainModel.interfaceStrings.sectionTitle
 
                 self?.favoritedTools = domainModel.yourFavoritedTools
-            }
+            })
             .store(in: &cancellables)
                 
         didConfirmToolRemovalSubject

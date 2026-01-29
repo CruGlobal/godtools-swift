@@ -25,7 +25,7 @@ class GetUserActivityUseCase {
         self.completedTrainingTipRepository = completedTrainingTipRepository
     }
     
-    func getUserActivityPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<UserActivityDomainModel, Never> {
+    @MainActor func getUserActivityPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<UserActivityDomainModel, Never> {
         
         return userCounterRepository
             .getUserCountersChanged(reloadFromRemote: true, requestPriority: .high)
