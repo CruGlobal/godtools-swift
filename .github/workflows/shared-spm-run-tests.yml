@@ -20,7 +20,7 @@ jobs:
       - name: Select Xcode Version
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '26.0.1'
+          xcode-version: '26.1.1'
       - name: Run Tests
         run: xcodebuild test -scheme ${{ inputs.xcodebuild-test-scheme }} -destination "OS=26.0.1,name=iPhone 17"
       - name: Upload Xcode Code Coverage Report to CodeCov
