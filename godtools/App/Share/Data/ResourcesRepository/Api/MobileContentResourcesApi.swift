@@ -47,7 +47,12 @@ class MobileContentResourcesApi {
         
         let urlRequest: URLRequest = getResourcePlusLatestTranslationsAndAttachmentsRequest(urlSession: urlSession, id: id)
         
-        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
+        return requestSender
+            .sendDataTaskPublisher(
+                urlRequest: urlRequest,
+                urlSession: urlSession
+            )
+            .validate()
             .decodeRequestDataResponseForSuccessOrFailureCodable()
             .map { (response: RequestCodableResponse<ResourcesPlusLatestTranslationsAndAttachmentsCodable, NoResponseCodable>) in
                 
@@ -77,7 +82,12 @@ class MobileContentResourcesApi {
         
         let urlRequest: URLRequest = getResourcePlusLatestTranslationsAndAttachmentsRequest(urlSession: urlSession, abbreviation: abbreviation)
         
-        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
+        return requestSender
+            .sendDataTaskPublisher(
+                urlRequest: urlRequest,
+                urlSession: urlSession
+            )
+            .validate()
             .decodeRequestDataResponseForSuccessOrFailureCodable()
             .map { (response: RequestCodableResponse<ResourcesPlusLatestTranslationsAndAttachmentsCodable, NoResponseCodable>) in
                 
@@ -109,7 +119,12 @@ class MobileContentResourcesApi {
         
         let urlRequest: URLRequest = getResourcesPlusLatestTranslationsAndAttachmentsRequest(urlSession: urlSession)
         
-        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
+        return requestSender
+            .sendDataTaskPublisher(
+                urlRequest: urlRequest,
+                urlSession: urlSession
+            )
+            .validate()
             .decodeRequestDataResponseForSuccessCodable()
             .map { (response: RequestCodableResponse<ResourcesPlusLatestTranslationsAndAttachmentsCodable, NoResponseCodable>) in
                 
