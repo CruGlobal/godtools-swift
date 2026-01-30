@@ -152,6 +152,7 @@ extension ResourcesRepository {
                         .getResourcesPlusLatestTranslationsAndAttachments()
                         .publisher
                 )
+                .receive(on: DispatchQueue.main)
                 .flatMap({ (languages: [LanguageDataModel], resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable) -> AnyPublisher<ResourcesCacheSyncResult, Error> in
                     
                     return self.cache.syncResources(
@@ -197,6 +198,7 @@ extension ResourcesRepository {
                     .syncLanguagesFromRemote(requestPriority: requestPriority),
                 externalDataFetch.getResourcesPlusLatestTranslationsAndAttachments(requestPriority: requestPriority)
             )
+            .receive(on: DispatchQueue.main)
             .flatMap({ (languages: [LanguageDataModel], resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable) -> AnyPublisher<ResourcesCacheSyncResult, Error> in
                 
                 return self.cache.syncResources(
