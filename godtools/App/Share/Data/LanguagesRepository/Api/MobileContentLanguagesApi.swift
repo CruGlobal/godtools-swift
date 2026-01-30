@@ -95,7 +95,12 @@ class MobileContentLanguagesApi {
         
         let urlRequest: URLRequest = getLanguageRequest(urlSession: urlSession, languageId: languageId)
         
-        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
+        return requestSender
+            .sendDataTaskPublisher(
+                urlRequest: urlRequest,
+                urlSession: urlSession
+            )
+            .validate()
             .decodeRequestDataResponseForSuccessCodable()
             .map { (response: RequestCodableResponse<JsonApiResponseDataObject<LanguageCodable>, NoResponseCodable>) in
                 
@@ -111,7 +116,12 @@ class MobileContentLanguagesApi {
         
         let urlRequest: URLRequest = getLanguagesRequest(urlSession: urlSession)
         
-        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
+        return requestSender
+            .sendDataTaskPublisher(
+                urlRequest: urlRequest,
+                urlSession: urlSession
+            )
+            .validate()
             .decodeRequestDataResponseForSuccessCodable()
             .map { (response: RequestCodableResponse<JsonApiResponseDataArray<LanguageCodable>, NoResponseCodable>) in
                 
