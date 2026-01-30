@@ -8,18 +8,22 @@
 
 import Foundation
 import Combine
+import RepositorySync
 
-class AppLanguagesRepository {
+class AppLanguagesRepository: RepositorySync<AppLanguageDataModel, AppLanguagesApi> {
         
-    private let cache: RealmAppLanguagesCache
     private let sync: AppLanguagesRepositorySyncInterface
     
     private var cancellables: Set<AnyCancellable> = Set()
     
-    init(cache: RealmAppLanguagesCache, sync: AppLanguagesRepositorySyncInterface) {
+    let cache: AppLanguagesCache
+    
+    init(externalDataFetch: AppLanguagesApi, persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>, cache: AppLanguagesCache, sync: AppLanguagesRepositorySyncInterface) {
         
         self.cache = cache
         self.sync = sync
+        
+        super.init(externalDataFetch: externalDataFetch, persistence: persistence)
     }
     
     @MainActor func observeNumberOfAppLanguagesPublisher() -> AnyPublisher<Int, Never> {

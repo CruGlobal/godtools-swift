@@ -12,10 +12,10 @@ import Combine
 class AppLanguagesRepositorySync: AppLanguagesRepositorySyncInterface {
         
     private let api: AppLanguagesApi
-    private let cache: RealmAppLanguagesCache
+    private let cache: AppLanguagesCache
     private let syncInvalidator: SyncInvalidator
     
-    init(api: AppLanguagesApi, cache: RealmAppLanguagesCache, userDefaultsCache: UserDefaultsCacheInterface) {
+    init(api: AppLanguagesApi, cache: AppLanguagesCache, userDefaultsCache: UserDefaultsCacheInterface) {
         
         self.api = api
         self.cache = cache
@@ -41,7 +41,7 @@ class AppLanguagesRepositorySync: AppLanguagesRepositorySyncInterface {
             .flatMap({ (appLanguages: [AppLanguageCodable]) -> AnyPublisher<[AppLanguageDataModel], Never> in
                 
                 let dataModels: [AppLanguageDataModel] = appLanguages.map({
-                    AppLanguageDataModel(dataModel: $0)
+                    AppLanguageDataModel(interface: $0)
                 })
                 
                 return Just(dataModels)

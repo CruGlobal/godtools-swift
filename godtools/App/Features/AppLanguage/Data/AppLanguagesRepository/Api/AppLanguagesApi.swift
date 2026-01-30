@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import RepositorySync
 
 class AppLanguagesApi {
     
@@ -15,7 +16,7 @@ class AppLanguagesApi {
         
     }
     
-    func getAppLanguagesPublisher() -> AnyPublisher<[AppLanguageCodable], Error> {
+    private func getAppLanguages() -> [AppLanguageCodable] {
         
         let allAppLanguages: [AppLanguageCodable] = [
             AppLanguageCodable(languageCode: "af", languageDirection: .leftToRight, languageScriptCode: nil),
@@ -44,7 +45,34 @@ class AppLanguagesApi {
             AppLanguageCodable(languageCode: "zh", languageDirection: .leftToRight, languageScriptCode: "Hant")
         ]
         
-        return Just(allAppLanguages).setFailureType(to: Error.self)
+        return allAppLanguages
+    }
+    
+    func getAppLanguagesPublisher() -> AnyPublisher<[AppLanguageCodable], Error> {
+        
+        return Just(getAppLanguages())
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
+    }
+}
+
+extension AppLanguagesApi: ExternalDataFetchInterface {
+    
+    func getObject(id: String, context: RequestOperationFetchContext) async throws -> [AppLanguageCodable] {
+        return try await emptyResponse()
+    }
+    
+    func getObjects(context: RequestOperationFetchContext) async throws -> [AppLanguageCodable] {
+        return getAppLanguages()
+    }
+    
+    @available(*, deprecated) func getObjectPublisher(id: String, context: RequestOperationFetchContext) -> AnyPublisher<[AppLanguageCodable], Error> {
+        return emptyResponsePublisher()
+            .eraseToAnyPublisher()
+    }
+    
+    @available(*, deprecated) func getObjectsPublisher(context: RequestOperationFetchContext) -> AnyPublisher<[AppLanguageCodable], Error> {
+        return getAppLanguagesPublisher()
             .eraseToAnyPublisher()
     }
 }

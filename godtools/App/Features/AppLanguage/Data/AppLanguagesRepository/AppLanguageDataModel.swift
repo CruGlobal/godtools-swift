@@ -21,11 +21,11 @@ struct AppLanguageDataModel: AppLanguageDataModelInterface {
         self.languageScriptCode = languageScriptCode
     }
     
-    init(dataModel: AppLanguageDataModelInterface) {
+    init(interface: AppLanguageDataModelInterface) {
         
-        self.languageCode = dataModel.languageCode
-        self.languageDirection = dataModel.languageDirection
-        self.languageScriptCode = dataModel.languageScriptCode
+        self.languageCode = interface.languageCode
+        self.languageDirection = interface.languageDirection
+        self.languageScriptCode = interface.languageScriptCode
     }
 }
 

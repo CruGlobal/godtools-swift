@@ -1,5 +1,5 @@
 //
-//  RealmAppLanguagesCache.swift
+//  AppLanguagesCache.swift
 //  godtools
 //
 //  Created by Levi Eggert on 5/2/24.
@@ -9,14 +9,15 @@
 import Foundation
 import Combine
 import RealmSwift
+import RepositorySync
 
-class RealmAppLanguagesCache {
+class AppLanguagesCache {
     
-    private let realmDatabase: LegacyRealmDatabase
+    private let persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>
     
-    init(realmDatabase: LegacyRealmDatabase) {
-        
-        self.realmDatabase = realmDatabase
+    init(persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>) {
+                
+        self.persistence = persistence
     }
     
     @MainActor func observeChangesPublisher() -> AnyPublisher<Void, Never> {
@@ -42,7 +43,7 @@ class RealmAppLanguagesCache {
         return realmDatabase.readObjectsPublisher(mapInBackgroundClosure: { (results: Results<RealmAppLanguage>) -> [AppLanguageDataModel] in
             
             return results.map({
-                AppLanguageDataModel(dataModel: $0)
+                AppLanguageDataModel(interface: $0)
             })
         })
         .eraseToAnyPublisher()
@@ -56,7 +57,7 @@ class RealmAppLanguagesCache {
                 return nil
             }
             
-            return AppLanguageDataModel(dataModel: realmAppLanguage)
+            return AppLanguageDataModel(interface: realmAppLanguage)
         })
         .eraseToAnyPublisher()
     }
@@ -67,7 +68,7 @@ class RealmAppLanguagesCache {
             
             let realmObjects: [RealmAppLanguage] = appLanguages.map({
                 let realmAppLanguage = RealmAppLanguage()
-                realmAppLanguage.mapFrom(dataModel: $0)
+                realmAppLanguage.mapFrom(interface: $0)
                 return realmAppLanguage
             })
             
@@ -76,7 +77,7 @@ class RealmAppLanguagesCache {
         } mapInBackgroundClosure: { (objects: [RealmAppLanguage]) -> [AppLanguageDataModel] in
             
             return objects.map({
-                AppLanguageDataModel(dataModel: $0)
+                AppLanguageDataModel(interface: $0)
             })
         }
         .eraseToAnyPublisher()

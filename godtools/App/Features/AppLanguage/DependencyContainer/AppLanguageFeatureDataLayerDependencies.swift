@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RepositorySync
 
 class AppLanguageFeatureDataLayerDependencies {
     
@@ -21,13 +22,38 @@ class AppLanguageFeatureDataLayerDependencies {
     
     func getAppLanguagesRepository(realmDatabase: LegacyRealmDatabase? = nil, sync: AppLanguagesRepositorySyncInterface? = nil) -> AppLanguagesRepository {
         
-        let cache = RealmAppLanguagesCache(
-            realmDatabase: realmDatabase ?? coreDataLayer.getSharedLegacyRealmDatabase()
+        let persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>
+        
+        if #available(iOS 17.4, *), let database = coreDataLayer.getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                dataModelMapping: SwiftAppLanguageDataModelMapping()
+            )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                database: coreDataLayer.getSharedRealmDatabase(),
+                dataModelMapping: RealmAppLanguageDataModelMapping()
+            )
+        }
+        
+        let api = AppLanguagesApi()
+        
+        let cache = AppLanguagesCache(
+            persistence: persistence
         )
         
-        let sync: AppLanguagesRepositorySyncInterface = sync ?? AppLanguagesRepositorySync(api: AppLanguagesApi(), cache: cache, userDefaultsCache: coreDataLayer.getUserDefaultsCache())
+        let sync: AppLanguagesRepositorySyncInterface = sync ?? AppLanguagesRepositorySync(
+            api: api,
+            cache: cache,
+            userDefaultsCache: coreDataLayer.getUserDefaultsCache()
+        )
         
         return AppLanguagesRepository(
+            externalDataFetch: api,
+            persistence: persistence,
             cache: cache,
             sync: sync
         )
