@@ -33,9 +33,13 @@ import Combine
     private weak var flowDelegate: FlowDelegate?
 
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-    @Published private var toolFilterCategorySelection: ToolFilterCategoryDomainModel = ToolFilterAnyCategoryDomainModel(text: "", toolsAvailableText: "")
-    @Published private var toolFilterLanguageSelection: ToolFilterLanguageDomainModel = ToolFilterAnyLanguageDomainModel(text: "", toolsAvailableText: "", numberOfToolsAvailable: 0)
+    @Published private var toolFilterCategorySelection: ToolFilterCategoryDomainModel = ToolFilterAnyCategoryDomainModel.emptyValue
+    @Published private var toolFilterLanguageSelection: ToolFilterLanguageDomainModel = ToolFilterAnyLanguageDomainModel.emptyValue
     
+    @Published private(set) var toggleOptions: [PersonalizationToggleOption] = []
+    @Published private(set) var strings: ToolsInterfaceStringsDomainModel = .emptyValue
+    
+    @Published var selectedToggle: PersonalizationToggleOptionValue = .personalized
     @Published var favoritingToolBannerMessage: String = ""
     @Published var showsFavoritingToolBanner: Bool = false
     @Published var toolSpotlightTitle: String = ""
@@ -95,11 +99,18 @@ import Combine
             
         }, receiveValue: { [weak self] (domainModel: ViewToolsDomainModel, spotlightTools: [SpotlightToolListItemDomainModel]) in
             
-            self?.favoritingToolBannerMessage = domainModel.interfaceStrings.favoritingToolBannerMessage
-            self?.toolSpotlightTitle = domainModel.interfaceStrings.toolSpotlightTitle
-            self?.toolSpotlightSubtitle = domainModel.interfaceStrings.toolSpotlightSubtitle
-            self?.filterTitle = domainModel.interfaceStrings.filterTitle
-            
+            let interfaceStrings = domainModel.interfaceStrings
+
+            self?.strings = interfaceStrings
+            self?.favoritingToolBannerMessage = interfaceStrings.favoritingToolBannerMessage
+            self?.toolSpotlightTitle = interfaceStrings.toolSpotlightTitle
+            self?.toolSpotlightSubtitle = interfaceStrings.toolSpotlightSubtitle
+            self?.filterTitle = interfaceStrings.filterTitle
+            self?.toggleOptions = [
+                PersonalizationToggleOption(title: interfaceStrings.personalizedToolToggleTitle, selection: .personalized),
+                PersonalizationToggleOption(title: interfaceStrings.allToolsToggleTitle, selection: .all)
+            ]
+
             self?.spotlightTools = spotlightTools
             
             self?.allTools = domainModel.tools
@@ -280,9 +291,14 @@ extension ToolsViewModel {
     }
     
     func toolTapped(tool: ToolListItemDomainModel) {
-        
+
         trackToolTappedAnalytics(tool: tool)
-        
+
         flowDelegate?.navigate(step: .toolTappedFromTools(tool: tool, toolFilterLanguage: toolFilterLanguageSelection))
+    }
+
+    func localizationSettingsTapped() {
+
+        flowDelegate?.navigate(step: .localizationSettingsTappedFromTools)
     }
 }

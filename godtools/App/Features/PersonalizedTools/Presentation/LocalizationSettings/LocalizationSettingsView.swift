@@ -43,8 +43,11 @@ struct LocalizationSettingsView: View {
             
             List {
                 ForEach(viewModel.countrySearchResults) { country in
-                    
-                    LocalizationSettingsCountryItemView(country: country) {
+
+                    LocalizationSettingsCountryItemView(
+                        country: country,
+                        isSelected: country.isoRegionCode == viewModel.selectedCountryIsoRegionCode
+                    ) {
                         
                         viewModel.countryTapped(country: country)
                     }

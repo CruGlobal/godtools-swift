@@ -13,6 +13,10 @@ import Combine
 
 class AppFlow: NSObject, Flow {
         
+    static let defaultNavBarColor: UIColor = .white
+    static let defaultNavBarControlColor: UIColor = ColorPalette.gtBlue.uiColor
+    static let defaultNavBarStatusBarStyle: UIStatusBarStyle = .darkContent
+    
     private let deepLinkingService: DeepLinkingService
     private let appMessaging: AppMessagingInterface
     private let appLaunchObserver: AppLaunchObserver = AppLaunchObserver()
@@ -38,15 +42,15 @@ class AppFlow: NSObject, Flow {
     init(appDiContainer: AppDiContainer, appDeepLinkingService: DeepLinkingService) {
         
         let navigationBarAppearance = AppNavigationBarAppearance(
-            backgroundColor: ColorPalette.gtBlue.uiColor,
-            controlColor: .white,
+            backgroundColor: AppFlow.defaultNavBarColor,
+            controlColor: AppFlow.defaultNavBarControlColor,
             titleFont: FontLibrary.systemUIFont(size: 17, weight: .semibold),
-            titleColor: .white,
+            titleColor: AppFlow.defaultNavBarControlColor,
             isTranslucent: false
         )
         
         self.appDiContainer = appDiContainer
-        self.navigationController = AppNavigationController(navigationBarAppearance: navigationBarAppearance)
+        self.navigationController = AppNavigationController(navigationBarAppearance: navigationBarAppearance, hidesNavigationBar: true)
         self.rootView = AppRootView(appRootController: rootController)
         self.deepLinkingService = appDeepLinkingService
         self.appMessaging = appDiContainer.dataLayer.getAppMessaging()

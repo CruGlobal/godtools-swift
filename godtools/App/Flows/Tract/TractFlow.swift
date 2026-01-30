@@ -51,18 +51,12 @@ class TractFlow: ToolNavigationFlow, ToolSettingsNavigationFlow {
         else {
             navigationController.setViewControllers([toolView], animated: false)
         }
-        
-        configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
     }
 
-    private func configureNavigationBar(shouldAnimateNavigationBarHiddenState: Bool) {
-        navigationController.setNavigationBarHidden(false, animated: shouldAnimateNavigationBarHiddenState)
-    }
-    
     func navigate(step: FlowStep) {
         
         switch step {
@@ -111,7 +105,6 @@ class TractFlow: ToolNavigationFlow, ToolSettingsNavigationFlow {
             }
             
             _ = navigationController.popViewController(animated: true)
-            configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
             
             tractFlow = nil
             
@@ -122,7 +115,6 @@ class TractFlow: ToolNavigationFlow, ToolSettingsNavigationFlow {
             }
             
             _ = navigationController.popViewController(animated: true)
-            configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
             
             lessonFlow = nil
             

@@ -97,10 +97,6 @@ class LessonFlow: ToolNavigationFlow, Flow, ToolSharer {
         return hasLessonProgress && !lessonProgressIsFirstPage && !lessonProgressIsLastPage
     }
     
-    private func configureNavigationBar(shouldAnimateNavigationBarHiddenState: Bool) {
-        navigationController.setNavigationBarHidden(true, animated: shouldAnimateNavigationBarHiddenState)
-    }
-    
     func navigate(step: FlowStep) {
         
         switch step {
@@ -158,7 +154,6 @@ class LessonFlow: ToolNavigationFlow, Flow, ToolSharer {
             }
             
             _ = navigationController.popViewController(animated: true)
-            configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
             
             articleFlow = nil
             
@@ -169,7 +164,6 @@ class LessonFlow: ToolNavigationFlow, Flow, ToolSharer {
             }
 
             _ = navigationController.popViewController(animated: true)
-            configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
             
             tractFlow = nil
             
@@ -180,7 +174,6 @@ class LessonFlow: ToolNavigationFlow, Flow, ToolSharer {
             }
             
             _ = navigationController.popViewController(animated: true)
-            configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
             
             lessonFlow = nil
                     
@@ -198,9 +191,7 @@ class LessonFlow: ToolNavigationFlow, Flow, ToolSharer {
         )
                 
         navigationController.pushViewController(lessonView, animated: animated)
-        
-        configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
-        
+                
         showSwipeTutorialIfNeeded()
     }
     

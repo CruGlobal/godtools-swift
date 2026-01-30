@@ -45,7 +45,6 @@ import RequestOperation
         
         getToolBannerUseCase
             .execute(attachmentId:attachmentId)
-            .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             } receiveValue: { [weak self] (image: Image?) in

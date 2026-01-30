@@ -9,13 +9,14 @@
 import Foundation
 
 struct LocalizationSettingsCountryDomainModel {
-    
+
+    let isoRegionCode: String
     let countryNameTranslatedInOwnLanguage: String
     let countryNameTranslatedInCurrentAppLanguage: String
 }
 
 extension LocalizationSettingsCountryDomainModel: StringSearchable {
-    
+
     var searchableStrings: [String] {
         return [
             countryNameTranslatedInOwnLanguage,
@@ -26,7 +27,6 @@ extension LocalizationSettingsCountryDomainModel: StringSearchable {
 
 extension LocalizationSettingsCountryDomainModel: Identifiable {
     var id: String {
-        // TODO: - make this a real value
-        return countryNameTranslatedInCurrentAppLanguage
+        return isoRegionCode
     }
 }

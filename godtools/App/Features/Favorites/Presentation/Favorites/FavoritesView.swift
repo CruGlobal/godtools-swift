@@ -77,7 +77,7 @@ struct FavoritesView: View {
                         )
                         .padding([.top], 45)
                     }
-                    .padding([.bottom], DashboardView.scrollViewBottomSpacingToTabBar)
+                    .padding([.bottom], 30)
 
                 } refreshHandler: {
                     
@@ -86,7 +86,7 @@ struct FavoritesView: View {
                 .opacity(viewModel.isLoadingYourFavoritedTools ? 0 : 1)
                 .animation(.easeOut, value: !viewModel.isLoadingYourFavoritedTools)
             }
-        }
+        }//end GeometryReader
         .onAppear {
             
             viewModel.pageViewed()

@@ -9,8 +9,8 @@
 import Foundation
 
 struct LocalizationSettingsCountryDataModel {
-    
-    // TODO: - we'll likely need to translate the country name in the domain layer?
+
+    let isoRegionCode: String
     let countryNameTranslatedInOwnLanguage: String
     let countryNameTranslatedInCurrentAppLanguage: String
 }

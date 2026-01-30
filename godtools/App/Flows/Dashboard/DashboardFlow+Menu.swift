@@ -10,12 +10,14 @@ import UIKit
 
 extension DashboardFlow {
     
-    func navigateToMenu(animated: Bool) {
+    func navigateToMenu(animated: Bool, initialNavigationStep: FlowStep? = nil) {
         
         let menuFlow: MenuFlow = MenuFlow(
             flowDelegate: self,
-            appDiContainer: appDiContainer
+            appDiContainer: appDiContainer,
+            initialNavigationStep: initialNavigationStep
         )
+        
         self.menuFlow = menuFlow
         
         rootController.addChildController(child: menuFlow.navigationController)

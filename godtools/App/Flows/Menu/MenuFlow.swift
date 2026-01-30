@@ -12,7 +12,7 @@ import SwiftUI
 import Combine
 
 class MenuFlow: Flow {
-    
+        
     private var tutorialFlow: TutorialFlow?
     private var languageSettingsFlow: LanguageSettingsFlow?
     private var cancellables: Set<AnyCancellable> = Set()
@@ -25,16 +25,16 @@ class MenuFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: AppNavigationController
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, initialNavigationStep: FlowStep? = nil) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
                 
         let navigationBarAppearance = AppNavigationBarAppearance(
-            backgroundColor: ColorPalette.gtBlue.uiColor,
-            controlColor: .white,
+            backgroundColor: AppFlow.defaultNavBarColor,
+            controlColor: AppFlow.defaultNavBarControlColor,
             titleFont: FontLibrary.systemUIFont(size: 17, weight: .semibold),
-            titleColor: .white,
+            titleColor: AppFlow.defaultNavBarControlColor,
             isTranslucent: false
         )
         
@@ -65,6 +65,10 @@ class MenuFlow: Flow {
                 self?.viewShareGodToolsDomainModel = domainModel
             }
             .store(in: &cancellables)
+        
+        if let initialNavigationStep = initialNavigationStep {
+            navigate(step: initialNavigationStep)
+        }
     }
     
     deinit {
@@ -354,7 +358,9 @@ extension MenuFlow {
             flowDelegate: self,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getCountryListUseCase: appDiContainer.feature.personalizedTools.domainLayer.getLocalizationSettingsCountryListUseCase(),
+            getLocalizationSettingsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getGetLocalizationSettingsUseCase(),
             searchCountriesUseCase: appDiContainer.feature.personalizedTools.domainLayer.getSearchCountriesInLocalizationSettingsCountriesListUseCase(),
+            setLocalizationSettingsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getSetLocalizationSettingsUseCase(),
             viewLocalizationSettingsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getViewLocalizationSettingsUseCase(),
             viewSearchBarUseCase: appDiContainer.domainLayer.getViewSearchBarUseCase()
         )

@@ -12,8 +12,8 @@ struct GTBlueButton: View {
         
     let title: String
     let font: Font
-    let width: CGFloat
-    let height: CGFloat
+    let width: CGFloat?
+    let height: CGFloat?
     let cornerRadius: CGFloat
     let titleHorizontalPadding: CGFloat?
     let titleVerticalPadding: CGFloat?
@@ -21,7 +21,7 @@ struct GTBlueButton: View {
     let accessibility: AccessibilityStrings.Button?
     let action: () -> Void
     
-    init(title: String, font: Font? = nil, fontSize: CGFloat? = nil, width: CGFloat, height: CGFloat, cornerRadius: CGFloat = 6, titleHorizontalPadding: CGFloat? = nil, titleVerticalPadding: CGFloat? = nil, highlightsTitleOnTap: Bool = true, accessibility: AccessibilityStrings.Button? = nil, action: @escaping () -> Void) {
+    init(title: String, font: Font? = nil, fontSize: CGFloat? = nil, width: CGFloat?, height: CGFloat?, cornerRadius: CGFloat = 6, titleHorizontalPadding: CGFloat? = nil, titleVerticalPadding: CGFloat? = nil, highlightsTitleOnTap: Bool = true, accessibility: AccessibilityStrings.Button? = nil, action: @escaping () -> Void) {
         
         self.title = title
         self.width = width

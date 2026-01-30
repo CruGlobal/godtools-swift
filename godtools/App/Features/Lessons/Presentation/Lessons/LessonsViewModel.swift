@@ -27,6 +27,10 @@ import SwiftUI
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private var lessonFilterLanguageSelection: LessonFilterLanguageDomainModel?
     
+    @Published private(set) var toggleOptions: [PersonalizationToggleOption] = []
+    @Published private(set) var strings: LessonsInterfaceStringsDomainModel = .emptyValue
+    
+    @Published var selectedToggle: PersonalizationToggleOptionValue = .personalized
     @Published var sectionTitle: String = ""
     @Published var subtitle: String = ""
     @Published var languageFilterTitle: String = ""
@@ -66,10 +70,17 @@ import SwiftUI
             
         }, receiveValue: { [weak self] (domainModel: ViewLessonsDomainModel) in
             
-            self?.sectionTitle = domainModel.interfaceStrings.title
-            self?.subtitle = domainModel.interfaceStrings.subtitle
-            self?.languageFilterTitle = domainModel.interfaceStrings.languageFilterTitle
-            
+            let interfaceStrings = domainModel.interfaceStrings
+
+            self?.strings = interfaceStrings
+            self?.sectionTitle = interfaceStrings.title
+            self?.subtitle = interfaceStrings.subtitle
+            self?.languageFilterTitle = interfaceStrings.languageFilterTitle
+            self?.toggleOptions = [
+                PersonalizationToggleOption(title: interfaceStrings.personalizedToolToggleTitle, selection: .personalized),
+                PersonalizationToggleOption(title: interfaceStrings.allLessonsToggleTitle, selection: .all)
+            ]
+
             self?.lessons = domainModel.lessons
             self?.isLoadingLessons = false
         })
@@ -187,9 +198,14 @@ extension LessonsViewModel {
     }
     
     func lessonCardTapped(lessonListItem: LessonListItemDomainModel) {
-        
+
         flowDelegate?.navigate(step: .lessonTappedFromLessonsList(lessonListItem: lessonListItem, languageFilter: lessonFilterLanguageSelection))
-        
+
         trackLessonTappedAnalytics(lessonListItem: lessonListItem)
+    }
+
+    func localizationSettingsTapped() {
+
+        flowDelegate?.navigate(step: .localizationSettingsTappedFromLessons)
     }
 }

@@ -29,7 +29,9 @@ struct ResourceCodable: ResourceDataModelInterface, Codable {
     let metatoolId: String?
     let name: String
     let oneskyProjectId: Int
+    let resourceDefaultOrders: [ResourceDefaultOrderCodable]
     let resourceDescription: String
+    let resourceScores: [ResourceScoreCodable]
     let resourceType: String
     let totalViews: Int
     let type: String
@@ -65,6 +67,8 @@ struct ResourceCodable: ResourceDataModelInterface, Codable {
         case attachments = "attachments"
         case defaultVariant = "default-variant"
         case latestTranslations = "latest-translations"
+        case resourceDefaultOrders = "resource-default-orders"
+        case resourceScores = "resource-scores"
         case metatool = "metatool"
         case variants = "variants"
     }
@@ -150,6 +154,20 @@ struct ResourceCodable: ResourceDataModelInterface, Codable {
         }
         catch {
             variantIds = []
+        }
+        
+        do {
+            resourceDefaultOrders = try relationshipsContainer?.decodeIfPresent(ScriptJsonApiResponseDataArray<ResourceDefaultOrderCodable>.self, forKey: .resourceDefaultOrders)?.dataArray ?? []
+        }
+        catch _ {
+            resourceDefaultOrders = []
+        }
+        
+        do {
+            resourceScores = try relationshipsContainer?.decodeIfPresent(ScriptJsonApiResponseDataArray<ResourceScoreCodable>.self, forKey: .resourceScores)?.dataArray ?? []
+        }
+        catch _ {
+            resourceScores = []
         }
         
         // set when initialized from a model.

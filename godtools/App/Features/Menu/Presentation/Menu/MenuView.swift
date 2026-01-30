@@ -48,13 +48,10 @@ struct MenuView: View {
                                 viewModel.languageSettingsTapped()
                             })
                             
-                            if viewModel.showsLocalizationSettingsOption {
+                            MenuItemView(imageAssetName: ImageCatalog.translate.name, title: viewModel.localizationSettingsOptionTitle, accessibility: .localizationSettings, tappedClosure: {
                                 
-                                MenuItemView(imageAssetName: ImageCatalog.translate.name, title: viewModel.localizationSettingsOptionTitle, accessibility: .localizationSettings, tappedClosure: {
-                                    
-                                    viewModel.localizationSettingsTapped()
-                                })
-                            }
+                                viewModel.localizationSettingsTapped()
+                            })
                         }
                     )
    
