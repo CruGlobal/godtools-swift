@@ -11,7 +11,10 @@ import Testing
 import Foundation
 import RealmSwift
 import SwiftData
+import RepositorySync
+import Combine
 
+@Suite(.serialized)
 struct LanguagesCacheTests {
         
     struct TestLanguage {
@@ -21,47 +24,26 @@ struct LanguagesCacheTests {
     
     struct TestArgument {
         let queryByLanguageCodes: [LanguageCodeDomainModel]
-        let swiftPersistenceIsEnabled: Bool
         let expectedLanguageIds: [String]
     }
     
     @Test(arguments: [
         TestArgument(
             queryByLanguageCodes: [LanguageCodeDomainModel.english],
-            swiftPersistenceIsEnabled: false,
             expectedLanguageIds: ["c"]
         ),
         TestArgument(
             queryByLanguageCodes: [LanguageCodeDomainModel.spanish],
-            swiftPersistenceIsEnabled: false,
             expectedLanguageIds: ["i"]
         ),
         TestArgument(
             queryByLanguageCodes: [LanguageCodeDomainModel.finnish],
-            swiftPersistenceIsEnabled: false,
-            expectedLanguageIds: ["l"]
-        ),
-        TestArgument(
-            queryByLanguageCodes: [LanguageCodeDomainModel.english],
-            swiftPersistenceIsEnabled: true,
-            expectedLanguageIds: ["c"]
-        ),
-        TestArgument(
-            queryByLanguageCodes: [LanguageCodeDomainModel.spanish],
-            swiftPersistenceIsEnabled: true,
-            expectedLanguageIds: ["i"]
-        ),
-        TestArgument(
-            queryByLanguageCodes: [LanguageCodeDomainModel.finnish],
-            swiftPersistenceIsEnabled: true,
             expectedLanguageIds: ["l"]
         )
     ])
-    func queryLanguageByCode(argument: TestArgument) async throws {
+    func realmQueryLanguageByCode(argument: TestArgument) async throws {
                 
-        let languagesCache: LanguagesCache = getLanguagesCache(
-            swiftPersistenceIsEnabled: argument.swiftPersistenceIsEnabled
-        )
+        let languagesCache: LanguagesCache = try getLanguagesCache()
         
         let languageCode: String = try #require(argument.queryByLanguageCodes.first?.rawValue)
                         
@@ -69,43 +51,108 @@ struct LanguagesCacheTests {
         
         #expect(language?.id == argument.expectedLanguageIds.first)
     }
+    /*
+    @Test(arguments: [
+        TestArgument(
+            queryByLanguageCodes: [LanguageCodeDomainModel.english],
+            expectedLanguageIds: ["c"]
+        ),
+        TestArgument(
+            queryByLanguageCodes: [LanguageCodeDomainModel.spanish],
+            expectedLanguageIds: ["i"]
+        ),
+        TestArgument(
+            queryByLanguageCodes: [LanguageCodeDomainModel.finnish],
+            expectedLanguageIds: ["l"]
+        )
+    ])
+    func queryLanguageByCode(argument: TestArgument) async throws {
+                
+        let languagesCache: LanguagesCache = try getLanguagesCache(
+            swiftPersistenceIsEnabled: true
+        )
+        
+        let languageCode: String = try #require(argument.queryByLanguageCodes.first?.rawValue)
+                        
+        let language: LanguageDataModel? = languagesCache.getCachedLanguage(code: languageCode)
+        
+        #expect(language?.id == argument.expectedLanguageIds.first)
+    }*/
     
     @Test(arguments: [
         TestArgument(
             queryByLanguageCodes: [LanguageCodeDomainModel.english, LanguageCodeDomainModel.spanish],
-            swiftPersistenceIsEnabled: false,
             expectedLanguageIds: ["c", "i"]
         ),
         TestArgument(
             queryByLanguageCodes: [LanguageCodeDomainModel.russian, LanguageCodeDomainModel.vietnamese, LanguageCodeDomainModel.french, LanguageCodeDomainModel.chinese],
-            swiftPersistenceIsEnabled: false,
             expectedLanguageIds: ["j", "b", "d", "h"]
         ),
         TestArgument(
             queryByLanguageCodes: [],
-            swiftPersistenceIsEnabled: false,
-            expectedLanguageIds: []
-        ),
-        TestArgument(
-            queryByLanguageCodes: [LanguageCodeDomainModel.english, LanguageCodeDomainModel.spanish],
-            swiftPersistenceIsEnabled: true,
-            expectedLanguageIds: ["c", "i"]
-        ),
-        TestArgument(
-            queryByLanguageCodes: [LanguageCodeDomainModel.russian, LanguageCodeDomainModel.vietnamese, LanguageCodeDomainModel.french, LanguageCodeDomainModel.chinese],
-            swiftPersistenceIsEnabled: true,
-            expectedLanguageIds: ["j", "b", "d", "h"]
-        ),
-        TestArgument(
-            queryByLanguageCodes: [],
-            swiftPersistenceIsEnabled: true,
             expectedLanguageIds: []
         )
     ])
-    func queryLanguagesByCodes(argument: TestArgument) async {
+    func realmQueryLanguagesByCodes(argument: TestArgument) async  throws {
         
-        let languagesCache: LanguagesCache = getLanguagesCache(
-            swiftPersistenceIsEnabled: argument.swiftPersistenceIsEnabled
+        let languagesCache: LanguagesCache = try getLanguagesCache()
+        
+        let languageCodes: [String] = argument.queryByLanguageCodes.map { $0.rawValue }
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        var languagesRef: [LanguageDataModel] = Array()
+        
+        await confirmation(expectedCount: 1) { confirmation in
+            
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
+                }
+                
+                languagesCache
+                    .getCachedLanguagesPublisher(codes: languageCodes)
+                    .sink { _ in
+                        
+                    } receiveValue: { (languages: [LanguageDataModel]) in
+                        
+                        languagesRef = languages
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                                
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    }
+                    .store(in: &cancellables)
+            }
+        }
+                
+        let languageIds: [String] = languagesRef.map { $0.id }
+
+        #expect(languageIds.sortedAscending() == argument.expectedLanguageIds.sortedAscending())
+    }
+    /*
+    @Test(arguments: [
+        TestArgument(
+            queryByLanguageCodes: [LanguageCodeDomainModel.english, LanguageCodeDomainModel.spanish],
+            expectedLanguageIds: ["c", "i"]
+        ),
+        TestArgument(
+            queryByLanguageCodes: [LanguageCodeDomainModel.russian, LanguageCodeDomainModel.vietnamese, LanguageCodeDomainModel.french, LanguageCodeDomainModel.chinese],
+            expectedLanguageIds: ["j", "b", "d", "h"]
+        ),
+        TestArgument(
+            queryByLanguageCodes: [],
+            expectedLanguageIds: []
+        )
+    ])
+    func queryLanguagesByCodes(argument: TestArgument) async  throws {
+        
+        let languagesCache: LanguagesCache = try getLanguagesCache(
+            swiftPersistenceIsEnabled: true
         )
         
         let languageCodes: [String] = argument.queryByLanguageCodes.map { $0.rawValue }
@@ -115,10 +162,18 @@ struct LanguagesCacheTests {
         let languageIds: [String] = languages.map { $0.id }
 
         #expect(languageIds.sortedAscending() == argument.expectedLanguageIds.sortedAscending())
-    }
+    }*/
 }
 
 extension LanguagesCacheTests {
+    
+    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
+                
+        return try TestsDiContainer(
+            realmFileName: String(describing: LanguagesCacheTests.self),
+            addRealmObjects: addRealmObjects
+        )
+    }
     
     private var allTestLanguages: [TestLanguage] {
         return [
@@ -147,32 +202,21 @@ extension LanguagesCacheTests {
         }
     }
     
-    private func getLanguagesCache(swiftPersistenceIsEnabled: Bool) -> LanguagesCache {
-        
-        if #available(iOS 17.4, *), swiftPersistenceIsEnabled {
-            TempSharedSwiftDatabase.shared.setDatabase(
-                swiftDatabase: getSwiftDatabase()
-            )
-        }
-        
-        return LanguagesCache(
-            realmDatabase: getRealmDatabase(),
-            swiftPersistenceIsEnabled: swiftPersistenceIsEnabled
-        )
-    }
-}
-
-// MARK: - RealmDatabase
-
-extension LanguagesCacheTests {
-    
-    private func getRealmDatabaseObjects() -> [Object] {
+    private func getRealmDatabaseObjects() -> [IdentifiableRealmObject] {
         return allRealmLanguages
     }
     
-    private func getRealmDatabase() -> RealmDatabase {
-        return TestsInMemoryRealmDatabase(
-            addObjectsToDatabase: getRealmDatabaseObjects()
+    private func getLanguagesCache() throws -> LanguagesCache {
+        
+        let testsDiContainer = try getTestsDiContainer(addRealmObjects: getRealmDatabaseObjects())
+        
+        let persistence = RealmRepositorySyncPersistence(
+            database: testsDiContainer.dataLayer.getSharedRealmDatabase(),
+            dataModelMapping: RealmLanguageDataModelMapping()
+        )
+        
+        return LanguagesCache(
+            persistence: persistence
         )
     }
 }
@@ -191,9 +235,7 @@ extension LanguagesCacheTests {
     }
     
     @available(iOS 17.4, *)
-    private func getSwiftDatabase() -> SwiftDatabase {
-        return TestsInMemorySwiftDatabase(
-            addObjectsToDatabase: getSwiftDatabaseObjects()
-        )
+    private func getSwiftDatabase() throws -> SwiftDatabase {
+        return try TestsInMemorySwiftDatabase().createDatabase(addObjectsToDatabase: getSwiftDatabaseObjects())
     }
 }

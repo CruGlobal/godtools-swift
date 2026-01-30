@@ -173,11 +173,7 @@ Online verziju možete pronaći na adresi: https://knowgod.com/";
 "no" = "Ne";
 
 // Tract - Sharing
-"tract_share_message" = "Ova poveznica vodi do web verzije stranice koju smo zadnju danas gledali zajedno: %@. 
-
-Razgovarajmo više o tome!
-
-Aplikaciju je moguće preuzeti na adresi: http://godtoolsapp.com";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "Preuzmi";

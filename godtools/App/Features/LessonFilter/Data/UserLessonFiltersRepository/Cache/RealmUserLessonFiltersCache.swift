@@ -12,13 +12,13 @@ import Combine
 
 class RealmUserLessonFiltersCache {
     
-    private let realmDatabase: RealmDatabase
+    private let realmDatabase: LegacyRealmDatabase
     
-    init(realmDatabase: RealmDatabase) {
+    init(realmDatabase: LegacyRealmDatabase) {
         self.realmDatabase = realmDatabase
     }
     
-    func getUserLessonLanguageFilterChangedPublisher() -> AnyPublisher<Void, Never> {
+    @MainActor func getUserLessonLanguageFilterChangedPublisher() -> AnyPublisher<Void, Never> {
         
         return realmDatabase.openRealm().objects(RealmUserLessonLanguageFilter.self)
             .objectWillChange

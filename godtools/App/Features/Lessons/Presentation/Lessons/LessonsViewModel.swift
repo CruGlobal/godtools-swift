@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import SwiftUI
 
-class LessonsViewModel: ObservableObject {
+@MainActor class LessonsViewModel: ObservableObject {
         
     private let resourcesRepository: ResourcesRepository
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
@@ -18,7 +18,7 @@ class LessonsViewModel: ObservableObject {
     private let viewLessonsUseCase: ViewLessonsUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
-    private let attachmentsRepository: AttachmentsRepository
+    private let getToolBannerUseCase: GetToolBannerUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -34,7 +34,7 @@ class LessonsViewModel: ObservableObject {
     @Published var lessons: [LessonListItemDomainModel] = []
     @Published var isLoadingLessons: Bool = true
         
-    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase, viewLessonsUseCase: ViewLessonsUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, attachmentsRepository: AttachmentsRepository) {
+    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase, viewLessonsUseCase: ViewLessonsUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getToolBannerUseCase: GetToolBannerUseCase) {
         
         self.flowDelegate = flowDelegate
         self.resourcesRepository = resourcesRepository
@@ -43,7 +43,7 @@ class LessonsViewModel: ObservableObject {
         self.viewLessonsUseCase = viewLessonsUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
-        self.attachmentsRepository = attachmentsRepository
+        self.getToolBannerUseCase = getToolBannerUseCase
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
@@ -62,15 +62,17 @@ class LessonsViewModel: ObservableObject {
         }
         .switchToLatest()
         .receive(on: DispatchQueue.main)
-        .sink { [weak self] (domainModel: ViewLessonsDomainModel) in
-                            
+        .sink(receiveCompletion: { _ in
+            
+        }, receiveValue: { [weak self] (domainModel: ViewLessonsDomainModel) in
+            
             self?.sectionTitle = domainModel.interfaceStrings.title
             self?.subtitle = domainModel.interfaceStrings.subtitle
             self?.languageFilterTitle = domainModel.interfaceStrings.languageFilterTitle
             
             self?.lessons = domainModel.lessons
             self?.isLoadingLessons = false
-        }
+        })
         .store(in: &cancellables)
     
         $appLanguage
@@ -158,7 +160,7 @@ extension LessonsViewModel {
         
         return LessonCardViewModel(
             lessonListItem: lessonListItem,
-            attachmentsRepository: attachmentsRepository
+            getToolBannerUseCase: getToolBannerUseCase
         )
     }
     

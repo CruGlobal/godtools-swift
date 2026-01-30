@@ -6,6 +6,9 @@
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "Құралдарды табу";
+
+// Tract - Sharing
+"tract_share_message" = "%@";
 // Downloads
 "Download in progress" = "Жүктеу орындалуда";
 

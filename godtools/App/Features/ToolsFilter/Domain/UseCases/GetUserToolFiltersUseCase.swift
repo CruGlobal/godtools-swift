@@ -18,7 +18,7 @@ class GetUserToolFiltersUseCase {
         self.getUserToolFiltersRepositoryInterface = getUserToolFiltersRepositoryInterface
     }
     
-    func getUserToolFiltersPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<UserToolFiltersDomainModel, Never> {
+    @MainActor func getUserToolFiltersPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<UserToolFiltersDomainModel, Never> {
         
         return Publishers.CombineLatest(
             getUserToolFiltersRepositoryInterface.getUserCategoryFilterPublisher(translatedInAppLanguage: translatedInAppLanguage),

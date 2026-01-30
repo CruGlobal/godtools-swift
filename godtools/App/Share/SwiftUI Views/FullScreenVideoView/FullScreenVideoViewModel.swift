@@ -8,7 +8,7 @@
 
 import Foundation
 
-class FullScreenVideoViewModel: ObservableObject {
+@MainActor class FullScreenVideoViewModel: ObservableObject {
     
     private let userDidCloseVideoStep: FlowStep
     private let videoEndedStep: FlowStep

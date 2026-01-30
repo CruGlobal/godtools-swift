@@ -12,13 +12,13 @@ import Combine
 
 class RealmUserLessonProgressCache {
     
-    private let realmDatabase: RealmDatabase
+    private let realmDatabase: LegacyRealmDatabase
     
-    init(realmDatabase: RealmDatabase) {
+    init(realmDatabase: LegacyRealmDatabase) {
         self.realmDatabase = realmDatabase
     }
     
-    func getUserLessonProgressChangedPublisher() -> AnyPublisher<Void, Never> {
+    @MainActor func getUserLessonProgressChangedPublisher() -> AnyPublisher<Void, Never> {
         
         return realmDatabase.openRealm()
             .objects(RealmUserLessonProgress.self)

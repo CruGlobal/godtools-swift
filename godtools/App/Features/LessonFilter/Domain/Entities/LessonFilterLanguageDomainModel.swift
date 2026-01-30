@@ -13,6 +13,7 @@ struct LessonFilterLanguageDomainModel {
     let languageNameTranslatedInLanguage: String
     let languageNameTranslatedInAppLanguage: String
     let lessonsAvailableText: String
+    let lessonsAvailableCount: Int
 }
 
 extension LessonFilterLanguageDomainModel: StringSearchable {

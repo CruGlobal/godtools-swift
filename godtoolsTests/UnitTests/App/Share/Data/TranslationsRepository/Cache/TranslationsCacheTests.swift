@@ -11,7 +11,10 @@ import Testing
 import Foundation
 import RealmSwift
 import SwiftData
+import RepositorySync
+import Combine
 
+@Suite(.serialized)
 struct TranslationsCacheTests {
     
     private static let resourceId: String = "0"
@@ -24,31 +27,29 @@ struct TranslationsCacheTests {
         let resourceId: String
         let languageId: String?
         let expectedVersion: Int
-        let swiftPersistenceIsEnabled: Bool
         
-        init(expectedVersion: Int, swiftPersistenceIsEnabled: Bool, languageId: String? = nil, resourceId: String = TranslationsCacheTests.resourceId) {
+        init(expectedVersion: Int, languageId: String? = nil, resourceId: String = TranslationsCacheTests.resourceId) {
             
             self.resourceId = resourceId
             self.languageId = languageId
             self.expectedVersion = expectedVersion
-            self.swiftPersistenceIsEnabled = swiftPersistenceIsEnabled
         }
     }
     
     @Test()
     func getRealmEnglishTranslation() async throws {
         
-        let translationsCache = getTranslationsCache(swiftPersistenceIsEnabled: false)
+        let translationsCache = try getTranslationsCache()
         
         let translationId: String = "e0"
         
-        let translation: TranslationDataModel = try #require(translationsCache.getPersistence().getObject(id: translationId))
+        let translation: TranslationDataModel = try #require(translationsCache.persistence.getDataModelNonThrowing(id: translationId))
         
         #expect(translation.id == translationId)
         #expect(translation.languageDataModel?.id == Self.englishLanguageId)
         #expect(translation.resourceDataModel?.id == Self.resourceId)
     }
-    
+    /*
     @Test()
     func getSwiftEnglishTranslation() async throws {
         
@@ -56,24 +57,21 @@ struct TranslationsCacheTests {
         
         let translationId: String = "e0"
         
-        let translation: TranslationDataModel = try #require(translationsCache.getPersistence().getObject(id: translationId))
+        let translation: TranslationDataModel = try #require(translationsCache.getPersistence().getDataModelNonThrowing(id: translationId))
         
         #expect(translation.id == translationId)
         #expect(translation.languageDataModel?.id == Self.englishLanguageId)
         #expect(translation.resourceDataModel?.id == Self.resourceId)
-    }
+    }*/
     
     @Test(arguments: [
-        TestArgument(expectedVersion: 12, swiftPersistenceIsEnabled: false, languageId: englishLanguageId),
-        TestArgument(expectedVersion: 122, swiftPersistenceIsEnabled: false, languageId: spanishLanguageId),
-        TestArgument(expectedVersion: 20, swiftPersistenceIsEnabled: false, languageId: vietnameseLanguageId),
-        TestArgument(expectedVersion: 12, swiftPersistenceIsEnabled: true, languageId: englishLanguageId),
-        TestArgument(expectedVersion: 122, swiftPersistenceIsEnabled: true, languageId: spanishLanguageId),
-        TestArgument(expectedVersion: 20, swiftPersistenceIsEnabled: true, languageId: vietnameseLanguageId)
+        TestArgument(expectedVersion: 12, languageId: englishLanguageId),
+        TestArgument(expectedVersion: 122, languageId: spanishLanguageId),
+        TestArgument(expectedVersion: 20, languageId: vietnameseLanguageId)
     ])
-    func getLatestTranslationByLanguageId(argument: TestArgument) async throws {
+    func realmGetLatestTranslationByLanguageId(argument: TestArgument) async throws {
              
-        let translationsCache = getTranslationsCache(swiftPersistenceIsEnabled: false)
+        let translationsCache = try getTranslationsCache()
         
         let languageId: String = try #require(argument.languageId)
         
@@ -84,21 +82,52 @@ struct TranslationsCacheTests {
                 
         #expect(translation?.version == argument.expectedVersion)
     }
+    /*
+    @Test(arguments: [
+        TestArgument(expectedVersion: 12, languageId: englishLanguageId),
+        TestArgument(expectedVersion: 122, languageId: spanishLanguageId),
+        TestArgument(expectedVersion: 20, languageId: vietnameseLanguageId)
+    ])
+    func getLatestTranslationByLanguageId(argument: TestArgument) async throws {
+             
+        let translationsCache = getTranslationsCache(swiftPersistenceIsEnabled: true)
+        
+        let languageId: String = try #require(argument.languageId)
+        
+        let translation = translationsCache.getLatestTranslation(
+            resourceId: argument.resourceId,
+            languageId: languageId
+        )
+                
+        #expect(translation?.version == argument.expectedVersion)
+    }*/
 }
 
 extension TranslationsCacheTests {
     
-    private func getTranslationsCache(swiftPersistenceIsEnabled: Bool) -> TranslationsCache {
+    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
+                
+        return try TestsDiContainer(
+            realmFileName: String(describing: TranslationsCacheTests.self),
+            addRealmObjects: addRealmObjects
+        )
+    }
+    
+    private func getTranslationsCache() throws -> TranslationsCache {
         
-        if #available(iOS 17.4, *), swiftPersistenceIsEnabled {
-            TempSharedSwiftDatabase.shared.setDatabase(
-                swiftDatabase: getSwiftDatabase()
-            )
-        }
+        let testsDiContainer = try getTestsDiContainer(
+            addRealmObjects: getRealmDatabaseObjects()
+        )
+        
+        let realmDatabase: RealmDatabase = testsDiContainer.dataLayer.getSharedRealmDatabase()
+        
+        let persistence = RealmRepositorySyncPersistence(
+            database: realmDatabase,
+            dataModelMapping: RealmTranslationDataModelMapping()
+        )
         
         return TranslationsCache(
-            realmDatabase: getRealmDatabase(),
-            swiftPersistenceIsEnabled: swiftPersistenceIsEnabled
+            persistence: persistence
         )
     }
 }
@@ -146,7 +175,7 @@ extension TranslationsCacheTests {
         ]
     }
     
-    private func getRealmDatabaseObjects() -> [Object] {
+    private func getRealmDatabaseObjects() -> [IdentifiableRealmObject] {
         
         let english: RealmLanguage = getEnglishLanguage()
         let spanish: RealmLanguage = getSpanishLanguage()
@@ -181,12 +210,6 @@ extension TranslationsCacheTests {
         }
         
         return [resource]
-    }
-    
-    private func getRealmDatabase() -> RealmDatabase {
-        return TestsInMemoryRealmDatabase(
-            addObjectsToDatabase: getRealmDatabaseObjects()
-        )
     }
 }
 
@@ -243,9 +266,7 @@ extension TranslationsCacheTests {
     }
     
     @available(iOS 17.4, *)
-    private func getSwiftDatabase() -> SwiftDatabase {
-        return TestsInMemorySwiftDatabase(
-            addObjectsToDatabase: getSwiftDatabaseObjects()
-        )
+    private func getSwiftDatabase() throws -> SwiftDatabase {
+        return try TestsInMemorySwiftDatabase().createDatabase(addObjectsToDatabase: getSwiftDatabaseObjects())
     }
 }

@@ -9,12 +9,16 @@
 import Foundation
 import SocialAuthentication
 @testable import godtools
+import RepositorySync
+import SwiftData
 
-class TestsAppConfig: AppConfigInterface {
+final class TestsAppConfig: AppConfigInterface {
     
+    private let legacyRealmDatabase: LegacyRealmDatabase
     private let realmDatabase: RealmDatabase
     
-    init(realmDatabase: RealmDatabase) {
+    init(legacyRealmDatabase: LegacyRealmDatabase, realmDatabase: RealmDatabase) {
+        self.legacyRealmDatabase = legacyRealmDatabase
         self.realmDatabase = realmDatabase
     }
     
@@ -66,8 +70,17 @@ class TestsAppConfig: AppConfigInterface {
         return "\(scheme)://mobile-content-api.cru.org"
     }
     
+    func getLegacyRealmDatabase() -> LegacyRealmDatabase {
+        return legacyRealmDatabase
+    }
+    
     func getRealmDatabase() -> RealmDatabase {
         return realmDatabase
+    }
+    
+    @available(iOS 17.4, *)
+    func getSwiftDatabase() throws -> SwiftDatabase? {
+        return nil
     }
     
     func getTractRemoteShareConnectionUrl() -> String {

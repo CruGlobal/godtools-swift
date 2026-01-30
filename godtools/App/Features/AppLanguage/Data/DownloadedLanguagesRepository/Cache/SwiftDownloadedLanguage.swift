@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftData
+import RepositorySync
 
 @available(iOS 17.4, *)
 typealias SwiftDownloadedLanguage = SwiftDownloadedLanguageV1.SwiftDownloadedLanguage

@@ -10,7 +10,9 @@ import Testing
 import Foundation
 @testable import godtools
 import Combine
+import RepositorySync
 
+@Suite(.serialized)
 struct ReorderFavoritedToolRepositoryTests {
 
     struct TestArgument {
@@ -33,52 +35,100 @@ struct ReorderFavoritedToolRepositoryTests {
         TestArgument(resourcesInRealmIdsAtPositions: ["A": 0, "B": 1, "C": 2, "D": 3, "E": 4], resourceIdToReorder: "E", originalPosition: 4, newPosition: 2, expectedUpdatedIdsAtPositions: ["A": 0, "B": 1, "E": 2, "C": 3, "D": 4])
        ]
     )
-    @MainActor func testReorderFavorites(argument: TestArgument) async {
+    func testReorderFavorites(argument: TestArgument) async throws {
         
-        var cancellables: Set<AnyCancellable> = Set()
-             
-        let realmDatabase = getConfiguredRealmDatabase(with: argument.resourcesInRealmIdsAtPositions)
+        let realmDatabase = try getRealmDatabase(resources: argument.resourcesInRealmIdsAtPositions)
+        
         let favoritedResourcesRepo = FavoritedResourcesRepository(
             cache: RealmFavoritedResourcesCache(realmDatabase: realmDatabase)
         )
+        
         let reorderFavoriteToolsRepository = ReorderFavoritedToolRepository(favoritedResourcesRepository: favoritedResourcesRepo)
+        
+        var cancellables: Set<AnyCancellable> = Set()
         
         var favoritedResources: [ReorderFavoritedToolDomainModel] = Array()
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            reorderFavoriteToolsRepository.reorderFavoritedToolPubilsher(toolId: argument.resourceIdToReorder, originalPosition: argument.originalPosition, newPosition: argument.newPosition)
-                .sink { _ in
-                    
-                } receiveValue: { _ in
-                    
-                    favoritedResources = realmDatabase.openRealm().objects(RealmFavoritedResource.self).map {
-                        ReorderFavoritedToolDomainModel(dataModelId: $0.resourceId, position: $0.position)
-                    }
-                    
-                    confirmation()
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
                 }
-                .store(in: &cancellables)
+                
+                reorderFavoriteToolsRepository
+                    .reorderFavoritedToolPubilsher(
+                        toolId: argument.resourceIdToReorder,
+                        originalPosition: argument.originalPosition,
+                        newPosition: argument.newPosition
+                    )
+                    .sink { _ in
+                        
+                    } receiveValue: { _ in
+                        
+                        favoritedResources = realmDatabase.openRealm().objects(RealmFavoritedResource.self).map {
+                            ReorderFavoritedToolDomainModel(dataModelId: $0.resourceId, position: $0.position)
+                        }
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                                
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    }
+                    .store(in: &cancellables)
+            }
         }
         
         for (expectedId, expectedPosition) in argument.expectedUpdatedIdsAtPositions {
             
             let actualPosition = favoritedResources.first(where: { $0.id == expectedId })?.position
+            
             #expect(
                 actualPosition == expectedPosition,
                 "Expected position for resource \(expectedId) to be \(expectedPosition), but was \(actualPosition ?? -1)"
             )
         }
     }
+}
+
+extension ReorderFavoritedToolRepositoryTests {
     
-    private func getConfiguredRealmDatabase(with resources: [String: Int]) -> RealmDatabase {
+    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
+                
+        return try TestsDiContainer(
+            realmFileName: String(describing: ReorderFavoritedToolRepositoryTests.self),
+            addRealmObjects: addRealmObjects
+        )
+    }
+    
+    private func getFavoritedResources(resources: [String: Int]) -> [RealmFavoritedResource] {
+        
         var resourceObjects = [RealmFavoritedResource]()
         
         for (resourceId, resourcePosition) in resources {
-            let resource = RealmFavoritedResource(createdAt: Date(), resourceId: resourceId, position: resourcePosition)
+            
+            let resource = RealmFavoritedResource(
+                createdAt: Date(),
+                resourceId: resourceId,
+                position: resourcePosition
+            )
+            
             resourceObjects.append(resource)
         }
         
-        return TestsInMemoryRealmDatabase(addObjectsToDatabase: resourceObjects)
+        return resourceObjects
+    }
+    
+    private func getRealmDatabase(resources: [String: Int]) throws -> LegacyRealmDatabase {
+        
+        let realmObjects: [IdentifiableRealmObject] = getFavoritedResources(resources: resources)
+        
+        let testsDiContainer = try getTestsDiContainer(addRealmObjects: realmObjects)
+        
+        return testsDiContainer.dataLayer.getSharedLegacyRealmDatabase()
     }
 }

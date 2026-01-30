@@ -12,14 +12,14 @@ import Combine
 
 class RealmGlobalAnalyticsCache {
     
-    private let realmDatabase: RealmDatabase
+    private let realmDatabase: LegacyRealmDatabase
     
-    init(realmDatabase: RealmDatabase) {
+    init(realmDatabase: LegacyRealmDatabase) {
         
         self.realmDatabase = realmDatabase
     }
     
-    func getGlobalAnalyticsChangedPublisher(id: String) -> AnyPublisher<GlobalAnalyticsDataModel?, Never> {
+    @MainActor func getGlobalAnalyticsChangedPublisher(id: String) -> AnyPublisher<GlobalAnalyticsDataModel?, Never> {
         
         return realmDatabase.openRealm()
             .objects(RealmGlobalAnalytics.self)

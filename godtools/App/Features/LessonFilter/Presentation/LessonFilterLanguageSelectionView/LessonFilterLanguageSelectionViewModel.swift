@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class LessonFilterLanguageSelectionViewModel: ObservableObject {
+@MainActor class LessonFilterLanguageSelectionViewModel: ObservableObject {
     
     private static var staticCancellables: Set<AnyCancellable> = Set()
     
@@ -54,11 +54,13 @@ class LessonFilterLanguageSelectionViewModel: ObservableObject {
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (domainModel: ViewLessonFilterLanguagesDomainModel) in
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (domainModel: ViewLessonFilterLanguagesDomainModel) in
                 
                 self?.navTitle = domainModel.interfaceStrings.navTitle
                 self?.allLanguages = domainModel.languageFilters
-            }
+            })
             .store(in: &cancellables)
         
         $appLanguage

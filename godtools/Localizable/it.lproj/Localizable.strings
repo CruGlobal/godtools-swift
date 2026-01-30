@@ -171,11 +171,7 @@ La versione online è disponibile all'indirizzo https://knowgod.com/";
 "yes" = "Sì";
 
 // Tract - Sharing
-"tract_share_message" = "Questo link ti porterà alla versione web dell'ultima pagina che abbiamo visto insieme oggi: %@. 
-
-Parliamo ancora un po'!
-
-È possibile scaricare l'app da https://godtoolsapp.com";
+"tract_share_message" = "%@";
 "dismiss" = "Ignora";
 "done" = "Fatto";
 "remove" = "Rimuovi";

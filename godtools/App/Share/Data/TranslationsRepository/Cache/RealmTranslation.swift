@@ -8,6 +8,7 @@
 
 import Foundation
 import RealmSwift
+import RepositorySync
 
 class RealmTranslation: Object, IdentifiableRealmObject, TranslationDataModelInterface {
     

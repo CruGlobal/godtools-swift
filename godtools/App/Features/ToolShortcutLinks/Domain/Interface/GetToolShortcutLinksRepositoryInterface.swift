@@ -11,5 +11,5 @@ import Combine
 
 protocol GetToolShortcutLinksRepositoryInterface {
     
-    func getLinksPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[ToolShortcutLinkDomainModel], Never>
+    @MainActor func getLinksPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[ToolShortcutLinkDomainModel], Never>
 }

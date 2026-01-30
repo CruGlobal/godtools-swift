@@ -10,7 +10,7 @@ import Foundation
 import GodToolsShared
 import Combine
 
-class ArticleCategoriesViewModel {
+@MainActor class ArticleCategoriesViewModel {
         
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     

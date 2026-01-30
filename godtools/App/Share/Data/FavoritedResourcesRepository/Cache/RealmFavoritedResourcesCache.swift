@@ -12,9 +12,9 @@ import Combine
 
 class RealmFavoritedResourcesCache {
         
-    private let realmDatabase: RealmDatabase
+    private let realmDatabase: LegacyRealmDatabase
         
-    init(realmDatabase: RealmDatabase) {
+    init(realmDatabase: LegacyRealmDatabase) {
         
         self.realmDatabase = realmDatabase
     }
@@ -23,7 +23,7 @@ class RealmFavoritedResourcesCache {
         return realmDatabase.openRealm().objects(RealmFavoritedResource.self).count
     }
     
-    func getFavoritedResourcesChangedPublisher() -> AnyPublisher<Void, Never> {
+    @MainActor func getFavoritedResourcesChangedPublisher() -> AnyPublisher<Void, Never> {
         
         return realmDatabase.openRealm()
             .objects(RealmFavoritedResource.self)
@@ -56,7 +56,7 @@ class RealmFavoritedResourcesCache {
             .object(ofType: RealmFavoritedResource.self, forPrimaryKey: id) != nil
     }
     
-    func getFavoritedResourcesSortedByPositionPublisher() -> AnyPublisher<[FavoritedResourceDataModel], Never> {
+    @MainActor func getFavoritedResourcesSortedByPositionPublisher() -> AnyPublisher<[FavoritedResourceDataModel], Never> {
         
         return getFavoritedResourcesChangedPublisher()
             .flatMap { _ in

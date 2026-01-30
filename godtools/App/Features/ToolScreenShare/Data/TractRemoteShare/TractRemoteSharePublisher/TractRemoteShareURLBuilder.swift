@@ -10,7 +10,7 @@ import Foundation
 
 // Example url: https: //knowgod.com/de/kgp?icid=gtshare&primaryLanguage=en&parallelLanguage=de&liveShareStream=9cae02af93e1d510c3e0-1597355635
 
-class TractRemoteShareURLBuilder {
+final class TractRemoteShareURLBuilder {
     
     private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository
@@ -23,8 +23,8 @@ class TractRemoteShareURLBuilder {
     
     func buildRemoteShareURL(toolId: String, primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageId: String, page: Int?, subscriberChannelId: String) -> String? {
                 
-        let resource: ResourceDataModel? = resourcesRepository.persistence.getObject(id: toolId)
-        let selectedLanguage: LanguageDataModel? = languagesRepository.persistence.getObject(id: selectedLanguageId)
+        let resource: ResourceDataModel? = resourcesRepository.persistence.getDataModelNonThrowing(id: toolId)
+        let selectedLanguage: LanguageDataModel? = languagesRepository.persistence.getDataModelNonThrowing(id: selectedLanguageId)
         
         var urlPath: String = ""
         
@@ -48,13 +48,13 @@ class TractRemoteShareURLBuilder {
         
         var queryItems: [URLQueryItem] = Array()
         
-        if let parallelLanguageId = parallelLanguageId, let parallelLanguage = languagesRepository.persistence.getObject(id: parallelLanguageId) {
+        if let parallelLanguageId = parallelLanguageId, let parallelLanguage = languagesRepository.persistence.getDataModelNonThrowing(id: parallelLanguageId) {
             queryItems.append(URLQueryItem(name: "parallelLanguage", value: parallelLanguage.code))
         }
         
         queryItems.append(URLQueryItem(name: "icid", value: "gtshare"))
         
-        if let primaryLanguage = languagesRepository.persistence.getObject(id: primaryLanguageId) {
+        if let primaryLanguage = languagesRepository.persistence.getDataModelNonThrowing(id: primaryLanguageId) {
             queryItems.append(URLQueryItem(name: "primaryLanguage", value: primaryLanguage.code))
         }
         

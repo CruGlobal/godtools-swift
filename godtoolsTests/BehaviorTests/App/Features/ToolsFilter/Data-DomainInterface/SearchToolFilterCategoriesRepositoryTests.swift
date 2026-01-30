@@ -12,28 +12,6 @@ import Combine
 
 struct SearchToolFilterCategoriesRepositoryTests {
     
-    private static let allCategories: [ToolFilterCategoryDomainModel] = [
-        ToolFilterCategoryDomainModel(categoryId: "", translatedName: "blAnd", toolsAvailableText: ""),
-        ToolFilterCategoryDomainModel(categoryId: "", translatedName: "bran", toolsAvailableText: ""),
-        ToolFilterCategoryDomainModel(categoryId: "", translatedName: "Canned", toolsAvailableText: ""),
-        ToolFilterCategoryDomainModel(categoryId: "", translatedName: "Church", toolsAvailableText: ""),
-        ToolFilterCategoryDomainModel(categoryId: "", translatedName: "church", toolsAvailableText: ""),
-        ToolFilterCategoryDomainModel(categoryId: "", translatedName: "food", toolsAvailableText: ""),
-        ToolFilterCategoryDomainModel(categoryId: "", translatedName: "Food", toolsAvailableText: ""),
-        ToolFilterCategoryDomainModel(categoryId: "", translatedName: "foody", toolsAvailableText: ""),
-        ToolFilterCategoryDomainModel(categoryId: "", translatedName: "land", toolsAvailableText: ""),
-        ToolFilterCategoryDomainModel(categoryId: "", translatedName: "may", toolsAvailableText: ""),
-        ToolFilterCategoryDomainModel(categoryId: "", translatedName: "pAnda", toolsAvailableText: ""),
-        ToolFilterCategoryDomainModel(categoryId: "", translatedName: "sanded", toolsAvailableText: ""),
-        ToolFilterCategoryDomainModel(categoryId: "", translatedName: "soccer", toolsAvailableText: ""),
-        ToolFilterCategoryDomainModel(categoryId: "", translatedName: "soCCer", toolsAvailableText: ""),
-        ToolFilterCategoryDomainModel(categoryId: "", translatedName: "Tan", toolsAvailableText: ""),
-        ToolFilterCategoryDomainModel(categoryId: "", translatedName: "Tanned", toolsAvailableText: ""),
-        ToolFilterCategoryDomainModel(categoryId: "", translatedName: "WAND", toolsAvailableText: ""),
-        ToolFilterCategoryDomainModel(categoryId: "", translatedName: "wander", toolsAvailableText: ""),
-        ToolFilterCategoryDomainModel(categoryId: "", translatedName: "Yellow", toolsAvailableText: "")
-    ]
-    
     struct TestArgument {
         let searchString: String
         let expectedCategories: [String]
@@ -73,7 +51,7 @@ struct SearchToolFilterCategoriesRepositoryTests {
         await confirmation(expectedCount: 1) { confirmation in
             
             searchCategoriesRepository
-                .getSearchResultsPublisher(for: argument.searchString, in: Self.allCategories)
+                .getSearchResultsPublisher(for: argument.searchString, in: allCategories)
                 .sink { (categories: [ToolFilterCategoryDomainModel]) in
                     
                     confirmation()
@@ -84,5 +62,32 @@ struct SearchToolFilterCategoriesRepositoryTests {
         }
         
         #expect(argument.expectedCategories.elementsEqual(searchedCategories))
+    }
+}
+
+extension SearchToolFilterCategoriesRepositoryTests {
+    
+    private var allCategories: [ToolFilterCategoryDomainModel] {
+        return [
+            ToolFilterCategoryDomainModel(categoryId: "", translatedName: "blAnd", toolsAvailableText: ""),
+            ToolFilterCategoryDomainModel(categoryId: "", translatedName: "bran", toolsAvailableText: ""),
+            ToolFilterCategoryDomainModel(categoryId: "", translatedName: "Canned", toolsAvailableText: ""),
+            ToolFilterCategoryDomainModel(categoryId: "", translatedName: "Church", toolsAvailableText: ""),
+            ToolFilterCategoryDomainModel(categoryId: "", translatedName: "church", toolsAvailableText: ""),
+            ToolFilterCategoryDomainModel(categoryId: "", translatedName: "food", toolsAvailableText: ""),
+            ToolFilterCategoryDomainModel(categoryId: "", translatedName: "Food", toolsAvailableText: ""),
+            ToolFilterCategoryDomainModel(categoryId: "", translatedName: "foody", toolsAvailableText: ""),
+            ToolFilterCategoryDomainModel(categoryId: "", translatedName: "land", toolsAvailableText: ""),
+            ToolFilterCategoryDomainModel(categoryId: "", translatedName: "may", toolsAvailableText: ""),
+            ToolFilterCategoryDomainModel(categoryId: "", translatedName: "pAnda", toolsAvailableText: ""),
+            ToolFilterCategoryDomainModel(categoryId: "", translatedName: "sanded", toolsAvailableText: ""),
+            ToolFilterCategoryDomainModel(categoryId: "", translatedName: "soccer", toolsAvailableText: ""),
+            ToolFilterCategoryDomainModel(categoryId: "", translatedName: "soCCer", toolsAvailableText: ""),
+            ToolFilterCategoryDomainModel(categoryId: "", translatedName: "Tan", toolsAvailableText: ""),
+            ToolFilterCategoryDomainModel(categoryId: "", translatedName: "Tanned", toolsAvailableText: ""),
+            ToolFilterCategoryDomainModel(categoryId: "", translatedName: "WAND", toolsAvailableText: ""),
+            ToolFilterCategoryDomainModel(categoryId: "", translatedName: "wander", toolsAvailableText: ""),
+            ToolFilterCategoryDomainModel(categoryId: "", translatedName: "Yellow", toolsAvailableText: "")
+        ]
     }
 }

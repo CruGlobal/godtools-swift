@@ -14,18 +14,10 @@ class StoredAttachmentDataModel {
     let diskFileUrl: URL?
     let fileCacheLocation: FileCacheLocation
     
-    init(data: Data, fileCacheLocation: FileCacheLocation, resourcesFileCache: ResourcesSHA256FileCache) {
+    init(data: Data, fileCacheLocation: FileCacheLocation, resourcesFileCache: ResourcesSHA256FileCache) throws {
         
         self.data = data
+        self.diskFileUrl = try resourcesFileCache.getFile(location: fileCacheLocation)
         self.fileCacheLocation = fileCacheLocation
-        
-        switch resourcesFileCache.getFile(location: fileCacheLocation) {
-        
-        case .success(let url):
-            diskFileUrl = url
-            
-        case .failure( _):
-            diskFileUrl = nil
-        }
     }
 }

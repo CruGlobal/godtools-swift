@@ -15,6 +15,7 @@ class ProgressTimer {
     private static let interval: TimeInterval = 1 / ProgressTimer.intervalRatePerSecond
     
     private let currentProgressSubject: CurrentValueSubject<Double, Never> = CurrentValueSubject(0)
+    private let loggingEnabled: Bool
     
     private var progressTimer: Timer?
     private var maxIntervalCount: Double = 0
@@ -29,12 +30,28 @@ class ProgressTimer {
     
     private(set) var isPaused: Bool = false
     
-    init() {
+    init(loggingEnabled: Bool = false) {
         
+        self.loggingEnabled = loggingEnabled
+        
+        log(message: "init")
     }
     
     deinit {
+        
+        log(message: "deinit")
+        
         stop()
+    }
+    
+    private func log(message: String) {
+       
+        guard loggingEnabled else {
+            return
+        }
+        
+        print("\n Progress Timer")
+        print("  message: \(message)")
     }
     
     private static func getIntervalCountForSeconds(seconds: Double) -> Double {
@@ -87,6 +104,7 @@ class ProgressTimer {
     func start(lengthSeconds: TimeInterval, changed: @escaping ((_ progress: Double) -> Void), completed: @escaping (() -> Void)) {
         
         guard !isRunning else {
+            log(message: "already running...")
             return
         }
         
@@ -96,6 +114,8 @@ class ProgressTimer {
         
         progressChangedClosure = changed
         progressCompletedClosure = completed
+        
+        log(message: "start")
         
         progressTimer = Timer.scheduledTimer(
             timeInterval: ProgressTimer.interval,
@@ -120,6 +140,8 @@ class ProgressTimer {
     
     func pause(progress: Double?) {
         
+        log(message: "pause")
+        
         isPaused = true
         
         guard let progress = progress else {
@@ -141,6 +163,8 @@ class ProgressTimer {
             return
         }
         
+        log(message: "stop")
+        
         progressChangedClosure = nil
         progressCompletedClosure = nil
         
@@ -155,6 +179,7 @@ class ProgressTimer {
     @objc private func handleProgressTimerInterval() {
 
         guard !isPaused else {
+            log(message: "is paused...")
             return
         }
         
@@ -171,9 +196,13 @@ class ProgressTimer {
                         
             stop()
             
+            log(message: "handleProgressTimerInterval\n completed: \(progress)")
+            
             return
         }
                 
         progress = intervalCount / maxIntervalCount
+        
+        log(message: "handleProgressTimerInterval\n progress: \(progress)")
     }
 }

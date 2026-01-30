@@ -9,7 +9,7 @@
 import Foundation
 import GodToolsShared
 
-class TrainingViewFactory: MobileContentPageViewFactoryType {
+final class TrainingViewFactory: MobileContentPageViewFactoryType {
     
     private let mobileContentAnalytics: MobileContentRendererAnalytics
     private let getTrainingTipCompletedUseCase: GetTrainingTipCompletedUseCase

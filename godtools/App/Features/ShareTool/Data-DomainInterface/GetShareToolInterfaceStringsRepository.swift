@@ -24,11 +24,11 @@ class GetShareToolInterfaceStringsRepository: GetShareToolInterfaceStringsReposi
     
     func getStringsPublisher(toolId: String, toolLanguageId: String, pageNumber: Int, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ShareToolInterfaceStringsDomainModel, Never> {
         
-        let resourceType = resourcesRepository.persistence.getObject(id: toolId)?.resourceTypeEnum ?? .unknown
+        let resourceType = resourcesRepository.persistence.getDataModelNonThrowing(id: toolId)?.resourceTypeEnum ?? .unknown
 
         let localizedShareToolMessage: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "tract_share_message")
         
-        guard let resource = resourcesRepository.persistence.getObject(id: toolId), let toolLanguage = languagesRepository.persistence.getObject(id: toolLanguageId) else {
+        guard let resource = resourcesRepository.persistence.getDataModelNonThrowing(id: toolId), let toolLanguage = languagesRepository.persistence.getDataModelNonThrowing(id: toolLanguageId) else {
             
             return Just(ShareToolInterfaceStringsDomainModel(shareMessage: localizedShareToolMessage))
                 .eraseToAnyPublisher()

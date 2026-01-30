@@ -165,9 +165,7 @@ Online verzia je k dispozícii na https://knowgod.com/";
 "no" = "Nie";
 
 // Tract - Sharing
-"tract_share_message" = "Tento odkaz vás nasmeruje na webovú verziu stránky, na ktorú sme sa naposledy dnes pozerali spolu: %@. Pohovorme si viac!
-
-Aplikácia sa dá stiahnuť na https://godtoolsapp.com";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "Stiahnuť";

@@ -18,7 +18,7 @@ class ArticleCategoryCellViewModel {
         
         title.accept(value: category.label?.text ?? "")
         
-        if let bannerResource = category.banner, let image = manifestResourcesCache.getUIImage(resource: bannerResource) {
+        if let bannerResource = category.banner, let image = manifestResourcesCache.getNonThrowingUIImage(resource: bannerResource) {
             articleImage.accept(value: image)
         }
     }

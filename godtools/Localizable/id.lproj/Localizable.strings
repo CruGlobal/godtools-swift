@@ -310,11 +310,7 @@ Versi online dapat ditemukan di https://knowgod.com/id";
 "no" = "Tidak";
 
 // Tract - Sharing
-"tract_share_message" = "Tautan ini akan membawa Anda ke halaman versi web terakhir yang dilihat hari ini: %@. 
-
-Mari kita bicarakan lebih lanjut!
-
-Aplikasi dapat diunduh dari https://godtoolsapp.com";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "Unduh";

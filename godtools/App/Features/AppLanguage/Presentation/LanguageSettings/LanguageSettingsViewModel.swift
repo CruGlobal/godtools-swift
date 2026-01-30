@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class LanguageSettingsViewModel: ObservableObject {
+@MainActor class LanguageSettingsViewModel: ObservableObject {
     
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let viewLanguageSettingsUseCase: ViewLanguageSettingsUseCase
@@ -52,7 +52,9 @@ class LanguageSettingsViewModel: ObservableObject {
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (domainModel: ViewLanguageSettingsDomainModel) in
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (domainModel: ViewLanguageSettingsDomainModel) in
                 
                 let interfaceStrings: LanguageSettingsInterfaceStringsDomainModel = domainModel.interfaceStrings
                 
@@ -66,7 +68,7 @@ class LanguageSettingsViewModel: ObservableObject {
                 self?.editDownloadedLanguagesButtonTitle = interfaceStrings.editDownloadedLanguagesButtonTitle
                 
                 self?.downloadedLanguages = domainModel.downloadedLanguages
-            }
+            })
             .store(in: &cancellables)
     }
     

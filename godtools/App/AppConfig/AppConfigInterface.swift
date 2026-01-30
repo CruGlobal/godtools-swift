@@ -8,6 +8,7 @@
 
 import Foundation
 import SocialAuthentication
+import RepositorySync
 
 protocol AppConfigInterface {
     
@@ -23,6 +24,9 @@ protocol AppConfigInterface {
     func getFirebaseGoogleServiceFileName() -> String
     func getGoogleAuthenticationConfiguration() -> GoogleAuthenticationConfiguration?
     func getMobileContentApiBaseUrl() -> String
+    func getLegacyRealmDatabase() -> LegacyRealmDatabase
     func getRealmDatabase() -> RealmDatabase
+    @available(iOS 17.4, *)
+    func getSwiftDatabase() throws -> SwiftDatabase?
     func getTractRemoteShareConnectionUrl() -> String
 }

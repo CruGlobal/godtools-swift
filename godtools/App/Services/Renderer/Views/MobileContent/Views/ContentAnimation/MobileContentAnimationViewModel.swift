@@ -25,18 +25,18 @@ class MobileContentAnimationViewModel: MobileContentViewModel {
                 
         if let resource = animationModel.resource {
             
-            let animationfileResult: Result<URL, Error> = renderedPageContext.resourcesCache.getFile(resource: resource)
-            
-            switch animationfileResult {
-            
-            case .success(let fileUrl):
+            do {
+                
+                let fileUrl = try renderedPageContext.resourcesCache.getFile(resource: resource)
+                
                 animatedViewModel = AnimatedViewModel(
                     animationDataResource: .deviceFileManagerfilepathJsonFile(filepath: fileUrl.path),
                     autoPlay: animationModel.autoPlay,
                     loop: animationModel.loop
                 )
-            
-            case .failure( _):
+                
+            }
+            catch _ {
                 animatedViewModel = nil
             }
             

@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class ToolFilterLanguageSelectionViewModel: ObservableObject {
+@MainActor class ToolFilterLanguageSelectionViewModel: ObservableObject {
     
     private let viewToolFilterLanguagesUseCase: ViewToolFilterLanguagesUseCase
     private let searchToolFilterLanguagesUseCase: SearchToolFilterLanguagesUseCase
@@ -28,7 +28,7 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
     
     @Published var languageSearchResults: [ToolFilterLanguageDomainModel] = [ToolFilterLanguageDomainModel]()
     @Published var selectedCategory: ToolFilterCategoryDomainModel = ToolFilterAnyCategoryDomainModel(text: "Any category", toolsAvailableText: "")
-    @Published var selectedLanguage: ToolFilterLanguageDomainModel = ToolFilterAnyLanguageDomainModel(text: "", toolsAvailableText: "")
+    @Published var selectedLanguage: ToolFilterLanguageDomainModel = ToolFilterAnyLanguageDomainModel(text: "", toolsAvailableText: "", numberOfToolsAvailable: 0)
     @Published var searchText: String = ""
     @Published var navTitle: String = ""
     
@@ -74,7 +74,9 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
         }
         .switchToLatest()
         .receive(on: DispatchQueue.main)
-        .sink { [weak self] viewLanguageFiltersDomainModel in
+        .sink(receiveCompletion: { _ in
+            
+        }, receiveValue: { [weak self] (viewLanguageFiltersDomainModel: ViewToolFilterLanguagesDomainModel) in
             
             guard let self = self else {
                 return
@@ -84,8 +86,7 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
             
             self.navTitle = interfaceStrings.navTitle
             self.allLanguages = viewLanguageFiltersDomainModel.languageFilters
-            
-        }
+        })
         .store(in: &cancellables)
         
         Publishers.CombineLatest(

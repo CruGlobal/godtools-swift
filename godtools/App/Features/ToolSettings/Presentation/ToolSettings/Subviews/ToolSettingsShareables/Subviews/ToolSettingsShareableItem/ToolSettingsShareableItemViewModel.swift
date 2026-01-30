@@ -11,7 +11,7 @@ import UIKit
 import SwiftUI
 import Combine
 
-class ToolSettingsShareableItemViewModel: ObservableObject {
+@MainActor class ToolSettingsShareableItemViewModel: ObservableObject {
     
     private let shareable: ShareableDomainModel
     private let getShareableImageUseCase: GetShareableImageUseCase
@@ -28,9 +28,11 @@ class ToolSettingsShareableItemViewModel: ObservableObject {
         self.title = shareable.title
         
         getShareableImageUseCase
-            .getShareableImagePublisher(shareable: shareable)
+            .execute(shareable: shareable)
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (imageDomainModel: ShareableImageDomainModel?) in
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (imageDomainModel: ShareableImageDomainModel?) in
                 
                 if let imageData = imageDomainModel?.imageData, let uiImage = UIImage(data: imageData) {
                      
@@ -39,7 +41,7 @@ class ToolSettingsShareableItemViewModel: ObservableObject {
                         imageIdForAnimationChange: imageDomainModel?.dataModelId
                     )
                 }
-            }
+            })
             .store(in: &cancellables)
     }
 }

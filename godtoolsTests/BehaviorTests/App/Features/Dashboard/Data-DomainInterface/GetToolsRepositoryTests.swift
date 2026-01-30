@@ -11,23 +11,24 @@ import Testing
 import Foundation
 import Combine
 import RealmSwift
+import RepositorySync
 
+@Suite(.serialized)
 struct GetToolsRepositoryTests {
     
-    private static let testsDiContainer: TestsDiContainer = TestsDiContainer(realmDatabase: TestsInMemoryRealmDatabase(addObjectsToDatabase: Self.allTools))
-    private static let englishLanguage: RealmLanguage = Self.getLanguage(id: "0", code: .english)
-    private static let frenchLanguage: RealmLanguage = Self.getLanguage(id: "1", code: .french)
-    private static let russianLanguage: RealmLanguage = Self.getLanguage(id: "2", code: .russian)
-    private static let spanishLanguage: RealmLanguage = Self.getLanguage(id: "3", code: .spanish)
-    private static let conversationStarterTools: [RealmResource] = Self.getConversationStarterTools()
-    private static let gospelTools: [RealmResource] = Self.getGospelTools()
-    private static let growthTools: [RealmResource] = Self.getGrowthTools()
-    private static let articleTools: [RealmResource] = Self.getArticleTools()
-    private static let allTools: [RealmResource] = conversationStarterTools + gospelTools + growthTools + articleTools
-    private static let categoryConversationStarter: String = "conversation_starter"
-    private static let categoryGospel: String = "gospel"
-    private static let categoryArticles: String = "articles"
-    private static let categoryGrowth: String = "growth"
+    private let categoryConversationStarter: String = "conversation_starter"
+    private let categoryGospel: String = "gospel"
+    private let categoryArticles: String = "articles"
+    private let categoryGrowth: String = "growth"
+    private let englishLanguageId: String = "0"
+    private let frenchLanguageId: String = "1"
+    private let russianLanguageId: String = "2"
+    private let spanishLanguageId: String = "3"
+    private let conversationStarterTools: [RealmResource]
+    private let gospelTools: [RealmResource]
+    private let growthTools: [RealmResource]
+    private let articleTools: [RealmResource]
+    private let allTools: [RealmResource]
     
     @Test(
         """
@@ -36,9 +37,9 @@ struct GetToolsRepositoryTests {
         Then: I expect to see all tools.
         """
     )
-    @MainActor func anyCategoryAndAnyLanguageShouldShowAllTools() async {
+    @MainActor func anyCategoryAndAnyLanguageShouldShowAllTools() async throws {
         
-        let toolsRepository = Self.getToolsRepository()
+        let toolsRepository = try getToolsRepository()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -46,24 +47,39 @@ struct GetToolsRepositoryTests {
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            toolsRepository
-                .getToolsPublisher(
-                    translatedInAppLanguage: "",
-                    languageIdForAvailabilityText: nil,
-                    filterToolsByCategory: nil,
-                    filterToolsByLanguage: nil
-                )
-                .sink { (tools: [ToolListItemDomainModel]) in
-                    
-                    confirmation()
-                    
-                    toolsListRef = tools
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
                 }
-                .store(in: &cancellables)
+                
+                toolsRepository
+                    .getToolsPublisher(
+                        translatedInAppLanguage: "",
+                        languageIdForAvailabilityText: nil,
+                        filterToolsByCategory: nil,
+                        filterToolsByLanguage: nil
+                    )
+                    .sink(receiveCompletion: { _ in
+                        
+                    }, receiveValue: { (tools: [ToolListItemDomainModel]) in
+                        
+                        toolsListRef = tools
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                                
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    })
+                    .store(in: &cancellables)
+            }
         }
         
         let toolsList: [String] = toolsListRef.map({$0.id}).sorted()
-        let allTools: [String] = Self.allTools.map({$0.id}).sorted()
+        let allTools: [String] = allTools.map({$0.id}).sorted()
         
         #expect(toolsList.count > 0)
         #expect(toolsList == allTools)
@@ -76,45 +92,61 @@ struct GetToolsRepositoryTests {
         Then: I expect to see all growth tools.
         """
     )
-    @MainActor func categoryGrowthCategoryAndAnyLanguageShouldShowCategoryGrowthTools() async {
+    @MainActor func categoryGrowthCategoryAndAnyLanguageShouldShowCategoryGrowthTools() async throws {
         
-        let toolsRepository = Self.getToolsRepository()
+        let toolsRepository = try getToolsRepository()
         
         var cancellables: Set<AnyCancellable> = Set()
         
         var toolsListRef: [ToolListItemDomainModel] = Array()
         
         let growthCategoryFilter = ToolFilterCategoryDomainModel(
-            categoryId: Self.categoryGrowth,
+            categoryId: categoryGrowth,
             translatedName: "",
             toolsAvailableText: ""
         )
         
         let anyLanguageFilter = ToolFilterAnyLanguageDomainModel(
             text: "",
-            toolsAvailableText: ""
+            toolsAvailableText: "",
+            numberOfToolsAvailable: 0
         )
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            toolsRepository
-                .getToolsPublisher(
-                    translatedInAppLanguage: "",
-                    languageIdForAvailabilityText: nil,
-                    filterToolsByCategory: growthCategoryFilter,
-                    filterToolsByLanguage: anyLanguageFilter
-                )
-                .sink { (tools: [ToolListItemDomainModel]) in
-                    
-                    confirmation()
-                    
-                    toolsListRef = tools
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
                 }
-                .store(in: &cancellables)
+                
+                toolsRepository
+                    .getToolsPublisher(
+                        translatedInAppLanguage: "",
+                        languageIdForAvailabilityText: nil,
+                        filterToolsByCategory: growthCategoryFilter,
+                        filterToolsByLanguage: anyLanguageFilter
+                    )
+                    .sink(receiveCompletion: { _ in
+                        
+                    }, receiveValue: { (tools: [ToolListItemDomainModel]) in
+                        
+                        toolsListRef = tools
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                                
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    })
+                    .store(in: &cancellables)
+            }
         }
         
         let toolsList: [String] = toolsListRef.map({$0.id}).sorted()
-        let growthTools: [String] = Self.growthTools.map({$0.id}).sorted()
+        let growthTools: [String] = growthTools.map({$0.id}).sorted()
         
         #expect(toolsList.count > 0)
         #expect(toolsList == growthTools)
@@ -127,9 +159,9 @@ struct GetToolsRepositoryTests {
         Then: I expect to see all tools that support the russian language.
         """
     )
-    @MainActor func categoryIsAnyAndLanguageIsRussianShouldShowToolsThatSupportRussian() async {
+    @MainActor func categoryIsAnyAndLanguageIsRussianShouldShowToolsThatSupportRussian() async throws {
         
-        let toolsRepository = Self.getToolsRepository()
+        let toolsRepository = try getToolsRepository()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -144,30 +176,46 @@ struct GetToolsRepositoryTests {
             languageName: "",
             translatedName: "",
             toolsAvailableText: "",
-            languageId: Self.russianLanguage.id,
-            languageLocaleId: ""
+            languageId: russianLanguageId,
+            languageLocaleId: "",
+            numberOfToolsAvailable: 0
         )
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            toolsRepository
-                .getToolsPublisher(
-                    translatedInAppLanguage: "",
-                    languageIdForAvailabilityText: nil,
-                    filterToolsByCategory: anyCategoryFilter,
-                    filterToolsByLanguage: russianLanguageFilter
-                )
-                .sink { (tools: [ToolListItemDomainModel]) in
-                    
-                    confirmation()
-                    
-                    toolsListRef = tools
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
                 }
-                .store(in: &cancellables)
+                
+                toolsRepository
+                    .getToolsPublisher(
+                        translatedInAppLanguage: "",
+                        languageIdForAvailabilityText: nil,
+                        filterToolsByCategory: anyCategoryFilter,
+                        filterToolsByLanguage: russianLanguageFilter
+                    )
+                    .sink(receiveCompletion: { _ in
+                        
+                    }, receiveValue: { (tools: [ToolListItemDomainModel]) in
+                        
+                        toolsListRef = tools
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                                
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    })
+                    .store(in: &cancellables)
+            }
         }
         
         let toolsList: [String] = toolsListRef.map({$0.id}).sorted()
-        let russianTools: [String] = Self.getRussianTools().map({$0.id}).sorted()
+        let russianTools: [String] = getRussianTools().map({$0.id}).sorted()
         
         #expect(toolsList.count > 0)
         #expect(toolsList == russianTools)
@@ -180,9 +228,9 @@ struct GetToolsRepositoryTests {
         Then: I expect to see all tools that support the spanish language.
         """
     )
-    @MainActor func categoryIsAnyAndLanguageIsSpanishShouldShowToolsThatSupportSpanish() async {
+    @MainActor func categoryIsAnyAndLanguageIsSpanishShouldShowToolsThatSupportSpanish() async throws {
         
-        let toolsRepository = Self.getToolsRepository()
+        let toolsRepository = try getToolsRepository()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -197,39 +245,181 @@ struct GetToolsRepositoryTests {
             languageName: "",
             translatedName: "",
             toolsAvailableText: "",
-            languageId: Self.spanishLanguage.id,
-            languageLocaleId: ""
+            languageId: spanishLanguageId,
+            languageLocaleId: "",
+            numberOfToolsAvailable: 0
         )
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            toolsRepository
-                .getToolsPublisher(
-                    translatedInAppLanguage: "",
-                    languageIdForAvailabilityText: nil,
-                    filterToolsByCategory: anyCategoryFilter,
-                    filterToolsByLanguage: spanishLanguageFilter
-                )
-                .sink { (tools: [ToolListItemDomainModel]) in
-                    
-                    confirmation()
-                    
-                    toolsListRef = tools
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
                 }
-                .store(in: &cancellables)
+                
+                toolsRepository
+                    .getToolsPublisher(
+                        translatedInAppLanguage: "",
+                        languageIdForAvailabilityText: nil,
+                        filterToolsByCategory: anyCategoryFilter,
+                        filterToolsByLanguage: spanishLanguageFilter
+                    )
+                    .sink(receiveCompletion: { _ in
+                        
+                    }, receiveValue: { (tools: [ToolListItemDomainModel]) in
+                        
+                        toolsListRef = tools
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                                
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    })
+                    .store(in: &cancellables)
+            }
         }
         
         let toolsList: [String] = toolsListRef.map({$0.id}).sorted()
-        let spanishTools: [String] = Self.getSpanishTools().map({$0.id}).sorted()
+        let spanishTools: [String] = getSpanishTools().map({$0.id}).sorted()
         
         #expect(toolsList.count > 0)
         #expect(toolsList == spanishTools)
+    }
+    
+    init() {
+        
+        let englishLanguage: RealmLanguage = Self.createLanguage(id: englishLanguageId, code: .english)
+        let frenchLanguage: RealmLanguage = Self.createLanguage(id: frenchLanguageId, code: .french)
+        let russianLanguage: RealmLanguage = Self.createLanguage(id: russianLanguageId, code: .russian)
+        let spanishLanguage: RealmLanguage = Self.createLanguage(id: spanishLanguageId, code: .spanish)
+        
+        let conversationStarterTools: [RealmResource] = [
+            Self.createTool(
+                category: categoryConversationStarter,
+                addLanguages: [englishLanguage, frenchLanguage, russianLanguage, spanishLanguage]
+            ),
+            Self.createTool(
+                category: categoryConversationStarter,
+                addLanguages: [englishLanguage, frenchLanguage]
+            ),
+            Self.createTool(
+                category: categoryConversationStarter,
+                addLanguages: [russianLanguage, spanishLanguage]
+            ),
+            Self.createTool(
+                category: categoryConversationStarter,
+                addLanguages: [frenchLanguage, spanishLanguage]
+            )
+        ]
+        
+        let gospelTools: [RealmResource] = [
+            Self.createTool(
+                category: categoryGospel,
+                addLanguages: [englishLanguage, russianLanguage, spanishLanguage]
+            ),
+            Self.createTool(
+                category: categoryGospel,
+                addLanguages: [spanishLanguage]
+            ),
+            Self.createTool(
+                category: categoryGospel,
+                addLanguages: [englishLanguage, frenchLanguage, spanishLanguage]
+            ),
+            Self.createTool(
+                category: categoryGospel,
+                addLanguages: [russianLanguage, spanishLanguage]
+            ),
+            Self.createTool(
+                category: categoryGospel,
+                addLanguages: [englishLanguage]
+            ),
+            Self.createTool(
+                category: categoryGospel,
+                addLanguages: [englishLanguage, russianLanguage]
+            ),
+            Self.createTool(
+                category: categoryGospel,
+                addLanguages: [englishLanguage, frenchLanguage, russianLanguage, spanishLanguage]
+            ),
+            Self.createTool(
+                category: categoryGospel,
+                addLanguages: [englishLanguage, frenchLanguage, russianLanguage, spanishLanguage]
+            ),
+            Self.createTool(
+                category: categoryGospel,
+                addLanguages: [englishLanguage, frenchLanguage, russianLanguage, spanishLanguage]
+            )
+        ]
+        
+        let growthTools: [RealmResource] = [
+            Self.createTool(
+                category: categoryGrowth,
+                addLanguages: [englishLanguage, russianLanguage, spanishLanguage]
+            ),
+            Self.createTool(
+                category: categoryGrowth,
+                addLanguages: [spanishLanguage]
+            ),
+            Self.createTool(
+                category: categoryGrowth,
+                addLanguages: [englishLanguage, frenchLanguage, spanishLanguage]
+            ),
+            Self.createTool(
+                category: categoryGrowth,
+                addLanguages: [russianLanguage, spanishLanguage]
+            ),
+            Self.createTool(
+                category: categoryGrowth,
+                addLanguages: [englishLanguage]
+            ),
+            Self.createTool(
+                category: categoryGrowth,
+                addLanguages: [englishLanguage, russianLanguage]
+            ),
+            Self.createTool(
+                category: categoryGrowth,
+                addLanguages: [englishLanguage, frenchLanguage, russianLanguage, spanishLanguage]
+            ),
+            Self.createTool(
+                category: categoryGrowth,
+                addLanguages: [englishLanguage, frenchLanguage, russianLanguage, spanishLanguage]
+            ),
+            Self.createTool(
+                category: categoryGrowth,
+                addLanguages: [englishLanguage, frenchLanguage, russianLanguage, spanishLanguage]
+            )
+        ]
+        
+        let articleTools: [RealmResource] = [
+            Self.createTool(
+                category: categoryArticles,
+                addLanguages: [englishLanguage, spanishLanguage]
+            )
+        ]
+        
+        self.conversationStarterTools = conversationStarterTools
+        self.gospelTools = gospelTools
+        self.growthTools = growthTools
+        self.articleTools = articleTools
+        self.allTools = conversationStarterTools + gospelTools + growthTools + articleTools
     }
 }
 
 extension GetToolsRepositoryTests {
     
-    private static func getLanguage(id: String, code: LanguageCodeDomainModel) -> RealmLanguage {
+    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
+                
+        return try TestsDiContainer(
+            realmFileName: String(describing: GetToolsRepositoryTests.self),
+            addRealmObjects: allTools + addRealmObjects
+        )
+    }
+    
+    private static func createLanguage(id: String, code: LanguageCodeDomainModel) -> RealmLanguage {
         
         let language = RealmLanguage()
         language.id = id
@@ -238,7 +428,7 @@ extension GetToolsRepositoryTests {
         return language
     }
     
-    private static func getTool(category: String, addLanguages: [RealmLanguage]) -> RealmResource {
+    private static func createTool(category: String, addLanguages: [RealmLanguage]) -> RealmResource {
         
         let resource = RealmResource()
         resource.attrCategory = category
@@ -252,141 +442,29 @@ extension GetToolsRepositoryTests {
         return resource
     }
     
-    private static func getConversationStarterTools() -> [RealmResource] {
-        
-        let category: String = Self.categoryConversationStarter
-        
-        return [
-            getTool(
-                category: category,
-                addLanguages: [Self.englishLanguage, Self.frenchLanguage, Self.russianLanguage, Self.spanishLanguage]
-            ),
-            getTool(
-                category: category,
-                addLanguages: [Self.englishLanguage, Self.frenchLanguage]
-            ),
-            getTool(
-                category: category,
-                addLanguages: [Self.russianLanguage, Self.spanishLanguage]
-            ),
-            getTool(
-                category: category,
-                addLanguages: [Self.frenchLanguage, Self.spanishLanguage]
-            )
-        ]
-    }
-    
-    private static func getGospelTools() -> [RealmResource] {
-        
-        let category: String = Self.categoryGospel
-        
-        return [
-            getTool(
-                category: category,
-                addLanguages: [Self.englishLanguage, Self.russianLanguage, Self.spanishLanguage]
-            ),
-            getTool(
-                category: category,
-                addLanguages: [Self.spanishLanguage]
-            ),
-            getTool(
-                category: category,
-                addLanguages: [Self.englishLanguage, Self.frenchLanguage, Self.spanishLanguage]
-            ),
-            getTool(
-                category: category,
-                addLanguages: [Self.russianLanguage, Self.spanishLanguage]
-            ),
-            getTool(
-                category: category,
-                addLanguages: [Self.englishLanguage]
-            ),
-            getTool(
-                category: category,
-                addLanguages: [Self.englishLanguage, Self.russianLanguage]
-            ),
-            getTool(
-                category: category,
-                addLanguages: [Self.englishLanguage, Self.frenchLanguage, Self.russianLanguage, Self.spanishLanguage]
-            ),
-            getTool(
-                category: category,
-                addLanguages: [Self.englishLanguage, Self.frenchLanguage, Self.russianLanguage, Self.spanishLanguage]
-            ),
-            getTool(
-                category: category,
-                addLanguages: [Self.englishLanguage, Self.frenchLanguage, Self.russianLanguage, Self.spanishLanguage]
-            )
-        ]
-    }
-    
-    private static func getGrowthTools() -> [RealmResource] {
-        
-        let category: String = Self.categoryGrowth
-        
-        return [
-            getTool(
-                category: category,
-                addLanguages: [Self.englishLanguage, Self.frenchLanguage]
-            ),
-            getTool(
-                category: category,
-                addLanguages: [Self.englishLanguage, Self.russianLanguage]
-            ),
-            getTool(
-                category: category,
-                addLanguages: [Self.englishLanguage, Self.frenchLanguage, Self.russianLanguage, Self.spanishLanguage]
-            ),
-            getTool(
-                category: category,
-                addLanguages: [Self.englishLanguage, Self.spanishLanguage]
-            ),
-            getTool(
-                category: category,
-                addLanguages: [Self.englishLanguage, Self.spanishLanguage]
-            ),
-            getTool(
-                category: category,
-                addLanguages: [Self.englishLanguage, Self.russianLanguage, Self.spanishLanguage]
-            )
-        ]
-    }
-    
-    private static func getArticleTools() -> [RealmResource] {
-        
-        let category: String = Self.categoryArticles
-        
-        return [
-            getTool(
-                category: category,
-                addLanguages: [Self.englishLanguage, Self.spanishLanguage]
-            )
-        ]
-    }
-    
-    private static func getRussianGrowthTools() -> [RealmResource] {
+    private func getRussianGrowthTools() -> [RealmResource] {
         return allTools.filter { (resource: RealmResource) in
             resource.attrCategory == categoryGrowth && resource.getLanguages().contains(where: {$0.code == LanguageCodeDomainModel.russian.rawValue})
         }
     }
     
-    private static func getRussianTools() -> [RealmResource] {
+    private func getRussianTools() -> [RealmResource] {
         return getToolsByLanguage(language: .russian)
     }
     
-    private static func getSpanishTools() -> [RealmResource] {
+    private func getSpanishTools() -> [RealmResource] {
         return getToolsByLanguage(language: .spanish)
     }
     
-    private static func getToolsByLanguage(language: LanguageCodeDomainModel) -> [RealmResource] {
+    private func getToolsByLanguage(language: LanguageCodeDomainModel) -> [RealmResource] {
         return allTools.filter { (resource: RealmResource) in
             resource.getLanguages().contains(where: {$0.code == language.rawValue})
         }
     }
     
-    private static func getToolsRepository() -> GetToolsRepository {
+    private func getToolsRepository() throws -> GetToolsRepository {
         
-        let testsDiContainer: TestsDiContainer = Self.testsDiContainer
+        let testsDiContainer: TestsDiContainer = try getTestsDiContainer()
         
         let getToolsRepository = GetToolsRepository(
             resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),

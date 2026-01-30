@@ -11,28 +11,27 @@ import Testing
 import Foundation
 import RealmSwift
 import SwiftData
+import RepositorySync
+import Combine
 
+@Suite(.serialized)
 struct ResourcesCacheTests {
 
     private let englishLanguageId: Int = 0
     private let spanishLanguageId: Int = 1
     
     @Test()
-    func getLessonCount() async {
+    func getLessonCount() async throws {
         
         let expectedLessonCount: Int = 7
         
-        let realmResourcesCache = getResourcesCache(swiftPersistenceIsEnabled: false)
+        let realmResourcesCache = try getResourcesCache()
         
         #expect(realmResourcesCache.getLessonsCount() == expectedLessonCount)
-        
-        let resourcesCache = getResourcesCache(swiftPersistenceIsEnabled: true)
-        
-        #expect(resourcesCache.getLessonsCount() == expectedLessonCount)
     }
     
     @Test()
-    func getLessons() async {
+    func getLessons() async throws {
         
         let expectedLessonIds: [String] = [
             getLessonId(id: 0),
@@ -44,44 +43,96 @@ struct ResourcesCacheTests {
             getLessonId(id: 8)
         ]
                 
-        let realmResourcesCache = getResourcesCache(swiftPersistenceIsEnabled: false)
-        let realmLessons = realmResourcesCache.getLessons(filterByLanguageId: nil, sorted: false)
+        let realmResourcesCache = try getResourcesCache()
         
-        #expect(realmLessons.map {$0.id}.sorted() == expectedLessonIds)
+        var cancellables: Set<AnyCancellable> = Set()
         
-        let resourcesCache = getResourcesCache(swiftPersistenceIsEnabled: true)
-        let lessons = resourcesCache.getLessons(filterByLanguageId: nil, sorted: false)
+        var lessonsRef: [ResourceDataModel] = Array()
         
-        #expect(lessons.map {$0.id}.sorted() == expectedLessonIds)
+        await confirmation(expectedCount: 1) { confirmation in
+            
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
+                }
+                
+                realmResourcesCache
+                    .getLessonsPublisher(
+                        filterByLanguageId: nil,
+                        sorted: false
+                    )
+                    .sink { _ in
+                        
+                    } receiveValue: { (lessons: [ResourceDataModel]) in
+                        
+                        lessonsRef = lessons
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                        
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    }
+                    .store(in: &cancellables)
+            }
+        }
+        
+        #expect(lessonsRef.map {$0.id}.sorted() == expectedLessonIds)
     }
     
     @Test()
-    func getLessonsByLanguageId() async {
+    func getLessonsByLanguageId() async throws {
         
         let expectedLessonIds: [String] = [
             getLessonId(id: 2),
             getLessonId(id: 6)
         ]
         
-        let realmResourcesCache = getResourcesCache(swiftPersistenceIsEnabled: false)
-        let realmLessons = realmResourcesCache.getLessons(
-            filterByLanguageId: getLanguageId(id: spanishLanguageId),
-            sorted: false
-        )
+        let realmResourcesCache = try getResourcesCache()
         
-        #expect(realmLessons.map {$0.id}.sorted() == expectedLessonIds)
+        var cancellables: Set<AnyCancellable> = Set()
         
-        let resourcesCache = getResourcesCache(swiftPersistenceIsEnabled: true)
-        let lessons = resourcesCache.getLessons(
-            filterByLanguageId: getLanguageId(id: spanishLanguageId),
-            sorted: false
-        )
+        var lessonsRef: [ResourceDataModel] = Array()
         
-        #expect(lessons.map {$0.id}.sorted() == expectedLessonIds)
+        await confirmation(expectedCount: 1) { confirmation in
+            
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
+                }
+                
+                realmResourcesCache
+                    .getLessonsPublisher(
+                        filterByLanguageId: getLanguageId(id: spanishLanguageId),
+                        sorted: false
+                    )
+                    .sink { _ in
+                        
+                    } receiveValue: { (lessons: [ResourceDataModel]) in
+                        
+                        lessonsRef = lessons
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                        
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    }
+                    .store(in: &cancellables)
+            }
+        }
+        
+        #expect(lessonsRef.map {$0.id}.sorted() == expectedLessonIds)
     }
     
     @Test()
-    func getFeaturedLessons() async {
+    func getFeaturedLessons() async throws {
         
         let expectedLessonIds: [String] = [
             getLessonId(id: 6),
@@ -89,59 +140,95 @@ struct ResourcesCacheTests {
             getLessonId(id: 8)
         ]
                 
-        let realmResourcesCache = getResourcesCache(swiftPersistenceIsEnabled: false)
-        let realmLessons = realmResourcesCache.getFeaturedLessons(sorted: false)
+        let realmResourcesCache = try getResourcesCache()
         
-        #expect(realmLessons.map {$0.id}.sorted() == expectedLessonIds)
+        var cancellables: Set<AnyCancellable> = Set()
         
-        let resourcesCache = getResourcesCache(swiftPersistenceIsEnabled: true)
-        let lessons = resourcesCache.getFeaturedLessons(sorted: false)
+        var lessonsRef: [ResourceDataModel] = Array()
         
-        #expect(lessons.map {$0.id}.sorted() == expectedLessonIds)
+        await confirmation(expectedCount: 1) { confirmation in
+            
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
+                }
+                
+                realmResourcesCache
+                    .getFeaturedLessonsPublisher(
+                        sorted: false
+                    )
+                    .sink { _ in
+                        
+                    } receiveValue: { (lessons: [ResourceDataModel]) in
+                        
+                        lessonsRef = lessons
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                        
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    }
+                    .store(in: &cancellables)
+            }
+        }
+
+        #expect(lessonsRef.map {$0.id}.sorted() == expectedLessonIds)
     }
     
     @Test()
-    func getLessonsSupportedLanguageIds() async {
+    func getLessonsSupportedLanguageIds() async throws {
         
         let expectedLanguageIds: [String] = [
             getLanguageId(id: englishLanguageId),
             getLanguageId(id: spanishLanguageId)
         ]
         
-        let realmResourcesCache = getResourcesCache(swiftPersistenceIsEnabled: false)
+        let realmResourcesCache = try getResourcesCache()
         let realmLessonLanguageIds = realmResourcesCache.getLessonsSupportedLanguageIds()
         
         #expect(realmLessonLanguageIds.sorted() == expectedLanguageIds.sorted())
-        
-        let resourcesCache = getResourcesCache(swiftPersistenceIsEnabled: true)
-        let lessonLanguageIds = resourcesCache.getLessonsSupportedLanguageIds()
-        
-        #expect(lessonLanguageIds.sorted() == expectedLanguageIds.sorted())
     }
 }
 
 extension ResourcesCacheTests {
     
-    private func getResourcesCache(swiftPersistenceIsEnabled: Bool) -> ResourcesCache {
+    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
+                
+        return try TestsDiContainer(
+            realmFileName: String(describing: ResourcesCacheTests.self),
+            addRealmObjects: addRealmObjects
+        )
+    }
+    
+    private func getResourcesCache() throws -> ResourcesCache {
         
-        if #available(iOS 17.4, *), swiftPersistenceIsEnabled {
-            TempSharedSwiftDatabase.shared.setDatabase(
-                swiftDatabase: getSwiftDatabase()
-            )
-        }
+        let testsDiContainer = try getTestsDiContainer(
+            addRealmObjects: getRealmDatabaseObjects()
+        )
         
-        let realmDatabase: RealmDatabase = getRealmDatabase()
+        let realmDatabase: RealmDatabase = testsDiContainer.dataLayer.getSharedRealmDatabase()
+        
+        let persistence = RealmRepositorySyncPersistence(
+            database: realmDatabase,
+            dataModelMapping: RealmResourceDataModelMapping()
+        )
         
         let trackDownloadedTranslationsRepository = TrackDownloadedTranslationsRepository(
             cache: TrackDownloadedTranslationsCache(
-                realmDatabase: realmDatabase
+                persistence: RealmRepositorySyncPersistence(
+                    database: realmDatabase,
+                    dataModelMapping: RealmDownloadedTranslationDataModelMapping()
+                )
             )
         )
         
         return ResourcesCache(
-            realmDatabase: realmDatabase,
-            trackDownloadedTranslationsRepository: trackDownloadedTranslationsRepository,
-            swiftPersistenceIsEnabled: swiftPersistenceIsEnabled
+            persistence: persistence,
+            trackDownloadedTranslationsRepository: trackDownloadedTranslationsRepository
         )
     }
     
@@ -282,14 +369,8 @@ extension ResourcesCacheTests {
         return getRealmLessons() + getRealmTracts()
     }
     
-    private func getRealmDatabaseObjects() -> [Object] {
+    private func getRealmDatabaseObjects() -> [IdentifiableRealmObject] {
         return getRealmResources()
-    }
-    
-    private func getRealmDatabase() -> RealmDatabase {
-        return TestsInMemoryRealmDatabase(
-            addObjectsToDatabase: getRealmDatabaseObjects()
-        )
     }
 }
 
@@ -395,9 +476,8 @@ extension ResourcesCacheTests {
     }
     
     @available(iOS 17.4, *)
-    private func getSwiftDatabase() -> SwiftDatabase {
-        return TestsInMemorySwiftDatabase(
-            addObjectsToDatabase: getSwiftDatabaseObjects()
-        )
+    private func getSwiftDatabase() throws -> SwiftDatabase {
+        return try TestsInMemorySwiftDatabase().createDatabase(addObjectsToDatabase: getSwiftDatabaseObjects())
     }
 }
+

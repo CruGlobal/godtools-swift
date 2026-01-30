@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class ToolFilterCategorySelectionViewModel: ObservableObject {
+@MainActor class ToolFilterCategorySelectionViewModel: ObservableObject {
     
     private let viewToolFilterCategoriesUseCase: ViewToolFilterCategoriesUseCase
     private let searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase
@@ -27,7 +27,7 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
     @Published private var allCategories: [ToolFilterCategoryDomainModel] = [ToolFilterCategoryDomainModel]()
     
     @Published var searchText: String = ""
-    @Published var selectedLanguage: ToolFilterLanguageDomainModel = ToolFilterAnyLanguageDomainModel(text: "", toolsAvailableText: "")
+    @Published var selectedLanguage: ToolFilterLanguageDomainModel = ToolFilterAnyLanguageDomainModel(text: "", toolsAvailableText: "", numberOfToolsAvailable: 0)
     @Published var selectedCategory: ToolFilterCategoryDomainModel = ToolFilterAnyCategoryDomainModel(text: "", toolsAvailableText: "")
     @Published var navTitle: String = ""
     @Published var categorySearchResults: [ToolFilterCategoryDomainModel] = [ToolFilterCategoryDomainModel]()
@@ -74,15 +74,18 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
         }
         .switchToLatest()
         .receive(on: DispatchQueue.main)
-        .sink { [weak self] viewCategoryFiltersDomainModel in
+        .sink(receiveCompletion: { _ in
+            
+        }, receiveValue: { [weak self] (viewCategoryFiltersDomainModel: ViewToolFilterCategoriesDomainModel) in
+            
             guard let self = self else { return }
             
             let interfaceStrings = viewCategoryFiltersDomainModel.interfaceStrings
             
             self.navTitle = interfaceStrings.navTitle
             self.allCategories = viewCategoryFiltersDomainModel.categoryFilters
-        }
-            .store(in: &cancellables)
+        })
+        .store(in: &cancellables)
         
         Publishers.CombineLatest(
             $searchText,

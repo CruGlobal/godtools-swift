@@ -17,7 +17,7 @@ class UserLessonProgressRepository {
         self.cache = cache
     }
     
-    func getLessonProgressChangedPublisher() -> AnyPublisher<Void, Never> {
+    @MainActor func getLessonProgressChangedPublisher() -> AnyPublisher<Void, Never> {
         return cache.getUserLessonProgressChangedPublisher()
     }
     

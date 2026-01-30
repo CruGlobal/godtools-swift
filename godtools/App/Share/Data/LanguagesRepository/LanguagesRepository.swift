@@ -7,72 +7,58 @@
 //
 
 import Foundation
-import Combine
-import RealmSwift
 import RequestOperation
-import SwiftData
+import RepositorySync
+import Combine
 
 class LanguagesRepository: RepositorySync<LanguageDataModel, MobileContentLanguagesApi> {
     
-    private let api: MobileContentLanguagesApi
-    
     let cache: LanguagesCache
     
-    init(api: MobileContentLanguagesApi, cache: LanguagesCache) {
+    init(externalDataFetch: MobileContentLanguagesApi, persistence: any Persistence<LanguageDataModel, LanguageCodable>, cache: LanguagesCache) {
         
-        self.api = api
         self.cache = cache
         
-        super.init(
-            externalDataFetch: api,
-            persistence: cache.getPersistence()
-        )
+        super.init(externalDataFetch: externalDataFetch, persistence: persistence)
     }
+}
+
+// MARK: - Sync
+
+extension LanguagesRepository {
     
-    func syncLanguagesFromRemote(requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<LanguageDataModel>, Never> {
+    func syncLanguagesFromRemote(requestPriority: RequestPriority) -> AnyPublisher<[LanguageDataModel], Error> {
         
-        return api.getObjectsPublisher(
-            requestPriority: requestPriority
+        return externalDataFetch.getObjectsPublisher(
+            context: RequestOperationFetchContext(requestPriority: requestPriority)
         )
-        .flatMap { (getObectsResponse: RepositorySyncResponse<LanguageCodable>) in
+        .flatMap { (languages: [LanguageCodable]) in
             
-            let response: RepositorySyncResponse<LanguageDataModel> = super.storeExternalObjectsToPersistence(
-                externalObjects: getObectsResponse.objects,
-                deleteObjectsNotFoundInExternalObjects: true
+            return super.persistence.writeObjectsPublisher(
+                externalObjects: languages,
+                writeOption: .deleteObjectsNotInExternal,
+                getOption: .allObjects
             )
-            
-            return Just(response)
-                .eraseToAnyPublisher()
+            .eraseToAnyPublisher()
         }
         .eraseToAnyPublisher()
     }
     
-    func syncLanguagesFromJsonFileCache() -> AnyPublisher<RepositorySyncResponse<LanguageDataModel>, Never> {
+    func syncLanguagesFromJsonFileCache() -> AnyPublisher<[LanguageDataModel], Error> {
         
         return LanguagesJsonFileCache(
             jsonServices: JsonServices()
         )
         .getLanguages()
         .publisher
-        .flatMap { (languages: [LanguageCodable]) -> AnyPublisher<RepositorySyncResponse<LanguageDataModel>, Never> in
+        .flatMap { (languages: [LanguageCodable]) -> AnyPublisher<[LanguageDataModel], Error> in
             
-            let response: RepositorySyncResponse<LanguageDataModel> = super.storeExternalObjectsToPersistence(
+            return super.persistence.writeObjectsPublisher(
                 externalObjects: languages,
-                deleteObjectsNotFoundInExternalObjects: false
+                writeOption: nil,
+                getOption: .allObjects
             )
-                    
-            return Just(response)
-                .eraseToAnyPublisher()
-        }
-        .catch { (error: Error) in
-            
-            let response = RepositorySyncResponse<LanguageDataModel>(
-                objects: [],
-                errors: [error]
-            )
-            
-            return Just(response)
-                .eraseToAnyPublisher()
+            .eraseToAnyPublisher()
         }
         .eraseToAnyPublisher()
     }

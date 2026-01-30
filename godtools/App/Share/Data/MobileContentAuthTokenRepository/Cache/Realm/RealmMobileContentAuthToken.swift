@@ -8,9 +8,11 @@
 
 import Foundation
 import RealmSwift
+import RepositorySync
 
-class RealmMobileContentAuthToken: Object {
+class RealmMobileContentAuthToken: Object, IdentifiableRealmObject {
     
+    @objc dynamic var id: String = ""
     @objc dynamic var expirationDate: Date?
     @objc dynamic var userId: String = ""
     

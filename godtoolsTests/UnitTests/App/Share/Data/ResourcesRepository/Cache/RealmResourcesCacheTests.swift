@@ -6,145 +6,176 @@
 //  Copyright © 2023 Cru. All rights reserved.
 //
 
-import XCTest
+import Foundation
+import Testing
 @testable import godtools
+import RepositorySync
 import RealmSwift
-import Combine
 
-class RealmResourcesCacheTests: XCTestCase {
-    
-    private lazy var realmResourcesCache: ResourcesCache = {
+struct RealmResourcesCacheTests {
         
-        let realmDatabase = getNewTestDatabase()
-        
-        return ResourcesCache(
-            realmDatabase: realmDatabase,
-            trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository(
-                cache: TrackDownloadedTranslationsCache(realmDatabase: realmDatabase)
-            )
-        )
-    }()
-      
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-    
-    func testFilteringResourcesByCategory() {
+    @Test()
+    func filteringResourcesByCategory() async throws {
                 
-        let gospelTracts: [ResourceDataModel] = realmResourcesCache.getResourcesByFilter(
+        let resourcesCache: ResourcesCache = try getResourcesCache()
+        
+        let gospelTracts: [ResourceDataModel] = resourcesCache.getResourcesByFilter(
             filter: ResourcesFilter(category: "gospel", resourceTypes: ResourceType.toolTypes)
         )
         
-        let conversationStarters: [ResourceDataModel] = realmResourcesCache.getResourcesByFilter(
+        let conversationStarters: [ResourceDataModel] = resourcesCache.getResourcesByFilter(
             filter: ResourcesFilter(category: "conversation_starter", resourceTypes: ResourceType.toolTypes)
         )
-                        
-        XCTAssertEqual(gospelTracts.count, 6)
-        XCTAssertEqual(conversationStarters.count, 3)
+        
+        #expect(gospelTracts.count == 6)
+        #expect(conversationStarters.count == 3)
     }
     
-    func testFilteringResourcesByCategoryAndLanguage() {
+    @Test()
+    func filteringResourcesByCategoryAndLanguage() async throws {
         
-        let arabicGospelTracts = realmResourcesCache.getResourcesByFilter(
+        let resourcesCache: ResourcesCache = try getResourcesCache()
+        
+        let arabicGospelTracts = resourcesCache.getResourcesByFilter(
             filter: ResourcesFilter(category: "gospel", languageModelCode: "ar", resourceTypes: ResourceType.toolTypes)
         )
         
-        let arabicBahrainGospelTracts = realmResourcesCache.getResourcesByFilter(
+        let arabicBahrainGospelTracts = resourcesCache.getResourcesByFilter(
             filter: ResourcesFilter(category: "gospel", languageModelCode: "ar-BH", resourceTypes: ResourceType.toolTypes)
         )
         
-        let spanishGospelTracts = realmResourcesCache.getResourcesByFilter(
+        let spanishGospelTracts = resourcesCache.getResourcesByFilter(
             filter: ResourcesFilter(category: "gospel", languageModelCode: "es", resourceTypes: ResourceType.toolTypes)
         )
         
-        let englishGospelTracts = realmResourcesCache.getResourcesByFilter(
+        let englishGospelTracts = resourcesCache.getResourcesByFilter(
             filter: ResourcesFilter(category: "gospel", languageModelCode: "en", resourceTypes: ResourceType.toolTypes)
         )
         
-        let englishConversationStarterTools = realmResourcesCache.getResourcesByFilter(
+        let englishConversationStarterTools = resourcesCache.getResourcesByFilter(
             filter: ResourcesFilter(category: "conversation_starter", languageModelCode: "en", resourceTypes: ResourceType.toolTypes)
         )
         
-        let russianConversationStarterTools = realmResourcesCache.getResourcesByFilter(
+        let russianConversationStarterTools = resourcesCache.getResourcesByFilter(
             filter: ResourcesFilter(category: "conversation_starter", languageModelCode: "ru", resourceTypes: ResourceType.toolTypes)
         )
         
-        let chineseSimplifiedConversationStarterTools = realmResourcesCache.getResourcesByFilter(
+        let chineseSimplifiedConversationStarterTools = resourcesCache.getResourcesByFilter(
             filter: ResourcesFilter(category: "conversation_starter", languageModelCode: "zh-Hans", resourceTypes: ResourceType.toolTypes)
         )
         
-        let chineseTraditionalConversationStarterTools = realmResourcesCache.getResourcesByFilter(
+        let chineseTraditionalConversationStarterTools = resourcesCache.getResourcesByFilter(
             filter: ResourcesFilter(category: "conversation_starter", languageModelCode: "zh-Hant", resourceTypes: ResourceType.toolTypes)
         )
         
-        XCTAssertEqual(arabicGospelTracts.count, 2)
-        XCTAssertEqual(arabicBahrainGospelTracts.count, 1)
-        XCTAssertEqual(spanishGospelTracts.count, 3)
-        XCTAssertEqual(englishGospelTracts.count, 6)
+        #expect(arabicGospelTracts.count == 2)
+        #expect(arabicBahrainGospelTracts.count == 1)
+        #expect(spanishGospelTracts.count == 3)
+        #expect(englishGospelTracts.count == 6)
         
-        XCTAssertEqual(englishConversationStarterTools.count, 3)
-        XCTAssertEqual(russianConversationStarterTools.count, 2)
-        XCTAssertEqual(chineseSimplifiedConversationStarterTools.count, 1)
-        XCTAssertEqual(chineseTraditionalConversationStarterTools.count, 2)
+        #expect(englishConversationStarterTools.count == 3)
+        #expect(russianConversationStarterTools.count == 2)
+        #expect(chineseSimplifiedConversationStarterTools.count == 1)
+        #expect(chineseTraditionalConversationStarterTools.count == 2)
     }
     
-    func testFilteringResourcesByHidden() {
+    @Test()
+    func filteringResourcesByHidden() async throws {
         
-        let allTools = realmResourcesCache.getResources()
-        let hiddenTools = realmResourcesCache.getResourcesByFilter(filter: ResourcesFilter(resourceTypes: [.article, .chooseYourOwnAdventure, .lesson, .metaTool, .tract], isHidden: true))
-        let visibleTools = realmResourcesCache.getResourcesByFilter(filter: ResourcesFilter(resourceTypes: [.article, .chooseYourOwnAdventure, .lesson, .metaTool, .tract], isHidden: false))
-        let toolsIgnoringIsHidden = realmResourcesCache.getResourcesByFilter(filter: ResourcesFilter(resourceTypes: [.article, .chooseYourOwnAdventure, .lesson, .metaTool, .tract], isHidden: nil))
+        let resourcesCache: ResourcesCache = try getResourcesCache()
+        
+        let allToolsCount: Int = try resourcesCache.persistence.getObjectCount()
+        let hiddenTools = resourcesCache.getResourcesByFilter(filter: ResourcesFilter(resourceTypes: [.article, .chooseYourOwnAdventure, .lesson, .metaTool, .tract], isHidden: true))
+        let visibleTools = resourcesCache.getResourcesByFilter(filter: ResourcesFilter(resourceTypes: [.article, .chooseYourOwnAdventure, .lesson, .metaTool, .tract], isHidden: false))
+        let toolsIgnoringIsHidden = resourcesCache.getResourcesByFilter(filter: ResourcesFilter(resourceTypes: [.article, .chooseYourOwnAdventure, .lesson, .metaTool, .tract], isHidden: nil))
                 
-        XCTAssertEqual(hiddenTools.count, 3)
-        XCTAssertEqual(visibleTools.count, allTools.count - hiddenTools.count)
-        XCTAssertEqual(allTools.count, toolsIgnoringIsHidden.count)
+        #expect(hiddenTools.count == 3)
+        #expect(visibleTools.count == allToolsCount - hiddenTools.count)
+        #expect(allToolsCount == toolsIgnoringIsHidden.count)
     }
     
-    func testFilteringResourcesByMetaTool() {
+    @Test()
+    func filteringResourcesByMetaTool() async throws {
         
-        let metatools = realmResourcesCache.getResourcesByFilter(filter: ResourcesFilter(resourceTypes: [.metaTool]))
+        let resourcesCache: ResourcesCache = try getResourcesCache()
         
-        XCTAssertEqual(metatools.count, 3)
+        let metatools = resourcesCache.getResourcesByFilter(filter: ResourcesFilter(resourceTypes: [.metaTool]))
+        
+        #expect(metatools.count == 3)
     }
     
-    func testFilteringByVariant() {
+    @Test()
+    func filteringByVariant() async throws {
         
-        let variants = realmResourcesCache.getResourcesByFilter(filter: ResourcesFilter(variants: .isVariant))
+        let resourcesCache: ResourcesCache = try getResourcesCache()
         
-        XCTAssertEqual(variants.count, 15)
+        let variants = resourcesCache.getResourcesByFilter(filter: ResourcesFilter(variants: .isVariant))
+        
+        #expect(variants.count == 15)
     }
     
-    func testFilteringByDefaultVariant() {
+    @Test()
+    func filteringByDefaultVariant() async throws {
         
-        let defaultVariants = realmResourcesCache.getResourcesByFilter(filter: ResourcesFilter(variants: .isDefaultVariant))
+        let resourcesCache: ResourcesCache = try getResourcesCache()
         
-        XCTAssertEqual(defaultVariants.count, 3)
+        let defaultVariants = resourcesCache.getResourcesByFilter(filter: ResourcesFilter(variants: .isDefaultVariant))
+        
+        #expect(defaultVariants.count == 3)
     }
     
-    func testFilteringOutVariants() {
+    @Test()
+    func filteringOutVariants() async throws {
         
-        let allTools = realmResourcesCache.getResourcesByFilter(filter: ResourcesFilter())
-        let variants = realmResourcesCache.getResourcesByFilter(filter: ResourcesFilter(variants: .isVariant))
-        let toolsExcludingVariants = realmResourcesCache.getResourcesByFilter(filter: ResourcesFilter(variants: .isNotVariant))
+        let resourcesCache: ResourcesCache = try getResourcesCache()
         
-        XCTAssertEqual(toolsExcludingVariants.count, allTools.count - variants.count)
+        let allTools = resourcesCache.getResourcesByFilter(filter: ResourcesFilter())
+        let variants = resourcesCache.getResourcesByFilter(filter: ResourcesFilter(variants: .isVariant))
+        let toolsExcludingVariants = resourcesCache.getResourcesByFilter(filter: ResourcesFilter(variants: .isNotVariant))
+        
+        #expect(toolsExcludingVariants.count == allTools.count - variants.count)
+    }
+}
+
+extension RealmResourcesCacheTests {
+    
+    private func getResourcesCache() throws -> ResourcesCache {
+        
+        return ResourcesCache(
+            persistence: try getRealmPersistence(),
+            trackDownloadedTranslationsRepository: try getTrackDownloadedTranslationsRepository()
+        )
     }
     
-    private func getNewTestDatabase() -> RealmDatabase {
+    private func getRealmPersistence() throws -> RealmRepositorySyncPersistence<ResourceDataModel, ResourceCodable, RealmResource> {
         
-        let config = RealmDatabaseConfiguration(cacheType: .inMemory(identifier: UUID().uuidString), schemaVersion: 1)
+        return RealmRepositorySyncPersistence(
+            database: try getRealmDatabase(),
+            dataModelMapping: RealmResourceDataModelMapping()
+        )
+    }
+    
+    private func getTrackDownloadedTranslationsRepository() throws -> TrackDownloadedTranslationsRepository {
+             
+        return TrackDownloadedTranslationsRepository(
+            cache: TrackDownloadedTranslationsCache(
+                persistence: RealmRepositorySyncPersistence(
+                    database: try getRealmDatabase(),
+                    dataModelMapping: RealmDownloadedTranslationDataModelMapping()
+                )
+            )
+        )
+    }
+    
+    private func getRealmDatabase() throws -> RealmDatabase {
         
-        let realmDatabase = RealmDatabase(databaseConfiguration: config)
-        
-        let realm: Realm = realmDatabase.openRealm()
+        let realmDatabase = RealmDatabase(databaseConfig: RealmDatabaseConfig.createInMemoryConfig())
+                
+        let realm: Realm = try realmDatabase.openRealm()
                 
         let languages: [RealmLanguage] = getLanguages()
                 
-        let resources: [RealmResource] = getGospelTracts(languages: languages) + 
+        let resources: [RealmResource] = getGospelTracts(languages: languages) +
         getChooseYourOwnAdventureTools(languages: languages) +
         getLessons(languages: languages) +
         getHiddenTools(languages: languages) +

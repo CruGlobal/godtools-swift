@@ -10,7 +10,9 @@ import Testing
 import Foundation
 @testable import godtools
 import Combine
+import RepositorySync
 
+@Suite(.serialized)
 struct FavoritedResourcesRepositoryTests {
     
     struct StoreTestArgument {
@@ -26,26 +28,41 @@ struct FavoritedResourcesRepositoryTests {
             StoreTestArgument(resourcesInRealmIdsAtPositions: [:], resourceIdsToAdd: ["A", "B", "C"], expectedUpdatedIdsAtPositions: ["A": 0, "B": 1, "C": 2]),
         ]
     )
-    @MainActor func testStoreFavoritedResources(argument: StoreTestArgument) async {
+    func testStoreFavoritedResources(argument: StoreTestArgument) async throws {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        let realmDatabase = getConfiguredRealmDatabase(with: argument.resourcesInRealmIdsAtPositions)
+        let realmDatabase = try getRealmDatabase(resources: argument.resourcesInRealmIdsAtPositions)
         let favoritedResourcesRepository = FavoritedResourcesRepository(cache: RealmFavoritedResourcesCache(realmDatabase: realmDatabase))
         
         var favoritedResources: [FavoritedResourceDataModel] = Array()
         
         await confirmation(expectedCount: 1) { confirmation in
-            favoritedResourcesRepository.storeFavoritedResourcesPublisher(ids: argument.resourceIdsToAdd)
-                .sink(receiveValue: { _ in
-                    
-                    favoritedResources = realmDatabase.openRealm().objects(RealmFavoritedResource.self).map {
-                        FavoritedResourceDataModel(id: $0.resourceId, createdAt: $0.createdAt, position: $0.position)
-                    }
-                    
-                    confirmation()
-                })
-                .store(in: &cancellables)
+            
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
+                }
+                
+                favoritedResourcesRepository
+                    .storeFavoritedResourcesPublisher(ids: argument.resourceIdsToAdd)
+                    .sink(receiveValue: { _ in
+                        
+                        favoritedResources = realmDatabase.openRealm().objects(RealmFavoritedResource.self).map {
+                            FavoritedResourceDataModel(id: $0.resourceId, createdAt: $0.createdAt, position: $0.position)
+                        }
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                                
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    })
+                    .store(in: &cancellables)
+            }
         }
         
         for (expectedId, expectedPosition) in argument.expectedUpdatedIdsAtPositions {
@@ -74,30 +91,45 @@ struct FavoritedResourcesRepositoryTests {
             DeleteTestArgument(resourcesInRealmIdsAtPositions: ["A": 0], resourceIdToDelete: "B", expectedUpdatedIdsAtPositions: ["A": 0])
         ]
     )
-    @MainActor func testDeleteFavoritedResource(argument: DeleteTestArgument) async {
+    func testDeleteFavoritedResource(argument: DeleteTestArgument) async throws {
         var cancellables: Set<AnyCancellable> = Set()
         
-        let realmDatabase = getConfiguredRealmDatabase(with: argument.resourcesInRealmIdsAtPositions)
+        let realmDatabase = try getRealmDatabase(resources: argument.resourcesInRealmIdsAtPositions)
         let favoritedResourcesRepository = FavoritedResourcesRepository(cache: RealmFavoritedResourcesCache(realmDatabase: realmDatabase))
         
         var remainingResources: [FavoritedResourceDataModel] = Array()
         
         await confirmation(expectedCount: 1) { confirmation in
-            favoritedResourcesRepository.deleteFavoritedResourcePublisher(id: argument.resourceIdToDelete)
-                .sink(receiveCompletion: { _ in
-                    
-                }, receiveValue: { _ in
-                    
-                    let realm = realmDatabase.openRealm()
-                    remainingResources = realm.objects(RealmFavoritedResource.self).map {
-                        FavoritedResourceDataModel(id: $0.resourceId, createdAt: $0.createdAt, position: $0.position)
-                    }
-                    
-                    confirmation()
-                })
-                .store(in: &cancellables)
+            
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
+                }
+                
+                favoritedResourcesRepository
+                    .deleteFavoritedResourcePublisher(id: argument.resourceIdToDelete)
+                    .sink(receiveCompletion: { _ in
+                        
+                    }, receiveValue: { _ in
+                        
+                        let realm = realmDatabase.openRealm()
+                        remainingResources = realm.objects(RealmFavoritedResource.self).map {
+                            FavoritedResourceDataModel(id: $0.resourceId, createdAt: $0.createdAt, position: $0.position)
+                        }
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                                
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    })
+                    .store(in: &cancellables)
+            }
         }
-        
+
         for (expectedId, expectedPosition) in argument.expectedUpdatedIdsAtPositions {
             
             let actualPosition = remainingResources.first(where: { $0.id == expectedId })?.position
@@ -125,28 +157,44 @@ struct FavoritedResourcesRepositoryTests {
             ReorderTestArgument(resourcesInRealmIdsAtPositions: ["A": 0, "B": 1, "C": 2, "D": 3], resourceIdToReorder: "E", originalPosition: 1, newPosition: 2, expectedUpdatedIdsAtPositions: ["A": 0, "B": 1, "C": 2, "D": 3])
         ]
     )
-    @MainActor func testReorderFavoritedResources(argument: ReorderTestArgument) async {
+    func testReorderFavoritedResources(argument: ReorderTestArgument) async throws {
         var cancellables: Set<AnyCancellable> = Set()
         
-        let realmDatabase = getConfiguredRealmDatabase(with: argument.resourcesInRealmIdsAtPositions)
+        let realmDatabase = try getRealmDatabase(resources: argument.resourcesInRealmIdsAtPositions)
         let favoritedResourcesRepository = FavoritedResourcesRepository(cache: RealmFavoritedResourcesCache(realmDatabase: realmDatabase))
         
         var favoritedResources: [FavoritedResourceDataModel] = Array()
         
         await confirmation(expectedCount: 1) { confirmation in
-            favoritedResourcesRepository.reorderFavoritedResourcePublisher(id: argument.resourceIdToReorder, originalPosition: argument.originalPosition, newPosition: argument.newPosition)
-                .sink { _ in
-                    
-                } receiveValue: { _ in
-                    
-                    let realm = realmDatabase.openRealm()
-                    favoritedResources = realm.objects(RealmFavoritedResource.self).map {
-                        FavoritedResourceDataModel(id: $0.resourceId, createdAt: $0.createdAt, position: $0.position)
-                    }
-                    
-                    confirmation()
+            
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
                 }
-                .store(in: &cancellables)
+                
+                favoritedResourcesRepository
+                    .reorderFavoritedResourcePublisher(id: argument.resourceIdToReorder, originalPosition: argument.originalPosition, newPosition: argument.newPosition)
+                    .sink { _ in
+                        
+                    } receiveValue: { _ in
+                        
+                        let realm = realmDatabase.openRealm()
+                        
+                        favoritedResources = realm.objects(RealmFavoritedResource.self).map {
+                            FavoritedResourceDataModel(id: $0.resourceId, createdAt: $0.createdAt, position: $0.position)
+                        }
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                                
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    }
+                    .store(in: &cancellables)
+            }
         }
         
         for (expectedId, expectedPosition) in argument.expectedUpdatedIdsAtPositions {
@@ -162,7 +210,15 @@ struct FavoritedResourcesRepositoryTests {
 
 extension FavoritedResourcesRepositoryTests {
     
-    private func getConfiguredRealmDatabase(with resources: [String: Int]) -> RealmDatabase {
+    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
+                
+        return try TestsDiContainer(
+            realmFileName: String(describing: FavoritedResourcesRepositoryTests.self),
+            addRealmObjects: addRealmObjects
+        )
+    }
+    
+    private func getFavoritedResources(resources: [String: Int]) -> [RealmFavoritedResource] {
         
         var resourceObjects = [RealmFavoritedResource]()
         
@@ -171,7 +227,16 @@ extension FavoritedResourcesRepositoryTests {
             resourceObjects.append(resource)
         }
         
-        return TestsInMemoryRealmDatabase(addObjectsToDatabase: resourceObjects)
+        return resourceObjects
+    }
+    
+    private func getRealmDatabase(resources: [String: Int]) throws -> LegacyRealmDatabase {
+        
+        let realmObjects: [IdentifiableRealmObject] = getFavoritedResources(resources: resources)
+        
+        let testsDiContainer = try getTestsDiContainer(addRealmObjects: realmObjects)
+        
+        return testsDiContainer.dataLayer.getSharedLegacyRealmDatabase()
     }
 }
 

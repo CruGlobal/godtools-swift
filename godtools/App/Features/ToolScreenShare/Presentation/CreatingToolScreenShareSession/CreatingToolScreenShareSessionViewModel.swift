@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class CreatingToolScreenShareSessionViewModel: ObservableObject {
+@MainActor class CreatingToolScreenShareSessionViewModel: ObservableObject {
     
     private static var incrementScreenShareInBackgroundCancellable: AnyCancellable?
     

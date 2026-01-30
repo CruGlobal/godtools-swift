@@ -25,18 +25,16 @@ class GetLessonFilterLanguagesRepository: GetLessonFilterLanguagesRepositoryInte
         self.stringWithLocaleCount = stringWithLocaleCount
     }
     
-    func getLessonFilterLanguagesPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[LessonFilterLanguageDomainModel], Never> {
-        
+    @MainActor func getLessonFilterLanguagesPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[LessonFilterLanguageDomainModel], Error> {
+            
         return resourcesRepository
             .persistence
             .observeCollectionChangesPublisher()
-            .flatMap { _ in
+            .flatMap { (resourcesChanged: Void) in
                 
                 let languageIds = self.resourcesRepository.cache.getLessonsSupportedLanguageIds()
                 
-                let languages = self.createLessonLanguageFilterDomainModelList(from: languageIds, translatedInAppLanguage: translatedInAppLanguage)
-                
-                return Just(languages)
+                return self.createLessonLanguageFilterDomainModelListPublisher(from: languageIds, translatedInAppLanguage: translatedInAppLanguage)
             }
             .eraseToAnyPublisher()
     }
@@ -55,7 +53,7 @@ class GetLessonFilterLanguagesRepository: GetLessonFilterLanguagesRepositoryInte
     func getLessonLanguageFilterFromLanguageId(languageId: String?, translatedInAppLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel? {
         
         guard let languageId = languageId,
-              let language = languagesRepository.persistence.getObject(id: languageId)
+              let language = languagesRepository.persistence.getDataModelNonThrowing(id: languageId)
         else {
             return nil
         }
@@ -66,31 +64,37 @@ class GetLessonFilterLanguagesRepository: GetLessonFilterLanguagesRepositoryInte
 
 extension GetLessonFilterLanguagesRepository {
     
-    private func createLessonLanguageFilterDomainModelList(from languageIds: [String], translatedInAppLanguage: AppLanguageDomainModel) -> [LessonFilterLanguageDomainModel] {
+    private func createLessonLanguageFilterDomainModelListPublisher(from languageIds: [String], translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[LessonFilterLanguageDomainModel], Error> {
         
-        let languages: [LessonFilterLanguageDomainModel] = languagesRepository.persistence.getObjects(ids: languageIds)
-            .compactMap { (languageModel: LanguageDataModel) in
+        return languagesRepository
+            .persistence
+            .getDataModelsPublisher(getOption: .objectsByIds(ids: languageIds))
+            .map { (languages: [LanguageDataModel]) in
                 
-                let lessonsAvailableCount: Int = resourcesRepository.cache.getLessonsCount(filterByLanguageId: languageModel.id)
-                
-                guard lessonsAvailableCount > 0 else {
-                    return nil
+                let domainModels: [LessonFilterLanguageDomainModel] = languages.compactMap { (language: LanguageDataModel) in
+                    
+                    let domainModel: LessonFilterLanguageDomainModel = self.createLessonLanguageFilterDomainModel(
+                        with: language,
+                        translatedInAppLanguage: translatedInAppLanguage
+                    )
+                    
+                    guard domainModel.lessonsAvailableCount > 0 else {
+                        return nil
+                    }
+                    
+                    return domainModel
                 }
                 
-                return self.createLessonLanguageFilterDomainModel(
-                    with: languageModel,
-                    translatedInAppLanguage: translatedInAppLanguage
-                )
+                return domainModels
+                    .sorted { (language1: LessonFilterLanguageDomainModel, language2: LessonFilterLanguageDomainModel) in
+                        
+                        return language1.languageNameTranslatedInAppLanguage.lowercased() < language2.languageNameTranslatedInAppLanguage.lowercased()
+                    }
             }
-            .sorted { (language1: LessonFilterLanguageDomainModel, language2: LessonFilterLanguageDomainModel) in
-                
-                return language1.languageNameTranslatedInAppLanguage.lowercased() < language2.languageNameTranslatedInAppLanguage.lowercased()
-            }
-        
-        return languages
+            .eraseToAnyPublisher()
     }
     
-    private func createLessonLanguageFilterDomainModel(with languageModel: LanguageDataModel, translatedInAppLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel? {
+    private func createLessonLanguageFilterDomainModel(with languageModel: LanguageDataModel, translatedInAppLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel {
         
         let lessonsAvailableCount: Int = resourcesRepository.cache.getLessonsCount(filterByLanguageId: languageModel.id)
 
@@ -103,7 +107,8 @@ extension GetLessonFilterLanguagesRepository {
             languageId: languageModel.id,
             languageNameTranslatedInLanguage: languageNameTranslatedInLanguage,
             languageNameTranslatedInAppLanguage: languageNameTranslatedInAppLanguage,
-            lessonsAvailableText: lessonsAvailableText
+            lessonsAvailableText: lessonsAvailableText,
+            lessonsAvailableCount: lessonsAvailableCount
         )
     }
     

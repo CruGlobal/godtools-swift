@@ -172,11 +172,7 @@ Du kan finde en onlineversion på https://knowgod.com/";
 "no" = "Nej";
 
 // Tract - Sharing
-"tract_share_message" = "Med dette link kommer du til webversionen af den side, som vi så på sammen i dag: %@. 
-
-Lad os tale noget mere sammen!
-
-Appen kan downloades fra https://godtoolsapp.com";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "Hent";

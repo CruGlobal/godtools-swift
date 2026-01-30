@@ -22,7 +22,7 @@ class GetGlobalActivityThisWeekRepository: GetGlobalActivityThisWeekRepositoryIn
         self.getTranslatedNumberCount = getTranslatedNumberCount
     }
     
-    func getActivityPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<[GlobalActivityThisWeekDomainModel], Never> {
+    @MainActor func getActivityPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<[GlobalActivityThisWeekDomainModel], Never> {
         
         return globalAnalyticsRepository.getGlobalAnalyticsChangedPublisher(requestPriority: .high)
         .flatMap({ (dataModel: GlobalAnalyticsDataModel?) -> AnyPublisher<[GlobalActivityThisWeekDomainModel], Never> in

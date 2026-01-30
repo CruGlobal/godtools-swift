@@ -10,6 +10,7 @@ import Testing
 @testable import godtools
 import Combine
 
+@Suite(.serialized)
 struct GetLanguageSettingsInterfaceStringsRepositoryTests {
     
     @Test(
@@ -19,11 +20,11 @@ struct GetLanguageSettingsInterfaceStringsRepositoryTests {
         Then: The interface strings should be translated into Spanish.
         """
     )
-    @MainActor func interfaceStringsAreTranslatedWhenAppLanguageChanges() async {
+    @MainActor func interfaceStringsAreTranslatedWhenAppLanguageChanges() async throws {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        let getLanguageSettingsInterfaceStringsRepository: GetLanguageSettingsInterfaceStringsRepository = Self.getLanguageSettingsInterfaceStringsRepository()
+        let getLanguageSettingsInterfaceStringsRepository: GetLanguageSettingsInterfaceStringsRepository = try getLanguageSettingsInterfaceStringsRepository()
         
         let appLanguagePublisher: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
         
@@ -96,11 +97,11 @@ struct GetLanguageSettingsInterfaceStringsRepositoryTests {
             )
         ]
     )
-    @MainActor func chooseAppLanguageButtonTitleIsTranslatedInMyAppLanguage(argument: TestArgumentChooseAppLanguageButtonTitle) async {
+    @MainActor func chooseAppLanguageButtonTitleIsTranslatedInMyAppLanguage(argument: TestArgumentChooseAppLanguageButtonTitle) async throws {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        let getLanguageSettingsInterfaceStringsRepository: GetLanguageSettingsInterfaceStringsRepository = Self.getLanguageSettingsInterfaceStringsRepository()
+        let getLanguageSettingsInterfaceStringsRepository: GetLanguageSettingsInterfaceStringsRepository = try getLanguageSettingsInterfaceStringsRepository()
         
         var interfaceStringsRef: LanguageSettingsInterfaceStringsDomainModel?
         
@@ -123,29 +124,20 @@ struct GetLanguageSettingsInterfaceStringsRepositoryTests {
         #expect(interfaceStringsRef?.chooseAppLanguageButtonTitle == argument.expectedValue)
     }
     
-    struct TestArgumentNumberOfLanguages {
-        let appLanguage: LanguageCodeDomainModel
-        let expectedValue: String
-    }
-    
     @Test(
         """
         Given: User is viewing the language settings.
         When: The app language is set.
         Then: I expect to see the number of app languages available translated in my app language.
-        """,
-        arguments: [
-            TestArgumentNumberOfLanguages(
-                appLanguage: .english,
-                expectedValue: "\(Self.getNumberOfTestAppLanguages()) Languages available"
-            )
-        ]
+        """
     )
-    @MainActor func chooseAppLanguageIsTranslatedInMyLanguageEnglish(argument: TestArgumentNumberOfLanguages) async {
+    @MainActor func chooseAppLanguageIsTranslatedInMyLanguageEnglish() async throws {
         
         var cancellables: Set<AnyCancellable> = Set()
                 
-        let getLanguageSettingsInterfaceStringsRepository: GetLanguageSettingsInterfaceStringsRepository = Self.getLanguageSettingsInterfaceStringsRepository()
+        let getLanguageSettingsInterfaceStringsRepository: GetLanguageSettingsInterfaceStringsRepository = try getLanguageSettingsInterfaceStringsRepository()
+        
+        let english: LanguageCodeDomainModel = .english
         
         var interfaceStringsRef: LanguageSettingsInterfaceStringsDomainModel?
         
@@ -154,7 +146,7 @@ struct GetLanguageSettingsInterfaceStringsRepositoryTests {
         await confirmation(expectedCount: 1) { confirmation in
             
             getLanguageSettingsInterfaceStringsRepository
-                .getStringsPublisher(translateInAppLanguage: argument.appLanguage.rawValue)
+                .getStringsPublisher(translateInAppLanguage: english.rawValue)
                 .sink { (interfaceStrings: LanguageSettingsInterfaceStringsDomainModel) in
                     
                     sinkCount += 1
@@ -165,13 +157,15 @@ struct GetLanguageSettingsInterfaceStringsRepositoryTests {
                 .store(in: &cancellables)
         }
         
-        #expect(interfaceStringsRef?.numberOfAppLanguagesAvailable == argument.expectedValue)
+        let expectedValue: String = "\(getAppLanguages().count) Languages available"
+        
+        #expect(interfaceStringsRef?.numberOfAppLanguagesAvailable == expectedValue)
     }
 }
 
 extension GetLanguageSettingsInterfaceStringsRepositoryTests {
     
-    private static func getAppLanguages() -> [AppLanguageCodable] {
+    private func getAppLanguages() -> [AppLanguageCodable] {
         
         let appLanguages: [AppLanguageCodable] = [
             AppLanguageCodable(languageCode: "en", languageDirection: .leftToRight, languageScriptCode: nil),
@@ -184,18 +178,16 @@ extension GetLanguageSettingsInterfaceStringsRepositoryTests {
         return appLanguages
     }
     
-    private static func getNumberOfTestAppLanguages() -> Int {
+    private func getLanguageSettingsInterfaceStringsRepository() throws -> GetLanguageSettingsInterfaceStringsRepository {
         
-        return Self.getAppLanguages().count
-    }
-    
-    private static func getLanguageSettingsInterfaceStringsRepository() -> GetLanguageSettingsInterfaceStringsRepository {
+        let testsDiContainer = try TestsDiContainer(
+            realmFileName: String(describing: GetLanguageSettingsInterfaceStringsRepositoryTests.self),
+            addRealmObjects: []
+        )
         
-        let testsDiContainer = TestsDiContainer()
+        let testsRealmDatabase: LegacyRealmDatabase = testsDiContainer.dataLayer.getSharedLegacyRealmDatabase()
         
-        let testsRealmDatabase: RealmDatabase = testsDiContainer.dataLayer.getSharedRealmDatabase()
-        
-        let appLanguages: [AppLanguageCodable] = Self.getAppLanguages()
+        let appLanguages: [AppLanguageCodable] = getAppLanguages()
         
         let mockAppLanguagesSync: AppLanguagesRepositorySyncInterface = MockAppLanguagesRepositorySync(
             realmDatabase: testsRealmDatabase,

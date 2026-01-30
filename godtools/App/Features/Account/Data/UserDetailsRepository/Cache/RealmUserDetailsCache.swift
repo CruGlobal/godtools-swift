@@ -12,16 +12,16 @@ import Combine
 
 class RealmUserDetailsCache {
     
-    private let realmDatabase: RealmDatabase
+    private let realmDatabase: LegacyRealmDatabase
     private let authTokenRepository: MobileContentAuthTokenRepository
     
-    init(realmDatabase: RealmDatabase, authTokenRepository: MobileContentAuthTokenRepository) {
+    init(realmDatabase: LegacyRealmDatabase, authTokenRepository: MobileContentAuthTokenRepository) {
         
         self.realmDatabase = realmDatabase
         self.authTokenRepository = authTokenRepository
     }
     
-    func getAuthUserDetailsChangedPublisher() -> AnyPublisher<UserDetailsDataModel?, Never> {
+    @MainActor func getAuthUserDetailsChangedPublisher() -> AnyPublisher<UserDetailsDataModel?, Never> {
         
         return realmDatabase.openRealm()
             .objects(RealmUserDetails.self)
@@ -32,7 +32,7 @@ class RealmUserDetailsCache {
             .eraseToAnyPublisher()
     }
     
-    func getUserDetailsChangedPublisher(id: String) -> AnyPublisher<UserDetailsDataModel?, Never> {
+    @MainActor func getUserDetailsChangedPublisher(id: String) -> AnyPublisher<UserDetailsDataModel?, Never> {
         
         return realmDatabase.openRealm()
             .objects(RealmUserDetails.self)

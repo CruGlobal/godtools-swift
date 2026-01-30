@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class ToolSettingsToolLanguagesListViewModel: ObservableObject {
+@MainActor class ToolSettingsToolLanguagesListViewModel: ObservableObject {
         
     private let listType: ToolSettingsToolLanguagesListTypeDomainModel
     private let toolId: String
@@ -61,7 +61,9 @@ class ToolSettingsToolLanguagesListViewModel: ObservableObject {
         }
         .switchToLatest()
         .receive(on: DispatchQueue.main)
-        .sink(receiveValue: { [weak self] (domainModel: ViewToolSettingsToolLanguagesListDomainModel) in
+        .sink(receiveCompletion: { _ in
+            
+        }, receiveValue: { [weak self] (domainModel: ViewToolSettingsToolLanguagesListDomainModel) in
             
             self?.languages = domainModel.languages
             self?.deleteLanguageActionTitle = domainModel.interfaceStrings.deleteParallelLanguageActionTitle

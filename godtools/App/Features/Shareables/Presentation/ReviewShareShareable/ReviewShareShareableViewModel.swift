@@ -11,7 +11,7 @@ import UIKit
 import SwiftUI
 import Combine
 
-class ReviewShareShareableViewModel: ObservableObject {
+@MainActor class ReviewShareShareableViewModel: ObservableObject {
     
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     
@@ -62,10 +62,12 @@ class ReviewShareShareableViewModel: ObservableObject {
             .store(in: &cancellables)
         
         getShareableImageUseCase
-            .getShareableImagePublisher(shareable: shareable)
+            .execute(shareable: shareable)
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (domainModel: ShareableImageDomainModel?) in
-                                
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (domainModel: ShareableImageDomainModel?) in
+              
                 if let imageData = domainModel?.imageData, let uiImage = UIImage(data: imageData) {
                          
                     self?.imageToShare = uiImage
@@ -75,7 +77,7 @@ class ReviewShareShareableViewModel: ObservableObject {
                         imageIdForAnimationChange: domainModel?.dataModelId
                     )
                 }
-            }
+            })
             .store(in: &cancellables)
     }
     

@@ -21,8 +21,8 @@ struct SearchLanguageInDownloadableLanguagesRepositoryTests {
     )
     func searchingLanguagesWithSingleLetterSearchString() async {
         
-        let searchLanguageInDownloadableLanguages: SearchLanguageInDownloadableLanguagesRepository = Self.getSearchLanguageInDownloadableLanguagesRepository()
-        let downloadableLanguagesList: [DownloadableLanguageListItemDomainModel] = Self.getDownloadableLanguagesList()
+        let searchLanguageInDownloadableLanguages: SearchLanguageInDownloadableLanguagesRepository = getSearchLanguageInDownloadableLanguagesRepository()
+        let downloadableLanguagesList: [DownloadableLanguageListItemDomainModel] = getDownloadableLanguagesList()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -56,8 +56,8 @@ struct SearchLanguageInDownloadableLanguagesRepositoryTests {
     )
     func searchingLanguagesWithMultiLetterSearchString() async {
         
-        let searchLanguageInDownloadableLanguages: SearchLanguageInDownloadableLanguagesRepository = Self.getSearchLanguageInDownloadableLanguagesRepository()
-        let downloadableLanguagesList: [DownloadableLanguageListItemDomainModel] = Self.getDownloadableLanguagesList()
+        let searchLanguageInDownloadableLanguages: SearchLanguageInDownloadableLanguagesRepository = getSearchLanguageInDownloadableLanguagesRepository()
+        let downloadableLanguagesList: [DownloadableLanguageListItemDomainModel] = getDownloadableLanguagesList()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -85,14 +85,14 @@ struct SearchLanguageInDownloadableLanguagesRepositoryTests {
 
 extension SearchLanguageInDownloadableLanguagesRepositoryTests {
     
-    private static func getSearchLanguageInDownloadableLanguagesRepository() -> SearchLanguageInDownloadableLanguagesRepository {
+    private func getSearchLanguageInDownloadableLanguagesRepository() -> SearchLanguageInDownloadableLanguagesRepository {
         
         return SearchLanguageInDownloadableLanguagesRepository(
             stringSearcher: StringSearcher()
         )
     }
     
-    private static func getDownloadableLanguagesList() -> [DownloadableLanguageListItemDomainModel] {
+    private func getDownloadableLanguagesList() -> [DownloadableLanguageListItemDomainModel] {
         
         let downloadableLanguagesList = [
             DownloadableLanguageListItemDomainModel(

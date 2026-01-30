@@ -26,7 +26,7 @@ class GetToolFilterLanguagesRepository: GetToolFilterLanguagesRepositoryInterfac
         self.stringWithLocaleCount = stringWithLocaleCount
     }
     
-    func getToolFilterLanguagesPublisher(translatedInAppLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) -> AnyPublisher<[ToolFilterLanguageDomainModel], Never> {
+    @MainActor func getToolFilterLanguagesPublisher(translatedInAppLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) -> AnyPublisher<[ToolFilterLanguageDomainModel], Error> {
         
         return resourcesRepository
             .persistence
@@ -36,9 +36,11 @@ class GetToolFilterLanguagesRepository: GetToolFilterLanguagesRepositoryInterfac
                 let languageIds = self.resourcesRepository
                     .getAllToolLanguageIds(filteredByCategoryId: filteredByCategoryId)
                 
-                let languages = self.createLanguageFilterDomainModelList(from: languageIds, translatedInAppLanguage: translatedInAppLanguage, filteredByCategoryId: filteredByCategoryId)
-                
-                return Just(languages)
+                return self.createLanguageFilterDomainModelListPublisher(
+                    from: languageIds,
+                    translatedInAppLanguage: translatedInAppLanguage,
+                    filteredByCategoryId: filteredByCategoryId
+                )
             }
             .eraseToAnyPublisher()
     }
@@ -51,7 +53,7 @@ class GetToolFilterLanguagesRepository: GetToolFilterLanguagesRepositoryInterfac
     func getLanguageFilter(from languageId: String?, translatedInAppLanguage: AppLanguageDomainModel) -> ToolFilterLanguageDomainModel? {
         
         guard let languageId = languageId,
-            let language = languagesRepository.persistence.getObject(id: languageId)
+            let language = languagesRepository.persistence.getDataModelNonThrowing(id: languageId)
         else {
             return nil
         }
@@ -67,7 +69,7 @@ extension GetToolFilterLanguagesRepository {
     private func getLanguageFilterPublisher(from languageId: String?, translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolFilterLanguageDomainModel?, Never> {
         
         guard let languageId = languageId,
-            let language = languagesRepository.persistence.getObject(id: languageId)
+            let language = languagesRepository.persistence.getDataModelNonThrowing(id: languageId)
         else {
             return Just<ToolFilterLanguageDomainModel?>(nil)
                 .eraseToAnyPublisher()
@@ -79,34 +81,45 @@ extension GetToolFilterLanguagesRepository {
             .eraseToAnyPublisher()
     }
     
-    private func createLanguageFilterDomainModelList(from languageIds: [String], translatedInAppLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) -> [ToolFilterLanguageDomainModel] {
+    private func createLanguageFilterDomainModelListPublisher(from languageIds: [String], translatedInAppLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) -> AnyPublisher<[ToolFilterLanguageDomainModel], Error> {
                 
-        let anyLanguage = createAnyLanguageDomainModel(translatedInAppLanguage: translatedInAppLanguage, filteredByCategoryId: filteredByCategoryId)
+        let anyLanguage = createAnyLanguageDomainModel(
+            translatedInAppLanguage: translatedInAppLanguage,
+            filteredByCategoryId: filteredByCategoryId
+        )
         
-        let languages: [ToolFilterLanguageDomainModel] = languagesRepository.persistence.getObjects(ids: languageIds)
-            .compactMap { languageModel in
-                
-                let toolsAvailableCount: Int = getToolsAvailableCount(for: languageModel.id, filteredByCategoryId: filteredByCategoryId)
-                
-                guard toolsAvailableCount > 0 else {
-                    return nil
+        return languagesRepository
+            .persistence
+            .getDataModelsPublisher(getOption: .objectsByIds(ids: languageIds))
+            .map { (languages: [LanguageDataModel]) in
+
+                let domainModels: [ToolFilterLanguageDomainModel] = languages.compactMap { (language: LanguageDataModel) in
+                    
+                    let domainModel: ToolFilterLanguageDomainModel = self.createLanguageFilterDomainModel(
+                        with: language,
+                        translatedInAppLanguage: translatedInAppLanguage,
+                        filteredByCategoryId: filteredByCategoryId
+                    )
+                    
+                    guard domainModel.numberOfToolsAvailable > 0 else {
+                        return nil
+                    }
+                    
+                    return domainModel
                 }
                 
-                return self.createLanguageFilterDomainModel(
-                    with: languageModel,
-                    translatedInAppLanguage: translatedInAppLanguage,
-                    filteredByCategoryId: filteredByCategoryId
-                )
-            }
-            .sorted { language1, language2 in
+                let sortedDomainModels: [ToolFilterLanguageDomainModel] = domainModels
+                    .sorted { language1, language2 in
+                        
+                        let language1Name = language1.translatedName ?? language1.primaryText
+                        let language2Name = language2.translatedName ?? language2.primaryText
+                        
+                        return language1Name.lowercased() < language2Name.lowercased()
+                    }
                 
-                let language1Name = language1.translatedName ?? language1.primaryText
-                let language2Name = language2.translatedName ?? language2.primaryText
-                
-                return language1Name.lowercased() < language2Name.lowercased()
+                return [anyLanguage] + sortedDomainModels
             }
-        
-        return [anyLanguage] + languages
+            .eraseToAnyPublisher()
     }
     
     private func createLanguageFilterDomainModel(with languageModel: LanguageDataModel, translatedInAppLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) -> ToolFilterLanguageDomainModel {
@@ -123,7 +136,8 @@ extension GetToolFilterLanguagesRepository {
             translatedName: translatedLanguageName,
             toolsAvailableText: toolsAvailableText,
             languageId: languageModel.id,
-            languageLocaleId: languageModel.code
+            languageLocaleId: languageModel.code,
+            numberOfToolsAvailable: toolsAvailableCount
         )
     }
     
@@ -136,7 +150,8 @@ extension GetToolFilterLanguagesRepository {
         
         return ToolFilterAnyLanguageDomainModel(
             text: anyLanguageTranslation,
-            toolsAvailableText: toolsAvailableText
+            toolsAvailableText: toolsAvailableText,
+            numberOfToolsAvailable: toolsAvailableCount
         )
     }
     

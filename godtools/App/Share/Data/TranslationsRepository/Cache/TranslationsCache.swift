@@ -7,49 +7,34 @@
 //
 
 import Foundation
+import RepositorySync
 import RealmSwift
 
-class TranslationsCache: SwiftElseRealmPersistence<TranslationDataModel, TranslationCodable, RealmTranslation> {
+class TranslationsCache {
          
-    private let realmDatabase: RealmDatabase
+    let persistence: any Persistence<TranslationDataModel, TranslationCodable>
     
-    init(realmDatabase: RealmDatabase, swiftPersistenceIsEnabled: Bool? = nil) {
+    init(persistence: any Persistence<TranslationDataModel, TranslationCodable>) {
         
-        self.realmDatabase = realmDatabase
-        
-        super.init(
-            realmDatabase: realmDatabase,
-            realmDataModelMapping: RealmTranslationDataModelMapping(),
-            swiftPersistenceIsEnabled: swiftPersistenceIsEnabled
-        )
+        self.persistence = persistence
     }
     
     @available(iOS 17.4, *)
-    override func getAnySwiftPersistence(swiftDatabase: SwiftDatabase) -> (any RepositorySyncPersistence<TranslationDataModel, TranslationCodable>)? {
-        return getSwiftPersistence(swiftDatabase: swiftDatabase)
+    var swiftDatabase: SwiftDatabase? {
+        return getSwiftPersistence()?.database
     }
     
     @available(iOS 17.4, *)
-    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<TranslationDataModel, TranslationCodable, SwiftTranslation>? {
-        
-        guard let swiftDatabase = super.getSwiftDatabase() else {
-            return nil
-        }
-        
-        return getSwiftPersistence(swiftDatabase: swiftDatabase)
+    func getSwiftPersistence() -> SwiftRepositorySyncPersistence<TranslationDataModel, TranslationCodable, SwiftTranslation>? {
+        return persistence as? SwiftRepositorySyncPersistence<TranslationDataModel, TranslationCodable, SwiftTranslation>
     }
     
-    @available(iOS 17.4, *)
-    private func getSwiftPersistence(swiftDatabase: SwiftDatabase) -> SwiftRepositorySyncPersistence<TranslationDataModel, TranslationCodable, SwiftTranslation>? {
-        
-        guard let swiftDatabase = super.getSwiftDatabase() else {
-            return nil
-        }
-        
-        return SwiftRepositorySyncPersistence(
-            swiftDatabase: swiftDatabase,
-            dataModelMapping: SwiftTranslationDataModelMapping()
-        )
+    var realmDatabase: RealmDatabase? {
+        return getRealmPersistence()?.database
+    }
+    
+    func getRealmPersistence() -> RealmRepositorySyncPersistence<TranslationDataModel, TranslationCodable, RealmTranslation>? {
+        return persistence as? RealmRepositorySyncPersistence<TranslationDataModel, TranslationCodable, RealmTranslation>
     }
 }
 
@@ -59,7 +44,7 @@ extension TranslationsCache {
     
     func getLatestTranslation(resourceId: String, languageId: String) -> TranslationDataModel? {
                 
-        if #available(iOS 17.4, *), let swiftDatabase = super.getSwiftDatabase() {
+        if #available(iOS 17.4, *), let swiftDatabase = swiftDatabase {
             
             guard let translation = getSwiftTranslationsSortedByLatestVersion(swiftDatabase: swiftDatabase, resourceId: resourceId, languageId: languageId).first else {
                 return nil
@@ -77,7 +62,7 @@ extension TranslationsCache {
     
     func getLatestTranslation(resourceId: String, languageCode: BCP47LanguageIdentifier) -> TranslationDataModel? {
         
-        if #available(iOS 17.4, *), let swiftDatabase = super.getSwiftDatabase() {
+        if #available(iOS 17.4, *), let swiftDatabase = swiftDatabase {
             
             guard let translation = getSwiftTranslationsSortedByLatestVersion(swiftDatabase: swiftDatabase, resourceId: resourceId, languageCode: languageCode).first else {
                 return nil
@@ -96,7 +81,7 @@ extension TranslationsCache {
     @available(iOS 17.4, *)
     private func getResourceLatestTranslations(swiftDatabase: SwiftDatabase, resourceId: String) -> [SwiftTranslation] {
         
-        let resource: SwiftResource? = swiftDatabase.getObject(context: swiftDatabase.openContext(), id: resourceId)
+        let resource: SwiftResource? = swiftDatabase.read.objectNonThrowing(context: swiftDatabase.openContext(), id: resourceId)
         
         guard let resource = resource else {
             return Array()
@@ -125,8 +110,11 @@ extension TranslationsCache {
     
     private func getRealmTranslationsSortedByLatestVersion(resourceId: String, languageId: String) -> Results<RealmTranslation>? {
         
-        guard let realmResource = realmDatabase.openRealm()
-            .object(ofType: RealmResource.self, forPrimaryKey: resourceId) else {
+        guard let realmDatabase = realmDatabase, let realm = realmDatabase.openRealmNonThrowing() else {
+            return nil
+        }
+        
+        guard let realmResource = realm.object(ofType: RealmResource.self, forPrimaryKey: resourceId) else {
             
             return nil
         }
@@ -138,8 +126,11 @@ extension TranslationsCache {
     
     private func getRealmTranslationsSortedByLatestVersion(resourceId: String, languageCode: BCP47LanguageIdentifier) -> Results<RealmTranslation>? {
         
-        guard let realmResource = realmDatabase.openRealm()
-            .object(ofType: RealmResource.self, forPrimaryKey: resourceId) else {
+        guard let realmDatabase = realmDatabase, let realm = realmDatabase.openRealmNonThrowing() else {
+            return nil
+        }
+        
+        guard let realmResource = realm.object(ofType: RealmResource.self, forPrimaryKey: resourceId) else {
            
             return nil
         }
@@ -149,3 +140,4 @@ extension TranslationsCache {
             .sorted(byKeyPath: #keyPath(RealmTranslation.version), ascending: false)
     }
 }
+

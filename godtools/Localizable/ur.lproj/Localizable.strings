@@ -310,10 +310,7 @@ https://knowgod.com";
 "no" = "نہیں";
 
 // Tract - Sharing
-"tract_share_message" = "یہ لنک آپ کو اس پیج کے ویب ورژن میں لےجائے گا جس کو آج ہم سب مل کر دیکھ رہے تھے: %@۔ آئیے کچھ اور چیزوں پر بات کریں!
-
-ایپ یہاں سے ڈاؤنلوڈ کی جا سکتی ہے
-https://godtoolsapp.com";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "ڈاؤن لوڈ کریں";

@@ -12,16 +12,16 @@ import Combine
 
 class RealmUserCountersCache {
     
-    private let realmDatabase: RealmDatabase
+    private let realmDatabase: LegacyRealmDatabase
     private let userCountersSync: RealmUserCountersCacheSync
     
-    init(realmDatabase: RealmDatabase, userCountersSync: RealmUserCountersCacheSync) {
+    init(realmDatabase: LegacyRealmDatabase, userCountersSync: RealmUserCountersCacheSync) {
         
         self.realmDatabase = realmDatabase
         self.userCountersSync = userCountersSync
     }
     
-    func getUserCountersChanged() -> AnyPublisher<Void, Never> {
+    @MainActor func getUserCountersChanged() -> AnyPublisher<Void, Never> {
         
         return realmDatabase.openRealm()
             .objects(RealmUserCounter.self)
@@ -31,13 +31,15 @@ class RealmUserCountersCache {
     
     func getUserCounter(id: String) -> UserCounterDataModel? {
         
-        guard let realmUserCounter = realmDatabase.openRealm()
-            .object(ofType: RealmUserCounter.self, forPrimaryKey: id) else {
-           
+        let realm: Realm = realmDatabase.openRealm()
+        
+        guard let realmUserCounter = realm.object(ofType: RealmUserCounter.self, forPrimaryKey: id) else {
             return nil
         }
         
-        return UserCounterDataModel(realmUserCounter: realmUserCounter)
+        return UserCounterDataModel(
+            realmUserCounter: realmUserCounter
+        )
     }
     
     func getAllUserCounters() -> [UserCounterDataModel] {

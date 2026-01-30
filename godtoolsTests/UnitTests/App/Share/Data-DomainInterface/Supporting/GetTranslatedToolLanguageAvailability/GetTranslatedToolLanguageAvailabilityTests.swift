@@ -8,7 +8,9 @@
 
 import Testing
 @testable import godtools
+import RepositorySync
 
+@Suite(.serialized)
 struct GetTranslatedToolLanguageAvailabilityTests {
     
     struct TestArgument {
@@ -18,11 +20,12 @@ struct GetTranslatedToolLanguageAvailabilityTests {
         let expectedAvailabilityString: String
     }
     
-    private static let toolId: String = "0"
     private static let languageNotAvailable: String = "Language Not Available"
     private static let spanishInEnglish: String = "Spanish"
     private static let spanishInSpanish: String = "Español"
     
+    private let toolId: String = "0"
+    
     @Test(
         """
         Given: User is viewing a tool. 
@@ -44,20 +47,18 @@ struct GetTranslatedToolLanguageAvailabilityTests {
             )
         ]
     )
-    func testTranslateLanguageAvailabilityByToolIdAndLanguageModelIsAvailable(argument: TestArgument) {
+    func testTranslateLanguageAvailabilityByToolIdAndLanguageModelIsAvailable(argument: TestArgument) async throws {
         
-        let testsDiContainer: TestsDiContainer = Self.getTestsDiContainer()
-        let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability = Self.getTranslatedToolLanguageAvailability(testsDiContainer: testsDiContainer)
+        let testsDiContainer: TestsDiContainer = try getTestsDiContainer()
+        let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability(testsDiContainer: testsDiContainer)
         
-        let language: LanguageDataModel? = Self.queryLanguage(id: argument.availableInLanguageCode, testsDiContainer: testsDiContainer)
+        let language: LanguageDataModel = try #require(queryLanguage(id: argument.availableInLanguageCode, testsDiContainer: testsDiContainer))
         
         let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(
-            toolId: Self.toolId,
-            language: language!,
+            toolId: toolId,
+            language: language,
             translateInLanguage: argument.translateInLanguage
         )
-        
-        print(toolLanguageAvailability)
         
         #expect(toolLanguageAvailability.isAvailable == argument.expectedIsAvailable)
         #expect(toolLanguageAvailability.availabilityString.isEmpty == false)
@@ -91,21 +92,19 @@ struct GetTranslatedToolLanguageAvailabilityTests {
             )
         ]
     )
-    func testTranslateLanguageAvailabilityByToolIdAndLanguageModelIsNotAvailable(argument: TestArgument) {
+    func testTranslateLanguageAvailabilityByToolIdAndLanguageModelIsNotAvailable(argument: TestArgument) async throws {
         
-        let testsDiContainer: TestsDiContainer = Self.getTestsDiContainer()
-        let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability = Self.getTranslatedToolLanguageAvailability(testsDiContainer: testsDiContainer)
+        let testsDiContainer: TestsDiContainer = try getTestsDiContainer()
+        let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability(testsDiContainer: testsDiContainer)
         
-        let language: LanguageDataModel? = Self.queryLanguage(id: argument.availableInLanguageCode, testsDiContainer: testsDiContainer)
+        let language: LanguageDataModel = try #require(queryLanguage(id: argument.availableInLanguageCode, testsDiContainer: testsDiContainer))
         
         let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(
-            toolId: Self.toolId,
-            language: language!,
+            toolId: toolId,
+            language: language,
             translateInLanguage: argument.translateInLanguage
         )
-        
-        print(toolLanguageAvailability)
-        
+                
         #expect(toolLanguageAvailability.isAvailable == argument.expectedIsAvailable)
         #expect(toolLanguageAvailability.availabilityString.isEmpty == false)
         #expect(toolLanguageAvailability.availabilityString == argument.expectedAvailabilityString)
@@ -132,19 +131,19 @@ struct GetTranslatedToolLanguageAvailabilityTests {
             )
         ]
     )
-    func testTranslateLanguageAvailabilityByToolIdAndAppLanguageIsAvailable(argument: TestArgument) {
+    func testTranslateLanguageAvailabilityByToolIdAndAppLanguageIsAvailable(argument: TestArgument) async throws {
         
-        let testsDiContainer: TestsDiContainer = Self.getTestsDiContainer()
-        let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability = Self.getTranslatedToolLanguageAvailability(testsDiContainer: testsDiContainer)
+        let testsDiContainer: TestsDiContainer = try getTestsDiContainer()
+        let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability(testsDiContainer: testsDiContainer)
                 
+        let resource: ResourceDataModel = try #require(queryResource(id: toolId, testsDiContainer: testsDiContainer))
+        
         let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(
-            resource: Self.queryResource(id: Self.toolId, testsDiContainer: testsDiContainer)!,
+            resource: resource,
             language: argument.availableInLanguageCode,
             translateInLanguage: argument.translateInLanguage
         )
-        
-        print(toolLanguageAvailability)
-        
+                
         #expect(toolLanguageAvailability.isAvailable == argument.expectedIsAvailable)
         #expect(toolLanguageAvailability.availabilityString.isEmpty == false)
         #expect(toolLanguageAvailability.availabilityString == argument.expectedAvailabilityString)
@@ -177,19 +176,19 @@ struct GetTranslatedToolLanguageAvailabilityTests {
             )
         ]
     )
-    func testTranslateLanguageAvailabilityByToolIdAndAppLanguageIsNotAvailable(argument: TestArgument) {
+    func testTranslateLanguageAvailabilityByToolIdAndAppLanguageIsNotAvailable(argument: TestArgument) async throws {
         
-        let testsDiContainer: TestsDiContainer = Self.getTestsDiContainer()
-        let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability = Self.getTranslatedToolLanguageAvailability(testsDiContainer: testsDiContainer)
+        let testsDiContainer: TestsDiContainer = try getTestsDiContainer()
+        let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability(testsDiContainer: testsDiContainer)
                 
+        let resource: ResourceDataModel = try #require(queryResource(id: toolId, testsDiContainer: testsDiContainer))
+        
         let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(
-            resource: Self.queryResource(id: Self.toolId, testsDiContainer: testsDiContainer)!,
+            resource: resource,
             language: argument.availableInLanguageCode,
             translateInLanguage: argument.translateInLanguage
         )
-        
-        print(toolLanguageAvailability)
-        
+                
         #expect(toolLanguageAvailability.isAvailable == argument.expectedIsAvailable)
         #expect(toolLanguageAvailability.availabilityString.isEmpty == false)
         #expect(toolLanguageAvailability.availabilityString == argument.expectedAvailabilityString)
@@ -198,22 +197,32 @@ struct GetTranslatedToolLanguageAvailabilityTests {
 
 extension GetTranslatedToolLanguageAvailabilityTests {
     
-    private static func getTestsDiContainer() -> TestsDiContainer {
-        return TestsDiContainer(
-            realmDatabase: getConfiguredRealmDatabase()
+    private func queryResource(id: String, testsDiContainer: TestsDiContainer) -> ResourceDataModel? {
+        return testsDiContainer.dataLayer.getResourcesRepository().persistence.getDataModelNonThrowing(id: id)
+    }
+    
+    private func queryLanguage(id: String, testsDiContainer: TestsDiContainer) -> LanguageDataModel? {
+        return testsDiContainer.dataLayer.getLanguagesRepository().persistence.getDataModelNonThrowing(id: id)
+    }
+    
+    private func getTestsDiContainer() throws -> TestsDiContainer {
+        
+        return try TestsDiContainer(
+            realmFileName: String(describing: GetTranslatedToolLanguageAvailabilityTests.self),
+            addRealmObjects: getRealmObjects()
         )
     }
     
-    private static func getTranslatedToolLanguageAvailability(testsDiContainer: TestsDiContainer) -> GetTranslatedToolLanguageAvailability {
+    private func getTranslatedToolLanguageAvailability(testsDiContainer: TestsDiContainer) -> GetTranslatedToolLanguageAvailability {
         return GetTranslatedToolLanguageAvailability(
-            localizationServices: Self.getLocalizationServices(),
+            localizationServices: getLocalizationServices(),
             resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
             languagesRepository: testsDiContainer.dataLayer.getLanguagesRepository(),
-            getTranslatedLanguageName: Self.getTranslatedLanguageName()
+            getTranslatedLanguageName: getTranslatedLanguageName()
         )
     }
     
-    private static func getTranslatedLanguageName() -> GetTranslatedLanguageName {
+    private func getTranslatedLanguageName() -> GetTranslatedLanguageName {
         
         let languageNames: [MockLocaleLanguageName.LanguageCode: [MockLocaleLanguageName.TranslateInLocaleId: MockLocaleLanguageName.LanguageName]] = [
             LanguageCodeDomainModel.czech.rawValue: [
@@ -245,14 +254,14 @@ extension GetTranslatedToolLanguageAvailabilityTests {
         let localeLanguageName = MockLocaleLanguageName(languageNames: languageNames)
         
         return GetTranslatedLanguageName(
-            localizationLanguageNameRepository: MockLocalizationLanguageNameRepository(localizationServices: Self.getLocalizationServices()),
+            localizationLanguageNameRepository: MockLocalizationLanguageNameRepository(localizationServices: getLocalizationServices()),
             localeLanguageName: localeLanguageName,
             localeRegionName: MockLocaleLanguageRegionName(regionNames: [:]),
             localeScriptName: MockLocaleLanguageScriptName(scriptNames: [:])
         )
     }
     
-    private static func getConfiguredRealmDatabase() -> TestsInMemoryRealmDatabase {
+    private func getRealmObjects() -> [IdentifiableRealmObject] {
         
         let czechLanguage: RealmLanguage = getNewRealmLanguage(languageCode: .czech)
         let englishLanguage: RealmLanguage = getNewRealmLanguage(languageCode: .english)
@@ -274,18 +283,14 @@ extension GetTranslatedToolLanguageAvailabilityTests {
             MockRealmResource.createTract(
                 addLanguages: [.english, .spanish],
                 fromLanguages: allLanguages,
-                id: Self.toolId
+                id: toolId
             )
         ]
                 
-        let realmDatabase = TestsInMemoryRealmDatabase(
-            addObjectsToDatabase: allLanguages + tracts
-        )
-        
-        return realmDatabase
+        return allLanguages + tracts
     }
     
-    private static func getNewRealmLanguage(languageCode: LanguageCodeDomainModel) -> RealmLanguage {
+    private  func getNewRealmLanguage(languageCode: LanguageCodeDomainModel) -> RealmLanguage {
         return MockRealmLanguage.createLanguage(
             language: languageCode,
             name: languageCode.rawValue + " Name",
@@ -293,15 +298,7 @@ extension GetTranslatedToolLanguageAvailabilityTests {
         )
     }
     
-    private static func queryResource(id: String, testsDiContainer: TestsDiContainer) -> ResourceDataModel? {
-        return testsDiContainer.dataLayer.getResourcesRepository().persistence.getObject(id: id)
-    }
-    
-    private static func queryLanguage(id: String, testsDiContainer: TestsDiContainer) -> LanguageDataModel? {
-        return testsDiContainer.dataLayer.getLanguagesRepository().persistence.getObject(id: id)
-    }
-    
-    private static func getLocalizationServices() -> MockLocalizationServices {
+    private func getLocalizationServices() -> MockLocalizationServices {
         return MockLocalizationServices(
             localizableStrings: [
                 LanguageCodeDomainModel.czech.rawValue: [

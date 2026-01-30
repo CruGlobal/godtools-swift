@@ -169,11 +169,7 @@ Retrouvez également la version en ligne à l'adresse : https://knowgod.com/";
 "no" = "Non";
 
 // Tract - Sharing
-"tract_share_message" = "Ce lien vous mènera vers la version web de la dernière page que nous avons regardée ensemble aujourd'hui : %@. 
-
-Parlons un peu plus !
-
-L'application est téléchargeable sur https://godtoolsapp.com";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "Télécharger";

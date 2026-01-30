@@ -10,7 +10,9 @@ import Testing
 @testable import godtools
 import Combine
 import RealmSwift
+import RepositorySync
 
+@Suite(.serialized)
 struct GetUserLessonFiltersRepositoryTests {
     
     @Test(
@@ -20,9 +22,7 @@ struct GetUserLessonFiltersRepositoryTests {
         Then: The lesson language filter should default to the current app language when lessons exist in the current app language.
         """
     )
-    @MainActor func lessonsLanguageFilterDefaultsToAppLanguageWhenLessonsExistInAppLanguage() async {
-        
-        var cancellables: Set<AnyCancellable> = Set()
+    @MainActor func lessonsLanguageFilterDefaultsToAppLanguageWhenLessonsExistInAppLanguage() async throws {
         
         let appLanguageSpanish: AppLanguageDomainModel = LanguageCodeDomainModel.spanish.rawValue
         
@@ -36,30 +36,43 @@ struct GetUserLessonFiltersRepositoryTests {
         spanishLesson_0.resourceType = ResourceType.lesson.rawValue
         spanishLesson_0.addLanguage(language: spanishLanguage)
         
-        let realmObjectsToAdd: [Object] = [spanishLanguage, spanishLesson_0]
+        let realmObjectsToAdd: [IdentifiableRealmObject] = [spanishLanguage, spanishLesson_0]
         
-        let testsDiContainer = TestsDiContainer(
-            realmDatabase: Self.getRealmDatabase(addRealmObjects: realmObjectsToAdd)
-        )
+        let testsDiContainer = try getTestsDiContainer(addRealmObjects: realmObjectsToAdd)
         
         let getUserLessonFiltersRepository = GetUserLessonFiltersRepository(
-            userLessonFiltersRepository: Self.getUserLessonFiltersRepository(testsDiContainer: testsDiContainer),
-            getLessonFilterLanguagesRepository: Self.getLessonFilterLanguagesRepository(testsDiContainer: testsDiContainer)
+            userLessonFiltersRepository: getUserLessonFiltersRepository(testsDiContainer: testsDiContainer),
+            getLessonFilterLanguagesRepository: getLessonFilterLanguagesRepository(testsDiContainer: testsDiContainer)
         )
+        
+        var cancellables: Set<AnyCancellable> = Set()
         
         var lessonLanguageFilterRef: LessonFilterLanguageDomainModel?
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            getUserLessonFiltersRepository
-                .getUserLessonLanguageFilterPublisher(translatedInAppLanguage: appLanguageSpanish)
-                .sink { (lessonLanguageFilter: LessonFilterLanguageDomainModel?) in
-                        
-                    confirmation()
-
-                    lessonLanguageFilterRef = lessonLanguageFilter
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
                 }
-                .store(in: &cancellables)
+                
+                getUserLessonFiltersRepository
+                    .getUserLessonLanguageFilterPublisher(translatedInAppLanguage: appLanguageSpanish)
+                    .sink { (lessonLanguageFilter: LessonFilterLanguageDomainModel?) in
+                            
+                        lessonLanguageFilterRef = lessonLanguageFilter
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                        
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    }
+                    .store(in: &cancellables)
+            }
         }
         
         #expect(lessonLanguageFilterRef?.languageNameTranslatedInLanguage == "Español")
@@ -73,9 +86,7 @@ struct GetUserLessonFiltersRepositoryTests {
         Then: The lesson language filter should default to the current app language even when lessons don't exist in the current app language.
         """
     )
-    @MainActor func lessonsLanguageFilterDefaultsToAppLanguageWhenLessonsDontExistInAppLanguage() async {
-        
-        var cancellables: Set<AnyCancellable> = Set()
+    @MainActor func lessonsLanguageFilterDefaultsToAppLanguageWhenLessonsDontExistInAppLanguage() async throws {
         
         let appLanguageFrench: AppLanguageDomainModel = LanguageCodeDomainModel.french.rawValue
         
@@ -99,30 +110,43 @@ struct GetUserLessonFiltersRepositoryTests {
         frenchTract_0.resourceType = ResourceType.tract.rawValue
         frenchTract_0.addLanguage(language: frenchLanguage)
         
-        let realmObjectsToAdd: [Object] = [spanishLanguage, frenchLanguage, spanishLesson_0, frenchTract_0]
+        let realmObjectsToAdd: [IdentifiableRealmObject] = [spanishLanguage, frenchLanguage, spanishLesson_0, frenchTract_0]
         
-        let testsDiContainer = TestsDiContainer(
-            realmDatabase: Self.getRealmDatabase(addRealmObjects: realmObjectsToAdd)
-        )
+        let testsDiContainer = try getTestsDiContainer(addRealmObjects: realmObjectsToAdd)
         
         let getUserLessonFiltersRepository = GetUserLessonFiltersRepository(
-            userLessonFiltersRepository: Self.getUserLessonFiltersRepository(testsDiContainer: testsDiContainer),
-            getLessonFilterLanguagesRepository: Self.getLessonFilterLanguagesRepository(testsDiContainer: testsDiContainer)
+            userLessonFiltersRepository: getUserLessonFiltersRepository(testsDiContainer: testsDiContainer),
+            getLessonFilterLanguagesRepository: getLessonFilterLanguagesRepository(testsDiContainer: testsDiContainer)
         )
         
+        var cancellables: Set<AnyCancellable> = Set()
+        
         var lessonLanguageFilterRef: LessonFilterLanguageDomainModel?
-                
+        
         await confirmation(expectedCount: 1) { confirmation in
             
-            getUserLessonFiltersRepository
-                .getUserLessonLanguageFilterPublisher(translatedInAppLanguage: appLanguageFrench)
-                .sink { (lessonLanguageFilter: LessonFilterLanguageDomainModel?) in
-                        
-                    confirmation()
-
-                    lessonLanguageFilterRef = lessonLanguageFilter
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
                 }
-                .store(in: &cancellables)
+                
+                getUserLessonFiltersRepository
+                    .getUserLessonLanguageFilterPublisher(translatedInAppLanguage: appLanguageFrench)
+                    .sink { (lessonLanguageFilter: LessonFilterLanguageDomainModel?) in
+                            
+                        lessonLanguageFilterRef = lessonLanguageFilter
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                                
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    }
+                    .store(in: &cancellables)
+            }
         }
         
         #expect(lessonLanguageFilterRef?.languageNameTranslatedInLanguage == "Français")
@@ -136,10 +160,8 @@ struct GetUserLessonFiltersRepositoryTests {
         Then: The lesson language filter should be spanish.
         """
     )
-    @MainActor func lessonsLanguageFilterIsTheSelectedLanguageFilterAndNotDefaultingAppLanguage() async {
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        
+    @MainActor func lessonsLanguageFilterIsTheSelectedLanguageFilterAndNotDefaultingAppLanguage() async throws {
+                
         let appLanguageFrench: AppLanguageDomainModel = LanguageCodeDomainModel.french.rawValue
         
         let spanishLanguage = RealmLanguage()
@@ -152,16 +174,18 @@ struct GetUserLessonFiltersRepositoryTests {
         frenchLanguage.code = LanguageCodeDomainModel.french.rawValue
         frenchLanguage.name = "French Name"
         
-        let testsDiContainer = TestsDiContainer(
-            realmDatabase: Self.getRealmDatabase(addRealmObjects: [spanishLanguage, frenchLanguage])
-        )
+        let realmObjectsToAdd: [IdentifiableRealmObject] = [spanishLanguage, frenchLanguage]
         
-        let userLessonFiltersRepository: UserLessonFiltersRepository = Self.getUserLessonFiltersRepository(testsDiContainer: testsDiContainer)
+        let testsDiContainer = try getTestsDiContainer(addRealmObjects: realmObjectsToAdd)
+        
+        let userLessonFiltersRepository: UserLessonFiltersRepository = getUserLessonFiltersRepository(testsDiContainer: testsDiContainer)
         
         let getUserLessonFiltersRepository = GetUserLessonFiltersRepository(
             userLessonFiltersRepository: userLessonFiltersRepository,
-            getLessonFilterLanguagesRepository: Self.getLessonFilterLanguagesRepository(testsDiContainer: testsDiContainer)
+            getLessonFilterLanguagesRepository: getLessonFilterLanguagesRepository(testsDiContainer: testsDiContainer)
         )
+        
+        var cancellables: Set<AnyCancellable> = Set()
         
         var originalLessonLanguageFilterRef: LessonFilterLanguageDomainModel?
         var selectedLessonLanguageFilterRef: LessonFilterLanguageDomainModel?
@@ -209,29 +233,31 @@ struct GetUserLessonFiltersRepositoryTests {
 
 extension GetUserLessonFiltersRepositoryTests {
     
-    private static func getRealmDatabase(addRealmObjects: [Object]) -> RealmDatabase {
-        return TestsInMemoryRealmDatabase(
-            addObjectsToDatabase: addRealmObjects
+    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
+                
+        return try TestsDiContainer(
+            realmFileName: String(describing: GetUserLessonFiltersRepositoryTests.self),
+            addRealmObjects: addRealmObjects
         )
     }
     
-    private static func getUserLessonFiltersRepository(testsDiContainer: TestsDiContainer) -> UserLessonFiltersRepository {
+    private func getUserLessonFiltersRepository(testsDiContainer: TestsDiContainer) -> UserLessonFiltersRepository {
         
         return testsDiContainer.dataLayer.getUserLessonFiltersRepository()
     }
     
-    private static func getLessonFilterLanguagesRepository(testsDiContainer: TestsDiContainer) -> GetLessonFilterLanguagesRepository {
+    private func getLessonFilterLanguagesRepository(testsDiContainer: TestsDiContainer) -> GetLessonFilterLanguagesRepository {
         
         return GetLessonFilterLanguagesRepository(
             resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
             languagesRepository: testsDiContainer.dataLayer.getLanguagesRepository(),
-            getTranslatedLanguageName: Self.getTranslatedLanguageName(),
-            localizationServices: Self.getLocalizationServices(),
-            stringWithLocaleCount: Self.getStringWithLocaleCount()
+            getTranslatedLanguageName: getTranslatedLanguageName(),
+            localizationServices: getLocalizationServices(),
+            stringWithLocaleCount: getStringWithLocaleCount()
         )
     }
     
-    private static func getLocalizationServices() -> MockLocalizationServices {
+    private func getLocalizationServices() -> MockLocalizationServices {
         
         let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
             LanguageCodeDomainModel.spanish.value: [
@@ -242,10 +268,10 @@ extension GetUserLessonFiltersRepositoryTests {
         return MockLocalizationServices(localizableStrings: localizableStrings)
     }
 
-    private static func getTranslatedLanguageName() -> GetTranslatedLanguageName {
+    private func getTranslatedLanguageName() -> GetTranslatedLanguageName {
         
         let getTranslatedLanguageName = GetTranslatedLanguageName(
-            localizationLanguageNameRepository: MockLocalizationLanguageNameRepository(localizationServices: Self.getLocalizationServices()),
+            localizationLanguageNameRepository: MockLocalizationLanguageNameRepository(localizationServices: getLocalizationServices()),
             localeLanguageName: MockLocaleLanguageName.defaultMockLocaleLanguageName(),
             localeRegionName: MockLocaleLanguageRegionName(regionNames: [:]),
             localeScriptName: MockLocaleLanguageScriptName(scriptNames: [:])
@@ -254,7 +280,7 @@ extension GetUserLessonFiltersRepositoryTests {
         return getTranslatedLanguageName
     }
     
-    private static func getStringWithLocaleCount() -> StringWithLocaleCountInterface {
+    private func getStringWithLocaleCount() -> StringWithLocaleCountInterface {
         
         return MockStringWithLocaleCount()
     }

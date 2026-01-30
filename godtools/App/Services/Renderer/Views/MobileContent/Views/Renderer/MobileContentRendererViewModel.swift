@@ -10,7 +10,7 @@ import UIKit
 import GodToolsShared
 import Combine
 
-class MobileContentRendererViewModel: MobileContentPagesViewModel {
+@MainActor class MobileContentRendererViewModel: MobileContentPagesViewModel {
     
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
@@ -79,9 +79,11 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
             .persistence
             .observeCollectionChangesPublisher()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] _ in
                 self?.updateTranslationsIfNeeded()
-            }
+            })
             .store(in: &cancellables)
         
         countLanguageUsage(localeId: currentPageRenderer.value.language.localeId)

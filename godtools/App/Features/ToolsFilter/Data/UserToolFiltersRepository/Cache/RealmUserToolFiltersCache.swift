@@ -12,13 +12,13 @@ import Combine
 
 class RealmUserToolFiltersCache {
     
-    private let realmDatabase: RealmDatabase
+    private let realmDatabase: LegacyRealmDatabase
     
-    init(realmDatabase: RealmDatabase) {
+    init(realmDatabase: LegacyRealmDatabase) {
         self.realmDatabase = realmDatabase
     }
     
-    func getUserToolCategoryFilterChangedPublisher() -> AnyPublisher<Void, Never> {
+    @MainActor func getUserToolCategoryFilterChangedPublisher() -> AnyPublisher<Void, Never> {
         
         return realmDatabase.openRealm()
             .objects(RealmUserToolCategoryFilter.self)
@@ -26,7 +26,7 @@ class RealmUserToolFiltersCache {
             .eraseToAnyPublisher()
     }
     
-    func getUserToolLanguageFilterChangedPublisher() -> AnyPublisher<Void, Never> {
+    @MainActor func getUserToolLanguageFilterChangedPublisher() -> AnyPublisher<Void, Never> {
         
         return realmDatabase.openRealm()
             .objects(RealmUserToolLanguageFilter.self)

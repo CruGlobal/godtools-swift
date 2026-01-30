@@ -14,9 +14,9 @@ class RealmUserAppLanguageCache {
     
     private static let sharedUserId: String = "shared-user-id"
     
-    private let realmDatabase: RealmDatabase
+    private let realmDatabase: LegacyRealmDatabase
     
-    init(realmDatabase: RealmDatabase) {
+    init(realmDatabase: LegacyRealmDatabase) {
         
         self.realmDatabase = realmDatabase
     }
@@ -38,7 +38,7 @@ class RealmUserAppLanguageCache {
             .eraseToAnyPublisher()
     }
     
-    func getLanguageChangedPublisher() -> AnyPublisher<Void, Never> {
+    @MainActor func getLanguageChangedPublisher() -> AnyPublisher<Void, Never> {
                 
         return realmDatabase.openRealm()
             .objects(RealmUserAppLanguage.self)

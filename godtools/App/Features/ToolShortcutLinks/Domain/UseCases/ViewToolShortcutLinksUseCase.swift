@@ -18,7 +18,7 @@ class ViewToolShortcutLinksUseCase {
         self.getToolShortcutLinksRepositoryInterface = getToolShortcutLinksRepositoryInterface
     }
     
-    func viewPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewToolShortcutLinksDomainModel, Never> {
+    @MainActor func viewPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewToolShortcutLinksDomainModel, Never> {
         
         return getToolShortcutLinksRepositoryInterface
             .getLinksPublisher(appLanguage: appLanguage)

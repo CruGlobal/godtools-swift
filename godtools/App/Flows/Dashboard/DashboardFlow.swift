@@ -10,10 +10,9 @@ import UIKit
 import Combine
 
 class DashboardFlow: Flow, ToolNavigationFlow {
-    
-    private static let startingTab: DashboardTabTypeDomainModel = .favorites
-    
-    private let dashboardTabObserver = CurrentValueSubject<DashboardTabTypeDomainModel, Never>(DashboardFlow.startingTab)
+        
+    private let dashboardTabObserver: CurrentValueSubject<DashboardTabTypeDomainModel, Never>
+    private let startingTab: DashboardTabTypeDomainModel = .favorites
     
     private var tutorialFlow: TutorialFlow?
     private var learnToShareToolFlow: LearnToShareToolFlow?
@@ -37,6 +36,8 @@ class DashboardFlow: Flow, ToolNavigationFlow {
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
         self.rootController = rootController
+        
+        dashboardTabObserver = CurrentValueSubject(startingTab)
         
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()
@@ -166,7 +167,7 @@ class DashboardFlow: Flow, ToolNavigationFlow {
             let primaryLanguage: AppLanguageDomainModel?
             let parallelLanguage: AppLanguageDomainModel?
             
-            if let toolResource = resourcesRepository.persistence.getObject(id: tool.dataModelId),
+            if let toolResource = resourcesRepository.persistence.getDataModelNonThrowing(id: tool.dataModelId),
                toolResource.resourceTypeEnum == .article {
                 
                 parallelLanguage = nil
@@ -340,7 +341,7 @@ extension DashboardFlow {
     private func getNewDashboardView(startingTab: DashboardTabTypeDomainModel?) -> UIViewController {
                 
         let viewModel = DashboardViewModel(
-            startingTab: startingTab ?? Self.startingTab,
+            startingTab: startingTab ?? self.startingTab,
             flowDelegate: self,
             dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies(
                 appDiContainer: appDiContainer,
@@ -384,7 +385,9 @@ extension DashboardFlow {
         navigationController.setLayoutDirectionPublisherToApplicationLayout()
     }
     
-    func navigateToDashboard(startingTab: DashboardTabTypeDomainModel = DashboardFlow.startingTab, animatePopToToolsMenu: Bool = false, animateDismissingPresentedView: Bool = false, didCompleteDismissingPresentedView: (() -> Void)? = nil) {
+    func navigateToDashboard(startingTab: DashboardTabTypeDomainModel? = nil, animatePopToToolsMenu: Bool = false, animateDismissingPresentedView: Bool = false, didCompleteDismissingPresentedView: (() -> Void)? = nil) {
+        
+        let startingTab: DashboardTabTypeDomainModel = startingTab ?? self.startingTab
         
         if let dashboard = getDashboardInNavigationStack() {
             
@@ -503,7 +506,7 @@ extension DashboardFlow {
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToolIsFavoritedUseCase(),
             reorderFavoritedToolUseCase: appDiContainer.feature.favorites.domainLayer.getReorderFavoritedToolUseCase(),
-            attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),
+            getToolBannerUseCase: appDiContainer.domainLayer.getToolBannerUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
         )
@@ -762,7 +765,7 @@ extension DashboardFlow {
             getToolDetailsMediaUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsMediaUseCase(),
             getToolDetailsLearnToShareToolIsAvailableUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsLearnToShareToolIsAvailableUseCase(),
             toggleToolFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToggleFavoritedToolUseCase(),
-            attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),
+            getToolBannerUseCase: appDiContainer.domainLayer.getToolBannerUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
         )

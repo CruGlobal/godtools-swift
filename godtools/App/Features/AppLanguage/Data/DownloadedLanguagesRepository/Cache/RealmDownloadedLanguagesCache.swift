@@ -12,14 +12,14 @@ import Combine
 
 class RealmDownloadedLanguagesCache {
     
-    private let realmDatabase: RealmDatabase
+    private let realmDatabase: LegacyRealmDatabase
     
-    init(realmDatabase: RealmDatabase) {
+    init(realmDatabase: LegacyRealmDatabase) {
         
         self.realmDatabase = realmDatabase
     }
     
-    func getDownloadedLanguagesChangedPublisher() -> AnyPublisher<Void, Never> {
+    @MainActor func getDownloadedLanguagesChangedPublisher() -> AnyPublisher<Void, Never> {
         
         return realmDatabase.openRealm()
             .objects(RealmDownloadedLanguage.self)

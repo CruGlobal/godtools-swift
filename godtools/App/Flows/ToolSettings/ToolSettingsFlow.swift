@@ -99,7 +99,7 @@ class ToolSettingsFlow: Flow, ToolSharer {
             navigationController.present(getShareToolView(
                 viewShareToolDomainModel: domainModel,
                 toolId: toolSettingsObserver.toolId,
-                toolAnalyticsAbbreviation: appDiContainer.dataLayer.getResourcesRepository().persistence.getObject(id: toolSettingsObserver.toolId)?.abbreviation ?? "",
+                toolAnalyticsAbbreviation: appDiContainer.dataLayer.getResourcesRepository().persistence.getDataModelNonThrowing(id: toolSettingsObserver.toolId)?.abbreviation ?? "",
                 pageNumber: toolSettingsObserver.pageNumber
             ), animated: true, completion: nil)
                     

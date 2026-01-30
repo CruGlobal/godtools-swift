@@ -10,15 +10,16 @@ import Foundation
 import SwiftUI
 import Combine
 
-class ToolCardViewModel: ObservableObject {
+@MainActor class ToolCardViewModel: ObservableObject {
         
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
-    private let attachmentsRepository: AttachmentsRepository
-                
-    let attachmentBanner: AttachmentBannerObservableObject
+    
+    private var cancellables: Set<AnyCancellable> = Set()
+
     let tool: ToolListItemDomainModelInterface
     let accessibilityWithToolName: String
     
+    @Published private(set) var banner: OptionalImageData?
     @Published private(set) var isFavorited = false
     @Published private(set) var name: String = ""
     @Published private(set) var category: String = ""
@@ -26,11 +27,10 @@ class ToolCardViewModel: ObservableObject {
     @Published private(set) var detailsButtonTitle: String = ""
     @Published private(set) var openButtonTitle: String = ""
             
-    init(tool: ToolListItemDomainModelInterface, accessibility: AccessibilityStrings.Button, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, attachmentsRepository: AttachmentsRepository) {
+    init(tool: ToolListItemDomainModelInterface, accessibility: AccessibilityStrings.Button, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getToolBannerUseCase: GetToolBannerUseCase) {
         
         self.tool = tool
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
-        self.attachmentsRepository = attachmentsRepository
                         
         name = tool.name
         category = tool.category
@@ -40,16 +40,24 @@ class ToolCardViewModel: ObservableObject {
         detailsButtonTitle = tool.interfaceStrings.openToolDetailsActionTitle
         
         accessibilityWithToolName = AccessibilityStrings.Button.getToolButtonAccessibility(toolButton: accessibility, toolName: tool.name)
-        
-        attachmentBanner = AttachmentBannerObservableObject(
-            attachmentId: tool.bannerImageId,
-            attachmentsRepository: attachmentsRepository
-        )
-                
+            
         getToolIsFavoritedUseCase
             .getToolIsFavoritedPublisher(toolId: tool.dataModelId)
             .map { $0.isFavorited }
             .receive(on: DispatchQueue.main)
             .assign(to: &$isFavorited)
+        
+        let attachmentId: String = tool.bannerImageId
+        
+        getToolBannerUseCase
+            .execute(attachmentId:attachmentId)
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                
+            } receiveValue: { [weak self] (image: Image?) in
+                
+                self?.banner = OptionalImageData(image: image, imageIdForAnimationChange: attachmentId)
+            }
+            .store(in: &cancellables)
     }
 }
