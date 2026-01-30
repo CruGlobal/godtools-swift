@@ -6,6 +6,7 @@
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
+import Foundation
 import Combine
 
 class GetSpotlightToolsUseCase {
@@ -17,7 +18,7 @@ class GetSpotlightToolsUseCase {
         self.getSpotlightToolsRepository = getSpotlightToolsRepository
     }
     
-    func getSpotlightToolsPublisher(translatedInAppLanguage: AppLanguageDomainModel, languageIdForAvailabilityText: String?) -> AnyPublisher<[SpotlightToolListItemDomainModel], Never> {
+    @MainActor func getSpotlightToolsPublisher(translatedInAppLanguage: AppLanguageDomainModel, languageIdForAvailabilityText: String?) -> AnyPublisher<[SpotlightToolListItemDomainModel], Error> {
         
         return getSpotlightToolsRepository
             .getSpotlightToolsPublisher(translatedInAppLanguage: translatedInAppLanguage, languageIdForAvailabilityText: languageIdForAvailabilityText)

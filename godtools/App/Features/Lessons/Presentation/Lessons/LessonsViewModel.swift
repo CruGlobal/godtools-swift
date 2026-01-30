@@ -66,8 +66,10 @@ import SwiftUI
         }
         .switchToLatest()
         .receive(on: DispatchQueue.main)
-        .sink { [weak self] (domainModel: ViewLessonsDomainModel) in
-                            
+        .sink(receiveCompletion: { _ in
+            
+        }, receiveValue: { [weak self] (domainModel: ViewLessonsDomainModel) in
+            
             let interfaceStrings = domainModel.interfaceStrings
 
             self?.strings = interfaceStrings
@@ -81,7 +83,7 @@ import SwiftUI
 
             self?.lessons = domainModel.lessons
             self?.isLoadingLessons = false
-        }
+        })
         .store(in: &cancellables)
     
         $appLanguage

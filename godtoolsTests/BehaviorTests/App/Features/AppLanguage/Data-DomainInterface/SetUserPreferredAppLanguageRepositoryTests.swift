@@ -10,7 +10,9 @@ import Testing
 import Foundation
 @testable import godtools
 import Combine
+import RepositorySync
 
+@Suite(.serialized)
 struct SetUserPreferredAppLanguageRepositoryTests {
         
     @Test(
@@ -20,17 +22,15 @@ struct SetUserPreferredAppLanguageRepositoryTests {
         Then: The user's lesson language filter should update to Spanish.
         """
     )
-    @MainActor func setUserPreferredAppLanguageRepositoryTest() async {
+    @MainActor func setUserPreferredAppLanguageRepositoryTest() async throws {
         
         var cancellables: Set<AnyCancellable> = Set()
         
         let allLanguages: [RealmLanguage] = getAllLanguages()
         
-        let realmDatabase: LegacyRealmDatabase = TestsInMemoryRealmDatabase(
-            addObjectsToDatabase: allLanguages
+        let testsDiContainer = try getTestsDiContainer(
+            addRealmObjects: allLanguages
         )
-        
-        let testsDiContainer = TestsDiContainer(realmDatabase: realmDatabase)
         
         let setUserPreferredAppLanguageRepository = SetUserPreferredAppLanguageRepository(
             userAppLanguageRepository: testsDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository(),
@@ -49,10 +49,12 @@ struct SetUserPreferredAppLanguageRepositoryTests {
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            setUserPreferredAppLanguageRepository.setLanguagePublisher(appLanguage: LanguageCodeDomainModel.spanish.rawValue)
+            setUserPreferredAppLanguageRepository
+                .setLanguagePublisher(appLanguage: LanguageCodeDomainModel.spanish.rawValue)
                 .flatMap { _ in
                     
-                    return getUserLessonFiltersRepository.getUserLessonLanguageFilterPublisher(translatedInAppLanguage: appLanguageSpanish)
+                    return getUserLessonFiltersRepository
+                        .getUserLessonLanguageFilterPublisher(translatedInAppLanguage: appLanguageSpanish)
                 }
                 .sink { lessonFilterLanguage in
                     
@@ -64,6 +66,17 @@ struct SetUserPreferredAppLanguageRepositoryTests {
         
         #expect(realmLanguageSpanish != nil)
         #expect(lessonLanguageFilterRef?.languageId == realmLanguageSpanish?.id)
+    }
+}
+
+extension SetUserPreferredAppLanguageRepositoryTests {
+    
+    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject]) throws -> TestsDiContainer {
+                
+        return try TestsDiContainer(
+            realmFileName: String(describing: SetUserPreferredAppLanguageRepositoryTests.self),
+            addRealmObjects: addRealmObjects
+        )
     }
     
     private func getAllLanguages() -> [RealmLanguage] {
@@ -83,9 +96,6 @@ struct SetUserPreferredAppLanguageRepositoryTests {
             getRealmLanguage(languageCode: .vietnamese)
         ]
     }
-}
-
-extension SetUserPreferredAppLanguageRepositoryTests {
     
     private func getRealmLanguage(languageCode: LanguageCodeDomainModel) -> RealmLanguage {
         

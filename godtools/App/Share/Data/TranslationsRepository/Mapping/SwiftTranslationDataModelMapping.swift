@@ -7,9 +7,10 @@
 //
 
 import Foundation
+import RepositorySync
 
 @available(iOS 17.4, *)
-class SwiftTranslationDataModelMapping: GTRepositorySyncMapping {
+final class SwiftTranslationDataModelMapping: Mapping {
     
     func toDataModel(externalObject: TranslationCodable) -> TranslationDataModel? {
         return TranslationDataModel(interface: externalObject)

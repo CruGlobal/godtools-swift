@@ -20,10 +20,12 @@ class ViewToolDetailsUseCase {
         self.getToolDetailsRepository = getToolDetailsRepository
     }
     
-    func viewPublisher(toolId: String, translateInLanguage: BCP47LanguageIdentifier, toolPrimaryLanguage: BCP47LanguageIdentifier, toolParallelLanguage: BCP47LanguageIdentifier?) -> AnyPublisher<ViewToolDetailsDomainModel, Never> {
+    @MainActor func viewPublisher(toolId: String, translateInLanguage: BCP47LanguageIdentifier, toolPrimaryLanguage: BCP47LanguageIdentifier, toolParallelLanguage: BCP47LanguageIdentifier?) -> AnyPublisher<ViewToolDetailsDomainModel, Error> {
         
         return Publishers.CombineLatest(
-            getInterfaceStringsRepository.getStringsPublisher(translateInToolLanguage: translateInLanguage),
+            getInterfaceStringsRepository
+                .getStringsPublisher(translateInToolLanguage: translateInLanguage)
+                .setFailureType(to: Error.self),
             getToolDetailsRepository.getDetailsPublisher(toolId: toolId, translateInLanguage: translateInLanguage, toolPrimaryLanguage: toolPrimaryLanguage, toolParallelLanguage: toolParallelLanguage)
         )
         .flatMap({ (interfaceStrings: ToolDetailsInterfaceStringsDomainModel, toolDetails: ToolDetailsDomainModel) -> AnyPublisher<ViewToolDetailsDomainModel, Never> in

@@ -11,5 +11,5 @@ import Combine
 
 protocol GetGlobalActivityThisWeekRepositoryInterface {
     
-    func getActivityPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<[GlobalActivityThisWeekDomainModel], Never>
+    @MainActor func getActivityPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<[GlobalActivityThisWeekDomainModel], Never>
 }

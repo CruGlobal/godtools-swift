@@ -7,9 +7,10 @@
 //
 
 import Foundation
+import RepositorySync
 
 @available(iOS 17.4, *)
-class SwiftDownloadedTranslationDataModelMapping: GTRepositorySyncMapping {
+final class SwiftDownloadedTranslationDataModelMapping: Mapping {
     
     func toDataModel(externalObject: DownloadedTranslationDataModel) -> DownloadedTranslationDataModel? {
         return DownloadedTranslationDataModel(interface: externalObject)

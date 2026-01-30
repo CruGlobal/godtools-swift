@@ -10,19 +10,22 @@ import Foundation
 import RealmSwift
 import Combine
 
+@available(*, deprecated)
 class LegacyRealmDatabase {
     
-    private let databaseConfiguration: RealmDatabaseConfiguration
+    private let backgroundQueue: DispatchQueue = DispatchQueue(label: "realm.background_queue")
     private let config: Realm.Configuration
-    private let realmInstanceCreator: RealmInstanceCreator
     
-    init(databaseConfiguration: RealmDatabaseConfiguration, realmInstanceCreationType: RealmInstanceCreationType = .alwaysCreatesANewRealmInstance) {
+    init(config: Realm.Configuration) {
         
-        self.databaseConfiguration = databaseConfiguration
-        config = databaseConfiguration.getRealmConfig()
-        realmInstanceCreator = RealmInstanceCreator(config: config, creationType: realmInstanceCreationType)
+        self.config = config
         
         _ = checkForUnsupportedFileFormatVersionAndDeleteRealmFilesIfNeeded(config: config)
+    }
+    
+    convenience init(databaseConfiguration: RealmDatabaseConfiguration) {
+        
+        self.init(config: databaseConfiguration.getRealmConfig())
     }
     
     private func checkForUnsupportedFileFormatVersionAndDeleteRealmFilesIfNeeded(config: Realm.Configuration) -> Error? {
@@ -51,11 +54,26 @@ class LegacyRealmDatabase {
 
     func openRealm() -> Realm {
         
-        return realmInstanceCreator.createRealm()
+        return try! Realm(configuration: config)
     }
     
     func background(async: @escaping ((_ realm: Realm) -> Void)) {
                 
-        realmInstanceCreator.createBackgroundRealm(async: async)
+        backgroundQueue.async {
+            autoreleasepool {
+                
+                let realm: Realm
+               
+                do {
+                    realm = try Realm(configuration: self.config)
+                }
+                catch let error {
+                    assertionFailure("RealmDatabase: Did fail to initialize background realm with error: \(error.localizedDescription) ")
+                    realm = try! Realm(configuration: self.config)
+                }
+                
+                async(realm)
+            }
+        }
     }
 }

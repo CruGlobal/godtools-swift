@@ -18,7 +18,7 @@ class GetToolIsFavoritedUseCase {
         self.getToolIsFavoritedRepository = getToolIsFavoritedRepository
     }
     
-    func getToolIsFavoritedPublisher(toolId: String) -> AnyPublisher<ToolIsFavoritedDomainModel, Never>  {
+    @MainActor func getToolIsFavoritedPublisher(toolId: String) -> AnyPublisher<ToolIsFavoritedDomainModel, Never>  {
         
         return getToolIsFavoritedRepository
             .getIsFavoritedPublisher(toolId: toolId)

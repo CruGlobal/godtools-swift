@@ -28,9 +28,10 @@ class UserAppLanguageRepository {
             .eraseToAnyPublisher()
     }
     
-    func getLanguageChangedPublisher() -> AnyPublisher<Void, Never> {
+    @MainActor func getLanguageChangedPublisher() -> AnyPublisher<Void, Never> {
                 
-        return cache.getLanguageChangedPublisher()
+        return cache
+            .getLanguageChangedPublisher()
             .eraseToAnyPublisher()
     }
     

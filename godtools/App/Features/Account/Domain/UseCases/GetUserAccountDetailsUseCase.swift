@@ -18,8 +18,9 @@ class GetUserAccountDetailsUseCase {
         self.getUserAccountDetailsRepository = getUserAccountDetailsRepository
     }
     
-    func getUserAccountDetailsPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<UserAccountDetailsDomainModel, Never> {
+    @MainActor func getUserAccountDetailsPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<UserAccountDetailsDomainModel, Never> {
         
-        return getUserAccountDetailsRepository.getUserAccountDetailsPublisher(appLanguage: appLanguage)
+        return getUserAccountDetailsRepository
+            .getUserAccountDetailsPublisher(appLanguage: appLanguage)
     }
 }

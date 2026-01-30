@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import RepositorySync
 
-class RealmDownloadedTranslationDataModelMapping: GTRepositorySyncMapping {
+final class RealmDownloadedTranslationDataModelMapping: Mapping {
     
     func toDataModel(externalObject: DownloadedTranslationDataModel) -> DownloadedTranslationDataModel? {
         return DownloadedTranslationDataModel(interface: externalObject)

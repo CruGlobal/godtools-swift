@@ -72,9 +72,11 @@ import Combine
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { _ in
+            .sink(receiveCompletion: { _ in
                 
-            }
+            }, receiveValue: { _ in
+                
+            })
             .store(in: &cancellables)
     }
     
@@ -83,22 +85,27 @@ import Combine
         Publishers.CombineLatest(
             resourcesRepository.persistence.observeCollectionChangesPublisher().prepend(Void()),
             launchCountRepository.getLaunchCountPublisher()
+                .setFailureType(to: Error.self)
         )
-        .flatMap { (resourcesChanged: Void, launchCount: Int) -> AnyPublisher<Void, Never> in
+        .flatMap { (resourcesChanged: Void, launchCount: Int) -> AnyPublisher<Void, Error> in
             
             guard launchCount == 1 else {
                 return Just(Void())
+                    .setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             }
             
             return storeInitialFavoritedToolsUseCase
                 .storeToolsPublisher()
+                .setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
         }
         .receive(on: DispatchQueue.main)
-        .sink { _ in
+        .sink(receiveCompletion: { _ in
             
-        }
+        }, receiveValue: { _ in
+            
+        })
         .store(in: &cancellables)
     }
     

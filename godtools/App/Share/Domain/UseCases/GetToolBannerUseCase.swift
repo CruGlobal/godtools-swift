@@ -19,11 +19,13 @@ class GetToolBannerUseCase {
         self.attachmentsRepository = attachmentsRepository
     }
     
-    func execute(attachmentId: String) -> AnyPublisher<Image?, Error> {
+    @MainActor func execute(attachmentId: String) -> AnyPublisher<Image?, Error> {
                 
         do {
             
-            let cachedAttachment: AttachmentDataModel? = try attachmentsRepository.cache.getAttachment(id: attachmentId)
+            let cachedAttachment: AttachmentDataModel? = try attachmentsRepository
+                .cache
+                .getAttachment(id: attachmentId)
                         
             if let cachedImage = cachedAttachment?.getImage() {
                 
@@ -42,6 +44,7 @@ class GetToolBannerUseCase {
                         
                         return attachment?.getImage()
                     }
+                    .receive(on: DispatchQueue.main)
                     .eraseToAnyPublisher()
             }
         }

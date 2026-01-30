@@ -25,7 +25,7 @@ class ArticleAemCache {
         self.articleWebArchiver = articleWebArchiver
     }
     
-    func observeArticleAemCacheObjectsChangedPublisher() -> AnyPublisher<Void, Never> {
+    @MainActor func observeArticleAemCacheObjectsChangedPublisher() -> AnyPublisher<Void, Never> {
         
         return realmDatabase.openRealm()
             .objects(RealmResource.self)

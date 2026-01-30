@@ -23,7 +23,7 @@ open class ArticleAemRepository: NSObject {
         super.init()
     }
     
-    func observeArticleAemCacheObjectsChangedPublisher() -> AnyPublisher<Void, Never> {
+    @MainActor func observeArticleAemCacheObjectsChangedPublisher() -> AnyPublisher<Void, Never> {
         return cache.observeArticleAemCacheObjectsChangedPublisher()
             .eraseToAnyPublisher()
     }

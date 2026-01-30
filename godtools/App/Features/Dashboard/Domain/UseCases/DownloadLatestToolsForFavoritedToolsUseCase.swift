@@ -18,7 +18,7 @@ class DownloadLatestToolsForFavoritedToolsUseCase {
         self.latestToolDownloader = latestToolDownloader
     }
     
-    func downloadPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<Void, Never> {
+    @MainActor func downloadPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<Void, Error> {
         
         return latestToolDownloader
             .downloadLatestToolsPublisher(inLanguages: [appLanguage])
