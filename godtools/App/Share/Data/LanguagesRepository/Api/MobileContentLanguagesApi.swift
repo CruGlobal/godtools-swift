@@ -68,6 +68,8 @@ class MobileContentLanguagesApi {
             urlSession: urlSession
         )
         
+        _ = try response.validate()
+        
         let decodeResponse: RequestCodableResponse<JsonApiResponseDataObject<LanguageCodable>, NoResponseCodable> = try response.decodeRequestDataResponseForSuccessCodable()
         
         return decodeResponse.successCodable?.dataObject
@@ -83,6 +85,8 @@ class MobileContentLanguagesApi {
             urlRequest: urlRequest,
             urlSession: urlSession
         )
+        
+        _ = try response.validate()
         
         let decodeResponse: RequestCodableResponse<JsonApiResponseDataArray<LanguageCodable>, NoResponseCodable> = try response.decodeRequestDataResponseForSuccessCodable()
         
