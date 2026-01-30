@@ -12,6 +12,8 @@ import Combine
 
 final class PersonalizedToolsApi {
     
+    static let fieldsResourceQueryName: String = "fields[resource]"
+    
     enum QueryName: String {
         case country = "country"
         case language = "lang"
@@ -32,13 +34,17 @@ final class PersonalizedToolsApi {
     
     private func getAllRankedResourcesUrlRequest(urlSession: URLSession, country: String?, language: String?, resouceType: ResourceType?) -> URLRequest {
         
-        let queryItems: [URLQueryItem]? = JsonApiFilter.buildQueryItems(
+        var queryItems: [URLQueryItem]? = JsonApiFilter.buildQueryItems(
             nameValues: [
                 QueryName.country.rawValue: [country],
                 QueryName.language.rawValue: [language],
                 QueryName.resourceType.rawValue: [resouceType?.rawValue]
             ]
         )
+        
+        let fieldsParam = URLQueryItem(name: PersonalizedToolsApi.fieldsResourceQueryName, value: "")
+        
+        queryItems?.append(fieldsParam)
         
         return requestBuilder
             .build(
@@ -55,12 +61,16 @@ final class PersonalizedToolsApi {
     
     private func getDefaultOrderResourcesUrlRequest(urlSession: URLSession, language: String?, resouceType: ResourceType?) -> URLRequest {
         
-        let queryItems: [URLQueryItem]? = JsonApiFilter.buildQueryItems(
+        var queryItems: [URLQueryItem]? = JsonApiFilter.buildQueryItems(
             nameValues: [
                 QueryName.language.rawValue: [language],
                 QueryName.resourceType.rawValue: [resouceType?.rawValue]
             ]
         )
+        
+        let fieldsParam = URLQueryItem(name: PersonalizedToolsApi.fieldsResourceQueryName, value: "")
+        
+        queryItems?.append(fieldsParam)
         
         return requestBuilder
             .build(
