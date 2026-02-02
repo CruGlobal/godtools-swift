@@ -8,24 +8,24 @@
 
 import Foundation
 
-class SyncInvalidator {
+public final class SyncInvalidator {
     
     private let id: String
     private let timeInterval: SyncInvalidatorTimeInterval
-    private let userDefaultsCache: UserDefaultsCacheInterface
+    private let persistence: SyncInvalidatorPersistenceInterface
     
-    init(id: String, timeInterval: SyncInvalidatorTimeInterval, userDefaultsCache: UserDefaultsCacheInterface) {
+    public init(id: String, timeInterval: SyncInvalidatorTimeInterval, persistence: SyncInvalidatorPersistenceInterface) {
         
         self.id = id
         self.timeInterval = timeInterval
-        self.userDefaultsCache = userDefaultsCache
+        self.persistence = persistence
     }
     
     private var keyLastSyncDate: String {
         return String(describing: SyncInvalidator.self) + ".keyLastSyncDate.\(id)"
     }
     
-    var shouldSync: Bool {
+    public var shouldSync: Bool {
         
         let shouldSync: Bool
         
@@ -53,21 +53,19 @@ class SyncInvalidator {
         return shouldSync
     }
     
-    func didSync(lastSyncDate: Date = Date()) {
+    public func didSync(lastSyncDate: Date = Date()) {
         storeLastSyncDate(date: lastSyncDate)
     }
     
-    func resetSync() {
-        userDefaultsCache.deleteValue(key: keyLastSyncDate)
-        userDefaultsCache.commitChanges()
+    public func resetSync() {
+        persistence.deleteDate(id: keyLastSyncDate)
     }
     
     private func getLastSyncDate() -> Date? {
-        return userDefaultsCache.getValue(key: keyLastSyncDate) as? Date
+        return persistence.getDate(id: keyLastSyncDate)
     }
     
     private func storeLastSyncDate(date: Date) {
-        userDefaultsCache.cache(value: date, forKey: keyLastSyncDate)
-        userDefaultsCache.commitChanges()
+        persistence.saveDate(id: keyLastSyncDate, date: date)
     }
 }
