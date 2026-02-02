@@ -1,5 +1,5 @@
 //
-//  PersonalizedToolsDataModel.swift
+//  PersonalizedLessonsDataModel.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 1/26/26.
@@ -8,19 +8,19 @@
 
 import Foundation
 
-struct PersonalizedToolsDataModel {
+struct PersonalizedLessonsDataModel {
 
     let id: String
     let updatedAt: Date
     let resourceIds: [String]
 
     init(country: String, language: String, resourceIds: [String]) {
-        self.id = RealmPersonalizedTools.createId(country: country, language: language)
+        self.id = RealmPersonalizedLessons.createId(country: country, language: language)
         self.updatedAt = Date()
         self.resourceIds = resourceIds
     }
 
-    init(realmObject: RealmPersonalizedTools) {
+    init(realmObject: RealmPersonalizedLessons) {
         self.id = realmObject.id
         self.updatedAt = realmObject.updatedAt
         self.resourceIds = realmObject.getResourceIds()

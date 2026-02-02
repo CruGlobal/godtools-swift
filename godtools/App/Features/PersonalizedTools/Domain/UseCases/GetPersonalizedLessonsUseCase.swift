@@ -12,16 +12,16 @@ import Combine
 class GetPersonalizedLessonsUseCase {
 
     private let resourcesRepository: ResourcesRepository
-    private let personalizedToolsRepository: PersonalizedToolsRepository
+    private let personalizedLessonsRepository: PersonalizedLessonsRepository
     private let languagesRepository: LanguagesRepository
     private let getTranslatedToolName: GetTranslatedToolName
     private let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability
     private let getLessonListItemProgressRepository: GetLessonListItemProgressRepository
 
-    init(resourcesRepository: ResourcesRepository, personalizedToolsRepository: PersonalizedToolsRepository, languagesRepository: LanguagesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability, getLessonListItemProgressRepository: GetLessonListItemProgressRepository) {
+    init(resourcesRepository: ResourcesRepository, personalizedLessonsRepository: PersonalizedLessonsRepository, languagesRepository: LanguagesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability, getLessonListItemProgressRepository: GetLessonListItemProgressRepository) {
 
         self.resourcesRepository = resourcesRepository
-        self.personalizedToolsRepository = personalizedToolsRepository
+        self.personalizedLessonsRepository = personalizedLessonsRepository
         self.languagesRepository = languagesRepository
         self.getTranslatedToolName = getTranslatedToolName
         self.getTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability
@@ -38,15 +38,15 @@ class GetPersonalizedLessonsUseCase {
         let language = getLanguageCode(filterLessonsByLanguage: filterLessonsByLanguage, appLanguage: appLanguage)
         
         return Publishers.CombineLatest3(
-            personalizedToolsRepository.getPersonalizedToolsChanged(reloadFromRemote: true, requestPriority: .high, country: country, language: language, resourceType: .lesson),
+            personalizedLessonsRepository.getPersonalizedLessonsChanged(reloadFromRemote: true, requestPriority: .high, country: country, language: language),
             resourcesRepository.persistence.observeCollectionChangesPublisher(),
             getLessonListItemProgressRepository.getLessonListItemProgressChanged()
         )
         .map({ (_, _, _) in
 
-            let personalizedTools = self.personalizedToolsRepository.getPersonalizedTools(country: country, language: language, resourceType: .lesson)
-            
-            let resources = self.fetchResources(for: personalizedTools)
+            let personalizedLessons = self.personalizedLessonsRepository.getPersonalizedLessons(country: country, language: language)
+
+            let resources = self.fetchResources(for: personalizedLessons)
             
             return self.mapLessonsToListItems(lessons: resources, appLanguage: appLanguage, filterLessonsByLanguage: filterLessonsByLanguage)
             
@@ -70,10 +70,10 @@ class GetPersonalizedLessonsUseCase {
         return languageCode
     }
 
-    private func fetchResources(for personalizedToolsDataModel: PersonalizedToolsDataModel?) -> [ResourceDataModel] {
-        guard let personalizedToolsDataModel = personalizedToolsDataModel else { return [] }
-        
-        return personalizedToolsDataModel.resourceIds.compactMap { resourceId in
+    private func fetchResources(for personalizedLessonsDataModel: PersonalizedLessonsDataModel?) -> [ResourceDataModel] {
+        guard let personalizedLessonsDataModel = personalizedLessonsDataModel else { return [] }
+
+        return personalizedLessonsDataModel.resourceIds.compactMap { resourceId in
             resourcesRepository.persistence.getObject(id: resourceId)
         }
     }

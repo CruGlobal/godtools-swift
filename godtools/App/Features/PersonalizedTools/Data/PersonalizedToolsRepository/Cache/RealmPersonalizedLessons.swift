@@ -1,5 +1,5 @@
 //
-//  RealmPersonalizedTools.swift
+//  RealmPersonalizedLessons.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 1/26/26.
@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class RealmPersonalizedTools: Object {
+class RealmPersonalizedLessons: Object {
 
     @objc dynamic var id: String = ""
     @objc dynamic var updatedAt: Date = Date()
