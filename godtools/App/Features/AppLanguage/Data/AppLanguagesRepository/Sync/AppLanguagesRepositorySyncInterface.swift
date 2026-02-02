@@ -11,5 +11,5 @@ import Combine
 
 protocol AppLanguagesRepositorySyncInterface {
     
-    func syncPublisher() -> AnyPublisher<Void, Never>
+    func syncPublisher() -> AnyPublisher<Void, Error>
 }

@@ -18,9 +18,10 @@ class GetAppInterfaceLayoutDirection: GetAppInterfaceLayoutDirectionInterface {
         self.appLanguagesRepository = appLanguagesRepository
     }
     
-    func getLayoutDirectionPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppInterfaceLayoutDirectionDomainModel, Never> {
+    func getLayoutDirectionPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppInterfaceLayoutDirectionDomainModel, Error> {
         
-        return appLanguagesRepository.getLanguagePublisher(languageId: appLanguage)
+        return appLanguagesRepository
+            .getLanguagePublisher(languageId: appLanguage)
             .map { (dataModel: AppLanguageDataModel?) in
                 
                 guard let dataModel = dataModel else {

@@ -20,10 +20,11 @@ class GetAppLanguagesListRepository: GetAppLanguagesListRepositoryInterface {
         self.getTranslatedLanguageName = getTranslatedLanguageName
     }
     
-    func getLanguagesPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> {
+    func getLanguagesPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[AppLanguageListItemDomainModel], Error> {
         
-        return appLanguagesRepository.getLanguagesPublisher()
-            .flatMap({ (languages: [AppLanguageDataModel]) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> in
+        return appLanguagesRepository
+            .getLanguagesPublisher()
+            .flatMap({ (languages: [AppLanguageDataModel]) -> AnyPublisher<[AppLanguageListItemDomainModel], Error> in
                 
                 let appLanguagesList: [AppLanguageListItemDomainModel] = languages.map { (languageDataModel: AppLanguageDataModel) in
                                                             
@@ -41,6 +42,7 @@ class GetAppLanguagesListRepository: GetAppLanguagesListRepositoryInterface {
                 }
                 
                 return Just(appLanguagesList)
+                    .setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()

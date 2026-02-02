@@ -20,7 +20,7 @@ class AppLanguageFeatureDataLayerDependencies {
     
     // MARK: - Data Layer Classes
     
-    func getAppLanguagesRepository(realmDatabase: LegacyRealmDatabase? = nil, sync: AppLanguagesRepositorySyncInterface? = nil) -> AppLanguagesRepository {
+    func getAppLanguagesRepository(sync: AppLanguagesRepositorySyncInterface? = nil) -> AppLanguagesRepository {
         
         let persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>
         
@@ -45,10 +45,16 @@ class AppLanguageFeatureDataLayerDependencies {
             persistence: persistence
         )
         
+        let syncInvalidator = SyncInvalidator(
+            id: String(describing: AppLanguagesRepositorySync.self),
+            timeInterval: .minutes(minute: 15),
+            persistence: coreDataLayer.getUserDefaultsCache()
+        )
+        
         let sync: AppLanguagesRepositorySyncInterface = sync ?? AppLanguagesRepositorySync(
-            api: api,
+            api: AppLanguagesApi(),
             cache: cache,
-            userDefaultsCache: coreDataLayer.getUserDefaultsCache()
+            syncInvalidator: syncInvalidator
         )
         
         return AppLanguagesRepository(

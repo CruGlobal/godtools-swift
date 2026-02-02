@@ -11,5 +11,5 @@ import Combine
 
 protocol GetAppInterfaceLayoutDirectionInterface {
     
-    func getLayoutDirectionPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppInterfaceLayoutDirectionDomainModel, Never>
+    func getLayoutDirectionPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppInterfaceLayoutDirectionDomainModel, Error>
 }

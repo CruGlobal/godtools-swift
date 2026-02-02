@@ -40,9 +40,11 @@ import Combine
             .getStoreInitialAppLanguageUseCase()
             .storeInitialAppLanguagePublisher()
             .receive(on: DispatchQueue.main)
-            .sink { (appLanguage: BCP47LanguageIdentifier) in
-
-            }
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { (appLanguage: BCP47LanguageIdentifier) in
+                
+            })
             .store(in: &cancellables)
         
         syncLatestToolsForFavoritedTools(

@@ -18,7 +18,7 @@ class GetInterfaceLayoutDirectionUseCase {
         self.getLayoutDirectionInterface = getLayoutDirectionInterface
     }
     
-    func getLayoutDirectionPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppInterfaceLayoutDirectionDomainModel, Never> {
+    func getLayoutDirectionPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppInterfaceLayoutDirectionDomainModel, Error> {
         
         return getLayoutDirectionInterface
             .getLayoutDirectionPublisher(appLanguage: appLanguage)

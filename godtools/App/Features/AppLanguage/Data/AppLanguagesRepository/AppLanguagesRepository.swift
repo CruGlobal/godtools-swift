@@ -26,57 +26,69 @@ class AppLanguagesRepository: RepositorySync<AppLanguageDataModel, AppLanguagesA
         super.init(externalDataFetch: externalDataFetch, persistence: persistence)
     }
     
-    @MainActor func observeNumberOfAppLanguagesPublisher() -> AnyPublisher<Int, Never> {
+    @MainActor func observeNumberOfAppLanguagesPublisher() -> AnyPublisher<Int, Error> {
         
         sync.syncPublisher()
-            .sink { _ in
+            .sink(receiveCompletion: { _ in
                 
-            }
+            }, receiveValue: { _ in
+                
+            })
             .store(in: &cancellables)
         
-        return cache.observeChangesPublisher()
-            .flatMap({ (changes: Void) -> AnyPublisher<Int, Never> in
-                return self.cache.getNumberOfLanguagesPublisher()
+        return cache
+            .persistence
+            .observeCollectionChangesPublisher()
+            .tryMap { _ in
+                return try self
+                    .persistence
+                    .getObjectCount()
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    @MainActor func observeAppLanguagesPublisher() -> AnyPublisher<[AppLanguageDataModel], Error> {
+        
+        sync.syncPublisher()
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { _ in
+                
+            })
+            .store(in: &cancellables)
+        
+        return cache.persistence
+            .observeCollectionChangesPublisher()
+            .flatMap({ (changes: Void) -> AnyPublisher<[AppLanguageDataModel], Error> in
+                
+                return self.persistence
+                    .getDataModelsPublisher(getOption: .allObjects)
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
     }
     
-    @MainActor func observeAppLanguagesPublisher() -> AnyPublisher<[AppLanguageDataModel], Never> {
-        
-        sync.syncPublisher()
-            .sink { _ in
-                
-            }
-            .store(in: &cancellables)
-        
-        return cache.observeChangesPublisher()
-            .flatMap({ (changes: Void) -> AnyPublisher<[AppLanguageDataModel], Never> in
-                return self.cache.getLanguagesPublisher()
-                    .eraseToAnyPublisher()
-            })
-            .eraseToAnyPublisher()
-    }
-    
-    func getLanguagesPublisher() -> AnyPublisher<[AppLanguageDataModel], Never> {
+    func getLanguagesPublisher() -> AnyPublisher<[AppLanguageDataModel], Error> {
         
         return sync.syncPublisher()
-            .flatMap({ (syncCompleted: Void) -> AnyPublisher<[AppLanguageDataModel], Never> in
+            .flatMap({ (syncCompleted: Void) -> AnyPublisher<[AppLanguageDataModel], Error> in
                 
-                return self.cache.getLanguagesPublisher()
+                return self.persistence
+                    .getDataModelsPublisher(getOption: .allObjects)
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
     }
 
-    func getLanguagePublisher(languageId: BCP47LanguageIdentifier) -> AnyPublisher<AppLanguageDataModel?, Never> {
+    func getLanguagePublisher(languageId: BCP47LanguageIdentifier) -> AnyPublisher<AppLanguageDataModel?, Error> {
         
         return sync.syncPublisher()
-            .flatMap({ (syncCompleted: Void) -> AnyPublisher<AppLanguageDataModel?, Never> in
+            .tryMap { _ in
                 
-                return self.cache.getLanguagePublisher(languageId: languageId)
-                    .eraseToAnyPublisher()
-            })
+                let dataModel: AppLanguageDataModel? = try self.persistence.getDataModel(id: languageId)
+                
+                return dataModel
+            }
             .eraseToAnyPublisher()
     }
 }
