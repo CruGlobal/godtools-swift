@@ -89,7 +89,7 @@ class AppDataLayerDependencies {
             categoryArticlesCache: RealmCategoryArticlesCache(
                 realmDatabase: getSharedLegacyRealmDatabase()
             ),
-            userDefaultsCache: getUserDefaultsCache()
+            syncInvalidatorPersistence: getUserDefaultsCache()
         )
     }
     
@@ -341,7 +341,7 @@ class AppDataLayerDependencies {
             cache: cache,
             attachmentsRepository: getAttachmentsRepository(),
             languagesRepository: getLanguagesRepository(),
-            userDefaultsCache: getUserDefaultsCache()
+            syncInvalidatorPersistence: getUserDefaultsCache()
         )
     }
     
@@ -567,7 +567,7 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getUserDefaultsCache() -> UserDefaultsCacheInterface {
+    func getUserDefaultsCache() -> SharedUserDefaultsCache {
         return sharedUserDefaultsCache
     }
     
