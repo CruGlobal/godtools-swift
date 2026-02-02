@@ -2,265 +2,209 @@
 //  SyncInvalidatorTests.swift
 //  godtools
 //
-//  Created by Levi Eggert on 6/2/25.
-//  Copyright © 2025 Cru. All rights reserved.
+//  Created by Levi Eggert on 5/7/24.
+//  Copyright © 2024 Cru. All rights reserved.
 //
 
-import XCTest
+import Foundation
+import Testing
 @testable import godtools
-import RealmSwift
-import Combine
 
-class SyncInvalidatorTests: XCTestCase {
-    
-    private static let sharedCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
-    private static let sharedSyncInvalidatorId: String = "SyncInvalidatorTests.syncInvalidatorKey"
-    private static let syncInvalidatorId_1: String = "SyncInvalidatorTests.syncInvalidatorKey.1"
-    private static let syncInvalidatorId_2: String = "SyncInvalidatorTests.syncInvalidatorKey.2"
-    
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-        SyncInvalidator(
-            id: Self.sharedSyncInvalidatorId,
-            timeInterval: .days(day: 1),
-            userDefaultsCache: Self.sharedCache
-        )
-        .resetSync()
+struct SyncInvalidatorTests {
         
-        SyncInvalidator(
-            id: Self.syncInvalidatorId_1,
-            timeInterval: .days(day: 1),
-            userDefaultsCache: Self.sharedCache
-        )
-        .resetSync()
+    @Test()
+    func shouldSyncShouldBeAvailableOnFirstAttempt() async {
         
-        SyncInvalidator(
-            id: Self.syncInvalidatorId_2,
-            timeInterval: .days(day: 1),
-            userDefaultsCache: Self.sharedCache
-        )
-        .resetSync()
-    }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        let syncInvalidator: SyncInvalidator = getSyncInvalidator(timeInterval: .minutes(minute: 60))
+                
+        #expect(syncInvalidator.shouldSync == true)
     }
     
-    private static func getSharedSyncInvalidator(timeInterval: SyncInvalidatorTimeInterval) -> SyncInvalidator {
-        return SyncInvalidator(
-            id: Self.sharedSyncInvalidatorId,
-            timeInterval: timeInterval,
-            userDefaultsCache: Self.sharedCache
-        )
-    }
-    
-    func testShouldSyncShouldBeAvailableOnFirstAttempt() {
+    @Test()
+    func resettingSyncMakesNewSyncAvailable() async {
         
-        let syncInvalidator: SyncInvalidator = Self.getSharedSyncInvalidator(timeInterval: .minutes(minute: 60))
-        
-        XCTAssertTrue(syncInvalidator.shouldSync)
-    }
-    
-    func testResettingSyncMakesNewSyncAvailable() {
-        
-        let syncInvalidator: SyncInvalidator = Self.getSharedSyncInvalidator(timeInterval: .minutes(minute: 60))
+        let syncInvalidator: SyncInvalidator = getSyncInvalidator(timeInterval: .minutes(minute: 60))
     
         syncInvalidator.didSync()
         
-        XCTAssertFalse(syncInvalidator.shouldSync)
+        #expect(syncInvalidator.shouldSync == false)
         
         syncInvalidator.resetSync()
         
-        XCTAssertTrue(syncInvalidator.shouldSync)
+        #expect(syncInvalidator.shouldSync == true)
     }
     
-    func testShouldNotSyncPriorToElapsedMinutes() {
+    @Test()
+    func shouldNotSyncPriorToElapsedMinutes() async throws {
         
-        let thirtyMinutesAgo: Date? = Calendar.current.date(
+        let thirtyMinutesAgo: Date = try #require(Calendar.current.date(
             byAdding: DateComponents(minute: 30 * -1),
             to: Date()
-        )
+        ))
+                
+        let syncInvalidator: SyncInvalidator = getSyncInvalidator(timeInterval: .minutes(minute: 60))
         
-        XCTAssertNotNil(thirtyMinutesAgo)
+        syncInvalidator.didSync(lastSyncDate: thirtyMinutesAgo)
         
-        let syncInvalidator: SyncInvalidator = Self.getSharedSyncInvalidator(
-            timeInterval: .minutes(minute: 60)
-        )
-        
-        syncInvalidator.didSync(lastSyncDate: thirtyMinutesAgo!)
-        
-        XCTAssertFalse(syncInvalidator.shouldSync)
+        #expect(syncInvalidator.shouldSync == false)
     }
     
-    func testShouldSyncOnElapsedMinutes() {
+    @Test()
+    func shouldSyncOnElapsedMinutes() async throws {
         
-        let oneHourAndThirtyMinutesAgo: Date? = Calendar.current.date(
+        let oneHourAndThirtyMinutesAgo: Date = try #require(Calendar.current.date(
             byAdding: DateComponents(minute: 60 * -1),
             to: Date()
-        )
+        ))
+                
+        let syncInvalidator: SyncInvalidator = getSyncInvalidator(timeInterval: .minutes(minute: 60))
         
-        XCTAssertNotNil(oneHourAndThirtyMinutesAgo)
+        syncInvalidator.didSync(lastSyncDate: oneHourAndThirtyMinutesAgo)
         
-        let syncInvalidator: SyncInvalidator = Self.getSharedSyncInvalidator(
-            timeInterval: .minutes(minute: 60)
-        )
-        
-        syncInvalidator.didSync(lastSyncDate: oneHourAndThirtyMinutesAgo!)
-        
-        XCTAssertTrue(syncInvalidator.shouldSync)
+        #expect(syncInvalidator.shouldSync == true)
     }
     
-    func testShouldSyncAfterElapsedMinutes() {
+    @Test()
+    func shouldSyncAfterElapsedMinutes() async throws {
         
-        let oneHourAndThirtyMinutesAgo: Date? = Calendar.current.date(
+        let oneHourAndThirtyMinutesAgo: Date = try #require(Calendar.current.date(
             byAdding: DateComponents(minute: 90 * -1),
             to: Date()
-        )
+        ))
+                
+        let syncInvalidator: SyncInvalidator = getSyncInvalidator(timeInterval: .minutes(minute: 60))
         
-        XCTAssertNotNil(oneHourAndThirtyMinutesAgo)
+        syncInvalidator.didSync(lastSyncDate: oneHourAndThirtyMinutesAgo)
         
-        let syncInvalidator: SyncInvalidator = Self.getSharedSyncInvalidator(
-            timeInterval: .minutes(minute: 60)
-        )
-        
-        syncInvalidator.didSync(lastSyncDate: oneHourAndThirtyMinutesAgo!)
-        
-        XCTAssertTrue(syncInvalidator.shouldSync)
+        #expect(syncInvalidator.shouldSync == true)
     }
     
-    func testShouldNotSyncPriorToElapsedHours() {
+    @Test()
+    func shouldNotSyncPriorToElapsedHours() async throws {
         
-        let twoHoursAgo: Date? = Calendar.current.date(
+        let twoHoursAgo: Date = try #require(Calendar.current.date(
             byAdding: DateComponents(hour: 2 * -1),
             to: Date()
-        )
+        ))
+                
+        let syncInvalidator: SyncInvalidator = getSyncInvalidator(timeInterval: .hours(hour: 4))
         
-        XCTAssertNotNil(twoHoursAgo)
+        syncInvalidator.didSync(lastSyncDate: twoHoursAgo)
         
-        let syncInvalidator: SyncInvalidator = Self.getSharedSyncInvalidator(
-            timeInterval: .hours(hour: 4)
-        )
-        
-        syncInvalidator.didSync(lastSyncDate: twoHoursAgo!)
-        
-        XCTAssertFalse(syncInvalidator.shouldSync)
+        #expect(syncInvalidator.shouldSync == false)
     }
     
-    func testShouldSyncOnElapsedHours() {
+    @Test()
+    func shouldSyncOnElapsedHours() async throws {
         
-        let fourHoursAgo: Date? = Calendar.current.date(
+        let fourHoursAgo: Date = try #require(Calendar.current.date(
             byAdding: DateComponents(hour: 4 * -1),
             to: Date()
-        )
+        ))
+                
+        let syncInvalidator: SyncInvalidator = getSyncInvalidator(timeInterval: .hours(hour: 4))
         
-        XCTAssertNotNil(fourHoursAgo)
+        syncInvalidator.didSync(lastSyncDate: fourHoursAgo)
         
-        let syncInvalidator: SyncInvalidator = Self.getSharedSyncInvalidator(
-            timeInterval: .hours(hour: 4)
-        )
-        
-        syncInvalidator.didSync(lastSyncDate: fourHoursAgo!)
-        
-        XCTAssertTrue(syncInvalidator.shouldSync)
+        #expect(syncInvalidator.shouldSync == true)
     }
     
-    func testShouldSyncAfterElapsedHours() {
+    @Test()
+    func shouldSyncAfterElapsedHours() async throws {
         
-        let fiveHoursAgo: Date? = Calendar.current.date(
+        let fiveHoursAgo: Date = try #require(Calendar.current.date(
             byAdding: DateComponents(hour: 5 * -1),
             to: Date()
-        )
+        ))
+                
+        let syncInvalidator: SyncInvalidator = getSyncInvalidator(timeInterval: .hours(hour: 4))
         
-        XCTAssertNotNil(fiveHoursAgo)
+        syncInvalidator.didSync(lastSyncDate: fiveHoursAgo)
         
-        let syncInvalidator: SyncInvalidator = Self.getSharedSyncInvalidator(
-            timeInterval: .hours(hour: 4)
-        )
-        
-        syncInvalidator.didSync(lastSyncDate: fiveHoursAgo!)
-        
-        XCTAssertTrue(syncInvalidator.shouldSync)
+        #expect(syncInvalidator.shouldSync == true)
     }
     
-    func testShouldNotSyncPriorToElapsedDays() {
+    @Test()
+    func shouldNotSyncPriorToElapsedDays() async throws {
         
-        let twoDaysAgo: Date? = Calendar.current.date(
+        let twoDaysAgo: Date = try #require(Calendar.current.date(
             byAdding: DateComponents(day: 2 * -1),
             to: Date()
-        )
+        ))
+                
+        let syncInvalidator: SyncInvalidator = getSyncInvalidator(timeInterval: .days(day: 5))
         
-        XCTAssertNotNil(twoDaysAgo)
+        syncInvalidator.didSync(lastSyncDate: twoDaysAgo)
         
-        let syncInvalidator: SyncInvalidator = Self.getSharedSyncInvalidator(
-            timeInterval: .days(day: 5)
-        )
-        
-        syncInvalidator.didSync(lastSyncDate: twoDaysAgo!)
-        
-        XCTAssertFalse(syncInvalidator.shouldSync)
+        #expect(syncInvalidator.shouldSync == false)
     }
     
-    func testShouldSyncOnElapsedDays() {
+    @Test()
+    func shouldSyncOnElapsedDays() async throws {
         
-        let fiveDaysAgo: Date? = Calendar.current.date(
+        let fiveDaysAgo: Date = try #require(Calendar.current.date(
             byAdding: DateComponents(day: 5 * -1),
             to: Date()
-        )
+        ))
+                
+        let syncInvalidator: SyncInvalidator = getSyncInvalidator(timeInterval: .days(day: 5))
         
-        XCTAssertNotNil(fiveDaysAgo)
+        syncInvalidator.didSync(lastSyncDate: fiveDaysAgo)
         
-        let syncInvalidator: SyncInvalidator = Self.getSharedSyncInvalidator(
-            timeInterval: .days(day: 5)
-        )
-        
-        syncInvalidator.didSync(lastSyncDate: fiveDaysAgo!)
-        
-        XCTAssertTrue(syncInvalidator.shouldSync)
+        #expect(syncInvalidator.shouldSync == true)
     }
     
-    func testShouldSyncAfterElapsedDays() {
+    @Test()
+    func shouldSyncAfterElapsedDays() async throws {
         
-        let sixDaysAgo: Date? = Calendar.current.date(
+        let sixDaysAgo: Date = try #require(Calendar.current.date(
             byAdding: DateComponents(day: 6 * -1),
             to: Date()
-        )
+        ))
+                
+        let syncInvalidator: SyncInvalidator = getSyncInvalidator(timeInterval: .days(day: 5))
         
-        XCTAssertNotNil(sixDaysAgo)
+        syncInvalidator.didSync(lastSyncDate: sixDaysAgo)
         
-        let syncInvalidator: SyncInvalidator = Self.getSharedSyncInvalidator(
-            timeInterval: .days(day: 5)
-        )
-        
-        syncInvalidator.didSync(lastSyncDate: sixDaysAgo!)
-        
-        XCTAssertTrue(syncInvalidator.shouldSync)
+        #expect(syncInvalidator.shouldSync == true)
     }
     
-    func testSyncInvalidatorIdIsUnique() {
+    @Test()
+    func syncInvalidatorIdIsUnique() async throws {
         
-        let syncInvalidator_1 = SyncInvalidator(
-            id: Self.syncInvalidatorId_1,
+        let persistence = MockSyncInvalidatorPersistence()
+        
+        let syncInvalidator_1: SyncInvalidator = getSyncInvalidator(
             timeInterval: .hours(hour: 4),
-            userDefaultsCache: Self.sharedCache
+            persistence: persistence
         )
         
-        let syncInvalidator_2 = SyncInvalidator(
-            id: Self.syncInvalidatorId_2,
+        let syncInvalidator_2: SyncInvalidator = getSyncInvalidator(
             timeInterval: .hours(hour: 4),
-            userDefaultsCache: Self.sharedCache
+            persistence: persistence
         )
         
-        let twoHoursAgo: Date? = Calendar.current.date(
+        let twoHoursAgo: Date = try #require(Calendar.current.date(
             byAdding: DateComponents(hour: 2 * -1),
             to: Date()
+        ))
+                
+        syncInvalidator_1.didSync(lastSyncDate: twoHoursAgo)
+        
+        #expect(syncInvalidator_1.shouldSync == false)
+        
+        #expect(syncInvalidator_2.shouldSync == true)
+    }
+}
+
+extension SyncInvalidatorTests {
+    
+    private func getSyncInvalidator(timeInterval: SyncInvalidatorTimeInterval, persistence: SyncInvalidatorPersistenceInterface = MockSyncInvalidatorPersistence()) -> SyncInvalidator {
+        
+        return SyncInvalidator(
+            id: UUID().uuidString,
+            timeInterval: timeInterval,
+            persistence: persistence
         )
-        
-        XCTAssertNotNil(twoHoursAgo)
-        
-        syncInvalidator_1.didSync(lastSyncDate: twoHoursAgo!)
-        
-        XCTAssertFalse(syncInvalidator_1.shouldSync)
-        
-        XCTAssertTrue(syncInvalidator_2.shouldSync)
     }
 }
