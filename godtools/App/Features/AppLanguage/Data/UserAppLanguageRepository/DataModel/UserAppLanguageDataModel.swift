@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct UserAppLanguageDataModel {
+struct UserAppLanguageDataModel: UserAppLanguageDataModelInterface {
     
     let id: String
     let languageId: BCP47LanguageIdentifier
@@ -19,9 +19,9 @@ struct UserAppLanguageDataModel {
         self.languageId = languageId
     }
     
-    init(realmUserAppLanguage: RealmUserAppLanguage) {
+    init(interface: UserAppLanguageDataModelInterface) {
         
-        id = realmUserAppLanguage.id
-        languageId = realmUserAppLanguage.languageId
+        id = interface.id
+        languageId = interface.languageId
     }
 }

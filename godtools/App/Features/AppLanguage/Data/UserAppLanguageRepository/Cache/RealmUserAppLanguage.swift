@@ -8,8 +8,9 @@
 
 import Foundation
 import RealmSwift
+import RepositorySync
 
-class RealmUserAppLanguage: Object {
+class RealmUserAppLanguage: Object, IdentifiableRealmObject, UserAppLanguageDataModelInterface {
     
     @objc dynamic var id: String = ""
     @objc dynamic var languageId: BCP47LanguageIdentifier = ""
@@ -18,9 +19,14 @@ class RealmUserAppLanguage: Object {
         return "id"
     }
     
-    func mapFrom(appLanguage: UserAppLanguageDataModel) {
-        
-        id = appLanguage.id
-        languageId = appLanguage.languageId
+    func mapFrom(interface: UserAppLanguageDataModelInterface) {
+        id = interface.id
+        languageId = interface.languageId
+    }
+    
+    static func createNewFrom(interface: UserAppLanguageDataModelInterface) -> RealmUserAppLanguage {
+        let object = RealmUserAppLanguage()
+        object.mapFrom(interface: interface)
+        return object
     }
 }

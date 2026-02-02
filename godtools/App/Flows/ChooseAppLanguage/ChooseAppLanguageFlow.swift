@@ -50,8 +50,10 @@ class ChooseAppLanguageFlow: Flow {
             
             ChooseAppLanguageFlow.setAppLanguageInBackgroundCancellable = setAppLanguageUseCase.setLanguagePublisher(language: appLanguage.language)
                 .receive(on: DispatchQueue.main)
-                .sink(receiveValue: { _ in
-
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { _ in
+                    
                 })
             
             navigationController.dismiss(animated: true)

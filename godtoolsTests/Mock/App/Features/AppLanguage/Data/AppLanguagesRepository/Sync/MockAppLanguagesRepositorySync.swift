@@ -10,46 +10,65 @@ import Foundation
 @testable import godtools
 import Combine
 import RealmSwift
+import RepositorySync
 
 class MockAppLanguagesRepositorySync: AppLanguagesRepositorySyncInterface {
     
-    private let realmDatabase: LegacyRealmDatabase
+    private let realmDatabase: RealmDatabase
     private let appLanguages: [AppLanguageCodable]
     
-    init(realmDatabase: LegacyRealmDatabase, appLanguages: [AppLanguageCodable]) {
+    init(realmDatabase: RealmDatabase, appLanguages: [AppLanguageCodable]) throws {
         
         self.realmDatabase = realmDatabase
         self.appLanguages = appLanguages
         
-        addAppLanguagesToRealm(appLanguages: appLanguages)
+        try addAppLanguagesToRealm(appLanguages: appLanguages)
     }
     
-    func syncPublisher() -> AnyPublisher<Void, Never> {
+    func syncPublisher() -> AnyPublisher<Void, Error> {
                 
         guard appLanguages.isEmpty else {
             return Just(Void())
+                .setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
         }
-                
-        addAppLanguagesToRealm(appLanguages: appLanguages)
         
-        return Just(())
-            .eraseToAnyPublisher()
+        do {
+            
+            try addAppLanguagesToRealm(appLanguages: appLanguages)
+            
+            return Just(Void())
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        }
+        catch let error {
+            
+            return Fail(error: error)
+                .eraseToAnyPublisher()
+        }
     }
     
-    private func addAppLanguagesToRealm(appLanguages: [AppLanguageCodable]) {
+    private func addAppLanguagesToRealm(appLanguages: [AppLanguageCodable]) throws {
         
-        _ = realmDatabase.writeObjects(realm: realmDatabase.openRealm()) { (realm: Realm) in
+        let realmLanguages: [RealmAppLanguage] = appLanguages.map({
             
-            let realmLanguages: [RealmAppLanguage] = appLanguages.map({
-                
-                let realmAppLanguage = RealmAppLanguage()
-                realmAppLanguage.mapFrom(dataModel: $0)
-                return realmAppLanguage
-            })
-            
-            return realmLanguages
-        }
+            let realmAppLanguage = RealmAppLanguage()
+            realmAppLanguage.mapFrom(interface: $0)
+            return realmAppLanguage
+        })
+        
+        let realm: Realm = try realmDatabase.openRealm()
+        
+        try realmDatabase.write.realm(
+            realm: realm,
+            writeClosure: { (realm: Realm) in
+                return WriteRealmObjects(
+                    deleteObjects: nil,
+                    addObjects: realmLanguages
+                )
+            },
+            updatePolicy: .modified
+        )
     }
     
     static func getSampleAppLanguages() -> [AppLanguageCodable] {

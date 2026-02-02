@@ -9,6 +9,7 @@
 import Testing
 @testable import godtools
 import Combine
+import RepositorySync
 
 @Suite(.serialized)
 struct GetLanguageSettingsInterfaceStringsRepositoryTests {
@@ -22,11 +23,11 @@ struct GetLanguageSettingsInterfaceStringsRepositoryTests {
     )
     @MainActor func interfaceStringsAreTranslatedWhenAppLanguageChanges() async throws {
         
-        var cancellables: Set<AnyCancellable> = Set()
-        
         let getLanguageSettingsInterfaceStringsRepository: GetLanguageSettingsInterfaceStringsRepository = try getLanguageSettingsInterfaceStringsRepository()
         
         let appLanguagePublisher: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
+        
+        var cancellables: Set<AnyCancellable> = Set()
         
         var englishInterfaceStringsRef: LanguageSettingsInterfaceStringsDomainModel?
         var spanishInterfaceStringsRef: LanguageSettingsInterfaceStringsDomainModel?
@@ -35,29 +36,44 @@ struct GetLanguageSettingsInterfaceStringsRepositoryTests {
         
         await confirmation(expectedCount: 2) { confirmation in
             
-            appLanguagePublisher
-                .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<LanguageSettingsInterfaceStringsDomainModel, Never> in
-                    
-                    return getLanguageSettingsInterfaceStringsRepository
-                        .getStringsPublisher(translateInAppLanguage: appLanguage)
-                        .eraseToAnyPublisher()
-                })
-                .sink { (interfaceStrings: LanguageSettingsInterfaceStringsDomainModel) in
-                    
-                    sinkCount += 1
-                    confirmation()
-                    
-                    if sinkCount == 1 {
-                        
-                        englishInterfaceStringsRef = interfaceStrings
-                        appLanguagePublisher.send(LanguageCodeDomainModel.spanish.rawValue)
-                    }
-                    else if sinkCount == 2 {
-                        
-                        spanishInterfaceStringsRef = interfaceStrings
-                    }
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
                 }
-                .store(in: &cancellables)
+                
+                appLanguagePublisher
+                    .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<LanguageSettingsInterfaceStringsDomainModel, Error> in
+                        
+                        return getLanguageSettingsInterfaceStringsRepository
+                            .getStringsPublisher(translateInAppLanguage: appLanguage)
+                            .eraseToAnyPublisher()
+                    })
+                    .sink(receiveCompletion: { _ in
+                        
+                    }, receiveValue: { (interfaceStrings: LanguageSettingsInterfaceStringsDomainModel) in
+                        
+                        sinkCount += 1
+                        
+                        confirmation()
+                        
+                        if sinkCount == 1 {
+                            
+                            englishInterfaceStringsRef = interfaceStrings
+                            appLanguagePublisher.send(LanguageCodeDomainModel.spanish.rawValue)
+                        }
+                        else if sinkCount == 2 {
+                            
+                            spanishInterfaceStringsRef = interfaceStrings
+                            
+                            // When finished be sure to call:
+                            timeoutTask.cancel()
+                            continuation.resume(returning: ())
+                        }
+                    })
+                    .store(in: &cancellables)
+            }
         }
         
         #expect(englishInterfaceStringsRef?.navTitle == "Language settings")
@@ -99,26 +115,40 @@ struct GetLanguageSettingsInterfaceStringsRepositoryTests {
     )
     @MainActor func chooseAppLanguageButtonTitleIsTranslatedInMyAppLanguage(argument: TestArgumentChooseAppLanguageButtonTitle) async throws {
         
-        var cancellables: Set<AnyCancellable> = Set()
-        
         let getLanguageSettingsInterfaceStringsRepository: GetLanguageSettingsInterfaceStringsRepository = try getLanguageSettingsInterfaceStringsRepository()
         
+        var cancellables: Set<AnyCancellable> = Set()
+        
         var interfaceStringsRef: LanguageSettingsInterfaceStringsDomainModel?
-        
-        var sinkCount: Int = 0
-        
+                        
         await confirmation(expectedCount: 1) { confirmation in
             
-            getLanguageSettingsInterfaceStringsRepository
-                .getStringsPublisher(translateInAppLanguage: argument.appLanguage.rawValue)
-                .sink { (interfaceStrings: LanguageSettingsInterfaceStringsDomainModel) in
-                    
-                    sinkCount += 1
-                    confirmation()
-                    
-                    interfaceStringsRef = interfaceStrings
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
                 }
-                .store(in: &cancellables)
+                
+                getLanguageSettingsInterfaceStringsRepository
+                    .getStringsPublisher(
+                        translateInAppLanguage: argument.appLanguage.rawValue
+                    )
+                    .sink(receiveCompletion: { _ in
+                        
+                    }, receiveValue: { (interfaceStrings: LanguageSettingsInterfaceStringsDomainModel) in
+                                                
+                        interfaceStringsRef = interfaceStrings
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                                
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    })
+                    .store(in: &cancellables)
+            }
         }
         
         #expect(interfaceStringsRef?.chooseAppLanguageButtonTitle == argument.expectedValue)
@@ -132,31 +162,43 @@ struct GetLanguageSettingsInterfaceStringsRepositoryTests {
         """
     )
     @MainActor func chooseAppLanguageIsTranslatedInMyLanguageEnglish() async throws {
-        
-        var cancellables: Set<AnyCancellable> = Set()
                 
         let getLanguageSettingsInterfaceStringsRepository: GetLanguageSettingsInterfaceStringsRepository = try getLanguageSettingsInterfaceStringsRepository()
         
         let english: LanguageCodeDomainModel = .english
         
+        var cancellables: Set<AnyCancellable> = Set()
+        
         var interfaceStringsRef: LanguageSettingsInterfaceStringsDomainModel?
-        
-        var sinkCount: Int = 0
-        
+                
         await confirmation(expectedCount: 1) { confirmation in
             
-            getLanguageSettingsInterfaceStringsRepository
-                .getStringsPublisher(translateInAppLanguage: english.rawValue)
-                .sink { (interfaceStrings: LanguageSettingsInterfaceStringsDomainModel) in
-                    
-                    sinkCount += 1
-                    confirmation()
-                    
-                    interfaceStringsRef = interfaceStrings
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
                 }
-                .store(in: &cancellables)
+                
+                getLanguageSettingsInterfaceStringsRepository
+                    .getStringsPublisher(translateInAppLanguage: english.rawValue)
+                    .sink(receiveCompletion: { _ in
+                        
+                    }, receiveValue: { (interfaceStrings: LanguageSettingsInterfaceStringsDomainModel) in
+                        
+                        interfaceStringsRef = interfaceStrings
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                        
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    })
+                    .store(in: &cancellables)
+            }
         }
-        
+
         let expectedValue: String = "\(getAppLanguages().count) Languages available"
         
         #expect(interfaceStringsRef?.numberOfAppLanguagesAvailable == expectedValue)
@@ -185,19 +227,33 @@ extension GetLanguageSettingsInterfaceStringsRepositoryTests {
             addRealmObjects: []
         )
         
-        let testsRealmDatabase: LegacyRealmDatabase = testsDiContainer.dataLayer.getSharedLegacyRealmDatabase()
+        let realmDatabase: RealmDatabase = testsDiContainer.dataLayer.getSharedRealmDatabase()
+        
+        let persistence = RealmRepositorySyncPersistence(
+            database: realmDatabase,
+            dataModelMapping: RealmAppLanguageDataModelMapping()
+        )
         
         let appLanguages: [AppLanguageCodable] = getAppLanguages()
         
-        let mockAppLanguagesSync: AppLanguagesRepositorySyncInterface = MockAppLanguagesRepositorySync(
-            realmDatabase: testsRealmDatabase,
+        let mockAppLanguagesSync = try MockAppLanguagesRepositorySync(
+            realmDatabase: realmDatabase,
             appLanguages: appLanguages
         )
         
-        let appLanguagesRepository: AppLanguagesRepository = testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesRepository(
-            realmDatabase: testsRealmDatabase,
+        let api = AppLanguagesApi()
+        
+        let cache = AppLanguagesCache(
+            persistence: persistence
+        )
+        
+        let appLanguagesRepository = AppLanguagesRepository(
+            externalDataFetch: api,
+            persistence: persistence,
+            cache: cache,
             sync: mockAppLanguagesSync
         )
+        
         
         let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
             LanguageCodeDomainModel.english.value: [

@@ -26,8 +26,7 @@ class StoreInitialAppLanguage: StoreInitialAppLanguageInterface {
         
         return Publishers.CombineLatest(
             userAppLanguageRepository
-                .getLanguagePublisher()
-                .setFailureType(to: Error.self),
+                .getCachedLanguagePublisher(),
             appLanguagesRepository
                 .getLanguagesPublisher()
         )
@@ -55,11 +54,12 @@ class StoreInitialAppLanguage: StoreInitialAppLanguageInterface {
             }
             
             return self.userAppLanguageRepository
-                .storeLanguagePublisher(appLanguageId: appLanguageToStore)
-                .map { (success: Bool) in
+                .storeLanguagePublisher(
+                    appLanguageId: appLanguageToStore
+                )
+                .map { _ in
                     appLanguageToStore
                 }
-                .setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
         })
         .eraseToAnyPublisher()
