@@ -77,7 +77,7 @@ import SwiftUI
 
             if toggle == .personalized {
                 
-                return self.getPersonalizedLessonsUseCase
+                return getPersonalizedLessonsUseCase
                     .execute(
                         appLanguage: appLanguage,
                         country: country,
@@ -98,8 +98,8 @@ import SwiftUI
                     }
                     .eraseToAnyPublisher()
             } else {
-                // Use all lessons
-                return self.viewLessonsUseCase
+
+                return viewLessonsUseCase
                     .viewPublisher(appLanguage: appLanguage, filterLessonsByLanguage: languageFilter)
             }
         }
