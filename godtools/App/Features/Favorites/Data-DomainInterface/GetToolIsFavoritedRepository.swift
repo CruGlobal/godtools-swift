@@ -18,9 +18,10 @@ class GetToolIsFavoritedRepository: GetToolIsFavoritedRepositoryInterface {
         self.favoritedResourcesRepository = favoritedResourcesRepository
     }
     
-    func getIsFavoritedPublisher(toolId: String) -> AnyPublisher<ToolIsFavoritedDomainModel, Never> {
+    @MainActor func getIsFavoritedPublisher(toolId: String) -> AnyPublisher<ToolIsFavoritedDomainModel, Never> {
         
-        return favoritedResourcesRepository.getFavoritedResourcesChangedPublisher()
+        return favoritedResourcesRepository
+            .getFavoritedResourcesChangedPublisher()
             .flatMap({ (favoritedResourcesChanged: Void) -> AnyPublisher<Bool, Never> in
                 
                 return self.favoritedResourcesRepository.getResourceIsFavoritedPublisher(id: toolId)

@@ -32,7 +32,7 @@ class GetTranslatedToolLanguageAvailability {
     
     func getTranslatedLanguageAvailability(toolId: String, language: LanguageDataModel, translateInLanguage: AppLanguageDomainModel) -> ToolLanguageAvailabilityDomainModel {
         
-        guard let resource = resourcesRepository.persistence.getObject(id: toolId) else {
+        guard let resource = resourcesRepository.persistence.getDataModelNonThrowing(id: toolId) else {
             return failedToDetermineLanguageAvailability
         }
         

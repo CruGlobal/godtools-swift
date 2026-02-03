@@ -18,7 +18,7 @@ class GetAppLanguageRepository: GetAppLanguageRepositoryInterface {
         self.userAppLanguageRepository = userAppLanguageRepository
     }
     
-    func getLanguagePublisher() -> AnyPublisher<AppLanguageDomainModel, Never> {
+    @MainActor func getLanguagePublisher() -> AnyPublisher<AppLanguageDomainModel, Never> {
                 
         return userAppLanguageRepository.getLanguageChangedPublisher()
             .flatMap({ (userAppLanguageChanged: Void) -> AnyPublisher<UserAppLanguageDataModel?, Never> in

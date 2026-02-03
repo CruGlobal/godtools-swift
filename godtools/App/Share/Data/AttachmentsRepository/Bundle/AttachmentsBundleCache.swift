@@ -10,6 +10,8 @@ import Foundation
 
 class AttachmentsBundleCache {
     
+    private let bundle: Bundle = Bundle.main
+    
     init() {
         
     }
@@ -21,7 +23,7 @@ class AttachmentsBundleCache {
     
     func getBundledAttachment(resource: String) -> Data? {
                                 
-        guard let filePath = Bundle.main.path(forResource: resource, ofType: nil) else {
+        guard let filePath = bundle.path(forResource: resource, ofType: nil) else {
             return nil
         }
         

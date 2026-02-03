@@ -22,7 +22,7 @@ class FavoritedResourcesRepository {
         return cache.getNumberOfFavoritedResources()
     }
     
-    func getFavoritedResourcesChangedPublisher() -> AnyPublisher<Void, Never> {
+    @MainActor func getFavoritedResourcesChangedPublisher() -> AnyPublisher<Void, Never> {
         
         return cache.getFavoritedResourcesChangedPublisher()
             .eraseToAnyPublisher()
@@ -47,7 +47,7 @@ class FavoritedResourcesRepository {
         return cache.getResourceIsFavorited(id: id)
     }
     
-    func getFavoritedResourcesSortedByPositionPublisher() -> AnyPublisher<[FavoritedResourceDataModel], Never> {
+    @MainActor func getFavoritedResourcesSortedByPositionPublisher() -> AnyPublisher<[FavoritedResourceDataModel], Never> {
         
         return cache.getFavoritedResourcesSortedByPositionPublisher()
             .eraseToAnyPublisher()

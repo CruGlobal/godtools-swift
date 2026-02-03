@@ -22,7 +22,8 @@ class GetToolDetailsMediaRepository: GetToolDetailsMediaRepositoryInterface {
     
     func getMediaPublisher(toolId: String) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
                 
-        guard let resource = resourcesRepository.persistence.getObject(id: toolId) else {
+        guard let resource = resourcesRepository.persistence.getDataModelNonThrowing(id: toolId) else {
+            
             return Just(.empty)
                 .eraseToAnyPublisher()
         }
@@ -52,7 +53,15 @@ class GetToolDetailsMediaRepository: GetToolDetailsMediaRepositoryInterface {
     
     private func getAnimatedMediaElseImage(resource: ResourceDataModel) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
         
-        return attachmentsRepository.getAttachmentFromCacheElseRemotePublisher(id: resource.attrAboutBannerAnimation, requestPriority: .high)
+        return attachmentsRepository
+            .getAttachmentFromCacheElseRemotePublisher(
+                id: resource.attrAboutBannerAnimation,
+                requestPriority: .high
+            )
+            .catch { _ in
+                return Just(nil)
+                    .eraseToAnyPublisher()
+            }
             .flatMap({ (attachment: AttachmentDataModel?) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> in
                 
                 guard let diskFileUrl = attachment?.storedAttachment?.diskFileUrl else {
@@ -71,7 +80,15 @@ class GetToolDetailsMediaRepository: GetToolDetailsMediaRepositoryInterface {
     
     private func getImageMediaElseEmpty(resource: ResourceDataModel) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
         
-        return attachmentsRepository.getAttachmentFromCacheElseRemotePublisher(id: resource.attrBannerAbout, requestPriority: .high)
+        return attachmentsRepository
+            .getAttachmentFromCacheElseRemotePublisher(
+                id: resource.attrBannerAbout,
+                requestPriority: .high
+            )
+            .catch { _ in
+                return Just(nil)
+                    .eraseToAnyPublisher()
+            }
             .flatMap({ (attachment: AttachmentDataModel?) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> in
                 
                 guard let image = attachment?.getImage() else {

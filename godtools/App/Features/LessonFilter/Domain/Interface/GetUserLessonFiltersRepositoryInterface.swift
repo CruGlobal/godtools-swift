@@ -11,5 +11,5 @@ import Combine
 
 protocol GetUserLessonFiltersRepositoryInterface {
     
-    func getUserLessonLanguageFilterPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<LessonFilterLanguageDomainModel?, Never>
+    @MainActor func getUserLessonLanguageFilterPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<LessonFilterLanguageDomainModel?, Never>
 }

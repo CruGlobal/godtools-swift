@@ -20,7 +20,7 @@ import SwiftUI
     private let viewLessonsUseCase: ViewLessonsUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
-    private let attachmentsRepository: AttachmentsRepository
+    private let getToolBannerUseCase: GetToolBannerUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -41,7 +41,7 @@ import SwiftUI
     @Published var lessons: [LessonListItemDomainModel] = []
     @Published var isLoadingLessons: Bool = true
         
-    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase, getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase, viewLessonsUseCase: ViewLessonsUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, attachmentsRepository: AttachmentsRepository) {
+    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase, getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase, viewLessonsUseCase: ViewLessonsUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getToolBannerUseCase: GetToolBannerUseCase) {
 
         self.flowDelegate = flowDelegate
         self.resourcesRepository = resourcesRepository
@@ -52,7 +52,7 @@ import SwiftUI
         self.viewLessonsUseCase = viewLessonsUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
-        self.attachmentsRepository = attachmentsRepository
+        self.getToolBannerUseCase = getToolBannerUseCase
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
@@ -73,7 +73,7 @@ import SwiftUI
             $selectedToggle
         )
         .dropFirst()
-        .flatMap { (appLanguage, languageFilter, country, toggle) -> AnyPublisher<ViewLessonsDomainModel, Never> in
+        .flatMap { (appLanguage, languageFilter, country, toggle) -> AnyPublisher<ViewLessonsDomainModel, Error> in
 
             if toggle == .personalized {
                 
@@ -104,8 +104,10 @@ import SwiftUI
             }
         }
         .receive(on: DispatchQueue.main)
-        .sink { [weak self] (domainModel: ViewLessonsDomainModel) in
-
+        .sink(receiveCompletion: { _ in
+            
+        }, receiveValue: { [weak self] (domainModel: ViewLessonsDomainModel) in
+            
             let interfaceStrings = domainModel.interfaceStrings
 
             self?.strings = interfaceStrings
@@ -119,7 +121,7 @@ import SwiftUI
 
             self?.lessons = domainModel.lessons
             self?.isLoadingLessons = false
-        }
+        })
         .store(in: &cancellables)
     
         $appLanguage
@@ -207,7 +209,7 @@ extension LessonsViewModel {
         
         return LessonCardViewModel(
             lessonListItem: lessonListItem,
-            attachmentsRepository: attachmentsRepository
+            getToolBannerUseCase: getToolBannerUseCase
         )
     }
     

@@ -23,7 +23,7 @@ class GlobalAnalyticsRepository {
         self.cache = cache
     }
     
-    func getGlobalAnalyticsChangedPublisher(requestPriority: RequestPriority) -> AnyPublisher<GlobalAnalyticsDataModel?, Never> {
+    @MainActor func getGlobalAnalyticsChangedPublisher(requestPriority: RequestPriority) -> AnyPublisher<GlobalAnalyticsDataModel?, Never> {
                 
         getGlobalAnalyticsFromRemotePublisher(requestPriority: requestPriority)
             .sink { value in

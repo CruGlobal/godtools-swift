@@ -41,7 +41,7 @@ class MobileContentTextViewModel: MobileContentViewModel {
             return nil
         }
         
-        guard let resourceImage = renderedPageContext.resourcesCache.getUIImage(resource: resource) else {
+        guard let resourceImage = renderedPageContext.resourcesCache.getNonThrowingUIImage(resource: resource) else {
             return nil
         }
         
@@ -84,7 +84,7 @@ class MobileContentTextViewModel: MobileContentViewModel {
             return nil
         }
         
-        guard let resourceImage = renderedPageContext.resourcesCache.getUIImage(resource: resource) else {
+        guard let resourceImage = renderedPageContext.resourcesCache.getNonThrowingUIImage(resource: resource) else {
             return nil
         }
         

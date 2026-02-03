@@ -7,44 +7,49 @@
 //
 
 import Foundation
-import Combine
 import RequestOperation
+import RepositorySync
+import Combine
 
 class AttachmentsRepository: RepositorySync<AttachmentDataModel, MobileContentAttachmentsApi> {
-    
-    private let api: MobileContentAttachmentsApi
-    
+        
     let cache: AttachmentsCache
     
-    init(api: MobileContentAttachmentsApi, cache: AttachmentsCache) {
+    init(externalDataFetch: MobileContentAttachmentsApi, persistence: any Persistence<AttachmentDataModel, AttachmentCodable>, cache: AttachmentsCache) {
         
-        self.api = api
         self.cache = cache
         
         super.init(
-            externalDataFetch: api,
-            persistence: cache.getPersistence()
+            externalDataFetch: externalDataFetch,
+            persistence: persistence
         )
     }
 }
 
 extension AttachmentsRepository {
     
-    func getAttachmentFromCacheElseRemotePublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<AttachmentDataModel?, Never> {
+    func getAttachmentFromCacheElseRemotePublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<AttachmentDataModel?, Error> {
         
-        guard let cachedAttachment = cache.getAttachment(id: id) else {
-            return Just(nil)
+        return cache.getAttachmentPublisher(id: id)
+            .flatMap { (cachedAttachment: AttachmentDataModel?) -> AnyPublisher<AttachmentDataModel?, Error> in
+                
+                guard let cachedAttachment = cachedAttachment else {
+                    return Just(nil)
+                        .setFailureType(to: Error.self)
+                        .eraseToAnyPublisher()
+                }
+                
+                return self.getAttachmentWithDataFromCacheElseRemotePublisher(
+                    attachment: cachedAttachment,
+                    requestPriority: requestPriority
+                )
                 .eraseToAnyPublisher()
-        }
-        
-        return getAttachmentWithDataFromCacheElseRemotePublisher(
-            attachment: cachedAttachment,
-            requestPriority: requestPriority
-        )
-        .eraseToAnyPublisher()
+                
+            }
+            .eraseToAnyPublisher()
     }
     
-    func downloadAndCacheAttachmentDataIfNeededPublisher(attachment: AttachmentDataModel, requestPriority: RequestPriority) -> AnyPublisher<AttachmentDataModel?, Never> {
+    func downloadAndCacheAttachmentDataIfNeededPublisher(attachment: AttachmentDataModel, requestPriority: RequestPriority) -> AnyPublisher<AttachmentDataModel?, Error> {
         
         return getAttachmentWithDataFromCacheElseRemotePublisher(
             attachment: attachment,
@@ -53,14 +58,18 @@ extension AttachmentsRepository {
         .eraseToAnyPublisher()
     }
     
-    private func getAttachmentWithDataFromCacheElseRemotePublisher(attachment: AttachmentDataModel, requestPriority: RequestPriority) -> AnyPublisher<AttachmentDataModel?, Never> {
+    private func getAttachmentWithDataFromCacheElseRemotePublisher(attachment: AttachmentDataModel, requestPriority: RequestPriority) -> AnyPublisher<AttachmentDataModel?, Error> {
         
-        return cache.getAttachmentPublisher(id: attachment.id)
-            .flatMap({ (cachedAttachment: AttachmentDataModel?) -> AnyPublisher<AttachmentDataModel?, Never> in
+        return cache
+            .getAttachmentPublisher(
+                id: attachment.id
+            )
+            .flatMap({ (cachedAttachment: AttachmentDataModel?) -> AnyPublisher<AttachmentDataModel?, Error> in
                 
                 if let cachedAttachment = cachedAttachment, cachedAttachment.storedAttachment?.data != nil {
                     
                     return Just(cachedAttachment)
+                        .setFailureType(to: Error.self)
                         .eraseToAnyPublisher()
                 }
                 else {
@@ -75,37 +84,37 @@ extension AttachmentsRepository {
             .eraseToAnyPublisher()
     }
     
-    private func downloadAndCacheAttachmentPublisher(attachment: AttachmentDataModel, requestPriority: RequestPriority) -> AnyPublisher<AttachmentDataModel?, Never> {
+    private func downloadAndCacheAttachmentPublisher(attachment: AttachmentDataModel, requestPriority: RequestPriority) -> AnyPublisher<AttachmentDataModel?, Error> {
         
         return getAndStoreAttachmentFilePublisher(
             attachment: attachment,
             requestPriority: requestPriority
         )
-        .map { (storedAttachment: StoredAttachmentDataModel?) in
-            AttachmentDataModel(interface: attachment, storedAttachment: storedAttachment)
+        .map { (storedAttachment: StoredAttachmentDataModel) in
+            
+            return AttachmentDataModel(interface: attachment, storedAttachment: storedAttachment)
         }
         .eraseToAnyPublisher()
     }
     
-    private func getAndStoreAttachmentFilePublisher(attachment: AttachmentDataModel, requestPriority: RequestPriority) -> AnyPublisher<StoredAttachmentDataModel?, Never> {
+    private func getAndStoreAttachmentFilePublisher(attachment: AttachmentDataModel, requestPriority: RequestPriority) -> AnyPublisher<StoredAttachmentDataModel, Error> {
         
         guard let remoteUrl = URL(string: attachment.file) else {
-            return Just(nil)
+            
+            let error: Error = NSError.errorWithDescription(description: "Failed to create attachment file url.")
+            
+            return Fail(error: error)
                 .eraseToAnyPublisher()
         }
         
-        return api.getAttachmentFile(url: remoteUrl, requestPriority: requestPriority)
-            .flatMap({ (response: RequestDataResponse) -> AnyPublisher<StoredAttachmentDataModel?, Never> in
+        return externalDataFetch.getAttachmentFilePublisher(url: remoteUrl, requestPriority: requestPriority)
+            .flatMap({ (response: RequestDataResponse) -> AnyPublisher<StoredAttachmentDataModel, Error> in
                 
                 return self.cache.storeAttachmentDataPublisher(
                     attachment: attachment,
                     data: response.data
                 )
             })
-            .catch { _ in
-                return Just(nil)
-                    .eraseToAnyPublisher()
-            }
             .eraseToAnyPublisher()
     }
 }

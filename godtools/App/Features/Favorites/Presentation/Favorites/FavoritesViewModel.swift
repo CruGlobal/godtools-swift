@@ -16,7 +16,7 @@ import Combine
     private let viewFavoritesUseCase: ViewFavoritesUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
-    private let attachmentsRepository: AttachmentsRepository
+    private let getToolBannerUseCase: GetToolBannerUseCase
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
     private let getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase
     private let getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase
@@ -43,14 +43,14 @@ import Combine
     @Published var noFavoriteToolsDescription: String = ""
     @Published var noFavoriteToolsButtonText: String = ""
     
-    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, viewFavoritesUseCase: ViewFavoritesUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, attachmentsRepository: AttachmentsRepository, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, viewFavoritesUseCase: ViewFavoritesUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getToolBannerUseCase: GetToolBannerUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.viewFavoritesUseCase = viewFavoritesUseCase
         self.resourcesRepository = resourcesRepository
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
-        self.attachmentsRepository = attachmentsRepository
+        self.getToolBannerUseCase = getToolBannerUseCase
         self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
         self.getFeaturedLessonsUseCase = getFeaturedLessonsUseCase
         self.getOptInOnboardingBannerEnabledUseCase = getOptInOnboardingBannerEnabledUseCase
@@ -73,7 +73,9 @@ import Combine
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (domainModel: ViewFavoritesDomainModel, featuredLessons: [FeaturedLessonDomainModel]) in
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (domainModel: ViewFavoritesDomainModel, featuredLessons: [FeaturedLessonDomainModel]) in
                 
                 self?.openTutorialBannerMessage = domainModel.interfaceStrings.tutorialMessage
                 self?.openTutorialBannerButtonTitle = domainModel.interfaceStrings.openTutorialActionTitle
@@ -89,7 +91,7 @@ import Combine
                 self?.yourFavoritedTools = domainModel.yourFavoritedTools
                 
                 self?.isLoadingYourFavoritedTools = false
-            }
+            })
             .store(in: &cancellables)
         
         $appLanguage
@@ -265,7 +267,7 @@ extension FavoritesViewModel {
                 
         return LessonCardViewModel(
             lessonListItem: featuredLesson,
-            attachmentsRepository: attachmentsRepository
+            getToolBannerUseCase: getToolBannerUseCase
         )
     }
     
@@ -281,7 +283,7 @@ extension FavoritesViewModel {
             tool: tool,
             accessibility: .favoriteTool,
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
-            attachmentsRepository: attachmentsRepository
+            getToolBannerUseCase: getToolBannerUseCase
         )
     }
     

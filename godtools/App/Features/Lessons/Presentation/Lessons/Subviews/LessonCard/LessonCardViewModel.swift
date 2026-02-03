@@ -12,10 +12,10 @@ import Combine
 @MainActor class LessonCardViewModel: ObservableObject {
         
     private let lessonListItem: LessonListItemDomainModelInterface
-    private let attachmentsRepository: AttachmentsRepository
-            
-    let attachmentBanner: AttachmentBannerObservableObject
     
+    private var cancellables: Set<AnyCancellable> = Set()
+    
+    @Published private(set) var banner: OptionalImageData?
     @Published private(set) var title: String = ""
     @Published private(set) var titleLayoutDirection: LayoutDirection = .rightToLeft
     @Published private(set) var appLanguageAvailability: String = ""
@@ -25,10 +25,9 @@ import Combine
     @Published private(set) var attachmentsDownloadProgressValue: Double = 0
     @Published private(set) var translationDownloadProgressValue: Double = 0
     
-    init(lessonListItem: LessonListItemDomainModelInterface, attachmentsRepository: AttachmentsRepository) {
+    init(lessonListItem: LessonListItemDomainModelInterface, getToolBannerUseCase: GetToolBannerUseCase) {
         
         self.lessonListItem = lessonListItem
-        self.attachmentsRepository = attachmentsRepository
         self.title = lessonListItem.name
         self.titleLayoutDirection = lessonListItem.nameLanguageDirection == .leftToRight ? .leftToRight : .rightToLeft
         self.appLanguageAvailability = lessonListItem.availabilityInAppLanguage.availabilityString
@@ -49,9 +48,16 @@ import Combine
             completionString = completeString
         }
         
-        attachmentBanner = AttachmentBannerObservableObject(
-            attachmentId: lessonListItem.bannerImageId,
-            attachmentsRepository: attachmentsRepository
-        )
+        let attachmentId: String = lessonListItem.bannerImageId
+        
+        getToolBannerUseCase
+            .execute(attachmentId: attachmentId)
+            .sink { _ in
+                
+            } receiveValue: { [weak self] (image: Image?) in
+                
+                self?.banner = OptionalImageData(image: image, imageIdForAnimationChange: attachmentId)
+            }
+            .store(in: &cancellables)
     }
 }

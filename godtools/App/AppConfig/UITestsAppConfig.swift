@@ -72,6 +72,12 @@ class UITestsAppConfig: AppConfigInterface {
     @available(iOS 17.4, *)
     func getSwiftDatabase() throws -> SwiftDatabase? {
        
+        return nil
+        
+        // TODO: Return database once SwiftDatabase can be enabled. ~Levi
+        
+        /*
+        
         let database = SwiftDatabase(
             container: try SwiftDataContainer.createInMemoryContainer(
                 name: "godtools_swiftdata_ui_tests",
@@ -79,7 +85,7 @@ class UITestsAppConfig: AppConfigInterface {
             )
         )
         
-        return database
+        return database*/
     }
     
     func getTractRemoteShareConnectionUrl() -> String {

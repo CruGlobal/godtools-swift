@@ -52,7 +52,7 @@ import Foundation
             viewLessonsUseCase: appDiContainer.feature.lessons.domainLayer.getViewLessonsUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
-            attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository()
+            getToolBannerUseCase: appDiContainer.domainLayer.getToolBannerUseCase()
         )
     }
     
@@ -64,7 +64,7 @@ import Foundation
             viewFavoritesUseCase: appDiContainer.feature.favorites.domainLayer.getViewFavoritesUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToolIsFavoritedUseCase(),
-            attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),
+            getToolBannerUseCase: appDiContainer.domainLayer.getToolBannerUseCase(),
             disableOptInOnboardingBannerUseCase: appDiContainer.domainLayer.getDisableOptInOnboardingBannerUseCase(),
             getFeaturedLessonsUseCase: appDiContainer.feature.featuredLessons.domainLayer.getFeaturedLessonsUseCase(),
             getOptInOnboardingBannerEnabledUseCase: appDiContainer.domainLayer.getOptInOnboardingBannerEnabledUseCase(),
@@ -87,7 +87,7 @@ import Foundation
             toggleToolFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToggleFavoritedToolUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
-            attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository()
+            getToolBannerUseCase: appDiContainer.domainLayer.getToolBannerUseCase()
         )
     }
 }

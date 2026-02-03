@@ -16,7 +16,7 @@ import SwiftUI
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     private let reorderFavoritedToolUseCase: ReorderFavoritedToolUseCase
-    private let attachmentsRepository: AttachmentsRepository
+    private let getToolBannerUseCase: GetToolBannerUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let didConfirmToolRemovalSubject: PassthroughSubject<Void, Never> = PassthroughSubject()
@@ -31,14 +31,14 @@ import SwiftUI
     @Published var sectionTitle: String = ""
     @Published var favoritedTools: [YourFavoritedToolDomainModel] = Array()
         
-    init(flowDelegate: FlowDelegate?, viewAllYourFavoritedToolsUseCase: ViewAllYourFavoritedToolsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, reorderFavoritedToolUseCase: ReorderFavoritedToolUseCase, attachmentsRepository: AttachmentsRepository, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate?, viewAllYourFavoritedToolsUseCase: ViewAllYourFavoritedToolsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, reorderFavoritedToolUseCase: ReorderFavoritedToolUseCase, getToolBannerUseCase: GetToolBannerUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.viewAllYourFavoritedToolsUseCase = viewAllYourFavoritedToolsUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.reorderFavoritedToolUseCase = reorderFavoritedToolUseCase
-        self.attachmentsRepository = attachmentsRepository
+        self.getToolBannerUseCase = getToolBannerUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         
@@ -56,12 +56,14 @@ import SwiftUI
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (domainModel: ViewAllYourFavoritedToolsDomainModel) in
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (domainModel: ViewAllYourFavoritedToolsDomainModel) in
                 
                 self?.sectionTitle = domainModel.interfaceStrings.sectionTitle
 
                 self?.favoritedTools = domainModel.yourFavoritedTools
-            }
+            })
             .store(in: &cancellables)
                 
         didConfirmToolRemovalSubject
@@ -165,7 +167,7 @@ extension AllYourFavoriteToolsViewModel {
             tool: tool,
             accessibility: .favoriteTool,
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
-            attachmentsRepository: attachmentsRepository
+            getToolBannerUseCase: getToolBannerUseCase
         )
     }
     

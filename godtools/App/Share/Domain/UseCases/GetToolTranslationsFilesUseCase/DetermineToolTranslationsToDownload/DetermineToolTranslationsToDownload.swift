@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface {
     
@@ -24,13 +25,14 @@ class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadIn
     }
     
     func getResource() -> ResourceDataModel? {
-        return resourcesRepository.persistence.getObject(id: resourceId)
+        return resourcesRepository.persistence.getDataModelNonThrowing(id: resourceId)
     }
     
-    func determineToolTranslationsToDownload() -> Result<DetermineToolTranslationsToDownloadResult, DetermineToolTranslationsToDownloadError> {
+    func determineToolTranslationsToDownloadPublisher() -> AnyPublisher<DetermineToolTranslationsToDownloadResult, DetermineToolTranslationsToDownloadError> {
         
         guard let resource = getResource() else {
-            return .failure(.failedToFetchResourceFromCache(resourceNeeded: .id(value: resourceId)))
+            return Fail(error: .failedToFetchResourceFromCache(resourceNeeded: .id(value: resourceId)))
+                .eraseToAnyPublisher()
         }
         
         let supportedLanguageIds: [String] = languageIds.filter({resource.supportsLanguage(languageId: $0)})
@@ -40,7 +42,8 @@ class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadIn
         for languageId in supportedLanguageIds {
             
             guard let translation = translationsRepository.cache.getLatestTranslation(resourceId: resourceId, languageId: languageId) else {
-                return .failure(.failedToFetchResourceFromCache(resourceNeeded: .id(value: resourceId)))
+                return Fail(error: .failedToFetchResourceFromCache(resourceNeeded: .id(value: resourceId)))
+                    .eraseToAnyPublisher()
             }
             
             translations.append(translation)
@@ -53,6 +56,8 @@ class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadIn
     
         let result = DetermineToolTranslationsToDownloadResult(translations: translations)
         
-        return .success(result)
+        return Just(result)
+            .setFailureType(to: DetermineToolTranslationsToDownloadError.self)
+            .eraseToAnyPublisher()
     }
 }

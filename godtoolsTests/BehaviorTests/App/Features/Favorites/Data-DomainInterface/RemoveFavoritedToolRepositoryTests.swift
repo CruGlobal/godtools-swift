@@ -10,7 +10,10 @@ import Testing
 import Foundation
 @testable import godtools
 import Combine
+import RepositorySync
+import RealmSwift
 
+@Suite(.serialized)
 struct RemoveFavoritedToolRepositoryTests {
     
     struct TestArgument {
@@ -32,26 +35,48 @@ struct RemoveFavoritedToolRepositoryTests {
             TestArgument(resourcesInRealmIdsAtPositions: ["A": 0, "B": 1, "C": 2, "D": 3, "E": 4], resourceIdToDelete: "F", expectedUpdatedIdsAtPositions: ["A": 0, "B": 1, "C": 2, "D": 3, "E": 4])
         ]
     )
-    @MainActor func testRemoveFavoritedTool(argument: TestArgument) async {
+    func testRemoveFavoritedTool(argument: TestArgument) async throws {
         
-        var cancellables: Set<AnyCancellable> = Set()
-                    
-        let realmDatabase = getConfiguredRealmDatabase(with: argument.resourcesInRealmIdsAtPositions)
+        let realmObjects: [IdentifiableRealmObject] = getRealmObjects(with: argument.resourcesInRealmIdsAtPositions)
+        
+        let testsDiContainer = try getTestsDiContainer(addRealmObjects: realmObjects)
+        
+        let realmDatabase: LegacyRealmDatabase = testsDiContainer.dataLayer.getSharedLegacyRealmDatabase()
+        
         let removeFavoritedToolRepository = RemoveFavoritedToolRepository(favoritedResourcesRepository: FavoritedResourcesRepository(cache: RealmFavoritedResourcesCache(realmDatabase: realmDatabase)))
         
+        var cancellables: Set<AnyCancellable> = Set()
+        
         var remainingResources: [FavoritedResourceDataModel] = Array()
-                    
+                
         await confirmation(expectedCount: 1) { confirmation in
-            removeFavoritedToolRepository.removeToolPublisher(toolId: argument.resourceIdToDelete)
-                .sink(receiveValue: { _ in
-                    
-                    remainingResources = realmDatabase.openRealm().objects(RealmFavoritedResource.self).map {
-                        FavoritedResourceDataModel(id: $0.resourceId, createdAt: $0.createdAt, position: $0.position)
-                    }
-                    
-                    confirmation()
-                })
-                .store(in: &cancellables)
+            
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
+                }
+                
+                removeFavoritedToolRepository
+                    .removeToolPublisher(toolId: argument.resourceIdToDelete)
+                    .sink(receiveValue: { _ in
+                        
+                        let realm: Realm = realmDatabase.openRealm()
+                        
+                        remainingResources = realm.objects(RealmFavoritedResource.self).map {
+                            FavoritedResourceDataModel(id: $0.resourceId, createdAt: $0.createdAt, position: $0.position)
+                        }
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                                
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    })
+                    .store(in: &cancellables)
+            }
         }
         
         for (expectedId, expectedPosition) in argument.expectedUpdatedIdsAtPositions {
@@ -63,8 +88,19 @@ struct RemoveFavoritedToolRepositoryTests {
             )
         }
     }
+}
+
+extension RemoveFavoritedToolRepositoryTests {
     
-    private func getConfiguredRealmDatabase(with resources: [String: Int]) -> LegacyRealmDatabase {
+    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
+                
+        return try TestsDiContainer(
+            realmFileName: String(describing: RemoveFavoritedToolRepositoryTests.self),
+            addRealmObjects: addRealmObjects
+        )
+    }
+    
+    private func getRealmObjects(with resources: [String: Int]) -> [IdentifiableRealmObject] {
         
         var resourceObjects = [RealmFavoritedResource]()
         
@@ -73,7 +109,6 @@ struct RemoveFavoritedToolRepositoryTests {
             resourceObjects.append(resource)
         }
         
-        return TestsInMemoryRealmDatabase(addObjectsToDatabase: resourceObjects)
+        return resourceObjects
     }
 }
-

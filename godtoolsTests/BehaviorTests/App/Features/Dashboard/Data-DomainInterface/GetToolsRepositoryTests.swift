@@ -11,7 +11,9 @@ import Testing
 import Foundation
 import Combine
 import RealmSwift
+import RepositorySync
 
+@Suite(.serialized)
 struct GetToolsRepositoryTests {
     
     private let categoryConversationStarter: String = "conversation_starter"
@@ -35,9 +37,9 @@ struct GetToolsRepositoryTests {
         Then: I expect to see all tools.
         """
     )
-    @MainActor func anyCategoryAndAnyLanguageShouldShowAllTools() async {
+    @MainActor func anyCategoryAndAnyLanguageShouldShowAllTools() async throws {
         
-        let toolsRepository = getToolsRepository()
+        let toolsRepository = try getToolsRepository()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -45,20 +47,35 @@ struct GetToolsRepositoryTests {
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            toolsRepository
-                .getToolsPublisher(
-                    translatedInAppLanguage: "",
-                    languageIdForAvailabilityText: nil,
-                    filterToolsByCategory: nil,
-                    filterToolsByLanguage: nil
-                )
-                .sink { (tools: [ToolListItemDomainModel]) in
-                    
-                    confirmation()
-                    
-                    toolsListRef = tools
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
                 }
-                .store(in: &cancellables)
+                
+                toolsRepository
+                    .getToolsPublisher(
+                        translatedInAppLanguage: "",
+                        languageIdForAvailabilityText: nil,
+                        filterToolsByCategory: nil,
+                        filterToolsByLanguage: nil
+                    )
+                    .sink(receiveCompletion: { _ in
+                        
+                    }, receiveValue: { (tools: [ToolListItemDomainModel]) in
+                        
+                        toolsListRef = tools
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                                
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    })
+                    .store(in: &cancellables)
+            }
         }
         
         let toolsList: [String] = toolsListRef.map({$0.id}).sorted()
@@ -75,9 +92,9 @@ struct GetToolsRepositoryTests {
         Then: I expect to see all growth tools.
         """
     )
-    @MainActor func categoryGrowthCategoryAndAnyLanguageShouldShowCategoryGrowthTools() async {
+    @MainActor func categoryGrowthCategoryAndAnyLanguageShouldShowCategoryGrowthTools() async throws {
         
-        let toolsRepository = getToolsRepository()
+        let toolsRepository = try getToolsRepository()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -91,25 +108,41 @@ struct GetToolsRepositoryTests {
         
         let anyLanguageFilter = ToolFilterAnyLanguageDomainModel(
             text: "",
-            toolsAvailableText: ""
+            toolsAvailableText: "",
+            numberOfToolsAvailable: 0
         )
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            toolsRepository
-                .getToolsPublisher(
-                    translatedInAppLanguage: "",
-                    languageIdForAvailabilityText: nil,
-                    filterToolsByCategory: growthCategoryFilter,
-                    filterToolsByLanguage: anyLanguageFilter
-                )
-                .sink { (tools: [ToolListItemDomainModel]) in
-                    
-                    confirmation()
-                    
-                    toolsListRef = tools
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
                 }
-                .store(in: &cancellables)
+                
+                toolsRepository
+                    .getToolsPublisher(
+                        translatedInAppLanguage: "",
+                        languageIdForAvailabilityText: nil,
+                        filterToolsByCategory: growthCategoryFilter,
+                        filterToolsByLanguage: anyLanguageFilter
+                    )
+                    .sink(receiveCompletion: { _ in
+                        
+                    }, receiveValue: { (tools: [ToolListItemDomainModel]) in
+                        
+                        toolsListRef = tools
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                                
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    })
+                    .store(in: &cancellables)
+            }
         }
         
         let toolsList: [String] = toolsListRef.map({$0.id}).sorted()
@@ -126,9 +159,9 @@ struct GetToolsRepositoryTests {
         Then: I expect to see all tools that support the russian language.
         """
     )
-    @MainActor func categoryIsAnyAndLanguageIsRussianShouldShowToolsThatSupportRussian() async {
+    @MainActor func categoryIsAnyAndLanguageIsRussianShouldShowToolsThatSupportRussian() async throws {
         
-        let toolsRepository = getToolsRepository()
+        let toolsRepository = try getToolsRepository()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -144,25 +177,41 @@ struct GetToolsRepositoryTests {
             translatedName: "",
             toolsAvailableText: "",
             languageId: russianLanguageId,
-            languageLocaleId: ""
+            languageLocaleId: "",
+            numberOfToolsAvailable: 0
         )
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            toolsRepository
-                .getToolsPublisher(
-                    translatedInAppLanguage: "",
-                    languageIdForAvailabilityText: nil,
-                    filterToolsByCategory: anyCategoryFilter,
-                    filterToolsByLanguage: russianLanguageFilter
-                )
-                .sink { (tools: [ToolListItemDomainModel]) in
-                    
-                    confirmation()
-                    
-                    toolsListRef = tools
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
                 }
-                .store(in: &cancellables)
+                
+                toolsRepository
+                    .getToolsPublisher(
+                        translatedInAppLanguage: "",
+                        languageIdForAvailabilityText: nil,
+                        filterToolsByCategory: anyCategoryFilter,
+                        filterToolsByLanguage: russianLanguageFilter
+                    )
+                    .sink(receiveCompletion: { _ in
+                        
+                    }, receiveValue: { (tools: [ToolListItemDomainModel]) in
+                        
+                        toolsListRef = tools
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                                
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    })
+                    .store(in: &cancellables)
+            }
         }
         
         let toolsList: [String] = toolsListRef.map({$0.id}).sorted()
@@ -179,9 +228,9 @@ struct GetToolsRepositoryTests {
         Then: I expect to see all tools that support the spanish language.
         """
     )
-    @MainActor func categoryIsAnyAndLanguageIsSpanishShouldShowToolsThatSupportSpanish() async {
+    @MainActor func categoryIsAnyAndLanguageIsSpanishShouldShowToolsThatSupportSpanish() async throws {
         
-        let toolsRepository = getToolsRepository()
+        let toolsRepository = try getToolsRepository()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -197,25 +246,41 @@ struct GetToolsRepositoryTests {
             translatedName: "",
             toolsAvailableText: "",
             languageId: spanishLanguageId,
-            languageLocaleId: ""
+            languageLocaleId: "",
+            numberOfToolsAvailable: 0
         )
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            toolsRepository
-                .getToolsPublisher(
-                    translatedInAppLanguage: "",
-                    languageIdForAvailabilityText: nil,
-                    filterToolsByCategory: anyCategoryFilter,
-                    filterToolsByLanguage: spanishLanguageFilter
-                )
-                .sink { (tools: [ToolListItemDomainModel]) in
-                    
-                    confirmation()
-                    
-                    toolsListRef = tools
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
                 }
-                .store(in: &cancellables)
+                
+                toolsRepository
+                    .getToolsPublisher(
+                        translatedInAppLanguage: "",
+                        languageIdForAvailabilityText: nil,
+                        filterToolsByCategory: anyCategoryFilter,
+                        filterToolsByLanguage: spanishLanguageFilter
+                    )
+                    .sink(receiveCompletion: { _ in
+                        
+                    }, receiveValue: { (tools: [ToolListItemDomainModel]) in
+                        
+                        toolsListRef = tools
+                        
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                                                
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    })
+                    .store(in: &cancellables)
+            }
         }
         
         let toolsList: [String] = toolsListRef.map({$0.id}).sorted()
@@ -346,6 +411,14 @@ struct GetToolsRepositoryTests {
 
 extension GetToolsRepositoryTests {
     
+    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
+                
+        return try TestsDiContainer(
+            realmFileName: String(describing: GetToolsRepositoryTests.self),
+            addRealmObjects: allTools + addRealmObjects
+        )
+    }
+    
     private static func createLanguage(id: String, code: LanguageCodeDomainModel) -> RealmLanguage {
         
         let language = RealmLanguage()
@@ -389,9 +462,9 @@ extension GetToolsRepositoryTests {
         }
     }
     
-    @MainActor private func getToolsRepository() -> GetToolsRepository {
+    private func getToolsRepository() throws -> GetToolsRepository {
         
-        let testsDiContainer: TestsDiContainer = getTestsDiContainer()
+        let testsDiContainer: TestsDiContainer = try getTestsDiContainer()
         
         let getToolsRepository = GetToolsRepository(
             resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
@@ -404,12 +477,5 @@ extension GetToolsRepositoryTests {
         )
         
         return getToolsRepository
-    }
-    
-    @MainActor private func getTestsDiContainer() -> TestsDiContainer {
-        
-        return TestsDiContainer(
-            realmDatabase: TestsInMemoryRealmDatabase(addObjectsToDatabase: allTools)
-        )
     }
 }

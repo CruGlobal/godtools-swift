@@ -19,7 +19,7 @@ class RealmAppLanguagesCache {
         self.realmDatabase = realmDatabase
     }
     
-    func observeChangesPublisher() -> AnyPublisher<Void, Never> {
+    @MainActor func observeChangesPublisher() -> AnyPublisher<Void, Never> {
         return realmDatabase.openRealm()
             .objects(RealmAppLanguage.self)
             .objectWillChange

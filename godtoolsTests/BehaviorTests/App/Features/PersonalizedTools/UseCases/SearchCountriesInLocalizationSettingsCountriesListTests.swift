@@ -95,44 +95,54 @@ extension SearchCountriesInLocalizationSettingsCountriesListTests {
         
         let countriesList: [LocalizationSettingsCountryDomainModel] = [
               LocalizationSettingsCountryDomainModel(
-                  countryNameTranslatedInOwnLanguage: "United States",
-                  countryNameTranslatedInCurrentAppLanguage: "United States"
+                isoRegionCode: "",
+                countryNameTranslatedInOwnLanguage: "United States",
+                countryNameTranslatedInCurrentAppLanguage: "United States"
               ),
               LocalizationSettingsCountryDomainModel(
-                  countryNameTranslatedInOwnLanguage: "España",
-                  countryNameTranslatedInCurrentAppLanguage: "Spain"
+                isoRegionCode: "",
+                countryNameTranslatedInOwnLanguage: "España",
+                countryNameTranslatedInCurrentAppLanguage: "Spain"
               ),
               LocalizationSettingsCountryDomainModel(
-                  countryNameTranslatedInOwnLanguage: "France",
-                  countryNameTranslatedInCurrentAppLanguage: "France"
+                isoRegionCode: "",
+                countryNameTranslatedInOwnLanguage: "France",
+                countryNameTranslatedInCurrentAppLanguage: "France"
               ),
               LocalizationSettingsCountryDomainModel(
-                  countryNameTranslatedInOwnLanguage: "Deutschland",
-                  countryNameTranslatedInCurrentAppLanguage: "Germany"
+                isoRegionCode: "",
+                countryNameTranslatedInOwnLanguage: "Deutschland",
+                countryNameTranslatedInCurrentAppLanguage: "Germany"
               ),
               LocalizationSettingsCountryDomainModel(
-                  countryNameTranslatedInOwnLanguage: "日本",
-                  countryNameTranslatedInCurrentAppLanguage: "Japan"
+                isoRegionCode: "",
+                countryNameTranslatedInOwnLanguage: "日本",
+                countryNameTranslatedInCurrentAppLanguage: "Japan"
               ),
               LocalizationSettingsCountryDomainModel(
-                  countryNameTranslatedInOwnLanguage: "Brasil",
-                  countryNameTranslatedInCurrentAppLanguage: "Brazil"
+                isoRegionCode: "",
+                countryNameTranslatedInOwnLanguage: "Brasil",
+                countryNameTranslatedInCurrentAppLanguage: "Brazil"
               ),
               LocalizationSettingsCountryDomainModel(
-                  countryNameTranslatedInOwnLanguage: "대한민국",
-                  countryNameTranslatedInCurrentAppLanguage: "South Korea"
+                isoRegionCode: "",
+                countryNameTranslatedInOwnLanguage: "대한민국",
+                countryNameTranslatedInCurrentAppLanguage: "South Korea"
               ),
               LocalizationSettingsCountryDomainModel(
-                  countryNameTranslatedInOwnLanguage: "Italia",
-                  countryNameTranslatedInCurrentAppLanguage: "Italy"
+                isoRegionCode: "",
+                countryNameTranslatedInOwnLanguage: "Italia",
+                countryNameTranslatedInCurrentAppLanguage: "Italy"
               ),
               LocalizationSettingsCountryDomainModel(
-                  countryNameTranslatedInOwnLanguage: "中国",
-                  countryNameTranslatedInCurrentAppLanguage: "China"
+                isoRegionCode: "",
+                countryNameTranslatedInOwnLanguage: "中国",
+                countryNameTranslatedInCurrentAppLanguage: "China"
               ),
               LocalizationSettingsCountryDomainModel(
-                  countryNameTranslatedInOwnLanguage: "México",
-                  countryNameTranslatedInCurrentAppLanguage: "Mexico"
+                isoRegionCode: "",
+                countryNameTranslatedInOwnLanguage: "México",
+                countryNameTranslatedInCurrentAppLanguage: "Mexico"
               )
           ]
 

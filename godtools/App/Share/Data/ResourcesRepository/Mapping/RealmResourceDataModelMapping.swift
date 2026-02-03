@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import RepositorySync
 
-class RealmResourceDataModelMapping: RepositorySyncMapping {
+final class RealmResourceDataModelMapping: Mapping {
     
     func toDataModel(externalObject: ResourceCodable) -> ResourceDataModel? {
         return ResourceDataModel(interface: externalObject)

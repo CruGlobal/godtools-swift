@@ -16,31 +16,40 @@ class GetPersonalizedLessonsUseCase {
     private let languagesRepository: LanguagesRepository
     private let getTranslatedToolName: GetTranslatedToolName
     private let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability
+    private let lessonProgressRepository: UserLessonProgressRepository
     private let getLessonListItemProgressRepository: GetLessonListItemProgressRepository
 
-    init(resourcesRepository: ResourcesRepository, personalizedLessonsRepository: PersonalizedLessonsRepository, languagesRepository: LanguagesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability, getLessonListItemProgressRepository: GetLessonListItemProgressRepository) {
+    init(resourcesRepository: ResourcesRepository, personalizedLessonsRepository: PersonalizedLessonsRepository, languagesRepository: LanguagesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability, lessonProgressRepository: UserLessonProgressRepository, getLessonListItemProgressRepository: GetLessonListItemProgressRepository) {
 
         self.resourcesRepository = resourcesRepository
         self.personalizedLessonsRepository = personalizedLessonsRepository
         self.languagesRepository = languagesRepository
         self.getTranslatedToolName = getTranslatedToolName
         self.getTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability
+        self.lessonProgressRepository = lessonProgressRepository
         self.getLessonListItemProgressRepository = getLessonListItemProgressRepository
     }
 
-    @MainActor func execute(appLanguage: AppLanguageDomainModel, country: String?, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<[LessonListItemDomainModel], Never> {
+    @MainActor func execute(appLanguage: AppLanguageDomainModel, country: String?, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<[LessonListItemDomainModel], Error> {
 
         // TODO: - if there's no country, get all the tools
         guard let country = country else {
-            return Just([]).eraseToAnyPublisher()
+            return Just([])
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
         }
 
         let language = getLanguageCode(filterLessonsByLanguage: filterLessonsByLanguage, appLanguage: appLanguage)
         
         return Publishers.CombineLatest3(
-            personalizedLessonsRepository.getPersonalizedLessonsChanged(reloadFromRemote: true, requestPriority: .high, country: country, language: language),
-            resourcesRepository.persistence.observeCollectionChangesPublisher(),
-            getLessonListItemProgressRepository.getLessonListItemProgressChanged()
+            personalizedLessonsRepository
+                .getPersonalizedLessonsChanged(reloadFromRemote: true, requestPriority: .high, country: country, language: language)
+                .setFailureType(to: Error.self),
+            resourcesRepository.persistence
+                .observeCollectionChangesPublisher(),
+            lessonProgressRepository
+                .getLessonProgressChangedPublisher()
+                .setFailureType(to: Error.self)
         )
         .map({ (_, _, _) in
 
@@ -59,7 +68,7 @@ class GetPersonalizedLessonsUseCase {
         let languageCode: BCP47LanguageIdentifier
         
         if let filterLanguageId = filterLessonsByLanguage?.languageId,
-           let filterLanguage = languagesRepository.persistence.getObject(id: filterLanguageId) {
+           let filterLanguage = languagesRepository.persistence.getDataModelNonThrowing(id: filterLanguageId) {
             
             languageCode = filterLanguage.code
             
@@ -74,7 +83,7 @@ class GetPersonalizedLessonsUseCase {
         guard let personalizedLessonsDataModel = personalizedLessonsDataModel else { return [] }
 
         return personalizedLessonsDataModel.resourceIds.compactMap { resourceId in
-            resourcesRepository.persistence.getObject(id: resourceId)
+            resourcesRepository.persistence.getDataModelNonThrowing(id: resourceId)
         }
     }
 
@@ -84,7 +93,7 @@ class GetPersonalizedLessonsUseCase {
 
             let filterLanguageModel: LanguageDataModel?
             if let filterLanguageId = filterLessonsByLanguage?.languageId {
-                filterLanguageModel = languagesRepository.persistence.getObject(id: filterLanguageId)
+                filterLanguageModel = languagesRepository.persistence.getDataModelNonThrowing(id: filterLanguageId)
             } else {
                 filterLanguageModel = nil
             }

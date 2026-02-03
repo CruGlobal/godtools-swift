@@ -26,12 +26,12 @@ class GetYourFavoritedToolsRepository: GetYourFavoritedToolsRepositoryInterface 
         self.getToolListItemInterfaceStringsRepository = getToolListItemInterfaceStringsRepository
     }
     
-    func getToolsPublisher(translateInLanguage: AppLanguageDomainModel, maxCount: Int?) -> AnyPublisher<[YourFavoritedToolDomainModel], Never> {
+    @MainActor func getToolsPublisher(translateInLanguage: AppLanguageDomainModel, maxCount: Int?) -> AnyPublisher<[YourFavoritedToolDomainModel], Error> {
         
         return Publishers.CombineLatest3(
             resourcesRepository.persistence.observeCollectionChangesPublisher(),
-            getToolListItemInterfaceStringsRepository.getStringsPublisher(translateInLanguage: translateInLanguage),
-            favoritedResourcesRepository.getFavoritedResourcesSortedByPositionPublisher()
+            getToolListItemInterfaceStringsRepository.getStringsPublisher(translateInLanguage: translateInLanguage).setFailureType(to: Error.self),
+            favoritedResourcesRepository.getFavoritedResourcesSortedByPositionPublisher().setFailureType(to: Error.self)
         )
         .flatMap({ (resourcesChanged: Void, interfaceStrings: ToolListItemInterfaceStringsDomainModel, favoritedResourceModels: [FavoritedResourceDataModel]) -> AnyPublisher<[YourFavoritedToolDomainModel], Never> in
           
@@ -40,7 +40,7 @@ class GetYourFavoritedToolsRepository: GetYourFavoritedToolsRepositoryInterface 
             let favoritedResources: [ResourceDataModel] = favoritedResourceModels
                 .prefix(maxCount ?? numberOfFavoritedTools)
                 .compactMap({
-                    self.resourcesRepository.persistence.getObject(id: $0.id)
+                    self.resourcesRepository.persistence.getDataModelNonThrowing(id: $0.id)
                 })
             
             let yourFavoritedTools: [YourFavoritedToolDomainModel] = favoritedResources

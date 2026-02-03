@@ -94,7 +94,7 @@ struct ToolCardView: View {
             VStack(alignment: .leading, spacing: 0) {
                 
                 OptionalImage(
-                    imageData: viewModel.attachmentBanner.bannerImageData,
+                    imageData: viewModel.banner,
                     imageSize: .aspectRatio(width: cardWidth, aspectRatio: bannerImageAspectRatio),
                     contentMode: .fill,
                     placeholderColor: ColorPalette.gtLightestGrey.color
@@ -208,7 +208,7 @@ struct ToolCardView_Previews: PreviewProvider {
             tool: tool,
             accessibility: .tool,
             getToolIsFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToolIsFavoritedUseCase(),
-            attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository()
+            getToolBannerUseCase: appDiContainer.domainLayer.getToolBannerUseCase()
         )
     }
     

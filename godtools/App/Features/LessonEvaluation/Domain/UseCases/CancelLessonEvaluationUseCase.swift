@@ -22,7 +22,7 @@ class CancelLessonEvaluationUseCase {
     
     func execute(lessonId: String) -> AnyPublisher<Void, Never> {
         
-        guard let lessonResource = resourcesRepository.persistence.getObject(id: lessonId) else {
+        guard let lessonResource = resourcesRepository.persistence.getDataModelNonThrowing(id: lessonId) else {
             return Just(Void())
                 .eraseToAnyPublisher()
         }

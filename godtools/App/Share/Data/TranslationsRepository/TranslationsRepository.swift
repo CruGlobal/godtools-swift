@@ -10,37 +10,28 @@ import Foundation
 import Combine
 import GodToolsShared
 import RequestOperation
+import RepositorySync
 
 class TranslationsRepository: RepositorySync<TranslationDataModel, MobileContentTranslationsApi> {
     
     private let infoPlist: InfoPlist
-    private let api: MobileContentTranslationsApi
-    private let realmPersistence: RealmRepositorySyncPersistence<TranslationDataModel, TranslationCodable, RealmTranslation>
     private let resourcesFileCache: ResourcesSHA256FileCache
     private let trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
     private let remoteConfigRepository: RemoteConfigRepository
     
     let cache: TranslationsCache
     
-    init(infoPlist: InfoPlist, api: MobileContentTranslationsApi, realmDatabase: LegacyRealmDatabase, cache: TranslationsCache, resourcesFileCache: ResourcesSHA256FileCache, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository, remoteConfigRepository: RemoteConfigRepository) {
+    init(externalDataFetch: MobileContentTranslationsApi, persistence: any Persistence<TranslationDataModel, TranslationCodable>, cache: TranslationsCache, infoPlist: InfoPlist, resourcesFileCache: ResourcesSHA256FileCache, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository, remoteConfigRepository: RemoteConfigRepository) {
         
-        self.infoPlist = infoPlist
-        self.api = api
         self.cache = cache
+        self.infoPlist = infoPlist
         self.resourcesFileCache = resourcesFileCache
         self.trackDownloadedTranslationsRepository = trackDownloadedTranslationsRepository
         self.remoteConfigRepository = remoteConfigRepository
         
-        let realmPersistence = RealmRepositorySyncPersistence<TranslationDataModel, TranslationCodable, RealmTranslation>(
-            realmDatabase: realmDatabase,
-            dataModelMapping: RealmTranslationDataModelMapping()
-        )
-        
-        self.realmPersistence = realmPersistence
-        
         super.init(
-            externalDataFetch: api,
-            persistence: realmPersistence
+            externalDataFetch: externalDataFetch,
+            persistence: persistence
         )
     }
 }
@@ -246,7 +237,7 @@ extension TranslationsRepository {
                 
                 if shouldFallbackToLatestDownloadedTranslation, let resourceId = translation.resourceDataModel?.id, let languageId = translation.languageDataModel?.id, let latestTrackedDownloadedTranslation = self.trackDownloadedTranslationsRepository.cache.getLatestDownloadedTranslation(resourceId: resourceId, languageId: languageId) {
                     
-                    latestDownloadedTranslation = self.persistence.getObject(id: latestTrackedDownloadedTranslation.translationId)
+                    latestDownloadedTranslation = self.persistence.getDataModelNonThrowing(id: latestTrackedDownloadedTranslation.translationId)
                 }
                 else {
                     latestDownloadedTranslation = nil
@@ -350,7 +341,11 @@ extension TranslationsRepository {
                     .collect()
                     .flatMap({ (files: [FileCacheLocation]) -> AnyPublisher<TranslationFilesDataModel, Error> in
                         
-                        return self.didDownloadTranslationAndRelatedFiles(translation: translation, files: files)
+                        return self
+                            .didDownloadTranslationAndRelatedFilesPublisher(
+                                translation: translation,
+                                files: files
+                            )
                             .eraseToAnyPublisher()
                     })
                     .eraseToAnyPublisher()
@@ -388,26 +383,30 @@ extension TranslationsRepository {
                 
         let fileCacheLocation = FileCacheLocation(relativeUrlString: fileName)
         
-        switch resourcesFileCache.getFileExists(location: fileCacheLocation) {
+        do {
             
-        case .success(let fileExists):
+            let fileExists: Bool = try resourcesFileCache.getFileExists(location: fileCacheLocation)
+            
             if fileExists {
                 return .success(fileCacheLocation)
             }
             else {
                 return .failure(NSError.errorWithDescription(description: "Failed to get translation file.  File does not exist in the cache."))
             }
-        case .failure(let error):
+        }
+        catch let error {
             return .failure(error)
         }
     }
     
     private func getTranslationFileFromRemote(translation: TranslationDataModel, fileName: String, requestPriority: RequestPriority) -> AnyPublisher<FileCacheLocation, Error> {
         
-        return api.getTranslationFile(fileName: fileName, requestPriority: requestPriority)
+        return externalDataFetch.getTranslationFile(fileName: fileName, requestPriority: requestPriority)
             .flatMap({ (response: RequestDataResponse) -> AnyPublisher<FileCacheLocation, Error> in
                 
-                return self.resourcesFileCache.storeTranslationFile(translationId: translation.id, fileName: fileName, fileData: response.data)
+                return self
+                    .resourcesFileCache
+                    .storeTranslationFilePublisher(translationId: translation.id, fileName: fileName, fileData: response.data)
                     .eraseToAnyPublisher()
             })
             .flatMap({ fileLocation -> AnyPublisher<FileCacheLocation, Error> in
@@ -418,16 +417,24 @@ extension TranslationsRepository {
             .eraseToAnyPublisher()
     }
     
-    private func downloadAndCacheTranslationZipFiles(translation: TranslationDataModel, requestPriority: RequestPriority) -> AnyPublisher<TranslationFilesDataModel, Error> {
+    func downloadAndCacheTranslationZipFiles(translation: TranslationDataModel, requestPriority: RequestPriority) -> AnyPublisher<TranslationFilesDataModel, Error> {
         
-        return api.getTranslationZipFile(translationId: translation.id, requestPriority: requestPriority)
+        return externalDataFetch.getTranslationZipFile(translationId: translation.id, requestPriority: requestPriority)
             .flatMap({ (response: RequestDataResponse) -> AnyPublisher<TranslationFilesDataModel, Error> in
                 
-                return self.resourcesFileCache.storeTranslationZipFile(translationId: translation.id, zipFileData: response.data)
-                    .flatMap({ files -> AnyPublisher<TranslationFilesDataModel, Error> in
+                return self
+                    .resourcesFileCache
+                    .storeTranslationZipFilePublisher(
+                        translationId: translation.id,
+                        zipFileData: response.data
+                    )
+                    .flatMap({ (files: [FileCacheLocation]) -> AnyPublisher<TranslationFilesDataModel, Error> in
                         
-                        return self.didDownloadTranslationAndRelatedFiles(translation: translation, files: files)
-                            .eraseToAnyPublisher()
+                        return self.didDownloadTranslationAndRelatedFilesPublisher(
+                            translation: translation,
+                            files: files
+                        )
+                        .eraseToAnyPublisher()
                     })
                     .eraseToAnyPublisher()
             })
@@ -439,9 +446,11 @@ extension TranslationsRepository {
 
 extension TranslationsRepository {
     
-    private func didDownloadTranslationAndRelatedFiles(translation: TranslationDataModel, files: [FileCacheLocation]) -> AnyPublisher<TranslationFilesDataModel, Error> {
+    func didDownloadTranslationAndRelatedFilesPublisher(translation: TranslationDataModel, files: [FileCacheLocation]) -> AnyPublisher<TranslationFilesDataModel, Error> {
         
-        return trackDownloadedTranslationsRepository.cache.trackTranslationDownloaded(translation: translation)
+        return trackDownloadedTranslationsRepository
+            .cache
+            .trackTranslationDownloaded(translation: translation)
             .flatMap({ translationId -> AnyPublisher<TranslationFilesDataModel, Error> in
                 
                 return Just(TranslationFilesDataModel(files: files, translation: translation)).setFailureType(to: Error.self)
@@ -450,3 +459,4 @@ extension TranslationsRepository {
             .eraseToAnyPublisher()
     }
 }
+

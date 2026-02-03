@@ -20,13 +20,13 @@ class UserDetailsRepository {
         self.cache = cache
     }
     
-    func getAuthUserDetailsChangedPublisher() -> AnyPublisher<UserDetailsDataModel?, Never> {
+    @MainActor func getAuthUserDetailsChangedPublisher() -> AnyPublisher<UserDetailsDataModel?, Never> {
         
         return cache.getAuthUserDetailsChangedPublisher()
             .eraseToAnyPublisher()
     }
     
-    func getUserDetailsChangedPublisher(id: String) -> AnyPublisher<UserDetailsDataModel?, Never> {
+    @MainActor func getUserDetailsChangedPublisher(id: String) -> AnyPublisher<UserDetailsDataModel?, Never> {
         
         return cache.getUserDetailsChangedPublisher(id: id)
             .eraseToAnyPublisher()

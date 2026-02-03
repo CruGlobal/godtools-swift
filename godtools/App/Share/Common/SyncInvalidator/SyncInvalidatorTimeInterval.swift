@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum SyncInvalidatorTimeInterval {
+public enum SyncInvalidatorTimeInterval {
     
     case minutes(minute: TimeInterval)
     case hours(hour: TimeInterval)

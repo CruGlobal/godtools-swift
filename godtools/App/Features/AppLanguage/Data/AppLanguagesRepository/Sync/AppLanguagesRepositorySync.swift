@@ -15,15 +15,11 @@ class AppLanguagesRepositorySync: AppLanguagesRepositorySyncInterface {
     private let cache: RealmAppLanguagesCache
     private let syncInvalidator: SyncInvalidator
     
-    init(api: AppLanguagesApi, cache: RealmAppLanguagesCache, userDefaultsCache: UserDefaultsCacheInterface) {
+    init(api: AppLanguagesApi, cache: RealmAppLanguagesCache, syncInvalidator: SyncInvalidator) {
         
         self.api = api
         self.cache = cache
-        self.syncInvalidator = SyncInvalidator(
-            id: String(describing: AppLanguagesRepositorySync.self),
-            timeInterval: .minutes(minute: 15),
-            userDefaultsCache: userDefaultsCache
-        )
+        self.syncInvalidator = syncInvalidator
     }
     
     func syncPublisher() -> AnyPublisher<Void, Never> {

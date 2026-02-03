@@ -25,7 +25,17 @@ class AppLanguageFeatureDataLayerDependencies {
             realmDatabase: realmDatabase ?? coreDataLayer.getSharedLegacyRealmDatabase()
         )
         
-        let sync: AppLanguagesRepositorySyncInterface = sync ?? AppLanguagesRepositorySync(api: AppLanguagesApi(), cache: cache, userDefaultsCache: coreDataLayer.getUserDefaultsCache())
+        let syncInvalidator = SyncInvalidator(
+            id: String(describing: AppLanguagesRepositorySync.self),
+            timeInterval: .minutes(minute: 15),
+            persistence: coreDataLayer.getUserDefaultsCache()
+        )
+        
+        let sync: AppLanguagesRepositorySyncInterface = sync ?? AppLanguagesRepositorySync(
+            api: AppLanguagesApi(),
+            cache: cache,
+            syncInvalidator: syncInvalidator
+        )
         
         return AppLanguagesRepository(
             cache: cache,

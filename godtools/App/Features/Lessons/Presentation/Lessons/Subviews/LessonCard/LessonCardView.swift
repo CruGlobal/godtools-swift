@@ -37,7 +37,7 @@ struct LessonCardView: View {
             VStack(alignment: .leading, spacing: 0) {
                 
                 OptionalImage(
-                    imageData: viewModel.attachmentBanner.bannerImageData,
+                    imageData: viewModel.banner,
                     imageSize: .aspectRatio(width: cardWidth, aspectRatio: bannerImageAspectRatio),
                     contentMode: .fill,
                     placeholderColor: ColorPalette.gtLightestGrey.color
@@ -110,7 +110,7 @@ struct LessonCardView_Previews: PreviewProvider {
         
         let viewModel = LessonCardViewModel(
             lessonListItem: lessonListItem,
-            attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository()
+            getToolBannerUseCase: appDiContainer.domainLayer.getToolBannerUseCase()
         )
         
         GeometryReader { geometry in

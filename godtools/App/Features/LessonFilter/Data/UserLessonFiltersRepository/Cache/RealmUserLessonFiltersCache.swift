@@ -18,7 +18,7 @@ class RealmUserLessonFiltersCache {
         self.realmDatabase = realmDatabase
     }
     
-    func getUserLessonLanguageFilterChangedPublisher() -> AnyPublisher<Void, Never> {
+    @MainActor func getUserLessonLanguageFilterChangedPublisher() -> AnyPublisher<Void, Never> {
         
         return realmDatabase.openRealm().objects(RealmUserLessonLanguageFilter.self)
             .objectWillChange

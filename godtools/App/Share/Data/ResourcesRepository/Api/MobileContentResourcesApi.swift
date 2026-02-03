@@ -8,6 +8,7 @@
 
 import Foundation
 import RequestOperation
+import RepositorySync
 import Combine
 
 class MobileContentResourcesApi {
@@ -46,7 +47,12 @@ class MobileContentResourcesApi {
         
         let urlRequest: URLRequest = getResourcePlusLatestTranslationsAndAttachmentsRequest(urlSession: urlSession, id: id)
         
-        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
+        return requestSender
+            .sendDataTaskPublisher(
+                urlRequest: urlRequest,
+                urlSession: urlSession
+            )
+            .validate()
             .decodeRequestDataResponseForSuccessOrFailureCodable()
             .map { (response: RequestCodableResponse<ResourcesPlusLatestTranslationsAndAttachmentsCodable, NoResponseCodable>) in
                 
@@ -76,7 +82,12 @@ class MobileContentResourcesApi {
         
         let urlRequest: URLRequest = getResourcePlusLatestTranslationsAndAttachmentsRequest(urlSession: urlSession, abbreviation: abbreviation)
         
-        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
+        return requestSender
+            .sendDataTaskPublisher(
+                urlRequest: urlRequest,
+                urlSession: urlSession
+            )
+            .validate()
             .decodeRequestDataResponseForSuccessOrFailureCodable()
             .map { (response: RequestCodableResponse<ResourcesPlusLatestTranslationsAndAttachmentsCodable, NoResponseCodable>) in
                 
@@ -108,7 +119,12 @@ class MobileContentResourcesApi {
         
         let urlRequest: URLRequest = getResourcesPlusLatestTranslationsAndAttachmentsRequest(urlSession: urlSession)
         
-        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
+        return requestSender
+            .sendDataTaskPublisher(
+                urlRequest: urlRequest,
+                urlSession: urlSession
+            )
+            .validate()
             .decodeRequestDataResponseForSuccessCodable()
             .map { (response: RequestCodableResponse<ResourcesPlusLatestTranslationsAndAttachmentsCodable, NoResponseCodable>) in
                 
@@ -119,15 +135,23 @@ class MobileContentResourcesApi {
     }
 }
 
-// MARK: - RepositorySyncExternalDataFetchInterface
+// MARK: - ExternalDataFetchInterface
 
-extension MobileContentResourcesApi: RepositorySyncExternalDataFetchInterface {
+extension MobileContentResourcesApi: ExternalDataFetchInterface {
     
-    func getObjectPublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<ResourceCodable>, Never> {
+    func getObject(id: String, context: ExternalDataFetchContext) async throws -> [ResourceCodable] {
+        return Array()
+    }
+    
+    func getObjects(context: ExternalDataFetchContext) async throws -> [ResourceCodable] {
+        return Array()
+    }
+    
+    func getObjectPublisher(id: String, context: RequestOperationFetchContext) -> AnyPublisher<[ResourceCodable], Error> {
         return emptyResponsePublisher()
     }
     
-    func getObjectsPublisher(requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<ResourceCodable>, Never> {
+    func getObjectsPublisher(context: RequestOperationFetchContext) -> AnyPublisher<[ResourceCodable], Error> {
         return emptyResponsePublisher()
     }
 }

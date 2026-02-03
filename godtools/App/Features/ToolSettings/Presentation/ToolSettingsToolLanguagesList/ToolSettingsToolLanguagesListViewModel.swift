@@ -61,7 +61,9 @@ import Combine
         }
         .switchToLatest()
         .receive(on: DispatchQueue.main)
-        .sink(receiveValue: { [weak self] (domainModel: ViewToolSettingsToolLanguagesListDomainModel) in
+        .sink(receiveCompletion: { _ in
+            
+        }, receiveValue: { [weak self] (domainModel: ViewToolSettingsToolLanguagesListDomainModel) in
             
             self?.languages = domainModel.languages
             self?.deleteLanguageActionTitle = domainModel.interfaceStrings.deleteParallelLanguageActionTitle

@@ -174,7 +174,7 @@ class DashboardFlow: NSObject, Flow, ToolNavigationFlow {
             let primaryLanguage: AppLanguageDomainModel?
             let parallelLanguage: AppLanguageDomainModel?
             
-            if let toolResource = resourcesRepository.persistence.getObject(id: tool.dataModelId),
+            if let toolResource = resourcesRepository.persistence.getDataModelNonThrowing(id: tool.dataModelId),
                toolResource.resourceTypeEnum == .article {
                 
                 parallelLanguage = nil
@@ -335,7 +335,8 @@ extension DashboardFlow: UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         
         let isDashboard: Bool = viewController is AppHostingController<DashboardView>
-        let hidesNavigationBar: Bool = isDashboard
+        let isLesson: Bool = viewController is LessonView
+        let hidesNavigationBar: Bool = isDashboard || isLesson
         
         if isDashboard {
             configureNavBarForDashboard()
@@ -514,7 +515,7 @@ extension DashboardFlow {
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToolIsFavoritedUseCase(),
             reorderFavoritedToolUseCase: appDiContainer.feature.favorites.domainLayer.getReorderFavoritedToolUseCase(),
-            attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),
+            getToolBannerUseCase: appDiContainer.domainLayer.getToolBannerUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
         )
@@ -773,7 +774,7 @@ extension DashboardFlow {
             getToolDetailsMediaUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsMediaUseCase(),
             getToolDetailsLearnToShareToolIsAvailableUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsLearnToShareToolIsAvailableUseCase(),
             toggleToolFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToggleFavoritedToolUseCase(),
-            attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),
+            getToolBannerUseCase: appDiContainer.domainLayer.getToolBannerUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
         )

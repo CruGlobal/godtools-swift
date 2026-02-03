@@ -22,19 +22,16 @@ class FavoritedToolsLatestToolDownloader: FavoritedToolsLatestToolDownloaderInte
         self.toolDownloader = toolDownloader
     }
     
-    func downloadLatestToolsPublisher(inLanguages: [BCP47LanguageIdentifier]) -> AnyPublisher<Void, Never> {
+    @MainActor func downloadLatestToolsPublisher(inLanguages: [BCP47LanguageIdentifier]) -> AnyPublisher<Void, Error> {
         
         return Publishers.CombineLatest(
             resourcesRepository.persistence.observeCollectionChangesPublisher(),
-            favoritedResourcesRepository.getFavoritedResourcesSortedByPositionPublisher()
+            favoritedResourcesRepository
+                .getFavoritedResourcesSortedByPositionPublisher()
+                .setFailureType(to: Error.self)
         )
-        .flatMap({ (resourcesChanged: Void, favoritedTools: [FavoritedResourceDataModel]) -> AnyPublisher<[FavoritedResourceDataModel], Never> in
+        .flatMap({ (resourcesChanged: Void, favoritedTools: [FavoritedResourceDataModel]) -> AnyPublisher<[DownloadToolDataModel], Error> in
                         
-            return Just(favoritedTools)
-                .eraseToAnyPublisher()
-        })
-        .flatMap({ (favoritedTools: [FavoritedResourceDataModel]) -> AnyPublisher<[DownloadToolDataModel], Never> in
-            
             let tools: [DownloadToolDataModel] = favoritedTools.map({
                 DownloadToolDataModel(
                     toolId: $0.id,
@@ -43,17 +40,15 @@ class FavoritedToolsLatestToolDownloader: FavoritedToolsLatestToolDownloaderInte
             })
             
             return Just(tools)
+                .setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
         })
-        .flatMap({ (tools: [DownloadToolDataModel]) -> AnyPublisher<Void, Never> in
+        .flatMap({ (tools: [DownloadToolDataModel]) -> AnyPublisher<Void, Error> in
                         
             return self.toolDownloader
                 .downloadToolsPublisher(tools: tools, requestPriority: .medium)
                 .map { _ in
                     return Void()
-                }
-                .catch { _ in
-                    return Just(Void())
                 }
                 .eraseToAnyPublisher()
         })
