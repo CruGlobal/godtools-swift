@@ -58,6 +58,14 @@ class PersonalizedToolsDomainLayerDependencies {
         return GetPersonalizedLessonsUseCase(
             resourcesRepository: coreDataLayer.getResourcesRepository(),
             personalizedLessonsRepository: dataLayer.getPersonalizedLessonsRepository(),
+            getLessonsListRepository: GetLessonsListRepository(
+                resourcesRepository: coreDataLayer.getResourcesRepository(),
+                languagesRepository: coreDataLayer.getLanguagesRepository(),
+                getTranslatedToolName: coreDataLayer.getTranslatedToolName(),
+                getTranslatedToolLanguageAvailability: coreDataLayer.getTranslatedToolLanguageAvailability(),
+                lessonProgressRepository: coreDataLayer.getUserLessonProgressRepository(),
+                getLessonListItemProgressRepository: coreDataLayer.getLessonListItemProgressRepository()
+            ),
             languagesRepository: coreDataLayer.getLanguagesRepository(),
             getTranslatedToolName: coreDataLayer.getTranslatedToolName(),
             getTranslatedToolLanguageAvailability: coreDataLayer.getTranslatedToolLanguageAvailability(),

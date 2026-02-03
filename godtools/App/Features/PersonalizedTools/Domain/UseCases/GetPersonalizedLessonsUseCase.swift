@@ -13,16 +13,18 @@ class GetPersonalizedLessonsUseCase {
 
     private let resourcesRepository: ResourcesRepository
     private let personalizedLessonsRepository: PersonalizedLessonsRepository
+    private let getLessonsListRepository: GetLessonsListRepository
     private let languagesRepository: LanguagesRepository
     private let getTranslatedToolName: GetTranslatedToolName
     private let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability
     private let lessonProgressRepository: UserLessonProgressRepository
     private let getLessonListItemProgressRepository: GetLessonListItemProgressRepository
 
-    init(resourcesRepository: ResourcesRepository, personalizedLessonsRepository: PersonalizedLessonsRepository, languagesRepository: LanguagesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability, lessonProgressRepository: UserLessonProgressRepository, getLessonListItemProgressRepository: GetLessonListItemProgressRepository) {
+    init(resourcesRepository: ResourcesRepository, personalizedLessonsRepository: PersonalizedLessonsRepository, getLessonsListRepository: GetLessonsListRepository, languagesRepository: LanguagesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability, lessonProgressRepository: UserLessonProgressRepository, getLessonListItemProgressRepository: GetLessonListItemProgressRepository) {
 
         self.resourcesRepository = resourcesRepository
         self.personalizedLessonsRepository = personalizedLessonsRepository
+        self.getLessonsListRepository = getLessonsListRepository
         self.languagesRepository = languagesRepository
         self.getTranslatedToolName = getTranslatedToolName
         self.getTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability
@@ -32,11 +34,10 @@ class GetPersonalizedLessonsUseCase {
 
     @MainActor func execute(appLanguage: AppLanguageDomainModel, country: String?, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<[LessonListItemDomainModel], Error> {
 
-        // TODO: - if there's no country, get all the tools
+        // TODO: - use personalizedLessonsRepository when country == nil
         guard let country = country else {
-            return Just([])
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
+            return getLessonsListRepository
+                .getLessonsListPublisher(appLanguage: appLanguage, filterLessonsByLanguage: filterLessonsByLanguage)
         }
 
         let language = getLanguageCode(filterLessonsByLanguage: filterLessonsByLanguage, appLanguage: appLanguage)

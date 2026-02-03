@@ -16,8 +16,8 @@ import SwiftUI
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase
     private let getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase
+    private let getLessonsInterfaceStringsUseCase: GetLessonsInterfaceStringsUseCase
     private let getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase
-    private let viewLessonsUseCase: ViewLessonsUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let getToolBannerUseCase: GetToolBannerUseCase
@@ -41,15 +41,15 @@ import SwiftUI
     @Published var lessons: [LessonListItemDomainModel] = []
     @Published var isLoadingLessons: Bool = true
         
-    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase, getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase, viewLessonsUseCase: ViewLessonsUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getToolBannerUseCase: GetToolBannerUseCase) {
+    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase, getLessonsInterfaceStringsUseCase: GetLessonsInterfaceStringsUseCase, getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getToolBannerUseCase: GetToolBannerUseCase) {
 
         self.flowDelegate = flowDelegate
         self.resourcesRepository = resourcesRepository
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getLocalizationSettingsUseCase = getLocalizationSettingsUseCase
         self.getPersonalizedLessonsUseCase = getPersonalizedLessonsUseCase
+        self.getLessonsInterfaceStringsUseCase = getLessonsInterfaceStringsUseCase
         self.getUserLessonFiltersUseCase = getUserLessonFiltersUseCase
-        self.viewLessonsUseCase = viewLessonsUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.getToolBannerUseCase = getToolBannerUseCase
@@ -72,33 +72,26 @@ import SwiftUI
         .dropFirst()
         .flatMap { (appLanguage, languageFilter, localizationSettings, toggle) -> AnyPublisher<ViewLessonsDomainModel, Error> in
 
-            if toggle == .personalized {
+            let country = toggle == .personalized ? localizationSettings?.selectedCountryIsoRegionCode : nil
 
-                return getPersonalizedLessonsUseCase
+            return Publishers.CombineLatest(
+                getLessonsInterfaceStringsUseCase
+                    .getStringsPublisher(appLanguage: appLanguage)
+                    .setFailureType(to: Error.self),
+                getPersonalizedLessonsUseCase
                     .execute(
                         appLanguage: appLanguage,
-                        country: localizationSettings?.selectedCountryIsoRegionCode,
+                        country: country,
                         filterLessonsByLanguage: languageFilter
                     )
-                    .flatMap { personalizedLessons in
-
-                        return self.viewLessonsUseCase
-                            .viewPublisher(appLanguage: appLanguage, filterLessonsByLanguage: languageFilter)
-                            .map { viewModel in
-
-                                return ViewLessonsDomainModel(
-                                    interfaceStrings: viewModel.interfaceStrings,
-                                    lessons: personalizedLessons
-                                )
-                            }
-                            .eraseToAnyPublisher()
-                    }
-                    .eraseToAnyPublisher()
-            } else {
-
-                return viewLessonsUseCase
-                    .viewPublisher(appLanguage: appLanguage, filterLessonsByLanguage: languageFilter)
+            )
+            .map { (interfaceStrings, lessons) in
+                return ViewLessonsDomainModel(
+                    interfaceStrings: interfaceStrings,
+                    lessons: lessons
+                )
             }
+            .eraseToAnyPublisher()
         }
         .receive(on: DispatchQueue.main)
         .sink(receiveCompletion: { _ in
