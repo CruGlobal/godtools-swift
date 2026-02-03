@@ -22,7 +22,7 @@ class PersonalizedToolsDataLayerDependencies {
         return LocalizationSettingsCountriesRepository()
     }
 
-    @MainActor func getPersonalizedLessonsCache() -> PersonalizedLessonsCache {
+    func getPersonalizedLessonsCache() -> PersonalizedLessonsCache {
 
         let personalizedLessonsSync = RealmPersonalizedLessonsCacheSync(
             realmDatabase: coreDataLayer.getSharedLegacyRealmDatabase()
@@ -34,7 +34,7 @@ class PersonalizedToolsDataLayerDependencies {
         )
     }
 
-    @MainActor func getPersonalizedLessonsRepository() -> PersonalizedLessonsRepository {
+    func getPersonalizedLessonsRepository() -> PersonalizedLessonsRepository {
 
         let api = PersonalizedToolsApi(
             config: coreDataLayer.getAppConfig(),

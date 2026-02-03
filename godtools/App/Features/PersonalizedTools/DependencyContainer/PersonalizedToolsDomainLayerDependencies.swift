@@ -53,7 +53,7 @@ class PersonalizedToolsDomainLayerDependencies {
         )
     }
 
-    @MainActor func getGetPersonalizedLessonsUseCase() -> GetPersonalizedLessonsUseCase {
+    func getGetPersonalizedLessonsUseCase() -> GetPersonalizedLessonsUseCase {
 
         return GetPersonalizedLessonsUseCase(
             resourcesRepository: coreDataLayer.getResourcesRepository(),
