@@ -28,7 +28,7 @@ import SwiftUI
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private var lessonFilterLanguageSelection: LessonFilterLanguageDomainModel?
-    @Published private var selectedCountryIsoRegionCode: String?
+    @Published private var localizationSettings: UserLocalizationSettingsDomainModel?
     
     @Published private(set) var toggleOptions: [PersonalizationToggleOption] = []
     @Published private(set) var strings: LessonsInterfaceStringsDomainModel = .emptyValue
@@ -60,27 +60,24 @@ import SwiftUI
             .assign(to: &$appLanguage)
 
         getLocalizationSettingsUseCase.execute()
-            .map { domainModel in
-                return domainModel?.selectedCountryIsoRegionCode
-            }
             .receive(on: DispatchQueue.main)
-            .assign(to: &$selectedCountryIsoRegionCode)
+            .assign(to: &$localizationSettings)
 
         Publishers.CombineLatest4(
             $appLanguage,
             $lessonFilterLanguageSelection,
-            $selectedCountryIsoRegionCode,
+            $localizationSettings,
             $selectedToggle
         )
         .dropFirst()
-        .flatMap { (appLanguage, languageFilter, country, toggle) -> AnyPublisher<ViewLessonsDomainModel, Error> in
+        .flatMap { (appLanguage, languageFilter, localizationSettings, toggle) -> AnyPublisher<ViewLessonsDomainModel, Error> in
 
             if toggle == .personalized {
-                
+
                 return getPersonalizedLessonsUseCase
                     .execute(
                         appLanguage: appLanguage,
-                        country: country,
+                        country: localizationSettings?.selectedCountryIsoRegionCode,
                         filterLessonsByLanguage: languageFilter
                     )
                     .flatMap { personalizedLessons in
