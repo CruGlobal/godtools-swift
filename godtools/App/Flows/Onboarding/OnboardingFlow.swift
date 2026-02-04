@@ -14,6 +14,7 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
     
     @Published private var currentAppLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
+    private var didPromptForAppLanguage: Bool = false
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
@@ -66,8 +67,17 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
         case .chooseAppLanguageTappedFromOnboardingTutorial:
             navigateToChooseAppLanguageFlow()
             
-        case .chooseAppLanguageFlowCompleted( _):
-            navigateBackFromChooseAppLanguageFlow()
+        case .chooseAppLanguageFlowCompleted(let state):
+            
+            switch state {
+            
+            case .userClosedChooseAppLanguage:
+                navigateBackFromChooseAppLanguageFlow()
+            
+            case .userChoseAppLanguage(let appLanguage):
+                let localizationSettings = getLocalizationSettingsView()
+                navigationController.pushViewController(localizationSettings, animated: true)
+            }
             
         case .videoButtonTappedFromOnboardingTutorial(let youtubeVideoId):
             presentWatchOnboardingTutorialVideoPlayer(youtubeVideoId: youtubeVideoId)
@@ -115,10 +125,24 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
                     )
                 }
             }
+            else if !reachedEnd && !didPromptForAppLanguage {
+                
+                didPromptForAppLanguage = true
+                
+                navigateToChooseAppLanguageFlow()
+            }
             else {
                 
                 onboardingTutorialView.setCurrentPage(page: currentPage + 1)
             }
+            
+        case .backTappedFromLocalizationSettings:
+            navigationController.popViewController(animated: true)
+            
+        case .didSelectLocalizationFromLocalizationSettings(let localization):
+            // TODO: Add confirmation popup. ~Levi
+            // See Figma (https://www.figma.com/design/gdsgXh4cAeBAVrJzH7YoEOU6/GodTools-app-master-file?node-id=14999-2173&t=NLq4O0aCCH1N5Ou7-0)
+            break
             
         case .endTutorialFromOnboardingTutorial:
             flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: nil))
