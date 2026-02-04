@@ -109,6 +109,7 @@ enum FlowStep {
     
     // tutorial
     case closeTappedFromTutorial
+    case continueTappedFromTutorial
     case startUsingGodToolsTappedFromTutorial
     case tutorialFlowCompleted(state: TutorialFlowCompletedState)
     

@@ -81,6 +81,45 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
         case .skipTappedFromOnboardingTutorial:
             flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: nil))
             
+        case .continueTappedFromTutorial:
+            
+            guard let onboardingTutorialView = self.onboardingTutorialView else {
+                return
+            }
+            
+            let page: OnboardingTutorialPage? = onboardingTutorialView.getCurrentPage()
+            let lastPage: Int = onboardingTutorialView.getPageCount() - 1
+            let currentPage: Int = onboardingTutorialView.getCurrentPageIndex()
+            let reachedEnd = currentPage >= lastPage
+            
+            if reachedEnd {
+                
+                navigate(step: .endTutorialFromOnboardingTutorial)
+                
+                if let page = page {
+                    
+                    let pageAnalytics: OnboardingTutorialPageAnalyticsProperties = onboardingTutorialView.getOnboardingTutorialPageAnalyticsProperties(
+                        page: page
+                    )
+                    
+                    appDiContainer.domainLayer.getTrackActionAnalyticsUseCase().trackAction(
+                        screenName: pageAnalytics.screenName,
+                        actionName: "Onboarding Start",
+                        siteSection: pageAnalytics.siteSection,
+                        siteSubSection: pageAnalytics.siteSubsection,
+                        appLanguage: nil,
+                        contentLanguage: pageAnalytics.contentLanguage,
+                        contentLanguageSecondary: pageAnalytics.contentLanguageSecondary,
+                        url: nil,
+                        data: [AnalyticsConstants.Keys.onboardingStart: 1]
+                    )
+                }
+            }
+            else {
+                
+                onboardingTutorialView.setCurrentPage(page: currentPage + 1)
+            }
+            
         case .endTutorialFromOnboardingTutorial:
             flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: nil))
         
@@ -115,6 +154,17 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
 // MARK: -
 
 extension OnboardingFlow {
+    
+    private var onboardingTutorialView: OnboardingTutorialView? {
+        
+        for viewController in navigationController.viewControllers {
+            if let hosting = viewController as? AppHostingController<OnboardingTutorialView> {
+                return hosting.rootView
+            }
+        }
+        
+        return nil
+    }
     
     private func getOnboardingTutorialView() -> UIViewController {
         

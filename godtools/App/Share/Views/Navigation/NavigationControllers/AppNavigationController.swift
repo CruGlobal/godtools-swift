@@ -92,7 +92,7 @@ class AppNavigationController: UINavigationController {
                 dashboardHostingView.rootView.navigateToTab(tab: currentTab)
             }
             else if let onboardingTutorialHostingView = viewController as? AppHostingController<OnboardingTutorialView> {
-                let currentPage: Int = onboardingTutorialHostingView.rootView.getCurrentPage()
+                let currentPage: Int = onboardingTutorialHostingView.rootView.getCurrentPageIndex()
                 onboardingTutorialHostingView.rootView.setCurrentPage(page: currentPage)
             }
         }
