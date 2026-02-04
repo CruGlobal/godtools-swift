@@ -13,18 +13,16 @@ class GetPersonalizedLessonsUseCase {
 
     private let resourcesRepository: ResourcesRepository
     private let personalizedLessonsRepository: PersonalizedLessonsRepository
-    private let getLessonsListRepository: GetLessonsListRepository
     private let languagesRepository: LanguagesRepository
     private let getTranslatedToolName: GetTranslatedToolName
     private let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability
     private let lessonProgressRepository: UserLessonProgressRepository
     private let getLessonListItemProgressRepository: GetLessonListItemProgressRepository
 
-    init(resourcesRepository: ResourcesRepository, personalizedLessonsRepository: PersonalizedLessonsRepository, getLessonsListRepository: GetLessonsListRepository, languagesRepository: LanguagesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability, lessonProgressRepository: UserLessonProgressRepository, getLessonListItemProgressRepository: GetLessonListItemProgressRepository) {
+    init(resourcesRepository: ResourcesRepository, personalizedLessonsRepository: PersonalizedLessonsRepository, languagesRepository: LanguagesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability, lessonProgressRepository: UserLessonProgressRepository, getLessonListItemProgressRepository: GetLessonListItemProgressRepository) {
 
         self.resourcesRepository = resourcesRepository
         self.personalizedLessonsRepository = personalizedLessonsRepository
-        self.getLessonsListRepository = getLessonsListRepository
         self.languagesRepository = languagesRepository
         self.getTranslatedToolName = getTranslatedToolName
         self.getTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability
@@ -32,19 +30,13 @@ class GetPersonalizedLessonsUseCase {
         self.getLessonListItemProgressRepository = getLessonListItemProgressRepository
     }
 
-    @MainActor func execute(appLanguage: AppLanguageDomainModel, country: String?, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<[LessonListItemDomainModel], Error> {
-
-        // TODO: - use personalizedLessonsRepository when country == nil
-        guard let country = country else {
-            return getLessonsListRepository
-                .getLessonsListPublisher(appLanguage: appLanguage, filterLessonsByLanguage: filterLessonsByLanguage)
-        }
+    @MainActor func execute(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<[LessonListItemDomainModel], Error> {
 
         let language = getLanguageCode(filterLessonsByLanguage: filterLessonsByLanguage, appLanguage: appLanguage)
-        
+
         return Publishers.CombineLatest3(
             personalizedLessonsRepository
-                .getPersonalizedLessonsChanged(reloadFromRemote: true, requestPriority: .high, country: country, language: language)
+                .getPersonalizedLessonsChanged(reloadFromRemote: true, requestPriority: .high, country: country.isoRegionCode, language: language)
                 .setFailureType(to: Error.self),
             resourcesRepository.persistence
                 .observeCollectionChangesPublisher(),
@@ -54,7 +46,7 @@ class GetPersonalizedLessonsUseCase {
         )
         .flatMap({ (_, _, _) in
 
-            let personalizedLessons = self.personalizedLessonsRepository.getPersonalizedLessons(country: country, language: language)
+            let personalizedLessons = self.personalizedLessonsRepository.getPersonalizedLessons(country: country.isoRegionCode, language: language)
 
             return self.fetchResources(for: personalizedLessons)
         })

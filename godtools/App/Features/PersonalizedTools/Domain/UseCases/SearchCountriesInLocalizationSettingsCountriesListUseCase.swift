@@ -17,7 +17,7 @@ class SearchCountriesInLocalizationSettingsCountriesListUseCase {
         self.stringSearcher = stringSearcher
     }
     
-    func execute(searchText: String, in countriesList: [LocalizationSettingsCountryDomainModel]) -> AnyPublisher<[LocalizationSettingsCountryDomainModel], Never> {
+    func execute(searchText: String, in countriesList: [LocalizationSettingsCountryListItemDomainModel]) -> AnyPublisher<[LocalizationSettingsCountryListItemDomainModel], Never> {
         
         let searchResults = stringSearcher.search(for: searchText, in: countriesList)
         

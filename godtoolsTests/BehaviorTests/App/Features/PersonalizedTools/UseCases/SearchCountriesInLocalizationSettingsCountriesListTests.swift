@@ -26,13 +26,13 @@ struct SearchCountriesInLocalizationSettingsCountriesListTests {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var searchResults: [LocalizationSettingsCountryDomainModel] = []
+        var searchResults: [LocalizationSettingsCountryListItemDomainModel] = []
         
         await confirmation(expectedCount: 1) { confirmation in
         
             searchCountryList
                 .execute(searchText: "e", in: countriesList)
-                .sink { (results: [LocalizationSettingsCountryDomainModel]) in
+                .sink { (results: [LocalizationSettingsCountryListItemDomainModel]) in
                     
                     confirmation()
                     searchResults = results
@@ -60,13 +60,13 @@ struct SearchCountriesInLocalizationSettingsCountriesListTests {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var searchResults: [LocalizationSettingsCountryDomainModel] = []
+        var searchResults: [LocalizationSettingsCountryListItemDomainModel] = []
         
         await confirmation(expectedCount: 1) { confirmation in
         
             searchCountryList
                 .execute(searchText: "pan", in: countriesList)
-                .sink { (results: [LocalizationSettingsCountryDomainModel]) in
+                .sink { (results: [LocalizationSettingsCountryListItemDomainModel]) in
                     
                     confirmation()
                     searchResults = results
@@ -91,55 +91,55 @@ extension SearchCountriesInLocalizationSettingsCountriesListTests {
         return searchCountriesUseCase
     }
     
-    private static func getCountriesList() -> [LocalizationSettingsCountryDomainModel] {
+    private static func getCountriesList() -> [LocalizationSettingsCountryListItemDomainModel] {
         
-        let countriesList: [LocalizationSettingsCountryDomainModel] = [
-              LocalizationSettingsCountryDomainModel(
+        let countriesList: [LocalizationSettingsCountryListItemDomainModel] = [
+              LocalizationSettingsCountryListItemDomainModel(
                 isoRegionCode: "",
                 countryNameTranslatedInOwnLanguage: "United States",
                 countryNameTranslatedInCurrentAppLanguage: "United States"
               ),
-              LocalizationSettingsCountryDomainModel(
+              LocalizationSettingsCountryListItemDomainModel(
                 isoRegionCode: "",
                 countryNameTranslatedInOwnLanguage: "España",
                 countryNameTranslatedInCurrentAppLanguage: "Spain"
               ),
-              LocalizationSettingsCountryDomainModel(
+              LocalizationSettingsCountryListItemDomainModel(
                 isoRegionCode: "",
                 countryNameTranslatedInOwnLanguage: "France",
                 countryNameTranslatedInCurrentAppLanguage: "France"
               ),
-              LocalizationSettingsCountryDomainModel(
+              LocalizationSettingsCountryListItemDomainModel(
                 isoRegionCode: "",
                 countryNameTranslatedInOwnLanguage: "Deutschland",
                 countryNameTranslatedInCurrentAppLanguage: "Germany"
               ),
-              LocalizationSettingsCountryDomainModel(
+              LocalizationSettingsCountryListItemDomainModel(
                 isoRegionCode: "",
                 countryNameTranslatedInOwnLanguage: "日本",
                 countryNameTranslatedInCurrentAppLanguage: "Japan"
               ),
-              LocalizationSettingsCountryDomainModel(
+              LocalizationSettingsCountryListItemDomainModel(
                 isoRegionCode: "",
                 countryNameTranslatedInOwnLanguage: "Brasil",
                 countryNameTranslatedInCurrentAppLanguage: "Brazil"
               ),
-              LocalizationSettingsCountryDomainModel(
+              LocalizationSettingsCountryListItemDomainModel(
                 isoRegionCode: "",
                 countryNameTranslatedInOwnLanguage: "대한민국",
                 countryNameTranslatedInCurrentAppLanguage: "South Korea"
               ),
-              LocalizationSettingsCountryDomainModel(
+              LocalizationSettingsCountryListItemDomainModel(
                 isoRegionCode: "",
                 countryNameTranslatedInOwnLanguage: "Italia",
                 countryNameTranslatedInCurrentAppLanguage: "Italy"
               ),
-              LocalizationSettingsCountryDomainModel(
+              LocalizationSettingsCountryListItemDomainModel(
                 isoRegionCode: "",
                 countryNameTranslatedInOwnLanguage: "中国",
                 countryNameTranslatedInCurrentAppLanguage: "China"
               ),
-              LocalizationSettingsCountryDomainModel(
+              LocalizationSettingsCountryListItemDomainModel(
                 isoRegionCode: "",
                 countryNameTranslatedInOwnLanguage: "México",
                 countryNameTranslatedInCurrentAppLanguage: "Mexico"

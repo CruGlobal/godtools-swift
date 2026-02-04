@@ -17,14 +17,14 @@ class GetLocalizationSettingsCountryListUseCase {
         self.countriesRepository = countriesRepository
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[LocalizationSettingsCountryDomainModel], Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[LocalizationSettingsCountryListItemDomainModel], Never> {
 
         return countriesRepository.getCountriesPublisher(appLanguage: appLanguage)
             .flatMap { (countries: [LocalizationSettingsCountryDataModel]) in
 
                 let countryDomainModels = countries.map { country in
 
-                    return LocalizationSettingsCountryDomainModel(
+                    return LocalizationSettingsCountryListItemDomainModel(
                         isoRegionCode: country.isoRegionCode,
                         countryNameTranslatedInOwnLanguage: country.countryNameTranslatedInOwnLanguage,
                         countryNameTranslatedInCurrentAppLanguage: country.countryNameTranslatedInCurrentAppLanguage

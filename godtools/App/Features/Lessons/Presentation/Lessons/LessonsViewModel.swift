@@ -71,27 +71,36 @@ import SwiftUI
         )
         .dropFirst()
         .flatMap { (appLanguage, languageFilter, localizationSettings, toggle) -> AnyPublisher<ViewLessonsDomainModel, Error> in
-
-            let country = toggle == .personalized ? localizationSettings?.selectedCountryIsoRegionCode : nil
-
-            return Publishers.CombineLatest(
-                getLessonsInterfaceStringsUseCase
-                    .getStringsPublisher(appLanguage: appLanguage)
-                    .setFailureType(to: Error.self),
-                getPersonalizedLessonsUseCase
-                    .execute(
-                        appLanguage: appLanguage,
-                        country: country,
-                        filterLessonsByLanguage: languageFilter
-                    )
-            )
-            .map { (interfaceStrings, lessons) in
-                return ViewLessonsDomainModel(
-                    interfaceStrings: interfaceStrings,
-                    lessons: lessons
+            
+            if toggle == .personalized, let localizationSettings = localizationSettings {
+                
+                return Publishers.CombineLatest(
+                    getLessonsInterfaceStringsUseCase
+                        .getStringsPublisher(appLanguage: appLanguage)
+                        .setFailureType(to: Error.self),
+                    getPersonalizedLessonsUseCase
+                        .execute(
+                            appLanguage: appLanguage,
+                            country: localizationSettings.selectedCountry,
+                            filterLessonsByLanguage: languageFilter
+                        )
                 )
+                .map { (interfaceStrings, lessons) in
+                    return ViewLessonsDomainModel(
+                        interfaceStrings: interfaceStrings,
+                        lessons: lessons
+                    )
+                }
+                .eraseToAnyPublisher()
+                
+            } else {
+
+                // TODO: - all lessons use case
+                return Just(ViewLessonsDomainModel(interfaceStrings: .emptyValue, lessons: []))
+                    .setFailureType(to: Error.self)
+                    .eraseToAnyPublisher()
             }
-            .eraseToAnyPublisher()
+
         }
         .receive(on: DispatchQueue.main)
         .sink(receiveCompletion: { _ in
