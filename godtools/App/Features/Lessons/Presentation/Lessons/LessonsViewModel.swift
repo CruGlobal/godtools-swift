@@ -63,6 +63,26 @@ import SwiftUI
             .receive(on: DispatchQueue.main)
             .assign(to: &$localizationSettings)
 
+        $appLanguage
+            .dropFirst()
+            .map { appLanguage in
+                getLessonsInterfaceStringsUseCase.getStringsPublisher(appLanguage: appLanguage)
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (interfaceStrings: LessonsInterfaceStringsDomainModel) in
+
+                self?.strings = interfaceStrings
+                self?.sectionTitle = interfaceStrings.title
+                self?.subtitle = interfaceStrings.subtitle
+                self?.languageFilterTitle = interfaceStrings.languageFilterTitle
+                self?.toggleOptions = [
+                    PersonalizationToggleOption(title: interfaceStrings.personalizedToolToggleTitle, selection: .personalized),
+                    PersonalizationToggleOption(title: interfaceStrings.allLessonsToggleTitle, selection: .all)
+                ]
+            }
+            .store(in: &cancellables)
+
         Publishers.CombineLatest4(
             $appLanguage,
             $lessonFilterLanguageSelection,
@@ -70,55 +90,32 @@ import SwiftUI
             $selectedToggle
         )
         .dropFirst()
-        .flatMap { (appLanguage, languageFilter, localizationSettings, toggle) -> AnyPublisher<ViewLessonsDomainModel, Error> in
-            
+        .map { (appLanguage, languageFilter, localizationSettings, toggle) -> AnyPublisher<[LessonListItemDomainModel], Error> in
+
             if toggle == .personalized, let localizationSettings = localizationSettings {
-                
-                return Publishers.CombineLatest(
-                    getLessonsInterfaceStringsUseCase
-                        .getStringsPublisher(appLanguage: appLanguage)
-                        .setFailureType(to: Error.self),
-                    getPersonalizedLessonsUseCase
-                        .execute(
-                            appLanguage: appLanguage,
-                            country: localizationSettings.selectedCountry,
-                            filterLessonsByLanguage: languageFilter
-                        )
-                )
-                .map { (interfaceStrings, lessons) in
-                    return ViewLessonsDomainModel(
-                        interfaceStrings: interfaceStrings,
-                        lessons: lessons
+
+                return getPersonalizedLessonsUseCase
+                    .execute(
+                        appLanguage: appLanguage,
+                        country: localizationSettings.selectedCountry,
+                        filterLessonsByLanguage: languageFilter
                     )
-                }
-                .eraseToAnyPublisher()
-                
+
             } else {
 
                 // TODO: - all lessons use case
-                return Just(ViewLessonsDomainModel(interfaceStrings: .emptyValue, lessons: []))
+                return Just([])
                     .setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             }
-
         }
+        .switchToLatest()
         .receive(on: DispatchQueue.main)
         .sink(receiveCompletion: { _ in
-            
-        }, receiveValue: { [weak self] (domainModel: ViewLessonsDomainModel) in
-            
-            let interfaceStrings = domainModel.interfaceStrings
 
-            self?.strings = interfaceStrings
-            self?.sectionTitle = interfaceStrings.title
-            self?.subtitle = interfaceStrings.subtitle
-            self?.languageFilterTitle = interfaceStrings.languageFilterTitle
-            self?.toggleOptions = [
-                PersonalizationToggleOption(title: interfaceStrings.personalizedToolToggleTitle, selection: .personalized),
-                PersonalizationToggleOption(title: interfaceStrings.allLessonsToggleTitle, selection: .all)
-            ]
+        }, receiveValue: { [weak self] (lessons: [LessonListItemDomainModel]) in
 
-            self?.lessons = domainModel.lessons
+            self?.lessons = lessons
             self?.isLoadingLessons = false
         })
         .store(in: &cancellables)
