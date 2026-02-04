@@ -15,11 +15,9 @@ import Combine
     private let getCountryListUseCase: GetLocalizationSettingsCountryListUseCase
     private let getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase
     private let searchCountriesUseCase: SearchCountriesInLocalizationSettingsCountriesListUseCase
-    private let setLocalizationSettingsUseCase: SetLocalizationSettingsUseCase
     private let viewLocalizationSettingsUseCase: ViewLocalizationSettingsUseCase
     private let viewSearchBarUseCase: ViewSearchBarUseCase
 
-    private static var backgroundCancellables: Set<AnyCancellable> = Set()
     private var cancellables: Set<AnyCancellable> = Set()
 
     private weak var flowDelegate: FlowDelegate?
@@ -33,14 +31,13 @@ import Combine
     @Published private(set) var countrySearchResults: [LocalizationSettingsCountryDomainModel] = Array()
     @Published private(set) var strings = LocalizationSettingsInterfaceStringsDomainModel.emptyValue
 
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getCountryListUseCase: GetLocalizationSettingsCountryListUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, searchCountriesUseCase: SearchCountriesInLocalizationSettingsCountriesListUseCase, setLocalizationSettingsUseCase: SetLocalizationSettingsUseCase, viewLocalizationSettingsUseCase: ViewLocalizationSettingsUseCase, viewSearchBarUseCase: ViewSearchBarUseCase) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getCountryListUseCase: GetLocalizationSettingsCountryListUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, searchCountriesUseCase: SearchCountriesInLocalizationSettingsCountriesListUseCase, viewLocalizationSettingsUseCase: ViewLocalizationSettingsUseCase, viewSearchBarUseCase: ViewSearchBarUseCase) {
 
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getCountryListUseCase = getCountryListUseCase
         self.getLocalizationSettingsUseCase = getLocalizationSettingsUseCase
         self.searchCountriesUseCase = searchCountriesUseCase
-        self.setLocalizationSettingsUseCase = setLocalizationSettingsUseCase
         self.viewLocalizationSettingsUseCase = viewLocalizationSettingsUseCase
         self.viewSearchBarUseCase = viewSearchBarUseCase
         
@@ -103,9 +100,7 @@ extension LocalizationSettingsViewModel {
 
         selectedCountryIsoRegionCode = country.isoRegionCode
         
-        setLocalizationSettingsUseCase.execute(isoRegionCode: country.isoRegionCode)
-            .sink { _ in }
-            .store(in: &LocalizationSettingsViewModel.backgroundCancellables)
+        flowDelegate?.navigate(step: .didSelectLocalizationFromLocalizationSettings(localization: country))
     }
     
     func getSearchBarViewModel() -> SearchBarViewModel {

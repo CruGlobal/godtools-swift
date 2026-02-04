@@ -118,7 +118,6 @@ enum FlowStep {
     case tutorialTappedFromMenu
     case languageSettingsTappedFromMenu
     case localizationSettingsTappedFromMenu
-    case backTappedFromLocalizationSettings
     case loginTappedFromMenu
     case createAccountTappedFromMenu
     case activityTappedFromMenu
@@ -230,4 +229,8 @@ enum FlowStep {
     
     // download tool
     case closeTappedFromDownloadToolProgress
+    
+    // localization settings
+    case backTappedFromLocalizationSettings
+    case didSelectLocalizationFromLocalizationSettings(localization: LocalizationSettingsCountryDomainModel)
 }
