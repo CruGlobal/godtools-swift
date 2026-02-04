@@ -52,15 +52,16 @@ class GetPersonalizedLessonsUseCase {
                 .getLessonProgressChangedPublisher()
                 .setFailureType(to: Error.self)
         )
-        .map({ (_, _, _) in
+        .flatMap({ (_, _, _) in
 
             let personalizedLessons = self.personalizedLessonsRepository.getPersonalizedLessons(country: country, language: language)
 
-            let resources = self.fetchResources(for: personalizedLessons)
-            
-            return self.mapLessonsToListItems(lessons: resources, appLanguage: appLanguage, filterLessonsByLanguage: filterLessonsByLanguage)
-            
+            return self.fetchResources(for: personalizedLessons)
         })
+        .map { resources in
+
+            return self.mapLessonsToListItems(lessons: resources, appLanguage: appLanguage, filterLessonsByLanguage: filterLessonsByLanguage)
+        }
         .eraseToAnyPublisher()
     }
     
@@ -80,12 +81,14 @@ class GetPersonalizedLessonsUseCase {
         return languageCode
     }
 
-    private func fetchResources(for personalizedLessonsDataModel: PersonalizedLessonsDataModel?) -> [ResourceDataModel] {
-        guard let personalizedLessonsDataModel = personalizedLessonsDataModel else { return [] }
-
-        return personalizedLessonsDataModel.resourceIds.compactMap { resourceId in
-            resourcesRepository.persistence.getDataModelNonThrowing(id: resourceId)
+    private func fetchResources(for personalizedLessonsDataModel: PersonalizedLessonsDataModel?) -> AnyPublisher<[ResourceDataModel], Error> {
+        guard let personalizedLessonsDataModel = personalizedLessonsDataModel else {
+            return Just([])
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
         }
+
+        return resourcesRepository.persistence.getDataModelsPublisher(getOption: .objectsByIds(ids: personalizedLessonsDataModel.resourceIds))
     }
 
     private func mapLessonsToListItems(lessons: [ResourceDataModel], appLanguage: AppLanguageDomainModel, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> [LessonListItemDomainModel] {
