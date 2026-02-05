@@ -19,8 +19,13 @@ class GetLocalizationSettingsUseCase {
 
     func execute() -> AnyPublisher<UserLocalizationSettingsDomainModel?, Never> {
 
-        return userLocalizationSettingsRepository.getUserLocalizationSettingPublisher()
-            .map { dataModel in
+        return userLocalizationSettingsRepository
+            .getUserLocalizationSettingPublisher()
+            .catch { (error: Error) in
+                return Just(nil)
+                    .eraseToAnyPublisher()
+            }
+            .map { (dataModel: UserLocalizationSettingsDataModel?) in
 
                 guard let dataModel = dataModel else {
                     return nil

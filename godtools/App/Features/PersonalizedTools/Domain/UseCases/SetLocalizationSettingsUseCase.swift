@@ -17,7 +17,7 @@ class SetLocalizationSettingsUseCase {
         self.userLocalizationSettingsRepository = userLocalizationSettingsRepository
     }
 
-    func execute(isoRegionCode: String) -> AnyPublisher<UserLocalizationSettingsDomainModel, Never> {
+    func execute(isoRegionCode: String) -> AnyPublisher<UserLocalizationSettingsDomainModel, Error> {
 
         userLocalizationSettingsRepository.setCountryPublisher(isoRegionCode: isoRegionCode)
             .map { return UserLocalizationSettingsDomainModel(selectedCountryIsoRegionCode: $0.selectedCountryIsoRegionCode) }

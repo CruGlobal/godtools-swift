@@ -104,7 +104,11 @@ extension LocalizationSettingsViewModel {
         selectedCountryIsoRegionCode = country.isoRegionCode
         
         setLocalizationSettingsUseCase.execute(isoRegionCode: country.isoRegionCode)
-            .sink { _ in }
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { _ in
+                
+            })
             .store(in: &LocalizationSettingsViewModel.backgroundCancellables)
     }
     
