@@ -24,11 +24,11 @@ import Combine
     private lazy var searchBarViewModel = SearchBarViewModel(getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, viewSearchBarUseCase: viewSearchBarUseCase)
 
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-    @Published private var countriesList: [LocalizationSettingsCountryDomainModel] = Array()
+    @Published private var countriesList: [LocalizationSettingsCountryListItemDomainModel] = Array()
     @Published private(set) var selectedCountryIsoRegionCode: String?
 
     @Published var searchText: String = ""
-    @Published private(set) var countrySearchResults: [LocalizationSettingsCountryDomainModel] = Array()
+    @Published private(set) var countrySearchResults: [LocalizationSettingsCountryListItemDomainModel] = Array()
     @Published private(set) var strings = LocalizationSettingsInterfaceStringsDomainModel.emptyValue
 
     init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getCountryListUseCase: GetLocalizationSettingsCountryListUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, searchCountriesUseCase: SearchCountriesInLocalizationSettingsCountriesListUseCase, viewLocalizationSettingsUseCase: ViewLocalizationSettingsUseCase, viewSearchBarUseCase: ViewSearchBarUseCase) {
@@ -48,7 +48,7 @@ import Combine
 
         getLocalizationSettingsUseCase.execute()
             .map { domainModel in
-                return domainModel?.selectedCountryIsoRegionCode
+                return domainModel?.selectedCountry.isoRegionCode
             }
             .receive(on: DispatchQueue.main)
             .assign(to: &$selectedCountryIsoRegionCode)
@@ -96,7 +96,7 @@ extension LocalizationSettingsViewModel {
         flowDelegate?.navigate(step: .backTappedFromLocalizationSettings)
     }
     
-    func countryTapped(country: LocalizationSettingsCountryDomainModel) {
+    func countryTapped(country: LocalizationSettingsCountryListItemDomainModel) {
 
         selectedCountryIsoRegionCode = country.isoRegionCode
         

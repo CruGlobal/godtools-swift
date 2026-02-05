@@ -232,5 +232,5 @@ enum FlowStep {
     
     // localization settings
     case backTappedFromLocalizationSettings
-    case didSelectLocalizationFromLocalizationSettings(localization: LocalizationSettingsCountryDomainModel)
+    case didSelectLocalizationFromLocalizationSettings(localization: LocalizationSettingsCountryListItemDomainModel)
 }

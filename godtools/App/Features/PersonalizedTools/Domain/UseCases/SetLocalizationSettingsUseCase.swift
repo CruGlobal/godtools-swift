@@ -22,7 +22,11 @@ class SetLocalizationSettingsUseCase {
         userLocalizationSettingsRepository
             .setCountryPublisher(isoRegionCode: isoRegionCode)
             .map {
-                return UserLocalizationSettingsDomainModel(selectedCountryIsoRegionCode: $0.selectedCountryIsoRegionCode)
+                return UserLocalizationSettingsDomainModel(
+                    selectedCountry: LocalizationSettingsCountryDomainModel(
+                        isoRegionCode: $0.selectedCountryIsoRegionCode
+                    )
+                )
             }
             .eraseToAnyPublisher()
     }

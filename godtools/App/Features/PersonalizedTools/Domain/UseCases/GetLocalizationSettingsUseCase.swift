@@ -27,7 +27,7 @@ class GetLocalizationSettingsUseCase {
                 }
 
                 return UserLocalizationSettingsDomainModel(
-                    selectedCountryIsoRegionCode: dataModel.selectedCountryIsoRegionCode
+                    selectedCountry: LocalizationSettingsCountryDomainModel(isoRegionCode: dataModel.selectedCountryIsoRegionCode)
                 )
             }
             .eraseToAnyPublisher()

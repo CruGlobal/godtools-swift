@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class GetLessonsInterfaceStringsRepository: GetLessonsInterfaceStringsRepositoryInterface {
+class GetLessonsInterfaceStringsRepository {
  
     private let localizationServices: LocalizationServicesInterface
     

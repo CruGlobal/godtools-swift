@@ -10,5 +10,5 @@ import Foundation
 
 struct UserLocalizationSettingsDomainModel {
 
-    let selectedCountryIsoRegionCode: String
+    let selectedCountry: LocalizationSettingsCountryDomainModel
 }
