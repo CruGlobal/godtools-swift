@@ -315,11 +315,8 @@ extension GetAllLessonsUseCaseTests {
         
         return GetAllLessonsUseCase(
             resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
-            languagesRepository: testsDiContainer.dataLayer.getLanguagesRepository(),
-            getTranslatedToolName: getTranslatedToolName(testsDiContainer: testsDiContainer),
-            getTranslatedToolLanguageAvailability: getTranslatedToolLanguageAvailability(testsDiContainer: testsDiContainer),
             lessonProgressRepository: testsDiContainer.dataLayer.getUserLessonProgressRepository(),
-            getLessonListItemProgressRepository: testsDiContainer.dataLayer.getLessonListItemProgressRepository()
+            getLessonsListItems: testsDiContainer.domainLayer.getLessonsListItems()
         )
     }
     
