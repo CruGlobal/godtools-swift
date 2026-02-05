@@ -93,7 +93,7 @@ import SwiftUI
         .dropFirst()
         .map { (appLanguage, languageFilter, localizationSettings, toggle) -> AnyPublisher<[LessonListItemDomainModel], Error> in
 
-            if toggle == .personalized, let localizationSettings = localizationSettings {
+            if toggle == .personalized, let localizationSettings = localizationSettings, localizationSettings.selectedCountry.isoRegionCode.isEmpty == false {
 
                 return getPersonalizedLessonsUseCase
                     .execute(
