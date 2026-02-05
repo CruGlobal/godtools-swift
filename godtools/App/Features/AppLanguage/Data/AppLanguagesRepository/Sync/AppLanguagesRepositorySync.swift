@@ -7,18 +7,19 @@
 //
 
 import Foundation
+import RepositorySync
 import Combine
 
 class AppLanguagesRepositorySync: AppLanguagesRepositorySyncInterface {
         
     private let api: AppLanguagesApi
-    private let cache: AppLanguagesCache
+    private let persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>
     private let syncInvalidator: SyncInvalidator
     
-    init(api: AppLanguagesApi, cache: AppLanguagesCache, syncInvalidator: SyncInvalidator) {
+    init(api: AppLanguagesApi, persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>, syncInvalidator: SyncInvalidator) {
         
         self.api = api
-        self.cache = cache
+        self.persistence = persistence
         self.syncInvalidator = syncInvalidator
     }
     
@@ -34,8 +35,7 @@ class AppLanguagesRepositorySync: AppLanguagesRepositorySyncInterface {
             .getAppLanguagesPublisher()
             .flatMap({ (appLanguages: [AppLanguageCodable]) -> AnyPublisher<Void, Error> in
                 
-                return self.cache
-                    .persistence
+                return self.persistence
                     .writeObjectsPublisher(
                         externalObjects: appLanguages,
                         writeOption: nil,

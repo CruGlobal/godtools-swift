@@ -45,6 +45,7 @@ extension UserAppLanguageCache {
             
         if #available(iOS 17.4, *), let database = swiftDatabase {
             
+            // TODO: Delete for swiftdatabase. ~Levi
         }
         else if let realmDatabase = realmDatabase {
             

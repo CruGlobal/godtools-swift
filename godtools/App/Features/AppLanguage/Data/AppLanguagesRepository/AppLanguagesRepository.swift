@@ -15,12 +15,9 @@ class AppLanguagesRepository: RepositorySync<AppLanguageDataModel, AppLanguagesA
     private let sync: AppLanguagesRepositorySyncInterface
     
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    let cache: AppLanguagesCache
-    
-    init(externalDataFetch: AppLanguagesApi, persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>, cache: AppLanguagesCache, sync: AppLanguagesRepositorySyncInterface) {
         
-        self.cache = cache
+    init(externalDataFetch: AppLanguagesApi, persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>, sync: AppLanguagesRepositorySyncInterface) {
+        
         self.sync = sync
         
         super.init(externalDataFetch: externalDataFetch, persistence: persistence)
@@ -36,8 +33,7 @@ class AppLanguagesRepository: RepositorySync<AppLanguageDataModel, AppLanguagesA
             })
             .store(in: &cancellables)
         
-        return cache
-            .persistence
+        return persistence
             .observeCollectionChangesPublisher()
             .tryMap { _ in
                 return try self
@@ -57,7 +53,7 @@ class AppLanguagesRepository: RepositorySync<AppLanguageDataModel, AppLanguagesA
             })
             .store(in: &cancellables)
         
-        return cache.persistence
+        return persistence
             .observeCollectionChangesPublisher()
             .flatMap({ (changes: Void) -> AnyPublisher<[AppLanguageDataModel], Error> in
                 

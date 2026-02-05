@@ -41,10 +41,6 @@ class AppLanguageFeatureDataLayerDependencies {
         
         let api = AppLanguagesApi()
         
-        let cache = AppLanguagesCache(
-            persistence: persistence
-        )
-        
         let syncInvalidator = SyncInvalidator(
             id: String(describing: AppLanguagesRepositorySync.self),
             timeInterval: .minutes(minute: 15),
@@ -53,14 +49,13 @@ class AppLanguageFeatureDataLayerDependencies {
         
         let sync: AppLanguagesRepositorySyncInterface = sync ?? AppLanguagesRepositorySync(
             api: AppLanguagesApi(),
-            cache: cache,
+            persistence: persistence,
             syncInvalidator: syncInvalidator
         )
         
         return AppLanguagesRepository(
             externalDataFetch: api,
             persistence: persistence,
-            cache: cache,
             sync: sync
         )
     }

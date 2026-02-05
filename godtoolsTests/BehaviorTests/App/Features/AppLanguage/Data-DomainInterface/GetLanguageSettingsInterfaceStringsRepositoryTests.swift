@@ -243,14 +243,9 @@ extension GetLanguageSettingsInterfaceStringsRepositoryTests {
         
         let api = AppLanguagesApi()
         
-        let cache = AppLanguagesCache(
-            persistence: persistence
-        )
-        
         let appLanguagesRepository = AppLanguagesRepository(
             externalDataFetch: api,
             persistence: persistence,
-            cache: cache,
             sync: mockAppLanguagesSync
         )
         
