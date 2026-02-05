@@ -1,5 +1,5 @@
 //
-//  GetLessonsListRepositoryTests.swift
+//  GetAllLessonsUseCaseTests.swift
 //  godtoolsTests
 //
 //  Created by Levi Eggert on 7/26/24.
@@ -12,7 +12,7 @@ import Combine
 import RepositorySync
 
 @Suite(.serialized)
-struct GetLessonsListRepositoryTests {
+struct GetAllLessonsUseCaseTests {
     
     @Test(
         """
@@ -33,7 +33,7 @@ struct GetLessonsListRepositoryTests {
             lessonsAvailableCount: 0
         )
         
-        let getLessonsListRepository: GetLessonsListRepository = try getLessonsListRepository()
+        let getAllLessonsUseCase: GetAllLessonsUseCase = try getAllLessonsUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -46,8 +46,8 @@ struct GetLessonsListRepositoryTests {
                 continuation.resume(returning: ())
             }
             
-            getLessonsListRepository
-                .getLessonsListPublisher(
+            getAllLessonsUseCase
+                .execute(
                     appLanguage: appLanguageEnglish,
                     filterLessonsByLanguage: spanishLanguageFilter
                 )
@@ -81,7 +81,7 @@ struct GetLessonsListRepositoryTests {
                 
         let appLanguageArabic: AppLanguageDomainModel = LanguageCodeDomainModel.arabic.rawValue
                                 
-        let getLessonsListRepository: GetLessonsListRepository = try getLessonsListRepository()
+        let getAllLessonsUseCase: GetAllLessonsUseCase = try getAllLessonsUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -94,8 +94,8 @@ struct GetLessonsListRepositoryTests {
                 continuation.resume(returning: ())
             }
             
-            getLessonsListRepository
-                .getLessonsListPublisher(
+            getAllLessonsUseCase
+                .execute(
                     appLanguage: appLanguageArabic,
                     filterLessonsByLanguage: nil
                 )
@@ -136,7 +136,7 @@ struct GetLessonsListRepositoryTests {
             lessonsAvailableCount: 0
         )
                                 
-        let getLessonsListRepository: GetLessonsListRepository = try getLessonsListRepository()
+        let getAllLessonsUseCase: GetAllLessonsUseCase = try getAllLessonsUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -149,8 +149,8 @@ struct GetLessonsListRepositoryTests {
                 continuation.resume(returning: ())
             }
             
-            getLessonsListRepository
-                .getLessonsListPublisher(
+            getAllLessonsUseCase
+                .execute(
                     appLanguage: appLanguageEnglish,
                     filterLessonsByLanguage: spanishLanguageFilter
                 )
@@ -174,7 +174,7 @@ struct GetLessonsListRepositoryTests {
     }
 }
 
-extension GetLessonsListRepositoryTests {
+extension GetAllLessonsUseCaseTests {
      
     private var spanishLanguageId: String {
         return LanguageCodeDomainModel.spanish.rawValue
@@ -304,16 +304,16 @@ extension GetLessonsListRepositoryTests {
     private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
                 
         return try TestsDiContainer(
-            realmFileName: String(describing: GetLessonsListRepositoryTests.self),
+            realmFileName: String(describing: GetAllLessonsUseCaseTests.self),
             addRealmObjects: addRealmObjects
         )
     }
     
-    private func getLessonsListRepository() throws -> GetLessonsListRepository {
+    private func getAllLessonsUseCase() throws -> GetAllLessonsUseCase {
                 
         let testsDiContainer = try getTestsDiContainer(addRealmObjects: getRealmObjects())
         
-        return GetLessonsListRepository(
+        return GetAllLessonsUseCase(
             resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
             languagesRepository: testsDiContainer.dataLayer.getLanguagesRepository(),
             getTranslatedToolName: getTranslatedToolName(testsDiContainer: testsDiContainer),
