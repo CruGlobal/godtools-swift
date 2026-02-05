@@ -1,28 +1,28 @@
 //
-//  GetLessonsInterfaceStringsRepository.swift
+//  GetLessonsStringsUseCase.swift
 //  godtools
 //
-//  Created by Levi Eggert on 12/4/23.
-//  Copyright © 2023 Cru. All rights reserved.
+//  Created by Rachael Skeath on 2/3/26.
+//  Copyright © 2026 Cru. All rights reserved.
 //
 
 import Foundation
 import Combine
 
-class GetLessonsInterfaceStringsRepository {
- 
+class GetLessonsStringsUseCase {
+
     private let localizationServices: LocalizationServicesInterface
     
     init(localizationServices: LocalizationServicesInterface) {
         
         self.localizationServices = localizationServices
     }
-    
-    func getStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<LessonsInterfaceStringsDomainModel, Never> {
-     
+
+    func execute(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<LessonsStringsDomainModel, Never> {
+
         let localeId: String = translateInLanguage
         
-        let interfaceStrings = LessonsInterfaceStringsDomainModel(
+        let strings = LessonsStringsDomainModel(
             title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.pageTitle"),
             subtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.pageSubtitle"),
             languageFilterTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.languageFilter.title"),
@@ -33,7 +33,7 @@ class GetLessonsInterfaceStringsRepository {
             changePersonalizedLessonSettingsActionLabel: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "dashboard.personalizedToolFooter.buttonTitle")
         )
         
-        return Just(interfaceStrings)
+        return Just(strings)
             .eraseToAnyPublisher()
     }
 }
