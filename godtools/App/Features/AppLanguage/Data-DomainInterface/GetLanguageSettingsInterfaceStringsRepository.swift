@@ -22,7 +22,7 @@ class GetLanguageSettingsInterfaceStringsRepository: GetLanguageSettingsInterfac
         self.appLanguagesRepository = appLanguagesRepository
     }
     
-    @MainActor func getStringsPublisher(translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<LanguageSettingsInterfaceStringsDomainModel, Never> {
+    @MainActor func getStringsPublisher(translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<LanguageSettingsInterfaceStringsDomainModel, Error> {
         
         let localeId: String = translateInAppLanguage
         
@@ -45,7 +45,7 @@ class GetLanguageSettingsInterfaceStringsRepository: GetLanguageSettingsInterfac
             .eraseToAnyPublisher()
     }
     
-    @MainActor private func getNumberOfAppLanguagesAvailableStringPublisher(translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<String, Never> {
+    @MainActor private func getNumberOfAppLanguagesAvailableStringPublisher(translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<String, Error> {
         
         return appLanguagesRepository
             .observeNumberOfAppLanguagesPublisher()

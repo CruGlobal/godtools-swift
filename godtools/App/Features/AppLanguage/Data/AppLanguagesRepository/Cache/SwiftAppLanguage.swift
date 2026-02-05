@@ -17,10 +17,10 @@ typealias SwiftAppLanguage = SwiftAppLanguageV1.SwiftAppLanguage
 enum SwiftAppLanguageV1 {
  
     @Model
-    class SwiftAppLanguage: IdentifiableSwiftDataObject {
+    class SwiftAppLanguage: IdentifiableSwiftDataObject, AppLanguageDataModelInterface {
         
         var languageCode: String = ""
-        var languageDirection: SwiftAppLanguageDirection = SwiftAppLanguageDirection.leftToRight
+        var swiftLanguageDirection: SwiftAppLanguageDirection = SwiftAppLanguageDirection.leftToRight
         var languageId: String = ""
         var languageScriptCode: String?
         
@@ -28,6 +28,37 @@ enum SwiftAppLanguageV1 {
         
         init() {
             
+        }
+        
+        func mapFrom(interface: AppLanguageDataModelInterface) {
+            
+            id = interface.languageId
+            languageCode = interface.languageCode
+            languageId = interface.languageId
+            languageScriptCode = interface.languageScriptCode
+            
+            switch interface.languageDirection {
+            case .leftToRight:
+                swiftLanguageDirection = .leftToRight
+            case .rightToLeft:
+                swiftLanguageDirection = .rightToLeft
+            }
+        }
+        
+        static func createNewFrom(interface: AppLanguageDataModelInterface) -> SwiftAppLanguage {
+            let object = SwiftAppLanguage()
+            object.mapFrom(interface: interface)
+            return object
+        }
+        
+        var languageDirection: AppLanguageDataModel.Direction {
+        
+            switch swiftLanguageDirection {
+            case .leftToRight:
+                return .leftToRight
+            case .rightToLeft:
+                return .rightToLeft
+            }
         }
     }
 }

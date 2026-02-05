@@ -63,7 +63,9 @@ import SwiftUI
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (interfaceLayoutDirection: AppInterfaceLayoutDirectionDomainModel) in
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (interfaceLayoutDirection: AppInterfaceLayoutDirectionDomainModel) in
                 
                 let newLayoutDirection: ApplicationLayoutDirection = interfaceLayoutDirection == .leftToRight ? .leftToRight : .rightToLeft
                 
@@ -74,7 +76,7 @@ import SwiftUI
                     self?.layoutDirection = newLayoutDirection.layoutDirection
                     self?.semanticContentAttributeSubject.send(newLayoutDirection.semanticContentAttribute)
                 }
-            }
+            })
             .store(in: &cancellables)
     }
 }

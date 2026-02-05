@@ -20,11 +20,22 @@ class GetAppLanguageRepository: GetAppLanguageRepositoryInterface {
     
     @MainActor func getLanguagePublisher() -> AnyPublisher<AppLanguageDomainModel, Never> {
                 
-        return userAppLanguageRepository.getLanguageChangedPublisher()
+        return userAppLanguageRepository
+            .cache
+            .persistence
+            .observeCollectionChangesPublisher()
+            .catch { (error: Error) in
+                return Just(Void())
+                    .eraseToAnyPublisher()
+            }
             .flatMap({ (userAppLanguageChanged: Void) -> AnyPublisher<UserAppLanguageDataModel?, Never> in
               
                 return self.userAppLanguageRepository
-                    .getLanguagePublisher()
+                    .getCachedLanguagePublisher()
+                    .catch { (error: Error) in
+                        return Just(nil)
+                            .eraseToAnyPublisher()
+                    }
                     .eraseToAnyPublisher()
             })
             .flatMap({ (userLanguage: UserAppLanguageDataModel?) -> AnyPublisher<AppLanguageDomainModel, Never> in

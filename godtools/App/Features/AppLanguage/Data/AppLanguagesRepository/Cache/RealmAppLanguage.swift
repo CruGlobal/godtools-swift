@@ -8,8 +8,9 @@
 
 import Foundation
 import RealmSwift
+import RepositorySync
 
-class RealmAppLanguage: Object {
+class RealmAppLanguage: Object, IdentifiableRealmObject {
 
     @Persisted var id: String = ""
     @Persisted var languageCode: String = ""
@@ -21,19 +22,25 @@ class RealmAppLanguage: Object {
         return "id"
     }
     
-    func mapFrom(dataModel: AppLanguageDataModelInterface) {
+    func mapFrom(interface: AppLanguageDataModelInterface) {
         
-        id = dataModel.languageId
-        languageCode = dataModel.languageCode
-        languageId = dataModel.languageId
-        languageScriptCode = dataModel.languageScriptCode
+        id = interface.languageId
+        languageCode = interface.languageCode
+        languageId = interface.languageId
+        languageScriptCode = interface.languageScriptCode
         
-        switch dataModel.languageDirection {
+        switch interface.languageDirection {
         case .leftToRight:
             realmLanguageDirection = .leftToRight
         case .rightToLeft:
             realmLanguageDirection = .rightToLeft
         }
+    }
+    
+    static func createNewFrom(interface: AppLanguageDataModelInterface) -> RealmAppLanguage {
+        let object = RealmAppLanguage()
+        object.mapFrom(interface: interface)
+        return object
     }
 }
 

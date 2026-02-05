@@ -22,14 +22,15 @@ class SetUserPreferredAppLanguageRepository: SetUserPreferredAppLanguageReposito
         self.languagesRepository = languagesRepository
     }
     
-    func setLanguagePublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppLanguageDomainModel, Never> {
+    func setLanguagePublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppLanguageDomainModel, Error> {
         
         if let languageModelId = languagesRepository.cache.getCachedLanguage(code: appLanguage)?.id {
             
             userLessonFiltersRepository.storeUserLessonLanguageFilter(with: languageModelId)
         }
         
-        return userAppLanguageRepository.storeLanguagePublisher(appLanguageId: appLanguage)
+        return userAppLanguageRepository
+            .storeLanguagePublisher(appLanguageId: appLanguage)
             .map { _ in
                 return appLanguage
             }
