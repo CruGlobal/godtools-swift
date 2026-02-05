@@ -10,6 +10,7 @@ import Foundation
 import RepositorySync
 import Combine
 import RealmSwift
+import SwiftData
 
 class UserAppLanguageCache {
             
@@ -45,7 +46,20 @@ extension UserAppLanguageCache {
             
         if #available(iOS 17.4, *), let database = swiftDatabase {
             
-            // TODO: Delete for swiftdatabase. ~Levi
+            let context: ModelContext = database.openContext()
+            
+            let objectToDelete: SwiftUserAppLanguage? = try database.read.object(context: context, id: id)
+            
+            if let objectToDelete = objectToDelete {
+                
+                try database.write.context(
+                    context: context,
+                    writeObjects: WriteSwiftObjects(
+                        deleteObjects: [objectToDelete],
+                        insertObjects: nil
+                    )
+                )
+            }
         }
         else if let realmDatabase = realmDatabase {
             
