@@ -59,7 +59,8 @@ import SwiftUI
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
 
-        getLocalizationSettingsUseCase.execute()
+        getLocalizationSettingsUseCase
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$localizationSettings)
 
