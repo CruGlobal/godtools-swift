@@ -109,6 +109,7 @@ enum FlowStep {
     
     // tutorial
     case closeTappedFromTutorial
+    case continueTappedFromTutorial
     case startUsingGodToolsTappedFromTutorial
     case tutorialFlowCompleted(state: TutorialFlowCompletedState)
     
@@ -117,7 +118,6 @@ enum FlowStep {
     case tutorialTappedFromMenu
     case languageSettingsTappedFromMenu
     case localizationSettingsTappedFromMenu
-    case backTappedFromLocalizationSettings
     case loginTappedFromMenu
     case createAccountTappedFromMenu
     case activityTappedFromMenu
@@ -229,4 +229,8 @@ enum FlowStep {
     
     // download tool
     case closeTappedFromDownloadToolProgress
+    
+    // localization settings
+    case backTappedFromLocalizationSettings
+    case didSelectLocalizationFromLocalizationSettings(localization: LocalizationSettingsCountryListItemDomainModel)
 }
