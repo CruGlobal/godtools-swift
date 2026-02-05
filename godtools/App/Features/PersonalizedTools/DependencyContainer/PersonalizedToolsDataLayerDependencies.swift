@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RepositorySync
 
 class PersonalizedToolsDataLayerDependencies {
     
@@ -36,9 +37,27 @@ class PersonalizedToolsDataLayerDependencies {
     }
 
     func getUserLocalizationSettingsRepository() -> UserLocalizationSettingsRepository {
-
+        
+        let persistence: any Persistence<UserLocalizationSettingsDataModel, UserLocalizationSettingsDataModel>
+        
+        if #available(iOS 17.4, *), let database = coreDataLayer.getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                dataModelMapping: SwiftUserLocalizationSettingsDataModelMapping()
+            )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                database: coreDataLayer.getSharedRealmDatabase(),
+                dataModelMapping: RealmUserLocalizationSettingsDataModelMapping()
+            )
+        }
+        
         return UserLocalizationSettingsRepository(
-            cache: RealmUserLocalizationSettingsCache(realmDatabase: coreDataLayer.getSharedLegacyRealmDatabase())
+            persistence: persistence,
+            cache: UserLocalizationSettingsCache(persistence: persistence)
         )
     }
 }
