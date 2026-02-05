@@ -18,7 +18,7 @@ class GetAppLanguagesListUseCase {
         self.getAppLanguagesListRepository = getAppLanguagesListRepository
     }
     
-    func getAppLanguagesListPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> {
+    func getAppLanguagesListPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[AppLanguageListItemDomainModel], Error> {
         
         return getAppLanguagesListRepository
             .getLanguagesPublisher(appLanguage: appLanguage)

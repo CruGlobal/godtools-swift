@@ -7,49 +7,40 @@
 //
 
 import Foundation
+import RepositorySync
 import Combine
 
 class AppLanguagesRepositorySync: AppLanguagesRepositorySyncInterface {
         
     private let api: AppLanguagesApi
-    private let cache: RealmAppLanguagesCache
+    private let persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>
     private let syncInvalidator: SyncInvalidator
     
-    init(api: AppLanguagesApi, cache: RealmAppLanguagesCache, syncInvalidator: SyncInvalidator) {
+    init(api: AppLanguagesApi, persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>, syncInvalidator: SyncInvalidator) {
         
         self.api = api
-        self.cache = cache
+        self.persistence = persistence
         self.syncInvalidator = syncInvalidator
     }
     
-    func syncPublisher() -> AnyPublisher<Void, Never> {
+    func syncPublisher() -> AnyPublisher<Void, Error> {
 
         guard syncInvalidator.shouldSync else {
             return Just(Void())
+                .setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
         }
                 
-        return api.getAppLanguagesPublisher()
-            .catch({ (error: Error) in
-                return Just([])
-                    .eraseToAnyPublisher()
-            })
-            .flatMap({ (appLanguages: [AppLanguageCodable]) -> AnyPublisher<[AppLanguageDataModel], Never> in
+        return api
+            .getAppLanguagesPublisher()
+            .flatMap({ (appLanguages: [AppLanguageCodable]) -> AnyPublisher<Void, Error> in
                 
-                let dataModels: [AppLanguageDataModel] = appLanguages.map({
-                    AppLanguageDataModel(dataModel: $0)
-                })
-                
-                return Just(dataModels)
-                    .eraseToAnyPublisher()
-            })
-            .flatMap({ (appLanguages: [AppLanguageDataModel]) -> AnyPublisher<Void, Never> in
-                
-                return self.cache.storeLanguagesPublisher(appLanguages: appLanguages)
-                    .catch({ _ in
-                        return Just([])
-                            .eraseToAnyPublisher()
-                    })
+                return self.persistence
+                    .writeObjectsPublisher(
+                        externalObjects: appLanguages,
+                        writeOption: nil,
+                        getOption: nil
+                    )
                     .map { _ in
                         
                         self.syncInvalidator.didSync()

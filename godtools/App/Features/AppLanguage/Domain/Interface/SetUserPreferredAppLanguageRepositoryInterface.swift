@@ -11,5 +11,5 @@ import Combine
 
 protocol SetUserPreferredAppLanguageRepositoryInterface {
     
-    func setLanguagePublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppLanguageDomainModel, Never>
+    func setLanguagePublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppLanguageDomainModel, Error>
 }

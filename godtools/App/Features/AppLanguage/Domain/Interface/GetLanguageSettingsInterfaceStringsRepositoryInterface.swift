@@ -11,5 +11,5 @@ import Combine
 
 protocol GetLanguageSettingsInterfaceStringsRepositoryInterface {
     
-    @MainActor func getStringsPublisher(translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<LanguageSettingsInterfaceStringsDomainModel, Never>
+    @MainActor func getStringsPublisher(translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<LanguageSettingsInterfaceStringsDomainModel, Error>
 }

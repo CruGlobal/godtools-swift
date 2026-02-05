@@ -51,7 +51,13 @@ import Combine
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$appLanguagesList)
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (appLanguages: [AppLanguageListItemDomainModel]) in
+                
+                self?.appLanguagesList = appLanguages
+            })
+            .store(in: &cancellables)
         
         $appLanguage
             .dropFirst()
