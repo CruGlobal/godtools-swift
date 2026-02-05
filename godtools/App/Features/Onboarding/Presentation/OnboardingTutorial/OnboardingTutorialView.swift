@@ -133,8 +133,20 @@ struct OnboardingTutorialView: View {
 
 extension OnboardingTutorialView {
     
-    func getCurrentPage() -> Int {
+    func getPageCount() -> Int {
+        return viewModel.pages.count
+    }
+    
+    func getCurrentPage() -> OnboardingTutorialPage? {
+        return viewModel.getPage(index: viewModel.currentPage)
+    }
+    
+    func getCurrentPageIndex() -> Int {
         return viewModel.currentPage
+    }
+    
+    func getOnboardingTutorialPageAnalyticsProperties(page: OnboardingTutorialPage) -> OnboardingTutorialPageAnalyticsProperties {
+        return viewModel.getOnboardingTutorialPageAnalyticsProperties(page: page)
     }
     
     func setCurrentPage(page: Int) {

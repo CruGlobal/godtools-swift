@@ -14,8 +14,10 @@ import SwiftUI
         
     private let resourcesRepository: ResourcesRepository
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    private let getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase
+    private let getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase
+    private let getLessonsInterfaceStringsUseCase: GetLessonsInterfaceStringsUseCase
     private let getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase
-    private let viewLessonsUseCase: ViewLessonsUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let getToolBannerUseCase: GetToolBannerUseCase
@@ -26,6 +28,7 @@ import SwiftUI
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private var lessonFilterLanguageSelection: LessonFilterLanguageDomainModel?
+    @Published private var localizationSettings: UserLocalizationSettingsDomainModel?
     
     @Published private(set) var toggleOptions: [PersonalizationToggleOption] = []
     @Published private(set) var strings: LessonsInterfaceStringsDomainModel = .emptyValue
@@ -38,13 +41,15 @@ import SwiftUI
     @Published var lessons: [LessonListItemDomainModel] = []
     @Published var isLoadingLessons: Bool = true
         
-    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase, viewLessonsUseCase: ViewLessonsUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getToolBannerUseCase: GetToolBannerUseCase) {
-        
+    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase, getLessonsInterfaceStringsUseCase: GetLessonsInterfaceStringsUseCase, getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getToolBannerUseCase: GetToolBannerUseCase) {
+
         self.flowDelegate = flowDelegate
         self.resourcesRepository = resourcesRepository
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
+        self.getLocalizationSettingsUseCase = getLocalizationSettingsUseCase
+        self.getPersonalizedLessonsUseCase = getPersonalizedLessonsUseCase
+        self.getLessonsInterfaceStringsUseCase = getLessonsInterfaceStringsUseCase
         self.getUserLessonFiltersUseCase = getUserLessonFiltersUseCase
-        self.viewLessonsUseCase = viewLessonsUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.getToolBannerUseCase = getToolBannerUseCase
@@ -53,35 +58,64 @@ import SwiftUI
             .getLanguagePublisher()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
-        
-        Publishers.CombineLatest(
+
+        getLocalizationSettingsUseCase.execute()
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$localizationSettings)
+
+        $appLanguage
+            .dropFirst()
+            .map { appLanguage in
+                getLessonsInterfaceStringsUseCase.getStringsPublisher(appLanguage: appLanguage)
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (interfaceStrings: LessonsInterfaceStringsDomainModel) in
+
+                self?.strings = interfaceStrings
+                self?.sectionTitle = interfaceStrings.title
+                self?.subtitle = interfaceStrings.subtitle
+                self?.languageFilterTitle = interfaceStrings.languageFilterTitle
+                self?.toggleOptions = [
+                    PersonalizationToggleOption(title: interfaceStrings.personalizedToolToggleTitle, selection: .personalized),
+                    PersonalizationToggleOption(title: interfaceStrings.allLessonsToggleTitle, selection: .all)
+                ]
+            }
+            .store(in: &cancellables)
+
+        Publishers.CombineLatest4(
             $appLanguage,
-            $lessonFilterLanguageSelection
+            $lessonFilterLanguageSelection,
+            $localizationSettings,
+            $selectedToggle
         )
         .dropFirst()
-        .map { (appLanguage, languageFilter) in
-        
-            viewLessonsUseCase
-                .viewPublisher(appLanguage: appLanguage, filterLessonsByLanguage: languageFilter)
+        .map { (appLanguage, languageFilter, localizationSettings, toggle) -> AnyPublisher<[LessonListItemDomainModel], Error> in
+
+            if toggle == .personalized, let localizationSettings = localizationSettings {
+
+                return getPersonalizedLessonsUseCase
+                    .execute(
+                        appLanguage: appLanguage,
+                        country: localizationSettings.selectedCountry,
+                        filterLessonsByLanguage: languageFilter
+                    )
+
+            } else {
+
+                // TODO: - all lessons use case
+                return Just([])
+                    .setFailureType(to: Error.self)
+                    .eraseToAnyPublisher()
+            }
         }
         .switchToLatest()
         .receive(on: DispatchQueue.main)
         .sink(receiveCompletion: { _ in
-            
-        }, receiveValue: { [weak self] (domainModel: ViewLessonsDomainModel) in
-            
-            let interfaceStrings = domainModel.interfaceStrings
 
-            self?.strings = interfaceStrings
-            self?.sectionTitle = interfaceStrings.title
-            self?.subtitle = interfaceStrings.subtitle
-            self?.languageFilterTitle = interfaceStrings.languageFilterTitle
-            self?.toggleOptions = [
-                PersonalizationToggleOption(title: interfaceStrings.personalizedToolToggleTitle, selection: .personalized),
-                PersonalizationToggleOption(title: interfaceStrings.allLessonsToggleTitle, selection: .all)
-            ]
+        }, receiveValue: { [weak self] (lessons: [LessonListItemDomainModel]) in
 
-            self?.lessons = domainModel.lessons
+            self?.lessons = lessons
             self?.isLoadingLessons = false
         })
         .store(in: &cancellables)

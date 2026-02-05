@@ -30,13 +30,13 @@ final class PersonalizedToolsApi {
         baseUrl = config.getMobileContentApiBaseUrl()
     }
     
-    private func getAllRankedResourcesUrlRequest(urlSession: URLSession, country: String?, language: String?, resouceType: ResourceType?) -> URLRequest {
+    private func getAllRankedResourcesUrlRequest(urlSession: URLSession, country: String?, language: String?, resourceType: ResourceType?) -> URLRequest {
         
         let queryItems: [URLQueryItem]? = JsonApiFilter.buildQueryItems(
             nameValues: [
                 QueryName.country.rawValue: [country],
                 QueryName.language.rawValue: [language],
-                QueryName.resourceType.rawValue: [resouceType?.rawValue]
+                QueryName.resourceType.rawValue: [resourceType?.rawValue]
             ]
         )
         
@@ -75,7 +75,7 @@ final class PersonalizedToolsApi {
             )
     }
     
-    func getAllRankedResourcesPublisher(requestPriority: RequestPriority, country: String?, language: String?, resouceType: ResourceType?) -> AnyPublisher<[ResourceCodable], Error> {
+    func getAllRankedResourcesPublisher(requestPriority: RequestPriority, country: String?, language: String?, resourceType: ResourceType?) -> AnyPublisher<[ResourceCodable], Error> {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
@@ -83,7 +83,7 @@ final class PersonalizedToolsApi {
             urlSession: urlSession,
             country: country,
             language: language,
-            resouceType: resouceType
+            resourceType: resourceType
         )
         
         return requestSender
