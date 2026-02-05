@@ -17,10 +17,10 @@ class LessonsFeatureDomainLayerDependencies {
         self.dataLayer = dataLayer
     }
     
-    func getViewLessonsUseCase() -> ViewLessonsUseCase {
-        return ViewLessonsUseCase(
-            getInterfaceStringsRepository: dataLayer.getLessonsInterfaceStringsRepositoryInterface(),
-            getLessonsListRepository: dataLayer.getLessonsListRepositoryInterface()
+    func getLessonsInterfaceStringsUseCase() -> GetLessonsInterfaceStringsUseCase {
+        return GetLessonsInterfaceStringsUseCase(
+            getInterfaceStringsRepository: dataLayer.getLessonsInterfaceStringsRepository()
         )
     }
+
 }

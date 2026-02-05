@@ -52,4 +52,17 @@ class PersonalizedToolsDomainLayerDependencies {
             userLocalizationSettingsRepository: dataLayer.getUserLocalizationSettingsRepository()
         )
     }
+
+    func getGetPersonalizedLessonsUseCase() -> GetPersonalizedLessonsUseCase {
+
+        return GetPersonalizedLessonsUseCase(
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            personalizedLessonsRepository: dataLayer.getPersonalizedLessonsRepository(),
+            languagesRepository: coreDataLayer.getLanguagesRepository(),
+            getTranslatedToolName: coreDataLayer.getTranslatedToolName(),
+            getTranslatedToolLanguageAvailability: coreDataLayer.getTranslatedToolLanguageAvailability(),
+            lessonProgressRepository: coreDataLayer.getUserLessonProgressRepository(),
+            getLessonListItemProgressRepository: coreDataLayer.getLessonListItemProgressRepository()
+        )
+    }
 }

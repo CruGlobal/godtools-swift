@@ -12,12 +12,12 @@ struct LocalizationSettingsCountryItemView: View {
     
     private static let lightGrey = Color.getColorWithRGB(red: 151, green: 151, blue: 151, opacity: 1)
     
-    private let country: LocalizationSettingsCountryDomainModel
+    private let country: LocalizationSettingsCountryListItemDomainModel
     private let isSelected: Bool
     private let tappedClosure: (() -> Void)?
     private let accessibility: AccessibilityStrings.Button = .localizationSettingsCountryListItem
     
-    init(country: LocalizationSettingsCountryDomainModel, isSelected: Bool, tappedClosure: (() -> Void)?) {
+    init(country: LocalizationSettingsCountryListItemDomainModel, isSelected: Bool, tappedClosure: (() -> Void)?) {
         
         self.country = country
         self.isSelected = isSelected
