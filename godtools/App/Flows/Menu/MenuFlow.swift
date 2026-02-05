@@ -110,6 +110,8 @@ class MenuFlow: Flow {
                 )
                 .sink { _ in
                     
+                } receiveValue: { _ in
+                    
                 }
                 .store(in: &Self.backgroundCancellables)
 

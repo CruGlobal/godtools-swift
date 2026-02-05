@@ -8,25 +8,40 @@
 
 import Foundation
 import Combine
+import RepositorySync
 
-class UserLocalizationSettingsRepository {
+class UserLocalizationSettingsRepository: RepositorySync<UserLocalizationSettingsDataModel, NoExternalDataFetch<UserLocalizationSettingsDataModel>> {
 
-    private let cache: RealmUserLocalizationSettingsCache
+    static let sharedUserId: String = "user"
+    
+    private let cache: UserLocalizationSettingsCache
 
-    init(cache: RealmUserLocalizationSettingsCache) {
+    init(persistence: any Persistence<UserLocalizationSettingsDataModel, UserLocalizationSettingsDataModel>, cache: UserLocalizationSettingsCache) {
+        
         self.cache = cache
+        
+        super.init(
+            externalDataFetch: NoExternalDataFetch<UserLocalizationSettingsDataModel>(),
+            persistence: persistence
+        )
     }
 
-    func setCountryPublisher(isoRegionCode: String) -> AnyPublisher<UserLocalizationSettingsDataModel, Never> {
+    func setCountryPublisher(isoRegionCode: String) -> AnyPublisher<UserLocalizationSettingsDataModel, Error> {
 
-        let dataModel = UserLocalizationSettingsDataModel(selectedCountryIsoRegionCode: isoRegionCode)
-        cache.storeUserLocalizationSetting(dataModel: dataModel)
-
-        return Just(dataModel)
+        let dataModel = UserLocalizationSettingsDataModel(
+            id: Self.sharedUserId,
+            selectedCountryIsoRegionCode: isoRegionCode
+        )
+        
+        return cache.storeUserLocalizationSetting(dataModel: dataModel)
+            .map { _ in
+                return dataModel
+            }
             .eraseToAnyPublisher()
     }
 
-    func getUserLocalizationSettingPublisher() -> AnyPublisher<UserLocalizationSettingsDataModel?, Never> {
-        return cache.getUserLocalizationSettingPublisher()
+    func getUserLocalizationSettingPublisher() -> AnyPublisher<UserLocalizationSettingsDataModel?, Error> {
+        
+        return cache.getUserLocalizationSettingPublisher(id: Self.sharedUserId)
     }
 }
