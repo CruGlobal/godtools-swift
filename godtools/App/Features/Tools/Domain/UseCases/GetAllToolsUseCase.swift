@@ -30,7 +30,7 @@ final class GetAllToolsUseCase {
         self.getTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability
     }
     
-    @MainActor func execute(translatedInAppLanguage: AppLanguageDomainModel, languageIdForAvailabilityText: String?, filterToolsByCategory: ToolFilterCategoryDomainModel?, filterToolsByLanguage: ToolFilterLanguageDomainModel?) -> AnyPublisher<[ToolListItemDomainModel], Error> {
+    @MainActor func execute(appLanguage: AppLanguageDomainModel, languageIdForAvailabilityText: String?, filterToolsByCategory: ToolFilterCategoryDomainModel?, filterToolsByLanguage: ToolFilterLanguageDomainModel?) -> AnyPublisher<[ToolListItemDomainModel], Error> {
         
         let languageForAvailabilityTextModel: LanguageDataModel?
         
@@ -42,7 +42,7 @@ final class GetAllToolsUseCase {
         
         return Publishers.CombineLatest(
             resourcesRepository.persistence.observeCollectionChangesPublisher().prepend(Void()),
-            getToolListItemInterfaceStringsRepository.getStringsPublisher(translateInLanguage: translatedInAppLanguage).setFailureType(to: Error.self)
+            getToolListItemInterfaceStringsRepository.getStringsPublisher(translateInLanguage: appLanguage).setFailureType(to: Error.self)
         )
         .flatMap({ (resourcesChanged: Void, interfaceStrings: ToolListItemInterfaceStringsDomainModel) -> AnyPublisher<[ToolListItemDomainModel], Error> in
         
@@ -58,7 +58,7 @@ final class GetAllToolsUseCase {
                     let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel
                     
                     if let language = languageForAvailabilityTextModel {
-                        toolLanguageAvailability = self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: $0, language: language, translateInLanguage: translatedInAppLanguage)
+                        toolLanguageAvailability = self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: $0, language: language, translateInLanguage: appLanguage)
                     }
                     else {
                         toolLanguageAvailability = ToolLanguageAvailabilityDomainModel(availabilityString: "", isAvailable: false)
@@ -69,8 +69,8 @@ final class GetAllToolsUseCase {
                         analyticsToolAbbreviation: $0.abbreviation,
                         dataModelId: $0.id,
                         bannerImageId: $0.attrBanner,
-                        name: self.getTranslatedToolName.getToolName(resource: $0, translateInLanguage: translatedInAppLanguage),
-                        category: self.getTranslatedToolCategory.getTranslatedCategory(resource: $0, translateInLanguage: translatedInAppLanguage),
+                        name: self.getTranslatedToolName.getToolName(resource: $0, translateInLanguage: appLanguage),
+                        category: self.getTranslatedToolCategory.getTranslatedCategory(resource: $0, translateInLanguage: appLanguage),
                         isFavorited: self.favoritedResourcesRepository.getResourceIsFavorited(id: $0.id),
                         languageAvailability: toolLanguageAvailability
                     )
