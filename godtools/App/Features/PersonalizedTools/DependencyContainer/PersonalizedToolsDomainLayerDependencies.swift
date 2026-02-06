@@ -62,7 +62,7 @@ class PersonalizedToolsDomainLayerDependencies {
             personalizedLessonsRepository: dataLayer.getPersonalizedLessonsRepository(),
             languagesRepository: coreDataLayer.getLanguagesRepository(),
             lessonProgressRepository: coreDataLayer.getUserLessonProgressRepository(),
-            getLessonsListItems: coreDomainlayer.getLessonsListItems()
+            getLessonsListItems: coreDomainlayer.supporting.getLessonsListItems()
         )
     }
 }

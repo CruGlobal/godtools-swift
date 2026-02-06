@@ -57,7 +57,7 @@ class AppDiContainer {
         let shareToolDiContainer = ShareToolDiContainer(coreDataLayer: dataLayer)
         let spotlightToolsDiContainer = SpotlightToolsDiContainer(coreDataLayer: dataLayer)
         let toolDetailsDiContainer = ToolDetailsFeatureDiContainer(coreDataLayer: dataLayer)
-        let toolsDiContainer = ToolsDiContainer(coreDataLayer: dataLayer)
+        let toolsDiContainer = ToolsDiContainer(coreDataLayer: dataLayer, coreDomainLayer: domainLayer)
         let toolScreenShareDiContainer = ToolScreenShareFeatureDiContainer(coreDataLayer: dataLayer)
         let toolScreenShareQRCodeDiContainer = ToolScreenShareQRCodeFeatureDiContainer(coreDataLayer: dataLayer)
         let toolSettingsDiContainer = ToolSettingsDiContainer(coreDataLayer: dataLayer)

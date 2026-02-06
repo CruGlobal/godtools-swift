@@ -20,6 +20,7 @@ import Combine
     private let getToolsStringsUseCase: GetToolsStringsUseCase
     private let getAllToolsUseCase: GetAllToolsUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    private let getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase
     private let favoritingToolMessageCache: FavoritingToolMessageCache
     private let getSpotlightToolsUseCase: GetSpotlightToolsUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
@@ -36,6 +37,7 @@ import Combine
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private var toolFilterCategorySelection: ToolFilterCategoryDomainModel = ToolFilterAnyCategoryDomainModel.emptyValue
     @Published private var toolFilterLanguageSelection: ToolFilterLanguageDomainModel = ToolFilterAnyLanguageDomainModel.emptyValue
+    @Published private var localizationSettings: UserLocalizationSettingsDomainModel?
     
     @Published private(set) var toggleOptions: [PersonalizationToggleOption] = []
     @Published private(set) var strings: ToolsStringsDomainModel = .emptyValue
@@ -52,13 +54,14 @@ import Combine
     @Published var allTools: [ToolListItemDomainModel] = Array()
     @Published var isLoadingAllTools: Bool = true
         
-    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, getToolsStringsUseCase: GetToolsStringsUseCase, getAllToolsUseCase: GetAllToolsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, favoritingToolMessageCache: FavoritingToolMessageCache, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getUserToolFiltersUseCase: GetUserToolFiltersUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getToolBannerUseCase: GetToolBannerUseCase) {
+    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, getToolsStringsUseCase: GetToolsStringsUseCase, getAllToolsUseCase: GetAllToolsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, favoritingToolMessageCache: FavoritingToolMessageCache, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getUserToolFiltersUseCase: GetUserToolFiltersUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getToolBannerUseCase: GetToolBannerUseCase) {
         
         self.flowDelegate = flowDelegate
         self.resourcesRepository = resourcesRepository
         self.getToolsStringsUseCase = getToolsStringsUseCase
         self.getAllToolsUseCase = getAllToolsUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
+        self.getLocalizationSettingsUseCase = getLocalizationSettingsUseCase
         self.favoritingToolMessageCache = favoritingToolMessageCache
         self.getSpotlightToolsUseCase = getSpotlightToolsUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
@@ -74,6 +77,48 @@ import Combine
             .getLanguagePublisher()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
+        
+        getLocalizationSettingsUseCase
+            .execute()
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$localizationSettings)
+        
+        Publishers.CombineLatest4(
+            $appLanguage,
+            $toolFilterCategorySelection,
+            $toolFilterLanguageSelection,
+            $selectedToggle
+        )
+        .dropFirst()
+        .map { (appLanguage, toolFilterCategory, toolFilterLanguage, toggle) -> AnyPublisher<[ToolListItemDomainModel], Error> in
+
+            switch toggle {
+            
+            case .personalized:
+                return Just([])
+                    .setFailureType(to: Error.self)
+                    .eraseToAnyPublisher()
+            
+            case .all:
+                return getAllToolsUseCase
+                    .execute(
+                        appLanguage: appLanguage,
+                        languageIdForAvailabilityText: toolFilterLanguage.languageDataModelId,
+                        filterToolsByCategory: toolFilterCategory,
+                        filterToolsByLanguage: toolFilterLanguage
+                    )
+            }
+        }
+        .switchToLatest()
+        .receive(on: DispatchQueue.main)
+        .sink(receiveCompletion: { _ in
+
+        }, receiveValue: { [weak self] (tools: [ToolListItemDomainModel]) in
+
+            self?.allTools = tools
+            self?.isLoadingAllTools = false
+        })
+        .store(in: &cancellables)
         
         $appLanguage.dropFirst()
             .map { appLanguage in
@@ -95,33 +140,6 @@ import Combine
                 ]
             }
             .store(in: &cancellables)
-        
-        Publishers.CombineLatest3(
-            $appLanguage.dropFirst(),
-            $toolFilterCategorySelection.dropFirst(),
-            $toolFilterLanguageSelection.dropFirst()
-        )
-        .map { (appLanguage, toolFilterCategory, toolFilterLanguage) in
-                                    
-            return getAllToolsUseCase
-                .execute(
-                    translatedInAppLanguage: appLanguage,
-                    languageIdForAvailabilityText: toolFilterLanguage.languageDataModelId,
-                    filterToolsByCategory: toolFilterCategory,
-                    filterToolsByLanguage: toolFilterLanguage
-                )
-
-        }
-        .switchToLatest()
-        .receive(on: DispatchQueue.main)
-        .sink(receiveCompletion: { _ in
-            
-        }, receiveValue: { [weak self] (allTools: [ToolListItemDomainModel]) in
-            
-            self?.allTools = allTools
-            self?.isLoadingAllTools = false
-        })
-        .store(in: &cancellables)
         
         Publishers.CombineLatest3(
             $appLanguage.dropFirst(),

@@ -25,7 +25,7 @@ class LessonsFeatureDomainLayerDependencies {
         return GetAllLessonsUseCase(
             resourcesRepository: coreDataLayer.getResourcesRepository(),
             lessonProgressRepository: coreDataLayer.getUserLessonProgressRepository(),
-            getLessonsListItems: coreDomainlayer.getLessonsListItems()
+            getLessonsListItems: coreDomainlayer.supporting.getLessonsListItems()
         )
     }
     

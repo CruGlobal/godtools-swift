@@ -8,7 +8,7 @@
 
 import Foundation
 
-class GetLessonsListItems {
+final class GetLessonsListItems {
     
     private let languagesRepository: LanguagesRepository
     private let getTranslatedToolName: GetTranslatedToolName
