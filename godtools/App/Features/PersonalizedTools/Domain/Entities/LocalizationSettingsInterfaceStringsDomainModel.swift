@@ -9,12 +9,16 @@
 import Foundation
 
 struct LocalizationSettingsInterfaceStringsDomainModel {
-    
+
     let navTitle: String
     let localizationHeaderTitle: String
     let localizationHeaderDescription: String
-    
+
     static var emptyValue: LocalizationSettingsInterfaceStringsDomainModel {
-        return LocalizationSettingsInterfaceStringsDomainModel(navTitle: "", localizationHeaderTitle: "", localizationHeaderDescription: "")
+        return LocalizationSettingsInterfaceStringsDomainModel(
+            navTitle: "",
+            localizationHeaderTitle: "",
+            localizationHeaderDescription: ""
+        )
     }
 }

@@ -232,5 +232,9 @@ enum FlowStep {
     
     // localization settings
     case backTappedFromLocalizationSettings
+    case countryTappedFromLocalizationSettings(country: LocalizationSettingsCountryListItemDomainModel)
+    case closeLocalizationConfirmationFromLocalizationSettings
+    case cancelLocalizationConfirmationFromLocalizationSettings
+    case confirmLocalizationConfirmationFromLocalizationSettings(country: LocalizationSettingsCountryListItemDomainModel)
     case didSelectLocalizationFromLocalizationSettings(localization: LocalizationSettingsCountryListItemDomainModel)
 }

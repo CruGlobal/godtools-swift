@@ -18,7 +18,8 @@ class MenuFlow: Flow {
     private var tutorialFlow: TutorialFlow?
     private var languageSettingsFlow: LanguageSettingsFlow?
     private var cancellables: Set<AnyCancellable> = Set()
-    
+    private var localizationSettingsViewModel: LocalizationSettingsViewModel?
+
     private weak var flowDelegate: FlowDelegate?
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
@@ -92,14 +93,32 @@ class MenuFlow: Flow {
             closeLanguageSettings()
             
         case .localizationSettingsTappedFromMenu:
-            let localizationSettings = getLocalizationSettingsView()
+            let localizationSettings = createAndStoreLocalizationSettingsView()
             navigationController.pushViewController(localizationSettings, animated: true)
             
         case .backTappedFromLocalizationSettings:
             navigationController.popViewController(animated: true)
-            
+
+        case .countryTappedFromLocalizationSettings(let country):
+            let confirmationView = getLocalizationSettingsConfirmationView()
+            navigationController.present(confirmationView, animated: true)
+
+        case .closeLocalizationConfirmationFromLocalizationSettings:
+            localizationSettingsViewModel?.pendingCountry = nil
+            navigationController.dismiss(animated: true)
+
+        case .cancelLocalizationConfirmationFromLocalizationSettings:
+            localizationSettingsViewModel?.pendingCountry = nil
+            navigationController.dismiss(animated: true)
+
+        case .confirmLocalizationConfirmationFromLocalizationSettings(let country):
+//            localizationSettingsViewModel?.selectedCountryIsoRegionCode = country.isoRegionCode
+            localizationSettingsViewModel?.pendingCountry = nil
+            navigationController.dismiss(animated: true)
+            navigate(step: .didSelectLocalizationFromLocalizationSettings(localization: country))
+
         case .didSelectLocalizationFromLocalizationSettings(let localization):
-            
+
             appDiContainer
                 .feature
                 .personalizedTools
@@ -109,9 +128,9 @@ class MenuFlow: Flow {
                     isoRegionCode: localization.isoRegionCode
                 )
                 .sink { _ in
-                    
+
                 } receiveValue: { _ in
-                    
+
                 }
                 .store(in: &Self.backgroundCancellables)
 
@@ -720,14 +739,78 @@ extension MenuFlow {
     }
     
     private func pushWebContentView(webContent: WebContentType, screenAccessibility: AccessibilityStrings.Screen?, backTappedFromWebContentStep: FlowStep) {
-        
+
         let view = getWebContentView(
             webContent: webContent,
             screenAccessibility: screenAccessibility,
             backTappedFromWebContentStep: backTappedFromWebContentStep
         )
-        
+
         navigationController.pushViewController(view, animated: true)
+    }
+
+    private func createAndStoreLocalizationSettingsView() -> UIViewController {
+
+        let viewModel = LocalizationSettingsViewModel(
+            flowDelegate: self,
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            getCountryListUseCase: appDiContainer.feature.personalizedTools.domainLayer.getLocalizationSettingsCountryListUseCase(),
+            getLocalizationSettingsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getGetLocalizationSettingsUseCase(),
+            searchCountriesUseCase: appDiContainer.feature.personalizedTools.domainLayer.getSearchCountriesInLocalizationSettingsCountriesListUseCase(),
+            viewLocalizationSettingsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getViewLocalizationSettingsUseCase(),
+            viewSearchBarUseCase: appDiContainer.domainLayer.getViewSearchBarUseCase()
+        )
+
+        // Store reference for confirmation view
+        self.localizationSettingsViewModel = viewModel
+
+        let view = LocalizationSettingsView(viewModel: viewModel)
+
+        let backButton = AppBackBarItem(
+            target: viewModel,
+            action: #selector(viewModel.backTapped),
+            accessibilityIdentifier: nil
+        )
+
+        let hostingView = AppHostingController<LocalizationSettingsView>(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                appearance: nil,
+                backButton: backButton,
+                leadingItems: [],
+                trailingItems: []
+            )
+        )
+
+        return hostingView
+    }
+
+    private func getLocalizationSettingsConfirmationView() -> UIViewController {
+
+        guard let localizationSettingsViewModel = localizationSettingsViewModel,
+              let pendingCountry = localizationSettingsViewModel.pendingCountry else {
+            return UIViewController()
+        }
+
+        let confirmationViewModel = LocalizationSettingsConfirmationViewModel(
+            flowDelegate: self,
+            selectedCountry: pendingCountry,
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices()
+        )
+
+        let confirmationView = LocalizationSettingsConfirmationView(viewModel: confirmationViewModel)
+
+        let hostingView = AppHostingController<LocalizationSettingsConfirmationView>(
+            rootView: confirmationView,
+            navigationBar: nil
+        )
+
+        hostingView.modalPresentationStyle = .overFullScreen
+        hostingView.modalTransitionStyle = .crossDissolve
+        hostingView.view.backgroundColor = .clear
+
+        return hostingView
     }
 }
 

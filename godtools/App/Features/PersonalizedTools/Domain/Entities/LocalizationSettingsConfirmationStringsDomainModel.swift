@@ -1,0 +1,28 @@
+//
+//  LocalizationSettingsConfirmationStringsDomainModel.swift
+//  godtools
+//
+//  Created by Rachael Skeath on 2/6/26.
+//  Copyright © 2026 Cru. All rights reserved.
+//
+
+import Foundation
+
+struct LocalizationSettingsConfirmationStringsDomainModel {
+
+    let title: String
+    let description: String
+    let detail: String
+    let cancelButton: String
+    let confirmButton: String
+
+    static var emptyValue: LocalizationSettingsConfirmationStringsDomainModel {
+        return LocalizationSettingsConfirmationStringsDomainModel(
+            title: "",
+            description: "",
+            detail: "",
+            cancelButton: "",
+            confirmButton: ""
+        )
+    }
+}
