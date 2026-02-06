@@ -14,7 +14,7 @@ import SwiftUI
     
     private let dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
-    private let viewDashboardUseCase: ViewDashboardUseCase
+    private let getDashboardStringsUseCase: GetDashboardStringsUseCase
         
     private var cancellables: Set<AnyCancellable> = Set()
     private var initialTabSet: Bool = false
@@ -29,12 +29,12 @@ import SwiftUI
     @Published var toolsButtonTitle: String = ""
     @Published var currentTab: Int = 0
         
-    init(startingTab: DashboardTabTypeDomainModel, flowDelegate: FlowDelegate, dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewDashboardUseCase: ViewDashboardUseCase, dashboardTabObserver: CurrentValueSubject<DashboardTabTypeDomainModel, Never>) {
+    init(startingTab: DashboardTabTypeDomainModel, flowDelegate: FlowDelegate, dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getDashboardStringsUseCase: GetDashboardStringsUseCase, dashboardTabObserver: CurrentValueSubject<DashboardTabTypeDomainModel, Never>) {
         
         self.flowDelegate = flowDelegate
         self.dashboardPresentationLayerDependencies = dashboardPresentationLayerDependencies
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
-        self.viewDashboardUseCase = viewDashboardUseCase
+        self.getDashboardStringsUseCase = getDashboardStringsUseCase
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
@@ -45,16 +45,16 @@ import SwiftUI
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
                 
-                viewDashboardUseCase
-                    .viewPublisher(appLanguage: appLanguage)
+                getDashboardStringsUseCase
+                    .execute(translateInLanguage: appLanguage)
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (domainModel: ViewDashboardDomainModel) in
+            .sink { [weak self] (strings: DashboardStringsDomainModel) in
                 
-                self?.lessonsButtonTitle = domainModel.interfaceStrings.lessonsActionTitle
-                self?.favoritesButtonTitle = domainModel.interfaceStrings.favoritesActionTitle
-                self?.toolsButtonTitle = domainModel.interfaceStrings.toolsActionTitle
+                self?.lessonsButtonTitle = strings.lessonsActionTitle
+                self?.favoritesButtonTitle = strings.favoritesActionTitle
+                self?.toolsButtonTitle = strings.toolsActionTitle
                 
                 self?.reloadTabs() // NOTE: Needed since button title interface strings aren't connected to the View. ~Levi
                 self?.setStartingTabIfNeeded(startingTab: startingTab, tabs: self?.tabs ?? Array())

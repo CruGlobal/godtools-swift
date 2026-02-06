@@ -16,7 +16,8 @@ class DisableOptInOnboardingBannerUseCase {
         self.optInOnboardingBannerEnabledRepository = optInOnboardingBannerEnabledRepository
     }
     
-    func disableOptInOnboardingBanner() {
-        optInOnboardingBannerEnabledRepository.storeEnabled(enabled: false)
+    func execute() {
+        optInOnboardingBannerEnabledRepository
+            .storeEnabled(enabled: false)
     }
 }

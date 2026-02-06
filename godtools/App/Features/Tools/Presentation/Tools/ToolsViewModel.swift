@@ -17,7 +17,8 @@ import Combine
     private static var favoriteToolCancellables: [ToolId: AnyCancellable?] = Dictionary()
     
     private let resourcesRepository: ResourcesRepository
-    private let viewToolsUseCase: ViewToolsUseCase
+    private let getToolsStringsUseCase: GetToolsStringsUseCase
+    private let getAllToolsUseCase: GetAllToolsUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let favoritingToolMessageCache: FavoritingToolMessageCache
     private let getSpotlightToolsUseCase: GetSpotlightToolsUseCase
@@ -37,7 +38,7 @@ import Combine
     @Published private var toolFilterLanguageSelection: ToolFilterLanguageDomainModel = ToolFilterAnyLanguageDomainModel.emptyValue
     
     @Published private(set) var toggleOptions: [PersonalizationToggleOption] = []
-    @Published private(set) var strings: ToolsInterfaceStringsDomainModel = .emptyValue
+    @Published private(set) var strings: ToolsStringsDomainModel = .emptyValue
     
     @Published var selectedToggle: PersonalizationToggleOptionValue = .personalized
     @Published var favoritingToolBannerMessage: String = ""
@@ -51,11 +52,12 @@ import Combine
     @Published var allTools: [ToolListItemDomainModel] = Array()
     @Published var isLoadingAllTools: Bool = true
         
-    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, viewToolsUseCase: ViewToolsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, favoritingToolMessageCache: FavoritingToolMessageCache, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getUserToolFiltersUseCase: GetUserToolFiltersUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getToolBannerUseCase: GetToolBannerUseCase) {
+    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, getToolsStringsUseCase: GetToolsStringsUseCase, getAllToolsUseCase: GetAllToolsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, favoritingToolMessageCache: FavoritingToolMessageCache, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getUserToolFiltersUseCase: GetUserToolFiltersUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getToolBannerUseCase: GetToolBannerUseCase) {
         
         self.flowDelegate = flowDelegate
         self.resourcesRepository = resourcesRepository
-        self.viewToolsUseCase = viewToolsUseCase
+        self.getToolsStringsUseCase = getToolsStringsUseCase
+        self.getAllToolsUseCase = getAllToolsUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.favoritingToolMessageCache = favoritingToolMessageCache
         self.getSpotlightToolsUseCase = getSpotlightToolsUseCase
@@ -73,48 +75,74 @@ import Combine
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
+        $appLanguage.dropFirst()
+            .map { appLanguage in
+                return getToolsStringsUseCase
+                    .execute(translateInLanguage: appLanguage)
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (interfaceStrings: ToolsStringsDomainModel) in
+                
+                self?.strings = interfaceStrings
+                self?.favoritingToolBannerMessage = interfaceStrings.favoritingToolBannerMessage
+                self?.toolSpotlightTitle = interfaceStrings.toolSpotlightTitle
+                self?.toolSpotlightSubtitle = interfaceStrings.toolSpotlightSubtitle
+                self?.filterTitle = interfaceStrings.filterTitle
+                self?.toggleOptions = [
+                    PersonalizationToggleOption(title: interfaceStrings.personalizedToolToggleTitle, selection: .personalized),
+                    PersonalizationToggleOption(title: interfaceStrings.allToolsToggleTitle, selection: .all)
+                ]
+            }
+            .store(in: &cancellables)
+        
         Publishers.CombineLatest3(
-            $appLanguage.eraseToAnyPublisher().dropFirst(),
-            $toolFilterCategorySelection.eraseToAnyPublisher().dropFirst(),
-            $toolFilterLanguageSelection.eraseToAnyPublisher().dropFirst()
+            $appLanguage.dropFirst(),
+            $toolFilterCategorySelection.dropFirst(),
+            $toolFilterLanguageSelection.dropFirst()
         )
         .map { (appLanguage, toolFilterCategory, toolFilterLanguage) in
                                     
-            Publishers.CombineLatest(
-                viewToolsUseCase.viewPublisher(
+            return getAllToolsUseCase
+                .execute(
                     translatedInAppLanguage: appLanguage,
                     languageIdForAvailabilityText: toolFilterLanguage.languageDataModelId,
                     filterToolsByCategory: toolFilterCategory,
                     filterToolsByLanguage: toolFilterLanguage
-                ),
-                getSpotlightToolsUseCase.getSpotlightToolsPublisher(
-                    translatedInAppLanguage: appLanguage,
-                    languageIdForAvailabilityText: toolFilterLanguage.languageDataModelId
                 )
-            )
+
         }
         .switchToLatest()
         .receive(on: DispatchQueue.main)
         .sink(receiveCompletion: { _ in
             
-        }, receiveValue: { [weak self] (domainModel: ViewToolsDomainModel, spotlightTools: [SpotlightToolListItemDomainModel]) in
+        }, receiveValue: { [weak self] (allTools: [ToolListItemDomainModel]) in
             
-            let interfaceStrings = domainModel.interfaceStrings
-
-            self?.strings = interfaceStrings
-            self?.favoritingToolBannerMessage = interfaceStrings.favoritingToolBannerMessage
-            self?.toolSpotlightTitle = interfaceStrings.toolSpotlightTitle
-            self?.toolSpotlightSubtitle = interfaceStrings.toolSpotlightSubtitle
-            self?.filterTitle = interfaceStrings.filterTitle
-            self?.toggleOptions = [
-                PersonalizationToggleOption(title: interfaceStrings.personalizedToolToggleTitle, selection: .personalized),
-                PersonalizationToggleOption(title: interfaceStrings.allToolsToggleTitle, selection: .all)
-            ]
-
-            self?.spotlightTools = spotlightTools
-            
-            self?.allTools = domainModel.tools
+            self?.allTools = allTools
             self?.isLoadingAllTools = false
+        })
+        .store(in: &cancellables)
+        
+        Publishers.CombineLatest3(
+            $appLanguage.dropFirst(),
+            $toolFilterCategorySelection.dropFirst(),
+            $toolFilterLanguageSelection.dropFirst()
+        )
+        .map { (appLanguage, toolFilterCategory, toolFilterLanguage) in
+            
+            getSpotlightToolsUseCase
+                .execute(
+                    translatedInAppLanguage: appLanguage,
+                    languageIdForAvailabilityText: toolFilterLanguage.languageDataModelId
+                )
+        }
+        .switchToLatest()
+        .receive(on: DispatchQueue.main)
+        .sink(receiveCompletion: { _ in
+            
+        }, receiveValue: { [weak self] (spotlightTools: [SpotlightToolListItemDomainModel]) in
+            
+            self?.spotlightTools = spotlightTools
         })
         .store(in: &cancellables)
         

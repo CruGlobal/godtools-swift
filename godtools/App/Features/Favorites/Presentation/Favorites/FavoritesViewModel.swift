@@ -99,7 +99,7 @@ import Combine
             .map { (appLanguage: AppLanguageDomainModel) in
                 
                 getOptInOnboardingBannerEnabledUseCase
-                    .getBannerIsEnabled(appLanguage: appLanguage)
+                    .execute(appLanguage: appLanguage)
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
@@ -209,7 +209,7 @@ import Combine
             showsOpenTutorialBanner = false
         }
         
-        disableOptInOnboardingBannerUseCase.disableOptInOnboardingBanner()
+        disableOptInOnboardingBannerUseCase.execute()
     }
 }
 

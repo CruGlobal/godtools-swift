@@ -1,5 +1,5 @@
 //
-//  FavoritedToolsLatestToolDownloader.swift
+//  DownloadLatestToolsForFavoritedToolsUseCase.swift
 //  godtools
 //
 //  Created by Levi Eggert on 1/30/24.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class FavoritedToolsLatestToolDownloader: FavoritedToolsLatestToolDownloaderInterface {
+class DownloadLatestToolsForFavoritedToolsUseCase {
     
     private let favoritedResourcesRepository: FavoritedResourcesRepository
     private let resourcesRepository: ResourcesRepository
@@ -22,7 +22,7 @@ class FavoritedToolsLatestToolDownloader: FavoritedToolsLatestToolDownloaderInte
         self.toolDownloader = toolDownloader
     }
     
-    @MainActor func downloadLatestToolsPublisher(inLanguages: [BCP47LanguageIdentifier]) -> AnyPublisher<Void, Error> {
+    @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<Void, Error> {
         
         return Publishers.CombineLatest(
             resourcesRepository.persistence.observeCollectionChangesPublisher(),
@@ -35,7 +35,7 @@ class FavoritedToolsLatestToolDownloader: FavoritedToolsLatestToolDownloaderInte
             let tools: [DownloadToolDataModel] = favoritedTools.map({
                 DownloadToolDataModel(
                     toolId: $0.id,
-                    languages: inLanguages
+                    languages: [appLanguage]
                 )
             })
             

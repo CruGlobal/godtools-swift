@@ -1,26 +1,32 @@
 //
-//  SpotlightToolsDomainInterfaceDependencies.swift
+//  GetToolsInterfaceStringsRepository.swift
 //  godtools
 //
-//  Created by Levi Eggert on 2/19/24.
-//  Copyright © 2024 Cru. All rights reserved.
+//  Created by Levi Eggert on 2/6/26.
+//  Copyright © 2026 Cru. All rights reserved.
 //
 
 import Foundation
 
-class SpotlightToolsDomainInterfaceDependencies {
+class ToolsDomainLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
-    private let dataLayer: SpotlightToolsDataLayerDependencies
+    private let dataLayer: ToolsDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, dataLayer: SpotlightToolsDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, dataLayer: ToolsDataLayerDependencies) {
         
         self.coreDataLayer = coreDataLayer
         self.dataLayer = dataLayer
     }
     
-    func getSpotlightToolsRepository() -> GetSpotlightToolsRepositoryInterface {
-        return GetSpotlightToolsRepository(
+    func getToolsStringsUseCase() -> GetToolsStringsUseCase {
+        return GetToolsStringsUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getAllToolsUseCase() -> GetAllToolsUseCase {
+        return GetAllToolsUseCase(
             resourcesRepository: coreDataLayer.getResourcesRepository(),
             favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository(),
             languagesRepository: coreDataLayer.getLanguagesRepository(),

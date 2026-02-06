@@ -1,5 +1,5 @@
 //
-//  DashboardInterfaceStringsDomainModel.swift
+//  DashboardStringsDomainModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 1/2/24.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct DashboardInterfaceStringsDomainModel {
+struct DashboardStringsDomainModel {
     
     let lessonsActionTitle: String
     let favoritesActionTitle: String

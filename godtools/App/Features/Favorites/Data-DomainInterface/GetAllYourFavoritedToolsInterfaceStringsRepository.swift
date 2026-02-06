@@ -18,9 +18,9 @@ class GetAllYourFavoritedToolsInterfaceStringsRepository: GetAllYourFavoritedToo
         self.localizationServices = localizationServices
     }
     
-    func getStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<AllYourFavoritedToolsInterfaceStringsDomainModel, Never> {
+    func getStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<AllYourFavoritedToolsStringsDomainModel, Never> {
         
-        let interfaceStrings = AllYourFavoritedToolsInterfaceStringsDomainModel(
+        let interfaceStrings = AllYourFavoritedToolsStringsDomainModel(
             sectionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "favorites.favoriteTools.title")
         )
 

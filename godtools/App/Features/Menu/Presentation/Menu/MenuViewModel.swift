@@ -196,7 +196,7 @@ extension MenuViewModel {
     }
     
     func tutorialTapped() {
-        disableOptInOnboardingBannerUseCase.disableOptInOnboardingBanner()
+        disableOptInOnboardingBannerUseCase.execute()
         flowDelegate?.navigate(step: .tutorialTappedFromMenu)
     }
     

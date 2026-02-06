@@ -1,15 +1,15 @@
 //
-//  GetToolsInterfaceStringsRepository.swift
+//  GetToolsStringsUseCase.swift
 //  godtools
 //
-//  Created by Levi Eggert on 2/16/24.
-//  Copyright © 2024 Cru. All rights reserved.
+//  Created by Levi Eggert on 2/6/26.
+//  Copyright © 2026 Cru. All rights reserved.
 //
 
 import Foundation
 import Combine
 
-class GetToolsInterfaceStringsRepository: GetToolsInterfaceStringsRepositoryInterface {
+final class GetToolsStringsUseCase {
     
     private let localizationServices: LocalizationServicesInterface
     
@@ -18,9 +18,9 @@ class GetToolsInterfaceStringsRepository: GetToolsInterfaceStringsRepositoryInte
         self.localizationServices = localizationServices
     }
     
-    func getStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolsInterfaceStringsDomainModel, Never> {
+    func execute(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolsStringsDomainModel, Never> {
         
-        let interfaceStrings = ToolsInterfaceStringsDomainModel(
+        let interfaceStrings = ToolsStringsDomainModel(
             favoritingToolBannerMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "tool_offline_favorite_message"),
             toolSpotlightTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: ToolStringKeys.Spotlight.title.rawValue),
             toolSpotlightSubtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: ToolStringKeys.Spotlight.subtitle.rawValue),

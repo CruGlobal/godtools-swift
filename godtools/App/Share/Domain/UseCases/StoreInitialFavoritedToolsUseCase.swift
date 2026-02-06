@@ -1,15 +1,15 @@
 //
-//  StoreInitialFavoritedTools.swift
+//  StoreInitialFavoritedToolsUseCase.swift
 //  godtools
 //
-//  Created by Levi Eggert on 5/24/24.
-//  Copyright © 2024 Cru. All rights reserved.
+//  Created by Levi Eggert on 8/16/22.
+//  Copyright © 2022 Cru. All rights reserved.
 //
 
 import Foundation
 import Combine
 
-class StoreInitialFavoritedTools: StoreInitialFavoritedToolsInterface {
+class StoreInitialFavoritedToolsUseCase {
     
     private let favoritedResourcesRepository: FavoritedResourcesRepository
     
@@ -18,7 +18,7 @@ class StoreInitialFavoritedTools: StoreInitialFavoritedToolsInterface {
         self.favoritedResourcesRepository = favoritedResourcesRepository
     }
     
-    func storeInitialFavoritedToolsPublisher() -> AnyPublisher<Void, Never> {
+    func execute() -> AnyPublisher<Void, Never> {
         
         guard favoritedResourcesRepository.getNumberOfFavoritedResources() == 0 else {
             return Just(Void())

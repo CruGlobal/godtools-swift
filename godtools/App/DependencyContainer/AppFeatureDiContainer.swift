@@ -34,6 +34,7 @@ class AppFeatureDiContainer {
     let shareTool: ShareToolDiContainer
     let spotlightTools: SpotlightToolsDiContainer
     let toolDetails: ToolDetailsFeatureDiContainer
+    let tools: ToolsDiContainer
     let toolScreenShare: ToolScreenShareFeatureDiContainer
     let toolScreenShareQRCode: ToolScreenShareQRCodeFeatureDiContainer
     let toolSettings: ToolSettingsDiContainer
@@ -67,6 +68,7 @@ class AppFeatureDiContainer {
         shareTool: ShareToolDiContainer,
         spotlightTools: SpotlightToolsDiContainer,
         toolDetails: ToolDetailsFeatureDiContainer,
+        tools: ToolsDiContainer,
         toolScreenShare: ToolScreenShareFeatureDiContainer,
         toolScreenShareQRCode: ToolScreenShareQRCodeFeatureDiContainer,
         toolSettings: ToolSettingsDiContainer,
@@ -100,6 +102,7 @@ class AppFeatureDiContainer {
         self.shareTool = shareTool
         self.spotlightTools = spotlightTools
         self.toolDetails = toolDetails
+        self.tools = tools
         self.toolScreenShare = toolScreenShare
         self.toolScreenShareQRCode = toolScreenShareQRCode
         self.toolSettings = toolSettings

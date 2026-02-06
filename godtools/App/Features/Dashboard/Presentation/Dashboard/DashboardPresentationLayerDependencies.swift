@@ -78,7 +78,8 @@ import Foundation
         return ToolsViewModel(
             flowDelegate: unwrappedFlowDelegate,
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
-            viewToolsUseCase: appDiContainer.feature.dashboard.domainLayer.getViewToolsUseCase(),
+            getToolsStringsUseCase: appDiContainer.feature.tools.domainLayer.getToolsStringsUseCase(),
+            getAllToolsUseCase: appDiContainer.feature.tools.domainLayer.getAllToolsUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             favoritingToolMessageCache: appDiContainer.dataLayer.getFavoritingToolMessageCache(),
             getSpotlightToolsUseCase: appDiContainer.feature.spotlightTools.domainLayer.getSpotlightToolsUseCase(),

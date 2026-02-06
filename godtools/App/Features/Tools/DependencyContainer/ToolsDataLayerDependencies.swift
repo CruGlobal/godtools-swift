@@ -1,14 +1,14 @@
 //
-//  DashboardDataLayerDependencies.swift
+//  ToolsDataLayerDependencies.swift
 //  godtools
 //
-//  Created by Levi Eggert on 1/2/24.
-//  Copyright © 2024 Cru. All rights reserved.
+//  Created by Levi Eggert on 2/6/26.
+//  Copyright © 2026 Cru. All rights reserved.
 //
 
 import Foundation
 
-class DashboardDataLayerDependencies {
+class ToolsDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     
