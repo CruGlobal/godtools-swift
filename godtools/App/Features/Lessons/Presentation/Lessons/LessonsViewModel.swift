@@ -107,7 +107,6 @@ import SwiftUI
                     )
             
             case .all:
-                
                 return getAllLessonsUseCase
                     .execute(
                         appLanguage: appLanguage,
