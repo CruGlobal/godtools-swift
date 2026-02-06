@@ -12,9 +12,12 @@ class AppDomainLayerDependencies {
         
     private let dataLayer: AppDataLayerDependencies
     
+    let supporting: AppSupportingDomainLayerDependencies
+    
     init(dataLayer: AppDataLayerDependencies) {
         
         self.dataLayer = dataLayer
+        self.supporting = AppSupportingDomainLayerDependencies(dataLayer: dataLayer)
     }
     
     func getAppUIDebuggingIsEnabledUseCase() -> GetAppUIDebuggingIsEnabledUseCase {
@@ -26,6 +29,14 @@ class AppDomainLayerDependencies {
     func getDisableOptInOnboardingBannerUseCase() -> DisableOptInOnboardingBannerUseCase {
         return DisableOptInOnboardingBannerUseCase(
             optInOnboardingBannerEnabledRepository: dataLayer.getOptInOnboardingBannerEnabledRepository()
+        )
+    }
+    
+    func getDownloadLatestToolsForFavoritedToolsUseCase() -> DownloadLatestToolsForFavoritedToolsUseCase {
+        return DownloadLatestToolsForFavoritedToolsUseCase(
+            favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository(),
+            resourcesRepository: dataLayer.getResourcesRepository(),
+            toolDownloader: dataLayer.getToolDownloader()
         )
     }
     
@@ -46,10 +57,12 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getShouldShowLanguageSettingsBarButtonUseCase() -> GetShouldShowLanguageSettingsBarButtonUseCase {
-        return GetShouldShowLanguageSettingsBarButtonUseCase()
+    func getStoreInitialFavoritedToolsUseCase() -> StoreInitialFavoritedToolsUseCase {
+        return StoreInitialFavoritedToolsUseCase(
+            favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository()
+        )
     }
-    
+
     func getToolBannerUseCase() -> GetToolBannerUseCase {
         return GetToolBannerUseCase(
             attachmentsRepository: dataLayer.getAttachmentsRepository()

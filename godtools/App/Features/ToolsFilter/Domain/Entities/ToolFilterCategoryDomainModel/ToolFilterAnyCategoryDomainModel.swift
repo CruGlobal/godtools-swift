@@ -21,4 +21,8 @@ class ToolFilterAnyCategoryDomainModel: ToolFilterCategoryDomainModel {
             searchableStrings: [text]
         )
     }
+    
+    static var emptyValue: ToolFilterAnyCategoryDomainModel {
+        return ToolFilterAnyCategoryDomainModel(text: "", toolsAvailableText: "")
+    }
 }

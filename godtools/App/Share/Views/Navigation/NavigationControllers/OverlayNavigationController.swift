@@ -14,7 +14,7 @@ class OverlayNavigationController: AppNavigationController {
         
     init(rootView: UIViewController, hidesNavigationBar: Bool, navigationBarAppearance: AppNavigationBarAppearance?) {
         
-        super.init(hidesNavigationBar: hidesNavigationBar, navigationBarAppearance: navigationBarAppearance)
+        super.init(navigationBarAppearance: navigationBarAppearance, hidesNavigationBar: hidesNavigationBar)
         
         modalPresentationStyle = .overCurrentContext
         transitioningDelegate = self

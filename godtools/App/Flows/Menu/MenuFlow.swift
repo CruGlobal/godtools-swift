@@ -12,6 +12,8 @@ import SwiftUI
 import Combine
 
 class MenuFlow: Flow {
+        
+    private static var backgroundCancellables: Set<AnyCancellable> = Set()
     
     private var tutorialFlow: TutorialFlow?
     private var languageSettingsFlow: LanguageSettingsFlow?
@@ -24,17 +26,17 @@ class MenuFlow: Flow {
     
     let appDiContainer: AppDiContainer
     let navigationController: AppNavigationController
-    
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer) {
+        
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, initialNavigationStep: FlowStep? = nil) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
                 
         let navigationBarAppearance = AppNavigationBarAppearance(
-            backgroundColor: ColorPalette.gtBlue.uiColor,
-            controlColor: .white,
+            backgroundColor: AppFlow.defaultNavBarColor,
+            controlColor: AppFlow.defaultNavBarControlColor,
             titleFont: FontLibrary.systemUIFont(size: 17, weight: .semibold),
-            titleColor: .white,
+            titleColor: AppFlow.defaultNavBarControlColor,
             isTranslucent: false
         )
         
@@ -65,6 +67,10 @@ class MenuFlow: Flow {
                 self?.viewShareGodToolsDomainModel = domainModel
             }
             .store(in: &cancellables)
+        
+        if let initialNavigationStep = initialNavigationStep {
+            navigate(step: initialNavigationStep)
+        }
     }
     
     deinit {
@@ -86,11 +92,29 @@ class MenuFlow: Flow {
             closeLanguageSettings()
             
         case .localizationSettingsTappedFromMenu:
-            navigateToLocalizationSettings()
+            let localizationSettings = getLocalizationSettingsView()
+            navigationController.pushViewController(localizationSettings, animated: true)
             
         case .backTappedFromLocalizationSettings:
             navigationController.popViewController(animated: true)
             
+        case .didSelectLocalizationFromLocalizationSettings(let localization):
+            
+            appDiContainer
+                .feature
+                .personalizedTools
+                .domainLayer
+                .getSetLocalizationSettingsUseCase()
+                .execute(
+                    isoRegionCode: localization.isoRegionCode
+                )
+                .sink { _ in
+                    
+                } receiveValue: { _ in
+                    
+                }
+                .store(in: &Self.backgroundCancellables)
+
         case .tutorialTappedFromMenu:
             navigateToTutorial()
             
@@ -334,50 +358,6 @@ extension MenuFlow {
         navigationController.popViewController(animated: true)
         
         self.languageSettingsFlow = nil
-    }
-}
-
-// MARK: - Localization Settings
-
-extension MenuFlow {
-    
-    private func navigateToLocalizationSettings() {
-        
-        let view = getLocalizationSettingsView()
-        
-        navigationController.pushViewController(view, animated: true)
-    }
-    
-    private func getLocalizationSettingsView() -> UIViewController {
-        
-        let viewModel = LocalizationSettingsViewModel(
-            flowDelegate: self,
-            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getCountryListUseCase: appDiContainer.feature.personalizedTools.domainLayer.getLocalizationSettingsCountryListUseCase(),
-            searchCountriesUseCase: appDiContainer.feature.personalizedTools.domainLayer.getSearchCountriesInLocalizationSettingsCountriesListUseCase(),
-            viewLocalizationSettingsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getViewLocalizationSettingsUseCase(),
-            viewSearchBarUseCase: appDiContainer.domainLayer.getViewSearchBarUseCase()
-        )
-        
-        let view = LocalizationSettingsView(viewModel: viewModel)
-        
-        let backButton = AppBackBarItem(
-            target: viewModel,
-            action: #selector(viewModel.backTapped),
-            accessibilityIdentifier: nil
-        )
-        
-        let hostingView = AppHostingController<LocalizationSettingsView>(
-            rootView: view,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: backButton,
-                leadingItems: [],
-                trailingItems: []
-            )
-        )
-        
-        return hostingView
     }
 }
 

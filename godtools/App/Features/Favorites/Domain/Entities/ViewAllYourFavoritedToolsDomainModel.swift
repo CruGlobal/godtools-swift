@@ -10,6 +10,6 @@ import Foundation
 
 struct ViewAllYourFavoritedToolsDomainModel {
     
-    let interfaceStrings: AllYourFavoritedToolsInterfaceStringsDomainModel
+    let interfaceStrings: AllYourFavoritedToolsStringsDomainModel
     let yourFavoritedTools: [YourFavoritedToolDomainModel]
 }

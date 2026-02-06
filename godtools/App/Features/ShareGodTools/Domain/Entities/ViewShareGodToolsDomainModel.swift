@@ -10,5 +10,5 @@ import Foundation
 
 struct ViewShareGodToolsDomainModel {
     
-    let interfaceStrings: ShareGodToolsInterfaceStringsDomainModel
+    let interfaceStrings: ShareGodToolsStringsDomainModel
 }

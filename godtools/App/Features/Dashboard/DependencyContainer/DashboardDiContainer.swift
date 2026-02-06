@@ -17,6 +17,6 @@ class DashboardDiContainer {
         
         dataLayer = DashboardDataLayerDependencies(coreDataLayer: coreDataLayer)
         
-        domainLayer = DashboardDomainLayerDependencies(dataLayer: dataLayer)
+        domainLayer = DashboardDomainLayerDependencies(coreDataLayer: coreDataLayer, dataLayer: dataLayer)
     }
 }

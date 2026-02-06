@@ -10,16 +10,24 @@ import Foundation
 
 class SpotlightToolsDomainLayerDependencies {
     
-    private let domainInterfaceLayer: SpotlightToolsDomainInterfaceDependencies
+    private let coreDataLayer: AppDataLayerDependencies
+    private let dataLayer: SpotlightToolsDataLayerDependencies
     
-    init(domainInterfaceLayer: SpotlightToolsDomainInterfaceDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, dataLayer: SpotlightToolsDataLayerDependencies) {
         
-        self.domainInterfaceLayer = domainInterfaceLayer
+        self.coreDataLayer = coreDataLayer
+        self.dataLayer = dataLayer
     }
     
     func getSpotlightToolsUseCase() -> GetSpotlightToolsUseCase {
         return GetSpotlightToolsUseCase(
-            getSpotlightToolsRepository: domainInterfaceLayer.getSpotlightToolsRepository()
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository(),
+            languagesRepository: coreDataLayer.getLanguagesRepository(),
+            getTranslatedToolName: coreDataLayer.getTranslatedToolName(),
+            getTranslatedToolCategory: coreDataLayer.getTranslatedToolCategory(),
+            getToolListItemInterfaceStringsRepository: coreDataLayer.getToolListItemInterfaceStringsRepository(),
+            getTranslatedToolLanguageAvailability: coreDataLayer.getTranslatedToolLanguageAvailability()
         )
     }
 }

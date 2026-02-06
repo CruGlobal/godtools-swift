@@ -39,6 +39,7 @@ enum FlowStep {
     case lessonTappedFromLessonsList(lessonListItem: LessonListItemDomainModel, languageFilter: LessonFilterLanguageDomainModel?)
     case languageTappedFromLessonLanguageFilter
     case backTappedFromLessonLanguageFilter
+    case localizationSettingsTappedFromLessons
 
     // lesson
     case closeLessonSwipeTutorial
@@ -78,6 +79,7 @@ enum FlowStep {
     case backTappedFromToolLanguageFilter
     case spotlightToolTappedFromTools(spotlightTool: SpotlightToolListItemDomainModel, toolFilterLanguage: ToolFilterLanguageDomainModel?)
     case toolTappedFromTools(tool: ToolListItemDomainModel, toolFilterLanguage: ToolFilterLanguageDomainModel?)
+    case localizationSettingsTappedFromTools
     
     // toolDetails
     case backTappedFromToolDetails
@@ -107,6 +109,7 @@ enum FlowStep {
     
     // tutorial
     case closeTappedFromTutorial
+    case continueTappedFromTutorial
     case startUsingGodToolsTappedFromTutorial
     case tutorialFlowCompleted(state: TutorialFlowCompletedState)
     
@@ -115,7 +118,6 @@ enum FlowStep {
     case tutorialTappedFromMenu
     case languageSettingsTappedFromMenu
     case localizationSettingsTappedFromMenu
-    case backTappedFromLocalizationSettings
     case loginTappedFromMenu
     case createAccountTappedFromMenu
     case activityTappedFromMenu
@@ -227,4 +229,8 @@ enum FlowStep {
     
     // download tool
     case closeTappedFromDownloadToolProgress
+    
+    // localization settings
+    case backTappedFromLocalizationSettings
+    case didSelectLocalizationFromLocalizationSettings(localization: LocalizationSettingsCountryListItemDomainModel)
 }

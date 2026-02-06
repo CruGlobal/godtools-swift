@@ -10,9 +10,11 @@ import SwiftUI
 
 struct DashboardView: View {
         
+    static let navHeight: CGFloat = 44
     static let contentHorizontalInsets: CGFloat = 16
     static let toolCardVerticalSpacing: CGFloat = 15
-    static let scrollViewBottomSpacingToTabBar: CGFloat = 30
+    
+    private let navBarColor: Color = Color.white
         
     @ObservedObject private var viewModel: DashboardViewModel
     
@@ -24,45 +26,63 @@ struct DashboardView: View {
     var body: some View {
         
         GeometryReader { geometry in
-            
-            VStack(alignment: .center, spacing: 0) {
+            ZStack(alignment: .topLeading) {
                 
-                if viewModel.tabs.count > 0 {
-                 
-                    TabView(selection: $viewModel.currentTab) {
+                ZStack(alignment: .topLeading) {
+                    navBarColor
+                }
+                .frame(height: Self.navHeight)
+                .allowsHitTesting(false)
+                
+                VStack(alignment: .center, spacing: 0) {
+                    
+                    if viewModel.tabs.count > 0 {
                         
-                        Group {
+                        TabView(selection: $viewModel.currentTab) {
                             
-                            if ApplicationLayout.shared.layoutDirection == .rightToLeft {
+                            Group {
                                 
-                                ForEach((0 ..< viewModel.tabs.count).reversed(), id: \.self) { index in
+                                if ApplicationLayout.shared.layoutDirection == .rightToLeft {
                                     
-                                    getDashboardPageView(index: index)
-                                        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
-                                        .tag(index)
+                                    ForEach((0 ..< viewModel.tabs.count).reversed(), id: \.self) { index in
+                                        
+                                        getDashboardPageView(index: index)
+                                            .padding([.top], Self.navHeight)
+                                            .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+                                            .tag(index)
+                                    }
                                 }
-                            }
-                            else {
-                                
-                                ForEach(0 ..< viewModel.tabs.count, id: \.self) { index in
+                                else {
                                     
-                                    getDashboardPageView(index: index)
-                                        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
-                                        .tag(index)
+                                    ForEach(0 ..< viewModel.tabs.count, id: \.self) { index in
+                                        
+                                        getDashboardPageView(index: index)
+                                            .padding([.top], Self.navHeight)
+                                            .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+                                            .tag(index)
+                                    }
                                 }
                             }
                         }
+                        .environment(\.layoutDirection, .leftToRight)
+                        .tabViewStyle(.page(indexDisplayMode: .never))
+                        .animation(.easeOut, value: viewModel.currentTab)
+                        
+                        DashboardTabBarView(
+                            viewModel: viewModel
+                        )
                     }
-                    .environment(\.layoutDirection, .leftToRight)
-                    .tabViewStyle(.page(indexDisplayMode: .never))
-                    .animation(.easeOut, value: viewModel.currentTab)
-                    
-                    DashboardTabBarView(
-                        viewModel: viewModel
-                    )
+                }//end VStack
+                
+                let navButtonTopPadding: CGFloat = (Self.navHeight / 2) - (NavMenuButton.size / 2)
+                
+                NavMenuButton {
+                    viewModel.menuTapped()
                 }
-            }
-        }
+                .padding([.leading], 20)
+                .padding([.top], navButtonTopPadding)
+            }//end ZStack
+        }//end GeometryReader
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
     
@@ -111,7 +131,7 @@ struct DashboardView_Previews: PreviewProvider {
             flowDelegate: Self.flowDelegate,
             dashboardPresentationLayerDependencies: Self.dashboardDependencies,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewDashboardUseCase: appDiContainer.feature.dashboard.domainLayer.getViewDashboardUseCase(),
+            getDashboardStringsUseCase: appDiContainer.feature.dashboard.domainLayer.getDashboardStringsUseCase(),
             dashboardTabObserver: CurrentValueSubject(.favorites)
         )
         
