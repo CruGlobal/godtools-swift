@@ -26,13 +26,22 @@ class GetPersonalizedLessonsUseCase {
         self.getLessonsListItems = getLessonsListItems
     }
 
-    @MainActor func execute(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<[LessonListItemDomainModel], Error> {
+    @MainActor func execute(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<[LessonListItemDomainModel], Error> {
 
         let language = getLanguageCode(filterLessonsByLanguage: filterLessonsByLanguage, appLanguage: appLanguage)
+        
+        let countryIsoRegionCode: String? = country?.isoRegionCode
+        
+        // TODO: Remove this guard once supporting an optional country in this UseCase. ~Levi
+        guard let countryIsoRegionCode = countryIsoRegionCode, !countryIsoRegionCode.isEmpty else {
+            return Just([])
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        }
 
         return Publishers.CombineLatest3(
             personalizedLessonsRepository
-                .getPersonalizedLessonsChanged(reloadFromRemote: true, requestPriority: .high, country: country.isoRegionCode, language: language)
+                .getPersonalizedLessonsChanged(reloadFromRemote: true, requestPriority: .high, country: countryIsoRegionCode, language: language)
                 .setFailureType(to: Error.self),
             resourcesRepository.persistence
                 .observeCollectionChangesPublisher(),
@@ -40,10 +49,10 @@ class GetPersonalizedLessonsUseCase {
                 .getLessonProgressChangedPublisher()
                 .setFailureType(to: Error.self)
         )
-        .flatMap({ (_, _, _) in
+        .flatMap({ (personalizedLessonsChanged, resourcesChanged, lessonProgressChanged) in
 
             let personalizedLessons = self.personalizedLessonsRepository.getPersonalizedLessons(
-                country: country.isoRegionCode,
+                country: countryIsoRegionCode,
                 language: language
             )
 
