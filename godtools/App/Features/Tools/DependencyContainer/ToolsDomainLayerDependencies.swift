@@ -12,11 +12,13 @@ class ToolsDomainLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     private let dataLayer: ToolsDataLayerDependencies
+    private let coreDomainLayer: AppDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, dataLayer: ToolsDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, dataLayer: ToolsDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies) {
         
         self.coreDataLayer = coreDataLayer
         self.dataLayer = dataLayer
+        self.coreDomainLayer = coreDomainLayer
     }
     
     func getToolsStringsUseCase() -> GetToolsStringsUseCase {
@@ -28,12 +30,7 @@ class ToolsDomainLayerDependencies {
     func getAllToolsUseCase() -> GetAllToolsUseCase {
         return GetAllToolsUseCase(
             resourcesRepository: coreDataLayer.getResourcesRepository(),
-            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository(),
-            languagesRepository: coreDataLayer.getLanguagesRepository(),
-            getTranslatedToolName: coreDataLayer.getTranslatedToolName(),
-            getTranslatedToolCategory: coreDataLayer.getTranslatedToolCategory(),
-            getToolListItemInterfaceStringsRepository: coreDataLayer.getToolListItemInterfaceStringsRepository(),
-            getTranslatedToolLanguageAvailability: coreDataLayer.getTranslatedToolLanguageAvailability()
+            getToolsListItems: coreDomainLayer.supporting.getToolsListItems()
         )
     }
 }

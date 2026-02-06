@@ -12,9 +12,12 @@ class AppDomainLayerDependencies {
         
     private let dataLayer: AppDataLayerDependencies
     
+    let supporting: AppSupportingDomainLayerDependencies
+    
     init(dataLayer: AppDataLayerDependencies) {
         
         self.dataLayer = dataLayer
+        self.supporting = AppSupportingDomainLayerDependencies(dataLayer: dataLayer)
     }
     
     func getAppUIDebuggingIsEnabledUseCase() -> GetAppUIDebuggingIsEnabledUseCase {
@@ -34,15 +37,6 @@ class AppDomainLayerDependencies {
             favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository(),
             resourcesRepository: dataLayer.getResourcesRepository(),
             toolDownloader: dataLayer.getToolDownloader()
-        )
-    }
-    
-    func getLessonsListItems() -> GetLessonsListItems {
-        return GetLessonsListItems(
-            languagesRepository: dataLayer.getLanguagesRepository(),
-            getTranslatedToolName: dataLayer.getTranslatedToolName(),
-            getTranslatedToolLanguageAvailability: dataLayer.getTranslatedToolLanguageAvailability(),
-            getLessonListItemProgressRepository: dataLayer.getLessonListItemProgressRepository()
         )
     }
     

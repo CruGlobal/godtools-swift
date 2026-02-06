@@ -316,7 +316,7 @@ extension GetAllLessonsUseCaseTests {
         return GetAllLessonsUseCase(
             resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
             lessonProgressRepository: testsDiContainer.dataLayer.getUserLessonProgressRepository(),
-            getLessonsListItems: testsDiContainer.domainLayer.getLessonsListItems()
+            getLessonsListItems: testsDiContainer.domainLayer.supporting.getLessonsListItems()
         )
     }
     

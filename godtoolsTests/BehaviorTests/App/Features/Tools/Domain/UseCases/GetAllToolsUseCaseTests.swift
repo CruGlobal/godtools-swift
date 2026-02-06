@@ -56,7 +56,7 @@ struct GetAllToolsUseCaseTests {
                 
                 getAllToolsUseCase
                     .execute(
-                        translatedInAppLanguage: "",
+                        appLanguage: "",
                         languageIdForAvailabilityText: nil,
                         filterToolsByCategory: nil,
                         filterToolsByLanguage: nil
@@ -123,7 +123,7 @@ struct GetAllToolsUseCaseTests {
                 
                 getAllToolsUseCase
                     .execute(
-                        translatedInAppLanguage: "",
+                        appLanguage: "",
                         languageIdForAvailabilityText: nil,
                         filterToolsByCategory: growthCategoryFilter,
                         filterToolsByLanguage: anyLanguageFilter
@@ -192,7 +192,7 @@ struct GetAllToolsUseCaseTests {
                 
                 getAllToolsUseCase
                     .execute(
-                        translatedInAppLanguage: "",
+                        appLanguage: "",
                         languageIdForAvailabilityText: nil,
                         filterToolsByCategory: anyCategoryFilter,
                         filterToolsByLanguage: russianLanguageFilter
@@ -261,7 +261,7 @@ struct GetAllToolsUseCaseTests {
                 
                 getAllToolsUseCase
                     .execute(
-                        translatedInAppLanguage: "",
+                        appLanguage: "",
                         languageIdForAvailabilityText: nil,
                         filterToolsByCategory: anyCategoryFilter,
                         filterToolsByLanguage: spanishLanguageFilter
@@ -468,12 +468,7 @@ extension GetAllToolsUseCaseTests {
         
         return GetAllToolsUseCase(
             resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
-            favoritedResourcesRepository: testsDiContainer.dataLayer.getFavoritedResourcesRepository(),
-            languagesRepository: testsDiContainer.dataLayer.getLanguagesRepository(),
-            getTranslatedToolName: testsDiContainer.dataLayer.getTranslatedToolName(),
-            getTranslatedToolCategory: testsDiContainer.dataLayer.getTranslatedToolCategory(),
-            getToolListItemInterfaceStringsRepository: testsDiContainer.dataLayer.getToolListItemInterfaceStringsRepository(),
-            getTranslatedToolLanguageAvailability: testsDiContainer.dataLayer.getTranslatedToolLanguageAvailability()
+            getToolsListItems: testsDiContainer.domainLayer.supporting.getToolsListItems()
         )
     }
 }
