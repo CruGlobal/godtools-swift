@@ -29,6 +29,15 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getLessonsListItems() -> GetLessonsListItems {
+        return GetLessonsListItems(
+            languagesRepository: dataLayer.getLanguagesRepository(),
+            getTranslatedToolName: dataLayer.getTranslatedToolName(),
+            getTranslatedToolLanguageAvailability: dataLayer.getTranslatedToolLanguageAvailability(),
+            getLessonListItemProgressRepository: dataLayer.getLessonListItemProgressRepository()
+        )
+    }
+    
     func getOptInOnboardingBannerEnabledUseCase() -> GetOptInOnboardingBannerEnabledUseCase {
         return GetOptInOnboardingBannerEnabledUseCase(
             getOptInOnboardingTutorialAvailableUseCase: getOptInOnboardingTutorialAvailableUseCase(),

@@ -1,5 +1,5 @@
 //
-//  LessonsInterfaceStringsDomainModel.swift
+//  LessonsStringsDomainModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 12/4/23.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LessonsInterfaceStringsDomainModel {
+struct LessonsStringsDomainModel {
 
     let title: String
     let subtitle: String
@@ -19,7 +19,7 @@ struct LessonsInterfaceStringsDomainModel {
     let personalizedLessonExplanationSubtitle: String
     let changePersonalizedLessonSettingsActionLabel: String
 
-    static var emptyValue: LessonsInterfaceStringsDomainModel {
-        LessonsInterfaceStringsDomainModel(title: "", subtitle: "", languageFilterTitle: "", personalizedToolToggleTitle: "", allLessonsToggleTitle: "", personalizedLessonExplanationTitle: "", personalizedLessonExplanationSubtitle: "", changePersonalizedLessonSettingsActionLabel: "")
+    static var emptyValue: LessonsStringsDomainModel {
+        LessonsStringsDomainModel(title: "", subtitle: "", languageFilterTitle: "", personalizedToolToggleTitle: "", allLessonsToggleTitle: "", personalizedLessonExplanationTitle: "", personalizedLessonExplanationSubtitle: "", changePersonalizedLessonSettingsActionLabel: "")
     }
 }
