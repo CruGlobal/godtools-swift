@@ -24,16 +24,4 @@ class DashboardDomainLayerDependencies {
             localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
-    
-    func getDownloadLatestToolsForFavoritedToolsUseCase() -> DownloadLatestToolsForFavoritedToolsUseCase {
-        return DownloadLatestToolsForFavoritedToolsUseCase(
-            latestToolDownloader: dataLayer.getFavoritedToolsLatestToolDownloaderInterface()
-        )
-    }
-    
-    func getStoreInitialFavoritedToolsUseCase() -> StoreInitialFavoritedToolsUseCase {
-        return StoreInitialFavoritedToolsUseCase(
-            storeInitialFavoritedTools: dataLayer.getStoreInitialFavoritedTools()
-        )
-    }
 }

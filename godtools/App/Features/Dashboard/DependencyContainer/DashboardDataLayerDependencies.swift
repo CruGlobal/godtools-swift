@@ -16,18 +16,4 @@ class DashboardDataLayerDependencies {
         
         self.coreDataLayer = coreDataLayer
     }
-    
-    func getFavoritedToolsLatestToolDownloaderInterface() -> FavoritedToolsLatestToolDownloaderInterface {
-        return FavoritedToolsLatestToolDownloader(
-            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository(),
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
-            toolDownloader: coreDataLayer.getToolDownloader()
-        )
-    }
-    
-    func getStoreInitialFavoritedTools() -> StoreInitialFavoritedToolsInterface {
-        return StoreInitialFavoritedTools(
-            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository()
-        )
-    }
 }

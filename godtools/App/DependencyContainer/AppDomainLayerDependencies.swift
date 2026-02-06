@@ -29,6 +29,14 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getDownloadLatestToolsForFavoritedToolsUseCase() -> DownloadLatestToolsForFavoritedToolsUseCase {
+        return DownloadLatestToolsForFavoritedToolsUseCase(
+            favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository(),
+            resourcesRepository: dataLayer.getResourcesRepository(),
+            toolDownloader: dataLayer.getToolDownloader()
+        )
+    }
+    
     func getLessonsListItems() -> GetLessonsListItems {
         return GetLessonsListItems(
             languagesRepository: dataLayer.getLanguagesRepository(),
@@ -55,10 +63,12 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getShouldShowLanguageSettingsBarButtonUseCase() -> GetShouldShowLanguageSettingsBarButtonUseCase {
-        return GetShouldShowLanguageSettingsBarButtonUseCase()
+    func getStoreInitialFavoritedToolsUseCase() -> StoreInitialFavoritedToolsUseCase {
+        return StoreInitialFavoritedToolsUseCase(
+            favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository()
+        )
     }
-    
+
     func getToolBannerUseCase() -> GetToolBannerUseCase {
         return GetToolBannerUseCase(
             attachmentsRepository: dataLayer.getAttachmentsRepository()
