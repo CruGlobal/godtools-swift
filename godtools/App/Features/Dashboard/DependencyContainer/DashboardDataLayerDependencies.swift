@@ -17,12 +17,6 @@ class DashboardDataLayerDependencies {
         self.coreDataLayer = coreDataLayer
     }
     
-    func getDashboardInterfaceStringsRepositoryInterface() -> GetDashboardInterfaceStringsRepositoryInterface {
-        return GetDashboardInterfaceStringsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
-    
     func getFavoritedToolsLatestToolDownloaderInterface() -> FavoritedToolsLatestToolDownloaderInterface {
         return FavoritedToolsLatestToolDownloader(
             favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository(),

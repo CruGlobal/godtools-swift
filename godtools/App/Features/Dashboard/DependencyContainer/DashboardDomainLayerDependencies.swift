@@ -10,11 +10,19 @@ import Foundation
 
 class DashboardDomainLayerDependencies {
     
+    private let coreDataLayer: AppDataLayerDependencies
     private let dataLayer: DashboardDataLayerDependencies
     
-    init(dataLayer: DashboardDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, dataLayer: DashboardDataLayerDependencies) {
         
+        self.coreDataLayer = coreDataLayer
         self.dataLayer = dataLayer
+    }
+    
+    func getDashboardStringsUseCase() -> GetDashboardStringsUseCase {
+        return GetDashboardStringsUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
     }
     
     func getDownloadLatestToolsForFavoritedToolsUseCase() -> DownloadLatestToolsForFavoritedToolsUseCase {
@@ -26,12 +34,6 @@ class DashboardDomainLayerDependencies {
     func getStoreInitialFavoritedToolsUseCase() -> StoreInitialFavoritedToolsUseCase {
         return StoreInitialFavoritedToolsUseCase(
             storeInitialFavoritedTools: dataLayer.getStoreInitialFavoritedTools()
-        )
-    }
-    
-    func getViewDashboardUseCase() -> ViewDashboardUseCase {
-        return ViewDashboardUseCase(
-            getInterfaceStringsRepository: dataLayer.getDashboardInterfaceStringsRepositoryInterface()
         )
     }
 }

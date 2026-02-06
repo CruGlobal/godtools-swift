@@ -1,15 +1,15 @@
 //
-//  GetDashboardInterfaceStringsRepository.swift
+//  GetDashboardStringsUseCase.swift
 //  godtools
 //
-//  Created by Levi Eggert on 1/2/24.
-//  Copyright © 2024 Cru. All rights reserved.
+//  Created by Levi Eggert on 2/6/26.
+//  Copyright © 2026 Cru. All rights reserved.
 //
 
 import Foundation
 import Combine
 
-class GetDashboardInterfaceStringsRepository: GetDashboardInterfaceStringsRepositoryInterface {
+class GetDashboardStringsUseCase {
     
     private let localizationServices: LocalizationServicesInterface
     
@@ -18,11 +18,11 @@ class GetDashboardInterfaceStringsRepository: GetDashboardInterfaceStringsReposi
         self.localizationServices = localizationServices
     }
     
-    func getStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<DashboardInterfaceStringsDomainModel, Never> {
+    func execute(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<DashboardStringsDomainModel, Never> {
         
         let localeId: String = translateInLanguage
         
-        let interfaceStrings = DashboardInterfaceStringsDomainModel(
+        let interfaceStrings = DashboardStringsDomainModel(
             lessonsActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "tool_menu_item.lessons"),
             favoritesActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "my_tools"),
             toolsActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "tool_menu_item.tools")
