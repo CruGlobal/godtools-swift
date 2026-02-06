@@ -1,15 +1,15 @@
 //
-//  GetToolsRepository.swift
+//  GetAllToolsUseCase.swift
 //  godtools
 //
-//  Created by Levi Eggert on 2/19/24.
-//  Copyright © 2024 Cru. All rights reserved.
+//  Created by Levi Eggert on 2/6/26.
+//  Copyright © 2026 Cru. All rights reserved.
 //
 
 import Foundation
 import Combine
 
-class GetToolsRepository: GetToolsRepositoryInterface {
+final class GetAllToolsUseCase {
     
     private let resourcesRepository: ResourcesRepository
     private let favoritedResourcesRepository: FavoritedResourcesRepository
@@ -30,7 +30,7 @@ class GetToolsRepository: GetToolsRepositoryInterface {
         self.getTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability
     }
     
-    @MainActor func getToolsPublisher(translatedInAppLanguage: AppLanguageDomainModel, languageIdForAvailabilityText: String?, filterToolsByCategory: ToolFilterCategoryDomainModel?, filterToolsByLanguage: ToolFilterLanguageDomainModel?) -> AnyPublisher<[ToolListItemDomainModel], Error> {
+    @MainActor func execute(translatedInAppLanguage: AppLanguageDomainModel, languageIdForAvailabilityText: String?, filterToolsByCategory: ToolFilterCategoryDomainModel?, filterToolsByLanguage: ToolFilterLanguageDomainModel?) -> AnyPublisher<[ToolListItemDomainModel], Error> {
         
         let languageForAvailabilityTextModel: LanguageDataModel?
         

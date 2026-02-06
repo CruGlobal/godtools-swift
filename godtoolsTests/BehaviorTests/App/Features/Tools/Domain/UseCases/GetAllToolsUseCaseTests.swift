@@ -1,5 +1,5 @@
 //
-//  GetToolsRepositoryTests.swift
+//  GetAllToolsUseCaseTests.swift
 //  godtoolsTests
 //
 //  Created by Levi Eggert on 4/11/24.
@@ -14,7 +14,7 @@ import RealmSwift
 import RepositorySync
 
 @Suite(.serialized)
-struct GetToolsRepositoryTests {
+struct GetAllToolsUseCaseTests {
     
     private let categoryConversationStarter: String = "conversation_starter"
     private let categoryGospel: String = "gospel"
@@ -39,7 +39,7 @@ struct GetToolsRepositoryTests {
     )
     @MainActor func anyCategoryAndAnyLanguageShouldShowAllTools() async throws {
         
-        let toolsRepository = try getToolsRepository()
+        let getAllToolsUseCase = try getAllToolsUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -54,8 +54,8 @@ struct GetToolsRepositoryTests {
                     continuation.resume(returning: ())
                 }
                 
-                toolsRepository
-                    .getToolsPublisher(
+                getAllToolsUseCase
+                    .execute(
                         translatedInAppLanguage: "",
                         languageIdForAvailabilityText: nil,
                         filterToolsByCategory: nil,
@@ -94,7 +94,7 @@ struct GetToolsRepositoryTests {
     )
     @MainActor func categoryGrowthCategoryAndAnyLanguageShouldShowCategoryGrowthTools() async throws {
         
-        let toolsRepository = try getToolsRepository()
+        let getAllToolsUseCase = try getAllToolsUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -121,8 +121,8 @@ struct GetToolsRepositoryTests {
                     continuation.resume(returning: ())
                 }
                 
-                toolsRepository
-                    .getToolsPublisher(
+                getAllToolsUseCase
+                    .execute(
                         translatedInAppLanguage: "",
                         languageIdForAvailabilityText: nil,
                         filterToolsByCategory: growthCategoryFilter,
@@ -161,7 +161,7 @@ struct GetToolsRepositoryTests {
     )
     @MainActor func categoryIsAnyAndLanguageIsRussianShouldShowToolsThatSupportRussian() async throws {
         
-        let toolsRepository = try getToolsRepository()
+        let getAllToolsUseCase = try getAllToolsUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -190,8 +190,8 @@ struct GetToolsRepositoryTests {
                     continuation.resume(returning: ())
                 }
                 
-                toolsRepository
-                    .getToolsPublisher(
+                getAllToolsUseCase
+                    .execute(
                         translatedInAppLanguage: "",
                         languageIdForAvailabilityText: nil,
                         filterToolsByCategory: anyCategoryFilter,
@@ -230,7 +230,7 @@ struct GetToolsRepositoryTests {
     )
     @MainActor func categoryIsAnyAndLanguageIsSpanishShouldShowToolsThatSupportSpanish() async throws {
         
-        let toolsRepository = try getToolsRepository()
+        let getAllToolsUseCase = try getAllToolsUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -259,8 +259,8 @@ struct GetToolsRepositoryTests {
                     continuation.resume(returning: ())
                 }
                 
-                toolsRepository
-                    .getToolsPublisher(
+                getAllToolsUseCase
+                    .execute(
                         translatedInAppLanguage: "",
                         languageIdForAvailabilityText: nil,
                         filterToolsByCategory: anyCategoryFilter,
@@ -409,12 +409,12 @@ struct GetToolsRepositoryTests {
     }
 }
 
-extension GetToolsRepositoryTests {
+extension GetAllToolsUseCaseTests {
     
     private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
                 
         return try TestsDiContainer(
-            realmFileName: String(describing: GetToolsRepositoryTests.self),
+            realmFileName: String(describing: GetAllToolsUseCaseTests.self),
             addRealmObjects: allTools + addRealmObjects
         )
     }
@@ -462,11 +462,11 @@ extension GetToolsRepositoryTests {
         }
     }
     
-    private func getToolsRepository() throws -> GetToolsRepository {
+    private func getAllToolsUseCase() throws -> GetAllToolsUseCase {
         
         let testsDiContainer: TestsDiContainer = try getTestsDiContainer()
         
-        let getToolsRepository = GetToolsRepository(
+        return GetAllToolsUseCase(
             resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
             favoritedResourcesRepository: testsDiContainer.dataLayer.getFavoritedResourcesRepository(),
             languagesRepository: testsDiContainer.dataLayer.getLanguagesRepository(),
@@ -475,7 +475,5 @@ extension GetToolsRepositoryTests {
             getToolListItemInterfaceStringsRepository: testsDiContainer.dataLayer.getToolListItemInterfaceStringsRepository(),
             getTranslatedToolLanguageAvailability: testsDiContainer.dataLayer.getTranslatedToolLanguageAvailability()
         )
-        
-        return getToolsRepository
     }
 }

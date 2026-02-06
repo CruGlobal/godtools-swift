@@ -1,5 +1,5 @@
 //
-//  AllYourFavoritedToolsInterfaceStringsDomainModel.swift
+//  AllYourFavoritedToolsStringsDomainModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 2/16/24.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct AllYourFavoritedToolsInterfaceStringsDomainModel {
+struct AllYourFavoritedToolsStringsDomainModel {
     
     let sectionTitle: String
 }

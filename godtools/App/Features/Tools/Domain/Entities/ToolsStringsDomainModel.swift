@@ -1,5 +1,5 @@
 //
-//  ToolsInterfaceStringsDomainModel.swift
+//  ToolsStringsDomainModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 2/16/24.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ToolsInterfaceStringsDomainModel {
+struct ToolsStringsDomainModel {
 
     let favoritingToolBannerMessage: String
     let toolSpotlightTitle: String
@@ -20,7 +20,7 @@ struct ToolsInterfaceStringsDomainModel {
     let personalizedToolExplanationSubtitle: String
     let changePersonalizedToolSettingsActionLabel: String
 
-    static var emptyValue: ToolsInterfaceStringsDomainModel {
-        ToolsInterfaceStringsDomainModel(favoritingToolBannerMessage: "", toolSpotlightTitle: "", toolSpotlightSubtitle: "", filterTitle: "", personalizedToolToggleTitle: "", allToolsToggleTitle: "", personalizedToolExplanationTitle: "", personalizedToolExplanationSubtitle: "", changePersonalizedToolSettingsActionLabel: "")
+    static var emptyValue: ToolsStringsDomainModel {
+        ToolsStringsDomainModel(favoritingToolBannerMessage: "", toolSpotlightTitle: "", toolSpotlightSubtitle: "", filterTitle: "", personalizedToolToggleTitle: "", allToolsToggleTitle: "", personalizedToolExplanationTitle: "", personalizedToolExplanationSubtitle: "", changePersonalizedToolSettingsActionLabel: "")
     }
 }

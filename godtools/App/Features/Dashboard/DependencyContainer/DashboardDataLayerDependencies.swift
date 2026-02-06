@@ -17,10 +17,6 @@ class DashboardDataLayerDependencies {
         self.coreDataLayer = coreDataLayer
     }
     
-    // MARK: - Data Layer Classes
-    
-    // MARK: - Domain Interface
-    
     func getDashboardInterfaceStringsRepositoryInterface() -> GetDashboardInterfaceStringsRepositoryInterface {
         return GetDashboardInterfaceStringsRepository(
             localizationServices: coreDataLayer.getLocalizationServices()
@@ -38,24 +34,6 @@ class DashboardDataLayerDependencies {
     func getStoreInitialFavoritedTools() -> StoreInitialFavoritedToolsInterface {
         return StoreInitialFavoritedTools(
             favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository()
-        )
-    }
-    
-    func getToolsInterfaceStringsRepository() -> GetToolsInterfaceStringsRepositoryInterface {
-        return GetToolsInterfaceStringsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
-    
-    func getToolsRepository() -> GetToolsRepositoryInterface {
-        return GetToolsRepository(
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
-            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository(),
-            languagesRepository: coreDataLayer.getLanguagesRepository(),
-            getTranslatedToolName: coreDataLayer.getTranslatedToolName(),
-            getTranslatedToolCategory: coreDataLayer.getTranslatedToolCategory(),
-            getToolListItemInterfaceStringsRepository: coreDataLayer.getToolListItemInterfaceStringsRepository(),
-            getTranslatedToolLanguageAvailability: coreDataLayer.getTranslatedToolLanguageAvailability()
         )
     }
 }
