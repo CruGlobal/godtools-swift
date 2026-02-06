@@ -129,11 +129,12 @@ import Combine
             $toolFilterLanguageSelection.dropFirst()
         )
         .map { (appLanguage, toolFilterCategory, toolFilterLanguage) in
-                                    
-            return getSpotlightToolsUseCase.getSpotlightToolsPublisher(
-                translatedInAppLanguage: appLanguage,
-                languageIdForAvailabilityText: toolFilterLanguage.languageDataModelId
-            )
+            
+            getSpotlightToolsUseCase
+                .execute(
+                    translatedInAppLanguage: appLanguage,
+                    languageIdForAvailabilityText: toolFilterLanguage.languageDataModelId
+                )
         }
         .switchToLatest()
         .receive(on: DispatchQueue.main)
