@@ -9,7 +9,7 @@
 import UIKit
 import Combine
 
-class DashboardFlow: Flow, ToolNavigationFlow {
+class DashboardFlow: NSObject, Flow, ToolNavigationFlow {
         
     private let dashboardTabObserver: CurrentValueSubject<DashboardTabTypeDomainModel, Never>
     private let startingTab: DashboardTabTypeDomainModel = .favorites
@@ -39,6 +39,8 @@ class DashboardFlow: Flow, ToolNavigationFlow {
         
         dashboardTabObserver = CurrentValueSubject(startingTab)
         
+        super.init()
+        
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()
             .getLanguagePublisher()
@@ -47,6 +49,8 @@ class DashboardFlow: Flow, ToolNavigationFlow {
     
     func navigate(step: FlowStep) {
      
+        navigationController.delegate = self
+        
         switch step {
                         
         case .menuTappedFromTools:
@@ -63,7 +67,10 @@ class DashboardFlow: Flow, ToolNavigationFlow {
             
         case .backTappedFromLessonLanguageFilter:
             navigationController.popViewController(animated: true)
-            
+
+        case .localizationSettingsTappedFromLessons:
+            navigateToMenu(animated: true, initialNavigationStep: .localizationSettingsTappedFromMenu)
+
         case .languageTappedFromLessonLanguageFilter:
             navigationController.popViewController(animated: true)
             
@@ -196,7 +203,10 @@ class DashboardFlow: Flow, ToolNavigationFlow {
             )
             
             navigationController.pushViewController(toolDetails, animated: true)
-            
+
+        case .localizationSettingsTappedFromTools:
+            navigateToMenu(animated: true, initialNavigationStep: .localizationSettingsTappedFromMenu)
+
         case .openToolTappedFromToolDetails(let toolId, let primaryLanguage, let parallelLanguage, let selectedLanguageIndex):
             
             if dashboardTabObserver.value == .favorites {
@@ -208,7 +218,6 @@ class DashboardFlow: Flow, ToolNavigationFlow {
             }
             
         case .backTappedFromToolDetails:
-            configureNavBarForDashboard()
             navigationController.popViewController(animated: true)
             
         case .urlLinkTappedFromToolDetails(let url, let screenName, let siteSection, let siteSubSection, let contentLanguage, let contentLanguageSecondary):
@@ -286,12 +295,10 @@ class DashboardFlow: Flow, ToolNavigationFlow {
             }
             else if let dashboardInNavigationStack = getDashboardInNavigationStack() {
                 
-                configureNavBarForDashboard()
                 navigationController.popToViewController(dashboardInNavigationStack, animated: true)
             }
             else {
                 
-                configureNavBarForDashboard()
                 _ = navigationController.popViewController(animated: true)
             }
             
@@ -305,12 +312,10 @@ class DashboardFlow: Flow, ToolNavigationFlow {
                 
                 if let dashboardInNavigationStack = getDashboardInNavigationStack() {
                     
-                    configureNavBarForDashboard()
                     navigationController.popToViewController(dashboardInNavigationStack, animated: true)
                 }
                 else {
                     
-                    configureNavBarForDashboard()
                     _ = navigationController.popViewController(animated: true)
                 }
                 
@@ -320,6 +325,24 @@ class DashboardFlow: Flow, ToolNavigationFlow {
         default:
             break
         }
+    }
+}
+
+// MARK: - UINavigationControllerDelegate
+
+extension DashboardFlow: UINavigationControllerDelegate {
+    
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        
+        let isDashboard: Bool = viewController is AppHostingController<DashboardView>
+        let isLesson: Bool = viewController is LessonView
+        let hidesNavigationBar: Bool = isDashboard || isLesson
+        
+        if isDashboard {
+            configureNavBarForDashboard()
+        }
+        
+        navigationController.setNavigationBarHidden(hidesNavigationBar, animated: false)
     }
 }
 
@@ -348,27 +371,15 @@ extension DashboardFlow {
                 flowDelegate: self
             ),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewDashboardUseCase: appDiContainer.feature.dashboard.domainLayer.getViewDashboardUseCase(),
+            getDashboardStringsUseCase: appDiContainer.feature.dashboard.domainLayer.getDashboardStringsUseCase(),
             dashboardTabObserver: dashboardTabObserver
         )
                 
         let view = DashboardView(viewModel: viewModel)
-        
-        let menuButton = AppMenuBarItem(
-            color: .white,
-            target: viewModel,
-            action: #selector(viewModel.menuTapped),
-            accessibilityIdentifier: AccessibilityStrings.Button.dashboardMenu.id
-        )
-        
+            
         let hostingController = AppHostingController<DashboardView>(
             rootView: view,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: nil,
-                leadingItems: [menuButton],
-                trailingItems: []
-            )
+            navigationBar: nil
         )
     
         return hostingController
@@ -376,7 +387,7 @@ extension DashboardFlow {
     
     private func configureNavBarForDashboard() {
         
-        GodToolsSceneDelegate.setWindowBackgroundColorForStatusBarColor(color: ColorPalette.gtBlue.uiColor)
+        GodToolsSceneDelegate.setWindowBackgroundColorForStatusBarColor(color: AppFlow.defaultNavBarColor)
                 
         navigationController.resetNavigationBarAppearance()
         
@@ -399,9 +410,7 @@ extension DashboardFlow {
             
             navigationController.setViewControllers([dashboard], animated: false)
         }
-        
-        configureNavBarForDashboard()
-        
+                
         closeMenu(animated: false)
         
         learnToShareToolFlow = nil

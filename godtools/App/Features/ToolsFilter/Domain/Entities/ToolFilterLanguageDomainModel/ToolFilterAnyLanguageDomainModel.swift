@@ -25,4 +25,8 @@ class ToolFilterAnyLanguageDomainModel: ToolFilterLanguageDomainModel {
             numberOfToolsAvailable: numberOfToolsAvailable
         )
     }
+    
+    static var emptyValue: ToolFilterAnyLanguageDomainModel {
+        return ToolFilterAnyLanguageDomainModel(text: "", toolsAvailableText: "", numberOfToolsAvailable: 0)
+    }
 }

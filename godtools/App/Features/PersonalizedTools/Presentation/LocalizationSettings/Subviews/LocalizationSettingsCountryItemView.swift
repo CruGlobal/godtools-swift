@@ -12,13 +12,15 @@ struct LocalizationSettingsCountryItemView: View {
     
     private static let lightGrey = Color.getColorWithRGB(red: 151, green: 151, blue: 151, opacity: 1)
     
-    private let country: LocalizationSettingsCountryDomainModel
+    private let country: LocalizationSettingsCountryListItemDomainModel
+    private let isSelected: Bool
     private let tappedClosure: (() -> Void)?
     private let accessibility: AccessibilityStrings.Button = .localizationSettingsCountryListItem
     
-    init(country: LocalizationSettingsCountryDomainModel, tappedClosure: (() -> Void)?) {
+    init(country: LocalizationSettingsCountryListItemDomainModel, isSelected: Bool, tappedClosure: (() -> Void)?) {
         
         self.country = country
+        self.isSelected = isSelected
         self.tappedClosure = tappedClosure
     }
     
@@ -46,6 +48,12 @@ struct LocalizationSettingsCountryItemView: View {
                 .padding(.vertical, 3)
                 
                 Spacer()
+
+                if isSelected {
+                    Image(systemName: "checkmark")
+                        .foregroundColor(ColorPalette.gtBlue.color)
+                        .padding(.trailing, 5)
+                }
             }
         }
         .accessibilityIdentifier(accessibility.id)

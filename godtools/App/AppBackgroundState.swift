@@ -40,19 +40,21 @@ import Combine
             .getStoreInitialAppLanguageUseCase()
             .storeInitialAppLanguagePublisher()
             .receive(on: DispatchQueue.main)
-            .sink { (appLanguage: BCP47LanguageIdentifier) in
-
-            }
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { (appLanguage: BCP47LanguageIdentifier) in
+                
+            })
             .store(in: &cancellables)
         
         syncLatestToolsForFavoritedTools(
-            downloadLatestToolsForFavoritedToolsUseCase: appDiContainer.feature.dashboard.domainLayer.getDownloadLatestToolsForFavoritedToolsUseCase()
+            downloadLatestToolsForFavoritedToolsUseCase: appDiContainer.domainLayer.getDownloadLatestToolsForFavoritedToolsUseCase()
         )
                 
         syncInitialFavoritedTools(
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             launchCountRepository: appDiContainer.dataLayer.getLaunchCountRepository(),
-            storeInitialFavoritedToolsUseCase: appDiContainer.feature.dashboard.domainLayer.getStoreInitialFavoritedToolsUseCase()
+            storeInitialFavoritedToolsUseCase: appDiContainer.domainLayer.getStoreInitialFavoritedToolsUseCase()
         )
         
         syncUserCounters(
@@ -67,7 +69,7 @@ import Combine
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
                 return downloadLatestToolsForFavoritedToolsUseCase
-                    .downloadPublisher(appLanguage: appLanguage)
+                    .execute(appLanguage: appLanguage)
                     .eraseToAnyPublisher()
             }
             .switchToLatest()
@@ -96,7 +98,7 @@ import Combine
             }
             
             return storeInitialFavoritedToolsUseCase
-                .storeToolsPublisher()
+                .execute()
                 .setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
         }

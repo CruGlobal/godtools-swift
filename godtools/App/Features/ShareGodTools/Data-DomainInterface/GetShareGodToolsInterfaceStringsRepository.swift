@@ -18,9 +18,9 @@ class GetShareGodToolsInterfaceStringsRepository: GetShareGodToolsInterfaceStrin
         self.localizationServices = localizationServices
     }
     
-    func getInterfaceStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ShareGodToolsInterfaceStringsDomainModel, Never> {
+    func getInterfaceStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ShareGodToolsStringsDomainModel, Never> {
                 
-        let interfaceStrings = ShareGodToolsInterfaceStringsDomainModel(
+        let interfaceStrings = ShareGodToolsStringsDomainModel(
             shareMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "share_god_tools_share_sheet_text")
         )
         

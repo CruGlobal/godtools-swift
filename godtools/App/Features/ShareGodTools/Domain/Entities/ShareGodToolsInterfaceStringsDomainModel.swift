@@ -1,5 +1,5 @@
 //
-//  ShareGodToolsInterfaceStringsDomainModel.swift
+//  ShareGodToolsStringsDomainModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 4/19/24.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ShareGodToolsInterfaceStringsDomainModel {
+struct ShareGodToolsStringsDomainModel {
     
     let shareMessage: String
 }

@@ -10,17 +10,28 @@ import Foundation
 
 class LessonsFeatureDomainLayerDependencies {
     
+    private let coreDataLayer: AppDataLayerDependencies
     private let dataLayer: LessonsFeatureDataLayerDependencies
+    private let coreDomainlayer: AppDomainLayerDependencies
     
-    init(dataLayer: LessonsFeatureDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, dataLayer: LessonsFeatureDataLayerDependencies, coreDomainlayer: AppDomainLayerDependencies) {
         
+        self.coreDataLayer = coreDataLayer
         self.dataLayer = dataLayer
+        self.coreDomainlayer = coreDomainlayer
     }
     
-    func getViewLessonsUseCase() -> ViewLessonsUseCase {
-        return ViewLessonsUseCase(
-            getInterfaceStringsRepository: dataLayer.getLessonsInterfaceStringsRepositoryInterface(),
-            getLessonsListRepository: dataLayer.getLessonsListRepositoryInterface()
+    func getAllLessonsUseCase() -> GetAllLessonsUseCase {
+        return GetAllLessonsUseCase(
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            lessonProgressRepository: coreDataLayer.getUserLessonProgressRepository(),
+            getLessonsListItems: coreDomainlayer.supporting.getLessonsListItems()
+        )
+    }
+    
+    func getLessonsStringsUseCase() -> GetLessonsStringsUseCase {
+        return GetLessonsStringsUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
 }

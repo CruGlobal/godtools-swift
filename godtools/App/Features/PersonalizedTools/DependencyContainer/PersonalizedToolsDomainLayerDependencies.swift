@@ -12,11 +12,13 @@ class PersonalizedToolsDomainLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     private let dataLayer: PersonalizedToolsDataLayerDependencies
+    private let coreDomainlayer: AppDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, dataLayer: PersonalizedToolsDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, dataLayer: PersonalizedToolsDataLayerDependencies, coreDomainlayer: AppDomainLayerDependencies) {
         
         self.coreDataLayer = coreDataLayer
         self.dataLayer = dataLayer
+        self.coreDomainlayer = coreDomainlayer
     }
     
     func getLocalizationSettingsCountryListUseCase() -> GetLocalizationSettingsCountryListUseCase {
@@ -33,9 +35,34 @@ class PersonalizedToolsDomainLayerDependencies {
     }
     
     func getViewLocalizationSettingsUseCase() -> ViewLocalizationSettingsUseCase {
-        
+
         return ViewLocalizationSettingsUseCase(
             localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getGetLocalizationSettingsUseCase() -> GetLocalizationSettingsUseCase {
+
+        return GetLocalizationSettingsUseCase(
+            userLocalizationSettingsRepository: dataLayer.getUserLocalizationSettingsRepository()
+        )
+    }
+
+    func getSetLocalizationSettingsUseCase() -> SetLocalizationSettingsUseCase {
+
+        return SetLocalizationSettingsUseCase(
+            userLocalizationSettingsRepository: dataLayer.getUserLocalizationSettingsRepository()
+        )
+    }
+
+    func getGetPersonalizedLessonsUseCase() -> GetPersonalizedLessonsUseCase {
+
+        return GetPersonalizedLessonsUseCase(
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            personalizedLessonsRepository: dataLayer.getPersonalizedLessonsRepository(),
+            languagesRepository: coreDataLayer.getLanguagesRepository(),
+            lessonProgressRepository: coreDataLayer.getUserLessonProgressRepository(),
+            getLessonsListItems: coreDomainlayer.supporting.getLessonsListItems()
         )
     }
 }

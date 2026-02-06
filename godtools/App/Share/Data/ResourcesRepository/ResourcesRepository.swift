@@ -17,16 +17,16 @@ class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResour
     
     private let attachmentsRepository: AttachmentsRepository
     private let languagesRepository: LanguagesRepository
-    private let userDefaultsCache: UserDefaultsCacheInterface
+    private let syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface
     
     let cache: ResourcesCache
     
-    init(externalDataFetch: MobileContentResourcesApi, persistence: any Persistence<ResourceDataModel, ResourceCodable>, cache: ResourcesCache, attachmentsRepository: AttachmentsRepository, languagesRepository: LanguagesRepository, userDefaultsCache: UserDefaultsCacheInterface) {
+    init(externalDataFetch: MobileContentResourcesApi, persistence: any Persistence<ResourceDataModel, ResourceCodable>, cache: ResourcesCache, attachmentsRepository: AttachmentsRepository, languagesRepository: LanguagesRepository, syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface) {
         
         self.cache = cache
         self.attachmentsRepository = attachmentsRepository
         self.languagesRepository = languagesRepository
-        self.userDefaultsCache = userDefaultsCache
+        self.syncInvalidatorPersistence = syncInvalidatorPersistence
                         
         super.init(
             externalDataFetch: externalDataFetch,
@@ -181,7 +181,7 @@ extension ResourcesRepository {
         let syncInvalidator = SyncInvalidator(
             id: Self.syncInvalidatorIdForResourcesPlustLatestTranslationsAndAttachments,
             timeInterval: .hours(hour: 8),
-            userDefaultsCache: userDefaultsCache
+            persistence: syncInvalidatorPersistence
         )
         
         let shouldFetchFromRemote: Bool = forceFetchFromRemote || syncInvalidator.shouldSync
