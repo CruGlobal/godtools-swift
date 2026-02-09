@@ -74,7 +74,7 @@ struct GodToolsApp: App {
         
         toolShortcutLinksViewModel = ToolShortcutLinksViewModel(
             getCurrentAppLanguageUseCase: Self.appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewToolShortcutLinksUseCase: Self.appDiContainer.feature.toolShortcutLinks.domainLayer.getViewToolShortcutLinksUseCase()
+            getToolShortcutLinksUseCase: Self.appDiContainer.feature.toolShortcutLinks.domainLayer.getToolShortcutLinksUseCase()
         )
     }
 
