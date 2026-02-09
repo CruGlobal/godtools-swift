@@ -1,5 +1,5 @@
 //
-//  DidChangeScaleForSpiritualConversationReadinessTests.swift
+//  DidChangeScaleForSpiritualConversationReadinessUseCaseTests.swift
 //  godtoolsTests
 //
 //  Created by Levi Eggert on 4/26/24.
@@ -10,7 +10,7 @@ import Testing
 @testable import godtools
 import Combine
 
-struct DidChangeScaleForSpiritualConversationReadinessTests {
+struct DidChangeScaleForSpiritualConversationReadinessUseCaseTests {
     
     @Test(
         """
@@ -195,7 +195,7 @@ struct DidChangeScaleForSpiritualConversationReadinessTests {
     }
 }
 
-extension DidChangeScaleForSpiritualConversationReadinessTests {
+extension DidChangeScaleForSpiritualConversationReadinessUseCaseTests {
     
     private func getDidChangeScaleForSpiritualConversationReadinessUseCase() -> DidChangeScaleForSpiritualConversationReadinessUseCase {
         

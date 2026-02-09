@@ -10,17 +10,24 @@ import Foundation
 
 class TutorialFeatureDomainLayerDependencies {
     
+    private let coreDataLayer: AppDataLayerDependencies
     private let dataLayer: TutorialFeatureDataLayerDependencies
     
-    init(dataLayer: TutorialFeatureDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, dataLayer: TutorialFeatureDataLayerDependencies) {
         
+        self.coreDataLayer = coreDataLayer
         self.dataLayer = dataLayer
+    }
+    
+    func getTutorialStringsUseCase() -> GetTutorialStringsUseCase {
+        return GetTutorialStringsUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
     }
     
     func getTutorialUseCase() -> GetTutorialUseCase {
         return GetTutorialUseCase(
-            getInterfaceStringsRepositoryInterface: dataLayer.getTutorialInterfaceStringsRepositoryInterface(),
-            getTutorialRepositoryInterface: dataLayer.getTutorialRepositoryInterface()
+            localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
 }

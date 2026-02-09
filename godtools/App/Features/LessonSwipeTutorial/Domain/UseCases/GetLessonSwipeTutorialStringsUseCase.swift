@@ -1,5 +1,5 @@
 //
-//  GetLessonSwipeTutorialInterfaceStringsRepository.swift
+//  GetLessonSwipeTutorialStringsUseCase.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 4/14/25.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class GetLessonSwipeTutorialInterfaceStringsRepository: GetLessonSwipeTutorialInterfaceStringsRepositoryInterface {
+final class GetLessonSwipeTutorialStringsUseCase {
     
     private let localizationServices: LocalizationServicesInterface
     
@@ -17,16 +17,16 @@ class GetLessonSwipeTutorialInterfaceStringsRepository: GetLessonSwipeTutorialIn
         self.localizationServices = localizationServices
     }
     
-    func getStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<LessonSwipeTutorialInterfaceStringsDomainModel, Never> {
+    func execute(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<LessonSwipeTutorialStringsDomainModel, Never> {
         
         let localeId: String = translateInLanguage.localeId
         
-        let interfaceStrings = LessonSwipeTutorialInterfaceStringsDomainModel(
+        let strings = LessonSwipeTutorialStringsDomainModel(
             title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.swipeTutorial.title"),
             closeButtonText: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.swipeTutorial.buttonText")
         )
         
-        return Just(interfaceStrings)
+        return Just(strings)
             .eraseToAnyPublisher()
     }
 }

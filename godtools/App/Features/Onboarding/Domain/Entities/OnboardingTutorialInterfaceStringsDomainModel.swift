@@ -1,5 +1,5 @@
 //
-//  OnboardingTutorialInterfaceStringsDomainModel.swift
+//  OnboardingTutorialStringsDomainModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 10/18/23.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct OnboardingTutorialInterfaceStringsDomainModel {
+struct OnboardingTutorialStringsDomainModel {
     
     let chooseAppLanguageButtonTitle: String
     let beginTutorialButtonTitle: String

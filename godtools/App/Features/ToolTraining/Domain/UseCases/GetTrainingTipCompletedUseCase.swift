@@ -9,18 +9,16 @@
 import Foundation
 import Combine
 
-class GetTrainingTipCompletedUseCase {
+final class GetTrainingTipCompletedUseCase {
     
     private let repository: CompletedTrainingTipRepository
-    
-    private var cancellables = Set<AnyCancellable>()
-    
+        
     init(repository: CompletedTrainingTipRepository) {
         
         self.repository = repository
     }
     
-    func hasTrainingTipBeenCompleted(tip: TrainingTipDomainModel) -> Bool {
+    func execute(tip: TrainingTipDomainModel) -> Bool {
         
         if repository.getCompletedTrainingTip(id: tip.id) != nil {
             

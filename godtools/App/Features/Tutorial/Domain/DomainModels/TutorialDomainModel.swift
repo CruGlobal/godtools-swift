@@ -10,6 +10,5 @@ import Foundation
 
 struct TutorialDomainModel {
     
-    let interfaceStrings: TutorialInterfaceStringsDomainModel
     let pages: [TutorialPageDomainModel]
 }
