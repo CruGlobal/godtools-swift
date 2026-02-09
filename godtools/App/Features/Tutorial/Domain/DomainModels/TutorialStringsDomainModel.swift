@@ -1,5 +1,5 @@
 //
-//  TutorialInterfaceStringsDomainModel.swift
+//  TutorialStringsDomainModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/2/23.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TutorialInterfaceStringsDomainModel {
+struct TutorialStringsDomainModel {
     
     let nextTutorialPageActionTitle: String
     let completeTutorialActionTitle: String

@@ -1,5 +1,5 @@
 //
-//  GetTutorialInterfaceStringsRepository.swift
+//  GetTutorialStringsUseCase.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/2/23.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class GetTutorialInterfaceStringsRepository: GetTutorialInterfaceStringsRepositoryInterface {
+final class GetTutorialStringsUseCase {
     
     private let localizationServices: LocalizationServicesInterface
     
@@ -18,20 +18,20 @@ class GetTutorialInterfaceStringsRepository: GetTutorialInterfaceStringsReposito
         self.localizationServices = localizationServices
     }
     
-    func getStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<TutorialInterfaceStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<TutorialStringsDomainModel, Never> {
         
-        let localeId: String = translateInLanguage
+        let localeId: String = appLanguage
         
         let completeTutorialActionLocalizedStringKey: String
         
-        if translateInLanguage == LanguageCodeDomainModel.english.value {
+        if appLanguage == LanguageCodeDomainModel.english.value {
             completeTutorialActionLocalizedStringKey = "tutorial.continueButton.title.closeTutorial"
         }
         else {
             completeTutorialActionLocalizedStringKey = "tutorial.continueButton.title.startUsingGodTools"
         }
         
-        let interfaceStrings = TutorialInterfaceStringsDomainModel(
+        let interfaceStrings = TutorialStringsDomainModel(
             nextTutorialPageActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: "tutorial.continueButton.title.continue"),
             completeTutorialActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: completeTutorialActionLocalizedStringKey)
         )
