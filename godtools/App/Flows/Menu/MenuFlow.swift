@@ -796,7 +796,7 @@ extension MenuFlow {
             flowDelegate: self,
             selectedCountry: pendingCountry,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices()
+            getLocalizationSettingsConfirmationStringsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getLocalizationSettingsConfirmationStringsUseCase()
         )
 
         let confirmationView = LocalizationSettingsConfirmationView(viewModel: confirmationViewModel)

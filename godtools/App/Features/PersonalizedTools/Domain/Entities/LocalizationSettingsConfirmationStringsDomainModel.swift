@@ -10,7 +10,7 @@ import Foundation
 
 struct LocalizationSettingsConfirmationStringsDomainModel {
 
-    let title: String
+    let titleHighlightModel: ConfirmAppLanguageHighlightStringDomainModel
     let description: String
     let detail: String
     let cancelButton: String
@@ -18,7 +18,7 @@ struct LocalizationSettingsConfirmationStringsDomainModel {
 
     static var emptyValue: LocalizationSettingsConfirmationStringsDomainModel {
         return LocalizationSettingsConfirmationStringsDomainModel(
-            title: "",
+            titleHighlightModel: ConfirmAppLanguageHighlightStringDomainModel.emptyStrings(),
             description: "",
             detail: "",
             cancelButton: "",

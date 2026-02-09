@@ -10,12 +10,8 @@ import SwiftUI
 
 struct LocalizationSettingsConfirmationView: View {
 
-    private let cardHorizontalPadding: CGFloat = 30
-    private let cardVerticalPadding: CGFloat = 25
-    private let cardCornerRadius: CGFloat = 12
-    private let imageSize: CGFloat = 120
-    private let buttonHeight: CGFloat = 50
-    private let buttonSpacing: CGFloat = 12
+    private let cardHorizontalPadding: CGFloat = 26
+    private let buttonSpacing: CGFloat = 10
 
     @ObservedObject private var viewModel: LocalizationSettingsConfirmationViewModel
 
@@ -40,74 +36,75 @@ struct LocalizationSettingsConfirmationView: View {
                 let cardWidth: CGFloat = min(geometry.size.width - (cardHorizontalPadding * 2), 400)
                 let buttonWidth: CGFloat = (cardWidth - (cardHorizontalPadding * 2) - buttonSpacing) / 2
 
-                VStack(alignment: .leading, spacing: 0) {
+                ZStack(alignment: .topTrailing) {
 
-                    HStack {
-                        Spacer()
-                        CloseButton(buttonSize: 44) {
-                            viewModel.closeTapped()
+                    VStack(alignment: .leading, spacing: 0) {
+
+                        VStack(alignment: .leading, spacing: 0) {
+
+                            ImageCatalog.localizationSettingsGlobe.image
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 59, height: 67)
+                                .frame(maxWidth: .infinity)
+                                .padding(.top, 25)
+
+                            Text(getAttributedTitleString())
+                                .font(FontLibrary.sfProTextRegular.font(size: 18))
+                                .foregroundColor(ColorPalette.gtGrey.color)
+                                .multilineTextAlignment(.leading)
+                                .padding(.top, 15)
+
+                            Text(viewModel.strings.description)
+                                .font(FontLibrary.sfProTextRegular.font(size: 18))
+                                .foregroundColor(ColorPalette.gtGrey.color)
+                                .multilineTextAlignment(.leading)
+                                .padding(.top, 12)
+
+                            Text(viewModel.strings.detail)
+                                .font(FontLibrary.sfProTextRegular.font(size: 15))
+                                .foregroundColor(ColorPalette.gtGrey.color)
+                                .multilineTextAlignment(.leading)
+                                .padding(.top, 10)
+
+                            HStack(spacing: buttonSpacing) {
+
+                                GTWhiteButton(
+                                    title: viewModel.strings.cancelButton,
+                                    fontSize: 15,
+                                    width: buttonWidth,
+                                    height: 50,
+                                    action: {
+                                        viewModel.cancelTapped()
+                                    }
+                                )
+
+                                GTBlueButton(
+                                    title: viewModel.strings.confirmButton,
+                                    fontSize: 15,
+                                    width: buttonWidth,
+                                    height: 50,
+                                    action: {
+                                        viewModel.confirmTapped()
+                                    }
+                                )
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(.top, 30)
                         }
+                        .padding(.horizontal, cardHorizontalPadding)
+                        .padding(.bottom, 28)
                     }
-                    .padding(.top, 15)
-                    .padding(.trailing, 15)
+                    .background(Color.white)
+                    .cornerRadius(6)
+                    .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 4)
 
-                    VStack(spacing: 0) {
-
-                        ImageCatalog.localizationSettingsGlobe.image
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: imageSize, height: imageSize)
-                            .padding(.top, 10)
-
-                        Text(viewModel.strings.title)
-                            .font(FontLibrary.sfProTextBold.font(size: 18))
-                            .foregroundColor(ColorPalette.gtGrey.color)
-                            .multilineTextAlignment(.center)
-                            .padding(.top, 20)
-
-                        Text(viewModel.strings.description)
-                            .font(FontLibrary.sfProTextRegular.font(size: 18))
-                            .foregroundColor(ColorPalette.gtGrey.color)
-                            .multilineTextAlignment(.center)
-                            .padding(.top, 12)
-
-                        Text(viewModel.strings.detail)
-                            .font(FontLibrary.sfProTextRegular.font(size: 15))
-                            .foregroundColor(ColorPalette.gtGrey.color)
-                            .multilineTextAlignment(.center)
-                            .padding(.top, 10)
-
-                        HStack(spacing: buttonSpacing) {
-
-                            GTWhiteButton(
-                                title: viewModel.strings.cancelButton,
-                                fontSize: 15,
-                                width: buttonWidth,
-                                height: buttonHeight,
-                                action: {
-                                    viewModel.cancelTapped()
-                                }
-                            )
-
-                            GTBlueButton(
-                                title: viewModel.strings.confirmButton,
-                                fontSize: 15,
-                                width: buttonWidth,
-                                height: buttonHeight,
-                                action: {
-                                    viewModel.confirmTapped()
-                                }
-                            )
-                        }
-                        .padding(.top, 24)
+                    CloseButton(buttonSize: 44) {
+                        viewModel.closeTapped()
                     }
-                    .frame(width: cardWidth - (cardHorizontalPadding * 2))
-                    .padding(.horizontal, cardHorizontalPadding)
-                    .padding(.bottom, cardVerticalPadding)
+                    .padding(.top, 10)
+                    .padding(.trailing, 8)
                 }
-                .background(Color.white)
-                .cornerRadius(cardCornerRadius)
-                .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 4)
                 .frame(width: cardWidth)
                 .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
                 .opacity(isVisible ? 1 : 0)
@@ -121,5 +118,15 @@ struct LocalizationSettingsConfirmationView: View {
             }
         }
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+    }
+
+    private func getAttributedTitleString() -> AttributedString {
+
+        var attributedString = AttributedString(viewModel.strings.titleHighlightModel.fullText)
+
+        guard let range = attributedString.range(of: viewModel.strings.titleHighlightModel.highlightText) else { return attributedString }
+        attributedString[range].foregroundColor = ColorPalette.gtBlue.color
+
+        return attributedString
     }
 }

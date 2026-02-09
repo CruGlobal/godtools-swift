@@ -139,7 +139,7 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
             
         case .backTappedFromLocalizationSettings:
             navigationController.popViewController(animated: true)
-
+ 
         case .countryTappedFromLocalizationSettings(let country):
             let confirmationView = getLocalizationSettingsConfirmationView()
             navigationController.present(confirmationView, animated: true)
@@ -239,7 +239,7 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
             flowDelegate: self,
             selectedCountry: pendingCountry,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices()
+            getLocalizationSettingsConfirmationStringsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getLocalizationSettingsConfirmationStringsUseCase()
         )
 
         let confirmationView = LocalizationSettingsConfirmationView(viewModel: confirmationViewModel)

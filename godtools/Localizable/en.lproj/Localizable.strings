@@ -16,7 +16,7 @@
 "localizationSettings.confirmation.title" = "You have selected %@ as your localization.";
 "localizationSettings.confirmation.description" = "Would you like to continue?";
 "localizationSettings.confirmation.detail" = "Note: You can change this setting at anytime from within the menu.";
-"localizationSettings.confirmation.cancelButton" = "Edit localization";
+"localizationSettings.confirmation.cancelButton" = "Edit Localization";
 "localizationSettings.confirmation.confirmButton" = "Continue";
 
 "deferredDeepLinkModal.title" = "It looks like you clicked a link for GodTools";

@@ -12,7 +12,7 @@ import Combine
 @MainActor class LocalizationSettingsConfirmationViewModel: ObservableObject {
 
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
-    private let localizationServices: LocalizationServicesInterface
+    private let getLocalizationSettingsConfirmationStringsUseCase: GetLocalizationSettingsConfirmationStringsUseCase
     private var cancellables: Set<AnyCancellable> = Set()
 
     private weak var flowDelegate: FlowDelegate?
@@ -22,12 +22,12 @@ import Combine
 
     let selectedCountry: LocalizationSettingsCountryListItemDomainModel
 
-    init(flowDelegate: FlowDelegate, selectedCountry: LocalizationSettingsCountryListItemDomainModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, localizationServices: LocalizationServicesInterface) {
+    init(flowDelegate: FlowDelegate, selectedCountry: LocalizationSettingsCountryListItemDomainModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLocalizationSettingsConfirmationStringsUseCase: GetLocalizationSettingsConfirmationStringsUseCase) {
 
         self.flowDelegate = flowDelegate
         self.selectedCountry = selectedCountry
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
-        self.localizationServices = localizationServices
+        self.getLocalizationSettingsConfirmationStringsUseCase = getLocalizationSettingsConfirmationStringsUseCase
 
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
@@ -37,21 +37,14 @@ import Combine
         $appLanguage
             .dropFirst()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] appLanguage in
-                self?.loadStrings(appLanguage: appLanguage)
+            .flatMap { [weak self] appLanguage in
+                guard let self = self else {
+                    return Just(LocalizationSettingsConfirmationStringsDomainModel.emptyValue).eraseToAnyPublisher()
+                }
+                return self.getLocalizationSettingsConfirmationStringsUseCase.execute(appLanguage: appLanguage, selectedCountry: self.selectedCountry)
             }
-            .store(in: &cancellables)
-    }
-
-    private func loadStrings(appLanguage: AppLanguageDomainModel) {
-
-        strings = LocalizationSettingsConfirmationStringsDomainModel(
-            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "localizationSettings.confirmation.title"),
-            description: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "localizationSettings.confirmation.description"),
-            detail: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "localizationSettings.confirmation.detail"),
-            cancelButton: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "localizationSettings.confirmation.cancelButton"),
-            confirmButton: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "localizationSettings.confirmation.confirmButton")
-        )
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$strings)
     }
 
     deinit {
