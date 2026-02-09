@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class SetCompletedTrainingTipUseCase {
+final class SetCompletedTrainingTipUseCase {
     
     private let repository: CompletedTrainingTipRepository
     
@@ -18,11 +18,12 @@ class SetCompletedTrainingTipUseCase {
         self.repository = repository
     }
     
-    func setTrainingTipAsCompleted(tip: TrainingTipDomainModel) -> AnyPublisher<TrainingTipDomainModel, Error>  {
+    func execute(tip: TrainingTipDomainModel) -> AnyPublisher<TrainingTipDomainModel, Error>  {
         
         let trainingTipDataModel = CompletedTrainingTipDataModel(trainingTipDomainModel: tip)
         
-        return repository.storeCompletedTrainingTip(trainingTipDataModel)
+        return repository
+            .storeCompletedTrainingTip(trainingTipDataModel)
             .flatMap { completedTrainingTipDataModel in
                 
                 let domainModel = TrainingTipDomainModel(

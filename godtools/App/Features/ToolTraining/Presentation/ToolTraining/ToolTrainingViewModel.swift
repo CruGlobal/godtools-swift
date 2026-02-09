@@ -12,6 +12,8 @@ import Combine
 
 @MainActor class ToolTrainingViewModel: NSObject {
     
+    private static var backgroundCancellables: Set<AnyCancellable> = Set()
+    
     private let pageRenderer: MobileContentPageRenderer
     private let renderedPageContext: MobileContentRenderedPageContext
     private let trainingTipId: String
@@ -47,7 +49,7 @@ import Combine
         super.init()
         
         let trainingTip = TrainingTipDomainModel(trainingTipId: trainingTipId, resourceId: resource.id, languageId: language.id)
-        let trainingTipViewed = getTrainingTipCompletedUseCase.hasTrainingTipBeenCompleted(tip: trainingTip)
+        let trainingTipViewed = getTrainingTipCompletedUseCase.execute(tip: trainingTip)
         
         reloadTitleAndTipIcon(
             tipModel: tipModel,
@@ -154,14 +156,15 @@ extension ToolTrainingViewModel {
         
         let trainingTipCompleted = TrainingTipDomainModel(trainingTipId: trainingTipId, resourceId: resource.id, languageId: language.id)
         
-        setCompletedTrainingTipUseCase.setTrainingTipAsCompleted(tip: trainingTipCompleted)
+        setCompletedTrainingTipUseCase
+            .execute(tip: trainingTipCompleted)
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             } receiveValue: { _ in
                 
             }
-            .store(in: &cancellables)
+            .store(in: &Self.backgroundCancellables)
     }
     
     func overlayTapped() {

@@ -197,7 +197,9 @@ class LessonFlow: ToolNavigationFlow, Flow, ToolSharer {
     
     private func showSwipeTutorialIfNeeded() {
         
-        appDiContainer.feature.lessonSwipeTutorial.domainlayer.getShouldShowLessonSwipeTutorialUseCase().shouldShowLessonSwipeTutorialPublisher()
+        appDiContainer.feature.lessonSwipeTutorial.domainlayer
+            .getShouldShowLessonSwipeTutorialUseCase()
+            .execute()
             .receive(on: DispatchQueue.main)
             .first()
             .sink { [weak self] shouldShowSwipeTutorial in
@@ -224,8 +226,9 @@ class LessonFlow: ToolNavigationFlow, Flow, ToolSharer {
     
     private func trackSwipeTutorialViewed() {
         
-        appDiContainer.feature.lessonSwipeTutorial.domainlayer.getTrackViewedLessonSwipeTutorialUseCase()
-            .trackLessonSwipeTutorialViewed()
+        appDiContainer.feature.lessonSwipeTutorial.domainlayer
+            .getTrackViewedLessonSwipeTutorialUseCase()
+            .execute()
             .sink { _ in
                 
             }
@@ -288,7 +291,7 @@ extension LessonFlow {
         
         let viewModel = LessonSwipeTutorialViewModel(
             flowDelegate: self,
-            getInterfaceStringsUseCase: appDiContainer.feature.lessonSwipeTutorial.domainlayer.getLessonSwipeTutorialInterfaceStringsUseCase(),
+            getStringsUseCase: appDiContainer.feature.lessonSwipeTutorial.domainlayer.getLessonSwipeTutorialStringsUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase()
         )
         
