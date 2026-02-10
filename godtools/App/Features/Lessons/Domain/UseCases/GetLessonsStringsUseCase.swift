@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class GetLessonsStringsUseCase {
+final class GetLessonsStringsUseCase {
 
     private let localizationServices: LocalizationServicesInterface
     
