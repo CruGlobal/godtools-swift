@@ -12,11 +12,13 @@ class PersonalizedToolsDomainLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     private let dataLayer: PersonalizedToolsDataLayerDependencies
+    private let coreDomainlayer: AppDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, dataLayer: PersonalizedToolsDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, dataLayer: PersonalizedToolsDataLayerDependencies, coreDomainlayer: AppDomainLayerDependencies) {
         
         self.coreDataLayer = coreDataLayer
         self.dataLayer = dataLayer
+        self.coreDomainlayer = coreDomainlayer
     }
     
     func getLocalizationSettingsCountryListUseCase() -> GetLocalizationSettingsCountryListUseCase {
@@ -68,10 +70,8 @@ class PersonalizedToolsDomainLayerDependencies {
             resourcesRepository: coreDataLayer.getResourcesRepository(),
             personalizedLessonsRepository: dataLayer.getPersonalizedLessonsRepository(),
             languagesRepository: coreDataLayer.getLanguagesRepository(),
-            getTranslatedToolName: coreDataLayer.getTranslatedToolName(),
-            getTranslatedToolLanguageAvailability: coreDataLayer.getTranslatedToolLanguageAvailability(),
             lessonProgressRepository: coreDataLayer.getUserLessonProgressRepository(),
-            getLessonListItemProgressRepository: coreDataLayer.getLessonListItemProgressRepository()
+            getLessonsListItems: coreDomainlayer.supporting.getLessonsListItems()
         )
     }
 }

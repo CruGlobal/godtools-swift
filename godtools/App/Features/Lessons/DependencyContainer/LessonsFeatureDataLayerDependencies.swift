@@ -16,25 +16,4 @@ class LessonsFeatureDataLayerDependencies {
         
         self.coreDataLayer = coreDataLayer
     }
-    
-    // MARK: - Data Layer Classes
-
-    func getLessonsInterfaceStringsRepository() -> GetLessonsInterfaceStringsRepository {
-        return GetLessonsInterfaceStringsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
-
-    // MARK: - Domain Interface
-
-    func getLessonsListRepositoryInterface() -> GetLessonsListRepositoryInterface {
-        return GetLessonsListRepository(
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
-            languagesRepository: coreDataLayer.getLanguagesRepository(),
-            getTranslatedToolName: coreDataLayer.getTranslatedToolName(),
-            getTranslatedToolLanguageAvailability: coreDataLayer.getTranslatedToolLanguageAvailability(),
-            lessonProgressRepository: coreDataLayer.getUserLessonProgressRepository(),
-            getLessonListItemProgressRepository: coreDataLayer.getLessonListItemProgressRepository()
-        )
-    }
 }

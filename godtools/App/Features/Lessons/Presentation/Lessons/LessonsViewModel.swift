@@ -16,7 +16,8 @@ import SwiftUI
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase
     private let getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase
-    private let getLessonsInterfaceStringsUseCase: GetLessonsInterfaceStringsUseCase
+    private let getLessonsStringsUseCase: GetLessonsStringsUseCase
+    private let getAllLessonsUseCase: GetAllLessonsUseCase
     private let getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
@@ -31,7 +32,7 @@ import SwiftUI
     @Published private var localizationSettings: UserLocalizationSettingsDomainModel?
     
     @Published private(set) var toggleOptions: [PersonalizationToggleOption] = []
-    @Published private(set) var strings: LessonsInterfaceStringsDomainModel = .emptyValue
+    @Published private(set) var strings: LessonsStringsDomainModel = .emptyValue
     
     @Published var selectedToggle: PersonalizationToggleOptionValue = .personalized
     @Published var sectionTitle: String = ""
@@ -41,14 +42,15 @@ import SwiftUI
     @Published var lessons: [LessonListItemDomainModel] = []
     @Published var isLoadingLessons: Bool = true
         
-    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase, getLessonsInterfaceStringsUseCase: GetLessonsInterfaceStringsUseCase, getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getToolBannerUseCase: GetToolBannerUseCase) {
+    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase, getLessonsStringsUseCase: GetLessonsStringsUseCase, getAllLessonsUseCase: GetAllLessonsUseCase, getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getToolBannerUseCase: GetToolBannerUseCase) {
 
         self.flowDelegate = flowDelegate
         self.resourcesRepository = resourcesRepository
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getLocalizationSettingsUseCase = getLocalizationSettingsUseCase
         self.getPersonalizedLessonsUseCase = getPersonalizedLessonsUseCase
-        self.getLessonsInterfaceStringsUseCase = getLessonsInterfaceStringsUseCase
+        self.getLessonsStringsUseCase = getLessonsStringsUseCase
+        self.getAllLessonsUseCase = getAllLessonsUseCase
         self.getUserLessonFiltersUseCase = getUserLessonFiltersUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
@@ -67,11 +69,12 @@ import SwiftUI
         $appLanguage
             .dropFirst()
             .map { appLanguage in
-                getLessonsInterfaceStringsUseCase.getStringsPublisher(appLanguage: appLanguage)
+                getLessonsStringsUseCase
+                    .execute(translateInLanguage: appLanguage)
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (interfaceStrings: LessonsInterfaceStringsDomainModel) in
+            .sink { [weak self] (interfaceStrings: LessonsStringsDomainModel) in
 
                 self?.strings = interfaceStrings
                 self?.sectionTitle = interfaceStrings.title
@@ -93,21 +96,22 @@ import SwiftUI
         .dropFirst()
         .map { (appLanguage, languageFilter, localizationSettings, toggle) -> AnyPublisher<[LessonListItemDomainModel], Error> in
 
-            if toggle == .personalized, let localizationSettings = localizationSettings, localizationSettings.selectedCountry.isoRegionCode.isEmpty == false {
-
+            switch toggle {
+            
+            case .personalized:
                 return getPersonalizedLessonsUseCase
                     .execute(
                         appLanguage: appLanguage,
-                        country: localizationSettings.selectedCountry,
+                        country: localizationSettings?.selectedCountry,
                         filterLessonsByLanguage: languageFilter
                     )
-
-            } else {
-
-                // TODO: - all lessons use case
-                return Just([])
-                    .setFailureType(to: Error.self)
-                    .eraseToAnyPublisher()
+            
+            case .all:
+                return getAllLessonsUseCase
+                    .execute(
+                        appLanguage: appLanguage,
+                        filterLessonsByLanguage: languageFilter
+                    )
             }
         }
         .switchToLatest()
