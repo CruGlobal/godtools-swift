@@ -14,6 +14,7 @@
 "localizationSettings.localizationHeader.title" = "Select your localization";
 "localizationSettings.localizationHeader.description" = "Choose from a country below to set your localization and see prioritized content and recommendations based on your location.";
 "localizationSettings.confirmation.title" = "You have selected %@ as your localization.";
+"localizationSettings.confirmation.titleNoCountry" = "You have not selected a localization for your GodTools experience.";
 "localizationSettings.confirmation.description" = "Would you like to continue?";
 "localizationSettings.confirmation.detail" = "Note: You can change this setting at anytime from within the menu.";
 "localizationSettings.confirmation.cancelButton" = "Edit Localization";

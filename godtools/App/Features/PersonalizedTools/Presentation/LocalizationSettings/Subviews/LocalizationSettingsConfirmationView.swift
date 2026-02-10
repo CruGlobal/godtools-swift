@@ -25,11 +25,10 @@ struct LocalizationSettingsConfirmationView: View {
 
         ZStack {
 
-            FullScreenOverlayView(tappedClosure: {
-                viewModel.closeTapped()
-            })
-            .opacity(isVisible ? 1 : 0)
-            .animation(.easeOut(duration: 0.3), value: isVisible)
+            Color.black.opacity(0.4)
+                .ignoresSafeArea()
+                .opacity(isVisible ? 1 : 0)
+                .animation(.easeOut(duration: 0.3), value: isVisible)
 
             GeometryReader { geometry in
 
@@ -40,61 +39,60 @@ struct LocalizationSettingsConfirmationView: View {
 
                     VStack(alignment: .leading, spacing: 0) {
 
-                        VStack(alignment: .leading, spacing: 0) {
-
-                            ImageCatalog.localizationSettingsGlobe.image
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 59, height: 67)
-                                .frame(maxWidth: .infinity)
-                                .padding(.top, 25)
-
-                            Text(getAttributedTitleString())
-                                .font(FontLibrary.sfProTextRegular.font(size: 18))
-                                .foregroundColor(ColorPalette.gtGrey.color)
-                                .multilineTextAlignment(.leading)
-                                .padding(.top, 15)
-
-                            Text(viewModel.strings.description)
-                                .font(FontLibrary.sfProTextRegular.font(size: 18))
-                                .foregroundColor(ColorPalette.gtGrey.color)
-                                .multilineTextAlignment(.leading)
-                                .padding(.top, 12)
-
-                            Text(viewModel.strings.detail)
-                                .font(FontLibrary.sfProTextRegular.font(size: 15))
-                                .foregroundColor(ColorPalette.gtGrey.color)
-                                .multilineTextAlignment(.leading)
-                                .padding(.top, 10)
-
-                            HStack(spacing: buttonSpacing) {
-
-                                GTWhiteButton(
-                                    title: viewModel.strings.cancelButton,
-                                    fontSize: 15,
-                                    width: buttonWidth,
-                                    height: 50,
-                                    action: {
-                                        viewModel.cancelTapped()
-                                    }
-                                )
-
-                                GTBlueButton(
-                                    title: viewModel.strings.confirmButton,
-                                    fontSize: 15,
-                                    width: buttonWidth,
-                                    height: 50,
-                                    action: {
-                                        viewModel.confirmTapped()
-                                    }
-                                )
-                            }
+                        ImageCatalog.localizationSettingsGlobe.image
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 59, height: 67)
                             .frame(maxWidth: .infinity)
-                            .padding(.top, 30)
+                            .padding(.top, 25)
+
+                        Text(getAttributedTitleString())
+                            .font(FontLibrary.sfProTextRegular.font(size: 18))
+                            .foregroundColor(ColorPalette.gtGrey.color)
+                            .multilineTextAlignment(.leading)
+                            .padding(.top, 15)
+
+                        Text(viewModel.strings.description)
+                            .font(FontLibrary.sfProTextRegular.font(size: 18))
+                            .foregroundColor(ColorPalette.gtGrey.color)
+                            .multilineTextAlignment(.leading)
+                            .padding(.top, 12)
+
+                        Text(viewModel.strings.detail)
+                            .font(FontLibrary.sfProTextRegular.font(size: 15))
+                            .foregroundColor(ColorPalette.gtGrey.color)
+                            .multilineTextAlignment(.leading)
+                            .padding(.top, 10)
+
+                        HStack(spacing: buttonSpacing) {
+
+                            GTWhiteButton(
+                                title: viewModel.strings.cancelButton,
+                                fontSize: 15,
+                                width: buttonWidth,
+                                height: 50,
+                                titleHorizontalPadding: 8,
+                                action: {
+                                    viewModel.cancelTapped()
+                                }
+                            )
+
+                            GTBlueButton(
+                                title: viewModel.strings.confirmButton,
+                                fontSize: 15,
+                                width: buttonWidth,
+                                height: 50,
+                                titleHorizontalPadding: 8,
+                                action: {
+                                    viewModel.confirmTapped()
+                                }
+                            )
                         }
-                        .padding(.horizontal, cardHorizontalPadding)
-                        .padding(.bottom, 28)
+                        .frame(maxWidth: .infinity)
+                        .padding(.top, 30)
                     }
+                    .padding(.horizontal, cardHorizontalPadding)
+                    .padding(.bottom, 28)
                     .background(Color.white)
                     .cornerRadius(6)
                     .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 4)

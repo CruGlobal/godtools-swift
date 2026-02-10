@@ -19,14 +19,25 @@ class GetLocalizationSettingsConfirmationStringsUseCase {
 
     func execute(appLanguage: AppLanguageDomainModel, selectedCountry: LocalizationSettingsCountryListItemDomainModel) -> AnyPublisher<LocalizationSettingsConfirmationStringsDomainModel, Never> {
 
-        let titleTemplate = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "localizationSettings.confirmation.title")
-        let countryName = selectedCountry.countryNameTranslatedInCurrentAppLanguage
-        let titleFullText = String(format: titleTemplate, countryName)
+        let titleHighlightModel: ConfirmAppLanguageHighlightStringDomainModel
 
-        let titleHighlightModel = ConfirmAppLanguageHighlightStringDomainModel(
-            fullText: titleFullText,
-            highlightText: countryName
-        )
+        if selectedCountry.isoRegionCode.isEmpty {
+            
+            let titleFullText = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "localizationSettings.confirmation.titleNoCountry")
+            titleHighlightModel = ConfirmAppLanguageHighlightStringDomainModel(
+                fullText: titleFullText,
+                highlightText: ""
+            )
+            
+        } else {
+            let titleTemplate = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "localizationSettings.confirmation.title")
+            let countryName = selectedCountry.countryNameTranslatedInCurrentAppLanguage
+            let titleFullText = String(format: titleTemplate, countryName)
+            titleHighlightModel = ConfirmAppLanguageHighlightStringDomainModel(
+                fullText: titleFullText,
+                highlightText: countryName
+            )
+        }
 
         let interfaceStrings = LocalizationSettingsConfirmationStringsDomainModel(
             titleHighlightModel: titleHighlightModel,
