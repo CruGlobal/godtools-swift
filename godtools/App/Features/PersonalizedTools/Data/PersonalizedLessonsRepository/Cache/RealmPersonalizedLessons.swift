@@ -15,25 +15,21 @@ class RealmPersonalizedLessons: Object, IdentifiableRealmObject, PersonalizedLes
     @objc dynamic var id: String = ""
     @objc dynamic var updatedAt: Date = Date()
 
-    let resourceIdsList = List<String>()
+    let resourceIds = List<String>()
 
     override static func primaryKey() -> String? {
         return "id"
     }
 
-    var resourceIds: [String] {
-        return Array(resourceIdsList)
+    func getResourceIds() -> [String] {
+        return Array(resourceIds)
     }
 
-    static func createId(country: String, language: String) -> String {
-        return "\(country)_\(language)"
-    }
-    
     func mapFrom(interface: PersonalizedLessonsDataModelInterface) {
         id = interface.id
         updatedAt = interface.updatedAt
-        resourceIdsList.removeAll()
-        resourceIdsList.append(objectsIn: interface.resourceIds)
+        resourceIds.removeAll()
+        resourceIds.append(objectsIn: interface.getResourceIds())
     }
     
     static func createNewFrom(interface: PersonalizedLessonsDataModelInterface) -> RealmPersonalizedLessons {

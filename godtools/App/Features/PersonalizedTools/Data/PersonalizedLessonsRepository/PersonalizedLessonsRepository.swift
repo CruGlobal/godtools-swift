@@ -55,7 +55,7 @@ final class PersonalizedLessonsRepository: RepositorySync<PersonalizedLessonsDat
             .getDataModelNonThrowing(id: id)
     }
 
-    private func getAllRankedLessonsPublisher(requestPriority: RequestPriority, country: String, language: String) -> AnyPublisher<[PersonalizedLessonsDataModel], Error> {
+    func getAllRankedLessonsPublisher(requestPriority: RequestPriority, country: String, language: String) -> AnyPublisher<[PersonalizedLessonsDataModel], Error> {
 
         return api
             .getAllRankedResourcesPublisher(requestPriority: requestPriority, country: country, language: language, resourceType: .lesson)

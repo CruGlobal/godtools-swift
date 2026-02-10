@@ -12,7 +12,7 @@ import SwiftUI
 
 @MainActor class LessonsViewModel: ObservableObject {
         
-    private let resourcesRepository: ResourcesRepository
+    private let pullToRefreshLessonsUseCase: PullToRefreshLessonsUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase
     private let getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase
@@ -42,10 +42,10 @@ import SwiftUI
     @Published var lessons: [LessonListItemDomainModel] = []
     @Published var isLoadingLessons: Bool = true
         
-    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase, getLessonsStringsUseCase: GetLessonsStringsUseCase, getAllLessonsUseCase: GetAllLessonsUseCase, getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getToolBannerUseCase: GetToolBannerUseCase) {
+    init(flowDelegate: FlowDelegate, pullToRefreshLessonsUseCase: PullToRefreshLessonsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase, getLessonsStringsUseCase: GetLessonsStringsUseCase, getAllLessonsUseCase: GetAllLessonsUseCase, getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getToolBannerUseCase: GetToolBannerUseCase) {
 
         self.flowDelegate = flowDelegate
-        self.resourcesRepository = resourcesRepository
+        self.pullToRefreshLessonsUseCase = pullToRefreshLessonsUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getLocalizationSettingsUseCase = getLocalizationSettingsUseCase
         self.getPersonalizedLessonsUseCase = getPersonalizedLessonsUseCase
@@ -216,12 +216,16 @@ extension LessonsViewModel {
     
     func pullToRefresh() {
         
-        resourcesRepository
-            .syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsPublisher(requestPriority: .high, forceFetchFromRemote: true)
+        pullToRefreshLessonsUseCase
+            .execute(
+                appLanguage: appLanguage,
+                country: localizationSettings?.selectedCountry,
+                filterLessonsByLanguage: lessonFilterLanguageSelection
+            )
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completed in
 
-            }, receiveValue: { (result: ResourcesCacheSyncResult) in
+            }, receiveValue: { _ in
                 
             })
             .store(in: &cancellables)

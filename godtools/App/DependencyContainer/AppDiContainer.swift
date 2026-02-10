@@ -28,6 +28,7 @@ class AppDiContainer {
         // feature data layer dependencies
         let accountDataLayer = AccountDataLayerDependencies(coreDataLayer: dataLayer)
         let onboardingDataLayer = OnboardingDataLayerDependencies(coreDataLayer: dataLayer)
+        let personalizedToolsDataLayer = PersonalizedToolsDataLayerDependencies(coreDataLayer: dataLayer)
         
         // feature domain interface layer dependencies
         let onboardingDomainInterfaceLayer = OnboardingDomainInterfaceDependencies(coreDataLayer: dataLayer, dataLayer: onboardingDataLayer)
@@ -44,7 +45,7 @@ class AppDiContainer {
         let learnToShareToolDiContainer = LearnToShareToolDiContainer(coreDataLayer: dataLayer)
         let lessonEvaluationDiContainer = LessonEvaluationFeatureDiContainer(coreDataLayer: dataLayer)
         let lessonFilterDiContainer = LessonFilterDiContainer(coreDataLayer: dataLayer)
-        let lessonsDiContainer = LessonsFeatureDiContainer(coreDataLayer: dataLayer, coreDomainlayer: domainLayer)
+        let lessonsDiContainer = LessonsFeatureDiContainer(coreDataLayer: dataLayer, coreDomainlayer: domainLayer, personalizedToolsDataLayer: personalizedToolsDataLayer)
         let lessonProgressDiContainer = UserLessonProgressDiContainer(coreDataLayer: dataLayer)
         let lessonSwipeTutorialDiContainer = LessonSwipeTutorialDiContainer(coreDataLayer: dataLayer)
         let menuDiContainer = MenuDiContainer(coreDataLayer: dataLayer)

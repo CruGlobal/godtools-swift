@@ -12,5 +12,6 @@ protocol PersonalizedLessonsDataModelInterface {
     
     var id: String { get }
     var updatedAt: Date { get }
-    var resourceIds: [String] { get }
+    
+    func getResourceIds() -> [String]
 }
