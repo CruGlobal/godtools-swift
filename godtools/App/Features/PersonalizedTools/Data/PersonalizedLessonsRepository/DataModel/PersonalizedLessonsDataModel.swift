@@ -8,21 +8,21 @@
 
 import Foundation
 
-struct PersonalizedLessonsDataModel {
+struct PersonalizedLessonsDataModel: PersonalizedLessonsDataModelInterface {
 
     let id: String
     let updatedAt: Date
     let resourceIds: [String]
 
     init(country: String, language: String, resourceIds: [String]) {
-        self.id = RealmPersonalizedLessons.createId(country: country, language: language)
+        self.id = PersonalizedLessonsId(country: country, language: language).value
         self.updatedAt = Date()
         self.resourceIds = resourceIds
     }
 
-    init(realmObject: RealmPersonalizedLessons) {
-        self.id = realmObject.id
-        self.updatedAt = realmObject.updatedAt
-        self.resourceIds = realmObject.getResourceIds()
+    init(interface: PersonalizedLessonsDataModelInterface) {
+        self.id = interface.id
+        self.updatedAt = interface.updatedAt
+        self.resourceIds = interface.resourceIds
     }
 }

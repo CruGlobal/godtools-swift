@@ -9,40 +9,32 @@
 import Foundation
 import RealmSwift
 import Combine
+import RepositorySync
 
 class PersonalizedLessonsCache {
-
-    private let realmDatabase: LegacyRealmDatabase
-    private let personalizedLessonsSync: RealmPersonalizedLessonsCacheSync
-
-    init(realmDatabase: LegacyRealmDatabase, personalizedLessonsSync: RealmPersonalizedLessonsCacheSync) {
-        self.realmDatabase = realmDatabase
-        self.personalizedLessonsSync = personalizedLessonsSync
+    
+    let persistence: any Persistence<PersonalizedLessonsDataModel, PersonalizedLessonsDataModel>
+    
+    init(persistence: any Persistence<PersonalizedLessonsDataModel, PersonalizedLessonsDataModel>) {
+                
+        self.persistence = persistence
     }
-
-    @MainActor func getPersonalizedLessonsChanged() -> AnyPublisher<Void, Never> {
-
-        return realmDatabase.openRealm()
-            .objects(RealmPersonalizedLessons.self)
-            .objectWillChange
-            .eraseToAnyPublisher()
+    
+    @available(iOS 17.4, *)
+    var swiftDatabase: SwiftDatabase? {
+        return getSwiftPersistence()?.database
     }
-
-    func getPersonalizedLessonsFor(country: String, language: String) -> PersonalizedLessonsDataModel? {
-
-        let id = RealmPersonalizedLessons.createId(country: country, language: language)
-
-        guard let realmPersonalizedLessons = realmDatabase.openRealm()
-            .object(ofType: RealmPersonalizedLessons.self, forPrimaryKey: id)
-        else {
-            return nil
-        }
-
-        return PersonalizedLessonsDataModel(realmObject: realmPersonalizedLessons)
+    
+    @available(iOS 17.4, *)
+    func getSwiftPersistence() -> SwiftRepositorySyncPersistence<PersonalizedLessonsDataModel, PersonalizedLessonsDataModel, SwiftPersonalizedLessons>? {
+        return persistence as? SwiftRepositorySyncPersistence<PersonalizedLessonsDataModel, PersonalizedLessonsDataModel, SwiftPersonalizedLessons>
     }
-
-    func syncPersonalizedLessons(_ personalizedLessons: [PersonalizedLessonsDataModel]) -> AnyPublisher<[PersonalizedLessonsDataModel], Error> {
-
-        return personalizedLessonsSync.syncPersonalizedLessons(personalizedLessons)
+    
+    var realmDatabase: RealmDatabase? {
+        return getRealmPersistence()?.database
+    }
+    
+    func getRealmPersistence() -> RealmRepositorySyncPersistence<PersonalizedLessonsDataModel, PersonalizedLessonsDataModel, RealmPersonalizedLessons>? {
+        return persistence as? RealmRepositorySyncPersistence<PersonalizedLessonsDataModel, PersonalizedLessonsDataModel, RealmPersonalizedLessons>
     }
 }
