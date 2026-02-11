@@ -100,24 +100,17 @@ class MenuFlow: Flow {
             navigationController.popViewController(animated: true)
 
         case .countryTappedFromLocalizationSettings(let country):
-            let confirmationView = getLocalizationSettingsConfirmationView()
+            let confirmationView = getLocalizationSettingsConfirmationView(selectedCountry: country)
             navigationController.present(confirmationView, animated: true)
 
-        case .closeLocalizationConfirmationFromLocalizationSettings:
-            localizationSettingsViewModel?.pendingCountry = nil
+        case .closeTappedFromLocalizationConfirmation:
             navigationController.dismiss(animated: true)
 
-        case .cancelLocalizationConfirmationFromLocalizationSettings:
-            localizationSettingsViewModel?.pendingCountry = nil
+        case .cancelTappedFromLocalizationConfirmation:
             navigationController.dismiss(animated: true)
 
-        case .confirmLocalizationConfirmationFromLocalizationSettings(let country):
-//            localizationSettingsViewModel?.selectedCountryIsoRegionCode = country.isoRegionCode
-            localizationSettingsViewModel?.pendingCountry = nil
+        case .confirmTappedFromLocalizationConfirmation(let country):
             navigationController.dismiss(animated: true)
-            navigate(step: .didSelectLocalizationFromLocalizationSettings(localization: country))
-
-        case .didSelectLocalizationFromLocalizationSettings(let localization):
 
             appDiContainer
                 .feature
@@ -125,7 +118,7 @@ class MenuFlow: Flow {
                 .domainLayer
                 .getSetLocalizationSettingsUseCase()
                 .execute(
-                    isoRegionCode: localization.isoRegionCode
+                    isoRegionCode: country.isoRegionCode
                 )
                 .sink { _ in
 
@@ -785,16 +778,11 @@ extension MenuFlow {
         return hostingView
     }
 
-    private func getLocalizationSettingsConfirmationView() -> UIViewController {
-
-        guard let localizationSettingsViewModel = localizationSettingsViewModel,
-              let pendingCountry = localizationSettingsViewModel.pendingCountry else {
-            return UIViewController()
-        }
+    private func getLocalizationSettingsConfirmationView(selectedCountry: LocalizationSettingsCountryListItemDomainModel) -> UIViewController {
 
         let confirmationViewModel = LocalizationSettingsConfirmationViewModel(
             flowDelegate: self,
-            selectedCountry: pendingCountry,
+            selectedCountry: selectedCountry,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getLocalizationSettingsConfirmationStringsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getLocalizationSettingsConfirmationStringsUseCase()
         )

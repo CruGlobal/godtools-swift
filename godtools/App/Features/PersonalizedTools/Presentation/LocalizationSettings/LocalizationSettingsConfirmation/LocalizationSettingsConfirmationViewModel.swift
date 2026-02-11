@@ -18,9 +18,8 @@ import Combine
     private var cancellables: Set<AnyCancellable> = Set()
     private weak var flowDelegate: FlowDelegate?
 
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private(set) var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private(set) var strings = LocalizationSettingsConfirmationStringsDomainModel.emptyValue
-
 
     init(flowDelegate: FlowDelegate, selectedCountry: LocalizationSettingsCountryListItemDomainModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLocalizationSettingsConfirmationStringsUseCase: GetLocalizationSettingsConfirmationStringsUseCase) {
 
@@ -56,14 +55,14 @@ import Combine
 extension LocalizationSettingsConfirmationViewModel {
 
     func closeTapped() {
-        flowDelegate?.navigate(step: .closeLocalizationConfirmationFromLocalizationSettings)
+        flowDelegate?.navigate(step: .closeTappedFromLocalizationConfirmation)
     }
 
     func cancelTapped() {
-        flowDelegate?.navigate(step: .cancelLocalizationConfirmationFromLocalizationSettings)
+        flowDelegate?.navigate(step: .cancelTappedFromLocalizationConfirmation)
     }
 
     func confirmTapped() {
-        flowDelegate?.navigate(step: .confirmLocalizationConfirmationFromLocalizationSettings(country: selectedCountry))
+        flowDelegate?.navigate(step: .confirmTappedFromLocalizationConfirmation(country: selectedCountry))
     }
 }

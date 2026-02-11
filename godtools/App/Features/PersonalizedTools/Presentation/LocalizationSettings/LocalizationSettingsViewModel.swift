@@ -30,7 +30,6 @@ import Combine
     @Published var searchText: String = ""
     @Published private(set) var countrySearchResults: [LocalizationSettingsCountryListItemDomainModel] = Array()
     @Published private(set) var strings = LocalizationSettingsStringsDomainModel.emptyValue
-    @Published var pendingCountry: LocalizationSettingsCountryListItemDomainModel?
 
     init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getCountryListUseCase: GetLocalizationSettingsCountryListUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, searchCountriesUseCase: SearchCountriesInLocalizationSettingsCountriesListUseCase, viewLocalizationSettingsUseCase: ViewLocalizationSettingsUseCase, viewSearchBarUseCase: ViewSearchBarUseCase) {
 
@@ -98,8 +97,6 @@ extension LocalizationSettingsViewModel {
     }
     
     func countryTapped(country: LocalizationSettingsCountryListItemDomainModel) {
-
-        pendingCountry = country
         flowDelegate?.navigate(step: .countryTappedFromLocalizationSettings(country: country))
     }
 
