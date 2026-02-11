@@ -29,7 +29,7 @@ import Combine
 
     @Published var searchText: String = ""
     @Published private(set) var countrySearchResults: [LocalizationSettingsCountryListItemDomainModel] = Array()
-    @Published private(set) var strings = LocalizationSettingsInterfaceStringsDomainModel.emptyValue
+    @Published private(set) var strings = LocalizationSettingsStringsDomainModel.emptyValue
     @Published var pendingCountry: LocalizationSettingsCountryListItemDomainModel?
 
     init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getCountryListUseCase: GetLocalizationSettingsCountryListUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, searchCountriesUseCase: SearchCountriesInLocalizationSettingsCountriesListUseCase, viewLocalizationSettingsUseCase: ViewLocalizationSettingsUseCase, viewSearchBarUseCase: ViewSearchBarUseCase) {

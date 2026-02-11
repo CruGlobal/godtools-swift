@@ -13,14 +13,14 @@ import Combine
 
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getLocalizationSettingsConfirmationStringsUseCase: GetLocalizationSettingsConfirmationStringsUseCase
+    private let selectedCountry: LocalizationSettingsCountryListItemDomainModel
+    
     private var cancellables: Set<AnyCancellable> = Set()
-
     private weak var flowDelegate: FlowDelegate?
 
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private(set) var strings = LocalizationSettingsConfirmationStringsDomainModel.emptyValue
 
-    let selectedCountry: LocalizationSettingsCountryListItemDomainModel
 
     init(flowDelegate: FlowDelegate, selectedCountry: LocalizationSettingsCountryListItemDomainModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLocalizationSettingsConfirmationStringsUseCase: GetLocalizationSettingsConfirmationStringsUseCase) {
 
@@ -37,12 +37,11 @@ import Combine
         $appLanguage
             .dropFirst()
             .receive(on: DispatchQueue.main)
-            .flatMap { [weak self] appLanguage in
-                guard let self = self else {
-                    return Just(LocalizationSettingsConfirmationStringsDomainModel.emptyValue).eraseToAnyPublisher()
-                }
-                return self.getLocalizationSettingsConfirmationStringsUseCase.execute(appLanguage: appLanguage, selectedCountry: self.selectedCountry)
+            .map { appLanguage in
+                
+                return getLocalizationSettingsConfirmationStringsUseCase.execute(appLanguage: appLanguage, selectedCountry: selectedCountry)
             }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .assign(to: &$strings)
     }

@@ -1,5 +1,5 @@
 //
-//  LocalizationSettingsInterfaceStringsDomainModel.swift
+//  LocalizationSettingsStringsDomainModel.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 11/25/25.
@@ -8,14 +8,14 @@
 
 import Foundation
 
-struct LocalizationSettingsInterfaceStringsDomainModel {
+struct LocalizationSettingsStringsDomainModel {
 
     let navTitle: String
     let localizationHeaderTitle: String
     let localizationHeaderDescription: String
 
-    static var emptyValue: LocalizationSettingsInterfaceStringsDomainModel {
-        return LocalizationSettingsInterfaceStringsDomainModel(
+    static var emptyValue: LocalizationSettingsStringsDomainModel {
+        return LocalizationSettingsStringsDomainModel(
             navTitle: "",
             localizationHeaderTitle: "",
             localizationHeaderDescription: ""
