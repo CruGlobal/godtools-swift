@@ -28,7 +28,7 @@ class PersonalizedLessonsCache {
             .eraseToAnyPublisher()
     }
 
-    func getPersonalizedLessonsFor(country: String, language: String) -> PersonalizedLessonsDataModel? {
+    func getPersonalizedLessonsFor(country: String?, language: String) -> PersonalizedLessonsDataModel? {
 
         let id = RealmPersonalizedLessons.createId(country: country, language: language)
 

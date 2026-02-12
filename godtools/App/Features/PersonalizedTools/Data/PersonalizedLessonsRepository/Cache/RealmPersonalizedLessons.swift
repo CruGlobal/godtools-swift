@@ -24,7 +24,11 @@ class RealmPersonalizedLessons: Object {
         return Array(resourceIds)
     }
 
-    static func createId(country: String, language: String) -> String {
-        return "\(country)_\(language)"
+    static func createId(country: String?, language: String) -> String {
+        if let country = country, !country.isEmpty {
+            return "\(country)_\(language)"
+        } else {
+            return language
+        }
     }
 }

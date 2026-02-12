@@ -28,16 +28,19 @@ class GetPersonalizedLessonsUseCase {
 
     @MainActor func execute(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<[LessonListItemDomainModel], Error> {
 
+        let countryIsoRegionCode: String? = {
+            if let isoRegionCode = country?.isoRegionCode, !isoRegionCode.isEmpty {
+                return isoRegionCode
+            }
+            return nil
+        }()
+
+        return getPersonalizedLessonsPublisher(countryIsoRegionCode: countryIsoRegionCode, appLanguage: appLanguage, filterLessonsByLanguage: filterLessonsByLanguage)
+    }
+    
+    @MainActor private func getPersonalizedLessonsPublisher(countryIsoRegionCode: String?, appLanguage: AppLanguageDomainModel, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<[LessonListItemDomainModel], Error> {
+
         let language = getLanguageCode(filterLessonsByLanguage: filterLessonsByLanguage, appLanguage: appLanguage)
-        
-        let countryIsoRegionCode: String? = country?.isoRegionCode
-        
-        // TODO: Remove this guard once supporting an optional country in this UseCase. ~Levi
-        guard let countryIsoRegionCode = countryIsoRegionCode, !countryIsoRegionCode.isEmpty else {
-            return Just([])
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
 
         return Publishers.CombineLatest3(
             personalizedLessonsRepository

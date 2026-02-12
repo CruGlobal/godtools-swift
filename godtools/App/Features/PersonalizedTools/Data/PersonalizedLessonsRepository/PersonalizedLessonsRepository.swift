@@ -23,7 +23,7 @@ final class PersonalizedLessonsRepository {
         self.cache = cache
     }
 
-    @MainActor func getPersonalizedLessonsChanged(reloadFromRemote: Bool, requestPriority: RequestPriority, country: String, language: String) -> AnyPublisher<Void, Never> {
+    @MainActor func getPersonalizedLessonsChanged(reloadFromRemote: Bool, requestPriority: RequestPriority, country: String?, language: String) -> AnyPublisher<Void, Never> {
 
         if reloadFromRemote {
 
@@ -39,15 +39,22 @@ final class PersonalizedLessonsRepository {
         return cache.getPersonalizedLessonsChanged()
     }
 
-    func getPersonalizedLessons(country: String, language: String) -> PersonalizedLessonsDataModel? {
+    func getPersonalizedLessons(country: String?, language: String) -> PersonalizedLessonsDataModel? {
 
         return cache.getPersonalizedLessonsFor(country: country, language: language)
     }
 
-    private func getAllRankedLessonsPublisher(requestPriority: RequestPriority, country: String, language: String) -> AnyPublisher<[PersonalizedLessonsDataModel], Error> {
+    private func getAllRankedLessonsPublisher(requestPriority: RequestPriority, country: String?, language: String) -> AnyPublisher<[PersonalizedLessonsDataModel], Error> {
 
-        return api
-            .getAllRankedResourcesPublisher(requestPriority: requestPriority, country: country, language: language, resourceType: .lesson)
+        let publisher: AnyPublisher<[ResourceCodable], Error>
+
+        if let country = country, !country.isEmpty {
+            publisher = api.getAllRankedResourcesPublisher(requestPriority: requestPriority, country: country, language: language, resourceType: .lesson)
+        } else {
+            publisher = api.getDefaultOrderResourcesPublisher(requestPriority: requestPriority, language: language, resouceType: .lesson)
+        }
+
+        return publisher
             .flatMap { (resourceCodables: [ResourceCodable]) in
 
                 let resources: [ResourceDataModel] = resourceCodables.map {
@@ -62,21 +69,6 @@ final class PersonalizedLessonsRepository {
 
                 return self.cache.syncPersonalizedLessons([personalizedLessons])
                     .eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
-    }
-    
-    func getDefaultOrderResourcesPublisher(requestPriority: RequestPriority, language: String?, resouceType: ResourceType?) -> AnyPublisher<[ResourceDataModel], Error> {
-        
-        return api
-            .getDefaultOrderResourcesPublisher(requestPriority: requestPriority, language: language, resouceType: resouceType)
-            .map { (resourceCodables: [ResourceCodable]) in
-                
-                let dataModels: [ResourceDataModel] = resourceCodables.map {
-                    ResourceDataModel(interface: $0)
-                }
-                
-                return dataModels
             }
             .eraseToAnyPublisher()
     }

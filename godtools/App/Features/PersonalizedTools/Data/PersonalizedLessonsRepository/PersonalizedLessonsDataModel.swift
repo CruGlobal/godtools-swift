@@ -14,7 +14,7 @@ struct PersonalizedLessonsDataModel {
     let updatedAt: Date
     let resourceIds: [String]
 
-    init(country: String, language: String, resourceIds: [String]) {
+    init(country: String?, language: String, resourceIds: [String]) {
         self.id = RealmPersonalizedLessons.createId(country: country, language: language)
         self.updatedAt = Date()
         self.resourceIds = resourceIds
