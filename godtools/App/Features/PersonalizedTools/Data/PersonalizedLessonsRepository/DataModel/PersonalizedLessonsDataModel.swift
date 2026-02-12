@@ -23,6 +23,10 @@ struct PersonalizedLessonsDataModel: PersonalizedLessonsDataModelInterface {
     init(interface: PersonalizedLessonsDataModelInterface) {
         self.id = interface.id
         self.updatedAt = interface.updatedAt
-        self.resourceIds = interface.resourceIds
+        self.resourceIds = interface.getResourceIds()
+    }
+    
+    func getResourceIds() -> [String] {
+        return resourceIds
     }
 }

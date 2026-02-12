@@ -44,7 +44,7 @@ import Foundation
         
         return LessonsViewModel(
             flowDelegate: unwrappedFlowDelegate,
-            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
+            pullToRefreshLessonsUseCase: appDiContainer.feature.lessons.domainLayer.getPullToRefreshLessonsUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getLocalizationSettingsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getGetLocalizationSettingsUseCase(),
             getPersonalizedLessonsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getGetPersonalizedLessonsUseCase(),

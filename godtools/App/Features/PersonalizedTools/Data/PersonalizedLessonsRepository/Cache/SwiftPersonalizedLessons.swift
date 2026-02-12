@@ -28,9 +28,13 @@ enum SwiftPersonalizedLessonsV1 {
             
         }
         
+        func getResourceIds() -> [String] {
+            return resourceIds
+        }
+        
         func mapFrom(interface: PersonalizedLessonsDataModelInterface) {
             id = interface.id
-            resourceIds = interface.resourceIds
+            resourceIds = interface.getResourceIds()
             updatedAt = interface.updatedAt
         }
         

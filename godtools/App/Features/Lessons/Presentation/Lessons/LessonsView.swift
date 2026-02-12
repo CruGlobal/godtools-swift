@@ -125,7 +125,7 @@ struct LessonsView_Preview: PreviewProvider {
         
         let viewModel = LessonsViewModel(
             flowDelegate: MockFlowDelegate(),
-            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
+            pullToRefreshLessonsUseCase: appDiContainer.feature.lessons.domainLayer.getPullToRefreshLessonsUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getLocalizationSettingsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getGetLocalizationSettingsUseCase(),
             getPersonalizedLessonsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getGetPersonalizedLessonsUseCase(),

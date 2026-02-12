@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class GetAllLessonsUseCase {
+final class GetAllLessonsUseCase {
     
     private let resourcesRepository: ResourcesRepository
     private let lessonProgressRepository: UserLessonProgressRepository
