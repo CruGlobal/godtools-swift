@@ -1,15 +1,15 @@
 //
-//  Profile+AuthenticationProviderProfile.swift
+//  FacebookProfile+ToAuthenticationProviderProfile.swift
 //  godtools
 //
-//  Created by Levi Eggert on 8/18/25.
-//  Copyright © 2025 Cru. All rights reserved.
+//  Created by Levi Eggert on 2/12/26.
+//  Copyright © 2026 Cru. All rights reserved.
 //
 
 import Foundation
-import FBSDKLoginKit
+import SocialAuthentication
 
-extension Profile {
+extension FacebookProfile {
     
     func toAuthProviderProfile() -> AuthenticationProviderProfile {
         

@@ -20,6 +20,28 @@ class MobileContentAuthTokenRepository {
         self.cache = cache
     }
     
+    func fetchRemoteAuthTokenPublisher(providerToken: MobileContentAuthProviderToken, createUser: Bool) async throws -> Result<MobileContentAuthTokenDataModel, MobileContentApiError> {
+        
+        let result: Result<MobileContentAuthTokenDecodable, MobileContentApiError> = try await api.fetchAuthToken(
+            providerToken: providerToken,
+            createUser: createUser
+        )
+        
+        switch result {
+        case .success(let authTokenCodable):
+            
+            let authTokenDataModel = MobileContentAuthTokenDataModel(decodable: authTokenCodable)
+            
+            try cache.storeAuthToken(authTokenDataModel)
+            
+            return .success(authTokenDataModel)
+            
+        case .failure(let apiError):
+            return .failure(apiError)
+        }
+    }
+    
+    // TODO: Remove publisher and will use async throws. ~Levi
     func fetchRemoteAuthTokenPublisher(providerToken: MobileContentAuthProviderToken, createUser: Bool) -> AnyPublisher<MobileContentAuthTokenDataModel, MobileContentApiError> {
         
         return api.fetchAuthTokenPublisher(providerToken: providerToken, createUser: createUser)
@@ -27,7 +49,12 @@ class MobileContentAuthTokenRepository {
                 
                 let authTokenDataModel = MobileContentAuthTokenDataModel(decodable: authTokenDecodable)
                 
-                self?.cache.storeAuthToken(authTokenDataModel)
+                do {
+                    try self?.cache.storeAuthToken(authTokenDataModel)
+                }
+                catch _ {
+                    
+                }
                 
                 return Just(authTokenDataModel)
                     .setFailureType(to: MobileContentApiError.self)

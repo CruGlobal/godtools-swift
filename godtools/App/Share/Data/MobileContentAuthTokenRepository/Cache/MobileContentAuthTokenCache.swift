@@ -27,20 +27,13 @@ class MobileContentAuthTokenCache {
         updateHashableAuthTokenSubject(authToken: getAuthTokenData())
     }
     
-    func storeAuthToken(_ authTokenDataModel: MobileContentAuthTokenDataModel) {
+    func storeAuthToken(_ authTokenDataModel: MobileContentAuthTokenDataModel) throws {
         
-        do {
-            
-            try keychainAccessor.saveMobileContentAuthToken(authTokenDataModel)
-            
-            _ = realmCache.storeAuthTokenData(authTokenData: authTokenDataModel)
-            
-            updateHashableAuthTokenSubject(authToken: authTokenDataModel)
-
-        } catch let error {
-            
-            assertionFailure("Keychain store failed with error: \(error.localizedDescription)")
-        }
+        try keychainAccessor.saveMobileContentAuthToken(authTokenDataModel)
+        
+        _ = realmCache.storeAuthTokenData(authTokenData: authTokenDataModel)
+        
+        updateHashableAuthTokenSubject(authToken: authTokenDataModel)
     }
     
     func getAuthTokenData() -> MobileContentAuthTokenDataModel? {

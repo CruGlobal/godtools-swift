@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum AuthenticationProviderType: String {
+enum AuthenticationProviderType: String, Sendable {
     
     case apple = "apple"
     case facebook = "facebook"

@@ -1885,7 +1885,7 @@
 			repositoryURL = "https://github.com/CruGlobal/social-authentication-ios.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.6.3;
+				minimumVersion = 1.0.0;
 			};
 		};
 		45DF96472D386C1C00C6AE68 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {

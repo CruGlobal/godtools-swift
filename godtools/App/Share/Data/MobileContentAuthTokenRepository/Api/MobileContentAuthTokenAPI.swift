@@ -78,6 +78,37 @@ class MobileContentAuthTokenAPI: MobileContentAuthTokenAPIInterface {
         )
     }
     
+    func fetchAuthToken(providerToken: MobileContentAuthProviderToken, createUser: Bool) async throws -> Result<MobileContentAuthTokenDecodable, MobileContentApiError> {
+        
+        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: .high)
+                
+        let urlRequest: URLRequest = getAuthTokenRequest(urlSession: urlSession, providerToken: providerToken, createUser: createUser)
+        
+        let response: RequestDataResponse = try await requestSender.sendDataTask(
+            urlRequest: urlRequest,
+            urlSession: urlSession
+        )
+        
+        let codable: RequestCodableResponse<JsonApiResponseDataObject<MobileContentAuthTokenDecodable>, MobileContentApiErrorsCodable> = try response.decodeRequestDataResponseForSuccessOrFailureCodable()
+        
+        if let mobileContentApiErrors = codable.failureCodable {
+            
+            let error = MobileContentApiError.responseError(responseErrors: mobileContentApiErrors.errors)
+            
+            return .failure(error)
+        }
+        
+        if let authTokenDecodable = codable.successCodable?.dataObject {
+            
+            return .success(authTokenDecodable)
+        }
+        
+        let error = MobileContentApiError.other(error: NSError.errorWithDescription(description: "Unable to fetch mobile content api auth token. Unknown reason."))
+                                                
+        return .failure(error)
+    }
+    
+    // TODO: Drop Publisher and use async throws. ~Levi
     func fetchAuthTokenPublisher(providerToken: MobileContentAuthProviderToken, createUser: Bool) -> AnyPublisher<MobileContentAuthTokenDecodable, MobileContentApiError> {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: .high)
