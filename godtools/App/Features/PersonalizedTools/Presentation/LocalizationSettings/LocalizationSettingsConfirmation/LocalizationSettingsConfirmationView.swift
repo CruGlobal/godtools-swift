@@ -120,11 +120,10 @@ struct LocalizationSettingsConfirmationView: View {
 
     private func getAttributedTitleString() -> AttributedString {
 
-        var attributedString = AttributedString(viewModel.strings.titleHighlightModel.fullText)
-
-        guard let range = attributedString.range(of: viewModel.strings.titleHighlightModel.highlightText) else { return attributedString }
-        attributedString[range].foregroundColor = ColorPalette.gtBlue.color
-
-        return attributedString
+        return AttributedString.withHighlightedText(
+            fullText: viewModel.strings.titleHighlightModel.fullText,
+            highlightText: viewModel.strings.titleHighlightModel.highlightText,
+            highlightColor: ColorPalette.gtBlue.color
+        )
     }
 }
