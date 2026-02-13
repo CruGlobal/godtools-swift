@@ -17,7 +17,7 @@ typealias SwiftUserCounter = SwiftUserCounterV1.SwiftUserCounter
 enum SwiftUserCounterV1 {
     
     @Model
-    class SwiftUserCounter: IdentifiableSwiftDataObject {
+    class SwiftUserCounter: IdentifiableSwiftDataObject, UserCounterDataModelInterface {
         
         var latestCountFromAPI: Int = 0
         var incrementValue: Int = 0
@@ -26,6 +26,18 @@ enum SwiftUserCounterV1 {
         
         init() {
             
+        }
+        
+        func mapFrom(interface: UserCounterDataModelInterface) {
+            id = interface.id
+            latestCountFromAPI = interface.latestCountFromAPI
+            incrementValue = interface.incrementValue
+        }
+        
+        static func createNewFrom(interface: UserCounterDataModelInterface) -> SwiftUserCounter {
+            let object = SwiftUserCounter()
+            object.mapFrom(interface: interface)
+            return object
         }
     }
 }

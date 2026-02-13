@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class MobileContentAuthTokenRepository {
+final class MobileContentAuthTokenRepository {
     
     private let api: MobileContentAuthTokenAPIInterface
     private let cache: MobileContentAuthTokenCache
@@ -20,7 +20,7 @@ class MobileContentAuthTokenRepository {
         self.cache = cache
     }
     
-    func fetchRemoteAuthTokenPublisher(providerToken: MobileContentAuthProviderToken, createUser: Bool) async throws -> Result<MobileContentAuthTokenDataModel, MobileContentApiError> {
+    func fetchRemoteAuthToken(providerToken: MobileContentAuthProviderToken, createUser: Bool) async throws -> Result<MobileContentAuthTokenDataModel, MobileContentApiError> {
         
         let result: Result<MobileContentAuthTokenDecodable, MobileContentApiError> = try await api.fetchAuthToken(
             providerToken: providerToken,
@@ -39,29 +39,6 @@ class MobileContentAuthTokenRepository {
         case .failure(let apiError):
             return .failure(apiError)
         }
-    }
-    
-    // TODO: Remove publisher and will use async throws. ~Levi
-    func fetchRemoteAuthTokenPublisher(providerToken: MobileContentAuthProviderToken, createUser: Bool) -> AnyPublisher<MobileContentAuthTokenDataModel, MobileContentApiError> {
-        
-        return api.fetchAuthTokenPublisher(providerToken: providerToken, createUser: createUser)
-            .flatMap({ [weak self] authTokenDecodable -> AnyPublisher<MobileContentAuthTokenDataModel, MobileContentApiError> in
-                
-                let authTokenDataModel = MobileContentAuthTokenDataModel(decodable: authTokenDecodable)
-                
-                do {
-                    try self?.cache.storeAuthToken(authTokenDataModel)
-                }
-                catch _ {
-                    
-                }
-                
-                return Just(authTokenDataModel)
-                    .setFailureType(to: MobileContentApiError.self)
-                    .eraseToAnyPublisher()
-                
-            })
-            .eraseToAnyPublisher()
     }
     
     func getUserId() -> String? {

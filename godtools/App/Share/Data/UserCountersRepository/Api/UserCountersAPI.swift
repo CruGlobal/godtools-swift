@@ -9,6 +9,7 @@
 import Foundation
 import RequestOperation
 import Combine
+import RepositorySync
 
 class UserCountersAPI: UserCountersApiInterface {
     
@@ -24,32 +25,42 @@ class UserCountersAPI: UserCountersApiInterface {
         self.authSession = mobileContentApiAuthSession
     }
     
-    func fetchUserCountersPublisher(requestPriority: RequestPriority) -> AnyPublisher<[UserCounterDecodable], Error> {
+    func fetchUserCounters(requestPriority: RequestPriority) async throws -> [UserCounterDecodable] {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
         let fetchRequest = getUserCountersRequest(urlSession: urlSession)
         
-        return authSession.sendAuthenticatedRequest(urlRequest: fetchRequest, urlSession: urlSession)
-            .decode(type: JsonApiResponseDataArray<UserCounterDecodable>.self, decoder: JSONDecoder())
-            .map {
-                return $0.dataArray
-            }
-            .eraseToAnyPublisher()
+        let data: Data = try await authSession.sendAuthenticatedRequest(
+            urlRequest: fetchRequest,
+            urlSession: urlSession
+        )
+        
+        let codable: JsonApiResponseDataArray<UserCounterDecodable> = try JSONDecoder().decode(
+            JsonApiResponseDataArray<UserCounterDecodable>.self,
+            from: data
+        )
+        
+        return codable.dataArray
     }
     
-    func incrementUserCounterPublisher(id: String, increment: Int, requestPriority: RequestPriority) -> AnyPublisher<UserCounterDecodable, Error> {
+    func incrementUserCounter(id: String, increment: Int, requestPriority: RequestPriority) async throws -> UserCounterDecodable {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
         let incrementRequest = getIncrementUserCountersRequest(id: id, increment: increment, urlSession: urlSession)
         
-        return authSession.sendAuthenticatedRequest(urlRequest: incrementRequest, urlSession: urlSession)
-            .decode(type: JsonApiResponseDataObject<UserCounterDecodable>.self, decoder: JSONDecoder())
-            .map {
-                return $0.dataObject
-            }
-            .eraseToAnyPublisher()
+        let data: Data = try await authSession.sendAuthenticatedRequest(
+            urlRequest: incrementRequest,
+            urlSession: urlSession
+        )
+        
+        let codable: JsonApiResponseDataObject<UserCounterDecodable> = try JSONDecoder().decode(
+            JsonApiResponseDataObject<UserCounterDecodable>.self,
+            from: data
+        )
+        
+        return codable.dataObject
     }
     
     private func getUserCountersRequest(urlSession: URLSession) -> URLRequest {
@@ -95,5 +106,28 @@ class UserCountersAPI: UserCountersApiInterface {
                 queryItems: nil
             )
         )
+    }
+}
+
+extension UserCountersAPI: ExternalDataFetchInterface {
+
+    func getObject(id: String, context: RequestOperationFetchContext) async throws -> [UserCounterDecodable] {
+        
+        return try await emptyResponse()
+    }
+    
+    func getObjects(context: RequestOperationFetchContext) async throws -> [UserCounterDecodable] {
+        
+        return try await emptyResponse()
+    }
+    
+    func getObjectPublisher(id: String, context: RequestOperationFetchContext) -> AnyPublisher<[UserCounterDecodable], Error> {
+        
+        return emptyResponsePublisher()
+    }
+    
+    func getObjectsPublisher(context: RequestOperationFetchContext) -> AnyPublisher<[UserCounterDecodable], Error> {
+        
+        return emptyResponsePublisher()
     }
 }

@@ -9,9 +9,33 @@
 import Foundation
 import Combine
 import RequestOperation
+import RepositorySync
 
-protocol UserCountersApiInterface {
+protocol UserCountersApiInterface: ExternalDataFetchInterface {
     
-    func fetchUserCountersPublisher(requestPriority: RequestPriority) -> AnyPublisher<[UserCounterDecodable], Error>
-    func incrementUserCounterPublisher(id: String, increment: Int, requestPriority: RequestPriority) -> AnyPublisher<UserCounterDecodable, Error>
+    func fetchUserCounters(requestPriority: RequestPriority) async throws -> [UserCounterDecodable]
+    func incrementUserCounter(id: String, increment: Int, requestPriority: RequestPriority) async throws -> UserCounterDecodable
+}
+
+extension UserCountersApiInterface {
+    
+    func getObject(id: String, context: RequestOperationFetchContext) async throws -> [UserCounterDecodable] {
+        return Array()
+    }
+    
+    func getObjects(context: RequestOperationFetchContext) async throws -> [UserCounterDecodable] {
+        return Array()
+    }
+    
+    func getObjectPublisher(id: String, context: RequestOperationFetchContext) -> AnyPublisher<[UserCounterDecodable], Error> {
+        return Just([])
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
+    }
+    
+    func getObjectsPublisher(context: RequestOperationFetchContext) -> AnyPublisher<[UserCounterDecodable], Error> {
+        return Just([])
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
+    }
 }

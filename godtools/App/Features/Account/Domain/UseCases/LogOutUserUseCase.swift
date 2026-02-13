@@ -24,23 +24,20 @@ class LogOutUserUseCase {
     
     func logOutPublisher() -> AnyPublisher<Bool, Error> {
                 
-        return userAuthentication.signOutPublisher()
-            .flatMap { (void: Void) in
-                
-                self.setAnalyticsUserProperties()
-                
-                return self.deleteUserCountersUseCase.deleteUserCountersPublisher()
-                    .flatMap { void in
-                        
-                        return Just(true)
-                            .eraseToAnyPublisher()
-                    }
-                    .catch({ error in
-                        
-                        return Just(false)
-                            .eraseToAnyPublisher()
-                    })
+        userAuthentication.signOut()
+        
+        setAnalyticsUserProperties()
+        
+        return deleteUserCountersUseCase
+            .deleteUserCountersPublisher()
+            .map { _ in
+                return true
             }
+            .catch({ error in
+                return Just(false)
+                    .setFailureType(to: Error.self)
+                    .eraseToAnyPublisher()
+            })
             .eraseToAnyPublisher()
     }
     

@@ -82,9 +82,9 @@ final class UserAuthentication {
         
         let response: AuthenticationProviderResponse
         
-        if lastAuthenticatedProviderType == .apple {
+        if let appleProvider = provider as? AppleAuthentication  {
             
-            response = try await renewAppleToken(provider: provider)
+            response = try await renewAppleToken(appleProvider: appleProvider)
             
         } else {
             
@@ -95,7 +95,7 @@ final class UserAuthentication {
             authProviderResponse: response
         )
         
-        let result: Result<MobileContentAuthTokenDataModel, MobileContentApiError> = try await mobileContentAuthTokenRepository.fetchRemoteAuthTokenPublisher(
+        let result: Result<MobileContentAuthTokenDataModel, MobileContentApiError> = try await mobileContentAuthTokenRepository.fetchRemoteAuthToken(
             providerToken: providerToken,
             createUser: false
         )
@@ -112,31 +112,17 @@ final class UserAuthentication {
         return try await lastAuthProvider.providerGetAuthUser()
     }
     
-    func signInPublisher(provider: AuthenticationProviderType, createUser: Bool, fromViewController: UIViewController) -> AnyPublisher<MobileContentAuthTokenDataModel, MobileContentApiError> {
-    
-        return getAuthenticationProviderPublisher(provider: provider)
-            .mapError { (error: Error) in
-                return .other(error: error)
-            }
-            .flatMap({ (provider: AuthenticationProviderInterface) -> AnyPublisher<AuthenticationProviderResponse, MobileContentApiError> in
-                
-                return provider.authenticatePublisher(presentingViewController: fromViewController)
-                    .mapError { (error: Error) in
-                        return .other(error: error)
-                    }
-                    .eraseToAnyPublisher()
-            })
-            .map { (response: AuthenticationProviderResponse) in
-                
-                self.lastAuthenticatedProviderCache.store(provider: provider)
-                
-                return response
-            }
-            .flatMap { (authProviderResponse: AuthenticationProviderResponse) -> AnyPublisher<MobileContentAuthTokenDataModel, MobileContentApiError> in
-                
-                return self.authenticateWithMobileContentApiPublisher(authProviderResponse: authProviderResponse, createUser: createUser)
-            }
-            .eraseToAnyPublisher()
+    @MainActor func signIn(provider: AuthenticationProviderType, createUser: Bool, fromViewController: UIViewController) async throws -> Result<MobileContentAuthTokenDataModel, MobileContentApiError> {
+        
+        let authProvider: AuthenticationProviderInterface = try getAuthenticationProvider(provider: provider)
+        
+        let response: AuthenticationProviderResponse = try await authProvider.providerAuthenticate(presentingViewController: fromViewController)
+        
+        lastAuthenticatedProviderCache.store(provider: provider)
+        
+        let token: MobileContentAuthProviderToken = try getMobileContentAuthProviderToken(authProviderResponse: response)
+        
+        return try await mobileContentAuthTokenRepository.fetchRemoteAuthToken(providerToken: token, createUser: createUser)
     }
     
     func signOut() {
@@ -148,14 +134,9 @@ final class UserAuthentication {
         }
     }
 
-    private func renewAppleToken(provider: AuthenticationProviderInterface) async throws -> AuthenticationProviderResponse {
+    private func renewAppleToken(appleProvider: AppleAuthentication) async throws -> AuthenticationProviderResponse {
         
-        guard provider is AppleAuthentication else {
-            let error: Error = NSError.errorWithDescription(description: "Authentication provider is not Apple.")
-            throw error
-        }
-        
-        let authUserDomainModel: AuthUserDomainModel? = try await provider.providerGetAuthUser()
+        let authUserDomainModel: AuthUserDomainModel? = try await appleProvider.providerGetAuthUser()
         
         let authProviderProfile = AuthenticationProviderProfile(
             email: authUserDomainModel?.email,

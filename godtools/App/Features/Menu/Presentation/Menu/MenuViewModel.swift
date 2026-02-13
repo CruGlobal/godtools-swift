@@ -11,6 +11,8 @@ import Combine
 
 @MainActor class MenuViewModel: ObservableObject {
         
+    private static var backgroundCancellables: Set<AnyCancellable> = Set()
+    
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getMenuInterfaceStringsUseCase: GetMenuInterfaceStringsUseCase
     private let getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase
@@ -229,7 +231,7 @@ extension MenuViewModel {
             }, receiveValue: { (finished: Bool) in
                 
             })
-            .store(in: &cancellables)
+            .store(in: &Self.backgroundCancellables)
     }
     
     func deleteAccountTapped() {
