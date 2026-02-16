@@ -45,9 +45,9 @@ class GetFeaturedLessonsRepository: GetFeaturedLessonsRepositoryInterface {
             return self.resourcesRepository
                 .cache
                 .getFeaturedLessonsPublisher(sorted: true)
-                .map { (featuredLessonsDataModels: [ResourceDataModel]) in
+                .tryMap { (featuredLessonsDataModels: [ResourceDataModel]) in
                     
-                    let featuredLessons: [FeaturedLessonDomainModel] = featuredLessonsDataModels.map { (resource: ResourceDataModel) in
+                    let featuredLessons: [FeaturedLessonDomainModel] = try featuredLessonsDataModels.map { (resource: ResourceDataModel) in
 
                         let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel
                         
@@ -58,7 +58,10 @@ class GetFeaturedLessonsRepository: GetFeaturedLessonsRepositoryInterface {
                             toolLanguageAvailability = ToolLanguageAvailabilityDomainModel(availabilityString: "", isAvailable: false)
                         }
                         
-                        let lessonProgress = self.getLessonListItemProgressRepository.getLessonProgress(lesson: resource, appLanguage: appLanguage)
+                        let lessonProgress = try self.getLessonListItemProgressRepository.getLessonProgress(
+                            lesson: resource,
+                            appLanguage: appLanguage
+                        )
                         
                         let nameLanguageDirection: LanguageDirectionDomainModel
                         

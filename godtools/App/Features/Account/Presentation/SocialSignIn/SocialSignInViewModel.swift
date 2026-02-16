@@ -15,8 +15,8 @@ import Combine
     private let presentAuthViewController: UIViewController
     private let authenticationType: SocialSignInAuthenticationType
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
-    private let getSocialCreateAccountInterfaceStringsUseCase: GetSocialCreateAccountInterfaceStringsUseCase
-    private let getSocialSignInInterfaceStringsUseCase: GetSocialSignInInterfaceStringsUseCase
+    private let getSocialCreateAccountStringsUseCase: GetSocialCreateAccountStringsUseCase
+    private let getSocialSignInStringsUseCase: GetSocialSignInStringsUseCase
     private let authenticateUserUseCase: AuthenticateUserUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
@@ -31,14 +31,14 @@ import Combine
     @Published var signInWithFacebookButtonTitle: String = ""
     @Published var signInWithGoogleButtonTitle: String = ""
     
-    init(flowDelegate: FlowDelegate, presentAuthViewController: UIViewController, authenticationType: SocialSignInAuthenticationType, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getSocialCreateAccountInterfaceStringsUseCase: GetSocialCreateAccountInterfaceStringsUseCase, getSocialSignInInterfaceStringsUseCase: GetSocialSignInInterfaceStringsUseCase, authenticateUserUseCase: AuthenticateUserUseCase) {
+    init(flowDelegate: FlowDelegate, presentAuthViewController: UIViewController, authenticationType: SocialSignInAuthenticationType, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getSocialCreateAccountStringsUseCase: GetSocialCreateAccountStringsUseCase, getSocialSignInStringsUseCase: GetSocialSignInStringsUseCase, authenticateUserUseCase: AuthenticateUserUseCase) {
         
         self.flowDelegate = flowDelegate
         self.presentAuthViewController = presentAuthViewController
         self.authenticationType = authenticationType
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
-        self.getSocialCreateAccountInterfaceStringsUseCase = getSocialCreateAccountInterfaceStringsUseCase
-        self.getSocialSignInInterfaceStringsUseCase = getSocialSignInInterfaceStringsUseCase
+        self.getSocialCreateAccountStringsUseCase = getSocialCreateAccountStringsUseCase
+        self.getSocialSignInStringsUseCase = getSocialSignInStringsUseCase
         self.authenticateUserUseCase = authenticateUserUseCase
         
         getCurrentAppLanguageUseCase
@@ -52,12 +52,12 @@ import Combine
             $appLanguage
                 .dropFirst()
                 .map { (appLanguage: AppLanguageDomainModel) in
-                    return getSocialCreateAccountInterfaceStringsUseCase
-                        .getStringsPublisher(appLanguage: appLanguage)
+                    return getSocialCreateAccountStringsUseCase
+                        .execute(appLanguage: appLanguage)
                 }
                 .switchToLatest()
                 .receive(on: DispatchQueue.main)
-                .sink { [weak self] (interfaceStrings: SocialCreateAccountInterfaceStringsDomainModel) in
+                .sink { [weak self] (interfaceStrings: SocialCreateAccountStringsDomainModel) in
                     
                     self?.title = interfaceStrings.title
                     self?.subtitle = interfaceStrings.subtitle
@@ -72,12 +72,12 @@ import Combine
             $appLanguage
                 .dropFirst()
                 .map { (appLanguage: AppLanguageDomainModel) in
-                    return getSocialSignInInterfaceStringsUseCase
-                        .getStringsPublisher(appLanguage: appLanguage)
+                    return getSocialSignInStringsUseCase
+                        .execute(appLanguage: appLanguage)
                 }
                 .switchToLatest()
                 .receive(on: DispatchQueue.main)
-                .sink { [weak self] (interfaceStrings: SocialSignInInterfaceStringsDomainModel) in
+                .sink { [weak self] (interfaceStrings: SocialSignInStringsDomainModel) in
                     
                     self?.title = interfaceStrings.title
                     self?.subtitle = interfaceStrings.subtitle
@@ -95,29 +95,32 @@ import Combine
     
     private func authenticateUser(authPlatform: AuthenticateUserAuthPlatformDomainModel) {
                 
-        authenticateUserUseCase.authenticatePublisher(
-            authType: authenticationType == .createAccount ? .createAccount : .signIn,
-            authPlatform: authPlatform,
-            authPolicy: .renewAccessTokenElseAskUserToAuthenticate(fromViewController: presentAuthViewController)
-        )
-        .receive(on: DispatchQueue.main)
-        .sink { [weak self] subscriberCompletion in
-            
-            let authenticationError: AuthErrorDomainModel?
-            
-            switch subscriberCompletion {
-            case .finished:
-                authenticationError = nil
-            case .failure(let error):
-                authenticationError = error
+        authenticateUserUseCase
+            .execute(
+                authType: authenticationType == .createAccount ? .createAccount : .signIn,
+                authPlatform: authPlatform,
+                authPolicy: .renewAccessTokenElseAskUserToAuthenticate(fromViewController: presentAuthViewController)
+            )
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] subscriberCompletion in
+                
+                let authenticationError: AuthErrorDomainModel?
+                
+                switch subscriberCompletion {
+                case .finished:
+                    authenticationError = nil
+                case .failure(let error):
+                    // TODO: Fix auth error. ~Levi
+                    //authenticationError = error
+                    authenticationError = nil
+                }
+                
+                self?.handleAuthenticationCompleted(error: authenticationError)
+                
+            } receiveValue: { _ in
+                
             }
-            
-            self?.handleAuthenticationCompleted(error: authenticationError)
-            
-        } receiveValue: { _ in
-            
-        }
-        .store(in: &cancellables)
+            .store(in: &cancellables)
     }
     
     private func handleAuthenticationCompleted(error: AuthErrorDomainModel?) {

@@ -549,19 +549,36 @@ class AppDataLayerDependencies {
     
     func getUserCountersRepository() -> UserCountersRepository {
         
+        let persistence: any Persistence<UserCounterDataModel, UserCounterDecodable>
+        
+        if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                dataModelMapping: SwiftUserCounterMapping()
+            )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                database: getSharedRealmDatabase(),
+                dataModelMapping: RealmUserCounterMapping()
+            )
+        }
+        
         let api = UserCountersAPI(
             config: getAppConfig(),
             urlSessionPriority: getSharedUrlSessionPriority(),
             mobileContentApiAuthSession: getMobileContentApiAuthSession()
         )
         
-        let cache = RealmUserCountersCache(
-            realmDatabase: getSharedLegacyRealmDatabase(),
-            userCountersSync: RealmUserCountersCacheSync(realmDatabase: getSharedLegacyRealmDatabase())
+        let cache = UserCountersCache(
+            persistence: persistence
         )
         
         return UserCountersRepository(
-            api: api,
+            externalDataFetch: api,
+            persistence: persistence,
             cache: cache,
             remoteUserCountersSync: RemoteUserCountersSync(api: api, cache: cache)
         )

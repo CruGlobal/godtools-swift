@@ -121,8 +121,10 @@ import Combine
             .map { (appLanguage: AppLanguageDomainModel) in
                 
                 Publishers.CombineLatest(
-                    getAccountCreationIsSupportedUseCase.getIsSupportedPublisher(appLanguage: appLanguage),
-                    getUserIsAuthenticatedUseCase.getIsAuthenticatedPublisher()
+                    getAccountCreationIsSupportedUseCase
+                        .execute(appLanguage: appLanguage),
+                    getUserIsAuthenticatedUseCase
+                        .execute()
                 )
             }
             .switchToLatest()
@@ -224,7 +226,8 @@ extension MenuViewModel {
     
     func logoutTapped() {
         
-        logOutUserUseCase.logOutPublisher()
+        logOutUserUseCase
+            .execute()
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { _ in
                 

@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import GodToolsShared
 
-class GetUserActivityUseCase {
+final class GetUserActivityUseCase {
     
     private let getUserActivityBadgeUseCase: GetUserActivityBadgeUseCase
     private let getUserActivityStatsUseCase: GetUserActivityStatsUseCase
@@ -25,24 +25,36 @@ class GetUserActivityUseCase {
         self.completedTrainingTipRepository = completedTrainingTipRepository
     }
     
-    @MainActor func getUserActivityPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<UserActivityDomainModel, Never> {
+    @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<UserActivityDomainModel, Error> {
         
         return userCounterRepository
-            .getUserCountersChanged(reloadFromRemote: true, requestPriority: .high)
-            .flatMap { _ in
+            .getUserCountersChanged(
+                reloadFromRemote: true,
+                requestPriority: .high
+            )
+            .flatMap { (countersChanged: Void) -> AnyPublisher<[UserCounterDomainModel], Error> in
                 
-                let allUserCounters = self.getAllUserCounters()
+                return AnyPublisher() {
+                    return try await self.getAllUserCounters()
+                }
+            }
+            .map { (allUserCounters: [UserCounterDomainModel]) in
+                                
+                let userActivityDomainModel = self.getUserActivityDomainModel(
+                    from: allUserCounters,
+                    translatedInAppLanguage: appLanguage
+                )
                 
-                let userActivityDomainModel = self.getUserActivityDomainModel(from: allUserCounters, translatedInAppLanguage: appLanguage)
-                
-                return Just(userActivityDomainModel)
+                return userActivityDomainModel
             }
             .eraseToAnyPublisher()
     }
     
-    private func getAllUserCounters() -> [UserCounterDomainModel] {
+    private func getAllUserCounters() async throws -> [UserCounterDomainModel] {
         
-        var userCounters = userCounterRepository.getUserCounters().map { UserCounterDomainModel(dataModel: $0) }
+        var userCounters = try await userCounterRepository.getUserCounters().map {
+            UserCounterDomainModel(dataModel: $0)
+        }
         
         userCounters.append(getCompletedTrainingTipCounter())
         

@@ -20,9 +20,9 @@ import Combine
     
     @Published private var appLanguage: AppLanguageDomainModel = ""
     
-    @Published var interfaceStrings: DeleteAccountProgressInterfaceStringsDomainModel = DeleteAccountProgressInterfaceStringsDomainModel.emptyStrings()
+    @Published private(set) var strings = DeleteAccountProgressStringsDomainModel.emptyValue
     
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguage: GetCurrentAppLanguageUseCase, viewDeleteAccountProgressUseCase: ViewDeleteAccountProgressUseCase, deleteAccountUseCase: DeleteAccountUseCase) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguage: GetCurrentAppLanguageUseCase, getDeleteAccountProgressStringsUseCase: GetDeleteAccountProgressStringsUseCase, deleteAccountUseCase: DeleteAccountUseCase) {
         
         self.flowDelegate = flowDelegate
         self.deleteAccountUseCase = deleteAccountUseCase
@@ -35,13 +35,13 @@ import Combine
         $appLanguage
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
-                viewDeleteAccountProgressUseCase
-                    .viewPublisher(appLanguage: appLanguage)
+                getDeleteAccountProgressStringsUseCase
+                    .execute(appLanguage: appLanguage)
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (domainModel: ViewDeleteAccountProgressDomainModel) in
-                self?.interfaceStrings = domainModel.interfaceStrings
+            .sink { [weak self] (strings: DeleteAccountProgressStringsDomainModel) in
+                self?.strings = strings
             }
             .store(in: &cancellables)
         
@@ -56,7 +56,8 @@ import Combine
         
         let startDeleteAccountTime = Date()
         
-        deleteAccountUseCase.deleteAccountPublisher()
+        deleteAccountUseCase
+            .execute()
             .receive(on: DispatchQueue.main)
             .delay(for: .seconds(getRemainingSecondsToDisplayDeleteAccountProgress(startTime: startDeleteAccountTime)), scheduler: DispatchQueue.main)
             .sink { [weak self] subscribersCompletion in

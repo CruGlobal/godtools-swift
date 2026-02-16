@@ -23,9 +23,9 @@ final class GetLessonsListItems {
         self.getLessonListItemProgressRepository = getLessonListItemProgressRepository
     }
     
-    func mapLessonsToListItems(lessons: [ResourceDataModel], appLanguage: AppLanguageDomainModel, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> [LessonListItemDomainModel] {
+    func mapLessonsToListItems(lessons: [ResourceDataModel], appLanguage: AppLanguageDomainModel, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) throws -> [LessonListItemDomainModel] {
 
-        return lessons.map { resource in
+        return try lessons.map { resource in
 
             let filterLanguageModel: LanguageDataModel?
             if let filterLanguageId = filterLessonsByLanguage?.languageId {
@@ -45,7 +45,7 @@ final class GetLessonsListItems {
                 translateInLanguage: filterLanguageModel?.code ?? appLanguage
             )
 
-            let lessonProgress = getLessonListItemProgressRepository.getLessonProgress(
+            let lessonProgress = try getLessonListItemProgressRepository.getLessonProgress(
                 lesson: resource,
                 appLanguage: appLanguage
             )

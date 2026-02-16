@@ -35,7 +35,7 @@ struct AccountView: View {
                 viewModel.pullToRefresh()
             }
         }
-        .navigationTitle(viewModel.navTitle)
+        .navigationTitle(viewModel.strings.navTitle)
         .navigationBarBackButtonHidden(true)
         .background(Color.getColorWithRGB(red: 245, green: 245, blue: 245, opacity: 1))
         .edgesIgnoringSafeArea(.bottom)
@@ -55,7 +55,7 @@ struct AccountView_Preview: PreviewProvider {
             getUserActivityUseCase: appDiContainer.feature.userActivity.domainLayer.getUserActivityUseCase(),
             viewGlobalActivityThisWeekUseCase: appDiContainer.feature.globalActivity.domainLayer.getViewGlobalActivityThisWeekUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-            viewAccountUseCase: appDiContainer.feature.account.domainLayer.getViewAccountUseCase(),
+            getAccountStringsUseCase: appDiContainer.feature.account.domainLayer.getAccountStringsUseCase(),
             getGlobalActivityEnabledUseCase: appDiContainer.feature.globalActivity.domainLayer.getGlobalActivityEnabledUseCase()
         )
     }

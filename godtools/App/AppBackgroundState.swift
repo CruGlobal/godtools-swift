@@ -116,7 +116,7 @@ import RequestOperation
                        
         Publishers.CombineLatest(
             userIsAuthenticatedUseCase
-                .getIsAuthenticatedPublisher()
+                .execute()
                 .setFailureType(to: Error.self),
             userCountersRepository
                 .getUserCountersChanged(

@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import GodToolsShared
 
-class IncrementUserCounterUseCase {
+final class IncrementUserCounterUseCase {
     
     enum UserCounterInteraction {
         case articleOpen(uri: String)
@@ -34,31 +34,36 @@ class IncrementUserCounterUseCase {
         self.userCountersRepository = userCountersRepository
     }
     
-    func incrementUserCounter(for interaction: UserCounterInteraction) -> AnyPublisher<UserCounterDomainModel, Error> {
+    func execute(interaction: UserCounterInteraction) -> AnyPublisher<UserCounterDomainModel, Error> {
         
         guard let userCounterId = getUserCounterId(for: interaction) else {
-            
             return Fail(error: UserCounterError.invalidUserCounterId)
                 .eraseToAnyPublisher()
         }
         
-        return userCountersRepository.incrementCachedUserCounterBy1(id: userCounterId)
-            .flatMap { (userCounterDataModels: [UserCounterDataModel]) in
-                
-                let userCounterDomainModel: UserCounterDomainModel
-                
-                if let dataModel = userCounterDataModels.first {
-                    
-                    userCounterDomainModel = UserCounterDomainModel(dataModel: dataModel)
-                }
-                else {
-                    
-                    userCounterDomainModel = UserCounterDomainModel(id: userCounterId, count: 0)
-                }
-                                
-                return Just(userCounterDomainModel)
+        do {
+            
+            let userCounterDataModels: [UserCounterDataModel] = try userCountersRepository.incrementCachedUserCounterBy1(
+                id: userCounterId
+            )
+            
+            let userCounterDomainModel: UserCounterDomainModel
+            
+            if let dataModel = userCounterDataModels.first {
+                userCounterDomainModel = UserCounterDomainModel(dataModel: dataModel)
             }
-            .eraseToAnyPublisher()
+            else {
+                userCounterDomainModel = UserCounterDomainModel(id: userCounterId, count: 0)
+            }
+            
+            return Just(userCounterDomainModel)
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        }
+        catch let error {
+            return Fail(error: error)
+                .eraseToAnyPublisher()
+        }
     }
     
     private func getUserCounterId(for interaction: UserCounterInteraction) -> String? {

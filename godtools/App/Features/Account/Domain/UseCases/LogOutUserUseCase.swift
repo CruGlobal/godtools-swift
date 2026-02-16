@@ -9,36 +9,37 @@
 import UIKit
 import Combine
 
-class LogOutUserUseCase {
+final class LogOutUserUseCase {
     
     private let userAuthentication: UserAuthentication
     private let firebaseAnalytics: FirebaseAnalyticsInterface
-    private let deleteUserCountersUseCase: DeleteUserCountersUseCase
+    private let userCountersRepository: UserCountersRepository
     
-    init(userAuthentication: UserAuthentication, firebaseAnalytics: FirebaseAnalyticsInterface, deleteUserCountersUseCase: DeleteUserCountersUseCase) {
+    init(userAuthentication: UserAuthentication, firebaseAnalytics: FirebaseAnalyticsInterface, userCountersRepository: UserCountersRepository) {
         
         self.userAuthentication = userAuthentication
         self.firebaseAnalytics = firebaseAnalytics
-        self.deleteUserCountersUseCase = deleteUserCountersUseCase
+        self.userCountersRepository = userCountersRepository
     }
     
-    func logOutPublisher() -> AnyPublisher<Bool, Error> {
+    func execute() -> AnyPublisher<Bool, Error> {
                 
         userAuthentication.signOut()
         
         setAnalyticsUserProperties()
         
-        return deleteUserCountersUseCase
-            .deleteUserCountersPublisher()
-            .map { _ in
-                return true
-            }
-            .catch({ error in
-                return Just(false)
-                    .setFailureType(to: Error.self)
-                    .eraseToAnyPublisher()
-            })
-            .eraseToAnyPublisher()
+        do {
+            
+            try userCountersRepository.deleteUserCounters()
+            
+            return Just(true)
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        }
+        catch let error {
+            return Fail(error: error)
+                .eraseToAnyPublisher()
+        }
     }
     
     private func setAnalyticsUserProperties() {

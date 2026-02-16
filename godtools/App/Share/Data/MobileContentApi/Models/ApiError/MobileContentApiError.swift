@@ -29,3 +29,32 @@ extension MobileContentApiError {
         return getError().localizedDescription
     }
 }
+
+
+extension MobileContentApiError {
+ 
+    func toAuthError() -> AuthErrorDomainModel {
+       
+        switch self {
+            
+        case .other(let error):
+            return .other(error: error)
+            
+        case .responseError(let responseErrors, let error):
+            
+            for responseError in responseErrors {
+                
+                let code: MobileContentApiErrorCodableCode = responseError.getCodeEnum()
+                
+                if code == .userNotFound {
+                    return .accountNotFound
+                }
+                else if code == .userAlreadyExists {
+                    return .accountAlreadyExists
+                }
+            }
+
+            return .other(error: error)
+        }
+    }
+}
