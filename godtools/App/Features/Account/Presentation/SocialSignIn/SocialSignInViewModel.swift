@@ -19,6 +19,7 @@ import Combine
     private let getSocialSignInStringsUseCase: GetSocialSignInStringsUseCase
     private let authenticateUserUseCase: AuthenticateUserUseCase
     
+    private var authenticateUserTask: Task<Void, Error>?
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
@@ -95,32 +96,47 @@ import Combine
     
     private func authenticateUser(authPlatform: AuthenticateUserAuthPlatformDomainModel) {
                 
-        authenticateUserUseCase
-            .execute(
-                authType: authenticationType == .createAccount ? .createAccount : .signIn,
-                authPlatform: authPlatform,
-                authPolicy: .renewAccessTokenElseAskUserToAuthenticate(fromViewController: presentAuthViewController)
-            )
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] subscriberCompletion in
-                
-                let authenticationError: AuthErrorDomainModel?
-                
-                switch subscriberCompletion {
-                case .finished:
-                    authenticationError = nil
-                case .failure(let error):
-                    // TODO: Fix auth error. ~Levi
-                    //authenticationError = error
-                    authenticationError = nil
-                }
-                
-                self?.handleAuthenticationCompleted(error: authenticationError)
-                
-            } receiveValue: { _ in
-                
+        authenticateUserTask = Task {
+            
+            do {
+                _ = try await authenticateUserUseCase
+                    .execute(
+                        authType: authenticationType == .createAccount ? .createAccount : .signIn,
+                        authPlatform: authPlatform,
+                        authPolicy: .renewAccessTokenElseAskUserToAuthenticate(fromViewController: presentAuthViewController)
+                    )
             }
-            .store(in: &cancellables)
+            catch let error {
+                print("\n Auth error: \(error)")
+            }
+        }
+        
+//        authenticateUserUseCase
+//            .execute(
+//                authType: authenticationType == .createAccount ? .createAccount : .signIn,
+//                authPlatform: authPlatform,
+//                authPolicy: .renewAccessTokenElseAskUserToAuthenticate(fromViewController: presentAuthViewController)
+//            )
+//            .receive(on: DispatchQueue.main)
+//            .sink { [weak self] subscriberCompletion in
+//                
+//                let authenticationError: AuthErrorDomainModel?
+//                
+//                switch subscriberCompletion {
+//                case .finished:
+//                    authenticationError = nil
+//                case .failure(let error):
+//                    // TODO: Fix auth error. ~Levi
+//                    //authenticationError = error
+//                    authenticationError = nil
+//                }
+//                
+//                self?.handleAuthenticationCompleted(error: authenticationError)
+//                
+//            } receiveValue: { _ in
+//                
+//            }
+//            .store(in: &cancellables)
     }
     
     private func handleAuthenticationCompleted(error: AuthErrorDomainModel?) {

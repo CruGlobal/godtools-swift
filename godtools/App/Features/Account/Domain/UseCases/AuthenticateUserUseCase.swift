@@ -24,44 +24,29 @@ final class AuthenticateUserUseCase {
         self.firebaseAnalytics = firebaseAnalytics
     }
     
-    @MainActor func execute(authType: AuthenticateUserAuthTypeDomainModel, authPlatform: AuthenticateUserAuthPlatformDomainModel, authPolicy: AuthenticateUserAuthPolicyDomainModel) -> AnyPublisher<Bool, Error> {
+    @MainActor func execute(authType: AuthenticateUserAuthTypeDomainModel, authPlatform: AuthenticateUserAuthPlatformDomainModel, authPolicy: AuthenticateUserAuthPolicyDomainModel) async throws {
         
-        return authenticateByAuthTypePublisher(
+        _ = try await authenticateByAuthType(
             authType: authType,
             authPlatform: authPlatform,
             authPolicy: authPolicy
         )
-        .flatMap { (token: MobileContentAuthTokenDataModel) -> AnyPublisher<AuthUserDomainModel?, Error> in
-            
-            return AnyPublisher() {
-                
-                let authUser: AuthUserDomainModel? = try await self.userAuthentication.getAuthUser()
-                
-                return authUser
-            }
-            .eraseToAnyPublisher()
+        
+        let authUser: AuthUserDomainModel? = try await self.userAuthentication.getAuthUser()
+        
+        if let authUser = authUser {
+            self.postEmailSignUp(authUser: authUser)
+            self.setAnalyticsUserProperties(authUser: authUser, authPlatform: authPlatform)
         }
-        .flatMap{ (authUser: AuthUserDomainModel?) -> AnyPublisher<Bool, Error> in
-            
-            if let authUser = authUser {
-                self.postEmailSignUp(authUser: authUser)
-                self.setAnalyticsUserProperties(authUser: authUser, authPlatform: authPlatform)
-            }
-            
-            return Just(true)
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
-        .eraseToAnyPublisher()
     }
     
-    @MainActor private func authenticateByAuthTypePublisher(authType: AuthenticateUserAuthTypeDomainModel, authPlatform: AuthenticateUserAuthPlatformDomainModel, authPolicy: AuthenticateUserAuthPolicyDomainModel) -> AnyPublisher<MobileContentAuthTokenDataModel, Error> {
+    @MainActor private func authenticateByAuthType(authType: AuthenticateUserAuthTypeDomainModel, authPlatform: AuthenticateUserAuthPlatformDomainModel, authPolicy: AuthenticateUserAuthPolicyDomainModel) async throws -> MobileContentAuthTokenDataModel {
                                 
         switch authPolicy {
             
         case .renewAccessTokenElseAskUserToAuthenticate(let fromViewController):
             
-            return signInPublisher(
+            return try await signIn(
                 fromViewController: fromViewController,
                 authType: authType,
                 authPlatform: authPlatform
@@ -69,50 +54,42 @@ final class AuthenticateUserUseCase {
             
         case .renewAccessToken:
             
-            return renewTokenPublisher()
+            return try await renewToken()
         }
     }
     
-    @MainActor private func signInPublisher(fromViewController: UIViewController, authType: AuthenticateUserAuthTypeDomainModel, authPlatform: AuthenticateUserAuthPlatformDomainModel) -> AnyPublisher<MobileContentAuthTokenDataModel, Error> {
+    @MainActor private func signIn(fromViewController: UIViewController, authType: AuthenticateUserAuthTypeDomainModel, authPlatform: AuthenticateUserAuthPlatformDomainModel) async throws -> MobileContentAuthTokenDataModel {
         
         // TODO: Need AuthErrorDomainModel here. ~Levi
         
-        return AnyPublisher() {
+        let result: Result<MobileContentAuthTokenDataModel, MobileContentApiError> = try await self.userAuthentication.signIn(
+            provider: authPlatform.toProvider(),
+            createUser: authType == .createAccount,
+            fromViewController: fromViewController
+        )
+        
+        switch result {
+        case .success(let token):
+            return token
             
-            let result: Result<MobileContentAuthTokenDataModel, MobileContentApiError> = try await self.userAuthentication.signIn(
-                provider: authPlatform.toProvider(),
-                createUser: authType == .createAccount,
-                fromViewController: fromViewController
-            )
-            
-            switch result {
-            case .success(let token):
-                return token
-                
-            case .failure(let apiError):
-                throw apiError
-            }
+        case .failure(let apiError):
+            throw apiError
         }
-        .eraseToAnyPublisher()
     }
     
-    private func renewTokenPublisher() -> AnyPublisher<MobileContentAuthTokenDataModel, Error> {
+    private func renewToken() async throws -> MobileContentAuthTokenDataModel {
         
         // TODO: Need AuthErrorDomainModel here. ~Levi
         
-        return AnyPublisher() {
+        let result: Result<MobileContentAuthTokenDataModel, MobileContentApiError> = try await self.userAuthentication.renewToken()
+        
+        switch result {
+        case .success(let token):
+            return token
             
-            let result: Result<MobileContentAuthTokenDataModel, MobileContentApiError> = try await self.userAuthentication.renewToken()
-            
-            switch result {
-            case .success(let token):
-                return token
-                
-            case .failure(let apiError):
-                throw apiError
-            }
+        case .failure(let apiError):
+            throw apiError
         }
-        .eraseToAnyPublisher()
     }
     
     private func postEmailSignUp(authUser: AuthUserDomainModel) {
