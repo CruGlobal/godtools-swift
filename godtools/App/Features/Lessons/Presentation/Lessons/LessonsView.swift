@@ -36,11 +36,14 @@ struct LessonsView: View {
 
             VStack(alignment: .center, spacing: 0) {
 
-                PersonalizedToolToggle(
-                    selectedToggle: $viewModel.selectedToggle,
-                    toggleOptions: viewModel.toggleOptions
-                )
-                .padding([.top], ToolsView.personalizedToggleTopPadding)
+                if GodToolsAppConfig.showsPersonalization {
+                    
+                    PersonalizedToolToggle(
+                        selectedToggle: $viewModel.selectedToggle,
+                        toggleOptions: viewModel.toggleOptions
+                    )
+                    .padding([.top], ToolsView.personalizedToggleTopPadding)
+                }
 
                 PullToRefreshScrollView(showsIndicators: true) {
 
