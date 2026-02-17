@@ -133,6 +133,9 @@ final class UserAuthentication {
         for provider in allProviders {
             provider.providerSignOut()
         }
+        
+        lastAuthenticatedProviderCache.deleteLastAuthenticatedProvider()
+        mobileContentAuthTokenRepository.deleteCachedAuthToken()
     }
 
     private func renewAppleToken(appleProvider: AppleAuthentication) async throws -> AuthenticationProviderResponse {
