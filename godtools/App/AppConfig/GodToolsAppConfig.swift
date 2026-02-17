@@ -11,6 +11,9 @@ import SocialAuthentication
 import RepositorySync
 
 class GodToolsAppConfig: AppConfigInterface {
+
+    // TODO: Remove constant in GT-2966. ~Levi
+    static let showsPersonalization: Bool = false
     
     private let appBuild: AppBuild
         
