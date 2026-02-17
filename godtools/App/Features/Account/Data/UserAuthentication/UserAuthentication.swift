@@ -34,7 +34,8 @@ final class UserAuthentication {
     
     func getIsAuthenticatedChangedPublisher() -> AnyPublisher<Bool, Never> {
         
-        return mobileContentAuthTokenRepository.getAuthTokenChangedPublisher()
+        return mobileContentAuthTokenRepository
+            .getAuthTokenChangedPublisher()
             .map { (authToken: MobileContentAuthTokenDataModel?) in
                 
                 guard let authToken = authToken else {

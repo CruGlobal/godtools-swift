@@ -83,7 +83,11 @@ extension MobileContentAuthTokenCache {
     
     func getAuthTokenChangedPublisher() -> AnyPublisher<MobileContentAuthTokenDataModel?, Never> {
         
-        return MobileContentAuthTokenCache.sharedHashableAuthTokenSubject.getValueChangedPublisher(hash: MobileContentAuthTokenCache.sharedAuthUserId)
+        return MobileContentAuthTokenCache
+            .sharedHashableAuthTokenSubject
+            .getValueChangedPublisher(
+                hash: MobileContentAuthTokenCache.sharedAuthUserId
+            )
             .eraseToAnyPublisher()
     }
     
