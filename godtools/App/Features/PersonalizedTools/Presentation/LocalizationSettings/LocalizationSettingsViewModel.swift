@@ -31,7 +31,7 @@ import Combine
     @Published private(set) var countrySearchResults: [LocalizationSettingsCountryListItem] = Array()
     @Published private(set) var strings = LocalizationSettingsStringsDomainModel.emptyValue
 
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getCountryListUseCase: GetLocalizationSettingsCountryListUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, searchCountriesUseCase: SearchCountriesInLocalizationSettingsCountriesListUseCase, viewLocalizationSettingsUseCase: ViewLocalizationSettingsUseCase, viewSearchBarUseCase: ViewSearchBarUseCase) {
+    init(flowDelegate: FlowDelegate, showsPreferNotToSay: Bool, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getCountryListUseCase: GetLocalizationSettingsCountryListUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, searchCountriesUseCase: SearchCountriesInLocalizationSettingsCountriesListUseCase, viewLocalizationSettingsUseCase: ViewLocalizationSettingsUseCase, viewSearchBarUseCase: ViewSearchBarUseCase) {
 
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
@@ -40,7 +40,7 @@ import Combine
         self.searchCountriesUseCase = searchCountriesUseCase
         self.viewLocalizationSettingsUseCase = viewLocalizationSettingsUseCase
         self.viewSearchBarUseCase = viewSearchBarUseCase
-        
+
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
             .receive(on: DispatchQueue.main)
@@ -59,6 +59,13 @@ import Combine
                 getCountryListUseCase.execute(appLanguage: appLanguage)
             }
             .switchToLatest()
+            .map { countries in
+                guard !showsPreferNotToSay else { return countries }
+                return countries.filter {
+                    if case .preferNotToSay = $0 { return false }
+                    return true
+                }
+            }
             .receive(on: DispatchQueue.main)
             .assign(to: &$countriesList)
         

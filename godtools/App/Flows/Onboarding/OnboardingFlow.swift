@@ -77,7 +77,7 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
                 navigateBackFromChooseAppLanguageFlow()
             
             case .userChoseAppLanguage(let appLanguage):
-                let localizationSettings = getLocalizationSettingsView()
+                let localizationSettings = getLocalizationSettingsView(showsPreferNotToSay: true)
                 navigationController.pushViewController(localizationSettings, animated: true)
             }
             
@@ -259,39 +259,6 @@ extension OnboardingFlow {
 
 extension OnboardingFlow {
     
-    private func getLocalizationSettingsView() -> UIViewController {
-
-        let viewModel = LocalizationSettingsViewModel(
-            flowDelegate: self,
-            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getCountryListUseCase: appDiContainer.feature.personalizedTools.domainLayer.getLocalizationSettingsCountryListUseCase(),
-            getLocalizationSettingsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getGetLocalizationSettingsUseCase(),
-            searchCountriesUseCase: appDiContainer.feature.personalizedTools.domainLayer.getSearchCountriesInLocalizationSettingsCountriesListUseCase(),
-            viewLocalizationSettingsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getViewLocalizationSettingsUseCase(),
-            viewSearchBarUseCase: appDiContainer.domainLayer.getViewSearchBarUseCase()
-        )
-
-        let view = LocalizationSettingsView(viewModel: viewModel)
-
-        let backButton = AppBackBarItem(
-            target: viewModel,
-            action: #selector(viewModel.backTapped),
-            accessibilityIdentifier: nil
-        )
-
-        let hostingView = AppHostingController<LocalizationSettingsView>(
-            rootView: view,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: backButton,
-                leadingItems: [],
-                trailingItems: []
-            )
-        )
-
-        return hostingView
-    }
-
     private func getLocalizationSettingsConfirmationView(selectedCountry: LocalizationSettingsCountryListItem) -> UIViewController {
 
         let confirmationViewModel = LocalizationSettingsConfirmationViewModel(

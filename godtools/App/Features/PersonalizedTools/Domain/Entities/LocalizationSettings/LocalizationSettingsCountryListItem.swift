@@ -45,7 +45,7 @@ enum LocalizationSettingsCountryListItem: Identifiable, StringSearchable {
         case .country(let country):
             return country.isoRegionCode
         case .preferNotToSay:
-            return nil
+            return ""
         }
     }
 
