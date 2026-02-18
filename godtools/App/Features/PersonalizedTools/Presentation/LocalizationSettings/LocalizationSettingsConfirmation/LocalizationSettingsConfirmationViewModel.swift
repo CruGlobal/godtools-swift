@@ -13,7 +13,7 @@ import Combine
 
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getLocalizationSettingsConfirmationStringsUseCase: GetLocalizationSettingsConfirmationStringsUseCase
-    private let selectedCountry: LocalizationSettingsCountryListItemDomainModel
+    private let selectedCountry: LocalizationSettingsCountryListItem
     
     private var cancellables: Set<AnyCancellable> = Set()
     private weak var flowDelegate: FlowDelegate?
@@ -21,7 +21,7 @@ import Combine
     @Published private(set) var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private(set) var strings = LocalizationSettingsConfirmationStringsDomainModel.emptyValue
 
-    init(flowDelegate: FlowDelegate, selectedCountry: LocalizationSettingsCountryListItemDomainModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLocalizationSettingsConfirmationStringsUseCase: GetLocalizationSettingsConfirmationStringsUseCase) {
+    init(flowDelegate: FlowDelegate, selectedCountry: LocalizationSettingsCountryListItem, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLocalizationSettingsConfirmationStringsUseCase: GetLocalizationSettingsConfirmationStringsUseCase) {
 
         self.flowDelegate = flowDelegate
         self.selectedCountry = selectedCountry

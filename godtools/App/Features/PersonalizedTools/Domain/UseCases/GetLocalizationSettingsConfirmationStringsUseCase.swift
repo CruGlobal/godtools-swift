@@ -17,25 +17,25 @@ class GetLocalizationSettingsConfirmationStringsUseCase {
         self.localizationServices = localizationServices
     }
 
-    func execute(appLanguage: AppLanguageDomainModel, selectedCountry: LocalizationSettingsCountryListItemDomainModel) -> AnyPublisher<LocalizationSettingsConfirmationStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel, selectedCountry: LocalizationSettingsCountryListItem) -> AnyPublisher<LocalizationSettingsConfirmationStringsDomainModel, Never> {
 
         let titleHighlightModel: ConfirmAppLanguageHighlightStringDomainModel
 
-        if selectedCountry.isoRegionCode.isEmpty {
-            
-            let titleFullText = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "localizationSettings.confirmation.titleNoCountry")
-            titleHighlightModel = ConfirmAppLanguageHighlightStringDomainModel(
-                fullText: titleFullText,
-                highlightText: ""
-            )
-            
-        } else {
+        switch selectedCountry {
+        case .country(let country):
             let titleTemplate = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "localizationSettings.confirmation.title")
-            let countryName = selectedCountry.countryNameTranslatedInCurrentAppLanguage
+            let countryName = country.countryNameTranslatedInCurrentAppLanguage
             let titleFullText = String(format: titleTemplate, countryName)
             titleHighlightModel = ConfirmAppLanguageHighlightStringDomainModel(
                 fullText: titleFullText,
                 highlightText: countryName
+            )
+
+        case .preferNotToSay:
+            let titleFullText = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "localizationSettings.confirmation.titleNoCountry")
+            titleHighlightModel = ConfirmAppLanguageHighlightStringDomainModel(
+                fullText: titleFullText,
+                highlightText: ""
             )
         }
 

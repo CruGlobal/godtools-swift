@@ -24,11 +24,11 @@ import Combine
     private lazy var searchBarViewModel = SearchBarViewModel(getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, viewSearchBarUseCase: viewSearchBarUseCase)
 
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-    @Published private var countriesList: [LocalizationSettingsCountryListItemDomainModel] = Array()
+    @Published private var countriesList: [LocalizationSettingsCountryListItem] = Array()
     @Published private(set) var selectedCountryIsoRegionCode: String?
 
     @Published var searchText: String = ""
-    @Published private(set) var countrySearchResults: [LocalizationSettingsCountryListItemDomainModel] = Array()
+    @Published private(set) var countrySearchResults: [LocalizationSettingsCountryListItem] = Array()
     @Published private(set) var strings = LocalizationSettingsStringsDomainModel.emptyValue
 
     init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getCountryListUseCase: GetLocalizationSettingsCountryListUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, searchCountriesUseCase: SearchCountriesInLocalizationSettingsCountriesListUseCase, viewLocalizationSettingsUseCase: ViewLocalizationSettingsUseCase, viewSearchBarUseCase: ViewSearchBarUseCase) {
@@ -96,7 +96,7 @@ extension LocalizationSettingsViewModel {
         flowDelegate?.navigate(step: .backTappedFromLocalizationSettings)
     }
     
-    func countryTapped(country: LocalizationSettingsCountryListItemDomainModel) {
+    func countryTapped(country: LocalizationSettingsCountryListItem) {
         flowDelegate?.navigate(step: .countryTappedFromLocalizationSettings(country: country))
     }
 

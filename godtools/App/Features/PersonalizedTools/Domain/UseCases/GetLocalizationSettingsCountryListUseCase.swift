@@ -19,39 +19,37 @@ class GetLocalizationSettingsCountryListUseCase {
         self.localizationServices = localizationServices
     }
 
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[LocalizationSettingsCountryListItemDomainModel], Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[LocalizationSettingsCountryListItem], Never> {
 
         return countriesRepository.getCountriesPublisher(appLanguage: appLanguage)
             .flatMap { (countries: [LocalizationSettingsCountryDataModel]) in
 
                 let preferNotToSay = self.createPreferNotToSayOption(appLanguage: appLanguage)
 
-                let countryDomainModels = countries.map { country in
+                let countryListItems: [LocalizationSettingsCountryListItem] = countries.map { country in
 
-                    return LocalizationSettingsCountryListItemDomainModel(
+                    return .country(LocalizationSettingsCountryDomainModel(
                         isoRegionCode: country.isoRegionCode,
                         countryNameTranslatedInOwnLanguage: country.countryNameTranslatedInOwnLanguage,
                         countryNameTranslatedInCurrentAppLanguage: country.countryNameTranslatedInCurrentAppLanguage
-                    )
+                    ))
                 }
 
-                return Just([preferNotToSay] + countryDomainModels)
+                return Just([preferNotToSay] + countryListItems)
                     .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
     }
 
-    private func createPreferNotToSayOption(appLanguage: AppLanguageDomainModel) -> LocalizationSettingsCountryListItemDomainModel {
+    private func createPreferNotToSayOption(appLanguage: AppLanguageDomainModel) -> LocalizationSettingsCountryListItem {
 
         let preferNotToSayText = localizationServices.stringForLocaleElseEnglish(
             localeIdentifier: appLanguage,
             key: "localizationSettings.preferNotToSay"
         )
 
-        return LocalizationSettingsCountryListItemDomainModel(
-            isoRegionCode: "",
-            countryNameTranslatedInOwnLanguage: preferNotToSayText,
-            countryNameTranslatedInCurrentAppLanguage: ""
-        )
+        return .preferNotToSay(LocalizationSettingsPreferNotToSayDomainModel(
+            preferNotToSayText: preferNotToSayText
+        ))
     }
 }

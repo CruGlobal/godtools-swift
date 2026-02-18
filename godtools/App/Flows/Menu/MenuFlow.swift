@@ -117,7 +117,7 @@ class MenuFlow: Flow {
                 .domainLayer
                 .getSetLocalizationSettingsUseCase()
                 .execute(
-                    isoRegionCode: country.isoRegionCode
+                    isoRegionCode: country.isoRegionCode ?? ""
                 )
                 .sink { _ in
 
@@ -409,7 +409,7 @@ extension MenuFlow {
         return hostingView
     }
 
-    private func getLocalizationSettingsConfirmationView(selectedCountry: LocalizationSettingsCountryListItemDomainModel) -> UIViewController {
+    private func getLocalizationSettingsConfirmationView(selectedCountry: LocalizationSettingsCountryListItem) -> UIViewController {
 
         let confirmationViewModel = LocalizationSettingsConfirmationViewModel(
             flowDelegate: self,

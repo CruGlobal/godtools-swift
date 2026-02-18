@@ -160,7 +160,7 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
                 .domainLayer
                 .getSetLocalizationSettingsUseCase()
                 .execute(
-                    isoRegionCode: country.isoRegionCode
+                    isoRegionCode: country.isoRegionCode ?? ""
                 )
                 .sink { _ in
 
@@ -292,7 +292,7 @@ extension OnboardingFlow {
         return hostingView
     }
 
-    private func getLocalizationSettingsConfirmationView(selectedCountry: LocalizationSettingsCountryListItemDomainModel) -> UIViewController {
+    private func getLocalizationSettingsConfirmationView(selectedCountry: LocalizationSettingsCountryListItem) -> UIViewController {
 
         let confirmationViewModel = LocalizationSettingsConfirmationViewModel(
             flowDelegate: self,
