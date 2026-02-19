@@ -119,11 +119,20 @@ final class UserAuthentication {
         
         let response: AuthenticationProviderResponse = try await authProvider.providerAuthenticate(presentingViewController: fromViewController)
         
-        lastAuthenticatedProviderCache.store(provider: provider)
-        
         let token: MobileContentAuthProviderToken = try getMobileContentAuthProviderToken(authProviderResponse: response)
         
-        return try await mobileContentAuthTokenRepository.fetchRemoteAuthToken(providerToken: token, createUser: createUser)
+        do {
+            
+            let result = try await mobileContentAuthTokenRepository.fetchRemoteAuthToken(providerToken: token, createUser: createUser)
+            
+            lastAuthenticatedProviderCache.store(provider: provider)
+            
+            return result
+        }
+        catch let error {
+            
+            throw error
+        }
     }
     
     func signOut() {
