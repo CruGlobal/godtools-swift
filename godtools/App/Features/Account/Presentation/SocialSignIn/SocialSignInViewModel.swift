@@ -105,38 +105,14 @@ import Combine
                         authPlatform: authPlatform,
                         authPolicy: .renewAccessTokenElseAskUserToAuthenticate(fromViewController: presentAuthViewController)
                     )
+                
+                self.handleAuthenticationCompleted(error: nil)
             }
             catch let error {
-                print("\n Auth error: \(error)")
+                
+                self.handleAuthenticationCompleted(error: error as? AuthErrorDomainModel)
             }
         }
-        
-//        authenticateUserUseCase
-//            .execute(
-//                authType: authenticationType == .createAccount ? .createAccount : .signIn,
-//                authPlatform: authPlatform,
-//                authPolicy: .renewAccessTokenElseAskUserToAuthenticate(fromViewController: presentAuthViewController)
-//            )
-//            .receive(on: DispatchQueue.main)
-//            .sink { [weak self] subscriberCompletion in
-//                
-//                let authenticationError: AuthErrorDomainModel?
-//                
-//                switch subscriberCompletion {
-//                case .finished:
-//                    authenticationError = nil
-//                case .failure(let error):
-//                    // TODO: Fix auth error. ~Levi
-//                    //authenticationError = error
-//                    authenticationError = nil
-//                }
-//                
-//                self?.handleAuthenticationCompleted(error: authenticationError)
-//                
-//            } receiveValue: { _ in
-//                
-//            }
-//            .store(in: &cancellables)
     }
     
     private func handleAuthenticationCompleted(error: AuthErrorDomainModel?) {

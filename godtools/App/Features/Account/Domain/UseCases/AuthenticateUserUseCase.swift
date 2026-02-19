@@ -59,9 +59,7 @@ final class AuthenticateUserUseCase {
     }
     
     @MainActor private func signIn(fromViewController: UIViewController, authType: AuthenticateUserAuthTypeDomainModel, authPlatform: AuthenticateUserAuthPlatformDomainModel) async throws -> MobileContentAuthTokenDataModel {
-        
-        // TODO: Need AuthErrorDomainModel here. ~Levi
-        
+                
         let result: Result<MobileContentAuthTokenDataModel, MobileContentApiError> = try await self.userAuthentication.signIn(
             provider: authPlatform.toProvider(),
             createUser: authType == .createAccount,
@@ -73,14 +71,12 @@ final class AuthenticateUserUseCase {
             return token
             
         case .failure(let apiError):
-            throw apiError
+            throw apiError.toAuthError()
         }
     }
     
     private func renewToken() async throws -> MobileContentAuthTokenDataModel {
-        
-        // TODO: Need AuthErrorDomainModel here. ~Levi
-        
+                
         let result: Result<MobileContentAuthTokenDataModel, MobileContentApiError> = try await self.userAuthentication.renewToken()
         
         switch result {
@@ -88,7 +84,7 @@ final class AuthenticateUserUseCase {
             return token
             
         case .failure(let apiError):
-            throw apiError
+            throw apiError.toAuthError()
         }
     }
     
