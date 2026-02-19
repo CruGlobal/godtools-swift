@@ -22,7 +22,7 @@ import Combine
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
-    @Published private(set) var strings: ToolScreenShareQRCodeInterfaceStringsDomainModel = .emptyStrings()
+    @Published private(set) var strings = ToolScreenShareQRCodeInterfaceStringsDomainModel.emptyValue
     
     init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolScreenShareQRCodeUseCase: ViewToolScreenShareQRCodeUseCase, shareUrl: String) {
         
