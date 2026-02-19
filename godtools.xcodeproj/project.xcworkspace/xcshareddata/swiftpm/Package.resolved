@@ -222,8 +222,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/CruGlobal/social-authentication-ios.git",
       "state" : {
-        "revision" : "e8c0d8803f42fe07d0aaf73a3159aea42e98e0c0",
-        "version" : "1.0.0"
+        "revision" : "bb665cdce5a33f55ed64035183cbf8598860d423",
+        "version" : "1.0.1"
       }
     },
     {
