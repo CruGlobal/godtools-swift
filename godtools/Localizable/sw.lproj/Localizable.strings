@@ -1,6 +1,10 @@
 "deferredDeepLinkModal.title" = "Inaonekana ulibofya kiungo cha GodTools";
 "deferredDeepLinkModal.message" = "Gusa kitufe kilicho hapa chini ili tuweze kukupeleka kwenye maudhui uliyoomba.";
 
+"toolScreenShare.qrCode.closeButtonTitle" = "Funga";
+"toolScreenShare.qrCode.description" = "Changanua msimbo huu wa QR ili ujiunge nami";
+"toolScreenShare.qrCode.title" = "Msimbo wa QR";
+
 "optInNotification.notificationSettings" = "Mipangilio ya Arifa";
 "lessons.swipeTutorial.title" = "Telezesha kidole ili kubadilisha kurasa";
 "lessons.swipeTutorial.buttonText" = "Nimeelewa";
@@ -337,6 +341,7 @@ Toleo la mtandao linaweza kupatikana kwenye https://knowgod.com/";
 "tutorial.tutorialItem.0.title" = "Tazama";
 "general_about_2" = "Vifaa hivi vinasaidia kumwambia mtu kwa ujasiri jinsi wanaweza kuanzisha uhusiano na Mungu kupitia Yesu Kristo, hata kama hujawahi kushiriki imani yako kabla au wanasema ama wanaongea lugha tofauti.";
 "general_about_3" = "Chagua kutoka kwa aina mbalimbali za zana kulingana na upendeleo wako na watumiaji wako. Sio zana zote zinazopatikana kwa kila lugha.";
+"tutorial.tutorialItem.1.title" = "Jiandae";
 "general_about_4" = "Viungo vya rasilimali nyingine vinajumuishwa mwishoni mwa kila chombo.";
 "general_about_5" = "Uunganisho wa mtandaoni unahitajika kupakua kila chombo kipya na / au lugha. Mara baada ya kupakuliwa, inaweza kutumika nje ya mtandao.";
 "general_about_6" = "Maswali? Mapendekezo? Maombi? Wasiliana nasi kupitia support@godtoolsapp.com";
@@ -378,3 +383,5 @@ Toleo la mtandao linaweza kupatikana kwenye https://knowgod.com/";
 // OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "Nchi";
 "onboardingTutorial.showMoreButton.title" = "Onesha zaidi";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Tengeneza Msimbo wa QR";

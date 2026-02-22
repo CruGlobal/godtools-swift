@@ -2,6 +2,8 @@
 "deferredDeepLinkModal.message" = "اضغط على الزر أدناه حتى نتمكن من نقلك إلى المحتوى الذي طلبته.";
 
 "toolScreenShare.qrCode.closeButtonTitle" = "إغلاق";
+"toolScreenShare.qrCode.description" = "امسح رمز الاستجابة السريعة هذا للانضمام إليّ";
+"toolScreenShare.qrCode.title" = "رمز الاستجابة السريعة";
 
 "optInNotification.notificationSettings" = "إعدادات الإشعارات";
 "lessons.swipeTutorial.title" = "اسحب لتغيير الصفحات";
@@ -23,6 +25,8 @@
 "language_name_fil" = "الفلبينية (تاجالوج)";
 "lessons.filter.navBar.language" = "لُغة الدرس";
 "lessons.languageFilter.title" = "دروس في:";
+"language_name_fil-x-taglish" = "التاغليش";
+"language_name_sid" = "سيداما";
 "onboardingTutorial.chooseLanguageButton.title" = "اختر اللغة";
 "languageSettings.confirmAppLanguage.message" = "لقد حددت %@  كلغة تطبيقك. سيؤدي هذا إلى تغيير لغة تطبيق GodTools بالكامل. هل أنت متأكد؟";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "تغيير اللغة";
@@ -379,3 +383,5 @@ https://godtoolsapp.com
 // OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "البلدان";
 "onboardingTutorial.showMoreButton.title" = "أعرض لي المزيد";
+
+"screenShareTutorial.generateQRCodeButton.title" = "إنشاء رمز QR";

@@ -1,6 +1,10 @@
 "deferredDeepLinkModal.title" = "Sepertinya Anda mengklik tautan untuk GodTools";
 "deferredDeepLinkModal.message" = "Ketuk tombol di bawah ini agar kami dapat mengarahkan Anda ke konten yang Anda minta.";
 
+"toolScreenShare.qrCode.closeButtonTitle" = "Selesai";
+"toolScreenShare.qrCode.description" = "Pindai kode QR ini untuk bergabung bersama saya.";
+"toolScreenShare.qrCode.title" = "Kode QR";
+
 "optInNotification.notificationSettings" = "Pengaturan Notifikasi";
 "lessons.swipeTutorial.title" = "Geser untuk mengganti halaman";
 "lessons.swipeTutorial.buttonText" = "Mengerti";
@@ -22,6 +26,7 @@
 "lessons.filter.navBar.language" = "Bahasa pelajaran";
 "lessons.languageFilter.title" = "Pelajaran dalam bahasa:";
 "language_name_fil-x-taglish" = "Bahasa Taglish";
+"language_name_sid" = "Sidama";
 "onboardingTutorial.chooseLanguageButton.title" = "Pilih bahasa";
 "languageSettings.confirmAppLanguage.message" = "Saudara telah memilih %@ sebagai bahasa aplikasi Saudara. Ini akan mengubah bahasa seluruh aplikasi GodTools. Apa Saudara yakin?";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Mengubah bahasa";
@@ -33,6 +38,7 @@
 "languageSettings.toolLanguagesAvailableOffline.title" = "Bahasa alat tersedia secara offline";
 "languageSettings.toolLanguagesAvailableOffline.message" = "Unduh semua alat dalam satu bahasa agar dapat dibuka meskipun Saudara tidak terhubung WiFi atau layanan seluler. Atur bahasa alat melalui tombol opsi di dalam alat.";
 "languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title" = "Edit bahasa yang telah diunduh";
+"allTools.filter.title" = "Filter";
 "allTools.filter.anyCategory" = "Kategori apa pun";
 "allTools.filter.anyLanguage" = "Bahasa apapun";
 "allTools.filter.navBar.language" = "Filter berdasarkan bahasa";
@@ -381,3 +387,5 @@ Kolose 4:6";
 // OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "Negara-negara";
 "onboardingTutorial.showMoreButton.title" = "Lebih";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Buat Kode QR";

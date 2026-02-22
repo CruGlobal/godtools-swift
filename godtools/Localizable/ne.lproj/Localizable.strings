@@ -1,6 +1,10 @@
 "deferredDeepLinkModal.title" = "तपाईंले GodTools को लिङ्कमा क्लिक गर्नुभएको जस्तो देखिन्छ।";
 "deferredDeepLinkModal.message" = "तलको बटनमा ट्याप गर्नुहोस् ताकि हामी तपाईंलाई तपाईंले अनुरोध गर्नुभएको सामग्रीमा लैजान सकौं।";
 
+"toolScreenShare.qrCode.closeButtonTitle" = "सम्पन्न";
+"toolScreenShare.qrCode.description" = "मसँग सामेल हुन यो QR कोड स्क्यान गर्नुहोस्।";
+"toolScreenShare.qrCode.title" = "QR कोड";
+
 "optInNotification.notificationSettings" = "सूचना सेटिङहरु";
 "lessons.swipeTutorial.title" = "पृष्ठहरू परिवर्तन गर्न स्वाइप गर्नुहोस्";
 "lessons.swipeTutorial.buttonText" = "बुझेँ";
@@ -301,14 +305,20 @@
 "no_internet_title" = "इन्टरनेट जडान छैन";
 "no_internet" = "कृपया आफ्नो इन्टरनेट जडान जाँच गर्नुहोस् र फेरि प्रयास गर्नुहोस्।";
 
+"the_tool_you_requested_is_loading" = "तपाईले अनुरोध गरेको टूल लोड हुँदैछ...";
+
 // Actions
 "yes" = "हजुर";
 "no" = "भएन";
 
 // Tract - Sharing
 "tract_share_message" = "%@";
+
+// Buttons
+"download" = "डाउनलोड गर्नुहोस्";
 "dismiss" = "खारेज गर्नुहोस्";
 "done" = "सम्पन्न";
+"remove" = "हटाउनुहोस्";
 "clear" = "स्पष्ट";
 /* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
 "toolinfo_opentool" = "खोल्नुहोस्";
@@ -367,3 +377,5 @@
 // OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "देशहरु";
 "onboardingTutorial.showMoreButton.title" = "मलाई थप देखाउनुहोस्";
+
+"screenShareTutorial.generateQRCodeButton.title" = "QR कोड उत्पन्न गर्नुहोस्";
