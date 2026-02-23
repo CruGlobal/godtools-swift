@@ -37,9 +37,9 @@ final class GetAllLessonsUseCase {
             return self.resourcesRepository
                 .cache
                 .getLessonsPublisher(filterByLanguageId: filterLessonsByLanguage?.languageId, sorted: true)
-                .map { (lessons: [ResourceDataModel]) in
+                .tryMap { (lessons: [ResourceDataModel]) in
                     
-                    let lessonsListItems: [LessonListItemDomainModel] = self.getLessonsListItems.mapLessonsToListItems(
+                    let lessonsListItems: [LessonListItemDomainModel] = try self.getLessonsListItems.mapLessonsToListItems(
                         lessons: lessons,
                         appLanguage: appLanguage,
                         filterLessonsByLanguage: filterLessonsByLanguage

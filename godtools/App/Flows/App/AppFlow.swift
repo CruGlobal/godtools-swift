@@ -288,30 +288,30 @@ extension AppFlow {
             }
             .store(in: &cancellables)
         
-        let authenticateUser: AuthenticateUserInterface = appDiContainer.feature.account.domainInterfaceLayer.getAuthenticateUser()
-        
-        authenticateUser.renewAuthenticationPublisher()
-            .receive(on: DispatchQueue.main)
-            .sink { finished in
-
-            } receiveValue: { authUser in
-
-            }
-            .store(in: &cancellables)
-        
         remoteConfigRepository
             .syncDataPublisher()
             .sink { _ in
                 
             }
             .store(in: &cancellables)
+        
+        Task {
+            
+            let userAuthentication: UserAuthentication = appDiContainer.dataLayer.getUserAuthentication()
+            
+            _ = try await userAuthentication.renewToken()
+            _ = try await userAuthentication.getAuthUser()
+        }
     }
     
     private func countAppSessionLaunch() {
         
         let incrementUserCounterUseCase = appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase()
         
-        incrementUserCounterUseCase.incrementUserCounter(for: .sessionLaunch)
+        incrementUserCounterUseCase
+            .execute(
+                interaction: .sessionLaunch
+            )
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 

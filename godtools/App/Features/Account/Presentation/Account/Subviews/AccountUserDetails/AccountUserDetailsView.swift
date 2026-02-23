@@ -38,14 +38,14 @@ struct AccountUserDetailsView: View {
              
                 FixedVerticalSpacer(height: 45)
                 
-                Text(viewModel.profileName)
+                Text(viewModel.userDetails.name)
                     .font(FontLibrary.sfProTextSemibold.font(size: 25))
                     .foregroundColor(ColorPalette.gtGrey.color)
                     .multilineTextAlignment(.center)
                 
                 FixedVerticalSpacer(height: 9)
                 
-                Text(viewModel.joinedOnText)
+                Text(viewModel.userDetails.joinedOnString)
                     .font(FontLibrary.sfProTextRegular.font(size: 11))
                     .foregroundColor(ColorPalette.gtGrey.color)
                     .multilineTextAlignment(.center)
