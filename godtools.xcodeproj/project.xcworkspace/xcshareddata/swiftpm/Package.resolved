@@ -150,8 +150,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/CruGlobal/localization-services-ios",
       "state" : {
-        "revision" : "394a69eedb9faaeaca4966076b8a2824b8fcb4f7",
-        "version" : "0.4.0"
+        "revision" : "51d60c946d127680c0a9618c22c0336edfecb555",
+        "version" : "0.5.0"
       }
     },
     {
