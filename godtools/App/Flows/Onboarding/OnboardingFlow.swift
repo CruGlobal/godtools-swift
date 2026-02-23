@@ -154,6 +154,10 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
         case .confirmTappedFromLocalizationConfirmation(let country):
             navigationController.dismiss(animated: true)
 
+            if let tutorialVC = onboardingTutorialViewController {
+                navigationController.popToViewController(tutorialVC, animated: true)
+            }
+
             appDiContainer
                 .feature
                 .personalizedTools
@@ -205,13 +209,18 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
 extension OnboardingFlow {
     
     private var onboardingTutorialView: OnboardingTutorialView? {
-        
+
+        return onboardingTutorialViewController?.rootView
+    }
+
+    private var onboardingTutorialViewController: AppHostingController<OnboardingTutorialView>? {
+
         for viewController in navigationController.viewControllers {
             if let hosting = viewController as? AppHostingController<OnboardingTutorialView> {
-                return hosting.rootView
+                return hosting
             }
         }
-        
+
         return nil
     }
     
