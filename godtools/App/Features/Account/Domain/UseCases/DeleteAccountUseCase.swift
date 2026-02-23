@@ -27,8 +27,8 @@ final class DeleteAccountUseCase {
                 requestPriority: .high
             )
         }
-        .map { _ in
-            self.userAuthentication.signOut()
+        .tryMap { _ in
+            try self.userAuthentication.signOut()
             return Void()
         }
         .eraseToAnyPublisher()

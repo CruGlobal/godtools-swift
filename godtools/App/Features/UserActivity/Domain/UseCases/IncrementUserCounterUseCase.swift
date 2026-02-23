@@ -35,35 +35,30 @@ final class IncrementUserCounterUseCase {
     }
     
     func execute(interaction: UserCounterInteraction) -> AnyPublisher<UserCounterDomainModel, Error> {
-        
+            
         guard let userCounterId = getUserCounterId(for: interaction) else {
+            
             return Fail(error: UserCounterError.invalidUserCounterId)
                 .eraseToAnyPublisher()
         }
         
-        do {
-            
-            let userCounterDataModels: [UserCounterDataModel] = try userCountersRepository.incrementCachedUserCounterBy1(
-                id: userCounterId
-            )
-            
-            let userCounterDomainModel: UserCounterDomainModel
-            
-            if let dataModel = userCounterDataModels.first {
-                userCounterDomainModel = UserCounterDomainModel(dataModel: dataModel)
+        return userCountersRepository.incrementCachedUserCounterBy1Publisher(id: userCounterId)
+            .flatMap { (userCounterDataModels: [UserCounterDataModel]) in
+                
+                let userCounterDomainModel: UserCounterDomainModel
+                
+                if let dataModel = userCounterDataModels.first {
+                    
+                    userCounterDomainModel = UserCounterDomainModel(dataModel: dataModel)
+                }
+                else {
+                    
+                    userCounterDomainModel = UserCounterDomainModel(id: userCounterId, count: 0)
+                }
+                                
+                return Just(userCounterDomainModel)
             }
-            else {
-                userCounterDomainModel = UserCounterDomainModel(id: userCounterId, count: 0)
-            }
-            
-            return Just(userCounterDomainModel)
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
-        catch let error {
-            return Fail(error: error)
-                .eraseToAnyPublisher()
-        }
+            .eraseToAnyPublisher()
     }
     
     private func getUserCounterId(for interaction: UserCounterInteraction) -> String? {
@@ -109,5 +104,4 @@ final class IncrementUserCounterUseCase {
         
         return userCounterId
     }
-    
 }

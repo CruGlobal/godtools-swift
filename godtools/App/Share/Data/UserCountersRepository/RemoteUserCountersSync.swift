@@ -12,50 +12,52 @@ import RequestOperation
 
 class RemoteUserCountersSync {
     
-    private let api: any UserCountersApiInterface
-    private let cache: UserCountersCache
+    private let api: UserCountersAPI
+    private let cache: RealmUserCountersCache
         
-    init(api: any UserCountersApiInterface, cache: UserCountersCache) {
+    init(api: UserCountersAPI, cache: RealmUserCountersCache) {
         
         self.api = api
         self.cache = cache
     }
     
-    func syncUpdatedUserCountersWithRemote(requestPriority: RequestPriority) async throws {
+    func syncUpdatedUserCountersWithRemotePublisher(requestPriority: RequestPriority) -> AnyPublisher<Void, Error> {
         
-        let cache: UserCountersCache = self.cache
-        let userCountersToSync: [UserCounterDataModel] = try await cache.getUserCountersWithIncrementGreaterThanZero()
+        let cache: RealmUserCountersCache = self.cache
+        let userCountersToSync: [UserCounterDataModel] = cache.getUserCountersWithIncrementGreaterThanZero()
         
-        for userCounter in userCountersToSync {
-            
+        let publishers: [AnyPublisher<Void, Error>] = userCountersToSync.map { (userCounter: UserCounterDataModel) in
+           
             let incrementValue: Int = userCounter.incrementValue
             
-            let updatedUserCounter: UserCounterDecodable = try await api.incrementUserCounter(
-                id: userCounter.id,
-                increment: incrementValue,
-                requestPriority: requestPriority
-            )
+            // TODO: Eventually remove AnyPublisher() and support async await. ~Levi
             
-            _ = try cache.syncUserCounter(
-                userCounter: updatedUserCounter,
-                incrementValueBeforeRemoteUpdate: incrementValue
-            )
-        }
-    }
-    
-    @MainActor func syncUpdatedUserCountersWithRemotePublisher(requestPriority: RequestPriority) -> AnyPublisher<Void, Error> {
-        
-        return Future { promise in
-            Task {
-                do {
-                    try await self.syncUpdatedUserCountersWithRemote(requestPriority: requestPriority)
-                    return promise(.success(Void()))
-                }
-                catch let error {
-                    return promise(.failure(error))
-                }
+            return AnyPublisher() {
+                return try await self.api.incrementUserCounter(
+                    id: userCounter.id,
+                    increment: incrementValue,
+                    requestPriority: requestPriority
+                )
             }
+            .flatMap { (userCounterUpdatedFromRemote: UserCounterDecodable) in
+                
+                cache.syncUserCounter(
+                    userCounterUpdatedFromRemote,
+                    incrementValueBeforeRemoteUpdate: incrementValue
+                )
+                .map { _ in
+                    return Void()
+                }
+                .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
         }
-        .eraseToAnyPublisher()
+        
+        return Publishers.MergeMany(publishers)
+            .collect()
+            .map { _ in
+                Void()
+            }
+            .eraseToAnyPublisher()
     }
 }

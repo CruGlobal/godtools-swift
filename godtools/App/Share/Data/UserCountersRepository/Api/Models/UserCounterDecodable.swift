@@ -8,17 +8,10 @@
 
 import Foundation
 
-struct UserCounterDecodable: Codable, UserCounterDataModelInterface, Sendable {
+struct UserCounterDecodable: Codable {
     
     let id: String
     let count: Int
-    
-    var latestCountFromAPI: Int {
-        return 0
-    }
-    var incrementValue: Int {
-        return 0
-    }
     
     enum RootKeys: String, CodingKey {
         case id

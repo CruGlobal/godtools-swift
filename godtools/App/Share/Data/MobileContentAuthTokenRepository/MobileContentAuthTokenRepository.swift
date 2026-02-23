@@ -29,14 +29,13 @@ final class MobileContentAuthTokenRepository {
         
         switch result {
         case .success(let authTokenCodable):
+                        
+            try await cache.storeAuthToken(authTokenCodable: authTokenCodable)
             
-            let authTokenDataModel = MobileContentAuthTokenDataModel(decodable: authTokenCodable)
-            
-            try cache.storeAuthToken(authTokenDataModel)
-            
-            return .success(authTokenDataModel)
+            return .success(MobileContentAuthTokenDataModel(interface: authTokenCodable))
             
         case .failure(let apiError):
+            
             return .failure(apiError)
         }
     }
@@ -52,22 +51,26 @@ final class MobileContentAuthTokenRepository {
             .eraseToAnyPublisher()
     }
     
-    func getCachedAuthTokenModel() -> MobileContentAuthTokenDataModel? {
+    func getCachedAuthTokenModel() throws -> MobileContentAuthTokenDataModel? {
         
-        return cache.getAuthTokenData()
+        guard let cachedAuthToken =  try cache.getCachedAuthToken() else {
+            return nil
+        }
+        
+        return MobileContentAuthTokenDataModel(authToken: cachedAuthToken)
     }
     
-    func getCachedAuthToken() -> String? {
+    func getCachedAuthToken() throws -> String? {
         
-        return getCachedAuthTokenModel()?.token
+        return try getCachedAuthTokenModel()?.token
     }
     
-    func deleteCachedAuthToken() {
+    func deleteCachedAuthToken() throws {
         
         guard let userId = getUserId() else {
             return
         }
         
-        cache.deleteAuthToken(for: userId)
+        try cache.deleteAuthToken(for: userId)
     }
 }

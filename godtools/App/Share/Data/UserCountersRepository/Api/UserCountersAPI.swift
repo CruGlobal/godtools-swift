@@ -11,7 +11,7 @@ import RequestOperation
 import Combine
 import RepositorySync
 
-class UserCountersAPI: UserCountersApiInterface {
+class UserCountersAPI {
     
     private let authSession: MobileContentApiAuthSession
     private let baseURL: String

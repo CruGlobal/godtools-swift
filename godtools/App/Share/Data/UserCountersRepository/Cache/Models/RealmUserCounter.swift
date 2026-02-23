@@ -8,9 +8,8 @@
 
 import Foundation
 import RealmSwift
-import RepositorySync
 
-class RealmUserCounter: Object, IdentifiableRealmObject, UserCounterDataModelInterface {
+class RealmUserCounter: Object {
     
     @objc dynamic var id: String = ""
     @objc dynamic var latestCountFromAPI: Int = 0
@@ -20,20 +19,9 @@ class RealmUserCounter: Object, IdentifiableRealmObject, UserCounterDataModelInt
         return "id"
     }
     
-    func mapFrom(codable: UserCounterDecodable) {
-        id = codable.id
-        latestCountFromAPI = codable.count
-    }
-    
-    func mapFrom(interface: UserCounterDataModelInterface) {
-        id = interface.id
-        latestCountFromAPI = interface.latestCountFromAPI
-        incrementValue = interface.incrementValue
-    }
-    
-    static func createNewFrom(interface: UserCounterDataModelInterface) -> RealmUserCounter {
-        let object = RealmUserCounter()
-        object.mapFrom(interface: interface)
-        return object
+    func mapFrom(model: UserCounterDecodable) {
+        
+        id = model.id
+        latestCountFromAPI = model.count
     }
 }

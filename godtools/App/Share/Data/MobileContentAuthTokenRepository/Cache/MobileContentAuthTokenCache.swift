@@ -8,6 +8,9 @@
 
 import Foundation
 import Combine
+import RepositorySync
+import SwiftData
+import RealmSwift
 
 class MobileContentAuthTokenCache {
     
@@ -17,38 +20,89 @@ class MobileContentAuthTokenCache {
     private static let sharedAuthUserId: UserId = "shared_auth_user_id"
     
     private let keychainAccessor: MobileContentAuthTokenKeychainAccessorInterface
-    private let realmCache: RealmMobileContentAuthTokenCache
+    private let persistence: any Persistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenDecodable>
     
-    init(mobileContentAuthTokenKeychainAccessor: MobileContentAuthTokenKeychainAccessorInterface, realmCache: RealmMobileContentAuthTokenCache) {
+    init(mobileContentAuthTokenKeychainAccessor: MobileContentAuthTokenKeychainAccessorInterface, persistence: any Persistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenDecodable>) {
         
         self.keychainAccessor = mobileContentAuthTokenKeychainAccessor
-        self.realmCache = realmCache
+        self.persistence = persistence
         
-        updateHashableAuthTokenSubject(authToken: getAuthTokenData())
+        do {
+            
+            let cachedAuthToken: CachedAuthToken? = try getCachedAuthToken()
+            let dataModel: MobileContentAuthTokenDataModel?
+            
+            if let cachedAuthToken = cachedAuthToken {
+                dataModel = MobileContentAuthTokenDataModel(authToken: cachedAuthToken)
+            }
+            else {
+                dataModel = nil
+            }
+            
+            updateHashableAuthTokenSubject(authToken: dataModel)
+        }
+        catch let error {
+            
+            assertionFailure("\n MobileContentAuthTokenCache failed to get cached auth token with error: \(error)")
+        }
     }
     
-    func storeAuthToken(_ authTokenDataModel: MobileContentAuthTokenDataModel) throws {
-        
-        try keychainAccessor.saveMobileContentAuthToken(authTokenDataModel)
-        
-        _ = realmCache.storeAuthTokenData(authTokenData: authTokenDataModel)
-        
-        updateHashableAuthTokenSubject(authToken: authTokenDataModel)
+    @available(iOS 17.4, *)
+    var swiftDatabase: SwiftDatabase? {
+        return getSwiftPersistence()?.database
     }
     
-    func getAuthTokenData() -> MobileContentAuthTokenDataModel? {
+    @available(iOS 17.4, *)
+    func getSwiftPersistence() -> SwiftRepositorySyncPersistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenDecodable, SwiftMobileContentAuthToken>? {
+        return persistence as? SwiftRepositorySyncPersistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenDecodable, SwiftMobileContentAuthToken>
+    }
+    
+    var realmDatabase: RealmDatabase? {
+        return getRealmPersistence()?.database
+    }
+    
+    func getRealmPersistence() -> RealmRepositorySyncPersistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenDecodable, RealmMobileContentAuthToken>? {
+        return persistence as? RealmRepositorySyncPersistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenDecodable, RealmMobileContentAuthToken>
+    }
+}
+
+extension MobileContentAuthTokenCache {
+    
+    func storeAuthToken(authTokenCodable: MobileContentAuthTokenDecodable) async throws {
+        
+        try keychainAccessor.saveMobileContentAuthToken(authTokenCodable: authTokenCodable)
+        
+        _ = try await persistence.writeObjectsAsync(
+            externalObjects: [authTokenCodable],
+            writeOption: nil,
+            getOption: nil
+        )
+        
+        let cachedAuthToken = CachedAuthToken(
+            appleRefreshToken: authTokenCodable.appleRefreshToken,
+            expirationDate: authTokenCodable.expirationDate,
+            token: authTokenCodable.token,
+            userId: authTokenCodable.userId
+        )
+        
+        let dataModel = MobileContentAuthTokenDataModel(authToken: cachedAuthToken)
+                
+        updateHashableAuthTokenSubject(authToken: dataModel)
+    }
+    
+    func getCachedAuthToken() throws -> CachedAuthToken? {
         
         guard let userId = getUserId(), let authToken = getAuthToken(for: userId) else {
             return nil
         }
         
-        let authTokenData: RealmMobileContentAuthToken? = realmCache.getAuthTokenData(userId: userId)
-                
-        return MobileContentAuthTokenDataModel(
-            expirationDate: authTokenData?.expirationDate,
-            userId: userId,
+        let persistedTokenData: MobileContentAuthTokenDataModel? = try persistence.getDataModel(id: userId)
+        
+        return CachedAuthToken(
+            appleRefreshToken: keychainAccessor.getAppleRefreshToken(userId: userId),
+            expirationDate: persistedTokenData?.expirationDate,
             token: authToken,
-            appleRefreshToken: getAppleRefreshToken(for: userId)
+            userId: userId
         )
     }
     
@@ -62,16 +116,42 @@ class MobileContentAuthTokenCache {
         return keychainAccessor.getMobileContentUserId()
     }
     
-    func getAppleRefreshToken(for userId: String) -> String? {
-        
-        return keychainAccessor.getAppleRefreshToken(userId: userId)
-    }
-    
-    func deleteAuthToken(for userId: String) {
+    func deleteAuthToken(for userId: String) throws {
         
         keychainAccessor.deleteMobileContentAuthTokenAndUserId(userId: userId)
         
-        _ = realmCache.deleteAuthTokenData(userId: userId)
+        if #available(iOS 17.4, *), let database = getSwiftPersistence()?.database {
+            
+            let context: ModelContext = database.openContext()
+            
+            let object: SwiftMobileContentAuthToken? = try database.read.object(context: context, id: userId)
+            
+            guard let object = object else {
+                return
+            }
+            
+            try database.write.context(
+                context: context,
+                writeObjects: WriteSwiftObjects(
+                    deleteObjects: [object],
+                    insertObjects: nil
+                )
+            )
+        }
+        else if let database = getRealmPersistence()?.database {
+            
+            let realm: Realm = try database.openRealm()
+            
+            let object: RealmMobileContentAuthToken? = database.read.object(realm: realm, id: userId)
+            
+            guard let object = object else {
+                return
+            }
+            
+            try database.write.realm(realm: realm, writeClosure: { realm in
+                return WriteRealmObjects(deleteObjects: [object], addObjects: nil)
+            }, updatePolicy: .modified)
+        }
         
         updateHashableAuthTokenSubject(authToken: nil)
     }

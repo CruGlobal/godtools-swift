@@ -28,7 +28,7 @@ final class GetUserActivityUseCase {
     @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<UserActivityDomainModel, Error> {
         
         return userCounterRepository
-            .getUserCountersChanged(
+            .getUserCountersChangedPublisher(
                 reloadFromRemote: true,
                 requestPriority: .high
             )

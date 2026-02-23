@@ -25,11 +25,14 @@ final class UserAuthentication {
     
     var isAuthenticated: Bool {
         
-        guard let authTokenData = mobileContentAuthTokenRepository.getCachedAuthTokenModel() else {
-            return false
+        get throws {
+            
+            guard let authTokenData = try mobileContentAuthTokenRepository.getCachedAuthTokenModel() else {
+                return false
+            }
+            
+            return !authTokenData.isExpired
         }
-        
-        return !authTokenData.isExpired
     }
     
     func getIsAuthenticatedChangedPublisher() -> AnyPublisher<Bool, Never> {
@@ -135,7 +138,7 @@ final class UserAuthentication {
         }
     }
     
-    func signOut() {
+    func signOut() throws {
         
         let allProviders: [AuthenticationProviderInterface] = Array(authenticationProviders.values)
         
@@ -144,7 +147,8 @@ final class UserAuthentication {
         }
         
         lastAuthenticatedProviderCache.deleteLastAuthenticatedProvider()
-        mobileContentAuthTokenRepository.deleteCachedAuthToken()
+        
+        try mobileContentAuthTokenRepository.deleteCachedAuthToken()
     }
 
     private func renewAppleToken(appleProvider: AppleAuthentication) async throws -> AuthenticationProviderResponse {
@@ -158,7 +162,7 @@ final class UserAuthentication {
             name: authUserDomainModel?.name
         )
         
-        let persistedAppleRefreshToken = self.mobileContentAuthTokenRepository.getCachedAuthTokenModel()?.appleRefreshToken
+        let persistedAppleRefreshToken = try mobileContentAuthTokenRepository.getCachedAuthTokenModel()?.appleRefreshToken
         
         let appleAuthProviderResponse = AuthenticationProviderResponse(
             accessToken: nil,

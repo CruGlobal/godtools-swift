@@ -1,5 +1,5 @@
 //
-//  GetUserAccountDetailsRepositoryTests.swift
+//  GetUserAccountDetailsUseCaseTests.swift
 //  godtoolsTests
 //
 //  Created by Rachael Skeath on 8/1/25.
@@ -13,7 +13,7 @@ import Foundation
 import RepositorySync
 
 @Suite(.serialized)
-struct GetUserAccountDetailsRepositoryTests {
+struct GetUserAccountDetailsUseCaseTests {
     
     private static let userId = "test-user-id"
     private static let userFamilyName = "Smith"
@@ -39,7 +39,7 @@ struct GetUserAccountDetailsRepositoryTests {
     )
     @MainActor func testGetUserAccountDetailsInAppLanguage(argument: TestArgument) async throws {
         
-        let getUserAccountDetailsRepository = try getUserDetailsRepository()
+        let getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase = try getUserAccountDetailsUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
@@ -53,19 +53,23 @@ struct GetUserAccountDetailsRepositoryTests {
                     continuation.resume(returning: ())
                 }
                 
-                getUserAccountDetailsRepository
-                    .getUserAccountDetailsPublisher(appLanguage: argument.appLanguage.rawValue)
-                    .sink { (result: UserAccountDetailsDomainModel) in
+                getUserAccountDetailsUseCase
+                    .execute(
+                        appLanguage: argument.appLanguage.rawValue
+                    )
+                    .sink(receiveCompletion: { _ in
+                        
+                    }, receiveValue: { (result: UserAccountDetailsDomainModel) in
                         
                         userAccountDetails = result
                         
                         // Place inside a sink or other async closure:
                         confirmation()
-                                                
+                        
                         // When finished be sure to call:
                         timeoutTask.cancel()
                         continuation.resume(returning: ())
-                    }
+                    })
                     .store(in: &cancellables)
             }
         }
@@ -87,8 +91,8 @@ struct GetUserAccountDetailsRepositoryTests {
     )
     @MainActor func testGetNilUserDetails() async throws {
         
-        let getUserAccountDetailsRepository = try getUserDetailsRepository(emptyRealm: true)
-        
+        let getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase = try getUserAccountDetailsUseCase(emptyRealm: true)
+                
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
         
@@ -101,9 +105,13 @@ struct GetUserAccountDetailsRepositoryTests {
                     continuation.resume(returning: ())
                 }
                 
-                getUserAccountDetailsRepository
-                    .getUserAccountDetailsPublisher(appLanguage: LanguageCodeDomainModel.english.rawValue)
-                    .sink { (result: UserAccountDetailsDomainModel) in
+                getUserAccountDetailsUseCase
+                    .execute(
+                        appLanguage: LanguageCodeDomainModel.english.rawValue
+                    )
+                    .sink(receiveCompletion: { _ in
+                        
+                    }, receiveValue: { (result: UserAccountDetailsDomainModel) in
                         
                         userAccountDetails = result
                         
@@ -113,7 +121,7 @@ struct GetUserAccountDetailsRepositoryTests {
                         // When finished be sure to call:
                         timeoutTask.cancel()
                         continuation.resume(returning: ())
-                    }
+                    })
                     .store(in: &cancellables)
             }
         }
@@ -131,8 +139,8 @@ struct GetUserAccountDetailsRepositoryTests {
     )
     @MainActor func testGetUserDetailsWithNilName() async throws {
         
-        let getUserAccountDetailsRepository = try getUserDetailsRepository(name: nil)
-        
+        let getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase = try getUserAccountDetailsUseCase(name: nil)
+                
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
         
@@ -145,9 +153,13 @@ struct GetUserAccountDetailsRepositoryTests {
                     continuation.resume(returning: ())
                 }
                 
-                getUserAccountDetailsRepository
-                    .getUserAccountDetailsPublisher(appLanguage: LanguageCodeDomainModel.english.rawValue)
-                    .sink { (result: UserAccountDetailsDomainModel) in
+                getUserAccountDetailsUseCase
+                    .execute(
+                        appLanguage: LanguageCodeDomainModel.english.rawValue
+                    )
+                    .sink(receiveCompletion: { _ in
+                        
+                    }, receiveValue: { (result: UserAccountDetailsDomainModel) in
                         
                         userAccountDetails = result
                         
@@ -157,7 +169,7 @@ struct GetUserAccountDetailsRepositoryTests {
                         // When finished be sure to call:
                         timeoutTask.cancel()
                         continuation.resume(returning: ())
-                    }
+                    })
                     .store(in: &cancellables)
             }
         }
@@ -174,8 +186,8 @@ struct GetUserAccountDetailsRepositoryTests {
     )
     @MainActor func testGetUserDetailsWithNilFamilyAndFullNames() async throws {
         
-        let getUserAccountDetailsRepository = try getUserDetailsRepository(familyName: nil, name: nil)
-        
+        let getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase = try getUserAccountDetailsUseCase(familyName: nil, name: nil)
+                
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
         
@@ -188,17 +200,23 @@ struct GetUserAccountDetailsRepositoryTests {
                     continuation.resume(returning: ())
                 }
                 
-                getUserAccountDetailsRepository.getUserAccountDetailsPublisher(appLanguage: LanguageCodeDomainModel.english.rawValue)
-                    .sink { (result: UserAccountDetailsDomainModel) in
-                                                userAccountDetails = result
+                getUserAccountDetailsUseCase
+                    .execute(
+                        appLanguage: LanguageCodeDomainModel.english.rawValue
+                    )
+                    .sink(receiveCompletion: { _ in
                         
+                    }, receiveValue: { (result: UserAccountDetailsDomainModel) in
+                        
+                        userAccountDetails = result
+
                         // Place inside a sink or other async closure:
                         confirmation()
                                                 
                         // When finished be sure to call:
                         timeoutTask.cancel()
                         continuation.resume(returning: ())
-                    }
+                    })
                     .store(in: &cancellables)
             }
         }
@@ -215,7 +233,7 @@ struct GetUserAccountDetailsRepositoryTests {
     )
     @MainActor func testGetUserDetailsWithAllNilNames() async throws {
         
-        let getUserAccountDetailsRepository = try getUserDetailsRepository(familyName: nil, givenName: nil, name: nil)
+        let getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase = try getUserAccountDetailsUseCase(familyName: nil, givenName: nil, name: nil)
         
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
@@ -229,9 +247,13 @@ struct GetUserAccountDetailsRepositoryTests {
                     continuation.resume(returning: ())
                 }
                 
-                getUserAccountDetailsRepository
-                    .getUserAccountDetailsPublisher(appLanguage: LanguageCodeDomainModel.english.rawValue)
-                    .sink { (result: UserAccountDetailsDomainModel) in
+                getUserAccountDetailsUseCase
+                    .execute(
+                        appLanguage: LanguageCodeDomainModel.english.rawValue
+                    )
+                    .sink(receiveCompletion: { _ in
+                        
+                    }, receiveValue: { (result: UserAccountDetailsDomainModel) in
                         
                         userAccountDetails = result
                         
@@ -241,7 +263,7 @@ struct GetUserAccountDetailsRepositoryTests {
                         // When finished be sure to call:
                         timeoutTask.cancel()
                         continuation.resume(returning: ())
-                    }
+                    })
                     .store(in: &cancellables)
             }
         }
@@ -258,7 +280,7 @@ struct GetUserAccountDetailsRepositoryTests {
     )
     @MainActor func testGetUserDetailsWithNilJoinedOn() async throws {
         
-        let getUserAccountDetailsRepository = try getUserDetailsRepository(createdAt: nil)
+        let getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase = try getUserAccountDetailsUseCase(createdAt: nil)
         
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
@@ -272,8 +294,13 @@ struct GetUserAccountDetailsRepositoryTests {
                     continuation.resume(returning: ())
                 }
                 
-                getUserAccountDetailsRepository.getUserAccountDetailsPublisher(appLanguage: LanguageCodeDomainModel.english.rawValue)
-                    .sink { (result: UserAccountDetailsDomainModel) in
+                getUserAccountDetailsUseCase
+                    .execute(
+                        appLanguage: LanguageCodeDomainModel.english.rawValue
+                    )
+                    .sink(receiveCompletion: { _ in
+                        
+                    }, receiveValue: { (result: UserAccountDetailsDomainModel) in
                         
                         userAccountDetails = result
                         
@@ -283,7 +310,7 @@ struct GetUserAccountDetailsRepositoryTests {
                         // When finished be sure to call:
                         timeoutTask.cancel()
                         continuation.resume(returning: ())
-                    }
+                    })
                     .store(in: &cancellables)
             }
         }
@@ -292,17 +319,17 @@ struct GetUserAccountDetailsRepositoryTests {
     }
 }
 
-extension GetUserAccountDetailsRepositoryTests {
+extension GetUserAccountDetailsUseCaseTests {
     
     private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
                 
         return try TestsDiContainer(
-            realmFileName: String(describing: GetUserAccountDetailsRepositoryTests.self),
+            realmFileName: String(describing: GetUserAccountDetailsUseCaseTests.self),
             addRealmObjects: addRealmObjects
         )
     }
     
-    private func getConfiguredRealmDatabase(emptyRealm: Bool, familyName: String?, givenName: String?, name: String?, createdAt: Date?) throws -> LegacyRealmDatabase {
+    private func getTestsDiContainer(emptyRealm: Bool, familyName: String?, givenName: String?, name: String?, createdAt: Date?) throws -> TestsDiContainer {
         
         let realmObjects: [IdentifiableRealmObject]
         
@@ -327,7 +354,7 @@ extension GetUserAccountDetailsRepositoryTests {
         
         let testsDiContainer: TestsDiContainer = try getTestsDiContainer(addRealmObjects: realmObjects)
         
-        return testsDiContainer.dataLayer.getSharedLegacyRealmDatabase()
+        return testsDiContainer
     }
 
     private func getLocalizationServices() -> MockLocalizationServices {
@@ -347,30 +374,57 @@ extension GetUserAccountDetailsRepositoryTests {
     }
 
     
-    private func getUserDetailsRepository(emptyRealm: Bool = false, familyName: String? = userFamilyName, givenName: String? = userGivenName, name: String? = userFullName, createdAt: Date? = userCreatedAt) throws -> GetUserAccountDetailsRepository {
+    private func getUserAccountDetailsUseCase(emptyRealm: Bool = false, familyName: String? = userFamilyName, givenName: String? = userGivenName, name: String? = userFullName, createdAt: Date? = userCreatedAt) throws -> GetUserAccountDetailsUseCase {
         
-        let realmDatabase = try getConfiguredRealmDatabase(emptyRealm: emptyRealm, familyName: familyName, givenName: givenName, name: name, createdAt: createdAt)
+        let testsDiContainer: TestsDiContainer = try getTestsDiContainer(
+            emptyRealm: emptyRealm,
+            familyName: familyName,
+            givenName: givenName,
+            name: name,
+            createdAt: createdAt
+        )
+        
+        let realmDatabase: RealmDatabase = testsDiContainer.dataLayer.getSharedRealmDatabase()
         
         let mockMobileContentAuthTokenKeychainAccessor = MockMobileContentAuthTokenKeychainAccessor()
         mockMobileContentAuthTokenKeychainAccessor.setUserId(Self.userId)
         
+        let authTokenPersistence: any Persistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenDecodable> = RealmRepositorySyncPersistence(
+            database: realmDatabase,
+            dataModelMapping: RealmMobileContentAuthTokenMapping()
+        )
+        
         let mobileContentAuthTokenCache = MobileContentAuthTokenCache(
             mobileContentAuthTokenKeychainAccessor: mockMobileContentAuthTokenKeychainAccessor,
-            realmCache: RealmMobileContentAuthTokenCache(realmDatabase: realmDatabase)
+            persistence: authTokenPersistence
         )
+        
         let authTokenRepository = MobileContentAuthTokenRepository(
             api: MockMobileContentAuthTokenAPI(fetchedAuthToken: nil),
             cache: mobileContentAuthTokenCache
         )
+        
+        let userDetailsPersistence: any Persistence<UserDetailsDataModel, MobileContentApiUsersMeCodable> = RealmRepositorySyncPersistence(
+            database: realmDatabase,
+            dataModelMapping: RealmUserDetailsMapping()
+        )
+        
+        let api = UserDetailsAPI(
+            config: testsDiContainer.dataLayer.getAppConfig(),
+            urlSessionPriority: testsDiContainer.dataLayer.getSharedUrlSessionPriority(),
+            mobileContentApiAuthSession: testsDiContainer.dataLayer.getMobileContentApiAuthSession()
+        )
+        
         let userDetailsRepository = UserDetailsRepository(
-            api: MockUserDetailsAPI(),
-            cache: RealmUserDetailsCache(
-                realmDatabase: realmDatabase,
+            externalDataFetch: api,
+            persistence: userDetailsPersistence,
+            cache: UserDetailsCache(
+                persistence: userDetailsPersistence,
                 authTokenRepository: authTokenRepository
             )
         )
         
-        let getUserAccountDetailsRepository = GetUserAccountDetailsRepository(
+        let getUserAccountDetailsRepository = GetUserAccountDetailsUseCase(
             userDetailsRepository: userDetailsRepository,
             localizationServices: getLocalizationServices()
         )

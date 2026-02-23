@@ -116,10 +116,9 @@ import RequestOperation
                        
         Publishers.CombineLatest(
             userIsAuthenticatedUseCase
-                .execute()
-                .setFailureType(to: Error.self),
+                .execute(),
             userCountersRepository
-                .getUserCountersChanged(
+                .getUserCountersChangedPublisher(
                     reloadFromRemote: false,
                     requestPriority: .low
                 )
@@ -129,7 +128,6 @@ import RequestOperation
             if isAuthenticatedDomainModel.isAuthenticated {
                 
                 return userCountersRepository
-                    .remoteUserCountersSync
                     .syncUpdatedUserCountersWithRemotePublisher(requestPriority: .low)
                     .eraseToAnyPublisher()
             }

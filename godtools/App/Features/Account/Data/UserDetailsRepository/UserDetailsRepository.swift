@@ -16,6 +16,8 @@ class UserDetailsRepository: RepositorySync<UserDetailsDataModel, UserDetailsAPI
     private let api: UserDetailsAPI
     private let cache: UserDetailsCache
     
+    private var cancellables: Set<AnyCancellable> = Set()
+        
     init(externalDataFetch: UserDetailsAPI, persistence: any Persistence<UserDetailsDataModel, MobileContentApiUsersMeCodable>, cache: UserDetailsCache) {
         
         self.api = externalDataFetch
@@ -24,7 +26,9 @@ class UserDetailsRepository: RepositorySync<UserDetailsDataModel, UserDetailsAPI
         super.init(externalDataFetch: externalDataFetch, persistence: persistence)
     }
     
-    @MainActor func getAuthUserDetailsChangedPublisher() -> AnyPublisher<UserDetailsDataModel?, Error> {
+    @MainActor func getAuthUserDetailsChangedPublisher(requestPriority: RequestPriority) -> AnyPublisher<UserDetailsDataModel?, Error> {
+        
+        makeSinkWithRemote(requestPriority: requestPriority)
         
         return persistence
             .observeCollectionChangesPublisher()
@@ -35,7 +39,9 @@ class UserDetailsRepository: RepositorySync<UserDetailsDataModel, UserDetailsAPI
             .eraseToAnyPublisher()
     }
     
-    @MainActor func getUserDetailsChangedPublisher(id: String) -> AnyPublisher<UserDetailsDataModel?, Error> {
+    @MainActor func getUserDetailsChangedPublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<UserDetailsDataModel?, Error> {
+        
+        makeSinkWithRemote(requestPriority: requestPriority)
         
         return persistence
             .observeCollectionChangesPublisher()
@@ -51,7 +57,34 @@ class UserDetailsRepository: RepositorySync<UserDetailsDataModel, UserDetailsAPI
         return try cache.getAuthUserDetails()
     }
     
-    func getAuthUserDetailsFromRemote(requestPriority: RequestPriority) async throws -> UserDetailsDataModel {
+    func deleteAuthUserDetails(requestPriority: RequestPriority) async throws {
+        
+        try await api.deleteAuthUserDetails(requestPriority: requestPriority)
+    }
+}
+
+extension UserDetailsRepository {
+    
+    private func makeSinkWithRemote(requestPriority: RequestPriority) {
+        
+        syncFromRemotePublisher(
+            requestPriority: requestPriority
+        )
+        .sink { _ in
+            
+        } receiveValue: { _ in
+            
+        }
+        .store(in: &cancellables)
+    }
+    
+    private func syncFromRemotePublisher(requestPriority: RequestPriority) -> AnyPublisher<UserDetailsDataModel, Error> {
+        return AnyPublisher() {
+            return try await self.syncFromRemote(requestPriority: requestPriority)
+        }
+    }
+    
+    private func syncFromRemote(requestPriority: RequestPriority) async throws -> UserDetailsDataModel {
         
         let codable: MobileContentApiUsersMeCodable = try await api.fetchUserDetails(requestPriority: requestPriority)
         
@@ -62,10 +95,5 @@ class UserDetailsRepository: RepositorySync<UserDetailsDataModel, UserDetailsAPI
         )
         
         return UserDetailsDataModel(interface: codable)
-    }
-    
-    func deleteAuthUserDetails(requestPriority: RequestPriority) async throws {
-        
-        try await api.deleteAuthUserDetails(requestPriority: requestPriority)
     }
 }

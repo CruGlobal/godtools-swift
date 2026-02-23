@@ -8,16 +8,16 @@
 
 import Foundation
 
-struct UserCounterDataModel: Sendable, UserCounterDataModelInterface {
+struct UserCounterDataModel {
     
     let id: String
     let latestCountFromAPI: Int
     let incrementValue: Int
     
-    init(interface: UserCounterDataModelInterface) {
+    init(realmUserCounter: RealmUserCounter) {
         
-        id = interface.id
-        latestCountFromAPI = interface.latestCountFromAPI
-        incrementValue = interface.incrementValue
+        id = realmUserCounter.id
+        latestCountFromAPI = realmUserCounter.latestCountFromAPI
+        incrementValue = realmUserCounter.incrementValue
     }
 }

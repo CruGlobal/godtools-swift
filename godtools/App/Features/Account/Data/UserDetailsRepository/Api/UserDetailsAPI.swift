@@ -11,7 +11,7 @@ import RequestOperation
 import Combine
 import RepositorySync
 
-class UserDetailsAPI: UserDetailsAPIInterface {
+class UserDetailsAPI {
     
     private let authSession: MobileContentApiAuthSession
     private let requestBuilder: RequestBuilder = RequestBuilder()

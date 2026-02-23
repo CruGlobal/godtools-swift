@@ -21,11 +21,11 @@ class MobileContentAuthTokenKeychainAccessor: MobileContentAuthTokenKeychainAcce
         case userId
     }
     
-    func saveMobileContentAuthToken(_ authTokenDataModel: MobileContentAuthTokenDataModel) throws {
+    func saveMobileContentAuthToken(authTokenCodable: MobileContentAuthTokenDecodable) throws {
         
-        try saveUserId(authTokenDataModel.userId)
-        try saveAuthToken(authTokenDataModel)
-        try saveAppleRefreshToken(authTokenDataModel.appleRefreshToken, userId: authTokenDataModel.userId)
+        try saveUserId(authTokenCodable.userId)
+        try saveAuthToken(authTokenCodable: authTokenCodable)
+        try saveAppleRefreshToken(authTokenCodable.appleRefreshToken, userId: authTokenCodable.userId)
     }
     
     func deleteMobileContentAuthTokenAndUserId(userId: String) {
@@ -105,9 +105,9 @@ class MobileContentAuthTokenKeychainAccessor: MobileContentAuthTokenKeychainAcce
  
 extension MobileContentAuthTokenKeychainAccessor {
     
-    private func saveAuthToken(_ authTokenDataModel: MobileContentAuthTokenDataModel) throws {
+    private func saveAuthToken(authTokenCodable: MobileContentAuthTokenDecodable) throws {
         
-        let saveQuery = buildSaveQueryFromAuthToken(authTokenDataModel)
+        let saveQuery = buildSaveQueryFromAuthToken(authTokenCodable: authTokenCodable)
         let saveStatus = SecItemAdd(saveQuery, nil)
         
         let saveResponse = KeychainServiceResponse(osStatus: saveStatus)
@@ -119,7 +119,7 @@ extension MobileContentAuthTokenKeychainAccessor {
             
         case .duplicateItem:
             
-            try updateExistingMobileContentAuthToken(authTokenDataModel)
+            try updateExistingMobileContentAuthToken(authTokenCodable: authTokenCodable)
             
         case .unhandledError(let error):
             
@@ -175,9 +175,9 @@ extension MobileContentAuthTokenKeychainAccessor {
         }
     }
     
-    private func updateExistingMobileContentAuthToken(_ authTokenDataModel: MobileContentAuthTokenDataModel) throws {
+    private func updateExistingMobileContentAuthToken(authTokenCodable: MobileContentAuthTokenDecodable) throws {
         
-        let (updateQuery, updateAttributes) = buildUpdateQueryAndAttributesFromAuthToken(authTokenDataModel)
+        let (updateQuery, updateAttributes) = buildUpdateQueryAndAttributesFromAuthToken(authTokenCodable: authTokenCodable)
         
         let updateStatus = SecItemUpdate(updateQuery, updateAttributes)
         let updateResponse = KeychainServiceResponse(osStatus: updateStatus)
@@ -238,13 +238,13 @@ extension MobileContentAuthTokenKeychainAccessor {
         }
     }
     
-    private func buildSaveQueryFromAuthToken(_ authTokenDataModel: MobileContentAuthTokenDataModel) -> CFDictionary {
+    private func buildSaveQueryFromAuthToken(authTokenCodable: MobileContentAuthTokenDecodable) -> CFDictionary {
         
         return [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: Service.mobileContentAuthToken.rawValue,
-            kSecAttrAccount as String: authTokenDataModel.userId,
-            kSecValueData as String: Data(authTokenDataModel.token.utf8)
+            kSecAttrAccount as String: authTokenCodable.userId,
+            kSecValueData as String: Data(authTokenCodable.token.utf8)
         ] as CFDictionary
     }
     
@@ -268,7 +268,7 @@ extension MobileContentAuthTokenKeychainAccessor {
         ] as CFDictionary
     }
     
-    private func buildUpdateQueryAndAttributesFromAuthToken(_ authTokenDataModel: MobileContentAuthTokenDataModel) -> (query: CFDictionary, updateAttributes: CFDictionary) {
+    private func buildUpdateQueryAndAttributesFromAuthToken(authTokenCodable: MobileContentAuthTokenDecodable) -> (query: CFDictionary, updateAttributes: CFDictionary) {
         
         let updateQuery = [
             kSecClass as String: kSecClassGenericPassword,
@@ -276,8 +276,8 @@ extension MobileContentAuthTokenKeychainAccessor {
         ] as CFDictionary
         
         let updateAttributes = [
-            kSecAttrAccount as String: authTokenDataModel.userId,
-            kSecValueData as String: Data(authTokenDataModel.token.utf8)
+            kSecAttrAccount as String: authTokenCodable.userId,
+            kSecValueData as String: Data(authTokenCodable.token.utf8)
         ] as CFDictionary
         
         return (updateQuery, updateAttributes)

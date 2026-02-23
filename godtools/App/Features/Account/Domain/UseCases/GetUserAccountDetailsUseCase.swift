@@ -23,34 +23,26 @@ final class GetUserAccountDetailsUseCase {
     
     @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<UserAccountDetailsDomainModel, Error> {
         
-        return Publishers.CombineLatest(
-            getAuthUserDetailsPublisher(),
-            userDetailsRepository
-                .getAuthUserDetailsChangedPublisher()
-        )
-        .tryMap { (remoteUserDetails: UserDetailsDataModel, changedUserDetails: UserDetailsDataModel?) in
-            
-            let cachedAuthUserDetails: UserDetailsDataModel? = try self.userDetailsRepository.getCachedAuthUserDetails()
-            
-            guard let cachedAuthUserDetails = cachedAuthUserDetails else {
-                return UserAccountDetailsDomainModel.emptyValue
-            }
-            
-            let accountDetails: UserAccountDetailsDomainModel = self.mapUserDetails(
-                userDetails: cachedAuthUserDetails,
-                translatedInAppLanguage: appLanguage
+        userDetailsRepository
+            .getAuthUserDetailsChangedPublisher(
+                requestPriority: .high
             )
-            
-            return accountDetails
-        }
-        .eraseToAnyPublisher()
-    }
-    
-    private func getAuthUserDetailsPublisher() -> AnyPublisher<UserDetailsDataModel, Error> {
-        
-        return AnyPublisher() {
-            return try await self.userDetailsRepository.getAuthUserDetailsFromRemote(requestPriority: .high)
-        }
+            .tryMap { (changedUserDetails: UserDetailsDataModel?) in
+                
+                let cachedAuthUserDetails: UserDetailsDataModel? = try self.userDetailsRepository.getCachedAuthUserDetails()
+                
+                guard let cachedAuthUserDetails = cachedAuthUserDetails else {
+                    return UserAccountDetailsDomainModel.emptyValue
+                }
+                
+                let accountDetails: UserAccountDetailsDomainModel = self.mapUserDetails(
+                    userDetails: cachedAuthUserDetails,
+                    translatedInAppLanguage: appLanguage
+                )
+                
+                return accountDetails
+            }
+            .eraseToAnyPublisher()
     }
 }
 

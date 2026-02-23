@@ -11,6 +11,8 @@ import Combine
 
 @MainActor class DeleteAccountProgressViewModel: ObservableObject {
     
+    private static var backgroundCancellables: Set<AnyCancellable> = Set()
+    
     private let deleteAccountUseCase: DeleteAccountUseCase
     private let minimumSecondsToDisplayDeleteAccountProgress: TimeInterval = 2
     
@@ -78,7 +80,7 @@ import Combine
             } receiveValue: { _ in
                 
             }
-            .store(in: &cancellables)
+            .store(in: &Self.backgroundCancellables)
     }
     
     private func getRemainingSecondsToDisplayDeleteAccountProgress(startTime: Date) -> TimeInterval {

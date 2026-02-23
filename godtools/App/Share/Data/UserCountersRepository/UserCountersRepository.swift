@@ -9,79 +9,79 @@
 import Foundation
 import Combine
 import RequestOperation
-import RepositorySync
 
-class UserCountersRepository: RepositorySync<UserCounterDataModel, UserCountersAPI> {
+class UserCountersRepository {
     
     private let api: UserCountersAPI
-    private let cache: UserCountersCache
+    private let cache: RealmUserCountersCache
+    private let remoteUserCountersSync: RemoteUserCountersSync
     
-    let remoteUserCountersSync: RemoteUserCountersSync
+    private var cancellables: Set<AnyCancellable> = Set()
     
-    private var fetchRemoteCountersTask: Task<Void, Error>?
-    
-    init(externalDataFetch: UserCountersAPI, persistence: any Persistence<UserCounterDataModel, UserCounterDecodable>, cache: UserCountersCache, remoteUserCountersSync: RemoteUserCountersSync) {
-        
-        self.api = externalDataFetch
+    init(api: UserCountersAPI, cache: RealmUserCountersCache, remoteUserCountersSync: RemoteUserCountersSync) {
+        self.api = api
         self.cache = cache
         self.remoteUserCountersSync = remoteUserCountersSync
-        
-        super.init(externalDataFetch: externalDataFetch, persistence: persistence)
-    }
-}
-
-extension UserCountersRepository {
-    
-    func getUserCounter(id: String) throws -> UserCounterDataModel? {
-        
-        return try persistence.getDataModel(id: id)
     }
     
-    @MainActor func getUserCountersChanged(reloadFromRemote: Bool, requestPriority: RequestPriority) -> AnyPublisher<Void, Error> {
+    func getUserCounter(id: String) -> UserCounterDomainModel? {
+        
+        guard let userCounterDataModel = cache.getUserCounter(id: id) else {
+            return nil
+        }
+        
+        return UserCounterDomainModel(dataModel: userCounterDataModel)
+    }
+    
+    @MainActor func getUserCountersChangedPublisher(reloadFromRemote: Bool, requestPriority: RequestPriority) -> AnyPublisher<Void, Never> {
         
         if reloadFromRemote {
             
-            fetchRemoteCountersTask?.cancel()
-            
-            fetchRemoteCountersTask = Task {
-                _ = try await fetchRemoteUserCounters(requestPriority: requestPriority)
-            }
+            fetchRemoteUserCountersPublisher(requestPriority: requestPriority)
+                .sink(receiveCompletion: { _ in
+                }, receiveValue: { _ in
+                    
+                })
+                .store(in: &cancellables)
         }
         
-        return persistence
-            .observeCollectionChangesPublisher()
+        return cache.getUserCountersChanged()
     }
     
-    func getUserCounters() async throws -> [UserCounterDataModel] {
+    func getUserCounters() -> [UserCounterDataModel] {
         
-        return try await cache.getAllUserCounters()
+        return cache.getAllUserCounters()
     }
     
-    func fetchRemoteUserCounters(requestPriority: RequestPriority) async throws -> [UserCounterDataModel] {
+    func fetchRemoteUserCountersPublisher(requestPriority: RequestPriority) -> AnyPublisher<[UserCounterDataModel], Error> {
         
-        let userCounters: [UserCounterDecodable] = try await api.fetchUserCounters(
+        // TODO: Eventually remove AnyPublisher() and support async await. ~Levi
+        
+        return AnyPublisher() {
+            return try await self.api.fetchUserCounters(requestPriority: requestPriority)
+        }
+        .flatMap { (userCounters: [UserCounterDecodable]) in
+            
+            return self.cache.syncUserCounters(userCounters)
+                .eraseToAnyPublisher()
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    func incrementCachedUserCounterBy1Publisher(id: String) -> AnyPublisher<[UserCounterDataModel], Error> {
+        
+        return cache.incrementUserCounterBy1(id: id)
+    }
+    
+    func deleteUserCountersPublisher() -> AnyPublisher<Void, Error> {
+        
+        return cache.deleteAllUserCounters()
+    }
+    
+    func syncUpdatedUserCountersWithRemotePublisher(requestPriority: RequestPriority) -> AnyPublisher<Void, Error> {
+        return remoteUserCountersSync.syncUpdatedUserCountersWithRemotePublisher(
             requestPriority: requestPriority
         )
-        
-        return try cache.syncUserCounters(
-            userCounters: userCounters
-        )
-    }
-    
-    func incrementCachedUserCounterBy1(id: String) throws -> [UserCounterDataModel] {
-        
-        return try cache.incrementUserCounterBy1(id: id)
-    }
-    
-    func deleteUserCounters() throws {
-        
-        return try cache.deleteAllUserCounters()
-    }
-    
-    func syncUpdatedUserCountersWithRemote(requestPriority: RequestPriority) async throws {
-        
-        try await remoteUserCountersSync.syncUpdatedUserCountersWithRemote(
-            requestPriority: requestPriority
-        )
+        .eraseToAnyPublisher()
     }
 }
