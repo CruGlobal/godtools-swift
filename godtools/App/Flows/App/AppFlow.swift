@@ -428,6 +428,9 @@ extension AppFlow {
         case .dashboard:
             dashboardFlow.navigateToDashboard(startingTab: .favorites)
             
+        case .menu:
+            dashboardFlow.navigateToMenu(animated: true, initialNavigationStep: nil)
+            
         case .onboarding(let appLanguage):
             
             let userAppLanguageRepository: UserAppLanguageRepository = appDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository()
