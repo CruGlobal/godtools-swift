@@ -39,7 +39,7 @@ class AppFlow: NSObject, Flow {
     let navigationController: AppNavigationController
     let rootView: AppRootView
             
-    init(appDiContainer: AppDiContainer, appDeepLinkingService: DeepLinkingService) {
+    init(appDiContainer: AppDiContainer, appDeepLinkingService: DeepLinkingService, deepLink: ParsedDeepLinkType?) {
         
         let navigationBarAppearance = AppNavigationBarAppearance(
             backgroundColor: AppFlow.defaultNavBarColor,
@@ -56,6 +56,7 @@ class AppFlow: NSObject, Flow {
         self.appMessaging = appDiContainer.dataLayer.getAppMessaging()
         self.launchCountRepository = appDiContainer.dataLayer.getLaunchCountRepository()
         self.dashboardFlow = DashboardFlow(appDiContainer: appDiContainer, sharedNavigationController: navigationController, rootController: rootController)
+        self.appLaunchedFromDeepLink = deepLink
         
         super.init()
         

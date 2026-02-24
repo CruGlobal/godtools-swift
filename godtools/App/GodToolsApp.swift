@@ -57,9 +57,12 @@ struct GodToolsApp: App {
             Self.appDiContainer.dataLayer.getFirebaseDebugArguments().enable()
         }
         
+        let deepLink: ParsedDeepLinkType? = Self.processUITestsDeepLink()
+        
         appFlow = AppFlow(
             appDiContainer: Self.appDiContainer,
-            appDeepLinkingService: Self.appDeepLinkingService
+            appDeepLinkingService: Self.appDeepLinkingService,
+            deepLink: deepLink
         )
         
         if Self.appConfig.buildConfig == .release {
@@ -69,8 +72,6 @@ struct GodToolsApp: App {
         if Self.appConfig.firebaseEnabled {
             Self.appDiContainer.dataLayer.getAnalytics().firebaseAnalytics.configure()
         }
-
-        Self.processUITestsDeepLink()
         
         toolShortcutLinksViewModel = ToolShortcutLinksViewModel(
             getCurrentAppLanguageUseCase: Self.appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
@@ -219,15 +220,17 @@ extension GodToolsApp {
 
 extension GodToolsApp {
     
-    private static func processUITestsDeepLink() {
+    private static func processUITestsDeepLink() -> ParsedDeepLinkType? {
         
         let uiTestsDeepLinkString: String? = Self.uiTestsLaunchEnvironment.getUrlDeepLink()
 
         if let uiTestsDeepLinkString = uiTestsDeepLinkString, !uiTestsDeepLinkString.isEmpty, let url = URL(string: uiTestsDeepLinkString) {
                         
-            _ = Self.appDeepLinkingService.parseDeepLinkAndNotify(
+            return Self.appDeepLinkingService.parseDeepLink(
                 incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url))
             )
         }
+        
+        return nil
     }
 }
