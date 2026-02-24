@@ -38,7 +38,7 @@ class UITestsAppConfig: AppConfigInterface {
     }
     
     var urlRequestsEnabled: Bool {
-        return true
+        return false
     }
     
     func getAppleAppId() -> String {
