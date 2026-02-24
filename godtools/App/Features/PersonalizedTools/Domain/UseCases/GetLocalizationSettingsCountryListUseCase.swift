@@ -19,12 +19,10 @@ class GetLocalizationSettingsCountryListUseCase {
         self.localizationServices = localizationServices
     }
 
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[LocalizationSettingsCountryListItem], Never> {
+    func execute(appLanguage: AppLanguageDomainModel, showsPreferNotToSay: Bool) -> AnyPublisher<[LocalizationSettingsCountryListItem], Never> {
 
         return countriesRepository.getCountriesPublisher(appLanguage: appLanguage)
             .flatMap { (countries: [LocalizationSettingsCountryDataModel]) in
-
-                let preferNotToSay = self.createPreferNotToSayOption(appLanguage: appLanguage)
 
                 let countryListItems: [LocalizationSettingsCountryListItem] = countries.map { country in
 
@@ -35,8 +33,14 @@ class GetLocalizationSettingsCountryListUseCase {
                     ))
                 }
 
-                return Just([preferNotToSay] + countryListItems)
-                    .eraseToAnyPublisher()
+                if showsPreferNotToSay {
+                    let preferNotToSay = self.createPreferNotToSayOption(appLanguage: appLanguage)
+                    return Just([preferNotToSay] + countryListItems)
+                        .eraseToAnyPublisher()
+                } else {
+                    return Just(countryListItems)
+                        .eraseToAnyPublisher()
+                }
             }
             .eraseToAnyPublisher()
     }

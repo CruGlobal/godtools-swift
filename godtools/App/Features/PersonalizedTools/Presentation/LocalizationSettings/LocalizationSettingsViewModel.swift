@@ -56,16 +56,9 @@ import Combine
         $appLanguage
             .dropFirst()
             .map { appLanguage in
-                getCountryListUseCase.execute(appLanguage: appLanguage)
+                getCountryListUseCase.execute(appLanguage: appLanguage, showsPreferNotToSay: showsPreferNotToSay)
             }
             .switchToLatest()
-            .map { countries in
-                guard !showsPreferNotToSay else { return countries }
-                return countries.filter {
-                    if case .preferNotToSay = $0 { return false }
-                    return true
-                }
-            }
             .receive(on: DispatchQueue.main)
             .assign(to: &$countriesList)
         
