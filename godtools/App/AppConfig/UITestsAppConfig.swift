@@ -62,11 +62,11 @@ class UITestsAppConfig: AppConfigInterface {
     }
     
     func getLegacyRealmDatabase() -> LegacyRealmDatabase {
-        return UITestsRealmDatabase()
+        return UITestsRealmDatabase.getLegacyRealmDatabase()
     }
     
     func getRealmDatabase() -> RealmDatabase {
-        return RealmDatabase(databaseConfig: RealmDatabaseConfig.createInMemoryConfig())
+        return UITestsRealmDatabase.getRealmDatabase()
     }
     
     @available(iOS 17.4, *)
