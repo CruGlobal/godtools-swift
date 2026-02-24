@@ -53,7 +53,7 @@ struct FavoritesView: View {
                     
                     VStack(alignment: .leading, spacing: 0) {
                         
-                        Text(viewModel.welcomeTitle)
+                        Text(viewModel.strings.welcomeTitle)
                             .font(FontLibrary.sfProTextRegular.font(size: 30))
                             .foregroundColor(ColorPalette.gtGrey.color)
                             .padding([.top], 24)
@@ -105,7 +105,8 @@ struct FavoritesView_Preview: PreviewProvider {
         let viewModel = FavoritesViewModel(
             flowDelegate: MockFlowDelegate(),
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
-            viewFavoritesUseCase: appDiContainer.feature.favorites.domainLayer.getViewFavoritesUseCase(),
+            getFavoritesStringsUseCase: appDiContainer.feature.favorites.domainLayer.getFavoritesStringsUseCase(),
+            getYourFavoritedToolsUseCase: appDiContainer.feature.favorites.domainLayer.getYourFavoritedToolsUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToolIsFavoritedUseCase(),
             getToolBannerUseCase: appDiContainer.domainLayer.getToolBannerUseCase(),

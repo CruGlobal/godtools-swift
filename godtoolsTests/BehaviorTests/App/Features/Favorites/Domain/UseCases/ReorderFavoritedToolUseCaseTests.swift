@@ -1,5 +1,5 @@
 //
-//  ReorderFavoritedToolRepositoryTests.swift
+//  ReorderFavoritedToolUseCaseTests.swift
 //  godtoolsTests
 //
 //  Created by Rachael Skeath on 3/21/25.
@@ -13,7 +13,7 @@ import Combine
 import RepositorySync
 
 @Suite(.serialized)
-struct ReorderFavoritedToolRepositoryTests {
+struct ReorderFavoritedToolUseCaseTests {
 
     struct TestArgument {
         let resourcesInRealmIdsAtPositions: [String: Int]
@@ -43,7 +43,7 @@ struct ReorderFavoritedToolRepositoryTests {
             cache: RealmFavoritedResourcesCache(realmDatabase: realmDatabase)
         )
         
-        let reorderFavoriteToolsRepository = ReorderFavoritedToolRepository(favoritedResourcesRepository: favoritedResourcesRepo)
+        let reorderFavoritedToolUseCase = ReorderFavoritedToolUseCase(favoritedResourcesRepository: favoritedResourcesRepo)
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -58,8 +58,8 @@ struct ReorderFavoritedToolRepositoryTests {
                     continuation.resume(returning: ())
                 }
                 
-                reorderFavoriteToolsRepository
-                    .reorderFavoritedToolPubilsher(
+                reorderFavoritedToolUseCase
+                    .execute(
                         toolId: argument.resourceIdToReorder,
                         originalPosition: argument.originalPosition,
                         newPosition: argument.newPosition
@@ -95,12 +95,12 @@ struct ReorderFavoritedToolRepositoryTests {
     }
 }
 
-extension ReorderFavoritedToolRepositoryTests {
+extension ReorderFavoritedToolUseCaseTests {
     
     private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
                 
         return try TestsDiContainer(
-            realmFileName: String(describing: ReorderFavoritedToolRepositoryTests.self),
+            realmFileName: String(describing: ReorderFavoritedToolUseCaseTests.self),
             addRealmObjects: addRealmObjects
         )
     }

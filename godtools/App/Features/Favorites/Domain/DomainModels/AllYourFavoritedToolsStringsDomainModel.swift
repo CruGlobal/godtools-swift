@@ -8,7 +8,11 @@
 
 import Foundation
 
-struct AllYourFavoritedToolsStringsDomainModel {
+struct AllYourFavoritedToolsStringsDomainModel: Sendable {
     
     let sectionTitle: String
+    
+    static var emptyValue: AllYourFavoritedToolsStringsDomainModel {
+        return AllYourFavoritedToolsStringsDomainModel(sectionTitle: "")
+    }
 }

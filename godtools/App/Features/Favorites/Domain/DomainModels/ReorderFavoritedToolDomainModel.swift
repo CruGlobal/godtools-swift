@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ReorderFavoritedToolDomainModel {
+struct ReorderFavoritedToolDomainModel: Sendable {
     
     let dataModelId: String
     let position: Int

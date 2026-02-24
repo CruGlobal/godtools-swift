@@ -253,7 +253,9 @@ import Combine
     private func toggleToolIsFavorited(toolId: String) {
         
         ToolsViewModel.favoriteToolCancellables[toolId] = toggleToolFavoritedUseCase
-            .toggleFavoritedPublisher(toolId: toolId)
+            .execute(
+                toolId: toolId
+            )
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { (domainModel: ToolIsFavoritedDomainModel) in
                 
