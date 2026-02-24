@@ -60,4 +60,17 @@ enum LocalizationSettingsCountryListItem: Identifiable, StringSearchable {
             return [preferNotToSay.preferNotToSayText]
         }
     }
+
+    var countryDomainModel: LocalizationSettingsCountryDomainModel {
+        switch self {
+        case .country(let country):
+            return country
+        case .preferNotToSay:
+            return LocalizationSettingsCountryDomainModel(
+                isoRegionCode: "",
+                countryNameTranslatedInOwnLanguage: "",
+                countryNameTranslatedInCurrentAppLanguage: ""
+            )
+        }
+    }
 }

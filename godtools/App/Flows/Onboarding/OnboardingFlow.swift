@@ -163,9 +163,7 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
                 .personalizedTools
                 .domainLayer
                 .getSetLocalizationSettingsUseCase()
-                .execute(
-                    isoRegionCode: country.isoRegionCode ?? ""
-                )
+                .execute(country: country.countryDomainModel)
                 .sink { _ in
 
                 } receiveValue: { _ in
