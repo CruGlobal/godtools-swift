@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ToolIsFavoritedDomainModel {
+struct ToolIsFavoritedDomainModel: Sendable {
     
     let dataModelId: String
     let isFavorited: Bool

@@ -1,5 +1,5 @@
 //
-//  ToggleToolFavoritedRepositoryTests.swift
+//  ToggleToolFavoritedUseCaseTests.swift
 //  godtoolsTests
 //
 //  Created by Rachael Skeath on 3/28/25.
@@ -13,7 +13,7 @@ import Combine
 import RepositorySync
 
 @Suite(.serialized)
-struct ToggleToolFavoritedRepositoryTests {
+struct ToggleToolFavoritedUseCaseTests {
     
     struct TestArgument {
         let resourcesInRealmIdsAtPositions: [String: Int]
@@ -38,7 +38,7 @@ struct ToggleToolFavoritedRepositoryTests {
         
         let realmDatabase = try getRealmDatabase(resources: argument.resourcesInRealmIdsAtPositions)
         
-        let toggleToolFavoritedRepository = ToggleToolFavoritedRepository(favoritedResourcesRepository: FavoritedResourcesRepository(cache: RealmFavoritedResourcesCache(realmDatabase: realmDatabase)))
+        let toggleToolFavoritedUseCase = ToggleToolFavoritedUseCase(favoritedResourcesRepository: FavoritedResourcesRepository(cache: RealmFavoritedResourcesCache(realmDatabase: realmDatabase)))
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -53,8 +53,10 @@ struct ToggleToolFavoritedRepositoryTests {
                     continuation.resume(returning: ())
                 }
                 
-                toggleToolFavoritedRepository
-                    .toggleFavoritedPublisher(toolId: argument.resourceIdToToggle)
+                toggleToolFavoritedUseCase
+                    .execute(
+                        toolId: argument.resourceIdToToggle
+                    )
                     .sink { _ in
                         
                         favoritedResources = realmDatabase.openRealm().objects(RealmFavoritedResource.self).map {
@@ -83,12 +85,12 @@ struct ToggleToolFavoritedRepositoryTests {
     }
 }
 
-extension ToggleToolFavoritedRepositoryTests {
+extension ToggleToolFavoritedUseCaseTests {
     
     private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
                 
         return try TestsDiContainer(
-            realmFileName: String(describing: ToggleToolFavoritedRepositoryTests.self),
+            realmFileName: String(describing: ToggleToolFavoritedUseCaseTests.self),
             addRealmObjects: addRealmObjects
         )
     }
