@@ -81,8 +81,8 @@ import SwiftUI
                 self?.subtitle = interfaceStrings.subtitle
                 self?.languageFilterTitle = interfaceStrings.languageFilterTitle
                 self?.toggleOptions = [
-                    PersonalizationToggleOption(title: interfaceStrings.personalizedToolToggleTitle, selection: .personalized),
-                    PersonalizationToggleOption(title: interfaceStrings.allLessonsToggleTitle, selection: .all)
+                    PersonalizationToggleOption(title: interfaceStrings.personalizedToolToggleTitle, selection: .personalized, buttonAccessibility: .personalizedLessons),
+                    PersonalizationToggleOption(title: interfaceStrings.allLessonsToggleTitle, selection: .all, buttonAccessibility: .allLessons)
                 ]
             }
             .store(in: &cancellables)
