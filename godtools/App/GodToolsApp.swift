@@ -10,7 +10,7 @@ import SwiftUI
 
 struct GodToolsApp: App {
 
-    private enum AppLaunchType {
+    enum AppLaunchType {
         case godtools
         case uiTests
     }
@@ -27,20 +27,20 @@ struct GodToolsApp: App {
             return UITestsAppConfig()
         }
     }()
-    
-    private static var appLaunchType: AppLaunchType {
-        let isUITests: Bool = uiTestsLaunchEnvironment.getIsUITests() ?? false
-        if isUITests {
-            return .uiTests
-        }
-        return .godtools
-    }
 
     private let appFlow: AppFlow
     private let toolShortcutLinksViewModel: ToolShortcutLinksViewModel
     
     static var isDebug: Bool {
         return appConfig.isDebug
+    }
+    
+    static var appLaunchType: AppLaunchType {
+        let isUITests: Bool = uiTestsLaunchEnvironment.getIsUITests() ?? false
+        if isUITests {
+            return .uiTests
+        }
+        return .godtools
     }
     
     @Environment(\.scenePhase) private var scenePhase
@@ -52,6 +52,9 @@ struct GodToolsApp: App {
         let deepLink: ParsedDeepLinkType?
         
         if Self.appLaunchType == .uiTests {
+            
+            //disable UIKit animations
+            UIView.setAnimationsEnabled(false)
             
             deepLink = Self.processUITestsDeepLink()
             
