@@ -1,5 +1,5 @@
 //
-//  RemoveFavoritedToolRepositoryTests.swift
+//  RemoveFavoritedToolUseCaseTests.swift
 //  godtoolsTests
 //
 //  Created by Rachael Skeath on 3/28/25.
@@ -14,7 +14,7 @@ import RepositorySync
 import RealmSwift
 
 @Suite(.serialized)
-struct RemoveFavoritedToolRepositoryTests {
+struct RemoveFavoritedToolUseCaseTests {
     
     struct TestArgument {
         let resourcesInRealmIdsAtPositions: [String: Int]
@@ -43,7 +43,7 @@ struct RemoveFavoritedToolRepositoryTests {
         
         let realmDatabase: LegacyRealmDatabase = testsDiContainer.dataLayer.getSharedLegacyRealmDatabase()
         
-        let removeFavoritedToolRepository = RemoveFavoritedToolRepository(favoritedResourcesRepository: FavoritedResourcesRepository(cache: RealmFavoritedResourcesCache(realmDatabase: realmDatabase)))
+        let removeFavoritedToolUseCase = RemoveFavoritedToolUseCase(favoritedResourcesRepository: FavoritedResourcesRepository(cache: RealmFavoritedResourcesCache(realmDatabase: realmDatabase)))
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -58,8 +58,10 @@ struct RemoveFavoritedToolRepositoryTests {
                     continuation.resume(returning: ())
                 }
                 
-                removeFavoritedToolRepository
-                    .removeToolPublisher(toolId: argument.resourceIdToDelete)
+                removeFavoritedToolUseCase
+                    .execute(
+                        toolId: argument.resourceIdToDelete
+                    )
                     .sink(receiveValue: { _ in
                         
                         let realm: Realm = realmDatabase.openRealm()
@@ -90,12 +92,12 @@ struct RemoveFavoritedToolRepositoryTests {
     }
 }
 
-extension RemoveFavoritedToolRepositoryTests {
+extension RemoveFavoritedToolUseCaseTests {
     
     private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
                 
         return try TestsDiContainer(
-            realmFileName: String(describing: RemoveFavoritedToolRepositoryTests.self),
+            realmFileName: String(describing: RemoveFavoritedToolUseCaseTests.self),
             addRealmObjects: addRealmObjects
         )
     }

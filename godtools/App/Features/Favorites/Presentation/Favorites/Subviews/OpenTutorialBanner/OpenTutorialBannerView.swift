@@ -28,12 +28,12 @@ struct OpenTutorialBannerView: View {
             
             VStack {
                 
-                Text(viewModel.openTutorialBannerMessage)
+                Text(viewModel.strings.tutorialMessage)
                     .modifier(BannerTextStyle())
                 
                 HStack(alignment: .center) {
                     
-                    Text(viewModel.openTutorialBannerButtonTitle)
+                    Text(viewModel.strings.openTutorialActionTitle)
                         .foregroundColor(ColorPalette.gtBlue.color)
                         .font(FontLibrary.sfProTextRegular.font(size: 17))
                         .onTapGesture {

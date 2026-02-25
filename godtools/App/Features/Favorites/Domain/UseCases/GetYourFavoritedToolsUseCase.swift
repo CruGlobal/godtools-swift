@@ -1,5 +1,5 @@
 //
-//  GetYourFavoritedToolsRepository.swift
+//  GetYourFavoritedToolsUseCase.swift
 //  godtools
 //
 //  Created by Levi Eggert on 2/15/24.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class GetYourFavoritedToolsRepository: GetYourFavoritedToolsRepositoryInterface {
+final class GetYourFavoritedToolsUseCase {
     
     private let favoritedResourcesRepository: FavoritedResourcesRepository
     private let resourcesRepository: ResourcesRepository
@@ -26,12 +26,16 @@ class GetYourFavoritedToolsRepository: GetYourFavoritedToolsRepositoryInterface 
         self.getToolListItemInterfaceStringsRepository = getToolListItemInterfaceStringsRepository
     }
     
-    @MainActor func getToolsPublisher(translateInLanguage: AppLanguageDomainModel, maxCount: Int?) -> AnyPublisher<[YourFavoritedToolDomainModel], Error> {
+    @MainActor func execute(appLanguage: AppLanguageDomainModel, maxCount: Int?) -> AnyPublisher<[YourFavoritedToolDomainModel], Error> {
         
         return Publishers.CombineLatest3(
-            resourcesRepository.persistence.observeCollectionChangesPublisher(),
-            getToolListItemInterfaceStringsRepository.getStringsPublisher(translateInLanguage: translateInLanguage).setFailureType(to: Error.self),
-            favoritedResourcesRepository.getFavoritedResourcesSortedByPositionPublisher().setFailureType(to: Error.self)
+            resourcesRepository
+                .persistence
+                .observeCollectionChangesPublisher(),
+            getToolListItemInterfaceStringsRepository.getStringsPublisher(translateInLanguage: appLanguage)
+                .setFailureType(to: Error.self),
+            favoritedResourcesRepository.getFavoritedResourcesSortedByPositionPublisher()
+                .setFailureType(to: Error.self)
         )
         .flatMap({ (resourcesChanged: Void, interfaceStrings: ToolListItemInterfaceStringsDomainModel, favoritedResourceModels: [FavoritedResourceDataModel]) -> AnyPublisher<[YourFavoritedToolDomainModel], Never> in
           
@@ -50,8 +54,8 @@ class GetYourFavoritedToolsRepository: GetYourFavoritedToolsRepositoryInterface 
                         analyticsToolAbbreviation: $0.abbreviation,
                         dataModelId: $0.id,
                         bannerImageId: $0.attrBanner,
-                        name: self.getTranslatedToolName.getToolName(resource: $0, translateInLanguage: translateInLanguage),
-                        category: self.getTranslatedToolCategory.getTranslatedCategory(resource: $0, translateInLanguage: translateInLanguage),
+                        name: self.getTranslatedToolName.getToolName(resource: $0, translateInLanguage: appLanguage),
+                        category: self.getTranslatedToolCategory.getTranslatedCategory(resource: $0, translateInLanguage: appLanguage),
                         isFavorited: true,
                         languageAvailability: nil
                     )

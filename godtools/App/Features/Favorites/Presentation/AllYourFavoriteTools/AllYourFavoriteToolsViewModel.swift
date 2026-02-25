@@ -12,7 +12,10 @@ import SwiftUI
 
 @MainActor class AllYourFavoriteToolsViewModel: ObservableObject {
         
-    private let viewAllYourFavoritedToolsUseCase: ViewAllYourFavoritedToolsUseCase
+    private static var backgroundCancellables: Set<AnyCancellable> = Set()
+    
+    private let getAllYourFavoritedToolsStringsUseCase: GetAllYourFavoritedToolsStringsUseCase
+    private let getYourFavoritedToolsUseCase: GetYourFavoritedToolsUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     private let reorderFavoritedToolUseCase: ReorderFavoritedToolUseCase
@@ -21,20 +24,21 @@ import SwiftUI
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let didConfirmToolRemovalSubject: PassthroughSubject<Void, Never> = PassthroughSubject()
     
-    private static var backgroundCancellables: Set<AnyCancellable> = Set()
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     
-    @Published var sectionTitle: String = ""
+    @Published private(set) var strings = AllYourFavoritedToolsStringsDomainModel.emptyValue
+    
     @Published var favoritedTools: [YourFavoritedToolDomainModel] = Array()
         
-    init(flowDelegate: FlowDelegate?, viewAllYourFavoritedToolsUseCase: ViewAllYourFavoritedToolsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, reorderFavoritedToolUseCase: ReorderFavoritedToolUseCase, getToolBannerUseCase: GetToolBannerUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate?, getAllYourFavoritedToolsStringsUseCase: GetAllYourFavoritedToolsStringsUseCase, getYourFavoritedToolsUseCase: GetYourFavoritedToolsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, reorderFavoritedToolUseCase: ReorderFavoritedToolUseCase, getToolBannerUseCase: GetToolBannerUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
-        self.viewAllYourFavoritedToolsUseCase = viewAllYourFavoritedToolsUseCase
+        self.getAllYourFavoritedToolsStringsUseCase = getAllYourFavoritedToolsStringsUseCase
+        self.getYourFavoritedToolsUseCase = getYourFavoritedToolsUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.reorderFavoritedToolUseCase = reorderFavoritedToolUseCase
@@ -51,18 +55,34 @@ import SwiftUI
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
                 
-                viewAllYourFavoritedToolsUseCase
-                    .viewPublisher(appLanguage: appLanguage)
+                getAllYourFavoritedToolsStringsUseCase
+                    .execute(appLanguage: appLanguage)
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] (strings: AllYourFavoritedToolsStringsDomainModel) in
+                
+                self?.strings = strings
+            })
+            .store(in: &cancellables)
+        
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+                
+                getYourFavoritedToolsUseCase
+                    .execute(
+                        appLanguage: appLanguage,
+                        maxCount: nil
+                    )
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { _ in
                 
-            }, receiveValue: { [weak self] (domainModel: ViewAllYourFavoritedToolsDomainModel) in
+            }, receiveValue: { [weak self] (favoritedTools: [YourFavoritedToolDomainModel]) in
                 
-                self?.sectionTitle = domainModel.interfaceStrings.sectionTitle
-
-                self?.favoritedTools = domainModel.yourFavoritedTools
+                self?.favoritedTools = favoritedTools
             })
             .store(in: &cancellables)
                 
@@ -210,13 +230,17 @@ extension AllYourFavoriteToolsViewModel {
             }
             
             reorderFavoritedToolUseCase
-                .reorderFavoritedToolPublisher(toolId: toolToMove.id, originalPosition: index, newPosition: newIndex)
+                .execute(
+                    toolId: toolToMove.id,
+                    originalPosition: index,
+                    newPosition: newIndex
+                )
                 .sink { _ in
                     
                 } receiveValue: { _ in
                     
                 }
-                .store(in: &AllYourFavoriteToolsViewModel.backgroundCancellables)
+                .store(in: &Self.backgroundCancellables)
 
         }
     }
