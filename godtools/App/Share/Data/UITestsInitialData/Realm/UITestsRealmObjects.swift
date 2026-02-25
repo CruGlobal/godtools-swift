@@ -11,8 +11,11 @@ import RealmSwift
 
 final class UITestsRealmObjects {
     
-    private static let tmtsTract: String = "ui_test_resource_1"
-    private static let fslTract: String = "ui_test_resource_2"
+    static let tmtsTract: String = "ui_test_resource_1"
+    static let fslTract: String = "ui_test_resource_2"
+    static let tmtsEnTranslation: String = "tmts_en_translation"
+    static let tmtsManifest: String = "tmts_manifest"
+    static let fslManifest: String = "fsl_manifest"
     
     static func getAllObjects() -> [Object] {
         
@@ -159,13 +162,21 @@ extension UITestsRealmObjects {
 
 extension UITestsRealmObjects {
     
+    static func getTranslations() -> [RealmTranslation] {
+        
+        return [
+            getTMTSTranslation(),
+            getFSLTranslation()
+        ]
+    }
+    
     private static func getTMTSTranslation() -> RealmTranslation {
         
         let object = RealmTranslation()
         
-        object.id = "tmts_en_translation"
+        object.id = Self.tmtsEnTranslation
         object.isPublished = true
-        object.manifestName = "tmts_manifest"
+        object.manifestName = Self.tmtsManifest
         object.version = 1
         
         return object
@@ -177,7 +188,7 @@ extension UITestsRealmObjects {
         
         object.id = "fsl_en_translation"
         object.isPublished = true
-        object.manifestName = "fsl_manifest"
+        object.manifestName = Self.fslManifest
         object.version = 1
         
         return object

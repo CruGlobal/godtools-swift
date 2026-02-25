@@ -48,6 +48,22 @@ struct GodToolsApp: App {
     @UIApplicationDelegateAdaptor private var appDelegate: GodToolsAppDelegate
 
     init() {
+        
+        let deepLink: ParsedDeepLinkType?
+        
+        if Self.appLaunchType == .uiTests {
+            
+            deepLink = Self.processUITestsDeepLink()
+            
+            Self.appDiContainer
+                .dataLayer
+                .getUITestsInitialDataLoader()
+                .loadData()
+        }
+        else {
+            
+            deepLink = nil
+        }
 
         if Self.appConfig.firebaseEnabled {
             Self.appDiContainer.dataLayer.getFirebaseConfiguration().configure()
@@ -56,8 +72,6 @@ struct GodToolsApp: App {
         if Self.appConfig.buildConfig == .analyticsLogging {
             Self.appDiContainer.dataLayer.getFirebaseDebugArguments().enable()
         }
-        
-        let deepLink: ParsedDeepLinkType? = Self.processUITestsDeepLink()
         
         appFlow = AppFlow(
             appDiContainer: Self.appDiContainer,
