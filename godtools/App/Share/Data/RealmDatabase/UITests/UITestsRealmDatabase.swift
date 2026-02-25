@@ -39,7 +39,7 @@ final class UITestsRealmDatabase {
     static func getLegacyRealmDatabase() -> LegacyRealmDatabase {
         
         let legacyRealmDatabase = LegacyRealmDatabase(
-            config: getRealmDatabaseConfig().config
+            realmDatabase: Self.getRealmDatabase()
         )
                 
         return legacyRealmDatabase
