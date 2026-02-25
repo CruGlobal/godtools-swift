@@ -16,7 +16,7 @@ import Combine
     
     private static var favoriteToolCancellables: [ToolId: AnyCancellable?] = Dictionary()
     
-    private let resourcesRepository: ResourcesRepository
+    private let pullToRefreshToolsUseCase: PullToRefreshToolsUseCase
     private let getToolsStringsUseCase: GetToolsStringsUseCase
     private let getAllToolsUseCase: GetAllToolsUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
@@ -50,10 +50,10 @@ import Combine
     
     @Published var selectedToggle: PersonalizationToggleOptionValue = .personalized
         
-    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, getToolsStringsUseCase: GetToolsStringsUseCase, getAllToolsUseCase: GetAllToolsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, favoritingToolMessageCache: FavoritingToolMessageCache, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getUserToolFiltersUseCase: GetUserToolFiltersUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getToolBannerUseCase: GetToolBannerUseCase) {
+    init(flowDelegate: FlowDelegate, pullToRefreshToolsUseCase: PullToRefreshToolsUseCase, getToolsStringsUseCase: GetToolsStringsUseCase, getAllToolsUseCase: GetAllToolsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, favoritingToolMessageCache: FavoritingToolMessageCache, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getUserToolFiltersUseCase: GetUserToolFiltersUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getToolBannerUseCase: GetToolBannerUseCase) {
         
         self.flowDelegate = flowDelegate
-        self.resourcesRepository = resourcesRepository
+        self.pullToRefreshToolsUseCase = pullToRefreshToolsUseCase
         self.getToolsStringsUseCase = getToolsStringsUseCase
         self.getAllToolsUseCase = getAllToolsUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
@@ -267,12 +267,15 @@ extension ToolsViewModel {
     
     func pullToRefresh() {
         
-        resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsPublisher(requestPriority: .high, forceFetchFromRemote: true)
+        pullToRefreshToolsUseCase
+            .execute(
+                appLanguage: appLanguage
+            )
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completed in
 
-            }, receiveValue: { (result: ResourcesCacheSyncResult) in
-
+            }, receiveValue: { _ in
+                
             })
             .store(in: &cancellables)
     }
