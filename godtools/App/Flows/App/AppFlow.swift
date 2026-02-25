@@ -59,6 +59,8 @@ class AppFlow: NSObject, Flow {
         
         super.init()
         
+        navigationController.delegate = self
+        
         rootController.view.frame = UIScreen.main.bounds
         rootController.view.backgroundColor = .clear
         
@@ -243,6 +245,24 @@ class AppFlow: NSObject, Flow {
         default:
             break
         }
+    }
+}
+
+// MARK: - UINavigationControllerDelegate
+
+extension AppFlow: UINavigationControllerDelegate {
+    
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        
+        let isDashboard: Bool = viewController is AppHostingController<DashboardView>
+        let isLesson: Bool = viewController is LessonView
+        let hidesNavigationBar: Bool = isDashboard || isLesson
+        
+        if isDashboard {
+            dashboardFlow.configureNavBarForDashboard()
+        }
+        
+        navigationController.setNavigationBarHidden(hidesNavigationBar, animated: false)
     }
 }
 

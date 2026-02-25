@@ -9,7 +9,7 @@
 import UIKit
 import Combine
 
-class DashboardFlow: NSObject, Flow, ToolNavigationFlow {
+class DashboardFlow: Flow, ToolNavigationFlow {
         
     private let dashboardTabObserver: CurrentValueSubject<DashboardTabTypeDomainModel, Never>
     private let startingTab: DashboardTabTypeDomainModel = .favorites
@@ -38,9 +38,7 @@ class DashboardFlow: NSObject, Flow, ToolNavigationFlow {
         self.rootController = rootController
         
         dashboardTabObserver = CurrentValueSubject(startingTab)
-        
-        super.init()
-        
+                
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()
             .getLanguagePublisher()
@@ -48,9 +46,7 @@ class DashboardFlow: NSObject, Flow, ToolNavigationFlow {
     }
     
     func navigate(step: FlowStep) {
-     
-        navigationController.delegate = self
-        
+             
         switch step {
                         
         case .menuTappedFromTools:
@@ -328,24 +324,6 @@ class DashboardFlow: NSObject, Flow, ToolNavigationFlow {
     }
 }
 
-// MARK: - UINavigationControllerDelegate
-
-extension DashboardFlow: UINavigationControllerDelegate {
-    
-    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-        
-        let isDashboard: Bool = viewController is AppHostingController<DashboardView>
-        let isLesson: Bool = viewController is LessonView
-        let hidesNavigationBar: Bool = isDashboard || isLesson
-        
-        if isDashboard {
-            configureNavBarForDashboard()
-        }
-        
-        navigationController.setNavigationBarHidden(hidesNavigationBar, animated: false)
-    }
-}
-
 // MARK: - Dashboard
 
 extension DashboardFlow {
@@ -385,7 +363,7 @@ extension DashboardFlow {
         return hostingController
     }
     
-    private func configureNavBarForDashboard() {
+    func configureNavBarForDashboard() {
         
         GodToolsSceneDelegate.setWindowBackgroundColorForStatusBarColor(color: AppFlow.defaultNavBarColor)
                 
