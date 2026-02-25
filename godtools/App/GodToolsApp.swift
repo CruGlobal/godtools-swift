@@ -53,6 +53,9 @@ struct GodToolsApp: App {
         
         if Self.appLaunchType == .uiTests {
             
+            //disable UIKit animations
+            UIView.setAnimationsEnabled(false)
+            
             deepLink = Self.processUITestsDeepLink()
             
             Self.appDiContainer
