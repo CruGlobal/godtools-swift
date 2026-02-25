@@ -15,6 +15,7 @@ final class UITestsRealmObjects {
     static let fslTract: String = "ui_test_resource_2"
     static let tmtsEnTranslation: String = "tmts_en_translation"
     static let tmtsManifest: String = "tmts_manifest"
+    static let fslEnTranslation: String = "fsl_en_translation"
     static let fslManifest: String = "fsl_manifest"
     
     static func getAllObjects() -> [Object] {
@@ -186,7 +187,7 @@ extension UITestsRealmObjects {
         
         let object = RealmTranslation()
         
-        object.id = "fsl_en_translation"
+        object.id = Self.fslEnTranslation
         object.isPublished = true
         object.manifestName = Self.fslManifest
         object.version = 1
