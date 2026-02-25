@@ -39,20 +39,16 @@ import Combine
     @Published private var toolFilterLanguageSelection: ToolFilterLanguageDomainModel = ToolFilterAnyLanguageDomainModel.emptyValue
     @Published private var localizationSettings: UserLocalizationSettingsDomainModel?
     
-    @Published private(set) var toggleOptions: [PersonalizationToggleOption] = []
+    @Published private(set) var toggleOptions: [PersonalizationToggleOption] = ToolsViewModel.getToggleOptions(strings: ToolsStringsDomainModel.emptyValue)
     @Published private(set) var strings: ToolsStringsDomainModel = .emptyValue
+    @Published private(set) var showsFavoritingToolBanner: Bool = false
+    @Published private(set) var spotlightTools: [SpotlightToolListItemDomainModel] = Array()
+    @Published private(set) var categoryFilterButtonTitle: String = ""
+    @Published private(set) var languageFilterButtonTitle: String = ""
+    @Published private(set) var allTools: [ToolListItemDomainModel] = Array()
+    @Published private(set) var isLoadingAllTools: Bool = true
     
     @Published var selectedToggle: PersonalizationToggleOptionValue = .personalized
-    @Published var favoritingToolBannerMessage: String = ""
-    @Published var showsFavoritingToolBanner: Bool = false
-    @Published var toolSpotlightTitle: String = ""
-    @Published var toolSpotlightSubtitle: String = ""
-    @Published var spotlightTools: [SpotlightToolListItemDomainModel] = Array()
-    @Published var filterTitle: String = ""
-    @Published var categoryFilterButtonTitle: String = ""
-    @Published var languageFilterButtonTitle: String = ""
-    @Published var allTools: [ToolListItemDomainModel] = Array()
-    @Published var isLoadingAllTools: Bool = true
         
     init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, getToolsStringsUseCase: GetToolsStringsUseCase, getAllToolsUseCase: GetAllToolsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, favoritingToolMessageCache: FavoritingToolMessageCache, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getUserToolFiltersUseCase: GetUserToolFiltersUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getToolBannerUseCase: GetToolBannerUseCase) {
         
@@ -127,17 +123,11 @@ import Combine
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (interfaceStrings: ToolsStringsDomainModel) in
+            .sink { [weak self] (strings: ToolsStringsDomainModel) in
                 
-                self?.strings = interfaceStrings
-                self?.favoritingToolBannerMessage = interfaceStrings.favoritingToolBannerMessage
-                self?.toolSpotlightTitle = interfaceStrings.toolSpotlightTitle
-                self?.toolSpotlightSubtitle = interfaceStrings.toolSpotlightSubtitle
-                self?.filterTitle = interfaceStrings.filterTitle
-                self?.toggleOptions = [
-                    PersonalizationToggleOption(title: interfaceStrings.personalizedToolToggleTitle, selection: .personalized, buttonAccessibility: .personalizedTools),
-                    PersonalizationToggleOption(title: interfaceStrings.allToolsToggleTitle, selection: .all, buttonAccessibility: .allTools)
-                ]
+                self?.strings = strings
+                
+                self?.toggleOptions = Self.getToggleOptions(strings: strings)
             }
             .store(in: &cancellables)
         
@@ -260,6 +250,14 @@ import Combine
             .sink(receiveValue: { (domainModel: ToolIsFavoritedDomainModel) in
                 
             })
+    }
+    
+    private static func getToggleOptions(strings: ToolsStringsDomainModel) -> [PersonalizationToggleOption] {
+        
+        return [
+            PersonalizationToggleOption(title: strings.personalizedToolToggleTitle, selection: .personalized, buttonAccessibility: .personalizedTools),
+            PersonalizationToggleOption(title: strings.allToolsToggleTitle, selection: .all, buttonAccessibility: .allTools)
+        ]
     }
 }
 
