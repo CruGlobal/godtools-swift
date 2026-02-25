@@ -27,7 +27,9 @@ class DownloadToolLanguageRepository: DownloadToolLanguageRepositoryInterface {
         downloadedLanguagesRepository.storeDownloadedLanguage(languageId: languageId, downloadComplete: false)
         
         return toolLanguageDownloader
-            .downloadToolLanguagePublisher(languageId: languageId)
+            .downloadToolLanguagePublisher(
+                languageId: languageId
+            )
             .catch { (downloadError: Error) -> AnyPublisher<ToolDownloaderDataModel, Error> in
                 
                 return self.downloadedLanguagesRepository.deleteDownloadedLanguagePublisher(languageId: languageId)
@@ -44,13 +46,28 @@ class DownloadToolLanguageRepository: DownloadToolLanguageRepositoryInterface {
                     })
                     .eraseToAnyPublisher()
             }
-            .map { (dataModel: ToolDownloaderDataModel) in
+            .flatMap { (dataModel: ToolDownloaderDataModel) -> AnyPublisher<ToolDownloaderDataModel, Error> in
                 
-                let progress = dataModel.progress
+                let downloadComplete: Bool = dataModel.progress >= 1
                 
-                if progress >= 1 {
-                    self.downloadedLanguagesRepository.storeDownloadedLanguage(languageId: languageId, downloadComplete: true)
+                if downloadComplete {
+                    
+                    return self.downloadedLanguagesRepository
+                        .storeDownloadedLanguagePublisher(
+                            languageId: languageId,
+                            downloadComplete: true
+                        )
+                        .map { _ in
+                            return dataModel
+                        }
+                        .eraseToAnyPublisher()
                 }
+                
+                return Just(dataModel)
+                    .setFailureType(to: Error.self)
+                    .eraseToAnyPublisher()
+            }
+            .map { (dataModel: ToolDownloaderDataModel) in
                 
                 return dataModel.progress
             }
