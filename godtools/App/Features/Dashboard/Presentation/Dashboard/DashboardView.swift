@@ -66,7 +66,7 @@ struct DashboardView: View {
                         }
                         .environment(\.layoutDirection, .leftToRight)
                         .tabViewStyle(.page(indexDisplayMode: .never))
-                        .animation(.easeOut, value: viewModel.currentTab)
+                        .animateIfEnabled(.easeOut, value: viewModel.currentTab)
                         
                         DashboardTabBarView(
                             viewModel: viewModel
