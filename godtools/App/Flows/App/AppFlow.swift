@@ -39,7 +39,7 @@ class AppFlow: NSObject, Flow {
     let navigationController: AppNavigationController
     let rootView: AppRootView
             
-    init(appDiContainer: AppDiContainer, appDeepLinkingService: DeepLinkingService) {
+    init(appDiContainer: AppDiContainer, appDeepLinkingService: DeepLinkingService, deepLink: ParsedDeepLinkType?) {
         
         let navigationBarAppearance = AppNavigationBarAppearance(
             backgroundColor: AppFlow.defaultNavBarColor,
@@ -56,8 +56,11 @@ class AppFlow: NSObject, Flow {
         self.appMessaging = appDiContainer.dataLayer.getAppMessaging()
         self.launchCountRepository = appDiContainer.dataLayer.getLaunchCountRepository()
         self.dashboardFlow = DashboardFlow(appDiContainer: appDiContainer, sharedNavigationController: navigationController, rootController: rootController)
+        self.appLaunchedFromDeepLink = deepLink
         
         super.init()
+        
+        navigationController.delegate = self
         
         rootController.view.frame = UIScreen.main.bounds
         rootController.view.backgroundColor = .clear
@@ -246,6 +249,24 @@ class AppFlow: NSObject, Flow {
     }
 }
 
+// MARK: - UINavigationControllerDelegate
+
+extension AppFlow: UINavigationControllerDelegate {
+    
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        
+        let isDashboard: Bool = viewController is AppHostingController<DashboardView>
+        let isLesson: Bool = viewController is LessonView
+        let hidesNavigationBar: Bool = isDashboard || isLesson
+        
+        if isDashboard {
+            dashboardFlow.configureNavBarForDashboard()
+        }
+        
+        navigationController.setNavigationBarHidden(hidesNavigationBar, animated: false)
+    }
+}
+
 // MARK: - Launch
 
 extension AppFlow {
@@ -427,6 +448,9 @@ extension AppFlow {
             
         case .dashboard:
             dashboardFlow.navigateToDashboard(startingTab: .favorites)
+            
+        case .menu:
+            dashboardFlow.navigateToMenu(animated: true, initialNavigationStep: nil)
             
         case .onboarding(let appLanguage):
             

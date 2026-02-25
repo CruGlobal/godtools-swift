@@ -219,6 +219,21 @@ class ResourcesSHA256FileCache {
         return fileCacheLocation
     }
     
+    func storeTranslationFile(realm: Realm, translationId: String, fileName: String, fileData: Data) throws -> FileCacheLocation {
+                
+        let fileCacheLocation: FileCacheLocation = FileCacheLocation(relativeUrlString: fileName)
+        
+        _ = try fileCache.storeFile(location: fileCacheLocation, data: fileData)
+        
+        let storedResult: StoreResourcesFilesResult = try realmCreateStoredFileRelationshipsToTranslation(
+            realm: realm,
+            translationId: translationId,
+            fileCacheLocations: [fileCacheLocation]
+        )
+        
+        return fileCacheLocation
+    }
+    
     func storeTranslationZipFilePublisher(translationId: String, zipFileData: Data) -> AnyPublisher<[FileCacheLocation], Error> {
         
         let fileCacheLocations: [FileCacheLocation]
@@ -246,6 +261,19 @@ class ResourcesSHA256FileCache {
         let fileCacheLocations: [FileCacheLocation] = try fileCache.decompressZipFileAndStoreFileContents(zipFileData: zipFileData)
         
         let storedResult: StoreResourcesFilesResult = try await realmCreateStoredFileRelationshipsToTranslation(
+            translationId: translationId,
+            fileCacheLocations: fileCacheLocations
+        )
+        
+        return fileCacheLocations
+    }
+    
+    func storeTranslationZipFile(realm: Realm, translationId: String, zipFileData: Data) throws -> [FileCacheLocation] {
+        
+        let fileCacheLocations: [FileCacheLocation] = try fileCache.decompressZipFileAndStoreFileContents(zipFileData: zipFileData)
+        
+        let storedResult: StoreResourcesFilesResult = try realmCreateStoredFileRelationshipsToTranslation(
+            realm: realm,
             translationId: translationId,
             fileCacheLocations: fileCacheLocations
         )
@@ -292,55 +320,70 @@ class ResourcesSHA256FileCache {
                 
             case .success(let realm):
                 
-                guard let realmTranslation = realm.object(ofType: RealmTranslation.self, forPrimaryKey: translationId) else {
-                    
-                    let error: Error = NSError.errorWithDescription(description: "Failed to create file relationships because a translation object does not exist in realm.")
-                    
-                    completion(.failure(error))
-    
-                    return
-                }
-                
                 do {
                     
-                    try realm.write {
-
-                        for location in fileCacheLocations {
-                                  
-                            guard let filenameWithPathExtension = location.filenameWithPathExtension else {
-                                continue
-                            }
-                            
-                            if let existingRealmSHA256File = realm.object(ofType: RealmSHA256File.self, forPrimaryKey: filenameWithPathExtension), !existingRealmSHA256File.translations.contains(realmTranslation) {
-                                
-                                existingRealmSHA256File.translations.append(realmTranslation)
-                            }
-                            else {
-                                
-                                let newRealmSHA256File: RealmSHA256File = RealmSHA256File()
-                                newRealmSHA256File.sha256WithPathExtension = filenameWithPathExtension
-                                newRealmSHA256File.translations.append(realmTranslation)
-                                
-                                realm.add(newRealmSHA256File, update: .all)
-                            }
-                        }
-                    }
-                    
-                    let storeResourcesFilesResult = StoreResourcesFilesResult(
-                        storedFiles: fileCacheLocations,
-                        deleteResourcesFilesResult: try self.deleteUnusedResourceFiles(realm: realm)
+                    let result = try self.realmCreateStoredFileRelationshipsToTranslation(
+                        realm: realm,
+                        translationId: translationId,
+                        fileCacheLocations: fileCacheLocations
                     )
                     
-                    completion(.success(storeResourcesFilesResult))
+                    completion(.success(result))
                 }
                 catch let error {
-                    
                     completion(.failure(error))
                 }
                 
             case .failure(let error):
                 completion(.failure(error))
             }
+        }
+    }
+    
+    private func realmCreateStoredFileRelationshipsToTranslation(realm: Realm, translationId: String, fileCacheLocations: [FileCacheLocation]) throws -> StoreResourcesFilesResult {
+        
+        guard let realmTranslation = realm.object(ofType: RealmTranslation.self, forPrimaryKey: translationId) else {
+            
+            let error: Error = NSError.errorWithDescription(description: "Failed to create file relationships because a translation object does not exist in realm.")
+            
+            throw error
+        }
+        
+        do {
+            
+            try realm.write {
+
+                for location in fileCacheLocations {
+                          
+                    guard let filenameWithPathExtension = location.filenameWithPathExtension else {
+                        continue
+                    }
+                    
+                    if let existingRealmSHA256File = realm.object(ofType: RealmSHA256File.self, forPrimaryKey: filenameWithPathExtension), !existingRealmSHA256File.translations.contains(realmTranslation) {
+                        
+                        existingRealmSHA256File.translations.append(realmTranslation)
+                    }
+                    else {
+                        
+                        let newRealmSHA256File: RealmSHA256File = RealmSHA256File()
+                        newRealmSHA256File.sha256WithPathExtension = filenameWithPathExtension
+                        newRealmSHA256File.translations.append(realmTranslation)
+                        
+                        realm.add(newRealmSHA256File, update: .all)
+                    }
+                }
+            }
+            
+            let storeResourcesFilesResult = StoreResourcesFilesResult(
+                storedFiles: fileCacheLocations,
+                deleteResourcesFilesResult: try self.deleteUnusedResourceFiles(realm: realm)
+            )
+            
+            return storeResourcesFilesResult
+        }
+        catch let error {
+            
+            throw error
         }
     }
     

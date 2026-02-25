@@ -135,8 +135,8 @@ import Combine
                 self?.toolSpotlightSubtitle = interfaceStrings.toolSpotlightSubtitle
                 self?.filterTitle = interfaceStrings.filterTitle
                 self?.toggleOptions = [
-                    PersonalizationToggleOption(title: interfaceStrings.personalizedToolToggleTitle, selection: .personalized),
-                    PersonalizationToggleOption(title: interfaceStrings.allToolsToggleTitle, selection: .all)
+                    PersonalizationToggleOption(title: interfaceStrings.personalizedToolToggleTitle, selection: .personalized, buttonAccessibility: .personalizedTools),
+                    PersonalizationToggleOption(title: interfaceStrings.allToolsToggleTitle, selection: .all, buttonAccessibility: .allTools)
                 ]
             }
             .store(in: &cancellables)

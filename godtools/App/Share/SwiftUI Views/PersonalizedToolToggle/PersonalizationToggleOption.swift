@@ -9,6 +9,8 @@
 import Foundation
 
 struct PersonalizationToggleOption {
+    
     let title: String
     let selection: PersonalizationToggleOptionValue
+    let buttonAccessibility: AccessibilityStrings.Button
 }

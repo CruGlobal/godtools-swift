@@ -14,13 +14,9 @@ class MenuFlowTests: BaseFlowTests {
     private func launchAppToMenu() {
         
         super.launchApp(
-            flowDeepLinkUrl: "godtools://org.cru.godtools/dashboard/tools",
-            checkInitialScreenExists: .dashboardTools
+            flowDeepLinkUrl: "godtools://org.cru.godtools/ui_tests/menu",
+            checkInitialScreenExists: .menu
         )
-        
-        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .dashboardMenu)
-        
-        assertIfScreenDoesNotExist(screenAccessibility: .menu)
     }
     
     func testInitialScreenIsMenu() {
@@ -44,6 +40,15 @@ class MenuFlowTests: BaseFlowTests {
         assertIfButtonDoesNotExistElseTap(buttonAccessibility: .languageSettings)
         
         assertIfScreenDoesNotExist(screenAccessibility: .languageSettings)
+    }
+    
+    func testNavigationToLocalizationSettings() {
+        
+        launchAppToMenu()
+        
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .localizationSettings)
+        
+        assertIfScreenDoesNotExist(screenAccessibility: .localizationSettings)
     }
     
     func testNavigationToCreateAccount() {

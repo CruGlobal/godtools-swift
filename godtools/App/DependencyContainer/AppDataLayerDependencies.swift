@@ -543,6 +543,13 @@ class AppDataLayerDependencies {
             trackActionAnalytics: getAnalytics().trackActionAnalytics
         )
     }
+    
+    func getUITestsInitialDataLoader() -> UITestsInitialDataLoader {
+        return UITestsInitialDataLoader(
+            realmDatabase: getSharedRealmDatabase(),
+            resourcesFileCache: getResourcesFileCache()
+        )
+    }
 
     func getUserAuthentication() -> UserAuthentication {
                 
