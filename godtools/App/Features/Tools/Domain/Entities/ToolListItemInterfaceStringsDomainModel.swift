@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ToolListItemInterfaceStringsDomainModel {
+struct ToolListItemInterfaceStringsDomainModel: Sendable {
     
     let openToolActionTitle: String
     let openToolDetailsActionTitle: String

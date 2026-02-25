@@ -475,8 +475,8 @@ extension MenuFlow {
             presentAuthViewController: navigationController,
             authenticationType: authenticationType,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getSocialCreateAccountInterfaceStringsUseCase: appDiContainer.feature.account.domainLayer.getSocialCreateAccountInterfaceStringsUseCase(),
-            getSocialSignInInterfaceStringsUseCase: appDiContainer.feature.account.domainLayer.getSocialSignInInterfaceStringsUseCase(),
+            getSocialCreateAccountStringsUseCase: appDiContainer.feature.account.domainLayer.getSocialCreateAccountStringsUseCase(),
+            getSocialSignInStringsUseCase: appDiContainer.feature.account.domainLayer.getSocialSignInStringsUseCase(),
             authenticateUserUseCase: appDiContainer.feature.account.domainLayer.getAuthenticateUserUseCase()
         )
         
@@ -580,7 +580,7 @@ extension MenuFlow {
             getUserActivityUseCase: appDiContainer.feature.userActivity.domainLayer.getUserActivityUseCase(),
             viewGlobalActivityThisWeekUseCase: appDiContainer.feature.globalActivity.domainLayer.getViewGlobalActivityThisWeekUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-            viewAccountUseCase: appDiContainer.feature.account.domainLayer.getViewAccountUseCase(),
+            getAccountStringsUseCase: appDiContainer.feature.account.domainLayer.getAccountStringsUseCase(),
             getGlobalActivityEnabledUseCase: appDiContainer.feature.globalActivity.domainLayer.getGlobalActivityEnabledUseCase()
         )
         
@@ -618,7 +618,7 @@ extension MenuFlow {
         let viewModel = DeleteAccountViewModel(
             flowDelegate: self,
             getCurrentAppLanguage: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewDeleteAccountUseCase: appDiContainer.feature.account.domainLayer.getViewDeleteAccountUseCase()
+            getDeleteAccountStringsUseCase: appDiContainer.feature.account.domainLayer.getDeleteAccountStringsUseCase()
         )
         
         let view = DeleteAccountView(viewModel: viewModel, backgroundColor: viewBackgroundColor)
@@ -684,7 +684,7 @@ extension MenuFlow {
         let viewModel = DeleteAccountProgressViewModel(
             flowDelegate: self,
             getCurrentAppLanguage: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewDeleteAccountProgressUseCase: appDiContainer.feature.account.domainLayer.getViewDeleteAccountProgressUseCase(),
+            getDeleteAccountProgressStringsUseCase: appDiContainer.feature.account.domainLayer.getDeleteAccountProgressStringsUseCase(),
             deleteAccountUseCase: appDiContainer.feature.account.domainLayer.getDeleteAccountUseCase()
         )
         

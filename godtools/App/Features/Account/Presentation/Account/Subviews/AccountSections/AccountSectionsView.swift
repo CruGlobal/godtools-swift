@@ -47,9 +47,9 @@ struct AccountSectionsView: View {
         let segmentTitles: [String] = accountSections.map({
             switch $0 {
             case .activity:
-                return viewModel.activityButtonTitle
+                return viewModel.strings.activityButtonTitle
             case .globalActivity:
-                return viewModel.globalActivityButtonTitle
+                return viewModel.strings.globalActivityButtonTitle
             }
         })
         

@@ -18,11 +18,11 @@ class GetOnboardingTutorialInterfaceStringsRepository: GetOnboardingTutorialInte
         self.localizationServices = localizationServices
     }
     
-    func getStringsPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<OnboardingTutorialInterfaceStringsDomainModel, Never> {
+    func getStringsPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<OnboardingTutorialStringsDomainModel, Never> {
         
         let localeId: String = appLanguage
         
-        let interfaceStrings = OnboardingTutorialInterfaceStringsDomainModel(
+        let interfaceStrings = OnboardingTutorialStringsDomainModel(
             chooseAppLanguageButtonTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "onboardingTutorial.chooseLanguageButton.title"),
             beginTutorialButtonTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "onboardingTutorial.beginButton.title"),
             nextTutorialPageButtonTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "onboardingTutorial.nextButton.title"),

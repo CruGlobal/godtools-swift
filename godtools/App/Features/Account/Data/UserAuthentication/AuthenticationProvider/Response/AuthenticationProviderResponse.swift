@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct AuthenticationProviderResponse {
+struct AuthenticationProviderResponse: Sendable {
  
     let accessToken: String?
     let appleSignInAuthorizationCode: String?

@@ -48,6 +48,22 @@ struct GodToolsApp: App {
     @UIApplicationDelegateAdaptor private var appDelegate: GodToolsAppDelegate
 
     init() {
+        
+        let deepLink: ParsedDeepLinkType?
+        
+        if Self.appLaunchType == .uiTests {
+            
+            deepLink = Self.processUITestsDeepLink()
+            
+            Self.appDiContainer
+                .dataLayer
+                .getUITestsInitialDataLoader()
+                .loadData()
+        }
+        else {
+            
+            deepLink = nil
+        }
 
         if Self.appConfig.firebaseEnabled {
             Self.appDiContainer.dataLayer.getFirebaseConfiguration().configure()
@@ -59,7 +75,8 @@ struct GodToolsApp: App {
         
         appFlow = AppFlow(
             appDiContainer: Self.appDiContainer,
-            appDeepLinkingService: Self.appDeepLinkingService
+            appDeepLinkingService: Self.appDeepLinkingService,
+            deepLink: deepLink
         )
         
         if Self.appConfig.buildConfig == .release {
@@ -69,12 +86,10 @@ struct GodToolsApp: App {
         if Self.appConfig.firebaseEnabled {
             Self.appDiContainer.dataLayer.getAnalytics().firebaseAnalytics.configure()
         }
-
-        Self.processUITestsDeepLink()
         
         toolShortcutLinksViewModel = ToolShortcutLinksViewModel(
             getCurrentAppLanguageUseCase: Self.appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewToolShortcutLinksUseCase: Self.appDiContainer.feature.toolShortcutLinks.domainLayer.getViewToolShortcutLinksUseCase()
+            getToolShortcutLinksUseCase: Self.appDiContainer.feature.toolShortcutLinks.domainLayer.getToolShortcutLinksUseCase()
         )
     }
 
@@ -219,15 +234,17 @@ extension GodToolsApp {
 
 extension GodToolsApp {
     
-    private static func processUITestsDeepLink() {
+    private static func processUITestsDeepLink() -> ParsedDeepLinkType? {
         
         let uiTestsDeepLinkString: String? = Self.uiTestsLaunchEnvironment.getUrlDeepLink()
 
         if let uiTestsDeepLinkString = uiTestsDeepLinkString, !uiTestsDeepLinkString.isEmpty, let url = URL(string: uiTestsDeepLinkString) {
                         
-            _ = Self.appDeepLinkingService.parseDeepLinkAndNotify(
+            return Self.appDeepLinkingService.parseDeepLink(
                 incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url))
             )
         }
+        
+        return nil
     }
 }

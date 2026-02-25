@@ -12,10 +12,10 @@ import RequestOperation
 
 class RemoteUserCountersSync {
     
-    private let api: UserCountersApiInterface
+    private let api: UserCountersAPI
     private let cache: RealmUserCountersCache
         
-    init(api: UserCountersApiInterface, cache: RealmUserCountersCache) {
+    init(api: UserCountersAPI, cache: RealmUserCountersCache) {
         
         self.api = api
         self.cache = cache
@@ -30,11 +30,15 @@ class RemoteUserCountersSync {
            
             let incrementValue: Int = userCounter.incrementValue
             
-            return api.incrementUserCounterPublisher(
-                id: userCounter.id,
-                increment: incrementValue,
-                requestPriority: requestPriority
-            )
+            // TODO: Eventually remove AnyPublisher() and support async await. ~Levi
+            
+            return AnyPublisher() {
+                return try await self.api.incrementUserCounter(
+                    id: userCounter.id,
+                    increment: incrementValue,
+                    requestPriority: requestPriority
+                )
+            }
             .flatMap { (userCounterUpdatedFromRemote: UserCounterDecodable) in
                 
                 cache.syncUserCounter(

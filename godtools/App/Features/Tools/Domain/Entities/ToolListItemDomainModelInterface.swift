@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ToolListItemDomainModelInterface {
+protocol ToolListItemDomainModelInterface: Sendable {
     
     var interfaceStrings: ToolListItemInterfaceStringsDomainModel { get }
     var analyticsToolAbbreviation: String { get }

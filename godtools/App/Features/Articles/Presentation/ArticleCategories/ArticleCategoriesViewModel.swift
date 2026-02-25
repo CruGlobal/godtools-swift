@@ -86,7 +86,10 @@ extension ArticleCategoriesViewModel {
         
         if pageViewCount == 0 {
             
-            incrementUserCounterUseCase.incrementUserCounter(for: .toolOpen(tool: resource.id))
+            incrementUserCounterUseCase
+                .execute(
+                    interaction: .toolOpen(tool: resource.id)
+                )
                 .receive(on: DispatchQueue.main)
                 .sink { _ in
                     

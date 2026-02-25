@@ -135,8 +135,8 @@ import Combine
                 self?.toolSpotlightSubtitle = interfaceStrings.toolSpotlightSubtitle
                 self?.filterTitle = interfaceStrings.filterTitle
                 self?.toggleOptions = [
-                    PersonalizationToggleOption(title: interfaceStrings.personalizedToolToggleTitle, selection: .personalized),
-                    PersonalizationToggleOption(title: interfaceStrings.allToolsToggleTitle, selection: .all)
+                    PersonalizationToggleOption(title: interfaceStrings.personalizedToolToggleTitle, selection: .personalized, buttonAccessibility: .personalizedTools),
+                    PersonalizationToggleOption(title: interfaceStrings.allToolsToggleTitle, selection: .all, buttonAccessibility: .allTools)
                 ]
             }
             .store(in: &cancellables)
@@ -253,7 +253,9 @@ import Combine
     private func toggleToolIsFavorited(toolId: String) {
         
         ToolsViewModel.favoriteToolCancellables[toolId] = toggleToolFavoritedUseCase
-            .toggleFavoritedPublisher(toolId: toolId)
+            .execute(
+                toolId: toolId
+            )
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { (domainModel: ToolIsFavoritedDomainModel) in
                 
