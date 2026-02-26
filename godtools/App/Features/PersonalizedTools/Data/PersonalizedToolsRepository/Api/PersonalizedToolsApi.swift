@@ -12,13 +12,16 @@ import Combine
 
 final class PersonalizedToolsApi {
     
-    static let fieldsResourceQueryName: String = "fields[resource]"
+    typealias TwoLetterCountryCode = String
+    typealias TwoLetterLanguageCode = String
     
     enum QueryName: String {
         case country = "country"
         case language = "lang"
         case resourceType = "resource_type"
     }
+    
+    private static let fieldsQueryItem = URLQueryItem(name: "fields[resource]", value: "")
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let urlSessionPriority: URLSessionPriority
@@ -32,19 +35,17 @@ final class PersonalizedToolsApi {
         baseUrl = config.getMobileContentApiBaseUrl()
     }
     
-    private func getAllRankedResourcesUrlRequest(urlSession: URLSession, country: String?, language: String?, resouceType: ResourceType?) -> URLRequest {
+    private func getAllRankedResourcesUrlRequest(urlSession: URLSession, country: TwoLetterCountryCode?, language: TwoLetterLanguageCode?, resourceType: ResourceType?) -> URLRequest {
         
         var queryItems: [URLQueryItem]? = JsonApiFilter.buildQueryItems(
             nameValues: [
                 QueryName.country.rawValue: [country],
                 QueryName.language.rawValue: [language],
-                QueryName.resourceType.rawValue: [resouceType?.rawValue]
+                QueryName.resourceType.rawValue: [resourceType?.rawValue]
             ]
         )
-        
-        let fieldsParam = URLQueryItem(name: PersonalizedToolsApi.fieldsResourceQueryName, value: "")
-        
-        queryItems?.append(fieldsParam)
+                
+        queryItems?.append(Self.fieldsQueryItem)
         
         return requestBuilder
             .build(
@@ -59,7 +60,7 @@ final class PersonalizedToolsApi {
             )
     }
     
-    private func getDefaultOrderResourcesUrlRequest(urlSession: URLSession, language: String?, resouceType: ResourceType?) -> URLRequest {
+    private func getDefaultOrderResourcesUrlRequest(urlSession: URLSession, language: TwoLetterLanguageCode?, resouceType: ResourceType?) -> URLRequest {
         
         var queryItems: [URLQueryItem]? = JsonApiFilter.buildQueryItems(
             nameValues: [
@@ -68,9 +69,7 @@ final class PersonalizedToolsApi {
             ]
         )
         
-        let fieldsParam = URLQueryItem(name: PersonalizedToolsApi.fieldsResourceQueryName, value: "")
-        
-        queryItems?.append(fieldsParam)
+        queryItems?.append(Self.fieldsQueryItem)
         
         return requestBuilder
             .build(
@@ -85,7 +84,7 @@ final class PersonalizedToolsApi {
             )
     }
     
-    func getAllRankedResourcesPublisher(requestPriority: RequestPriority, country: String?, language: String?, resouceType: ResourceType?) -> AnyPublisher<[ResourceCodable], Error> {
+    func getAllRankedResourcesPublisher(requestPriority: RequestPriority, country: TwoLetterCountryCode?, language: TwoLetterLanguageCode?, resourceType: ResourceType?) -> AnyPublisher<[ResourceCodable], Error> {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
@@ -93,7 +92,7 @@ final class PersonalizedToolsApi {
             urlSession: urlSession,
             country: country,
             language: language,
-            resouceType: resouceType
+            resourceType: resourceType
         )
         
         return requestSender
@@ -107,7 +106,7 @@ final class PersonalizedToolsApi {
             .eraseToAnyPublisher()
     }
     
-    func getDefaultOrderResourcesPublisher(requestPriority: RequestPriority, language: String?, resouceType: ResourceType?) -> AnyPublisher<[ResourceCodable], Error> {
+    func getDefaultOrderResourcesPublisher(requestPriority: RequestPriority, language: TwoLetterLanguageCode?, resouceType: ResourceType?) -> AnyPublisher<[ResourceCodable], Error> {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         

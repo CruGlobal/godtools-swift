@@ -11,19 +11,20 @@ import Combine
 
 @MainActor class LessonSwipeTutorialViewModel: ObservableObject {
     
-    private weak var flowDelegate: FlowDelegate?
-    private let getInterfaceStringsUseCase: GetLessonSwipeTutorialInterfaceStringsUseCase
+    private let getStringsUseCase: GetLessonSwipeTutorialStringsUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
+    
+    private weak var flowDelegate: FlowDelegate?
 
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     
-    @Published var interfaceStrings: LessonSwipeTutorialInterfaceStringsDomainModel = LessonSwipeTutorialInterfaceStringsDomainModel.emptyStrings()
+    @Published private(set) var strings: LessonSwipeTutorialStringsDomainModel = LessonSwipeTutorialStringsDomainModel.emptyValue
 
-    init(flowDelegate: FlowDelegate, getInterfaceStringsUseCase: GetLessonSwipeTutorialInterfaceStringsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase) {
+    init(flowDelegate: FlowDelegate, getStringsUseCase: GetLessonSwipeTutorialStringsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase) {
         self.flowDelegate = flowDelegate
-        self.getInterfaceStringsUseCase = getInterfaceStringsUseCase
+        self.getStringsUseCase = getStringsUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         
         getCurrentAppLanguageUseCase
@@ -34,18 +35,22 @@ import Combine
         $appLanguage
             .dropFirst()
             .map { appLanguage in
-                getInterfaceStringsUseCase.getStringsPublisher(appLanguage: appLanguage)
+                getStringsUseCase
+                    .execute(translateInLanguage: appLanguage)
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] interfaceStrings in
+            .sink { [weak self] (strings: LessonSwipeTutorialStringsDomainModel) in
                 
-                self?.interfaceStrings = interfaceStrings
+                self?.strings = strings
             }
             .store(in: &cancellables)
     }
-    
-    // MARK: - Input
+}
+
+// MARK: - Inputs
+
+extension LessonSwipeTutorialViewModel {
     
     func dismissTutorial() {
         flowDelegate?.navigate(step: .closeLessonSwipeTutorial)

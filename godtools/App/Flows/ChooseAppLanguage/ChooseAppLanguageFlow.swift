@@ -50,8 +50,10 @@ class ChooseAppLanguageFlow: Flow {
             
             ChooseAppLanguageFlow.setAppLanguageInBackgroundCancellable = setAppLanguageUseCase.setLanguagePublisher(language: appLanguage.language)
                 .receive(on: DispatchQueue.main)
-                .sink(receiveValue: { _ in
-
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { _ in
+                    
                 })
             
             navigationController.dismiss(animated: true)
@@ -88,7 +90,7 @@ extension ChooseAppLanguageFlow {
         let backButton = AppBackBarItem(
             target: viewModel,
             action: #selector(viewModel.backTapped),
-            accessibilityIdentifier: nil
+            accessibilityIdentifier: AccessibilityStrings.Button.appLanguagesNavBack.id
         )
         
         let hostingView = AppHostingController<AppLanguagesView>(

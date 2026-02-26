@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import GodToolsShared
 
-class IncrementUserCounterUseCase {
+final class IncrementUserCounterUseCase {
     
     enum UserCounterInteraction {
         case articleOpen(uri: String)
@@ -34,15 +34,15 @@ class IncrementUserCounterUseCase {
         self.userCountersRepository = userCountersRepository
     }
     
-    func incrementUserCounter(for interaction: UserCounterInteraction) -> AnyPublisher<UserCounterDomainModel, Error> {
-        
+    func execute(interaction: UserCounterInteraction) -> AnyPublisher<UserCounterDomainModel, Error> {
+            
         guard let userCounterId = getUserCounterId(for: interaction) else {
             
             return Fail(error: UserCounterError.invalidUserCounterId)
                 .eraseToAnyPublisher()
         }
         
-        return userCountersRepository.incrementCachedUserCounterBy1(id: userCounterId)
+        return userCountersRepository.incrementCachedUserCounterBy1Publisher(id: userCounterId)
             .flatMap { (userCounterDataModels: [UserCounterDataModel]) in
                 
                 let userCounterDomainModel: UserCounterDomainModel
@@ -104,5 +104,4 @@ class IncrementUserCounterUseCase {
         
         return userCounterId
     }
-    
 }

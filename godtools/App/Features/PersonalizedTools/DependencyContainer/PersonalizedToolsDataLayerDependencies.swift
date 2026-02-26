@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RepositorySync
 
 class PersonalizedToolsDataLayerDependencies {
     
@@ -21,24 +22,65 @@ class PersonalizedToolsDataLayerDependencies {
 
         return LocalizationSettingsCountriesRepository()
     }
-    
-    func getPersonalizedToolsRepository() -> PersonalizedToolsRepository {
 
+    func getPersonalizedLessonsRepository() -> PersonalizedLessonsRepository {
+
+        let persistence: any Persistence<PersonalizedLessonsDataModel, PersonalizedLessonsDataModel>
+        
+        if #available(iOS 17.4, *), let database = coreDataLayer.getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                dataModelMapping: SwiftPersonalizedLessonsMapping()
+            )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                database: coreDataLayer.getSharedRealmDatabase(),
+                dataModelMapping: RealmPersonalizedLessonsMapping()
+            )
+        }
+        
         let api = PersonalizedToolsApi(
             config: coreDataLayer.getAppConfig(),
             urlSessionPriority: coreDataLayer.getSharedUrlSessionPriority(),
             requestSender: coreDataLayer.getRequestSender()
         )
+        
+        let cache = PersonalizedLessonsCache(
+            persistence: persistence
+        )
 
-        return PersonalizedToolsRepository(
-            api: api
+        return PersonalizedLessonsRepository(
+            persistence: persistence,
+            api: api,
+            cache: cache
         )
     }
 
     func getUserLocalizationSettingsRepository() -> UserLocalizationSettingsRepository {
-
+        
+        let persistence: any Persistence<UserLocalizationSettingsDataModel, UserLocalizationSettingsDataModel>
+        
+        if #available(iOS 17.4, *), let database = coreDataLayer.getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                dataModelMapping: SwiftUserLocalizationSettingsDataModelMapping()
+            )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                database: coreDataLayer.getSharedRealmDatabase(),
+                dataModelMapping: RealmUserLocalizationSettingsDataModelMapping()
+            )
+        }
+        
         return UserLocalizationSettingsRepository(
-            cache: RealmUserLocalizationSettingsCache(realmDatabase: coreDataLayer.getSharedLegacyRealmDatabase())
+            persistence: persistence,
+            cache: UserLocalizationSettingsCache(persistence: persistence)
         )
     }
 }

@@ -66,7 +66,7 @@ struct DashboardView: View {
                         }
                         .environment(\.layoutDirection, .leftToRight)
                         .tabViewStyle(.page(indexDisplayMode: .never))
-                        .animation(.easeOut, value: viewModel.currentTab)
+                        .animateIfEnabled(.easeOut, value: viewModel.currentTab)
                         
                         DashboardTabBarView(
                             viewModel: viewModel
@@ -131,7 +131,7 @@ struct DashboardView_Previews: PreviewProvider {
             flowDelegate: Self.flowDelegate,
             dashboardPresentationLayerDependencies: Self.dashboardDependencies,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewDashboardUseCase: appDiContainer.feature.dashboard.domainLayer.getViewDashboardUseCase(),
+            getDashboardStringsUseCase: appDiContainer.feature.dashboard.domainLayer.getDashboardStringsUseCase(),
             dashboardTabObserver: CurrentValueSubject(.favorites)
         )
         

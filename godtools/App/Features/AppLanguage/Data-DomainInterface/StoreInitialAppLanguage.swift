@@ -22,16 +22,19 @@ class StoreInitialAppLanguage: StoreInitialAppLanguageInterface {
         self.appLanguagesRepository = appLanguagesRepository
     }
     
-    func storeInitialAppLanguagePublisher() -> AnyPublisher<AppLanguageDomainModel, Never> {
+    func storeInitialAppLanguagePublisher() -> AnyPublisher<AppLanguageDomainModel, Error> {
         
         return Publishers.CombineLatest(
-            userAppLanguageRepository.getLanguagePublisher(),
-            appLanguagesRepository.getLanguagesPublisher()
+            userAppLanguageRepository
+                .getCachedLanguagePublisher(),
+            appLanguagesRepository
+                .getLanguagesPublisher()
         )
-        .flatMap({ (userAppLanguage: UserAppLanguageDataModel?, appLanguages: [AppLanguageDataModel]) -> AnyPublisher<AppLanguageDomainModel, Never> in
+        .flatMap({ (userAppLanguage: UserAppLanguageDataModel?, appLanguages: [AppLanguageDataModel]) -> AnyPublisher<AppLanguageDomainModel, Error> in
             
             if let userAppLanguage = userAppLanguage {
                 return Just(userAppLanguage.languageId)
+                    .setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             }
             
@@ -51,8 +54,10 @@ class StoreInitialAppLanguage: StoreInitialAppLanguageInterface {
             }
             
             return self.userAppLanguageRepository
-                .storeLanguagePublisher(appLanguageId: appLanguageToStore)
-                .map { (success: Bool) in
+                .storeLanguagePublisher(
+                    appLanguageId: appLanguageToStore
+                )
+                .map { _ in
                     appLanguageToStore
                 }
                 .eraseToAnyPublisher()

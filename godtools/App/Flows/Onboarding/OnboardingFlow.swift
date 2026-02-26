@@ -14,6 +14,7 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
     
     @Published private var currentAppLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
+    private var didPromptForAppLanguage: Bool = false
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
@@ -66,8 +67,17 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
         case .chooseAppLanguageTappedFromOnboardingTutorial:
             navigateToChooseAppLanguageFlow()
             
-        case .chooseAppLanguageFlowCompleted( _):
-            navigateBackFromChooseAppLanguageFlow()
+        case .chooseAppLanguageFlowCompleted(let state):
+            
+            switch state {
+            
+            case .userClosedChooseAppLanguage:
+                navigateBackFromChooseAppLanguageFlow()
+            
+            case .userChoseAppLanguage(let appLanguage):
+                let localizationSettings = getLocalizationSettingsView()
+                navigationController.pushViewController(localizationSettings, animated: true)
+            }
             
         case .videoButtonTappedFromOnboardingTutorial(let youtubeVideoId):
             presentWatchOnboardingTutorialVideoPlayer(youtubeVideoId: youtubeVideoId)
@@ -80,6 +90,59 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
             
         case .skipTappedFromOnboardingTutorial:
             flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: nil))
+            
+        case .continueTappedFromTutorial:
+            
+            guard let onboardingTutorialView = self.onboardingTutorialView else {
+                return
+            }
+            
+            let page: OnboardingTutorialPage? = onboardingTutorialView.getCurrentPage()
+            let lastPage: Int = onboardingTutorialView.getPageCount() - 1
+            let currentPage: Int = onboardingTutorialView.getCurrentPageIndex()
+            let reachedEnd = currentPage >= lastPage
+            
+            if reachedEnd {
+                
+                navigate(step: .endTutorialFromOnboardingTutorial)
+                
+                if let page = page {
+                    
+                    let pageAnalytics: OnboardingTutorialPageAnalyticsProperties = onboardingTutorialView.getOnboardingTutorialPageAnalyticsProperties(
+                        page: page
+                    )
+                    
+                    appDiContainer.domainLayer.getTrackActionAnalyticsUseCase().trackAction(
+                        screenName: pageAnalytics.screenName,
+                        actionName: "Onboarding Start",
+                        siteSection: pageAnalytics.siteSection,
+                        siteSubSection: pageAnalytics.siteSubsection,
+                        appLanguage: nil,
+                        contentLanguage: pageAnalytics.contentLanguage,
+                        contentLanguageSecondary: pageAnalytics.contentLanguageSecondary,
+                        url: nil,
+                        data: [AnalyticsConstants.Keys.onboardingStart: 1]
+                    )
+                }
+            }
+            else if !reachedEnd && !didPromptForAppLanguage {
+                
+                didPromptForAppLanguage = true
+                
+                navigateToChooseAppLanguageFlow()
+            }
+            else {
+                
+                onboardingTutorialView.setCurrentPage(page: currentPage + 1)
+            }
+            
+        case .backTappedFromLocalizationSettings:
+            navigationController.popViewController(animated: true)
+            
+        case .didSelectLocalizationFromLocalizationSettings(let localization):
+            // TODO: Add confirmation popup. ~Levi
+            // See Figma (https://www.figma.com/design/gdsgXh4cAeBAVrJzH7YoEOU6/GodTools-app-master-file?node-id=14999-2173&t=NLq4O0aCCH1N5Ou7-0)
+            break
             
         case .endTutorialFromOnboardingTutorial:
             flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: nil))
@@ -115,6 +178,17 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
 // MARK: -
 
 extension OnboardingFlow {
+    
+    private var onboardingTutorialView: OnboardingTutorialView? {
+        
+        for viewController in navigationController.viewControllers {
+            if let hosting = viewController as? AppHostingController<OnboardingTutorialView> {
+                return hosting.rootView
+            }
+        }
+        
+        return nil
+    }
     
     private func getOnboardingTutorialView() -> UIViewController {
         

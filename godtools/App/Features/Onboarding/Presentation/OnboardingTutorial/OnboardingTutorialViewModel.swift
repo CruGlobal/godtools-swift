@@ -25,7 +25,7 @@ import Combine
     private let readyForEveryConversationYoutubeVideoId: String = "RvhZ_wuxAgE"
     private let showsChooseAppLanguageButtonOnPages: [Int] = [0]
     
-    private var interfaceStrings: OnboardingTutorialInterfaceStringsDomainModel?
+    private var interfaceStrings: OnboardingTutorialStringsDomainModel?
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
@@ -33,13 +33,13 @@ import Combine
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     
     @Published private(set) var continueButtonAccessibility: AccessibilityStrings.Button = OnboardingTutorialViewModel.continueButtonContinueAccessibility
+    @Published private(set) var hidesSkipButton: Bool = true
+    @Published private(set) var chooseAppLanguageButtonTitle: String = ""
+    @Published private(set) var showsChooseLanguageButton: Bool = true
+    @Published private(set) var pages: [OnboardingTutorialPage] = Array()
+    @Published private(set) var continueButtonTitle: String = ""
     
-    @Published var hidesSkipButton: Bool = true
     @Published var currentPage: Int = 0
-    @Published var chooseAppLanguageButtonTitle: String = ""
-    @Published var showsChooseLanguageButton: Bool = true
-    @Published var pages: [OnboardingTutorialPage] = Array()
-    @Published var continueButtonTitle: String = ""
     
     init(flowDelegate: FlowDelegate, trackViewedOnboardingTutorialUseCase: TrackViewedOnboardingTutorialUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getOnboardingTutorialInterfaceStringsUseCase: GetOnboardingTutorialInterfaceStringsUseCase, trackTutorialVideoAnalytics: TutorialVideoAnalytics, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
@@ -72,7 +72,7 @@ import Combine
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (interfaceStrings: OnboardingTutorialInterfaceStringsDomainModel) in
+            .sink { [weak self] (interfaceStrings: OnboardingTutorialStringsDomainModel) in
                 
                 guard let weakSelf = self else {
                     return
@@ -108,7 +108,11 @@ import Combine
         print("x deinit: \(type(of: self))")
     }
     
-    private func getOnboardingTutorialPageAnalyticsProperties(page: OnboardingTutorialPage) -> OnboardingTutorialPageAnalyticsProperties {
+    func getPage(index: Int) -> OnboardingTutorialPage? {
+        return pages[safe: index]
+    }
+    
+    func getOnboardingTutorialPageAnalyticsProperties(page: OnboardingTutorialPage) -> OnboardingTutorialPageAnalyticsProperties {
         
         let pageOffset: Int = 2
         let pageIndex: Int = pages.firstIndex(of: page) ?? -1
@@ -245,32 +249,7 @@ extension OnboardingTutorialViewModel {
     
     func continueTapped() {
         
-        let lastPage: Int = pages.count - 1
-        
-        let reachedEnd = currentPage >= lastPage
-        
-        if reachedEnd {
-            
-            flowDelegate?.navigate(step: .endTutorialFromOnboardingTutorial)
-            
-            let pageAnalytics: OnboardingTutorialPageAnalyticsProperties = getOnboardingTutorialPageAnalyticsProperties(page: pages[currentPage])
-            
-            trackActionAnalyticsUseCase.trackAction(
-                screenName: pageAnalytics.screenName,
-                actionName: "Onboarding Start",
-                siteSection: pageAnalytics.siteSection,
-                siteSubSection: pageAnalytics.siteSubsection,
-                appLanguage: nil,
-                contentLanguage: pageAnalytics.contentLanguage,
-                contentLanguageSecondary: pageAnalytics.contentLanguageSecondary,
-                url: nil,
-                data: [AnalyticsConstants.Keys.onboardingStart: 1]
-            )
-        }
-        else {
-            
-            currentPage += 1
-        }
+        flowDelegate?.navigate(step: .continueTappedFromTutorial)
     }
     
     func watchReadyForEveryConversationVideoTapped() {

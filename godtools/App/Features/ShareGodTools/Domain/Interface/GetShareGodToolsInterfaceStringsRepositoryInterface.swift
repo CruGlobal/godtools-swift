@@ -11,5 +11,5 @@ import Combine
 
 protocol GetShareGodToolsInterfaceStringsRepositoryInterface {
     
-    func getInterfaceStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ShareGodToolsInterfaceStringsDomainModel, Never>
+    func getInterfaceStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ShareGodToolsStringsDomainModel, Never>
 }

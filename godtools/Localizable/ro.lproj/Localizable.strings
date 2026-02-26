@@ -1,6 +1,10 @@
 "deferredDeepLinkModal.title" = "Se pare că ai dat clic pe un link pentru GodTools";
 "deferredDeepLinkModal.message" = "Atingeți butonul de mai jos pentru a vă putea direcționa către conținutul solicitat.";
 
+"toolScreenShare.qrCode.closeButtonTitle" = "Închide";
+"toolScreenShare.qrCode.description" = "Scanează acest cod QR pentru a te alătura mie";
+"toolScreenShare.qrCode.title" = "Cod QR";
+
 "optInNotification.notificationSettings" = "Setarea Notificărilor";
 "lessons.swipeTutorial.title" = "Glisează pentru a schimba paginile";
 "lessons.swipeTutorial.buttonText" = "Am înțeles";
@@ -21,6 +25,8 @@
 "language_name_fil" = "Filipineză (Tagalog)";
 "lessons.filter.navBar.language" = "Limba lecției";
 "lessons.languageFilter.title" = "Lecțiile în:";
+"language_name_fil-x-taglish" = "Tagliș";
+"language_name_sid" = "Sidama";
 "onboardingTutorial.chooseLanguageButton.title" = "Alege limba";
 "languageSettings.confirmAppLanguage.message" = "Ați selectat %@ ca limbă a aplicației. Acest lucru va schimba limba întregii aplicații GodTools. Esti sigur?";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Schimbă limba";
@@ -321,6 +327,7 @@ Găsești versiunea online aici https://knowgod.com/";
 
 // Alerts
 "error" = "Eroare";
+"OK" = "OK";
 "cancel" = "Anulează";
 "required_field_missing" = "\"%@\" este un câmp obligatoriu.";
 
@@ -372,3 +379,5 @@ Găsești versiunea online aici https://knowgod.com/";
 // OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "Țări";
 "onboardingTutorial.showMoreButton.title" = "Arată-mi mai mult";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Generați cod QR";

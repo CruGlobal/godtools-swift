@@ -8,12 +8,11 @@
 
 import Foundation
 import RealmSwift
+import RepositorySync
 
-class RealmUserLocalizationSettings: Object {
+class RealmUserLocalizationSettings: Object, IdentifiableRealmObject, UserLocalizationSettingsDataModelInterface {
 
-    static let primaryKeyValue: String = "user"
-
-    @Persisted var id: String = RealmUserLocalizationSettings.primaryKeyValue
+    @Persisted var id: String = ""
     @Persisted var createdAt: Date = Date()
     @Persisted var selectedCountryIsoRegionCode: String = ""
 
@@ -21,9 +20,15 @@ class RealmUserLocalizationSettings: Object {
         return "id"
     }
 
-    func mapFrom(dataModel: UserLocalizationSettingsDataModel) {
-        id = dataModel.id
-        createdAt = dataModel.createdAt
-        selectedCountryIsoRegionCode = dataModel.selectedCountryIsoRegionCode
+    func mapFrom(interface: UserLocalizationSettingsDataModelInterface) {
+        id = interface.id
+        createdAt = interface.createdAt
+        selectedCountryIsoRegionCode = interface.selectedCountryIsoRegionCode
+    }
+    
+    static func createNewFrom(interface: UserLocalizationSettingsDataModelInterface) -> RealmUserLocalizationSettings {
+        let object = RealmUserLocalizationSettings()
+        object.mapFrom(interface: interface)
+        return object
     }
 }

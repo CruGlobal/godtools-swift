@@ -24,8 +24,7 @@ class ViewLanguageSettingsUseCase {
         
         return Publishers.CombineLatest(
             getInterfaceStringsRepository
-                .getStringsPublisher(translateInAppLanguage: appLanguage)
-                .setFailureType(to: Error.self),
+                .getStringsPublisher(translateInAppLanguage: appLanguage),
             getDownloadedLanguagesListRepositoryInterface
                 .getDownloadedLanguagesPublisher(currentAppLanguage: appLanguage)
         )

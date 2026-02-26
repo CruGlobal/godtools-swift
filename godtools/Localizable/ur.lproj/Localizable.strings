@@ -1,6 +1,10 @@
 "deferredDeepLinkModal.title" = "ایسا لگتا ہے کہ آپ نے GodTools کے لیے کسی لنک پر کلک کیا ہے۔";
 "deferredDeepLinkModal.message" = "نیچے دیئے گئے بٹن کو تھپتھپائیں تاکہ ہم آپ کو آپ کے درخواست کردہ مواد تک لے جا سکیں۔";
 
+"toolScreenShare.qrCode.closeButtonTitle" = "ہوگیا / کر لیا";
+"toolScreenShare.qrCode.description" = "میرے ساتھ شامل ہونے کے لیے اس QR کوڈ کو اسکین کریں۔";
+"toolScreenShare.qrCode.title" = "کیو آر کوڈ";
+
 "optInNotification.notificationSettings" = "نوٹیفکیشن سیٹنگز";
 "lessons.swipeTutorial.title" = "صفحات بدلنے کے لیے سوائپ کریں";
 "lessons.swipeTutorial.buttonText" = "سمجھ گیا";
@@ -21,6 +25,8 @@
 "language_name_fil" = "فلپائینی(تاگالوگ)";
 "lessons.filter.navBar.language" = "سبق کی زبان";
 "lessons.languageFilter.title" = "اسباق در:";
+"language_name_fil-x-taglish" = "ٹیگلش";
+"language_name_sid" = "سیدامہ";
 "onboardingTutorial.chooseLanguageButton.title" = "زبان منتخب کریں";
 "languageSettings.confirmAppLanguage.message" = "کو ا؛پنی اَیپ زبان%@ آپ نے کے طور پر منتخب کِیا ۔ یہ گاڈ ٹولزکی ساری زبان کو بدل دے گی ۔ کیا آپ چاہتے ہیں ؟";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "زبان تبدیل کریں";
@@ -263,6 +269,7 @@
 "language_settings" = "زبان سیٹِنگز";
 "menu.tutorial" = "تربیت";
 "menu.my_account" = "میرا اکاؤنٹ";
+"menu.localization_settings" = "نوٹیفکیشن سیٹنگز";
 
 // Login
 "login" = "لاگ اِن کریں";
@@ -335,6 +342,7 @@ https://knowgod.com";
 "tutorial.tutorialItem.0.title" = "دیکھیں";
 "general_about_2" = "یہ ٹولس آپ کی مدد کرتا ہے بھروسہ کے ساتھ سمجھانے کے لئے  کسی کو بھی کہ وہ کس طرح خداکے ساتھ یسوع مسیح کے وسیلہ سے ایک رشتہ کی شروعات کی جا سکتی ہے۔ اس کے باوجود بھی کہ آپ نے اس سے پہلے کبھی کسی سے اپنا ایمان نہ بانٹا ہو یا وہ لوگ ایک فرق زبان بولتے ہوں۔";
 "general_about_3" = "آپ اپنے ترجیح اور سامعین کی بنا پر مختلف قسم  کے اوزار کا چناؤ کریں۔ ہر کسی زبان میں تمام اوزار کا چناؤ کریں۔ ہر کسی زبان میں تمام اوزار دستیاب نہیں ہیں۔";
+"tutorial.tutorialItem.1.title" = "تیار کریں";
 "general_about_4" = "دیگر ذرائع کے لئے لنک ہر ایک اوزار کے آخر میں شامل کئے گئے ہیں۔";
 "general_about_5" = "ہر ایک نئے اوزار اور / یا زبان کے لئے آن لائن کا سلسلہ / تعلق ڈاؤن لوڈ کرنے کی ضرورت ہے۔ ایک بار جب ڈاؤن لوڈ ہو چکا تو انہیں کبھی بھی آف لائن میں استعمال کیا جا سکتاہے۔";
 "general_about_6" = "سوالات؟ صلاح مشورے ؟ درخواستیں؟  support@godtoolsapp.com میں ہمارے  ساتھ رابطہ قائم کریں۔";
@@ -375,3 +383,5 @@ https://knowgod.com";
 // OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "ممالک";
 "onboardingTutorial.showMoreButton.title" = "مزید دکھائیے ";
+
+"screenShareTutorial.generateQRCodeButton.title" = "کیو آر کوڈ بنائیں";

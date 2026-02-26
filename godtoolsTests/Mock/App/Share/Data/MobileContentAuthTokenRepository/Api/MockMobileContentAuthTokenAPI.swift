@@ -21,15 +21,12 @@ class MockMobileContentAuthTokenAPI {
 
 extension MockMobileContentAuthTokenAPI: MobileContentAuthTokenAPIInterface {
     
-    func fetchAuthTokenPublisher(providerToken: MobileContentAuthProviderToken, createUser: Bool) -> AnyPublisher<MobileContentAuthTokenDecodable, MobileContentApiError> {
+    func fetchAuthToken(providerToken: MobileContentAuthProviderToken, createUser: Bool) async throws -> Result<MobileContentAuthTokenDecodable, MobileContentApiError> {
         
         guard let token = fetchedAuthToken else {
-            return Fail(error: MobileContentApiError.other(error: NSError(domain: "TestError", code: -2, userInfo: [NSLocalizedDescriptionKey: "No mock token configured"])))
-                .eraseToAnyPublisher()
+            return .failure(MobileContentApiError.other(error: NSError(domain: "TestError", code: -2, userInfo: [NSLocalizedDescriptionKey: "No mock token configured"])))
         }
         
-        return Just(token)
-            .setFailureType(to: MobileContentApiError.self)
-            .eraseToAnyPublisher()
+        return .success(token)
     }
 }

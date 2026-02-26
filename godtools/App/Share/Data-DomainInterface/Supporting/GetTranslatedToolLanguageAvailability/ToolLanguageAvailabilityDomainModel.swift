@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ToolLanguageAvailabilityDomainModel {
+struct ToolLanguageAvailabilityDomainModel: Sendable {
     
     let availabilityString: String
     let isAvailable: Bool

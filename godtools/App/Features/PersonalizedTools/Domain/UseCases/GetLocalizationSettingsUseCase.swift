@@ -17,17 +17,40 @@ class GetLocalizationSettingsUseCase {
         self.userLocalizationSettingsRepository = userLocalizationSettingsRepository
     }
 
-    func execute() -> AnyPublisher<UserLocalizationSettingsDomainModel?, Never> {
-
-        return userLocalizationSettingsRepository.getUserLocalizationSettingPublisher()
-            .map { dataModel in
-
+    @MainActor func execute() -> AnyPublisher<UserLocalizationSettingsDomainModel?, Never> {
+        
+        return userLocalizationSettingsRepository
+            .persistence
+            .observeCollectionChangesPublisher()
+            .catch { (error: Error) in
+                return Just(Void())
+                    .eraseToAnyPublisher()
+            }
+            .flatMap { (settingsChanged: Void) -> AnyPublisher<UserLocalizationSettingsDomainModel?, Never> in
+                
+                return self.getUserLocalizationSettings()
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    private func getUserLocalizationSettings() -> AnyPublisher<UserLocalizationSettingsDomainModel?, Never> {
+        
+        return self.userLocalizationSettingsRepository
+            .getUserLocalizationSettingPublisher()
+            .catch { (error: Error) in
+                return Just(nil)
+                    .eraseToAnyPublisher()
+            }
+            .map { (dataModel: UserLocalizationSettingsDataModel?) in
+                
                 guard let dataModel = dataModel else {
                     return nil
                 }
-
+                
                 return UserLocalizationSettingsDomainModel(
-                    selectedCountryIsoRegionCode: dataModel.selectedCountryIsoRegionCode
+                    selectedCountry: LocalizationSettingsCountryDomainModel(
+                        isoRegionCode: dataModel.selectedCountryIsoRegionCode
+                    )
                 )
             }
             .eraseToAnyPublisher()

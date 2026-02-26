@@ -18,7 +18,7 @@ class StoreInitialAppLanguageUseCase {
         self.storeInitialAppLanguage = storeInitialAppLanguage
     }
     
-    func storeInitialAppLanguagePublisher() -> AnyPublisher<AppLanguageDomainModel, Never> {
+    func storeInitialAppLanguagePublisher() -> AnyPublisher<AppLanguageDomainModel, Error> {
         
         return storeInitialAppLanguage
             .storeInitialAppLanguagePublisher()

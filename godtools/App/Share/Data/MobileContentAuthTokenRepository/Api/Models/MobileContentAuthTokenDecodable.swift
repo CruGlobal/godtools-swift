@@ -8,22 +8,23 @@
 
 import Foundation
 
-struct MobileContentAuthTokenDecodable: Codable {
+struct MobileContentAuthTokenDecodable: MobileContentAuthTokenDataModelInterface, Codable {
     
-    let token: String
-    let expirationDate: Date?
-    let userId: String
     let appleRefreshToken: String?
+    let expirationDate: Date?
+    let id: String
+    let token: String
+    let userId: String
     
     enum DataKeys: String, CodingKey {
         case attributes
     }
     
     enum AttributesKeys: String, CodingKey {
-        case token
-        case expiration
-        case userId = "user-id"
         case appleRefreshToken = "apple-refresh-token"
+        case expiration
+        case token
+        case userId = "user-id"
     }
     
     init(from decoder: Decoder) throws {
@@ -35,6 +36,8 @@ struct MobileContentAuthTokenDecodable: Codable {
         token = try attributesContainer.decode(String.self, forKey: .token)
         let userIdInt = try attributesContainer.decode(Int.self, forKey: .userId)
         userId = String(userIdInt)
+        
+        id = userId
         
         let expirationDateString = try attributesContainer.decodeIfPresent(String.self, forKey: .expiration) ?? ""
         expirationDate = MobileContentAuthTokenDecodable.parseExpirationDateFromString(expirationDateString)

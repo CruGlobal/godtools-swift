@@ -1,0 +1,18 @@
+//
+//  AllYourFavoritedToolsStringsDomainModel.swift
+//  godtools
+//
+//  Created by Levi Eggert on 2/16/24.
+//  Copyright © 2024 Cru. All rights reserved.
+//
+
+import Foundation
+
+struct AllYourFavoritedToolsStringsDomainModel: Sendable {
+    
+    let sectionTitle: String
+    
+    static var emptyValue: AllYourFavoritedToolsStringsDomainModel {
+        return AllYourFavoritedToolsStringsDomainModel(sectionTitle: "")
+    }
+}

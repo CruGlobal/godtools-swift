@@ -68,6 +68,8 @@ class MobileContentLanguagesApi {
             urlSession: urlSession
         )
         
+        _ = try response.validate()
+        
         let decodeResponse: RequestCodableResponse<JsonApiResponseDataObject<LanguageCodable>, NoResponseCodable> = try response.decodeRequestDataResponseForSuccessCodable()
         
         return decodeResponse.successCodable?.dataObject
@@ -84,6 +86,8 @@ class MobileContentLanguagesApi {
             urlSession: urlSession
         )
         
+        _ = try response.validate()
+        
         let decodeResponse: RequestCodableResponse<JsonApiResponseDataArray<LanguageCodable>, NoResponseCodable> = try response.decodeRequestDataResponseForSuccessCodable()
         
         return decodeResponse.successCodable?.dataArray ?? []
@@ -95,7 +99,12 @@ class MobileContentLanguagesApi {
         
         let urlRequest: URLRequest = getLanguageRequest(urlSession: urlSession, languageId: languageId)
         
-        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
+        return requestSender
+            .sendDataTaskPublisher(
+                urlRequest: urlRequest,
+                urlSession: urlSession
+            )
+            .validate()
             .decodeRequestDataResponseForSuccessCodable()
             .map { (response: RequestCodableResponse<JsonApiResponseDataObject<LanguageCodable>, NoResponseCodable>) in
                 
@@ -111,7 +120,12 @@ class MobileContentLanguagesApi {
         
         let urlRequest: URLRequest = getLanguagesRequest(urlSession: urlSession)
         
-        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
+        return requestSender
+            .sendDataTaskPublisher(
+                urlRequest: urlRequest,
+                urlSession: urlSession
+            )
+            .validate()
             .decodeRequestDataResponseForSuccessCodable()
             .map { (response: RequestCodableResponse<JsonApiResponseDataArray<LanguageCodable>, NoResponseCodable>) in
                 
@@ -126,7 +140,7 @@ class MobileContentLanguagesApi {
 
 extension MobileContentLanguagesApi: ExternalDataFetchInterface {
     
-    func getObject(id: String, context: ExternalDataFetchContext) async throws -> [LanguageCodable] {
+    func getObject(id: String, context: RequestOperationFetchContext) async throws -> [LanguageCodable] {
         
         let language: LanguageCodable? = try await getLanguage(
             requestPriority: context.requestPriority,
@@ -140,7 +154,7 @@ extension MobileContentLanguagesApi: ExternalDataFetchInterface {
         return [language]
     }
     
-    func getObjects(context: ExternalDataFetchContext) async throws -> [LanguageCodable] {
+    func getObjects(context: RequestOperationFetchContext) async throws -> [LanguageCodable] {
         
         return try await getLanguages(requestPriority: context.requestPriority)
     }

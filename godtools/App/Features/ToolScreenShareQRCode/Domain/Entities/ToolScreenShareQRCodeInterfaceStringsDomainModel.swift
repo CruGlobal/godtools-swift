@@ -12,7 +12,7 @@ struct ToolScreenShareQRCodeInterfaceStringsDomainModel {
     let qrCodeDescription: String
     let closeButtonTitle: String
     
-    static func emptyStrings() -> ToolScreenShareQRCodeInterfaceStringsDomainModel {
+    static var emptyValue: ToolScreenShareQRCodeInterfaceStringsDomainModel {
         return ToolScreenShareQRCodeInterfaceStringsDomainModel(qrCodeDescription: "", closeButtonTitle: "")
     }
 }

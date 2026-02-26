@@ -16,6 +16,6 @@ class TutorialFeatureDiContainer {
     init(coreDataLayer: AppDataLayerDependencies) {
         
         dataLayer = TutorialFeatureDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainLayer = TutorialFeatureDomainLayerDependencies(dataLayer: dataLayer)
+        domainLayer = TutorialFeatureDomainLayerDependencies(coreDataLayer: coreDataLayer, dataLayer: dataLayer)
     }
 }
