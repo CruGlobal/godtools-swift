@@ -73,13 +73,20 @@ struct DashboardView: View {
                         )
                     }
                 }//end VStack
+
+                let menuButtonLeading: CGFloat = 20
+                
+                NavMenuButtonGradientView(
+                    menuButtonLeading: menuButtonLeading,
+                    menuButtonSize: NavMenuButton.size
+                )
                 
                 let navButtonTopPadding: CGFloat = (Self.navHeight / 2) - (NavMenuButton.size / 2)
                 
                 NavMenuButton {
                     viewModel.menuTapped()
                 }
-                .padding([.leading], 20)
+                .padding([.leading], menuButtonLeading)
                 .padding([.top], navButtonTopPadding)
             }//end ZStack
         }//end GeometryReader
