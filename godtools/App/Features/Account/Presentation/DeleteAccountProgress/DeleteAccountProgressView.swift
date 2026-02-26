@@ -28,7 +28,7 @@ struct DeleteAccountProgressView: View {
                 
                 Spacer()
                 
-                Text(viewModel.interfaceStrings.title)
+                Text(viewModel.strings.title)
                     .foregroundColor(Color.black)
                     .font(FontLibrary.sfProTextRegular.font(size: 18))
                     .multilineTextAlignment(.center)

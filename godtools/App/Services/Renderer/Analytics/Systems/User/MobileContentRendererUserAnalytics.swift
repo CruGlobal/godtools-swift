@@ -11,6 +11,8 @@ import Combine
 
 class MobileContentRendererUserAnalytics {
     
+    private static var backgroundCancellables: Set<AnyCancellable> = Set()
+    
     private let incrementUserCounterUseCase: IncrementUserCounterUseCase
     private let maxAllowedLessonCompletionIncrementsPerSession: Int = 1
     
@@ -35,13 +37,16 @@ extension MobileContentRendererUserAnalytics: MobileContentRendererAnalyticsSyst
         
         if trackLessonCompletionsCount < maxAllowedLessonCompletionIncrementsPerSession || maxAllowedLessonCompletionIncrementsPerSession == 0 {
                         
-            incrementUserCounterUseCase.incrementUserCounter(for: .lessonCompletion(mobileContentAction: action))
+            incrementUserCounterUseCase
+                .execute(
+                    interaction: .lessonCompletion(mobileContentAction: action)
+                )
                 .sink { _ in
                     
                 } receiveValue: { _ in
                     
                 }
-                .store(in: &cancellables)
+                .store(in: &Self.backgroundCancellables)
         }
         
         trackLessonCompletionsCount += 1

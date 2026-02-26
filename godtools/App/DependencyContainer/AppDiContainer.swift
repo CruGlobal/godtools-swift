@@ -26,7 +26,6 @@ class AppDiContainer {
         domainLayer = AppDomainLayerDependencies(dataLayer: dataLayer)
                 
         // feature data layer dependencies
-        let accountDataLayer = AccountDataLayerDependencies(coreDataLayer: dataLayer)
         let onboardingDataLayer = OnboardingDataLayerDependencies(coreDataLayer: dataLayer)
         let personalizedToolsDataLayer = PersonalizedToolsDataLayerDependencies(coreDataLayer: dataLayer)
         
@@ -34,7 +33,7 @@ class AppDiContainer {
         let onboardingDomainInterfaceLayer = OnboardingDomainInterfaceDependencies(coreDataLayer: dataLayer, dataLayer: onboardingDataLayer)
         
         // feature dependency containers
-        let accountDiContainer = AccountDiContainer(coreDataLayer: dataLayer, dataLayer: accountDataLayer, domainInterfaceLayer: AccountDomainInterfaceDependencies(coreDataLayer: dataLayer, dataLayer: accountDataLayer))
+        let accountDiContainer = AccountDiContainer(coreDataLayer: dataLayer)
         let appLanguageDiContainer = AppLanguageFeatureDiContainer(coreDataLayer: dataLayer)
         let dashboardDiContainer = DashboardDiContainer(coreDataLayer: dataLayer)
         let deferredDeepLinkDiContainer = DeferredDeepLinkDiContainer(coreDataLayer: dataLayer)

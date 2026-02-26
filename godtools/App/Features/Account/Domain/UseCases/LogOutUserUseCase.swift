@@ -9,27 +9,28 @@
 import UIKit
 import Combine
 
-class LogOutUserUseCase {
+final class LogOutUserUseCase {
     
     private let userAuthentication: UserAuthentication
     private let firebaseAnalytics: FirebaseAnalyticsInterface
-    private let deleteUserCountersUseCase: DeleteUserCountersUseCase
+    private let userCountersRepository: UserCountersRepository
     
-    init(userAuthentication: UserAuthentication, firebaseAnalytics: FirebaseAnalyticsInterface, deleteUserCountersUseCase: DeleteUserCountersUseCase) {
+    init(userAuthentication: UserAuthentication, firebaseAnalytics: FirebaseAnalyticsInterface, userCountersRepository: UserCountersRepository) {
         
         self.userAuthentication = userAuthentication
         self.firebaseAnalytics = firebaseAnalytics
-        self.deleteUserCountersUseCase = deleteUserCountersUseCase
+        self.userCountersRepository = userCountersRepository
     }
     
-    func logOutPublisher() -> AnyPublisher<Bool, Error> {
+    func execute() -> AnyPublisher<Bool, Error> {
                 
-        return userAuthentication.signOutPublisher()
+        return signOutPublisher()
             .flatMap { (void: Void) in
                 
                 self.setAnalyticsUserProperties()
                 
-                return self.deleteUserCountersUseCase.deleteUserCountersPublisher()
+                return self.userCountersRepository
+                    .deleteUserCountersPublisher()
                     .flatMap { void in
                         
                         return Just(true)
@@ -41,6 +42,21 @@ class LogOutUserUseCase {
                             .eraseToAnyPublisher()
                     })
             }
+            .eraseToAnyPublisher()
+    }
+    
+    private func signOutPublisher() -> AnyPublisher<Void, Error> {
+        
+        do {
+            try userAuthentication.signOut()
+        }
+        catch let error {
+            return Fail(error: error)
+                .eraseToAnyPublisher()
+        }
+        
+        return Just(Void())
+            .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
     }
     

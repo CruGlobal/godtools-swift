@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import RequestOperation
 
 @MainActor class AppBackgroundState {
     
@@ -112,19 +113,26 @@ import Combine
     }
     
     private func syncUserCounters(userIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase, userCountersRepository: UserCountersRepository) {
-                
+                       
         Publishers.CombineLatest(
-            userIsAuthenticatedUseCase.getIsAuthenticatedPublisher(),
-            userCountersRepository.getUserCountersChanged(reloadFromRemote: false, requestPriority: .low)
+            userIsAuthenticatedUseCase
+                .execute(),
+            userCountersRepository
+                .getUserCountersChangedPublisher(
+                    reloadFromRemote: false,
+                    requestPriority: .low
+                )
         )
         .map { (isAuthenticatedDomainModel: UserIsAuthenticatedDomainModel, userCountersChanged: Void) in
                         
             if isAuthenticatedDomainModel.isAuthenticated {
+                
                 return userCountersRepository
                     .syncUpdatedUserCountersWithRemotePublisher(requestPriority: .low)
                     .eraseToAnyPublisher()
             }
             else {
+                
                 return Just(Void())
                     .setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
@@ -141,7 +149,7 @@ import Combine
                 break
             }
             
-        }, receiveValue: {
+        }, receiveValue: { _ in
             
         })
         .store(in: &cancellables)

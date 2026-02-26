@@ -136,7 +136,7 @@ struct AllToolsView_Preview: PreviewProvider {
         
         let viewModel = ToolsViewModel(
             flowDelegate: MockFlowDelegate(),
-            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
+            pullToRefreshToolsUseCase: appDiContainer.feature.tools.domainLayer.getPullToRefreshToolsUseCase(),
             getToolsStringsUseCase: appDiContainer.feature.tools.domainLayer.getToolsStringsUseCase(),
             getAllToolsUseCase: appDiContainer.feature.tools.domainLayer.getAllToolsUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
@@ -145,7 +145,7 @@ struct AllToolsView_Preview: PreviewProvider {
             getSpotlightToolsUseCase: appDiContainer.feature.spotlightTools.domainLayer.getSpotlightToolsUseCase(),
             getUserToolFiltersUseCase: appDiContainer.feature.toolsFilter.domainLayer.getUserToolFiltersUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToolIsFavoritedUseCase(),
-            toggleToolFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToggleFavoritedToolUseCase(),
+            toggleToolFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToggleToolFavoritedUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
             getToolBannerUseCase: appDiContainer.domainLayer.getToolBannerUseCase()

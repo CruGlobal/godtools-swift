@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct AuthenticationProviderProfile {
+struct AuthenticationProviderProfile: Sendable {
     
     let email: String?
     let familyName: String?

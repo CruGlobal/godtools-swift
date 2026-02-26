@@ -18,7 +18,7 @@ import GodToolsShared
     private let getUserActivityUseCase: GetUserActivityUseCase
     private let viewGlobalActivityThisWeekUseCase: ViewGlobalActivityThisWeekUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
-    private let viewAccountUseCase: ViewAccountUseCase
+    private let getAccountStringsUseCase: GetAccountStringsUseCase
     private let getGlobalActivityEnabledUseCase: GetGlobalActivityEnabledUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
@@ -28,23 +28,16 @@ import GodToolsShared
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     @Published private var didPullToRefresh: Void = ()
     
+    @Published private(set) var strings = AccountStringsDomainModel.emptyValue
+    @Published private(set) var isLoadingProfile: Bool = true
+    @Published private(set) var isLoadingGlobalActivityThisWeek: Bool = true
+    @Published private(set) var userDetails = UserAccountDetailsDomainModel.emptyValue
+    @Published private(set) var badges = [UserActivityBadgeDomainModel]()
+    @Published private(set) var globalActivitiesThisWeek: [GlobalActivityThisWeekDomainModel] = Array()
+    @Published private(set) var stats = [UserActivityStatDomainModel]()
     @Published private(set) var globalActivityIsEnabled: Bool = false
-    
-    @Published var navTitle: String = ""
-    @Published var isLoadingProfile: Bool = true
-    @Published var isLoadingGlobalActivityThisWeek: Bool = true
-    @Published var profileName: String = ""
-    @Published var joinedOnText: String = ""
-    @Published var activityButtonTitle: String = ""
-    @Published var myActivitySectionTitle: String = ""
-    @Published var badges = [UserActivityBadgeDomainModel]()
-    @Published var badgesSectionTitle: String = ""
-    @Published var globalActivityButtonTitle: String = ""
-    @Published var globalActivityTitle: String = ""
-    @Published var globalActivitiesThisWeek: [GlobalActivityThisWeekDomainModel] = Array()
-    @Published var stats = [UserActivityStatDomainModel]()
         
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase, getUserActivityUseCase: GetUserActivityUseCase, viewGlobalActivityThisWeekUseCase: ViewGlobalActivityThisWeekUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, viewAccountUseCase: ViewAccountUseCase, getGlobalActivityEnabledUseCase: GetGlobalActivityEnabledUseCase) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase, getUserActivityUseCase: GetUserActivityUseCase, viewGlobalActivityThisWeekUseCase: ViewGlobalActivityThisWeekUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, getAccountStringsUseCase: GetAccountStringsUseCase, getGlobalActivityEnabledUseCase: GetGlobalActivityEnabledUseCase) {
         
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
@@ -52,7 +45,7 @@ import GodToolsShared
         self.viewGlobalActivityThisWeekUseCase = viewGlobalActivityThisWeekUseCase
         self.getUserActivityUseCase = getUserActivityUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
-        self.viewAccountUseCase = viewAccountUseCase
+        self.getAccountStringsUseCase = getAccountStringsUseCase
         self.getGlobalActivityEnabledUseCase = getGlobalActivityEnabledUseCase
         
         getCurrentAppLanguageUseCase
@@ -64,21 +57,14 @@ import GodToolsShared
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
                 
-                viewAccountUseCase
-                    .viewPublisher(appLanguage: appLanguage)
+                getAccountStringsUseCase
+                    .execute(appLanguage: appLanguage)
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] viewAccountDomainModel in
-                
-                let interfaceStrings = viewAccountDomainModel.interfaceStrings
-                
-                self?.navTitle = interfaceStrings.navTitle
-                self?.activityButtonTitle = interfaceStrings.activityButtonTitle
-                self?.myActivitySectionTitle = interfaceStrings.myActivitySectionTitle
-                self?.badgesSectionTitle = interfaceStrings.badgesSectionTitle
-                self?.globalActivityButtonTitle = interfaceStrings.globalActivityButtonTitle
-                self?.globalActivityTitle = interfaceStrings.globalAnalyticsTitle
+            .sink { [weak self] (strings: AccountStringsDomainModel) in
+                       
+                self?.strings = strings
             }
             .store(in: &cancellables)
         
@@ -87,17 +73,17 @@ import GodToolsShared
             .map { (appLanguage: AppLanguageDomainModel) in
                 
                 getUserAccountDetailsUseCase
-                    .getUserAccountDetailsPublisher(appLanguage: appLanguage)
+                    .execute(appLanguage: appLanguage)
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (userDetails: UserAccountDetailsDomainModel) in
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (userDetails: UserAccountDetailsDomainModel) in
                 
                 self?.isLoadingProfile = false
-                
-                self?.profileName = userDetails.name
-                self?.joinedOnText = userDetails.joinedOnString
-            }
+                self?.userDetails = userDetails
+            })
             .store(in: &cancellables)
         
         $appLanguage
@@ -123,15 +109,17 @@ import GodToolsShared
         .map { (appLanguage: AppLanguageDomainModel, didPullToRefresh: Void) in
             
             getUserActivityUseCase
-                .getUserActivityPublisher(appLanguage: appLanguage)
+                .execute(appLanguage: appLanguage)
         }
         .switchToLatest()
         .receive(on: DispatchQueue.main)
-        .sink { [weak self] (userActivity: UserActivityDomainModel) in
-                
+        .sink(receiveCompletion: { _ in
+            
+        }, receiveValue: { [weak self] (userActivity: UserActivityDomainModel) in
+            
             self?.badges = userActivity.badges
             self?.stats = userActivity.stats
-        }
+        })
         .store(in: &cancellables)
         
         getGlobalActivityEnabledUseCase

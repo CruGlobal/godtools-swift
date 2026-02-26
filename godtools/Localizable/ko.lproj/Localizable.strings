@@ -1,6 +1,10 @@
 "deferredDeepLinkModal.title" = "GodTools에 대한 링크를 클릭한 것 같습니다.";
 "deferredDeepLinkModal.message" = "아래 버튼을 탭하면 요청하신 콘텐츠로 이동하실 수 있습니다.";
 
+"toolScreenShare.qrCode.closeButtonTitle" = "닫기";
+"toolScreenShare.qrCode.description" = "이 QR 코드를 스캔하여 저와 함께 참여하세요.";
+"toolScreenShare.qrCode.title" = "QR 코드";
+
 "optInNotification.notificationSettings" = "알림 설정";
 "lessons.swipeTutorial.title" = "밀어서 페이지를 바꾸세요";
 "lessons.swipeTutorial.buttonText" = "알았어";
@@ -375,3 +379,5 @@
 // OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "국가";
 "onboardingTutorial.showMoreButton.title" = "더 보기";
+
+"screenShareTutorial.generateQRCodeButton.title" = "QR 코드 생성";

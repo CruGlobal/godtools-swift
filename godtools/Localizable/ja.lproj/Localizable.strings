@@ -1,6 +1,10 @@
 "deferredDeepLinkModal.title" = "GodToolsへのリンクをクリックしたようです";
 "deferredDeepLinkModal.message" = "下のボタンをタップすると、要求したコンテンツに移動できます。";
 
+"toolScreenShare.qrCode.closeButtonTitle" = "終了";
+"toolScreenShare.qrCode.description" = "このQRコードをスキャンして一緒に参加しましょう";
+"toolScreenShare.qrCode.title" = "QRコード";
+
 "optInNotification.notificationSettings" = "通知設定";
 "lessons.swipeTutorial.title" = "スワイプでページを切り替えられます";
 "lessons.swipeTutorial.buttonText" = "了解";
@@ -323,6 +327,7 @@
 
 // Alerts
 "error" = "エラー";
+"OK" = "OK";
 "cancel" = "キャンセル";
 "required_field_missing" = "「%@」は必須記入欄です。";
 
@@ -374,3 +379,5 @@
 // OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "国";
 "onboardingTutorial.showMoreButton.title" = "もっと見せて";
+
+"screenShareTutorial.generateQRCodeButton.title" = "QRコードを生成する";

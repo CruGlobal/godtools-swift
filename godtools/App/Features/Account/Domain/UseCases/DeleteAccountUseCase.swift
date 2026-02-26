@@ -9,25 +9,28 @@
 import Foundation
 import Combine
 
-class DeleteAccountUseCase {
+final class DeleteAccountUseCase {
     
     private let userAuthentication: UserAuthentication
-    private let deleteUserDetails: DeleteUserDetailsInterface
+    private let userDetailsRepository: UserDetailsRepository
     
-    init(userAuthentication: UserAuthentication, deleteUserDetails: DeleteUserDetailsInterface) {
+    init(userAuthentication: UserAuthentication, userDetailsRepository: UserDetailsRepository) {
         
         self.userAuthentication = userAuthentication
-        self.deleteUserDetails = deleteUserDetails
+        self.userDetailsRepository = userDetailsRepository
     }
     
-    func deleteAccountPublisher() -> AnyPublisher<Void, Error> {
-                
-        return deleteUserDetails.deleteUserDetailsPublisher()
-            .flatMap({ (void: Void) -> AnyPublisher<Void, Error> in
-                                
-                return self.userAuthentication.signOutPublisher()
-                    .eraseToAnyPublisher()
-            })
-            .eraseToAnyPublisher()
+    func execute() -> AnyPublisher<Void, Error> {
+        
+        return AnyPublisher() {
+            return try await self.userDetailsRepository.deleteAuthUserDetails(
+                requestPriority: .high
+            )
+        }
+        .tryMap { _ in
+            try self.userAuthentication.signOut()
+            return Void()
+        }
+        .eraseToAnyPublisher()
     }
 }

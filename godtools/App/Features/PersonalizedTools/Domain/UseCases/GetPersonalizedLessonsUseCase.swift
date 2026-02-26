@@ -57,9 +57,9 @@ class GetPersonalizedLessonsUseCase {
 
             return self.fetchResources(for: personalizedLessons)
         })
-        .map { resources in
+        .tryMap { resources in
 
-            return self.getLessonsListItems.mapLessonsToListItems(
+            return try self.getLessonsListItems.mapLessonsToListItems(
                 lessons: resources,
                 appLanguage: appLanguage,
                 filterLessonsByLanguage: filterLessonsByLanguage

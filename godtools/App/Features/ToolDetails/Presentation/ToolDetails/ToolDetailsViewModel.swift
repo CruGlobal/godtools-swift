@@ -285,7 +285,9 @@ extension ToolDetailsViewModel {
         let toolId: String = self.toolId
         
         ToolDetailsViewModel.toggleToolFavoritedCancellables[toolId] = toggleToolFavoritedUseCase
-            .toggleFavoritedPublisher(toolId: toolId)
+            .execute(
+                toolId: toolId
+            )
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] (domainModel: ToolIsFavoritedDomainModel) in
                 self?.isFavorited = domainModel.isFavorited

@@ -2,6 +2,8 @@
 "deferredDeepLinkModal.message" = "Tik die knoppie hieronder sodat ons jou na die inhoud kan neem wat jy versoek het.";
 
 "toolScreenShare.qrCode.closeButtonTitle" = "Maak toe";
+"toolScreenShare.qrCode.description" = "Skandeer hierdie QR-kode om saam met my aan te sluit";
+"toolScreenShare.qrCode.title" = "QR-kode";
 
 "optInNotification.notificationSettings" = "Kennisgewing Instellings";
 "lessons.swipeTutorial.title" = "Swiep om bladsye te verander";
@@ -381,3 +383,5 @@ https://knowgod.com/";
 // OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "Lande";
 "onboardingTutorial.showMoreButton.title" = "Wys My Meer";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Genereer QR-kode";

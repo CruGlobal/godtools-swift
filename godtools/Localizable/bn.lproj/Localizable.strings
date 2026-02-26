@@ -2,6 +2,8 @@
 "deferredDeepLinkModal.message" = "আপনার অনুরোধ করা কন্টেন্টে আপনাকে নিয়ে যেতে নিচের বোতামটি ট্যাপ করুন।";
 
 "toolScreenShare.qrCode.closeButtonTitle" = "বন্ধ করুন";
+"toolScreenShare.qrCode.description" = "আমার সাথে যোগ দিতে এই QR কোডটি স্ক্যান করুন।";
+"toolScreenShare.qrCode.title" = "QR কোড";
 
 "optInNotification.notificationSettings" = "নোটিফিকেশন সেটিংস";
 "lessons.swipeTutorial.title" = "পেজ পরিবর্তন করতে সোয়াইপ করুন";
@@ -383,3 +385,5 @@ knowgod.com. আপনার নিজের সাইটে স্থাপ  �
 // OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "দেশ সমূহ";
 "onboardingTutorial.showMoreButton.title" = "আমাকে আরও দেখান";
+
+"screenShareTutorial.generateQRCodeButton.title" = "QR কোড তৈরি করুন";
