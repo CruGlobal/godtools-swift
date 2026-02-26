@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct UserCounterDomainModel {
+struct UserCounterDomainModel: Sendable {
     
     let id: String
     let count: Int

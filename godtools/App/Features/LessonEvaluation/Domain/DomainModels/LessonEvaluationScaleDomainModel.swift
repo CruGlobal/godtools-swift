@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LessonEvaluationScaleDomainModel {
+struct LessonEvaluationScaleDomainModel: Sendable {
     
     let integerValue: Int
     let valueTranslatedInAppLanguage: String

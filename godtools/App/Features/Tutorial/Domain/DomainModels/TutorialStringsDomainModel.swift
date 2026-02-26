@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TutorialStringsDomainModel {
+struct TutorialStringsDomainModel: Sendable {
     
     let nextTutorialPageActionTitle: String
     let completeTutorialActionTitle: String

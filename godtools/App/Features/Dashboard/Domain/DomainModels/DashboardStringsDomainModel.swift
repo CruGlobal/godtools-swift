@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct DashboardStringsDomainModel {
+struct DashboardStringsDomainModel: Sendable {
     
     let lessonsActionTitle: String
     let favoritesActionTitle: String
