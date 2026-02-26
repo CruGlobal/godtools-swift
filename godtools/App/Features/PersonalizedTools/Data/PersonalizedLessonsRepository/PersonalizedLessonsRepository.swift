@@ -15,32 +15,45 @@ final class PersonalizedLessonsRepository: RepositorySync<PersonalizedLessonsDat
 
     private let api: PersonalizedToolsApi
     private let cache: PersonalizedLessonsCache
+    private let syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface
 
     private var cancellables: Set<AnyCancellable> = Set()
 
-    init(persistence: any Persistence<PersonalizedLessonsDataModel, PersonalizedLessonsDataModel>, api: PersonalizedToolsApi, cache: PersonalizedLessonsCache) {
+    init(persistence: any Persistence<PersonalizedLessonsDataModel, PersonalizedLessonsDataModel>, api: PersonalizedToolsApi, cache: PersonalizedLessonsCache, syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface) {
 
         self.api = api
         self.cache = cache
+        self.syncInvalidatorPersistence = syncInvalidatorPersistence
         
         super.init(
             externalDataFetch: NoExternalDataFetch<PersonalizedLessonsDataModel>(),
             persistence: persistence
         )
     }
+    
+    private func getSyncInvalidator(id: PersonalizedLessonsId) -> SyncInvalidator {
+        
+        return SyncInvalidator(
+            id: id.value,
+            timeInterval: .hours(hour: 8),
+            persistence: syncInvalidatorPersistence
+        )
+    }
 
-    @MainActor func getPersonalizedLessonsChanged(reloadFromRemote: Bool, requestPriority: RequestPriority, country: String, language: String) -> AnyPublisher<Void, Error> {
+    @MainActor func getPersonalizedLessonsChanged(requestPriority: RequestPriority, country: String, language: String, forceNewSync: Bool = false) -> AnyPublisher<Void, Error> {
 
-        if reloadFromRemote {
+        syncAllRankedLessonsPublisher(
+            requestPriority: requestPriority,
+            country: country,
+            language: language,
+            forceNewSync: forceNewSync
+        )
+        .sink { completion in
+                        
+        } receiveValue: { _ in
 
-            getAllRankedLessonsPublisher(requestPriority: requestPriority, country: country, language: language)
-                .sink { _ in
-
-                } receiveValue: { _ in
-
-                }
-                .store(in: &cancellables)
         }
+        .store(in: &cancellables)
 
         return persistence
             .observeCollectionChangesPublisher()
@@ -51,14 +64,32 @@ final class PersonalizedLessonsRepository: RepositorySync<PersonalizedLessonsDat
 
         let id: String = PersonalizedLessonsId(country: country, language: language).value
         
-        return persistence
+        let dataModel: PersonalizedLessonsDataModel? = persistence
             .getDataModelNonThrowing(id: id)
+        
+        return dataModel
     }
 
-    func getAllRankedLessonsPublisher(requestPriority: RequestPriority, country: String, language: String) -> AnyPublisher<[PersonalizedLessonsDataModel], Error> {
+    func syncAllRankedLessonsPublisher(requestPriority: RequestPriority, country: String, language: String, forceNewSync: Bool = false) -> AnyPublisher<PersonalizedLessonsDataModel?, Error> {
 
+        let syncInvalidator: SyncInvalidator = getSyncInvalidator(id: PersonalizedLessonsId(country: country, language: language))
+        
+        let shouldSync: Bool = syncInvalidator.shouldSync || forceNewSync
+        
+        guard shouldSync else {
+            
+            return Just(getPersonalizedLessons(country: country, language: language))
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        }
+        
         return api
-            .getAllRankedResourcesPublisher(requestPriority: requestPriority, country: country, language: language, resourceType: .lesson)
+            .getAllRankedResourcesPublisher(
+                requestPriority: requestPriority,
+                country: country,
+                language: language,
+                resourceType: .lesson
+            )
             .flatMap { (resourceCodables: [ResourceCodable]) in
 
                 let resources: [ResourceDataModel] = resourceCodables.map {
@@ -78,6 +109,12 @@ final class PersonalizedLessonsRepository: RepositorySync<PersonalizedLessonsDat
                         getOption: .object(id: personalizedLessons.id)
                     )
                     .eraseToAnyPublisher()
+            }
+            .map { (personalizedLessons: [PersonalizedLessonsDataModel]) in
+                
+                syncInvalidator.didSync()
+                
+                return personalizedLessons.first
             }
             .eraseToAnyPublisher()
     }

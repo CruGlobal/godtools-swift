@@ -41,7 +41,7 @@ class GetPersonalizedLessonsUseCase {
 
         return Publishers.CombineLatest3(
             personalizedLessonsRepository
-                .getPersonalizedLessonsChanged(reloadFromRemote: true, requestPriority: .high, country: countryIsoRegionCode, language: languageCode),
+                .getPersonalizedLessonsChanged(requestPriority: .high, country: countryIsoRegionCode, language: languageCode),
             resourcesRepository.persistence
                 .observeCollectionChangesPublisher(),
             lessonProgressRepository
