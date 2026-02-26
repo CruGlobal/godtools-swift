@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ToolsStringsDomainModel {
+struct ToolsStringsDomainModel: Sendable {
 
     let favoritingToolBannerMessage: String
     let toolSpotlightTitle: String

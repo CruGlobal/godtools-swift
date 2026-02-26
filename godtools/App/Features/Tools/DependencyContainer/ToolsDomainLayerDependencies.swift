@@ -21,6 +21,12 @@ class ToolsDomainLayerDependencies {
         self.coreDomainLayer = coreDomainLayer
     }
     
+    func getPullToRefreshToolsUseCase() -> PullToRefreshToolsUseCase {
+        return PullToRefreshToolsUseCase(
+            resourcesRepository: coreDataLayer.getResourcesRepository()
+        )
+    }
+    
     func getToolsStringsUseCase() -> GetToolsStringsUseCase {
         return GetToolsStringsUseCase(
             localizationServices: coreDataLayer.getLocalizationServices()
