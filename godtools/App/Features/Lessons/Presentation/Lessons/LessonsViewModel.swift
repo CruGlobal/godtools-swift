@@ -53,10 +53,6 @@ import SwiftUI
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.getToolBannerUseCase = getToolBannerUseCase
         
-        if !GodToolsAppConfig.showsPersonalization {
-            selectedToggle = .all
-        }
-        
         getCurrentAppLanguageUseCase
             .execute()
             .receive(on: DispatchQueue.main)
@@ -198,10 +194,6 @@ import SwiftUI
     }
     
     private static func getToggleOptions(strings: LessonsStringsDomainModel) -> [PersonalizationToggleOption] {
-        
-        if !GodToolsAppConfig.showsPersonalization {
-            return [PersonalizationToggleOption(title: strings.allLessonsToggleTitle, selection: .all, buttonAccessibility: .allLessons)]
-        }
         
         return [
             PersonalizationToggleOption(title: strings.personalizedToolToggleTitle, selection: .personalized, buttonAccessibility: .personalizedLessons),
