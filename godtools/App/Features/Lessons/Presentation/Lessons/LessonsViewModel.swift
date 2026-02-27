@@ -12,7 +12,7 @@ import SwiftUI
 
 @MainActor class LessonsViewModel: ObservableObject {
         
-    private let resourcesRepository: ResourcesRepository
+    private let pullToRefreshLessonsUseCase: PullToRefreshLessonsUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase
     private let getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase
@@ -33,19 +33,16 @@ import SwiftUI
     
     @Published private(set) var toggleOptions: [PersonalizationToggleOption] = []
     @Published private(set) var strings: LessonsStringsDomainModel = .emptyValue
+    @Published private(set) var languageFilterButtonTitle: String = ""
+    @Published private(set) var lessons: [LessonListItemDomainModel] = []
+    @Published private(set) var isLoadingLessons: Bool = true
     
     @Published var selectedToggle: PersonalizationToggleOptionValue = .personalized
-    @Published var sectionTitle: String = ""
-    @Published var subtitle: String = ""
-    @Published var languageFilterTitle: String = ""
-    @Published var languageFilterButtonTitle: String = ""
-    @Published var lessons: [LessonListItemDomainModel] = []
-    @Published var isLoadingLessons: Bool = true
         
-    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase, getLessonsStringsUseCase: GetLessonsStringsUseCase, getAllLessonsUseCase: GetAllLessonsUseCase, getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getToolBannerUseCase: GetToolBannerUseCase) {
+    init(flowDelegate: FlowDelegate, pullToRefreshLessonsUseCase: PullToRefreshLessonsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase, getLessonsStringsUseCase: GetLessonsStringsUseCase, getAllLessonsUseCase: GetAllLessonsUseCase, getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getToolBannerUseCase: GetToolBannerUseCase) {
 
         self.flowDelegate = flowDelegate
-        self.resourcesRepository = resourcesRepository
+        self.pullToRefreshLessonsUseCase = pullToRefreshLessonsUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getLocalizationSettingsUseCase = getLocalizationSettingsUseCase
         self.getPersonalizedLessonsUseCase = getPersonalizedLessonsUseCase
@@ -56,8 +53,12 @@ import SwiftUI
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.getToolBannerUseCase = getToolBannerUseCase
         
+        if !GodToolsAppConfig.showsPersonalization {
+            selectedToggle = .all
+        }
+        
         getCurrentAppLanguageUseCase
-            .getLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
 
@@ -74,16 +75,11 @@ import SwiftUI
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (interfaceStrings: LessonsStringsDomainModel) in
+            .sink { [weak self] (strings: LessonsStringsDomainModel) in
 
-                self?.strings = interfaceStrings
-                self?.sectionTitle = interfaceStrings.title
-                self?.subtitle = interfaceStrings.subtitle
-                self?.languageFilterTitle = interfaceStrings.languageFilterTitle
-                self?.toggleOptions = [
-                    PersonalizationToggleOption(title: interfaceStrings.personalizedToolToggleTitle, selection: .personalized),
-                    PersonalizationToggleOption(title: interfaceStrings.allLessonsToggleTitle, selection: .all)
-                ]
+                self?.strings = strings
+                
+                self?.toggleOptions = Self.getToggleOptions(strings: strings)
             }
             .store(in: &cancellables)
 
@@ -200,6 +196,18 @@ import SwiftUI
             ]
         )
     }
+    
+    private static func getToggleOptions(strings: LessonsStringsDomainModel) -> [PersonalizationToggleOption] {
+        
+        if !GodToolsAppConfig.showsPersonalization {
+            return [PersonalizationToggleOption(title: strings.allLessonsToggleTitle, selection: .all, buttonAccessibility: .allLessons)]
+        }
+        
+        return [
+            PersonalizationToggleOption(title: strings.personalizedToolToggleTitle, selection: .personalized, buttonAccessibility: .personalizedLessons),
+            PersonalizationToggleOption(title: strings.allLessonsToggleTitle, selection: .all, buttonAccessibility: .allLessons)
+        ]
+    }
 }
 
 // MARK: - Inputs
@@ -216,12 +224,16 @@ extension LessonsViewModel {
     
     func pullToRefresh() {
         
-        resourcesRepository
-            .syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsPublisher(requestPriority: .high, forceFetchFromRemote: true)
+        pullToRefreshLessonsUseCase
+            .execute(
+                appLanguage: appLanguage,
+                country: localizationSettings?.selectedCountry,
+                filterLessonsByLanguage: lessonFilterLanguageSelection
+            )
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completed in
 
-            }, receiveValue: { (result: ResourcesCacheSyncResult) in
+            }, receiveValue: { _ in
                 
             })
             .store(in: &cancellables)

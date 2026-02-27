@@ -48,7 +48,7 @@ class ChooseAppLanguageFlow: Flow {
             
             let setAppLanguageUseCase: SetAppLanguageUseCase = appDiContainer.feature.appLanguage.domainLayer.getSetAppLanguageUseCase()
             
-            ChooseAppLanguageFlow.setAppLanguageInBackgroundCancellable = setAppLanguageUseCase.setLanguagePublisher(language: appLanguage.language)
+            ChooseAppLanguageFlow.setAppLanguageInBackgroundCancellable = setAppLanguageUseCase.execute(appLanguage: appLanguage.language)
                 .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { _ in
                     
@@ -78,7 +78,7 @@ extension ChooseAppLanguageFlow {
         
         let viewModel = AppLanguagesViewModel(
             flowDelegate: self,
-            viewAppLanguagesUseCase: appDiContainer.feature.appLanguage.domainLayer.getViewAppLanguagesUseCase(),
+            getAppLanguagesStringsUseCase: appDiContainer.feature.appLanguage.domainLayer.getAppLanguagesStringsUseCase(),
             searchAppLanguageInAppLanguagesListUseCase: appDiContainer.feature.appLanguage.domainLayer.getSearchAppLanguageInAppLanguagesListUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getAppLanguagesListUseCase: appDiContainer.feature.appLanguage.domainLayer.getAppLanguagesListUseCase(),
@@ -90,7 +90,7 @@ extension ChooseAppLanguageFlow {
         let backButton = AppBackBarItem(
             target: viewModel,
             action: #selector(viewModel.backTapped),
-            accessibilityIdentifier: nil
+            accessibilityIdentifier: AccessibilityStrings.Button.appLanguagesNavBack.id
         )
         
         let hostingView = AppHostingController<AppLanguagesView>(
@@ -111,7 +111,7 @@ extension ChooseAppLanguageFlow {
         let viewModel = ConfirmAppLanguageViewModel(
             selectedLanguage: selectedLanguage,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewConfirmAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getViewConfirmAppLanguageUseCase(),
+            getConfirmAppLanguageStringsUseCase: appDiContainer.feature.appLanguage.domainLayer.getConfirmAppLanguageStringsUseCase(),
             flowDelegate: self
         )
         

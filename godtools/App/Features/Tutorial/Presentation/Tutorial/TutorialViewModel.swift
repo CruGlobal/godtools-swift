@@ -12,6 +12,7 @@ import Combine
 @MainActor class TutorialViewModel: ObservableObject {
         
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    private let getTutorialStringsUseCase: GetTutorialStringsUseCase
     private let getTutorialUseCase: GetTutorialUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
@@ -23,24 +24,26 @@ import Combine
     private weak var flowDelegate: FlowDelegate?
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
-    @Published private var interfaceStrings: TutorialInterfaceStringsDomainModel?
+    @Published private var strings: TutorialStringsDomainModel?
     
-    @Published var hidesBackButton: Bool = true
-    @Published var tutorialPages: [TutorialPageDomainModel] = Array()
-    @Published var continueTitle: String = ""
+    @Published private(set) var hidesBackButton: Bool = true
+    @Published private(set) var tutorialPages: [TutorialPageDomainModel] = Array()
+    @Published private(set) var continueTitle: String = ""
+    
     @Published var currentPage: Int = 0
         
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTutorialUseCase: GetTutorialUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, tutorialVideoAnalytics: TutorialVideoAnalytics) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTutorialStringsUseCase: GetTutorialStringsUseCase, getTutorialUseCase: GetTutorialUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, tutorialVideoAnalytics: TutorialVideoAnalytics) {
         
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
+        self.getTutorialStringsUseCase = getTutorialStringsUseCase
         self.getTutorialUseCase = getTutorialUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.tutorialVideoAnalytics = tutorialVideoAnalytics
                 
         getCurrentAppLanguageUseCase
-            .getLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
@@ -48,28 +51,42 @@ import Combine
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
                 
+                getTutorialStringsUseCase
+                    .execute(appLanguage: appLanguage)
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (strings: TutorialStringsDomainModel) in
+                
+                self?.strings = strings
+            }
+            .store(in: &cancellables)
+        
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+                
                 getTutorialUseCase
-                    .getTutorialPublisher(appLanguage: appLanguage)
+                    .execute(appLanguage: appLanguage)
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (tutorial: TutorialDomainModel) in
                 
-                self?.interfaceStrings = tutorial.interfaceStrings
                 self?.tutorialPages = tutorial.pages
             }
             .store(in: &cancellables)
         
         Publishers.CombineLatest3(
             $currentPage,
-            $interfaceStrings,
+            $strings,
             $tutorialPages.dropFirst()
         )
         .receive(on: DispatchQueue.main)
-        .sink { [weak self] (currentPage: Int, interfaceStrings: TutorialInterfaceStringsDomainModel?, tutorialPages: [TutorialPageDomainModel]) in
+        .sink { [weak self] (currentPage: Int, strings: TutorialStringsDomainModel?, tutorialPages: [TutorialPageDomainModel]) in
             
-            if let interfaceStrings = interfaceStrings {
-                self?.refreshContinueTitle(interfaceStrings: interfaceStrings, tutorialPages: tutorialPages)
+            if let strings = strings {
+                self?.refreshContinueTitle(strings: strings, tutorialPages: tutorialPages)
             }
         }
         .store(in: &cancellables)
@@ -144,11 +161,11 @@ import Combine
         )
     }
     
-    private func refreshContinueTitle(interfaceStrings: TutorialInterfaceStringsDomainModel, tutorialPages: [TutorialPageDomainModel]) {
+    private func refreshContinueTitle(strings: TutorialStringsDomainModel, tutorialPages: [TutorialPageDomainModel]) {
         
         let isOnLastPage: Bool = getIsOnLastPage(tutorialPages: tutorialPages)
         
-        continueTitle = isOnLastPage ? interfaceStrings.completeTutorialActionTitle : interfaceStrings.nextTutorialPageActionTitle
+        continueTitle = isOnLastPage ? strings.completeTutorialActionTitle : strings.nextTutorialPageActionTitle
     }
 }
 

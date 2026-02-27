@@ -1,6 +1,10 @@
 "deferredDeepLinkModal.title" = "Parece que você clicou em um link para GodTools";
 "deferredDeepLinkModal.message" = "Toque no botão abaixo para que possamos levá-lo ao conteúdo solicitado.";
 
+"toolScreenShare.qrCode.closeButtonTitle" = "Concluído";
+"toolScreenShare.qrCode.description" = "Escaneie este código QR para participar comigo.";
+"toolScreenShare.qrCode.title" = "Código QR";
+
 "optInNotification.notificationSettings" = "Configurações de notificações";
 "lessons.swipeTutorial.title" = "Deslize para trocar de páginas";
 "lessons.swipeTutorial.buttonText" = "Entendi";
@@ -18,8 +22,11 @@
 "lessons.lessonCompleted" = "Concluído";
 "lessons.completionProgress" = "%@ concluído";
 "network_connection_lost" = "A conexão de rede foi perdida.";
+"language_name_fil" = "Filipino (Tagalog)";
 "lessons.filter.navBar.language" = "Idioma da lição";
 "lessons.languageFilter.title" = "Lições em:";
+"language_name_fil-x-taglish" = "Taglish";
+"language_name_sid" = "Sidama";
 "onboardingTutorial.chooseLanguageButton.title" = "Selecionar idioma";
 "languageSettings.confirmAppLanguage.message" = "Você selecionou %@ como o idioma do seu aplicativo. Isto altera o idioma de todo o aplicativo GodTools. Tem certeza de que quer fazer isto?";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Alterar idioma";
@@ -322,6 +329,7 @@ Pode encontrar uma versão online em https://knowgod.com/";
 
 // Alerts
 "error" = "Erro";
+"OK" = "OK";
 "cancel" = "Cancelar";
 "required_field_missing" = "\"%@\" é um campo obrigatório.";
 
@@ -381,3 +389,5 @@ Prima o botão de informações em qualquer ferramenta para obter mais informaç
 // OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "Países";
 "onboardingTutorial.showMoreButton.title" = "Mostrar mais";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Gerar código QR";

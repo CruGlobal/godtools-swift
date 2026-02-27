@@ -42,7 +42,7 @@ import UserNotifications
         self.notificationPromptType = notificationPromptType
 
         getCurrentAppLanguageUseCase
-            .getLanguagePublisher()
+            .execute()
             .assign(to: &$appLanguage)
 
         $appLanguage

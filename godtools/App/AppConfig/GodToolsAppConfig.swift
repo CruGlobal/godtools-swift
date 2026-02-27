@@ -11,6 +11,9 @@ import SocialAuthentication
 import RepositorySync
 
 class GodToolsAppConfig: AppConfigInterface {
+
+    // TODO: Remove constant in GT-2966. ~Levi
+    static let showsPersonalization: Bool = false
     
     private let appBuild: AppBuild
         
@@ -111,9 +114,9 @@ class GodToolsAppConfig: AppConfigInterface {
         switch appBuild.environment {
         
         case .staging:
-            return LegacyRealmDatabase(databaseConfiguration: RealmDatabaseStagingConfiguration())
+            return LegacyRealmDatabase(realmDatabase: getRealmDatabase())
         case .production:
-            return LegacyRealmDatabase(databaseConfiguration: RealmDatabaseProductionConfiguration())
+            return LegacyRealmDatabase(realmDatabase: getRealmDatabase())
         }
     }
     

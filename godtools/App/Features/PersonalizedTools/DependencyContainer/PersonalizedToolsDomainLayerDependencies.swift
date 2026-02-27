@@ -22,9 +22,11 @@ class PersonalizedToolsDomainLayerDependencies {
     }
     
     func getLocalizationSettingsCountryListUseCase() -> GetLocalizationSettingsCountryListUseCase {
-        
+
         return GetLocalizationSettingsCountryListUseCase(
-            countriesRepository: dataLayer.getLocalizationSettingsCountriesRepository())
+            countriesRepository: dataLayer.getLocalizationSettingsCountriesRepository(),
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
     }
     
     func getSearchCountriesInLocalizationSettingsCountriesListUseCase() -> SearchCountriesInLocalizationSettingsCountriesListUseCase {
@@ -37,6 +39,13 @@ class PersonalizedToolsDomainLayerDependencies {
     func getViewLocalizationSettingsUseCase() -> ViewLocalizationSettingsUseCase {
 
         return ViewLocalizationSettingsUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+
+    func getLocalizationSettingsConfirmationStringsUseCase() -> GetLocalizationSettingsConfirmationStringsUseCase {
+
+        return GetLocalizationSettingsConfirmationStringsUseCase(
             localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
@@ -60,7 +69,7 @@ class PersonalizedToolsDomainLayerDependencies {
         return GetPersonalizedLessonsUseCase(
             resourcesRepository: coreDataLayer.getResourcesRepository(),
             personalizedLessonsRepository: dataLayer.getPersonalizedLessonsRepository(),
-            languagesRepository: coreDataLayer.getLanguagesRepository(),
+            getLanguageElseAppLanguage: coreDomainlayer.supporting.getLanguageElseAppLanguage(),
             lessonProgressRepository: coreDataLayer.getUserLessonProgressRepository(),
             getLessonsListItems: coreDomainlayer.supporting.getLessonsListItems()
         )

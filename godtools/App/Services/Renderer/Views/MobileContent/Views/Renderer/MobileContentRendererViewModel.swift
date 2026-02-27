@@ -12,6 +12,8 @@ import Combine
 
 @MainActor class MobileContentRendererViewModel: MobileContentPagesViewModel {
     
+    private static var backgroundCancellables: Set<AnyCancellable> = Set()
+    
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
     private let mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking
@@ -58,7 +60,7 @@ import Combine
         super.init()
         
         getCurrentAppLanguageUseCase
-            .getLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
@@ -757,7 +759,10 @@ extension MobileContentRendererViewModel {
         
         let locale = Locale(identifier: localeId)
         
-        incrementUserCounterUseCase.incrementUserCounter(for: .languageUsed(locale: locale))
+        incrementUserCounterUseCase
+            .execute(
+                interaction: .languageUsed(locale: locale)
+            )
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 
@@ -772,7 +777,7 @@ extension MobileContentRendererViewModel {
             } receiveValue: { _ in
                 
             }
-            .store(in: &cancellables)
+            .store(in: &Self.backgroundCancellables)
     }
     
     private func languageUsageAlreadyCountedThisSession(localeId: String) -> Bool {
@@ -797,14 +802,17 @@ extension MobileContentRendererViewModel {
             return
         }
         
-        incrementUserCounterUseCase.incrementUserCounter(for: toolOpenInteraction)
+        incrementUserCounterUseCase
+            .execute(
+                interaction: toolOpenInteraction
+            )
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             } receiveValue: { _ in
                 
             }
-            .store(in: &cancellables)
+            .store(in: &Self.backgroundCancellables)
     }
     
     private func trackLanguageUsageCountedThisSession(localeId: String) {

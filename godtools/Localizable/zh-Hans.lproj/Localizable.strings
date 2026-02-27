@@ -2,6 +2,8 @@
 "deferredDeepLinkModal.message" = "点击下面的按钮，我们就可以带您到您请求的内容。";
 
 "toolScreenShare.qrCode.closeButtonTitle" = "关闭";
+"toolScreenShare.qrCode.description" = "扫描此二维码即可加入我";
+"toolScreenShare.qrCode.title" = "二维码";
 
 "optInNotification.notificationSettings" = "通知设置";
 "lessons.swipeTutorial.title" = "滑动切换页面";
@@ -386,3 +388,5 @@
 // OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "国家/地区";
 "onboardingTutorial.showMoreButton.title" = "显示更多";
+
+"screenShareTutorial.generateQRCodeButton.title" = "生成二维码";

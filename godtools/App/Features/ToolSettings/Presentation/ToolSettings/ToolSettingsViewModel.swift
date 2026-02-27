@@ -49,7 +49,7 @@ import Combine
         self.getShareableImageUseCase = getShareableImageUseCase
         
         getCurrentAppLanguageUseCase
-            .getLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         

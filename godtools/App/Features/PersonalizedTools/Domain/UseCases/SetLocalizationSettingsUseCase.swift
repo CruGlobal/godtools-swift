@@ -17,15 +17,13 @@ class SetLocalizationSettingsUseCase {
         self.userLocalizationSettingsRepository = userLocalizationSettingsRepository
     }
 
-    func execute(isoRegionCode: String) -> AnyPublisher<UserLocalizationSettingsDomainModel, Error> {
+    func execute(country: LocalizationSettingsCountryDomainModel) -> AnyPublisher<UserLocalizationSettingsDomainModel, Error> {
 
         userLocalizationSettingsRepository
-            .setCountryPublisher(isoRegionCode: isoRegionCode)
-            .map {
+            .setCountryPublisher(isoRegionCode: country.isoRegionCode)
+            .map { _ in
                 return UserLocalizationSettingsDomainModel(
-                    selectedCountry: LocalizationSettingsCountryDomainModel(
-                        isoRegionCode: $0.selectedCountryIsoRegionCode
-                    )
+                    selectedCountry: country
                 )
             }
             .eraseToAnyPublisher()

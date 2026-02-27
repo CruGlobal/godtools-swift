@@ -29,6 +29,8 @@
 		45AD217F2593ABC800A096A0 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 45AD217E2593ABC800A096A0 /* README.md */; };
 		45AF5BF82DBBF87E0059FF55 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 45AF5BF72DBBF87E0059FF55 /* FirebaseMessaging */; };
 		45B0F6A72DBBCC300011FF1D /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 45B0F6A62DBBCC300011FF1D /* FirebaseMessaging */; };
+		45B4DA2D2F50CD3E007EF287 /* FirebaseNotificationService.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 45B4DA262F50CD3E007EF287 /* FirebaseNotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		45B4DA372F50CE69007EF287 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 45B4DA362F50CE69007EF287 /* FirebaseMessaging */; };
 		45B6480925E581660098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		45B6480A25E581660098BAF1 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		45B6480B25E581660098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -65,6 +67,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 4F5732881EA69CF00082035C;
 			remoteInfo = godtools;
+		};
+		45B4DA2B2F50CD3E007EF287 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4F5732811EA69CF00082035C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 45B4DA252F50CD3E007EF287;
+			remoteInfo = FirebaseNotificationService;
 		};
 		4F12297120852BE3008842CC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -105,6 +114,17 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		45B4DA2E2F50CD3E007EF287 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				45B4DA2D2F50CD3E007EF287 /* FirebaseNotificationService.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		45C382C02BF3FC5600378656 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 12;
@@ -124,6 +144,7 @@
 		451F7A802ABD2F1100006EF2 /* Quick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		451F7A822ABD2F1400006EF2 /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		45AD217E2593ABC800A096A0 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		45B4DA262F50CD3E007EF287 /* FirebaseNotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FirebaseNotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F12296C20852BE3008842CC /* godtoolsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = godtoolsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F2500611F0C1E8D00364FBC /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		4F5732891EA69CF00082035C /* godtools.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = godtools.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -148,6 +169,13 @@
 				Info.plist,
 			);
 			target = 684328F01EB7CF66005E9131 /* godtoolsTests */;
+		};
+		45B4DA352F50CD3F007EF287 /* Exceptions for "FirebaseNotificationService" folder in "FirebaseNotificationService" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 45B4DA252F50CD3E007EF287 /* FirebaseNotificationService */;
 		};
 		45F7F2892E54980400F854AE /* Exceptions for "godtools" folder in "godtools" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
@@ -212,6 +240,14 @@
 			path = godtoolsTests;
 			sourceTree = "<group>";
 		};
+		45B4DA272F50CD3E007EF287 /* FirebaseNotificationService */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				45B4DA352F50CD3F007EF287 /* Exceptions for "FirebaseNotificationService" folder in "FirebaseNotificationService" target */,
+			);
+			path = FirebaseNotificationService;
+			sourceTree = "<group>";
+		};
 		45F7EC352E54980400F854AE /* godtools */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -250,6 +286,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		45B4DA232F50CD3E007EF287 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				45B4DA372F50CE69007EF287 /* FirebaseMessaging in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,6 +378,7 @@
 				45899C6C2E4D384E00473944 /* godtoolsTests */,
 				45308E092E4F5B590082B7DC /* godtoolsUITests */,
 				45F7F28F2E54982700F854AE /* godtoolsUIRecording */,
+				45B4DA272F50CD3E007EF287 /* FirebaseNotificationService */,
 				4F57328A1EA69CF00082035C /* Products */,
 				45AD217E2593ABC800A096A0 /* README.md */,
 				45F7F2A12E54999700F854AE /* Scripts */,
@@ -349,6 +394,7 @@
 				684328F11EB7CF66005E9131 /* godtoolsTests.xctest */,
 				4F12296C20852BE3008842CC /* godtoolsUITests.xctest */,
 				1733987A230736A400A715B4 /* godtoolsUIRecording.xctest */,
+				45B4DA262F50CD3E007EF287 /* FirebaseNotificationService.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -373,6 +419,29 @@
 			productName = godtoolsUIRecording;
 			productReference = 1733987A230736A400A715B4 /* godtoolsUIRecording.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		45B4DA252F50CD3E007EF287 /* FirebaseNotificationService */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 45B4DA342F50CD3F007EF287 /* Build configuration list for PBXNativeTarget "FirebaseNotificationService" */;
+			buildPhases = (
+				45B4DA222F50CD3E007EF287 /* Sources */,
+				45B4DA232F50CD3E007EF287 /* Frameworks */,
+				45B4DA242F50CD3E007EF287 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				45B4DA272F50CD3E007EF287 /* FirebaseNotificationService */,
+			);
+			name = FirebaseNotificationService;
+			packageProductDependencies = (
+				45B4DA362F50CE69007EF287 /* FirebaseMessaging */,
+			);
+			productName = FirebaseNotificationService;
+			productReference = 45B4DA262F50CD3E007EF287 /* FirebaseNotificationService.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 		4F12296B20852BE3008842CC /* godtoolsUITests */ = {
 			isa = PBXNativeTarget;
@@ -421,10 +490,12 @@
 				45B10ADF2BF3F270004342AB /* Embed Frameworks */,
 				45AD220F2593C66B00A096A0 /* Run Crashlytics */,
 				451C8B7628AEC6AD00E98AFA /* Download Initial Resources */,
+				45B4DA2E2F50CD3E007EF287 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				45B4DA2C2F50CD3E007EF287 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				45F7EC352E54980400F854AE /* godtools */,
@@ -487,7 +558,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastSwiftUpdateCheck = 1020;
+				LastSwiftUpdateCheck = 2620;
 				LastUpgradeCheck = 1600;
 				ORGANIZATIONNAME = Cru;
 				TargetAttributes = {
@@ -495,6 +566,9 @@
 						CreatedOnToolsVersion = 10.2.1;
 						ProvisioningStyle = Manual;
 						TestTargetID = 4F5732881EA69CF00082035C;
+					};
+					45B4DA252F50CD3E007EF287 = {
+						CreatedOnToolsVersion = 26.2;
 					};
 					4F12296B20852BE3008842CC = {
 						CreatedOnToolsVersion = 9.2;
@@ -617,12 +691,20 @@
 				684328F01EB7CF66005E9131 /* godtoolsTests */,
 				4F12296B20852BE3008842CC /* godtoolsUITests */,
 				17339879230736A400A715B4 /* godtoolsUIRecording */,
+				45B4DA252F50CD3E007EF287 /* FirebaseNotificationService */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		17339878230736A400A715B4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		45B4DA242F50CD3E007EF287 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -728,6 +810,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		45B4DA222F50CD3E007EF287 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4F12296820852BE3008842CC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -765,6 +854,11 @@
 			isa = PBXTargetDependency;
 			target = 4F5732881EA69CF00082035C /* godtools */;
 			targetProxy = 1733987F230736A400A715B4 /* PBXContainerItemProxy */;
+		};
+		45B4DA2C2F50CD3E007EF287 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 45B4DA252F50CD3E007EF287 /* FirebaseNotificationService */;
+			targetProxy = 45B4DA2B2F50CD3E007EF287 /* PBXContainerItemProxy */;
 		};
 		4F12297220852BE3008842CC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1211,6 +1305,230 @@
 				TEST_TARGET_NAME = godtools;
 			};
 			name = Staging;
+		};
+		45B4DA2F2F50CD3E007EF287 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1043;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = DQ48D9BF2V;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FirebaseNotificationService/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FirebaseNotificationService;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Cru. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 6.3.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.FirebaseNotificationService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		45B4DA302F50CD3E007EF287 /* Staging */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1043;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQ48D9BF2V;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FirebaseNotificationService/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FirebaseNotificationService;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Cru. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 6.3.14;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.FirebaseNotificationService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Staging Firebase Notification Service";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Staging;
+		};
+		45B4DA312F50CD3E007EF287 /* Production */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1043;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQ48D9BF2V;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FirebaseNotificationService/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FirebaseNotificationService;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Cru. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 6.3.14;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.FirebaseNotificationService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Production Firebase Notification Service";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Production;
+		};
+		45B4DA322F50CD3E007EF287 /* AnalyticsLogging */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1043;
+				DEVELOPMENT_TEAM = DQ48D9BF2V;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FirebaseNotificationService/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FirebaseNotificationService;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Cru. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 6.3.14;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.FirebaseNotificationService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = AnalyticsLogging;
+		};
+		45B4DA332F50CD3E007EF287 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1043;
+				DEVELOPMENT_TEAM = DQ48D9BF2V;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FirebaseNotificationService/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FirebaseNotificationService;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Cru. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 6.3.14;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.FirebaseNotificationService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
 		};
 		45E998E823FDB5340088DD0C /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1789,6 +2107,18 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		45B4DA342F50CD3F007EF287 /* Build configuration list for PBXNativeTarget "FirebaseNotificationService" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				45B4DA2F2F50CD3E007EF287 /* Debug */,
+				45B4DA302F50CD3E007EF287 /* Staging */,
+				45B4DA312F50CD3E007EF287 /* Production */,
+				45B4DA322F50CD3E007EF287 /* AnalyticsLogging */,
+				45B4DA332F50CD3E007EF287 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4F12297320852BE3008842CC /* Build configuration list for PBXNativeTarget "godtoolsUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1885,7 +2215,7 @@
 			repositoryURL = "https://github.com/CruGlobal/social-authentication-ios.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.6.3;
+				minimumVersion = 1.0.1;
 			};
 		};
 		45DF96472D386C1C00C6AE68 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
@@ -1917,7 +2247,7 @@
 			repositoryURL = "https://github.com/CruGlobal/localization-services-ios";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.4.0;
+				minimumVersion = 0.5.0;
 			};
 		};
 		D4997E0C28D4CED800205B4C /* XCRemoteSwiftPackageReference "youtube-ios-player-helper" */ = {
@@ -2007,6 +2337,11 @@
 			productName = FirebaseMessaging;
 		};
 		45B0F6A62DBBCC300011FF1D /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 45DF96472D386C1C00C6AE68 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+		45B4DA362F50CE69007EF287 /* FirebaseMessaging */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 45DF96472D386C1C00C6AE68 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;

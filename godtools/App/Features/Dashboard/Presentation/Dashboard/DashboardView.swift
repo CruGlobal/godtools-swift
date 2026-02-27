@@ -66,20 +66,28 @@ struct DashboardView: View {
                         }
                         .environment(\.layoutDirection, .leftToRight)
                         .tabViewStyle(.page(indexDisplayMode: .never))
-                        .animation(.easeOut, value: viewModel.currentTab)
+                        .animateIfEnabled(.easeOut, value: viewModel.currentTab)
                         
                         DashboardTabBarView(
                             viewModel: viewModel
                         )
                     }
                 }//end VStack
+
+                let menuButtonLeading: CGFloat = 20
+                
+                NavMenuButtonGradientView(
+                    menuButtonLeading: menuButtonLeading,
+                    menuButtonSize: NavMenuButton.size,
+                    navHeight: DashboardView.navHeight
+                )
                 
                 let navButtonTopPadding: CGFloat = (Self.navHeight / 2) - (NavMenuButton.size / 2)
                 
                 NavMenuButton {
                     viewModel.menuTapped()
                 }
-                .padding([.leading], 20)
+                .padding([.leading], menuButtonLeading)
                 .padding([.top], navButtonTopPadding)
             }//end ZStack
         }//end GeometryReader

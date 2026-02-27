@@ -17,13 +17,14 @@ class ViewLocalizationSettingsUseCase {
         self.localizationServices = localizationServices
     }
 
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<LocalizationSettingsInterfaceStringsDomainModel, Never> {
-        
-        let interfaceStrings = LocalizationSettingsInterfaceStringsDomainModel(
+    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<LocalizationSettingsStringsDomainModel, Never> {
+
+        let interfaceStrings = LocalizationSettingsStringsDomainModel(
             navTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "localizationSettings.navBar.title"),
             localizationHeaderTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "localizationSettings.localizationHeader.title"),
-            localizationHeaderDescription: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "localizationSettings.localizationHeader.description"))
-        
+            localizationHeaderDescription: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "localizationSettings.localizationHeader.description")
+        )
+
         return Just(interfaceStrings)
             .eraseToAnyPublisher()
     }

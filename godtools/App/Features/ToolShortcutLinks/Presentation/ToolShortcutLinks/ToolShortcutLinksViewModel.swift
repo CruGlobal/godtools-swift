@@ -21,7 +21,7 @@ import Combine
     }
     
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
-    private let viewToolShortcutLinksUseCase: ViewToolShortcutLinksUseCase
+    private let getToolShortcutLinksUseCase: GetToolShortcutLinksUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -29,25 +29,25 @@ import Combine
     
     @Published private(set) var shortcutLinks: [UIApplicationShortcutItem] = Array()
     
-    init(getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolShortcutLinksUseCase: ViewToolShortcutLinksUseCase) {
+    init(getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolShortcutLinksUseCase: GetToolShortcutLinksUseCase) {
         
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
-        self.viewToolShortcutLinksUseCase = viewToolShortcutLinksUseCase
+        self.getToolShortcutLinksUseCase = getToolShortcutLinksUseCase
         
         getCurrentAppLanguageUseCase
-            .getLanguagePublisher()
+            .execute()
             .assign(to: &$appLanguage)
         
         $appLanguage
             .dropFirst()
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewToolShortcutLinksDomainModel, Never> in
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<[ToolShortcutLinkDomainModel], Never> in
                 
-                viewToolShortcutLinksUseCase
-                    .viewPublisher(appLanguage: appLanguage)
+                getToolShortcutLinksUseCase
+                    .execute(appLanguage: appLanguage)
             })
-            .sink { [weak self] (domainModel: ViewToolShortcutLinksDomainModel) in
+            .sink { [weak self] (shortcutLinks: [ToolShortcutLinkDomainModel]) in
                 
-                self?.shortcutLinks = domainModel.shortcutLinks.map({ (toolShortcutLink: ToolShortcutLinkDomainModel) in
+                self?.shortcutLinks = shortcutLinks.map({ (toolShortcutLink: ToolShortcutLinkDomainModel) in
                     
                     UIApplicationShortcutItem(
                         type: ShortcutItemType.tool.rawValue,

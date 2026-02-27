@@ -30,7 +30,7 @@ struct FeaturedLessonsView: View {
         
         VStack(alignment: .leading, spacing: 0) {
             
-            Text(viewModel.featuredLessonsTitle)
+            Text(viewModel.strings.featuredLessonsTitle)
                 .font(FontLibrary.sfProTextRegular.font(size: 22))
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .padding(.leading, contentHorizontalInsets)

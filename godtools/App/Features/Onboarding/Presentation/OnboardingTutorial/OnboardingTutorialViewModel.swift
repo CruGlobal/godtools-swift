@@ -25,7 +25,7 @@ import Combine
     private let readyForEveryConversationYoutubeVideoId: String = "RvhZ_wuxAgE"
     private let showsChooseAppLanguageButtonOnPages: [Int] = [0]
     
-    private var interfaceStrings: OnboardingTutorialInterfaceStringsDomainModel?
+    private var interfaceStrings: OnboardingTutorialStringsDomainModel?
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
@@ -59,7 +59,7 @@ import Combine
             }
                 
         getCurrentAppLanguageUseCase
-            .getLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
@@ -72,7 +72,7 @@ import Combine
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (interfaceStrings: OnboardingTutorialInterfaceStringsDomainModel) in
+            .sink { [weak self] (interfaceStrings: OnboardingTutorialStringsDomainModel) in
                 
                 guard let weakSelf = self else {
                     return

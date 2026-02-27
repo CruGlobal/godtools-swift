@@ -103,6 +103,21 @@ extension ToolNavigationFlow {
     
     private func navigateToTool(appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, persistToolLanguageSettings: PersistToolLanguageSettingsInterface?, toolOpenedFrom: ToolOpenedFrom) {
         
+        guard toolTranslations.languageTranslationManifests.count > 0 else {
+            
+            let viewModel = AlertMessageViewModel(
+                title: "Internal Error",
+                message: "Found 0 translations downloaded.  Ensure you have a network connection and try again.",
+                cancelTitle: nil,
+                acceptTitle: "OK"
+            )
+            let view = AlertMessageView(viewModel: viewModel)
+            
+            navigationController.present(view.controller, animated: true, completion: nil)
+            
+            return
+        }
+        
         let resourceType: ResourceType = toolTranslations.tool.resourceTypeEnum
         
         switch resourceType {

@@ -42,7 +42,9 @@ import Combine
         accessibilityWithToolName = AccessibilityStrings.Button.getToolButtonAccessibility(toolButton: accessibility, toolName: tool.name)
             
         getToolIsFavoritedUseCase
-            .getToolIsFavoritedPublisher(toolId: tool.dataModelId)
+            .execute(
+                toolId: tool.dataModelId
+            )
             .map { $0.isFavorited }
             .receive(on: DispatchQueue.main)
             .assign(to: &$isFavorited)

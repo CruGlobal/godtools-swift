@@ -35,9 +35,9 @@ class TestsDiContainer: AppDiContainer {
             }
         )
         
-        let legacyRealmDatabase = LegacyRealmDatabase(config: config)
-        
         let realmDatabase = RealmDatabase(databaseConfig: RealmDatabaseConfig(config: config))
+        
+        let legacyRealmDatabase = LegacyRealmDatabase(realmDatabase: realmDatabase)
         
         let realm: Realm = try realmDatabase.openRealm()
         

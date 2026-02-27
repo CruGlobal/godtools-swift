@@ -1,6 +1,10 @@
 "deferredDeepLinkModal.title" = "Похоже, вы нажали ссылку на GodTools.";
 "deferredDeepLinkModal.message" = "Нажмите кнопку ниже, чтобы мы могли перенаправить вас к запрошенному вами контенту.";
 
+"toolScreenShare.qrCode.closeButtonTitle" = "Закрыть";
+"toolScreenShare.qrCode.description" = "Отсканируйте этот QR-код, чтобы присоединиться ко мне.";
+"toolScreenShare.qrCode.title" = "QR-код";
+
 "optInNotification.notificationSettings" = "Настройки уведомлений";
 "lessons.swipeTutorial.title" = "Проведите по экрану, чтобы листать страницы";
 "lessons.swipeTutorial.buttonText" = "Понятно";
@@ -384,3 +388,5 @@
 // OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "Страны";
 "onboardingTutorial.showMoreButton.title" = "Покажите еще";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Сгенерировать QR-код";

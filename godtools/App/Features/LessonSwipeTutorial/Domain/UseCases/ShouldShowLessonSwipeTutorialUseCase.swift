@@ -9,16 +9,19 @@
 import Foundation
 import Combine
 
-class ShouldShowLessonSwipeTutorialUseCase {
+final class ShouldShowLessonSwipeTutorialUseCase {
+
+    private let lessonSwipeTutorialViewedRepo: LessonSwipeTutorialViewedRepository
     
-    private let shouldShowLessonSwipeTutorialRepo: ShouldShowLessonSwipeTutorialRepositoryInterface
-    
-    init(shouldShowLessonSwipeTutorialRepo: ShouldShowLessonSwipeTutorialRepositoryInterface) {
-        self.shouldShowLessonSwipeTutorialRepo = shouldShowLessonSwipeTutorialRepo
+    init(lessonSwipeTutorialViewedRepo: LessonSwipeTutorialViewedRepository) {
+        self.lessonSwipeTutorialViewedRepo = lessonSwipeTutorialViewedRepo
     }
     
-    func shouldShowLessonSwipeTutorialPublisher() -> AnyPublisher<Bool, Never> {
-        return shouldShowLessonSwipeTutorialRepo
-            .shouldShowLessonSwipeTutorial()
+    func execute() -> AnyPublisher<Bool, Never> {
+        
+        let swipeTutorialViewed = lessonSwipeTutorialViewedRepo.getLessonSwipeTutorialViewed()
+        
+        return Just(swipeTutorialViewed == false)
+            .eraseToAnyPublisher()
     }
 }

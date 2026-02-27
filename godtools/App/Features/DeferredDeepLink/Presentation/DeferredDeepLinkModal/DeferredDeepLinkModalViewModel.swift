@@ -34,7 +34,7 @@ import Combine
         self.deepLinkingService = deepLinkingService
         
         getCurrentAppLanguageUseCase
-            .getLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         

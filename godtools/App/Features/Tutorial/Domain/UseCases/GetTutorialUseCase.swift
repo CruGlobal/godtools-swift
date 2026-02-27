@@ -2,37 +2,116 @@
 //  GetTutorialUseCase.swift
 //  godtools
 //
-//  Created by Levi Eggert on 11/22/21.
-//  Copyright © 2021 Cru. All rights reserved.
+//  Created by Levi Eggert on 11/2/23.
+//  Copyright © 2023 Cru. All rights reserved.
 //
 
 import Foundation
 import Combine
 
-class GetTutorialUseCase {
+final class GetTutorialUseCase {
     
-    private let getInterfaceStringsRepositoryInterface: GetTutorialInterfaceStringsRepositoryInterface
-    private let getTutorialRepositoryInterface: GetTutorialRepositoryInterface
+    private let localizationServices: LocalizationServicesInterface
     
-    init(getInterfaceStringsRepositoryInterface: GetTutorialInterfaceStringsRepositoryInterface, getTutorialRepositoryInterface: GetTutorialRepositoryInterface) {
+    init(localizationServices: LocalizationServicesInterface) {
         
-        self.getInterfaceStringsRepositoryInterface = getInterfaceStringsRepositoryInterface
-        self.getTutorialRepositoryInterface = getTutorialRepositoryInterface
+        self.localizationServices = localizationServices
     }
     
-    func getTutorialPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<TutorialDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<TutorialDomainModel, Never> {
         
-        return Publishers.CombineLatest(
-            self.getInterfaceStringsRepositoryInterface.getStringsPublisher(translateInLanguage: appLanguage),
-            self.getTutorialRepositoryInterface.getTutorialPublisher(translateInLanguage: appLanguage)
-        )
-        .flatMap({ (interfaceStrings: TutorialInterfaceStringsDomainModel, pages: [TutorialPageDomainModel]) -> AnyPublisher<TutorialDomainModel, Never> in
+        let isEnglish: Bool = appLanguage == LanguageCodeDomainModel.english.value
+        
+        let tutorialPages: [TutorialPageDomainModel] = isEnglish ? getEnglishTutorial(translateInLanguage: appLanguage) : getNonEnglishTutorial(translateInLanguage: appLanguage)
+        
+        let domainModel = TutorialDomainModel(pages: tutorialPages)
+        
+        return Just(domainModel)
+            .eraseToAnyPublisher()
+    }
+    
+    private func getEnglishTutorial(translateInLanguage: AppLanguageDomainModel) -> [TutorialPageDomainModel] {
+        
+        let localeId: String = translateInLanguage
+        
+        let tutorialPages = [
             
-            let tutorial = TutorialDomainModel(interfaceStrings: interfaceStrings, pages: pages)
+            TutorialPageDomainModel(
+                title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "tutorial.lesson.title"),
+                message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "tutorial.lesson.message"),
+                videoId: nil,
+                animatedResource: .mainBundleJsonFile(filename: "tutorial_lessons"),
+                imageName: nil
+            ),
+            TutorialPageDomainModel(
+                title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "tutorial.tool.title"),
+                message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "tutorial.tool.message"),
+                videoId: nil,
+                animatedResource: nil,
+                imageName: ImageCatalog.tutorialTool.rawValue
+            ),
+            TutorialPageDomainModel(
+                title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "tutorial.toolTip.title"),
+                message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "tutorial.toolTip.message"),
+                videoId: nil,
+                animatedResource: .mainBundleJsonFile(filename: "tutorial_tooltip"),
+                imageName: nil
+            ),
+            TutorialPageDomainModel(
+                title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "tutorial.screenShare.title"),
+                message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "tutorial.screenShare.message"),
+                videoId: nil,
+                animatedResource: .mainBundleJsonFile(filename: "tutorial_screenshare"),
+                imageName: nil
+            ),
+            TutorialPageDomainModel(
+                title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "tutorial.findTutorial.title"),
+                message: "",
+                videoId: nil,
+                animatedResource: nil,
+                imageName: ImageCatalog.tutorialInMenuEnglish.name
+            )
+        ]
+        
+        return tutorialPages
+    }
+    
+    private func getNonEnglishTutorial(translateInLanguage: AppLanguageDomainModel) -> [TutorialPageDomainModel] {
+        
+        let localeId: String = translateInLanguage
+        
+        let tutorialPages = [
             
-            return Just(tutorial)
-                .eraseToAnyPublisher()
-        })
-        .eraseToAnyPublisher()
+            TutorialPageDomainModel(
+                title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "tutorial.tutorialItem.0.title"),
+                message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "tutorial.tutorialItem.0.message"),
+                videoId: "ELRAmQxLqHE",
+                animatedResource: nil,
+                imageName: nil
+            ),
+            TutorialPageDomainModel(
+                title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "tutorial.tutorialItem.1.title"),
+                message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "tutorial.tutorialItem.1.message"),
+                videoId: nil,
+                animatedResource: nil,
+                imageName: ImageCatalog.tutorialToolNonEnglish.name
+            ),
+            TutorialPageDomainModel(
+                title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "tutorial.tutorialItem.2.title"),
+                message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "tutorial.tutorialItem.2.message"),
+                videoId: nil,
+                animatedResource: nil,
+                imageName: ImageCatalog.tutorialPeople.rawValue
+            ),
+            TutorialPageDomainModel(
+                title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "tutorial.tutorialItem.3.title"),
+                message: "",
+                videoId: nil,
+                animatedResource: nil,
+                imageName: ImageCatalog.tutorialInMenuNonEnglish.name
+            )
+        ]
+        
+        return tutorialPages
     }
 }

@@ -43,8 +43,8 @@ struct GetOnboardingTutorialInterfaceStringsRepositoryTests {
         
         let appLanguagePublisher: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
         
-        var englishInterfaceStringsRef: OnboardingTutorialInterfaceStringsDomainModel?
-        var spanishInterfaceStringsRef: OnboardingTutorialInterfaceStringsDomainModel?
+        var englishInterfaceStringsRef: OnboardingTutorialStringsDomainModel?
+        var spanishInterfaceStringsRef: OnboardingTutorialStringsDomainModel?
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -53,13 +53,13 @@ struct GetOnboardingTutorialInterfaceStringsRepositoryTests {
         await confirmation(expectedCount: 2) { confirmation in
             
             appLanguagePublisher
-                .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<OnboardingTutorialInterfaceStringsDomainModel, Never> in
+                .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<OnboardingTutorialStringsDomainModel, Never> in
                     
                     return getOnboardingTutorialInterfaceStringsRepository
                         .getStringsPublisher(appLanguage: appLanguage)
                         .eraseToAnyPublisher()
                 })
-                .sink { (interfaceStrings: OnboardingTutorialInterfaceStringsDomainModel) in
+                .sink { (interfaceStrings: OnboardingTutorialStringsDomainModel) in
                     
                     confirmation()
                     

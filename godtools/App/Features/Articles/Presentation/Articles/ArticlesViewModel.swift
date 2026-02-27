@@ -52,7 +52,7 @@ import Combine
         super.init()
         
         getCurrentAppLanguageUseCase
-            .getLanguagePublisher()
+            .execute()
             .assign(to: &$appLanguage)
                         
         navTitle.accept(value: category.label?.text ?? "")

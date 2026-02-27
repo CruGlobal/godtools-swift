@@ -176,7 +176,10 @@ extension ArticleWebViewModel {
             contentLanguageSecondary: nil
         )
         
-        incrementUserCounterUseCase.incrementUserCounter(for: .articleOpen(uri: aemCacheObject.aemUri))
+        incrementUserCounterUseCase
+            .execute(
+                interaction: .articleOpen(uri: aemCacheObject.aemUri)
+            )
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 

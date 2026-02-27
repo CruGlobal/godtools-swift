@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class CancelLessonEvaluationUseCase {
+final class CancelLessonEvaluationUseCase {
         
     private let resourcesRepository: ResourcesRepository
     private let lessonEvaluationRepository: LessonEvaluationRepository

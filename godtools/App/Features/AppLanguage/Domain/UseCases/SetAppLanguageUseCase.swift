@@ -9,19 +9,31 @@
 import Foundation
 import Combine
 
-class SetAppLanguageUseCase {
+final class SetAppLanguageUseCase {
     
-    private let setUserPreferredAppLanguageRepositoryInterface: SetUserPreferredAppLanguageRepositoryInterface
+    private let userAppLanguageRepository: UserAppLanguageRepository
+    private let userLessonFiltersRepository: UserLessonFiltersRepository
+    private let languagesRepository: LanguagesRepository
     
-    init(setUserPreferredAppLanguageRepositoryInterface: SetUserPreferredAppLanguageRepositoryInterface) {
+    init(userAppLanguageRepository: UserAppLanguageRepository, userLessonFiltersRepository: UserLessonFiltersRepository, languagesRepository: LanguagesRepository) {
         
-        self.setUserPreferredAppLanguageRepositoryInterface = setUserPreferredAppLanguageRepositoryInterface
+        self.userAppLanguageRepository = userAppLanguageRepository
+        self.userLessonFiltersRepository = userLessonFiltersRepository
+        self.languagesRepository = languagesRepository
     }
     
-    func setLanguagePublisher(language: AppLanguageDomainModel) -> AnyPublisher<AppLanguageDomainModel, Error> {
+    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppLanguageDomainModel, Error> {
         
-        setUserPreferredAppLanguageRepositoryInterface
-            .setLanguagePublisher(appLanguage: language)
+        if let languageModelId = languagesRepository.cache.getCachedLanguage(code: appLanguage)?.id {
+            
+            userLessonFiltersRepository.storeUserLessonLanguageFilter(with: languageModelId)
+        }
+        
+        return userAppLanguageRepository
+            .storeLanguagePublisher(appLanguageId: appLanguage)
+            .map { _ in
+                return appLanguage
+            }
             .eraseToAnyPublisher()
     }
 }

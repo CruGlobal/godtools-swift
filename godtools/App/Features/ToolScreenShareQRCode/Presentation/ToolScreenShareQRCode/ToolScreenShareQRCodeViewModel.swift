@@ -21,7 +21,8 @@ import Combine
     let shareUrl: String
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
-    @Published var interfaceStrings: ToolScreenShareQRCodeInterfaceStringsDomainModel = .emptyStrings()
+    
+    @Published private(set) var strings = ToolScreenShareQRCodeInterfaceStringsDomainModel.emptyValue
     
     init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolScreenShareQRCodeUseCase: ViewToolScreenShareQRCodeUseCase, shareUrl: String) {
         
@@ -31,7 +32,7 @@ import Combine
         self.shareUrl = shareUrl
         
         getCurrentAppLanguageUseCase
-            .getLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
@@ -46,7 +47,7 @@ import Combine
             .receive(on: DispatchQueue.main)
             .sink { [weak self] qrCodeDomainModel in
                 
-                self?.interfaceStrings = qrCodeDomainModel.interfaceStrings
+                self?.strings = qrCodeDomainModel.interfaceStrings
             }
             .store(in: &cancellables)
     }

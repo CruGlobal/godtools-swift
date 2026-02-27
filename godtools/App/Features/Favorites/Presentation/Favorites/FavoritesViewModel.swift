@@ -13,7 +13,8 @@ import Combine
 @MainActor class FavoritesViewModel: ObservableObject {
             
     private let resourcesRepository: ResourcesRepository
-    private let viewFavoritesUseCase: ViewFavoritesUseCase
+    private let getFavoritesStringsUseCase: GetFavoritesStringsUseCase
+    private let getYourFavoritedToolsUseCase: GetYourFavoritedToolsUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     private let getToolBannerUseCase: GetToolBannerUseCase
@@ -28,25 +29,18 @@ import Combine
     private weak var flowDelegate: FlowDelegate?
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-        
-    @Published var openTutorialBannerMessage: String = ""
-    @Published var openTutorialBannerButtonTitle: String = ""
-    @Published var showsOpenTutorialBanner: Bool = false
-    @Published var welcomeTitle: String = ""
-    @Published var featuredLessonsTitle: String = ""
-    @Published var featuredLessons: [FeaturedLessonDomainModel] = Array()
-    @Published var yourFavoriteToolsTitle: String = ""
-    @Published var viewAllFavoriteToolsButtonTitle: String = ""
-    @Published var yourFavoritedTools: [YourFavoritedToolDomainModel] = Array()
-    @Published var isLoadingYourFavoritedTools: Bool = true
-    @Published var noFavoriteToolsTitle: String = ""
-    @Published var noFavoriteToolsDescription: String = ""
-    @Published var noFavoriteToolsButtonText: String = ""
     
-    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, viewFavoritesUseCase: ViewFavoritesUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getToolBannerUseCase: GetToolBannerUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    @Published private(set) var strings = FavoritesStringsDomainModel.emptyValue
+    @Published private(set) var showsOpenTutorialBanner: Bool = false
+    @Published private(set) var featuredLessons: [FeaturedLessonDomainModel] = Array()
+    @Published private(set) var yourFavoritedTools: [YourFavoritedToolDomainModel] = Array()
+    @Published private(set) var isLoadingYourFavoritedTools: Bool = true
+    
+    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, getFavoritesStringsUseCase: GetFavoritesStringsUseCase, getYourFavoritedToolsUseCase: GetYourFavoritedToolsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getToolBannerUseCase: GetToolBannerUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
-        self.viewFavoritesUseCase = viewFavoritesUseCase
+        self.getFavoritesStringsUseCase = getFavoritesStringsUseCase
+        self.getYourFavoritedToolsUseCase = getYourFavoritedToolsUseCase
         self.resourcesRepository = resourcesRepository
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
@@ -58,7 +52,7 @@ import Combine
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
                  
         getCurrentAppLanguageUseCase
-            .getLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
@@ -66,29 +60,41 @@ import Combine
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
                 
+                getFavoritesStringsUseCase
+                    .execute(appLanguage: appLanguage)
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] (strings: FavoritesStringsDomainModel) in
+                
+                self?.strings = strings
+            })
+            .store(in: &cancellables)
+        
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+                
                 Publishers.CombineLatest(
-                    viewFavoritesUseCase.viewPublisher(appLanguage: appLanguage),
-                    getFeaturedLessonsUseCase.getFeaturedLessonsPublisher(appLanguage: appLanguage)
+                    getYourFavoritedToolsUseCase
+                        .execute(
+                            appLanguage: appLanguage,
+                            maxCount: 5
+                        ),
+                    getFeaturedLessonsUseCase
+                        .getFeaturedLessonsPublisher(
+                            appLanguage: appLanguage
+                        )
                 )
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { _ in
                 
-            }, receiveValue: { [weak self] (domainModel: ViewFavoritesDomainModel, featuredLessons: [FeaturedLessonDomainModel]) in
-                
-                self?.openTutorialBannerMessage = domainModel.interfaceStrings.tutorialMessage
-                self?.openTutorialBannerButtonTitle = domainModel.interfaceStrings.openTutorialActionTitle
-                self?.welcomeTitle = domainModel.interfaceStrings.pageTitle
-                self?.featuredLessonsTitle = domainModel.interfaceStrings.featuredLessonsTitle
-                self?.yourFavoriteToolsTitle = domainModel.interfaceStrings.favoriteToolsTitle
-                self?.viewAllFavoriteToolsButtonTitle = domainModel.interfaceStrings.viewAllFavoritesActionTitle
-                self?.noFavoriteToolsTitle = domainModel.interfaceStrings.noFavoritedToolsTitle
-                self?.noFavoriteToolsDescription = domainModel.interfaceStrings.noFavoritedToolsDescription
-                self?.noFavoriteToolsButtonText = domainModel.interfaceStrings.noFavoritedToolsActionTitle
+            }, receiveValue: { [weak self] (yourFavoritedTools: [YourFavoritedToolDomainModel], featuredLessons: [FeaturedLessonDomainModel]) in
                 
                 self?.featuredLessons = featuredLessons
-                self?.yourFavoritedTools = domainModel.yourFavoritedTools
+                self?.yourFavoritedTools = yourFavoritedTools
                 
                 self?.isLoadingYourFavoritedTools = false
             })
