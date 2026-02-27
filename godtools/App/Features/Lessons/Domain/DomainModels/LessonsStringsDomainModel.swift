@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LessonsStringsDomainModel {
+struct LessonsStringsDomainModel: Sendable {
 
     let title: String
     let subtitle: String

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ToolShortcutLinkDomainModel {
+struct ToolShortcutLinkDomainModel: Sendable {
     
     let appDeepLinkUrl: String
     let title: String

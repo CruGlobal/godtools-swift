@@ -33,7 +33,7 @@ import Combine
         self.getDownloadToolProgressInterfaceStringsUseCase = getDownloadToolProgressInterfaceStringsUseCase
         
         getCurrentAppLanguageUseCase
-            .getLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         

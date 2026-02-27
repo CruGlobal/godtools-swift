@@ -11,7 +11,7 @@ import Combine
 
 @MainActor class AppLanguagesViewModel: ObservableObject {
     
-    private let viewAppLanguagesUseCase: ViewAppLanguagesUseCase
+    private let getAppLanguagesStringsUseCase: GetAppLanguagesStringsUseCase
     private let searchAppLanguageInAppLanguagesListUseCase: SearchAppLanguageInAppLanguagesListUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getAppLanguagesListUseCase: GetAppLanguagesListUseCase
@@ -25,21 +25,22 @@ import Combine
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private var appLanguagesList: [AppLanguageListItemDomainModel] = Array()
     
+    @Published private(set) var strings = AppLanguagesStringsDomainModel.emptyValue
+    
     @Published var searchText: String = ""
     @Published var appLanguageSearchResults: [AppLanguageListItemDomainModel] = Array()
-    @Published var navTitle: String = ""
     
-    init(flowDelegate: FlowDelegate, viewAppLanguagesUseCase: ViewAppLanguagesUseCase, searchAppLanguageInAppLanguagesListUseCase: SearchAppLanguageInAppLanguagesListUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getAppLanguagesListUseCase: GetAppLanguagesListUseCase, viewSearchBarUseCase: ViewSearchBarUseCase) {
+    init(flowDelegate: FlowDelegate, getAppLanguagesStringsUseCase: GetAppLanguagesStringsUseCase, searchAppLanguageInAppLanguagesListUseCase: SearchAppLanguageInAppLanguagesListUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getAppLanguagesListUseCase: GetAppLanguagesListUseCase, viewSearchBarUseCase: ViewSearchBarUseCase) {
         
         self.flowDelegate = flowDelegate
-        self.viewAppLanguagesUseCase = viewAppLanguagesUseCase
+        self.getAppLanguagesStringsUseCase = getAppLanguagesStringsUseCase
         self.searchAppLanguageInAppLanguagesListUseCase = searchAppLanguageInAppLanguagesListUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getAppLanguagesListUseCase = getAppLanguagesListUseCase
         self.viewSearchBarUseCase = viewSearchBarUseCase
         
         getCurrentAppLanguageUseCase
-            .getLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
@@ -47,7 +48,7 @@ import Combine
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
                 getAppLanguagesListUseCase
-                    .getAppLanguagesListPublisher(appLanguage: appLanguage)
+                    .execute(appLanguage: appLanguage)
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
@@ -62,14 +63,14 @@ import Combine
         $appLanguage
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
-                viewAppLanguagesUseCase
-                    .viewPublisher(appLanguage: appLanguage)
+                getAppLanguagesStringsUseCase
+                    .execute(appLanguage: appLanguage)
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (domainModel: ViewAppLanguagesDomainModel) in
+            .sink { [weak self] (strings: AppLanguagesStringsDomainModel) in
                 
-                self?.navTitle = domainModel.interfaceStrings.navTitle
+                self?.strings = strings
             }
             .store(in: &cancellables)
         
@@ -80,7 +81,7 @@ import Combine
         .flatMap { (searchText: String, appLanguagesList: [AppLanguageListItemDomainModel]) in
             
             searchAppLanguageInAppLanguagesListUseCase
-                .getSearchResultsPublisher(for: searchText, in: appLanguagesList)
+                .execute(searchText: searchText, appLanguagesList: appLanguagesList)
         }
         .receive(on: DispatchQueue.main)
         .assign(to: &$appLanguageSearchResults)

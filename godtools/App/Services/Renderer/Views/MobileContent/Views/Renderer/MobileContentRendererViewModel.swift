@@ -60,7 +60,7 @@ import Combine
         super.init()
         
         getCurrentAppLanguageUseCase
-            .getLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         

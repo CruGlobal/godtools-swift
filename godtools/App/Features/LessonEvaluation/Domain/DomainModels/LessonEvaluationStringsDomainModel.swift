@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LessonEvaluationStringsDomainModel {
+struct LessonEvaluationStringsDomainModel: Sendable {
     
     let title: String
     let wasThisHelpful: String

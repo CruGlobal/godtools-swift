@@ -10,17 +10,17 @@ import Foundation
 import Combine
 
 class SearchCountriesInLocalizationSettingsCountriesListUseCase {
-    
+
     private let stringSearcher: StringSearcher
-    
+
     init(stringSearcher: StringSearcher) {
         self.stringSearcher = stringSearcher
     }
-    
-    func execute(searchText: String, in countriesList: [LocalizationSettingsCountryListItemDomainModel]) -> AnyPublisher<[LocalizationSettingsCountryListItemDomainModel], Never> {
-        
+
+    func execute(searchText: String, in countriesList: [LocalizationSettingsCountryListItem]) -> AnyPublisher<[LocalizationSettingsCountryListItem], Never> {
+
         let searchResults = stringSearcher.search(for: searchText, in: countriesList)
-        
+
         return Just(searchResults)
             .eraseToAnyPublisher()
     }

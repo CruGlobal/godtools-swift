@@ -48,10 +48,12 @@ struct MenuView: View {
                                 viewModel.languageSettingsTapped()
                             })
                             
-                            MenuItemView(imageAssetName: ImageCatalog.translate.name, title: viewModel.localizationSettingsOptionTitle, accessibility: .localizationSettings, tappedClosure: {
-                                
-                                viewModel.localizationSettingsTapped()
-                            })
+                            if GodToolsAppConfig.showsPersonalization {
+                                MenuItemView(imageAssetName: ImageCatalog.translate.name, title: viewModel.localizationSettingsOptionTitle, accessibility: .localizationSettings, tappedClosure: {
+                                    
+                                    viewModel.localizationSettingsTapped()
+                                })
+                            }
                         }
                     )
    

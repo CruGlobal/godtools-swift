@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TrainingTipDomainModel {
+struct TrainingTipDomainModel: Sendable {
     
     let trainingTipId: String
     let resourceId: String

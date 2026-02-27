@@ -34,7 +34,7 @@ class AppInterfaceStringNavBarItemController: NavBarItemController {
         
         let localizedStringKey: String = interfaceStringBarItem.localizedStringKey
         
-        getCurrentAppLanguageUseCase.getLanguagePublisher()
+        getCurrentAppLanguageUseCase.execute()
             .map { (appLanguage: AppLanguageDomainModel) in
                 
                 let interfaceString: String = localizationServices.stringForLocaleElseEnglish(

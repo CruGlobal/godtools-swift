@@ -43,7 +43,7 @@ import Combine
         self.authenticateUserUseCase = authenticateUserUseCase
         
         getCurrentAppLanguageUseCase
-            .getLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         

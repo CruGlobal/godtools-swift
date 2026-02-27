@@ -24,14 +24,14 @@ import Combine
     private lazy var searchBarViewModel = SearchBarViewModel(getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, viewSearchBarUseCase: viewSearchBarUseCase)
 
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-    @Published private var countriesList: [LocalizationSettingsCountryListItemDomainModel] = Array()
+    @Published private var countriesList: [LocalizationSettingsCountryListItem] = Array()
     @Published private(set) var selectedCountryIsoRegionCode: String?
 
     @Published var searchText: String = ""
-    @Published private(set) var countrySearchResults: [LocalizationSettingsCountryListItemDomainModel] = Array()
-    @Published private(set) var strings = LocalizationSettingsInterfaceStringsDomainModel.emptyValue
+    @Published private(set) var countrySearchResults: [LocalizationSettingsCountryListItem] = Array()
+    @Published private(set) var strings = LocalizationSettingsStringsDomainModel.emptyValue
 
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getCountryListUseCase: GetLocalizationSettingsCountryListUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, searchCountriesUseCase: SearchCountriesInLocalizationSettingsCountriesListUseCase, viewLocalizationSettingsUseCase: ViewLocalizationSettingsUseCase, viewSearchBarUseCase: ViewSearchBarUseCase) {
+    init(flowDelegate: FlowDelegate, showsPreferNotToSay: Bool, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getCountryListUseCase: GetLocalizationSettingsCountryListUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, searchCountriesUseCase: SearchCountriesInLocalizationSettingsCountriesListUseCase, viewLocalizationSettingsUseCase: ViewLocalizationSettingsUseCase, viewSearchBarUseCase: ViewSearchBarUseCase) {
 
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
@@ -40,9 +40,9 @@ import Combine
         self.searchCountriesUseCase = searchCountriesUseCase
         self.viewLocalizationSettingsUseCase = viewLocalizationSettingsUseCase
         self.viewSearchBarUseCase = viewSearchBarUseCase
-        
+
         getCurrentAppLanguageUseCase
-            .getLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
 
@@ -56,7 +56,7 @@ import Combine
         $appLanguage
             .dropFirst()
             .map { appLanguage in
-                getCountryListUseCase.execute(appLanguage: appLanguage)
+                getCountryListUseCase.execute(appLanguage: appLanguage, showsPreferNotToSay: showsPreferNotToSay)
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
@@ -96,15 +96,12 @@ extension LocalizationSettingsViewModel {
         flowDelegate?.navigate(step: .backTappedFromLocalizationSettings)
     }
     
-    func countryTapped(country: LocalizationSettingsCountryListItemDomainModel) {
-
-        selectedCountryIsoRegionCode = country.isoRegionCode
-        
-        flowDelegate?.navigate(step: .didSelectLocalizationFromLocalizationSettings(localization: country))
+    func countryTapped(country: LocalizationSettingsCountryListItem) {
+        flowDelegate?.navigate(step: .countryTappedFromLocalizationSettings(country: country))
     }
-    
+
     func getSearchBarViewModel() -> SearchBarViewModel {
-        
+
         return searchBarViewModel
     }
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum LessonListItemProgressDomainModel {
+enum LessonListItemProgressDomainModel: Sendable {
     case hidden
     case inProgress(progress: Double, progressString: String)
     case complete(completeString: String)

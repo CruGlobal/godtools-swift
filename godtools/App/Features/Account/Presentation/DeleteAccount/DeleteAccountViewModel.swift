@@ -24,7 +24,7 @@ import Combine
         self.flowDelegate = flowDelegate
         
         getCurrentAppLanguage
-            .getLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         

@@ -41,7 +41,7 @@ class DashboardFlow: Flow, ToolNavigationFlow {
                 
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()
-            .getLanguagePublisher()
+            .execute()
             .assign(to: &$appLanguage)
     }
     

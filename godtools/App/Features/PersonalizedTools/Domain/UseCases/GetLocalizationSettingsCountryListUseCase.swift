@@ -10,30 +10,50 @@ import Foundation
 import Combine
 
 class GetLocalizationSettingsCountryListUseCase {
-    
-    private let countriesRepository: LocalizationSettingsCountriesRepositoryInterface
 
-    init(countriesRepository: LocalizationSettingsCountriesRepositoryInterface) {
+    private let countriesRepository: LocalizationSettingsCountriesRepositoryInterface
+    private let localizationServices: LocalizationServicesInterface
+
+    init(countriesRepository: LocalizationSettingsCountriesRepositoryInterface, localizationServices: LocalizationServicesInterface) {
         self.countriesRepository = countriesRepository
+        self.localizationServices = localizationServices
     }
-    
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[LocalizationSettingsCountryListItemDomainModel], Never> {
+
+    func execute(appLanguage: AppLanguageDomainModel, showsPreferNotToSay: Bool) -> AnyPublisher<[LocalizationSettingsCountryListItem], Never> {
 
         return countriesRepository.getCountriesPublisher(appLanguage: appLanguage)
             .flatMap { (countries: [LocalizationSettingsCountryDataModel]) in
 
-                let countryDomainModels = countries.map { country in
+                let countryListItems: [LocalizationSettingsCountryListItem] = countries.map { country in
 
-                    return LocalizationSettingsCountryListItemDomainModel(
+                    return .country(LocalizationSettingsCountryDomainModel(
                         isoRegionCode: country.isoRegionCode,
                         countryNameTranslatedInOwnLanguage: country.countryNameTranslatedInOwnLanguage,
                         countryNameTranslatedInCurrentAppLanguage: country.countryNameTranslatedInCurrentAppLanguage
-                    )
+                    ))
                 }
 
-                return Just(countryDomainModels)
-                    .eraseToAnyPublisher()
+                if showsPreferNotToSay {
+                    let preferNotToSay = self.createPreferNotToSayOption(appLanguage: appLanguage)
+                    return Just([preferNotToSay] + countryListItems)
+                        .eraseToAnyPublisher()
+                } else {
+                    return Just(countryListItems)
+                        .eraseToAnyPublisher()
+                }
             }
             .eraseToAnyPublisher()
+    }
+
+    private func createPreferNotToSayOption(appLanguage: AppLanguageDomainModel) -> LocalizationSettingsCountryListItem {
+
+        let preferNotToSayText = localizationServices.stringForLocaleElseEnglish(
+            localeIdentifier: appLanguage,
+            key: "localizationSettings.preferNotToSay"
+        )
+
+        return .preferNotToSay(LocalizationSettingsPreferNotToSayDomainModel(
+            preferNotToSayText: preferNotToSayText
+        ))
     }
 }

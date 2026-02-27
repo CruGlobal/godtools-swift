@@ -36,11 +36,14 @@ struct LessonsView: View {
 
             VStack(alignment: .center, spacing: 0) {
 
-                PersonalizedToolToggle(
-                    selectedToggle: $viewModel.selectedToggle,
-                    toggleOptions: viewModel.toggleOptions
-                )
-                .padding([.top], ToolsView.personalizedToggleTopPadding)
+                if GodToolsAppConfig.showsPersonalization {
+                    
+                    PersonalizedToolToggle(
+                        selectedToggle: $viewModel.selectedToggle,
+                        toggleOptions: viewModel.toggleOptions
+                    )
+                    .padding([.top], ToolsView.personalizedToggleTopPadding)
+                }
 
                 PullToRefreshScrollView(showsIndicators: true) {
 
@@ -57,7 +60,7 @@ struct LessonsView: View {
                             .padding(.horizontal, contentHorizontalInsets)
 
                         HStack(spacing: 0) {
-                            Text(viewModel.languageFilterTitle)
+                            Text(viewModel.strings.languageFilterTitle)
                                 .font(FontLibrary.sfProTextBold.font(size: 18))
                                 .foregroundColor(ColorPalette.gtGrey.color)
 
