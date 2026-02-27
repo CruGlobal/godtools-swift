@@ -16,6 +16,6 @@ class DeferredDeepLinkDiContainer {
     init(coreDataLayer: AppDataLayerDependencies) {
         
         dataLayer = DeferredDeepLinkDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainLayer = DeferredDeepLinkDomainLayerDependencies(dataLayer: dataLayer)
+        domainLayer = DeferredDeepLinkDomainLayerDependencies(coreDataLayer: coreDataLayer, dataLayer: dataLayer)
     }
 }

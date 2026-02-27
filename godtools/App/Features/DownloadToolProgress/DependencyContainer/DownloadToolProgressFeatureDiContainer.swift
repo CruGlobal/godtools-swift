@@ -17,6 +17,6 @@ class DownloadToolProgressFeatureDiContainer {
         
         dataLayer = DownloadToolProgressFeatureDataLayerDependencies(coreDataLayer: coreDataLayer)
         
-        domainLayer = DownloadToolProgressFeatureDomainLayerDependencies(dataLayer: dataLayer)
+        domainLayer = DownloadToolProgressFeatureDomainLayerDependencies(coreDataLayer: coreDataLayer, dataLayer: dataLayer)
     }
 }

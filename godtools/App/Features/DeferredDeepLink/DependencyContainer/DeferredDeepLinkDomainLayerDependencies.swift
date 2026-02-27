@@ -10,15 +10,18 @@ import Foundation
 
 class DeferredDeepLinkDomainLayerDependencies {
     
+    private let coreDataLayer: AppDataLayerDependencies
     private let dataLayer: DeferredDeepLinkDataLayerDependencies
     
-    init(dataLayer: DeferredDeepLinkDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, dataLayer: DeferredDeepLinkDataLayerDependencies) {
+        
+        self.coreDataLayer = coreDataLayer
         self.dataLayer = dataLayer
     }
     
-    func getDeferredDeepLinkModalInterfaceStringsUseCase() -> GetDeferredDeepLinkModalInterfaceStringsUseCase {
-        return GetDeferredDeepLinkModalInterfaceStringsUseCase(
-            getInterfaceStringsRepositoryInterface: dataLayer.getDeferredDeepLinkModalInterfaceStringsRepositoryInterface()
+    func getDeferredDeepLinkModalStringsUseCase() -> GetDeferredDeepLinkModalStringsUseCase {
+        return GetDeferredDeepLinkModalStringsUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
 }

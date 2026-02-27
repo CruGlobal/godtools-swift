@@ -28,13 +28,13 @@ struct DeferredDeepLinkModalView: View {
             }
             .padding(.top, 32)
             
-            Text(viewModel.modalTitle)
+            Text(viewModel.strings.title)
                 .font(FontLibrary.sfProDisplayLight.font(size: 28))
                 .foregroundColor(ColorPalette.gtBlue.color)
                 .multilineTextAlignment(.center)
                 .padding(.top, 76)
             
-            Text(viewModel.modalMessage)
+            Text(viewModel.strings.message)
                 .multilineTextAlignment(.center)
                 .font(FontLibrary.sfProDisplayLight.font(size: 16))
                 .foregroundColor(ColorPalette.gtGrey.color)

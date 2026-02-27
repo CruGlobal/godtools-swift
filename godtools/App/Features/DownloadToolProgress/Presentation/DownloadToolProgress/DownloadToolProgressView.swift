@@ -20,7 +20,7 @@ struct DownloadToolProgressView: View {
     var body: some View {
         
         FullScreenDownloadProgressView(
-            downloadMessage: viewModel.message,
+            downloadMessage: viewModel.strings.downloadMessage,
             hidesSpinner: false,
             downloadProgress: nil,
             downloadProgressString: nil
