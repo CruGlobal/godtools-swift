@@ -488,9 +488,9 @@
 				4F5732861EA69CF00082035C /* Frameworks */,
 				4F5732871EA69CF00082035C /* Resources */,
 				45B10ADF2BF3F270004342AB /* Embed Frameworks */,
-				45AD220F2593C66B00A096A0 /* Run Crashlytics */,
-				451C8B7628AEC6AD00E98AFA /* Download Initial Resources */,
 				45B4DA2E2F50CD3E007EF287 /* Embed Foundation Extensions */,
+				451C8B7628AEC6AD00E98AFA /* Download Initial Resources */,
+				45AD220F2593C66B00A096A0 /* Run Crashlytics */,
 			);
 			buildRules = (
 			);
