@@ -28,12 +28,12 @@ struct ToolLanguagesAvailableOfflineView: View {
         
         VStack(alignment: .leading, spacing: 0) {
          
-            Text(viewModel.toolLanguagesAvailableOfflineTitle)
+            Text(viewModel.strings.toolLanguagesAvailableOfflineTitle)
                 .font(FontLibrary.sfProTextRegular.font(size: 26))
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .multilineTextAlignment(.leading)
             
-            Text(viewModel.downloadToolsForOfflineMessage)
+            Text(viewModel.strings.downloadToolsForOfflineMessage)
                 .font(FontLibrary.sfProTextRegular.font(size: 15))
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .multilineTextAlignment(.leading)
@@ -67,7 +67,7 @@ struct ToolLanguagesAvailableOfflineView: View {
                 FixedVerticalSpacer(height: 25)
                 
                 GTBlueButton(
-                    title: viewModel.editDownloadedLanguagesButtonTitle,
+                    title: viewModel.strings.editDownloadedLanguagesButtonTitle,
                     font: FontLibrary.sfProTextRegular.font(size: 14),
                     width: geometry.size.width - (contentHorizontalInsets * 2),
                     height: 50,

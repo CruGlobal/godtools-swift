@@ -49,7 +49,7 @@ import GodToolsShared
         self.getGlobalActivityEnabledUseCase = getGlobalActivityEnabledUseCase
         
         getCurrentAppLanguageUseCase
-            .getLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
 

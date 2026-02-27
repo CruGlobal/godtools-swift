@@ -9,17 +9,20 @@
 import Foundation
 import Combine
 
-class SearchLanguageInDownloadableLanguagesUseCase {
+final class SearchLanguageInDownloadableLanguagesUseCase {
     
-    private let searchLanguageInDownloadableLanguagesRepository: SearchLanguageInDownloadableLanguagesRepositoryInterface
+    private let stringSearcher: StringSearcher
     
-    init(searchLanguageInDownloadableLanguagesRepository: SearchLanguageInDownloadableLanguagesRepositoryInterface) {
+    init(stringSearcher: StringSearcher) {
         
-        self.searchLanguageInDownloadableLanguagesRepository = searchLanguageInDownloadableLanguagesRepository
+        self.stringSearcher = stringSearcher
     }
     
-    func getSearchResultsPublisher(for searchText: String, in downloadableLanguages: [DownloadableLanguageListItemDomainModel]) -> AnyPublisher<[DownloadableLanguageListItemDomainModel], Never> {
+    func execute(searchText: String, downloadableLanguages: [DownloadableLanguageListItemDomainModel]) -> AnyPublisher<[DownloadableLanguageListItemDomainModel], Never> {
         
-        return searchLanguageInDownloadableLanguagesRepository.getSearchResultsPublisher(searchText: searchText, downloadableLanguagesList: downloadableLanguages)
+        let searchResults = stringSearcher.search(for: searchText, in: downloadableLanguages)
+        
+        return Just(searchResults)
+            .eraseToAnyPublisher()
     }
 }

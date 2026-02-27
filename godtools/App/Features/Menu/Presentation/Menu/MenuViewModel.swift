@@ -73,7 +73,7 @@ import Combine
         self.hidesDebugSection = !appConfig.isDebug
         
         getCurrentAppLanguageUseCase
-            .getLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         

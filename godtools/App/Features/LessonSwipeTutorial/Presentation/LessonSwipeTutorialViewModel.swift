@@ -28,7 +28,7 @@ import Combine
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         
         getCurrentAppLanguageUseCase
-            .getLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
