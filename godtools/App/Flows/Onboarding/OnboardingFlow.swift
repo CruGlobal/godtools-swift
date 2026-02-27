@@ -104,6 +104,10 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
             let currentPage: Int = onboardingTutorialView.getCurrentPageIndex()
             let reachedEnd = currentPage >= lastPage
             
+            if !GodToolsAppConfig.showsPersonalization {
+                didPromptForAppLanguage = true
+            }
+            
             if reachedEnd {
                 
                 navigate(step: .endTutorialFromOnboardingTutorial)
