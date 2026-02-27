@@ -29,7 +29,7 @@ import Combine
         self.getLocalizationSettingsConfirmationStringsUseCase = getLocalizationSettingsConfirmationStringsUseCase
 
         getCurrentAppLanguageUseCase
-            .getLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
 
@@ -38,7 +38,11 @@ import Combine
             .receive(on: DispatchQueue.main)
             .map { appLanguage in
                 
-                return getLocalizationSettingsConfirmationStringsUseCase.execute(appLanguage: appLanguage, selectedCountry: selectedCountry)
+                return getLocalizationSettingsConfirmationStringsUseCase
+                    .execute(
+                        appLanguage: appLanguage,
+                        selectedCountry: selectedCountry
+                    )
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
