@@ -48,7 +48,7 @@ import SwiftUI
         let getCurrentAppLanguageUseCase = appLanguageFeatureDiContainer.domainLayer.getCurrentAppLanguageUseCase()
         
         getCurrentAppLanguageUseCase
-            .getLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
@@ -59,7 +59,7 @@ import SwiftUI
             .map { (appLanguage: AppLanguageDomainModel) in
                 
                 getInterfaceLayoutDirectionUseCase
-                    .getLayoutDirectionPublisher(appLanguage: appLanguage)
+                    .execute(appLanguage: appLanguage)
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)

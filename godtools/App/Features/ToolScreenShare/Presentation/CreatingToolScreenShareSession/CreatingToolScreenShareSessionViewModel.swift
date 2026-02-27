@@ -39,7 +39,7 @@ import Combine
         self.incrementUserCounterUseCase = incrementUserCounterUseCase
         
         getCurrentAppLanguage
-            .getLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         

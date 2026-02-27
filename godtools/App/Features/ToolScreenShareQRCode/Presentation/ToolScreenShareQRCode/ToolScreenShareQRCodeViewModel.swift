@@ -32,7 +32,7 @@ import Combine
         self.shareUrl = shareUrl
         
         getCurrentAppLanguageUseCase
-            .getLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         

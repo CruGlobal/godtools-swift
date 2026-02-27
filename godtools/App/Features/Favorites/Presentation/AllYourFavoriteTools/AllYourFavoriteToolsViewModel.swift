@@ -47,7 +47,7 @@ import SwiftUI
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         
         getCurrentAppLanguageUseCase
-            .getLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         

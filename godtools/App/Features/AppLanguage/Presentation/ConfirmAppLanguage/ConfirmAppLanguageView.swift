@@ -52,9 +52,9 @@ struct ConfirmAppLanguageView: View {
                 FixedVerticalSpacer(height: 10)
                 
                 Group {
-                    attributedMessageView(attributedString: getAttributedMessageString(highlightStringDomainModel: viewModel.messageInCurrentLanguageHighlightModel), fontSize: 18)
+                    attributedMessageView(attributedString: getAttributedMessageString(highlightStringDomainModel: viewModel.strings.messageInCurrentLanguageHighlightModel), fontSize: 18)
                     
-                    attributedMessageView(attributedString: getAttributedMessageString(highlightStringDomainModel: viewModel.messageInNewlySelectedLanguageHighlightModel), fontSize: 18)
+                    attributedMessageView(attributedString: getAttributedMessageString(highlightStringDomainModel: viewModel.strings.messageInNewlySelectedLanguageHighlightModel), fontSize: 18)
                 }
                 .padding(.horizontal, 10)
                 
@@ -66,12 +66,12 @@ struct ConfirmAppLanguageView: View {
                     
                     let buttonWidth = (geometry.size.width - buttonSpacing - 2 * horizontalPadding) / 2
                     
-                    GTWhiteButton(title: viewModel.nevermindButtonTitle, fontSize: 15, width: buttonWidth, height: 48) {
+                    GTWhiteButton(title: viewModel.strings.nevermindButtonText, fontSize: 15, width: buttonWidth, height: 48) {
                         
                         viewModel.nevermindButtonTapped()
                     }
                     
-                    GTBlueButton(title: viewModel.changeLanguageButtonTitle, fontSize: 15, width: buttonWidth, height: 48) {
+                    GTBlueButton(title: viewModel.strings.changeLanguageButtonText, fontSize: 15, width: buttonWidth, height: 48) {
                         
                         viewModel.confirmLanguageButtonTapped()
                     }

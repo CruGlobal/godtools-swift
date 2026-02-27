@@ -17,9 +17,7 @@ class AppLanguageFeatureDataLayerDependencies {
         
         self.coreDataLayer = coreDataLayer
     }
-    
-    // MARK: - Data Layer Classes
-    
+        
     func getAppLanguagesRepository(sync: AppLanguagesRepositorySyncInterface? = nil) -> AppLanguagesRepository {
         
         let persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>
@@ -60,7 +58,7 @@ class AppLanguageFeatureDataLayerDependencies {
         )
     }
     
-    private func getDownloadedLanguagesRepository() -> DownloadedLanguagesRepository {
+    func getDownloadedLanguagesRepository() -> DownloadedLanguagesRepository {
         return DownloadedLanguagesRepository(cache: getRealmDownloadedLanguagesCache())
     }
     
@@ -100,115 +98,6 @@ class AppLanguageFeatureDataLayerDependencies {
         
         return UserAppLanguageRepository(
             cache: cache
-        )
-    }
-    
-    // MARK: - Domain Interface
-    
-    func getAppInterfaceLayoutDirectionInterface() -> GetAppInterfaceLayoutDirectionInterface {
-        return GetAppInterfaceLayoutDirection(
-            appLanguagesRepository: getAppLanguagesRepository()
-        )
-    }
-    
-    func getAppLanguagesListRepositoryInterface() -> GetAppLanguagesListRepositoryInterface {
-        return GetAppLanguagesListRepository(
-            appLanguagesRepository: getAppLanguagesRepository(),
-            getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName()
-        )
-    }
-    
-    func getAppLanguageRepository() -> GetAppLanguageRepositoryInterface {
-        return GetAppLanguageRepository(
-            userAppLanguageRepository: getUserAppLanguageRepository()
-        )
-    }
-    
-    func getAppLanguagesInterfaceStringsRepositoryInterface() -> GetAppLanguagesInterfaceStringsRepositoryInterface {
-        return GetAppLanguagesInterfaceStringsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
-    
-    func getConfirmAppLanguageInterfaceStringsRepositoryInterface() -> GetConfirmAppLanguageInterfaceStringsRepositoryInterface {
-        return GetConfirmAppLanguageInterfaceStringsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices(),
-            getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName()
-        )
-    }
-    
-    func getDownloadableLanguagesInterfaceStringsRepositoryInterface() -> GetDownloadableLanguagesInterfaceStringsRepositoryInterface {
-        return GetDownloadableLanguagesInterfaceStringsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
-    
-    func getDownloadableLanguagesListRepositoryInterface() -> GetDownloadableLanguagesListRepositoryInterface {
-        return GetDownloadableLanguagesListRepository(
-            languagesRepository: coreDataLayer.getLanguagesRepository(),
-            downloadedLanguagesRepository: getDownloadedLanguagesRepository(),
-            getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName(),
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
-            localizationServices: coreDataLayer.getLocalizationServices(),
-            stringWithLocaleCount: coreDataLayer.getStringWithLocaleCount()
-        )
-    }
-    
-    func getDownloadedLanguagesListRepositoryInterface() -> GetDownloadedLanguagesListRepositoryInterface {
-        return GetDownloadedLanguagesListRepository(
-            languagesRepository: coreDataLayer.getLanguagesRepository(),
-            downloadedLanguagesRepository: getDownloadedLanguagesRepository(),
-            getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName()
-        )
-    }
-    
-    func getDownloadToolLanguageRepositoryInterface() -> DownloadToolLanguageRepositoryInterface {
-        return DownloadToolLanguageRepository(
-            downloadedLanguagesRepository: getDownloadedLanguagesRepository(),
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
-            toolLanguageDownloader: getToolLanguageDownloader()
-        )
-    }
-    
-    func getLanguageSettingsInterfaceStringsRepositoryInterface() -> GetLanguageSettingsInterfaceStringsRepositoryInterface {
-        return GetLanguageSettingsInterfaceStringsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices(),
-            getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName(),
-            appLanguagesRepository: getAppLanguagesRepository()
-        )
-    }
-    
-    func getRemoveDownloadedToolLanguageRepositoryInterface() -> RemoveDownloadedToolLanguageRepositoryInterface {
-        return RemoveDownloadedToolLanguageRepository(
-            downloadedLanguagesRepository: getDownloadedLanguagesRepository()
-        )
-    }
-    
-    func getSearchAppLanguageInAppLanguageListRepository() -> SearchAppLanguageInAppLanguagesListRepositoryInterface {
-        return SearchAppLanguageInAppLanguagesListRepository(
-            stringSearcher: StringSearcher()
-        )
-    }
-    
-    func getSearchLanguageInDownloadableLanguagesRepositoryInterface() -> SearchLanguageInDownloadableLanguagesRepositoryInterface {
-        return SearchLanguageInDownloadableLanguagesRepository(
-            stringSearcher: StringSearcher()
-        )
-    }
-    
-    func getSetUserPreferredAppLanguageRepositoryInterface() -> SetUserPreferredAppLanguageRepositoryInterface {
-        return SetUserPreferredAppLanguageRepository(
-            userAppLanguageRepository: getUserAppLanguageRepository(),
-            userLessonFiltersRepository: coreDataLayer.getUserLessonFiltersRepository(),
-            languagesRepository: coreDataLayer.getLanguagesRepository()
-        )
-    }
-    
-    func getStoreInitialAppLanguage() -> StoreInitialAppLanguageInterface {
-        return StoreInitialAppLanguage(
-            deviceSystemLanguage: coreDataLayer.getDeviceSystemLanguage(),
-            userAppLanguageRepository: getUserAppLanguageRepository(),
-            appLanguagesRepository: getAppLanguagesRepository()
         )
     }
 }

@@ -50,7 +50,7 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
         let getCurrentAppLanguageUseCase = appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase()
         
         getCurrentAppLanguageUseCase
-            .getLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$currentAppLanguage)
     }

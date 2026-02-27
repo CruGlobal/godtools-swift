@@ -33,13 +33,13 @@ import RequestOperation
                         
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()
-            .getLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         appDiContainer.feature.appLanguage.domainLayer
             .getStoreInitialAppLanguageUseCase()
-            .storeInitialAppLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { _ in
                 

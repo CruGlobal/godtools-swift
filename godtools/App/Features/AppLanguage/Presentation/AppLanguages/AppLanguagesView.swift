@@ -37,7 +37,7 @@ struct AppLanguagesView: View {
             .listStyle(.inset)
         }
         .navigationBarBackButtonHidden(true)
-        .navigationTitle(viewModel.navTitle)
+        .navigationTitle(viewModel.strings.navTitle)
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
 }
