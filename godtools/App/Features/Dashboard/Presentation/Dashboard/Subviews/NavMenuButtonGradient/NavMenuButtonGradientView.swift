@@ -12,11 +12,13 @@ struct NavMenuButtonGradientView: View {
     
     private let menuButtonLeading: CGFloat
     private let menuButtonSize: CGFloat
+    private let navHeight: CGFloat
     
-    init(menuButtonLeading: CGFloat, menuButtonSize: CGFloat) {
+    init(menuButtonLeading: CGFloat, menuButtonSize: CGFloat, navHeight: CGFloat) {
      
         self.menuButtonLeading = menuButtonLeading
         self.menuButtonSize = menuButtonSize
+        self.navHeight = navHeight
     }
     
     var body: some View {
@@ -27,16 +29,14 @@ struct NavMenuButtonGradientView: View {
                 
                 Rectangle()
                     .fill(Color.white)
-                    .frame(width: menuButtonLeading + menuButtonSize, height: PersonalizedToolToggle.height)
-                    .border(Color.red, width: 1)
+                    .frame(width: menuButtonLeading + menuButtonSize, height: navHeight)
                 
                 Rectangle()
                     .fill(Color.clear)
-                    .frame(width: 40, height: PersonalizedToolToggle.height)
+                    .frame(width: 40, height: navHeight)
                     .background(
                         LinearGradient(gradient: Gradient(colors: [.white, .white.opacity(0.5), .white.opacity(0)]), startPoint: .leading, endPoint: .trailing)
                     )
-                    .border(Color.blue, width: 1)
             }
         }
     }
