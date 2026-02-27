@@ -11,10 +11,11 @@ import UIKit
 
 extension Flow {
     
-    func getLocalizationSettingsView() -> UIViewController {
-        
+    func getLocalizationSettingsView(showsPreferNotToSay: Bool) -> UIViewController {
+
         let viewModel = LocalizationSettingsViewModel(
             flowDelegate: self,
+            showsPreferNotToSay: showsPreferNotToSay,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getCountryListUseCase: appDiContainer.feature.personalizedTools.domainLayer.getLocalizationSettingsCountryListUseCase(),
             getLocalizationSettingsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getGetLocalizationSettingsUseCase(),

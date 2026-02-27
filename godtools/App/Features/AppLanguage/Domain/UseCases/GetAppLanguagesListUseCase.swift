@@ -9,19 +9,42 @@
 import Foundation
 import Combine
 
-class GetAppLanguagesListUseCase {
+final class GetAppLanguagesListUseCase {
     
-    private let getAppLanguagesListRepository: GetAppLanguagesListRepositoryInterface
+    private let appLanguagesRepository: AppLanguagesRepository
+    private let getTranslatedLanguageName: GetTranslatedLanguageName
     
-    init(getAppLanguagesListRepository: GetAppLanguagesListRepositoryInterface) {
+    init(appLanguagesRepository: AppLanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName) {
         
-        self.getAppLanguagesListRepository = getAppLanguagesListRepository
+        self.appLanguagesRepository = appLanguagesRepository
+        self.getTranslatedLanguageName = getTranslatedLanguageName
     }
     
-    func getAppLanguagesListPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[AppLanguageListItemDomainModel], Error> {
+    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[AppLanguageListItemDomainModel], Error> {
         
-        return getAppLanguagesListRepository
-            .getLanguagesPublisher(appLanguage: appLanguage)
+        return appLanguagesRepository
+            .getLanguagesPublisher()
+            .flatMap({ (languages: [AppLanguageDataModel]) -> AnyPublisher<[AppLanguageListItemDomainModel], Error> in
+                
+                let appLanguagesList: [AppLanguageListItemDomainModel] = languages.map { (languageDataModel: AppLanguageDataModel) in
+                                                            
+                    let languageNameTranslatedInOwnLanguage: String = self.getTranslatedLanguageName.getLanguageName(language: languageDataModel, translatedInLanguage: languageDataModel.languageId)
+                    let languageNameTranslatedInCurrentAppLanguage: String = self.getTranslatedLanguageName.getLanguageName(language: languageDataModel, translatedInLanguage: appLanguage)
+                    
+                    return AppLanguageListItemDomainModel(
+                        language: languageDataModel.languageId,
+                        languageNameTranslatedInOwnLanguage: languageNameTranslatedInOwnLanguage,
+                        languageNameTranslatedInCurrentAppLanguage: languageNameTranslatedInCurrentAppLanguage
+                    )
+                }
+                .sorted { (thisAppLanguage: AppLanguageListItemDomainModel, thatAppLanguage: AppLanguageListItemDomainModel) in
+                    return thisAppLanguage.languageNameTranslatedInCurrentAppLanguage < thatAppLanguage.languageNameTranslatedInCurrentAppLanguage
+                }
+                
+                return Just(appLanguagesList)
+                    .setFailureType(to: Error.self)
+                    .eraseToAnyPublisher()
+            })
             .eraseToAnyPublisher()
     }
 }

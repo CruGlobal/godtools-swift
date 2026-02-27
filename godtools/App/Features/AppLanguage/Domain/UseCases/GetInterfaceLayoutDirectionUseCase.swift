@@ -9,19 +9,27 @@
 import Foundation
 import Combine
 
-class GetInterfaceLayoutDirectionUseCase {
+final class GetInterfaceLayoutDirectionUseCase {
     
-    private let getLayoutDirectionInterface: GetAppInterfaceLayoutDirectionInterface
+    private let appLanguagesRepository: AppLanguagesRepository
     
-    init(getLayoutDirectionInterface: GetAppInterfaceLayoutDirectionInterface) {
+    init(appLanguagesRepository: AppLanguagesRepository) {
         
-        self.getLayoutDirectionInterface = getLayoutDirectionInterface
+        self.appLanguagesRepository = appLanguagesRepository
     }
     
-    func getLayoutDirectionPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppInterfaceLayoutDirectionDomainModel, Error> {
+    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppInterfaceLayoutDirectionDomainModel, Error> {
         
-        return getLayoutDirectionInterface
-            .getLayoutDirectionPublisher(appLanguage: appLanguage)
+        return appLanguagesRepository
+            .getLanguagePublisher(languageId: appLanguage)
+            .map { (dataModel: AppLanguageDataModel?) in
+                
+                guard let dataModel = dataModel else {
+                    return .leftToRight
+                }
+                
+                return dataModel.languageDirection == .leftToRight ? .leftToRight : .rightToLeft
+            }
             .eraseToAnyPublisher()
     }
 }

@@ -30,7 +30,7 @@ import Combine
         self.deleteAccountUseCase = deleteAccountUseCase
         
         getCurrentAppLanguage
-            .getLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         

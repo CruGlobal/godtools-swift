@@ -57,7 +57,7 @@ import SwiftUI
         self.getToolBannerUseCase = getToolBannerUseCase
         
         getCurrentAppLanguageUseCase
-            .getLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
 

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LessonSwipeTutorialStringsDomainModel {
+struct LessonSwipeTutorialStringsDomainModel: Sendable {
     
     let title: String
     let closeButtonText: String
