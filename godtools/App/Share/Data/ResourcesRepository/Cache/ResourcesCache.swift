@@ -532,33 +532,26 @@ extension ResourcesCache {
         guard let realm = realmDatabase?.openRealmNonThrowing() else {
             return nil
         }
-        var filterByANDSubpredicates: [NSPredicate] = Array()
+        
+        var filters: [NSPredicate] = Array()
         
         if let filterByCategory = filterByCategory {
-            filterByANDSubpredicates.append(ResourcesFilter.getCategoryPredicate(category: filterByCategory))
+            filters.append(ResourcesFilter.getCategoryPredicate(category: filterByCategory))
         }
         
         if let filterByLanguageId = filterByLanguageId {
-            filterByANDSubpredicates.append(ResourcesFilter.getLanguageModelIdPredicate(languageModelId: filterByLanguageId))
+            filters.append(ResourcesFilter.getLanguageModelIdPredicate(languageModelId: filterByLanguageId))
         }
         
-        filterByANDSubpredicates.append(ResourcesFilter.getIsHiddenPredicate(isHidden: false))
+        filters.append(ResourcesFilter.getIsHiddenPredicate(isHidden: false))
         
-        filterByANDSubpredicates.append(ResourcesFilter.getResourceTypesPredicate(resourceTypes: [.article, .chooseYourOwnAdventure, .tract]))
+        filters.append(ResourcesFilter.getResourceTypesPredicate(resourceTypes: [.article, .chooseYourOwnAdventure, .tract]))
+        
+        let filterByANDPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: filters)
                 
-        let filterExcludingVariants: [NSPredicate] = filterByANDSubpredicates + [ResourcesFilter.getVariantsPredicate(variants: .isNotVariant)]
-        
-        let filterIncludingDefaultVariantOnly: [NSPredicate] = filterByANDSubpredicates + [ResourcesFilter.getVariantsPredicate(variants: .isDefaultVariant)]
-            
-        let filterPredicates: NSCompoundPredicate = NSCompoundPredicate(
-            type: .or,
-            subpredicates: [
-                NSCompoundPredicate(type: .and, subpredicates: filterExcludingVariants),
-                NSCompoundPredicate(type: .and, subpredicates: filterIncludingDefaultVariantOnly)
-            ]
-        )
-        
-        let filteredRealmResources: Results<RealmResource> = realm.objects(RealmResource.self).filter(filterPredicates)
+        let filteredRealmResources: Results<RealmResource> = realm
+            .objects(RealmResource.self)
+            .filter(filterByANDPredicate)
         
         let allToolsListResults: Results<RealmResource>
         
