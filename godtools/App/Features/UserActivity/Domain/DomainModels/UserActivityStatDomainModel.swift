@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-struct UserActivityStatDomainModel {
+struct UserActivityStatDomainModel: Sendable {
     
     let iconImageName: String
     let text: String

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ViewToolShortcutLinksDomainModel {
+struct ViewToolShortcutLinksDomainModel: Sendable {
     
     let shortcutLinks: [ToolShortcutLinkDomainModel]
 }

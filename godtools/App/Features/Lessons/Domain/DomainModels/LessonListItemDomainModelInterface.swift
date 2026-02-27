@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol LessonListItemDomainModelInterface {
+protocol LessonListItemDomainModelInterface: Sendable {
     
     var availabilityInAppLanguage: ToolLanguageAvailabilityDomainModel { get }
     var bannerImageId: String { get }

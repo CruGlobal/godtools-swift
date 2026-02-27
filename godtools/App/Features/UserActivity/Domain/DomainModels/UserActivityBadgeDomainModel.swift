@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-struct UserActivityBadgeDomainModel: Identifiable {
+struct UserActivityBadgeDomainModel: Sendable, Identifiable {
         
     let badgeText: String
     let iconBackgroundColor: Color

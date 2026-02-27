@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct UserActivityDomainModel {
+struct UserActivityDomainModel: Sendable {
     
     let badges: [UserActivityBadgeDomainModel]
     let stats: [UserActivityStatDomainModel]
