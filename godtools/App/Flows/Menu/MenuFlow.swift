@@ -18,7 +18,7 @@ class MenuFlow: Flow {
     private var tutorialFlow: TutorialFlow?
     private var languageSettingsFlow: LanguageSettingsFlow?
     private var cancellables: Set<AnyCancellable> = Set()
-    
+
     private weak var flowDelegate: FlowDelegate?
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
@@ -92,26 +92,23 @@ class MenuFlow: Flow {
             closeLanguageSettings()
             
         case .localizationSettingsTappedFromMenu:
-            let localizationSettings = getLocalizationSettingsView()
+            let localizationSettings = getLocalizationSettingsView(showsPreferNotToSay: false)
             navigationController.pushViewController(localizationSettings, animated: true)
             
         case .backTappedFromLocalizationSettings:
             navigationController.popViewController(animated: true)
-            
-        case .didSelectLocalizationFromLocalizationSettings(let localization):
-            
+
+        case .countryTappedFromLocalizationSettings(let country):
             appDiContainer
                 .feature
                 .personalizedTools
                 .domainLayer
                 .getSetLocalizationSettingsUseCase()
-                .execute(
-                    isoRegionCode: localization.isoRegionCode
-                )
+                .execute(country: country.countryDomainModel)
                 .sink { _ in
-                    
+
                 } receiveValue: { _ in
-                    
+
                 }
                 .store(in: &Self.backgroundCancellables)
 
@@ -358,6 +355,34 @@ extension MenuFlow {
         navigationController.popViewController(animated: true)
         
         self.languageSettingsFlow = nil
+    }
+}
+
+// MARK: - Localization Settings
+
+extension MenuFlow {
+    
+    private func getLocalizationSettingsConfirmationView(selectedCountry: LocalizationSettingsCountryListItem) -> UIViewController {
+
+        let confirmationViewModel = LocalizationSettingsConfirmationViewModel(
+            flowDelegate: self,
+            selectedCountry: selectedCountry,
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            getLocalizationSettingsConfirmationStringsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getLocalizationSettingsConfirmationStringsUseCase()
+        )
+
+        let confirmationView = LocalizationSettingsConfirmationView(viewModel: confirmationViewModel)
+
+        let hostingView = AppHostingController<LocalizationSettingsConfirmationView>(
+            rootView: confirmationView,
+            navigationBar: nil
+        )
+
+        hostingView.modalPresentationStyle = .overFullScreen
+        hostingView.modalTransitionStyle = .crossDissolve
+        hostingView.view.backgroundColor = .clear
+
+        return hostingView
     }
 }
 
@@ -720,13 +745,13 @@ extension MenuFlow {
     }
     
     private func pushWebContentView(webContent: WebContentType, screenAccessibility: AccessibilityStrings.Screen?, backTappedFromWebContentStep: FlowStep) {
-        
+
         let view = getWebContentView(
             webContent: webContent,
             screenAccessibility: screenAccessibility,
             backTappedFromWebContentStep: backTappedFromWebContentStep
         )
-        
+
         navigationController.pushViewController(view, animated: true)
     }
 }

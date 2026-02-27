@@ -94,12 +94,11 @@ struct ConfirmAppLanguageView: View {
     }
     
     private func getAttributedMessageString(highlightStringDomainModel: ConfirmAppLanguageHighlightStringDomainModel) -> AttributedString {
-        
-        var attributedString = AttributedString(highlightStringDomainModel.fullText)
-        
-        guard let range = attributedString.range(of: highlightStringDomainModel.highlightText) else { return attributedString }
-        attributedString[range].foregroundColor = ColorPalette.gtBlue.color
-        
-        return attributedString
+
+        return AttributedString.withHighlightedText(
+            fullText: highlightStringDomainModel.fullText,
+            highlightText: highlightStringDomainModel.highlightText,
+            highlightColor: ColorPalette.gtBlue.color
+        )
     }
 }
