@@ -12,7 +12,7 @@ import Combine
 @MainActor class DeferredDeepLinkModalViewModel: ObservableObject {
     
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
-    private let getDeferredDeepLinkModalInterfaceStringsUseCase: GetDeferredDeepLinkModalInterfaceStringsUseCase
+    private let getDeferredDeepLinkModalStringsUseCase: GetDeferredDeepLinkModalStringsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let deepLinkingService: DeepLinkingService
 
@@ -22,14 +22,13 @@ import Combine
         
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
-    @Published var modalTitle: String = ""
-    @Published var modalMessage: String = ""
+    @Published private(set) var strings = DeferredDeepLinkModalStringsDomainModel.emptyValue
     
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getDeferredDeepLinkModalInterfaceStringsUseCase: GetDeferredDeepLinkModalInterfaceStringsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, deepLinkingService: DeepLinkingService) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getDeferredDeepLinkModalStringsUseCase: GetDeferredDeepLinkModalStringsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, deepLinkingService: DeepLinkingService) {
         
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
-        self.getDeferredDeepLinkModalInterfaceStringsUseCase = getDeferredDeepLinkModalInterfaceStringsUseCase
+        self.getDeferredDeepLinkModalStringsUseCase = getDeferredDeepLinkModalStringsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.deepLinkingService = deepLinkingService
         
@@ -41,14 +40,14 @@ import Combine
         $appLanguage
             .dropFirst()
             .map { appLanguage in
-                getDeferredDeepLinkModalInterfaceStringsUseCase.getStringsPublisher(appLanguage: appLanguage)
+                getDeferredDeepLinkModalStringsUseCase
+                    .execute(appLanguage: appLanguage)
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] interfaceStrings in
+            .sink { [weak self] (strings: DeferredDeepLinkModalStringsDomainModel) in
                 
-                self?.modalTitle = interfaceStrings.title
-                self?.modalMessage = interfaceStrings.message
+                self?.strings = strings
             }
             .store(in: &cancellables)
     }
