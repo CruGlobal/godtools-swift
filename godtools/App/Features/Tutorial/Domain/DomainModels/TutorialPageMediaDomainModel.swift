@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum TutorialPageMediaDomainModel {
+enum TutorialPageMediaDomainModel: Sendable {
     
     case animation(animatedResource: AnimatedResource)
     case image(name: String)

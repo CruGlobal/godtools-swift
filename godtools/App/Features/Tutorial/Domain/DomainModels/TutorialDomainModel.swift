@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TutorialDomainModel {
+struct TutorialDomainModel: Sendable {
     
     let pages: [TutorialPageDomainModel]
 }

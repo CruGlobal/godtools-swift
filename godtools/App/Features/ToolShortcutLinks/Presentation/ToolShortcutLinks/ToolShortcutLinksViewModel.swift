@@ -35,7 +35,7 @@ import Combine
         self.getToolShortcutLinksUseCase = getToolShortcutLinksUseCase
         
         getCurrentAppLanguageUseCase
-            .getLanguagePublisher()
+            .execute()
             .assign(to: &$appLanguage)
         
         $appLanguage

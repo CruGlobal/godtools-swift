@@ -12,7 +12,8 @@ import Combine
 @MainActor class DownloadableLanguagesViewModel: ObservableObject {
     
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
-    private let viewDownloadableLanguagesUseCase: ViewDownloadableLanguagesUseCase
+    private let getDownloadableLanguagesStringsUseCase: GetDownloadableLanguagesStringsUseCase
+    private let getDownloadableLanguagesListUseCase: GetDownloadableLanguagesListUseCase
     private let viewSearchBarUseCase: ViewSearchBarUseCase
     private let searchLanguageInDownloadableLanguagesUseCase: SearchLanguageInDownloadableLanguagesUseCase
     private let downloadToolLanguageUseCase: DownloadToolLanguageUseCase
@@ -28,22 +29,23 @@ import Combine
     @Published private var allDownloadableLanguages: [DownloadableLanguageListItemDomainModel] = Array()
     
     @Published private(set) var displayedDownloadableLanguages: [DownloadableLanguageListItemDomainModel] = Array()
-    @Published private(set) var navTitle: String = ""
+    @Published private(set) var strings = DownloadableLanguagesStringsDomainModel.emptyValue
     
     @Published var searchText: String = ""
     
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewDownloadableLanguagesUseCase: ViewDownloadableLanguagesUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, searchLanguageInDownloadableLanguagesUseCase: SearchLanguageInDownloadableLanguagesUseCase, downloadToolLanguageUseCase: DownloadToolLanguageUseCase, removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getDownloadableLanguagesStringsUseCase: GetDownloadableLanguagesStringsUseCase, getDownloadableLanguagesListUseCase: GetDownloadableLanguagesListUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, searchLanguageInDownloadableLanguagesUseCase: SearchLanguageInDownloadableLanguagesUseCase, downloadToolLanguageUseCase: DownloadToolLanguageUseCase, removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase) {
         
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
-        self.viewDownloadableLanguagesUseCase = viewDownloadableLanguagesUseCase
+        self.getDownloadableLanguagesStringsUseCase = getDownloadableLanguagesStringsUseCase
+        self.getDownloadableLanguagesListUseCase = getDownloadableLanguagesListUseCase
         self.viewSearchBarUseCase = viewSearchBarUseCase
         self.searchLanguageInDownloadableLanguagesUseCase = searchLanguageInDownloadableLanguagesUseCase
         self.downloadToolLanguageUseCase = downloadToolLanguageUseCase
         self.removeDownloadedToolLanguageUseCase = removeDownloadedToolLanguageUseCase
         
         getCurrentAppLanguageUseCase
-            .getLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
@@ -51,19 +53,30 @@ import Combine
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
                 
-                viewDownloadableLanguagesUseCase
-                    .viewPublisher(appLanguage: appLanguage)
+                getDownloadableLanguagesStringsUseCase
+                    .execute(appLanguage: appLanguage)
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (strings: DownloadableLanguagesStringsDomainModel) in
+                
+                self?.strings = strings
+            }
+            .store(in: &cancellables)
+        
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+                
+                getDownloadableLanguagesListUseCase
+                    .execute(appLanguage: appLanguage)
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { _ in
                 
-            }, receiveValue: { [weak self] (domainModel: ViewDownloadableLanguagesDomainModel) in
+            }, receiveValue: { [weak self] (downloadableLanguages: [DownloadableLanguageListItemDomainModel]) in
                 
-                let interfaceStrings = domainModel.interfaceStrings
-                let downloadableLanguages = domainModel.downloadableLanguages
-                
-                self?.navTitle = interfaceStrings.navTitle
                 self?.allDownloadableLanguages = downloadableLanguages
             })
             .store(in: &cancellables)
@@ -75,7 +88,10 @@ import Combine
         .map({ (searchText: String, downloadableLanguages: [DownloadableLanguageListItemDomainModel]) in
             
             return searchLanguageInDownloadableLanguagesUseCase
-                .getSearchResultsPublisher(for: searchText, in: downloadableLanguages)
+                .execute(
+                    searchText: searchText,
+                    downloadableLanguages: downloadableLanguages
+                )
                 .map { downloadableLanguages in
                     return downloadableLanguages
                 }

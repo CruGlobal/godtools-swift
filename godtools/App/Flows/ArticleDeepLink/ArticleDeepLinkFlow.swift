@@ -31,7 +31,7 @@ class ArticleDeepLinkFlow: Flow {
         
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()
-            .getLanguagePublisher()
+            .execute()
             .flatMap(maxPublishers: .max(1)) {
                 return Just($0)
             }
