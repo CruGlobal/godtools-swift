@@ -55,7 +55,8 @@ class PersonalizedToolsDataLayerDependencies {
         return PersonalizedLessonsRepository(
             persistence: persistence,
             api: api,
-            cache: cache
+            cache: cache,
+            syncInvalidatorPersistence: coreDataLayer.getUserDefaultsCache()
         )
     }
 

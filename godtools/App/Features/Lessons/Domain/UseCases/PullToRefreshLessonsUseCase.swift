@@ -69,10 +69,11 @@ final class PullToRefreshLessonsUseCase {
         }
         
         return personalizedLessonsRepository
-            .getAllRankedLessonsPublisher(
+            .syncAllRankedLessonsPublisher(
                 requestPriority: requestPriority,
                 country: countryIsoRegionCode,
-                language: languageCode
+                language: languageCode,
+                forceNewSync: true
             )
             .map { _ in
                 return ()
