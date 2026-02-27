@@ -60,7 +60,7 @@ struct LessonsView: View {
                             .padding(.horizontal, contentHorizontalInsets)
 
                         HStack(spacing: 0) {
-                            Text(viewModel.languageFilterTitle)
+                            Text(viewModel.strings.languageFilterTitle)
                                 .font(FontLibrary.sfProTextBold.font(size: 18))
                                 .foregroundColor(ColorPalette.gtGrey.color)
 
