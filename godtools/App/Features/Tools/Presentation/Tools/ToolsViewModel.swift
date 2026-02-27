@@ -67,10 +67,6 @@ import Combine
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.getToolBannerUseCase = getToolBannerUseCase
         
-        if !GodToolsAppConfig.showsPersonalization {
-            selectedToggle = .all
-        }
-        
         showsFavoritingToolBanner = !favoritingToolMessageCache.favoritingToolMessageDisabled
         
         getCurrentAppLanguageUseCase
@@ -257,10 +253,6 @@ import Combine
     }
     
     private static func getToggleOptions(strings: ToolsStringsDomainModel) -> [PersonalizationToggleOption] {
-        
-        if !GodToolsAppConfig.showsPersonalization {
-            return [PersonalizationToggleOption(title: strings.allToolsToggleTitle, selection: .all, buttonAccessibility: .allTools)]
-        }
         
         return [
             PersonalizationToggleOption(title: strings.personalizedToolToggleTitle, selection: .personalized, buttonAccessibility: .personalizedTools),
