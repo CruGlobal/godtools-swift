@@ -12,7 +12,7 @@ import Combine
 @MainActor class DownloadToolProgressViewModel: ObservableObject {
     
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
-    private let getDownloadToolProgressInterfaceStringsUseCase: GetDownloadToolProgressInterfaceStringsUseCase
+    private let getDownloadToolProgressStringsUseCase: GetDownloadToolProgressStringsUseCase
     private let progressTimer: ProgressTimer = ProgressTimer()
     private let initialProgressDownloadLengthSeconds: TimeInterval = 1
     
@@ -24,13 +24,13 @@ import Combine
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
-    @Published var message: String = ""
-    
-    init(flowDelegate: FlowDelegate, toolId: String?, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getDownloadToolProgressInterfaceStringsUseCase: GetDownloadToolProgressInterfaceStringsUseCase) {
+    @Published private(set) var strings = DownloadToolProgressStringsDomainModel.emptyValue
+        
+    init(flowDelegate: FlowDelegate, toolId: String?, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getDownloadToolProgressStringsUseCase: GetDownloadToolProgressStringsUseCase) {
                 
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
-        self.getDownloadToolProgressInterfaceStringsUseCase = getDownloadToolProgressInterfaceStringsUseCase
+        self.getDownloadToolProgressStringsUseCase = getDownloadToolProgressStringsUseCase
         
         getCurrentAppLanguageUseCase
             .execute()
@@ -47,14 +47,14 @@ import Combine
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
                 
-                getDownloadToolProgressInterfaceStringsUseCase
-                    .getStringsPublisher(toolId: toolId, appLanguage: appLanguage)
+                getDownloadToolProgressStringsUseCase
+                    .execute(toolId: toolId, appLanguage: appLanguage)
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (interfaceStrings: DownloadToolProgressInterfaceStringsDomainModel) in
+            .sink { [weak self] (strings: DownloadToolProgressStringsDomainModel) in
                 
-                self?.message = interfaceStrings.downloadMessage
+                self?.strings = strings
             }
             .store(in: &cancellables)
     }

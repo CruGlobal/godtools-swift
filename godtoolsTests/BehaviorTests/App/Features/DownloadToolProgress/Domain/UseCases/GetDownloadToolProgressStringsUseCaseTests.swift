@@ -1,5 +1,5 @@
 //
-//  GetDownloadToolProgressInterfaceStringsRepositoryTests.swift
+//  GetDownloadToolProgressStringsUseCaseTests.swift
 //  godtoolsTests
 //
 //  Created by Levi Eggert on 3/15/24.
@@ -13,7 +13,7 @@ import RealmSwift
 import RepositorySync
 
 @Suite(.serialized)
-struct GetDownloadToolProgressInterfaceStringsRepositoryTests {
+struct GetDownloadToolProgressStringsUseCaseTests {
     
     private let favoritedToolId: String = "1"
     private let unFavoritedToolId: String = "2"
@@ -30,11 +30,11 @@ struct GetDownloadToolProgressInterfaceStringsRepositoryTests {
     )
     func correctMessageShowsWhenDownloadingAFavoritedTool() async throws {
         
-        let downloadToolProgressInterfaceStringsRepository: GetDownloadToolProgressInterfaceStringsRepository = try getDownloadToolProgressInterfaceStringsRepository()
+        let getDownloadToolProgressStringsUseCase: GetDownloadToolProgressStringsUseCase = try getDownloadToolProgressStringsUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
                 
-        var interfaceStringsRef: DownloadToolProgressInterfaceStringsDomainModel?
+        var stringsRef: DownloadToolProgressStringsDomainModel?
         
         await confirmation(expectedCount: 1) { confirmation in
             
@@ -45,11 +45,14 @@ struct GetDownloadToolProgressInterfaceStringsRepositoryTests {
                     continuation.resume(returning: ())
                 }
                 
-                downloadToolProgressInterfaceStringsRepository
-                    .getStringsPublisher(toolId: favoritedToolId, translateInAppLanguage: LanguageCodeDomainModel.english.value)
-                    .sink { (interfaceStrings: DownloadToolProgressInterfaceStringsDomainModel) in
+                getDownloadToolProgressStringsUseCase
+                    .execute(
+                        toolId: favoritedToolId,
+                        appLanguage: LanguageCodeDomainModel.english.value
+                    )
+                    .sink { (strings: DownloadToolProgressStringsDomainModel) in
                                                 
-                        interfaceStringsRef = interfaceStrings
+                        stringsRef = strings
                         
                         // Place inside a sink or other async closure:
                         confirmation()
@@ -62,7 +65,7 @@ struct GetDownloadToolProgressInterfaceStringsRepositoryTests {
             }
         }
         
-        #expect(interfaceStringsRef?.downloadMessage == downloadToolMessage)
+        #expect(stringsRef?.downloadMessage == downloadToolMessage)
     }
     
     @Test(
@@ -74,11 +77,11 @@ struct GetDownloadToolProgressInterfaceStringsRepositoryTests {
     )
     func correctMessageShowsWhenDownloadingAToolThatIsNotFavoritedButCanBeFavorited() async throws {
         
-        let downloadToolProgressInterfaceStringsRepository: GetDownloadToolProgressInterfaceStringsRepository = try getDownloadToolProgressInterfaceStringsRepository()
+        let getDownloadToolProgressStringsUseCase: GetDownloadToolProgressStringsUseCase = try getDownloadToolProgressStringsUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
-                
-        var interfaceStringsRef: DownloadToolProgressInterfaceStringsDomainModel?
+              
+        var stringsRef: DownloadToolProgressStringsDomainModel?
         
         await confirmation(expectedCount: 1) { confirmation in
             
@@ -89,11 +92,14 @@ struct GetDownloadToolProgressInterfaceStringsRepositoryTests {
                     continuation.resume(returning: ())
                 }
                 
-                downloadToolProgressInterfaceStringsRepository
-                    .getStringsPublisher(toolId: unFavoritedToolId, translateInAppLanguage: LanguageCodeDomainModel.english.value)
-                    .sink { (interfaceStrings: DownloadToolProgressInterfaceStringsDomainModel) in
+                getDownloadToolProgressStringsUseCase
+                    .execute(
+                        toolId: unFavoritedToolId,
+                        appLanguage: LanguageCodeDomainModel.english.value
+                    )
+                    .sink { (strings: DownloadToolProgressStringsDomainModel) in
                                                 
-                        interfaceStringsRef = interfaceStrings
+                        stringsRef = strings
                         
                         // Place inside a sink or other async closure:
                         confirmation()
@@ -106,7 +112,7 @@ struct GetDownloadToolProgressInterfaceStringsRepositoryTests {
             }
         }
         
-        #expect(interfaceStringsRef?.downloadMessage == favoriteThisToolForOfflineUseMessage)
+        #expect(stringsRef?.downloadMessage == favoriteThisToolForOfflineUseMessage)
     }
     
     @Test(
@@ -118,11 +124,11 @@ struct GetDownloadToolProgressInterfaceStringsRepositoryTests {
     )
     func correctMessageShowsWhenDownloadingAToolThatCantBeFavorited() async throws {
         
-        let downloadToolProgressInterfaceStringsRepository: GetDownloadToolProgressInterfaceStringsRepository = try getDownloadToolProgressInterfaceStringsRepository()
+        let getDownloadToolProgressStringsUseCase: GetDownloadToolProgressStringsUseCase = try getDownloadToolProgressStringsUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
                 
-        var interfaceStringsRef: DownloadToolProgressInterfaceStringsDomainModel?
+        var stringsRef: DownloadToolProgressStringsDomainModel?
         
         await confirmation(expectedCount: 1) { confirmation in
             
@@ -133,11 +139,14 @@ struct GetDownloadToolProgressInterfaceStringsRepositoryTests {
                     continuation.resume(returning: ())
                 }
                 
-                downloadToolProgressInterfaceStringsRepository
-                    .getStringsPublisher(toolId: unFavoritableToolId, translateInAppLanguage: LanguageCodeDomainModel.english.value)
-                    .sink { (interfaceStrings: DownloadToolProgressInterfaceStringsDomainModel) in
+                getDownloadToolProgressStringsUseCase
+                    .execute(
+                        toolId: unFavoritableToolId,
+                        appLanguage: LanguageCodeDomainModel.english.value
+                    )
+                    .sink { (strings: DownloadToolProgressStringsDomainModel) in
                                                 
-                        interfaceStringsRef = interfaceStrings
+                        stringsRef = strings
                         
                         // Place inside a sink or other async closure:
                         confirmation()
@@ -150,16 +159,16 @@ struct GetDownloadToolProgressInterfaceStringsRepositoryTests {
             }
         }
         
-        #expect(interfaceStringsRef?.downloadMessage == downloadToolMessage)
+        #expect(stringsRef?.downloadMessage == downloadToolMessage)
     }
 }
 
-extension GetDownloadToolProgressInterfaceStringsRepositoryTests {
+extension GetDownloadToolProgressStringsUseCaseTests {
     
     private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
                 
         return try TestsDiContainer(
-            realmFileName: String(describing: GetDownloadToolProgressInterfaceStringsRepositoryTests.self),
+            realmFileName: String(describing: GetDownloadToolProgressStringsUseCaseTests.self),
             addRealmObjects: addRealmObjects
         )
     }
@@ -185,7 +194,7 @@ extension GetDownloadToolProgressInterfaceStringsRepositoryTests {
         return realmObjects
     }
  
-    private func getDownloadToolProgressInterfaceStringsRepository() throws -> GetDownloadToolProgressInterfaceStringsRepository {
+    private func getDownloadToolProgressStringsUseCase() throws -> GetDownloadToolProgressStringsUseCase {
         
         let testsDiContainer = try getTestsDiContainer(addRealmObjects: getRealmObjects())
         
@@ -196,12 +205,12 @@ extension GetDownloadToolProgressInterfaceStringsRepositoryTests {
             ]
         ]
         
-        let getDownloadToolProgressInterfaceStringsRepository = GetDownloadToolProgressInterfaceStringsRepository(
+        let getDownloadToolProgressStringsUseCase = GetDownloadToolProgressStringsUseCase(
             resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
             localizationServices: MockLocalizationServices(localizableStrings: localizableStrings),
             favoritedResourcesRepository: testsDiContainer.dataLayer.getFavoritedResourcesRepository()
         )
         
-        return getDownloadToolProgressInterfaceStringsRepository
+        return getDownloadToolProgressStringsUseCase
     }
 }
