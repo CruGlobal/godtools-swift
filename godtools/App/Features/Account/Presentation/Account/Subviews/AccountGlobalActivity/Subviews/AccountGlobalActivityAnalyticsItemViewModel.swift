@@ -13,7 +13,7 @@ import Foundation
     let label: String
     let count: String
     
-    init(globalActivity: GlobalActivityThisWeekDomainModel) {
+    init(globalActivity: GlobalActivityDomainModel) {
         
         label = globalActivity.label
         count = globalActivity.count

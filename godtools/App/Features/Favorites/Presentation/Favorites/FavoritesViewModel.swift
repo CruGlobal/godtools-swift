@@ -82,7 +82,7 @@ import Combine
                             maxCount: 5
                         ),
                     getFeaturedLessonsUseCase
-                        .getFeaturedLessonsPublisher(
+                        .execute(
                             appLanguage: appLanguage
                         )
                 )
