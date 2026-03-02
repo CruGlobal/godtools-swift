@@ -140,7 +140,7 @@ class MobileContentLanguagesApi {
 
 extension MobileContentLanguagesApi: ExternalDataFetchInterface {
     
-    func getObject(id: String, context: ExternalDataFetchContext) async throws -> [LanguageCodable] {
+    func getObject(id: String, context: RequestOperationFetchContext) async throws -> [LanguageCodable] {
         
         let language: LanguageCodable? = try await getLanguage(
             requestPriority: context.requestPriority,
@@ -154,7 +154,7 @@ extension MobileContentLanguagesApi: ExternalDataFetchInterface {
         return [language]
     }
     
-    func getObjects(context: ExternalDataFetchContext) async throws -> [LanguageCodable] {
+    func getObjects(context: RequestOperationFetchContext) async throws -> [LanguageCodable] {
         
         return try await getLanguages(requestPriority: context.requestPriority)
     }

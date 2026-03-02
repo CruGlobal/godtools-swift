@@ -10,27 +10,30 @@ import Foundation
 
 class LessonSwipeTutorialDomainLayerDependencies {
     
+    private let coreDataLayer: AppDataLayerDependencies
     private let dataLayer: LessonSwipeTutorialDataLayerDependencies
     
-    init(dataLayer: LessonSwipeTutorialDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, dataLayer: LessonSwipeTutorialDataLayerDependencies) {
+        
+        self.coreDataLayer = coreDataLayer
         self.dataLayer = dataLayer
     }
     
-    func getLessonSwipeTutorialInterfaceStringsUseCase() -> GetLessonSwipeTutorialInterfaceStringsUseCase {
-        return GetLessonSwipeTutorialInterfaceStringsUseCase(
-            getLessonSwipeTutorialInterfaceStringsRepo: dataLayer.getLessonSwipeTutorialInterfaceStringsRepositoryInterface()
+    func getLessonSwipeTutorialStringsUseCase() -> GetLessonSwipeTutorialStringsUseCase {
+        return GetLessonSwipeTutorialStringsUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
     
     func getShouldShowLessonSwipeTutorialUseCase() -> ShouldShowLessonSwipeTutorialUseCase {
         return ShouldShowLessonSwipeTutorialUseCase(
-            shouldShowLessonSwipeTutorialRepo: dataLayer.getShouldShowLessonSwipeTutorialRepositoryInterface()
+            lessonSwipeTutorialViewedRepo: dataLayer.getLessonSwipeTutorialViewedRepository()
         )
     }
     
     func getTrackViewedLessonSwipeTutorialUseCase() -> TrackViewedLessonSwipeTutorialUseCase {
         return TrackViewedLessonSwipeTutorialUseCase(
-            trackViewedLessonSwipeTutorialRepo: dataLayer.getTrackViewedLessonSwipeTutorialRepositoryInterface()
+            lessonSwipeTutorialViewedRepository: dataLayer.getLessonSwipeTutorialViewedRepository()
         )
     }
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum MobileContentApiError: Error {
+enum MobileContentApiError: Error, Sendable {
     
     case other(error: Error)
     case responseError(responseErrors: [MobileContentApiErrorCodable], error: Error = NSError.errorWithDescription(description: "Bad request from mobile content api.  Check responseErrors: [MobileContentApiErrorCodable]."))
@@ -27,5 +27,34 @@ extension MobileContentApiError {
     
     func getErrorDescription() -> String {
         return getError().localizedDescription
+    }
+}
+
+
+extension MobileContentApiError {
+ 
+    func toAuthError() -> AuthErrorDomainModel {
+       
+        switch self {
+            
+        case .other(let error):
+            return .other(error: error)
+            
+        case .responseError(let responseErrors, let error):
+            
+            for responseError in responseErrors {
+                
+                let code: MobileContentApiErrorCodableCode = responseError.getCodeEnum()
+                
+                if code == .userNotFound {
+                    return .accountNotFound
+                }
+                else if code == .userAlreadyExists {
+                    return .accountAlreadyExists
+                }
+            }
+
+            return .other(error: error)
+        }
     }
 }

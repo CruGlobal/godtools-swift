@@ -11,5 +11,5 @@ import Combine
 
 protocol GetOnboardingTutorialInterfaceStringsRepositoryInterface {
     
-    func getStringsPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<OnboardingTutorialInterfaceStringsDomainModel, Never>
+    func getStringsPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<OnboardingTutorialStringsDomainModel, Never>
 }

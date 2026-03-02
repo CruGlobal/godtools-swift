@@ -9,47 +9,20 @@
 import Foundation
 import RealmSwift
 import Combine
+import RepositorySync
 
 @available(*, deprecated)
 class LegacyRealmDatabase {
     
-    private let backgroundQueue: DispatchQueue = DispatchQueue(label: "realm.background_queue")
-    private let config: Realm.Configuration
+    private let realmDatabase: RealmDatabase
     
-    init(config: Realm.Configuration) {
+    init(realmDatabase: RealmDatabase) {
         
-        self.config = config
-        
-        _ = checkForUnsupportedFileFormatVersionAndDeleteRealmFilesIfNeeded(config: config)
+        self.realmDatabase = realmDatabase
     }
     
-    convenience init(databaseConfiguration: RealmDatabaseConfiguration) {
-        
-        self.init(config: databaseConfiguration.getRealmConfig())
-    }
-    
-    private func checkForUnsupportedFileFormatVersionAndDeleteRealmFilesIfNeeded(config: Realm.Configuration) -> Error? {
-
-        do {
-            _ = try Realm(configuration: config)
-        }
-        catch let realmConfigError as NSError {
-
-            if realmConfigError.code == Realm.Error.unsupportedFileFormatVersion.rawValue {
-                
-                do {
-                    _ = try Realm.deleteFiles(for: config)
-                }
-                catch let deleteFilesError {
-                    return deleteFilesError
-                }
-            }
-            else {
-                return realmConfigError
-            }
-        }
-
-        return nil
+    private var config: Realm.Configuration {
+        return realmDatabase.databaseConfig.config
     }
 
     func openRealm() -> Realm {
@@ -59,21 +32,21 @@ class LegacyRealmDatabase {
     
     func background(async: @escaping ((_ realm: Realm) -> Void)) {
                 
-        backgroundQueue.async {
-            autoreleasepool {
+        realmDatabase
+            .write
+            .serialAsync { result in
                 
-                let realm: Realm
-               
-                do {
-                    realm = try Realm(configuration: self.config)
-                }
-                catch let error {
+                let asyncRealm: Realm
+                
+                switch result {
+                case .success(let realm):
+                    asyncRealm = realm
+                case .failure(let error):
                     assertionFailure("RealmDatabase: Did fail to initialize background realm with error: \(error.localizedDescription) ")
-                    realm = try! Realm(configuration: self.config)
+                    asyncRealm = try! Realm(configuration: self.config)
                 }
                 
-                async(realm)
+                async(asyncRealm)
             }
-        }
     }
 }

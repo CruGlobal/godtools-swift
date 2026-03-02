@@ -9,8 +9,9 @@
 import Foundation
 import RequestOperation
 import Combine
+import RepositorySync
 
-class UserDetailsAPI: UserDetailsAPIInterface {
+class UserDetailsAPI {
     
     private let authSession: MobileContentApiAuthSession
     private let requestBuilder: RequestBuilder = RequestBuilder()
@@ -24,21 +25,23 @@ class UserDetailsAPI: UserDetailsAPIInterface {
         self.baseURL = config.getMobileContentApiBaseUrl()
     }
     
-    func fetchUserDetailsPublisher(requestPriority: RequestPriority) -> AnyPublisher<MobileContentApiUsersMeCodable, Error> {
+    func fetchUserDetails(requestPriority: RequestPriority) async throws -> MobileContentApiUsersMeCodable {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
         let urlRequest: URLRequest = getAuthUserDetailsRequest(urlSession: urlSession)
                 
-        return authSession.sendAuthenticatedRequest(
+        let responseData: Data = try await authSession.sendAuthenticatedRequest(
             urlRequest: urlRequest,
             urlSession: urlSession
         )
-        .decode(type: JsonApiResponseDataObject<MobileContentApiUsersMeCodable>.self, decoder: JSONDecoder())
-        .map {
-            return $0.dataObject
-        }
-        .eraseToAnyPublisher()
+        
+        let codable: JsonApiResponseDataObject<MobileContentApiUsersMeCodable> = try JSONDecoder().decode(
+            JsonApiResponseDataObject<MobileContentApiUsersMeCodable>.self,
+            from: responseData
+        )
+        
+        return codable.dataObject
     }
     
     private func getAuthUserDetailsRequest(urlSession: URLSession) -> URLRequest {
@@ -59,21 +62,16 @@ class UserDetailsAPI: UserDetailsAPIInterface {
         )
     }
     
-    func deleteAuthUserDetailsPublisher(requestPriority: RequestPriority) -> AnyPublisher<Void, Error> {
+    func deleteAuthUserDetails(requestPriority: RequestPriority) async throws {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
         let urlRequest = getDeleteAuthorizedUserDetailsRequest(urlSession: urlSession)
-                
-        return authSession.sendAuthenticatedRequest(
+        
+        _ = try await authSession.sendAuthenticatedRequest(
             urlRequest: urlRequest,
             urlSession: urlSession
         )
-        .map { (data: Data) in
-            
-            return ()
-        }
-        .eraseToAnyPublisher()
     }
     
     private func getDeleteAuthorizedUserDetailsRequest(urlSession: URLSession) -> URLRequest {
@@ -92,5 +90,26 @@ class UserDetailsAPI: UserDetailsAPIInterface {
                 queryItems: nil
             )
         )
+    }
+}
+
+// MARK: - ExternalDataFetchInterface
+
+extension UserDetailsAPI: ExternalDataFetchInterface {
+    
+    func getObject(id: String, context: RequestOperationFetchContext) async throws -> [MobileContentApiUsersMeCodable] {
+        return Array()
+    }
+    
+    func getObjects(context: RequestOperationFetchContext) async throws -> [MobileContentApiUsersMeCodable] {
+        return Array()
+    }
+    
+    func getObjectPublisher(id: String, context: RequestOperationFetchContext) -> AnyPublisher<[MobileContentApiUsersMeCodable], Error> {
+        return emptyResponsePublisher()
+    }
+    
+    func getObjectsPublisher(context: RequestOperationFetchContext) -> AnyPublisher<[MobileContentApiUsersMeCodable], Error> {
+        return emptyResponsePublisher()
     }
 }

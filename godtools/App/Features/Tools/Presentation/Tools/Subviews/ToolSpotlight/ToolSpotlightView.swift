@@ -26,12 +26,12 @@ struct ToolSpotlightView: View {
         
         VStack(alignment: .leading, spacing: 0) {
             
-            Text(viewModel.toolSpotlightTitle)
+            Text(viewModel.strings.toolSpotlightTitle)
                 .font(FontLibrary.sfProTextRegular.font(size: 22))
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .padding([.leading, .trailing], contentHorizontalInsets)
                         
-            Text(viewModel.toolSpotlightSubtitle)
+            Text(viewModel.strings.toolSpotlightSubtitle)
                 .font(FontLibrary.sfProTextRegular.font(size: 14))
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .padding([.top], 3)

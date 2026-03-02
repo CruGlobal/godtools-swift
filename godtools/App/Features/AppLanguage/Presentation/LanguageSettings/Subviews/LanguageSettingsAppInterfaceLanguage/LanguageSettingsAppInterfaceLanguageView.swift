@@ -26,25 +26,25 @@ struct LanguageSettingsAppInterfaceLanguageView: View {
         
         VStack(alignment: .leading, spacing: 0) {
          
-            Text(viewModel.appInterfaceLanguageTitle)
+            Text(viewModel.strings.appInterfaceLanguageTitle)
                 .font(FontLibrary.sfProTextRegular.font(size: 26))
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .multilineTextAlignment(.leading)
             
-            Text(viewModel.numberOfLanguagesAvailable)
+            Text(viewModel.strings.numberOfAppLanguagesAvailable)
                 .font(FontLibrary.sfProTextRegular.font(size: 13))
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .multilineTextAlignment(.leading)
                 .padding([.top], 5)
             
-            Text(viewModel.setLanguageYouWouldLikeAppDisplayedInLabel)
+            Text(viewModel.strings.setAppLanguageMessage)
                 .font(FontLibrary.sfProTextRegular.font(size: 15))
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .multilineTextAlignment(.leading)
                 .padding([.top], 6)
             
             AppInterfaceLanguageButtonView(
-                title: viewModel.appInterfaceLanguageButtonTitle,
+                title: viewModel.strings.chooseAppLanguageButtonTitle,
                 width: geometry.size.width - (contentHorizontalInsets * 2),
                 height: 50,
                 tappedClosure: {

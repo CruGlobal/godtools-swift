@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct SpiritualConversationReadinessScaleDomainModel {
+struct SpiritualConversationReadinessScaleDomainModel: Sendable {
     
     let minScale: LessonEvaluationScaleDomainModel
     let maxScale: LessonEvaluationScaleDomainModel

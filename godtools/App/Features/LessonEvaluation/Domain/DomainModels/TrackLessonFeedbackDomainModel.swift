@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TrackLessonFeedbackDomainModel {
+struct TrackLessonFeedbackDomainModel: Sendable {
  
     let feedbackHelpful: TrackLessonFeedbackDomainModel.FeedbackHelpful?
     let readinessScaleValue: Int

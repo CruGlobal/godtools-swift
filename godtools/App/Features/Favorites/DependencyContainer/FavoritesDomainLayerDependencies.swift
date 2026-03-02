@@ -10,54 +10,65 @@ import Foundation
 
 class FavoritesDomainLayerDependencies {
     
+    private let coreDataLayer: AppDataLayerDependencies
     private let dataLayer: FavoritesDataLayerDependencies
     
-    init(dataLayer: FavoritesDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, dataLayer: FavoritesDataLayerDependencies) {
         
+        self.coreDataLayer = coreDataLayer
         self.dataLayer = dataLayer
+    }
+    
+    func getAllYourFavoritedToolsStringsUseCase() -> GetAllYourFavoritedToolsStringsUseCase {
+        return GetAllYourFavoritedToolsStringsUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getConfirmRemoveToolFromFavoritesStringsUseCase() -> GetConfirmRemoveToolFromFavoritesStringsUseCase {
+        return GetConfirmRemoveToolFromFavoritesStringsUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices(),
+            getTranslatedToolName: coreDataLayer.getTranslatedToolName()
+        )
+    }
+    
+    func getFavoritesStringsUseCase() -> GetFavoritesStringsUseCase {
+        return GetFavoritesStringsUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
     }
     
     func getRemoveFavoritedToolUseCase() -> RemoveFavoritedToolUseCase {
         return RemoveFavoritedToolUseCase(
-            removeFavoritedToolRepository: dataLayer.getRemoveFavoritedToolRepository()
+            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository()
         )
     }
     
     func getReorderFavoritedToolUseCase() -> ReorderFavoritedToolUseCase {
         return ReorderFavoritedToolUseCase(
-            reorderFavoritedToolRepository: dataLayer.getReorderFavoritedToolRepository()
+            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository()
         )
     }
     
-    func getToggleFavoritedToolUseCase() -> ToggleToolFavoritedUseCase {
+    func getToggleToolFavoritedUseCase() -> ToggleToolFavoritedUseCase {
         return ToggleToolFavoritedUseCase(
-            toggleToolFavoritedRepository: dataLayer.getToggleToolFavoritedRepository()
+            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository()
         )
     }
     
     func getToolIsFavoritedUseCase() -> GetToolIsFavoritedUseCase {
         return GetToolIsFavoritedUseCase(
-            getToolIsFavoritedRepository: dataLayer.getToolIsFavoritedRepository()
+            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository()
         )
     }
     
-    func getViewAllYourFavoritedToolsUseCase() -> ViewAllYourFavoritedToolsUseCase {
-        return ViewAllYourFavoritedToolsUseCase(
-            getInterfaceStringsRepository: dataLayer.getAllYourFavoritedToolsInterfaceStringsRepository(),
-            getFavoritedToolsRepository: dataLayer.getYourFavoritedToolsRepository()
-        )
-    }
-    
-    func getViewConfirmRemoveToolFromFavoritesUseCase() -> ViewConfirmRemoveToolFromFavoritesUseCase {
-        return ViewConfirmRemoveToolFromFavoritesUseCase(
-            interfaceStringsRepository: dataLayer.getConfirmRemoveToolFromFavoritesInterfaceStringsRepository()
-        )
-    }
-    
-    func getViewFavoritesUseCase() -> ViewFavoritesUseCase {
-        return ViewFavoritesUseCase(
-            getInterfaceStringsRepository: dataLayer.getFavoritesInterfaceStringsRepository(),
-            getFavoritedToolsRepository: dataLayer.getYourFavoritedToolsRepository()
+    func getYourFavoritedToolsUseCase() -> GetYourFavoritedToolsUseCase {
+        return GetYourFavoritedToolsUseCase(
+            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository(),
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            getTranslatedToolName: coreDataLayer.getTranslatedToolName(),
+            getTranslatedToolCategory: coreDataLayer.getTranslatedToolCategory(),
+            getToolListItemInterfaceStringsRepository: coreDataLayer.getToolListItemInterfaceStringsRepository()
         )
     }
 }

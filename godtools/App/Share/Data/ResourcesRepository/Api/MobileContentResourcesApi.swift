@@ -139,11 +139,11 @@ class MobileContentResourcesApi {
 
 extension MobileContentResourcesApi: ExternalDataFetchInterface {
     
-    func getObject(id: String, context: ExternalDataFetchContext) async throws -> [ResourceCodable] {
+    func getObject(id: String, context: RequestOperationFetchContext) async throws -> [ResourceCodable] {
         return Array()
     }
     
-    func getObjects(context: ExternalDataFetchContext) async throws -> [ResourceCodable] {
+    func getObjects(context: RequestOperationFetchContext) async throws -> [ResourceCodable] {
         return Array()
     }
     

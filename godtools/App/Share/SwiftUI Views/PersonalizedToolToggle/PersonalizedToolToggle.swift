@@ -30,18 +30,21 @@ struct PersonalizedToolToggle: View {
 
             ForEach(toggleOptions.indices, id: \.self) { index in
 
+                let toggleOption: PersonalizationToggleOption = toggleOptions[index]
+                
                 Button {
-                    selectedToggle = toggleOptions[index].selection
+                    selectedToggle = toggleOption.selection
                 } label: {
 
-                    Text(toggleOptions[index].title)
+                    Text(toggleOption.title)
                         .font(font)
-                        .foregroundColor(selectedToggle == toggleOptions[index].selection ? .white : ColorPalette.gtBlue.color)
+                        .foregroundColor(selectedToggle == toggleOption.selection ? .white : ColorPalette.gtBlue.color)
                         .frame(maxWidth: .infinity)
                         .frame(height: Self.height - (borderWidth * 1))
                         .padding(.horizontal, 16)
-                        .background(selectedToggle == toggleOptions[index].selection ? ColorPalette.gtBlue.color : Color.clear)
+                        .background(selectedToggle == toggleOption.selection ? ColorPalette.gtBlue.color : Color.clear)
                 }
+                .accessibilityIdentifier(toggleOption.buttonAccessibility.id)
             }
         }
         .cornerRadius(20)

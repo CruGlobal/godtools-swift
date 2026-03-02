@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct MobileContentApiErrorsCodable: Codable {
+struct MobileContentApiErrorsCodable: Codable, Sendable {
     
     let errors: [MobileContentApiErrorCodable]
     

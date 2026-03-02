@@ -28,7 +28,7 @@ struct AllYourFavoriteToolsView: View {
                     
             VStack(alignment: .leading, spacing: 0) {
                 List {
-                    Text(viewModel.sectionTitle)
+                    Text(viewModel.strings.sectionTitle)
                         .font(FontLibrary.sfProTextRegular.font(size: 22))
                         .foregroundColor(ColorPalette.gtGrey.color)
                         .listRowSeparator(.hidden)
@@ -85,7 +85,8 @@ struct AllYourFavoriteToolsView_Preview: PreviewProvider {
         
         let viewModel = AllYourFavoriteToolsViewModel(
             flowDelegate: MockFlowDelegate(),
-            viewAllYourFavoritedToolsUseCase: appDiContainer.feature.favorites.domainLayer.getViewAllYourFavoritedToolsUseCase(),
+            getAllYourFavoritedToolsStringsUseCase: appDiContainer.feature.favorites.domainLayer.getAllYourFavoritedToolsStringsUseCase(),
+            getYourFavoritedToolsUseCase: appDiContainer.feature.favorites.domainLayer.getYourFavoritedToolsUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToolIsFavoritedUseCase(),
             reorderFavoritedToolUseCase: appDiContainer.feature.favorites.domainLayer.getReorderFavoritedToolUseCase(),

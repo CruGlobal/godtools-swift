@@ -9,15 +9,19 @@
 import Foundation
 import Combine
 
-class TrackViewedLessonSwipeTutorialUseCase {
+final class TrackViewedLessonSwipeTutorialUseCase {
     
-    private let trackViewedLessonSwipeTutorialRepo: TrackViewedLessonSwipeTutorialRepositoryInterface
+    private let lessonSwipeTutorialViewedRepository: LessonSwipeTutorialViewedRepository
     
-    init(trackViewedLessonSwipeTutorialRepo: TrackViewedLessonSwipeTutorialRepositoryInterface) {
-        self.trackViewedLessonSwipeTutorialRepo = trackViewedLessonSwipeTutorialRepo
+    init(lessonSwipeTutorialViewedRepository: LessonSwipeTutorialViewedRepository) {
+        self.lessonSwipeTutorialViewedRepository = lessonSwipeTutorialViewedRepository
     }
     
-    func trackLessonSwipeTutorialViewed() -> AnyPublisher<Void, Never> {
-        return trackViewedLessonSwipeTutorialRepo.trackSwipeTutorialViewedPublisher()
+    func execute() -> AnyPublisher<Void, Never> {
+        
+        lessonSwipeTutorialViewedRepository.storeLessonSwipeTutorialViewed(viewed: true)
+        
+        return Just(())
+            .eraseToAnyPublisher()
     }
 }

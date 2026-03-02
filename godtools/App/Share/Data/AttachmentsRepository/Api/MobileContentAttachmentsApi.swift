@@ -52,11 +52,11 @@ class MobileContentAttachmentsApi {
 
 extension MobileContentAttachmentsApi: ExternalDataFetchInterface {
     
-    func getObject(id: String, context: ExternalDataFetchContext) async throws -> [AttachmentCodable] {
+    func getObject(id: String, context: RequestOperationFetchContext) async throws -> [AttachmentCodable] {
         return Array()
     }
     
-    func getObjects(context: ExternalDataFetchContext) async throws -> [AttachmentCodable] {
+    func getObjects(context: RequestOperationFetchContext) async throws -> [AttachmentCodable] {
         return Array()
     }
     

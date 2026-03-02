@@ -1,6 +1,10 @@
 "deferredDeepLinkModal.title" = "Liinkii GodTools cuqaaste fakkaata";
 "deferredDeepLinkModal.message" = "Qabiyyee isin gaafatteetti isin geessuuf button armaan gadii tuquun.";
 
+"toolScreenShare.qrCode.closeButtonTitle" = "Cufi";
+"toolScreenShare.qrCode.description" = "Na waliin join gochuuf koodii QR kana scan godhaa";
+"toolScreenShare.qrCode.title" = "Koodii QR";
+
 "optInNotification.notificationSettings" = "Seetiingii yaadachiiftuuwwanii";
 "lessons.swipeTutorial.title" = "Fuula kan biraatti darbuuf gara bitaatti ykn mirgaatti skriinii kana buti";
 "lessons.swipeTutorial.buttonText" = "Naaf galeera";
@@ -18,8 +22,11 @@
 "lessons.lessonCompleted" = "Xumurteetta";
 "lessons.completionProgress" = "%@ Xumurameera";
 "network_connection_lost" = "Tajaajilli interneetii kee addaan citeera.";
+"language_name_fil" = "Afaan Filippiins (Tagalog)";
 "lessons.filter.navBar.language" = "Afaan Barannoo kanaa";
 "lessons.languageFilter.title" = "Barannoowwaan afaan:";
+"language_name_fil-x-taglish" = "Taglish jedhu";
+"language_name_sid" = "Sidaamaa";
 "onboardingTutorial.chooseLanguageButton.title" = "Qooqa filadhu";
 "languageSettings.confirmAppLanguage.message" = "Afaan %@ akka afaan app kanaa ta'uuf filatteetta. Kunis afaan guutummaa app GodTools jijjira. Akkas akka ta'u ni barbaaddaa?";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Qooqa jijjiiri";
@@ -238,6 +245,9 @@ Ergaan kun turee yoo si qaqqabe link'n kun hojjechuu dhiisuu mala. Garuu yeroo k
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "Vershinii";
 
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
+"language_onboard" = "Afaanota 90+";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "Kan jaallataman";
 
@@ -268,6 +278,7 @@ Ergaan kun turee yoo si qaqqabe link'n kun hojjechuu dhiisuu mala. Garuu yeroo k
 "share_god_tools" = "GodTools qoodi";
 "share_a_story_with_us" = "Seenaakee nuuf qoodi";
 "terms_of_use" = "Haala fayyadamaa";
+"privacy_policy" = "Privacy Policy";
 "copyright_info" = "Odeeffannoo mirga waraabbii";
 "share_god_tools_share_sheet_text" = "App GodTools buufadhu: https://godtoolsapp.com
 
@@ -292,14 +303,20 @@ Marsariitii https://knowgod.com/ irrattis argachuu ni dandeessa.";
 "no_internet_title" = "Qunnamtiin interneetii hin jiru";
 "no_internet" = "Maaloo tajaajila interneetii qabaachuu kee mirkaneeffadhuutii, irra deebi'i yaali.";
 
+"the_tool_you_requested_is_loading" = "Barruun ati barbaadde banamaa jira...";
+
 // Actions
 "yes" = "Eeyyee";
 "no" = "Lakki";
 
 // Tract - Sharing
 "tract_share_message" = "%@";
+
+// Buttons
+"download" = "Buusuu";
 "dismiss" = "Cufii dhisii";
 "done" = "Xumureera";
+"remove" = "Irraa kaasuu";
 "clear" = "Haqi";
 /* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
 "toolinfo_opentool" = "Barruu kana bani";
@@ -332,6 +349,9 @@ Marsariitii https://knowgod.com/ irrattis argachuu ni dandeessa.";
 
 "account.activity.title" = "Sochiiwwan";
 
+// Language Name Strings
+"language_name_fa" = "Afaan Faarsi (Farsii)";
+
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Sochii addunyaalessaa";
 // OnboardingWelcome
@@ -342,3 +362,5 @@ Marsariitii https://knowgod.com/ irrattis argachuu ni dandeessa.";
 // OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "Biyyoota";
 "onboardingTutorial.showMoreButton.title" = "Kana caalaa natti agarsiisi";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Koodii QR uumuu";

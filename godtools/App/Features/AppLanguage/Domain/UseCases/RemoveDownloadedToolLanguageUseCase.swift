@@ -9,17 +9,26 @@
 import Foundation
 import Combine
 
-class RemoveDownloadedToolLanguageUseCase {
+final class RemoveDownloadedToolLanguageUseCase {
     
-    private let removeDownloadedToolLanguageRepository: RemoveDownloadedToolLanguageRepositoryInterface
+    private let downloadedLanguagesRepository: DownloadedLanguagesRepository
     
-    init(removeDownloadedToolLanguageRepository: RemoveDownloadedToolLanguageRepositoryInterface) {
+    init(downloadedLanguagesRepository: DownloadedLanguagesRepository) {
         
-        self.removeDownloadedToolLanguageRepository = removeDownloadedToolLanguageRepository
+        self.downloadedLanguagesRepository = downloadedLanguagesRepository
     }
     
-    func removeDownloadedToolLanguage(_ appLanguage: AppLanguageDomainModel) -> AnyPublisher<Bool, Never> {
+    func execute(languageId: String) -> AnyPublisher<Bool, Never> {
         
-        return removeDownloadedToolLanguageRepository.removeDownloadedToolLanguage(languageId: appLanguage)
+        return downloadedLanguagesRepository.deleteDownloadedLanguagePublisher(languageId: languageId)
+            .map { _ in
+                
+                return true
+            }
+            .catch { _ in
+                
+                return Just(false)
+            }
+            .eraseToAnyPublisher()
     }
 }

@@ -52,7 +52,7 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
         let getCurrentAppLanguageUseCase = appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase()
         
         getCurrentAppLanguageUseCase
-            .getLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$currentAppLanguage)
     }
@@ -77,7 +77,7 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
                 navigateBackFromChooseAppLanguageFlow()
             
             case .userChoseAppLanguage(let appLanguage):
-                let localizationSettings = getLocalizationSettingsView()
+                let localizationSettings = getLocalizationSettingsView(showsPreferNotToSay: true)
                 navigationController.pushViewController(localizationSettings, animated: true)
             }
             
@@ -154,14 +154,16 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
         case .confirmTappedFromLocalizationConfirmation(let country):
             navigationController.dismiss(animated: true)
 
+            if let tutorialVC = onboardingTutorialViewController {
+                navigationController.popToViewController(tutorialVC, animated: true)
+            }
+
             appDiContainer
                 .feature
                 .personalizedTools
                 .domainLayer
                 .getSetLocalizationSettingsUseCase()
-                .execute(
-                    isoRegionCode: country.isoRegionCode
-                )
+                .execute(country: country.countryDomainModel)
                 .sink { _ in
 
                 } receiveValue: { _ in
@@ -205,13 +207,18 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
 extension OnboardingFlow {
     
     private var onboardingTutorialView: OnboardingTutorialView? {
-        
+
+        return onboardingTutorialViewController?.rootView
+    }
+
+    private var onboardingTutorialViewController: AppHostingController<OnboardingTutorialView>? {
+
         for viewController in navigationController.viewControllers {
             if let hosting = viewController as? AppHostingController<OnboardingTutorialView> {
-                return hosting.rootView
+                return hosting
             }
         }
-        
+
         return nil
     }
     
@@ -259,40 +266,7 @@ extension OnboardingFlow {
 
 extension OnboardingFlow {
     
-    private func getLocalizationSettingsView() -> UIViewController {
-
-        let viewModel = LocalizationSettingsViewModel(
-            flowDelegate: self,
-            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getCountryListUseCase: appDiContainer.feature.personalizedTools.domainLayer.getLocalizationSettingsCountryListUseCase(),
-            getLocalizationSettingsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getGetLocalizationSettingsUseCase(),
-            searchCountriesUseCase: appDiContainer.feature.personalizedTools.domainLayer.getSearchCountriesInLocalizationSettingsCountriesListUseCase(),
-            viewLocalizationSettingsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getViewLocalizationSettingsUseCase(),
-            viewSearchBarUseCase: appDiContainer.domainLayer.getViewSearchBarUseCase()
-        )
-
-        let view = LocalizationSettingsView(viewModel: viewModel)
-
-        let backButton = AppBackBarItem(
-            target: viewModel,
-            action: #selector(viewModel.backTapped),
-            accessibilityIdentifier: nil
-        )
-
-        let hostingView = AppHostingController<LocalizationSettingsView>(
-            rootView: view,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: backButton,
-                leadingItems: [],
-                trailingItems: []
-            )
-        )
-
-        return hostingView
-    }
-
-    private func getLocalizationSettingsConfirmationView(selectedCountry: LocalizationSettingsCountryListItemDomainModel) -> UIViewController {
+    private func getLocalizationSettingsConfirmationView(selectedCountry: LocalizationSettingsCountryListItem) -> UIViewController {
 
         let confirmationViewModel = LocalizationSettingsConfirmationViewModel(
             flowDelegate: self,

@@ -114,6 +114,22 @@
         <string>Langues utilisées</string>
       </dict>
     </dict>
+    <key>account.activity.sessions</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@sessionCount@</string>
+      <key>sessionCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Séance</string>
+        <key>other</key>
+        <string>Séances</string>
+      </dict>
+    </dict>
     <key>tools.filter.toolsAvailable</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>

@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class GetAccountCreationIsSupportedUseCase {
+final class GetAccountCreationIsSupportedUseCase {
     
     private let supportedLanguageCodes: [String]
         
@@ -21,7 +21,7 @@ class GetAccountCreationIsSupportedUseCase {
         ]
     }
     
-    func getIsSupportedPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<AccountCreationIsSupportedDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<AccountCreationIsSupportedDomainModel, Never> {
 
         let isSupported: Bool = supportedLanguageCodes.contains(appLanguage.languageCode)
                         

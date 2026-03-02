@@ -9,18 +9,24 @@
 import Foundation
 import Combine
 import RequestOperation
+import RepositorySync
 
-final class PersonalizedLessonsRepository {
+final class PersonalizedLessonsRepository: RepositorySync<PersonalizedLessonsDataModel, NoExternalDataFetch<PersonalizedLessonsDataModel>> {
 
     private let api: PersonalizedToolsApi
     private let cache: PersonalizedLessonsCache
 
     private var cancellables: Set<AnyCancellable> = Set()
 
-    init(api: PersonalizedToolsApi, cache: PersonalizedLessonsCache) {
+    init(persistence: any Persistence<PersonalizedLessonsDataModel, PersonalizedLessonsDataModel>, api: PersonalizedToolsApi, cache: PersonalizedLessonsCache) {
 
         self.api = api
         self.cache = cache
+        
+        super.init(
+            externalDataFetch: NoExternalDataFetch<PersonalizedLessonsDataModel>(),
+            persistence: persistence
+        )
     }
 
     @MainActor func getPersonalizedLessonsChanged(reloadFromRemote: Bool, requestPriority: RequestPriority, country: String?, language: String) -> AnyPublisher<Void, Never> {
@@ -36,12 +42,17 @@ final class PersonalizedLessonsRepository {
                 .store(in: &cancellables)
         }
 
-        return cache.getPersonalizedLessonsChanged()
+        return persistence
+            .observeCollectionChangesPublisher()
+            .eraseToAnyPublisher()
     }
 
     func getPersonalizedLessons(country: String?, language: String) -> PersonalizedLessonsDataModel? {
 
-        return cache.getPersonalizedLessonsFor(country: country, language: language)
+        let id: String = PersonalizedLessonsId(country: country, language: language).value
+        
+        return persistence
+            .getDataModelNonThrowing(id: id)
     }
 
     private func getAllRankedLessonsPublisher(requestPriority: RequestPriority, country: String?, language: String) -> AnyPublisher<[PersonalizedLessonsDataModel], Error> {
@@ -67,7 +78,12 @@ final class PersonalizedLessonsRepository {
                     resourceIds: resources.map { $0.id }
                 )
 
-                return self.cache.syncPersonalizedLessons([personalizedLessons])
+                return self.persistence
+                    .writeObjectsPublisher(
+                        externalObjects: [personalizedLessons],
+                        writeOption: nil,
+                        getOption: .object(id: personalizedLessons.id)
+                    )
                     .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()

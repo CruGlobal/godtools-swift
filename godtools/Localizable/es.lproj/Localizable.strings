@@ -1,6 +1,10 @@
 "deferredDeepLinkModal.title" = "Parece que hiciste clic en un enlace para GodTools";
 "deferredDeepLinkModal.message" = "Toque el botón a continuación para que podamos llevarlo al contenido que solicitó.";
 
+"toolScreenShare.qrCode.closeButtonTitle" = "Cerrar";
+"toolScreenShare.qrCode.description" = "Escanea este código QR para unirte a mí.";
+"toolScreenShare.qrCode.title" = "Código QR";
+
 "optInNotification.notificationSettings" = "Ajustes de notificaciones";
 "lessons.swipeTutorial.title" = "Desliza para cambiar páginas";
 "lessons.swipeTutorial.buttonText" = "Entendido";
@@ -18,8 +22,10 @@
 "lessons.lessonCompleted" = "Completado";
 "lessons.completionProgress" = "%@ completado";
 "network_connection_lost" = "Se perdió la conexión de red.";
+"language_name_fil" = "Filipino (tagalo)";
 "lessons.filter.navBar.language" = "Idioma de la lección";
 "lessons.languageFilter.title" = "Lecciones en:";
+"language_name_fil-x-taglish" = "Taglish";
 "language_name_sid" = "Sidamo";
 "onboardingTutorial.chooseLanguageButton.title" = "Elegir idioma";
 "languageSettings.confirmAppLanguage.message" = "Has seleccionado %@ como idioma de tu aplicación. Esto cambiará el idioma de toda la aplicación GodTools. ¿Estás seguro?";
@@ -48,6 +54,7 @@
 "accountDeletedAlert.title" = "Cuenta eliminada";
 "accountDeletedAlert.message" = "Se ha eliminado tu cuenta";
 "deleteAccount.title" = "No te vayas tan pronto";
+"deleteAccount.subtitle" = "Si borras tu cuenta, no podrás acceder a tus herramientas favoritas ni a la actividad de tu cuenta.";
 "deleteAccount.confirmButton.title" = "Eliminar mi cuenta";
 "deleteAccount.cancelButton.title" = "Conservar mi cuenta";
 "signIn.title" = "Iniciar sesión";
@@ -303,6 +310,7 @@ Puedes acceer a una versión online en https://knowgod.com/";
 
 // Actions
 "yes" = "Sí";
+"no" = "No";
 
 // Tract - Sharing
 "tract_share_message" = "%@";
@@ -374,3 +382,5 @@ Puedes acceer a una versión online en https://knowgod.com/";
 // OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "Países";
 "onboardingTutorial.showMoreButton.title" = "Mostrarme más";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Generar código QR";

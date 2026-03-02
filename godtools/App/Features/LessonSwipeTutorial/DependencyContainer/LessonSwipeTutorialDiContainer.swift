@@ -16,6 +16,6 @@ class LessonSwipeTutorialDiContainer {
     init(coreDataLayer: AppDataLayerDependencies) {
         
         dataLayer = LessonSwipeTutorialDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainlayer = LessonSwipeTutorialDomainLayerDependencies(dataLayer: dataLayer)
+        domainlayer = LessonSwipeTutorialDomainLayerDependencies(coreDataLayer: coreDataLayer, dataLayer: dataLayer)
     }
 }

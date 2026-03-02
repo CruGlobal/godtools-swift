@@ -61,7 +61,10 @@ class AccessibilityStrings {
         }
         
         case activity = "Activity"
+        case allLessons = "All Lessons"
+        case allTools = "All Tools"
         case appLanguageListItem = "App Language List Item"
+        case appLanguagesNavBack = "App Languages Nav Back"
         case askAQuestion = "Ask A Question"
         case close = "Close"
         case chooseAppLanguage = "Choose App Language"
@@ -86,6 +89,8 @@ class AccessibilityStrings {
         case login = "Login"
         case logout = "Logout"
         case openTool = "Open Tool"
+        case personalizedLessons = "Personalized Lessons"
+        case personalizedTools = "Personalized Tools"
         case privacyPolicy = "Privacy Policy"
         case reportABug = "Report A Bug"
         case sendFeedback

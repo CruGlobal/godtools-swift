@@ -40,7 +40,7 @@ import Combine
         showsDeleteLanguageButton = listType == .chooseParallelLanguage
         
         getCurrentAppLanguageUseCase
-            .getLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         

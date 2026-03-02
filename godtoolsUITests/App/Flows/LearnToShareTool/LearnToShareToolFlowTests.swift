@@ -18,6 +18,8 @@ class LearnToShareToolFlowTests: BaseFlowTests {
             checkInitialScreenExists: .dashboardTools
         )
         
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .allTools)
+        
         let toolId: String = AccessibilityStrings.Button.getToolButtonAccessibility(
             toolButton: .tool,
             toolName: .fourSpiritualLaws

@@ -18,7 +18,7 @@ class GetOnboardingTutorialInterfaceStringsUseCase {
         self.stringsRepository = stringsRepository
     }
     
-    func getStringsPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<OnboardingTutorialInterfaceStringsDomainModel, Never> {
+    func getStringsPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<OnboardingTutorialStringsDomainModel, Never> {
         
         return stringsRepository
             .getStringsPublisher(appLanguage: appLanguage)

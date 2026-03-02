@@ -16,16 +16,4 @@ class ToolShortcutLinksDataLayerDependencies {
         
         self.coreDataLayer = coreDataLayer
     }
-    
-    // MARK: - Data Layer Classes
-    
-    // MARK: - Domain Interface
-    
-    func getToolShortcutLinksRepositoryInterface() -> GetToolShortcutLinksRepositoryInterface {
-        return GetToolShortcutLinksRepository(
-            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository(),
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
-            translationsRepository: coreDataLayer.getTranslationsRepository()
-        )
-    }
 }

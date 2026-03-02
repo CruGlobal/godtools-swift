@@ -9,16 +9,27 @@
 import Foundation
 import Combine
 
-class ReorderFavoritedToolUseCase {
+final class ReorderFavoritedToolUseCase {
     
-    private let reorderFavoritedToolRepository: ReorderFavoritedToolRepositoryInterface
+    private let favoritedResourcesRepository: FavoritedResourcesRepository
     
-    init(reorderFavoritedToolRepository: ReorderFavoritedToolRepositoryInterface) {
-        self.reorderFavoritedToolRepository = reorderFavoritedToolRepository
+    init(favoritedResourcesRepository: FavoritedResourcesRepository) {
+        self.favoritedResourcesRepository = favoritedResourcesRepository
     }
     
-    func reorderFavoritedToolPublisher(toolId: String, originalPosition: Int, newPosition: Int) -> AnyPublisher<[ReorderFavoritedToolDomainModel], Error> {
+    func execute(toolId: String, originalPosition: Int, newPosition: Int) -> AnyPublisher<[ReorderFavoritedToolDomainModel], Error> {
         
-        return reorderFavoritedToolRepository.reorderFavoritedToolPubilsher(toolId: toolId, originalPosition: originalPosition, newPosition: newPosition)
+        return favoritedResourcesRepository
+            .reorderFavoritedResourcePublisher(
+                id: toolId,
+                originalPosition: originalPosition,
+                newPosition: newPosition
+            )
+            .map { favoritesReordered in
+                return favoritesReordered.map {
+                    ReorderFavoritedToolDomainModel(dataModelId: $0.id, position: $0.position)
+                }
+            }
+            .eraseToAnyPublisher()
     }
 }

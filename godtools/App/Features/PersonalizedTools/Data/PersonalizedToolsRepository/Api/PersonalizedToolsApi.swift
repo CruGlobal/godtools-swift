@@ -12,6 +12,9 @@ import Combine
 
 final class PersonalizedToolsApi {
     
+    typealias TwoLetterCountryCode = String
+    typealias TwoLetterLanguageCode = String
+    
     enum QueryName: String {
         case country = "country"
         case language = "lang"
@@ -30,7 +33,7 @@ final class PersonalizedToolsApi {
         baseUrl = config.getMobileContentApiBaseUrl()
     }
     
-    private func getAllRankedResourcesUrlRequest(urlSession: URLSession, country: String?, language: String?, resourceType: ResourceType?) -> URLRequest {
+    private func getAllRankedResourcesUrlRequest(urlSession: URLSession, country: TwoLetterCountryCode?, language: TwoLetterLanguageCode?, resourceType: ResourceType?) -> URLRequest {
         
         let queryItems: [URLQueryItem]? = JsonApiFilter.buildQueryItems(
             nameValues: [
@@ -53,7 +56,7 @@ final class PersonalizedToolsApi {
             )
     }
     
-    private func getDefaultOrderResourcesUrlRequest(urlSession: URLSession, language: String?, resouceType: ResourceType?) -> URLRequest {
+    private func getDefaultOrderResourcesUrlRequest(urlSession: URLSession, language: TwoLetterLanguageCode?, resouceType: ResourceType?) -> URLRequest {
         
         let queryItems: [URLQueryItem]? = JsonApiFilter.buildQueryItems(
             nameValues: [
@@ -75,7 +78,7 @@ final class PersonalizedToolsApi {
             )
     }
     
-    func getAllRankedResourcesPublisher(requestPriority: RequestPriority, country: String?, language: String?, resourceType: ResourceType?) -> AnyPublisher<[ResourceCodable], Error> {
+    func getAllRankedResourcesPublisher(requestPriority: RequestPriority, country: TwoLetterCountryCode?, language: TwoLetterLanguageCode?, resourceType: ResourceType?) -> AnyPublisher<[ResourceCodable], Error> {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
@@ -97,7 +100,7 @@ final class PersonalizedToolsApi {
             .eraseToAnyPublisher()
     }
     
-    func getDefaultOrderResourcesPublisher(requestPriority: RequestPriority, language: String?, resouceType: ResourceType?) -> AnyPublisher<[ResourceCodable], Error> {
+    func getDefaultOrderResourcesPublisher(requestPriority: RequestPriority, language: TwoLetterLanguageCode?, resouceType: ResourceType?) -> AnyPublisher<[ResourceCodable], Error> {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         

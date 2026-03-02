@@ -16,6 +16,6 @@ class ToolShortcutLinksDiContainer {
     init(coreDataLayer: AppDataLayerDependencies) {
         
         dataLayer = ToolShortcutLinksDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainLayer = ToolShortcutLinksDomainLayerDependencies(dataLayer: dataLayer)
+        domainLayer = ToolShortcutLinksDomainLayerDependencies(coreDataLayer: coreDataLayer, dataLayer: dataLayer)
     }
 }

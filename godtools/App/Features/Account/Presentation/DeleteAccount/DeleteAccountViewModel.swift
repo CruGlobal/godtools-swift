@@ -17,27 +17,27 @@ import Combine
     
     @Published private var appLanguage: AppLanguageDomainModel = ""
     
-    @Published var interfaceStrings: DeleteAccountInterfaceStringsDomainModel = DeleteAccountInterfaceStringsDomainModel.emptyStrings()
+    @Published private(set) var strings = DeleteAccountStringsDomainModel.emptyValue
     
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguage: GetCurrentAppLanguageUseCase, viewDeleteAccountUseCase: ViewDeleteAccountUseCase) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguage: GetCurrentAppLanguageUseCase, getDeleteAccountStringsUseCase: GetDeleteAccountStringsUseCase) {
         
         self.flowDelegate = flowDelegate
         
         getCurrentAppLanguage
-            .getLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         $appLanguage
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
-                viewDeleteAccountUseCase
-                    .viewPublisher(appLanguage: appLanguage)
+                getDeleteAccountStringsUseCase
+                    .execute(appLanguage: appLanguage)
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (domainModel: ViewDeleteAccountDomainModel) in
-                self?.interfaceStrings = domainModel.interfaceStrings
+            .sink { [weak self] (strings: DeleteAccountStringsDomainModel) in
+                self?.strings = strings
             }
             .store(in: &cancellables)
     }

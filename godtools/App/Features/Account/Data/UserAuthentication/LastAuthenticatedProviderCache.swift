@@ -8,7 +8,7 @@
 
 import Foundation
 
-class LastAuthenticatedProviderCache {
+final class LastAuthenticatedProviderCache {
     
     private static let lastAuthenticatedProviderCacheKey: String = "LastAuthenticatedProviderCache.lastAuthenticatedProviderCacheKey"
     

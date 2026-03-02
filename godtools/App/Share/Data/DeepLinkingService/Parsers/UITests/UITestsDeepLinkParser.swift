@@ -20,7 +20,11 @@ class UITestsDeepLinkParser: DeepLinkUrlParserInterface {
         
         let screenPath: String? = pathComponents[safe: 1]
         
-        if screenPath == "onboarding" {
+        if screenPath == "menu" {
+            
+            return .menu
+        }
+        else if screenPath == "onboarding" {
             
             return .onboarding(appLanguage: appLanguage)
         }

@@ -10,16 +10,20 @@ import Foundation
 
 class ToolShortcutLinksDomainLayerDependencies {
     
+    private let coreDataLayer: AppDataLayerDependencies
     private let dataLayer: ToolShortcutLinksDataLayerDependencies
     
-    init(dataLayer: ToolShortcutLinksDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, dataLayer: ToolShortcutLinksDataLayerDependencies) {
         
+        self.coreDataLayer = coreDataLayer
         self.dataLayer = dataLayer
     }
     
-    func getViewToolShortcutLinksUseCase() -> ViewToolShortcutLinksUseCase {
-        return ViewToolShortcutLinksUseCase(
-            getToolShortcutLinksRepositoryInterface: dataLayer.getToolShortcutLinksRepositoryInterface()
+    func getToolShortcutLinksUseCase() -> GetToolShortcutLinksUseCase {
+        return GetToolShortcutLinksUseCase(
+            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository(),
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            translationsRepository: coreDataLayer.getTranslationsRepository()
         )
     }
 }

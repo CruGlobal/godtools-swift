@@ -1,6 +1,10 @@
 "deferredDeepLinkModal.title" = "Es sieht so aus, als hätten Sie auf einen Link für GodTools geklickt";
 "deferredDeepLinkModal.message" = "Tippen Sie auf die Schaltfläche unten, damit wir Sie zum gewünschten Inhalt weiterleiten können.";
 
+"toolScreenShare.qrCode.closeButtonTitle" = "Schließen";
+"toolScreenShare.qrCode.description" = "Scanne diesen QR-Code, um mitzumachen!";
+"toolScreenShare.qrCode.title" = "QR-Code";
+
 "optInNotification.notificationSettings" = "Benachrichtigungseinstellungen";
 "lessons.swipeTutorial.title" = "Wische, um die Seite zu wechseln.";
 "lessons.swipeTutorial.buttonText" = "Alles klar";
@@ -73,6 +77,9 @@
 
 "account.globalActivity.title" = "Globale Aktivität";
 "toolDetails.conversationStarters.title" = "Gesprächsstarter";
+
+/* A list of the main points of the tool will live behind a section called "Outline" */
+"toolDetails.outline.title" = "Gliederung";
 
 "toolDetails.bibleReferences.title" = "Bibelstellen";
 
@@ -198,6 +205,9 @@
 "onboardingTutorial.3.title" = "Hilf jemandem, zu Jesus zu finden";
 "onboardingTutorial.3.message" = "GodTools ist dein Leitfaden, um das Evangelium auf klare und relevante Weise zu kommunizieren.";
 
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Training";
+
 /*
  * This is an invitation for a user to open a tool
  * Please keep to a 9 character limit, longer phrases may get cut off
@@ -317,6 +327,7 @@ Eine Online-Version findest du unter https://knowgod.com/";
 
 // Alerts
 "error" = "Fehler";
+"OK" = "OK";
 "cancel" = "Abbrechen";
 "required_field_missing" = "\"%@\" ist ein Pflichtfeld.";
 
@@ -367,9 +378,13 @@ Für weitere Infos drücke den Info-Button bei einem Tool.";
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Weltweite Aktivitäten";
+// OnboardingWelcome
+"accountActivity.globalAnalytics.users.title" = "Einmalige Benutzer";
 "onboardingWelcome.titleLabel.tagline" = "Teile leichter deinen Glauben";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Evangeliums-\nPräsentationen";
 "accountActivity.globalAnalytics.launches.title" = "Sitzungen";
 // OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "Länder";
 "onboardingTutorial.showMoreButton.title" = "Mehr anzeigen";
+
+"screenShareTutorial.generateQRCodeButton.title" = "QR-Code generieren";

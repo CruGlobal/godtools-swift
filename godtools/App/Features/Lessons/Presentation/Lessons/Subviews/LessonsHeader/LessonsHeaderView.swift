@@ -21,11 +21,11 @@ struct LessonsHeaderView: View {
         
         VStack(alignment: .leading, spacing: 0) {
             
-            Text(viewModel.sectionTitle)
+            Text(viewModel.strings.title)
                 .font(FontLibrary.sfProTextRegular.font(size: 24))
                 .foregroundColor(ColorPalette.gtGrey.color)
                         
-            Text(viewModel.subtitle)
+            Text(viewModel.strings.subtitle)
                 .font(FontLibrary.sfProTextRegular.font(size: 14))
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .padding([.top], 7)

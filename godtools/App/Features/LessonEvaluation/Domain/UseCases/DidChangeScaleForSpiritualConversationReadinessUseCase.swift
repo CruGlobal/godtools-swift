@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class DidChangeScaleForSpiritualConversationReadinessUseCase {
+final class DidChangeScaleForSpiritualConversationReadinessUseCase {
     
     private static let minScaleValue: Int = 1
     private static let maxScaleValue: Int = 10

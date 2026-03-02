@@ -11,6 +11,8 @@ import Combine
 
 @MainActor class MenuViewModel: ObservableObject {
         
+    private static var backgroundCancellables: Set<AnyCancellable> = Set()
+    
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getMenuInterfaceStringsUseCase: GetMenuInterfaceStringsUseCase
     private let getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase
@@ -71,7 +73,7 @@ import Combine
         self.hidesDebugSection = !appConfig.isDebug
         
         getCurrentAppLanguageUseCase
-            .getLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
@@ -119,8 +121,10 @@ import Combine
             .map { (appLanguage: AppLanguageDomainModel) in
                 
                 Publishers.CombineLatest(
-                    getAccountCreationIsSupportedUseCase.getIsSupportedPublisher(appLanguage: appLanguage),
-                    getUserIsAuthenticatedUseCase.getIsAuthenticatedPublisher()
+                    getAccountCreationIsSupportedUseCase
+                        .execute(appLanguage: appLanguage),
+                    getUserIsAuthenticatedUseCase
+                        .execute()
                 )
             }
             .switchToLatest()
@@ -222,14 +226,15 @@ extension MenuViewModel {
     
     func logoutTapped() {
         
-        logOutUserUseCase.logOutPublisher()
+        logOutUserUseCase
+            .execute()
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { _ in
                 
             }, receiveValue: { (finished: Bool) in
                 
             })
-            .store(in: &cancellables)
+            .store(in: &Self.backgroundCancellables)
     }
     
     func deleteAccountTapped() {

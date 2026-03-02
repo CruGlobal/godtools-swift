@@ -12,7 +12,7 @@ import Foundation
 class MockMobileContentAuthTokenKeychainAccessor {
     
     private var userId: String?
-    private var authToken: MobileContentAuthTokenDataModel?
+    private var authTokenCodable: MobileContentAuthTokenDecodable?
     private var appleRefreshToken: String?
     
     func setUserId(_ userId: String?) {
@@ -22,20 +22,20 @@ class MockMobileContentAuthTokenKeychainAccessor {
 
 extension MockMobileContentAuthTokenKeychainAccessor: MobileContentAuthTokenKeychainAccessorInterface {
     
-    func saveMobileContentAuthToken(_ authTokenDataModel: MobileContentAuthTokenDataModel) throws {
-        authToken = authTokenDataModel
-        userId = authTokenDataModel.userId
-        appleRefreshToken = authTokenDataModel.appleRefreshToken
+    func saveMobileContentAuthToken(authTokenCodable: MobileContentAuthTokenDecodable) throws {
+        self.authTokenCodable = authTokenCodable
+        userId = authTokenCodable.userId
+        appleRefreshToken = authTokenCodable.appleRefreshToken
     }
     
     func deleteMobileContentAuthTokenAndUserId(userId: String) {
-        authToken = nil
+        authTokenCodable = nil
         self.userId = nil
         appleRefreshToken = nil
     }
     
     func getMobileContentAuthToken(userId: String) -> String? {
-        return authToken?.userId == userId ? authToken?.token : nil
+        return authTokenCodable?.userId == userId ? authTokenCodable?.token : nil
     }
     
     func getMobileContentUserId() -> String? {
@@ -43,6 +43,6 @@ extension MockMobileContentAuthTokenKeychainAccessor: MobileContentAuthTokenKeyc
     }
     
     func getAppleRefreshToken(userId: String) -> String? {
-        return authToken?.userId == userId ? appleRefreshToken : nil
+        return authTokenCodable?.userId == userId ? appleRefreshToken : nil
     }
 }

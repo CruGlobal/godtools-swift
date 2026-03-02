@@ -9,7 +9,7 @@
 import UIKit
 import Combine
 
-class DashboardFlow: NSObject, Flow, ToolNavigationFlow {
+class DashboardFlow: Flow, ToolNavigationFlow {
         
     private let dashboardTabObserver: CurrentValueSubject<DashboardTabTypeDomainModel, Never>
     private let startingTab: DashboardTabTypeDomainModel = .favorites
@@ -38,19 +38,15 @@ class DashboardFlow: NSObject, Flow, ToolNavigationFlow {
         self.rootController = rootController
         
         dashboardTabObserver = CurrentValueSubject(startingTab)
-        
-        super.init()
-        
+                
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()
-            .getLanguagePublisher()
+            .execute()
             .assign(to: &$appLanguage)
     }
     
     func navigate(step: FlowStep) {
-     
-        navigationController.delegate = self
-        
+             
         switch step {
                         
         case .menuTappedFromTools:
@@ -328,24 +324,6 @@ class DashboardFlow: NSObject, Flow, ToolNavigationFlow {
     }
 }
 
-// MARK: - UINavigationControllerDelegate
-
-extension DashboardFlow: UINavigationControllerDelegate {
-    
-    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-        
-        let isDashboard: Bool = viewController is AppHostingController<DashboardView>
-        let isLesson: Bool = viewController is LessonView
-        let hidesNavigationBar: Bool = isDashboard || isLesson
-        
-        if isDashboard {
-            configureNavBarForDashboard()
-        }
-        
-        navigationController.setNavigationBarHidden(hidesNavigationBar, animated: false)
-    }
-}
-
 // MARK: - Dashboard
 
 extension DashboardFlow {
@@ -385,7 +363,7 @@ extension DashboardFlow {
         return hostingController
     }
     
-    private func configureNavBarForDashboard() {
+    func configureNavBarForDashboard() {
         
         GodToolsSceneDelegate.setWindowBackgroundColorForStatusBarColor(color: AppFlow.defaultNavBarColor)
                 
@@ -511,7 +489,8 @@ extension DashboardFlow {
         
         let viewModel = AllYourFavoriteToolsViewModel(
             flowDelegate: self,
-            viewAllYourFavoritedToolsUseCase: appDiContainer.feature.favorites.domainLayer.getViewAllYourFavoritedToolsUseCase(),
+            getAllYourFavoritedToolsStringsUseCase: appDiContainer.feature.favorites.domainLayer.getAllYourFavoritedToolsStringsUseCase(),
+            getYourFavoritedToolsUseCase: appDiContainer.feature.favorites.domainLayer.getYourFavoritedToolsUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToolIsFavoritedUseCase(),
             reorderFavoritedToolUseCase: appDiContainer.feature.favorites.domainLayer.getReorderFavoritedToolUseCase(),
@@ -773,7 +752,7 @@ extension DashboardFlow {
             viewToolDetailsUseCase: appDiContainer.feature.toolDetails.domainLayer.getViewToolDetailsUseCase(),
             getToolDetailsMediaUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsMediaUseCase(),
             getToolDetailsLearnToShareToolIsAvailableUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsLearnToShareToolIsAvailableUseCase(),
-            toggleToolFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToggleFavoritedToolUseCase(),
+            toggleToolFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToggleToolFavoritedUseCase(),
             getToolBannerUseCase: appDiContainer.domainLayer.getToolBannerUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
@@ -857,11 +836,11 @@ extension DashboardFlow {
 
 extension DashboardFlow {
     
-    private func getConfirmRemoveToolFromFavoritesAlertView(toolId: String, domainModel: ViewConfirmRemoveToolFromFavoritesDomainModel, didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?) -> UIViewController {
+    private func getConfirmRemoveToolFromFavoritesAlertView(toolId: String, strings: ConfirmRemoveToolFromFavoritesStringsDomainModel, didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?) -> UIViewController {
         
         let viewModel = ConfirmRemoveToolFromFavoritesAlertViewModel(
             toolId: toolId,
-            viewConfirmRemoveToolFromFavoritesDomainModel: domainModel,
+            strings: strings,
             removeFavoritedToolUseCase: appDiContainer.feature.favorites.domainLayer.getRemoveFavoritedToolUseCase(),
             didConfirmToolRemovalSubject: didConfirmToolRemovalSubject
         )
@@ -874,10 +853,13 @@ extension DashboardFlow {
     private func presentConfirmRemoveToolFromFavoritesAlertView(toolId: String, didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?, animated: Bool) {
         
         appDiContainer.feature.favorites.domainLayer
-            .getViewConfirmRemoveToolFromFavoritesUseCase()
-            .viewPublisher(toolId: toolId, appLanguage: appLanguage)
+            .getConfirmRemoveToolFromFavoritesStringsUseCase()
+            .execute(
+                toolId: toolId,
+                appLanguage: appLanguage
+            )
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (domainModel: ViewConfirmRemoveToolFromFavoritesDomainModel) in
+            .sink { [weak self] (strings: ConfirmRemoveToolFromFavoritesStringsDomainModel) in
                 
                 guard let weakSelf = self else {
                     return
@@ -885,7 +867,7 @@ extension DashboardFlow {
                 
                 let view = weakSelf.getConfirmRemoveToolFromFavoritesAlertView(
                     toolId: toolId,
-                    domainModel: domainModel,
+                    strings: strings,
                     didConfirmToolRemovalSubject: didConfirmToolRemovalSubject
                 )
                 

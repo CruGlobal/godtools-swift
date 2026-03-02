@@ -39,7 +39,7 @@ struct AccountActivityView: View {
         
         VStack(alignment: .leading) {
 
-            Text(viewModel.myActivitySectionTitle)
+            Text(viewModel.strings.myActivitySectionTitle)
                 .font(FontLibrary.sfProTextRegular.font(size: 22))
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .padding(.top, 20)
@@ -81,7 +81,7 @@ struct AccountActivityView: View {
         
         VStack(alignment: .leading) {
             
-            Text(viewModel.badgesSectionTitle)
+            Text(viewModel.strings.badgesSectionTitle)
                 .font(FontLibrary.sfProTextRegular.font(size: 22))
                 .foregroundColor(ColorPalette.gtGrey.color)
             

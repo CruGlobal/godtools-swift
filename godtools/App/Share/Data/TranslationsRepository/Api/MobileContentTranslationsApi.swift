@@ -84,11 +84,11 @@ class MobileContentTranslationsApi {
 
 extension MobileContentTranslationsApi: ExternalDataFetchInterface {
     
-    func getObject(id: String, context: ExternalDataFetchContext) async throws -> [TranslationCodable] {
+    func getObject(id: String, context: RequestOperationFetchContext) async throws -> [TranslationCodable] {
         return Array()
     }
     
-    func getObjects(context: ExternalDataFetchContext) async throws -> [TranslationCodable] {
+    func getObjects(context: RequestOperationFetchContext) async throws -> [TranslationCodable] {
         return Array()
     }
     

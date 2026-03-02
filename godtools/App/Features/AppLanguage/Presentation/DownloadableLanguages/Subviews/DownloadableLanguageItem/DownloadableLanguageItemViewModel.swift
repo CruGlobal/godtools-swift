@@ -109,7 +109,7 @@ extension DownloadableLanguageItemViewModel {
         recycleState.downloadState = .notDownloaded
         
         removeDownloadedToolLanguageUseCase
-            .removeDownloadedToolLanguage(languageId)
+            .execute(languageId: languageId)
             .receive(on: DispatchQueue.main)
             .sink { _ in
 
@@ -136,7 +136,7 @@ extension DownloadableLanguageItemViewModel {
         Self.languageDownloads[languageId] = languageDownloadWithAnimateDownloadProgress
         
         languageDownloadWithAnimateDownloadProgress
-            .start(downloadProgressPublisher: downloadToolLanguageUseCase.downloadToolLanguage(languageId: languageId))
+            .start(downloadProgressPublisher: downloadToolLanguageUseCase.execute(languageId: languageId))
             .receive(on: DispatchQueue.main)
             .sink { completion in
                 

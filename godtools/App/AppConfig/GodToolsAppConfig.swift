@@ -11,7 +11,7 @@ import SocialAuthentication
 import RepositorySync
 
 class GodToolsAppConfig: AppConfigInterface {
-    
+
     private let appBuild: AppBuild
         
     init() {
@@ -111,9 +111,9 @@ class GodToolsAppConfig: AppConfigInterface {
         switch appBuild.environment {
         
         case .staging:
-            return LegacyRealmDatabase(databaseConfiguration: RealmDatabaseStagingConfiguration())
+            return LegacyRealmDatabase(realmDatabase: getRealmDatabase())
         case .production:
-            return LegacyRealmDatabase(databaseConfiguration: RealmDatabaseProductionConfiguration())
+            return LegacyRealmDatabase(realmDatabase: getRealmDatabase())
         }
     }
     

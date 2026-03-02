@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RepositorySync
 
 class AccountDataLayerDependencies {
     
@@ -18,16 +19,39 @@ class AccountDataLayerDependencies {
     }
         
     func getUserDetailsRepository() -> UserDetailsRepository {
-        return UserDetailsRepository(
-            api: UserDetailsAPI(
-                config: coreDataLayer.getAppConfig(),
-                urlSessionPriority: coreDataLayer.getSharedUrlSessionPriority(),
-                mobileContentApiAuthSession: coreDataLayer.getMobileContentApiAuthSession()
-            ),
-            cache: RealmUserDetailsCache(
-                realmDatabase: coreDataLayer.getSharedLegacyRealmDatabase(),
-                authTokenRepository: coreDataLayer.getMobileContentAuthTokenRepository()
+        
+        let persistence: any Persistence<UserDetailsDataModel, MobileContentApiUsersMeCodable>
+        
+        if #available(iOS 17.4, *), let database = coreDataLayer.getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                dataModelMapping: SwiftUserDetailsMapping()
             )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                database: coreDataLayer.getSharedRealmDatabase(),
+                dataModelMapping: RealmUserDetailsMapping()
+            )
+        }
+        
+        let api = UserDetailsAPI(
+            config: coreDataLayer.getAppConfig(),
+            urlSessionPriority: coreDataLayer.getSharedUrlSessionPriority(),
+            mobileContentApiAuthSession: coreDataLayer.getMobileContentApiAuthSession()
+        )
+        
+        let cache = UserDetailsCache(
+            persistence: persistence,
+            authTokenRepository: coreDataLayer.getMobileContentAuthTokenRepository()
+        )
+        
+        return UserDetailsRepository(
+            externalDataFetch: api,
+            persistence: persistence,
+            cache: cache
         )
     }
 }

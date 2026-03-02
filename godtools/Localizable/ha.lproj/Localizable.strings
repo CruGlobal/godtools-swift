@@ -1,6 +1,10 @@
 "deferredDeepLinkModal.title" = "Ga alama kun danna hanyar haɗi don GodTools";
 "deferredDeepLinkModal.message" = "Matsa maɓallin da ke ƙasa don mu iya kai ku zuwa abubuwan da kuka nema.";
 
+"toolScreenShare.qrCode.closeButtonTitle" = "Rufewa";
+"toolScreenShare.qrCode.description" = "Duba wannan lambar QR don shiga tare da ni";
+"toolScreenShare.qrCode.title" = "Lambar QR";
+
 "optInNotification.notificationSettings" = "Saitunan sanarwa";
 "lessons.swipeTutorial.title" = "Shafa don canza shafuka";
 "lessons.swipeTutorial.buttonText" = "Na samu";
@@ -19,8 +23,11 @@
 "lessons.lessonCompleted" = "An kammala";
 "lessons.completionProgress" = "%@ Cikkake";
 "network_connection_lost" = "An rasa haɗin yanar gizon.";
+"language_name_fil" = "Filipino (Tagalog)";
 "lessons.filter.navBar.language" = "Harshen darasi";
 "lessons.languageFilter.title" = "Darussa a cikin:";
+"language_name_fil-x-taglish" = "Taglish";
+"language_name_sid" = "Sidama";
 "onboardingTutorial.chooseLanguageButton.title" = "Zabi Harshe";
 "languageSettings.confirmAppLanguage.message" = "Kun zaɓi %@ azaman yaren app ɗin ku. Wannan zai canza yaren dukan GodTools app. Kun tabbata?";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Canza harshe";
@@ -170,6 +177,7 @@
 
 "share_link" = "Raba hanyar haɗi";
 "share_tool_menu.remote_share_tool" = "Raba allon ku";
+"share_tool_menu.send_tool" = "Aika wannan kayan aiki";
 "share_tool_screen_tutorial.share_your_screen.title" = "Raba allon ku";
 "share_tool_screen_tutorial.share_your_screen.message" = "Wannan zaɓin zai aika hanyar haɗi zuwa wannan kayan aikin ga aboki. Lokacin da aka buɗe hanyar haɗin yanar gizon zai fara zaman raba allo.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "Gwanintar madubi";
@@ -240,6 +248,9 @@
 "menu_version" = "Sigar
 ";
 
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
+"language_onboard" = "Harsuna 90+";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "Waɗanda aka fi so";
 
@@ -281,14 +292,20 @@
 "no_internet_title" = "Babu haɗin intanet";
 "no_internet" = "Da fatan za a duba haɗin intanet ɗin ku kuma a sake gwadawa";
 
+"the_tool_you_requested_is_loading" = "Kayan aikin da kuka nema yana lodawa...";
+
 // Actions
 "yes" = "\"I\" hakika";
 "no" = "A'a";
 
 // Tract - Sharing
 "tract_share_message" = "%@";
+
+// Buttons
+"download" = "Zazzage";
 "dismiss" = "Sallama";
 "done" = "Ya yi";
+"remove" = "Motsa";
 "clear" = "Share";
 /* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
 "toolinfo_opentool" = "Bude kayan aiki";
@@ -302,6 +319,7 @@
 "onboardingTutorial.getStartedButton.title" = "Fara";
 // Tutorial
 "tutorial.tutorialItem.0.title" = "Kala";
+"tutorial.tutorialItem.1.title" = "Shirya";
 "tutorial.tutorialItem.3.title" = "Ana samun wannan koyawa don sake gani a cikin menu";
 "tutorial.continueButton.title.continue" = "Ci gaba";
 "tutorial.continueButton.title.startUsingGodTools" = "Fara Amfani da GodTools";
@@ -334,3 +352,5 @@
 // OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "Kasashe";
 "onboardingTutorial.showMoreButton.title" = "Nuna mun karin";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Samar da Lambar QR";

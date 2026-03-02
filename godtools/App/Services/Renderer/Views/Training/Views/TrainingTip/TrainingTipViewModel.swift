@@ -48,7 +48,7 @@ class TrainingTipViewModel: MobileContentViewModel {
             languageId: renderedPageContext.language.id
         )
         
-        let trainingTipViewed: Bool = getTrainingTipCompletedUseCase.hasTrainingTipBeenCompleted(tip: trainingTip)
+        let trainingTipViewed: Bool = getTrainingTipCompletedUseCase.execute(tip: trainingTip)
         
         return trainingTipViewed
     }

@@ -26,7 +26,7 @@ struct ToolsFilterSectionView: View {
         
         VStack(alignment: .leading, spacing: 8) {
             
-            Text(viewModel.filterTitle)
+            Text(viewModel.strings.filterTitle)
                 .font(FontLibrary.sfProTextRegular.font(size: 22))
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .padding(.leading, contentHorizontalInsets)

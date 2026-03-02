@@ -12,13 +12,13 @@ import RequestOperation
 
 class UserCountersRepository {
     
-    private let api: UserCountersApiInterface
+    private let api: UserCountersAPI
     private let cache: RealmUserCountersCache
     private let remoteUserCountersSync: RemoteUserCountersSync
     
     private var cancellables: Set<AnyCancellable> = Set()
     
-    init(api: UserCountersApiInterface, cache: RealmUserCountersCache, remoteUserCountersSync: RemoteUserCountersSync) {
+    init(api: UserCountersAPI, cache: RealmUserCountersCache, remoteUserCountersSync: RemoteUserCountersSync) {
         self.api = api
         self.cache = cache
         self.remoteUserCountersSync = remoteUserCountersSync
@@ -33,11 +33,11 @@ class UserCountersRepository {
         return UserCounterDomainModel(dataModel: userCounterDataModel)
     }
     
-    @MainActor func getUserCountersChanged(reloadFromRemote: Bool, requestPriority: RequestPriority) -> AnyPublisher<Void, Never> {
+    @MainActor func getUserCountersChangedPublisher(reloadFromRemote: Bool, requestPriority: RequestPriority) -> AnyPublisher<Void, Never> {
         
         if reloadFromRemote {
             
-            fetchRemoteUserCounters(requestPriority: requestPriority)
+            fetchRemoteUserCountersPublisher(requestPriority: requestPriority)
                 .sink(receiveCompletion: { _ in
                 }, receiveValue: { _ in
                     
@@ -53,23 +53,27 @@ class UserCountersRepository {
         return cache.getAllUserCounters()
     }
     
-    func fetchRemoteUserCounters(requestPriority: RequestPriority) -> AnyPublisher<[UserCounterDataModel], Error> {
+    func fetchRemoteUserCountersPublisher(requestPriority: RequestPriority) -> AnyPublisher<[UserCounterDataModel], Error> {
         
-        return api.fetchUserCountersPublisher(requestPriority: requestPriority)
-            .flatMap { (userCounters: [UserCounterDecodable]) in
-                
-                return self.cache.syncUserCounters(userCounters)
-                    .eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
+        // TODO: Eventually remove AnyPublisher() and support async await. ~Levi
+        
+        return AnyPublisher() {
+            return try await self.api.fetchUserCounters(requestPriority: requestPriority)
+        }
+        .flatMap { (userCounters: [UserCounterDecodable]) in
+            
+            return self.cache.syncUserCounters(userCounters)
+                .eraseToAnyPublisher()
+        }
+        .eraseToAnyPublisher()
     }
     
-    func incrementCachedUserCounterBy1(id: String) -> AnyPublisher<[UserCounterDataModel], Error> {
+    func incrementCachedUserCounterBy1Publisher(id: String) -> AnyPublisher<[UserCounterDataModel], Error> {
         
         return cache.incrementUserCounterBy1(id: id)
     }
     
-    func deleteUserCounters() -> AnyPublisher<Void, Error> {
+    func deleteUserCountersPublisher() -> AnyPublisher<Void, Error> {
         
         return cache.deleteAllUserCounters()
     }

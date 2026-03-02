@@ -49,7 +49,7 @@ class MenuFlow: Flow {
         
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()
-            .getLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
@@ -92,33 +92,19 @@ class MenuFlow: Flow {
             closeLanguageSettings()
             
         case .localizationSettingsTappedFromMenu:
-            let localizationSettings = getLocalizationSettingsView()
+            let localizationSettings = getLocalizationSettingsView(showsPreferNotToSay: false)
             navigationController.pushViewController(localizationSettings, animated: true)
             
         case .backTappedFromLocalizationSettings:
             navigationController.popViewController(animated: true)
 
         case .countryTappedFromLocalizationSettings(let country):
-            let confirmationView = getLocalizationSettingsConfirmationView(selectedCountry: country)
-            navigationController.present(confirmationView, animated: true)
-
-        case .closeTappedFromLocalizationConfirmation:
-            navigationController.dismiss(animated: true)
-
-        case .cancelTappedFromLocalizationConfirmation:
-            navigationController.dismiss(animated: true)
-
-        case .confirmTappedFromLocalizationConfirmation(let country):
-            navigationController.dismiss(animated: true)
-
             appDiContainer
                 .feature
                 .personalizedTools
                 .domainLayer
                 .getSetLocalizationSettingsUseCase()
-                .execute(
-                    isoRegionCode: country.isoRegionCode
-                )
+                .execute(country: country.countryDomainModel)
                 .sink { _ in
 
                 } receiveValue: { _ in
@@ -376,40 +362,7 @@ extension MenuFlow {
 
 extension MenuFlow {
     
-    private func getLocalizationSettingsView() -> UIViewController {
-
-        let viewModel = LocalizationSettingsViewModel(
-            flowDelegate: self,
-            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getCountryListUseCase: appDiContainer.feature.personalizedTools.domainLayer.getLocalizationSettingsCountryListUseCase(),
-            getLocalizationSettingsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getGetLocalizationSettingsUseCase(),
-            searchCountriesUseCase: appDiContainer.feature.personalizedTools.domainLayer.getSearchCountriesInLocalizationSettingsCountriesListUseCase(),
-            viewLocalizationSettingsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getViewLocalizationSettingsUseCase(),
-            viewSearchBarUseCase: appDiContainer.domainLayer.getViewSearchBarUseCase()
-        )
-
-        let view = LocalizationSettingsView(viewModel: viewModel)
-
-        let backButton = AppBackBarItem(
-            target: viewModel,
-            action: #selector(viewModel.backTapped),
-            accessibilityIdentifier: nil
-        )
-
-        let hostingView = AppHostingController<LocalizationSettingsView>(
-            rootView: view,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: backButton,
-                leadingItems: [],
-                trailingItems: []
-            )
-        )
-
-        return hostingView
-    }
-
-    private func getLocalizationSettingsConfirmationView(selectedCountry: LocalizationSettingsCountryListItemDomainModel) -> UIViewController {
+    private func getLocalizationSettingsConfirmationView(selectedCountry: LocalizationSettingsCountryListItem) -> UIViewController {
 
         let confirmationViewModel = LocalizationSettingsConfirmationViewModel(
             flowDelegate: self,
@@ -522,8 +475,8 @@ extension MenuFlow {
             presentAuthViewController: navigationController,
             authenticationType: authenticationType,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getSocialCreateAccountInterfaceStringsUseCase: appDiContainer.feature.account.domainLayer.getSocialCreateAccountInterfaceStringsUseCase(),
-            getSocialSignInInterfaceStringsUseCase: appDiContainer.feature.account.domainLayer.getSocialSignInInterfaceStringsUseCase(),
+            getSocialCreateAccountStringsUseCase: appDiContainer.feature.account.domainLayer.getSocialCreateAccountStringsUseCase(),
+            getSocialSignInStringsUseCase: appDiContainer.feature.account.domainLayer.getSocialSignInStringsUseCase(),
             authenticateUserUseCase: appDiContainer.feature.account.domainLayer.getAuthenticateUserUseCase()
         )
         
@@ -627,7 +580,7 @@ extension MenuFlow {
             getUserActivityUseCase: appDiContainer.feature.userActivity.domainLayer.getUserActivityUseCase(),
             viewGlobalActivityThisWeekUseCase: appDiContainer.feature.globalActivity.domainLayer.getViewGlobalActivityThisWeekUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-            viewAccountUseCase: appDiContainer.feature.account.domainLayer.getViewAccountUseCase(),
+            getAccountStringsUseCase: appDiContainer.feature.account.domainLayer.getAccountStringsUseCase(),
             getGlobalActivityEnabledUseCase: appDiContainer.feature.globalActivity.domainLayer.getGlobalActivityEnabledUseCase()
         )
         
@@ -665,7 +618,7 @@ extension MenuFlow {
         let viewModel = DeleteAccountViewModel(
             flowDelegate: self,
             getCurrentAppLanguage: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewDeleteAccountUseCase: appDiContainer.feature.account.domainLayer.getViewDeleteAccountUseCase()
+            getDeleteAccountStringsUseCase: appDiContainer.feature.account.domainLayer.getDeleteAccountStringsUseCase()
         )
         
         let view = DeleteAccountView(viewModel: viewModel, backgroundColor: viewBackgroundColor)
@@ -731,7 +684,7 @@ extension MenuFlow {
         let viewModel = DeleteAccountProgressViewModel(
             flowDelegate: self,
             getCurrentAppLanguage: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewDeleteAccountProgressUseCase: appDiContainer.feature.account.domainLayer.getViewDeleteAccountProgressUseCase(),
+            getDeleteAccountProgressStringsUseCase: appDiContainer.feature.account.domainLayer.getDeleteAccountProgressStringsUseCase(),
             deleteAccountUseCase: appDiContainer.feature.account.domainLayer.getDeleteAccountUseCase()
         )
         

@@ -14,7 +14,7 @@ class ConfirmRemoveToolFromFavoritesAlertViewModel: AlertMessageViewModelType {
     private static var removeToolFromFavoritesCancellable: AnyCancellable?
     
     private let toolId: String
-    private let viewConfirmRemoveToolFromFavoritesDomainModel: ViewConfirmRemoveToolFromFavoritesDomainModel
+    private let strings: ConfirmRemoveToolFromFavoritesStringsDomainModel
     private let removeFavoritedToolUseCase: RemoveFavoritedToolUseCase
     private let didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?
     
@@ -23,17 +23,17 @@ class ConfirmRemoveToolFromFavoritesAlertViewModel: AlertMessageViewModelType {
     let cancelTitle: String?
     let acceptTitle: String
     
-    init(toolId: String, viewConfirmRemoveToolFromFavoritesDomainModel: ViewConfirmRemoveToolFromFavoritesDomainModel, removeFavoritedToolUseCase: RemoveFavoritedToolUseCase, didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?) {
+    init(toolId: String, strings: ConfirmRemoveToolFromFavoritesStringsDomainModel, removeFavoritedToolUseCase: RemoveFavoritedToolUseCase, didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?) {
         
         self.toolId = toolId
-        self.viewConfirmRemoveToolFromFavoritesDomainModel = viewConfirmRemoveToolFromFavoritesDomainModel
+        self.strings = strings
         self.removeFavoritedToolUseCase = removeFavoritedToolUseCase
         self.didConfirmToolRemovalSubject = didConfirmToolRemovalSubject
         
-        title = viewConfirmRemoveToolFromFavoritesDomainModel.interfaceStrings.title
-        message = viewConfirmRemoveToolFromFavoritesDomainModel.interfaceStrings.message
-        acceptTitle = viewConfirmRemoveToolFromFavoritesDomainModel.interfaceStrings.confirmRemoveActionTitle
-        cancelTitle = viewConfirmRemoveToolFromFavoritesDomainModel.interfaceStrings.cancelRemoveActionTitle
+        title = strings.title
+        message = strings.message
+        acceptTitle = strings.confirmRemoveActionTitle
+        cancelTitle = strings.cancelRemoveActionTitle
     }
     
     deinit {
@@ -49,7 +49,9 @@ class ConfirmRemoveToolFromFavoritesAlertViewModel: AlertMessageViewModelType {
         didConfirmToolRemovalSubject?.send(Void())
         
         ConfirmRemoveToolFromFavoritesAlertViewModel.removeToolFromFavoritesCancellable = removeFavoritedToolUseCase
-            .removeToolPublisher(toolId: toolId)
+            .execute(
+                toolId: toolId
+            )
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 

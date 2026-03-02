@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum AnimatedResource {
+enum AnimatedResource: Sendable {
     
     case deviceFileManagerfilepathJsonFile(filepath: String)
     case mainBundleJsonFile(filename: String)

@@ -82,7 +82,7 @@ extension ShareToolViewModel {
             ]
         )
         
-        incrementUserCounterUseCase.incrementUserCounter(for: .linkShared)
+        incrementUserCounterUseCase.execute(interaction: .linkShared)
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 

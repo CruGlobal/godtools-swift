@@ -11,8 +11,8 @@ import Combine
 
 @MainActor class CreatingToolScreenShareSessionViewModel: ObservableObject {
     
-    private static var incrementScreenShareInBackgroundCancellable: AnyCancellable?
-    
+    private static var backgroundCancellables: Set<AnyCancellable> = Set()
+        
     private let toolId: String
     private let createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger
     private let getCurrentAppLanguage: GetCurrentAppLanguageUseCase
@@ -39,7 +39,7 @@ import Combine
         self.incrementUserCounterUseCase = incrementUserCounterUseCase
         
         getCurrentAppLanguage
-            .getLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
@@ -118,12 +118,16 @@ extension CreatingToolScreenShareSessionViewModel {
     
     func pageViewed() {
         
-        CreatingToolScreenShareSessionViewModel.incrementScreenShareInBackgroundCancellable = incrementUserCounterUseCase.incrementUserCounter(for: .screenShare(tool: toolId))
+        incrementUserCounterUseCase
+            .execute(
+                interaction: .screenShare(tool: toolId)
+            )
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             } receiveValue: { _ in
                 
             }
+            .store(in: &Self.backgroundCancellables)
     }
 }

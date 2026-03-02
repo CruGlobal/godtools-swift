@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class MobileContentAuthTokenRepository {
+final class MobileContentAuthTokenRepository {
     
     private let api: MobileContentAuthTokenAPIInterface
     private let cache: MobileContentAuthTokenCache
@@ -20,21 +20,24 @@ class MobileContentAuthTokenRepository {
         self.cache = cache
     }
     
-    func fetchRemoteAuthTokenPublisher(providerToken: MobileContentAuthProviderToken, createUser: Bool) -> AnyPublisher<MobileContentAuthTokenDataModel, MobileContentApiError> {
+    func fetchRemoteAuthToken(providerToken: MobileContentAuthProviderToken, createUser: Bool) async throws -> Result<MobileContentAuthTokenDataModel, MobileContentApiError> {
         
-        return api.fetchAuthTokenPublisher(providerToken: providerToken, createUser: createUser)
-            .flatMap({ [weak self] authTokenDecodable -> AnyPublisher<MobileContentAuthTokenDataModel, MobileContentApiError> in
-                
-                let authTokenDataModel = MobileContentAuthTokenDataModel(decodable: authTokenDecodable)
-                
-                self?.cache.storeAuthToken(authTokenDataModel)
-                
-                return Just(authTokenDataModel)
-                    .setFailureType(to: MobileContentApiError.self)
-                    .eraseToAnyPublisher()
-                
-            })
-            .eraseToAnyPublisher()
+        let result: Result<MobileContentAuthTokenDecodable, MobileContentApiError> = try await api.fetchAuthToken(
+            providerToken: providerToken,
+            createUser: createUser
+        )
+        
+        switch result {
+        case .success(let authTokenCodable):
+                        
+            try await cache.storeAuthToken(authTokenCodable: authTokenCodable)
+            
+            return .success(MobileContentAuthTokenDataModel(interface: authTokenCodable))
+            
+        case .failure(let apiError):
+            
+            return .failure(apiError)
+        }
     }
     
     func getUserId() -> String? {
@@ -48,22 +51,26 @@ class MobileContentAuthTokenRepository {
             .eraseToAnyPublisher()
     }
     
-    func getCachedAuthTokenModel() -> MobileContentAuthTokenDataModel? {
+    func getCachedAuthTokenModel() throws -> MobileContentAuthTokenDataModel? {
         
-        return cache.getAuthTokenData()
+        guard let cachedAuthToken =  try cache.getCachedAuthToken() else {
+            return nil
+        }
+        
+        return MobileContentAuthTokenDataModel(authToken: cachedAuthToken)
     }
     
-    func getCachedAuthToken() -> String? {
+    func getCachedAuthToken() throws -> String? {
         
-        return getCachedAuthTokenModel()?.token
+        return try getCachedAuthTokenModel()?.token
     }
     
-    func deleteCachedAuthToken() {
+    func deleteCachedAuthToken() throws {
         
         guard let userId = getUserId() else {
             return
         }
         
-        cache.deleteAuthToken(for: userId)
+        try cache.deleteAuthToken(for: userId)
     }
 }

@@ -21,7 +21,7 @@ struct FavoritingToolBannerView: View {
         
         BannerView {
             
-            Text(viewModel.favoritingToolBannerMessage)
+            Text(viewModel.strings.favoritingToolBannerMessage)
                 .modifier(BannerTextStyle())
             
         } closeButtonTapHandler: {

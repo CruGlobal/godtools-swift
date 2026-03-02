@@ -16,6 +16,6 @@ class FavoritesDiContainer {
     init(coreDataLayer: AppDataLayerDependencies) {
         
         dataLayer = FavoritesDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainLayer = FavoritesDomainLayerDependencies(dataLayer: dataLayer)
+        domainLayer = FavoritesDomainLayerDependencies(coreDataLayer: coreDataLayer, dataLayer: dataLayer)
     }
 }

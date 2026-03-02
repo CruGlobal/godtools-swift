@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum LanguageDirectionDomainModel {
+enum LanguageDirectionDomainModel: Sendable {
     
     case leftToRight
     case rightToLeft

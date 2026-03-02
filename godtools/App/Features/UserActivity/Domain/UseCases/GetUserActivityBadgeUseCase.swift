@@ -10,7 +10,7 @@ import Foundation
 import GodToolsShared
 import SwiftUI
 
-class GetUserActivityBadgeUseCase {
+final class GetUserActivityBadgeUseCase {
     
     private let localizationServices: LocalizationServicesInterface
     private let stringWithLocaleCount: StringWithLocaleCountInterface

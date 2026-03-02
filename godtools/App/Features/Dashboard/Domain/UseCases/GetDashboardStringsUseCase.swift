@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class GetDashboardStringsUseCase {
+final class GetDashboardStringsUseCase {
     
     private let localizationServices: LocalizationServicesInterface
     

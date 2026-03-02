@@ -26,7 +26,7 @@ struct AccountGlobalActivity: View {
         
         VStack(alignment: .leading, spacing: 0) {
             
-            Text(viewModel.globalActivityTitle)
+            Text(viewModel.strings.globalAnalyticsTitle)
                 .font(AccountSectionsView.sectionTitleFont)
                 .foregroundColor(AccountSectionsView.sectionTitleColor)
                 .multilineTextAlignment(.leading)

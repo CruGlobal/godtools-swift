@@ -9,19 +9,42 @@
 import Foundation
 import Combine
 
-class GetCurrentAppLanguageUseCase {
+final class GetCurrentAppLanguageUseCase {
     
-    private let getAppLanguageRepository: GetAppLanguageRepositoryInterface
+    private let userAppLanguageRepository: UserAppLanguageRepository
+    
+    init(userAppLanguageRepository: UserAppLanguageRepository) {
         
-    init(getAppLanguageRepository: GetAppLanguageRepositoryInterface) {
-        
-        self.getAppLanguageRepository = getAppLanguageRepository
+        self.userAppLanguageRepository = userAppLanguageRepository
     }
     
-    @MainActor func getLanguagePublisher() -> AnyPublisher<AppLanguageDomainModel, Never> {
-        
-        return getAppLanguageRepository
-            .getLanguagePublisher()
+    @MainActor func execute() -> AnyPublisher<AppLanguageDomainModel, Never> {
+                
+        return userAppLanguageRepository
+            .cache
+            .persistence
+            .observeCollectionChangesPublisher()
+            .catch { (error: Error) in
+                return Just(Void())
+                    .eraseToAnyPublisher()
+            }
+            .flatMap({ (userAppLanguageChanged: Void) -> AnyPublisher<UserAppLanguageDataModel?, Never> in
+              
+                return self.userAppLanguageRepository
+                    .getCachedLanguagePublisher()
+                    .catch { (error: Error) in
+                        return Just(nil)
+                            .eraseToAnyPublisher()
+                    }
+                    .eraseToAnyPublisher()
+            })
+            .flatMap({ (userLanguage: UserAppLanguageDataModel?) -> AnyPublisher<AppLanguageDomainModel, Never> in
+                
+                let appLanguage: AppLanguageDomainModel = userLanguage?.languageId ?? LanguageCodeDomainModel.english.rawValue
+                
+                return Just(appLanguage)
+                    .eraseToAnyPublisher()
+            })
             .eraseToAnyPublisher()
     }
 }

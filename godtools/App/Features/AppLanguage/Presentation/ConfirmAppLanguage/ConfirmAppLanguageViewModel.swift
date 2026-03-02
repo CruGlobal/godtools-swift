@@ -13,28 +13,25 @@ import Combine
     
     private let selectedLanguage: AppLanguageListItemDomainModel
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
-    private let viewConfirmAppLanguageUseCase: ViewConfirmAppLanguageUseCase
+    private let getConfirmAppLanguageStringsUseCase: GetConfirmAppLanguageStringsUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
     private weak var flowDelegate: FlowDelegate?
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     
-    @Published var messageInNewlySelectedLanguageHighlightModel: ConfirmAppLanguageHighlightStringDomainModel = ConfirmAppLanguageHighlightStringDomainModel.emptyStrings()
-    @Published var messageInCurrentLanguageHighlightModel: ConfirmAppLanguageHighlightStringDomainModel = ConfirmAppLanguageHighlightStringDomainModel.emptyStrings()
-    @Published var changeLanguageButtonTitle: String = ""
-    @Published var nevermindButtonTitle: String = ""
-
-    init(selectedLanguage: AppLanguageListItemDomainModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewConfirmAppLanguageUseCase: ViewConfirmAppLanguageUseCase, flowDelegate: FlowDelegate?) {
+    @Published private(set) var strings = ConfirmAppLanguageStringsDomainModel.emptyValue
+    
+    init(selectedLanguage: AppLanguageListItemDomainModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getConfirmAppLanguageStringsUseCase: GetConfirmAppLanguageStringsUseCase, flowDelegate: FlowDelegate?) {
         
         self.selectedLanguage = selectedLanguage
         self.flowDelegate = flowDelegate
         
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
-        self.viewConfirmAppLanguageUseCase = viewConfirmAppLanguageUseCase
+        self.getConfirmAppLanguageStringsUseCase = getConfirmAppLanguageStringsUseCase
         
         getCurrentAppLanguageUseCase
-            .getLanguagePublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
@@ -42,19 +39,14 @@ import Combine
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
                 
-                viewConfirmAppLanguageUseCase
-                    .viewPublisher(appLanguage: appLanguage, selectedLanguage: selectedLanguage.language)
+                getConfirmAppLanguageStringsUseCase
+                    .execute(appLanguage: appLanguage, selectedLanguage: selectedLanguage.language)
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] domainModel in
-                guard let self = self else { return }
-                let interfaceStrings = domainModel.interfaceStrings
+            .sink { [weak self] (strings: ConfirmAppLanguageStringsDomainModel) in
                 
-                self.messageInNewlySelectedLanguageHighlightModel = interfaceStrings.messageInNewlySelectedLanguageHighlightModel
-                self.messageInCurrentLanguageHighlightModel = interfaceStrings.messageInCurrentLanguageHighlightModel
-                self.changeLanguageButtonTitle = interfaceStrings.changeLanguageButtonText
-                self.nevermindButtonTitle = interfaceStrings.nevermindButtonText
+                self?.strings = strings
             }
             .store(in: &cancellables)
     }

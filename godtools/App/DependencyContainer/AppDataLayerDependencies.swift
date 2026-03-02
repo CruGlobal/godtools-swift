@@ -262,16 +262,38 @@ class AppDataLayerDependencies {
     }
     
     func getMobileContentAuthTokenRepository() -> MobileContentAuthTokenRepository {
-        return MobileContentAuthTokenRepository(
-            api: MobileContentAuthTokenAPI(
-                config: getAppConfig(),
-                urlSessionPriority: getSharedUrlSessionPriority(),
-                requestSender: getRequestSender()
-            ),
-            cache: MobileContentAuthTokenCache(
-                mobileContentAuthTokenKeychainAccessor: getMobileContentAuthTokenKeychainAccessor(),
-                realmCache: RealmMobileContentAuthTokenCache(realmDatabase: getSharedLegacyRealmDatabase())
+        
+        let persistence: any Persistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenDecodable>
+        
+        if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                dataModelMapping: SwiftMobileContentAuthTokenMapping()
             )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                database: getSharedRealmDatabase(),
+                dataModelMapping: RealmMobileContentAuthTokenMapping()
+            )
+        }
+        
+        let api = MobileContentAuthTokenAPI(
+            config: getAppConfig(),
+            urlSessionPriority: getSharedUrlSessionPriority(),
+            requestSender: getRequestSender()
+        )
+        
+        let cache = MobileContentAuthTokenCache(
+            mobileContentAuthTokenKeychainAccessor: getMobileContentAuthTokenKeychainAccessor(),
+            persistence: persistence
+        )
+        
+        return MobileContentAuthTokenRepository(
+            api: api,
+            cache: cache
         )
     }
     
@@ -521,6 +543,13 @@ class AppDataLayerDependencies {
             trackActionAnalytics: getAnalytics().trackActionAnalytics
         )
     }
+    
+    func getUITestsInitialDataLoader() -> UITestsInitialDataLoader {
+        return UITestsInitialDataLoader(
+            realmDatabase: getSharedRealmDatabase(),
+            resourcesFileCache: getResourcesFileCache()
+        )
+    }
 
     func getUserAuthentication() -> UserAuthentication {
                 
@@ -548,24 +577,24 @@ class AppDataLayerDependencies {
     }
     
     func getUserCountersRepository() -> UserCountersRepository {
-        
-        let api = UserCountersAPI(
-            config: getAppConfig(),
-            urlSessionPriority: getSharedUrlSessionPriority(),
-            mobileContentApiAuthSession: getMobileContentApiAuthSession()
-        )
-        
-        let cache = RealmUserCountersCache(
-            realmDatabase: getSharedLegacyRealmDatabase(),
-            userCountersSync: RealmUserCountersCacheSync(realmDatabase: getSharedLegacyRealmDatabase())
-        )
-        
-        return UserCountersRepository(
-            api: api,
-            cache: cache,
-            remoteUserCountersSync: RemoteUserCountersSync(api: api, cache: cache)
-        )
-    }
+            
+            let api = UserCountersAPI(
+                config: getAppConfig(),
+                urlSessionPriority: getSharedUrlSessionPriority(),
+                mobileContentApiAuthSession: getMobileContentApiAuthSession()
+            )
+            
+            let cache = RealmUserCountersCache(
+                realmDatabase: getSharedLegacyRealmDatabase(),
+                userCountersSync: RealmUserCountersCacheSync(realmDatabase: getSharedLegacyRealmDatabase())
+            )
+            
+            return UserCountersRepository(
+                api: api,
+                cache: cache,
+                remoteUserCountersSync: RemoteUserCountersSync(api: api, cache: cache)
+            )
+        }
     
     func getUserDefaultsCache() -> SharedUserDefaultsCache {
         return sharedUserDefaultsCache

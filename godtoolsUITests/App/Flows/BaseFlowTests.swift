@@ -56,7 +56,7 @@ class BaseFlowTests: XCTestCase {
         return app
     }
     
-    func launchApp(flowDeepLinkUrl: String, checkInitialScreenExists: AccessibilityStrings.Screen) {
+    func launchApp(flowDeepLinkUrl: String, checkInitialScreenExists: AccessibilityStrings.Screen?) {
         
         self.app = Self.getNewApp(flowDeepLinkUrl: flowDeepLinkUrl)
         self.flowDeepLinkUrl = flowDeepLinkUrl
@@ -78,13 +78,9 @@ extension BaseFlowTests {
             
             assertIfScreenDoesNotExist(screenAccessibility: initialScreen)
         }
-        else {
-            
-            XCTAssertNotNil(initialScreen)
-        }
     }
     
-    func assertIfScreenDoesNotExist(screenAccessibility: AccessibilityStrings.Screen) {
+    func assertIfScreenDoesNotExist(screenAccessibility: AccessibilityStrings.Screen, shouldWaitForExistence: Bool = true) {
         
         // NOTE:
         //  I needed to place screen accessibility id's on an element within the screen view hierarchy rather than
@@ -95,7 +91,12 @@ extension BaseFlowTests {
         //
         // ~Levi
         
-        XCTAssertTrue(app.staticTexts[screenAccessibility.id].waitForExistence(timeout: Self.defaultWaitForScreenExistence))
+        if shouldWaitForExistence {
+            XCTAssertTrue(app.staticTexts[screenAccessibility.id].waitForExistence(timeout: Self.defaultWaitForScreenExistence))
+        }
+        else {
+            XCTAssertTrue(app.staticTexts[screenAccessibility.id].exists)
+        }
     }
 }
 
@@ -160,19 +161,24 @@ extension BaseFlowTests {
         
         let button = queryButton(buttonId: buttonId, buttonQueryType: buttonQueryType)
         
+        assertIfButtonDoesNotExist(button: button)
+                
+        if shouldTapButton {
+            button?.tap()
+        }
+    }
+    
+    func assertIfButtonDoesNotExist(button: XCUIElement?) {
+        
         guard let button = button else {
             XCTAssertNotNil(button, "Found nil element.")
             return
         }
         
         XCTAssertTrue(button.exists)
-                
-        if shouldTapButton {
-            button.tap()
-        }
     }
     
-    private func queryButtonWithWaitForExistence(buttonId: String, buttonQueryType: ButtonQueryType) -> Bool {
+    func queryButtonWithWaitForExistence(buttonId: String, buttonQueryType: ButtonQueryType) -> Bool {
         
         guard let button = queryButton(buttonId: buttonId, buttonQueryType: buttonQueryType) else {
             return true
@@ -181,7 +187,7 @@ extension BaseFlowTests {
         return button.waitForExistence(timeout: Self.defaultWaitForButtonExistence)
     }
     
-    private func queryButton(buttonId: String, buttonQueryType: ButtonQueryType) -> XCUIElement? {
+    func queryButton(buttonId: String, buttonQueryType: ButtonQueryType) -> XCUIElement? {
         
         switch buttonQueryType {
         case .exactMatch:

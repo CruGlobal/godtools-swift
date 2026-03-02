@@ -17,6 +17,12 @@ final class AppSupportingDomainLayerDependencies {
         self.dataLayer = dataLayer
     }
     
+    func getLanguageElseAppLanguage() -> GetLanguageElseAppLanguage {
+        return GetLanguageElseAppLanguage(
+            languagesRepository: dataLayer.getLanguagesRepository()
+        )
+    }
+    
     func getLessonsListItems() -> GetLessonsListItems {
         return GetLessonsListItems(
             languagesRepository: dataLayer.getLanguagesRepository(),

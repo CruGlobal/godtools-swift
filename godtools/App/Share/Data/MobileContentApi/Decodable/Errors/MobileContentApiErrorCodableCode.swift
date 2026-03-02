@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum MobileContentApiErrorCodableCode: String {
+enum MobileContentApiErrorCodableCode: String, Sendable {
     
     case unknown = "unknown"
     case userAlreadyExists = "user_already_exists"

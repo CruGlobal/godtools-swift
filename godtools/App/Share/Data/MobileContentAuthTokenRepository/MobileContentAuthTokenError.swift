@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum MobileContentAuthTokenError: Error {
+enum MobileContentAuthTokenError: Error, Sendable {
     case nilOktaToken
     case nilAuthToken
 }

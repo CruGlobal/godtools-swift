@@ -16,20 +16,4 @@ class TutorialFeatureDataLayerDependencies {
         
         self.coreDataLayer = coreDataLayer
     }
-    
-    // MARK: - Data Layer Classes
-    
-    // MARK: - Domain Interface
-    
-    func getTutorialInterfaceStringsRepositoryInterface() -> GetTutorialInterfaceStringsRepositoryInterface {
-        return GetTutorialInterfaceStringsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
-    
-    func getTutorialRepositoryInterface() -> GetTutorialRepositoryInterface {
-        return GetTutorialRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
 }

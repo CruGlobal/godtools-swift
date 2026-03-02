@@ -8,7 +8,7 @@
 
 import Foundation
 
-class DisableOptInOnboardingBannerUseCase {
+final class DisableOptInOnboardingBannerUseCase {
     
     private let optInOnboardingBannerEnabledRepository: OptInOnboardingBannerEnabledRepository
     

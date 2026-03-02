@@ -11,7 +11,7 @@ import Testing
 import Combine
 
 struct SearchCountriesInLocalizationSettingsCountriesListTests {
-    
+
     @Test(
         """
         Given: User is searching a country in the Localization Settings country list
@@ -20,32 +20,35 @@ struct SearchCountriesInLocalizationSettingsCountriesListTests {
         """
     )
     func searchingCountriesWithSingleLetterSearchText() async {
-        
+
         let searchCountryList = Self.getSearchCountriesListUseCase()
         let countriesList = Self.getCountriesList()
-        
+
         var cancellables: Set<AnyCancellable> = Set()
-        
-        var searchResults: [LocalizationSettingsCountryListItemDomainModel] = []
-        
+
+        var searchResults: [LocalizationSettingsCountryListItem] = []
+
         await confirmation(expectedCount: 1) { confirmation in
-        
+
             searchCountryList
                 .execute(searchText: "e", in: countriesList)
-                .sink { (results: [LocalizationSettingsCountryListItemDomainModel]) in
-                    
+                .sink { (results: [LocalizationSettingsCountryListItem]) in
+
                     confirmation()
                     searchResults = results
                 }
                 .store(in: &cancellables)
         }
-        
-        let searchResultNames = searchResults.map { $0.countryNameTranslatedInCurrentAppLanguage }
+
+        let searchResultNames = searchResults.compactMap { item -> String? in
+            if case .country(let country) = item { return country.countryNameTranslatedInCurrentAppLanguage }
+            return nil
+        }
         let expectedCountryNames = ["United States", "Spain", "France", "Germany", "South Korea", "Mexico"]
-        
+
         #expect(searchResultNames.elementsEqual(expectedCountryNames))
     }
-    
+
     @Test(
         """
         Given: User is searching a country in the Localization Settings country list
@@ -54,98 +57,99 @@ struct SearchCountriesInLocalizationSettingsCountriesListTests {
         """
     )
     func searchingCountriesWithMultiLetterSearchText() async {
-        
+
         let searchCountryList = Self.getSearchCountriesListUseCase()
         let countriesList = Self.getCountriesList()
-        
+
         var cancellables: Set<AnyCancellable> = Set()
-        
-        var searchResults: [LocalizationSettingsCountryListItemDomainModel] = []
-        
+
+        var searchResults: [LocalizationSettingsCountryListItem] = []
+
         await confirmation(expectedCount: 1) { confirmation in
-        
+
             searchCountryList
                 .execute(searchText: "pan", in: countriesList)
-                .sink { (results: [LocalizationSettingsCountryListItemDomainModel]) in
-                    
+                .sink { (results: [LocalizationSettingsCountryListItem]) in
+
                     confirmation()
                     searchResults = results
                 }
                 .store(in: &cancellables)
         }
-        
-        let searchResultNames = searchResults.map { $0.countryNameTranslatedInCurrentAppLanguage }
+
+        let searchResultNames = searchResults.compactMap { item -> String? in
+            if case .country(let country) = item { return country.countryNameTranslatedInCurrentAppLanguage }
+            return nil
+        }
         let expectedCountryNames = ["Japan"]
-        
+
         #expect(searchResultNames.elementsEqual(expectedCountryNames))
     }
 }
 
 extension SearchCountriesInLocalizationSettingsCountriesListTests {
-    
+
     private static func getSearchCountriesListUseCase() -> SearchCountriesInLocalizationSettingsCountriesListUseCase {
-        
+
         let searchCountriesUseCase = SearchCountriesInLocalizationSettingsCountriesListUseCase(stringSearcher: StringSearcher()
         )
-        
+
         return searchCountriesUseCase
     }
-    
-    private static func getCountriesList() -> [LocalizationSettingsCountryListItemDomainModel] {
-        
-        let countriesList: [LocalizationSettingsCountryListItemDomainModel] = [
-              LocalizationSettingsCountryListItemDomainModel(
-                isoRegionCode: "",
+
+    private static func getCountriesList() -> [LocalizationSettingsCountryListItem] {
+
+        return [
+            .country(LocalizationSettingsCountryDomainModel(
+                isoRegionCode: "US",
                 countryNameTranslatedInOwnLanguage: "United States",
                 countryNameTranslatedInCurrentAppLanguage: "United States"
-              ),
-              LocalizationSettingsCountryListItemDomainModel(
-                isoRegionCode: "",
+            )),
+            .country(LocalizationSettingsCountryDomainModel(
+                isoRegionCode: "ES",
                 countryNameTranslatedInOwnLanguage: "España",
                 countryNameTranslatedInCurrentAppLanguage: "Spain"
-              ),
-              LocalizationSettingsCountryListItemDomainModel(
-                isoRegionCode: "",
+            )),
+            .country(LocalizationSettingsCountryDomainModel(
+                isoRegionCode: "FR",
                 countryNameTranslatedInOwnLanguage: "France",
                 countryNameTranslatedInCurrentAppLanguage: "France"
-              ),
-              LocalizationSettingsCountryListItemDomainModel(
-                isoRegionCode: "",
+            )),
+            .country(LocalizationSettingsCountryDomainModel(
+                isoRegionCode: "DE",
                 countryNameTranslatedInOwnLanguage: "Deutschland",
                 countryNameTranslatedInCurrentAppLanguage: "Germany"
-              ),
-              LocalizationSettingsCountryListItemDomainModel(
-                isoRegionCode: "",
+            )),
+            .country(LocalizationSettingsCountryDomainModel(
+                isoRegionCode: "JP",
                 countryNameTranslatedInOwnLanguage: "日本",
                 countryNameTranslatedInCurrentAppLanguage: "Japan"
-              ),
-              LocalizationSettingsCountryListItemDomainModel(
-                isoRegionCode: "",
+            )),
+            .country(LocalizationSettingsCountryDomainModel(
+                isoRegionCode: "BR",
                 countryNameTranslatedInOwnLanguage: "Brasil",
                 countryNameTranslatedInCurrentAppLanguage: "Brazil"
-              ),
-              LocalizationSettingsCountryListItemDomainModel(
-                isoRegionCode: "",
+            )),
+            .country(LocalizationSettingsCountryDomainModel(
+                isoRegionCode: "KR",
                 countryNameTranslatedInOwnLanguage: "대한민국",
                 countryNameTranslatedInCurrentAppLanguage: "South Korea"
-              ),
-              LocalizationSettingsCountryListItemDomainModel(
-                isoRegionCode: "",
+            )),
+            .country(LocalizationSettingsCountryDomainModel(
+                isoRegionCode: "IT",
                 countryNameTranslatedInOwnLanguage: "Italia",
                 countryNameTranslatedInCurrentAppLanguage: "Italy"
-              ),
-              LocalizationSettingsCountryListItemDomainModel(
-                isoRegionCode: "",
+            )),
+            .country(LocalizationSettingsCountryDomainModel(
+                isoRegionCode: "CN",
                 countryNameTranslatedInOwnLanguage: "中国",
                 countryNameTranslatedInCurrentAppLanguage: "China"
-              ),
-              LocalizationSettingsCountryListItemDomainModel(
-                isoRegionCode: "",
+            )),
+            .country(LocalizationSettingsCountryDomainModel(
+                isoRegionCode: "MX",
                 countryNameTranslatedInOwnLanguage: "México",
                 countryNameTranslatedInCurrentAppLanguage: "Mexico"
-              )
-          ]
-
-        return countriesList
+            )),
+        ]
     }
 }

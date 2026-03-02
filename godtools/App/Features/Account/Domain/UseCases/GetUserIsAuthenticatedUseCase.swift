@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class GetUserIsAuthenticatedUseCase {
+final class GetUserIsAuthenticatedUseCase {
     
     private let userAuthentication: UserAuthentication
     
@@ -18,9 +18,10 @@ class GetUserIsAuthenticatedUseCase {
         self.userAuthentication = userAuthentication
     }
     
-    func getIsAuthenticatedPublisher() -> AnyPublisher<UserIsAuthenticatedDomainModel, Never> {
+    func execute() -> AnyPublisher<UserIsAuthenticatedDomainModel, Never> {
         
-        return userAuthentication.getIsAuthenticatedChangedPublisher()
+        return userAuthentication
+            .getIsAuthenticatedChangedPublisher()
             .map { (isAuthenticated: Bool) in
                 
                 return UserIsAuthenticatedDomainModel(isAuthenticated: isAuthenticated)

@@ -1,6 +1,10 @@
 "deferredDeepLinkModal.title" = "Có vẻ như bạn đã nhấp vào liên kết đến GodTools";
 "deferredDeepLinkModal.message" = "Nhấn vào nút bên dưới để chúng tôi có thể chuyển bạn đến nội dung bạn yêu cầu.";
 
+"toolScreenShare.qrCode.closeButtonTitle" = "Đóng";
+"toolScreenShare.qrCode.description" = "Hãy quét mã QR này để tham gia cùng tôi!";
+"toolScreenShare.qrCode.title" = "Mã QR";
+
 "optInNotification.notificationSettings" = "Cài đặt Thông báo";
 "lessons.swipeTutorial.title" = "Vuốt để chuyển trang";
 "lessons.swipeTutorial.buttonText" = "Hiểu rồi";
@@ -21,6 +25,8 @@
 "language_name_fil" = "Tiếng Philippines (Tagalog)";
 "lessons.filter.navBar.language" = "Ngôn ngữ bài học";
 "lessons.languageFilter.title" = "Bài học bằng:";
+"language_name_fil-x-taglish" = "Taglish";
+"language_name_sid" = "Sidama";
 "onboardingTutorial.chooseLanguageButton.title" = "Chọn ngôn ngữ";
 "languageSettings.confirmAppLanguage.message" = "Bạn đã lựa chọn %@ làm ngôn ngữ ứng dụng. Toàn bộ ứng dụng GodTools sẽ được thay đổi sang ngôn ngữ này. Bạn có chắc chắn?";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Thay đổi ngôn ngữ";
@@ -321,6 +327,7 @@ Một phiên bản trực tuyến có thể tìm thấy ở https://knowgod.com/
 
 // Alerts
 "error" = "Lỗi";
+"OK" = "OK";
 "cancel" = "Hủy";
 "required_field_missing" = "\"%@\" là một trường bắt buộc.";
 
@@ -380,3 +387,5 @@ Nhấn nút \"Giới thiệu\" để biết thêm về công cụ.";
 // OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "Quốc gia";
 "onboardingTutorial.showMoreButton.title" = "Cho tôi xem nhiều hơn";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Tạo mã QR";

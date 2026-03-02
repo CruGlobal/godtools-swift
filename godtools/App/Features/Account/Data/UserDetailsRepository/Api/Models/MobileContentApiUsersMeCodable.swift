@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct MobileContentApiUsersMeCodable: Codable {
+struct MobileContentApiUsersMeCodable: Codable, UserDetailsDataModelInterface {
     
     let id: String
     let createdAt: Date?

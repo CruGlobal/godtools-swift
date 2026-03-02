@@ -10,38 +10,49 @@ import Foundation
 
 class AccountDomainLayerDependencies {
     
-    // TODO: Need to refactor so reference (coreDataLayer: AppDataLayerDependencies) is not in this class. UseCases should only point to interfaces for dependency inversion. ~Levi
     private let coreDataLayer: AppDataLayerDependencies
-    private let domainInterfaceLayer: AccountDomainInterfaceDependencies
+    private let dataLayer: AccountDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, domainInterfaceLayer: AccountDomainInterfaceDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, dataLayer: AccountDataLayerDependencies) {
         
         self.coreDataLayer = coreDataLayer
-        self.domainInterfaceLayer = domainInterfaceLayer
+        self.dataLayer = dataLayer
     }
     
     func getAccountCreationIsSupportedUseCase() -> GetAccountCreationIsSupportedUseCase {
         return GetAccountCreationIsSupportedUseCase()
     }
     
+    func getAccountStringsUseCase() -> GetAccountStringsUseCase {
+        return GetAccountStringsUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
     func getAuthenticateUserUseCase() -> AuthenticateUserUseCase {
         return AuthenticateUserUseCase(
-            authenticateUser: domainInterfaceLayer.getAuthenticateUser(),
+            userAuthentication: coreDataLayer.getUserAuthentication(),
             emailSignUpService: coreDataLayer.getEmailSignUpService(),
             firebaseAnalytics: coreDataLayer.getAnalytics().firebaseAnalytics
+        )
+    }
+    
+    func getDeleteAccountProgressStringsUseCase() -> GetDeleteAccountProgressStringsUseCase {
+        return GetDeleteAccountProgressStringsUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getDeleteAccountStringsUseCase() -> GetDeleteAccountStringsUseCase {
+        return GetDeleteAccountStringsUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
     
     func getDeleteAccountUseCase() -> DeleteAccountUseCase {
         return DeleteAccountUseCase(
             userAuthentication: coreDataLayer.getUserAuthentication(),
-            deleteUserDetails: domainInterfaceLayer.getDeleteUserDetails()
-        )
-    }
-    
-    func getDeleteUserCountersUseCase() -> DeleteUserCountersUseCase {
-        return DeleteUserCountersUseCase(
-            repository: coreDataLayer.getUserCountersRepository()
+            userDetailsRepository: dataLayer.getUserDetailsRepository()
         )
     }
     
@@ -49,49 +60,32 @@ class AccountDomainLayerDependencies {
         return LogOutUserUseCase(
             userAuthentication: coreDataLayer.getUserAuthentication(),
             firebaseAnalytics: coreDataLayer.getAnalytics().firebaseAnalytics,
-            deleteUserCountersUseCase: getDeleteUserCountersUseCase()
+            userCountersRepository: coreDataLayer.getUserCountersRepository()
         )
     }
     
-    func getSocialCreateAccountInterfaceStringsUseCase() -> GetSocialCreateAccountInterfaceStringsUseCase {
-        return GetSocialCreateAccountInterfaceStringsUseCase(
-            getInterfaceStringsRepositoryInterface: domainInterfaceLayer.getSocialCreateAccountInterfaceStringsRepository()
+    func getSocialCreateAccountStringsUseCase() -> GetSocialCreateAccountStringsUseCase {
+        return GetSocialCreateAccountStringsUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
     
-    func getSocialSignInInterfaceStringsUseCase() -> GetSocialSignInInterfaceStringsUseCase {
-        return GetSocialSignInInterfaceStringsUseCase(
-            getInterfaceStringsRepositoryInterface: domainInterfaceLayer.getSocialSignInInterfaceStringsRepository()
+    func getSocialSignInStringsUseCase() -> GetSocialSignInStringsUseCase {
+        return GetSocialSignInStringsUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
     
     func getUserAccountDetailsUseCase() -> GetUserAccountDetailsUseCase {
         return GetUserAccountDetailsUseCase(
-            getUserAccountDetailsRepository: domainInterfaceLayer.getUserAccountDetailsRepository()
+            userDetailsRepository: dataLayer.getUserDetailsRepository(),
+            localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
     
     func getUserIsAuthenticatedUseCase() -> GetUserIsAuthenticatedUseCase {
         return GetUserIsAuthenticatedUseCase(
             userAuthentication: coreDataLayer.getUserAuthentication()
-        )
-    }
-    
-    func getViewAccountUseCase() -> ViewAccountUseCase {
-        return ViewAccountUseCase(
-            getInterfaceStringsRepository: domainInterfaceLayer.getAccountInterfaceStringsRepository()
-        )
-    }
-    
-    func getViewDeleteAccountUseCase() -> ViewDeleteAccountUseCase {
-        return ViewDeleteAccountUseCase(
-            getInterfaceStringsRepository: domainInterfaceLayer.getDeleteAccountInterfaceStringsRepository()
-        )
-    }
-    
-    func getViewDeleteAccountProgressUseCase() -> ViewDeleteAccountProgressUseCase {
-        return ViewDeleteAccountProgressUseCase(
-            getInterfaceStringsRepository: domainInterfaceLayer.getDeleteAccountProgressInterfaceStringsRepository()
         )
     }
 }

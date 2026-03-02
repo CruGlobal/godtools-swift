@@ -1,6 +1,10 @@
 "deferredDeepLinkModal.title" = "ऐसा लगता है कि आपने GodTools के लिंक पर क्लिक किया है";
 "deferredDeepLinkModal.message" = "नीचे दिए गए बटन पर टैप करें ताकि हम आपको आपके द्वारा अनुरोधित सामग्री तक ले जा सकें।";
 
+"toolScreenShare.qrCode.closeButtonTitle" = "बन्द करें";
+"toolScreenShare.qrCode.description" = "मेरे साथ जुड़ने के लिए इस क्यूआर कोड को स्कैन करें।";
+"toolScreenShare.qrCode.title" = "क्यू आर संहिता";
+
 "optInNotification.notificationSettings" = "नोटिफिकेशन सेटिंग्स";
 "lessons.swipeTutorial.title" = "पृष्ठ बदलने के लिए स्वाइप करें";
 "lessons.swipeTutorial.buttonText" = "समझ गया";
@@ -382,3 +386,5 @@
 // OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "देश";
 "onboardingTutorial.showMoreButton.title" = "अधिक दिखाएं";
+
+"screenShareTutorial.generateQRCodeButton.title" = "क्यूआर कोड जनरेट करें";

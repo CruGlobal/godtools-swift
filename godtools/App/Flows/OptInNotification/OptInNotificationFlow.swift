@@ -30,7 +30,7 @@ class OptInNotificationFlow: Flow {
         
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()
-            .getLanguagePublisher()
+            .execute()
             .assign(to: &$appLanguage)
         
         

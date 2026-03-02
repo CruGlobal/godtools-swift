@@ -24,18 +24,18 @@ struct NoFavoriteToolsView: View {
             
             VStack(spacing: 4) {
                 
-                Text(viewModel.noFavoriteToolsTitle)
+                Text(viewModel.strings.noFavoritedToolsTitle)
                     .font(FontLibrary.sfProTextRegular.font(size: 18))
                     .foregroundColor(ColorPalette.gtGrey.color)
                     .multilineTextAlignment(.center)
                 
-                Text(viewModel.noFavoriteToolsDescription)
+                Text(viewModel.strings.noFavoritedToolsDescription)
                     .font(FontLibrary.sfProTextRegular.font(size: 14))
                     .foregroundColor(ColorPalette.gtGrey.color)
                     .multilineTextAlignment(.center)
                     .lineSpacing(4)
                 
-                GTBlueButton(title: viewModel.noFavoriteToolsButtonText, fontSize: 12, width: 118, height: 30) {
+                GTBlueButton(title: viewModel.strings.noFavoritedToolsActionTitle, fontSize: 12, width: 118, height: 30) {
                     
                     viewModel.goToToolsTapped()
                 }

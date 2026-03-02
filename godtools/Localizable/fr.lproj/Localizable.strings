@@ -1,6 +1,10 @@
 "deferredDeepLinkModal.title" = "Il semble que vous ayez cliqué sur un lien pour GodTools";
 "deferredDeepLinkModal.message" = "Appuyez sur le bouton ci-dessous pour que nous puissions vous amener au contenu que vous avez demandé.";
 
+"toolScreenShare.qrCode.closeButtonTitle" = "Terminé";
+"toolScreenShare.qrCode.description" = "Scannez ce code QR pour me rejoindre";
+"toolScreenShare.qrCode.title" = "Code QR";
+
 "optInNotification.notificationSettings" = "Paramètres de notification";
 "lessons.swipeTutorial.title" = "Glissez pour changer de pages";
 "lessons.swipeTutorial.buttonText" = "Bien compris";
@@ -21,6 +25,8 @@
 "language_name_fil" = "Philippine (Tagalog)";
 "lessons.filter.navBar.language" = "Langue de la leçon";
 "lessons.languageFilter.title" = "Leçons en :";
+"language_name_fil-x-taglish" = "Taglish";
+"language_name_sid" = "Sidama";
 "onboardingTutorial.chooseLanguageButton.title" = "Choisir la langue";
 "languageSettings.confirmAppLanguage.message" = "Vous avez choisi %@ comme langue de l'application. Ceci changera la langue de toute l'application GodTools. Êtes-vous sûr?";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Changer de langue";
@@ -107,6 +113,7 @@
 "toolSettings.languagesList.deleteLanguage.title" = "Aucun";
 
 "toolSettings.chooseLanguage.toggleMessage" = "Cet outil permet de basculer entre deux langues différentes.";
+"toolDetails.versions.title" = "Versions";
 "toolDetails.learnToShareToolButton.title" = "Apprendre à partager cet outil";
 "toolSettings.title" = "Options de l'outil";
 "toolSettings.option.shareLink.title" = "Partager lien";
@@ -228,7 +235,13 @@
 /* Gospel indicates the gospel of Jesus Christ */
 "tool_category_gospel" = "Invitation à Évangile";
 
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Articles";
+
 "articles.downloadArticlesButton.title.retryDownload" = "Nouvelle tentative de téléchargement";
+
+/* This is to let users know which version of the app is installed on their phone */
+"menu_version" = "Version";
 
 /* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "Plus de 90 langues";
@@ -314,6 +327,7 @@ Une version en ligne est disponible sur https://knowgod.com";
 
 // Alerts
 "error" = "Erreur";
+"OK" = "OK";
 "cancel" = "Annuler";
 "required_field_missing" = "\"%@\" est un champ obligatoire.";
 
@@ -367,6 +381,9 @@ Colossiens 4:6";
 "accountActivity.globalAnalytics.users.title" = "Utilisateurs\nuniques";
 "onboardingWelcome.titleLabel.tagline" = "Vous aider à partager votre foi";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Présentations\nde l'Évangile";
+"accountActivity.globalAnalytics.launches.title" = "Séances";
 // OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "Pays";
 "onboardingTutorial.showMoreButton.title" = "Me montrer plus";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Générer un code QR";
