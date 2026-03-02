@@ -9,6 +9,7 @@
 import Foundation
 
 struct FeaturedLessonDomainModel: LessonListItemDomainModelInterface {
+    
     let analyticsToolName: String
     let availabilityInAppLanguage: ToolLanguageAvailabilityDomainModel
     let bannerImageId: String

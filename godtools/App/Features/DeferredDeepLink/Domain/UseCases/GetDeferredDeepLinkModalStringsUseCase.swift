@@ -1,5 +1,5 @@
 //
-//  GetDeferredDeepLinkInterfaceStringsRepository.swift
+//  GetDeferredDeepLinkModalStringsUseCase.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 9/4/25.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class GetDeferredDeepLinkInterfaceStringsRepository: GetDeferredDeepLinkModalInterfaceStringsRepositoryInterface {
+final class GetDeferredDeepLinkModalStringsUseCase {
     
     private let localizationServices: LocalizationServicesInterface
 
@@ -17,16 +17,16 @@ class GetDeferredDeepLinkInterfaceStringsRepository: GetDeferredDeepLinkModalInt
         self.localizationServices = localizationServices
     }
     
-    func getStringsPublisher(translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<DeferredDeepLinkModalInterfaceStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<DeferredDeepLinkModalStringsDomainModel, Never> {
         
-        let localeIdentifier = translateInAppLanguage
+        let localeIdentifier = appLanguage
         
-        let interfaceStrings = DeferredDeepLinkModalInterfaceStringsDomainModel(
+        let strings = DeferredDeepLinkModalStringsDomainModel(
             title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeIdentifier, key: "deferredDeepLinkModal.title"),
             message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeIdentifier, key: "deferredDeepLinkModal.message")
         )
         
-        return Just(interfaceStrings)
+        return Just(strings)
             .eraseToAnyPublisher()
     }
 }

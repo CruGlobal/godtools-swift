@@ -1,5 +1,5 @@
 //
-//  GetDownloadToolProgressInterfaceStringsRepository.swift
+//  GetDownloadToolProgressStringsUseCase.swift
 //  godtools
 //
 //  Created by Levi Eggert on 10/27/23.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class GetDownloadToolProgressInterfaceStringsRepository: GetDownloadToolProgressInterfaceStringsRepositoryInterface {
+final class GetDownloadToolProgressStringsUseCase {
     
     private let resourcesRepository: ResourcesRepository
     private let localizationServices: LocalizationServicesInterface
@@ -22,9 +22,9 @@ class GetDownloadToolProgressInterfaceStringsRepository: GetDownloadToolProgress
         self.favoritedResourcesRepository = favoritedResourcesRepository
     }
     
-    func getStringsPublisher(toolId: String?, translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<DownloadToolProgressInterfaceStringsDomainModel, Never> {
+    func execute(toolId: String?, appLanguage: AppLanguageDomainModel) -> AnyPublisher<DownloadToolProgressStringsDomainModel, Never> {
                         
-        let localeId: String = translateInAppLanguage
+        let localeId: String = appLanguage
         
         let resource: ResourceDataModel?
         
@@ -54,11 +54,11 @@ class GetDownloadToolProgressInterfaceStringsRepository: GetDownloadToolProgress
             downloadMessage = localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "loading_favorited_tool")
         }
         
-        let interfaceStrings = DownloadToolProgressInterfaceStringsDomainModel(
+        let strings = DownloadToolProgressStringsDomainModel(
             downloadMessage: downloadMessage
         )
         
-        return Just(interfaceStrings)
+        return Just(strings)
             .eraseToAnyPublisher()
     }
 }
