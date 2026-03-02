@@ -77,6 +77,13 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
                 navigateBackFromChooseAppLanguageFlow()
             
             case .userChoseAppLanguage(let appLanguage):
+                
+                // TODO: Remove guard in personalized tools feature. ~Levi
+                guard GodToolsAppConfig.showsPersonalization else {
+                    navigationController.popToRootViewController(animated: true)
+                    return
+                }
+                
                 let localizationSettings = getLocalizationSettingsView(showsPreferNotToSay: true)
                 navigationController.pushViewController(localizationSettings, animated: true)
             }
