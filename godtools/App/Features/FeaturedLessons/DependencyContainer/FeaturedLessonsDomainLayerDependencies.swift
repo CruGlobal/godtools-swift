@@ -10,17 +10,23 @@ import Foundation
 
 class FeaturedLessonsDomainLayerDependencies {
     
+    private let coreDataLayer: AppDataLayerDependencies
     private let dataLayer: FeaturedLessonsDataLayerDependencies
     
-    init(dataLayer: FeaturedLessonsDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, dataLayer: FeaturedLessonsDataLayerDependencies) {
         
+        self.coreDataLayer = coreDataLayer
         self.dataLayer = dataLayer
     }
     
     func getFeaturedLessonsUseCase() -> GetFeaturedLessonsUseCase {
-        
         return GetFeaturedLessonsUseCase(
-            getFeaturedLessonsRepository: dataLayer.getFeaturedLessonsRepositoryInterface()
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            languagesRepository: coreDataLayer.getLanguagesRepository(),
+            getTranslatedToolName: coreDataLayer.getTranslatedToolName(),
+            getTranslatedToolLanguageAvailability: coreDataLayer.getTranslatedToolLanguageAvailability(),
+            lessonProgressRepository: coreDataLayer.getUserLessonProgressRepository(),
+            getLessonListItemProgressRepository: coreDataLayer.getLessonListItemProgressRepository()
         )
     }
 }

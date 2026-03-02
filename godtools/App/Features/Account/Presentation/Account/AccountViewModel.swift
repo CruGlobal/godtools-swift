@@ -16,7 +16,7 @@ import GodToolsShared
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase
     private let getUserActivityUseCase: GetUserActivityUseCase
-    private let viewGlobalActivityThisWeekUseCase: ViewGlobalActivityThisWeekUseCase
+    private let getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let getAccountStringsUseCase: GetAccountStringsUseCase
     private let getGlobalActivityEnabledUseCase: GetGlobalActivityEnabledUseCase
@@ -33,16 +33,16 @@ import GodToolsShared
     @Published private(set) var isLoadingGlobalActivityThisWeek: Bool = true
     @Published private(set) var userDetails = UserAccountDetailsDomainModel.emptyValue
     @Published private(set) var badges = [UserActivityBadgeDomainModel]()
-    @Published private(set) var globalActivitiesThisWeek: [GlobalActivityThisWeekDomainModel] = Array()
+    @Published private(set) var globalActivitiesThisWeek: [GlobalActivityDomainModel] = Array()
     @Published private(set) var stats = [UserActivityStatDomainModel]()
     @Published private(set) var globalActivityIsEnabled: Bool = false
         
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase, getUserActivityUseCase: GetUserActivityUseCase, viewGlobalActivityThisWeekUseCase: ViewGlobalActivityThisWeekUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, getAccountStringsUseCase: GetAccountStringsUseCase, getGlobalActivityEnabledUseCase: GetGlobalActivityEnabledUseCase) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase, getUserActivityUseCase: GetUserActivityUseCase, getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, getAccountStringsUseCase: GetAccountStringsUseCase, getGlobalActivityEnabledUseCase: GetGlobalActivityEnabledUseCase) {
         
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getUserAccountDetailsUseCase = getUserAccountDetailsUseCase
-        self.viewGlobalActivityThisWeekUseCase = viewGlobalActivityThisWeekUseCase
+        self.getGlobalActivityThisWeekUseCase = getGlobalActivityThisWeekUseCase
         self.getUserActivityUseCase = getUserActivityUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.getAccountStringsUseCase = getAccountStringsUseCase
@@ -90,15 +90,17 @@ import GodToolsShared
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
                 
-                viewGlobalActivityThisWeekUseCase
-                    .viewPublisher(appLanguage: appLanguage)
+                getGlobalActivityThisWeekUseCase
+                    .execute(
+                        appLanguage: appLanguage
+                    )
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (domainModel: ViewGlobalActivityThisWeekDomainModel) in
+            .sink { [weak self] (domainModels: [GlobalActivityDomainModel]) in
                 
                 self?.isLoadingGlobalActivityThisWeek = false
-                self?.globalActivitiesThisWeek = domainModel.activityItems
+                self?.globalActivitiesThisWeek = domainModels
             }
             .store(in: &cancellables)
         
@@ -123,7 +125,7 @@ import GodToolsShared
         .store(in: &cancellables)
         
         getGlobalActivityEnabledUseCase
-            .getIsEnabledPublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$globalActivityIsEnabled)
     }

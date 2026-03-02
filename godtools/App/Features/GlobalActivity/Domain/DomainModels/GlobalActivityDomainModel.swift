@@ -1,5 +1,5 @@
 //
-//  GlobalActivityThisWeekDomainModel.swift
+//  GlobalActivityDomainModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/15/22.
@@ -8,13 +8,13 @@
 
 import Foundation
 
-struct GlobalActivityThisWeekDomainModel {
+struct GlobalActivityDomainModel: Sendable {
     
     let count: String
     let label: String
 }
 
-extension GlobalActivityThisWeekDomainModel: Identifiable {
+extension GlobalActivityDomainModel: Identifiable {
     
     var id: String {
         return label
