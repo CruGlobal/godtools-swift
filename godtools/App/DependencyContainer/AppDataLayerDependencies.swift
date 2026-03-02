@@ -157,6 +157,10 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getErrorReporting() -> ErrorReportingInterface {
+        return getFirebaseNonFatalErrorReporting()
+    }
+    
     func getFavoritedResourcesRepository() -> FavoritedResourcesRepository {
         return FavoritedResourcesRepository(
             cache: RealmFavoritedResourcesCache(realmDatabase: getSharedLegacyRealmDatabase())
@@ -173,6 +177,10 @@ class AppDataLayerDependencies {
     
     func getFirebaseDebugArguments() -> FirebaseDebugArguments {
         return FirebaseDebugArguments()
+    }
+    
+    func getFirebaseNonFatalErrorReporting() -> FirebaseNonFatalErrorReporting {
+        return FirebaseNonFatalErrorReporting()
     }
     
     func getFollowUpsService() -> FollowUpsService {
