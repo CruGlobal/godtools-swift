@@ -23,12 +23,11 @@ final class GetToolIsFavoritedUseCase {
         return favoritedResourcesRepository
             .persistence
             .observeCollectionChangesPublisher()
-            .flatMap({ (favoritedResourcesChanged: Void) -> AnyPublisher<Bool, Never> in
+            .map { (favoritedResourcesChanged: Void) in
                 
                 return self.favoritedResourcesRepository
-                    .getResourceIsFavoritedPublisher(id: toolId)
-                    .eraseToAnyPublisher()
-            })
+                    .getResourceIsFavorited(id: toolId)
+            }
             .map { (isFavorited: Bool) in
                 
                 return ToolIsFavoritedDomainModel(

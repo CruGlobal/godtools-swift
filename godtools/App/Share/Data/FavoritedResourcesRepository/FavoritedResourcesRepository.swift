@@ -23,48 +23,26 @@ final class FavoritedResourcesRepository: RepositorySync<FavoritedResourceDataMo
             persistence: persistence
         )
     }
-    
-    func getFavoritedResourcePublisher(id: String) -> AnyPublisher<FavoritedResourceDataModel?, Never> {
-        
-        // TODO: Implement. ~Levi
-        
-        return Just(nil)
-            .eraseToAnyPublisher()
-        
-//        return cache.getFavoritedResourcePublisher(id: id)
-//            .eraseToAnyPublisher()
-    }
-    
-    func getResourceIsFavoritedPublisher(id: String) -> AnyPublisher<Bool, Never> {
-        
-        // TODO: Implement. ~Levi
-        
-        return Just(false)
-            .eraseToAnyPublisher()
-        
-//        return cache.getFavoritedResourcePublisher(id: id)
-//            .map { (object: FavoritedResourceDataModel?) in
-//                return object != nil
-//            }
-//            .eraseToAnyPublisher()
-    }
-    
+
     func getResourceIsFavorited(id: String) -> Bool {
         
-        // TODO: Implement. ~Levi
-        return false
-        //return cache.getResourceIsFavorited(id: id)
+        // TODO: Handle Error. ~Levi
+        
+        do {
+            return try persistence.getDataModel(id: id) != nil
+        }
+        catch _ {
+            return false
+        }
     }
     
-    @MainActor func getFavoritedResourcesSortedByPositionPublisher() -> AnyPublisher<[FavoritedResourceDataModel], Never> {
-        
-        // TODO: Implement. ~Levi
-        
-        return Just([])
-            .eraseToAnyPublisher()
-        
-//        return cache.getFavoritedResourcesSortedByPositionPublisher()
-//            .eraseToAnyPublisher()
+    func getFavoritedResourcesSortedByPositionPublisher() -> AnyPublisher<[FavoritedResourceDataModel], Error> {
+     
+        return AnyPublisher() {
+            
+            return try await self.cache.getFavoritedResourcesSortedByPosition()
+        }
+        .eraseToAnyPublisher()
     }
     
     func storeFavoritedResourcesPublisher(ids: [String]) -> AnyPublisher<Void, Error> {
