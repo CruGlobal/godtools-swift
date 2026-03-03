@@ -36,6 +36,10 @@ class StoreInitialFavoritedToolsUseCase {
             
             return favoritedResourcesRepository
                 .storeFavoritedResourcesPublisher(ids: favoritedResourceIdsToStore)
+                .map { _ in
+                    return Void()
+                }
+                .eraseToAnyPublisher()
             
         }
         catch let error {

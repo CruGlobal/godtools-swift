@@ -27,4 +27,13 @@ struct FavoritedResourceDataModel: FavoritedResourceDataModelInterface {
         self.id = interface.id
         self.position = interface.position
     }
+    
+    func copy(position: Int) -> FavoritedResourceDataModel {
+        
+        return FavoritedResourceDataModel(
+            id: id,
+            createdAt: createdAt,
+            position: position
+        )
+    }
 }

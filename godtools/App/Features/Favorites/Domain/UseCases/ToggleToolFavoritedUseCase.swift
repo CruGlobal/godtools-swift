@@ -26,7 +26,7 @@ final class ToggleToolFavoritedUseCase {
             
             return favoritedResourcesRepository
                 .deleteFavoritedResourcePublisher(id: toolId)
-                .map {
+                .map { _ in
                     ToolIsFavoritedDomainModel(dataModelId: toolId, isFavorited: false)
                 }
                 .eraseToAnyPublisher()

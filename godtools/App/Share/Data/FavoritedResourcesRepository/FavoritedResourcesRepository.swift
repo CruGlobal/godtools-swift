@@ -12,7 +12,7 @@ import Combine
 
 final class FavoritedResourcesRepository: RepositorySync<FavoritedResourceDataModel, NoExternalDataFetch<FavoritedResourceDataModel>> {
     
-    private let cache: FavoritedResourcesCache
+    let cache: FavoritedResourcesCache
     
     init(persistence: any Persistence<FavoritedResourceDataModel, FavoritedResourceDataModel>, cache: FavoritedResourcesCache) {
         
@@ -45,36 +45,30 @@ final class FavoritedResourcesRepository: RepositorySync<FavoritedResourceDataMo
         .eraseToAnyPublisher()
     }
     
-    func storeFavoritedResourcesPublisher(ids: [String]) -> AnyPublisher<Void, Error> {
+    func storeFavoritedResourcesPublisher(ids: [String]) -> AnyPublisher<[FavoritedResourceDataModel], Error> {
      
-        // TODO: Implement. ~Levi
-        
-        return Just(Void())
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
-        
-//        return cache.storeFavoritedResourcesPublisher(ids: ids)
-//            .eraseToAnyPublisher()
+        return AnyPublisher() {
+            
+            return try await self.cache.storeFavoritedResources(ids: ids)
+        }
+        .eraseToAnyPublisher()
     }
     
-    func deleteFavoritedResourcePublisher(id: String) -> AnyPublisher<Void, Error> {
+    func deleteFavoritedResourcePublisher(id: String) -> AnyPublisher<[FavoritedResourceDataModel], Error> {
         
-        // TODO: Implement. ~Levi
-        return Just(Void())
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
-        
-//        return cache.deleteFavoritedResourcePublisher(id: id)
-//            .eraseToAnyPublisher()
+        return AnyPublisher() {
+            
+            return try await self.cache.deleteFavoritedResource(id: id)
+        }
+        .eraseToAnyPublisher()
     }
     
     func reorderFavoritedResourcePublisher(id: String, originalPosition: Int, newPosition: Int) -> AnyPublisher<[FavoritedResourceDataModel], Error> {
         
-        // TODO: Implement. ~Levi
-        return Just([])
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
-        
-        //return cache.reorderFavoritedResourcePublisher(id: id, originalPosition: originalPosition, newPosition: newPosition)
+        return AnyPublisher() {
+            
+            return try await self.cache.reorderFavoritedResource(id: id, originalPosition: originalPosition, newPosition: newPosition)
+        }
+        .eraseToAnyPublisher()
     }
 }
