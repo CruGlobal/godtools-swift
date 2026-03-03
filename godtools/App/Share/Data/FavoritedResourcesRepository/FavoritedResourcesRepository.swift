@@ -24,16 +24,6 @@ final class FavoritedResourcesRepository: RepositorySync<FavoritedResourceDataMo
         )
     }
     
-    @MainActor func getFavoritedResourcesChangedPublisher() -> AnyPublisher<Void, Never> {
-        
-        // TODO: Implement. ~Levi
-        return Just(Void())
-            .eraseToAnyPublisher()
-        
-//        return cache.getFavoritedResourcesChangedPublisher()
-//            .eraseToAnyPublisher()
-    }
-    
     func getFavoritedResourcePublisher(id: String) -> AnyPublisher<FavoritedResourceDataModel?, Never> {
         
         // TODO: Implement. ~Levi

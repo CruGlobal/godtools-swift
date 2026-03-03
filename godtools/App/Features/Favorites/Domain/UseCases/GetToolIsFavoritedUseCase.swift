@@ -18,13 +18,15 @@ final class GetToolIsFavoritedUseCase {
         self.favoritedResourcesRepository = favoritedResourcesRepository
     }
     
-    @MainActor func execute(toolId: String) -> AnyPublisher<ToolIsFavoritedDomainModel, Never> {
+    @MainActor func execute(toolId: String) -> AnyPublisher<ToolIsFavoritedDomainModel, Error> {
         
         return favoritedResourcesRepository
-            .getFavoritedResourcesChangedPublisher()
+            .persistence
+            .observeCollectionChangesPublisher()
             .flatMap({ (favoritedResourcesChanged: Void) -> AnyPublisher<Bool, Never> in
                 
-                return self.favoritedResourcesRepository.getResourceIsFavoritedPublisher(id: toolId)
+                return self.favoritedResourcesRepository
+                    .getResourceIsFavoritedPublisher(id: toolId)
                     .eraseToAnyPublisher()
             })
             .map { (isFavorited: Bool) in
