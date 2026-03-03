@@ -29,7 +29,7 @@ final class PersonalizedLessonsRepository: RepositorySync<PersonalizedLessonsDat
         )
     }
 
-    @MainActor func getPersonalizedLessonsChanged(reloadFromRemote: Bool, requestPriority: RequestPriority, country: String?, language: String) -> AnyPublisher<Void, Never> {
+    @MainActor func getPersonalizedLessonsChanged(reloadFromRemote: Bool, requestPriority: RequestPriority, country: String?, language: String) -> AnyPublisher<Void, Error> {
 
         if reloadFromRemote {
 
@@ -55,7 +55,7 @@ final class PersonalizedLessonsRepository: RepositorySync<PersonalizedLessonsDat
             .getDataModelNonThrowing(id: id)
     }
 
-    private func getAllRankedLessonsPublisher(requestPriority: RequestPriority, country: String?, language: String) -> AnyPublisher<[PersonalizedLessonsDataModel], Error> {
+    func getAllRankedLessonsPublisher(requestPriority: RequestPriority, country: String?, language: String) -> AnyPublisher<[PersonalizedLessonsDataModel], Error> {
 
         let publisher: AnyPublisher<[ResourceCodable], Error>
 

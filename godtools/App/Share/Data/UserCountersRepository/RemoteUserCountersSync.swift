@@ -31,14 +31,14 @@ class RemoteUserCountersSync {
             let incrementValue: Int = userCounter.incrementValue
             
             // TODO: Eventually remove AnyPublisher() and support async await. ~Levi
-            
-            return AnyPublisher() {
+
+            return AnyPublisher(asyncFunc: {
                 return try await self.api.incrementUserCounter(
                     id: userCounter.id,
                     increment: incrementValue,
                     requestPriority: requestPriority
                 )
-            }
+            })
             .flatMap { (userCounterUpdatedFromRemote: UserCounterDecodable) in
                 
                 cache.syncUserCounter(
