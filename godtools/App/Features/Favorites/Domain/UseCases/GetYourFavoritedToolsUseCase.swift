@@ -39,7 +39,14 @@ final class GetYourFavoritedToolsUseCase {
         )
         .flatMap({ (resourcesChanged: Void, interfaceStrings: ToolListItemInterfaceStringsDomainModel, favoritedResourceModels: [FavoritedResourceDataModel]) -> AnyPublisher<[YourFavoritedToolDomainModel], Never> in
           
-            let numberOfFavoritedTools: Int = self.favoritedResourcesRepository.getNumberOfFavoritedResources()
+            let numberOfFavoritedTools: Int
+            
+            do {
+                numberOfFavoritedTools = try self.favoritedResourcesRepository.persistence.getObjectCount()
+            }
+            catch _ {
+                numberOfFavoritedTools = 0
+            }
             
             let favoritedResources: [ResourceDataModel] = favoritedResourceModels
                 .prefix(maxCount ?? numberOfFavoritedTools)

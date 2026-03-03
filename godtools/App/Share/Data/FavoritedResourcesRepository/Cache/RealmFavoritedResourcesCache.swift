@@ -19,10 +19,6 @@ class RealmFavoritedResourcesCache {
         self.realmDatabase = realmDatabase
     }
     
-    func getNumberOfFavoritedResources() -> Int {
-        return realmDatabase.openRealm().objects(RealmFavoritedResource.self).count
-    }
-    
     @MainActor func getFavoritedResourcesChangedPublisher() -> AnyPublisher<Void, Never> {
         
         return realmDatabase.openRealm()
@@ -47,7 +43,7 @@ class RealmFavoritedResourcesCache {
             return nil
         }
         
-        return FavoritedResourceDataModel(realmFavoritedResource: realmFavoritedResource)
+        return FavoritedResourceDataModel(interface: realmFavoritedResource)
     }
     
     func getResourceIsFavorited(id: String) -> Bool {
@@ -63,7 +59,7 @@ class RealmFavoritedResourcesCache {
 
                 return self.getFavoritesSortedByPositionPublisher()
                     .map { (favoritedResources: [RealmFavoritedResource]) in
-                        return favoritedResources.map{ FavoritedResourceDataModel(realmFavoritedResource: $0) }
+                        return favoritedResources.map{ FavoritedResourceDataModel(interface: $0) }
                     }
                     .eraseToAnyPublisher()
             }
@@ -179,7 +175,7 @@ class RealmFavoritedResourcesCache {
             
         } mapInBackgroundClosure: { (objects: [RealmFavoritedResource]) in
             return objects.map({
-                FavoritedResourceDataModel(realmFavoritedResource: $0)
+                FavoritedResourceDataModel(interface: $0)
             })
         }
         .eraseToAnyPublisher()

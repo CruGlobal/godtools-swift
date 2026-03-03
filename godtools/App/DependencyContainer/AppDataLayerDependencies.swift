@@ -162,8 +162,27 @@ class AppDataLayerDependencies {
     }
     
     func getFavoritedResourcesRepository() -> FavoritedResourcesRepository {
+        
+        let persistence: any Persistence<FavoritedResourceDataModel, FavoritedResourceDataModel>
+        
+        if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                dataModelMapping: SwiftFavoritedResourceMapping()
+            )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                database: getSharedRealmDatabase(),
+                dataModelMapping: RealmFavoritedResourceMapping()
+            )
+        }
+        
         return FavoritedResourcesRepository(
-            cache: RealmFavoritedResourcesCache(realmDatabase: getSharedLegacyRealmDatabase())
+            persistence: persistence,
+            cache: FavoritedResourcesCache(persistence: persistence)
         )
     }
     

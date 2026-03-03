@@ -7,66 +7,106 @@
 //
 
 import Foundation
+import RepositorySync
 import Combine
 
-class FavoritedResourcesRepository {
+final class FavoritedResourcesRepository: RepositorySync<FavoritedResourceDataModel, NoExternalDataFetch<FavoritedResourceDataModel>> {
     
-    private let cache: RealmFavoritedResourcesCache
+    private let cache: FavoritedResourcesCache
     
-    init(cache: RealmFavoritedResourcesCache) {
+    init(persistence: any Persistence<FavoritedResourceDataModel, FavoritedResourceDataModel>, cache: FavoritedResourcesCache) {
         
         self.cache = cache
-    }
-    
-    func getNumberOfFavoritedResources() -> Int {
-        return cache.getNumberOfFavoritedResources()
+        
+        super.init(
+            externalDataFetch: NoExternalDataFetch<FavoritedResourceDataModel>(),
+            persistence: persistence
+        )
     }
     
     @MainActor func getFavoritedResourcesChangedPublisher() -> AnyPublisher<Void, Never> {
         
-        return cache.getFavoritedResourcesChangedPublisher()
+        // TODO: Implement. ~Levi
+        return Just(Void())
             .eraseToAnyPublisher()
+        
+//        return cache.getFavoritedResourcesChangedPublisher()
+//            .eraseToAnyPublisher()
     }
     
     func getFavoritedResourcePublisher(id: String) -> AnyPublisher<FavoritedResourceDataModel?, Never> {
         
-        return cache.getFavoritedResourcePublisher(id: id)
+        // TODO: Implement. ~Levi
+        
+        return Just(nil)
             .eraseToAnyPublisher()
+        
+//        return cache.getFavoritedResourcePublisher(id: id)
+//            .eraseToAnyPublisher()
     }
     
     func getResourceIsFavoritedPublisher(id: String) -> AnyPublisher<Bool, Never> {
         
-        return cache.getFavoritedResourcePublisher(id: id)
-            .map { (object: FavoritedResourceDataModel?) in
-                return object != nil
-            }
+        // TODO: Implement. ~Levi
+        
+        return Just(false)
             .eraseToAnyPublisher()
+        
+//        return cache.getFavoritedResourcePublisher(id: id)
+//            .map { (object: FavoritedResourceDataModel?) in
+//                return object != nil
+//            }
+//            .eraseToAnyPublisher()
     }
     
     func getResourceIsFavorited(id: String) -> Bool {
-        return cache.getResourceIsFavorited(id: id)
+        
+        // TODO: Implement. ~Levi
+        return false
+        //return cache.getResourceIsFavorited(id: id)
     }
     
     @MainActor func getFavoritedResourcesSortedByPositionPublisher() -> AnyPublisher<[FavoritedResourceDataModel], Never> {
         
-        return cache.getFavoritedResourcesSortedByPositionPublisher()
+        // TODO: Implement. ~Levi
+        
+        return Just([])
             .eraseToAnyPublisher()
+        
+//        return cache.getFavoritedResourcesSortedByPositionPublisher()
+//            .eraseToAnyPublisher()
     }
     
-    func storeFavoritedResourcesPublisher(ids: [String]) -> AnyPublisher<Void, Never> {
+    func storeFavoritedResourcesPublisher(ids: [String]) -> AnyPublisher<Void, Error> {
      
-        return cache.storeFavoritedResourcesPublisher(ids: ids)
+        // TODO: Implement. ~Levi
+        
+        return Just(Void())
+            .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
+        
+//        return cache.storeFavoritedResourcesPublisher(ids: ids)
+//            .eraseToAnyPublisher()
     }
     
     func deleteFavoritedResourcePublisher(id: String) -> AnyPublisher<Void, Error> {
         
-        return cache.deleteFavoritedResourcePublisher(id: id)
+        // TODO: Implement. ~Levi
+        return Just(Void())
+            .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
+        
+//        return cache.deleteFavoritedResourcePublisher(id: id)
+//            .eraseToAnyPublisher()
     }
     
     func reorderFavoritedResourcePublisher(id: String, originalPosition: Int, newPosition: Int) -> AnyPublisher<[FavoritedResourceDataModel], Error> {
         
-        return cache.reorderFavoritedResourcePublisher(id: id, originalPosition: originalPosition, newPosition: newPosition)
+        // TODO: Implement. ~Levi
+        return Just([])
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
+        
+        //return cache.reorderFavoritedResourcePublisher(id: id, originalPosition: originalPosition, newPosition: newPosition)
     }
 }
