@@ -9,18 +9,22 @@
 import Foundation
 import Combine
 
-class GetGlobalActivityEnabledUseCase {
+final class GetGlobalActivityEnabledUseCase {
     
-    private let getGlobalActivityIsEnabled: GetGlobalActivityIsEnabledInterface
+    private let remoteConfigRepository: RemoteConfigRepository
     
-    init(getGlobalActivityIsEnabled: GetGlobalActivityIsEnabledInterface) {
+    init(remoteConfigRepository: RemoteConfigRepository) {
         
-        self.getGlobalActivityIsEnabled = getGlobalActivityIsEnabled
+        self.remoteConfigRepository = remoteConfigRepository
     }
     
-    func getIsEnabledPublisher() -> AnyPublisher<Bool, Never> {
+    func execute() -> AnyPublisher<Bool, Never> {
         
-        return getGlobalActivityIsEnabled.getIsEnabledPublisher()
+        return remoteConfigRepository
+            .getRemoteConfigPublisher()
+            .map { (dataModel: RemoteConfigDataModel?) in
+                return dataModel?.globalActivityIsEnabled ?? false
+            }
             .eraseToAnyPublisher()
     }
 }

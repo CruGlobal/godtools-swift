@@ -59,7 +59,7 @@ struct AccountGlobalActivity: View {
                 
                 VStack(alignment: .leading, spacing: itemSpacing) {
                  
-                    ForEach(viewModel.globalActivitiesThisWeek) { (activity: GlobalActivityThisWeekDomainModel) in
+                    ForEach(viewModel.globalActivitiesThisWeek) { (activity: GlobalActivityDomainModel) in
                         
                         let index: Int = viewModel.globalActivitiesThisWeek.firstIndex(where: {$0.id == activity.id}) ?? 0
                         
