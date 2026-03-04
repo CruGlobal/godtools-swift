@@ -27,16 +27,16 @@ class UserDetailsCache {
     }
     
     @available(iOS 17.4, *)
-    func getSwiftPersistence() -> SwiftRepositorySyncPersistence<LanguageDataModel, LanguageCodable, SwiftLanguage>? {
-        return persistence as? SwiftRepositorySyncPersistence<LanguageDataModel, LanguageCodable, SwiftLanguage>
+    func getSwiftPersistence() -> SwiftRepositorySyncPersistence<UserDetailsDataModel, MobileContentApiUsersMeCodable, SwiftUserDetails>? {
+        return persistence as? SwiftRepositorySyncPersistence<UserDetailsDataModel, MobileContentApiUsersMeCodable, SwiftUserDetails>
     }
     
     var realmDatabase: RealmDatabase? {
         return getRealmPersistence()?.database
     }
     
-    func getRealmPersistence() -> RealmRepositorySyncPersistence<LanguageDataModel, LanguageCodable, RealmLanguage>? {
-        return persistence as? RealmRepositorySyncPersistence<LanguageDataModel, LanguageCodable, RealmLanguage>
+    func getRealmPersistence() -> RealmRepositorySyncPersistence<UserDetailsDataModel, MobileContentApiUsersMeCodable, RealmUserDetails>? {
+        return persistence as? RealmRepositorySyncPersistence<UserDetailsDataModel, MobileContentApiUsersMeCodable, RealmUserDetails>
     }
 }
 

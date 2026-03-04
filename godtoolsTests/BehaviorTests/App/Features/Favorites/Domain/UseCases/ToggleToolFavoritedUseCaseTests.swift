@@ -36,13 +36,11 @@ struct ToggleToolFavoritedUseCaseTests {
     )
     func testToggleToolFavorited(argument: TestArgument) async throws {
         
-        let realmDatabase = try getRealmDatabase(resources: argument.resourcesInRealmIdsAtPositions)
-        
-        let toggleToolFavoritedUseCase = ToggleToolFavoritedUseCase(favoritedResourcesRepository: FavoritedResourcesRepository(cache: RealmFavoritedResourcesCache(realmDatabase: realmDatabase)))
+        let testsDiContainer: TestsDiContainer = try getTestsDiContainer(addResources: argument.resourcesInRealmIdsAtPositions)
+                
+        let toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase = testsDiContainer.feature.favorites.domainLayer.getToggleToolFavoritedUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
-        
-        var favoritedResources: [FavoritedResourceDataModel] = Array()
         
         await confirmation(expectedCount: 1) { confirmation in
             
@@ -57,11 +55,10 @@ struct ToggleToolFavoritedUseCaseTests {
                     .execute(
                         toolId: argument.resourceIdToToggle
                     )
-                    .sink { _ in
+                    .receive(on: DispatchQueue.main)
+                    .sink(receiveCompletion: { _ in
                         
-                        favoritedResources = realmDatabase.openRealm().objects(RealmFavoritedResource.self).map {
-                            FavoritedResourceDataModel(id: $0.resourceId, createdAt: $0.createdAt, position: $0.position)
-                        }
+                    }, receiveValue: { _ in
                         
                         // Place inside a sink or other async closure:
                         confirmation()
@@ -69,17 +66,20 @@ struct ToggleToolFavoritedUseCaseTests {
                         // When finished be sure to call:
                         timeoutTask.cancel()
                         continuation.resume(returning: ())
-                    }
+                    })
                     .store(in: &cancellables)
             }
         }
         
+        let favoritedResources: [FavoritedResourceDataModel] = try await testsDiContainer.dataLayer.getFavoritedResourcesRepository().cache.getFavoritedResourcesSortedByPosition()
+        
         for (expectedId, expectedPosition) in argument.expectedUpdatedIdsAtPositions {
             
-            let actualPosition = favoritedResources.first(where: { $0.id == expectedId })?.position
+            let actualPosition: Int = try #require(favoritedResources.first(where: { $0.id == expectedId })?.position)
+            
             #expect(
                 actualPosition == expectedPosition,
-                "Expected position for resource \(expectedId) to be \(expectedPosition), but was \(actualPosition ?? -1)"
+                "Expected position for resource \(expectedId) to be \(expectedPosition), but was \(actualPosition)"
             )
         }
     }
@@ -87,11 +87,11 @@ struct ToggleToolFavoritedUseCaseTests {
 
 extension ToggleToolFavoritedUseCaseTests {
     
-    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
+    private func getTestsDiContainer(addResources: [String: Int]) throws -> TestsDiContainer {
                 
         return try TestsDiContainer(
             realmFileName: String(describing: ToggleToolFavoritedUseCaseTests.self),
-            addRealmObjects: addRealmObjects
+            addRealmObjects: getFavoritedResources(resources: addResources)
         )
     }
     
@@ -100,19 +100,12 @@ extension ToggleToolFavoritedUseCaseTests {
         var resourceObjects = [RealmFavoritedResource]()
         
         for (resourceId, resourcePosition) in resources {
-            let resource = RealmFavoritedResource(createdAt: Date(), resourceId: resourceId, position: resourcePosition)
-            resourceObjects.append(resource)
+            
+            let dataModel = FavoritedResourceDataModel(id: resourceId, createdAt: Date(), position: resourcePosition)
+            
+            resourceObjects.append(RealmFavoritedResource.createNewFrom(interface: dataModel))
         }
         
         return resourceObjects
-    }
-    
-    private func getRealmDatabase(resources: [String: Int]) throws -> LegacyRealmDatabase {
-        
-        let realmObjects: [IdentifiableRealmObject] = getFavoritedResources(resources: resources)
-        
-        let testsDiContainer = try getTestsDiContainer(addRealmObjects: realmObjects)
-        
-        return testsDiContainer.dataLayer.getSharedLegacyRealmDatabase()
     }
 }

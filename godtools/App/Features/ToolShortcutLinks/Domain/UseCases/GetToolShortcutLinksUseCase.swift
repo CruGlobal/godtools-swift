@@ -23,30 +23,43 @@ final class GetToolShortcutLinksUseCase {
         self.translationsRepository = translationsRepository
     }
     
-    @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[ToolShortcutLinkDomainModel], Never> {
+    @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[ToolShortcutLinkDomainModel], Error> {
         
         return favoritedResourcesRepository
-            .getFavoritedResourcesSortedByPositionPublisher()
-            .flatMap({ (favoritedResources: [FavoritedResourceDataModel]) -> AnyPublisher<[ToolShortcutLinkDomainModel], Never> in
+            .persistence
+            .observeCollectionChangesPublisher()
+            .flatMap { (favoritesChanged: Void) -> AnyPublisher<[FavoritedResourceDataModel], Error> in
                 
-                let toolShortcutLinks: [ToolShortcutLinkDomainModel] = favoritedResources
-                    .prefix(self.maxNumberOfToolShortcutLinks)
-                    .compactMap({ (favoritedResource: FavoritedResourceDataModel) in
-                    
-                        guard let resource = self.resourcesRepository.persistence.getDataModelNonThrowing(id: favoritedResource.id) else {
-                            return nil
-                        }
-                                            
-                        return ToolShortcutLinkDomainModel(
-                            appDeepLinkUrl: self.getToolUrlDeepLink(resource: resource, appLanguage: appLanguage),
-                            title: self.getToolName(resource: resource, appLanguage: appLanguage)
-                        )
-                })
+                return self.favoritedResourcesRepository
+                    .getFavoritedResourcesSortedByPositionPublisher()
+            }
+            .tryMap { (favoritedResources: [FavoritedResourceDataModel]) in
                 
-                return Just(toolShortcutLinks)
-                    .eraseToAnyPublisher()
-            })
+                return try self.getToolShortcutLinks(
+                    appLanguage: appLanguage,
+                    favoritedResources: favoritedResources
+                )
+            }
             .eraseToAnyPublisher()
+    }
+    
+    private func getToolShortcutLinks(appLanguage: AppLanguageDomainModel, favoritedResources: [FavoritedResourceDataModel]) throws -> [ToolShortcutLinkDomainModel] {
+        
+        let toolShortcutLinks: [ToolShortcutLinkDomainModel] = try favoritedResources
+            .prefix(self.maxNumberOfToolShortcutLinks)
+            .compactMap { (favoritedResource: FavoritedResourceDataModel) in
+                
+                guard let resource = try resourcesRepository.persistence.getDataModel(id: favoritedResource.id) else {
+                    return nil
+                }
+                
+                return ToolShortcutLinkDomainModel(
+                    appDeepLinkUrl: self.getToolUrlDeepLink(resource: resource, appLanguage: appLanguage),
+                    title: self.getToolName(resource: resource, appLanguage: appLanguage)
+                )
+            }
+        
+        return toolShortcutLinks
     }
     
     private func getToolUrlDeepLink(resource: ResourceDataModel, appLanguage: AppLanguageDomainModel) -> String {

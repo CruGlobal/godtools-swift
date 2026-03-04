@@ -41,10 +41,8 @@ struct RemoveFavoritedToolUseCaseTests {
         
         let testsDiContainer = try getTestsDiContainer(addRealmObjects: realmObjects)
         
-        let realmDatabase: LegacyRealmDatabase = testsDiContainer.dataLayer.getSharedLegacyRealmDatabase()
-        
-        let removeFavoritedToolUseCase = RemoveFavoritedToolUseCase(favoritedResourcesRepository: FavoritedResourcesRepository(cache: RealmFavoritedResourcesCache(realmDatabase: realmDatabase)))
-        
+        let removeFavoritedToolUseCase: RemoveFavoritedToolUseCase = testsDiContainer.feature.favorites.domainLayer.getRemoveFavoritedToolUseCase()
+                
         var cancellables: Set<AnyCancellable> = Set()
         
         var remainingResources: [FavoritedResourceDataModel] = Array()
@@ -62,13 +60,11 @@ struct RemoveFavoritedToolUseCaseTests {
                     .execute(
                         toolId: argument.resourceIdToDelete
                     )
-                    .sink(receiveValue: { _ in
+                    .sink(receiveCompletion: { _ in
                         
-                        let realm: Realm = realmDatabase.openRealm()
+                    }, receiveValue: { (favoritedResources: [FavoritedResourceDataModel]) in
                         
-                        remainingResources = realm.objects(RealmFavoritedResource.self).map {
-                            FavoritedResourceDataModel(id: $0.resourceId, createdAt: $0.createdAt, position: $0.position)
-                        }
+                        remainingResources = favoritedResources
                         
                         // Place inside a sink or other async closure:
                         confirmation()
@@ -83,10 +79,11 @@ struct RemoveFavoritedToolUseCaseTests {
         
         for (expectedId, expectedPosition) in argument.expectedUpdatedIdsAtPositions {
             
-            let actualPosition = remainingResources.first(where: { $0.id == expectedId })?.position
+            let actualPosition: Int = try #require(remainingResources.first(where: { $0.id == expectedId })?.position)
+            
             #expect(
                 actualPosition == expectedPosition,
-                "Expected position for resource \(expectedId) to be \(expectedPosition), but was \(actualPosition ?? -1)"
+                "Expected position for resource \(expectedId) to be \(expectedPosition), but was \(actualPosition)"
             )
         }
     }
@@ -107,8 +104,14 @@ extension RemoveFavoritedToolUseCaseTests {
         var resourceObjects = [RealmFavoritedResource]()
         
         for (resourceId, resourcePosition) in resources {
-            let resource = RealmFavoritedResource(createdAt: Date(), resourceId: resourceId, position: resourcePosition)
-            resourceObjects.append(resource)
+            
+            let dataModel = FavoritedResourceDataModel(
+                id: resourceId,
+                createdAt: Date(),
+                position: resourcePosition
+            )
+            
+            resourceObjects.append(RealmFavoritedResource.createNewFrom(interface: dataModel))
         }
         
         return resourceObjects
