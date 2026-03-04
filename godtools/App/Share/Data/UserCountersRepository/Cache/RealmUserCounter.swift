@@ -21,7 +21,7 @@ class RealmUserCounter: Object, IdentifiableRealmObject, UserCounterDataModelInt
         return "id"
     }
     
-    func mapFrom(model: UserCounterDecodable) {
+    func mapFrom(model: UserCounterCodable) {
         
         id = model.id
         latestCountFromAPI = model.count

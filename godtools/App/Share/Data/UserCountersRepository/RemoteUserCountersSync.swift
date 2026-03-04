@@ -39,7 +39,7 @@ class RemoteUserCountersSync {
                     requestPriority: requestPriority
                 )
             }
-            .flatMap { (userCounterUpdatedFromRemote: UserCounterDecodable) in
+            .flatMap { (userCounterUpdatedFromRemote: UserCounterCodable) in
                 
                 cache.syncUserCounter(
                     userCounterUpdatedFromRemote,

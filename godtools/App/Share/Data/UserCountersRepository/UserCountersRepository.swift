@@ -60,7 +60,7 @@ class UserCountersRepository {
         return AnyPublisher() {
             return try await self.api.fetchUserCounters(requestPriority: requestPriority)
         }
-        .flatMap { (userCounters: [UserCounterDecodable]) in
+        .flatMap { (userCounters: [UserCounterCodable]) in
             
             return self.cache.syncUserCounters(userCounters)
                 .eraseToAnyPublisher()

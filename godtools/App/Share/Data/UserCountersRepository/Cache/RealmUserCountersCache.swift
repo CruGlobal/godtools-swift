@@ -75,12 +75,12 @@ class RealmUserCountersCache {
             .eraseToAnyPublisher()
     }
     
-    func syncUserCounter(_ userCounter: UserCounterDecodable, incrementValueBeforeRemoteUpdate: Int) -> AnyPublisher<[UserCounterDataModel], Error> {
+    func syncUserCounter(_ userCounter: UserCounterCodable, incrementValueBeforeRemoteUpdate: Int) -> AnyPublisher<[UserCounterDataModel], Error> {
         
         return userCountersSync.syncUserCounter(userCounter, incrementValueBeforeRemoteUpdate: incrementValueBeforeRemoteUpdate)
     }
     
-    func syncUserCounters(_ userCounters: [UserCounterDecodable]) -> AnyPublisher<[UserCounterDataModel], Error> {
+    func syncUserCounters(_ userCounters: [UserCounterCodable]) -> AnyPublisher<[UserCounterDataModel], Error> {
         
         return userCountersSync.syncUserCounters(userCounters)
     }

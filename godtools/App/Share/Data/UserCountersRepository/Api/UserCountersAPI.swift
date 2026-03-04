@@ -25,7 +25,7 @@ class UserCountersAPI {
         self.authSession = mobileContentApiAuthSession
     }
     
-    func fetchUserCounters(requestPriority: RequestPriority) async throws -> [UserCounterDecodable] {
+    func fetchUserCounters(requestPriority: RequestPriority) async throws -> [UserCounterCodable] {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
@@ -36,15 +36,15 @@ class UserCountersAPI {
             urlSession: urlSession
         )
         
-        let codable: JsonApiResponseDataArray<UserCounterDecodable> = try JSONDecoder().decode(
-            JsonApiResponseDataArray<UserCounterDecodable>.self,
+        let codable: JsonApiResponseDataArray<UserCounterCodable> = try JSONDecoder().decode(
+            JsonApiResponseDataArray<UserCounterCodable>.self,
             from: data
         )
         
         return codable.dataArray
     }
     
-    func incrementUserCounter(id: String, increment: Int, requestPriority: RequestPriority) async throws -> UserCounterDecodable {
+    func incrementUserCounter(id: String, increment: Int, requestPriority: RequestPriority) async throws -> UserCounterCodable {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
@@ -55,8 +55,8 @@ class UserCountersAPI {
             urlSession: urlSession
         )
         
-        let codable: JsonApiResponseDataObject<UserCounterDecodable> = try JSONDecoder().decode(
-            JsonApiResponseDataObject<UserCounterDecodable>.self,
+        let codable: JsonApiResponseDataObject<UserCounterCodable> = try JSONDecoder().decode(
+            JsonApiResponseDataObject<UserCounterCodable>.self,
             from: data
         )
         
@@ -111,22 +111,22 @@ class UserCountersAPI {
 
 extension UserCountersAPI: ExternalDataFetchInterface {
 
-    func getObject(id: String, context: RequestOperationFetchContext) async throws -> [UserCounterDecodable] {
+    func getObject(id: String, context: RequestOperationFetchContext) async throws -> [UserCounterCodable] {
         
         return try await emptyResponse()
     }
     
-    func getObjects(context: RequestOperationFetchContext) async throws -> [UserCounterDecodable] {
+    func getObjects(context: RequestOperationFetchContext) async throws -> [UserCounterCodable] {
         
         return try await emptyResponse()
     }
     
-    func getObjectPublisher(id: String, context: RequestOperationFetchContext) -> AnyPublisher<[UserCounterDecodable], Error> {
+    func getObjectPublisher(id: String, context: RequestOperationFetchContext) -> AnyPublisher<[UserCounterCodable], Error> {
         
         return emptyResponsePublisher()
     }
     
-    func getObjectsPublisher(context: RequestOperationFetchContext) -> AnyPublisher<[UserCounterDecodable], Error> {
+    func getObjectsPublisher(context: RequestOperationFetchContext) -> AnyPublisher<[UserCounterCodable], Error> {
         
         return emptyResponsePublisher()
     }

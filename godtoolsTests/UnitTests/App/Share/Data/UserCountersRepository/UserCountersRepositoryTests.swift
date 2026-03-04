@@ -116,8 +116,8 @@ final class UserCountersRepositoryTests: XCTestCase {
         
         // Setup
         
-        let remoteCounter1 = UserCounterDecodable(id: "counter_1", count: 10)
-        let remoteCounter2 = UserCounterDecodable(id: "counter_2", count: 20)
+        let remoteCounter1 = UserCounterCodable(id: "counter_1", count: 10)
+        let remoteCounter2 = UserCounterCodable(id: "counter_2", count: 20)
         
         assertLocalCounterIsNil(remoteCounter1.id)
         assertLocalCounterIsNil(remoteCounter2.id)
@@ -176,8 +176,8 @@ final class UserCountersRepositoryTests: XCTestCase {
         
         cacheMockCounters([localCounter1, localCounter2])
         
-        let remoteCounter1 = UserCounterDecodable(id: localCounter1.id, count: 5)
-        let remoteCounter2 = UserCounterDecodable(id: localCounter2.id, count: 8)
+        let remoteCounter1 = UserCounterCodable(id: localCounter1.id, count: 5)
+        let remoteCounter2 = UserCounterCodable(id: localCounter2.id, count: 8)
 
         userCountersApi.setMockFetchResponse(fetchedCounters: [remoteCounter1, remoteCounter2])
 
@@ -241,8 +241,8 @@ final class UserCountersRepositoryTests: XCTestCase {
         
         cacheMockCounters([localCounter1, localCounter2])
         
-        let remoteCounter1 = UserCounterDecodable(id: localCounter1.id, count: 7)
-        let remoteCounter2 = UserCounterDecodable(id: localCounter2.id, count: 12)
+        let remoteCounter1 = UserCounterCodable(id: localCounter1.id, count: 7)
+        let remoteCounter2 = UserCounterCodable(id: localCounter2.id, count: 12)
         
         userCountersApi.setMockRemoteCountResponse(countValues: [remoteCounter1.count, remoteCounter2.count])
         

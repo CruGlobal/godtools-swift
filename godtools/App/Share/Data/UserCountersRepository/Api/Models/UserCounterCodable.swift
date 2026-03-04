@@ -1,5 +1,5 @@
 //
-//  UserCounterDecodable.swift
+//  UserCounterCodable.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 11/29/22.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct UserCounterDecodable: Codable {
+struct UserCounterCodable: Codable {
     
     let id: String
     let count: Int
