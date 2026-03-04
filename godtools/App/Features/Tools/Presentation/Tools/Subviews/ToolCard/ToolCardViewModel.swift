@@ -47,7 +47,12 @@ import Combine
             )
             .map { $0.isFavorited }
             .receive(on: DispatchQueue.main)
-            .assign(to: &$isFavorited)
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (isFavorited: Bool) in
+                self?.isFavorited = isFavorited
+            })
+            .store(in: &cancellables)
         
         let attachmentId: String = tool.bannerImageId
         

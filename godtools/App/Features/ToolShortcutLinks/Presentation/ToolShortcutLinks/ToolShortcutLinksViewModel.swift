@@ -40,12 +40,17 @@ import Combine
         
         $appLanguage
             .dropFirst()
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<[ToolShortcutLinkDomainModel], Never> in
-                
+            .map { (appLanguage: AppLanguageDomainModel) in
                 getToolShortcutLinksUseCase
-                    .execute(appLanguage: appLanguage)
-            })
-            .sink { [weak self] (shortcutLinks: [ToolShortcutLinkDomainModel]) in
+                    .execute(
+                        appLanguage: appLanguage
+                    )
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (shortcutLinks: [ToolShortcutLinkDomainModel]) in
                 
                 self?.shortcutLinks = shortcutLinks.map({ (toolShortcutLink: ToolShortcutLinkDomainModel) in
                     
@@ -57,7 +62,7 @@ import Combine
                         userInfo: [ShortcutItemUserInfoKey.toolDeepLinkUrl.rawValue: toolShortcutLink.appDeepLinkUrl as NSSecureCoding]
                     )
                 })
-            }
+            })
             .store(in: &cancellables)
     }
     

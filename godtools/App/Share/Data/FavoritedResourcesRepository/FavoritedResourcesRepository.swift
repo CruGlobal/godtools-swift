@@ -7,66 +7,68 @@
 //
 
 import Foundation
+import RepositorySync
 import Combine
 
-class FavoritedResourcesRepository {
+final class FavoritedResourcesRepository: RepositorySync<FavoritedResourceDataModel, NoExternalDataFetch<FavoritedResourceDataModel>> {
     
-    private let cache: RealmFavoritedResourcesCache
+    let cache: FavoritedResourcesCache
     
-    init(cache: RealmFavoritedResourcesCache) {
+    init(persistence: any Persistence<FavoritedResourceDataModel, FavoritedResourceDataModel>, cache: FavoritedResourcesCache) {
         
         self.cache = cache
-    }
-    
-    func getNumberOfFavoritedResources() -> Int {
-        return cache.getNumberOfFavoritedResources()
-    }
-    
-    @MainActor func getFavoritedResourcesChangedPublisher() -> AnyPublisher<Void, Never> {
         
-        return cache.getFavoritedResourcesChangedPublisher()
-            .eraseToAnyPublisher()
+        super.init(
+            externalDataFetch: NoExternalDataFetch<FavoritedResourceDataModel>(),
+            persistence: persistence
+        )
     }
-    
-    func getFavoritedResourcePublisher(id: String) -> AnyPublisher<FavoritedResourceDataModel?, Never> {
-        
-        return cache.getFavoritedResourcePublisher(id: id)
-            .eraseToAnyPublisher()
-    }
-    
-    func getResourceIsFavoritedPublisher(id: String) -> AnyPublisher<Bool, Never> {
-        
-        return cache.getFavoritedResourcePublisher(id: id)
-            .map { (object: FavoritedResourceDataModel?) in
-                return object != nil
-            }
-            .eraseToAnyPublisher()
-    }
-    
+
     func getResourceIsFavorited(id: String) -> Bool {
-        return cache.getResourceIsFavorited(id: id)
-    }
-    
-    @MainActor func getFavoritedResourcesSortedByPositionPublisher() -> AnyPublisher<[FavoritedResourceDataModel], Never> {
         
-        return cache.getFavoritedResourcesSortedByPositionPublisher()
-            .eraseToAnyPublisher()
+        // TODO: Handle Error. ~Levi
+        
+        do {
+            return try persistence.getDataModel(id: id) != nil
+        }
+        catch _ {
+            return false
+        }
     }
     
-    func storeFavoritedResourcesPublisher(ids: [String]) -> AnyPublisher<Void, Never> {
+    func getFavoritedResourcesSortedByPositionPublisher() -> AnyPublisher<[FavoritedResourceDataModel], Error> {
      
-        return cache.storeFavoritedResourcesPublisher(ids: ids)
-            .eraseToAnyPublisher()
+        return AnyPublisher() {
+            
+            return try await self.cache.getFavoritedResourcesSortedByPosition()
+        }
+        .eraseToAnyPublisher()
     }
     
-    func deleteFavoritedResourcePublisher(id: String) -> AnyPublisher<Void, Error> {
+    func storeFavoritedResourcesPublisher(ids: [String]) -> AnyPublisher<[FavoritedResourceDataModel], Error> {
+     
+        return AnyPublisher() {
+            
+            return try await self.cache.storeFavoritedResources(ids: ids)
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    func deleteFavoritedResourcePublisher(id: String) -> AnyPublisher<[FavoritedResourceDataModel], Error> {
         
-        return cache.deleteFavoritedResourcePublisher(id: id)
-            .eraseToAnyPublisher()
+        return AnyPublisher() {
+            
+            return try await self.cache.deleteFavoritedResource(id: id)
+        }
+        .eraseToAnyPublisher()
     }
     
     func reorderFavoritedResourcePublisher(id: String, originalPosition: Int, newPosition: Int) -> AnyPublisher<[FavoritedResourceDataModel], Error> {
         
-        return cache.reorderFavoritedResourcePublisher(id: id, originalPosition: originalPosition, newPosition: newPosition)
+        return AnyPublisher() {
+            
+            return try await self.cache.reorderFavoritedResource(id: id, originalPosition: originalPosition, newPosition: newPosition)
+        }
+        .eraseToAnyPublisher()
     }
 }

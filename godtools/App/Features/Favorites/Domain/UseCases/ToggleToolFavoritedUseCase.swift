@@ -18,25 +18,23 @@ final class ToggleToolFavoritedUseCase {
         self.favoritedResourcesRepository = favoritedResourcesRepository
     }
     
-    func execute(toolId: String) -> AnyPublisher<ToolIsFavoritedDomainModel, Never> {
+    func execute(toolId: String) -> AnyPublisher<ToolIsFavoritedDomainModel, Error> {
         
         let resourceIsFavorited: Bool = favoritedResourcesRepository.getResourceIsFavorited(id: toolId)
         
         if resourceIsFavorited {
             
-            return favoritedResourcesRepository.deleteFavoritedResourcePublisher(id: toolId)
-                .catch { _ in
-                    return Just(())
-                        .eraseToAnyPublisher()
-                }
-                .map {
+            return favoritedResourcesRepository
+                .deleteFavoritedResourcePublisher(id: toolId)
+                .map { _ in
                     ToolIsFavoritedDomainModel(dataModelId: toolId, isFavorited: false)
                 }
                 .eraseToAnyPublisher()
         }
         else {
             
-            return favoritedResourcesRepository.storeFavoritedResourcesPublisher(ids: [toolId])
+            return favoritedResourcesRepository
+                .storeFavoritedResourcesPublisher(ids: [toolId])
                 .map { _ in
                     ToolIsFavoritedDomainModel(dataModelId: toolId, isFavorited: true)
                 }
