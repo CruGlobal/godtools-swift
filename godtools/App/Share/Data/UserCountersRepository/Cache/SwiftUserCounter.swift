@@ -20,13 +20,24 @@ enum SwiftUserCounterV1 {
     class SwiftUserCounter: IdentifiableSwiftDataObject, UserCounterDataModelInterface {
         
         var count: Int = 0
-        var latestCountFromAPI: Int = 0
-        var incrementValue: Int = 0
+        var localCount: Int = 0
         
         @Attribute(.unique) var id: String = ""
         
         init() {
             
+        }
+        
+        func mapFrom(interface: UserCounterDataModelInterface) {
+            count = interface.count
+            id = interface.id
+            localCount = interface.localCount
+        }
+        
+        static func createNewFrom(interface: UserCounterDataModelInterface) -> SwiftUserCounter {
+            let object = SwiftUserCounter()
+            object.mapFrom(interface: interface)
+            return object
         }
     }
 }

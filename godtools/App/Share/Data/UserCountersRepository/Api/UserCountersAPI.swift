@@ -1,5 +1,5 @@
 //
-//  UserCountersAPI.swift
+//  UserCountersApi.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 11/29/22.
@@ -11,7 +11,7 @@ import RequestOperation
 import Combine
 import RepositorySync
 
-class UserCountersAPI {
+class UserCountersApi {
     
     private let authSession: MobileContentApiAuthSession
     private let baseURL: String
@@ -44,6 +44,24 @@ class UserCountersAPI {
         return codable.dataArray
     }
     
+    private func getUserCountersRequest(urlSession: URLSession) -> URLRequest {
+        
+        let headers: [String: String] = [
+            "Content-Type": "application/vnd.api+json"
+        ]
+        
+        return requestBuilder.build(
+            parameters: RequestBuilderParameters(
+                urlSession: urlSession,
+                urlString: baseURL + "/users/me/counters",
+                method: .get,
+                headers: headers,
+                httpBody: nil,
+                queryItems: nil
+            )
+        )
+    }
+    
     func incrementUserCounter(id: String, increment: Int, requestPriority: RequestPriority) async throws -> UserCounterCodable {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
@@ -61,24 +79,6 @@ class UserCountersAPI {
         )
         
         return codable.dataObject
-    }
-    
-    private func getUserCountersRequest(urlSession: URLSession) -> URLRequest {
-        
-        let headers: [String: String] = [
-            "Content-Type": "application/vnd.api+json"
-        ]
-        
-        return requestBuilder.build(
-            parameters: RequestBuilderParameters(
-                urlSession: urlSession,
-                urlString: baseURL + "/users/me/counters",
-                method: .get,
-                headers: headers,
-                httpBody: nil,
-                queryItems: nil
-            )
-        )
     }
     
     private func getIncrementUserCountersRequest(id: String, increment: Int, urlSession: URLSession) -> URLRequest {
@@ -106,28 +106,5 @@ class UserCountersAPI {
                 queryItems: nil
             )
         )
-    }
-}
-
-extension UserCountersAPI: ExternalDataFetchInterface {
-
-    func getObject(id: String, context: RequestOperationFetchContext) async throws -> [UserCounterCodable] {
-        
-        return try await emptyResponse()
-    }
-    
-    func getObjects(context: RequestOperationFetchContext) async throws -> [UserCounterCodable] {
-        
-        return try await emptyResponse()
-    }
-    
-    func getObjectPublisher(id: String, context: RequestOperationFetchContext) -> AnyPublisher<[UserCounterCodable], Error> {
-        
-        return emptyResponsePublisher()
-    }
-    
-    func getObjectsPublisher(context: RequestOperationFetchContext) -> AnyPublisher<[UserCounterCodable], Error> {
-        
-        return emptyResponsePublisher()
     }
 }

@@ -16,7 +16,7 @@ struct UserCounterDomainModel: Sendable {
     init(dataModel: UserCounterDataModel) {
         
         id = dataModel.id
-        count = dataModel.latestCountFromAPI + dataModel.incrementValue
+        count = dataModel.count
     }
     
     init(id: String, count: Int) {

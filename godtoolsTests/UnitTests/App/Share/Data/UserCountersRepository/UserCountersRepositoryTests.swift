@@ -16,13 +16,13 @@ import Combine
 final class UserCountersRepositoryTests: XCTestCase {
 
     private var userCountersRepository: UserCountersRepository!
-    private var userCountersApi: UserCountersAPIMock!
+    private var userCountersApi: UserCountersApiMock!
     private var cancellables: Set<AnyCancellable>!
     
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
 
-        userCountersApi = UserCountersAPIMock()
+        userCountersApi = UserCountersApiMock()
         cancellables = Set<AnyCancellable>()
         
         let realmDatabase = TestsInMemoryRealmDatabase()

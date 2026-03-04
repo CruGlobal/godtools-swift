@@ -14,16 +14,20 @@ class RealmUserCounter: Object, IdentifiableRealmObject, UserCounterDataModelInt
     
     @objc dynamic var id: String = ""
     @objc dynamic var count: Int = 0
-    @objc dynamic var latestCountFromAPI: Int = 0
-    @objc dynamic var incrementValue: Int = 0
+    @objc dynamic var localCount: Int = 0
     
     override static func primaryKey() -> String? {
         return "id"
     }
     
-    func mapFrom(model: UserCounterCodable) {
-        
-        id = model.id
-        latestCountFromAPI = model.count
+    func mapFrom(interface: UserCounterDataModelInterface) {
+        count = interface.count
+        id = interface.id
+    }
+    
+    static func createNewFrom(interface: UserCounterDataModelInterface) -> RealmUserCounter {
+        let object = RealmUserCounter()
+        object.mapFrom(interface: interface)
+        return object
     }
 }

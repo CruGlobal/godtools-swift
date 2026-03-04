@@ -9,20 +9,69 @@
 import Foundation
 import Combine
 import RequestOperation
+import RepositorySync
 
 class UserCountersRepository {
     
-    private let api: UserCountersAPI
+    private let api: UserCountersApi
+    private let localUserCounterIncrement: LocalUserCounterIncrement
     private let cache: RealmUserCountersCache
     private let remoteUserCountersSync: RemoteUserCountersSync
     
     private var cancellables: Set<AnyCancellable> = Set()
     
-    init(api: UserCountersAPI, cache: RealmUserCountersCache, remoteUserCountersSync: RemoteUserCountersSync) {
+    let persistence: any Persistence<UserCounterDataModel, UserCounterCodable>
+    
+    init(api: UserCountersApi, persistence: any Persistence<UserCounterDataModel, UserCounterCodable>, localUserCounterIncrement: LocalUserCounterIncrement, cache: RealmUserCountersCache, remoteUserCountersSync: RemoteUserCountersSync) {
+        
         self.api = api
+        self.persistence = persistence
+        self.localUserCounterIncrement = localUserCounterIncrement
         self.cache = cache
         self.remoteUserCountersSync = remoteUserCountersSync
     }
+    
+    func incrementCounterPublisher(id: String) -> AnyPublisher<UserCounterDataModel, Error> {
+        
+        return AnyPublisher() {
+            return try await self.localUserCounterIncrement.incrementCounter(id: id)
+        }
+    }
+    
+    func syncCountersPublisher() -> AnyPublisher<[UserCounterDataModel], Error> {
+        
+        return AnyPublisher() {
+            return try await self.syncCounters()
+        }
+    }
+    
+    private func syncCounters() async throws -> [UserCounterDataModel] {
+        
+        // First push any local counts greater than 0 to remote.
+        
+        // After pushing local counts to remote, fetch counts from remote.
+        
+        return Array()
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     func getUserCounter(id: String) -> UserCounterDomainModel? {
         

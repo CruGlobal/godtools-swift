@@ -8,10 +8,11 @@
 
 import Foundation
 
-struct UserCounterCodable: Codable {
+struct UserCounterCodable: Codable, UserCounterDataModelInterface, Sendable {
     
     let id: String
     let count: Int
+    let localCount: Int
     
     enum RootKeys: String, CodingKey {
         case id
@@ -31,10 +32,14 @@ struct UserCounterCodable: Codable {
         let attributesContainer = try container.nestedContainer(keyedBy: AttributesKeys.self, forKey: .attributes)
         
         count = try attributesContainer.decode(Int.self, forKey: .count)
+        
+        localCount = 0
     }
     
-    init(id: String, count: Int) {
+    init(id: String, count: Int, localCount: Int) {
+        
         self.id = id
         self.count = count
+        self.localCount = localCount
     }
 }

@@ -12,10 +12,10 @@ import RequestOperation
 
 class RemoteUserCountersSync {
     
-    private let api: UserCountersAPI
+    private let api: UserCountersApi
     private let cache: RealmUserCountersCache
         
-    init(api: UserCountersAPI, cache: RealmUserCountersCache) {
+    init(api: UserCountersApi, cache: RealmUserCountersCache) {
         
         self.api = api
         self.cache = cache
@@ -26,38 +26,42 @@ class RemoteUserCountersSync {
         let cache: RealmUserCountersCache = self.cache
         let userCountersToSync: [UserCounterDataModel] = cache.getUserCountersWithIncrementGreaterThanZero()
         
-        let publishers: [AnyPublisher<Void, Error>] = userCountersToSync.map { (userCounter: UserCounterDataModel) in
-           
-            let incrementValue: Int = userCounter.incrementValue
-            
-            // TODO: Eventually remove AnyPublisher() and support async await. ~Levi
-            
-            return AnyPublisher() {
-                return try await self.api.incrementUserCounter(
-                    id: userCounter.id,
-                    increment: incrementValue,
-                    requestPriority: requestPriority
-                )
-            }
-            .flatMap { (userCounterUpdatedFromRemote: UserCounterCodable) in
-                
-                cache.syncUserCounter(
-                    userCounterUpdatedFromRemote,
-                    incrementValueBeforeRemoteUpdate: incrementValue
-                )
-                .map { _ in
-                    return Void()
-                }
-                .eraseToAnyPublisher()
-            }
+        return Just(Void())
+            .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
-        }
         
-        return Publishers.MergeMany(publishers)
-            .collect()
-            .map { _ in
-                Void()
-            }
-            .eraseToAnyPublisher()
+//        let publishers: [AnyPublisher<Void, Error>] = userCountersToSync.map { (userCounter: UserCounterDataModel) in
+//           
+//            let incrementValue: Int = userCounter.incrementValue
+//
+//            // TODO: Eventually remove AnyPublisher() and support async await. ~Levi
+//            
+//            return AnyPublisher() {
+//                return try await self.api.incrementUserCounter(
+//                    id: userCounter.id,
+//                    increment: incrementValue,
+//                    requestPriority: requestPriority
+//                )
+//            }
+//            .flatMap { (userCounterUpdatedFromRemote: UserCounterCodable) in
+//                
+//                cache.syncUserCounter(
+//                    userCounterUpdatedFromRemote,
+//                    incrementValueBeforeRemoteUpdate: incrementValue
+//                )
+//                .map { _ in
+//                    return Void()
+//                }
+//                .eraseToAnyPublisher()
+//            }
+//            .eraseToAnyPublisher()
+//        }
+//        
+//        return Publishers.MergeMany(publishers)
+//            .collect()
+//            .map { _ in
+//                Void()
+//            }
+//            .eraseToAnyPublisher()
     }
 }
