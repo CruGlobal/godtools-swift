@@ -17,8 +17,9 @@ typealias SwiftUserCounter = SwiftUserCounterV1.SwiftUserCounter
 enum SwiftUserCounterV1 {
     
     @Model
-    class SwiftUserCounter: IdentifiableSwiftDataObject {
+    class SwiftUserCounter: IdentifiableSwiftDataObject, UserCounterDataModelInterface {
         
+        var count: Int = 0
         var latestCountFromAPI: Int = 0
         var incrementValue: Int = 0
         

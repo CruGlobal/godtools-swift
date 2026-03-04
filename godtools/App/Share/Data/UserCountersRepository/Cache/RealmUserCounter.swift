@@ -8,10 +8,12 @@
 
 import Foundation
 import RealmSwift
+import RepositorySync
 
-class RealmUserCounter: Object {
+class RealmUserCounter: Object, IdentifiableRealmObject, UserCounterDataModelInterface {
     
     @objc dynamic var id: String = ""
+    @objc dynamic var count: Int = 0
     @objc dynamic var latestCountFromAPI: Int = 0
     @objc dynamic var incrementValue: Int = 0
     
