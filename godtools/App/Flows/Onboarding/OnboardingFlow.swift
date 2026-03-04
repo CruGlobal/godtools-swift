@@ -77,6 +77,7 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
                 navigateBackFromChooseAppLanguageFlow()
             
             case .userChoseAppLanguage(let appLanguage):
+                
                 let localizationSettings = getLocalizationSettingsView(showsPreferNotToSay: true)
                 navigationController.pushViewController(localizationSettings, animated: true)
             }
@@ -103,10 +104,6 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
             let lastPage: Int = onboardingTutorialView.getPageCount() - 1
             let currentPage: Int = onboardingTutorialView.getCurrentPageIndex()
             let reachedEnd = currentPage >= lastPage
-            
-            if !GodToolsAppConfig.showsPersonalization {
-                didPromptForAppLanguage = true
-            }
             
             if reachedEnd {
                 

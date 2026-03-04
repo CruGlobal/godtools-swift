@@ -289,7 +289,10 @@ extension ToolDetailsViewModel {
                 toolId: toolId
             )
             .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] (domainModel: ToolIsFavoritedDomainModel) in
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (domainModel: ToolIsFavoritedDomainModel) in
+                
                 self?.isFavorited = domainModel.isFavorited
             })
     }

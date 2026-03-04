@@ -157,9 +157,32 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getErrorReporting() -> ErrorReportingInterface {
+        return getFirebaseNonFatalErrorReporting()
+    }
+    
     func getFavoritedResourcesRepository() -> FavoritedResourcesRepository {
+        
+        let persistence: any Persistence<FavoritedResourceDataModel, FavoritedResourceDataModel>
+        
+        if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                dataModelMapping: SwiftFavoritedResourceMapping()
+            )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                database: getSharedRealmDatabase(),
+                dataModelMapping: RealmFavoritedResourceMapping()
+            )
+        }
+        
         return FavoritedResourcesRepository(
-            cache: RealmFavoritedResourcesCache(realmDatabase: getSharedLegacyRealmDatabase())
+            persistence: persistence,
+            cache: FavoritedResourcesCache(persistence: persistence)
         )
     }
     
@@ -173,6 +196,10 @@ class AppDataLayerDependencies {
     
     func getFirebaseDebugArguments() -> FirebaseDebugArguments {
         return FirebaseDebugArguments()
+    }
+    
+    func getFirebaseNonFatalErrorReporting() -> FirebaseNonFatalErrorReporting {
+        return FirebaseNonFatalErrorReporting()
     }
     
     func getFollowUpsService() -> FollowUpsService {

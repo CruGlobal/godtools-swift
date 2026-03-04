@@ -37,14 +37,11 @@ struct ToolsView: View {
 
             VStack(alignment: .center, spacing: 0) {
 
-                if GodToolsAppConfig.showsPersonalization {
-                    
-                    PersonalizedToolToggle(
-                        selectedToggle: $viewModel.selectedToggle,
-                        toggleOptions: viewModel.toggleOptions,
-                    )
-                    .padding([.top], Self.personalizedToggleTopPadding)
-                }
+                PersonalizedToolToggle(
+                    selectedToggle: $viewModel.selectedToggle,
+                    toggleOptions: viewModel.toggleOptions,
+                )
+                .padding([.top], Self.personalizedToggleTopPadding)
                 
                 if viewModel.showsFavoritingToolBanner {
 

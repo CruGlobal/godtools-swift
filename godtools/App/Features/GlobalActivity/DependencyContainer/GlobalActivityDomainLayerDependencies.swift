@@ -10,23 +10,27 @@ import Foundation
 
 class GlobalActivityDomainLayerDependencies {
     
+    private let coreDataLayer: AppDataLayerDependencies
     private let dataLayer: GlobalActivityDataLayerDependencies
     
-    init(dataLayer: GlobalActivityDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, dataLayer: GlobalActivityDataLayerDependencies) {
         
+        self.coreDataLayer = coreDataLayer
         self.dataLayer = dataLayer
     }
     
     func getGlobalActivityEnabledUseCase() -> GetGlobalActivityEnabledUseCase {
         return GetGlobalActivityEnabledUseCase(
-            getGlobalActivityIsEnabled: dataLayer.getGlobalActivityIsEnabled()
+            remoteConfigRepository: coreDataLayer.getRemoteConfigRepository()
         )
     }
     
-    func getViewGlobalActivityThisWeekUseCase() -> ViewGlobalActivityThisWeekUseCase {
+    func getGlobalActivityThisWeekUseCase() -> GetGlobalActivityThisWeekUseCase {
         
-        return ViewGlobalActivityThisWeekUseCase(
-            getGlobalActivityRepository: dataLayer.getGlobalActivityThisWeekRepository()
+        return GetGlobalActivityThisWeekUseCase(
+            globalAnalyticsRepository: dataLayer.getGlobalAnalyticsRepository(),
+            localizationServices: coreDataLayer.getLocalizationServices(),
+            getTranslatedNumberCount: coreDataLayer.getTranslatedNumberCount()
         )
     }
 }
