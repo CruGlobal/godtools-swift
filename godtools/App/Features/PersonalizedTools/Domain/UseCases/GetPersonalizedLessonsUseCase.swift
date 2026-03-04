@@ -48,16 +48,26 @@ class GetPersonalizedLessonsUseCase {
                 .getLessonProgressChangedPublisher()
                 .setFailureType(to: Error.self)
         )
-        .flatMap({ (personalizedLessonsChanged, resourcesChanged, lessonProgressChanged) in
+        .flatMap({ (personalizedLessonsChanged, resourcesChanged, lessonProgressChanged) -> AnyPublisher<[ResourceDataModel], Error> in
 
-            let personalizedLessons = self.personalizedLessonsRepository.getPersonalizedLessons(
-                country: countryIsoRegionCode,
-                language: languageCode
-            )
-
-            return self.fetchResources(for: personalizedLessons)
+            let personalizedLessons: PersonalizedLessonsDataModel?
+            
+            do {
+                
+                personalizedLessons = try self.personalizedLessonsRepository.getPersonalizedLessons(
+                    country: countryIsoRegionCode,
+                    language: languageCode
+                )
+                
+                return self.fetchResources(for: personalizedLessons)
+            }
+            catch let error {
+                
+                return Fail(error: error)
+                    .eraseToAnyPublisher()
+            }
         })
-        .tryMap { resources in
+        .tryMap { (resources: [ResourceDataModel]) in
 
             return try self.getLessonsListItems.mapLessonsToListItems(
                 lessons: resources,

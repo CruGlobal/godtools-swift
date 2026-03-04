@@ -60,62 +60,61 @@ final class PersonalizedLessonsRepository: RepositorySync<PersonalizedLessonsDat
             .eraseToAnyPublisher()
     }
 
-    func getPersonalizedLessons(country: String, language: String) -> PersonalizedLessonsDataModel? {
+    func getPersonalizedLessons(country: String, language: String) throws -> PersonalizedLessonsDataModel? {
 
         let id: String = PersonalizedLessonsId(country: country, language: language).value
         
-        let dataModel: PersonalizedLessonsDataModel? = persistence
-            .getDataModelNonThrowing(id: id)
-        
-        return dataModel
+        return try persistence.getDataModel(id: id)
     }
 
     func syncAllRankedLessonsPublisher(requestPriority: RequestPriority, country: String, language: String, forceNewSync: Bool = false) -> AnyPublisher<PersonalizedLessonsDataModel?, Error> {
 
+        return AnyPublisher() {
+            
+            return try await self.syncAllRankedLessons(
+                requestPriority: requestPriority,
+                country: country,
+                language: language,
+                forceNewSync: forceNewSync
+            )
+        }
+    }
+    
+    private func syncAllRankedLessons(requestPriority: RequestPriority, country: String, language: String, forceNewSync: Bool = false) async throws -> PersonalizedLessonsDataModel? {
+        
         let syncInvalidator: SyncInvalidator = getSyncInvalidator(id: PersonalizedLessonsId(country: country, language: language))
         
         let shouldSync: Bool = syncInvalidator.shouldSync || forceNewSync
         
         guard shouldSync else {
-            
-            return Just(getPersonalizedLessons(country: country, language: language))
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
+            return try getPersonalizedLessons(country: country, language: language)
         }
         
-        return api
-            .getAllRankedResourcesPublisher(
-                requestPriority: requestPriority,
-                country: country,
-                language: language,
-                resourceType: .lesson
-            )
-            .flatMap { (resourceCodables: [ResourceCodable]) in
+        let resourceCodables: [ResourceCodable] = try await api.getAllRankedResources(
+            requestPriority: requestPriority,
+            country: country,
+            language: language,
+            resourceType: .lesson
+        )
+        
+        let resources: [ResourceDataModel] = resourceCodables.map {
+            ResourceDataModel(interface: $0)
+        }
 
-                let resources: [ResourceDataModel] = resourceCodables.map {
-                    ResourceDataModel(interface: $0)
-                }
-
-                let personalizedLessons = PersonalizedLessonsDataModel(
-                    country: country,
-                    language: language,
-                    resourceIds: resources.map { $0.id }
-                )
-                
-                return self.persistence
-                    .writeObjectsPublisher(
-                        externalObjects: [personalizedLessons],
-                        writeOption: nil,
-                        getOption: .object(id: personalizedLessons.id)
-                    )
-                    .eraseToAnyPublisher()
-            }
-            .map { (personalizedLessons: [PersonalizedLessonsDataModel]) in
-                
-                syncInvalidator.didSync()
-                
-                return personalizedLessons.first
-            }
-            .eraseToAnyPublisher()
+        let writePersonalizedLessons = PersonalizedLessonsDataModel(
+            country: country,
+            language: language,
+            resourceIds: resources.map { $0.id }
+        )
+        
+        let personalizedLessons = try await persistence.writeObjectsAsync(
+            externalObjects: [writePersonalizedLessons],
+            writeOption: nil,
+            getOption: .object(id: writePersonalizedLessons.id)
+        )
+        
+        syncInvalidator.didSync()
+        
+        return personalizedLessons.first
     }
 }
