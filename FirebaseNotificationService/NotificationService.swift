@@ -21,8 +21,13 @@ class NotificationService: UNNotificationServiceExtension {
         bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
         
         if let bestAttemptContent = bestAttemptContent {
-            // Modify the notification content here...
-            bestAttemptContent.title = "\(bestAttemptContent.title) [modified]"
+
+            // NOTE: Here you can modify the title. ~Levi
+            // See: (https://firebase.google.com/docs/cloud-messaging/ios/get-started#swift_5)
+            
+            let title: String = bestAttemptContent.title
+
+            bestAttemptContent.title = title
             
             Messaging.serviceExtension().populateNotificationContent(bestAttemptContent, withContentHandler: contentHandler)
         }
