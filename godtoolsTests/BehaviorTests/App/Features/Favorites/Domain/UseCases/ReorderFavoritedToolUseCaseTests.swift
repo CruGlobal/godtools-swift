@@ -37,18 +37,14 @@ struct ReorderFavoritedToolUseCaseTests {
     )
     func testReorderFavorites(argument: TestArgument) async throws {
         
-        let realmDatabase = try getRealmDatabase(resources: argument.resourcesInRealmIdsAtPositions)
-        
-        let favoritedResourcesRepo = FavoritedResourcesRepository(
-            cache: RealmFavoritedResourcesCache(realmDatabase: realmDatabase)
+        let testsDiContainer: TestsDiContainer = try getTestsDiContainer(
+            addResources: argument.resourcesInRealmIdsAtPositions
         )
         
-        let reorderFavoritedToolUseCase = ReorderFavoritedToolUseCase(favoritedResourcesRepository: favoritedResourcesRepo)
+        let reorderFavoritedToolUseCase: ReorderFavoritedToolUseCase = testsDiContainer.feature.favorites.domainLayer.getReorderFavoritedToolUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
-        
-        var favoritedResources: [ReorderFavoritedToolDomainModel] = Array()
-        
+                
         await confirmation(expectedCount: 1) { confirmation in
             
             await withCheckedContinuation { continuation in
@@ -64,14 +60,11 @@ struct ReorderFavoritedToolUseCaseTests {
                         originalPosition: argument.originalPosition,
                         newPosition: argument.newPosition
                     )
+                    .receive(on: DispatchQueue.main)
                     .sink { _ in
                         
-                    } receiveValue: { _ in
-                        
-                        favoritedResources = realmDatabase.openRealm().objects(RealmFavoritedResource.self).map {
-                            ReorderFavoritedToolDomainModel(dataModelId: $0.resourceId, position: $0.position)
-                        }
-                        
+                    } receiveValue: { (favoritedResources: [ReorderFavoritedToolDomainModel]) in
+                                                
                         // Place inside a sink or other async closure:
                         confirmation()
                                                 
@@ -83,13 +76,15 @@ struct ReorderFavoritedToolUseCaseTests {
             }
         }
         
+        let favoritedResources: [FavoritedResourceDataModel] = try await testsDiContainer.dataLayer.getFavoritedResourcesRepository().cache.getFavoritedResourcesSortedByPosition()
+        
         for (expectedId, expectedPosition) in argument.expectedUpdatedIdsAtPositions {
             
             let actualPosition = favoritedResources.first(where: { $0.id == expectedId })?.position
             
             #expect(
                 actualPosition == expectedPosition,
-                "Expected position for resource \(expectedId) to be \(expectedPosition), but was \(actualPosition ?? -1)"
+                "Expected position for resource \(expectedId) to be \(expectedPosition), but was \(actualPosition)"
             )
         }
     }
@@ -97,11 +92,11 @@ struct ReorderFavoritedToolUseCaseTests {
 
 extension ReorderFavoritedToolUseCaseTests {
     
-    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
+    private func getTestsDiContainer(addResources: [String: Int]) throws -> TestsDiContainer {
                 
         return try TestsDiContainer(
             realmFileName: String(describing: ReorderFavoritedToolUseCaseTests.self),
-            addRealmObjects: addRealmObjects
+            addRealmObjects: getFavoritedResources(resources: addResources)
         )
     }
     
@@ -111,24 +106,11 @@ extension ReorderFavoritedToolUseCaseTests {
         
         for (resourceId, resourcePosition) in resources {
             
-            let resource = RealmFavoritedResource(
-                createdAt: Date(),
-                resourceId: resourceId,
-                position: resourcePosition
-            )
+            let dataModel = FavoritedResourceDataModel(id: resourceId, createdAt: Date(), position: resourcePosition)
             
-            resourceObjects.append(resource)
+            resourceObjects.append(RealmFavoritedResource.createNewFrom(interface: dataModel))
         }
         
         return resourceObjects
-    }
-    
-    private func getRealmDatabase(resources: [String: Int]) throws -> LegacyRealmDatabase {
-        
-        let realmObjects: [IdentifiableRealmObject] = getFavoritedResources(resources: resources)
-        
-        let testsDiContainer = try getTestsDiContainer(addRealmObjects: realmObjects)
-        
-        return testsDiContainer.dataLayer.getSharedLegacyRealmDatabase()
     }
 }

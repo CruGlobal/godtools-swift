@@ -100,7 +100,6 @@ import RequestOperation
             
             return storeInitialFavoritedToolsUseCase
                 .execute()
-                .setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
         }
         .receive(on: DispatchQueue.main)
