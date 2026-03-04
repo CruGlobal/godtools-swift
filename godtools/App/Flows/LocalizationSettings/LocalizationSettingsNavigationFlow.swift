@@ -15,7 +15,7 @@ import Foundation
 
 extension LocalizationSettingsNavigationFlow {
     
-    func navigateToLocalizationSettings(showsPreferNotToSay: Bool, shouldStoreCountryWhenSelected: Bool) {
+    func navigateToLocalizationSettings(showsPreferNotToSay: Bool, shouldStoreCountryWhenSelected: Bool, userShouldConfirmSelectedCountry: Bool) {
         
         guard localizationSettingsFlow == nil else {
             return
@@ -26,7 +26,8 @@ extension LocalizationSettingsNavigationFlow {
             appDiContainer: appDiContainer,
             sharedNavigationController: navigationController,
             showsPreferNotToSay: showsPreferNotToSay,
-            shouldStoreCountryWhenSelected: shouldStoreCountryWhenSelected
+            shouldStoreCountryWhenSelected: shouldStoreCountryWhenSelected,
+            userShouldConfirmSelectedCountry: userShouldConfirmSelectedCountry
         )
         
         self.localizationSettingsFlow = localizationSettingsFlow

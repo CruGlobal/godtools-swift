@@ -68,12 +68,15 @@ class DashboardFlow: Flow, ToolNavigationFlow, LocalizationSettingsNavigationFlo
         case .localizationSettingsTappedFromLessons:
             navigateToLocalizationSettings(
                 showsPreferNotToSay: false,
-                shouldStoreCountryWhenSelected: true
+                shouldStoreCountryWhenSelected: true,
+                userShouldConfirmSelectedCountry: false
             )
             
         case .localizationSettingsFlowCompleted(let state):
             switch state {
             case .userTappedBackFromLocalizationSettings:
+                navigateBackFromLocalizationSettingsFlow()
+            case .userConfirmedLocalizationSetting(let countryListItem):
                 navigateBackFromLocalizationSettingsFlow()
             }
 
@@ -213,7 +216,8 @@ class DashboardFlow: Flow, ToolNavigationFlow, LocalizationSettingsNavigationFlo
         case .localizationSettingsTappedFromTools:
             navigateToLocalizationSettings(
                 showsPreferNotToSay: false,
-                shouldStoreCountryWhenSelected: true
+                shouldStoreCountryWhenSelected: true,
+                userShouldConfirmSelectedCountry: false
             )
             
         case .openToolTappedFromToolDetails(let toolId, let primaryLanguage, let parallelLanguage, let selectedLanguageIndex):

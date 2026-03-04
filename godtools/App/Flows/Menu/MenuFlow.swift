@@ -94,12 +94,15 @@ class MenuFlow: Flow, LocalizationSettingsNavigationFlow {
         case .localizationSettingsTappedFromMenu:
             navigateToLocalizationSettings(
                 showsPreferNotToSay: false,
-                shouldStoreCountryWhenSelected: true
+                shouldStoreCountryWhenSelected: true,
+                userShouldConfirmSelectedCountry: false
             )
             
         case .localizationSettingsFlowCompleted(let state):
             switch state {
             case .userTappedBackFromLocalizationSettings:
+                navigateBackFromLocalizationSettingsFlow()
+            case .userConfirmedLocalizationSetting(let countryListItem):
                 navigateBackFromLocalizationSettingsFlow()
             }
             

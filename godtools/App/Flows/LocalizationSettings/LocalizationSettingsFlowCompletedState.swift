@@ -11,4 +11,5 @@ import Foundation
 enum LocalizationSettingsFlowCompletedState {
     
     case userTappedBackFromLocalizationSettings
+    case userConfirmedLocalizationSetting(country: LocalizationSettingsCountryListItem)
 }

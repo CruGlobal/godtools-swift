@@ -15,18 +15,20 @@ final class LocalizationSettingsFlow: Flow {
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     
     private let shouldStoreCountryWhenSelected: Bool
+    private let userShouldConfirmSelectedCountry: Bool
     
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
     let navigationController: AppNavigationController
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, showsPreferNotToSay: Bool, shouldStoreCountryWhenSelected: Bool, animated: Bool = true) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, showsPreferNotToSay: Bool, shouldStoreCountryWhenSelected: Bool, userShouldConfirmSelectedCountry: Bool, animated: Bool = true) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
         self.shouldStoreCountryWhenSelected = shouldStoreCountryWhenSelected
+        self.userShouldConfirmSelectedCountry = userShouldConfirmSelectedCountry
         
         let localizationSettings = getLocalizationSettingsView(showsPreferNotToSay: showsPreferNotToSay)
         
@@ -45,16 +47,29 @@ final class LocalizationSettingsFlow: Flow {
             flowDelegate?.navigate(step: .localizationSettingsFlowCompleted(state: .userTappedBackFromLocalizationSettings))
             
         case .countryTappedFromLocalizationSettings(let countryListItem):
-            storeSelectedCountryListItem(countryListItem: countryListItem)
+            
+            if shouldStoreCountryWhenSelected {
+                storeSelectedCountryListItem(countryListItem: countryListItem)
+            }
+            
+            if userShouldConfirmSelectedCountry {
+                let confirmationView = getLocalizationSettingsConfirmationView(selectedCountry: countryListItem)
+                navigationController.present(confirmationView, animated: true)
+            }
             
         case .closeTappedFromLocalizationConfirmation:
-            break
+            navigationController.dismiss(animated: true)
             
         case .cancelTappedFromLocalizationConfirmation:
-            break
+            navigationController.dismiss(animated: true)
             
         case .confirmTappedFromLocalizationConfirmation(let countryListItem):
-            break
+            
+            navigationController.dismiss(animated: true)
+            
+            storeSelectedCountryListItem(countryListItem: countryListItem)
+            
+            flowDelegate?.navigate(step: .localizationSettingsFlowCompleted(state: .userConfirmedLocalizationSetting(country: countryListItem)))
             
         default:
             break
@@ -62,10 +77,6 @@ final class LocalizationSettingsFlow: Flow {
     }
     
     private func storeSelectedCountryListItem(countryListItem: LocalizationSettingsCountryListItem) {
-        
-        guard shouldStoreCountryWhenSelected else {
-            return
-        }
         
         appDiContainer
             .feature
