@@ -105,12 +105,20 @@ extension ToolNavigationFlow {
         
         guard toolTranslations.languageTranslationManifests.count > 0 else {
             
+            let error: Error = NSError.errorWithDescription(description: "Error navigating to tool. Found 0 translations downloaded for app language \(appLanguage) and tool abbreviation: \(toolTranslations.tool.abbreviation)")
+            
+            appDiContainer
+                .dataLayer
+                .getErrorReporting()
+                .reportError(error: error)
+            
             let viewModel = AlertMessageViewModel(
                 title: "Internal Error",
                 message: "Found 0 translations downloaded.  Ensure you have a network connection and try again.",
                 cancelTitle: nil,
                 acceptTitle: "OK"
             )
+            
             let view = AlertMessageView(viewModel: viewModel)
             
             navigationController.present(view.controller, animated: true, completion: nil)

@@ -77,6 +77,7 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
                 navigateBackFromChooseAppLanguageFlow()
             
             case .userChoseAppLanguage(let appLanguage):
+                
                 let localizationSettings = getLocalizationSettingsView(showsPreferNotToSay: true)
                 navigationController.pushViewController(localizationSettings, animated: true)
             }

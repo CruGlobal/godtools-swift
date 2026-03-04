@@ -247,7 +247,9 @@ import Combine
                 toolId: toolId
             )
             .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { (domainModel: ToolIsFavoritedDomainModel) in
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { (domainModel: ToolIsFavoritedDomainModel) in
                 
             })
     }

@@ -83,7 +83,10 @@ struct GodToolsApp: App {
         )
         
         if Self.appConfig.buildConfig == .release {
-            GodToolsParserLogger.shared.start()
+            GodToolsParserLogger.shared.start(
+                errorReporting: Self.appDiContainer.dataLayer.getErrorReporting(),
+                firebaseErrorReporting: Self.appDiContainer.dataLayer.getFirebaseNonFatalErrorReporting()
+            )
         }
         
         if Self.appConfig.firebaseEnabled {

@@ -17,9 +17,7 @@ class GlobalActivityDataLayerDependencies {
         self.coreDataLayer = coreDataLayer
     }
     
-    // MARK: - Data Layer Classes
-    
-    private func getGlobalAnalyticsRepository() -> GlobalAnalyticsRepository {
+    func getGlobalAnalyticsRepository() -> GlobalAnalyticsRepository {
         
         return GlobalAnalyticsRepository(
             api: MobileContentGlobalAnalyticsApi(
@@ -30,23 +28,6 @@ class GlobalActivityDataLayerDependencies {
             cache: RealmGlobalAnalyticsCache(
                 realmDatabase: coreDataLayer.getSharedLegacyRealmDatabase()
             )
-        )
-    }
-    
-    // MARK: - Domain Interface
-    
-    func getGlobalActivityIsEnabled() -> GetGlobalActivityIsEnabledInterface {
-        return GetGlobalActivityIsEnabled(
-            remoteConfigRepository: coreDataLayer.getRemoteConfigRepository()
-        )
-    }
-    
-    func getGlobalActivityThisWeekRepository() -> GetGlobalActivityThisWeekRepositoryInterface {
-        
-        return GetGlobalActivityThisWeekRepository(
-            globalAnalyticsRepository: getGlobalAnalyticsRepository(),
-            localizationServices: coreDataLayer.getLocalizationServices(),
-            getTranslatedNumberCount: coreDataLayer.getTranslatedNumberCount()
         )
     }
 }

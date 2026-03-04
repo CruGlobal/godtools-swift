@@ -48,8 +48,6 @@ class ToolScreenShareFlowTests: BaseFlowTests {
         assertIfScreenDoesNotExist(screenAccessibility: .tract)
     }
     
-    // TODO: Enable QR code tests when live. ~Levi
-    /*
     func testSkipNavigatesToLastPageWithGenerateQRCodeAndShareLinkButtons() {
         
         launchAppToToolScreenShare()
@@ -66,5 +64,5 @@ class ToolScreenShareFlowTests: BaseFlowTests {
         tapWhileExists(buttonAccessibility: .continueForward)
         
         assertIsLastPageWithGenerateQRCodeAndShareLinkButtons()
-    }*/
+    }
 }
