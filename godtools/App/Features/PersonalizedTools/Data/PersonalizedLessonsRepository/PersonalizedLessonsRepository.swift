@@ -96,25 +96,21 @@ final class PersonalizedLessonsRepository: RepositorySync<PersonalizedLessonsDat
             language: language,
             resourceType: .lesson
         )
-        
-        let resources: [ResourceDataModel] = resourceCodables.map {
-            ResourceDataModel(interface: $0)
-        }
 
-        let writePersonalizedLessons = PersonalizedLessonsDataModel(
+        let personalizedLessons = PersonalizedLessonsDataModel(
             country: country,
             language: language,
-            resourceIds: resources.map { $0.id }
+            resourceIds: resourceCodables.map { $0.id }
         )
         
-        let personalizedLessons = try await persistence.writeObjectsAsync(
-            externalObjects: [writePersonalizedLessons],
+        _ = try await persistence.writeObjectsAsync(
+            externalObjects: [personalizedLessons],
             writeOption: nil,
-            getOption: .object(id: writePersonalizedLessons.id)
+            getOption: nil
         )
         
         syncInvalidator.didSync()
         
-        return personalizedLessons.first
+        return personalizedLessons
     }
 }
