@@ -93,7 +93,7 @@ extension LocalUserCounterIncrement {
             
             let context: ModelContext = database.openContext()
             
-            let counter = SwiftUserCounter()
+            let counter: SwiftUserCounter = try database.read.object(context: context, id: id) ?? SwiftUserCounter()
             
             counter.id = id
             counter.localCount = updatedCounter.localCount
@@ -107,14 +107,24 @@ extension LocalUserCounterIncrement {
             
             let realm: Realm = try database.openRealm()
             
-            let counter = RealmUserCounter()
+            let counter: RealmUserCounter
             
-            counter.id = id
-            counter.localCount = updatedCounter.localCount
+            let existingCounter: RealmUserCounter? = database.read.object(realm: realm, id: id)
             
+            if let existingCounter = existingCounter {
+                counter = existingCounter
+            }
+            else {
+                counter = RealmUserCounter()
+                counter.id = id
+            }
+
             try database.write.realm(
                 realm: realm,
                 writeClosure: { realm in
+                    
+                    counter.localCount = updatedCounter.localCount
+                    
                     return WriteRealmObjects(deleteObjects: nil, addObjects: [counter])
                 },
                 updatePolicy: .modified
