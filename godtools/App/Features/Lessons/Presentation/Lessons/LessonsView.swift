@@ -78,8 +78,8 @@ struct LessonsView: View {
                                 PersonalizationUnavailableView(
                                     title: viewModel.personalizationUnavailableTitle ?? "",
                                     message: message,
-                                    changeSettingsButtonTitle: viewModel.strings.changePersonalizedLessonSettingsActionLabel,
-                                    goToAllLessonsButtonTitle: viewModel.strings.goToAllLessonsButtonTitle,
+                                    changeSettingsButtonTitle: viewModel.strings.changeSettings,
+                                    goToAllLessonsButtonTitle: viewModel.strings.viewAllLessons,
                                     geometry: geometry,
                                     changeSettingsAction: {
                                         viewModel.localizationSettingsTapped()
@@ -110,7 +110,7 @@ struct LessonsView: View {
                             PersonalizedToolFooterView(
                                 title: viewModel.strings.personalizedLessonExplanationTitle,
                                 subtitle: viewModel.strings.personalizedLessonExplanationSubtitle,
-                                buttonTitle: viewModel.strings.changePersonalizedLessonSettingsActionLabel,
+                                buttonTitle: viewModel.strings.changeSettings,
                                 buttonAction: {
                                     viewModel.localizationSettingsTapped()
                                 }

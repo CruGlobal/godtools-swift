@@ -17,10 +17,10 @@ struct LessonsStringsDomainModel: Sendable {
     let allLessonsToggleTitle: String
     let personalizedLessonExplanationTitle: String
     let personalizedLessonExplanationSubtitle: String
-    let changePersonalizedLessonSettingsActionLabel: String
-    let goToAllLessonsButtonTitle: String
+    let changeSettings: String
+    let viewAllLessons: String
 
     static var emptyValue: LessonsStringsDomainModel {
-        LessonsStringsDomainModel(title: "", subtitle: "", languageFilterTitle: "", personalizedToolToggleTitle: "", allLessonsToggleTitle: "", personalizedLessonExplanationTitle: "", personalizedLessonExplanationSubtitle: "", changePersonalizedLessonSettingsActionLabel: "", goToAllLessonsButtonTitle: "")
+        LessonsStringsDomainModel(title: "", subtitle: "", languageFilterTitle: "", personalizedToolToggleTitle: "", allLessonsToggleTitle: "", personalizedLessonExplanationTitle: "", personalizedLessonExplanationSubtitle: "", changeSettings: "", viewAllLessons: "")
     }
 }
