@@ -74,18 +74,23 @@ struct LessonsView: View {
 
                             if viewModel.isPersonalizationUnavailable,
                                let message = viewModel.personalizationUnavailableMessage {
-                                
+
                                 PersonalizationUnavailableView(
                                     title: viewModel.personalizationUnavailableTitle ?? "",
                                     message: message,
-                                    buttonTitle: viewModel.strings.goToAllLessonsButtonTitle,
-                                    buttonAction: {
+                                    changeSettingsButtonTitle: viewModel.strings.changePersonalizedLessonSettingsActionLabel,
+                                    goToAllLessonsButtonTitle: viewModel.strings.goToAllLessonsButtonTitle,
+                                    geometry: geometry,
+                                    changeSettingsAction: {
+                                        viewModel.localizationSettingsTapped()
+                                    },
+                                    goToAllLessonsAction: {
                                         viewModel.goToAllLessonsTapped()
                                     }
                                 )
-                                
+
                             } else {
-                                
+
                                 ForEach(viewModel.lessons) { (lessonListItem: LessonListItemDomainModel) in
 
                                     LessonCardView(
@@ -101,7 +106,7 @@ struct LessonsView: View {
                         }
                         .padding([.top], lessonCardSpacing)
 
-                        if viewModel.selectedToggle == .personalized {
+                        if viewModel.selectedToggle == .personalized && !viewModel.isPersonalizationUnavailable {
                             PersonalizedToolFooterView(
                                 title: viewModel.strings.personalizedLessonExplanationTitle,
                                 subtitle: viewModel.strings.personalizedLessonExplanationSubtitle,

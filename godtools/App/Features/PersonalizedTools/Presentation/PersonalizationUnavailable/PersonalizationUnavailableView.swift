@@ -11,67 +11,72 @@ import SwiftUI
 struct PersonalizationUnavailableView: View {
 
     private static let backgroundColor = Color.getColorWithRGB(red: 245, green: 245, blue: 245, opacity: 1)
-    private static let iconBackgroundColor = Color.getColorWithRGB(red: 100, green: 100, blue: 100, opacity: 1)
 
     private let title: String
     private let message: String
-    private let buttonTitle: String
-    private let buttonAction: () -> Void
+    private let changeSettingsButtonTitle: String
+    private let goToAllLessonsButtonTitle: String
+    private let geometry: GeometryProxy
+    private let changeSettingsAction: () -> Void
+    private let goToAllLessonsAction: () -> Void
 
-    init(title: String, message: String, buttonTitle: String, buttonAction: @escaping () -> Void) {
+    init(title: String, message: String, changeSettingsButtonTitle: String, goToAllLessonsButtonTitle: String, geometry: GeometryProxy, changeSettingsAction: @escaping () -> Void, goToAllLessonsAction: @escaping () -> Void) {
         self.title = title
         self.message = message
-        self.buttonTitle = buttonTitle
-        self.buttonAction = buttonAction
+        self.changeSettingsButtonTitle = changeSettingsButtonTitle
+        self.goToAllLessonsButtonTitle = goToAllLessonsButtonTitle
+        self.geometry = geometry
+        self.changeSettingsAction = changeSettingsAction
+        self.goToAllLessonsAction = goToAllLessonsAction
     }
 
     var body: some View {
 
-        VStack(alignment: .center, spacing: 0) {
+        ZStack {
+            PersonalizationUnavailableView.backgroundColor
 
-            // Exclamation mark icon
-            ZStack {
-                Circle()
-                    .fill(PersonalizationUnavailableView.iconBackgroundColor)
-                    .frame(width: 60, height: 60)
+            VStack(alignment: .center, spacing: 0) {
 
-                Text("!")
-                    .font(FontLibrary.sfProTextBold.font(size: 40))
-                    .foregroundColor(.white)
-            }
-            .padding(.top, 30)
+                Spacer()
 
-            // Title
-            Text(title)
-                .font(FontLibrary.sfProTextBold.font(size: 20))
-                .foregroundColor(.black)
-                .multilineTextAlignment(.center)
+                Text(title)
+                    .font(FontLibrary.sfProTextRegular.font(size: 18))
+                    .foregroundColor(.black)
+                    .multilineTextAlignment(.center)
+
+                Text(message)
+                    .font(FontLibrary.sfProTextRegular.font(size: 14))
+                    .foregroundColor(ColorPalette.gtGrey.color)
+                    .multilineTextAlignment(.center)
+                    .lineSpacing(4)
+                    .padding(.top, 10)
+                    .padding(.horizontal, 30)
+
+                GTWhiteButton(
+                    title: changeSettingsButtonTitle,
+                    font: FontLibrary.sfProTextSemibold.font(size: 14),
+                    width: 180,
+                    height: 28,
+                    cornerRadius: 20,
+                    backgroundColor: .clear,
+                    action: changeSettingsAction
+                )
                 .padding(.top, 20)
 
-            // Message
-            Text(message)
-                .font(FontLibrary.sfProTextRegular.font(size: 16))
-                .foregroundColor(ColorPalette.gtGrey.color)
-                .multilineTextAlignment(.center)
-                .lineSpacing(4)
+                GTBlueButton(
+                    title: goToAllLessonsButtonTitle,
+                    font: FontLibrary.sfProTextSemibold.font(size: 14),
+                    width: 180,
+                    height: 28,
+                    cornerRadius: 20,
+                    action: goToAllLessonsAction
+                )
                 .padding(.top, 10)
-                .padding(.horizontal, 20)
 
-            // Button
-            GTBlueButton(
-                title: buttonTitle,
-                font: FontLibrary.sfProTextSemibold.font(size: 16),
-                width: 200,
-                height: 44,
-                cornerRadius: 22,
-                action: buttonAction
-            )
-            .padding(.top, 25)
-            .padding(.bottom, 30)
+                Spacer()
+            }
         }
-        .frame(maxWidth: .infinity)
-        .background(PersonalizationUnavailableView.backgroundColor)
-        .cornerRadius(8)
+        .frame(height: (geometry.size.height * 0.7) - 15)
         .padding(.horizontal, DashboardView.contentHorizontalInsets)
     }
 }
