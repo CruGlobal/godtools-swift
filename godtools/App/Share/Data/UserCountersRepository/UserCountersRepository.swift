@@ -145,19 +145,14 @@ extension UserCountersRepository {
                         
         let remoteCounters: [UserCounterCodable] = try await api.fetchUserCounters(requestPriority: requestPriority)
                     
-        let counters: [UserCounterDataModel] = try await persistence
-            .writeObjectsAsync(
-                externalObjects: remoteCounters,
-                writeOption: nil,
-                getOption: .allObjects
-            )
+        try cache.writeCounters(counters: remoteCounters)
                 
-        return try mergeLocalCountersWithRemoteCounters(remoteCounters: counters)
+        return try mergeLocalCountersWithRemoteCounters(remoteCounters: remoteCounters)
     }
     
-    private func mergeLocalCountersWithRemoteCounters(remoteCounters: [UserCounterDataModel]) throws -> [UserCounterDataModel] {
+    private func mergeLocalCountersWithRemoteCounters(remoteCounters: [UserCounterCodable]) throws -> [UserCounterDataModel] {
         
-        return try remoteCounters.map { (remoteCounter: UserCounterDataModel) in
+        return try remoteCounters.map { (remoteCounter: UserCounterCodable) in
             
             let localCounter: LocalUserCounter? = try localUserCounterIncrement.getCounter(id: remoteCounter.id)
             

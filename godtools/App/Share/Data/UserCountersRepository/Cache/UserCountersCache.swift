@@ -41,6 +41,61 @@ final class UserCountersCache {
 
 extension UserCountersCache {
     
+    func writeCounters(counters: [UserCounterCodable]) throws {
+        
+        if #available(iOS 17.4, *), let database = getSwiftPersistence()?.database {
+            
+            let context: ModelContext = database.openContext()
+            
+            var countersToWrite: [SwiftUserCounter] = Array()
+            
+            for counter in counters {
+                
+                let swiftCounter: SwiftUserCounter = try database.read.object(context: context, id: counter.id) ?? SwiftUserCounter()
+                
+                swiftCounter.mapFrom(interface: counter)
+                
+                countersToWrite.append(swiftCounter)
+            }
+            
+            try database.write.context(
+                context: context,
+                writeObjects: WriteSwiftObjects(deleteObjects: nil, insertObjects: countersToWrite)
+            )
+        }
+        else if let database = getRealmPersistence()?.database {
+                        
+            var countersToWrite: [RealmUserCounter] = Array()
+            
+            database.write.async { (realm: Realm) in
+                
+                for counter in counters {
+                    
+                    let realmUserCounter: RealmUserCounter
+                    
+                    let existingCounter: RealmUserCounter? = database.read.object(realm: realm, id: counter.id)
+                    
+                    if let existingCounter = existingCounter {
+                        realmUserCounter = existingCounter
+                    }
+                    else {
+                        realmUserCounter = RealmUserCounter()
+                        realmUserCounter.id = counter.id
+                    }
+                    
+                    realmUserCounter.count = counter.count
+                    
+                    countersToWrite.append(realmUserCounter)
+                }
+                
+                realm.add(countersToWrite, update: .modified)
+                
+            } writeError: { error in
+                
+            }
+        }
+    }
+    
     func deleteCounters() throws {
                 
         if #available(iOS 17.4, *), let database = getSwiftPersistence()?.database {
