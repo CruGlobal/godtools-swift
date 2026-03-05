@@ -72,16 +72,31 @@ struct LessonsView: View {
 
                         LazyVStack(alignment: .center, spacing: lessonCardSpacing) {
 
-                            ForEach(viewModel.lessons) { (lessonListItem: LessonListItemDomainModel) in
-
-                                LessonCardView(
-                                    viewModel: viewModel.getLessonViewModel(lessonListItem: lessonListItem),
-                                    geometry: geometry,
-                                    cardTappedClosure: {
-
-                                        viewModel.lessonCardTapped(lessonListItem: lessonListItem)
+                            if viewModel.isPersonalizationUnavailable,
+                               let message = viewModel.personalizationUnavailableMessage {
+                                
+                                PersonalizationUnavailableView(
+                                    title: viewModel.personalizationUnavailableTitle ?? "",
+                                    message: message,
+                                    buttonTitle: viewModel.strings.goToAllLessonsButtonTitle,
+                                    buttonAction: {
+                                        viewModel.goToAllLessonsTapped()
                                     }
                                 )
+                                
+                            } else {
+                                
+                                ForEach(viewModel.lessons) { (lessonListItem: LessonListItemDomainModel) in
+
+                                    LessonCardView(
+                                        viewModel: viewModel.getLessonViewModel(lessonListItem: lessonListItem),
+                                        geometry: geometry,
+                                        cardTappedClosure: {
+
+                                            viewModel.lessonCardTapped(lessonListItem: lessonListItem)
+                                        }
+                                    )
+                                }
                             }
                         }
                         .padding([.top], lessonCardSpacing)

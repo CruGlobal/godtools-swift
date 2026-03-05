@@ -18,8 +18,9 @@ struct LessonsStringsDomainModel: Sendable {
     let personalizedLessonExplanationTitle: String
     let personalizedLessonExplanationSubtitle: String
     let changePersonalizedLessonSettingsActionLabel: String
+    let goToAllLessonsButtonTitle: String
 
     static var emptyValue: LessonsStringsDomainModel {
-        LessonsStringsDomainModel(title: "", subtitle: "", languageFilterTitle: "", personalizedToolToggleTitle: "", allLessonsToggleTitle: "", personalizedLessonExplanationTitle: "", personalizedLessonExplanationSubtitle: "", changePersonalizedLessonSettingsActionLabel: "")
+        LessonsStringsDomainModel(title: "", subtitle: "", languageFilterTitle: "", personalizedToolToggleTitle: "", allLessonsToggleTitle: "", personalizedLessonExplanationTitle: "", personalizedLessonExplanationSubtitle: "", changePersonalizedLessonSettingsActionLabel: "", goToAllLessonsButtonTitle: "")
     }
 }

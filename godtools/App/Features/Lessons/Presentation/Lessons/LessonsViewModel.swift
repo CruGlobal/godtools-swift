@@ -36,8 +36,16 @@ import SwiftUI
     @Published private(set) var languageFilterButtonTitle: String = ""
     @Published private(set) var lessons: [LessonListItemDomainModel] = []
     @Published private(set) var isLoadingLessons: Bool = true
-    
+    @Published private(set) var personalizationUnavailableTitle: String?
+    @Published private(set) var personalizationUnavailableMessage: String?
+
     @Published var selectedToggle: PersonalizationToggleOptionValue = .personalized
+
+    var isPersonalizationUnavailable: Bool {
+        return selectedToggle == .personalized &&
+                personalizationUnavailableMessage != nil &&
+                !isLoadingLessons
+    }
         
     init(flowDelegate: FlowDelegate, pullToRefreshLessonsUseCase: PullToRefreshLessonsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase, getLessonsStringsUseCase: GetLessonsStringsUseCase, getAllLessonsUseCase: GetAllLessonsUseCase, getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getToolBannerUseCase: GetToolBannerUseCase) {
 
@@ -86,10 +94,10 @@ import SwiftUI
             $selectedToggle
         )
         .dropFirst()
-        .map { (appLanguage, languageFilter, localizationSettings, toggle) -> AnyPublisher<[LessonListItemDomainModel], Error> in
+        .map { (appLanguage, languageFilter, localizationSettings, toggle) -> AnyPublisher<LessonsResultDomainModel, Error> in
 
             switch toggle {
-            
+
             case .personalized:
                 return getPersonalizedLessonsUseCase
                     .execute(
@@ -97,7 +105,7 @@ import SwiftUI
                         country: localizationSettings?.selectedCountry,
                         filterLessonsByLanguage: languageFilter
                     )
-            
+
             case .all:
                 return getAllLessonsUseCase
                     .execute(
@@ -110,9 +118,11 @@ import SwiftUI
         .receive(on: DispatchQueue.main)
         .sink(receiveCompletion: { _ in
 
-        }, receiveValue: { [weak self] (lessons: [LessonListItemDomainModel]) in
+        }, receiveValue: { [weak self] (result: LessonsResultDomainModel) in
 
-            self?.lessons = lessons
+            self?.lessons = result.lessons
+            self?.personalizationUnavailableTitle = result.unavailableTitle
+            self?.personalizationUnavailableMessage = result.unavailableMessage
             self?.isLoadingLessons = false
         })
         .store(in: &cancellables)
@@ -250,5 +260,9 @@ extension LessonsViewModel {
     func localizationSettingsTapped() {
 
         flowDelegate?.navigate(step: .localizationSettingsTappedFromLessons)
+    }
+
+    func goToAllLessonsTapped() {
+        selectedToggle = .all
     }
 }
