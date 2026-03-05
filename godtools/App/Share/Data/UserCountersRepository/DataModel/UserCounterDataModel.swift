@@ -12,19 +12,16 @@ struct UserCounterDataModel: Sendable {
     
     let count: Int
     let id: String
-    let localCount: Int
     
-    init(id: String, count: Int, localCount: Int) {
+    init(id: String, count: Int) {
         
         self.id = id
         self.count = count
-        self.localCount = localCount
     }
     
     init(interface: UserCounterDataModelInterface) {
         
         self.count = interface.count
         self.id = interface.id
-        self.localCount = interface.localCount
     }
 }

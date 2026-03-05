@@ -31,7 +31,6 @@ enum SwiftUserCounterV1 {
         func mapFrom(interface: UserCounterDataModelInterface) {
             count = interface.count
             id = interface.id
-            localCount = interface.localCount
         }
         
         static func createNewFrom(interface: UserCounterDataModelInterface) -> SwiftUserCounter {

@@ -630,17 +630,13 @@ class AppDataLayerDependencies {
         
         let localUserCounterIncrement = LocalUserCounterIncrement(persistence: persistence)
         
-        let cache = RealmUserCountersCache(
-            realmDatabase: getSharedLegacyRealmDatabase(),
-            userCountersSync: RealmUserCountersCacheSync(realmDatabase: getSharedLegacyRealmDatabase())
-        )
+        let cache = UserCountersCache(persistence: persistence)
         
         return UserCountersRepository(
             api: api,
             persistence: persistence,
             localUserCounterIncrement: localUserCounterIncrement,
-            cache: cache,
-            remoteUserCountersSync: RemoteUserCountersSync(api: api, cache: cache)
+            cache: cache
         )
     }
     

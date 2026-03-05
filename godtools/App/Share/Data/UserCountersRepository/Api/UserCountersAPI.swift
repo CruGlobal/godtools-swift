@@ -25,6 +25,10 @@ class UserCountersApi {
         self.authSession = mobileContentApiAuthSession
     }
     
+    func getUserId() -> String? {
+        return authSession.mobileContentAuthTokenRepository.getUserId()
+    }
+    
     func fetchUserCounters(requestPriority: RequestPriority) async throws -> [UserCounterCodable] {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)

@@ -28,7 +28,15 @@ final class GetUserActivityUseCase {
     @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<UserActivityDomainModel, Error> {
         
         return userCounterRepository
-            .getUserCountersChangedPublisher()
+            .persistence
+            .observeCollectionChangesPublisher()
+            .flatMap { (countersChanged: Void) in
+                
+                return self
+                    .userCounterRepository
+                    .getCachedCountersPublisher()
+                    .eraseToAnyPublisher()
+            }
             .map { (counters: [UserCounterDataModel]) in
                                 
                 let userActivityDomainModel: UserActivityDomainModel = self.getUserActivityDomainModel(
@@ -44,7 +52,7 @@ final class GetUserActivityUseCase {
     private func getAllUserCounterDomainModels(userCounters: [UserCounterDataModel]) -> [UserCounterDomainModel] {
         
         var userCounterDomainModels = userCounters.map {
-            UserCounterDomainModel(dataModel: $0)
+            UserCounterDomainModel(id: $0.id, count: $0.count)
         }
         
         let numberTipsCompleted = completedTrainingTipRepository.getNumberOfCompletedTrainingTips()

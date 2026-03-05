@@ -26,17 +26,14 @@ struct LocalUserCounterIncrementTests {
         
         #expect(try localCounterIncrement.getCounter(id: counterId) == nil)
         
-        let updateCounter_1: UserCounterDataModel = try await localCounterIncrement.incrementCounter(id: counterId)
-        let updateCounter_2: UserCounterDataModel = try await localCounterIncrement.incrementCounter(id: counterId)
-        let updateCounter_3: UserCounterDataModel = try await localCounterIncrement.incrementCounter(id: counterId)
+        let updateCounter_1: LocalUserCounter = try localCounterIncrement.incrementCounter(id: counterId)
+        let updateCounter_2: LocalUserCounter = try localCounterIncrement.incrementCounter(id: counterId)
+        let updateCounter_3: LocalUserCounter = try localCounterIncrement.incrementCounter(id: counterId)
         
-        #expect(updateCounter_1.count == 1)
         #expect(updateCounter_1.localCount == 1)
         
-        #expect(updateCounter_2.count == 2)
         #expect(updateCounter_2.localCount == 2)
         
-        #expect(updateCounter_3.count == 3)
         #expect(updateCounter_3.localCount == 3)
     }
     
@@ -49,25 +46,23 @@ struct LocalUserCounterIncrementTests {
         #expect(try localCounterIncrement.getCounter(id: toolOpensCounterId) == nil)
         #expect(try await localCounterIncrement.getCounters().count == 0)
         
-        let sessionCounter: UserCounterDataModel = try await localCounterIncrement.incrementCounter(id: sessionsCounterId)
+        let sessionCounter: LocalUserCounter = try localCounterIncrement.incrementCounter(id: sessionsCounterId)
         
-        _ = try await localCounterIncrement.incrementCounter(id: toolOpensCounterId)
-        let toolOpensCounter: UserCounterDataModel = try await localCounterIncrement.incrementCounter(id: toolOpensCounterId)
+        _ = try localCounterIncrement.incrementCounter(id: toolOpensCounterId)
+        let toolOpensCounter: LocalUserCounter = try localCounterIncrement.incrementCounter(id: toolOpensCounterId)
         
-        #expect(sessionCounter.count == 1)
         #expect(sessionCounter.localCount == 1)
         
-        #expect(toolOpensCounter.count == 2)
         #expect(toolOpensCounter.localCount == 2)
         
-        let counters: [UserCounterDataModel] = try await localCounterIncrement.getCounters()
+        let counters: [LocalUserCounter] = try localCounterIncrement.getCounters()
         let counterIds: [String] = counters.map { $0.id }.sorted()
         
         #expect(counterIds == [sessionsCounterId, toolOpensCounterId])
     }
     
     @Test()
-    func deleteCounters() async throws {
+    func decrementCounters() async throws {
         
         let localCounterIncrement: LocalUserCounterIncrement = try getLocalUserCounterIncrement()
         
@@ -75,17 +70,25 @@ struct LocalUserCounterIncrementTests {
         #expect(try localCounterIncrement.getCounter(id: toolOpensCounterId) == nil)
         #expect(try await localCounterIncrement.getCounters().count == 0)
         
-        _ = try await localCounterIncrement.incrementCounter(id: sessionsCounterId)
-        _ = try await localCounterIncrement.incrementCounter(id: toolOpensCounterId)
+        _ = try localCounterIncrement.incrementCounter(id: sessionsCounterId)
+        _ = try localCounterIncrement.incrementCounter(id: sessionsCounterId)
         
-        let counters: [UserCounterDataModel] = try await localCounterIncrement.getCounters()
-        let counterIds: [String] = counters.map { $0.id }.sorted()
+        _ = try localCounterIncrement.incrementCounter(id: toolOpensCounterId)
+        _ = try localCounterIncrement.incrementCounter(id: toolOpensCounterId)
+        _ = try localCounterIncrement.incrementCounter(id: toolOpensCounterId)
+        _ = try localCounterIncrement.incrementCounter(id: toolOpensCounterId)
         
-        #expect(counterIds == [sessionsCounterId, toolOpensCounterId])
+        #expect(try localCounterIncrement.getCounter(id: sessionsCounterId)?.localCount == 2)
         
-        try await localCounterIncrement.deleteCounters()
+        #expect(try localCounterIncrement.getCounter(id: toolOpensCounterId)?.localCount == 4)
         
-        #expect(try await localCounterIncrement.getCounters().count == 0)
+        try localCounterIncrement.decrementCount(id: sessionsCounterId, decrementBy: 3)
+        
+        try localCounterIncrement.decrementCount(id: toolOpensCounterId, decrementBy: 2)
+        
+        #expect(try localCounterIncrement.getCounter(id: sessionsCounterId)?.localCount == 0)
+        
+        #expect(try localCounterIncrement.getCounter(id: toolOpensCounterId)?.localCount == 2)
     }
 }
 

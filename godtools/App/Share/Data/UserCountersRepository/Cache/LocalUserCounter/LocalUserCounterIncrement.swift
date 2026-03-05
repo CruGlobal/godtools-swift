@@ -41,70 +41,129 @@ final class LocalUserCounterIncrement {
 
 extension LocalUserCounterIncrement {
     
-    private func fetchAndIncrementCounter(id: String) throws -> UserCounterCodable {
+    private func fetchAndIncrementCounter(id: String) throws -> LocalUserCounter {
         
-        guard let counter = try persistence.getDataModel(id: id) else {
+        let currentLocalCount: Int?
+        
+        if #available(iOS 17.4, *), let database = getSwiftPersistence()?.database {
             
-            let count: Int = 1
+            let context: ModelContext = database.openContext()
             
-            return UserCounterCodable(
-                id: id,
-                count: count,
-                localCount: count
+            let swiftCounter: SwiftUserCounter? = try database.read.object(context: context, id: id)
+            
+            currentLocalCount = swiftCounter?.localCount
+        }
+        else if let database = getRealmPersistence()?.database {
+            
+            let realm: Realm = try database.openRealm()
+            
+            let realmCounter: RealmUserCounter? = database.read.object(realm: realm, id: id)
+            
+            currentLocalCount = realmCounter?.localCount
+        }
+        else {
+            
+            currentLocalCount = nil
+        }
+        
+        let initialCount: Int = 0
+        
+        var clampedLocalCount: Int = initialCount
+        
+        if let currentLocalCount = currentLocalCount, currentLocalCount < 0 {
+            clampedLocalCount = initialCount
+        }
+        else {
+            clampedLocalCount = currentLocalCount ?? initialCount
+        }
+        
+        let newLocalCount: Int = clampedLocalCount + 1
+        
+        return LocalUserCounter(
+            id: id,
+            localCount: newLocalCount
+        )
+    }
+    
+    func incrementCounter(id: String) throws -> LocalUserCounter {
+        
+        let updatedCounter: LocalUserCounter = try fetchAndIncrementCounter(id: id)
+        
+        if #available(iOS 17.4, *), let database = getSwiftPersistence()?.database {
+            
+            let context: ModelContext = database.openContext()
+            
+            let counter = SwiftUserCounter()
+            
+            counter.id = id
+            counter.localCount = updatedCounter.localCount
+            
+            try database.write.context(
+                context: context,
+                writeObjects: WriteSwiftObjects(deleteObjects: nil, insertObjects: [counter])
+            )
+        }
+        else if let database = getRealmPersistence()?.database {
+            
+            let realm: Realm = try database.openRealm()
+            
+            let counter = RealmUserCounter()
+            
+            counter.id = id
+            counter.localCount = updatedCounter.localCount
+            
+            try database.write.realm(
+                realm: realm,
+                writeClosure: { realm in
+                    return WriteRealmObjects(deleteObjects: nil, addObjects: [counter])
+                },
+                updatePolicy: .modified
             )
         }
         
-        let count: Int = counter.count + 1
-        
-        return UserCounterCodable(
+        return LocalUserCounter(
             id: id,
-            count: count,
-            localCount: count
+            localCount: updatedCounter.localCount
         )
     }
     
-    func incrementCounter(id: String) async throws -> UserCounterDataModel {
+    func getCounter(id: String) throws -> LocalUserCounter? {
         
-        let updatedCounter: UserCounterCodable = try fetchAndIncrementCounter(id: id)
+        if #available(iOS 17.4, *), let database = getSwiftPersistence()?.database {
+            
+            let context: ModelContext = database.openContext()
+            
+            let swiftCounter: SwiftUserCounter? = try database.read.object(context: context, id: id)
+            
+            if let swiftCounter = swiftCounter {
+                return LocalUserCounter(id: id, localCount: swiftCounter.localCount)
+            }
+        }
+        else if let database = getRealmPersistence()?.database {
+            
+            let realm: Realm = try database.openRealm()
+            
+            let realmCounter: RealmUserCounter? = database.read.object(realm: realm, id: id)
+            
+            if let realmCounter = realmCounter {
+                return LocalUserCounter(id: id, localCount: realmCounter.localCount)
+            }
+        }
         
-        _ = try await persistence.writeObjectsAsync(
-            externalObjects: [updatedCounter],
-            writeOption: nil,
-            getOption: nil
-        )
-        
-        return UserCounterDataModel(interface: updatedCounter)
+        return nil
     }
     
-    func getCounter(id: String) throws -> UserCounterDataModel? {
+    func getCounters() throws -> [LocalUserCounter] {
         
-        return try persistence.getDataModel(id: id)
-    }
-    
-    func getCounters() async throws -> [UserCounterDataModel] {
-        
-        return try await persistence.getDataModelsAsync(getOption: .allObjects)
-    }
-    
-    func deleteCounters() async throws {
-                
         if #available(iOS 17.4, *), let database = getSwiftPersistence()?.database {
             
             let context: ModelContext = database.openContext()
             
             let counters: [SwiftUserCounter] = try database.read.objects(context: context, query: nil)
             
-            guard counters.count > 0 else {
-                return
+            return counters.map {
+                LocalUserCounter(id: $0.id, localCount: $0.localCount)
             }
-            
-            try database.write.context(
-                context: context,
-                writeObjects: WriteSwiftObjects(
-                    deleteObjects: counters,
-                    insertObjects: nil
-                )
-            )
         }
         else if let database = getRealmPersistence()?.database {
             
@@ -112,18 +171,58 @@ extension LocalUserCounterIncrement {
             
             let counters: [RealmUserCounter] = database.read.objects(realm: realm, query: nil)
             
-            guard counters.count > 0 else {
+            return counters.map {
+                LocalUserCounter(id: $0.id, localCount: $0.localCount)
+            }
+        }
+        
+        return Array()
+    }
+    
+    func decrementCount(id: String, decrementBy: Int) throws {
+        
+        if #available(iOS 17.4, *), let database = getSwiftPersistence()?.database {
+            
+            let context: ModelContext = database.openContext()
+            
+            let swiftCounter: SwiftUserCounter? = try database.read.object(context: context, id: id)
+            
+            guard let swiftCounter = swiftCounter else {
+                return
+            }
+            
+            swiftCounter.localCount -= decrementBy
+            
+            if swiftCounter.localCount < 0 {
+                swiftCounter.localCount = 0
+            }
+            
+            try database.write.context(
+                context: context,
+                writeObjects: WriteSwiftObjects(deleteObjects: nil, insertObjects: [swiftCounter])
+            )
+        }
+        else if let database = getRealmPersistence()?.database {
+            
+            let realm: Realm = try database.openRealm()
+            
+            let realmCounter: RealmUserCounter? = database.read.object(realm: realm, id: id)
+            
+            guard let realmCounter = realmCounter else {
                 return
             }
             
             try database.write.realm(
                 realm: realm,
-                writeClosure: { (realm: Realm) in
+                writeClosure: { realm in
                     
-                    return WriteRealmObjects(
-                        deleteObjects: counters,
-                        addObjects: nil
-                    )
+                    realmCounter.localCount -= decrementBy
+                    
+                    if realmCounter.localCount < 0 {
+                        realmCounter.localCount = 0
+                    }
+                    
+                    return WriteRealmObjects(deleteObjects: nil, addObjects: [realmCounter])
                 },
                 updatePolicy: .modified
             )

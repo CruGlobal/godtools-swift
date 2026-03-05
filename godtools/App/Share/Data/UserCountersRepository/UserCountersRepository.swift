@@ -15,135 +15,158 @@ class UserCountersRepository {
     
     private let api: UserCountersApi
     private let localUserCounterIncrement: LocalUserCounterIncrement
-    private let cache: RealmUserCountersCache
-    private let remoteUserCountersSync: RemoteUserCountersSync
+    private let cache: UserCountersCache
     
     private var cancellables: Set<AnyCancellable> = Set()
     
     let persistence: any Persistence<UserCounterDataModel, UserCounterCodable>
     
-    init(api: UserCountersApi, persistence: any Persistence<UserCounterDataModel, UserCounterCodable>, localUserCounterIncrement: LocalUserCounterIncrement, cache: RealmUserCountersCache, remoteUserCountersSync: RemoteUserCountersSync) {
+    init(api: UserCountersApi, persistence: any Persistence<UserCounterDataModel, UserCounterCodable>, localUserCounterIncrement: LocalUserCounterIncrement, cache: UserCountersCache) {
         
         self.api = api
         self.persistence = persistence
         self.localUserCounterIncrement = localUserCounterIncrement
         self.cache = cache
-        self.remoteUserCountersSync = remoteUserCountersSync
     }
     
-    @MainActor func getUserCountersChangedPublisher() -> AnyPublisher<[UserCounterDataModel], Error> {
+    func getCachedCounter(id: String) throws -> UserCounterDataModel? {
         
-        return persistence
-            .observeCollectionChangesPublisher()
-            .flatMap { (countersChanged: Void) -> AnyPublisher<[UserCounterDataModel], Error> in
-                
-                return AnyPublisher() {
-                    return try await self.persistence.getDataModelsAsync(getOption: .allObjects)
-                }
-            }
-            .eraseToAnyPublisher()
-    }
-    
-    func incrementCounterPublisher(id: String) -> AnyPublisher<UserCounterDataModel, Error> {
-        
-        return AnyPublisher() {
-            return try await self.localUserCounterIncrement.incrementCounter(id: id)
-        }
-    }
-    
-    func syncCountersPublisher() -> AnyPublisher<[UserCounterDataModel], Error> {
-        
-        return AnyPublisher() {
-            return try await self.syncCounters()
-        }
-    }
-    
-    private func syncCounters() async throws -> [UserCounterDataModel] {
-        
-        // First push any local counts greater than 0 to remote.
-        
-        // After pushing local counts to remote, fetch counts from remote.
-        
-        return Array()
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    func getUserCounter(id: String) -> UserCounterDomainModel? {
-        
-        guard let userCounterDataModel = cache.getUserCounter(id: id) else {
+        guard let counter = try persistence.getDataModel(id: id) else {
             return nil
         }
         
-        return UserCounterDomainModel(dataModel: userCounterDataModel)
+        let count: Int = counter.count
+        let localCount: Int = try localUserCounterIncrement.getCounter(id: id)?.localCount ?? 0
+        
+        return UserCounterDataModel(
+            id: id,
+            count: count + localCount
+        )
     }
     
-//    @MainActor func getUserCountersChangedPublisher(reloadFromRemote: Bool, requestPriority: RequestPriority) -> AnyPublisher<Void, Never> {
-//        
-//        if reloadFromRemote {
-//            
-//            fetchRemoteUserCountersPublisher(requestPriority: requestPriority)
-//                .sink(receiveCompletion: { _ in
-//                }, receiveValue: { _ in
-//                    
-//                })
-//                .store(in: &cancellables)
-//        }
-//        
-//        return cache.getUserCountersChanged()
-//    }
-    
-    func getUserCounters() -> [UserCounterDataModel] {
-        
-        return cache.getAllUserCounters()
-    }
-    
-    func fetchRemoteUserCountersPublisher(requestPriority: RequestPriority) -> AnyPublisher<[UserCounterDataModel], Error> {
-        
-        // TODO: Eventually remove AnyPublisher() and support async await. ~Levi
+    func getCachedCountersPublisher() -> AnyPublisher<[UserCounterDataModel], Error> {
         
         return AnyPublisher() {
-            return try await self.api.fetchUserCounters(requestPriority: requestPriority)
+            return try await self.persistence.getDataModelsAsync(getOption: .allObjects)
         }
-        .flatMap { (userCounters: [UserCounterCodable]) in
+    }
+    
+    func deleteCachedCounters() throws {
+                
+        try cache.deleteCounters()
+    }
+}
+
+// MARK: - Increment Local Counter
+
+extension UserCountersRepository {
+    
+    func incrementCounterPublisher(id: String) -> AnyPublisher<LocalUserCounter, Error> {
+        
+        do {
             
-            return self.cache.syncUserCounters(userCounters)
+            let localUserCounter: LocalUserCounter = try localUserCounterIncrement.incrementCounter(id: id)
+            
+            return Just(localUserCounter)
+                .setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
         }
-        .eraseToAnyPublisher()
+        catch let error {
+            return Fail(error: error)
+                .eraseToAnyPublisher()
+        }
     }
+}
+
+// MARK: - Sync Local Counters
+
+extension UserCountersRepository {
     
-    func incrementCachedUserCounterBy1Publisher(id: String) -> AnyPublisher<[UserCounterDataModel], Error> {
+    private func pushLocalCountersToRemote(requestPriority: RequestPriority) async throws -> [UserCounterCodable] {
         
-        return cache.incrementUserCounterBy1(id: id)
-    }
-    
-    func deleteUserCountersPublisher() -> AnyPublisher<Void, Error> {
+        let localCounters: [LocalUserCounter] = try localUserCounterIncrement.getCounters()
         
-        return cache.deleteAllUserCounters()
+        var updatedCounters: [UserCounterCodable] = Array()
+        
+        for localCounter in localCounters {
+            
+            let updatedCounter: UserCounterCodable? = try await pushLocalCounterToRemote(
+                localCounter: localCounter,
+                requestPriority: requestPriority
+            )
+            
+            if let updatedCounter = updatedCounter {
+                updatedCounters.append(updatedCounter)
+            }
+        }
+        
+        return updatedCounters
     }
     
-    func syncUpdatedUserCountersWithRemotePublisher(requestPriority: RequestPriority) -> AnyPublisher<Void, Error> {
-        return remoteUserCountersSync.syncUpdatedUserCountersWithRemotePublisher(
+    private func pushLocalCounterToRemote(localCounter: LocalUserCounter, requestPriority: RequestPriority) async throws -> UserCounterCodable? {
+        
+        guard localCounter.localCount > 0 else {
+            return nil
+        }
+        
+        let counterId: String = localCounter.id
+        let localCount: Int = localCounter.localCount
+        
+        let remoteCounter: UserCounterCodable = try await api.incrementUserCounter(
+            id: counterId,
+            increment: localCount,
             requestPriority: requestPriority
         )
-        .eraseToAnyPublisher()
+        
+        try localUserCounterIncrement
+            .decrementCount(id: counterId, decrementBy: localCount)
+        
+        return remoteCounter
+    }
+}
+
+// MARK: - Get Counters
+
+extension UserCountersRepository {
+    
+    func getCountersPublisher(requestPriority: RequestPriority) -> AnyPublisher<[UserCounterDataModel], Error> {
+        
+        return AnyPublisher() {
+            
+            return try await self.getCounters(
+                requestPriority: requestPriority
+            )
+        }
+    }
+    
+    private func getCounters(requestPriority: RequestPriority) async throws -> [UserCounterDataModel] {
+                        
+        _ = try await pushLocalCountersToRemote(requestPriority: requestPriority)
+                        
+        let remoteCounters: [UserCounterCodable] = try await api.fetchUserCounters(requestPriority: requestPriority)
+                    
+        let counters: [UserCounterDataModel] = try await persistence
+            .writeObjectsAsync(
+                externalObjects: remoteCounters,
+                writeOption: nil,
+                getOption: .allObjects
+            )
+                
+        return try mergeLocalCountersWithRemoteCounters(remoteCounters: counters)
+    }
+    
+    private func mergeLocalCountersWithRemoteCounters(remoteCounters: [UserCounterDataModel]) throws -> [UserCounterDataModel] {
+        
+        return try remoteCounters.map { (remoteCounter: UserCounterDataModel) in
+            
+            let localCounter: LocalUserCounter? = try localUserCounterIncrement.getCounter(id: remoteCounter.id)
+            
+            let localCount: Int = localCounter?.localCount ?? 0
+                        
+            return UserCounterDataModel(
+                id: remoteCounter.id,
+                count: remoteCounter.count + localCount
+            )
+        }
     }
 }

@@ -12,5 +12,4 @@ protocol UserCounterDataModelInterface {
     
     var id: String { get }
     var count: Int { get }
-    var localCount: Int { get }
 }
