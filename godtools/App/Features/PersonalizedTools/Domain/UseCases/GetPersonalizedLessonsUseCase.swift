@@ -76,8 +76,7 @@ class GetPersonalizedLessonsUseCase {
                 filterLessonsByLanguage: filterLessonsByLanguage
             )
 
-            if !hasCountry && lessons.isEmpty {
-                
+            if self.shouldShowUnavailableState(hasCountry: hasCountry, lessons: lessons) {
                 return self.getLessonsUnavailable(appLanguage: appLanguage)
             }
 
@@ -101,11 +100,15 @@ class GetPersonalizedLessonsUseCase {
     }
     
     private func getLessonsUnavailable(appLanguage: AppLanguageDomainModel) -> LessonsResultDomainModel {
-        
+
         return LessonsResultDomainModel(
             lessons: [],
             unavailableTitle: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "lessons.personalizationUnavailable.title"),
             unavailableMessage: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "lessons.personalizationUnavailable.message")
         )
+    }
+
+    private func shouldShowUnavailableState(hasCountry: Bool, lessons: [LessonListItemDomainModel]) -> Bool {
+        return !hasCountry && lessons.isEmpty
     }
 }
