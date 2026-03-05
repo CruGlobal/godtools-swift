@@ -115,14 +115,12 @@ import RequestOperation
                        
         Publishers.CombineLatest(
             userIsAuthenticatedUseCase
-                .execute(),
+                .execute()
+                .setFailureType(to: Error.self),
             userCountersRepository
-                .getUserCountersChangedPublisher(
-                    reloadFromRemote: false,
-                    requestPriority: .low
-                )
+                .getUserCountersChangedPublisher()
         )
-        .map { (isAuthenticatedDomainModel: UserIsAuthenticatedDomainModel, userCountersChanged: Void) in
+        .map { (isAuthenticatedDomainModel: UserIsAuthenticatedDomainModel, userCounters: [UserCounterDataModel]) in
                         
             if isAuthenticatedDomainModel.isAuthenticated {
                 

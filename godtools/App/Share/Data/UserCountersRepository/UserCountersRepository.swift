@@ -31,6 +31,19 @@ class UserCountersRepository {
         self.remoteUserCountersSync = remoteUserCountersSync
     }
     
+    @MainActor func getUserCountersChangedPublisher() -> AnyPublisher<[UserCounterDataModel], Error> {
+        
+        return persistence
+            .observeCollectionChangesPublisher()
+            .flatMap { (countersChanged: Void) -> AnyPublisher<[UserCounterDataModel], Error> in
+                
+                return AnyPublisher() {
+                    return try await self.persistence.getDataModelsAsync(getOption: .allObjects)
+                }
+            }
+            .eraseToAnyPublisher()
+    }
+    
     func incrementCounterPublisher(id: String) -> AnyPublisher<UserCounterDataModel, Error> {
         
         return AnyPublisher() {
@@ -82,20 +95,20 @@ class UserCountersRepository {
         return UserCounterDomainModel(dataModel: userCounterDataModel)
     }
     
-    @MainActor func getUserCountersChangedPublisher(reloadFromRemote: Bool, requestPriority: RequestPriority) -> AnyPublisher<Void, Never> {
-        
-        if reloadFromRemote {
-            
-            fetchRemoteUserCountersPublisher(requestPriority: requestPriority)
-                .sink(receiveCompletion: { _ in
-                }, receiveValue: { _ in
-                    
-                })
-                .store(in: &cancellables)
-        }
-        
-        return cache.getUserCountersChanged()
-    }
+//    @MainActor func getUserCountersChangedPublisher(reloadFromRemote: Bool, requestPriority: RequestPriority) -> AnyPublisher<Void, Never> {
+//        
+//        if reloadFromRemote {
+//            
+//            fetchRemoteUserCountersPublisher(requestPriority: requestPriority)
+//                .sink(receiveCompletion: { _ in
+//                }, receiveValue: { _ in
+//                    
+//                })
+//                .store(in: &cancellables)
+//        }
+//        
+//        return cache.getUserCountersChanged()
+//    }
     
     func getUserCounters() -> [UserCounterDataModel] {
         

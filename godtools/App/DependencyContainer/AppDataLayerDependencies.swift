@@ -637,6 +637,7 @@ class AppDataLayerDependencies {
         
         return UserCountersRepository(
             api: api,
+            persistence: persistence,
             localUserCounterIncrement: localUserCounterIncrement,
             cache: cache,
             remoteUserCountersSync: RemoteUserCountersSync(api: api, cache: cache)
