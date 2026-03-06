@@ -11,14 +11,12 @@ import Foundation
 struct LessonsResultDomainModel {
 
     let lessons: [LessonListItemDomainModel]
-    let unavailableTitle: String?
-    let unavailableMessage: String?
+    let unavailableStrings: PersonalizedLessonsUnavailableDomainModel?
 
     static var empty: LessonsResultDomainModel {
         LessonsResultDomainModel(
             lessons: [],
-            unavailableTitle: nil,
-            unavailableMessage: nil
+            unavailableStrings: nil
         )
     }
 }

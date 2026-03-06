@@ -73,11 +73,11 @@ struct LessonsView: View {
                         LazyVStack(alignment: .center, spacing: lessonCardSpacing) {
 
                             if viewModel.isPersonalizationUnavailable,
-                               let message = viewModel.personalizationUnavailableMessage {
+                               let unavailableState = viewModel.personalizationUnavailableState {
 
                                 PersonalizationUnavailableView(
-                                    title: viewModel.personalizationUnavailableTitle ?? "",
-                                    message: message,
+                                    title: unavailableState.title,
+                                    message: unavailableState.message,
                                     changeSettingsButtonTitle: viewModel.strings.changeSettings,
                                     goToAllLessonsButtonTitle: viewModel.strings.viewAllLessons,
                                     geometry: geometry,

@@ -47,8 +47,7 @@ final class GetAllLessonsUseCase {
 
                     return LessonsResultDomainModel(
                         lessons: lessonsListItems,
-                        unavailableTitle: nil,
-                        unavailableMessage: nil
+                        unavailableStrings: nil
                     )
                 }
                 .eraseToAnyPublisher()

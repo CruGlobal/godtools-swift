@@ -82,8 +82,7 @@ class GetPersonalizedLessonsUseCase {
 
             return LessonsResultDomainModel(
                 lessons: lessons,
-                unavailableTitle: nil,
-                unavailableMessage: nil
+                unavailableStrings: nil
             )
         }
         .eraseToAnyPublisher()
@@ -101,10 +100,14 @@ class GetPersonalizedLessonsUseCase {
     
     private func getLessonsUnavailable(appLanguage: AppLanguageDomainModel) -> LessonsResultDomainModel {
 
+        let unavailableState = PersonalizedLessonsUnavailableDomainModel(
+            title: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "lessons.personalizationUnavailable.title"),
+            message: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "lessons.personalizationUnavailable.message")
+        )
+
         return LessonsResultDomainModel(
             lessons: [],
-            unavailableTitle: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "lessons.personalizationUnavailable.title"),
-            unavailableMessage: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "lessons.personalizationUnavailable.message")
+            unavailableStrings: unavailableState
         )
     }
 

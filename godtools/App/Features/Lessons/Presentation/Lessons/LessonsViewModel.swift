@@ -36,14 +36,13 @@ import SwiftUI
     @Published private(set) var languageFilterButtonTitle: String = ""
     @Published private(set) var lessons: [LessonListItemDomainModel] = []
     @Published private(set) var isLoadingLessons: Bool = true
-    @Published private(set) var personalizationUnavailableTitle: String?
-    @Published private(set) var personalizationUnavailableMessage: String?
+    @Published private(set) var personalizationUnavailableState: PersonalizedLessonsUnavailableDomainModel?
 
     @Published var selectedToggle: PersonalizationToggleOptionValue = .personalized
 
     var isPersonalizationUnavailable: Bool {
         return selectedToggle == .personalized &&
-                personalizationUnavailableMessage != nil &&
+                personalizationUnavailableState != nil &&
                 !isLoadingLessons
     }
         
@@ -121,8 +120,7 @@ import SwiftUI
         }, receiveValue: { [weak self] (result: LessonsResultDomainModel) in
 
             self?.lessons = result.lessons
-            self?.personalizationUnavailableTitle = result.unavailableTitle
-            self?.personalizationUnavailableMessage = result.unavailableMessage
+            self?.personalizationUnavailableState = result.unavailableStrings
             self?.isLoadingLessons = false
         })
         .store(in: &cancellables)
