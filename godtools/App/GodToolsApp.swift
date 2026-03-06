@@ -31,10 +31,6 @@ struct GodToolsApp: App {
     private let appFlow: AppFlow
     private let toolShortcutLinksViewModel: ToolShortcutLinksViewModel
     
-    static var isDebug: Bool {
-        return appConfig.isDebug
-    }
-    
     static var appLaunchType: AppLaunchType {
         let isUITests: Bool = uiTestsLaunchEnvironment.getIsUITests() ?? false
         if isUITests {

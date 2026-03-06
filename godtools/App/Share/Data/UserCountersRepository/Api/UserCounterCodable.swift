@@ -1,5 +1,5 @@
 //
-//  UserCounterDecodable.swift
+//  UserCounterCodable.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 11/29/22.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct UserCounterDecodable: Codable {
+struct UserCounterCodable: Codable, UserCounterDataModelInterface, Sendable {
     
     let id: String
     let count: Int
@@ -31,10 +31,5 @@ struct UserCounterDecodable: Codable {
         let attributesContainer = try container.nestedContainer(keyedBy: AttributesKeys.self, forKey: .attributes)
         
         count = try attributesContainer.decode(Int.self, forKey: .count)
-    }
-    
-    init(id: String, count: Int) {
-        self.id = id
-        self.count = count
     }
 }
