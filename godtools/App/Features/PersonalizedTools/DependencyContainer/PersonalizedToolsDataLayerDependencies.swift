@@ -56,7 +56,8 @@ class PersonalizedToolsDataLayerDependencies {
             persistence: persistence,
             api: api,
             cache: cache,
-            syncInvalidatorPersistence: coreDataLayer.getUserDefaultsCache()
+            syncInvalidatorPersistence: coreDataLayer.getUserDefaultsCache(),
+            resourcesRepository: coreDataLayer.getResourcesRepository()
         )
     }
 

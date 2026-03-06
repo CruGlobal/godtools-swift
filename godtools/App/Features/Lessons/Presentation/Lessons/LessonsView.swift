@@ -72,25 +72,45 @@ struct LessonsView: View {
 
                         LazyVStack(alignment: .center, spacing: lessonCardSpacing) {
 
-                            ForEach(viewModel.lessons) { (lessonListItem: LessonListItemDomainModel) in
+                            if viewModel.isPersonalizationUnavailable,
+                               let unavailableState = viewModel.personalizationUnavailableState {
 
-                                LessonCardView(
-                                    viewModel: viewModel.getLessonViewModel(lessonListItem: lessonListItem),
+                                PersonalizationUnavailableView(
+                                    title: unavailableState.title,
+                                    message: unavailableState.message,
+                                    changeSettingsButtonTitle: viewModel.strings.changeSettings,
+                                    goToAllLessonsButtonTitle: viewModel.strings.viewAllLessons,
                                     geometry: geometry,
-                                    cardTappedClosure: {
-
-                                        viewModel.lessonCardTapped(lessonListItem: lessonListItem)
+                                    changeSettingsAction: {
+                                        viewModel.localizationSettingsTapped()
+                                    },
+                                    goToAllLessonsAction: {
+                                        viewModel.goToAllLessonsTapped()
                                     }
                                 )
+
+                            } else {
+
+                                ForEach(viewModel.lessons) { (lessonListItem: LessonListItemDomainModel) in
+
+                                    LessonCardView(
+                                        viewModel: viewModel.getLessonViewModel(lessonListItem: lessonListItem),
+                                        geometry: geometry,
+                                        cardTappedClosure: {
+
+                                            viewModel.lessonCardTapped(lessonListItem: lessonListItem)
+                                        }
+                                    )
+                                }
                             }
                         }
                         .padding([.top], lessonCardSpacing)
 
-                        if viewModel.selectedToggle == .personalized {
+                        if viewModel.selectedToggle == .personalized && !viewModel.isPersonalizationUnavailable {
                             PersonalizedToolFooterView(
                                 title: viewModel.strings.personalizedLessonExplanationTitle,
                                 subtitle: viewModel.strings.personalizedLessonExplanationSubtitle,
-                                buttonTitle: viewModel.strings.changePersonalizedLessonSettingsActionLabel,
+                                buttonTitle: viewModel.strings.changeSettings,
                                 buttonAction: {
                                     viewModel.localizationSettingsTapped()
                                 }
