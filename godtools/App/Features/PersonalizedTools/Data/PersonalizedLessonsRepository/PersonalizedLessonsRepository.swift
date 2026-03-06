@@ -29,11 +29,11 @@ final class PersonalizedLessonsRepository: RepositorySync<PersonalizedLessonsDat
         )
     }
 
-    @MainActor func getPersonalizedLessonsChanged(reloadFromRemote: Bool, requestPriority: RequestPriority, country: String, language: String) -> AnyPublisher<Void, Error> {
+    @MainActor func getPersonalizedLessonsChanged(reloadFromRemote: Bool, requestPriority: RequestPriority, country: String?, language: String) -> AnyPublisher<Void, Error> {
 
         if reloadFromRemote {
 
-            getAllRankedLessonsPublisher(requestPriority: requestPriority, country: country, language: language)
+            getPersonalizedLessonsPublisher(requestPriority: requestPriority, country: country, language: language)
                 .sink { _ in
 
                 } receiveValue: { _ in
@@ -47,7 +47,7 @@ final class PersonalizedLessonsRepository: RepositorySync<PersonalizedLessonsDat
             .eraseToAnyPublisher()
     }
 
-    func getPersonalizedLessons(country: String, language: String) -> PersonalizedLessonsDataModel? {
+    func getPersonalizedLessons(country: String?, language: String) -> PersonalizedLessonsDataModel? {
 
         let id: String = PersonalizedLessonsId(country: country, language: language).value
         
@@ -55,10 +55,17 @@ final class PersonalizedLessonsRepository: RepositorySync<PersonalizedLessonsDat
             .getDataModelNonThrowing(id: id)
     }
 
-    func getAllRankedLessonsPublisher(requestPriority: RequestPriority, country: String, language: String) -> AnyPublisher<[PersonalizedLessonsDataModel], Error> {
+    func getPersonalizedLessonsPublisher(requestPriority: RequestPriority, country: String?, language: String) -> AnyPublisher<[PersonalizedLessonsDataModel], Error> {
 
-        return api
-            .getAllRankedResourcesPublisher(requestPriority: requestPriority, country: country, language: language, resourceType: .lesson)
+        let publisher: AnyPublisher<[ResourceCodable], Error>
+
+        if let country = country, !country.isEmpty {
+            publisher = api.getAllRankedResourcesPublisher(requestPriority: requestPriority, country: country, language: language, resourceType: .lesson)
+        } else {
+            publisher = api.getDefaultOrderResourcesPublisher(requestPriority: requestPriority, language: language, resourceType: .lesson)
+        }
+
+        return publisher
             .flatMap { (resourceCodables: [ResourceCodable]) in
 
                 let resources: [ResourceDataModel] = resourceCodables.map {
@@ -70,7 +77,7 @@ final class PersonalizedLessonsRepository: RepositorySync<PersonalizedLessonsDat
                     language: language,
                     resourceIds: resources.map { $0.id }
                 )
-                
+
                 return self.persistence
                     .writeObjectsPublisher(
                         externalObjects: [personalizedLessons],

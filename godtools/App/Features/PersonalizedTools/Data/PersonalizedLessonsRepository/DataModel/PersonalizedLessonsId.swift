@@ -9,11 +9,15 @@
 import Foundation
 
 struct PersonalizedLessonsId: Sendable {
-    
+
     let value: String
-    
-    init(country: String, language: String) {
-        
-        value = "\(country)_\(language)"
+
+    init(country: String?, language: String) {
+
+        if let country = country, !country.isEmpty {
+            value = "\(country)_\(language)"
+        } else {
+            value = language
+        }
     }
 }

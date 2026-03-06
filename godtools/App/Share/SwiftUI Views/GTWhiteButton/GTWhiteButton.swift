@@ -9,9 +9,9 @@
 import SwiftUI
 
 struct GTWhiteButton: View {
-    
+
     private let accessibility: AccessibilityStrings.Button?
-    
+
     let title: String
     let font: Font
     let width: CGFloat
@@ -19,18 +19,20 @@ struct GTWhiteButton: View {
     let cornerRadius: CGFloat
     let titleHorizontalPadding: CGFloat?
     let titleVerticalPadding: CGFloat?
+    let backgroundColor: Color
     let action: () -> Void
-    
-    init(title: String, font: Font? = nil, fontSize: CGFloat? = nil, width: CGFloat, height: CGFloat, cornerRadius: CGFloat = 6, titleHorizontalPadding: CGFloat? = nil, titleVerticalPadding: CGFloat? = nil, accessibility: AccessibilityStrings.Button? = nil, action: @escaping () -> Void) {
+
+    init(title: String, font: Font? = nil, fontSize: CGFloat? = nil, width: CGFloat, height: CGFloat, cornerRadius: CGFloat = 6, titleHorizontalPadding: CGFloat? = nil, titleVerticalPadding: CGFloat? = nil, backgroundColor: Color = .white, accessibility: AccessibilityStrings.Button? = nil, action: @escaping () -> Void) {
         self.title = title
         self.width = width
         self.height = height
         self.cornerRadius = cornerRadius
         self.titleHorizontalPadding = titleHorizontalPadding
         self.titleVerticalPadding = titleVerticalPadding
+        self.backgroundColor = backgroundColor
         self.accessibility = accessibility
         self.action = action
-        
+
         if let font = font {
             self.font = font
         }
@@ -67,7 +69,7 @@ struct GTWhiteButton: View {
             }
         }
         .frame(width: width, height: height, alignment: .center)
-        .background(Color.white)
+        .background(backgroundColor)
         .accentColor(ColorPalette.gtBlue.color)
         .cornerRadius(cornerRadius)
         .accessibilityIdentifier(accessibility?.id ?? "")
