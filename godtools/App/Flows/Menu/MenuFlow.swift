@@ -11,10 +11,8 @@ import MessageUI
 import SwiftUI
 import Combine
 
-class MenuFlow: Flow {
-        
-    private static var backgroundCancellables: Set<AnyCancellable> = Set()
-    
+class MenuFlow: Flow, LocalizationSettingsNavigationFlow {
+            
     private var tutorialFlow: TutorialFlow?
     private var languageSettingsFlow: LanguageSettingsFlow?
     private var cancellables: Set<AnyCancellable> = Set()
@@ -26,6 +24,8 @@ class MenuFlow: Flow {
     
     let appDiContainer: AppDiContainer
     let navigationController: AppNavigationController
+    
+    var localizationSettingsFlow: LocalizationSettingsFlow?
         
     init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, initialNavigationStep: FlowStep? = nil) {
         
@@ -92,26 +92,20 @@ class MenuFlow: Flow {
             closeLanguageSettings()
             
         case .localizationSettingsTappedFromMenu:
-            let localizationSettings = getLocalizationSettingsView(showsPreferNotToSay: false)
-            navigationController.pushViewController(localizationSettings, animated: true)
+            navigateToLocalizationSettings(
+                showsPreferNotToSay: false,
+                shouldStoreCountryWhenSelected: true,
+                userShouldConfirmSelectedCountry: false
+            )
             
-        case .backTappedFromLocalizationSettings:
-            navigationController.popViewController(animated: true)
-
-        case .countryTappedFromLocalizationSettings(let country):
-            appDiContainer
-                .feature
-                .personalizedTools
-                .domainLayer
-                .getSetLocalizationSettingsUseCase()
-                .execute(country: country.countryDomainModel)
-                .sink { _ in
-
-                } receiveValue: { _ in
-
-                }
-                .store(in: &Self.backgroundCancellables)
-
+        case .localizationSettingsFlowCompleted(let state):
+            switch state {
+            case .userTappedBackFromLocalizationSettings:
+                navigateBackFromLocalizationSettingsFlow()
+            case .userConfirmedLocalizationSetting(let countryListItem):
+                navigateBackFromLocalizationSettingsFlow()
+            }
+            
         case .tutorialTappedFromMenu:
             navigateToTutorial()
             
@@ -358,34 +352,6 @@ extension MenuFlow {
     }
 }
 
-// MARK: - Localization Settings
-
-extension MenuFlow {
-    
-    private func getLocalizationSettingsConfirmationView(selectedCountry: LocalizationSettingsCountryListItem) -> UIViewController {
-
-        let confirmationViewModel = LocalizationSettingsConfirmationViewModel(
-            flowDelegate: self,
-            selectedCountry: selectedCountry,
-            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getLocalizationSettingsConfirmationStringsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getLocalizationSettingsConfirmationStringsUseCase()
-        )
-
-        let confirmationView = LocalizationSettingsConfirmationView(viewModel: confirmationViewModel)
-
-        let hostingView = AppHostingController<LocalizationSettingsConfirmationView>(
-            rootView: confirmationView,
-            navigationBar: nil
-        )
-
-        hostingView.modalPresentationStyle = .overFullScreen
-        hostingView.modalTransitionStyle = .crossDissolve
-        hostingView.view.backgroundColor = .clear
-
-        return hostingView
-    }
-}
-
 // MARK: - Tutorial
 
 extension MenuFlow {
@@ -578,7 +544,7 @@ extension MenuFlow {
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getUserAccountDetailsUseCase: appDiContainer.feature.account.domainLayer.getUserAccountDetailsUseCase(),
             getUserActivityUseCase: appDiContainer.feature.userActivity.domainLayer.getUserActivityUseCase(),
-            viewGlobalActivityThisWeekUseCase: appDiContainer.feature.globalActivity.domainLayer.getViewGlobalActivityThisWeekUseCase(),
+            getGlobalActivityThisWeekUseCase: appDiContainer.feature.globalActivity.domainLayer.getGlobalActivityThisWeekUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             getAccountStringsUseCase: appDiContainer.feature.account.domainLayer.getAccountStringsUseCase(),
             getGlobalActivityEnabledUseCase: appDiContainer.feature.globalActivity.domainLayer.getGlobalActivityEnabledUseCase()

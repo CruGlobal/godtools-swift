@@ -31,10 +31,6 @@ struct GodToolsApp: App {
     private let appFlow: AppFlow
     private let toolShortcutLinksViewModel: ToolShortcutLinksViewModel
     
-    static var isDebug: Bool {
-        return appConfig.isDebug
-    }
-    
     static var appLaunchType: AppLaunchType {
         let isUITests: Bool = uiTestsLaunchEnvironment.getIsUITests() ?? false
         if isUITests {
@@ -83,7 +79,10 @@ struct GodToolsApp: App {
         )
         
         if Self.appConfig.buildConfig == .release {
-            GodToolsParserLogger.shared.start()
+            GodToolsParserLogger.shared.start(
+                errorReporting: Self.appDiContainer.dataLayer.getErrorReporting(),
+                firebaseErrorReporting: Self.appDiContainer.dataLayer.getFirebaseNonFatalErrorReporting()
+            )
         }
         
         if Self.appConfig.firebaseEnabled {

@@ -16,6 +16,6 @@ class GlobalActivityDiContainer {
     init(coreDataLayer: AppDataLayerDependencies) {
         
         dataLayer = GlobalActivityDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainLayer = GlobalActivityDomainLayerDependencies(dataLayer: dataLayer)
+        domainLayer = GlobalActivityDomainLayerDependencies(coreDataLayer: coreDataLayer, dataLayer: dataLayer)
     }
 }

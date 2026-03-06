@@ -30,7 +30,7 @@ class GetLessonListItemProgressRepository {
         let lessonId = lesson.id
         let lessonCompletionUserCounterId = UserCounterNames.shared.LESSON_COMPLETION(tool: lesson.abbreviation)
         
-        if try userCountersRepository.getUserCounter(id: lessonCompletionUserCounterId) != nil {
+        if try userCountersRepository.getCachedCounter(id: lessonCompletionUserCounterId) != nil {
             
             let completeString = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage.localeId, key: "lessons.lessonCompleted")
             return .complete(completeString: completeString)

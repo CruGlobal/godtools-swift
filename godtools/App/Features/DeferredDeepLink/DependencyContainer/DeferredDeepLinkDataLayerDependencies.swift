@@ -15,14 +15,4 @@ class DeferredDeepLinkDataLayerDependencies {
     init(coreDataLayer: AppDataLayerDependencies) {
         self.coreDataLayer = coreDataLayer
     }
-    
-    // MARK: - Data Layer Classes
-    
-    // MARK: - Domain Interface
-    
-    func getDeferredDeepLinkModalInterfaceStringsRepositoryInterface() -> GetDeferredDeepLinkModalInterfaceStringsRepositoryInterface {
-        return GetDeferredDeepLinkInterfaceStringsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
 }

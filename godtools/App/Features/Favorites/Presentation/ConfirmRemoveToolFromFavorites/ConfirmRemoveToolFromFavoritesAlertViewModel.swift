@@ -53,8 +53,10 @@ class ConfirmRemoveToolFromFavoritesAlertViewModel: AlertMessageViewModelType {
                 toolId: toolId
             )
             .receive(on: DispatchQueue.main)
-            .sink { _ in
+            .sink(receiveCompletion: { _ in
                 
-            }
+            }, receiveValue: { _ in
+                
+            })
     }
 }

@@ -25,12 +25,19 @@ class DownloadLatestToolsForFavoritedToolsUseCase {
     @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<Void, Error> {
         
         return Publishers.CombineLatest(
-            resourcesRepository.persistence.observeCollectionChangesPublisher(),
+            resourcesRepository
+                .persistence
+                .observeCollectionChangesPublisher(),
             favoritedResourcesRepository
-                .getFavoritedResourcesSortedByPositionPublisher()
-                .setFailureType(to: Error.self)
+                .persistence
+                .observeCollectionChangesPublisher()
         )
-        .flatMap({ (resourcesChanged: Void, favoritedTools: [FavoritedResourceDataModel]) -> AnyPublisher<[DownloadToolDataModel], Error> in
+        .flatMap { (resourcesChanged: Void, favoritedResourcesChanged: Void) -> AnyPublisher<[FavoritedResourceDataModel], Error> in
+                        
+            return self.favoritedResourcesRepository
+                .getFavoritedResourcesSortedByPositionPublisher()
+        }
+        .flatMap { (favoritedTools: [FavoritedResourceDataModel]) -> AnyPublisher<[DownloadToolDataModel], Error> in
                         
             let tools: [DownloadToolDataModel] = favoritedTools.map({
                 DownloadToolDataModel(
@@ -42,8 +49,8 @@ class DownloadLatestToolsForFavoritedToolsUseCase {
             return Just(tools)
                 .setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
-        })
-        .flatMap({ (tools: [DownloadToolDataModel]) -> AnyPublisher<Void, Error> in
+        }
+        .flatMap { (tools: [DownloadToolDataModel]) -> AnyPublisher<Void, Error> in
                         
             return self.toolDownloader
                 .downloadToolsPublisher(tools: tools, requestPriority: .medium)
@@ -51,7 +58,7 @@ class DownloadLatestToolsForFavoritedToolsUseCase {
                     return Void()
                 }
                 .eraseToAnyPublisher()
-        })
+        }
         .eraseToAnyPublisher()
     }
 }
