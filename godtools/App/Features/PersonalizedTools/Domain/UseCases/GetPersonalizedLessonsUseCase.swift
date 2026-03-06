@@ -52,23 +52,22 @@ class GetPersonalizedLessonsUseCase {
 
         return Publishers.CombineLatest3(
             personalizedLessonsRepository
-                .getPersonalizedLessonsChanged(reloadFromRemote: true, requestPriority: .high, country: countryIsoRegionCode, language: languageCode),
+                .getPersonalizedLessonsChanged(requestPriority: .high, country: countryIsoRegionCode, language: languageCode),
             resourcesRepository.persistence
                 .observeCollectionChangesPublisher(),
             lessonProgressRepository
                 .getLessonProgressChangedPublisher()
                 .setFailureType(to: Error.self)
         )
-        .flatMap({ (personalizedLessonsChanged, resourcesChanged, lessonProgressChanged) in
+        .flatMap({ (personalizedLessonsChanged, resourcesChanged, lessonProgressChanged) -> AnyPublisher<[ResourceDataModel], Error> in
 
-            let personalizedLessons = self.personalizedLessonsRepository.getPersonalizedLessons(
-                country: countryIsoRegionCode,
-                language: languageCode
-            )
-
-            return self.fetchResources(for: personalizedLessons)
+            return self.personalizedLessonsRepository
+                .getPersistedPersonalizedLessonsPublisher(
+                    country: countryIsoRegionCode,
+                    language: languageCode
+                )
         })
-        .tryMap { resources in
+        .tryMap { (resources: [ResourceDataModel]) in
 
             let lessons = try self.getLessonsListItems.mapLessonsToListItems(
                 lessons: resources,
@@ -86,16 +85,6 @@ class GetPersonalizedLessonsUseCase {
             )
         }
         .eraseToAnyPublisher()
-    }
-    
-    private func fetchResources(for personalizedLessonsDataModel: PersonalizedLessonsDataModel?) -> AnyPublisher<[ResourceDataModel], Error> {
-        guard let personalizedLessonsDataModel = personalizedLessonsDataModel else {
-            return Just([])
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
-
-        return resourcesRepository.persistence.getDataModelsPublisher(getOption: .objectsByIds(ids: personalizedLessonsDataModel.resourceIds))
     }
     
     private func getLessonsUnavailable(appLanguage: AppLanguageDomainModel) -> LessonsResultDomainModel {

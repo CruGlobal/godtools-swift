@@ -15,77 +15,184 @@ final class PersonalizedLessonsRepository: RepositorySync<PersonalizedLessonsDat
 
     private let api: PersonalizedToolsApi
     private let cache: PersonalizedLessonsCache
+    private let syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface
+    private let resourcesRepository: ResourcesRepository
 
     private var cancellables: Set<AnyCancellable> = Set()
 
-    init(persistence: any Persistence<PersonalizedLessonsDataModel, PersonalizedLessonsDataModel>, api: PersonalizedToolsApi, cache: PersonalizedLessonsCache) {
+    init(persistence: any Persistence<PersonalizedLessonsDataModel, PersonalizedLessonsDataModel>, api: PersonalizedToolsApi, cache: PersonalizedLessonsCache, syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface, resourcesRepository: ResourcesRepository) {
 
         self.api = api
         self.cache = cache
+        self.syncInvalidatorPersistence = syncInvalidatorPersistence
+        self.resourcesRepository = resourcesRepository
         
         super.init(
             externalDataFetch: NoExternalDataFetch<PersonalizedLessonsDataModel>(),
             persistence: persistence
         )
     }
+    
+    private func getSyncInvalidator(id: PersonalizedLessonsId) -> SyncInvalidator {
+        
+        let id: String = "\(String(describing: PersonalizedLessonsRepository.self)).syncPersonalizedLessons.\(id.value)"
+        
+        return SyncInvalidator(
+            id: id,
+            timeInterval: .hours(hour: 8),
+            persistence: syncInvalidatorPersistence
+        )
+    }
 
-    @MainActor func getPersonalizedLessonsChanged(reloadFromRemote: Bool, requestPriority: RequestPriority, country: String?, language: String) -> AnyPublisher<Void, Error> {
+    @MainActor func getPersonalizedLessonsChanged(requestPriority: RequestPriority, country: String?, language: String, forceNewSync: Bool = false) -> AnyPublisher<Void, Error> {
 
-        if reloadFromRemote {
+        syncPersonalizedLessonsPublisher(
+            requestPriority: requestPriority,
+            country: country,
+            language: language,
+            forceNewSync: forceNewSync
+        )
+        .sink { completion in
+                        
+        } receiveValue: { _ in
 
-            getPersonalizedLessonsPublisher(requestPriority: requestPriority, country: country, language: language)
-                .sink { _ in
-
-                } receiveValue: { _ in
-
-                }
-                .store(in: &cancellables)
         }
+        .store(in: &cancellables)
 
         return persistence
             .observeCollectionChangesPublisher()
             .eraseToAnyPublisher()
     }
+}
 
-    func getPersonalizedLessons(country: String?, language: String) -> PersonalizedLessonsDataModel? {
+// MARK: - Persistence
 
-        let id: String = PersonalizedLessonsId(country: country, language: language).value
+extension PersonalizedLessonsRepository {
+    
+    func getPersistedPersonalizedLessonsPublisher(country: String?, language: String) -> AnyPublisher<[ResourceDataModel], Error> {
         
-        return persistence
-            .getDataModelNonThrowing(id: id)
+        return AnyPublisher() {
+            return try await self.getPersistedPersonalizedLessons(country: country, language: language)
+        }
     }
 
-    func getPersonalizedLessonsPublisher(requestPriority: RequestPriority, country: String?, language: String) -> AnyPublisher<[PersonalizedLessonsDataModel], Error> {
+    func getPersistedPersonalizedLessons(country: String?, language: String) async throws -> [ResourceDataModel] {
 
-        let publisher: AnyPublisher<[ResourceCodable], Error>
-
-        if let country = country, !country.isEmpty {
-            publisher = api.getAllRankedResourcesPublisher(requestPriority: requestPriority, country: country, language: language, resourceType: .lesson)
-        } else {
-            publisher = api.getDefaultOrderResourcesPublisher(requestPriority: requestPriority, language: language, resourceType: .lesson)
+        let type = PersonalizedLessonsType(country: country, langauge: language)
+        
+        switch type {
+            
+        case .allRanked(let country, let language):
+            return try await getPersistedAllRankedLessons(country: country, language: language)
+            
+        case .defaultOrder(let language):
+            return try await getPersistedDefaultOrderLessons(language: language)
         }
+    }
+    
+    func getPersistedAllRankedLessons(country: String, language: String) async throws -> [ResourceDataModel] {
+        
+        let personalizedLessons: PersonalizedLessonsDataModel? = try persistence.getDataModel(
+            id: try PersonalizedLessonsId.createForAllRankedLessons(country: country, language: language).value
+        )
+        
+        return try await getPersistedResources(personalizedLessons: personalizedLessons)
+    }
+    
+    func getPersistedDefaultOrderLessons(language: String) async throws -> [ResourceDataModel] {
+        
+        let personalizedLessons: PersonalizedLessonsDataModel? = try persistence.getDataModel(
+            id: PersonalizedLessonsId.createForDefaultOrder(language: language).value
+        )
+        
+        return try await getPersistedResources(personalizedLessons: personalizedLessons)
+    }
+    
+    private func getPersistedResources(personalizedLessons: PersonalizedLessonsDataModel?) async throws -> [ResourceDataModel] {
+        
+        guard let personalizedLessons = personalizedLessons else {
+            return Array()
+        }
+        
+        return try await resourcesRepository.persistence.getDataModelsAsync(getOption: .objectsByIds(ids: personalizedLessons.resourceIds))
+    }
+}
 
-        return publisher
-            .flatMap { (resourceCodables: [ResourceCodable]) in
+// MARK: - Sync
 
-                let resources: [ResourceDataModel] = resourceCodables.map {
-                    ResourceDataModel(interface: $0)
-                }
+extension PersonalizedLessonsRepository {
+    
+    func syncPersonalizedLessonsPublisher(requestPriority: RequestPriority, country: String?, language: String, forceNewSync: Bool = false) -> AnyPublisher<[ResourceDataModel], Error> {
 
-                let personalizedLessons = PersonalizedLessonsDataModel(
-                    country: country,
-                    language: language,
-                    resourceIds: resources.map { $0.id }
-                )
-
-                return self.persistence
-                    .writeObjectsPublisher(
-                        externalObjects: [personalizedLessons],
-                        writeOption: nil,
-                        getOption: .object(id: personalizedLessons.id)
-                    )
-                    .eraseToAnyPublisher()
+        return AnyPublisher() {
+            
+            return try await self.syncPersonalizedLessons(
+                requestPriority: requestPriority,
+                country: country,
+                language: language,
+                forceNewSync: forceNewSync
+            )
+        }
+    }
+    
+    private func syncPersonalizedLessons(requestPriority: RequestPriority, country: String?, language: String, forceNewSync: Bool = false) async throws -> [ResourceDataModel] {
+        
+        let type = PersonalizedLessonsType(country: country, langauge: language)
+        
+        let personalizedLessonId = try PersonalizedLessonsId(type: type)
+        
+        let syncInvalidator: SyncInvalidator = getSyncInvalidator(
+            id: personalizedLessonId
+        )
+        
+        let shouldSync: Bool = syncInvalidator.shouldSync || forceNewSync
+        
+        guard shouldSync else {
+            
+            switch type {
+            
+            case .allRanked(let country, let language):
+                return try await getPersistedAllRankedLessons(country: country, language: language)
+            
+            case .defaultOrder(let language):
+                return try await getPersistedDefaultOrderLessons(language: language)
             }
-            .eraseToAnyPublisher()
+        }
+        
+        let resourceCodables: [ResourceCodable]
+        
+        switch type {
+        
+        case .allRanked(let country, let language):
+            resourceCodables = try await api.getAllRankedResources(
+                requestPriority: requestPriority,
+                country: country,
+                language: language,
+                resourceType: .lesson
+            )
+        
+        case .defaultOrder(let language):
+            resourceCodables = try await api.getDefaultOrderResources(
+                requestPriority: requestPriority,
+                language: language,
+                resourceType: .lesson
+            )
+        }
+        
+        let personalizedLessons = try PersonalizedLessonsDataModel(
+            country: country,
+            language: language,
+            resourceIds: resourceCodables.map { $0.id }
+        )
+        
+        _ = try await persistence.writeObjectsAsync(
+            externalObjects: [personalizedLessons],
+            writeOption: nil,
+            getOption: nil
+        )
+        
+        syncInvalidator.didSync()
+        
+        return try await getPersistedResources(personalizedLessons: personalizedLessons)
     }
 }
