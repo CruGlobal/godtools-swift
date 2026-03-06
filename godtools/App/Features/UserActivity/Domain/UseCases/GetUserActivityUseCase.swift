@@ -28,20 +28,19 @@ final class GetUserActivityUseCase {
     @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<UserActivityDomainModel, Error> {
         
         return userCounterRepository
-            .getUserCountersChangedPublisher(
-                reloadFromRemote: true,
-                requestPriority: .high
-            )
-            .flatMap { (countersChanged: Void) -> AnyPublisher<[UserCounterDomainModel], Error> in
+            .persistence
+            .observeCollectionChangesPublisher()
+            .flatMap { (countersChanged: Void) in
                 
-                return AnyPublisher() {
-                    return try await self.getAllUserCounters()
-                }
+                return self
+                    .userCounterRepository
+                    .getCachedCountersPublisher()
+                    .eraseToAnyPublisher()
             }
-            .map { (allUserCounters: [UserCounterDomainModel]) in
+            .map { (counters: [UserCounterDataModel]) in
                                 
-                let userActivityDomainModel = self.getUserActivityDomainModel(
-                    from: allUserCounters,
+                let userActivityDomainModel: UserActivityDomainModel = self.getUserActivityDomainModel(
+                    userCounters: counters,
                     translatedInAppLanguage: appLanguage
                 )
                 
@@ -50,30 +49,29 @@ final class GetUserActivityUseCase {
             .eraseToAnyPublisher()
     }
     
-    private func getAllUserCounters() async throws -> [UserCounterDomainModel] {
+    private func getAllUserCounterDomainModels(userCounters: [UserCounterDataModel]) -> [UserCounterDomainModel] {
         
-        var userCounters = try await userCounterRepository.getUserCounters().map {
-            UserCounterDomainModel(dataModel: $0)
+        var userCounterDomainModels = userCounters.map {
+            UserCounterDomainModel(id: $0.id, count: $0.count)
         }
-        
-        userCounters.append(getCompletedTrainingTipCounter())
-        
-        return userCounters
-    }
-    
-    private func getCompletedTrainingTipCounter() -> UserCounterDomainModel {
         
         let numberTipsCompleted = completedTrainingTipRepository.getNumberOfCompletedTrainingTips()
         
-        return UserCounterDomainModel(
+        let trainingTipsCounter = UserCounterDomainModel(
             id: UserCounterNames.shared.TIPS_COMPLETED,
             count: numberTipsCompleted
         )
+        
+        userCounterDomainModels.append(trainingTipsCounter)
+        
+        return userCounterDomainModels
     }
     
-    private func getUserActivityDomainModel(from counters: [UserCounterDomainModel], translatedInAppLanguage: AppLanguageDomainModel) -> UserActivityDomainModel {
+    private func getUserActivityDomainModel(userCounters: [UserCounterDataModel], translatedInAppLanguage: AppLanguageDomainModel) -> UserActivityDomainModel {
         
-        let userCounterDictionary = buildUserCounterDictionary(from: counters)
+        let domainModels: [UserCounterDomainModel] = getAllUserCounterDomainModels(userCounters: userCounters)
+        
+        let userCounterDictionary = buildUserCounterDictionary(from: domainModels)
         
         let userActivity = UserActivity(counters: userCounterDictionary)
         

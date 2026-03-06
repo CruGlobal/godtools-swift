@@ -113,44 +113,42 @@ import RequestOperation
     
     private func syncUserCounters(userIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase, userCountersRepository: UserCountersRepository) {
                        
-        Publishers.CombineLatest(
-            userIsAuthenticatedUseCase
-                .execute(),
-            userCountersRepository
-                .getUserCountersChangedPublisher(
-                    reloadFromRemote: false,
-                    requestPriority: .low
-                )
-        )
-        .map { (isAuthenticatedDomainModel: UserIsAuthenticatedDomainModel, userCountersChanged: Void) in
-                        
-            if isAuthenticatedDomainModel.isAuthenticated {
+        userIsAuthenticatedUseCase
+            .execute()
+            .map { (isAuthenticatedDomainModel: UserIsAuthenticatedDomainModel) in
+                            
+                if isAuthenticatedDomainModel.isAuthenticated {
+                    
+                    return userCountersRepository
+                        .getCountersPublisher(
+                            requestPriority: .high
+                        )
+                        .map { _ in
+                            return Void()
+                        }
+                        .eraseToAnyPublisher()
+                }
+                else {
+                    
+                    return Just(Void())
+                        .setFailureType(to: Error.self)
+                        .eraseToAnyPublisher()
+                }
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { completion in
+                            
+                switch completion {
+                case .finished:
+                    break
+                case .failure( _):
+                    break
+                }
                 
-                return userCountersRepository
-                    .syncUpdatedUserCountersWithRemotePublisher(requestPriority: .low)
-                    .eraseToAnyPublisher()
-            }
-            else {
+            }, receiveValue: { _ in
                 
-                return Just(Void())
-                    .setFailureType(to: Error.self)
-                    .eraseToAnyPublisher()
-            }
-        }
-        .switchToLatest()
-        .receive(on: DispatchQueue.main)
-        .sink(receiveCompletion: { completion in
-                        
-            switch completion {
-            case .finished:
-                break
-            case .failure( _):
-                break
-            }
-            
-        }, receiveValue: { _ in
-            
-        })
-        .store(in: &cancellables)
+            })
+            .store(in: &cancellables)
     }
 }
