@@ -1,5 +1,5 @@
 //
-//  UserCountersAPI.swift
+//  UserCountersApi.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 11/29/22.
@@ -11,7 +11,7 @@ import RequestOperation
 import Combine
 import RepositorySync
 
-class UserCountersAPI {
+class UserCountersApi {
     
     private let authSession: MobileContentApiAuthSession
     private let baseURL: String
@@ -25,7 +25,7 @@ class UserCountersAPI {
         self.authSession = mobileContentApiAuthSession
     }
     
-    func fetchUserCounters(requestPriority: RequestPriority) async throws -> [UserCounterDecodable] {
+    func fetchUserCounters(requestPriority: RequestPriority) async throws -> [UserCounterCodable] {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
@@ -36,31 +36,12 @@ class UserCountersAPI {
             urlSession: urlSession
         )
         
-        let codable: JsonApiResponseDataArray<UserCounterDecodable> = try JSONDecoder().decode(
-            JsonApiResponseDataArray<UserCounterDecodable>.self,
+        let codable: JsonApiResponseDataArray<UserCounterCodable> = try JSONDecoder().decode(
+            JsonApiResponseDataArray<UserCounterCodable>.self,
             from: data
         )
         
         return codable.dataArray
-    }
-    
-    func incrementUserCounter(id: String, increment: Int, requestPriority: RequestPriority) async throws -> UserCounterDecodable {
-        
-        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
-        
-        let incrementRequest = getIncrementUserCountersRequest(id: id, increment: increment, urlSession: urlSession)
-        
-        let data: Data = try await authSession.sendAuthenticatedRequest(
-            urlRequest: incrementRequest,
-            urlSession: urlSession
-        )
-        
-        let codable: JsonApiResponseDataObject<UserCounterDecodable> = try JSONDecoder().decode(
-            JsonApiResponseDataObject<UserCounterDecodable>.self,
-            from: data
-        )
-        
-        return codable.dataObject
     }
     
     private func getUserCountersRequest(urlSession: URLSession) -> URLRequest {
@@ -79,6 +60,25 @@ class UserCountersAPI {
                 queryItems: nil
             )
         )
+    }
+    
+    func incrementUserCounter(id: String, increment: Int, requestPriority: RequestPriority) async throws -> UserCounterCodable {
+        
+        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
+        
+        let incrementRequest = getIncrementUserCountersRequest(id: id, increment: increment, urlSession: urlSession)
+        
+        let data: Data = try await authSession.sendAuthenticatedRequest(
+            urlRequest: incrementRequest,
+            urlSession: urlSession
+        )
+        
+        let codable: JsonApiResponseDataObject<UserCounterCodable> = try JSONDecoder().decode(
+            JsonApiResponseDataObject<UserCounterCodable>.self,
+            from: data
+        )
+        
+        return codable.dataObject
     }
     
     private func getIncrementUserCountersRequest(id: String, increment: Int, urlSession: URLSession) -> URLRequest {
@@ -106,28 +106,5 @@ class UserCountersAPI {
                 queryItems: nil
             )
         )
-    }
-}
-
-extension UserCountersAPI: ExternalDataFetchInterface {
-
-    func getObject(id: String, context: RequestOperationFetchContext) async throws -> [UserCounterDecodable] {
-        
-        return try await emptyResponse()
-    }
-    
-    func getObjects(context: RequestOperationFetchContext) async throws -> [UserCounterDecodable] {
-        
-        return try await emptyResponse()
-    }
-    
-    func getObjectPublisher(id: String, context: RequestOperationFetchContext) -> AnyPublisher<[UserCounterDecodable], Error> {
-        
-        return emptyResponsePublisher()
-    }
-    
-    func getObjectsPublisher(context: RequestOperationFetchContext) -> AnyPublisher<[UserCounterDecodable], Error> {
-        
-        return emptyResponsePublisher()
     }
 }
