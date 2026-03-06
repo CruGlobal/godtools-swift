@@ -36,8 +36,15 @@ import SwiftUI
     @Published private(set) var languageFilterButtonTitle: String = ""
     @Published private(set) var lessons: [LessonListItemDomainModel] = []
     @Published private(set) var isLoadingLessons: Bool = true
-    
+    @Published private(set) var personalizationUnavailableState: PersonalizedLessonsUnavailableDomainModel?
+
     @Published var selectedToggle: PersonalizationToggleOptionValue = .personalized
+
+    var isPersonalizationUnavailable: Bool {
+        return selectedToggle == .personalized &&
+                personalizationUnavailableState != nil &&
+                !isLoadingLessons
+    }
         
     init(flowDelegate: FlowDelegate, pullToRefreshLessonsUseCase: PullToRefreshLessonsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase, getLessonsStringsUseCase: GetLessonsStringsUseCase, getAllLessonsUseCase: GetAllLessonsUseCase, getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getToolBannerUseCase: GetToolBannerUseCase) {
 
@@ -52,10 +59,6 @@ import SwiftUI
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.getToolBannerUseCase = getToolBannerUseCase
-        
-        if !GodToolsAppConfig.showsPersonalization {
-            selectedToggle = .all
-        }
         
         getCurrentAppLanguageUseCase
             .execute()
@@ -90,10 +93,10 @@ import SwiftUI
             $selectedToggle
         )
         .dropFirst()
-        .map { (appLanguage, languageFilter, localizationSettings, toggle) -> AnyPublisher<[LessonListItemDomainModel], Error> in
+        .map { (appLanguage, languageFilter, localizationSettings, toggle) -> AnyPublisher<LessonsResultDomainModel, Error> in
 
             switch toggle {
-            
+
             case .personalized:
                 return getPersonalizedLessonsUseCase
                     .execute(
@@ -101,22 +104,30 @@ import SwiftUI
                         country: localizationSettings?.selectedCountry,
                         filterLessonsByLanguage: languageFilter
                     )
-            
+
             case .all:
                 return getAllLessonsUseCase
                     .execute(
                         appLanguage: appLanguage,
                         filterLessonsByLanguage: languageFilter
                     )
+                    .map { lessons in
+                        LessonsResultDomainModel(
+                            lessons: lessons,
+                            unavailableStrings: nil
+                        )
+                    }
+                    .eraseToAnyPublisher()
             }
         }
         .switchToLatest()
         .receive(on: DispatchQueue.main)
         .sink(receiveCompletion: { _ in
 
-        }, receiveValue: { [weak self] (lessons: [LessonListItemDomainModel]) in
+        }, receiveValue: { [weak self] (result: LessonsResultDomainModel) in
 
-            self?.lessons = lessons
+            self?.lessons = result.lessons
+            self?.personalizationUnavailableState = result.unavailableStrings
             self?.isLoadingLessons = false
         })
         .store(in: &cancellables)
@@ -199,10 +210,6 @@ import SwiftUI
     
     private static func getToggleOptions(strings: LessonsStringsDomainModel) -> [PersonalizationToggleOption] {
         
-        if !GodToolsAppConfig.showsPersonalization {
-            return [PersonalizationToggleOption(title: strings.allLessonsToggleTitle, selection: .all, buttonAccessibility: .allLessons)]
-        }
-        
         return [
             PersonalizationToggleOption(title: strings.personalizedToolToggleTitle, selection: .personalized, buttonAccessibility: .personalizedLessons),
             PersonalizationToggleOption(title: strings.allLessonsToggleTitle, selection: .all, buttonAccessibility: .allLessons)
@@ -258,5 +265,9 @@ extension LessonsViewModel {
     func localizationSettingsTapped() {
 
         flowDelegate?.navigate(step: .localizationSettingsTappedFromLessons)
+    }
+
+    func goToAllLessonsTapped() {
+        selectedToggle = .all
     }
 }

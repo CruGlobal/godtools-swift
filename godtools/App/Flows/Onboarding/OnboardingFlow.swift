@@ -10,10 +10,8 @@ import UIKit
 import SwiftUI
 import Combine
 
-class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
-    
-    private static var backgroundCancellables: Set<AnyCancellable> = Set()
-    
+class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow, LocalizationSettingsNavigationFlow {
+        
     @Published private var currentAppLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
     private var didPromptForAppLanguage: Bool = false
@@ -25,6 +23,7 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
     let navigationController: AppNavigationController
 
     var chooseAppLanguageFlow: ChooseAppLanguageFlow?
+    var localizationSettingsFlow: LocalizationSettingsFlow?
     
     deinit {
         print("x deinit: \(type(of: self))")
@@ -77,15 +76,25 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
                 navigateBackFromChooseAppLanguageFlow()
             
             case .userChoseAppLanguage(let appLanguage):
+                navigateToLocalizationSettings(
+                    showsPreferNotToSay: true,
+                    shouldStoreCountryWhenSelected: false,
+                    userShouldConfirmSelectedCountry: true
+                )
+            }
+            
+        case .localizationSettingsFlowCompleted(let state):
+            
+            switch state {
                 
-                // TODO: Remove guard in personalized tools feature. ~Levi
-                guard GodToolsAppConfig.showsPersonalization else {
-                    navigationController.popToRootViewController(animated: true)
-                    return
+            case .userTappedBackFromLocalizationSettings:
+                navigateBackFromLocalizationSettingsFlow()
+                
+            case .userConfirmedLocalizationSetting(let countryListItem):
+                if let tutorialVC = onboardingTutorialViewController {
+                    navigationController.popToViewController(tutorialVC, animated: true)
+                    localizationSettingsFlow = nil
                 }
-                
-                let localizationSettings = getLocalizationSettingsView(showsPreferNotToSay: true)
-                navigationController.pushViewController(localizationSettings, animated: true)
             }
             
         case .videoButtonTappedFromOnboardingTutorial(let youtubeVideoId):
@@ -110,10 +119,6 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
             let lastPage: Int = onboardingTutorialView.getPageCount() - 1
             let currentPage: Int = onboardingTutorialView.getCurrentPageIndex()
             let reachedEnd = currentPage >= lastPage
-            
-            if !GodToolsAppConfig.showsPersonalization {
-                didPromptForAppLanguage = true
-            }
             
             if reachedEnd {
                 
@@ -148,39 +153,6 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
                 
                 onboardingTutorialView.setCurrentPage(page: currentPage + 1)
             }
-            
-        case .backTappedFromLocalizationSettings:
-            navigationController.popViewController(animated: true)
- 
-        case .countryTappedFromLocalizationSettings(let country):
-            let confirmationView = getLocalizationSettingsConfirmationView(selectedCountry: country)
-            navigationController.present(confirmationView, animated: true)
-
-        case .closeTappedFromLocalizationConfirmation:
-            navigationController.dismiss(animated: true)
-
-        case .cancelTappedFromLocalizationConfirmation:
-            navigationController.dismiss(animated: true)
-
-        case .confirmTappedFromLocalizationConfirmation(let country):
-            navigationController.dismiss(animated: true)
-
-            if let tutorialVC = onboardingTutorialViewController {
-                navigationController.popToViewController(tutorialVC, animated: true)
-            }
-
-            appDiContainer
-                .feature
-                .personalizedTools
-                .domainLayer
-                .getSetLocalizationSettingsUseCase()
-                .execute(country: country.countryDomainModel)
-                .sink { _ in
-
-                } receiveValue: { _ in
-
-                }
-                .store(in: &Self.backgroundCancellables)
             
         case .endTutorialFromOnboardingTutorial:
             flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: nil))
@@ -269,34 +241,6 @@ extension OnboardingFlow {
             )
         )
                         
-        return hostingView
-    }
-}
-
-// MARK: - Localization Settings
-
-extension OnboardingFlow {
-    
-    private func getLocalizationSettingsConfirmationView(selectedCountry: LocalizationSettingsCountryListItem) -> UIViewController {
-
-        let confirmationViewModel = LocalizationSettingsConfirmationViewModel(
-            flowDelegate: self,
-            selectedCountry: selectedCountry,
-            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getLocalizationSettingsConfirmationStringsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getLocalizationSettingsConfirmationStringsUseCase()
-        )
-
-        let confirmationView = LocalizationSettingsConfirmationView(viewModel: confirmationViewModel)
-
-        let hostingView = AppHostingController<LocalizationSettingsConfirmationView>(
-            rootView: confirmationView,
-            navigationBar: nil
-        )
-
-        hostingView.modalPresentationStyle = .overFullScreen
-        hostingView.modalTransitionStyle = .crossDissolve
-        hostingView.view.backgroundColor = .clear
-
         return hostingView
     }
 }

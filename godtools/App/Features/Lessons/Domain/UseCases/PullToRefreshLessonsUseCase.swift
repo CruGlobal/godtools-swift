@@ -53,26 +53,25 @@ final class PullToRefreshLessonsUseCase {
     }
     
     private func refreshPersonalizedLessons(requestPriority: RequestPriority, appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<Void, Error> {
-        
+
         let languageCode: String = getLanguageElseAppLanguage.getLanguageCode(
             languageId: filterLessonsByLanguage?.languageId,
             appLanguage: appLanguage
         )
-        
-        let countryIsoRegionCode: String? = country?.isoRegionCode
-        
-        // TODO: Remove this guard once supporting an optional country in this UseCase. ~Levi
-        guard let countryIsoRegionCode = countryIsoRegionCode, !countryIsoRegionCode.isEmpty else {
-            return Just(Void())
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
-        
+
+        let countryIsoRegionCode: String? = {
+            if let isoRegionCode = country?.isoRegionCode, !isoRegionCode.isEmpty {
+                return isoRegionCode
+            }
+            return nil
+        }()
+
         return personalizedLessonsRepository
-            .getAllRankedLessonsPublisher(
+            .syncPersonalizedLessonsPublisher(
                 requestPriority: requestPriority,
                 country: countryIsoRegionCode,
-                language: languageCode
+                language: languageCode,
+                forceNewSync: true
             )
             .map { _ in
                 return ()
