@@ -605,23 +605,41 @@ class AppDataLayerDependencies {
     
     func getUserCountersRepository() -> UserCountersRepository {
             
-            let api = UserCountersAPI(
-                config: getAppConfig(),
-                urlSessionPriority: getSharedUrlSessionPriority(),
-                mobileContentApiAuthSession: getMobileContentApiAuthSession()
-            )
+        let api = UserCountersApi(
+            config: getAppConfig(),
+            urlSessionPriority: getSharedUrlSessionPriority(),
+            mobileContentApiAuthSession: getMobileContentApiAuthSession()
+        )
+    
+        let persistence: any Persistence<UserCounterDataModel, UserCounterCodable>
+        
+        if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
             
-            let cache = RealmUserCountersCache(
-                realmDatabase: getSharedLegacyRealmDatabase(),
-                userCountersSync: RealmUserCountersCacheSync(realmDatabase: getSharedLegacyRealmDatabase())
-            )
-            
-            return UserCountersRepository(
-                api: api,
-                cache: cache,
-                remoteUserCountersSync: RemoteUserCountersSync(api: api, cache: cache)
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                dataModelMapping: SwiftUserCounterMapping()
             )
         }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                database: getSharedRealmDatabase(),
+                dataModelMapping: RealmUserCounterMapping()
+            )
+        }
+        
+        let localUserCounterIncrement = LocalUserCounterIncrement(persistence: persistence)
+        
+        let cache = UserCountersCache(persistence: persistence)
+        
+        return UserCountersRepository(
+            api: api,
+            persistence: persistence,
+            localUserCounterIncrement: localUserCounterIncrement,
+            cache: cache,
+            syncInvalidatorPersistence: getUserDefaultsCache()
+        )
+    }
     
     func getUserDefaultsCache() -> SharedUserDefaultsCache {
         return sharedUserDefaultsCache

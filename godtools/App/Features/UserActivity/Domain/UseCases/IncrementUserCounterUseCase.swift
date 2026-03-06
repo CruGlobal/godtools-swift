@@ -42,21 +42,23 @@ final class IncrementUserCounterUseCase {
                 .eraseToAnyPublisher()
         }
         
-        return userCountersRepository.incrementCachedUserCounterBy1Publisher(id: userCounterId)
-            .flatMap { (userCounterDataModels: [UserCounterDataModel]) in
-                
-                let userCounterDomainModel: UserCounterDomainModel
-                
-                if let dataModel = userCounterDataModels.first {
+        return userCountersRepository
+            .incrementCounterPublisher(
+                id: userCounterId
+            )
+            .tryMap { (localCounter: LocalUserCounter) in
                     
-                    userCounterDomainModel = UserCounterDomainModel(dataModel: dataModel)
-                }
-                else {
-                    
-                    userCounterDomainModel = UserCounterDomainModel(id: userCounterId, count: 0)
-                }
+                return try self.userCountersRepository
+                    .getCachedCounter(
+                        id: userCounterId
+                    )
+            }
+            .map { (dataModel: UserCounterDataModel?) in
                                 
-                return Just(userCounterDomainModel)
+                return UserCounterDomainModel(
+                    id: userCounterId,
+                    count: dataModel?.count ?? 0
+                )
             }
             .eraseToAnyPublisher()
     }

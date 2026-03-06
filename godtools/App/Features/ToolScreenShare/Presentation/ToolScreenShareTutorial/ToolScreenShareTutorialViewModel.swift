@@ -108,13 +108,7 @@ import Combine
             weakSelf.hidesSkipButton = isOnLastPage
             weakSelf.hidesContinueButton = isOnLastPage
             
-            if GodToolsApp.isDebug {
-                weakSelf.shareOptions = isOnLastPage ? [.qrCode, .shareLink] : []
-            }
-            else {
-                weakSelf.shareOptions = isOnLastPage ? [.shareLink] : []
-            }
-            
+            weakSelf.shareOptions = isOnLastPage ? [.qrCode, .shareLink] : []
         }
         .store(in: &cancellables)
     }
