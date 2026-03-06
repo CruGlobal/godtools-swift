@@ -62,7 +62,7 @@ final class PersonalizedLessonsRepository: RepositorySync<PersonalizedLessonsDat
         if let country = country, !country.isEmpty {
             publisher = api.getAllRankedResourcesPublisher(requestPriority: requestPriority, country: country, language: language, resourceType: .lesson)
         } else {
-            publisher = api.getDefaultOrderResourcesPublisher(requestPriority: requestPriority, language: language, resouceType: .lesson)
+            publisher = api.getDefaultOrderResourcesPublisher(requestPriority: requestPriority, language: language, resourceType: .lesson)
         }
 
         return publisher
