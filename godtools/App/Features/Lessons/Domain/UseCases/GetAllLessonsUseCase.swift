@@ -22,7 +22,7 @@ final class GetAllLessonsUseCase {
         self.getLessonsListItems = getLessonsListItems
     }
     
-    @MainActor func execute(appLanguage: AppLanguageDomainModel, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<LessonsResultDomainModel, Error> {
+    @MainActor func execute(appLanguage: AppLanguageDomainModel, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<[LessonListItemDomainModel], Error> {
 
         return Publishers.CombineLatest(
             resourcesRepository
@@ -32,22 +32,17 @@ final class GetAllLessonsUseCase {
                 .getLessonProgressChangedPublisher()
                 .setFailureType(to: Error.self)
         )
-        .flatMap({ (resourcesDidChange: Void, lessonProgressDidChange: Void) -> AnyPublisher<LessonsResultDomainModel, Error> in
+        .flatMap({ (resourcesDidChange: Void, lessonProgressDidChange: Void) -> AnyPublisher<[LessonListItemDomainModel], Error> in
 
             return self.resourcesRepository
                 .cache
                 .getLessonsPublisher(filterByLanguageId: filterLessonsByLanguage?.languageId, sorted: true)
                 .tryMap { (lessons: [ResourceDataModel]) in
 
-                    let lessonsListItems: [LessonListItemDomainModel] = try self.getLessonsListItems.mapLessonsToListItems(
+                    return try self.getLessonsListItems.mapLessonsToListItems(
                         lessons: lessons,
                         appLanguage: appLanguage,
                         filterLessonsByLanguage: filterLessonsByLanguage
-                    )
-
-                    return LessonsResultDomainModel(
-                        lessons: lessonsListItems,
-                        unavailableStrings: nil
                     )
                 }
                 .eraseToAnyPublisher()

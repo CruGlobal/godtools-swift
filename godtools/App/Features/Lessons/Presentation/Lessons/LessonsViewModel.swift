@@ -111,6 +111,13 @@ import SwiftUI
                         appLanguage: appLanguage,
                         filterLessonsByLanguage: languageFilter
                     )
+                    .map { lessons in
+                        LessonsResultDomainModel(
+                            lessons: lessons,
+                            unavailableStrings: nil
+                        )
+                    }
+                    .eraseToAnyPublisher()
             }
         }
         .switchToLatest()
