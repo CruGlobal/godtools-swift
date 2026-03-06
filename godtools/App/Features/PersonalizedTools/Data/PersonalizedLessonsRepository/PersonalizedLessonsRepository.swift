@@ -35,8 +35,10 @@ final class PersonalizedLessonsRepository: RepositorySync<PersonalizedLessonsDat
     
     private func getSyncInvalidator(id: PersonalizedLessonsId) -> SyncInvalidator {
         
+        let id: String = "\(String(describing: PersonalizedLessonsRepository.self)).syncPersonalizedLessons.\(id.value)"
+        
         return SyncInvalidator(
-            id: id.value,
+            id: id,
             timeInterval: .hours(hour: 8),
             persistence: syncInvalidatorPersistence
         )
