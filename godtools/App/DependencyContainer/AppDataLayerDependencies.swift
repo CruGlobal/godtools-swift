@@ -636,7 +636,8 @@ class AppDataLayerDependencies {
             api: api,
             persistence: persistence,
             localUserCounterIncrement: localUserCounterIncrement,
-            cache: cache
+            cache: cache,
+            syncInvalidatorPersistence: getUserDefaultsCache()
         )
     }
     

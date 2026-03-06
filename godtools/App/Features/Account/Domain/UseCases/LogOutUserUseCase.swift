@@ -26,11 +26,11 @@ final class LogOutUserUseCase {
         
         do {
             
+            try userCountersRepository.deleteCachedCounters()
+            
             try userAuthentication.signOut()
             
             setAnalyticsUserProperties()
-            
-            try userCountersRepository.deleteCachedCounters()
             
             return Just(true)
                 .setFailureType(to: Error.self)

@@ -21,6 +21,10 @@ final class SwiftUserCounterMapping: Mapping {
     }
     
     func toPersistObject(externalObject: UserCounterCodable) -> SwiftUserCounter? {
-        return SwiftUserCounter.createNewFrom(interface: externalObject)
+        
+        // TODO: Is there a way to check for an existing swift user counter to map against here? ~Levi
+        
+        assertionFailure("Not setup to persist external objects as it would overrite the local count and count.")
+        return nil
     }
 }

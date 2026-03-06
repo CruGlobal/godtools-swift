@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct UserCounterDataModel: Sendable {
+struct UserCounterDataModel: UserCounterDataModelInterface, Sendable {
     
     let count: Int
     let id: String

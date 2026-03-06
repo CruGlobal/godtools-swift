@@ -16,17 +16,19 @@ class UserCountersRepository {
     private let api: UserCountersApi
     private let localUserCounterIncrement: LocalUserCounterIncrement
     private let cache: UserCountersCache
+    private let syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface
     
     private var cancellables: Set<AnyCancellable> = Set()
     
     let persistence: any Persistence<UserCounterDataModel, UserCounterCodable>
     
-    init(api: UserCountersApi, persistence: any Persistence<UserCounterDataModel, UserCounterCodable>, localUserCounterIncrement: LocalUserCounterIncrement, cache: UserCountersCache) {
+    init(api: UserCountersApi, persistence: any Persistence<UserCounterDataModel, UserCounterCodable>, localUserCounterIncrement: LocalUserCounterIncrement, cache: UserCountersCache, syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface) {
         
         self.api = api
         self.persistence = persistence
         self.localUserCounterIncrement = localUserCounterIncrement
         self.cache = cache
+        self.syncInvalidatorPersistence = syncInvalidatorPersistence
     }
     
     func getCachedCounter(id: String) throws -> UserCounterDataModel? {
@@ -47,13 +49,24 @@ class UserCountersRepository {
     func getCachedCountersPublisher() -> AnyPublisher<[UserCounterDataModel], Error> {
         
         return AnyPublisher() {
-            return try await self.persistence.getDataModelsAsync(getOption: .allObjects)
+            return try await self.mergeLocalCountersWithCachedCounters()
         }
     }
     
     func deleteCachedCounters() throws {
                 
+        getCountersSyncInvalidator().resetSync()
+        
         try cache.deleteCounters()
+    }
+    
+    private func getCountersSyncInvalidator() -> SyncInvalidator {
+        
+        return SyncInvalidator(
+            id:  "userCounters.getCounters",
+            timeInterval: .hours(hour: 2),
+            persistence: syncInvalidatorPersistence
+        )
     }
 }
 
@@ -140,27 +153,42 @@ extension UserCountersRepository {
     }
     
     private func getCounters(requestPriority: RequestPriority) async throws -> [UserCounterDataModel] {
-                        
+                      
+        let syncInvalidator: SyncInvalidator = getCountersSyncInvalidator()
+        
+        guard syncInvalidator.shouldSync else {
+            return try await mergeLocalCountersWithCachedCounters()
+        }
+        
         _ = try await pushLocalCountersToRemote(requestPriority: requestPriority)
                         
         let remoteCounters: [UserCounterCodable] = try await api.fetchUserCounters(requestPriority: requestPriority)
                     
         try cache.writeCounters(counters: remoteCounters)
+        
+        syncInvalidator.didSync()
                 
-        return try mergeLocalCountersWithRemoteCounters(remoteCounters: remoteCounters)
+        return try mergeLocalCountersWithCounters(counters: remoteCounters)
     }
     
-    private func mergeLocalCountersWithRemoteCounters(remoteCounters: [UserCounterCodable]) throws -> [UserCounterDataModel] {
+    private func mergeLocalCountersWithCachedCounters() async throws -> [UserCounterDataModel] {
         
-        return try remoteCounters.map { (remoteCounter: UserCounterCodable) in
+        let cachedCounters: [UserCounterDataModel] = try await persistence.getDataModelsAsync(getOption: .allObjects)
+        
+        return try mergeLocalCountersWithCounters(counters: cachedCounters)
+    }
+    
+    private func mergeLocalCountersWithCounters(counters: [UserCounterDataModelInterface]) throws -> [UserCounterDataModel] {
+        
+        return try counters.map { (counter: UserCounterDataModelInterface) in
             
-            let localCounter: LocalUserCounter? = try localUserCounterIncrement.getCounter(id: remoteCounter.id)
+            let localCounter: LocalUserCounter? = try localUserCounterIncrement.getCounter(id: counter.id)
             
             let localCount: Int = localCounter?.localCount ?? 0
                         
             return UserCounterDataModel(
-                id: remoteCounter.id,
-                count: remoteCounter.count + localCount
+                id: counter.id,
+                count: counter.count + localCount
             )
         }
     }
