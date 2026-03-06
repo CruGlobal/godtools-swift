@@ -33,7 +33,7 @@ final class PersonalizedLessonsRepository: RepositorySync<PersonalizedLessonsDat
 
         if reloadFromRemote {
 
-            getAllRankedLessonsPublisher(requestPriority: requestPriority, country: country, language: language)
+            getPersonalizedLessonsPublisher(requestPriority: requestPriority, country: country, language: language)
                 .sink { _ in
 
                 } receiveValue: { _ in
@@ -55,7 +55,7 @@ final class PersonalizedLessonsRepository: RepositorySync<PersonalizedLessonsDat
             .getDataModelNonThrowing(id: id)
     }
 
-    func getAllRankedLessonsPublisher(requestPriority: RequestPriority, country: String?, language: String) -> AnyPublisher<[PersonalizedLessonsDataModel], Error> {
+    func getPersonalizedLessonsPublisher(requestPriority: RequestPriority, country: String?, language: String) -> AnyPublisher<[PersonalizedLessonsDataModel], Error> {
 
         let publisher: AnyPublisher<[ResourceCodable], Error>
 

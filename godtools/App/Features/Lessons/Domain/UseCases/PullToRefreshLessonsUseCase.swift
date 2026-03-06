@@ -67,7 +67,7 @@ final class PullToRefreshLessonsUseCase {
         }()
 
         return personalizedLessonsRepository
-            .getAllRankedLessonsPublisher(
+            .getPersonalizedLessonsPublisher(
                 requestPriority: requestPriority,
                 country: countryIsoRegionCode,
                 language: languageCode
