@@ -120,6 +120,8 @@
 "lessons.personalizationUnavailable.title" = "Personalization unavailable";
 "lessons.personalizationUnavailable.message" = "The lessons shown on this page are based on your Language and Localization settings. Your current selection does not yet offer personalization.";
 "lessons.personalizationUnavailable.viewAllLessons" = "Go to All Lessons";
+"tools.personalizationUnavailable.title" = "Personalization unavailable";
+"tools.personalizationUnavailable.message" = "The tools shown on this page are based on your Language and Localization settings. Your current selection does not yet offer personalization.";
 "toolSettings.languagesAvailable.title" = "Languages available";
 "toolDetails.versions.message" = "Choose a different version of this tool below. Each version features unique style and content so you can find the one that is best for your conversation. You can favorite multiple versions of the same tool.";
 "favorites.noTools.title" = "No favorite tools to display";
