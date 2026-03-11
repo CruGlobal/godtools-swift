@@ -88,19 +88,19 @@ import Combine
             .receive(on: DispatchQueue.main)
             .assign(to: &$localizationSettings)
         
-        Publishers.CombineLatest(
-            Publishers.CombineLatest4(
-                $appLanguage,
+        Publishers.CombineLatest4(
+            $appLanguage,
+            Publishers.CombineLatest(
                 $toolFilterCategorySelection,
                 $toolFilterLanguageSelection,
-                $localizationSettings
             ),
+            $localizationSettings,
             $selectedToggle
         )
         .dropFirst()
-        .map { [weak self] (combined, toggle) -> AnyPublisher<ToolsResultDomainModel, Error> in
+        .map { [weak self] (appLanguage, toolFilters, localizationSettings, toggle) -> AnyPublisher<ToolsResultDomainModel, Error> in
 
-            let (appLanguage, toolFilterCategory, toolFilterLanguage, localizationSettings) = combined
+            let (toolFilterCategory, toolFilterLanguage) = toolFilters
 
             guard let self = self else {
                 return Just(ToolsResultDomainModel.empty)

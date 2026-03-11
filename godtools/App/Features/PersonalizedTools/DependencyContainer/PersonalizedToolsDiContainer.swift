@@ -10,7 +10,7 @@ import Foundation
 
 class PersonalizedToolsDiContainer {
 
-    let dataLayer: PersonalizedToolsDataLayerDependencies
+    private let dataLayer: PersonalizedToolsDataLayerDependencies
 
     let domainLayer: PersonalizedToolsDomainLayerDependencies
     

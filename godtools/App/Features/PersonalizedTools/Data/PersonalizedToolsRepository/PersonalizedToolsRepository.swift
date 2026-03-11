@@ -168,7 +168,7 @@ extension PersonalizedToolsRepository {
                 requestPriority: requestPriority,
                 country: country,
                 language: language,
-                resourceType: .tract    // TODO: - double check this is the correct value
+                resourceType: .tract
             )
 
         case .defaultOrder(let language):
