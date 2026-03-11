@@ -16,7 +16,7 @@ struct PersonalizedToolsDataModel: PersonalizedToolsDataModelInterface {
 
     init(country: String?, language: String, resourceIds: [String]) throws {
 
-        let type = PersonalizedToolsType(country: country, langauge: language)
+        let type = PersonalizedToolsType(country: country, language: language)
 
         self.id = try PersonalizedToolsId(type: type).value
 

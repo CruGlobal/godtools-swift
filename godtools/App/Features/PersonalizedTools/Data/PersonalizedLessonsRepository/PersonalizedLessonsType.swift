@@ -13,13 +13,13 @@ enum PersonalizedLessonsType {
     case allRanked(country: String, language: String)
     case defaultOrder(language: String)
     
-    init(country: String?, langauge: String) {
-        
+    init(country: String?, language: String) {
+
         if let country = country, !country.isEmpty {
-            self = .allRanked(country: country, language: langauge)
+            self = .allRanked(country: country, language: language)
         }
         else {
-            self = .defaultOrder(language: langauge)
+            self = .defaultOrder(language: language)
         }
     }
 }

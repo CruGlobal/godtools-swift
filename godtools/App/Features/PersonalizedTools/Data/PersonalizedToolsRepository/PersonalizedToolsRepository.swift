@@ -78,7 +78,7 @@ extension PersonalizedToolsRepository {
 
     func getPersistedPersonalizedTools(country: String?, language: String) async throws -> [ResourceDataModel] {
 
-        let type = PersonalizedToolsType(country: country, langauge: language)
+        let type = PersonalizedToolsType(country: country, language: language)
 
         switch type {
 
@@ -137,7 +137,7 @@ extension PersonalizedToolsRepository {
 
     private func syncPersonalizedTools(requestPriority: RequestPriority, country: String?, language: String, forceNewSync: Bool = false) async throws -> [ResourceDataModel] {
 
-        let type = PersonalizedToolsType(country: country, langauge: language)
+        let type = PersonalizedToolsType(country: country, language: language)
 
         let personalizedToolId = try PersonalizedToolsId(type: type)
 

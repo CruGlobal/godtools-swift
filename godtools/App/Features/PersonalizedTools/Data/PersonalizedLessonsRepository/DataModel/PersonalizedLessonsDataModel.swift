@@ -16,7 +16,7 @@ struct PersonalizedLessonsDataModel: PersonalizedLessonsDataModelInterface {
 
     init(country: String?, language: String, resourceIds: [String]) throws {
         
-        let type = PersonalizedLessonsType(country: country, langauge: language)
+        let type = PersonalizedLessonsType(country: country, language: language)
         
         self.id = try PersonalizedLessonsId(type: type).value
                 
