@@ -9,9 +9,9 @@
 import Foundation
 
 class PersonalizedToolsDiContainer {
-        
+
     private let dataLayer: PersonalizedToolsDataLayerDependencies
-    
+
     let domainLayer: PersonalizedToolsDomainLayerDependencies
     
     init(coreDataLayer: AppDataLayerDependencies, coreDomainlayer: AppDomainLayerDependencies) {

@@ -75,4 +75,15 @@ class PersonalizedToolsDomainLayerDependencies {
             localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
+
+    func getGetPersonalizedToolsUseCase() -> GetPersonalizedToolsUseCase {
+
+        return GetPersonalizedToolsUseCase(
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            personalizedToolsRepository: dataLayer.getPersonalizedToolsRepository(),
+            getLanguageElseAppLanguage: coreDomainlayer.supporting.getLanguageElseAppLanguage(),
+            getToolsListItems: coreDomainlayer.supporting.getToolsListItems(),
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
 }
