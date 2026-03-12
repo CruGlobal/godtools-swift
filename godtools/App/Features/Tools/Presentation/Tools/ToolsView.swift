@@ -72,29 +72,50 @@ struct ToolsView: View {
 
                         LazyVStack(alignment: .center, spacing: toolCardSpacing) {
 
-                            ForEach(viewModel.allTools) { (tool: ToolListItemDomainModel) in
+                            if viewModel.isPersonalizationUnavailable,
+                               let unavailableState = viewModel.personalizationUnavailableState {
 
-                                ToolCardView(
-                                    viewModel: viewModel.getToolItemViewModel(tool: tool),
+                                PersonalizationUnavailableView(
+                                    title: unavailableState.title,
+                                    message: unavailableState.message,
+                                    changeSettingsButtonTitle: viewModel.strings.changePersonalizedToolSettingsActionLabel,
+                                    goToAllLessonsButtonTitle: viewModel.strings.viewAllTools,
                                     geometry: geometry,
-                                    layout: .landscape,
-                                    showsCategory: true,
-                                    navButtonTitleHorizontalPadding: nil,
-                                    favoriteTappedClosure: {
-
-                                        viewModel.toolFavoriteTapped(tool: tool)
+                                    heightMultiplier: 0.45,
+                                    changeSettingsAction: {
+                                        viewModel.localizationSettingsTapped()
                                     },
-                                    toolDetailsTappedClosure: nil,
-                                    openToolTappedClosure: nil,
-                                    toolTappedClosure: {
-
-                                        viewModel.toolTapped(tool: tool)
+                                    goToAllLessonsAction: {
+                                        viewModel.goToAllToolsTapped()
                                     }
                                 )
+
+                            } else {
+
+                                ForEach(viewModel.allTools) { (tool: ToolListItemDomainModel) in
+
+                                    ToolCardView(
+                                        viewModel: viewModel.getToolItemViewModel(tool: tool),
+                                        geometry: geometry,
+                                        layout: .landscape,
+                                        showsCategory: true,
+                                        navButtonTitleHorizontalPadding: nil,
+                                        favoriteTappedClosure: {
+
+                                            viewModel.toolFavoriteTapped(tool: tool)
+                                        },
+                                        toolDetailsTappedClosure: nil,
+                                        openToolTappedClosure: nil,
+                                        toolTappedClosure: {
+
+                                            viewModel.toolTapped(tool: tool)
+                                        }
+                                    )
+                                }
                             }
                         }
 
-                        if viewModel.selectedToggle == .personalized {
+                        if viewModel.selectedToggle == .personalized && !viewModel.isPersonalizationUnavailable {
                             PersonalizedToolFooterView(
                                 title: viewModel.strings.personalizedToolExplanationTitle,
                                 subtitle: viewModel.strings.personalizedToolExplanationSubtitle,
