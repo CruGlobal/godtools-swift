@@ -42,7 +42,7 @@ struct GetAllLessonsUseCaseTests {
         await withCheckedContinuation { continuation in
             
             let timeoutTask = Task {
-                try await Task.sleep(nanoseconds: 15_000_000_000) // 15 seconds
+                try await Task.defaultTestSleep()
                 continuation.resume(returning: ())
             }
             
@@ -90,7 +90,7 @@ struct GetAllLessonsUseCaseTests {
         await withCheckedContinuation { continuation in
             
             let timeoutTask = Task {
-                try await Task.sleep(nanoseconds: 15_000_000_000) // 15 seconds
+                try await Task.defaultTestSleep()
                 continuation.resume(returning: ())
             }
             
@@ -145,7 +145,7 @@ struct GetAllLessonsUseCaseTests {
         await withCheckedContinuation { continuation in
             
             let timeoutTask = Task {
-                try await Task.sleep(nanoseconds: 15_000_000_000) // 15 seconds
+                try await Task.defaultTestSleep()
                 continuation.resume(returning: ())
             }
             
