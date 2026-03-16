@@ -217,11 +217,11 @@ struct GetLessonFilterLanguagesUseCaseTests {
 
 extension GetLessonFilterLanguagesUseCaseTests {
     
-    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
+    private func getTestsDiContainer() throws -> TestsDiContainer {
                 
         return try TestsDiContainer(
             realmFileName: String(describing: GetLessonFilterLanguagesUseCaseTests.self),
-            addRealmObjects: addRealmObjects
+            addRealmObjects: getRealmObjects()
         )
     }
     
@@ -255,7 +255,7 @@ extension GetLessonFilterLanguagesUseCaseTests {
     
     private func getLessonFilterLanguagesUseCase() throws -> GetLessonFilterLanguagesUseCase {
         
-        let testsDiContainer = try getTestsDiContainer(addRealmObjects: getRealmObjects())
+        let testsDiContainer = try getTestsDiContainer()
         
         let getLessonFilterLanguagesRepository = GetLessonFilterLanguagesUseCase(
             resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
