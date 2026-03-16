@@ -8,6 +8,7 @@
 
 import Foundation
 
-struct ViewSearchBarDomainModel {
-    let interfaceStrings: SearchBarInterfaceStringsDomainModel
+struct ViewSearchBarDomainModel: Sendable {
+    
+    let strings: SearchBarStringsDomainModel
 }

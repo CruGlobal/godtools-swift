@@ -60,7 +60,7 @@ struct ReviewShareShareableView: View {
                         
                         HStack(alignment: .center, spacing: 8) {
                             Image(ImageCatalog.toolSettingsShareImageButtonIcon.name)
-                            Text(viewModel.shareImageButtonTitle)
+                            Text(viewModel.strings.shareActionTitle)
                                 .foregroundColor(.white)
                         }
                     }
@@ -91,7 +91,7 @@ struct ReviewShareShareableViewPreview: PreviewProvider {
             toolId: "1",
             shareable: ShareableDomainModel(dataModelId: "", imageName: "", title: ""),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewReviewShareShareableUseCase: appDiContainer.feature.shareables.domainLayer.getViewReviewShareShareableUseCase(),
+            getReviewShareShareableStringsUseCase: appDiContainer.feature.shareables.domainLayer.getReviewShareShareableStringsUseCase(),
             getShareableImageUseCase: appDiContainer.feature.shareables.domainLayer.getShareableImageUseCase(),
             trackShareShareableTapUseCase: appDiContainer.feature.shareables.domainLayer.getTrackShareShareableTapUseCase()
         )

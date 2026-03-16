@@ -18,15 +18,15 @@ class UserLessonProgressDomainLayerDependencies {
         self.coreDataLayer = coreDataLayer
     }
     
-    func getResumeLessonProgressModalInterfaceStringsUseCase() -> GetResumeLessonProgressModalInterfaceStringsUseCase {
-        return GetResumeLessonProgressModalInterfaceStringsUseCase(
-            getResumeLessonModalInterfaceStringsRepo: dataLayer.getResumeLessonProgressModalInterfaceStringsRepositoryInterface()
+    func getResumeLessonProgressStringsUseCase() -> GetResumeLessonProgressStringsUseCase {
+        return GetResumeLessonProgressStringsUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
     
     func getStoreUserLessonProgressUseCase() -> StoreUserLessonProgressUseCase {
         return StoreUserLessonProgressUseCase(
-            storeLessonProgressRepository: dataLayer.getStoreUserLessonProgressRepositoryInterface()
+            lessonProgressRepository: coreDataLayer.getUserLessonProgressRepository()
         )
     }
 }

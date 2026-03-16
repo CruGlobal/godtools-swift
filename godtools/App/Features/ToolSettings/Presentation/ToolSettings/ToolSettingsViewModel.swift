@@ -96,13 +96,13 @@ import Combine
             $interfaceStrings
         )
         .receive(on: DispatchQueue.main)
-        .sink { [weak self] (trainingTipsEnabled: Bool, interfaceStrings: ToolSettingsInterfaceStringsDomainModel?) in
+        .sink { [weak self] (trainingTipsEnabled: Bool, strings: ToolSettingsInterfaceStringsDomainModel?) in
             
-            guard let interfaceStrings = interfaceStrings else {
+            guard let strings = strings else {
                 return
             }
             
-            self?.trainingTipsTitle = trainingTipsEnabled ? interfaceStrings.toolOptionDisableTrainingTips : interfaceStrings.toolOptionEnableTrainingTips
+            self?.trainingTipsTitle = trainingTipsEnabled ? strings.toolOptionDisableTrainingTips : strings.toolOptionEnableTrainingTips
             self?.trainingTipsIcon = trainingTipsEnabled ? ImageCatalog.toolSettingsOptionHideTips.image : ImageCatalog.toolSettingsOptionTrainingTips.image
         }
         .store(in: &cancellables)
@@ -111,7 +111,10 @@ import Combine
             .map { (languages: ToolSettingsLanguages) in
                 
                 getShareablesUseCase
-                    .getShareablesPublisher(toolId: toolSettingsObserver.toolId, toolLanguageId: languages.selectedLanguageId)
+                    .execute(
+                        toolId: toolSettingsObserver.toolId,
+                        toolLanguageId: languages.selectedLanguageId
+                    )
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)

@@ -27,7 +27,7 @@ class AppFeatureDiContainer {
     let menu: MenuDiContainer
     let onboarding: OnboardingDiContainer
     let optInNotification: OptInNotificationDiContainer
-    let persistFavoritedToolLanguageSettings: PersistUserToolLanguageSettingsDiContainer
+    let persistToolLanguageSettingsForFavoritedTool: PersistToolLanguageSettingsForFavoritedToolDiContainer
     let personalizedTools: PersonalizedToolsDiContainer
     let shareables: ShareablesDiContainer
     let shareGodTools: ShareGodToolsDiContainer
@@ -61,7 +61,7 @@ class AppFeatureDiContainer {
         menu: MenuDiContainer,
         onboarding: OnboardingDiContainer,
         optInNotification: OptInNotificationDiContainer,
-        persistFavoritedToolLanguageSettings: PersistUserToolLanguageSettingsDiContainer,
+        persistToolLanguageSettingsForFavoritedTool: PersistToolLanguageSettingsForFavoritedToolDiContainer,
         personalizedTools: PersonalizedToolsDiContainer,
         shareables: ShareablesDiContainer,
         shareGodTools: ShareGodToolsDiContainer,
@@ -95,7 +95,7 @@ class AppFeatureDiContainer {
         self.menu = menu
         self.onboarding = onboarding
         self.optInNotification = optInNotification
-        self.persistFavoritedToolLanguageSettings = persistFavoritedToolLanguageSettings
+        self.persistToolLanguageSettingsForFavoritedTool = persistToolLanguageSettingsForFavoritedTool
         self.personalizedTools = personalizedTools
         self.shareables = shareables
         self.shareGodTools = shareGodTools

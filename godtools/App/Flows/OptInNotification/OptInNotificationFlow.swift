@@ -38,9 +38,11 @@ class OptInNotificationFlow: Flow {
             .optInNotification
             .domainLayer
             .getCheckNotificationStatusUseCase()
-            .getPermissionStatusPublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (status: PermissionStatusDomainModel) in
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (status: PermissionStatusDomainModel) in
                 
                 self?.checkNotificationStatusCancellable = nil
                 
@@ -62,7 +64,7 @@ class OptInNotificationFlow: Flow {
                 )
                 
                 presentOnNavigationController.present(optInNotificationView, animated: true)
-            }
+            })
         
         appDiContainer.feature.optInNotification.dataLayer.getOptInNotificationRepository().recordPrompt()
     }
@@ -116,7 +118,7 @@ extension OptInNotificationFlow {
         let viewModel = OptInNotificationViewModel(
             flowDelegate: self,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewOptInNotificationUseCase: appDiContainer.feature.optInNotification.domainLayer.getViewOptInNotificationUseCase(),
+            getOptInNotificationStringsUseCase: appDiContainer.feature.optInNotification.domainLayer.getOptInNotificationStringsUseCase(),
             notificationPromptType: notificationPromptType
         )
         
@@ -142,9 +144,11 @@ extension OptInNotificationFlow {
         
         appDiContainer.feature.optInNotification.domainLayer
             .getRequestNotificationPermissionUseCase()
-            .requestNotificationPermissionPublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (granted: Bool) in
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (granted: Bool) in
                 
                 if granted {
                     self?.navigate(step: .allowTappedFromRequestNotificationPermission)
@@ -152,7 +156,7 @@ extension OptInNotificationFlow {
                 else {
                     self?.navigate(step: .dontAllowTappedFromRequestNotificationPermission)
                 }
-            }
+            })
             .store(in: &cancellables)
     }
 }

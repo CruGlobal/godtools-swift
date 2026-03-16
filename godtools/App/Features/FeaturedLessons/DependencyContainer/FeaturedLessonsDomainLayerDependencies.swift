@@ -11,11 +11,13 @@ import Foundation
 class FeaturedLessonsDomainLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
+    private let coreDomainLayer: AppDomainLayerDependencies
     private let dataLayer: FeaturedLessonsDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, dataLayer: FeaturedLessonsDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, dataLayer: FeaturedLessonsDataLayerDependencies) {
         
         self.coreDataLayer = coreDataLayer
+        self.coreDomainLayer = coreDomainLayer
         self.dataLayer = dataLayer
     }
     
@@ -23,10 +25,10 @@ class FeaturedLessonsDomainLayerDependencies {
         return GetFeaturedLessonsUseCase(
             resourcesRepository: coreDataLayer.getResourcesRepository(),
             languagesRepository: coreDataLayer.getLanguagesRepository(),
-            getTranslatedToolName: coreDataLayer.getTranslatedToolName(),
-            getTranslatedToolLanguageAvailability: coreDataLayer.getTranslatedToolLanguageAvailability(),
+            getTranslatedToolName: coreDomainLayer.supporting.getTranslatedToolName(),
+            getTranslatedToolLanguageAvailability: coreDomainLayer.supporting.getTranslatedToolLanguageAvailability(),
             lessonProgressRepository: coreDataLayer.getUserLessonProgressRepository(),
-            getLessonListItemProgressRepository: coreDataLayer.getLessonListItemProgressRepository()
+            getLessonListItemProgress: coreDomainLayer.supporting.getLessonListItemProgress()
         )
     }
 }

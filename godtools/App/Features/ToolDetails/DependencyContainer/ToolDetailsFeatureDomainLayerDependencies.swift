@@ -10,13 +10,15 @@ import Foundation
 
 class ToolDetailsFeatureDomainLayerDependencies {
     
-    private let dataLayer: ToolDetailsFeatureDataLayerDependencies
     private let coreDataLayer: AppDataLayerDependencies
+    private let coreDomainLayer: AppDomainLayerDependencies
+    private let dataLayer: ToolDetailsFeatureDataLayerDependencies
     
-    init(dataLayer: ToolDetailsFeatureDataLayerDependencies, coreDataLayer: AppDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, dataLayer: ToolDetailsFeatureDataLayerDependencies) {
         
-        self.dataLayer = dataLayer
         self.coreDataLayer = coreDataLayer
+        self.coreDomainLayer = coreDomainLayer
+        self.dataLayer = dataLayer
     }
     
     func getToolDetailsLearnToShareToolIsAvailableUseCase() -> GetToolDetailsLearnToShareToolIsAvailableUseCase {

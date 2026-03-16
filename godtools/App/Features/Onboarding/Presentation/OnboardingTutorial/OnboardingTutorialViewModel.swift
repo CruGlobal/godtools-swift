@@ -16,43 +16,42 @@ import Combine
     
     private static var trackInBackgroundViewedOnboardingTutorialCancellable: AnyCancellable?
     
-    private let trackViewedOnboardingTutorialUseCase: TrackViewedOnboardingTutorialUseCase
+    private let viewedOnboardingTutorialUseCase: ViewedOnboardingTutorialUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
-    private let getOnboardingTutorialInterfaceStringsUseCase: GetOnboardingTutorialInterfaceStringsUseCase
+    private let getOnboardingTutorialStringsUseCase: GetOnboardingTutorialStringsUseCase
     private let trackTutorialVideoAnalytics: TutorialVideoAnalytics
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let readyForEveryConversationYoutubeVideoId: String = "RvhZ_wuxAgE"
     private let showsChooseAppLanguageButtonOnPages: [Int] = [0]
     
-    private var interfaceStrings: OnboardingTutorialStringsDomainModel?
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     
+    @Published private(set) var strings = OnboardingTutorialStringsDomainModel.emptyValue
     @Published private(set) var continueButtonAccessibility: AccessibilityStrings.Button = OnboardingTutorialViewModel.continueButtonContinueAccessibility
     @Published private(set) var hidesSkipButton: Bool = true
-    @Published private(set) var chooseAppLanguageButtonTitle: String = ""
     @Published private(set) var showsChooseLanguageButton: Bool = true
     @Published private(set) var pages: [OnboardingTutorialPage] = Array()
     @Published private(set) var continueButtonTitle: String = ""
     
     @Published var currentPage: Int = 0
     
-    init(flowDelegate: FlowDelegate, trackViewedOnboardingTutorialUseCase: TrackViewedOnboardingTutorialUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getOnboardingTutorialInterfaceStringsUseCase: GetOnboardingTutorialInterfaceStringsUseCase, trackTutorialVideoAnalytics: TutorialVideoAnalytics, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, viewedOnboardingTutorialUseCase: ViewedOnboardingTutorialUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getOnboardingTutorialStringsUseCase: GetOnboardingTutorialStringsUseCase, trackTutorialVideoAnalytics: TutorialVideoAnalytics, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
-        self.trackViewedOnboardingTutorialUseCase = trackViewedOnboardingTutorialUseCase
+        self.viewedOnboardingTutorialUseCase = viewedOnboardingTutorialUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
-        self.getOnboardingTutorialInterfaceStringsUseCase = getOnboardingTutorialInterfaceStringsUseCase
+        self.getOnboardingTutorialStringsUseCase = getOnboardingTutorialStringsUseCase
         self.trackTutorialVideoAnalytics = trackTutorialVideoAnalytics
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
                         
-        OnboardingTutorialViewModel.trackInBackgroundViewedOnboardingTutorialCancellable = trackViewedOnboardingTutorialUseCase
-            .viewedPublisher()
+        OnboardingTutorialViewModel.trackInBackgroundViewedOnboardingTutorialCancellable = viewedOnboardingTutorialUseCase
+            .execute()
             .receive(on: DispatchQueue.main)
             .sink { (void: Void) in
                 
@@ -67,22 +66,15 @@ import Combine
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
                 
-                getOnboardingTutorialInterfaceStringsUseCase
-                    .getStringsPublisher(appLanguage: appLanguage)
+                getOnboardingTutorialStringsUseCase
+                    .execute(appLanguage: appLanguage)
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (interfaceStrings: OnboardingTutorialStringsDomainModel) in
+            .sink { [weak self] (strings: OnboardingTutorialStringsDomainModel) in
                 
-                guard let weakSelf = self else {
-                    return
-                }
-                
-                weakSelf.interfaceStrings = interfaceStrings
-                
-                weakSelf.chooseAppLanguageButtonTitle = interfaceStrings.chooseAppLanguageButtonTitle
-
-                weakSelf.pages = OnboardingTutorialViewModel.tutorialPages
+                self?.strings = strings
+                self?.pages = OnboardingTutorialViewModel.tutorialPages
             }
             .store(in: &cancellables)
         
@@ -144,19 +136,19 @@ import Combine
         if isFirstPage {
             
             hidesSkipButton = true
-            continueButtonTitle = interfaceStrings?.beginTutorialButtonTitle ?? ""
+            continueButtonTitle = strings.beginTutorialButtonTitle
             continueButtonAccessibility = Self.continueButtonContinueAccessibility
         }
         else if isLastPage {
             
             hidesSkipButton = true
-            continueButtonTitle = interfaceStrings?.endTutorialButtonTitle ?? ""
+            continueButtonTitle = strings.endTutorialButtonTitle
             continueButtonAccessibility = .getStarted
         }
         else {
          
             hidesSkipButton = false
-            continueButtonTitle = interfaceStrings?.nextTutorialPageButtonTitle ?? ""
+            continueButtonTitle = strings.nextTutorialPageButtonTitle
             continueButtonAccessibility = Self.continueButtonContinueAccessibility
         }
         
@@ -186,16 +178,16 @@ import Combine
     func getOnboardingTutorialReadyForEveryConversationViewModel() -> OnboardingTutorialReadyForEveryConversationViewModel {
         
         return OnboardingTutorialReadyForEveryConversationViewModel(
-            title: interfaceStrings?.readyForEveryConversationTitle ?? "",
-            watchVideoButtonTitle: interfaceStrings?.readyForEveryConversationVideoLinkTitle ?? ""
+            title: strings.readyForEveryConversationTitle,
+            watchVideoButtonTitle: strings.readyForEveryConversationVideoLinkTitle
         )
     }
     
     func getOnboardingTutorialPrepareForTheMomentsThatMatterViewModel() -> OnboardingTutorialMediaViewModel {
         
         return OnboardingTutorialMediaViewModel(
-            title: interfaceStrings?.prepareForMomentsThatMatterTitle ?? "",
-            message: interfaceStrings?.prepareForMomentsThatMatterMessage ?? "",
+            title: strings.prepareForMomentsThatMatterTitle,
+            message: strings.prepareForMomentsThatMatterMessage,
             animationFilename: "onboarding_prepare_for_moments"
         )
     }
@@ -203,8 +195,8 @@ import Combine
     func getOnboardingTutorialTalkAboutGodWithAnyoneViewModel() -> OnboardingTutorialMediaViewModel {
         
         return OnboardingTutorialMediaViewModel(
-            title: interfaceStrings?.talkWithGodAboutAnyoneTitle ?? "",
-            message: interfaceStrings?.talkWithGodAboutAnyoneMessage ?? "",
+            title: strings.talkWithGodAboutAnyoneTitle,
+            message: strings.talkWithGodAboutAnyoneMessage,
             animationFilename: "onboarding_talk_about_god"
         )
     }
@@ -212,8 +204,8 @@ import Combine
     func getOnboardingTutorialHelpSomeoneDiscoverJesusViewModel() -> OnboardingTutorialMediaViewModel {
         
         return OnboardingTutorialMediaViewModel(
-            title: interfaceStrings?.helpSomeoneDiscoverJesusTitle ?? "",
-            message: interfaceStrings?.helpSomeoneDiscoverJesusMessage ?? "",
+            title: strings.helpSomeoneDiscoverJesusTitle,
+            message: strings.helpSomeoneDiscoverJesusMessage,
             animationFilename: "onboarding_help_someone_discover_jesus"
         )
     }

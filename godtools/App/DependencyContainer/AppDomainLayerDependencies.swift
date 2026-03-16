@@ -103,7 +103,7 @@ class AppDomainLayerDependencies {
     
     func getViewSearchBarUseCase() -> ViewSearchBarUseCase {
         return ViewSearchBarUseCase(
-            getInterfaceStringsRepository: dataLayer.getSearchBarInterfaceStringsRepositoryInterface()
+            getSearchBarStrings: supporting.getSearchBarStrings()
         )
     }
 }

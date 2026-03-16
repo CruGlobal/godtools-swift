@@ -34,13 +34,13 @@ struct ResumeLessonProgressModal: View {
                     .background(.ultraThinMaterial)
                 
                 VStack(spacing: 0) {
-                    Text(viewModel.interfaceStringsDomainModel.title)
+                    Text(viewModel.strings.title)
                         .font(FontLibrary.sfProTextRegular.font(size: 28))
                         .foregroundColor(ColorPalette.gtGrey.color)
                         .padding(.top, 30)
                         .padding(.bottom, 15)
                     
-                    Text(viewModel.interfaceStringsDomainModel.subtitle)
+                    Text(viewModel.strings.subtitle)
                         .font(FontLibrary.sfProTextRegular.font(size: 16))
                         .foregroundColor(ColorPalette.gtGrey.color)
                         .multilineTextAlignment(.center)
@@ -48,10 +48,10 @@ struct ResumeLessonProgressModal: View {
                         .padding(.bottom, 35)
                     
                     VStack(spacing: buttonSpace) {
-                        GTWhiteButton(title: viewModel.interfaceStringsDomainModel.startOverButtonText, fontSize: 15, width: buttonWidth, height: buttonHeight) {
+                        GTWhiteButton(title: viewModel.strings.startOverButtonText, fontSize: 15, width: buttonWidth, height: buttonHeight) {
                             viewModel.startOverButtonTapped()
                         }
-                        GTBlueButton(title: viewModel.interfaceStringsDomainModel.continueButtonText, fontSize: 15, width: buttonWidth, height: buttonHeight) {
+                        GTBlueButton(title: viewModel.strings.continueButtonText, fontSize: 15, width: buttonWidth, height: buttonHeight) {
                             viewModel.continueButtonTapped()
                         }
                     }

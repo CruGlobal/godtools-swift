@@ -11,11 +11,13 @@ import Foundation
 class SpotlightToolsDomainLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
+    private let coreDomainLayer: AppDomainLayerDependencies
     private let dataLayer: SpotlightToolsDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, dataLayer: SpotlightToolsDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, dataLayer: SpotlightToolsDataLayerDependencies) {
         
         self.coreDataLayer = coreDataLayer
+        self.coreDomainLayer = coreDomainLayer
         self.dataLayer = dataLayer
     }
     
@@ -24,10 +26,10 @@ class SpotlightToolsDomainLayerDependencies {
             resourcesRepository: coreDataLayer.getResourcesRepository(),
             favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository(),
             languagesRepository: coreDataLayer.getLanguagesRepository(),
-            getTranslatedToolName: coreDataLayer.getTranslatedToolName(),
-            getTranslatedToolCategory: coreDataLayer.getTranslatedToolCategory(),
-            getToolListItemInterfaceStringsRepository: coreDataLayer.getToolListItemInterfaceStringsRepository(),
-            getTranslatedToolLanguageAvailability: coreDataLayer.getTranslatedToolLanguageAvailability()
+            getTranslatedToolName: coreDomainLayer.supporting.getTranslatedToolName(),
+            getTranslatedToolCategory: coreDomainLayer.supporting.getTranslatedToolCategory(),
+            getToolListItemStrings: coreDomainLayer.supporting.getToolListItemStrings(),
+            getTranslatedToolLanguageAvailability: coreDomainLayer.supporting.getTranslatedToolLanguageAvailability()
         )
     }
 }

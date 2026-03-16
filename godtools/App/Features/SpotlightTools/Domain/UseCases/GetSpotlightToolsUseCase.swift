@@ -16,17 +16,17 @@ final class GetSpotlightToolsUseCase {
     private let languagesRepository: LanguagesRepository
     private let getTranslatedToolName: GetTranslatedToolName
     private let getTranslatedToolCategory: GetTranslatedToolCategory
-    private let getToolListItemInterfaceStringsRepository: GetToolListItemInterfaceStringsRepository
+    private let getToolListItemStrings: GetToolListItemStrings
     private let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability
     
-    init(resourcesRepository: ResourcesRepository, favoritedResourcesRepository: FavoritedResourcesRepository, languagesRepository: LanguagesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolCategory: GetTranslatedToolCategory, getToolListItemInterfaceStringsRepository: GetToolListItemInterfaceStringsRepository, getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability) {
+    init(resourcesRepository: ResourcesRepository, favoritedResourcesRepository: FavoritedResourcesRepository, languagesRepository: LanguagesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolCategory: GetTranslatedToolCategory, getToolListItemStrings: GetToolListItemStrings, getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability) {
         
         self.resourcesRepository = resourcesRepository
         self.favoritedResourcesRepository = favoritedResourcesRepository
         self.languagesRepository = languagesRepository
         self.getTranslatedToolName = getTranslatedToolName
         self.getTranslatedToolCategory = getTranslatedToolCategory
-        self.getToolListItemInterfaceStringsRepository = getToolListItemInterfaceStringsRepository
+        self.getToolListItemStrings = getToolListItemStrings
         self.getTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability
     }
     
@@ -42,7 +42,7 @@ final class GetSpotlightToolsUseCase {
         
         return Publishers.CombineLatest(
             resourcesRepository.persistence.observeCollectionChangesPublisher(),
-            getToolListItemInterfaceStringsRepository
+            getToolListItemStrings
                 .getStringsPublisher(translateInLanguage: translatedInAppLanguage)
                 .setFailureType(to: Error.self)
         )
