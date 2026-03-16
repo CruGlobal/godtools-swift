@@ -254,7 +254,7 @@ extension GetTranslatedToolLanguageAvailabilityTests {
         let localeLanguageName = MockLocaleLanguageName(languageNames: languageNames)
         
         return GetTranslatedLanguageName(
-            localizationLanguageNameRepository: MockLocalizationLanguageNameRepository(localizationServices: getLocalizationServices()),
+            localizationLanguageName: MockLocalizationLanguageNameRepository(localizationServices: getLocalizationServices()),
             localeLanguageName: localeLanguageName,
             localeRegionName: MockLocaleLanguageRegionName(regionNames: [:]),
             localeScriptName: MockLocaleLanguageScriptName(scriptNames: [:])

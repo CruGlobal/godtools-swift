@@ -1,5 +1,5 @@
 //
-//  GetSearchBarInterfaceStringsRepositoryTests.swift
+//  GetSearchBarStringsTests.swift
 //  godtoolsTests
 //
 //  Created by Rachael Skeath on 7/23/25.
@@ -10,7 +10,7 @@ import Testing
 @testable import godtools
 import Combine
 
-struct GetSearchBarInterfaceStringsRepositoryTests {
+struct GetSearchBarStringsTests {
     
     private static let cancelButtonKey: String = "cancel"
     private static let cancelButtonTextEnglish: String = "Cancel"
@@ -27,12 +27,12 @@ struct GetSearchBarInterfaceStringsRepositoryTests {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        let getSearchBarInterfaceStringsRepository = GetSearchBarInterfaceStringsRepository(localizationServices: Self.getLocalizationServices())
+        let getSearchBarInterfaceStringsRepository = GetSearchBarStrings(localizationServices: Self.getLocalizationServices())
         
         let appLanguagePublisher: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
         
-        var englishInterfaceStringsRef: SearchBarInterfaceStringsDomainModel?
-        var spanishInterfaceStringsRef: SearchBarInterfaceStringsDomainModel?
+        var englishInterfaceStringsRef: SearchBarStringsDomainModel?
+        var spanishInterfaceStringsRef: SearchBarStringsDomainModel?
         
         var sinkCount: Int = 0
         
@@ -64,7 +64,7 @@ struct GetSearchBarInterfaceStringsRepositoryTests {
     }
 }
 
-extension GetSearchBarInterfaceStringsRepositoryTests {
+extension GetSearchBarStringsTests {
     
     private static func getLocalizationServices() -> MockLocalizationServices {
                 

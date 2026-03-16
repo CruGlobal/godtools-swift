@@ -30,7 +30,7 @@ struct GetToolListItemInterfaceStringsRepositoryTests {
                 
         var cancellables: Set<AnyCancellable> = Set()
         
-        let getToolListItemInterfaceStrings = GetToolListItemInterfaceStringsRepository(
+        let getToolListItemInterfaceStrings = GetToolListItemStrings(
             localizationServices: Self.getLocalizationServices()
         )
         

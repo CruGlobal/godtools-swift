@@ -1,5 +1,5 @@
 //
-//  GetOnboardingTutorialInterfaceStringsRepositoryTests.swift
+//  GetOnboardingTutorialStringsUseCaseTests.swift
 //  godtoolsTests
 //
 //  Created by Levi Eggert on 3/14/24.
@@ -10,7 +10,7 @@ import Testing
 @testable import godtools
 import Combine
 
-struct GetOnboardingTutorialInterfaceStringsRepositoryTests {
+struct GetOnboardingTutorialStringsUseCaseTests {
     
     @Test(
         """
@@ -35,7 +35,7 @@ struct GetOnboardingTutorialInterfaceStringsRepositoryTests {
             ]
         ]
         
-        let getOnboardingTutorialInterfaceStringsRepository =  GetOnboardingTutorialInterfaceStringsRepository(
+        let getOnboardingTutorialInterfaceStringsRepository =  GetOnboardingTutorialStringsUseCase(
             localizationServices: MockLocalizationServices(
                 localizableStrings: localizableStrings
             )
@@ -56,7 +56,7 @@ struct GetOnboardingTutorialInterfaceStringsRepositoryTests {
                 .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<OnboardingTutorialStringsDomainModel, Never> in
                     
                     return getOnboardingTutorialInterfaceStringsRepository
-                        .getStringsPublisher(appLanguage: appLanguage)
+                        .execute(appLanguage: appLanguage)
                         .eraseToAnyPublisher()
                 })
                 .sink { (interfaceStrings: OnboardingTutorialStringsDomainModel) in

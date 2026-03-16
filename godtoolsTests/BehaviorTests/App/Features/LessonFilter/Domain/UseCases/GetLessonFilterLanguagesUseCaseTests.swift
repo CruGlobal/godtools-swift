@@ -1,5 +1,5 @@
 //
-//  GetLessonFilterLanguagesRepositoryTests.swift
+//  GetLessonFilterLanguagesUseCaseTests.swift
 //  godtoolsTests
 //
 //  Created by Levi Eggert on 7/12/24.
@@ -12,7 +12,7 @@ import Combine
 import RepositorySync
 
 @Suite(.serialized)
-struct GetLessonFilterLanguagesRepositoryTests {
+struct GetLessonFilterLanguagesUseCaseTests {
     
     private let englishLessonsAvailableText: String = "lessons available"
     
@@ -27,7 +27,7 @@ struct GetLessonFilterLanguagesRepositoryTests {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        let lessonFilterLanguagesRepository: GetLessonFilterLanguagesRepository = try getLessonFilterLanguagesRepository()
+        let getLessonFilterLanguagesUseCase: GetLessonFilterLanguagesUseCase = try getLessonFilterLanguagesUseCase()
         
         let appLanguageRussian: AppLanguageDomainModel = LanguageCodeDomainModel.russian.rawValue
         
@@ -42,8 +42,8 @@ struct GetLessonFilterLanguagesRepositoryTests {
                     continuation.resume(returning: ())
                 }
                 
-                lessonFilterLanguagesRepository
-                    .getLessonFilterLanguagesPublisher(translatedInAppLanguage: appLanguageRussian)
+                getLessonFilterLanguagesUseCase
+                    .execute(appLanguage: appLanguageRussian)
                     .sink(receiveCompletion: { _ in
                         
                         timeoutTask.cancel()
@@ -101,7 +101,7 @@ struct GetLessonFilterLanguagesRepositoryTests {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        let lessonFilterLanguagesRepository: GetLessonFilterLanguagesRepository = try getLessonFilterLanguagesRepository()
+        let getLessonFilterLanguagesUseCase: GetLessonFilterLanguagesUseCase = try getLessonFilterLanguagesUseCase()
                 
         var languagesRef: [LessonFilterLanguageDomainModel] = Array()
         
@@ -114,8 +114,8 @@ struct GetLessonFilterLanguagesRepositoryTests {
                     continuation.resume(returning: ())
                 }
                 
-                lessonFilterLanguagesRepository
-                    .getLessonFilterLanguagesPublisher(translatedInAppLanguage: argument.appLanguage.rawValue)
+                getLessonFilterLanguagesUseCase
+                    .execute(appLanguage: argument.appLanguage.rawValue)
                     .sink(receiveCompletion: { _ in
                         
                         timeoutTask.cancel()
@@ -146,7 +146,7 @@ struct GetLessonFilterLanguagesRepositoryTests {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        let lessonFilterLanguagesRepository: GetLessonFilterLanguagesRepository = try getLessonFilterLanguagesRepository()
+        let getLessonFilterLanguagesUseCase: GetLessonFilterLanguagesUseCase = try getLessonFilterLanguagesUseCase()
         
         let appLanguageEnglish: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
         
@@ -161,8 +161,8 @@ struct GetLessonFilterLanguagesRepositoryTests {
                     continuation.resume(returning: ())
                 }
                 
-                lessonFilterLanguagesRepository
-                    .getLessonFilterLanguagesPublisher(translatedInAppLanguage: appLanguageEnglish)
+                getLessonFilterLanguagesUseCase
+                    .execute(appLanguage: appLanguageEnglish)
                     .sink(receiveCompletion: { _ in
                         
                         timeoutTask.cancel()
@@ -180,8 +180,8 @@ struct GetLessonFilterLanguagesRepositoryTests {
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            lessonFilterLanguagesRepository
-                .getLessonFilterLanguagesPublisher(translatedInAppLanguage: appLanguageEnglish)
+            getLessonFilterLanguagesUseCase
+                .execute(appLanguage: appLanguageEnglish)
                 .sink(receiveCompletion: { _ in
                     
                 }, receiveValue: { (languages: [LessonFilterLanguageDomainModel]) in
@@ -200,21 +200,27 @@ struct GetLessonFilterLanguagesRepositoryTests {
         let englishLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.english.rawValue})
         let frenchLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.french.rawValue})
         let spanishLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.spanish.rawValue})
+        
+        let afrikaansLessonsAvailable: String = try #require(afrikaansLanguage?.lessonsAvailableText)
+        let czechLessonsAvailable: String = try #require(czechLanguage?.lessonsAvailableText)
+        let englishLessonsAvailable: String = try #require(englishLanguage?.lessonsAvailableText)
+        let frenchLessonsAvailable: String = try #require(frenchLanguage?.lessonsAvailableText)
+        let spanishLessonsAvailable: String = try #require(spanishLanguage?.lessonsAvailableText)
 
-        #expect(afrikaansLanguage?.lessonsAvailableText == "\(englishLessonsAvailableText) 1")
-        #expect(czechLanguage?.lessonsAvailableText == "\(englishLessonsAvailableText) 1")
-        #expect(englishLanguage?.lessonsAvailableText == "\(englishLessonsAvailableText) 5")
-        #expect(frenchLanguage?.lessonsAvailableText == "\(englishLessonsAvailableText) 2")
-        #expect(spanishLanguage?.lessonsAvailableText == "\(englishLessonsAvailableText) 3")
+        #expect(afrikaansLessonsAvailable == "\(englishLessonsAvailableText) 1")
+        #expect(czechLessonsAvailable == "\(englishLessonsAvailableText) 1")
+        #expect(englishLessonsAvailable == "\(englishLessonsAvailableText) 5")
+        #expect(frenchLessonsAvailable == "\(englishLessonsAvailableText) 2")
+        #expect(spanishLessonsAvailable == "\(englishLessonsAvailableText) 3")
     }
 }
 
-extension GetLessonFilterLanguagesRepositoryTests {
+extension GetLessonFilterLanguagesUseCaseTests {
     
     private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
                 
         return try TestsDiContainer(
-            realmFileName: String(describing: GetLessonFilterLanguagesRepositoryTests.self),
+            realmFileName: String(describing: GetLessonFilterLanguagesUseCaseTests.self),
             addRealmObjects: addRealmObjects
         )
     }
@@ -247,16 +253,14 @@ extension GetLessonFilterLanguagesRepositoryTests {
         return allLanguages + tracts + lessons
     }
     
-    private func getLessonFilterLanguagesRepository() throws -> GetLessonFilterLanguagesRepository {
+    private func getLessonFilterLanguagesUseCase() throws -> GetLessonFilterLanguagesUseCase {
         
         let testsDiContainer = try getTestsDiContainer(addRealmObjects: getRealmObjects())
         
-        let getLessonFilterLanguagesRepository = GetLessonFilterLanguagesRepository(
+        let getLessonFilterLanguagesRepository = GetLessonFilterLanguagesUseCase(
             resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
             languagesRepository: testsDiContainer.dataLayer.getLanguagesRepository(),
-            getTranslatedLanguageName: getTranslatedLanguageName(),
-            localizationServices: getLocalizationServices(),
-            stringWithLocaleCount: getStringWithLocaleCount()
+            getLessonFilterLangauge: getLessonFilterLangauge(testsDiContainer: testsDiContainer)
         )
         
         return getLessonFilterLanguagesRepository
@@ -289,6 +293,16 @@ extension GetLessonFilterLanguagesRepositoryTests {
         )
     }
     
+    private func getLessonFilterLangauge(testsDiContainer: TestsDiContainer) -> GetLessonFilterLanguage {
+        return GetLessonFilterLanguage(
+            resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
+            languagesRepository: testsDiContainer.dataLayer.getLanguagesRepository(),
+            getTranslatedLanguageName: getTranslatedLanguageName(),
+            localizationServices: getLocalizationServices(),
+            stringWithLocaleCount: getStringWithLocaleCount()
+        )
+    }
+    
     private func getLocalizationServices() -> MockLocalizationServices {
         
         let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
@@ -303,7 +317,7 @@ extension GetLessonFilterLanguagesRepositoryTests {
     private func getTranslatedLanguageName() -> GetTranslatedLanguageName {
         
         let getTranslatedLanguageName = GetTranslatedLanguageName(
-            localizationLanguageNameRepository: MockLocalizationLanguageNameRepository(localizationServices: getLocalizationServices()),
+            localizationLanguageName: MockLocalizationLanguageNameRepository(localizationServices: getLocalizationServices()),
             localeLanguageName: MockLocaleLanguageName.defaultMockLocaleLanguageName(),
             localeRegionName: MockLocaleLanguageRegionName(regionNames: [:]),
             localeScriptName: MockLocaleLanguageScriptName(scriptNames: [:])

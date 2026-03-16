@@ -55,7 +55,7 @@ struct GetTranslatedLanguageNameTests {
     ]
             
     private static let getTranslatedLanguageName = GetTranslatedLanguageName(
-        localizationLanguageNameRepository: MockLocalizationLanguageNameRepository(localizationServices: MockLocalizationServices(localizableStrings: localizableStrings)),
+        localizationLanguageName: MockLocalizationLanguageNameRepository(localizationServices: MockLocalizationServices(localizableStrings: localizableStrings)),
         localeLanguageName: MockLocaleLanguageName(languageNames: languageNames),
         localeRegionName: MockLocaleLanguageRegionName(regionNames: [:]),
         localeScriptName: MockLocaleLanguageScriptName(scriptNames: [:])

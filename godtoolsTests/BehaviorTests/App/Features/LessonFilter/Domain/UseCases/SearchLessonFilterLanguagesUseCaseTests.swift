@@ -1,5 +1,5 @@
 //
-//  SearchLessonFilterLanguagesRepositoryTests.swift
+//  SearchLessonFilterLanguagesUseCaseTests.swift
 //  godtoolsTests
 //
 //  Created by Levi Eggert on 7/12/24.
@@ -10,7 +10,7 @@ import Testing
 @testable import godtools
 import Combine
 
-struct SearchLessonFilterLanguagesRepositoryTests {
+struct SearchLessonFilterLanguagesUseCaseTests {
         
     struct TestArgument {
         let searchString: String
@@ -40,7 +40,7 @@ struct SearchLessonFilterLanguagesRepositoryTests {
     )
     func showsLessonFilterLanguagesContainingSearchString(argument: TestArgument) async {
         
-        let searchLessonFilterLanguagesRepository = SearchLessonFilterLanguagesRepository(
+        let searchLessonFilterLanguagesUseCase = SearchLessonFilterLanguagesUseCase(
             stringSearcher: StringSearcher()
         )
         
@@ -50,8 +50,8 @@ struct SearchLessonFilterLanguagesRepositoryTests {
                 
         await confirmation(expectedCount: 1) { confirmation in
             
-            searchLessonFilterLanguagesRepository
-                .getSearchResultsPublisher(for: argument.searchString, in: allLessonFilterLanguages)
+            searchLessonFilterLanguagesUseCase
+                .execute(for: argument.searchString, in: allLessonFilterLanguages)
                 .sink { (languages: [LessonFilterLanguageDomainModel]) in
                     
                     confirmation()
@@ -65,7 +65,7 @@ struct SearchLessonFilterLanguagesRepositoryTests {
     }
 }
 
-extension SearchLessonFilterLanguagesRepositoryTests {
+extension SearchLessonFilterLanguagesUseCaseTests {
     
     private var allLessonFilterLanguages: [LessonFilterLanguageDomainModel] {
         return [

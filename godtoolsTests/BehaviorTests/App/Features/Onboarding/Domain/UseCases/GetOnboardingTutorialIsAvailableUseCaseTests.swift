@@ -1,5 +1,5 @@
 //
-//  GetOnboardingTutorialIsAvailableTests.swift
+//  GetOnboardingTutorialIsAvailableUseCaseTests.swift
 //  godtoolsTests
 //
 //  Created by Levi Eggert on 3/14/24.
@@ -10,7 +10,7 @@ import Testing
 @testable import godtools
 import Combine
 
-struct GetOnboardingTutorialIsAvailableTests {
+struct GetOnboardingTutorialIsAvailableUseCaseTests {
     
     @Test(
         """
@@ -23,7 +23,7 @@ struct GetOnboardingTutorialIsAvailableTests {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        let getOnboardingIsAvailable = GetOnboardingTutorialIsAvailable(
+        let getOnboardingIsAvailable = GetOnboardingTutorialIsAvailableUseCase(
             launchCountRepository: MockLaunchCountRepository(launchCount: 1),
             onboardingTutorialViewedRepository: MockOnboardingTutorialViewedRepository(tutorialViewed: false)
         )
@@ -33,7 +33,7 @@ struct GetOnboardingTutorialIsAvailableTests {
         await confirmation(expectedCount: 1) { confirmation in
             
             getOnboardingIsAvailable
-                .isAvailablePublisher()
+                .execute()
                 .sink { (isAvailable: Bool) in
                         
                     confirmation()
@@ -57,7 +57,7 @@ struct GetOnboardingTutorialIsAvailableTests {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        let getOnboardingIsAvailable = GetOnboardingTutorialIsAvailable(
+        let getOnboardingIsAvailable = GetOnboardingTutorialIsAvailableUseCase(
             launchCountRepository: MockLaunchCountRepository(launchCount: 2),
             onboardingTutorialViewedRepository: MockOnboardingTutorialViewedRepository(tutorialViewed: true)
         )
@@ -67,7 +67,7 @@ struct GetOnboardingTutorialIsAvailableTests {
         await confirmation(expectedCount: 1) { confirmation in
             
             getOnboardingIsAvailable
-                .isAvailablePublisher()
+                .execute()
                 .sink { (isAvailable: Bool) in
                         
                     confirmation()
@@ -91,7 +91,7 @@ struct GetOnboardingTutorialIsAvailableTests {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        let getOnboardingIsAvailable = GetOnboardingTutorialIsAvailable(
+        let getOnboardingIsAvailable = GetOnboardingTutorialIsAvailableUseCase(
             launchCountRepository: MockLaunchCountRepository(launchCount: 2),
             onboardingTutorialViewedRepository: MockOnboardingTutorialViewedRepository(tutorialViewed: false)
         )
@@ -101,7 +101,7 @@ struct GetOnboardingTutorialIsAvailableTests {
         await confirmation(expectedCount: 1) { confirmation in
             
             getOnboardingIsAvailable
-                .isAvailablePublisher()
+                .execute()
                 .sink { (isAvailable: Bool) in
                         
                     confirmation()

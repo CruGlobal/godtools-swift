@@ -1,5 +1,5 @@
 //
-//  GetUserLessonFiltersRepositoryTests.swift
+//  GetUserLessonFiltersUseCaseTests.swift
 //  godtoolsTests
 //
 //  Created by Levi Eggert on 7/12/24.
@@ -13,7 +13,7 @@ import RealmSwift
 import RepositorySync
 
 @Suite(.serialized)
-struct GetUserLessonFiltersRepositoryTests {
+struct GetUserLessonFiltersUseCaseTests {
     
     @Test(
         """
@@ -38,12 +38,7 @@ struct GetUserLessonFiltersRepositoryTests {
         
         let realmObjectsToAdd: [IdentifiableRealmObject] = [spanishLanguage, spanishLesson_0]
         
-        let testsDiContainer = try getTestsDiContainer(addRealmObjects: realmObjectsToAdd)
-        
-        let getUserLessonFiltersRepository = GetUserLessonFiltersRepository(
-            userLessonFiltersRepository: getUserLessonFiltersRepository(testsDiContainer: testsDiContainer),
-            getLessonFilterLanguagesRepository: getLessonFilterLanguagesRepository(testsDiContainer: testsDiContainer)
-        )
+        let getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase = try getUserLessonFiltersUseCase(addRealmObjects: realmObjectsToAdd)
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -58,11 +53,11 @@ struct GetUserLessonFiltersRepositoryTests {
                     continuation.resume(returning: ())
                 }
                 
-                getUserLessonFiltersRepository
-                    .getUserLessonLanguageFilterPublisher(translatedInAppLanguage: appLanguageSpanish)
-                    .sink { (lessonLanguageFilter: LessonFilterLanguageDomainModel?) in
+                getUserLessonFiltersUseCase
+                    .execute(appLanguage: appLanguageSpanish)
+                    .sink { (userLessonFilters: UserLessonFiltersDomainModel) in
                             
-                        lessonLanguageFilterRef = lessonLanguageFilter
+                        lessonLanguageFilterRef = userLessonFilters.languageFilter
                         
                         // Place inside a sink or other async closure:
                         confirmation()
@@ -112,12 +107,7 @@ struct GetUserLessonFiltersRepositoryTests {
         
         let realmObjectsToAdd: [IdentifiableRealmObject] = [spanishLanguage, frenchLanguage, spanishLesson_0, frenchTract_0]
         
-        let testsDiContainer = try getTestsDiContainer(addRealmObjects: realmObjectsToAdd)
-        
-        let getUserLessonFiltersRepository = GetUserLessonFiltersRepository(
-            userLessonFiltersRepository: getUserLessonFiltersRepository(testsDiContainer: testsDiContainer),
-            getLessonFilterLanguagesRepository: getLessonFilterLanguagesRepository(testsDiContainer: testsDiContainer)
-        )
+        let getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase = try getUserLessonFiltersUseCase(addRealmObjects: realmObjectsToAdd)
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -132,11 +122,11 @@ struct GetUserLessonFiltersRepositoryTests {
                     continuation.resume(returning: ())
                 }
                 
-                getUserLessonFiltersRepository
-                    .getUserLessonLanguageFilterPublisher(translatedInAppLanguage: appLanguageFrench)
-                    .sink { (lessonLanguageFilter: LessonFilterLanguageDomainModel?) in
+                getUserLessonFiltersUseCase
+                    .execute(appLanguage: appLanguageFrench)
+                    .sink { (userLessonFilters: UserLessonFiltersDomainModel) in
                             
-                        lessonLanguageFilterRef = lessonLanguageFilter
+                        lessonLanguageFilterRef = userLessonFilters.languageFilter
                         
                         // Place inside a sink or other async closure:
                         confirmation()
@@ -176,14 +166,9 @@ struct GetUserLessonFiltersRepositoryTests {
         
         let realmObjectsToAdd: [IdentifiableRealmObject] = [spanishLanguage, frenchLanguage]
         
-        let testsDiContainer = try getTestsDiContainer(addRealmObjects: realmObjectsToAdd)
+        let testsDiContainer: TestsDiContainer = try getTestsDiContainer(addRealmObjects: realmObjectsToAdd)
         
-        let userLessonFiltersRepository: UserLessonFiltersRepository = getUserLessonFiltersRepository(testsDiContainer: testsDiContainer)
-        
-        let getUserLessonFiltersRepository = GetUserLessonFiltersRepository(
-            userLessonFiltersRepository: userLessonFiltersRepository,
-            getLessonFilterLanguagesRepository: getLessonFilterLanguagesRepository(testsDiContainer: testsDiContainer)
-        )
+        let getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase = getUserLessonFiltersUseCase(testsDiContainer: testsDiContainer)
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -200,9 +185,9 @@ struct GetUserLessonFiltersRepositoryTests {
                     continuation.resume(returning: ())
                 }
                 
-                getUserLessonFiltersRepository
-                    .getUserLessonLanguageFilterPublisher(translatedInAppLanguage: appLanguageFrench)
-                    .sink { (lessonLanguageFilter: LessonFilterLanguageDomainModel?) in
+                getUserLessonFiltersUseCase
+                    .execute(appLanguage: appLanguageFrench)
+                    .sink { (userLessonFilters: UserLessonFiltersDomainModel) in
                         
                         confirmation()
                         
@@ -210,11 +195,11 @@ struct GetUserLessonFiltersRepositoryTests {
                                                 
                         if sinkCount == 1 {
                             
-                            originalLessonLanguageFilterRef = lessonLanguageFilter
-                            userLessonFiltersRepository.storeUserLessonLanguageFilter(with: spanishLanguage.id)
+                            originalLessonLanguageFilterRef = userLessonFilters.languageFilter
+                            testsDiContainer.dataLayer.getUserLessonFiltersRepository().storeUserLessonLanguageFilter(with: spanishLanguage.id)
                         }
                         else if sinkCount == 2 {
-                            selectedLessonLanguageFilterRef = lessonLanguageFilter
+                            selectedLessonLanguageFilterRef = userLessonFilters.languageFilter
                             task.cancel()
                             continuation.resume(returning: ())
                         }
@@ -231,24 +216,33 @@ struct GetUserLessonFiltersRepositoryTests {
     }
 }
 
-extension GetUserLessonFiltersRepositoryTests {
+extension GetUserLessonFiltersUseCaseTests {
     
-    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
+    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject]) throws -> TestsDiContainer {
                 
         return try TestsDiContainer(
-            realmFileName: String(describing: GetUserLessonFiltersRepositoryTests.self),
+            realmFileName: String(describing: GetUserLessonFiltersUseCaseTests.self),
             addRealmObjects: addRealmObjects
         )
     }
     
-    private func getUserLessonFiltersRepository(testsDiContainer: TestsDiContainer) -> UserLessonFiltersRepository {
+    private func getUserLessonFiltersUseCase(addRealmObjects: [IdentifiableRealmObject]) throws -> GetUserLessonFiltersUseCase {
         
-        return testsDiContainer.dataLayer.getUserLessonFiltersRepository()
+        let testsDiContainer = try getTestsDiContainer(addRealmObjects: addRealmObjects)
+        
+        return getUserLessonFiltersUseCase(testsDiContainer: testsDiContainer)
     }
     
-    private func getLessonFilterLanguagesRepository(testsDiContainer: TestsDiContainer) -> GetLessonFilterLanguagesRepository {
-        
-        return GetLessonFilterLanguagesRepository(
+    private func getUserLessonFiltersUseCase(testsDiContainer: TestsDiContainer) -> GetUserLessonFiltersUseCase {
+                
+        return GetUserLessonFiltersUseCase(
+            userLessonFiltersRepository: testsDiContainer.dataLayer.getUserLessonFiltersRepository(),
+            getLessonFilterLanguage: getLessonFilterLangauge(testsDiContainer: testsDiContainer)
+        )
+    }
+    
+    private func getLessonFilterLangauge(testsDiContainer: TestsDiContainer) -> GetLessonFilterLanguage {
+        return GetLessonFilterLanguage(
             resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
             languagesRepository: testsDiContainer.dataLayer.getLanguagesRepository(),
             getTranslatedLanguageName: getTranslatedLanguageName(),
@@ -271,7 +265,7 @@ extension GetUserLessonFiltersRepositoryTests {
     private func getTranslatedLanguageName() -> GetTranslatedLanguageName {
         
         let getTranslatedLanguageName = GetTranslatedLanguageName(
-            localizationLanguageNameRepository: MockLocalizationLanguageNameRepository(localizationServices: getLocalizationServices()),
+            localizationLanguageName: MockLocalizationLanguageNameRepository(localizationServices: getLocalizationServices()),
             localeLanguageName: MockLocaleLanguageName.defaultMockLocaleLanguageName(),
             localeRegionName: MockLocaleLanguageRegionName(regionNames: [:]),
             localeScriptName: MockLocaleLanguageScriptName(scriptNames: [:])

@@ -1,5 +1,5 @@
 //
-//  GetLessonFilterLanguagesInterfaceStringsRepositoryTests.swift
+//  GetLessonFilterLanguagesStringsUseCaseTests.swift
 //  godtoolsTests
 //
 //  Created by Levi Eggert on 7/12/24.
@@ -10,7 +10,7 @@ import Testing
 @testable import godtools
 import Combine
 
-struct GetLessonFilterLanguagesInterfaceStringsRepositoryTests {
+struct GetLessonFilterLanguagesStringsUseCaseTests {
     
     @Test(
         """
@@ -34,14 +34,14 @@ struct GetLessonFilterLanguagesInterfaceStringsRepositoryTests {
             ]
         ]
         
-        let getLessonFilterLanguagesInterfaceStringsRepository = GetLessonFilterLanguagesInterfaceStringsRepository(
+        let getLessonFilterLanguagesStringsUseCase = GetLessonFilterLanguagesStringsUseCase(
             localizationServices: MockLocalizationServices(localizableStrings: localizableStrings)
         )
         
         let appLanguagePublisher: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
         
-        var englishInterfaceStringsRef: LessonFilterLanguagesInterfaceStringsDomainModel?
-        var spanishInterfaceStringsRef: LessonFilterLanguagesInterfaceStringsDomainModel?
+        var englishStringsRef: LessonFilterLanguagesStringsDomainModel?
+        var spanishStringsRef: LessonFilterLanguagesStringsDomainModel?
         
         var sinkCount: Int = 0
         
@@ -55,25 +55,25 @@ struct GetLessonFilterLanguagesInterfaceStringsRepositoryTests {
                 }
                 
                 appLanguagePublisher
-                    .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<LessonFilterLanguagesInterfaceStringsDomainModel, Never> in
+                    .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<LessonFilterLanguagesStringsDomainModel, Never> in
                         
-                        return getLessonFilterLanguagesInterfaceStringsRepository
-                            .getStringsPublisher(translateInAppLanguage: appLanguage)
+                        return getLessonFilterLanguagesStringsUseCase
+                            .execute(appLanguage: appLanguage)
                             .eraseToAnyPublisher()
                     })
-                    .sink { (interfaceStrings: LessonFilterLanguagesInterfaceStringsDomainModel) in
+                    .sink { (strings: LessonFilterLanguagesStringsDomainModel) in
                         
                         sinkCount += 1
                         confirmation()
                         
                         if sinkCount == 1 {
                             
-                            englishInterfaceStringsRef = interfaceStrings
+                            englishStringsRef = strings
                             appLanguagePublisher.send(LanguageCodeDomainModel.spanish.rawValue)
                         }
                         else if sinkCount == 2 {
                             
-                            spanishInterfaceStringsRef = interfaceStrings
+                            spanishStringsRef = strings
                             
                             // When finished be sure to call:
                             timeoutTask.cancel()
@@ -84,7 +84,7 @@ struct GetLessonFilterLanguagesInterfaceStringsRepositoryTests {
             }
         }
         
-        #expect(englishInterfaceStringsRef?.navTitle == "Lesson language")
-        #expect(spanishInterfaceStringsRef?.navTitle == "Idioma de la lección")
+        #expect(englishStringsRef?.navTitle == "Lesson language")
+        #expect(spanishStringsRef?.navTitle == "Idioma de la lección")
     }
 }
