@@ -20,7 +20,6 @@
       }
     },
     {
-      "enabled" : false,
       "target" : {
         "containerPath" : "container:godtools.xcodeproj",
         "identifier" : "4F12296B20852BE3008842CC",
