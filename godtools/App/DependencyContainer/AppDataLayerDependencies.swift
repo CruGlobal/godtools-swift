@@ -262,21 +262,6 @@ class AppDataLayerDependencies {
         return LaunchCountRepository.shared
     }
     
-    func getLessonListItemProgressRepository() -> GetLessonListItemProgressRepository {
-        return GetLessonListItemProgressRepository(
-            lessonProgressRepository: getUserLessonProgressRepository(),
-            userCountersRepository: getUserCountersRepository(),
-            localizationServices: getLocalizationServices(), 
-            getTranslatedPercentage: getTranslatedPercentage()
-        )
-    }
-    
-    func getLocalizationLanguageNameRepository() -> LocalizationLanguageNameRepository {
-        return LocalizationLanguageNameRepository(
-            localizationServices: getLocalizationServices()
-        )
-    }
-    
     func getLocalizationServices() -> LocalizationServicesInterface {
         return LocalizationServices(
             localizableStringsFilesBundle: Bundle.main,
@@ -406,12 +391,6 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getSearchBarInterfaceStringsRepositoryInterface() -> GetSearchBarInterfaceStringsRepositoryInterface {
-        return GetSearchBarInterfaceStringsRepository(
-            localizationServices: getLocalizationServices()
-        )
-    }
-    
     func getSharedFirebaseMessaging() -> FirebaseMessaging {
         return FirebaseMessaging.shared
     }
@@ -453,12 +432,6 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getToolListItemInterfaceStringsRepository() -> GetToolListItemInterfaceStringsRepository {
-        return GetToolListItemInterfaceStringsRepository(
-            localizationServices: getLocalizationServices()
-        )
-    }
-    
     func getTrackDownloadedTranslationsRepository() -> TrackDownloadedTranslationsRepository {
                 
         let persistence: any Persistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel>
@@ -484,46 +457,6 @@ class AppDataLayerDependencies {
         
         return TrackDownloadedTranslationsRepository(
             cache: cache
-        )
-    }
-    
-    func getTranslatedLanguageName() -> GetTranslatedLanguageName {
-        return GetTranslatedLanguageName(
-            localizationLanguageNameRepository: getLocalizationLanguageNameRepository(),
-            localeLanguageName: LocaleLanguageName(),
-            localeRegionName: LocaleLanguageRegionName(),
-            localeScriptName: LocaleLanguageScriptName()
-        )
-    }
-    
-    func getTranslatedNumberCount() -> GetTranslatedNumberCount {
-        return GetTranslatedNumberCount()
-    }
-    
-    func getTranslatedPercentage() -> GetTranslatedPercentage {
-        return GetTranslatedPercentage()
-    }
-    
-    func getTranslatedToolCategory() -> GetTranslatedToolCategory {
-        return GetTranslatedToolCategory(
-            localizationServices: getLocalizationServices(),
-            resourcesRepository: getResourcesRepository()
-        )
-    }
-    
-    func getTranslatedToolLanguageAvailability() -> GetTranslatedToolLanguageAvailability {
-        return GetTranslatedToolLanguageAvailability(
-            localizationServices: getLocalizationServices(),
-            resourcesRepository: getResourcesRepository(),
-            languagesRepository: getLanguagesRepository(),
-            getTranslatedLanguageName: getTranslatedLanguageName()
-        )
-    }
-    
-    func getTranslatedToolName() -> GetTranslatedToolName {
-        return GetTranslatedToolName(
-            resourcesRepository: getResourcesRepository(),
-            translationsRepository: getTranslationsRepository()
         )
     }
     

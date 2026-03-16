@@ -11,11 +11,13 @@ import Foundation
 class ToolSettingsDomainInterfaceDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
+    private let coreDomainLayer: AppDomainLayerDependencies
     private let dataLayer: ToolSettingsDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, dataLayer: ToolSettingsDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, dataLayer: ToolSettingsDataLayerDependencies) {
         
         self.coreDataLayer = coreDataLayer
+        self.coreDomainLayer = coreDomainLayer
         self.dataLayer = dataLayer
     }
     
@@ -28,14 +30,14 @@ class ToolSettingsDomainInterfaceDependencies {
     func getToolSettingsPrimaryLanguageRepositoryInterface() -> GetToolSettingsPrimaryLanguageRepositoryInterface {
         return GetToolSettingsPrimaryLanguageRepository(
             languagesRepository: coreDataLayer.getLanguagesRepository(),
-            getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName()
+            getTranslatedLanguageName: coreDomainLayer.supporting.getTranslatedLanguageName()
         )
     }
     
     func getToolSettingsParallelLanguageRepositoryInterface() -> GetToolSettingsParallelLanguageRepositoryInterface {
         return GetToolSettingsParallelLanguageRepository(
             languagesRepository: coreDataLayer.getLanguagesRepository(),
-            getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName()
+            getTranslatedLanguageName: coreDomainLayer.supporting.getTranslatedLanguageName()
         )
     }
     
@@ -55,7 +57,7 @@ class ToolSettingsDomainInterfaceDependencies {
         return GetToolSettingsToolLanguagesListRepository(
             resourcesRepository: coreDataLayer.getResourcesRepository(),
             languagesRepository: coreDataLayer.getLanguagesRepository(),
-            getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName()
+            getTranslatedLanguageName: coreDomainLayer.supporting.getTranslatedLanguageName()
         )
     }
 }

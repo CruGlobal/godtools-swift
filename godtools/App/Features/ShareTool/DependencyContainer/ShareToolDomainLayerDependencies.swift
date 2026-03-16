@@ -10,16 +10,20 @@ import Foundation
 
 class ShareToolDomainLayerDependencies {
     
-    private let domainInterfaceLayer: ShareToolDomainInterfaceDependencies
+    private let coreDataLayer: AppDataLayerDependencies
+    private let dataLayer: ShareToolDataLayerDependencies
     
-    init(domainInterfaceLayer: ShareToolDomainInterfaceDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, dataLayer: ShareToolDataLayerDependencies) {
         
-        self.domainInterfaceLayer = domainInterfaceLayer
+        self.coreDataLayer = coreDataLayer
+        self.dataLayer = dataLayer
     }
     
-    func getViewShareToolUseCase() -> ViewShareToolUseCase {
-        return ViewShareToolUseCase(
-            getInterfaceStringsRepository: domainInterfaceLayer.getShareToolInterfaceStringsRepositoryInterface()
+    func getShareToolStringsUseCase() -> GetShareToolStringsUseCase {
+        return GetShareToolStringsUseCase(
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            languagesRepository: coreDataLayer.getLanguagesRepository(),
+            localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
 }

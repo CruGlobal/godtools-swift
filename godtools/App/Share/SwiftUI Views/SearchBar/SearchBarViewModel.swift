@@ -35,15 +35,17 @@ import Combine
             .map { appLanguage in
                 
                 viewSearchBarUseCase
-                    .viewPublisher(appLanguage: appLanguage)
+                    .execute(
+                        appLanguage: appLanguage
+                    )
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] domainModel in
                 
-                let interfaceStrings = domainModel.interfaceStrings
+                let strings = domainModel.strings
                 
-                self?.cancelText = interfaceStrings.cancel
+                self?.cancelText = strings.cancel
             }
             .store(in: &cancellables)
     }

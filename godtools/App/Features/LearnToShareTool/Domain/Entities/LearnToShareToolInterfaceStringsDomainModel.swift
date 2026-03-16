@@ -1,5 +1,5 @@
 //
-//  LearnToShareToolInterfaceStringsDomainModel.swift
+//  LearnToShareToolStringsDomainModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 12/6/23.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LearnToShareToolInterfaceStringsDomainModel {
+struct LearnToShareToolStringsDomainModel {
     
     let nextTutorialItemActionTitle: String
     let startTrainingActionTitle: String

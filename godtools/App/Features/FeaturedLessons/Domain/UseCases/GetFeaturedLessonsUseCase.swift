@@ -16,16 +16,16 @@ final class GetFeaturedLessonsUseCase {
     private let getTranslatedToolName: GetTranslatedToolName
     private let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability
     private let lessonProgressRepository: UserLessonProgressRepository
-    private let getLessonListItemProgressRepository: GetLessonListItemProgressRepository
+    private let getLessonListItemProgress: GetLessonListItemProgress
     
-    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability, lessonProgressRepository: UserLessonProgressRepository, getLessonListItemProgressRepository: GetLessonListItemProgressRepository) {
+    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability, lessonProgressRepository: UserLessonProgressRepository, getLessonListItemProgress: GetLessonListItemProgress) {
         
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository
         self.getTranslatedToolName = getTranslatedToolName
         self.getTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability
         self.lessonProgressRepository = lessonProgressRepository
-        self.getLessonListItemProgressRepository = getLessonListItemProgressRepository
+        self.getLessonListItemProgress = getLessonListItemProgress
     }
     
     @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[FeaturedLessonDomainModel], Error> {
@@ -58,7 +58,7 @@ final class GetFeaturedLessonsUseCase {
                             toolLanguageAvailability = ToolLanguageAvailabilityDomainModel(availabilityString: "", isAvailable: false)
                         }
                         
-                        let lessonProgress = try self.getLessonListItemProgressRepository.getLessonProgress(
+                        let lessonProgress = try self.getLessonListItemProgress.getLessonProgress(
                             lesson: resource,
                             appLanguage: appLanguage
                         )

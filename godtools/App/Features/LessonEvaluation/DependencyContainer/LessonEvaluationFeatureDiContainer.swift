@@ -13,9 +13,9 @@ class LessonEvaluationFeatureDiContainer {
     let dataLayer: LessonEvaluationFeatureDataLayerDependencies
     let domainLayer: LessonEvaluationFeatureDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies) {
         
         dataLayer = LessonEvaluationFeatureDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainLayer = LessonEvaluationFeatureDomainLayerDependencies(dataLayer: dataLayer, coreDataLayer: coreDataLayer)
+        domainLayer = LessonEvaluationFeatureDomainLayerDependencies(coreDataLayer: coreDataLayer, coreDomainLayer: coreDomainLayer, dataLayer: dataLayer)
     }
 }
