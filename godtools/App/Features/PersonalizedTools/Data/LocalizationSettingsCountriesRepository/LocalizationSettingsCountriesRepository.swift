@@ -54,16 +54,14 @@ class LocalizationSettingsCountriesRepository: LocalizationSettingsCountriesRepo
 
         let localeWhereLanguageMatchesRegion = "\(lowercasedRegion)_\(region.identifier)"
         if Locale.availableIdentifiers.contains(localeWhereLanguageMatchesRegion) {
-            
             return Locale(identifier: localeWhereLanguageMatchesRegion)
         }
 
-        let allLocalesInRegion = Locale.availableIdentifiers.filter { identifier in
-            return identifier.hasSuffix("_\(region.identifier)")
-        }
+        let allLocalesInRegion = Locale.availableIdentifiers
+            .filter { $0.hasSuffix("_\(region.identifier)") }
+            .sorted { sortByPreferringFirstLetterMatch($0, $1, region: region) }
 
         for localeId in allLocalesInRegion {
-            
             let locale = Locale(identifier: localeId)
             if let translation = locale.localizedString(forRegionCode: region.identifier), !translation.isEmpty {
                 return locale
@@ -71,5 +69,25 @@ class LocalizationSettingsCountriesRepository: LocalizationSettingsCountriesRepo
         }
 
         return Locale(identifier: region.identifier)
+    }
+
+    private func sortByPreferringFirstLetterMatch(_ first: String, _ second: String, region: Locale.Region) -> Bool {
+        let firstMatches = languageCodeStartsWithSameLetterAsRegion(localeIdentifier: first, region: region)
+        let secondMatches = languageCodeStartsWithSameLetterAsRegion(localeIdentifier: second, region: region)
+
+        if firstMatches && !secondMatches {
+            return true
+        }
+        if !firstMatches && secondMatches {
+            return false
+        }
+
+        return first < second
+    }
+
+    private func languageCodeStartsWithSameLetterAsRegion(localeIdentifier: String, region: Locale.Region) -> Bool {
+        let languageCode = localeIdentifier.split(separator: "_").first.map(String.init) ?? ""
+        let regionFirstLetter = region.identifier.lowercased().first
+        return languageCode.lowercased().first == regionFirstLetter
     }
 }
