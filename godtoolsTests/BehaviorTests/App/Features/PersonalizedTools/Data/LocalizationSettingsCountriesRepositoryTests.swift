@@ -180,4 +180,96 @@ struct LocalizationSettingsCountriesRepositoryTests {
             #expect(!country.isoRegionCode.isEmpty)
         }
     }
+
+    @Test(
+        """
+        Given: User is viewing the localization settings countries list
+        When: Countries with exact language-region code matches are requested
+        Then: Countries should return their native language translations correctly
+        """
+    )
+    func countriesWithExactLanguageRegionMatchesReturnNativeTranslations() async {
+
+        let repository = LocalizationSettingsCountriesRepository()
+        let appLanguage: AppLanguageDomainModel = "en"
+
+        var cancellables: Set<AnyCancellable> = Set()
+        var countries: [LocalizationSettingsCountryDataModel] = []
+
+        await confirmation(expectedCount: 1) { confirmation in
+
+            repository
+                .getCountriesPublisher(appLanguage: appLanguage)
+                .sink { (result: [LocalizationSettingsCountryDataModel]) in
+
+                    countries = result
+                    confirmation()
+                }
+                .store(in: &cancellables)
+        }
+
+        let france = countries.first(where: { $0.isoRegionCode == "FR" })
+        #expect(france?.countryNameTranslatedInOwnLanguage == "France")
+
+        let spain = countries.first(where: { $0.isoRegionCode == "ES" })
+        #expect(spain?.countryNameTranslatedInOwnLanguage == "España")
+
+        let italy = countries.first(where: { $0.isoRegionCode == "IT" })
+        #expect(italy?.countryNameTranslatedInOwnLanguage == "Italia")
+
+        let russia = countries.first(where: { $0.isoRegionCode == "RU" })
+        #expect(russia?.countryNameTranslatedInOwnLanguage == "Россия")
+
+        let southKorea = countries.first(where: { $0.isoRegionCode == "KR" })
+        #expect(southKorea?.countryNameTranslatedInOwnLanguage == "대한민국")
+
+        let poland = countries.first(where: { $0.isoRegionCode == "PL" })
+        #expect(poland?.countryNameTranslatedInOwnLanguage == "Polska")
+    }
+
+    @Test(
+        """
+        Given: User is viewing the localization settings countries list
+        When: Countries where language code differs from region code are requested
+        Then: Countries should still return their primary language translations correctly
+        """
+    )
+    func countriesWithDifferentLanguageRegionCodesReturnPrimaryLanguageTranslations() async {
+
+        let repository = LocalizationSettingsCountriesRepository()
+        let appLanguage: AppLanguageDomainModel = "en"
+
+        var cancellables: Set<AnyCancellable> = Set()
+        var countries: [LocalizationSettingsCountryDataModel] = []
+
+        await confirmation(expectedCount: 1) { confirmation in
+
+            repository
+                .getCountriesPublisher(appLanguage: appLanguage)
+                .sink { (result: [LocalizationSettingsCountryDataModel]) in
+
+                    countries = result
+                    confirmation()
+                }
+                .store(in: &cancellables)
+        }
+
+        let austria = countries.first(where: { $0.isoRegionCode == "AT" })
+        #expect(austria?.countryNameTranslatedInOwnLanguage == "Österreich")
+
+        let unitedKingdom = countries.first(where: { $0.isoRegionCode == "GB" })
+        #expect(unitedKingdom?.countryNameTranslatedInOwnLanguage == "United Kingdom")
+
+        let australia = countries.first(where: { $0.isoRegionCode == "AU" })
+        #expect(australia?.countryNameTranslatedInOwnLanguage == "Australia")
+
+        let brazil = countries.first(where: { $0.isoRegionCode == "BR" })
+        #expect(brazil?.countryNameTranslatedInOwnLanguage == "Brasil")
+
+        let mexico = countries.first(where: { $0.isoRegionCode == "MX" })
+        #expect(mexico?.countryNameTranslatedInOwnLanguage == "México")
+
+        let china = countries.first(where: { $0.isoRegionCode == "CN" })
+        #expect(china?.countryNameTranslatedInOwnLanguage == "中国大陆")
+    }
 }
