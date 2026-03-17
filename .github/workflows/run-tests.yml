@@ -34,7 +34,7 @@ jobs:
       - name: Run Tests and Generate Tests Code Coverage Report (.xcresult)
         run: bundle exec fastlane cru_shared_lane_run_tests testplan:Tests output_directory:fastlane_scan_output_directory/tests result_bundle:true reset_simulator:true should_clear_derived_data:true
 
-      # - name: Run UITests and Generate UITests Code Coverage Report (.xcresult)
+      - name: Run UITests and Generate UITests Code Coverage Report (.xcresult)
         run: bundle exec fastlane cru_shared_lane_run_tests testplan:UITests output_directory:fastlane_scan_output_directory/uitests result_bundle:true reset_simulator:true should_clear_derived_data:true
 
       # - name: Merge Tests and UITests XCResult Files
