@@ -42,7 +42,7 @@ struct GetAllLessonsUseCaseTests {
         await withCheckedContinuation { continuation in
             
             let timeoutTask = Task {
-                try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                try await Task.defaultTestSleep()
                 continuation.resume(returning: ())
             }
             
@@ -90,7 +90,7 @@ struct GetAllLessonsUseCaseTests {
         await withCheckedContinuation { continuation in
             
             let timeoutTask = Task {
-                try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                try await Task.defaultTestSleep()
                 continuation.resume(returning: ())
             }
             
@@ -145,7 +145,7 @@ struct GetAllLessonsUseCaseTests {
         await withCheckedContinuation { continuation in
             
             let timeoutTask = Task {
-                try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                try await Task.defaultTestSleep()
                 continuation.resume(returning: ())
             }
             
@@ -316,7 +316,7 @@ extension GetAllLessonsUseCaseTests {
         return GetAllLessonsUseCase(
             resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
             lessonProgressRepository: testsDiContainer.dataLayer.getUserLessonProgressRepository(),
-            getLessonsListItems: testsDiContainer.domainLayer.supporting.getLessonsListItems()
+            getLessonsListItems: getLessonsListItems(testsDiContainer: testsDiContainer)
         )
     }
     
@@ -325,6 +325,16 @@ extension GetAllLessonsUseCaseTests {
             language: languageCode,
             name: languageCode.rawValue + " Name",
             id: languageCode.rawValue
+        )
+    }
+    
+    private func getLessonsListItems(testsDiContainer: TestsDiContainer) -> GetLessonsListItems {
+        
+        return GetLessonsListItems(
+            languagesRepository: testsDiContainer.dataLayer.getLanguagesRepository(),
+            getTranslatedToolName: getTranslatedToolName(testsDiContainer: testsDiContainer),
+            getTranslatedToolLanguageAvailability: getTranslatedToolLanguageAvailability(testsDiContainer: testsDiContainer),
+            getLessonListItemProgress: testsDiContainer.domainLayer.supporting.getLessonListItemProgress()
         )
     }
     
