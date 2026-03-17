@@ -63,17 +63,18 @@ class LessonViewModel: MobileContentRendererViewModel {
         
         Self.storeLessonProgressCancellable?.cancel()
         
-        Self.storeLessonProgressCancellable = storeLessonProgressUseCase.storeLessonProgress(
-            lessonId: resourceId,
-            lastViewedPageId: currentPage.id,
-            lastViewedPageNumber: page,
-            totalPageCount: getPages().count
-        )
-        .sink(receiveCompletion: { _ in
-            
-        }, receiveValue: { _ in
-            
-        })
+        Self.storeLessonProgressCancellable = storeLessonProgressUseCase
+            .execute(
+                lessonId: resourceId,
+                lastViewedPageId: currentPage.id,
+                lastViewedPageNumber: page,
+                totalPageCount: getPages().count
+            )
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { _ in
+                
+            })
     }
 }
 

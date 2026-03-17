@@ -10,34 +10,37 @@ import Foundation
 
 class ShareablesDomainLayerDependencies {
     
+    private let coreDataLayer: AppDataLayerDependencies
     private let dataLayer: ShareablesDataLayerDependencies
     
-    init(dataLayer: ShareablesDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, dataLayer: ShareablesDataLayerDependencies) {
         
+        self.coreDataLayer = coreDataLayer
         self.dataLayer = dataLayer
+    }
+    
+    func getReviewShareShareableStringsUseCase() -> GetReviewShareShareableStringsUseCase {
+        return GetReviewShareShareableStringsUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
     }
     
     func getShareableImageUseCase() -> GetShareableImageUseCase {
         return GetShareableImageUseCase(
-            getShareableImageRepository: dataLayer.getShareableImageRepository()
+            resourcesFileCache: coreDataLayer.getResourcesFileCache()
         )
     }
     
     func getShareablesUseCase() -> GetShareablesUseCase {
         return GetShareablesUseCase(
-            getShareablesRepository: dataLayer.getShareablesRepositoryInterface()
+            translationsRepository: coreDataLayer.getTranslationsRepository()
         )
     }
     
     func getTrackShareShareableTapUseCase() -> TrackShareShareableTapUseCase {
         return TrackShareShareableTapUseCase(
-            trackTap: dataLayer.getTrackShareShareableTap()
-        )
-    }
-    
-    func getViewReviewShareShareableUseCase() -> ViewReviewShareShareableUseCase {
-        return ViewReviewShareShareableUseCase(
-            getInterfaceStringsRepository: dataLayer.getReviewShareShareableInterfaceStringsRepositoryInterface()
+            trackActionAnalytics: coreDataLayer.getAnalytics().trackActionAnalytics,
+            resourcesRepository: coreDataLayer.getResourcesRepository()
         )
     }
 }

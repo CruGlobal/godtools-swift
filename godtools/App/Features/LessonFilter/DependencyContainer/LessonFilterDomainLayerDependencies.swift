@@ -10,33 +10,58 @@ import Foundation
 
 class LessonFilterDomainLayerDependencies {
     
+    private let coreDataLayer: AppDataLayerDependencies
+    private let coreDomainLayer: AppDomainLayerDependencies
     private let dataLayer: LessonFilterDataLayerDependencies
     
-    init(dataLayer: LessonFilterDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, dataLayer: LessonFilterDataLayerDependencies) {
+        
+        self.coreDataLayer = coreDataLayer
+        self.coreDomainLayer = coreDomainLayer
         self.dataLayer = dataLayer
     }
     
-    func getSearchLessonFilterLanguagesUseCase() -> SearchLessonFilterLanguagesUseCase {
-        
-        return SearchLessonFilterLanguagesUseCase(searchLessonFilterLanguagesRepository: dataLayer.getSearchLessonFilterLanguagesRepositoryInterface())
+    func getLessonFilterLangauge() -> GetLessonFilterLanguage {
+        return GetLessonFilterLanguage(
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            languagesRepository: coreDataLayer.getLanguagesRepository(),
+            getTranslatedLanguageName: coreDomainLayer.supporting.getTranslatedLanguageName(),
+            localizationServices: coreDataLayer.getLocalizationServices(),
+            stringWithLocaleCount: coreDataLayer.getStringWithLocaleCount()
+        )
     }
     
-    func getStoreUserLessonFiltersUseCase() -> StoreUserLessonFiltersUseCase {
+    func getLessonFilterLanguagesStringsUseCase() -> GetLessonFilterLanguagesStringsUseCase {
         
-        return StoreUserLessonFiltersUseCase(storeUserLessonFiltersRepository: dataLayer.getStoreUserLessonFiltersRepositoryInterface())
+        return GetLessonFilterLanguagesStringsUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getLessonFilterLanguagesUseCase() -> GetLessonFilterLanguagesUseCase {
+        return GetLessonFilterLanguagesUseCase(
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            languagesRepository: coreDataLayer.getLanguagesRepository(),
+            getLessonFilterLangauge: getLessonFilterLangauge()
+        )
     }
     
     func getUserLessonFiltersUseCase() -> GetUserLessonFiltersUseCase {
         return GetUserLessonFiltersUseCase(
-            getUserLessonFiltersRepositoryInterface: dataLayer.getUserLessonFiltersRepositoryInterface()
+            userLessonFiltersRepository: coreDataLayer.getUserLessonFiltersRepository(),
+            getLessonFilterLanguage: getLessonFilterLangauge()
         )
     }
     
-    func getViewLessonFilterLanguagesUseCase() -> ViewLessonFilterLanguagesUseCase {
-        
-        return ViewLessonFilterLanguagesUseCase(
-            getLessonFilterLanguagesRepository: dataLayer.getLessonFilterLanguagesRepositoryInterface(),
-            getInterfaceStringsRepository: dataLayer.getLessonFilterLanguagesInterfaceStringsRepositoryInterface()
+    func getSearchLessonFilterLanguagesUseCase() -> SearchLessonFilterLanguagesUseCase {
+        return SearchLessonFilterLanguagesUseCase(
+            stringSearcher: StringSearcher()
+        )
+    }
+    
+    func getStoreUserLessonFiltersUseCase() -> StoreUserLessonFiltersUseCase {
+        return StoreUserLessonFiltersUseCase(
+            userLessonFiltersRepository: coreDataLayer.getUserLessonFiltersRepository()
         )
     }
 }

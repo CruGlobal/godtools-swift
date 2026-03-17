@@ -1,0 +1,31 @@
+//
+//  GetToolListItemStrings.swift
+//  godtools
+//
+//  Created by Levi Eggert on 2/16/24.
+//  Copyright © 2024 Cru. All rights reserved.
+//
+
+import Foundation
+import Combine
+
+class GetToolListItemStrings {
+    
+    private let localizationServices: LocalizationServicesInterface
+    
+    init(localizationServices: LocalizationServicesInterface) {
+        
+        self.localizationServices = localizationServices
+    }
+    
+    func getStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolListItemInterfaceStringsDomainModel, Never> {
+        
+        let interfaceStrings = ToolListItemInterfaceStringsDomainModel(
+            openToolActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "open"),
+            openToolDetailsActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "favorites.favoriteLessons.details")
+        )
+        
+        return Just(interfaceStrings)
+            .eraseToAnyPublisher()
+    }
+}

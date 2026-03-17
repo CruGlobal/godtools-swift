@@ -10,28 +10,31 @@ import Foundation
 
 class OnboardingDomainLayerDependencies {
     
-    private let domainInterfaceLayer: OnboardingDomainInterfaceDependencies
+    private let coreDataLayer: AppDataLayerDependencies
+    private let dataLayer: OnboardingDataLayerDependencies
     
-    init(domainInterfaceLayer: OnboardingDomainInterfaceDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, dataLayer: OnboardingDataLayerDependencies) {
         
-        self.domainInterfaceLayer = domainInterfaceLayer
-    }
-    
-    func getOnboardingTutorialInterfaceStringsUseCase() -> GetOnboardingTutorialInterfaceStringsUseCase {
-        return GetOnboardingTutorialInterfaceStringsUseCase(
-            stringsRepository: domainInterfaceLayer.getOnboardingTutorialInterfaceStringsRepository()
-        )
+        self.coreDataLayer = coreDataLayer
+        self.dataLayer = dataLayer
     }
     
     func getOnboardingTutorialIsAvailableUseCase() -> GetOnboardingTutorialIsAvailableUseCase {
         return GetOnboardingTutorialIsAvailableUseCase(
-            onboardingTutorialIsAvailable: domainInterfaceLayer.getOnboardingTutorialIsAvailable()
+            launchCountRepository: coreDataLayer.getLaunchCountRepository(),
+            onboardingTutorialViewedRepository: dataLayer.getOnboardingTutorialViewedRepository()
         )
     }
     
-    func getTrackViewedOnboardingTutorialUseCase() -> TrackViewedOnboardingTutorialUseCase {
-        return TrackViewedOnboardingTutorialUseCase(
-            storeViewedRepository: domainInterfaceLayer.getStoreOnboardingTutorialViewedRepository()
+    func getOnboardingTutorialStringsUseCase() -> GetOnboardingTutorialStringsUseCase {
+        return GetOnboardingTutorialStringsUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getViewedOnboardingTutorialUseCase() -> ViewedOnboardingTutorialUseCase {
+        return ViewedOnboardingTutorialUseCase(
+            onboardingTutorialViewedRepository: dataLayer.getOnboardingTutorialViewedRepository()
         )
     }
 }

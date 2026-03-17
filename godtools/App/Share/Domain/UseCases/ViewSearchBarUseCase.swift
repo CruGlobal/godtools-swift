@@ -9,21 +9,21 @@
 import Foundation
 import Combine
 
-class ViewSearchBarUseCase {
+final class ViewSearchBarUseCase {
     
-    private let getInterfaceStringsRepository: GetSearchBarInterfaceStringsRepositoryInterface
+    private let getSearchBarStrings: GetSearchBarStrings
     
-    init(getInterfaceStringsRepository: GetSearchBarInterfaceStringsRepositoryInterface) {
+    init(getSearchBarStrings: GetSearchBarStrings) {
         
-        self.getInterfaceStringsRepository = getInterfaceStringsRepository
+        self.getSearchBarStrings = getSearchBarStrings
     }
     
-    func viewPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewSearchBarDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewSearchBarDomainModel, Never> {
         
-        return self.getInterfaceStringsRepository
+        return self.getSearchBarStrings
             .getStringsPublisher(translateInAppLanguage: appLanguage)
             .map {
-                return ViewSearchBarDomainModel(interfaceStrings: $0)
+                return ViewSearchBarDomainModel(strings: $0)
             }
             .eraseToAnyPublisher()
     }

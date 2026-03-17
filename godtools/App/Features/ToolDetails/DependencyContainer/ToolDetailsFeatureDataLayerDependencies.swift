@@ -11,10 +11,12 @@ import Foundation
 class ToolDetailsFeatureDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
+    private let coreDomainLayer: AppDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies) {
         
         self.coreDataLayer = coreDataLayer
+        self.coreDomainLayer = coreDomainLayer
     }
     
     // MARK: - Data Layer Classes
@@ -46,7 +48,7 @@ class ToolDetailsFeatureDataLayerDependencies {
             languagesRepository: coreDataLayer.getLanguagesRepository(),
             translationsRepository: coreDataLayer.getTranslationsRepository(),
             localizationServices: coreDataLayer.getLocalizationServices(),
-            getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName(),
+            getTranslatedLanguageName: coreDomainLayer.supporting.getTranslatedLanguageName(),
             favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository()
         )
     }

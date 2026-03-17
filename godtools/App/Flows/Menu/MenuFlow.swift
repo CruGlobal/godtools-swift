@@ -20,7 +20,7 @@ class MenuFlow: Flow, LocalizationSettingsNavigationFlow {
     private weak var flowDelegate: FlowDelegate?
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-    @Published private var viewShareGodToolsDomainModel: ViewShareGodToolsDomainModel?
+    @Published private var shareGodToolsStringsDomainModel: ShareGodToolsStringsDomainModel?
     
     let appDiContainer: AppDiContainer
     let navigationController: AppNavigationController
@@ -58,13 +58,13 @@ class MenuFlow: Flow, LocalizationSettingsNavigationFlow {
             .map { (appLanguage: AppLanguageDomainModel) in
                 
                 appDiContainer.feature.shareGodTools.domainLayer
-                    .getViewShareGodToolsUseCase()
-                    .viewPublisher(appLanguage: appLanguage)
+                    .getShareGodToolsStringsUseCase()
+                    .execute(appLanguage: appLanguage)
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (domainModel: ViewShareGodToolsDomainModel) in
-                self?.viewShareGodToolsDomainModel = domainModel
+            .sink { [weak self] (strings: ShareGodToolsStringsDomainModel) in
+                self?.shareGodToolsStringsDomainModel = strings
             }
             .store(in: &cancellables)
         
@@ -309,13 +309,13 @@ extension MenuFlow {
     
     private func getShareGodToolsView() -> UIViewController {
         
-        guard let domainModel = viewShareGodToolsDomainModel else {
+        guard let strings = shareGodToolsStringsDomainModel else {
             let viewModel = AlertMessageViewModel(title: "Internal Error", message: "Failed to fetch data for share godtools modal.", cancelTitle: nil, acceptTitle: "OK")
             return AlertMessageView(viewModel: viewModel).controller
         }
         
         let viewModel = ShareGodToolsViewModel(
-            viewShareGodToolsDomainModel: domainModel
+            strings: strings
         )
         
         let view = ShareGodToolsView(viewModel: viewModel)
@@ -390,7 +390,7 @@ extension MenuFlow {
         let viewModel = MenuViewModel(
             flowDelegate: self,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getMenuInterfaceStringsUseCase: appDiContainer.feature.menu.domainLayer.getMenuInterfaceStringsUseCase(),
+            getMenuStringsUseCase: appDiContainer.feature.menu.domainLayer.getMenuStringsUseCase(),
             getOptInOnboardingTutorialAvailableUseCase: appDiContainer.domainLayer.getOptInOnboardingTutorialAvailableUseCase(),
             disableOptInOnboardingBannerUseCase: appDiContainer.domainLayer.getDisableOptInOnboardingBannerUseCase(),
             getAccountCreationIsSupportedUseCase: appDiContainer.feature.account.domainLayer.getAccountCreationIsSupportedUseCase(),

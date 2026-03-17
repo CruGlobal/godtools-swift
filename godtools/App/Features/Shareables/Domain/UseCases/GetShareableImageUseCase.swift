@@ -9,31 +9,49 @@
 import Foundation
 import Combine
 
-class GetShareableImageUseCase {
+final class GetShareableImageUseCase {
     
-    private let getShareableImageRepository: GetShareableImageRepository
+    private let resourcesFileCache: ResourcesSHA256FileCache
     
-    init(getShareableImageRepository: GetShareableImageRepository) {
+    init(resourcesFileCache: ResourcesSHA256FileCache) {
         
-        self.getShareableImageRepository = getShareableImageRepository
+        self.resourcesFileCache = resourcesFileCache
     }
     
     func execute(shareable: ShareableDomainModel) -> AnyPublisher<ShareableImageDomainModel?, Error> {
         
+        guard !shareable.imageName.isEmpty else {
+            return getShareableImagePublisher(shareableImage: nil)
+        }
+        
+        let fileCacheLocation = FileCacheLocation(relativeUrlString: shareable.imageName)
+        
         do {
             
-            let domainModel: ShareableImageDomainModel? = try getShareableImageRepository.getImageDomainModel(
-                shareable: shareable
+            let imageData: Data? = try resourcesFileCache.getData(location: fileCacheLocation)
+           
+            guard let imageData = imageData else {
+                return getShareableImagePublisher(shareableImage: nil)
+            }
+            
+            let shareableImage = ShareableImageDomainModel(
+                dataModelId: shareable.imageName,
+                imageData: imageData
             )
             
-            return Just(domainModel)
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
+            return getShareableImagePublisher(shareableImage: shareableImage)
         }
         catch let error {
             
             return Fail(error: error)
                 .eraseToAnyPublisher()
         }
+    }
+    
+    private func getShareableImagePublisher(shareableImage: ShareableImageDomainModel?) -> AnyPublisher<ShareableImageDomainModel?, Error> {
+        
+        return Just(shareableImage)
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
     }
 }

@@ -10,34 +10,42 @@ import Foundation
 
 class OptInNotificationDomainLayerDependencies {
 
+    private let coreDataLayer: AppDataLayerDependencies
     private let dataLayer: OptInNotificationDataLayerDependencies
+    private let getOnboardingTutorialIsAvailableUseCase: GetOnboardingTutorialIsAvailableUseCase
 
-    init(dataLayer: OptInNotificationDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, dataLayer: OptInNotificationDataLayerDependencies, getOnboardingTutorialIsAvailableUseCase: GetOnboardingTutorialIsAvailableUseCase) {
 
+        self.coreDataLayer = coreDataLayer
         self.dataLayer = dataLayer
+        self.getOnboardingTutorialIsAvailableUseCase = getOnboardingTutorialIsAvailableUseCase
     }
-
-    func getViewOptInNotificationUseCase() -> ViewOptInNotificationUseCase {
-        return ViewOptInNotificationUseCase(
-            getInterfaceStringsRepository: dataLayer.getOptInNotificationInterfaceStringsRepositoryInterface()
-        )
+    
+    private func getNotificationStatus() -> GetNotificationStatus {
+        return GetNotificationStatus()
     }
-
-    func getRequestNotificationPermissionUseCase() -> RequestNotificationPermissionUseCase {
-        return RequestNotificationPermissionUseCase(
-            requestNotificationPermission:dataLayer.getRequestNotificationPermission()
-        )
-    }
-
+    
     func getCheckNotificationStatusUseCase() -> CheckNotificationStatusUseCase {
         return CheckNotificationStatusUseCase(
-            checkNotificationStatus: dataLayer.getCheckNotificationStatus()
+            getNotificationStatus: getNotificationStatus()
         )
     }
     
+    func getOptInNotificationStringsUseCase() -> GetOptInNotificationStringsUseCase {
+        return GetOptInNotificationStringsUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getRequestNotificationPermissionUseCase() -> RequestNotificationPermissionUseCase {
+        return RequestNotificationPermissionUseCase()
+    }
+
     func getShouldPromptForOptInNotificationUseCase() -> ShouldPromptForOptInNotificationUseCase {
         return ShouldPromptForOptInNotificationUseCase(
-            shouldPromptForOptInNotification: dataLayer.getShouldPromptForOptInNotification()
+            getOnboardingTutorialIsAvailableUseCase: getOnboardingTutorialIsAvailableUseCase,
+            optInNotificationRepository: dataLayer.getOptInNotificationRepository(),
+            getNotificationStatus: getNotificationStatus()
         )
     }
 }
