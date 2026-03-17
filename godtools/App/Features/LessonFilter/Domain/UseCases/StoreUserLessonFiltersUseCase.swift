@@ -9,17 +9,19 @@
 import Foundation
 import Combine
 
-class StoreUserLessonFiltersUseCase {
+final class StoreUserLessonFiltersUseCase {
     
-    private let storeUserLessonFiltersRepository: StoreUserLessonFiltersRepositoryInterface
+    private let userLessonFiltersRepository: UserLessonFiltersRepository
     
-    init(storeUserLessonFiltersRepository: StoreUserLessonFiltersRepositoryInterface) {
-        self.storeUserLessonFiltersRepository = storeUserLessonFiltersRepository
+    init(userLessonFiltersRepository: UserLessonFiltersRepository) {
+        self.userLessonFiltersRepository = userLessonFiltersRepository
     }
     
-    func storeLanguageFilterPublisher(_ languageFilter: LessonFilterLanguageDomainModel) -> AnyPublisher<Void, Never> {
+    func execute(languageFilter: LessonFilterLanguageDomainModel) -> AnyPublisher<Void, Never> {
         
-        return storeUserLessonFiltersRepository.storeUserLanguageFilterPublisher(languageFilter)
+        userLessonFiltersRepository.storeUserLessonLanguageFilter(with: languageFilter.languageId)
+        
+        return Just(())
             .eraseToAnyPublisher()
     }
 }

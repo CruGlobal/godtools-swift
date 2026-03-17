@@ -23,12 +23,33 @@ final class AppSupportingDomainLayerDependencies {
         )
     }
     
+    func getLessonListItemProgress() -> GetLessonListItemProgress {
+        return GetLessonListItemProgress(
+            lessonProgressRepository: dataLayer.getUserLessonProgressRepository(),
+            userCountersRepository: dataLayer.getUserCountersRepository(),
+            localizationServices: dataLayer.getLocalizationServices(),
+            getTranslatedPercentage: getTranslatedPercentage()
+        )
+    }
+    
     func getLessonsListItems() -> GetLessonsListItems {
         return GetLessonsListItems(
             languagesRepository: dataLayer.getLanguagesRepository(),
-            getTranslatedToolName: dataLayer.getTranslatedToolName(),
-            getTranslatedToolLanguageAvailability: dataLayer.getTranslatedToolLanguageAvailability(),
-            getLessonListItemProgressRepository: dataLayer.getLessonListItemProgressRepository()
+            getTranslatedToolName: getTranslatedToolName(),
+            getTranslatedToolLanguageAvailability: getTranslatedToolLanguageAvailability(),
+            getLessonListItemProgress: getLessonListItemProgress()
+        )
+    }
+    
+    func getLocalizationLanguageName() -> LocalizationLanguageName {
+        return LocalizationLanguageName(
+            localizationServices: dataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getSearchBarStrings() -> GetSearchBarStrings {
+        return GetSearchBarStrings(
+            localizationServices: dataLayer.getLocalizationServices()
         )
     }
     
@@ -36,10 +57,56 @@ final class AppSupportingDomainLayerDependencies {
         return GetToolsListItems(
             favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository(),
             languagesRepository: dataLayer.getLanguagesRepository(),
-            getTranslatedToolName: dataLayer.getTranslatedToolName(),
-            getTranslatedToolCategory: dataLayer.getTranslatedToolCategory(),
-            getToolListItemInterfaceStringsRepository: dataLayer.getToolListItemInterfaceStringsRepository(),
-            getTranslatedToolLanguageAvailability: dataLayer.getTranslatedToolLanguageAvailability()
+            getTranslatedToolName: getTranslatedToolName(),
+            getTranslatedToolCategory: getTranslatedToolCategory(),
+            getToolListItemStrings: getToolListItemStrings(),
+            getTranslatedToolLanguageAvailability: getTranslatedToolLanguageAvailability()
+        )
+    }
+    
+    func getToolListItemStrings() -> GetToolListItemStrings {
+        return GetToolListItemStrings(
+            localizationServices: dataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getTranslatedLanguageName() -> GetTranslatedLanguageName {
+        return GetTranslatedLanguageName(
+            localizationLanguageName: getLocalizationLanguageName(),
+            localeLanguageName: LocaleLanguageName(),
+            localeRegionName: LocaleLanguageRegionName(),
+            localeScriptName: LocaleLanguageScriptName()
+        )
+    }
+    
+    func getTranslatedNumberCount() -> GetTranslatedNumberCount {
+        return GetTranslatedNumberCount()
+    }
+    
+    func getTranslatedPercentage() -> GetTranslatedPercentage {
+        return GetTranslatedPercentage()
+    }
+    
+    func getTranslatedToolCategory() -> GetTranslatedToolCategory {
+        return GetTranslatedToolCategory(
+            localizationServices: dataLayer.getLocalizationServices(),
+            resourcesRepository: dataLayer.getResourcesRepository()
+        )
+    }
+    
+    func getTranslatedToolLanguageAvailability() -> GetTranslatedToolLanguageAvailability {
+        return GetTranslatedToolLanguageAvailability(
+            localizationServices: dataLayer.getLocalizationServices(),
+            resourcesRepository: dataLayer.getResourcesRepository(),
+            languagesRepository: dataLayer.getLanguagesRepository(),
+            getTranslatedLanguageName: getTranslatedLanguageName()
+        )
+    }
+    
+    func getTranslatedToolName() -> GetTranslatedToolName {
+        return GetTranslatedToolName(
+            resourcesRepository: dataLayer.getResourcesRepository(),
+            translationsRepository: dataLayer.getTranslationsRepository()
         )
     }
 }

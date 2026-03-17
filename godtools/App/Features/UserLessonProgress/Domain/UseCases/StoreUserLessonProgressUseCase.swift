@@ -9,21 +9,37 @@
 import Foundation
 import Combine
 
-class StoreUserLessonProgressUseCase {
+final class StoreUserLessonProgressUseCase {
     
-    private let storeLessonProgressRepository: StoreUserLessonProgressRepositoryInterface
+    private let lessonProgressRepository: UserLessonProgressRepository
     
-    init(storeLessonProgressRepository: StoreUserLessonProgressRepositoryInterface) {
-        self.storeLessonProgressRepository = storeLessonProgressRepository
+    init(lessonProgressRepository: UserLessonProgressRepository) {
+        self.lessonProgressRepository = lessonProgressRepository
     }
     
-    func storeLessonProgress(lessonId: String, lastViewedPageId: String, lastViewedPageNumber: Int, totalPageCount: Int) -> AnyPublisher<UserLessonProgressDomainModel, Error> {
+    func execute(lessonId: String, lastViewedPageId: String, lastViewedPageNumber: Int, totalPageCount: Int) -> AnyPublisher<UserLessonProgressDomainModel, Error> {
         
-        return storeLessonProgressRepository.storeLessonProgress(
-            lessonId: lessonId, 
+        let progress: Double
+        if totalPageCount < 1 {
+            progress = 0
+        } else {
+            progress = Double(lastViewedPageNumber) / Double(totalPageCount)
+        }
+        
+        let lessonProgress = UserLessonProgressDataModel(
+            lessonId: lessonId,
             lastViewedPageId: lastViewedPageId,
-            lastViewedPageNumber: lastViewedPageNumber,
-            totalPageCount: totalPageCount
+            progress: progress
         )
+        
+        return lessonProgressRepository.storeLessonProgress(lessonProgress)
+            .map {
+                UserLessonProgressDomainModel(
+                    lessonId: $0.lessonId,
+                    lastViewedPageId: $0.lastViewedPageId,
+                    progress: $0.progress
+                )
+            }
+            .eraseToAnyPublisher()
     }
 }

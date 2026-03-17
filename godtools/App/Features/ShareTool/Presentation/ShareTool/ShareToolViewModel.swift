@@ -24,7 +24,7 @@ class ShareToolViewModel {
     
     private var cancellables = Set<AnyCancellable>()
     
-    init(viewShareToolDomainModel: ViewShareToolDomainModel, toolId: String, toolAnalyticsAbbreviation: String, pageNumber: Int, incrementUserCounterUseCase: IncrementUserCounterUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(strings: ShareToolStringsDomainModel, toolId: String, toolAnalyticsAbbreviation: String, pageNumber: Int, incrementUserCounterUseCase: IncrementUserCounterUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
                 
         self.toolId = toolId
         self.toolAnalyticsAbbreviation = toolAnalyticsAbbreviation
@@ -33,7 +33,7 @@ class ShareToolViewModel {
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.pageNumber = pageNumber
                 
-        shareMessage = viewShareToolDomainModel.interfaceStrings.shareMessage
+        shareMessage = strings.shareMessage
     }
     
     deinit {

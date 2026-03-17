@@ -136,7 +136,10 @@ import SwiftUI
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
             
-                getUserLessonFiltersUseCase.getUserToolFiltersPublisher(translatedInAppLanguage: appLanguage)
+                getUserLessonFiltersUseCase
+                    .execute(
+                        appLanguage: appLanguage
+                    )
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)

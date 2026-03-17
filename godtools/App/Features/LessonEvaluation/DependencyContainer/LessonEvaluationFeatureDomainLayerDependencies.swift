@@ -10,13 +10,15 @@ import Foundation
 
 class LessonEvaluationFeatureDomainLayerDependencies {
     
-    private let dataLayer: LessonEvaluationFeatureDataLayerDependencies
     private let coreDataLayer: AppDataLayerDependencies
+    private let coreDomainLayer: AppDomainLayerDependencies
+    private let dataLayer: LessonEvaluationFeatureDataLayerDependencies
     
-    init(dataLayer: LessonEvaluationFeatureDataLayerDependencies, coreDataLayer: AppDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, dataLayer: LessonEvaluationFeatureDataLayerDependencies) {
         
-        self.dataLayer = dataLayer
         self.coreDataLayer = coreDataLayer
+        self.coreDomainLayer = coreDomainLayer
+        self.dataLayer = dataLayer
     }
     
     func getCancelLessonEvaluationUseCase() -> CancelLessonEvaluationUseCase {
@@ -28,7 +30,7 @@ class LessonEvaluationFeatureDomainLayerDependencies {
     
     func getDidChangeScaleForSpiritualConversationReadinessUseCase() -> DidChangeScaleForSpiritualConversationReadinessUseCase {
         return DidChangeScaleForSpiritualConversationReadinessUseCase(
-            getTranslatedNumberCount: coreDataLayer.getTranslatedNumberCount()
+            getTranslatedNumberCount: coreDomainLayer.supporting.getTranslatedNumberCount()
         )
     }
     

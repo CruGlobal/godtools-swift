@@ -13,7 +13,8 @@ import Combine
     
     private static var staticCancellables: Set<AnyCancellable> = Set()
     
-    private let viewLessonFilterLanguagesUseCase: ViewLessonFilterLanguagesUseCase
+    private let getLessonFilterLanguagesStringsUseCase: GetLessonFilterLanguagesStringsUseCase
+    private let getLessonFilterLanguagesUseCase: GetLessonFilterLanguagesUseCase
     private let getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase
     private let storeUserLessonFiltersUseCase: StoreUserLessonFiltersUseCase
     private let viewSearchBarUseCase: ViewSearchBarUseCase
@@ -27,13 +28,16 @@ import Combine
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private var allLanguages: [LessonFilterLanguageDomainModel] = Array()
     
+    @Published private(set) var strings = LessonFilterLanguagesStringsDomainModel.emptyValue
+    
     @Published var searchText: String = ""
     @Published var languageSearchResults: [LessonFilterLanguageDomainModel] = Array()
     @Published var selectedLanguage: LessonFilterLanguageDomainModel?
-    @Published var navTitle: String = ""
     
-    init(viewLessonFilterLanguagesUseCase: ViewLessonFilterLanguagesUseCase, getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase, storeUserLessonFiltersUseCase: StoreUserLessonFiltersUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, searchLessonFilterLanguagesUseCase: SearchLessonFilterLanguagesUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, flowDelegate: FlowDelegate) {
-        self.viewLessonFilterLanguagesUseCase = viewLessonFilterLanguagesUseCase
+    init(getLessonFilterLanguagesStringsUseCase: GetLessonFilterLanguagesStringsUseCase, getLessonFilterLanguagesUseCase: GetLessonFilterLanguagesUseCase, getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase, storeUserLessonFiltersUseCase: StoreUserLessonFiltersUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, searchLessonFilterLanguagesUseCase: SearchLessonFilterLanguagesUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, flowDelegate: FlowDelegate) {
+        
+        self.getLessonFilterLanguagesStringsUseCase = getLessonFilterLanguagesStringsUseCase
+        self.getLessonFilterLanguagesUseCase = getLessonFilterLanguagesUseCase
         self.getUserLessonFiltersUseCase = getUserLessonFiltersUseCase
         self.storeUserLessonFiltersUseCase = storeUserLessonFiltersUseCase
         self.viewSearchBarUseCase = viewSearchBarUseCase
@@ -50,16 +54,35 @@ import Combine
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
                 
-                viewLessonFilterLanguagesUseCase.viewPublisher(translatedInAppLanguage: appLanguage)
+                getLessonFilterLanguagesStringsUseCase
+                    .execute(
+                        appLanguage: appLanguage
+                    )
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] (strings: LessonFilterLanguagesStringsDomainModel) in
+                
+                self?.strings = strings
+            })
+            .store(in: &cancellables)
+        
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+                
+                getLessonFilterLanguagesUseCase
+                    .execute(
+                        appLanguage: appLanguage
+                    )
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { _ in
                 
-            }, receiveValue: { [weak self] (domainModel: ViewLessonFilterLanguagesDomainModel) in
+            }, receiveValue: { [weak self] (filterLanguages: [LessonFilterLanguageDomainModel]) in
                 
-                self?.navTitle = domainModel.interfaceStrings.navTitle
-                self?.allLanguages = domainModel.languageFilters
+                self?.allLanguages = filterLanguages
             })
             .store(in: &cancellables)
         
@@ -67,18 +90,20 @@ import Combine
             .dropFirst()
             .map { appLanguage in
             
-                getUserLessonFiltersUseCase.getUserToolFiltersPublisher(translatedInAppLanguage: appLanguage)
+                getUserLessonFiltersUseCase
+                    .execute(
+                        appLanguage: appLanguage
+                    )
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] userFilters in
-                guard let self = self else { return }
-                guard self.selectedLanguage == nil else { return }
-                
-                if let languageFilter = userFilters.languageFilter {
-                    
-                    self.selectedLanguage = languageFilter
+            .sink { [weak self] (userFilters: UserLessonFiltersDomainModel) in
+                                
+                guard self?.selectedLanguage == nil, let languageFilter = userFilters.languageFilter else {
+                    return
                 }
+                
+                self?.selectedLanguage = languageFilter
             }
             .store(in: &cancellables)
         
@@ -88,7 +113,11 @@ import Combine
         )
         .flatMap { (searchText: String, languages: [LessonFilterLanguageDomainModel]) in
             
-            searchLessonFilterLanguagesUseCase.getSearchResultsPublisher(for: searchText, in: languages)
+            searchLessonFilterLanguagesUseCase
+                .execute(
+                    for: searchText,
+                    in: languages
+                )
         }
         .receive(on: DispatchQueue.main)
         .assign(to: &$languageSearchResults)
@@ -109,7 +138,7 @@ extension LessonFilterLanguageSelectionViewModel {
         selectedLanguage = language
         
         storeUserLessonFiltersUseCase
-            .storeLanguageFilterPublisher(language)
+            .execute(languageFilter: language)
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 

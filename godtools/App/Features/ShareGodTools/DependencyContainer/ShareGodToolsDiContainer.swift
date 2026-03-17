@@ -16,6 +16,6 @@ class ShareGodToolsDiContainer {
     init(coreDataLayer: AppDataLayerDependencies) {
         
         dataLayer = ShareGodToolsDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainLayer = ShareGodToolsDomainLayerDependencies(dataLayer: dataLayer)
+        domainLayer = ShareGodToolsDomainLayerDependencies(coreDataLayer: coreDataLayer, dataLayer: dataLayer)
     }
 }

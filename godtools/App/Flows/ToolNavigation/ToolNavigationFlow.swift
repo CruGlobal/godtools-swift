@@ -38,11 +38,12 @@ extension ToolNavigationFlow {
             trainingTipsEnabled: false,
             initialPage: toolDeepLink.mobileContentPage,
             initialPageSubIndex: toolDeepLink.pageSubIndex,
-            toolOpenedFrom: .deepLink
+            toolOpenedFrom: .deepLink,
+            persistToolLanguageSettings: nil
         )
     }
     
-    func navigateToTool(appLanguage: AppLanguageDomainModel, resourceId: String, languageIds: [String], liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, persistToolLanguageSettings: PersistToolLanguageSettingsInterface? = nil, toolOpenedFrom: ToolOpenedFrom) {
+    func navigateToTool(appLanguage: AppLanguageDomainModel, resourceId: String, languageIds: [String], liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, toolOpenedFrom: ToolOpenedFrom, persistToolLanguageSettings: PersistToolLanguageSettingsInterface?) {
         
         let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
             resourceId: resourceId,
@@ -59,12 +60,12 @@ extension ToolNavigationFlow {
             trainingTipsEnabled: trainingTipsEnabled,
             initialPage: initialPage,
             initialPageSubIndex: initialPageSubIndex,
-            persistToolLanguageSettings: persistToolLanguageSettings,
-            toolOpenedFrom: toolOpenedFrom
+            toolOpenedFrom: toolOpenedFrom,
+            persistToolLanguageSettings: persistToolLanguageSettings
         )
     }
     
-    private func navigateToToolAndDetermineToolTranslationsToDownload(appLanguage: AppLanguageDomainModel, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, persistToolLanguageSettings: PersistToolLanguageSettingsInterface? = nil, toolOpenedFrom: ToolOpenedFrom) {
+    private func navigateToToolAndDetermineToolTranslationsToDownload(appLanguage: AppLanguageDomainModel, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, toolOpenedFrom: ToolOpenedFrom, persistToolLanguageSettings: PersistToolLanguageSettingsInterface?) {
         
         let didDownloadToolTranslationsClosure = { [weak self] (result: Result<ToolTranslationsDomainModel, Error>) in
                         

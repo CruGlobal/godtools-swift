@@ -10,10 +10,12 @@ import Foundation
 
 class ToolsFilterFeatureDomainLayerDependencies {
     
+    private let coreDomainLayer: AppDomainLayerDependencies
     private let dataLayer: ToolsFilterFeatureDataLayerDependencies
     
-    init(dataLayer: ToolsFilterFeatureDataLayerDependencies) {
+    init(coreDomainLayer: AppDomainLayerDependencies, dataLayer: ToolsFilterFeatureDataLayerDependencies) {
         
+        self.coreDomainLayer = coreDomainLayer
         self.dataLayer = dataLayer
     }
     

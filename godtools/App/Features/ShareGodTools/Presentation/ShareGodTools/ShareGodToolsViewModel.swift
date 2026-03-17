@@ -10,14 +10,14 @@ import Foundation
 
 @MainActor class ShareGodToolsViewModel: ObservableObject {
     
-    private let viewShareGodToolsDomainModel: ViewShareGodToolsDomainModel
+    private let strings: ShareGodToolsStringsDomainModel
     
     @Published var shareMessage: String = ""
     
-    init(viewShareGodToolsDomainModel: ViewShareGodToolsDomainModel) {
+    init(strings: ShareGodToolsStringsDomainModel) {
         
-        self.viewShareGodToolsDomainModel = viewShareGodToolsDomainModel
+        self.strings = strings
         
-        shareMessage = viewShareGodToolsDomainModel.interfaceStrings.shareMessage
+        shareMessage = strings.shareMessage
     }
 }

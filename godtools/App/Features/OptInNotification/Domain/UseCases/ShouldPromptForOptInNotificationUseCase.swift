@@ -9,18 +9,57 @@
 import Foundation
 import Combine
 
-class ShouldPromptForOptInNotificationUseCase {
+final class ShouldPromptForOptInNotificationUseCase {
     
-    private let shouldPromptForOptInNotification: ShouldPromptForOptInNotificationInterface
+    private let getOnboardingTutorialIsAvailableUseCase: GetOnboardingTutorialIsAvailableUseCase
+    private let optInNotificationRepository: OptInNotificationRepositoryInterface
+    private let getNotificationStatus: GetNotificationStatus
     
-    init(shouldPromptForOptInNotification: ShouldPromptForOptInNotificationInterface) {
+    init(getOnboardingTutorialIsAvailableUseCase: GetOnboardingTutorialIsAvailableUseCase, optInNotificationRepository: OptInNotificationRepositoryInterface, getNotificationStatus: GetNotificationStatus) {
         
-        self.shouldPromptForOptInNotification = shouldPromptForOptInNotification
+        self.getOnboardingTutorialIsAvailableUseCase = getOnboardingTutorialIsAvailableUseCase
+        self.optInNotificationRepository = optInNotificationRepository
+        self.getNotificationStatus = getNotificationStatus
     }
     
-    func shouldPromptPublisher() -> AnyPublisher<Bool, Never> {
+    func execute() -> AnyPublisher<Bool, Error> {
         
-        return shouldPromptForOptInNotification
-            .shouldPromptPublisher()
+        let promptCount: Int = optInNotificationRepository.getPromptCount()
+        let isFirstPromptAttempt: Bool = promptCount == 0
+        
+        let lastPrompted: Date = optInNotificationRepository.getLastPrompted() ?? Date.distantPast
+        
+        let remoteTimeDate = optInNotificationRepository.getRemoteTimeInterval()
+        let remotePromptLimit = optInNotificationRepository.getRemotePromptLimit()
+        let remoteFeatureEnabled = optInNotificationRepository.getRemoteFeatureEnabled()
+        
+        return Publishers.CombineLatest(
+            getOnboardingTutorialIsAvailableUseCase
+                .execute()
+                .setFailureType(to: Error.self),
+            getNotificationStatus
+                .getStatusPublisher()
+        )
+        .map { (onboardingTutorialIsAvailable: Bool, notificationStatus: PermissionStatusDomainModel) in
+                      
+            guard onboardingTutorialIsAvailable == false else {
+                return false
+            }
+            
+            guard remoteFeatureEnabled == true else {
+                return false
+            }
+            
+            guard promptCount < remotePromptLimit else {
+                return false
+            }
+            
+            guard notificationStatus == .denied || notificationStatus == .undetermined else {
+                return false
+            }
+            
+            return lastPrompted < remoteTimeDate || isFirstPromptAttempt
+        }
+        .eraseToAnyPublisher()
     }
 }
