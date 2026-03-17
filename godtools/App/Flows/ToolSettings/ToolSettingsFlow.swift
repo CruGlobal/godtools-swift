@@ -23,7 +23,7 @@ class ToolSettingsFlow: Flow, ToolSharer {
     private var cancellables: Set<AnyCancellable> = Set()
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-    @Published private var viewShareToolDomainModel: ViewShareToolDomainModel?
+    @Published private var shareToolStrings: ShareToolStringsDomainModel?
     @Published private var toolScreenShareTutorialHasBeenViewedDomainModel: ToolScreenShareTutorialViewedDomainModel = ToolScreenShareTutorialViewedDomainModel(numberOfViews: 0)
     
     private weak var flowDelegate: FlowDelegate?
@@ -52,8 +52,8 @@ class ToolSettingsFlow: Flow, ToolSharer {
             .map { (appLanguage: AppLanguageDomainModel) in
                
                 appDiContainer.feature.shareTool.domainLayer
-                    .getViewShareToolUseCase()
-                    .viewPublisher(
+                    .getShareToolStringsUseCase()
+                    .execute(
                         toolId: toolSettingsObserver.toolId,
                         toolLanguageId: toolSettingsObserver.languages.selectedLanguageId,
                         pageNumber: toolSettingsObserver.pageNumber,
@@ -62,8 +62,8 @@ class ToolSettingsFlow: Flow, ToolSharer {
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (domainModel: ViewShareToolDomainModel) in
-                self?.viewShareToolDomainModel = domainModel
+            .sink { [weak self] (strings: ShareToolStringsDomainModel) in
+                self?.shareToolStrings = strings
             }
             .store(in: &cancellables)
         
@@ -92,12 +92,12 @@ class ToolSettingsFlow: Flow, ToolSharer {
             
         case .shareLinkTappedFromToolSettings:
             
-            guard let domainModel = viewShareToolDomainModel else {
+            guard let strings = shareToolStrings else {
                 return
             }
             
             navigationController.present(getShareToolView(
-                viewShareToolDomainModel: domainModel,
+                strings: strings,
                 toolId: toolSettingsObserver.toolId,
                 toolAnalyticsAbbreviation: appDiContainer.dataLayer.getResourcesRepository().persistence.getDataModelNonThrowing(id: toolSettingsObserver.toolId)?.abbreviation ?? "",
                 pageNumber: toolSettingsObserver.pageNumber
@@ -348,7 +348,7 @@ extension ToolSettingsFlow {
             toolId: toolSettingsObserver.toolId,
             shareable: shareable,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewReviewShareShareableUseCase: appDiContainer.feature.shareables.domainLayer.getViewReviewShareShareableUseCase(),
+            getReviewShareShareableStringsUseCase: appDiContainer.feature.shareables.domainLayer.getReviewShareShareableStringsUseCase(),
             getShareableImageUseCase: appDiContainer.feature.shareables.domainLayer.getShareableImageUseCase(),
             trackShareShareableTapUseCase: appDiContainer.feature.shareables.domainLayer.getTrackShareShareableTapUseCase()
         )

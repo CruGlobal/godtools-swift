@@ -9,19 +9,30 @@
 import Foundation
 import Combine
 
-class GetOnboardingTutorialIsAvailableUseCase {
+final class GetOnboardingTutorialIsAvailableUseCase {
     
-    private let onboardingTutorialIsAvailable: GetOnboardingTutorialIsAvailableInterface
+    private let launchCountRepository: LaunchCountRepositoryInterface
+    private let onboardingTutorialViewedRepository: OnboardingTutorialViewedRepositoryInterface
+    
+    init(launchCountRepository: LaunchCountRepositoryInterface, onboardingTutorialViewedRepository: OnboardingTutorialViewedRepositoryInterface) {
         
-    init(onboardingTutorialIsAvailable: GetOnboardingTutorialIsAvailableInterface) {
-        
-        self.onboardingTutorialIsAvailable = onboardingTutorialIsAvailable
+        self.launchCountRepository = launchCountRepository
+        self.onboardingTutorialViewedRepository = onboardingTutorialViewedRepository
     }
     
-    func getAvailablePublisher() -> AnyPublisher<Bool, Never> {
-          
-        return onboardingTutorialIsAvailable
-            .isAvailablePublisher()
-            .eraseToAnyPublisher()
+    func execute() -> AnyPublisher<Bool, Never> {
+        
+        Publishers.CombineLatest(
+            launchCountRepository.getLaunchCountPublisher(),
+            onboardingTutorialViewedRepository.getOnboardingTutorialViewedPublisher()
+        )
+        .flatMap({ (launchCount: Int, tutorialViewed: Bool) -> AnyPublisher<Bool, Never> in
+            
+            let isAvailable = launchCount == 1 && !tutorialViewed
+            
+            return Just(isAvailable)
+                .eraseToAnyPublisher()
+        })
+        .eraseToAnyPublisher()
     }
 }

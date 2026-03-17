@@ -16,6 +16,6 @@ class MenuDiContainer {
     init(coreDataLayer: AppDataLayerDependencies) {
         
         dataLayer = MenuDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainLayer = MenuDomainLayerDependencies(dataLayer: dataLayer)
+        domainLayer = MenuDomainLayerDependencies(coreDataLayer: coreDataLayer, dataLayer: dataLayer)
     }
 }

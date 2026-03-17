@@ -36,9 +36,9 @@ struct SetAppLanguageUseCaseTests {
             languagesRepository: testsDiContainer.dataLayer.getLanguagesRepository()
         )
         
-        let getUserLessonFiltersRepository = GetUserLessonFiltersRepository(
+        let getUserLessonFiltersRepository = GetUserLessonFiltersUseCase(
             userLessonFiltersRepository: testsDiContainer.dataLayer.getUserLessonFiltersRepository(),
-            getLessonFilterLanguagesRepository: testsDiContainer.feature.lessonFilter.dataLayer.getLessonFilterLanguagesRepository()
+            getLessonFilterLanguage: testsDiContainer.feature.lessonFilter.domainLayer.getLessonFilterLangauge()
         )
         
         let appLanguageSpanish = LanguageCodeDomainModel.spanish.rawValue
@@ -55,15 +55,15 @@ struct SetAppLanguageUseCaseTests {
             await withCheckedContinuation { continuation in
                 
                 let timeoutTask = Task {
-                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    try await Task.defaultTestSleep()
                     continuation.resume(returning: ())
                 }
                 
                 getUserLessonFiltersRepository
-                    .getUserLessonLanguageFilterPublisher(
-                        translatedInAppLanguage: appLanguageSpanish
+                    .execute(
+                        appLanguage: appLanguageSpanish
                     )
-                    .sink { (lessonFilterLanguage: LessonFilterLanguageDomainModel?) in
+                    .sink { (userLessonFilters: UserLessonFiltersDomainModel) in
                         
                         sinkCount += 1
                         
@@ -72,7 +72,7 @@ struct SetAppLanguageUseCaseTests {
                                         
                         if sinkCount == 2 {
                             
-                            lessonLanguageFilterRef = lessonFilterLanguage
+                            lessonLanguageFilterRef = userLessonFilters.languageFilter
                             
                             // When finished be sure to call:
                             timeoutTask.cancel()
@@ -144,7 +144,7 @@ extension SetAppLanguageUseCaseTests {
     private func getTranslatedLanguageName() -> GetTranslatedLanguageName {
         
         let getTranslatedLanguageName = GetTranslatedLanguageName(
-            localizationLanguageNameRepository: MockLocalizationLanguageNameRepository(localizationServices: getLocalizationServices()),
+            localizationLanguageName: MockLocalizationLanguageNameRepository(localizationServices: getLocalizationServices()),
             localeLanguageName: MockLocaleLanguageName.defaultMockLocaleLanguageName(),
             localeRegionName: MockLocaleLanguageRegionName(regionNames: [:]),
             localeScriptName: MockLocaleLanguageScriptName(scriptNames: [:])

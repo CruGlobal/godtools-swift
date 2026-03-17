@@ -13,9 +13,9 @@ class FeaturedLessonsDiContainer {
     let dataLayer: FeaturedLessonsDataLayerDependencies
     let domainLayer: FeaturedLessonsDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies) {
         
         dataLayer = FeaturedLessonsDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainLayer = FeaturedLessonsDomainLayerDependencies(coreDataLayer: coreDataLayer, dataLayer: dataLayer)
+        domainLayer = FeaturedLessonsDomainLayerDependencies(coreDataLayer: coreDataLayer, coreDomainLayer: coreDomainLayer, dataLayer: dataLayer)
     }
 }

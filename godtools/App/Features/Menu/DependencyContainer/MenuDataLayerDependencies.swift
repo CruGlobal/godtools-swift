@@ -14,11 +14,4 @@ class MenuDataLayerDependencies {
         
         self.coreDataLayer = coreDataLayer
     }
-    
-    func getMenuInterfaceStringsRepository() -> GetMenuInterfaceStringsRepositoryInterface {
-        return GetMenuInterfaceStringsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices(),
-            infoPlist: coreDataLayer.getInfoPlist()
-        )
-    }
 }

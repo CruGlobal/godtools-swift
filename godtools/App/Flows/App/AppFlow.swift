@@ -132,12 +132,17 @@ class AppFlow: NSObject, Flow {
                 let shouldPromptForOptInNotificationUseCase: ShouldPromptForOptInNotificationUseCase = appDiContainer.feature.optInNotification.domainLayer.getShouldPromptForOptInNotificationUseCase()
                 
                 cancellableForAppLaunchedFromTerminatedStateOptions = Publishers.CombineLatest(
-                    getOnboardingTutorialIsAvailableUseCase.getAvailablePublisher(),
-                    shouldPromptForOptInNotificationUseCase.shouldPromptPublisher()
+                    getOnboardingTutorialIsAvailableUseCase
+                        .execute()
+                        .setFailureType(to: Error.self),
+                    shouldPromptForOptInNotificationUseCase
+                        .execute()
                 )
                 .receive(on: DispatchQueue.main)
-                .sink(receiveValue: { [weak self] (onboardingTutorialIsAvailable: Bool, shouldPromptForOptInNotification: Bool) in
-                   
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { [weak self] (onboardingTutorialIsAvailable: Bool, shouldPromptForOptInNotification: Bool) in
+                    
                     guard let appFlow = self else {
                         return
                     }
@@ -527,16 +532,18 @@ extension AppFlow {
         
         cancellableForShouldPromptForOptInNotification = appDiContainer.feature.optInNotification.domainLayer
             .getShouldPromptForOptInNotificationUseCase()
-            .shouldPromptPublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (shouldPrompt: Bool) in
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (shouldPrompt: Bool) in
                 
                 self?.cancellableForShouldPromptForOptInNotification = nil
                 
                 if shouldPrompt {
                     self?.presentOptInNotificationFlow()
                 }
-            }
+            })
     }
     
     private func presentOptInNotificationFlow() {
