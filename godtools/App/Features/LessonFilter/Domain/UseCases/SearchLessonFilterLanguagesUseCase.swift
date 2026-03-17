@@ -9,16 +9,19 @@
 import Foundation
 import Combine
 
-class SearchLessonFilterLanguagesUseCase {
+final class SearchLessonFilterLanguagesUseCase {
     
-    private let searchLessonFilterLanguagesRepository: SearchLessonFilterLanguagesRepositoryInterface
+    private let stringSearcher: StringSearcher
     
-    init(searchLessonFilterLanguagesRepository: SearchLessonFilterLanguagesRepositoryInterface) {
-        self.searchLessonFilterLanguagesRepository = searchLessonFilterLanguagesRepository
+    init(stringSearcher: StringSearcher) {
+        self.stringSearcher = stringSearcher
     }
     
-    func getSearchResultsPublisher(for searchText: String, in lessonFilterLanguages: [LessonFilterLanguageDomainModel]) -> AnyPublisher<[LessonFilterLanguageDomainModel], Never> {
+    func execute(for searchText: String, in lessonFilterLanguages: [LessonFilterLanguageDomainModel]) -> AnyPublisher<[LessonFilterLanguageDomainModel], Never> {
         
-        return searchLessonFilterLanguagesRepository.getSearchResultsPublisher(for: searchText, in: lessonFilterLanguages)
+        let searchResults = stringSearcher.search(for: searchText, in: lessonFilterLanguages)
+        
+        return Just(searchResults)
+            .eraseToAnyPublisher()
     }
 }

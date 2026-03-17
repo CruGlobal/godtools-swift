@@ -18,11 +18,11 @@ class GetLearnToShareToolInterfaceStringsRepository: GetLearnToShareToolInterfac
         self.localizationServices = localizationServices
     }
     
-    func getStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<LearnToShareToolInterfaceStringsDomainModel, Never> {
+    func getStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<LearnToShareToolStringsDomainModel, Never> {
         
         let localeId: String = translateInLanguage
         
-        let interfaceStrings = LearnToShareToolInterfaceStringsDomainModel(
+        let interfaceStrings = LearnToShareToolStringsDomainModel(
             nextTutorialItemActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "tutorial.continueButton.title.continue"),
             startTrainingActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "start_training")
         )

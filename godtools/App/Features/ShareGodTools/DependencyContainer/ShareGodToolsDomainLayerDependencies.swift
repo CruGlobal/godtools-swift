@@ -10,16 +10,18 @@ import Foundation
 
 class ShareGodToolsDomainLayerDependencies {
     
+    private let coreDataLayer: AppDataLayerDependencies
     private let dataLayer: ShareGodToolsDataLayerDependencies
     
-    init(dataLayer: ShareGodToolsDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, dataLayer: ShareGodToolsDataLayerDependencies) {
         
+        self.coreDataLayer = coreDataLayer
         self.dataLayer = dataLayer
     }
     
-    func getViewShareGodToolsUseCase() -> ViewShareGodToolsUseCase {
-        return ViewShareGodToolsUseCase(
-            getInterfaceStringsRepository: dataLayer.getShareGodToolsInterfaceStringsRepository()
+    func getShareGodToolsStringsUseCase() -> GetShareGodToolsStringsUseCase {
+        return GetShareGodToolsStringsUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
 }

@@ -11,10 +11,12 @@ import Foundation
 class ToolsFilterFeatureDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
+    private let coreDomainLayer: AppDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies) {
         
         self.coreDataLayer = coreDataLayer
+        self.coreDomainLayer = coreDomainLayer
     }
     
     // MARK: - Data Layer Classes
@@ -45,7 +47,7 @@ class ToolsFilterFeatureDataLayerDependencies {
         return GetToolFilterLanguagesRepository(
             resourcesRepository: coreDataLayer.getResourcesRepository(),
             languagesRepository: coreDataLayer.getLanguagesRepository(),
-            getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName(),
+            getTranslatedLanguageName: coreDomainLayer.supporting.getTranslatedLanguageName(),
             localizationServices: coreDataLayer.getLocalizationServices(),
             stringWithLocaleCount: coreDataLayer.getStringWithLocaleCount()
         )

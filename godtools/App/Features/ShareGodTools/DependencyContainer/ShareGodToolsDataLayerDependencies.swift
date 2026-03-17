@@ -16,14 +16,4 @@ class ShareGodToolsDataLayerDependencies {
         
         self.coreDataLayer = coreDataLayer
     }
-    
-    // MARK: - Data Layer
-    
-    // MARK: - Domain Interface
-    
-    func getShareGodToolsInterfaceStringsRepository() -> GetShareGodToolsInterfaceStringsRepositoryInterface {
-        return GetShareGodToolsInterfaceStringsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
 }

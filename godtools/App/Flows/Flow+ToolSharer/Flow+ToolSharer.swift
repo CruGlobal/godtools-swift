@@ -12,10 +12,10 @@ protocol ToolSharer { }
 
 extension Flow where Self: ToolSharer {
     
-    func getShareToolView(viewShareToolDomainModel: ViewShareToolDomainModel, toolId: String, toolAnalyticsAbbreviation: String, pageNumber: Int) -> UIViewController {
+    func getShareToolView(strings: ShareToolStringsDomainModel, toolId: String, toolAnalyticsAbbreviation: String, pageNumber: Int) -> UIViewController {
                 
         let viewModel = ShareToolViewModel(
-            viewShareToolDomainModel: viewShareToolDomainModel,
+            strings: strings,
             toolId: toolId,
             toolAnalyticsAbbreviation: toolAnalyticsAbbreviation,
             pageNumber: pageNumber,
