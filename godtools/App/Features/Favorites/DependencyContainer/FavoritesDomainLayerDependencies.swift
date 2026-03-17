@@ -11,11 +11,13 @@ import Foundation
 class FavoritesDomainLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
+    private let coreDomainLayer: AppDomainLayerDependencies
     private let dataLayer: FavoritesDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, dataLayer: FavoritesDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, dataLayer: FavoritesDataLayerDependencies) {
         
         self.coreDataLayer = coreDataLayer
+        self.coreDomainLayer = coreDomainLayer
         self.dataLayer = dataLayer
     }
     
@@ -28,7 +30,7 @@ class FavoritesDomainLayerDependencies {
     func getConfirmRemoveToolFromFavoritesStringsUseCase() -> GetConfirmRemoveToolFromFavoritesStringsUseCase {
         return GetConfirmRemoveToolFromFavoritesStringsUseCase(
             localizationServices: coreDataLayer.getLocalizationServices(),
-            getTranslatedToolName: coreDataLayer.getTranslatedToolName()
+            getTranslatedToolName: coreDomainLayer.supporting.getTranslatedToolName()
         )
     }
     
@@ -66,9 +68,9 @@ class FavoritesDomainLayerDependencies {
         return GetYourFavoritedToolsUseCase(
             favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository(),
             resourcesRepository: coreDataLayer.getResourcesRepository(),
-            getTranslatedToolName: coreDataLayer.getTranslatedToolName(),
-            getTranslatedToolCategory: coreDataLayer.getTranslatedToolCategory(),
-            getToolListItemInterfaceStringsRepository: coreDataLayer.getToolListItemInterfaceStringsRepository()
+            getTranslatedToolName: coreDomainLayer.supporting.getTranslatedToolName(),
+            getTranslatedToolCategory: coreDomainLayer.supporting.getTranslatedToolCategory(),
+            getToolListItemStrings: coreDomainLayer.supporting.getToolListItemStrings()
         )
     }
 }

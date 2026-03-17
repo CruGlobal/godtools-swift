@@ -10,13 +10,15 @@ import Foundation
 
 class UserActivityDomainLayerDependencies {
     
-    private let dataLayer: UserActivityDataLayerDependencies
     private let coreDataLayer: AppDataLayerDependencies
+    private let coreDomainLayer: AppDomainLayerDependencies
+    private let dataLayer: UserActivityDataLayerDependencies
     
-    init(dataLayer: UserActivityDataLayerDependencies, coreDataLayer: AppDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, dataLayer: UserActivityDataLayerDependencies) {
         
-        self.dataLayer = dataLayer
         self.coreDataLayer = coreDataLayer
+        self.coreDomainLayer = coreDomainLayer
+        self.dataLayer = dataLayer
     }
     
     func getIncrementUserCounterUseCase() -> IncrementUserCounterUseCase {
@@ -35,7 +37,7 @@ class UserActivityDomainLayerDependencies {
     func getUserActivityStatsUseCase() -> GetUserActivityStatsUseCase {
         return GetUserActivityStatsUseCase(
             localizationServices: coreDataLayer.getLocalizationServices(),
-            getTranslatedNumberCount: coreDataLayer.getTranslatedNumberCount(),
+            getTranslatedNumberCount: coreDomainLayer.supporting.getTranslatedNumberCount(),
             stringWithLocaleCount: coreDataLayer.getStringWithLocaleCount()
         )
     }

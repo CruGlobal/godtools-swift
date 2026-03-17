@@ -6,23 +6,25 @@
 //  Copyright © 2025 Cru. All rights reserved.
 //
 
-import Combine
 import Foundation
+import Combine
 import UserNotifications
 
-class RequestNotificationPermissionUseCase {
+final class RequestNotificationPermissionUseCase {
 
-    private let requestNotificationPermission: GetRequestNotificationPermissionInterface
-
-    init(requestNotificationPermission: GetRequestNotificationPermissionInterface) {
-       
-        self.requestNotificationPermission = requestNotificationPermission
-    }
-
-    func requestNotificationPermissionPublisher() -> AnyPublisher<Bool, Never> {
+    init() {
         
-        return requestNotificationPermission.requestPermissionPublisher()
-            .eraseToAnyPublisher()
     }
-
+    
+    func execute() -> AnyPublisher<Bool, Error> {
+    
+        return AnyPublisher() {
+            return try await self.requestAuthorization()
+        }
+    }
+    
+    private func requestAuthorization() async throws -> Bool {
+        
+        return try await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound])
+    }
 }

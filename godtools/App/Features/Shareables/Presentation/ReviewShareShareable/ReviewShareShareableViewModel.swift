@@ -18,7 +18,7 @@ import Combine
     private let toolId: String
     private let shareable: ShareableDomainModel
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
-    private let viewReviewShareShareableUseCase: ViewReviewShareShareableUseCase
+    private let getReviewShareShareableStringsUseCase: GetReviewShareShareableStringsUseCase
     private let getShareableImageUseCase: GetShareableImageUseCase
     private let trackShareShareableTapUseCase: TrackShareShareableTapUseCase
    
@@ -29,16 +29,17 @@ import Combine
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     
-    @Published var imagePreviewData: OptionalImageData?
-    @Published var shareImageButtonTitle: String = ""
+    @Published private(set) var strings = ReviewShareShareableStringsDomainModel.emptyValue
     
-    init(flowDelegate: FlowDelegate, toolId: String, shareable: ShareableDomainModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewReviewShareShareableUseCase: ViewReviewShareShareableUseCase, getShareableImageUseCase: GetShareableImageUseCase, trackShareShareableTapUseCase: TrackShareShareableTapUseCase) {
+    @Published var imagePreviewData: OptionalImageData?
+    
+    init(flowDelegate: FlowDelegate, toolId: String, shareable: ShareableDomainModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getReviewShareShareableStringsUseCase: GetReviewShareShareableStringsUseCase, getShareableImageUseCase: GetShareableImageUseCase, trackShareShareableTapUseCase: TrackShareShareableTapUseCase) {
         
         self.flowDelegate = flowDelegate
         self.toolId = toolId
         self.shareable = shareable
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
-        self.viewReviewShareShareableUseCase = viewReviewShareShareableUseCase
+        self.getReviewShareShareableStringsUseCase = getReviewShareShareableStringsUseCase
         self.getShareableImageUseCase = getShareableImageUseCase
         self.trackShareShareableTapUseCase = trackShareShareableTapUseCase
         
@@ -51,14 +52,19 @@ import Combine
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
                 
-                viewReviewShareShareableUseCase
-                    .viewPublisher(appLanguage: appLanguage)
+                getReviewShareShareableStringsUseCase
+                    .execute(
+                        appLanguage: appLanguage
+                    )
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (domainModel: ViewReviewShareShareableDomainModel) in
-                self?.shareImageButtonTitle = domainModel.interfaceStrings.shareActionTitle
-            }
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (strings: ReviewShareShareableStringsDomainModel) in
+                
+                self?.strings = strings
+            })
             .store(in: &cancellables)
         
         getShareableImageUseCase
@@ -88,11 +94,16 @@ import Combine
     private func trackShareImageTappedAnalytics() {
         
         trackShareShareableTapUseCase
-            .trackPublisher(toolId: "", shareableId: shareable.dataModelId)
+            .execute(
+                toolId: toolId,
+                shareableId: shareable.dataModelId
+            )
             .receive(on: DispatchQueue.main)
-            .sink { _ in
+            .sink(receiveCompletion: { _ in
                 
-            }
+            }, receiveValue: { _ in
+                
+            })
             .store(in: &ReviewShareShareableViewModel.backgroundCancellables)
     }
 }

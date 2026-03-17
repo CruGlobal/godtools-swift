@@ -9,7 +9,7 @@
 import Foundation
 @testable import godtools
 
-class MockLocalizationLanguageNameRepository: LocalizationLanguageNameRepositoryInterface {
+class MockLocalizationLanguageNameRepository: LocalizationLanguageNameInterface {
     
     private let localizationServices: MockLocalizationServices
     

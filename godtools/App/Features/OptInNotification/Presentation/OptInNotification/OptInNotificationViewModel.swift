@@ -19,7 +19,7 @@ import UserNotifications
         case settings
     }
     
-    private let viewOptInNotificationUseCase: ViewOptInNotificationUseCase
+    private let getOptInNotificationStringsUseCase: GetOptInNotificationStringsUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let notificationPromptType: NotificationPromptType
     
@@ -29,16 +29,14 @@ import UserNotifications
 
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     
-    @Published private(set) var title: String = ""
-    @Published private(set) var body: String = ""
+    @Published private(set) var strings = OptInNotificationStringsDomainModel.emptyValue
     @Published private(set) var notificationsActionTitle: String = ""
-    @Published private(set) var maybeLaterActionTitle: String = ""
 
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewOptInNotificationUseCase: ViewOptInNotificationUseCase, notificationPromptType: NotificationPromptType) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getOptInNotificationStringsUseCase: GetOptInNotificationStringsUseCase, notificationPromptType: NotificationPromptType) {
 
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
-        self.viewOptInNotificationUseCase = viewOptInNotificationUseCase
+        self.getOptInNotificationStringsUseCase = getOptInNotificationStringsUseCase
         self.notificationPromptType = notificationPromptType
 
         getCurrentAppLanguageUseCase
@@ -48,26 +46,25 @@ import UserNotifications
         $appLanguage
             .dropFirst()
             .map { appLanguage in
-                viewOptInNotificationUseCase.viewPublisher(appLanguage: appLanguage)
+                getOptInNotificationStringsUseCase
+                    .execute(appLanguage: appLanguage)
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (domainModel: ViewOptInNotificationDomainModel) in
+            .sink { [weak self] (strings: OptInNotificationStringsDomainModel) in
                      
+                self?.strings = strings
+                
                 let actionTitle: String
                 
                 switch notificationPromptType {
                 case .allow:
-                    actionTitle = domainModel.interfaceStrings.allowNotificationsActionTitle
+                    actionTitle = strings.allowNotificationsActionTitle
                 case .settings:
-                    actionTitle = domainModel.interfaceStrings.notificationSettingsActionTitle
+                    actionTitle = strings.notificationSettingsActionTitle
                 }
                 
                 self?.notificationsActionTitle = actionTitle
-                
-                self?.title = domainModel.interfaceStrings.title
-                self?.body = domainModel.interfaceStrings.body
-                self?.maybeLaterActionTitle = domainModel.interfaceStrings.maybeLaterActionTitle
             }
             .store(in: &cancellables)
     }

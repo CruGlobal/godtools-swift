@@ -11,7 +11,6 @@ import Foundation
 class ShareToolDiContainer {
         
     private let dataLayer: ShareToolDataLayerDependencies
-    private let domainInterfaceLayer: ShareToolDomainInterfaceDependencies
     
     let domainLayer: ShareToolDomainLayerDependencies
     
@@ -20,7 +19,6 @@ class ShareToolDiContainer {
         let dataLayer = ShareToolDataLayerDependencies(coreDataLayer: coreDataLayer)
         
         self.dataLayer = dataLayer
-        self.domainInterfaceLayer = ShareToolDomainInterfaceDependencies(coreDataLayer: coreDataLayer, dataLayer: dataLayer)
-        domainLayer = ShareToolDomainLayerDependencies(domainInterfaceLayer: domainInterfaceLayer)
+        domainLayer = ShareToolDomainLayerDependencies(coreDataLayer: coreDataLayer, dataLayer: dataLayer)
     }
 }
