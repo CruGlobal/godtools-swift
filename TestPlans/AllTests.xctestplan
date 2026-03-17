@@ -2,14 +2,17 @@
   "configurations" : [
     {
       "id" : "CEA79D13-909A-4A12-8CF7-AF50FDB29FE3",
-      "name" : "Configuration 1",
+      "name" : "AllTestsConfig",
       "options" : {
-
+        "uiTestingScreenshotsLifetime" : "keepNever",
+        "userAttachmentLifetime" : "keepNever"
       }
     }
   ],
   "defaultOptions" : {
-    "testTimeoutsEnabled" : true
+    "testTimeoutsEnabled" : true,
+    "uiTestingScreenshotsLifetime" : "keepNever",
+    "userAttachmentLifetime" : "keepNever"
   },
   "testTargets" : [
     {
