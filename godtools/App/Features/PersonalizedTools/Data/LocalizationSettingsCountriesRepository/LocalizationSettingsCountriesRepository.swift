@@ -57,9 +57,14 @@ class LocalizationSettingsCountriesRepository: LocalizationSettingsCountriesRepo
             return Locale(identifier: localeWhereLanguageMatchesRegion)
         }
 
-        let allLocalesInRegion = Locale.availableIdentifiers
-            .filter { $0.hasSuffix("_\(region.identifier)") }
-            .sorted { sortByPreferringFirstLetterMatch($0, $1, region: region) }
+        if let primaryLanguage = getPrimaryLanguageForRegion(region) {
+            let preferredLocale = "\(primaryLanguage)_\(region.identifier)"
+            if Locale.availableIdentifiers.contains(preferredLocale) {
+                return Locale(identifier: preferredLocale)
+            }
+        }
+
+        let allLocalesInRegion = Locale.availableIdentifiers.filter { $0.hasSuffix("_\(region.identifier)") }
 
         for localeId in allLocalesInRegion {
             let locale = Locale(identifier: localeId)
@@ -71,23 +76,25 @@ class LocalizationSettingsCountriesRepository: LocalizationSettingsCountriesRepo
         return Locale(identifier: region.identifier)
     }
 
-    private func sortByPreferringFirstLetterMatch(_ first: String, _ second: String, region: Locale.Region) -> Bool {
-        let firstMatches = languageCodeStartsWithSameLetterAsRegion(localeIdentifier: first, region: region)
-        let secondMatches = languageCodeStartsWithSameLetterAsRegion(localeIdentifier: second, region: region)
+    private func getPrimaryLanguageForRegion(_ region: Locale.Region) -> String? {
+        let primaryLanguages: [String: String] = [
+            "BR": "pt",
+            "MX": "es",
+            "CN": "zh_Hans",
+            "GB": "en",
+            "US": "en",
+            "AU": "en",
+            "CA": "en",
+            "KR": "ko",
+            "JP": "ja",
+            "AT": "de",
+            "AR": "es",
+            "CL": "es",
+            "CO": "es",
+            "PE": "es",
+            "VE": "es"
+        ]
 
-        if firstMatches && !secondMatches {
-            return true
-        }
-        if !firstMatches && secondMatches {
-            return false
-        }
-
-        return first < second
-    }
-
-    private func languageCodeStartsWithSameLetterAsRegion(localeIdentifier: String, region: Locale.Region) -> Bool {
-        let languageCode = localeIdentifier.split(separator: "_").first.map(String.init) ?? ""
-        let regionFirstLetter = region.identifier.lowercased().first
-        return languageCode.lowercased().first == regionFirstLetter
+        return primaryLanguages[region.identifier]
     }
 }
