@@ -113,7 +113,7 @@ class AppFlow: NSObject, Flow {
         switch step {
             
         case .appLaunched(let launchState):
-            
+                        
             if launchState.isLaunching {
                 
                 AppBackgroundState.shared.start(appDiContainer: appDiContainer)
@@ -145,8 +145,9 @@ class AppFlow: NSObject, Flow {
                     appFlow.cancellableForAppLaunchedFromTerminatedStateOptions = nil
                     
                     let launchCount: Int = appFlow.launchCountRepository.getLaunchCount()
+                    let hasPossibleDeferredDeepLinkFOrDynalink: Bool = UIPasteboard.general.hasURLs
                     
-                    if launchCount == 1, UIPasteboard.general.hasURLs {
+                    if launchCount == 1, hasPossibleDeferredDeepLinkFOrDynalink {
                         
                         appFlow.navigate(step: .showDeferredDeepLinkModal)
                         
