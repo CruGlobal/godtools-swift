@@ -9,19 +9,45 @@
 import Foundation
 import Combine
 
-class TrackShareShareableTapUseCase {
+final class TrackShareShareableTapUseCase {
     
-    private let trackTap: TrackShareShareableTapInterface
+    private let trackActionAnalytics: TrackActionAnalytics
+    private let resourcesRepository: ResourcesRepository
     
-    init(trackTap: TrackShareShareableTapInterface) {
+    init(trackActionAnalytics: TrackActionAnalytics, resourcesRepository: ResourcesRepository) {
         
-        self.trackTap = trackTap
+        self.trackActionAnalytics = trackActionAnalytics
+        self.resourcesRepository = resourcesRepository
     }
     
-    func trackPublisher(toolId: String, shareableId: String) -> AnyPublisher<Void, Never> {
+    func execute(toolId: String, shareableId: String) -> AnyPublisher<Void, Error> {
         
-        return trackTap
-            .trackShareShareableTapPublisher(toolId: toolId, shareableId: shareableId)
-            .eraseToAnyPublisher()
+        do {
+            
+            let resource: ResourceDataModel? = try resourcesRepository.persistence.getDataModel(id: toolId)
+            
+            let action = TrackActionModel(
+                screenName: "",
+                actionName: AnalyticsConstants.ActionNames.shareShareable,
+                siteSection: resource?.abbreviation ?? "",
+                siteSubSection: "",
+                appLanguage: nil,
+                contentLanguage: nil,
+                secondaryContentLanguage: nil,
+                url: nil,
+                data: [AnalyticsConstants.Keys.shareableId: shareableId]
+            )
+            
+            trackActionAnalytics.trackAction(trackAction: action)
+            
+            return Just(())
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        }
+        catch let error {
+            
+            return Fail(error: error)
+                .eraseToAnyPublisher()
+        }
     }
 }

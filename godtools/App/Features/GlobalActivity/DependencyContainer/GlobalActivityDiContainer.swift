@@ -13,9 +13,9 @@ class GlobalActivityDiContainer {
     let dataLayer: GlobalActivityDataLayerDependencies
     let domainLayer: GlobalActivityDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies) {
         
         dataLayer = GlobalActivityDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainLayer = GlobalActivityDomainLayerDependencies(coreDataLayer: coreDataLayer, dataLayer: dataLayer)
+        domainLayer = GlobalActivityDomainLayerDependencies(coreDataLayer: coreDataLayer, coreDomainLayer: coreDomainLayer, dataLayer: dataLayer)
     }
 }

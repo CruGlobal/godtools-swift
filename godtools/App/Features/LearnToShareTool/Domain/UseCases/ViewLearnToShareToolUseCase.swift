@@ -26,7 +26,7 @@ class ViewLearnToShareToolUseCase {
             getInterfaceStringsRepository.getStringsPublisher(translateInLanguage: appLanguage),
             getTutorialItemsRepository.getItemsPublisher(translateInLanguage: appLanguage)
         )
-        .flatMap({ (interfaceStrings: LearnToShareToolInterfaceStringsDomainModel, tutorialItems: [LearnToShareToolItemDomainModel]) -> AnyPublisher<ViewLearnToShareToolDomainModel, Never> in
+        .flatMap({ (interfaceStrings: LearnToShareToolStringsDomainModel, tutorialItems: [LearnToShareToolItemDomainModel]) -> AnyPublisher<ViewLearnToShareToolDomainModel, Never> in
           
             let domainModel = ViewLearnToShareToolDomainModel(
                 interfaceStrings: interfaceStrings,

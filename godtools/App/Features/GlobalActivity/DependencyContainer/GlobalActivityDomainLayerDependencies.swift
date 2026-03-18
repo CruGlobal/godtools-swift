@@ -11,11 +11,13 @@ import Foundation
 class GlobalActivityDomainLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
+    private let coreDomainLayer: AppDomainLayerDependencies
     private let dataLayer: GlobalActivityDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, dataLayer: GlobalActivityDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, dataLayer: GlobalActivityDataLayerDependencies) {
         
         self.coreDataLayer = coreDataLayer
+        self.coreDomainLayer = coreDomainLayer
         self.dataLayer = dataLayer
     }
     
@@ -30,7 +32,7 @@ class GlobalActivityDomainLayerDependencies {
         return GetGlobalActivityThisWeekUseCase(
             globalAnalyticsRepository: dataLayer.getGlobalAnalyticsRepository(),
             localizationServices: coreDataLayer.getLocalizationServices(),
-            getTranslatedNumberCount: coreDataLayer.getTranslatedNumberCount()
+            getTranslatedNumberCount: coreDomainLayer.supporting.getTranslatedNumberCount()
         )
     }
 }

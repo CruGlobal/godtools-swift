@@ -16,29 +16,4 @@ class ShareablesDataLayerDependencies {
         
         self.coreDataLayer = coreDataLayer
     }
-    
-    func getReviewShareShareableInterfaceStringsRepositoryInterface() -> GetReviewShareShareableInterfaceStringsRepositoryInterface {
-        return GetReviewShareShareableInterfaceStringsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
-    
-    func getShareableImageRepository() -> GetShareableImageRepository {
-        return GetShareableImageRepository(
-            resourcesFileCache: coreDataLayer.getResourcesFileCache()
-        )
-    }
-    
-    func getShareablesRepositoryInterface() -> GetShareablesRepositoryInterface {
-        return GetShareablesRepository(
-            translationsRepository: coreDataLayer.getTranslationsRepository()
-        )
-    }
-    
-    func getTrackShareShareableTap() -> TrackShareShareableTapInterface {
-        return TrackShareShareableTap(
-            trackActionAnalytics: coreDataLayer.getAnalytics().trackActionAnalytics,
-            resourcesRepository: coreDataLayer.getResourcesRepository()
-        )
-    }
 }

@@ -54,7 +54,7 @@ struct ResourcesCacheTests {
             await withCheckedContinuation { continuation in
                 
                 let timeoutTask = Task {
-                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    try await Task.defaultTestSleep()
                     continuation.resume(returning: ())
                 }
                 
@@ -102,7 +102,7 @@ struct ResourcesCacheTests {
             await withCheckedContinuation { continuation in
                 
                 let timeoutTask = Task {
-                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    try await Task.defaultTestSleep()
                     continuation.resume(returning: ())
                 }
                 
@@ -151,7 +151,7 @@ struct ResourcesCacheTests {
             await withCheckedContinuation { continuation in
                 
                 let timeoutTask = Task {
-                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    try await Task.defaultTestSleep()
                     continuation.resume(returning: ())
                 }
                 
