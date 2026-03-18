@@ -78,7 +78,7 @@ extension PersonalizedLessonsRepository {
 
     func getPersistedPersonalizedLessons(country: String?, language: String) async throws -> [ResourceDataModel] {
 
-        let type = PersonalizedLessonsType(country: country, langauge: language)
+        let type = PersonalizedLessonsType(country: country, language: language)
         
         switch type {
             
@@ -137,7 +137,7 @@ extension PersonalizedLessonsRepository {
     
     private func syncPersonalizedLessons(requestPriority: RequestPriority, country: String?, language: String, forceNewSync: Bool = false) async throws -> [ResourceDataModel] {
         
-        let type = PersonalizedLessonsType(country: country, langauge: language)
+        let type = PersonalizedLessonsType(country: country, language: language)
         
         let personalizedLessonId = try PersonalizedLessonsId(type: type)
         
