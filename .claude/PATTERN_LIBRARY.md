@@ -296,12 +296,12 @@ var.*delegate.*:  # Check if weak keyword present
 
 ### Variables Without Explicit Access Control
 ```bash
-^\s*(var|let)\s+\w+.*:  # var or let without private/public/internal
+^\s*(var|let)\s+\w+.*:  # var or let that should be private but isn't
 # Exclude lines starting with @ (property wrappers)
 ```
 **Why**: Encourages proper encapsulation, reduces API surface area
 **Severity**: 4/10 (low-medium)
-**Note**: Should be `private` by default unless intentionally exposing
+**Note**: Variables that can be `private` should be marked as such. Variables that need to be `internal` (the default) don't require an explicit access modifier.
 
 ---
 
