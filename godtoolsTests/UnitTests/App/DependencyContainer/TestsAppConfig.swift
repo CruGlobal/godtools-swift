@@ -30,6 +30,10 @@ final class TestsAppConfig: AppConfigInterface {
         return .production
     }
     
+    var dynalinkClientApiKey: String? {
+        return nil
+    }
+    
     var environment: AppEnvironment {
         return .production
     }
