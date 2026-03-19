@@ -23,12 +23,20 @@ class LocalizationSettingsCountriesRepository: LocalizationSettingsCountriesRepo
             .filter { isCountryCode(region: $0) }
             .compactMap { region -> LocalizationSettingsCountryDataModel? in
 
-            let regionLocale = findLocaleId(for: region)
-
-            guard let nameInAppLanguage = appLocale.localizedString(forRegionCode: region.identifier),
-                  let nameInOwnLanguage = regionLocale.localizedString(forRegionCode: region.identifier)
-            else {
+            guard let nameInAppLanguage = appLocale.localizedString(forRegionCode: region.identifier) else {
                 return nil
+            }
+
+            let nameInOwnLanguage: String
+            if let staticEndonym = CountryEndonyms.mapping[region.identifier] {
+                nameInOwnLanguage = staticEndonym
+                
+            } else {
+                let regionLocale = findLocaleId(for: region)
+                guard let dynamicName = regionLocale.localizedString(forRegionCode: region.identifier) else {
+                    return nil
+                }
+                nameInOwnLanguage = dynamicName
             }
 
             return LocalizationSettingsCountryDataModel(
@@ -57,13 +65,6 @@ class LocalizationSettingsCountriesRepository: LocalizationSettingsCountriesRepo
             return Locale(identifier: localeWhereLanguageMatchesRegion)
         }
 
-        if let primaryLanguage = getPrimaryLanguageForRegion(region) {
-            let preferredLocale = "\(primaryLanguage)_\(region.identifier)"
-            if Locale.availableIdentifiers.contains(preferredLocale) {
-                return Locale(identifier: preferredLocale)
-            }
-        }
-
         let allLocalesInRegion = Locale.availableIdentifiers.filter { $0.hasSuffix("_\(region.identifier)") }
 
         for localeId in allLocalesInRegion {
@@ -74,27 +75,5 @@ class LocalizationSettingsCountriesRepository: LocalizationSettingsCountriesRepo
         }
 
         return Locale(identifier: region.identifier)
-    }
-
-    private func getPrimaryLanguageForRegion(_ region: Locale.Region) -> String? {
-        let primaryLanguages: [String: String] = [
-            "BR": "pt",
-            "MX": "es",
-            "CN": "zh_Hans",
-            "GB": "en",
-            "US": "en",
-            "AU": "en",
-            "CA": "en",
-            "KR": "ko",
-            "JP": "ja",
-            "AT": "de",
-            "AR": "es",
-            "CL": "es",
-            "CO": "es",
-            "PE": "es",
-            "VE": "es"
-        ]
-
-        return primaryLanguages[region.identifier]
     }
 }
