@@ -16,6 +16,6 @@ class ShareablesDiContainer {
     init(coreDataLayer: AppDataLayerDependencies) {
         
         dataLayer = ShareablesDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainLayer = ShareablesDomainLayerDependencies(dataLayer: dataLayer)
+        domainLayer = ShareablesDomainLayerDependencies(coreDataLayer: coreDataLayer, dataLayer: dataLayer)
     }
 }

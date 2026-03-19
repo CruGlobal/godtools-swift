@@ -2,7 +2,7 @@
   "configurations" : [
     {
       "id" : "FD8DCF59-E90D-4750-B68B-840366DEAC6C",
-      "name" : "Configuration 1",
+      "name" : "UITestsConfig",
       "options" : {
 
       }
@@ -10,7 +10,8 @@
   ],
   "defaultOptions" : {
     "testTimeoutsEnabled" : true,
-    "uiTestingScreenshotsLifetime" : "keepNever"
+    "uiTestingScreenshotsLifetime" : "keepNever",
+    "userAttachmentLifetime" : "keepNever"
   },
   "testTargets" : [
     {

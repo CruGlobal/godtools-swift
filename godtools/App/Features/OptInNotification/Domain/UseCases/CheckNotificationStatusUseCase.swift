@@ -6,21 +6,23 @@
 //  Copyright © 2025 Cru. All rights reserved.
 //
 
-import Combine
 import Foundation
+import Combine
 import UserNotifications
 
-class CheckNotificationStatusUseCase {
+final class CheckNotificationStatusUseCase {
    
-    private let checkNotificationStatus: GetCheckNotificationStatusInterface
-
-    init(checkNotificationStatus: GetCheckNotificationStatusInterface) {
-        self.checkNotificationStatus = checkNotificationStatus
-    }
-
-    func getPermissionStatusPublisher() -> AnyPublisher<PermissionStatusDomainModel, Never> {
+    private let getNotificationStatus: GetNotificationStatus
+    
+    init(getNotificationStatus: GetNotificationStatus) {
         
-        return checkNotificationStatus.permissionStatusPublisher()
-            .eraseToAnyPublisher()
+        self.getNotificationStatus = getNotificationStatus
+    }
+    
+    func execute() -> AnyPublisher<PermissionStatusDomainModel, Error> {
+       
+        return AnyPublisher() {
+            return try await self.getNotificationStatus.getStatus()
+        }
     }
 }

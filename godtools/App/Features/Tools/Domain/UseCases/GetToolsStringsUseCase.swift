@@ -29,7 +29,8 @@ final class GetToolsStringsUseCase {
             allToolsToggleTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "dashboard.personalizedToolToggle.allToolsTitle"),
             personalizedToolExplanationTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "dashboard.personalizedToolFooter.title"),
             personalizedToolExplanationSubtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "dashboard.personalizedToolFooter.subtitle"),
-            changePersonalizedToolSettingsActionLabel: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "dashboard.personalizedToolFooter.buttonTitle")
+            changePersonalizedToolSettingsActionLabel: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "dashboard.personalizedToolFooter.buttonTitle"),
+            viewAllTools: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "tools.personalizationUnavailable.viewAllTools")
         )
         
         return Just(interfaceStrings)

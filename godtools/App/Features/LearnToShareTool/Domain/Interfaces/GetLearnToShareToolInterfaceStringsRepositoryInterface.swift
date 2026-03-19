@@ -11,5 +11,5 @@ import Combine
 
 protocol GetLearnToShareToolInterfaceStringsRepositoryInterface {
     
-    func getStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<LearnToShareToolInterfaceStringsDomainModel, Never>
+    func getStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<LearnToShareToolStringsDomainModel, Never>
 }

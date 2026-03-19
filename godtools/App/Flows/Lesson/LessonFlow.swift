@@ -119,30 +119,33 @@ class LessonFlow: ToolNavigationFlow, Flow, ToolSharer {
             
         case .shareLessonTappedFromLesson(let pageNumber, let languageId):
              
-            let getViewShareToolUseCase = appDiContainer.feature.shareTool.domainLayer.getViewShareToolUseCase()
+            let getShareToolStringsUseCase = appDiContainer.feature.shareTool.domainLayer.getShareToolStringsUseCase()
             
-            getViewShareToolUseCase.viewPublisher(
-                toolId: lesson.id,
-                toolLanguageId: languageId,
-                pageNumber: pageNumber,
-                appLanguage: appLanguage
-            )
-            .first()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] viewShareToolDomainModel in
-            
-                guard let self = self else { return }
-                            
-                let shareToolView = getShareToolView(
-                    viewShareToolDomainModel: viewShareToolDomainModel,
-                    toolId: self.lesson.id,
-                    toolAnalyticsAbbreviation: self.lesson.abbreviation,
-                    pageNumber: pageNumber
+            getShareToolStringsUseCase
+                .execute(
+                    toolId: lesson.id,
+                    toolLanguageId: languageId,
+                    pageNumber: pageNumber,
+                    appLanguage: appLanguage
                 )
-                
-                self.navigationController.present(shareToolView, animated: true)
-            }
-            .store(in: &cancellables)
+                .first()
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] (strings: ShareToolStringsDomainModel) in
+            
+                    guard let self = self else {
+                        return
+                    }
+                                
+                    let shareToolView = getShareToolView(
+                        strings: strings,
+                        toolId: self.lesson.id,
+                        toolAnalyticsAbbreviation: self.lesson.abbreviation,
+                        pageNumber: pageNumber
+                    )
+                    
+                    self.navigationController.present(shareToolView, animated: true)
+                }
+                .store(in: &cancellables)
             
         case .closeTappedFromLesson(let lessonId, let highestPageNumberViewed):
             closeTool(lessonId: lessonId, highestPageNumberViewed: highestPageNumberViewed)
@@ -276,7 +279,7 @@ extension LessonFlow {
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
             mobileContentEventAnalytics: appDiContainer.getMobileContentRendererEventAnalyticsTracking(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getTranslatedLanguageName: appDiContainer.dataLayer.getTranslatedLanguageName(),
+            getTranslatedLanguageName: appDiContainer.domainLayer.supporting.getTranslatedLanguageName(),
             storeLessonProgressUseCase: appDiContainer.feature.lessonProgress.domainLayer.getStoreUserLessonProgressUseCase(),
             trainingTipsEnabled: trainingTipsEnabled,
             incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase()
@@ -313,7 +316,7 @@ extension LessonFlow {
         
         let viewModel = ResumeLessonProgressModalViewModel(
             flowDelegate: self,
-            getInterfaceStringsUseCase: appDiContainer.feature.lessonProgress.domainLayer.getResumeLessonProgressModalInterfaceStringsUseCase(),
+            getResumeLessonProgressStringsUseCase: appDiContainer.feature.lessonProgress.domainLayer.getResumeLessonProgressStringsUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase()
         )
         

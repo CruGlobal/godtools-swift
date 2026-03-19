@@ -39,7 +39,7 @@ class AppFlow: NSObject, Flow {
     let navigationController: AppNavigationController
     let rootView: AppRootView
             
-    init(appDiContainer: AppDiContainer, appDeepLinkingService: DeepLinkingService, deepLink: ParsedDeepLinkType?) {
+    init(appDiContainer: AppDiContainer, appDeepLinkingService: DeepLinkingService, deepLinkUrl: URL?) {
         
         let navigationBarAppearance = AppNavigationBarAppearance(
             backgroundColor: AppFlow.defaultNavBarColor,
@@ -56,7 +56,12 @@ class AppFlow: NSObject, Flow {
         self.appMessaging = appDiContainer.dataLayer.getAppMessaging()
         self.launchCountRepository = appDiContainer.dataLayer.getLaunchCountRepository()
         self.dashboardFlow = DashboardFlow(appDiContainer: appDiContainer, sharedNavigationController: navigationController, rootController: rootController)
-        self.appLaunchedFromDeepLink = deepLink
+        
+        if let deepLinkUrl = deepLinkUrl {
+            appLaunchedFromDeepLink = appDeepLinkingService.parseDeepLink(
+                incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: deepLinkUrl))
+            )
+        }
         
         super.init()
         
@@ -113,7 +118,7 @@ class AppFlow: NSObject, Flow {
         switch step {
             
         case .appLaunched(let launchState):
-            
+                        
             if launchState.isLaunching {
                 
                 AppBackgroundState.shared.start(appDiContainer: appDiContainer)
@@ -132,12 +137,17 @@ class AppFlow: NSObject, Flow {
                 let shouldPromptForOptInNotificationUseCase: ShouldPromptForOptInNotificationUseCase = appDiContainer.feature.optInNotification.domainLayer.getShouldPromptForOptInNotificationUseCase()
                 
                 cancellableForAppLaunchedFromTerminatedStateOptions = Publishers.CombineLatest(
-                    getOnboardingTutorialIsAvailableUseCase.getAvailablePublisher(),
-                    shouldPromptForOptInNotificationUseCase.shouldPromptPublisher()
+                    getOnboardingTutorialIsAvailableUseCase
+                        .execute()
+                        .setFailureType(to: Error.self),
+                    shouldPromptForOptInNotificationUseCase
+                        .execute()
                 )
                 .receive(on: DispatchQueue.main)
-                .sink(receiveValue: { [weak self] (onboardingTutorialIsAvailable: Bool, shouldPromptForOptInNotification: Bool) in
-                   
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { [weak self] (onboardingTutorialIsAvailable: Bool, shouldPromptForOptInNotification: Bool) in
+                    
                     guard let appFlow = self else {
                         return
                     }
@@ -145,8 +155,9 @@ class AppFlow: NSObject, Flow {
                     appFlow.cancellableForAppLaunchedFromTerminatedStateOptions = nil
                     
                     let launchCount: Int = appFlow.launchCountRepository.getLaunchCount()
+                    let hasPossibleDeferredDeepLinkFOrDynalink: Bool = UIPasteboard.general.hasURLs
                     
-                    if launchCount == 1, UIPasteboard.general.hasURLs {
+                    if launchCount == 1, hasPossibleDeferredDeepLinkFOrDynalink {
                         
                         appFlow.navigate(step: .showDeferredDeepLinkModal)
                         
@@ -527,16 +538,18 @@ extension AppFlow {
         
         cancellableForShouldPromptForOptInNotification = appDiContainer.feature.optInNotification.domainLayer
             .getShouldPromptForOptInNotificationUseCase()
-            .shouldPromptPublisher()
+            .execute()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (shouldPrompt: Bool) in
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (shouldPrompt: Bool) in
                 
                 self?.cancellableForShouldPromptForOptInNotification = nil
                 
                 if shouldPrompt {
                     self?.presentOptInNotificationFlow()
                 }
-            }
+            })
     }
     
     private func presentOptInNotificationFlow() {

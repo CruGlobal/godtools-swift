@@ -8,16 +8,19 @@
 
 class MenuDomainLayerDependencies {
     
+    private let coreDataLayer: AppDataLayerDependencies
     private let dataLayer: MenuDataLayerDependencies
     
-    init(dataLayer: MenuDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, dataLayer: MenuDataLayerDependencies) {
         
+        self.coreDataLayer = coreDataLayer
         self.dataLayer = dataLayer
     }
     
-    func getMenuInterfaceStringsUseCase() -> GetMenuInterfaceStringsUseCase {
-        return GetMenuInterfaceStringsUseCase(
-            getInterfaceStringsRepositoryInterface: dataLayer.getMenuInterfaceStringsRepository()
+    func getMenuStringsUseCase() -> GetMenuStringsUseCase {
+        return GetMenuStringsUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices(),
+            infoPlist: coreDataLayer.getInfoPlist()
         )
     }
 }

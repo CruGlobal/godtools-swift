@@ -14,7 +14,7 @@ import Combine
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
-    private let getMenuInterfaceStringsUseCase: GetMenuInterfaceStringsUseCase
+    private let getMenuStringsUseCase: GetMenuStringsUseCase
     private let getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
     private let getAccountCreationIsSupportedUseCase: GetAccountCreationIsSupportedUseCase
@@ -29,40 +29,16 @@ import Combine
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
+    @Published private(set) var strings = MenuStringsDomainModel.emptyValue
     @Published private(set) var hidesDebugSection: Bool = true
-    @Published private(set) var navTitle: String = ""
-    @Published private(set) var getStartedSectionTitle: String = ""
-    @Published private(set) var accountSectionTitle: String = ""
-    @Published private(set) var supportSectionTitle: String = ""
-    @Published private(set) var shareSectionTitle: String = ""
-    @Published private(set) var aboutSectionTitle: String = ""
-    @Published private(set) var versionSectionTitle: String = ""
-    @Published private(set) var tutorialOptionTitle: String = ""
-    @Published private(set) var languageSettingsOptionTitle: String = ""
-    @Published private(set) var localizationSettingsOptionTitle: String = ""
-    @Published private(set) var loginOptionTitle: String = ""
-    @Published private(set) var createAccountOptionTitle: String = ""
-    @Published private(set) var activityOptionTitle: String = ""
-    @Published private(set) var logoutOptionTitle: String = ""
-    @Published private(set) var deleteAccountOptionTitle: String = ""
-    @Published private(set) var sendFeedbackOptionTitle: String = ""
-    @Published private(set) var reportABugOptionTitle: String = ""
-    @Published private(set) var askAQuestionOptionTitle: String = ""
-    @Published private(set) var leaveAReviewOptionTitle: String = ""
-    @Published private(set) var shareAStoryWithUsOptionTitle: String = ""
-    @Published private(set) var shareGodToolsOptionTitle: String = ""
-    @Published private(set) var termsOfUseOptionTitle: String = ""
-    @Published private(set) var privacyPolicyOptionTitle: String = ""
-    @Published private(set) var copyrightInfoOptionTitle: String = ""
-    @Published private(set) var appVersion: String = ""
     @Published private(set) var accountSectionVisibility: MenuAccountSectionVisibility = .hidden
     @Published private(set) var showsTutorialOption: Bool = false
     
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getMenuInterfaceStringsUseCase: GetMenuInterfaceStringsUseCase, getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAccountCreationIsSupportedUseCase: GetAccountCreationIsSupportedUseCase, getUserIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase, logOutUserUseCase: LogOutUserUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, appConfig: AppConfigInterface) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getMenuStringsUseCase: GetMenuStringsUseCase, getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAccountCreationIsSupportedUseCase: GetAccountCreationIsSupportedUseCase, getUserIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase, logOutUserUseCase: LogOutUserUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, appConfig: AppConfigInterface) {
         
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
-        self.getMenuInterfaceStringsUseCase = getMenuInterfaceStringsUseCase
+        self.getMenuStringsUseCase = getMenuStringsUseCase
         self.getOptInOnboardingTutorialAvailableUseCase = getOptInOnboardingTutorialAvailableUseCase
         self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
         self.getAccountCreationIsSupportedUseCase = getAccountCreationIsSupportedUseCase
@@ -81,38 +57,14 @@ import Combine
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
                 
-                getMenuInterfaceStringsUseCase
-                    .getStringsPublisher(appLanguage: appLanguage)
+                getMenuStringsUseCase
+                    .execute(appLanguage: appLanguage)
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (interfaceStrings: MenuInterfaceStringsDomainModel) in
+            .sink { [weak self] (strings: MenuStringsDomainModel) in
                 
-                self?.navTitle = interfaceStrings.title
-                self?.getStartedSectionTitle = interfaceStrings.getStartedTitle
-                self?.accountSectionTitle = interfaceStrings.accountTitle
-                self?.supportSectionTitle = interfaceStrings.supportTitle
-                self?.shareSectionTitle = interfaceStrings.shareTitle
-                self?.aboutSectionTitle = interfaceStrings.aboutTitle
-                self?.versionSectionTitle = interfaceStrings.versionTitle
-                self?.tutorialOptionTitle = interfaceStrings.tutorialOptionTitle
-                self?.languageSettingsOptionTitle = interfaceStrings.languageSettingsOptionTitle
-                self?.localizationSettingsOptionTitle = interfaceStrings.localizationSettingsOptionTitle
-                self?.loginOptionTitle = interfaceStrings.loginOptionTitle
-                self?.createAccountOptionTitle = interfaceStrings.createAccountOptionTitle
-                self?.activityOptionTitle = interfaceStrings.activityOptionTitle
-                self?.logoutOptionTitle = interfaceStrings.logoutOptionTitle
-                self?.deleteAccountOptionTitle = interfaceStrings.deleteAccountOptionTitle
-                self?.sendFeedbackOptionTitle = interfaceStrings.sendFeedbackOptionTitle
-                self?.reportABugOptionTitle = interfaceStrings.reportABugOptionTitle
-                self?.askAQuestionOptionTitle = interfaceStrings.askAQuestionOptionTitle
-                self?.leaveAReviewOptionTitle = interfaceStrings.leaveAReviewOptionTitle
-                self?.shareAStoryWithUsOptionTitle = interfaceStrings.shareAStoryWithUsOptionTitle
-                self?.shareGodToolsOptionTitle = interfaceStrings.shareGodToolsOptionTitle
-                self?.termsOfUseOptionTitle = interfaceStrings.termsOfUseOptionTitle
-                self?.privacyPolicyOptionTitle = interfaceStrings.privacyPolicyOptionTitle
-                self?.copyrightInfoOptionTitle = interfaceStrings.copyrightInfoOptionTitle
-                self?.appVersion = interfaceStrings.version
+                self?.strings = strings
             }
             .store(in: &cancellables)
     

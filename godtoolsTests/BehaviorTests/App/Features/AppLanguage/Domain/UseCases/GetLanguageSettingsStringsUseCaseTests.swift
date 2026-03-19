@@ -39,7 +39,7 @@ struct GetLanguageSettingsStringsUseCaseTests {
             await withCheckedContinuation { continuation in
                 
                 let timeoutTask = Task {
-                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    try await Task.defaultTestSleep()
                     continuation.resume(returning: ())
                 }
                 
@@ -126,7 +126,7 @@ struct GetLanguageSettingsStringsUseCaseTests {
             await withCheckedContinuation { continuation in
                 
                 let timeoutTask = Task {
-                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    try await Task.defaultTestSleep()
                     continuation.resume(returning: ())
                 }
                 
@@ -176,7 +176,7 @@ struct GetLanguageSettingsStringsUseCaseTests {
             await withCheckedContinuation { continuation in
                 
                 let timeoutTask = Task {
-                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    try await Task.defaultTestSleep()
                     continuation.resume(returning: ())
                 }
                 
@@ -272,7 +272,7 @@ extension GetLanguageSettingsStringsUseCaseTests {
         ]
                 
         let getTranslatedLanguageName = GetTranslatedLanguageName(
-            localizationLanguageNameRepository: MockLocalizationLanguageNameRepository(localizationServices: MockLocalizationServices(localizableStrings: localizableStrings)),
+            localizationLanguageName: MockLocalizationLanguageNameRepository(localizationServices: MockLocalizationServices(localizableStrings: localizableStrings)),
             localeLanguageName: MockLocaleLanguageName.defaultMockLocaleLanguageName(),
             localeRegionName: MockLocaleLanguageRegionName(regionNames: [:]),
             localeScriptName: MockLocaleLanguageScriptName(scriptNames: [:])

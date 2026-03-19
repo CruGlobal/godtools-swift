@@ -15,15 +15,15 @@ final class GetYourFavoritedToolsUseCase {
     private let resourcesRepository: ResourcesRepository
     private let getTranslatedToolName: GetTranslatedToolName
     private let getTranslatedToolCategory: GetTranslatedToolCategory
-    private let getToolListItemInterfaceStringsRepository: GetToolListItemInterfaceStringsRepository
+    private let getToolListItemStrings: GetToolListItemStrings
     
-    init(favoritedResourcesRepository: FavoritedResourcesRepository, resourcesRepository: ResourcesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolCategory: GetTranslatedToolCategory, getToolListItemInterfaceStringsRepository: GetToolListItemInterfaceStringsRepository) {
+    init(favoritedResourcesRepository: FavoritedResourcesRepository, resourcesRepository: ResourcesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolCategory: GetTranslatedToolCategory, getToolListItemStrings: GetToolListItemStrings) {
         
         self.favoritedResourcesRepository = favoritedResourcesRepository
         self.resourcesRepository = resourcesRepository
         self.getTranslatedToolName = getTranslatedToolName
         self.getTranslatedToolCategory = getTranslatedToolCategory
-        self.getToolListItemInterfaceStringsRepository = getToolListItemInterfaceStringsRepository
+        self.getToolListItemStrings = getToolListItemStrings
     }
     
     @MainActor func execute(appLanguage: AppLanguageDomainModel, maxCount: Int?) -> AnyPublisher<[YourFavoritedToolDomainModel], Error> {
@@ -32,7 +32,7 @@ final class GetYourFavoritedToolsUseCase {
             resourcesRepository
                 .persistence
                 .observeCollectionChangesPublisher(),
-            getToolListItemInterfaceStringsRepository
+            getToolListItemStrings
                 .getStringsPublisher(translateInLanguage: appLanguage)
                 .setFailureType(to: Error.self),
             favoritedResourcesRepository

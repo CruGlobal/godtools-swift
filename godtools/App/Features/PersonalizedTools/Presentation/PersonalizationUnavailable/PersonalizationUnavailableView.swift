@@ -17,15 +17,17 @@ struct PersonalizationUnavailableView: View {
     private let changeSettingsButtonTitle: String
     private let goToAllLessonsButtonTitle: String
     private let geometry: GeometryProxy
+    private let heightMultiplier: CGFloat
     private let changeSettingsAction: () -> Void
     private let goToAllLessonsAction: () -> Void
 
-    init(title: String, message: String, changeSettingsButtonTitle: String, goToAllLessonsButtonTitle: String, geometry: GeometryProxy, changeSettingsAction: @escaping () -> Void, goToAllLessonsAction: @escaping () -> Void) {
+    init(title: String, message: String, changeSettingsButtonTitle: String, goToAllLessonsButtonTitle: String, geometry: GeometryProxy, heightMultiplier: CGFloat = 0.7, changeSettingsAction: @escaping () -> Void, goToAllLessonsAction: @escaping () -> Void) {
         self.title = title
         self.message = message
         self.changeSettingsButtonTitle = changeSettingsButtonTitle
         self.goToAllLessonsButtonTitle = goToAllLessonsButtonTitle
         self.geometry = geometry
+        self.heightMultiplier = heightMultiplier
         self.changeSettingsAction = changeSettingsAction
         self.goToAllLessonsAction = goToAllLessonsAction
     }
@@ -76,7 +78,7 @@ struct PersonalizationUnavailableView: View {
                 Spacer()
             }
         }
-        .frame(height: (geometry.size.height * 0.7) - 15)
+        .frame(height: (geometry.size.height * heightMultiplier) - 15)
         .padding(.horizontal, DashboardView.contentHorizontalInsets)
     }
 }

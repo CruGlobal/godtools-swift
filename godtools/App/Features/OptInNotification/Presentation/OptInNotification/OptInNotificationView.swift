@@ -51,7 +51,7 @@ struct OptInNotificationView: View {
                 
                 VStack(alignment: .center, spacing: 0) {
                     
-                    Text(viewModel.title)
+                    Text(viewModel.strings.title)
                         .multilineTextAlignment(.center)
                         .foregroundColor(ColorPalette.gtBlue.color)
                         .font(FontLibrary.sfProTextBold.font(size: 30))
@@ -59,7 +59,7 @@ struct OptInNotificationView: View {
                         .minimumScaleFactor(0.5)
                         .lineLimit(2)
 
-                    Text(viewModel.body)
+                    Text(viewModel.strings.body)
                         .font(FontLibrary.sfProTextRegular.font(size: 17))
                         .foregroundStyle(ColorPalette.gtGrey.color)
                         .multilineTextAlignment(.center)
@@ -86,7 +86,7 @@ struct OptInNotificationView: View {
                 .padding(.top, 18)
                 
                 GTWhiteButton(
-                    title: viewModel.maybeLaterActionTitle,
+                    title: viewModel.strings.maybeLaterActionTitle,
                     fontSize: buttonFontSize,
                     width: buttonWidth,
                     height: buttonHeight,
@@ -121,7 +121,7 @@ struct OptInNotificationView_Preview: PreviewProvider {
         let viewModel = OptInNotificationViewModel(
             flowDelegate: MockFlowDelegate(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewOptInNotificationUseCase: appDiContainer.feature.optInNotification.domainLayer.getViewOptInNotificationUseCase(),
+            getOptInNotificationStringsUseCase: appDiContainer.feature.optInNotification.domainLayer.getOptInNotificationStringsUseCase(),
             notificationPromptType: .allow
         )
 

@@ -9,14 +9,14 @@
 import Foundation
 
 class ToolsDiContainer {
-        
+
     private let dataLayer: ToolsDataLayerDependencies
-    
+
     let domainLayer: ToolsDomainLayerDependencies
-    
-    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies) {
-        
+
+    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, personalizedToolsDataLayer: PersonalizedToolsDataLayerDependencies) {
+
         self.dataLayer = ToolsDataLayerDependencies(coreDataLayer: coreDataLayer)
-        self.domainLayer = ToolsDomainLayerDependencies(coreDataLayer: coreDataLayer, dataLayer: dataLayer, coreDomainLayer: coreDomainLayer)
+        self.domainLayer = ToolsDomainLayerDependencies(coreDataLayer: coreDataLayer, dataLayer: dataLayer, coreDomainLayer: coreDomainLayer, personalizedToolsDataLayer: personalizedToolsDataLayer)
     }
 }

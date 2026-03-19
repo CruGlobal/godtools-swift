@@ -81,6 +81,7 @@ struct LessonsView: View {
                                     changeSettingsButtonTitle: viewModel.strings.changeSettings,
                                     goToAllLessonsButtonTitle: viewModel.strings.viewAllLessons,
                                     geometry: geometry,
+                                    heightMultiplier: 0.7,
                                     changeSettingsAction: {
                                         viewModel.localizationSettingsTapped()
                                     },
