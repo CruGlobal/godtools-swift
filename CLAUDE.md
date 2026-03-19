@@ -93,6 +93,11 @@ Shared code used across features lives in `godtools/App/Share/`.
 - Encapsulate storage details (remote API, Realm, UserDefaults, file system, etc.)
 - Define protocols (e.g., `FooRepositoryInterface`) in the `Data/` layer for dependency injection and test mocking
 - Concrete implementations also live in `Data/` layer
+- **Tiered Repository Pattern**: Repositories are organized in tiers:
+  - **Tier 1 (Core/Shared)**: General-purpose repositories used across the app (e.g., `ResourcesRepository`, `TranslationsRepository`)
+  - **Tier 2 (Feature-specific)**: Feature-specific repositories (e.g., `PersonalizedToolsRepository`, `PersonalizedLessonsRepository`)
+  - Tier 2 repositories **may depend on** Tier 1 repositories for composition/coordination
+  - Tier 1 repositories should remain independent
 
 ### Navigation
 
@@ -114,7 +119,10 @@ Tests live in `godtoolsTests/`:
 - `UnitTests/` — Isolated XCTest unit tests
 - `Mock/` — Shared mocks, including `TestsDiContainer`, `TestsAppConfig`, and `TestsInMemorySwiftDatabase`
 
-**Realm in tests:** Tests use an in-memory Realm instance (`TestsInMemorySwiftDatabase`). Any test observing Realm collection changes **must** be marked `@MainActor` to avoid a crash (`Can only add notification blocks from within runloops`).
+**Realm threading requirements:**
+- **In production code**: Any method that observes Realm collection changes (via `.observe()` or Realm collection publishers) **must** be marked `@MainActor` to avoid a crash (`Can only add notification blocks from within runloops`)
+- **In tests**: Tests use an in-memory Realm instance (`TestsInMemorySwiftDatabase`). Any test observing Realm collection changes **must** be marked `@MainActor` for the same reason
+- UseCases and Repositories that call `persistence.observeCollectionChangesPublisher()` should be marked `@MainActor`
 
 **Behavior test format (Given/When/Then):**
 
