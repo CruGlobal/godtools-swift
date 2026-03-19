@@ -27,7 +27,7 @@ jobs:
         uses: ./.github/actions/bundle-install
         
       # - Run all tests and build single xcresult.
-      # - name: Run Tests and Generate Code Coverage Report (.xcresult)
+      # - name: Run AllTests and Generate Code Coverage Report (.xcresult)
       #   run: bundle exec fastlane cru_shared_lane_run_tests testplan:AllTests output_directory:fastlane_scan_output_directory result_bundle:true reset_simulator:true should_clear_derived_data:true
 
       # - Run tests and build single xcresult.
