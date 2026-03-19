@@ -181,60 +181,30 @@ struct LocalizationSettingsCountriesRepositoryTests {
         }
     }
 
-    @Test(
-        """
-        Given: User is viewing the localization settings countries list
-        When: Countries with exact language-region code matches are requested
-        Then: Countries should return their native language translations correctly
-        """
-    )
-    func countriesWithExactLanguageRegionMatchesReturnNativeTranslations() async {
-
-        let repository = LocalizationSettingsCountriesRepository()
-        let appLanguage: AppLanguageDomainModel = "en"
-
-        var cancellables: Set<AnyCancellable> = Set()
-        var countries: [LocalizationSettingsCountryDataModel] = []
-
-        await confirmation(expectedCount: 1) { confirmation in
-
-            repository
-                .getCountriesPublisher(appLanguage: appLanguage)
-                .sink { (result: [LocalizationSettingsCountryDataModel]) in
-
-                    countries = result
-                    confirmation()
-                }
-                .store(in: &cancellables)
-        }
-
-        let france = countries.first(where: { $0.isoRegionCode == "FR" })
-        #expect(france?.countryNameTranslatedInOwnLanguage == "France")
-
-        let spain = countries.first(where: { $0.isoRegionCode == "ES" })
-        #expect(spain?.countryNameTranslatedInOwnLanguage == "España")
-
-        let italy = countries.first(where: { $0.isoRegionCode == "IT" })
-        #expect(italy?.countryNameTranslatedInOwnLanguage == "Italia")
-
-        let russia = countries.first(where: { $0.isoRegionCode == "RU" })
-        #expect(russia?.countryNameTranslatedInOwnLanguage == "Россия")
-
-        let southKorea = countries.first(where: { $0.isoRegionCode == "KR" })
-        #expect(southKorea?.countryNameTranslatedInOwnLanguage == "대한민국")
-
-        let poland = countries.first(where: { $0.isoRegionCode == "PL" })
-        #expect(poland?.countryNameTranslatedInOwnLanguage == "Polska")
+    struct AuthoritativeEndonymTestArgument {
+        let isoCode: String
+        let expectedEndonym: String
     }
 
     @Test(
         """
         Given: User is viewing the localization settings countries list
-        When: Countries where language code differs from region code are requested
-        Then: Countries should still return their primary language translations correctly
-        """
+        When: Countries are requested
+        Then: Countries should use the authoritative endonyms from the static mapping
+        """,
+        arguments: [
+            AuthoritativeEndonymTestArgument(isoCode: "AT", expectedEndonym: "Österreich"),
+            AuthoritativeEndonymTestArgument(isoCode: "AG", expectedEndonym: "Antigua & Barbuda"),
+            AuthoritativeEndonymTestArgument(isoCode: "CW", expectedEndonym: "Curaçao"),
+            AuthoritativeEndonymTestArgument(isoCode: "SA", expectedEndonym: "المملكة العربية السعودية"),
+            AuthoritativeEndonymTestArgument(isoCode: "UA", expectedEndonym: "Україна"),
+            AuthoritativeEndonymTestArgument(isoCode: "TW", expectedEndonym: "台灣"),
+            AuthoritativeEndonymTestArgument(isoCode: "NZ", expectedEndonym: "Aotearoa"),
+            AuthoritativeEndonymTestArgument(isoCode: "TR", expectedEndonym: "Türkiye"),
+            AuthoritativeEndonymTestArgument(isoCode: "CF", expectedEndonym: "Ködörösêse tî Bêafrîka")
+        ]
     )
-    func countriesWithDifferentLanguageRegionCodesReturnPrimaryLanguageTranslations() async {
+    func countriesUseAuthoritativeEndonymsFromStaticMapping(argument: AuthoritativeEndonymTestArgument) async {
 
         let repository = LocalizationSettingsCountriesRepository()
         let appLanguage: AppLanguageDomainModel = "en"
@@ -254,22 +224,8 @@ struct LocalizationSettingsCountriesRepositoryTests {
                 .store(in: &cancellables)
         }
 
-        let austria = countries.first(where: { $0.isoRegionCode == "AT" })
-        #expect(austria?.countryNameTranslatedInOwnLanguage == "Österreich")
-
-        let unitedKingdom = countries.first(where: { $0.isoRegionCode == "GB" })
-        #expect(unitedKingdom?.countryNameTranslatedInOwnLanguage == "United Kingdom")
-
-        let australia = countries.first(where: { $0.isoRegionCode == "AU" })
-        #expect(australia?.countryNameTranslatedInOwnLanguage == "Australia")
-
-        let brazil = countries.first(where: { $0.isoRegionCode == "BR" })
-        #expect(brazil?.countryNameTranslatedInOwnLanguage == "Brasil")
-
-        let mexico = countries.first(where: { $0.isoRegionCode == "MX" })
-        #expect(mexico?.countryNameTranslatedInOwnLanguage == "México")
-
-        let china = countries.first(where: { $0.isoRegionCode == "CN" })
-        #expect(china?.countryNameTranslatedInOwnLanguage == "中国大陆")
+        let country = countries.first(where: { $0.isoRegionCode == argument.isoCode })
+        #expect(country?.countryNameTranslatedInOwnLanguage == argument.expectedEndonym)
+        #expect(country?.countryNameTranslatedInOwnLanguage == CountryEndonyms.mapping[argument.isoCode])
     }
 }
