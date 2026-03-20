@@ -168,14 +168,14 @@ extension PersonalizedLessonsRepository {
                 requestPriority: requestPriority,
                 country: country,
                 language: language,
-                resourceType: .lesson
+                resourceTypes: [.lesson]
             )
         
         case .defaultOrder(let language):
             resourceCodables = try await api.getDefaultOrderResources(
                 requestPriority: requestPriority,
                 language: language,
-                resourceType: .lesson
+                resourceTypes: [.lesson]
             )
         }
         
