@@ -25,6 +25,10 @@ class UITestsAppConfig: AppConfigInterface {
         return .production
     }
     
+    var dynalinkClientApiKey: String? {
+        return nil
+    }
+    
     var environment: AppEnvironment {
         return .production
     }

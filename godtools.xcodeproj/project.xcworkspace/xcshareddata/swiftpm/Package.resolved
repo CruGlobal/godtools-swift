@@ -1,5 +1,5 @@
 {
-  "originHash" : "71a9cb9d59cb588de3c8c9711914b1416aedb6ead366e9238e1df9031aa137ab",
+  "originHash" : "587f6e0cf9ffb3d0e5cf5bbae1cb91150d8f60d22e292387a6fb985652c80e03",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -26,6 +26,15 @@
       "state" : {
         "revision" : "145104f5ea9d58ae21b60add007c33c1cc0c948e",
         "version" : "2.0.0"
+      }
+    },
+    {
+      "identity" : "dynalinks-ios-sdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/dynalinks/dynalinks-ios-sdk",
+      "state" : {
+        "revision" : "eb19e7df6814a7a2a0d9905aa501dd6914d79172",
+        "version" : "1.0.4"
       }
     },
     {

@@ -72,6 +72,8 @@ struct GodToolsApp: App {
             Self.appDiContainer.dataLayer.getFirebaseDebugArguments().enable()
         }
         
+        Self.configureDynalinkDeferredDeepLinking()
+        
         appFlow = AppFlow(
             appDiContainer: Self.appDiContainer,
             appDeepLinkingService: Self.appDeepLinkingService,
@@ -133,6 +135,35 @@ struct GodToolsApp: App {
             @unknown default:
                 break
             }
+        }
+    }
+    
+    private static func configureDynalinkDeferredDeepLinking() {
+        
+        guard let dynalinkClientApiKey = Self.appConfig.dynalinkClientApiKey else {
+            return
+        }
+        
+        let dataLayer: DeferredDeepLinkDataLayerDependencies = Self.appDiContainer.feature.deferredDeepLink.dataLayer
+        
+        dataLayer
+            .getConfigureDynalink()
+            .configure(clientApiKey: dynalinkClientApiKey)
+        
+        Task {
+            
+            let url: URL? = await dataLayer
+                .getDynalinkDeferredDeepLink()
+                .getDeepLinkUrl()
+            
+            guard let url = url else {
+                return
+            }
+            
+            _ = Self.appDeepLinkingService
+                .parseDeepLinkAndNotify(
+                    incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url))
+                )
         }
     }
 }

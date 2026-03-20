@@ -157,7 +157,10 @@ class AppFlow: NSObject, Flow {
                     let launchCount: Int = appFlow.launchCountRepository.getLaunchCount()
                     let hasPossibleDeferredDeepLinkFOrDynalink: Bool = UIPasteboard.general.hasURLs
                     
-                    if launchCount == 1, hasPossibleDeferredDeepLinkFOrDynalink {
+                    // TODO: Disabling pasteboard as Dynalink SDK offers seamless deferred deep linking.  Will possibly remove Pasteboard logic in the future in GT-2997. ~Levi
+                    let shouldOpenPasteboardForDeferredDeepLink: Bool = false// launchCount == 1 && hasPossibleDeferredDeepLinkFOrDynalink
+                    
+                    if shouldOpenPasteboardForDeferredDeepLink {
                         
                         appFlow.navigate(step: .showDeferredDeepLinkModal)
                         
