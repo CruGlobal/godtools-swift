@@ -55,13 +55,14 @@ struct GetAllLessonsUseCaseTests {
                     
                 }, receiveValue: { (lessons: [LessonListItemDomainModel]) in
                     
-                    if lessonsRef.count == 0 && lessons.count > 0 {
-                        
-                        lessonsRef = lessons
-                        
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
+                    guard lessonsRef.isEmpty && lessons.count > 0 else {
+                        return
                     }
+                    
+                    lessonsRef = lessons
+                    
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
                 })
                 .store(in: &cancellables)
         }
@@ -106,14 +107,14 @@ struct GetAllLessonsUseCaseTests {
 
                 }, receiveValue: { (lessons: [LessonListItemDomainModel]) in
                     
-                    if lessonsRef.count == 0 && lessons.count > 0 {
-                        
-                        lessonsRef = lessons
-                        
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
+                    guard lessonsRef.isEmpty && lessons.count > 0 else {
+                        return
                     }
+                    
+                    lessonsRef = lessons
+                    
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
                 })
                 .store(in: &cancellables)
         }
@@ -165,13 +166,14 @@ struct GetAllLessonsUseCaseTests {
                     
                 }, receiveValue: { (lessons: [LessonListItemDomainModel]) in
                     
-                    if lessonsRef.count == 0 && lessons.count > 0 {
-                        
-                        lessonsRef = lessons
-                        
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
+                    guard lessonsRef.isEmpty && lessons.count > 0 else {
+                        return
                     }
+                    
+                    lessonsRef = lessons
+                    
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
                 })
                 .store(in: &cancellables)
         }

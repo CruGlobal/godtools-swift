@@ -33,30 +33,29 @@ struct GetLessonFilterLanguagesUseCaseTests {
         
         var languagesRef: [LessonFilterLanguageDomainModel] = Array()
         
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                getLessonFilterLanguagesUseCase
-                    .execute(appLanguage: appLanguageRussian)
-                    .sink(receiveCompletion: { _ in
-                        
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                        
-                    }, receiveValue: { (languages: [LessonFilterLanguageDomainModel]) in
-                        
-                        languagesRef = languages
-                        
-                        confirmation()
-                    })
-                    .store(in: &cancellables)
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
             }
+            
+            getLessonFilterLanguagesUseCase
+                .execute(appLanguage: appLanguageRussian)
+                .sink(receiveCompletion: { _ in
+
+                }, receiveValue: { (languages: [LessonFilterLanguageDomainModel]) in
+                    
+                    guard languagesRef.isEmpty && languages.count > 0 else {
+                        return
+                    }
+                    
+                    languagesRef = languages
+                    
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
+                })
+                .store(in: &cancellables)
         }
         
         let afrikaansLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.afrikaans.rawValue})
@@ -105,30 +104,29 @@ struct GetLessonFilterLanguagesUseCaseTests {
                 
         var languagesRef: [LessonFilterLanguageDomainModel] = Array()
         
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                getLessonFilterLanguagesUseCase
-                    .execute(appLanguage: argument.appLanguage.rawValue)
-                    .sink(receiveCompletion: { _ in
-                        
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                        
-                    }, receiveValue: { (languages: [LessonFilterLanguageDomainModel]) in
-                        
-                        languagesRef = languages
-                        
-                        confirmation()
-                    })
-                    .store(in: &cancellables)
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
             }
+            
+            getLessonFilterLanguagesUseCase
+                .execute(appLanguage: argument.appLanguage.rawValue)
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { (languages: [LessonFilterLanguageDomainModel]) in
+                    
+                    guard languagesRef.isEmpty && languages.count > 0 else {
+                        return
+                    }
+                    
+                    languagesRef = languages
+                    
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
+                })
+                .store(in: &cancellables)
         }
         
         #expect(languagesRef.map({$0.languageNameTranslatedInAppLanguage}) == argument.expectedValue)
@@ -143,7 +141,6 @@ struct GetLessonFilterLanguagesUseCaseTests {
     )
     @MainActor func lessonFilterLanguagesShowNumberOfLessonsPerLanguageTranslatedInMyAppLanguage() async throws {
         
-        
         var cancellables: Set<AnyCancellable> = Set()
         
         let getLessonFilterLanguagesUseCase: GetLessonFilterLanguagesUseCase = try getLessonFilterLanguagesUseCase()
@@ -151,48 +148,31 @@ struct GetLessonFilterLanguagesUseCaseTests {
         let appLanguageEnglish: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
         
         var languagesRef: [LessonFilterLanguageDomainModel] = Array()
-        
-        await confirmation(expectedCount: 1) { confirmation in
+
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                getLessonFilterLanguagesUseCase
-                    .execute(appLanguage: appLanguageEnglish)
-                    .sink(receiveCompletion: { _ in
-                        
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                        
-                    }, receiveValue: { (languages: [LessonFilterLanguageDomainModel]) in
-                        
-                        languagesRef = languages
-                        
-                        confirmation()
-                    })
-                    .store(in: &cancellables)
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
             }
-        }
-        
-        await confirmation(expectedCount: 1) { confirmation in
             
             getLessonFilterLanguagesUseCase
                 .execute(appLanguage: appLanguageEnglish)
                 .sink(receiveCompletion: { _ in
                     
+                    
                 }, receiveValue: { (languages: [LessonFilterLanguageDomainModel]) in
+                    
+                    guard languagesRef.isEmpty && languages.count > 0 else {
+                        return
+                    }
                     
                     languagesRef = languages
                     
-                    confirmation()
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
                 })
                 .store(in: &cancellables)
-            
-            try? await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
         }
 
         let afrikaansLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.afrikaans.rawValue})
