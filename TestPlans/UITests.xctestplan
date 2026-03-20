@@ -9,6 +9,7 @@
     }
   ],
   "defaultOptions" : {
+    "testExecutionOrdering" : "random",
     "testTimeoutsEnabled" : true,
     "uiTestingScreenshotsLifetime" : "keepNever",
     "userAttachmentLifetime" : "keepNever"

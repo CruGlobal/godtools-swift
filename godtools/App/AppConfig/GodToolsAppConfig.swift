@@ -27,6 +27,10 @@ class GodToolsAppConfig: AppConfigInterface {
         return appBuild.configuration
     }
     
+    var dynalinkClientApiKey: String? {
+        return "8322c64ccf9c49fbd6f2a15ec0e20301"
+    }
+    
     var environment: AppEnvironment {
         return appBuild.environment
     }

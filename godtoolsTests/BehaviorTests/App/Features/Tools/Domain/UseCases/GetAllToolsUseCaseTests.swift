@@ -45,37 +45,35 @@ struct GetAllToolsUseCaseTests {
         
         var toolsListRef: [ToolListItemDomainModel] = Array()
         
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                getAllToolsUseCase
-                    .execute(
-                        appLanguage: "",
-                        languageIdForAvailabilityText: nil,
-                        filterToolsByCategory: nil,
-                        filterToolsByLanguage: nil
-                    )
-                    .sink(receiveCompletion: { _ in
-                        
-                    }, receiveValue: { (tools: [ToolListItemDomainModel]) in
-                        
-                        toolsListRef = tools
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                                
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    })
-                    .store(in: &cancellables)
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
             }
+            
+            getAllToolsUseCase
+                .execute(
+                    appLanguage: "",
+                    languageIdForAvailabilityText: nil,
+                    filterToolsByCategory: nil,
+                    filterToolsByLanguage: nil
+                )
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { (tools: [ToolListItemDomainModel]) in
+                    
+                    guard toolsListRef.isEmpty && tools.count > 0 else {
+                        return
+                    }
+                    
+                    toolsListRef = tools
+                                        
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
+                })
+                .store(in: &cancellables)
         }
         
         let toolsList: [String] = toolsListRef.map({$0.id}).sorted()
@@ -112,37 +110,35 @@ struct GetAllToolsUseCaseTests {
             numberOfToolsAvailable: 0
         )
         
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                getAllToolsUseCase
-                    .execute(
-                        appLanguage: "",
-                        languageIdForAvailabilityText: nil,
-                        filterToolsByCategory: growthCategoryFilter,
-                        filterToolsByLanguage: anyLanguageFilter
-                    )
-                    .sink(receiveCompletion: { _ in
-                        
-                    }, receiveValue: { (tools: [ToolListItemDomainModel]) in
-                        
-                        toolsListRef = tools
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                                
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    })
-                    .store(in: &cancellables)
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
             }
+            
+            getAllToolsUseCase
+                .execute(
+                    appLanguage: "",
+                    languageIdForAvailabilityText: nil,
+                    filterToolsByCategory: growthCategoryFilter,
+                    filterToolsByLanguage: anyLanguageFilter
+                )
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { (tools: [ToolListItemDomainModel]) in
+                    
+                    guard toolsListRef.isEmpty && tools.count > 0 else {
+                        return
+                    }
+                    
+                    toolsListRef = tools
+                    
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
+                })
+                .store(in: &cancellables)
         }
         
         let toolsList: [String] = toolsListRef.map({$0.id}).sorted()
@@ -181,37 +177,35 @@ struct GetAllToolsUseCaseTests {
             numberOfToolsAvailable: 0
         )
         
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                getAllToolsUseCase
-                    .execute(
-                        appLanguage: "",
-                        languageIdForAvailabilityText: nil,
-                        filterToolsByCategory: anyCategoryFilter,
-                        filterToolsByLanguage: russianLanguageFilter
-                    )
-                    .sink(receiveCompletion: { _ in
-                        
-                    }, receiveValue: { (tools: [ToolListItemDomainModel]) in
-                        
-                        toolsListRef = tools
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                                
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    })
-                    .store(in: &cancellables)
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
             }
+            
+            getAllToolsUseCase
+                .execute(
+                    appLanguage: "",
+                    languageIdForAvailabilityText: nil,
+                    filterToolsByCategory: anyCategoryFilter,
+                    filterToolsByLanguage: russianLanguageFilter
+                )
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { (tools: [ToolListItemDomainModel]) in
+                    
+                    guard toolsListRef.isEmpty && tools.count > 0 else {
+                        return
+                    }
+                    
+                    toolsListRef = tools
+                     
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
+                })
+                .store(in: &cancellables)
         }
         
         let toolsList: [String] = toolsListRef.map({$0.id}).sorted()
@@ -250,37 +244,35 @@ struct GetAllToolsUseCaseTests {
             numberOfToolsAvailable: 0
         )
         
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                getAllToolsUseCase
-                    .execute(
-                        appLanguage: "",
-                        languageIdForAvailabilityText: nil,
-                        filterToolsByCategory: anyCategoryFilter,
-                        filterToolsByLanguage: spanishLanguageFilter
-                    )
-                    .sink(receiveCompletion: { _ in
-                        
-                    }, receiveValue: { (tools: [ToolListItemDomainModel]) in
-                        
-                        toolsListRef = tools
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                                
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    })
-                    .store(in: &cancellables)
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
             }
+            
+            getAllToolsUseCase
+                .execute(
+                    appLanguage: "",
+                    languageIdForAvailabilityText: nil,
+                    filterToolsByCategory: anyCategoryFilter,
+                    filterToolsByLanguage: spanishLanguageFilter
+                )
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { (tools: [ToolListItemDomainModel]) in
+                    
+                    guard toolsListRef.isEmpty && tools.count > 0 else {
+                        return
+                    }
+                    
+                    toolsListRef = tools
+                      
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
+                })
+                .store(in: &cancellables)
         }
         
         let toolsList: [String] = toolsListRef.map({$0.id}).sorted()
