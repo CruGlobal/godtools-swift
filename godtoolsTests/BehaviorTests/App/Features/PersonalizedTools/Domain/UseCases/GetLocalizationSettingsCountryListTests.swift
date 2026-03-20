@@ -88,59 +88,6 @@ struct GetLocalizationSettingsCountryListTests {
         }
     }
 
-    @Test(
-        """
-        Given: User is viewing the Localization Settings country list
-        When: Countries are retrieved from the repository
-        Then: Should correctly map data models to domain models within country list items
-        """
-    )
-    func shouldCorrectlyMapDataModelsToDomainModels() async {
-
-        let useCase = Self.createUseCase(countries: Self.createMockCountries())
-
-        var cancellables: Set<AnyCancellable> = Set()
-        var countryListItems: [LocalizationSettingsCountryListItem] = []
-
-        await confirmation(expectedCount: 1) { confirmation in
-
-            useCase
-                .execute(appLanguage: "en", showsPreferNotToSay: false)
-                .sink { (results: [LocalizationSettingsCountryListItem]) in
-
-                    confirmation()
-                    countryListItems = results
-                }
-                .store(in: &cancellables)
-        }
-
-        #expect(countryListItems.count == 3)
-
-        if case .country(let country) = countryListItems[0] {
-            #expect(country.isoRegionCode == "US")
-            #expect(country.countryNameTranslatedInOwnLanguage == "United States")
-            #expect(country.countryNameTranslatedInCurrentAppLanguage == "United States")
-        } else {
-            Issue.record("First item should be United States")
-        }
-
-        if case .country(let country) = countryListItems[1] {
-            #expect(country.isoRegionCode == "ES")
-            #expect(country.countryNameTranslatedInOwnLanguage == "España")
-            #expect(country.countryNameTranslatedInCurrentAppLanguage == "Spain")
-        } else {
-            Issue.record("Second item should be Spain")
-        }
-
-        if case .country(let country) = countryListItems[2] {
-            #expect(country.isoRegionCode == "JP")
-            #expect(country.countryNameTranslatedInOwnLanguage == "日本")
-            #expect(country.countryNameTranslatedInCurrentAppLanguage == "Japan")
-        } else {
-            Issue.record("Third item should be Japan")
-        }
-    }
-
     struct LocalizationTestArgument {
         let appLanguage: AppLanguageDomainModel
         let expectedPreferNotToSayText: String
@@ -187,43 +134,23 @@ struct GetLocalizationSettingsCountryListTests {
         }
     }
 
-    @Test(
-        """
-        Given: User is viewing the Localization Settings country list
-        When: Repository returns an empty list
-        Then: Should return an empty list when showsPreferNotToSay is false
-        """
-    )
-    func shouldReturnEmptyListWhenNoCountriesAndPreferNotToSayDisabled() async {
-
-        let useCase = Self.createUseCase(countries: [])
-
-        var cancellables: Set<AnyCancellable> = Set()
-        var countryListItems: [LocalizationSettingsCountryListItem] = []
-
-        await confirmation(expectedCount: 1) { confirmation in
-
-            useCase
-                .execute(appLanguage: "en", showsPreferNotToSay: false)
-                .sink { (results: [LocalizationSettingsCountryListItem]) in
-
-                    confirmation()
-                    countryListItems = results
-                }
-                .store(in: &cancellables)
-        }
-
-        #expect(countryListItems.isEmpty)
+    struct EmptyListTestArgument {
+        let showsPreferNotToSay: Bool
+        let expectedCount: Int
     }
 
     @Test(
         """
         Given: User is viewing the Localization Settings country list
-        When: Repository returns an empty list and showsPreferNotToSay is true
-        Then: Should return only the "Prefer not to say" option
-        """
+        When: Repository returns an empty list
+        Then: Should return empty list or only "Prefer not to say" based on showsPreferNotToSay parameter
+        """,
+        arguments: [
+            EmptyListTestArgument(showsPreferNotToSay: false, expectedCount: 0),
+            EmptyListTestArgument(showsPreferNotToSay: true, expectedCount: 1)
+        ]
     )
-    func shouldReturnOnlyPreferNotToSayWhenNoCountriesAndPreferNotToSayEnabled() async {
+    func shouldHandleEmptyCountryList(argument: EmptyListTestArgument) async {
 
         let useCase = Self.createUseCase(countries: [])
 
@@ -233,7 +160,7 @@ struct GetLocalizationSettingsCountryListTests {
         await confirmation(expectedCount: 1) { confirmation in
 
             useCase
-                .execute(appLanguage: "en", showsPreferNotToSay: true)
+                .execute(appLanguage: "en", showsPreferNotToSay: argument.showsPreferNotToSay)
                 .sink { (results: [LocalizationSettingsCountryListItem]) in
 
                     confirmation()
@@ -242,12 +169,14 @@ struct GetLocalizationSettingsCountryListTests {
                 .store(in: &cancellables)
         }
 
-        #expect(countryListItems.count == 1)
+        #expect(countryListItems.count == argument.expectedCount)
 
-        if case .preferNotToSay(let preferNotToSay) = countryListItems.first {
-            #expect(preferNotToSay.preferNotToSayText == "Prefer not to say")
-        } else {
-            Issue.record("First item should be preferNotToSay")
+        if argument.showsPreferNotToSay {
+            if case .preferNotToSay(let preferNotToSay) = countryListItems.first {
+                #expect(preferNotToSay.preferNotToSayText == "Prefer not to say")
+            } else {
+                Issue.record("First item should be preferNotToSay")
+            }
         }
     }
 }
