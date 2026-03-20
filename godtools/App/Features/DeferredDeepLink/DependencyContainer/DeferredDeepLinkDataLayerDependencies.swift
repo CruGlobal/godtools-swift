@@ -15,4 +15,14 @@ class DeferredDeepLinkDataLayerDependencies {
     init(coreDataLayer: AppDataLayerDependencies) {
         self.coreDataLayer = coreDataLayer
     }
+    
+    func getConfigureDynalink() -> ConfigureDynalink {
+        return ConfigureDynalink()
+    }
+    
+    func getDynalinkDeferredDeepLink() -> DynalinkDeferredDeepLink {
+        return DynalinkDeferredDeepLink(
+            errorReporting: coreDataLayer.getErrorReporting()
+        )
+    }
 }

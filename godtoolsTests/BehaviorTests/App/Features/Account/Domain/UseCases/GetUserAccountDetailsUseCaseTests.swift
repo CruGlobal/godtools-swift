@@ -44,34 +44,32 @@ struct GetUserAccountDetailsUseCaseTests {
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
         
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                getUserAccountDetailsUseCase
-                    .execute(
-                        appLanguage: argument.appLanguage.rawValue
-                    )
-                    .sink(receiveCompletion: { _ in
-                        
-                    }, receiveValue: { (result: UserAccountDetailsDomainModel) in
-                        
-                        userAccountDetails = result
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                        
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    })
-                    .store(in: &cancellables)
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
             }
+            
+            getUserAccountDetailsUseCase
+                .execute(
+                    appLanguage: argument.appLanguage.rawValue
+                )
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { (result: UserAccountDetailsDomainModel) in
+                    
+                    guard userAccountDetails == nil else {
+                        return
+                    }
+                    
+                    userAccountDetails = result
+                    
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
+                })
+                .store(in: &cancellables)
         }
         
         let locale = Locale(identifier: argument.appLanguage.rawValue)
@@ -96,34 +94,32 @@ struct GetUserAccountDetailsUseCaseTests {
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
         
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                getUserAccountDetailsUseCase
-                    .execute(
-                        appLanguage: LanguageCodeDomainModel.english.rawValue
-                    )
-                    .sink(receiveCompletion: { _ in
-                        
-                    }, receiveValue: { (result: UserAccountDetailsDomainModel) in
-                        
-                        userAccountDetails = result
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                                
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    })
-                    .store(in: &cancellables)
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
             }
+            
+            getUserAccountDetailsUseCase
+                .execute(
+                    appLanguage: LanguageCodeDomainModel.english.rawValue
+                )
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { (result: UserAccountDetailsDomainModel) in
+                    
+                    guard userAccountDetails == nil else {
+                        return
+                    }
+                    
+                    userAccountDetails = result
+                                       
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
+                })
+                .store(in: &cancellables)
         }
         
         #expect(userAccountDetails?.name == "")
@@ -144,34 +140,32 @@ struct GetUserAccountDetailsUseCaseTests {
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
         
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                getUserAccountDetailsUseCase
-                    .execute(
-                        appLanguage: LanguageCodeDomainModel.english.rawValue
-                    )
-                    .sink(receiveCompletion: { _ in
-                        
-                    }, receiveValue: { (result: UserAccountDetailsDomainModel) in
-                        
-                        userAccountDetails = result
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                                
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    })
-                    .store(in: &cancellables)
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
             }
+            
+            getUserAccountDetailsUseCase
+                .execute(
+                    appLanguage: LanguageCodeDomainModel.english.rawValue
+                )
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { (result: UserAccountDetailsDomainModel) in
+                    
+                    guard userAccountDetails == nil else {
+                        return
+                    }
+                    
+                    userAccountDetails = result
+                                         
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
+                })
+                .store(in: &cancellables)
         }
         
         #expect(userAccountDetails?.name == "\(Self.userGivenName) \(Self.userFamilyName)")
@@ -191,34 +185,32 @@ struct GetUserAccountDetailsUseCaseTests {
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
         
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                getUserAccountDetailsUseCase
-                    .execute(
-                        appLanguage: LanguageCodeDomainModel.english.rawValue
-                    )
-                    .sink(receiveCompletion: { _ in
-                        
-                    }, receiveValue: { (result: UserAccountDetailsDomainModel) in
-                        
-                        userAccountDetails = result
-
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                                
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    })
-                    .store(in: &cancellables)
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
             }
+            
+            getUserAccountDetailsUseCase
+                .execute(
+                    appLanguage: LanguageCodeDomainModel.english.rawValue
+                )
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { (result: UserAccountDetailsDomainModel) in
+                    
+                    guard userAccountDetails == nil else {
+                        return
+                    }
+                    
+                    userAccountDetails = result
+                  
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
+                })
+                .store(in: &cancellables)
         }
         
         #expect(userAccountDetails?.name == Self.userGivenName)
@@ -238,34 +230,32 @@ struct GetUserAccountDetailsUseCaseTests {
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
         
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                getUserAccountDetailsUseCase
-                    .execute(
-                        appLanguage: LanguageCodeDomainModel.english.rawValue
-                    )
-                    .sink(receiveCompletion: { _ in
-                        
-                    }, receiveValue: { (result: UserAccountDetailsDomainModel) in
-                        
-                        userAccountDetails = result
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                                
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    })
-                    .store(in: &cancellables)
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
             }
+            
+            getUserAccountDetailsUseCase
+                .execute(
+                    appLanguage: LanguageCodeDomainModel.english.rawValue
+                )
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { (result: UserAccountDetailsDomainModel) in
+                    
+                    guard userAccountDetails == nil else {
+                        return
+                    }
+                    
+                    userAccountDetails = result
+                                        
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
+                })
+                .store(in: &cancellables)
         }
         
         #expect(userAccountDetails?.name == "")
@@ -285,34 +275,32 @@ struct GetUserAccountDetailsUseCaseTests {
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
         
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                getUserAccountDetailsUseCase
-                    .execute(
-                        appLanguage: LanguageCodeDomainModel.english.rawValue
-                    )
-                    .sink(receiveCompletion: { _ in
-                        
-                    }, receiveValue: { (result: UserAccountDetailsDomainModel) in
-                        
-                        userAccountDetails = result
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                                
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    })
-                    .store(in: &cancellables)
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
             }
+            
+            getUserAccountDetailsUseCase
+                .execute(
+                    appLanguage: LanguageCodeDomainModel.english.rawValue
+                )
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { (result: UserAccountDetailsDomainModel) in
+                    
+                    guard userAccountDetails == nil else {
+                        return
+                    }
+                    
+                    userAccountDetails = result
+                    
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
+                })
+                .store(in: &cancellables)
         }
         
         #expect(userAccountDetails?.joinedOnString == "")
