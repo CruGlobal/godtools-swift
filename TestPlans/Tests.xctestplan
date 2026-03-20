@@ -4,6 +4,7 @@
       "id" : "B19C43EF-CDA3-4BD2-AF10-B8863A5B00DE",
       "name" : "TestsConfig",
       "options" : {
+        "testExecutionOrdering" : "random",
         "userAttachmentLifetime" : "keepNever"
       }
     }

@@ -53,12 +53,16 @@ struct GetAllLessonsUseCaseTests {
                 )
                 .sink(receiveCompletion: { _ in
                     
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                    
                 }, receiveValue: { (lessons: [LessonListItemDomainModel]) in
                     
+                    guard lessonsRef.isEmpty && lessons.count > 0 else {
+                        return
+                    }
+                    
                     lessonsRef = lessons
+                    
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
                 })
                 .store(in: &cancellables)
         }
@@ -86,7 +90,7 @@ struct GetAllLessonsUseCaseTests {
         var cancellables: Set<AnyCancellable> = Set()
         
         var lessonsRef: [LessonListItemDomainModel] = Array()
-                
+            
         await withCheckedContinuation { continuation in
             
             let timeoutTask = Task {
@@ -100,13 +104,17 @@ struct GetAllLessonsUseCaseTests {
                     filterLessonsByLanguage: nil
                 )
                 .sink(receiveCompletion: { _ in
+
+                }, receiveValue: { (lessons: [LessonListItemDomainModel]) in
+                    
+                    guard lessonsRef.isEmpty && lessons.count > 0 else {
+                        return
+                    }
+                    
+                    lessonsRef = lessons
                     
                     timeoutTask.cancel()
                     continuation.resume(returning: ())
-                    
-                }, receiveValue: { (lessons: [LessonListItemDomainModel]) in
-                    
-                    lessonsRef = lessons
                 })
                 .store(in: &cancellables)
         }
@@ -156,12 +164,16 @@ struct GetAllLessonsUseCaseTests {
                 )
                 .sink(receiveCompletion: { _ in
                     
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                    
                 }, receiveValue: { (lessons: [LessonListItemDomainModel]) in
                     
+                    guard lessonsRef.isEmpty && lessons.count > 0 else {
+                        return
+                    }
+                    
                     lessonsRef = lessons
+                    
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
                 })
                 .store(in: &cancellables)
         }
