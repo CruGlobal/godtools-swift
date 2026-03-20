@@ -137,6 +137,7 @@ class LessonFlow: ToolNavigationFlow, Flow, ToolSharer {
                     }
                                 
                     let shareToolView = getShareToolView(
+                        flowDelegate: self,
                         strings: strings,
                         toolId: self.lesson.id,
                         toolAnalyticsAbbreviation: self.lesson.abbreviation,

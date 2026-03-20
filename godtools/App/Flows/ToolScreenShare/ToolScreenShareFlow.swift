@@ -420,9 +420,9 @@ extension ToolScreenShareFlow {
     
     private func getShareToolScreenShareSessionView(domainModel: ShareToolScreenShareSessionDomainModel, shareUrl: String) -> UIViewController {
         
-        let interfaceStrings: ShareToolScreenShareSessionInterfaceStringsDomainModel = domainModel.interfaceStrings
+        let strings: ShareToolScreenShareSessionInterfaceStringsDomainModel = domainModel.strings
         
-        let shareMessage: String = String.localizedStringWithFormat(interfaceStrings.shareMessage, shareUrl)
+        let shareMessage: String = String.localizedStringWithFormat(strings.shareMessage, shareUrl)
 
         let viewModel = ShareToolScreenShareSessionViewModel(
             flowDelegate: self,

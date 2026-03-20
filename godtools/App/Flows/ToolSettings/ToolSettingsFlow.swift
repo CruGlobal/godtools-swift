@@ -96,12 +96,15 @@ class ToolSettingsFlow: Flow, ToolSharer {
                 return
             }
             
-            navigationController.present(getShareToolView(
+            let shareToolView = getShareToolView(
+                flowDelegate: self,
                 strings: strings,
                 toolId: toolSettingsObserver.toolId,
                 toolAnalyticsAbbreviation: appDiContainer.dataLayer.getResourcesRepository().persistence.getDataModelNonThrowing(id: toolSettingsObserver.toolId)?.abbreviation ?? "",
                 pageNumber: toolSettingsObserver.pageNumber
-            ), animated: true, completion: nil)
+            )
+            
+            navigationController.present(shareToolView, animated: true, completion: nil)
                     
         case .screenShareTappedFromToolSettings:
             presentToolScreenShareFlow()

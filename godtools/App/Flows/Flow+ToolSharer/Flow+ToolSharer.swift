@@ -12,9 +12,12 @@ protocol ToolSharer { }
 
 extension Flow where Self: ToolSharer {
     
-    func getShareToolView(strings: ShareToolStringsDomainModel, toolId: String, toolAnalyticsAbbreviation: String, pageNumber: Int) -> UIViewController {
+    // TODO: Need to create a Flow so flow delegation can be shared. ~Levi
+    
+    func getShareToolView(flowDelegate: FlowDelegate, strings: ShareToolStringsDomainModel, toolId: String, toolAnalyticsAbbreviation: String, pageNumber: Int) -> UIViewController {
                 
         let viewModel = ShareToolViewModel(
+            flowDelegate: flowDelegate,
             strings: strings,
             toolId: toolId,
             toolAnalyticsAbbreviation: toolAnalyticsAbbreviation,

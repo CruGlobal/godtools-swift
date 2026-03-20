@@ -10,18 +10,37 @@ import UIKit
 
 class ShareToolView {
     
+    private static let qrCodeActivityType = UIActivity.ActivityType(rawValue: "org.cru.godtools.shareToolQRCodeActivity")
+    
     private let viewModel: ShareToolViewModel
     
-    let controller: UIViewController
+    let controller: UIActivityViewController
     
     init(viewModel: ShareToolViewModel) {
         
         self.viewModel = viewModel
         
-        controller = UIActivityViewController(
-            activityItems: [viewModel.shareMessage],
-            applicationActivities: nil
+        let shareQRCodeActivityItem = QRCodeActivity(
+            title: viewModel.strings.qrCodeActionTitle,
+            activityType: Self.qrCodeActivityType
         )
+        
+        let applicationActivities: [UIActivity]? = [shareQRCodeActivityItem]
+        
+        controller = UIActivityViewController(
+            activityItems: [viewModel.strings.shareMessage],
+            applicationActivities: applicationActivities
+        )
+        
+        controller.completionWithItemsHandler = { (activityType: UIActivity.ActivityType?, serviceCompleted: Bool, returnedItems: [Any]?, activityError: Error?) in
+            
+            if activityType == Self.qrCodeActivityType {
+                //viewModel.qrCodeTapped()
+            }
+            else {
+                //viewModel.activityViewDismissed()
+            }
+        }
                 
         viewModel.pageViewed()
     }
