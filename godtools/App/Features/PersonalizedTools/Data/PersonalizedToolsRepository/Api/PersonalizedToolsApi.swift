@@ -41,7 +41,7 @@ final class PersonalizedToolsApi {
             nameValues: [
                 QueryName.country.rawValue: [country],
                 QueryName.language.rawValue: [language],
-                QueryName.resourceType.rawValue: resourceTypes?.map { $0.rawValue } ?? []
+                QueryName.resourceType.rawValue: resourceTypes?.map { $0.rawValue } ?? [nil]
             ]
         )
                 
@@ -65,7 +65,7 @@ final class PersonalizedToolsApi {
         var queryItems: [URLQueryItem]? = JsonApiFilter.buildQueryItems(
             nameValues: [
                 QueryName.language.rawValue: [language],
-                QueryName.resourceType.rawValue: resourceTypes?.map { $0.rawValue } ?? []
+                QueryName.resourceType.rawValue: resourceTypes?.map { $0.rawValue } ?? [nil]
             ]
         )
         
