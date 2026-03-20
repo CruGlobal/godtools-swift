@@ -168,14 +168,14 @@ extension PersonalizedToolsRepository {
                 requestPriority: requestPriority,
                 country: country,
                 language: language,
-                resourceType: .tract
+                resourceTypes: [.tract, .article, .chooseYourOwnAdventure]
             )
 
         case .defaultOrder(let language):
             resourceCodables = try await api.getDefaultOrderResources(
                 requestPriority: requestPriority,
                 language: language,
-                resourceType: .tract
+                resourceTypes: [.tract, .article, .chooseYourOwnAdventure]
             )
         }
 
