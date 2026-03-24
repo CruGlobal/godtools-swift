@@ -36,7 +36,7 @@ class ShareToolViewModel {
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.pageNumber = pageNumber
-    }S
+    }
     
     deinit {
         print("x deinit: \(type(of: self))")

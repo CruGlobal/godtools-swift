@@ -105,7 +105,8 @@ extension ShareToolFlow {
     private func getShareToolQRCodeView() -> UIViewController {
         
         let viewModel = ShareToolQRCodeViewModel(
-            flowDelegate: self
+            flowDelegate: self,
+            shareToolQRCodeUseCase: appDiContainer.feature.shareTool.domainLayer.getShareToolQRCodeUseCase()
         )
         
         let view = ShareToolQRCodeView(
