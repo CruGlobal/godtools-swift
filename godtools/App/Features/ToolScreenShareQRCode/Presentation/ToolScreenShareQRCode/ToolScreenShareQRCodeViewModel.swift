@@ -62,6 +62,6 @@ import Combine
 extension ToolScreenShareQRCodeViewModel {
     
     func closeTapped() {
-        flowDelegate?.navigate(step: .closeTappedFromShareQRCode)
+        flowDelegate?.navigate(step: .closeTappedFromShareToolScreenQRCode)
     }
 }

@@ -7,19 +7,48 @@
 //
 
 import Foundation
+import Combine
 
 @MainActor class ShareToolQRCodeViewModel: ObservableObject {
     
-    private let shareToolQRCodeUseCase: ShareToolQRCodeUseCase
+    private let getShareToolQRCodeStringsUseCase: GetShareToolQRCodeStringsUseCase
+    
+    private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
     
+    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
+    
+    @Published private(set) var strings = ShareToolQRCodeStringsDomainModel.emptyValue
     @Published private(set) var shareToolQrCode: ShareToolQRCodeDomainModel?
     
-    init(flowDelegate: FlowDelegate, shareToolQRCodeUseCase: ShareToolQRCodeUseCase) {
+    let shareUrl: URL
+    
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getShareToolQRCodeStringsUseCase: GetShareToolQRCodeStringsUseCase, shareUrl: URL) {
         
         self.flowDelegate = flowDelegate
-        self.shareToolQRCodeUseCase = shareToolQRCodeUseCase
+        self.getShareToolQRCodeStringsUseCase = getShareToolQRCodeStringsUseCase
+        self.shareUrl = shareUrl
+        
+        getCurrentAppLanguageUseCase
+            .execute()
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$appLanguage)
+        
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+                
+                getShareToolQRCodeStringsUseCase
+                    .execute(appLanguage: appLanguage)
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (strings: ShareToolQRCodeStringsDomainModel) in
+                       
+                self?.strings = strings
+            }
+            .store(in: &cancellables)
     }
 }
 
@@ -28,6 +57,6 @@ import Foundation
 extension ShareToolQRCodeViewModel {
     
     func closeTapped() {
-        
+        flowDelegate?.navigate(step: .closedTappedFromShareToolQrCode)
     }
 }

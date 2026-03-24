@@ -20,8 +20,8 @@ struct ShareToolQRCodeView: View {
         
         QRCodeModalView(
             shareUrl: "",
-            qrCodeDescription: "FPO Description",
-            closeButtonTitle: "FPO Close",
+            qrCodeDescription: viewModel.strings.message,
+            closeButtonTitle: viewModel.strings.closeActionTitle,
             closeTapped: {
                 viewModel.closeTapped()
             }

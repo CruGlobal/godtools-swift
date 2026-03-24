@@ -135,7 +135,7 @@ class ToolScreenShareFlow: Flow {
         case .dismissedShareToolScreenShareActivityViewController:
             completeFlow(state: .userClosedShareModal)
             
-        case .closeTappedFromShareQRCode:
+        case .closeTappedFromShareToolScreenQRCode:
             navigationController.dismiss(animated: true)
             completeFlow(state: .userSharedQRCode)
             
@@ -462,9 +462,12 @@ extension ToolScreenShareFlow {
             animateOutAnimatedTransitioning: NoAnimationTransition(transition: .transitionOut)
         )
 
-        hostingView.view.backgroundColor = .clear
-        hostingView.modalPresentationStyle = .overCurrentContext
+        let overlayNavigationController = OverlayNavigationController(
+            rootView: hostingView,
+            hidesNavigationBar: true,
+            navigationBarAppearance: nil
+        )
         
-        return hostingView
+        return overlayNavigationController
     }
 }

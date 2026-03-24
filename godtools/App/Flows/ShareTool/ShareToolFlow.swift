@@ -12,6 +12,10 @@ import Combine
 
 class ShareToolFlow: Flow {
     
+    private let toolId: String
+    private let toolLanguageId: String
+    private let pageNumber: Int
+    
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
@@ -24,6 +28,9 @@ class ShareToolFlow: Flow {
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = navigationController
+        self.toolId = toolId
+        self.toolLanguageId = toolLanguageId
+        self.pageNumber = pageNumber
         
         let getShareToolStringsUseCase = appDiContainer.feature.shareTool.domainLayer.getShareToolStringsUseCase()
         
@@ -60,16 +67,31 @@ class ShareToolFlow: Flow {
             
         case .qrCodeTappedFromShareTool:
             
-            let shareToolQrCode: UIViewController = getShareToolQRCodeView()
-            
-            navigationController.dismissPresented(animated: true, completion: { [weak self] in
-                self?.navigationController.present(shareToolQrCode, animated: true)
-            })
+            appDiContainer
+                .feature
+                .shareTool
+                .domainLayer
+                .getShareToolQRCodeUseCase()
+                .execute(
+                    toolId: toolId,
+                    toolLanguageId: toolLanguageId,
+                    pageNumber: pageNumber
+                )
+                .receive(on: DispatchQueue.main)
+                .sink { _ in
+                    
+                } receiveValue: { [weak self] (shareToolQrCode: ShareToolQRCodeDomainModel) in
+
+                    self?.navigationController.dismissPresented(animated: true, completion: { [weak self] in
+                        self?.navigateToShareToolQRCode(shareUrl: shareToolQrCode.url)
+                    })
+                }
+                .store(in: &cancellables)
             
         case .dismissedShareTool:
             completeFlow(state: .userClosed)
             
-        case .closedShareQrCodeFromShareToolQrCode:
+        case .closedTappedFromShareToolQrCode:
             completeFlow(state: .userClosed)
             
         default:
@@ -77,8 +99,17 @@ class ShareToolFlow: Flow {
         }
     }
     
+    private func navigateToShareToolQRCode(shareUrl: URL) {
+        
+        let shareToolQrCode: UIViewController = getShareToolQRCodeView(shareUrl: shareUrl)
+        
+        navigationController.present(shareToolQrCode, animated: true)
+    }
+    
     private func completeFlow(state: ShareToolFlowCompletedState) {
-        flowDelegate?.navigate(step: .shareToolFlowCompleted(state: state))
+        navigationController.dismissPresented(animated: true) { [weak self] in
+            self?.flowDelegate?.navigate(step: .shareToolFlowCompleted(state: state))
+        }
     }
 }
 
@@ -102,11 +133,13 @@ extension ShareToolFlow {
         return view.controller
     }
     
-    private func getShareToolQRCodeView() -> UIViewController {
+    private func getShareToolQRCodeView(shareUrl: URL) -> UIViewController {
         
         let viewModel = ShareToolQRCodeViewModel(
             flowDelegate: self,
-            shareToolQRCodeUseCase: appDiContainer.feature.shareTool.domainLayer.getShareToolQRCodeUseCase()
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            getShareToolQRCodeStringsUseCase: appDiContainer.feature.shareTool.domainLayer.getShareToolQRCodeStringsUseCase(),
+            shareUrl: shareUrl
         )
         
         let view = ShareToolQRCodeView(
@@ -117,10 +150,13 @@ extension ShareToolFlow {
             rootView: view,
             navigationBar: nil
         )
+
+        let overlayNavigationController = OverlayNavigationController(
+            rootView: hostingView,
+            hidesNavigationBar: true,
+            navigationBarAppearance: nil
+        )
         
-        hostingView.view.backgroundColor = .clear
-        hostingView.modalPresentationStyle = .overCurrentContext
-        
-        return hostingView
+        return overlayNavigationController
     }
 }
