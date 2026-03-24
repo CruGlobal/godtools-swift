@@ -36,7 +36,7 @@ class ShareToolViewModel {
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.pageNumber = pageNumber
-    }
+    }S
     
     deinit {
         print("x deinit: \(type(of: self))")
@@ -96,11 +96,11 @@ extension ShareToolViewModel {
     
     func qrCodeTapped() {
     
-        //flowDelegate?.navigate(step: .shareQRCodeTappedFromToolScreenShareSession(shareUrl: shareUrl))
+        flowDelegate?.navigate(step: .qrCodeTappedFromShareTool)
     }
     
     func activityViewDismissed() {
         
-        //flowDelegate?.navigate(step: .dismissedShareToolScreenShareActivityViewController)
+        flowDelegate?.navigate(step: .dismissedShareTool)
     }
 }

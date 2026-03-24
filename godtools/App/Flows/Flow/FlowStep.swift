@@ -236,4 +236,10 @@ enum FlowStep {
     case closeTappedFromLocalizationConfirmation
     case cancelTappedFromLocalizationConfirmation
     case confirmTappedFromLocalizationConfirmation(country: LocalizationSettingsCountryListItem)
+    
+    // share tool
+    case qrCodeTappedFromShareTool
+    case dismissedShareTool
+    case shareToolFlowCompleted(state: ShareToolFlowCompletedState)
+    case closedShareQrCodeFromShareToolQrCode
 }

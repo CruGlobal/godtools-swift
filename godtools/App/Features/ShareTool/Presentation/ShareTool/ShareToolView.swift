@@ -35,10 +35,10 @@ class ShareToolView {
         controller.completionWithItemsHandler = { (activityType: UIActivity.ActivityType?, serviceCompleted: Bool, returnedItems: [Any]?, activityError: Error?) in
             
             if activityType == Self.qrCodeActivityType {
-                //viewModel.qrCodeTapped()
+                viewModel.qrCodeTapped()
             }
             else {
-                //viewModel.activityViewDismissed()
+                viewModel.activityViewDismissed()
             }
         }
                 
