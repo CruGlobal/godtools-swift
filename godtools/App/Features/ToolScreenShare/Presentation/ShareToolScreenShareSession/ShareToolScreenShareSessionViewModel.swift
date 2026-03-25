@@ -25,7 +25,7 @@ class ShareToolScreenShareSessionViewModel {
         self.domainModel = domainModel
         self.shareMessage = shareMessage
         self.shareUrl = shareUrl
-        self.qrCodeString = domainModel.interfaceStrings.qrCodeTitle
+        self.qrCodeString = domainModel.strings.qrCodeActionTitle
         
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
     }

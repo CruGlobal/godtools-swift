@@ -20,20 +20,22 @@ class ShareToolViewModel {
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let pageNumber: Int
     
-    let shareMessage: String
+    let strings: ShareToolStringsDomainModel
     
     private var cancellables = Set<AnyCancellable>()
     
-    init(strings: ShareToolStringsDomainModel, toolId: String, toolAnalyticsAbbreviation: String, pageNumber: Int, incrementUserCounterUseCase: IncrementUserCounterUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
-                
+    private weak var flowDelegate: FlowDelegate?
+    
+    init(flowDelegate: FlowDelegate, strings: ShareToolStringsDomainModel, toolId: String, toolAnalyticsAbbreviation: String, pageNumber: Int, incrementUserCounterUseCase: IncrementUserCounterUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+             
+        self.flowDelegate = flowDelegate
+        self.strings = strings
         self.toolId = toolId
         self.toolAnalyticsAbbreviation = toolAnalyticsAbbreviation
         self.incrementUserCounterUseCase = incrementUserCounterUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.pageNumber = pageNumber
-                
-        shareMessage = strings.shareMessage
     }
     
     deinit {
@@ -90,5 +92,15 @@ extension ShareToolViewModel {
 
             }
             .store(in: &Self.backgroundCancellables)
+    }
+    
+    func qrCodeTapped() {
+    
+        flowDelegate?.navigate(step: .qrCodeTappedFromShareTool)
+    }
+    
+    func activityViewDismissed() {
+        
+        flowDelegate?.navigate(step: .dismissedShareTool)
     }
 }

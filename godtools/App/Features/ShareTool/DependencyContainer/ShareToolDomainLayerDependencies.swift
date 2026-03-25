@@ -19,11 +19,29 @@ class ShareToolDomainLayerDependencies {
         self.dataLayer = dataLayer
     }
     
+    func getShareToolQRCodeStringsUseCase() -> GetShareToolQRCodeStringsUseCase {
+        return GetShareToolQRCodeStringsUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
     func getShareToolStringsUseCase() -> GetShareToolStringsUseCase {
         return GetShareToolStringsUseCase(
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
-            languagesRepository: coreDataLayer.getLanguagesRepository(),
+            getShareToolUrl: getShareToolUrl(),
             localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getShareToolQRCodeUseCase() -> ShareToolQRCodeUseCase {
+        return ShareToolQRCodeUseCase(
+            getShareToolUrl: getShareToolUrl()
+        )
+    }
+    
+    private func getShareToolUrl() -> GetShareToolUrl {
+        return GetShareToolUrl(
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            languagesRepository: coreDataLayer.getLanguagesRepository()
         )
     }
 }

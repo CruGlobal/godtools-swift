@@ -11,62 +11,46 @@ import Combine
 
 final class GetShareToolStringsUseCase {
     
-    enum ShareToolURLPath: String {
-        case tract = "tool/v1"
-        case cyoa = "tool/v2"
-        case lesson = "lesson"
-        
-        init(resourceType: ResourceType) {
-            switch resourceType {
-            case .chooseYourOwnAdventure:
-                self = .cyoa
-            case .lesson:
-                self = .lesson
-            default:
-                self = .tract
-            }
-        }
-    }
-    
-    private let resourcesRepository: ResourcesRepository
-    private let languagesRepository: LanguagesRepository
+    private let getShareToolUrl: GetShareToolUrl
     private let localizationServices: LocalizationServicesInterface
         
-    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, localizationServices: LocalizationServicesInterface) {
+    init(getShareToolUrl: GetShareToolUrl, localizationServices: LocalizationServicesInterface) {
         
-        self.resourcesRepository = resourcesRepository
-        self.languagesRepository = languagesRepository
+        self.getShareToolUrl = getShareToolUrl
         self.localizationServices = localizationServices
     }
     
     func execute(toolId: String, toolLanguageId: String, pageNumber: Int, appLanguage: AppLanguageDomainModel) -> AnyPublisher<ShareToolStringsDomainModel, Never> {
         
-        let resourceType = resourcesRepository.persistence.getDataModelNonThrowing(id: toolId)?.resourceTypeEnum ?? .unknown
-
-        let localizedShareToolMessage: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "tract_share_message")
+        let qrCodeActionTitle: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "toolScreenShare.qrCode.title")
         
-        guard let resource = resourcesRepository.persistence.getDataModelNonThrowing(id: toolId), let toolLanguage = languagesRepository.persistence.getDataModelNonThrowing(id: toolLanguageId) else {
-            
-            return Just(ShareToolStringsDomainModel(shareMessage: localizedShareToolMessage))
-                .eraseToAnyPublisher()
-        }
-        
-        let path = ShareToolURLPath(resourceType: resourceType)
-        var toolUrl: String = "https://knowgod.com/\(toolLanguage.code)/\(path.rawValue)/\(resource.abbreviation)"
-
-        if pageNumber > 0 {
-            toolUrl = toolUrl.appending("/").appending("\(pageNumber)")
-        }
-        
-        toolUrl = toolUrl.replacingOccurrences(of: " ", with: "").appending("?icid=gtshare ")
-        
-        let shareMessageWithToolUrl = String.localizedStringWithFormat(localizedShareToolMessage, toolUrl)
-
-        let interfaceStrings = ShareToolStringsDomainModel(
-            shareMessage: shareMessageWithToolUrl
+        let strings = ShareToolStringsDomainModel(
+            shareMessage: getShareMessage(
+                toolId: toolId,
+                toolLanguageId: toolLanguageId,
+                pageNumber: pageNumber,
+                appLanguage: appLanguage
+            ),
+            qrCodeActionTitle: qrCodeActionTitle
         )
         
-        return Just(interfaceStrings)
+        return Just(strings)
             .eraseToAnyPublisher()
+    }
+    
+    private func getShareMessage(toolId: String, toolLanguageId: String, pageNumber: Int, appLanguage: AppLanguageDomainModel) -> String {
+        
+        let toolUrl: String? = getShareToolUrl.getUrl(toolId: toolId, toolLanguageId: toolLanguageId, pageNumber: pageNumber)
+        
+        let localizedShareToolMessage: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "tract_share_message")
+        
+        guard let toolUrl = toolUrl else {
+            
+            return localizedShareToolMessage
+        }
+        
+        let shareMessageWithToolUrl = String.localizedStringWithFormat(localizedShareToolMessage, toolUrl)
+        
+        return shareMessageWithToolUrl
     }
 }

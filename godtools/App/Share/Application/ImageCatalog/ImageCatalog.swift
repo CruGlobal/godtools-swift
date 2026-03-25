@@ -57,6 +57,7 @@ enum ImageCatalog: String {
     case playIcon = "play_icon"
     case policy = "policy"
     case previousCard = "previous_card"
+    case qrCode = "qr_code"
     case rateReview = "rate_review"
     case rightArrowBlue = "right_arrow_blue"
     case school = "school"
