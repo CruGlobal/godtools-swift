@@ -11,4 +11,9 @@ import Foundation
 struct ShareToolStringsDomainModel: Sendable {
     
     let shareMessage: String
+    let qrCodeActionTitle: String
+    
+    static var emptyValue: ShareToolStringsDomainModel {
+        return ShareToolStringsDomainModel(shareMessage: "", qrCodeActionTitle: "")
+    }
 }

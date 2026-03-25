@@ -414,3 +414,5 @@ Press the About button on any tool for more info.";
 "onboardingTutorial.showMoreButton.title" = "Show Me More";
 
 "screenShareTutorial.generateQRCodeButton.title" = "Generate QR code";
+
+"shareToolQrCode.message" = "Share by QR Code";
