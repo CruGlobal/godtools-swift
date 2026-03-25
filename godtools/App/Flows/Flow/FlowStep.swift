@@ -224,7 +224,7 @@ enum FlowStep {
     case acceptTappedFromCreateToolScreenShareSessionTimeout
     case shareQRCodeTappedFromToolScreenShareSession(shareUrl: String)
     case dismissedShareToolScreenShareActivityViewController
-    case closeTappedFromShareQRCode
+    case closeTappedFromShareToolScreenQRCode
     case toolScreenShareFlowCompleted(state: ToolScreenShareFlowCompletedState)
     
     // download tool
@@ -237,4 +237,10 @@ enum FlowStep {
     case closeTappedFromLocalizationConfirmation
     case cancelTappedFromLocalizationConfirmation
     case confirmTappedFromLocalizationConfirmation(country: LocalizationSettingsCountryListItem)
+    
+    // share tool
+    case qrCodeTappedFromShareTool
+    case dismissedShareTool
+    case shareToolFlowCompleted(state: ShareToolFlowCompletedState)
+    case closedTappedFromShareToolQrCode
 }
