@@ -45,14 +45,14 @@ struct GodToolsApp: App {
 
     init() {
         
-        let deepLink: ParsedDeepLinkType?
+        let deepLinkUrl: URL?
         
         if Self.appLaunchType == .uiTests {
             
             //disable UIKit animations
             UIView.setAnimationsEnabled(false)
             
-            deepLink = Self.processUITestsDeepLink()
+            deepLinkUrl = Self.processUITestsDeepLink()
             
             Self.appDiContainer
                 .dataLayer
@@ -61,7 +61,7 @@ struct GodToolsApp: App {
         }
         else {
             
-            deepLink = nil
+            deepLinkUrl = nil
         }
 
         if Self.appConfig.firebaseEnabled {
@@ -72,10 +72,12 @@ struct GodToolsApp: App {
             Self.appDiContainer.dataLayer.getFirebaseDebugArguments().enable()
         }
         
+        Self.configureDynalinkDeferredDeepLinking()
+        
         appFlow = AppFlow(
             appDiContainer: Self.appDiContainer,
             appDeepLinkingService: Self.appDeepLinkingService,
-            deepLink: deepLink
+            deepLinkUrl: deepLinkUrl
         )
         
         if Self.appConfig.buildConfig == .release {
@@ -133,6 +135,35 @@ struct GodToolsApp: App {
             @unknown default:
                 break
             }
+        }
+    }
+    
+    private static func configureDynalinkDeferredDeepLinking() {
+        
+        guard let dynalinkClientApiKey = Self.appConfig.dynalinkClientApiKey else {
+            return
+        }
+        
+        let dataLayer: DeferredDeepLinkDataLayerDependencies = Self.appDiContainer.feature.deferredDeepLink.dataLayer
+        
+        dataLayer
+            .getConfigureDynalink()
+            .configure(clientApiKey: dynalinkClientApiKey)
+        
+        Task {
+            
+            let url: URL? = await dataLayer
+                .getDynalinkDeferredDeepLink()
+                .getDeepLinkUrl()
+            
+            guard let url = url else {
+                return
+            }
+            
+            _ = Self.appDeepLinkingService
+                .parseDeepLinkAndNotify(
+                    incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url))
+                )
         }
     }
 }
@@ -236,15 +267,12 @@ extension GodToolsApp {
 
 extension GodToolsApp {
     
-    private static func processUITestsDeepLink() -> ParsedDeepLinkType? {
+    private static func processUITestsDeepLink() -> URL? {
         
         let uiTestsDeepLinkString: String? = Self.uiTestsLaunchEnvironment.getUrlDeepLink()
 
         if let uiTestsDeepLinkString = uiTestsDeepLinkString, !uiTestsDeepLinkString.isEmpty, let url = URL(string: uiTestsDeepLinkString) {
-                        
-            return Self.appDeepLinkingService.parseDeepLink(
-                incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url))
-            )
+            return url
         }
         
         return nil

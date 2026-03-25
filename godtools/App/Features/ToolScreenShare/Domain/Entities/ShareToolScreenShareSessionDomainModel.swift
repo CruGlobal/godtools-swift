@@ -10,5 +10,5 @@ import Foundation
 
 struct ShareToolScreenShareSessionDomainModel {
     
-    let interfaceStrings: ShareToolScreenShareSessionInterfaceStringsDomainModel
+    let strings: ShareToolScreenShareSessionInterfaceStringsDomainModel
 }

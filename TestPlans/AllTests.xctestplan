@@ -4,6 +4,7 @@
       "id" : "CEA79D13-909A-4A12-8CF7-AF50FDB29FE3",
       "name" : "AllTestsConfig",
       "options" : {
+        "testExecutionOrdering" : "random",
         "uiTestingScreenshotsLifetime" : "keepNever",
         "userAttachmentLifetime" : "keepNever"
       }
@@ -16,7 +17,7 @@
   },
   "testTargets" : [
     {
-      "enabled" : false,
+      "parallelizable" : false,
       "target" : {
         "containerPath" : "container:godtools.xcodeproj",
         "identifier" : "684328F01EB7CF66005E9131",

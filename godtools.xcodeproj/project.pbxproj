@@ -40,6 +40,7 @@
 		45B6482825E593110098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		45B6482925E593110098BAF1 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		45B6482A25E593110098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		45C15DF92F6C78F1006B9020 /* DynalinksSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 45C15DF82F6C78F1006B9020 /* DynalinksSDK */; };
 		45CF09702784B910007F13D3 /* RequestOperation in Frameworks */ = {isa = PBXBuildFile; productRef = 45CF096F2784B910007F13D3 /* RequestOperation */; };
 		45D40C6B2A5315D500E8E4AE /* Fuzi in Frameworks */ = {isa = PBXBuildFile; productRef = 45D40C6A2A5315D500E8E4AE /* Fuzi */; };
 		45D48C8629F81324004E92B1 /* SocialAuthentication in Frameworks */ = {isa = PBXBuildFile; productRef = 45D48C8529F81324004E92B1 /* SocialAuthentication */; };
@@ -329,6 +330,7 @@
 				4581EAA32BFBE194008115FF /* RealmSwift in Frameworks */,
 				45CF09702784B910007F13D3 /* RequestOperation in Frameworks */,
 				4593DEFE2EABFD45004E1C8D /* GodToolsShared in Frameworks */,
+				45C15DF92F6C78F1006B9020 /* DynalinksSDK in Frameworks */,
 				45DF96512D386C1C00C6AE68 /* FirebaseRemoteConfig in Frameworks */,
 				45E7D4C42977430A008C7503 /* ZipArchive in Frameworks */,
 				45B0F6A72DBBCC300011FF1D /* FirebaseMessaging in Frameworks */,
@@ -518,6 +520,7 @@
 				45B0F6A62DBBCC300011FF1D /* FirebaseMessaging */,
 				4593DEFD2EABFD45004E1C8D /* GodToolsShared */,
 				4548320A2F0C4EFC00CF9CF0 /* RepositorySync */,
+				45C15DF82F6C78F1006B9020 /* DynalinksSDK */,
 			);
 			productName = godtools;
 			productReference = 4F5732891EA69CF00082035C /* godtools.app */;
@@ -681,6 +684,7 @@
 				45DF96472D386C1C00C6AE68 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				4593DEFC2EABFD45004E1C8D /* XCRemoteSwiftPackageReference "godtools-shared-swift" */,
 				454832092F0C4EFC00CF9CF0 /* XCRemoteSwiftPackageReference "repository-sync-ios" */,
+				45C15DF72F6C78F1006B9020 /* XCRemoteSwiftPackageReference "dynalinks-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4F57328A1EA69CF00082035C /* Products */;
@@ -741,7 +745,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		451C8B7628AEC6AD00E98AFA /* Download Initial Resources */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			files = (
 			);
 			inputFileListPaths = (
@@ -776,7 +780,7 @@
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "xcrun --sdk macosx swiftc -parse-as-library $SCRIPT_INPUT_FILE_0 $SCRIPT_INPUT_FILE_1 $SCRIPT_INPUT_FILE_2 $SCRIPT_INPUT_FILE_3 $SCRIPT_INPUT_FILE_4 $SCRIPT_INPUT_FILE_5 $SCRIPT_INPUT_FILE_6 $SCRIPT_INPUT_FILE_7 $SCRIPT_INPUT_FILE_8 $SCRIPT_INPUT_FILE_9 $SCRIPT_INPUT_FILE_10 $SCRIPT_INPUT_FILE_11 $SCRIPT_INPUT_FILE_12 $SCRIPT_INPUT_FILE_13 $SCRIPT_INPUT_FILE_14 $SCRIPT_INPUT_FILE_15 $SCRIPT_INPUT_FILE_16 $SCRIPT_INPUT_FILE_17 $SCRIPT_INPUT_FILE_18 $SCRIPT_INPUT_FILE_19 $SCRIPT_INPUT_FILE_20 $SCRIPT_INPUT_FILE_21 $SCRIPT_INPUT_FILE_22 \\\n  -o DownloadInitialResourcesScript\n  \n./DownloadInitialResourcesScript\n";
 		};
@@ -1320,6 +1324,7 @@
 				CURRENT_PROJECT_VERSION = 1043;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQ48D9BF2V;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1335,9 +1340,10 @@
 				MARKETING_VERSION = 6.3.14;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.FirebaseNotificationService;
+				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.beta.FirebaseNotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "GodTools Staging FirebaseNotificationService";
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1609,6 +1615,7 @@
 				CURRENT_PROJECT_VERSION = 1043;
 				DEVELOPMENT_ASSET_PATHS = "godtools/Preview\\ Content godtools/Preview\\ Content/Preview\\ Assets.xcassets";
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQ48D9BF2V;
 				DISPLAY_NAME = "GT-Debug";
 				INFOPLIST_FILE = godtools/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -1623,6 +1630,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.cru.godtools";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "GodTools Beta";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -2197,6 +2205,14 @@
 				minimumVersion = 1.2.0;
 			};
 		};
+		45C15DF72F6C78F1006B9020 /* XCRemoteSwiftPackageReference "dynalinks-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dynalinks/dynalinks-ios-sdk";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.0.4;
+			};
+		};
 		45CF096E2784B910007F13D3 /* XCRemoteSwiftPackageReference "request-operation-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CruGlobal/request-operation-ios.git";
@@ -2348,6 +2364,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 45DF96472D386C1C00C6AE68 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
+		};
+		45C15DF82F6C78F1006B9020 /* DynalinksSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 45C15DF72F6C78F1006B9020 /* XCRemoteSwiftPackageReference "dynalinks-ios-sdk" */;
+			productName = DynalinksSDK;
 		};
 		45CF096F2784B910007F13D3 /* RequestOperation */ = {
 			isa = XCSwiftPackageProductDependency;
