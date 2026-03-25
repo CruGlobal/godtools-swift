@@ -71,22 +71,13 @@ class ToolSettingsFlow: Flow {
             flowDelegate?.navigate(step: .toolSettingsFlowCompleted(state: .userClosedToolSettings))
             
         case .shareLinkTappedFromToolSettings:
-            
-            let toolAbbreviation: String = appDiContainer.dataLayer.getResourcesRepository().persistence.getDataModelNonThrowing(id: toolSettingsObserver.toolId)?.abbreviation ?? ""
-            
-            shareToolFlow = ShareToolFlow(
-                flowDelegate: self,
-                appDiContainer: appDiContainer,
-                navigationController: navigationController,
-                toolId: toolSettingsObserver.toolId,
-                toolLanguageId: toolSettingsObserver.languages.selectedLanguageId,
-                pageNumber: toolSettingsObserver.pageNumber,
-                appLanguage: appLanguage,
-                toolAnalyticsAbbreviation: toolAbbreviation
-            )
+            dismissToolSettingsIfPresented(animated: true) { [weak self] in
+                self?.presentShareTool()
+            }
             
         case .shareToolFlowCompleted( _):
             shareToolFlow = nil
+            presentToolSettings()
                     
         case .screenShareTappedFromToolSettings:
             presentToolScreenShareFlow()
@@ -218,6 +209,27 @@ extension ToolSettingsFlow {
         hostingView.modalPresentationStyle = .overCurrentContext
         
         return hostingView
+    }
+}
+
+// MARK: - Share Tool Link
+
+extension ToolSettingsFlow {
+    
+    private func presentShareTool() {
+        
+        let toolAbbreviation: String = appDiContainer.dataLayer.getResourcesRepository().persistence.getDataModelNonThrowing(id: toolSettingsObserver.toolId)?.abbreviation ?? ""
+        
+        shareToolFlow = ShareToolFlow(
+            flowDelegate: self,
+            appDiContainer: appDiContainer,
+            navigationController: navigationController,
+            toolId: toolSettingsObserver.toolId,
+            toolLanguageId: toolSettingsObserver.languages.selectedLanguageId,
+            pageNumber: toolSettingsObserver.pageNumber,
+            appLanguage: appLanguage,
+            toolAnalyticsAbbreviation: toolAbbreviation
+        )
     }
 }
 

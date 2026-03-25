@@ -23,6 +23,8 @@ class ShareToolFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: AppNavigationController
     
+    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    
     init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, navigationController: AppNavigationController, toolId: String, toolLanguageId: String, pageNumber: Int, appLanguage: AppLanguageDomainModel, toolAnalyticsAbbreviation: String) {
         
         self.flowDelegate = flowDelegate
@@ -31,6 +33,11 @@ class ShareToolFlow: Flow {
         self.toolId = toolId
         self.toolLanguageId = toolLanguageId
         self.pageNumber = pageNumber
+        
+        appDiContainer.feature.appLanguage.domainLayer
+            .getCurrentAppLanguageUseCase()
+            .execute()
+            .assign(to: &$appLanguage)
         
         let getShareToolStringsUseCase = appDiContainer.feature.shareTool.domainLayer.getShareToolStringsUseCase()
         
@@ -55,10 +62,14 @@ class ShareToolFlow: Flow {
                     toolAnalyticsAbbreviation: toolAnalyticsAbbreviation,
                     pageNumber: pageNumber
                 )
-                
+                                
                 weakSelf.navigationController.present(shareToolView, animated: true)
             }
             .store(in: &cancellables)
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
     
     func navigate(step: FlowStep) {
@@ -66,27 +77,7 @@ class ShareToolFlow: Flow {
         switch step {
             
         case .qrCodeTappedFromShareTool:
-            
-            appDiContainer
-                .feature
-                .shareTool
-                .domainLayer
-                .getShareToolQRCodeUseCase()
-                .execute(
-                    toolId: toolId,
-                    toolLanguageId: toolLanguageId,
-                    pageNumber: pageNumber
-                )
-                .receive(on: DispatchQueue.main)
-                .sink { _ in
-                    
-                } receiveValue: { [weak self] (shareToolQrCode: ShareToolQRCodeDomainModel) in
-
-                    self?.navigationController.dismissPresented(animated: true, completion: { [weak self] in
-                        self?.navigateToShareToolQRCode(shareUrl: shareToolQrCode.url)
-                    })
-                }
-                .store(in: &cancellables)
+            getShareToolUrlForQRCode()
             
         case .dismissedShareTool:
             completeFlow(state: .userClosed)
@@ -97,6 +88,47 @@ class ShareToolFlow: Flow {
         default:
             break
         }
+    }
+    
+    private func getShareToolUrlForQRCode() {
+        
+        appDiContainer.feature.shareTool.domainLayer
+            .getShareToolQRCodeUseCase()
+            .execute(
+                toolId: toolId,
+                toolLanguageId: toolLanguageId,
+                pageNumber: pageNumber
+            )
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] completiom in
+                
+                switch completiom {
+                case .finished:
+                    break
+                case .failure(let error):
+                    self?.handleGetShareToolUrlCompleted(result: .failure(error))
+                }
+                
+            } receiveValue: { [weak self] (shareToolQrCode: ShareToolQRCodeDomainModel) in
+
+                self?.handleGetShareToolUrlCompleted(result: .success(shareToolQrCode))
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func handleGetShareToolUrlCompleted(result: Result<ShareToolQRCodeDomainModel, Error>) {
+        
+        let appLanguage: AppLanguageDomainModel = self.appLanguage
+        
+        navigationController.dismissPresented(animated: true, completion: { [weak self] in
+            
+            switch result {
+            case .success(let shareToolQrCode):
+                self?.navigateToShareToolQRCode(shareUrl: shareToolQrCode.url)
+            case .failure(let error):
+                self?.presentError(appLanguage: appLanguage, error: error)
+            }
+        })
     }
     
     private func navigateToShareToolQRCode(shareUrl: URL) {
