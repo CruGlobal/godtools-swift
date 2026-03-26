@@ -19,7 +19,7 @@ struct ShareToolQRCodeView: View {
     var body: some View {
         
         QRCodeModalView(
-            shareUrl: "",
+            shareUrl: viewModel.shareUrl,
             qrCodeDescription: viewModel.strings.message,
             closeButtonTitle: viewModel.strings.closeActionTitle,
             closeTapped: {
