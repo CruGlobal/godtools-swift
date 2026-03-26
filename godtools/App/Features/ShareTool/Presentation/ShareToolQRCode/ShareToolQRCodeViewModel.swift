@@ -22,9 +22,9 @@ import Combine
     @Published private(set) var strings = ShareToolQRCodeStringsDomainModel.emptyValue
     @Published private(set) var shareToolQrCode: ShareToolQRCodeDomainModel?
     
-    let shareUrl: URL
+    let shareUrl: String
     
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getShareToolQRCodeStringsUseCase: GetShareToolQRCodeStringsUseCase, shareUrl: URL) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getShareToolQRCodeStringsUseCase: GetShareToolQRCodeStringsUseCase, shareUrl: String) {
         
         self.flowDelegate = flowDelegate
         self.getShareToolQRCodeStringsUseCase = getShareToolQRCodeStringsUseCase
