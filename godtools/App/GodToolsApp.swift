@@ -149,22 +149,6 @@ struct GodToolsApp: App {
         dataLayer
             .getConfigureDynalink()
             .configure(clientApiKey: dynalinkClientApiKey)
-        
-        Task {
-            
-            let url: URL? = await dataLayer
-                .getDynalinkDeferredDeepLink()
-                .getDeepLinkUrl()
-            
-            guard let url = url else {
-                return
-            }
-            
-            _ = Self.appDeepLinkingService
-                .parseDeepLinkAndNotify(
-                    incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url))
-                )
-        }
     }
 }
 
