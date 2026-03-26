@@ -8,6 +8,7 @@
 
 import Foundation
 import DynalinksSDK
+import Combine
 
 final class DynalinkDeferredDeepLink {
     
@@ -40,6 +41,12 @@ final class DynalinkDeferredDeepLink {
             errorReporting.reportError(error: error)
             
             return nil
+        }
+    }
+    
+    func getDeepLinkUrlPublisher() -> AnyPublisher<URL?, Error> {
+        return AnyPublisher() {
+            return await self.getDeepLinkUrl()
         }
     }
 }

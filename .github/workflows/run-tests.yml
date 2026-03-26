@@ -51,7 +51,7 @@ jobs:
         run: xcresultparser -o cobertura /Users/runner/work/godtools-swift/godtools-swift/fastlane_scan_output_directory/GodTools-Production.xcresult > /Users/runner/work/godtools-swift/godtools-swift/fastlane_scan_output_directory/coverage.xml
 
       - name: Upload Coverage XML to CodeCov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         with:
           files: /Users/runner/work/godtools-swift/godtools-swift/fastlane_scan_output_directory/coverage.xml
           plugin: xcode

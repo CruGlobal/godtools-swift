@@ -24,7 +24,7 @@ import SwiftUI
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
-    @Published var layoutDirection: LayoutDirection
+    @Published private(set) var layoutDirection: LayoutDirection
     
     var semanticContentAttributePublisher: AnyPublisher<UISemanticContentAttribute, Never> {
         return semanticContentAttributeSubject
