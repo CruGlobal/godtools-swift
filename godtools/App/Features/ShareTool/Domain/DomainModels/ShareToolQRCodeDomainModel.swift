@@ -10,5 +10,5 @@ import Foundation
 
 struct ShareToolQRCodeDomainModel {
     
-    let url: URL
+    let url: String
 }
