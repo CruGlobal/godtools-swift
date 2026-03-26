@@ -131,7 +131,7 @@ class ShareToolFlow: Flow {
         })
     }
     
-    private func navigateToShareToolQRCode(shareUrl: URL) {
+    private func navigateToShareToolQRCode(shareUrl: String) {
         
         let shareToolQrCode: UIViewController = getShareToolQRCodeView(shareUrl: shareUrl)
         
@@ -165,7 +165,7 @@ extension ShareToolFlow {
         return view.controller
     }
     
-    private func getShareToolQRCodeView(shareUrl: URL) -> UIViewController {
+    private func getShareToolQRCodeView(shareUrl: String) -> UIViewController {
         
         let viewModel = ShareToolQRCodeViewModel(
             flowDelegate: self,
