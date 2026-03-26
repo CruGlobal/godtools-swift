@@ -22,9 +22,9 @@ class ViewShareToolScreenShareSessionUseCase {
         
         return getInterfaceStringsRepositoryInterface
             .getStringsPublisher(translateInLanguage: appLanguage)
-            .flatMap({ (interfaceStrings: ShareToolScreenShareSessionInterfaceStringsDomainModel) -> AnyPublisher<ShareToolScreenShareSessionDomainModel, Never> in
+            .flatMap({ (strings: ShareToolScreenShareSessionInterfaceStringsDomainModel) -> AnyPublisher<ShareToolScreenShareSessionDomainModel, Never> in
                 
-                let domainModel = ShareToolScreenShareSessionDomainModel(interfaceStrings: interfaceStrings)
+                let domainModel = ShareToolScreenShareSessionDomainModel(strings: strings)
                 
                 return Just(domainModel)
                     .eraseToAnyPublisher()

@@ -10,12 +10,13 @@ import UIKit
 import SwiftUI
 import Combine
 
-class ToolSettingsFlow: Flow, ToolSharer {
+class ToolSettingsFlow: Flow {
     
     private let toolSettingsObserver: ToolSettingsObserver
     private let toolSettingsDidCloseClosure: (() -> Void)?
     
     private var toolSettingsView: AppHostingController<ToolSettingsView>?
+    private var shareToolFlow: ShareToolFlow?
     private var toolScreenShareFlow: ToolScreenShareFlow?
     private var languagesListModal: UIViewController?
     private var reviewShareShareableModal: UIViewController?
@@ -23,7 +24,6 @@ class ToolSettingsFlow: Flow, ToolSharer {
     private var cancellables: Set<AnyCancellable> = Set()
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-    @Published private var shareToolStrings: ShareToolStringsDomainModel?
     @Published private var toolScreenShareTutorialHasBeenViewedDomainModel: ToolScreenShareTutorialViewedDomainModel = ToolScreenShareTutorialViewedDomainModel(numberOfViews: 0)
     
     private weak var flowDelegate: FlowDelegate?
@@ -46,26 +46,6 @@ class ToolSettingsFlow: Flow, ToolSharer {
             .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
-
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-               
-                appDiContainer.feature.shareTool.domainLayer
-                    .getShareToolStringsUseCase()
-                    .execute(
-                        toolId: toolSettingsObserver.toolId,
-                        toolLanguageId: toolSettingsObserver.languages.selectedLanguageId,
-                        pageNumber: toolSettingsObserver.pageNumber,
-                        appLanguage: appLanguage
-                    )
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: ShareToolStringsDomainModel) in
-                self?.shareToolStrings = strings
-            }
-            .store(in: &cancellables)
         
         getToolScreenShareTutorialHasBeenViewedUseCase
             .getViewedPublisher(toolId: toolSettingsObserver.toolId)
@@ -91,17 +71,13 @@ class ToolSettingsFlow: Flow, ToolSharer {
             flowDelegate?.navigate(step: .toolSettingsFlowCompleted(state: .userClosedToolSettings))
             
         case .shareLinkTappedFromToolSettings:
-            
-            guard let strings = shareToolStrings else {
-                return
+            dismissToolSettingsIfPresented(animated: true) { [weak self] in
+                self?.presentShareTool()
             }
             
-            navigationController.present(getShareToolView(
-                strings: strings,
-                toolId: toolSettingsObserver.toolId,
-                toolAnalyticsAbbreviation: appDiContainer.dataLayer.getResourcesRepository().persistence.getDataModelNonThrowing(id: toolSettingsObserver.toolId)?.abbreviation ?? "",
-                pageNumber: toolSettingsObserver.pageNumber
-            ), animated: true, completion: nil)
+        case .shareToolFlowCompleted( _):
+            shareToolFlow = nil
+            presentToolSettings()
                     
         case .screenShareTappedFromToolSettings:
             presentToolScreenShareFlow()
@@ -233,6 +209,27 @@ extension ToolSettingsFlow {
         hostingView.modalPresentationStyle = .overCurrentContext
         
         return hostingView
+    }
+}
+
+// MARK: - Share Tool Link
+
+extension ToolSettingsFlow {
+    
+    private func presentShareTool() {
+        
+        let toolAbbreviation: String = appDiContainer.dataLayer.getResourcesRepository().persistence.getDataModelNonThrowing(id: toolSettingsObserver.toolId)?.abbreviation ?? ""
+        
+        shareToolFlow = ShareToolFlow(
+            flowDelegate: self,
+            appDiContainer: appDiContainer,
+            navigationController: navigationController,
+            toolId: toolSettingsObserver.toolId,
+            toolLanguageId: toolSettingsObserver.languages.selectedLanguageId,
+            pageNumber: toolSettingsObserver.pageNumber,
+            appLanguage: appLanguage,
+            toolAnalyticsAbbreviation: toolAbbreviation
+        )
     }
 }
 

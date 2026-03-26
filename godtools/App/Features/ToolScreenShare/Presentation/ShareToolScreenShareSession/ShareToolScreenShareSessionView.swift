@@ -6,20 +6,24 @@
 //  Copyright © 2023 Cru. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
 class ShareToolScreenShareSessionView {
     
+    private static let qrCodeActivityType = UIActivity.ActivityType(rawValue: "org.cru.godtools.screenShareQRCodeActivity")
+    
     private let viewModel: ShareToolScreenShareSessionViewModel
-        
+    
     let controller: UIActivityViewController
     
     init(viewModel: ShareToolScreenShareSessionViewModel) {
         
         self.viewModel = viewModel
                 
-        let shareQRCodeActivityItem = ToolScreenShareQRCodeActivity(
-            title: viewModel.qrCodeString
+        let shareQRCodeActivityItem = QRCodeActivity(
+            title: viewModel.qrCodeString,
+            activityType: Self.qrCodeActivityType
         )
         
         let applicationActivities: [UIActivity]? = [shareQRCodeActivityItem]
@@ -31,7 +35,7 @@ class ShareToolScreenShareSessionView {
         
         controller.completionWithItemsHandler = { (activityType: UIActivity.ActivityType?, serviceCompleted: Bool, returnedItems: [Any]?, activityError: Error?) in
             
-            if activityType == ToolScreenShareQRCodeActivity.activityType {
+            if activityType == Self.qrCodeActivityType {
                 viewModel.qrCodeTapped()
             }
             else {

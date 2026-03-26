@@ -23,12 +23,20 @@ class LocalizationSettingsCountriesRepository: LocalizationSettingsCountriesRepo
             .filter { isCountryCode(region: $0) }
             .compactMap { region -> LocalizationSettingsCountryDataModel? in
 
-            let regionLocale = findLocaleId(for: region)
-
-            guard let nameInAppLanguage = appLocale.localizedString(forRegionCode: region.identifier),
-                  let nameInOwnLanguage = regionLocale.localizedString(forRegionCode: region.identifier)
-            else {
+            guard let nameInAppLanguage = appLocale.localizedString(forRegionCode: region.identifier) else {
                 return nil
+            }
+
+            let nameInOwnLanguage: String
+            if let staticEndonym = CountryEndonyms.mapping[region.identifier] {
+                nameInOwnLanguage = staticEndonym
+                
+            } else {
+                let regionLocale = findLocaleId(for: region)
+                guard let dynamicName = regionLocale.localizedString(forRegionCode: region.identifier) else {
+                    return nil
+                }
+                nameInOwnLanguage = dynamicName
             }
 
             return LocalizationSettingsCountryDataModel(
@@ -54,16 +62,12 @@ class LocalizationSettingsCountriesRepository: LocalizationSettingsCountriesRepo
 
         let localeWhereLanguageMatchesRegion = "\(lowercasedRegion)_\(region.identifier)"
         if Locale.availableIdentifiers.contains(localeWhereLanguageMatchesRegion) {
-            
             return Locale(identifier: localeWhereLanguageMatchesRegion)
         }
 
-        let allLocalesInRegion = Locale.availableIdentifiers.filter { identifier in
-            return identifier.hasSuffix("_\(region.identifier)")
-        }
+        let allLocalesInRegion = Locale.availableIdentifiers.filter { $0.hasSuffix("_\(region.identifier)") }
 
         for localeId in allLocalesInRegion {
-            
             let locale = Locale(identifier: localeId)
             if let translation = locale.localizedString(forRegionCode: region.identifier), !translation.isEmpty {
                 return locale
