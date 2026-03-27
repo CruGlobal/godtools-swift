@@ -75,23 +75,26 @@ class AppFlow: NSObject, Flow {
         
         rootController.addChildController(child: navigationController)
         
-        deepLinkingService
-            .parsedDeepLinkPublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (deepLink: ParsedDeepLinkType?) in
-                
-                guard let weakSelf = self, let deepLink = deepLink else {
-                    return
-                }
-                
-                if !weakSelf.appLaunchObserver.appLaunched {
-                    weakSelf.appLaunchedFromDeepLink = deepLink
-                }
-                else {
-                    weakSelf.navigate(step: .deepLink(deepLinkType: deepLink))
-                }
+        Publishers.Merge(
+            deepLinkingService
+                .parsedDeepLinkPublisher,
+            getDeferredDeepLinkPublisher()
+        )
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] (deepLink: ParsedDeepLinkType?) in
+            
+            guard let weakSelf = self, let deepLink = deepLink else {
+                return
             }
-            .store(in: &cancellables)
+            
+            if !weakSelf.appLaunchObserver.appLaunched {
+                weakSelf.appLaunchedFromDeepLink = deepLink
+            }
+            else {
+                weakSelf.navigate(step: .deepLink(deepLinkType: deepLink))
+            }
+        }
+        .store(in: &cancellables)
         
         appMessaging.setMessagingDelegate(messagingDelegate: self)
         
@@ -135,9 +138,8 @@ class AppFlow: NSObject, Flow {
                 
                 let getOnboardingTutorialIsAvailableUseCase: GetOnboardingTutorialIsAvailableUseCase = appDiContainer.feature.onboarding.domainLayer.getOnboardingTutorialIsAvailableUseCase()
                 let shouldPromptForOptInNotificationUseCase: ShouldPromptForOptInNotificationUseCase = appDiContainer.feature.optInNotification.domainLayer.getShouldPromptForOptInNotificationUseCase()
-                let dynalinkDeferredDeepLink: DynalinkDeferredDeepLink = appDiContainer.feature.deferredDeepLink.dataLayer.getDynalinkDeferredDeepLink()
                 
-                cancellableForAppLaunchedFromTerminatedStateOptions = Publishers.CombineLatest3(
+                cancellableForAppLaunchedFromTerminatedStateOptions = Publishers.CombineLatest(
                     getOnboardingTutorialIsAvailableUseCase
                         .execute(),
                     shouldPromptForOptInNotificationUseCase
@@ -145,51 +147,32 @@ class AppFlow: NSObject, Flow {
                         .catch { (error: Error) in
                             return Just(false)
                                 .eraseToAnyPublisher()
-                        },
-                    dynalinkDeferredDeepLink
-                        .getDeepLinkUrlPublisher()
-                        .catch { (error: Error) in
-                            return Just(nil)
-                                .eraseToAnyPublisher()
                         }
                 )
                 .receive(on: DispatchQueue.main)
-                .sink(receiveValue: { [weak self] (onboardingTutorialIsAvailable: Bool, shouldPromptForOptInNotification: Bool, deferredDeepLinkUrl: URL?) in
+                .sink(receiveValue: { [weak self] (onboardingTutorialIsAvailable: Bool, shouldPromptForOptInNotification: Bool) in
                     
                     guard let appFlow = self else {
                         return
                     }
                     
-                    let parsedDeferredDeepLink: ParsedDeepLinkType?
-                    
-                    if let deferredDeepLinkUrl = deferredDeepLinkUrl {
-                        parsedDeferredDeepLink = appFlow.deepLinkingService.parseDeepLink(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: deferredDeepLinkUrl)))
-                    }
-                    else {
-                        parsedDeferredDeepLink = nil
-                    }
-                    
                     appFlow.cancellableForAppLaunchedFromTerminatedStateOptions = nil
                     
                     let launchCount: Int = appFlow.launchCountRepository.getLaunchCount()
-                    let hasPossibleDeferredDeepLinkFOrDynalink: Bool = UIPasteboard.general.hasURLs
+                    let hasPossibleDeferredDeepLinkForDynalink: Bool = UIPasteboard.general.hasURLs
                     
                     // TODO: Disabling pasteboard as Dynalink SDK offers seamless deferred deep linking.  Will possibly remove Pasteboard logic in the future in GT-2997. ~Levi
-                    let shouldOpenPasteboardForDeferredDeepLink: Bool = false// launchCount == 1 && hasPossibleDeferredDeepLinkFOrDynalink
+                    let shouldOpenPasteboardForDeferredDeepLink: Bool = launchCount == 1 && hasPossibleDeferredDeepLinkForDynalink
                     
-                    if shouldOpenPasteboardForDeferredDeepLink {
-                        
-                        appFlow.navigate(step: .showDeferredDeepLinkModal)
-                        
-                    }
-                    else if let parsedDeferredDeepLink = parsedDeferredDeepLink {
-                        
-                        appFlow.navigate(step: .deepLink(deepLinkType: parsedDeferredDeepLink))
-                    }
-                    else if let deepLink = appFlow.appLaunchedFromDeepLink {
+                    if let deepLink = appFlow.appLaunchedFromDeepLink {
                         
                         appFlow.appLaunchedFromDeepLink = nil
                         appFlow.navigate(step: .deepLink(deepLinkType: deepLink))
+                    }
+                    else if shouldOpenPasteboardForDeferredDeepLink {
+                        
+                        appFlow.navigate(step: .showDeferredDeepLinkModal)
+                        
                     }
                     else if onboardingTutorialIsAvailable {
                         
@@ -282,6 +265,32 @@ class AppFlow: NSObject, Flow {
         default:
             break
         }
+    }
+    
+    private func getDeferredDeepLinkPublisher() -> AnyPublisher<ParsedDeepLinkType?, Never> {
+        
+        let deepLinkService: DeepLinkingService = self.deepLinkingService
+        let dynalinkDeferredDeepLink: DynalinkDeferredDeepLink = appDiContainer.feature.deferredDeepLink.dataLayer.getDynalinkDeferredDeepLink()
+        
+        return dynalinkDeferredDeepLink
+            .getDeepLinkUrlPublisher()
+            .map { (url: URL?) in
+                
+                guard let url = url else {
+                    return nil
+                }
+                
+                let incomingDeepLink = IncomingDeepLinkUrl(url: url)
+                
+                let parsedDeepLink = deepLinkService.parseDeepLink(incomingDeepLink: .url(incomingUrl: incomingDeepLink))
+                
+                return parsedDeepLink
+            }
+            .catch { (error: Error) in
+                return Just(nil)
+                    .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
     }
 }
 
