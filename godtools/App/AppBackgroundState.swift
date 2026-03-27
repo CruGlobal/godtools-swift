@@ -87,7 +87,7 @@ import RequestOperation
         
         Publishers.CombineLatest(
             resourcesRepository.persistence.observeCollectionChangesPublisher().prepend(Void()),
-            launchCountRepository.getLaunchCountPublisher()
+            launchCountRepository.getLaunchCountChangedPublisher()
                 .setFailureType(to: Error.self)
         )
         .flatMap { (resourcesChanged: Void, launchCount: Int) -> AnyPublisher<Void, Error> in
