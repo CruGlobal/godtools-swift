@@ -49,11 +49,15 @@ class LaunchCountRepository: LaunchCountRepositoryInterface {
         return cache.getLaunchCountValue()
     }
     
-    func getLaunchCountPublisher() -> AnyPublisher<Int, Never> {
+    func getLaunchCountChangedPublisher() -> AnyPublisher<Int, Never> {
         
         incrementLaunchCountForAppLaunchIfNeeded()
         
-        return cache.getLaunchCountPublisher()
+        return cache.getLaunchCountChangedPublisher()
+    }
+    
+    func resetLaunchCount() {
+        cache.resetLaunchCount()
     }
     
     @objc private func handleUIApplicationLifeCycleNotification(notification: Notification) {

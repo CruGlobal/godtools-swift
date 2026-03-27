@@ -23,7 +23,7 @@ final class GetOnboardingTutorialIsAvailableUseCase {
     func execute() -> AnyPublisher<Bool, Never> {
         
         Publishers.CombineLatest(
-            launchCountRepository.getLaunchCountPublisher(),
+            launchCountRepository.getLaunchCountChangedPublisher(),
             onboardingTutorialViewedRepository.getOnboardingTutorialViewedPublisher()
         )
         .flatMap({ (launchCount: Int, tutorialViewed: Bool) -> AnyPublisher<Bool, Never> in
