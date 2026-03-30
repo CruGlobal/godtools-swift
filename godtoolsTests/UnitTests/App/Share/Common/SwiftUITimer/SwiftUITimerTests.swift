@@ -14,75 +14,33 @@ struct SwiftUITimerTests {
     
     @Test("")
     @MainActor func timerStartPublisherRunsOnce() async {
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        
+                
         let timer = SwiftUITimer(intervalSeconds: 0.1, repeats: false)
         
-        var sinkCount: Int = 0
-        
-        await confirmation(expectedCount: 1) { confirmation in
-            
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                timer
-                    .startPublisher()
-                    .sink { _ in
-                        confirmation()
-                        
-                        sinkCount += 1
-                        
-                        if sinkCount == 1 {
-                            timeoutTask.cancel()
-                            continuation.resume(returning: ())
-                        }
-                    }
-                    .store(in: &cancellables)
-            }
-        }
-        
-        #expect(timer.isRunning == false)
-    }
-    
-    @Test("")
-    @MainActor func timerRunsOnce() async {
-        
         var cancellables: Set<AnyCancellable> = Set()
+        var triggerCount: Int = 0
         
-        let timer = SwiftUITimer(intervalSeconds: 0.1, repeats: false)
-        
-        var sinkCount: Int = 0
-        
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                timer.start()
-                
-                timer
-                    .publisher
-                    .sink { _ in
-                        confirmation()
-                        
-                        sinkCount += 1
-                        
-                        if sinkCount == 1 {
-                            timeoutTask.cancel()
-                            continuation.resume(returning: ())
-                        }
-                    }
-                    .store(in: &cancellables)
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
             }
+            
+            timer
+                .startPublisher()
+                .sink { _ in
+                    
+                    triggerCount += 1
+                    
+                    if triggerCount == 1 {
+                        
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    }
+                }
+                .store(in: &cancellables)
         }
         
         #expect(timer.isRunning == false)
@@ -90,39 +48,37 @@ struct SwiftUITimerTests {
     
     @Test("")
     @MainActor func timerRunsUntilStopped() async {
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        
+                
         let timer = SwiftUITimer(intervalSeconds: 0.1, repeats: true)
         
         let maxTimerCount: Int = 3
         
-        var sinkCount: Int = 0
+        var cancellables: Set<AnyCancellable> = Set()
+        var triggerCount: Int = 0
         
-        await confirmation(expectedCount: maxTimerCount) { confirmation in
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                timer
-                    .startPublisher()
-                    .sink { _ in
-                        confirmation()
-                        
-                        sinkCount += 1
-                        
-                        if sinkCount == maxTimerCount {
-                            timer.stop()
-                            timeoutTask.cancel()
-                            continuation.resume(returning: ())
-                        }
-                    }
-                    .store(in: &cancellables)
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
             }
+            
+            timer
+                .startPublisher()
+                .sink { _ in
+                    
+                    triggerCount += 1
+                    
+                    if triggerCount == maxTimerCount {
+                        
+                        timer.stop()
+                        
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    }
+                }
+                .store(in: &cancellables)
         }
         
         #expect(timer.isRunning == false)

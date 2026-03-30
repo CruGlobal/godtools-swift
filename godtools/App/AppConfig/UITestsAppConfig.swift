@@ -95,4 +95,8 @@ class UITestsAppConfig: AppConfigInterface {
     func getTractRemoteShareConnectionUrl() -> String {
         return GodToolsAppConfig.getTractRemoteShareWebSocketUrl(environment: environment)
     }
+    
+    func getUserDefaultsCache() -> UserDefaultsCacheInterface {
+        return InMemUserDefaultsCache()
+    }
 }

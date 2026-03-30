@@ -17,7 +17,6 @@ class AppDataLayerDependencies {
     private let sharedAppConfig: AppConfigInterface
     private let sharedUrlSessionPriority: URLSessionPriority = URLSessionPriority()
     private let sharedLegacyRealmDatabase: LegacyRealmDatabase
-    private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
     private let sharedAnalytics: AnalyticsContainer
     
     init(appConfig: AppConfigInterface) {
@@ -187,7 +186,7 @@ class AppDataLayerDependencies {
     }
     
     func getFavoritingToolMessageCache() -> FavoritingToolMessageCache {
-        return FavoritingToolMessageCache(userDefaultsCache: sharedUserDefaultsCache)
+        return FavoritingToolMessageCache(userDefaultsCache: getUserDefaultsCache())
     }
     
     func getFirebaseConfiguration() -> FirebaseConfiguration {
@@ -531,7 +530,7 @@ class AppDataLayerDependencies {
         
         return UserAuthentication(
             authenticationProviders: authenticationProviders,
-            lastAuthenticatedProviderCache: LastAuthenticatedProviderCache(userDefaultsCache: sharedUserDefaultsCache),
+            lastAuthenticatedProviderCache: LastAuthenticatedProviderCache(userDefaultsCache: getUserDefaultsCache()),
             mobileContentAuthTokenRepository: getMobileContentAuthTokenRepository()
         )
     }
@@ -574,8 +573,8 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getUserDefaultsCache() -> SharedUserDefaultsCache {
-        return sharedUserDefaultsCache
+    func getUserDefaultsCache() -> UserDefaultsCacheInterface {
+        return getAppConfig().getUserDefaultsCache()
     }
     
     func getUserLessonFiltersRepository() -> UserLessonFiltersRepository {

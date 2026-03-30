@@ -11,9 +11,9 @@ import Combine
 
 final class ViewedOnboardingTutorialUseCase {
     
-    private let onboardingTutorialViewedRepository: OnboardingTutorialViewedRepositoryInterface
+    private let onboardingTutorialViewedRepository: OnboardingTutorialViewedRepository
     
-    init(onboardingTutorialViewedRepository: OnboardingTutorialViewedRepositoryInterface) {
+    init(onboardingTutorialViewedRepository: OnboardingTutorialViewedRepository) {
         
         self.onboardingTutorialViewedRepository = onboardingTutorialViewedRepository
     }

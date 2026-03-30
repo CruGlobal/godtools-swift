@@ -10,9 +10,9 @@ import Foundation
 
 class FavoritingToolMessageCache {
     
-    private let userDefaultsCache: SharedUserDefaultsCache
+    private let userDefaultsCache: UserDefaultsCacheInterface
         
-    init(userDefaultsCache: SharedUserDefaultsCache) {
+    init(userDefaultsCache: UserDefaultsCacheInterface) {
         
         self.userDefaultsCache = userDefaultsCache
     }
