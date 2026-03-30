@@ -24,4 +24,12 @@ class DeferredDeepLinkDomainLayerDependencies {
             localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
+    
+    func getDeferredDeepLinkUseCase() -> GetDeferredDeepLinkUseCase {
+        return GetDeferredDeepLinkUseCase(
+            deepLinkService: coreDataLayer.getDeepLinkingService(),
+            dynalinkDeferredDeepLink: dataLayer.getDynalinkDeferredDeepLink(),
+            launchCountRepository: coreDataLayer.getLaunchCountRepository()
+        )
+    }
 }

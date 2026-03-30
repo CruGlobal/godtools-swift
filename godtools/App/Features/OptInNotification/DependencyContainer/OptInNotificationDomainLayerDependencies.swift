@@ -12,13 +12,13 @@ class OptInNotificationDomainLayerDependencies {
 
     private let coreDataLayer: AppDataLayerDependencies
     private let dataLayer: OptInNotificationDataLayerDependencies
-    private let getOnboardingTutorialIsAvailableUseCase: GetOnboardingTutorialIsAvailableUseCase
+    private let getOnboardingTutorialIsAvailable: GetOnboardingTutorialIsAvailable
 
-    init(coreDataLayer: AppDataLayerDependencies, dataLayer: OptInNotificationDataLayerDependencies, getOnboardingTutorialIsAvailableUseCase: GetOnboardingTutorialIsAvailableUseCase) {
+    init(coreDataLayer: AppDataLayerDependencies, dataLayer: OptInNotificationDataLayerDependencies, getOnboardingTutorialIsAvailable: GetOnboardingTutorialIsAvailable) {
 
         self.coreDataLayer = coreDataLayer
         self.dataLayer = dataLayer
-        self.getOnboardingTutorialIsAvailableUseCase = getOnboardingTutorialIsAvailableUseCase
+        self.getOnboardingTutorialIsAvailable = getOnboardingTutorialIsAvailable
     }
     
     private func getNotificationStatus() -> GetNotificationStatus {
@@ -43,7 +43,7 @@ class OptInNotificationDomainLayerDependencies {
 
     func getShouldPromptForOptInNotificationUseCase() -> ShouldPromptForOptInNotificationUseCase {
         return ShouldPromptForOptInNotificationUseCase(
-            getOnboardingTutorialIsAvailableUseCase: getOnboardingTutorialIsAvailableUseCase,
+            getOnboardingTutorialIsAvailable: getOnboardingTutorialIsAvailable,
             optInNotificationRepository: dataLayer.getOptInNotificationRepository(),
             getNotificationStatus: getNotificationStatus()
         )

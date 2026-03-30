@@ -25,4 +25,10 @@ class DeferredDeepLinkDataLayerDependencies {
             errorReporting: coreDataLayer.getErrorReporting()
         )
     }
+    
+    func getDynalinkUniversalLinkHandler() -> DynalinkUniversalLinkHandler {
+        return DynalinkUniversalLinkHandler(
+            errorReporting: coreDataLayer.getErrorReporting()
+        )
+    }
 }
