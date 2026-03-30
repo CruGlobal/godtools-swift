@@ -164,6 +164,10 @@ class GodToolsAppConfig: AppConfigInterface {
     func getTractRemoteShareConnectionUrl() -> String {
         return Self.getTractRemoteShareWebSocketUrl(environment: environment)
     }
+    
+    func getUserDefaultsCache() -> UserDefaultsCacheInterface {
+        return SharedUserDefaultsCache()
+    }
 }
 
 extension GodToolsAppConfig {

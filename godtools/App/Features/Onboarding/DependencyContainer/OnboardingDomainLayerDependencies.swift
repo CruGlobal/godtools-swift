@@ -19,10 +19,16 @@ class OnboardingDomainLayerDependencies {
         self.dataLayer = dataLayer
     }
     
-    func getOnboardingTutorialIsAvailableUseCase() -> GetOnboardingTutorialIsAvailableUseCase {
-        return GetOnboardingTutorialIsAvailableUseCase(
+    func getOnboardingTutorialIsAvailable() -> GetOnboardingTutorialIsAvailable {
+        return GetOnboardingTutorialIsAvailable(
             launchCountRepository: coreDataLayer.getLaunchCountRepository(),
             onboardingTutorialViewedRepository: dataLayer.getOnboardingTutorialViewedRepository()
+        )
+    }
+    
+    func getOnboardingTutorialIsAvailableUseCase() -> GetOnboardingTutorialIsAvailableUseCase {
+        return GetOnboardingTutorialIsAvailableUseCase(
+            getOnboardingTutorialIsAvailable: getOnboardingTutorialIsAvailable()
         )
     }
     

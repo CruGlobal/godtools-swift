@@ -20,25 +20,32 @@ struct GetOnboardingTutorialIsAvailableUseCaseTests {
         """
     )
     func onboardingTutorialIsAvailableOnFirstAppLaunch() async {
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        let getOnboardingIsAvailable = GetOnboardingTutorialIsAvailableUseCase(
-            launchCountRepository: MockLaunchCountRepository(launchCount: 1),
-            onboardingTutorialViewedRepository: MockOnboardingTutorialViewedRepository(tutorialViewed: false)
+                
+        let getOnboardingIsAvailable = getOnboardingTutorialIsAvailableUseCase(
+            launchCount: 1,
+            tutorialViewed: false
         )
         
         var isAvailableRef: Bool?
-                
-        await confirmation(expectedCount: 1) { confirmation in
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        
+        await withCheckedContinuation { continuation in
+            
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
             
             getOnboardingIsAvailable
                 .execute()
                 .sink { (isAvailable: Bool) in
-                        
-                    confirmation()
-
+                                        
                     isAvailableRef = isAvailable
+                    
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
                 }
                 .store(in: &cancellables)
         }
@@ -54,25 +61,38 @@ struct GetOnboardingTutorialIsAvailableUseCaseTests {
         """
     )
     func onboardingTutorialShouldNotBeAvailableOnSecondAppLaunchAndAlreadyViewed() async {
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        let getOnboardingIsAvailable = GetOnboardingTutorialIsAvailableUseCase(
-            launchCountRepository: MockLaunchCountRepository(launchCount: 2),
-            onboardingTutorialViewedRepository: MockOnboardingTutorialViewedRepository(tutorialViewed: true)
+                
+        let getOnboardingIsAvailable = getOnboardingTutorialIsAvailableUseCase(
+            launchCount: 2,
+            tutorialViewed: true
         )
         
         var isAvailableRef: Bool?
-                
-        await confirmation(expectedCount: 1) { confirmation in
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        var triggerCount: Int = 0
+        
+        await withCheckedContinuation { continuation in
+            
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
             
             getOnboardingIsAvailable
                 .execute()
                 .sink { (isAvailable: Bool) in
-                        
-                    confirmation()
-
+                    
+                    triggerCount += 1
+                    
                     isAvailableRef = isAvailable
+                    
+                    if triggerCount == 1 {
+                        
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    }
                 }
                 .store(in: &cancellables)
         }
@@ -88,29 +108,61 @@ struct GetOnboardingTutorialIsAvailableUseCaseTests {
         """
     )
     func onboardingTutorialShouldNotBeAvailableOnSecondAppLaunchAndNotViewed() async {
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        let getOnboardingIsAvailable = GetOnboardingTutorialIsAvailableUseCase(
-            launchCountRepository: MockLaunchCountRepository(launchCount: 2),
-            onboardingTutorialViewedRepository: MockOnboardingTutorialViewedRepository(tutorialViewed: false)
+                
+        let getOnboardingIsAvailable = getOnboardingTutorialIsAvailableUseCase(
+            launchCount: 2,
+            tutorialViewed: false
         )
         
         var isAvailableRef: Bool?
-                
-        await confirmation(expectedCount: 1) { confirmation in
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        var triggerCount: Int = 0
+        
+        await withCheckedContinuation { continuation in
+            
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
             
             getOnboardingIsAvailable
                 .execute()
                 .sink { (isAvailable: Bool) in
-                        
-                    confirmation()
-
+                    
+                    triggerCount += 1
+                    
                     isAvailableRef = isAvailable
+                    
+                    if triggerCount == 1 {
+                        
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    }
                 }
                 .store(in: &cancellables)
         }
         
         #expect(isAvailableRef == false)
+    }
+}
+
+extension GetOnboardingTutorialIsAvailableUseCaseTests {
+    
+    private func getOnboardingTutorialIsAvailableUseCase(launchCount: Int, tutorialViewed: Bool) -> GetOnboardingTutorialIsAvailableUseCase {
+        
+        let cache = OnboardingTutorialViewedCache(userDefaultsCache: InMemUserDefaultsCache())
+        
+        cache.storeOnboardingTutorialViewed(viewed: tutorialViewed)
+        
+        let getOnboardingTutorialIsAvailable = GetOnboardingTutorialIsAvailable(
+            launchCountRepository: MockLaunchCountRepository(launchCount: launchCount),
+            onboardingTutorialViewedRepository: OnboardingTutorialViewedRepository(cache: cache)
+        )
+            
+        return GetOnboardingTutorialIsAvailableUseCase(
+            getOnboardingTutorialIsAvailable: getOnboardingTutorialIsAvailable
+        )
     }
 }

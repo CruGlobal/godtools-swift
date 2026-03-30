@@ -100,34 +100,29 @@ struct LanguagesCacheTests {
         let languageCodes: [String] = argument.queryByLanguageCodes.map { $0.rawValue }
         
         var cancellables: Set<AnyCancellable> = Set()
-        var languagesRef: [LanguageDataModel] = Array()
         
-        await confirmation(expectedCount: 1) { confirmation in
+        var languagesRef: [LanguageDataModel] = Array()
+                
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                languagesCache
-                    .getCachedLanguagesPublisher(codes: languageCodes)
-                    .sink { _ in
-                        
-                    } receiveValue: { (languages: [LanguageDataModel]) in
-                        
-                        languagesRef = languages
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                                
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    }
-                    .store(in: &cancellables)
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
             }
+            
+            languagesCache
+                .getCachedLanguagesPublisher(codes: languageCodes)
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { (languages: [LanguageDataModel]) in
+                    
+                    languagesRef = languages
+                    
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
+                })
+                .store(in: &cancellables)
         }
                 
         let languageIds: [String] = languagesRef.map { $0.id }
