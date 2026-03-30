@@ -130,66 +130,49 @@ class AppFlow: NSObject, Flow {
            
             case .fromTerminatedState:
                 
+                let loadingView: UIView = attachLaunchedFromBackgroundLoadingView()
+                
                 loadInitialData()
                 countAppSessionLaunch()
                 
-                let getOnboardingTutorialIsAvailableUseCase: GetOnboardingTutorialIsAvailableUseCase = appDiContainer.feature.onboarding.domainLayer.getOnboardingTutorialIsAvailableUseCase()
-                let shouldPromptForOptInNotificationUseCase: ShouldPromptForOptInNotificationUseCase = appDiContainer.feature.optInNotification.domainLayer.getShouldPromptForOptInNotificationUseCase()
-                let dynalinkDeferredDeepLink: DynalinkDeferredDeepLink = appDiContainer.feature.deferredDeepLink.dataLayer.getDynalinkDeferredDeepLink()
-                
                 cancellableForAppLaunchedFromTerminatedStateOptions = Publishers.CombineLatest3(
-                    getOnboardingTutorialIsAvailableUseCase
-                        .execute(),
-                    shouldPromptForOptInNotificationUseCase
-                        .execute()
+                    appDiContainer.feature.onboarding.domainLayer.getOnboardingTutorialIsAvailableUseCase().execute(),
+                    appDiContainer.feature.optInNotification.domainLayer.getShouldPromptForOptInNotificationUseCase().execute()
                         .catch { (error: Error) in
                             return Just(false)
                                 .eraseToAnyPublisher()
                         },
-                    dynalinkDeferredDeepLink
-                        .getDeepLinkUrlPublisher()
-                        .catch { (error: Error) in
-                            return Just(nil)
-                                .eraseToAnyPublisher()
-                        }
+                    appDiContainer.feature.deferredDeepLink.domainLayer.getDeferredDeepLinkUseCase().execute()
                 )
                 .receive(on: DispatchQueue.main)
-                .sink(receiveValue: { [weak self] (onboardingTutorialIsAvailable: Bool, shouldPromptForOptInNotification: Bool, deferredDeepLinkUrl: URL?) in
+                .sink(receiveValue: { [weak self] (onboardingTutorialIsAvailable: Bool, shouldPromptForOptInNotification: Bool, deferredDeepLink: ParsedDeepLinkType?) in
                     
                     guard let appFlow = self else {
                         return
                     }
                     
-                    let parsedDeferredDeepLink: ParsedDeepLinkType?
-                    
-                    if let deferredDeepLinkUrl = deferredDeepLinkUrl {
-                        parsedDeferredDeepLink = appFlow.deepLinkingService.parseDeepLink(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: deferredDeepLinkUrl)))
-                    }
-                    else {
-                        parsedDeferredDeepLink = nil
-                    }
-                    
                     appFlow.cancellableForAppLaunchedFromTerminatedStateOptions = nil
                     
+                    appFlow.removeLaunchedFromBackgroundLoadingView(view: loadingView)
+                    
                     let launchCount: Int = appFlow.launchCountRepository.getLaunchCount()
-                    let hasPossibleDeferredDeepLinkFOrDynalink: Bool = UIPasteboard.general.hasURLs
+                    let hasPossibleDeferredDeepLinkInPasteboardForDynalink: Bool = UIPasteboard.general.hasURLs
                     
-                    // TODO: Disabling pasteboard as Dynalink SDK offers seamless deferred deep linking.  Will possibly remove Pasteboard logic in the future in GT-2997. ~Levi
-                    let shouldOpenPasteboardForDeferredDeepLink: Bool = false// launchCount == 1 && hasPossibleDeferredDeepLinkFOrDynalink
+                    let shouldOpenPasteboardForDeferredDeepLink: Bool = launchCount == 1 && hasPossibleDeferredDeepLinkInPasteboardForDynalink
                     
-                    if shouldOpenPasteboardForDeferredDeepLink {
+                    if let deepLink = deferredDeepLink {
                         
-                        appFlow.navigate(step: .showDeferredDeepLinkModal)
-                        
-                    }
-                    else if let parsedDeferredDeepLink = parsedDeferredDeepLink {
-                        
-                        appFlow.navigate(step: .deepLink(deepLinkType: parsedDeferredDeepLink))
+                        appFlow.navigate(step: .deepLink(deepLinkType: deepLink))
                     }
                     else if let deepLink = appFlow.appLaunchedFromDeepLink {
                         
                         appFlow.appLaunchedFromDeepLink = nil
                         appFlow.navigate(step: .deepLink(deepLinkType: deepLink))
+                    }
+                    else if shouldOpenPasteboardForDeferredDeepLink {
+                        
+                        appFlow.navigate(step: .showDeferredDeepLinkModal)
+                        
                     }
                     else if onboardingTutorialIsAvailable {
                         

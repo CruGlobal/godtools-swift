@@ -30,4 +30,5 @@ protocol AppConfigInterface {
     @available(iOS 17.4, *)
     func getSwiftDatabase() throws -> SwiftDatabase?
     func getTractRemoteShareConnectionUrl() -> String
+    func getUserDefaultsCache() -> UserDefaultsCacheInterface
 }

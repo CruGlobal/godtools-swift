@@ -11,18 +11,20 @@ import Combine
 
 final class ShouldPromptForOptInNotificationUseCase {
     
-    private let getOnboardingTutorialIsAvailableUseCase: GetOnboardingTutorialIsAvailableUseCase
+    private let getOnboardingTutorialIsAvailable: GetOnboardingTutorialIsAvailable
     private let optInNotificationRepository: OptInNotificationRepositoryInterface
     private let getNotificationStatus: GetNotificationStatus
     
-    init(getOnboardingTutorialIsAvailableUseCase: GetOnboardingTutorialIsAvailableUseCase, optInNotificationRepository: OptInNotificationRepositoryInterface, getNotificationStatus: GetNotificationStatus) {
+    init(getOnboardingTutorialIsAvailable: GetOnboardingTutorialIsAvailable, optInNotificationRepository: OptInNotificationRepositoryInterface, getNotificationStatus: GetNotificationStatus) {
         
-        self.getOnboardingTutorialIsAvailableUseCase = getOnboardingTutorialIsAvailableUseCase
+        self.getOnboardingTutorialIsAvailable = getOnboardingTutorialIsAvailable
         self.optInNotificationRepository = optInNotificationRepository
         self.getNotificationStatus = getNotificationStatus
     }
     
     func execute() -> AnyPublisher<Bool, Error> {
+        
+        let onboardingTutorialIsAvailable: Bool = getOnboardingTutorialIsAvailable.getIsAvailable()
         
         let promptCount: Int = optInNotificationRepository.getPromptCount()
         let isFirstPromptAttempt: Bool = promptCount == 0
@@ -33,33 +35,28 @@ final class ShouldPromptForOptInNotificationUseCase {
         let remotePromptLimit = optInNotificationRepository.getRemotePromptLimit()
         let remoteFeatureEnabled = optInNotificationRepository.getRemoteFeatureEnabled()
         
-        return Publishers.CombineLatest(
-            getOnboardingTutorialIsAvailableUseCase
-                .execute()
-                .setFailureType(to: Error.self),
-            getNotificationStatus
-                .getStatusPublisher()
-        )
-        .map { (onboardingTutorialIsAvailable: Bool, notificationStatus: PermissionStatusDomainModel) in
-                      
-            guard onboardingTutorialIsAvailable == false else {
-                return false
+        return getNotificationStatus
+            .getStatusPublisher()
+            .map { (notificationStatus: PermissionStatusDomainModel) in
+                          
+                guard onboardingTutorialIsAvailable == false else {
+                    return false
+                }
+                
+                guard remoteFeatureEnabled == true else {
+                    return false
+                }
+                
+                guard promptCount < remotePromptLimit else {
+                    return false
+                }
+                
+                guard notificationStatus == .denied || notificationStatus == .undetermined else {
+                    return false
+                }
+                
+                return lastPrompted < remoteTimeDate || isFirstPromptAttempt
             }
-            
-            guard remoteFeatureEnabled == true else {
-                return false
-            }
-            
-            guard promptCount < remotePromptLimit else {
-                return false
-            }
-            
-            guard notificationStatus == .denied || notificationStatus == .undetermined else {
-                return false
-            }
-            
-            return lastPrompted < remoteTimeDate || isFirstPromptAttempt
-        }
-        .eraseToAnyPublisher()
+            .eraseToAnyPublisher()
     }
 }

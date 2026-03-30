@@ -1,5 +1,5 @@
 //
-//  OnboardingTutorialViewedUserDefaultsCache.swift
+//  OnboardingTutorialViewedCache.swift
 //  godtools
 //
 //  Created by Levi Eggert on 3/17/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class OnboardingTutorialViewedUserDefaultsCache {
+class OnboardingTutorialViewedCache {
         
     private let userDefaultsCache: UserDefaultsCacheInterface
     private let onboardingTutorialViewedCacheKey: String = "keyOnboardingTutorialViewed"
