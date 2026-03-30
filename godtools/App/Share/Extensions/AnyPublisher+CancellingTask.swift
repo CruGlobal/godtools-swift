@@ -41,16 +41,22 @@ extension AnyPublisher where Failure: Error {
 }
 
 extension AnyPublisher where Failure == Error {
+    
     init(asyncFunc: @escaping () async throws -> Output) {
+        
         self.init { subscriber in
+            
             let task = Task {
                 do {
-                    subscriber.send(try await asyncFunc())
+                    let output = try await asyncFunc()
+                    try await Task.sleep(for: .milliseconds(10)) // TODO: I noticed this publisher will not complete if an async task is never ran.  Would like to move away from using this extension as soon as possible. ~Levi
+                    subscriber.send(output)
                     subscriber.send(completion: .finished)
                 } catch {
                     subscriber.send(completion: .failure(error))
                 }
             }
+            
             return AnyCancellable { task.cancel() }
         }
     }

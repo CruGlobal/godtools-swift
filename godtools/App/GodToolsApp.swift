@@ -199,7 +199,14 @@ extension GodToolsApp {
     }
     
     static func openUrl(url: URL) -> Bool {
-                
+            
+        let dynalinkHandler: DynalinkUniversalLinkHandler = appDiContainer.feature.deferredDeepLink.dataLayer.getDynalinkUniversalLinkHandler()
+        
+        Task {
+            
+            await dynalinkHandler.handleUniversalLink(url: url)
+        }
+        
         let deepLinkedHandled: Bool = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
         
         if deepLinkedHandled {

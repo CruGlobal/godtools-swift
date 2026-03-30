@@ -16,7 +16,6 @@
   },
   "testTargets" : [
     {
-      "parallelizable" : false,
       "target" : {
         "containerPath" : "container:godtools.xcodeproj",
         "identifier" : "684328F01EB7CF66005E9131",

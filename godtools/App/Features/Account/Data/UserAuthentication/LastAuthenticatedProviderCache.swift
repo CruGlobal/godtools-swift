@@ -12,9 +12,9 @@ final class LastAuthenticatedProviderCache {
     
     private static let lastAuthenticatedProviderCacheKey: String = "LastAuthenticatedProviderCache.lastAuthenticatedProviderCacheKey"
     
-    private let userDefaultsCache: SharedUserDefaultsCache
+    private let userDefaultsCache: UserDefaultsCacheInterface
     
-    init(userDefaultsCache: SharedUserDefaultsCache) {
+    init(userDefaultsCache: UserDefaultsCacheInterface) {
         
         self.userDefaultsCache = userDefaultsCache
     }
