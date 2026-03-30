@@ -17,9 +17,9 @@ class OnboardingDataLayerDependencies {
         self.coreDataLayer = coreDataLayer
     }
     
-    func getOnboardingTutorialViewedRepository() -> OnboardingTutorialViewedRepositoryInterface {
+    func getOnboardingTutorialViewedRepository() -> OnboardingTutorialViewedRepository {
         return OnboardingTutorialViewedRepository(
-            cache: OnboardingTutorialViewedUserDefaultsCache(
+            cache: OnboardingTutorialViewedCache(
                 userDefaultsCache: coreDataLayer.getUserDefaultsCache()
             )
         )
