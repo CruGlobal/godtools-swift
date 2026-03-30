@@ -90,5 +90,9 @@ final class TestsAppConfig: AppConfigInterface {
     func getTractRemoteShareConnectionUrl() -> String {
         return getMobileContentApiBaseUrlByScheme(scheme: "wss") + "/" + "cable"
     }
+    
+    func getUserDefaultsCache() -> UserDefaultsCacheInterface {
+        return InMemUserDefaultsCache()
+    }
 }
 
