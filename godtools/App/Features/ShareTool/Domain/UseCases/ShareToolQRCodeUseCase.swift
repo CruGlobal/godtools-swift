@@ -26,14 +26,14 @@ final class ShareToolQRCodeUseCase {
             pageNumber: pageNumber
         )
         
-        guard let urlString = urlString, let url = URL(string: urlString) else {
+        guard let urlString = urlString, !urlString.isEmpty else {
             
             let error: Error = NSError.errorWithDescription(description: "Failed to get share tool url.")
             return Fail(error: error)
                 .eraseToAnyPublisher()
         }
         
-        let domainModel = ShareToolQRCodeDomainModel(url: url)
+        let domainModel = ShareToolQRCodeDomainModel(url: urlString)
         
         return Just(domainModel)
             .setFailureType(to: Error.self)

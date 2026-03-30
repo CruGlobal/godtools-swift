@@ -9,11 +9,11 @@
 import Foundation
 import Combine
 
-class OnboardingTutorialViewedRepository: OnboardingTutorialViewedRepositoryInterface {
+class OnboardingTutorialViewedRepository {
     
-    private let cache: OnboardingTutorialViewedUserDefaultsCache
+    private let cache: OnboardingTutorialViewedCache
     
-    init(cache: OnboardingTutorialViewedUserDefaultsCache) {
+    init(cache: OnboardingTutorialViewedCache) {
         
         self.cache = cache
     }
@@ -21,14 +21,6 @@ class OnboardingTutorialViewedRepository: OnboardingTutorialViewedRepositoryInte
     func getOnboardingTutorialViewed() -> Bool {
        
         return cache.getOnboardingTutorialViewed()
-    }
-    
-    func getOnboardingTutorialViewedPublisher() -> AnyPublisher<Bool, Never> {
-        
-        let cachedValue: Bool = cache.getOnboardingTutorialViewed()
-        
-        return Just(cachedValue)
-            .eraseToAnyPublisher()
     }
     
     func storeOnboardingTutorialViewed(viewed: Bool) {

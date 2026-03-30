@@ -12,14 +12,67 @@ import Combine
 
 struct GetOnboardingTutorialStringsUseCaseTests {
     
+    struct TestArgument {
+        let appLanguage: AppLanguageDomainModel
+        let expectedChooseLanguageButtonTitle: String
+        let expectedBeginButtonTitle: String
+    }
+    
     @Test(
         """
         Given: User is viewing the onboarding tutorial.
-        When: The app language is switched from English to Spanish.
-        Then: The interface strings should be translated into Spanish.
-        """
+        When: The app language is set.
+        Then: The interface strings should be translated in the app language.
+        """,
+        arguments: [
+            TestArgument(
+                appLanguage: LanguageCodeDomainModel.english.rawValue,
+                expectedChooseLanguageButtonTitle: "Choose Language",
+                expectedBeginButtonTitle: "Begin"
+            ),
+            TestArgument(
+                appLanguage: LanguageCodeDomainModel.spanish.rawValue,
+                expectedChooseLanguageButtonTitle: "Elige lengua",
+                expectedBeginButtonTitle: "Comenzar"
+            )
+        ]
     )
-    func interfaceStringsAreTranslatedWhenAppLanguageChanges() async {
+    func stringsAreTranslatedInAppLanguage(argument: TestArgument) async {
+        
+        let getOnboardingTutorialStringsUseCase = getOnboardingTutorialStringsUseCase()
+        
+        var stringsRef: OnboardingTutorialStringsDomainModel?
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        
+        await withCheckedContinuation { continuation in
+            
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
+            
+            getOnboardingTutorialStringsUseCase
+                .execute(appLanguage: argument.appLanguage)
+                .sink { (strings: OnboardingTutorialStringsDomainModel) in
+                    
+                    stringsRef = strings
+                    
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
+                }
+                .store(in: &cancellables)
+        }
+        
+        #expect(stringsRef?.chooseAppLanguageButtonTitle == argument.expectedChooseLanguageButtonTitle)
+        #expect(stringsRef?.beginTutorialButtonTitle == argument.expectedBeginButtonTitle)
+    }
+}
+
+extension GetOnboardingTutorialStringsUseCaseTests {
+    
+    private func getOnboardingTutorialStringsUseCase() -> GetOnboardingTutorialStringsUseCase {
         
         let chooseLanguageButtonTitleKey: String = "onboardingTutorial.chooseLanguageButton.title"
         let beginButtonTitleKey: String = "onboardingTutorial.beginButton.title"
@@ -35,53 +88,10 @@ struct GetOnboardingTutorialStringsUseCaseTests {
             ]
         ]
         
-        let getOnboardingTutorialInterfaceStringsRepository =  GetOnboardingTutorialStringsUseCase(
+        return GetOnboardingTutorialStringsUseCase(
             localizationServices: MockLocalizationServices(
                 localizableStrings: localizableStrings
             )
         )
-        
-        let appLanguagePublisher: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
-        
-        var englishInterfaceStringsRef: OnboardingTutorialStringsDomainModel?
-        var spanishInterfaceStringsRef: OnboardingTutorialStringsDomainModel?
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        var sinkCount: Int = 0
-        
-        await confirmation(expectedCount: 2) { confirmation in
-            
-            appLanguagePublisher
-                .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<OnboardingTutorialStringsDomainModel, Never> in
-                    
-                    return getOnboardingTutorialInterfaceStringsRepository
-                        .execute(appLanguage: appLanguage)
-                        .eraseToAnyPublisher()
-                })
-                .sink { (interfaceStrings: OnboardingTutorialStringsDomainModel) in
-                    
-                    confirmation()
-                    
-                    sinkCount += 1
-                    
-                    if sinkCount == 1 {
-                        
-                        englishInterfaceStringsRef = interfaceStrings
-                        appLanguagePublisher.send(LanguageCodeDomainModel.spanish.rawValue)
-                    }
-                    else if sinkCount == 2 {
-                        
-                        spanishInterfaceStringsRef = interfaceStrings
-                    }
-                }
-                .store(in: &cancellables)
-        }
-        
-        #expect(englishInterfaceStringsRef?.chooseAppLanguageButtonTitle == "Choose Language")
-        #expect(englishInterfaceStringsRef?.beginTutorialButtonTitle == "Begin")
-        
-        #expect(spanishInterfaceStringsRef?.chooseAppLanguageButtonTitle == "Elige lengua")
-        #expect(spanishInterfaceStringsRef?.beginTutorialButtonTitle == "Comenzar")
     }
 }

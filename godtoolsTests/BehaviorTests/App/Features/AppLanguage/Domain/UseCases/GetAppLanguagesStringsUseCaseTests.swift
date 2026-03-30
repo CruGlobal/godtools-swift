@@ -12,14 +12,63 @@ import Combine
 
 struct GetAppLanguagesStringsUseCaseTests {
     
+    struct TestArgument {
+        let appLanguage: AppLanguageDomainModel
+        let expectedNavTitle: String
+    }
+    
     @Test(
         """
         Given: User is viewing the app languages.
-        When: The app language is switched from English to Spanish.
-        Then: The interface strings should be translated into Spanish.
-        """
+        When: The app language is set.
+        Then: The interface strings should be translated in the app language.
+        """,
+        arguments: [
+            TestArgument(
+                appLanguage: LanguageCodeDomainModel.english.rawValue,
+                expectedNavTitle: "App Language"
+            ),
+            TestArgument(
+                appLanguage: LanguageCodeDomainModel.spanish.rawValue,
+                expectedNavTitle: "Idioma de la aplicación"
+            )
+        ]
     )
-    func interfaceStringsTranslateWhenAppLanguageChanges() async {
+    func stringsTranslateInAppLanguage(argument: TestArgument) async {
+        
+        let getAppLanguagesStringsUseCase = getAppLanguagesStringsUseCase()
+        
+        var stringsRef: AppLanguagesStringsDomainModel?
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        
+        await withCheckedContinuation { continuation in
+            
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
+            
+            getAppLanguagesStringsUseCase
+                .execute(appLanguage: argument.appLanguage)
+                .sink { (strings: AppLanguagesStringsDomainModel) in
+                    
+                    stringsRef = strings
+                    
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
+                }
+                .store(in: &cancellables)
+        }
+        
+        #expect(stringsRef?.navTitle == argument.expectedNavTitle)
+    }
+}
+
+extension GetAppLanguagesStringsUseCaseTests {
+    
+    private func getAppLanguagesStringsUseCase() -> GetAppLanguagesStringsUseCase {
         
         let navTitleKey: String = "languageSettings.appLanguage.title"
         
@@ -32,60 +81,8 @@ struct GetAppLanguagesStringsUseCaseTests {
             ]
         ]
         
-        let getAppLanguagesStringsUseCase = GetAppLanguagesStringsUseCase(
+        return GetAppLanguagesStringsUseCase(
             localizationServices: MockLocalizationServices(localizableStrings: localizableStrings)
         )
-        
-        let appLanguagePublisher: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        var englishInterfaceStringsRef: AppLanguagesStringsDomainModel?
-        var spanishInterfaceStringsRef: AppLanguagesStringsDomainModel?
-        
-        var sinkCount: Int = 0
-        
-        await confirmation(expectedCount: 2) { confirmation in
-            
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                appLanguagePublisher
-                    .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppLanguagesStringsDomainModel, Never> in
-                        
-                        return getAppLanguagesStringsUseCase
-                            .execute(appLanguage: appLanguage)
-                            .eraseToAnyPublisher()
-                    })
-                    .sink { (interfaceStrings: AppLanguagesStringsDomainModel) in
-                        
-                        sinkCount += 1
-                        confirmation()
-                        
-                        if sinkCount == 1 {
-                            
-                            englishInterfaceStringsRef = interfaceStrings
-                            appLanguagePublisher.send(LanguageCodeDomainModel.spanish.rawValue)
-                        }
-                        else if sinkCount == 2 {
-                            
-                            spanishInterfaceStringsRef = interfaceStrings
-                            
-                            // When finished be sure to call:
-                            timeoutTask.cancel()
-                            continuation.resume(returning: ())
-                        }
-                    }
-                    .store(in: &cancellables)
-            }
-        }
-        
-        #expect(englishInterfaceStringsRef?.navTitle == "App Language")
-        
-        #expect(spanishInterfaceStringsRef?.navTitle == "Idioma de la aplicación")
     }
 }
