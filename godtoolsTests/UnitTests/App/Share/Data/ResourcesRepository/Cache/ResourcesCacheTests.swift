@@ -48,36 +48,30 @@ struct ResourcesCacheTests {
         var cancellables: Set<AnyCancellable> = Set()
         
         var lessonsRef: [ResourceDataModel] = Array()
-        
-        await confirmation(expectedCount: 1) { confirmation in
-            
-            await withCheckedContinuation { continuation in
                 
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
+        await withCheckedContinuation { continuation in
+            
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
+            
+            realmResourcesCache
+                .getLessonsPublisher(
+                    filterByLanguageId: nil,
+                    sorted: false
+                )
+                .sink { _ in
+                    
+                } receiveValue: { (lessons: [ResourceDataModel]) in
+                    
+                    lessonsRef = lessons
+                           
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
                     continuation.resume(returning: ())
                 }
-                
-                realmResourcesCache
-                    .getLessonsPublisher(
-                        filterByLanguageId: nil,
-                        sorted: false
-                    )
-                    .sink { _ in
-                        
-                    } receiveValue: { (lessons: [ResourceDataModel]) in
-                        
-                        lessonsRef = lessons
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                        
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    }
-                    .store(in: &cancellables)
-            }
+                .store(in: &cancellables)
         }
         
         #expect(lessonsRef.map {$0.id}.sorted() == expectedLessonIds)
@@ -96,36 +90,30 @@ struct ResourcesCacheTests {
         var cancellables: Set<AnyCancellable> = Set()
         
         var lessonsRef: [ResourceDataModel] = Array()
-        
-        await confirmation(expectedCount: 1) { confirmation in
-            
-            await withCheckedContinuation { continuation in
                 
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
+        await withCheckedContinuation { continuation in
+            
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
+            
+            realmResourcesCache
+                .getLessonsPublisher(
+                    filterByLanguageId: getLanguageId(id: spanishLanguageId),
+                    sorted: false
+                )
+                .sink { _ in
+                    
+                } receiveValue: { (lessons: [ResourceDataModel]) in
+                    
+                    lessonsRef = lessons
+          
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
                     continuation.resume(returning: ())
                 }
-                
-                realmResourcesCache
-                    .getLessonsPublisher(
-                        filterByLanguageId: getLanguageId(id: spanishLanguageId),
-                        sorted: false
-                    )
-                    .sink { _ in
-                        
-                    } receiveValue: { (lessons: [ResourceDataModel]) in
-                        
-                        lessonsRef = lessons
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                        
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    }
-                    .store(in: &cancellables)
-            }
+                .store(in: &cancellables)
         }
         
         #expect(lessonsRef.map {$0.id}.sorted() == expectedLessonIds)
@@ -145,35 +133,29 @@ struct ResourcesCacheTests {
         var cancellables: Set<AnyCancellable> = Set()
         
         var lessonsRef: [ResourceDataModel] = Array()
-        
-        await confirmation(expectedCount: 1) { confirmation in
-            
-            await withCheckedContinuation { continuation in
                 
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
+        await withCheckedContinuation { continuation in
+            
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
+            
+            realmResourcesCache
+                .getFeaturedLessonsPublisher(
+                    sorted: false
+                )
+                .sink { _ in
+                    
+                } receiveValue: { (lessons: [ResourceDataModel]) in
+                    
+                    lessonsRef = lessons
+                    
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
                     continuation.resume(returning: ())
                 }
-                
-                realmResourcesCache
-                    .getFeaturedLessonsPublisher(
-                        sorted: false
-                    )
-                    .sink { _ in
-                        
-                    } receiveValue: { (lessons: [ResourceDataModel]) in
-                        
-                        lessonsRef = lessons
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                        
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    }
-                    .store(in: &cancellables)
-            }
+                .store(in: &cancellables)
         }
 
         #expect(lessonsRef.map {$0.id}.sorted() == expectedLessonIds)
