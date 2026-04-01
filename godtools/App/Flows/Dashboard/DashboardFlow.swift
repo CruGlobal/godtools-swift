@@ -9,7 +9,7 @@
 import UIKit
 import Combine
 
-class DashboardFlow: Flow, ToolNavigationFlow {
+class DashboardFlow: Flow, ToolNavigationFlow, LocalizationSettingsNavigationFlow {
         
     private let dashboardTabObserver: CurrentValueSubject<DashboardTabTypeDomainModel, Never>
     private let startingTab: DashboardTabTypeDomainModel = .favorites
@@ -28,6 +28,7 @@ class DashboardFlow: Flow, ToolNavigationFlow {
     var lessonFlow: LessonFlow?
     var tractFlow: TractFlow?
     var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
+    var localizationSettingsFlow: LocalizationSettingsFlow?
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     
@@ -65,7 +66,19 @@ class DashboardFlow: Flow, ToolNavigationFlow {
             navigationController.popViewController(animated: true)
 
         case .localizationSettingsTappedFromLessons:
-            navigateToMenu(animated: true, initialNavigationStep: .localizationSettingsTappedFromMenu)
+            navigateToLocalizationSettings(
+                showsPreferNotToSay: false,
+                shouldStoreCountryWhenSelected: true,
+                userShouldConfirmSelectedCountry: false
+            )
+            
+        case .localizationSettingsFlowCompleted(let state):
+            switch state {
+            case .userTappedBackFromLocalizationSettings:
+                navigateBackFromLocalizationSettingsFlow()
+            case .userConfirmedLocalizationSetting(let countryListItem):
+                navigateBackFromLocalizationSettingsFlow()
+            }
 
         case .languageTappedFromLessonLanguageFilter:
             navigationController.popViewController(animated: true)
@@ -217,8 +230,12 @@ class DashboardFlow: Flow, ToolNavigationFlow {
             navigationController.pushViewController(toolDetails, animated: true)
 
         case .localizationSettingsTappedFromTools:
-            navigateToMenu(animated: true, initialNavigationStep: .localizationSettingsTappedFromMenu)
-
+            navigateToLocalizationSettings(
+                showsPreferNotToSay: false,
+                shouldStoreCountryWhenSelected: true,
+                userShouldConfirmSelectedCountry: false
+            )
+            
         case .openToolTappedFromToolDetails(let toolId, let primaryLanguage, let parallelLanguage, let selectedLanguageIndex):
             
             if dashboardTabObserver.value == .favorites {
