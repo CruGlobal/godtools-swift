@@ -374,7 +374,8 @@ class AppDataLayerDependencies {
             cache: cache,
             attachmentsRepository: getAttachmentsRepository(),
             languagesRepository: getLanguagesRepository(),
-            syncInvalidatorPersistence: getUserDefaultsCache()
+            syncInvalidatorPersistence: getUserDefaultsCache(),
+            userDefaultsCache: getUserDefaultsCache()
         )
     }
     
