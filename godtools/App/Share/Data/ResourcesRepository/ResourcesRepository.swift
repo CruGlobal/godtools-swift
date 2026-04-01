@@ -14,19 +14,22 @@ import RepositorySync
 class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResourcesApi> {
             
     private static let syncInvalidatorIdForResourcesPlustLatestTranslationsAndAttachments: String = "resourcesPlusLatestTranslationAttachments.syncInvalidator.id"
+    private static let syncedResourcesFromJsonCacheKey: String = "ResourcesRepository.synced.resources.json"
     
     private let attachmentsRepository: AttachmentsRepository
     private let languagesRepository: LanguagesRepository
     private let syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface
+    private let userDefaultsCache: UserDefaultsCacheInterface
     
     let cache: ResourcesCache
     
-    init(externalDataFetch: MobileContentResourcesApi, persistence: any Persistence<ResourceDataModel, ResourceCodable>, cache: ResourcesCache, attachmentsRepository: AttachmentsRepository, languagesRepository: LanguagesRepository, syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface) {
+    init(externalDataFetch: MobileContentResourcesApi, persistence: any Persistence<ResourceDataModel, ResourceCodable>, cache: ResourcesCache, attachmentsRepository: AttachmentsRepository, languagesRepository: LanguagesRepository, syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface, userDefaultsCache: UserDefaultsCacheInterface) {
         
         self.cache = cache
         self.attachmentsRepository = attachmentsRepository
         self.languagesRepository = languagesRepository
         self.syncInvalidatorPersistence = syncInvalidatorPersistence
+        self.userDefaultsCache = userDefaultsCache
                         
         super.init(
             externalDataFetch: externalDataFetch,
@@ -53,17 +56,9 @@ extension ResourcesRepository {
     }
 }
 
-// MARK: - Sync
+// MARK: - Sync Resource
 
 extension ResourcesRepository {
-    
-    private var resourcesHaveBeenSynced: Bool {
-        get throws {
-            let languagesCount: Int = try languagesRepository.persistence.getObjectCount()
-            let resourcesCount: Int = try persistence.getObjectCount()
-            return languagesCount > 0 && resourcesCount > 0
-        }
-    }
     
     func syncResourceAndLatestTranslationsPublisher(resourceId: String, requestPriority: RequestPriority) -> AnyPublisher<Void, Error> {
         
@@ -98,82 +93,71 @@ extension ResourcesRepository {
             })
             .eraseToAnyPublisher()
     }
+}
+
+// MARK: - Sync Resources
+
+extension ResourcesRepository {
+    
+    private var syncedResourcesFromJson: Bool {
+        return userDefaultsCache.getValue(key: Self.syncedResourcesFromJsonCacheKey) as? Bool ?? false
+    }
+    
+    private func markDidSyncResourcesFromJson() {
+        self.userDefaultsCache.cache(value: true, forKey: Self.syncedResourcesFromJsonCacheKey)
+        self.userDefaultsCache.commitChanges()
+    }
     
     func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsPublisher(requestPriority: RequestPriority, forceFetchFromRemote: Bool) -> AnyPublisher<ResourcesCacheSyncResult, Error> {
         
-        do {
-            
-            if try !resourcesHaveBeenSynced {
+        return syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFile()
+            .setFailureType(to: Error.self)
+            .flatMap { (result: ResourcesCacheSyncResult?) -> AnyPublisher<ResourcesCacheSyncResult, Error> in
                 
-                return syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFile()
-                    .map{ _ in
-                        return ResourcesCacheSyncResult.emptyResult()
-                    }
-                    .catch { _ in
-                        return self.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote(
-                            requestPriority: requestPriority,
-                            forceFetchFromRemote: true
-                        )
-                        .eraseToAnyPublisher()
-                    }
-                    .eraseToAnyPublisher()
-            }
-            else {
-                
-                return syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote(
+                return self.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote(
                     requestPriority: requestPriority,
                     forceFetchFromRemote: forceFetchFromRemote
                 )
                 .eraseToAnyPublisher()
             }
-        }
-        catch let error {
-            return Fail(error: error)
-                .eraseToAnyPublisher()
-        }
+            .eraseToAnyPublisher()
     }
     
-    func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFile() -> AnyPublisher<ResourcesCacheSyncResult?, Error> {
+    func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFile() -> AnyPublisher<ResourcesCacheSyncResult?, Never> {
                         
-        do {
-            
-            guard try !resourcesHaveBeenSynced else {
+        guard !syncedResourcesFromJson else {
+            return Just(nil)
+                .eraseToAnyPublisher()
+        }
+        
+        return Publishers
+            .CombineLatest(
+                languagesRepository.syncLanguagesFromJsonFileCache(),
+                ResourcesJsonFileCache(jsonServices: JsonServices()).getResourcesPlusLatestTranslationsAndAttachments().publisher
+            )
+            .receive(on: DispatchQueue.main)
+            .flatMap { (languages: [LanguageDataModel], resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable) -> AnyPublisher<ResourcesCacheSyncResult, Error> in
                 
-                return Just(nil)
-                    .setFailureType(to: Error.self)
+                return self.cache.syncResources(
+                    resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
+                    shouldRemoveDataThatNoLongerExists: true
+                )
+                .eraseToAnyPublisher()
+            }
+            .map { (result: ResourcesCacheSyncResult) in
+                
+                self.markDidSyncResourcesFromJson()
+                
+                return result
+            }
+            .catch { (error: Error) in
+                
+                self.markDidSyncResourcesFromJson()
+                
+                return Just<ResourcesCacheSyncResult?>(nil)
                     .eraseToAnyPublisher()
             }
-                    
-            return Publishers
-                .CombineLatest(
-                    languagesRepository
-                        .syncLanguagesFromJsonFileCache(),
-                    ResourcesJsonFileCache(jsonServices: JsonServices())
-                        .getResourcesPlusLatestTranslationsAndAttachments()
-                        .publisher
-                )
-                .receive(on: DispatchQueue.main)
-                .flatMap({ (languages: [LanguageDataModel], resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable) -> AnyPublisher<ResourcesCacheSyncResult, Error> in
-                    
-                    return self.cache.syncResources(
-                        resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
-                        shouldRemoveDataThatNoLongerExists: true
-                    )
-                    .eraseToAnyPublisher()
-                })
-                .flatMap({ resourcesCacheResult -> AnyPublisher<ResourcesCacheSyncResult?, Error> in
-                    
-                    return Just(resourcesCacheResult)
-                        .setFailureType(to: Error.self)
-                        .eraseToAnyPublisher()
-                })
-                .eraseToAnyPublisher()
-            
-        }
-        catch let error {
-            return Fail(error: error)
-                .eraseToAnyPublisher()
-        }
+            .eraseToAnyPublisher()
     }
     
     private func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote(requestPriority: RequestPriority, forceFetchFromRemote: Bool) -> AnyPublisher<ResourcesCacheSyncResult, Error> {
