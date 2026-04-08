@@ -364,3 +364,5 @@ Marsariitii https://knowgod.com/ irrattis argachuu ni dandeessa.";
 "onboardingTutorial.showMoreButton.title" = "Kana caalaa natti agarsiisi";
 
 "screenShareTutorial.generateQRCodeButton.title" = "Koodii QR uumuu";
+
+"shareToolQrCode.message" = "Koodii QR tiin qoodaa";

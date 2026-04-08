@@ -388,3 +388,5 @@
 "onboardingTutorial.showMoreButton.title" = "अधिक दिखाएं";
 
 "screenShareTutorial.generateQRCodeButton.title" = "क्यूआर कोड जनरेट करें";
+
+"shareToolQrCode.message" = "क्यूआर कोड द्वारा साझा करें";
