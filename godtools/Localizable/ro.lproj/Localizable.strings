@@ -381,3 +381,5 @@ Găsești versiunea online aici https://knowgod.com/";
 "onboardingTutorial.showMoreButton.title" = "Arată-mi mai mult";
 
 "screenShareTutorial.generateQRCodeButton.title" = "Generați cod QR";
+
+"shareToolQrCode.message" = "Distribuie prin cod QR";

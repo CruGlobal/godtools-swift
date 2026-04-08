@@ -391,3 +391,5 @@ Prima o botão de informações em qualquer ferramenta para obter mais informaç
 "onboardingTutorial.showMoreButton.title" = "Mostrar mais";
 
 "screenShareTutorial.generateQRCodeButton.title" = "Gerar código QR";
+
+"shareToolQrCode.message" = "Compartilhe por código QR";

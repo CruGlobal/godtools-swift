@@ -390,3 +390,5 @@ Kolose 4:6";
 "onboardingTutorial.showMoreButton.title" = "Lebih";
 
 "screenShareTutorial.generateQRCodeButton.title" = "Buat Kode QR";
+
+"shareToolQrCode.message" = "Bagikan melalui Kode QR";

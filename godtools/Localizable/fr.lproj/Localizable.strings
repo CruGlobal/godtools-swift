@@ -387,3 +387,5 @@ Colossiens 4:6";
 "onboardingTutorial.showMoreButton.title" = "Me montrer plus";
 
 "screenShareTutorial.generateQRCodeButton.title" = "Générer un code QR";
+
+"shareToolQrCode.message" = "Partager par code QR";

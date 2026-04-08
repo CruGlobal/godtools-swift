@@ -385,3 +385,5 @@ https://godtoolsapp.com
 "onboardingTutorial.showMoreButton.title" = "أعرض لي المزيد";
 
 "screenShareTutorial.generateQRCodeButton.title" = "إنشاء رمز QR";
+
+"shareToolQrCode.message" = "مشاركة برمز الاستجابة السريعة";
