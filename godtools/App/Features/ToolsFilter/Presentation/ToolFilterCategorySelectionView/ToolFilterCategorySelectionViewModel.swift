@@ -11,7 +11,8 @@ import Combine
 
 @MainActor class ToolFilterCategorySelectionViewModel: ObservableObject {
     
-    private let viewToolFilterCategoriesUseCase: ViewToolFilterCategoriesUseCase
+    private let getToolFilterCategoriesStringsUseCase: GetToolFilterCategoriesStringsUseCase
+    private let getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase
     private let searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase
     private let getUserToolFiltersUseCase: GetUserToolFiltersUseCase
     private let storeUserToolFiltersUseCase: StoreUserToolFiltersUseCase
@@ -26,15 +27,18 @@ import Combine
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private var allCategories: [ToolFilterCategoryDomainModel] = [ToolFilterCategoryDomainModel]()
     
+    @Published private(set) var strings = ToolFilterCategoriesStringsDomainModel.emptyValue
+    
     @Published var searchText: String = ""
     @Published var selectedLanguage: ToolFilterLanguageDomainModel = ToolFilterAnyLanguageDomainModel(text: "", toolsAvailableText: "", numberOfToolsAvailable: 0)
     @Published var selectedCategory: ToolFilterCategoryDomainModel = ToolFilterAnyCategoryDomainModel(text: "", toolsAvailableText: "")
     @Published var navTitle: String = ""
     @Published var categorySearchResults: [ToolFilterCategoryDomainModel] = [ToolFilterCategoryDomainModel]()
     
-    init(viewToolFilterCategoriesUseCase: ViewToolFilterCategoriesUseCase, searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase, getUserToolFiltersUseCase: GetUserToolFiltersUseCase, storeUserToolFiltersUseCase: StoreUserToolFiltersUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, flowDelegate: FlowDelegate) {
+    init(getToolFilterCategoriesStringsUseCase: GetToolFilterCategoriesStringsUseCase, getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase, searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase, getUserToolFiltersUseCase: GetUserToolFiltersUseCase, storeUserToolFiltersUseCase: StoreUserToolFiltersUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, flowDelegate: FlowDelegate) {
         
-        self.viewToolFilterCategoriesUseCase = viewToolFilterCategoriesUseCase
+        self.getToolFilterCategoriesStringsUseCase = getToolFilterCategoriesStringsUseCase
+        self.getToolFilterCategoriesUseCase = getToolFilterCategoriesUseCase
         self.searchToolFilterCategoriesUseCase = searchToolFilterCategoriesUseCase
         self.getUserToolFiltersUseCase = getUserToolFiltersUseCase
         self.storeUserToolFiltersUseCase = storeUserToolFiltersUseCase
@@ -63,27 +67,35 @@ import Combine
             }
             .store(in: &cancellables)
         
+        $appLanguage.dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+                getToolFilterCategoriesStringsUseCase
+                    .execute(appLanguage: appLanguage)
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (strings: ToolFilterCategoriesStringsDomainModel) in
+                
+                self?.strings = strings
+            }
+            .store(in: &cancellables)
+        
         Publishers.CombineLatest(
             $appLanguage.dropFirst(),
             $selectedLanguage
         )
-        .map { appLanguage, selectedLanguage in
+        .map { (appLanguage: AppLanguageDomainModel, selectedLanguage: ToolFilterLanguageDomainModel) in
             
-            viewToolFilterCategoriesUseCase
-                .viewPublisher(filteredByLanguageId: selectedLanguage.id, translatedInAppLanguage: appLanguage)
+            getToolFilterCategoriesUseCase
+                .execute(appLanguage: appLanguage, filteredByLanguageId: selectedLanguage.id)
         }
         .switchToLatest()
         .receive(on: DispatchQueue.main)
         .sink(receiveCompletion: { _ in
             
-        }, receiveValue: { [weak self] (viewCategoryFiltersDomainModel: ViewToolFilterCategoriesDomainModel) in
+        }, receiveValue: { [weak self] (categoryFilters: [ToolFilterCategoryDomainModel]) in
             
-            guard let self = self else { return }
-            
-            let interfaceStrings = viewCategoryFiltersDomainModel.interfaceStrings
-            
-            self.navTitle = interfaceStrings.navTitle
-            self.allCategories = viewCategoryFiltersDomainModel.categoryFilters
+            self?.allCategories = categoryFilters
         })
         .store(in: &cancellables)
         

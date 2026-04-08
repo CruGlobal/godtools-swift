@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class SearchToolFilterCategoriesUseCase {
+final class SearchToolFilterCategoriesUseCase {
     
     private let searchToolFilterCategoriesRepository: SearchToolFilterCategoriesRepositoryInterface
     

@@ -1,5 +1,5 @@
 //
-//  GetToolFilterLanguagesRepository.swift
+//  GetToolFilterLanguage.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 2/27/24.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class GetToolFilterLanguagesRepository: GetToolFilterLanguagesRepositoryInterface {
+final class GetToolFilterLanguage {
     
     private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository
@@ -26,26 +26,7 @@ class GetToolFilterLanguagesRepository: GetToolFilterLanguagesRepositoryInterfac
         self.stringWithLocaleCount = stringWithLocaleCount
     }
     
-    @MainActor func getToolFilterLanguagesPublisher(translatedInAppLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) -> AnyPublisher<[ToolFilterLanguageDomainModel], Error> {
-        
-        return resourcesRepository
-            .persistence
-            .observeCollectionChangesPublisher()
-            .flatMap { _ in
-                
-                let languageIds = self.resourcesRepository
-                    .getAllToolLanguageIds(filteredByCategoryId: filteredByCategoryId)
-                
-                return self.createLanguageFilterDomainModelListPublisher(
-                    from: languageIds,
-                    translatedInAppLanguage: translatedInAppLanguage,
-                    filteredByCategoryId: filteredByCategoryId
-                )
-            }
-            .eraseToAnyPublisher()
-    }
-    
-    func getAnyLanguageFilterDomainModel(translatedInAppLanguage: AppLanguageDomainModel) -> ToolFilterLanguageDomainModel {
+    func getAnyLanguageFilter(translatedInAppLanguage: AppLanguageDomainModel) -> ToolFilterLanguageDomainModel {
         
         return createAnyLanguageDomainModel(translatedInAppLanguage: translatedInAppLanguage, filteredByCategoryId: nil)
     }
@@ -60,28 +41,8 @@ class GetToolFilterLanguagesRepository: GetToolFilterLanguagesRepositoryInterfac
         
         return createLanguageFilterDomainModel(with: language, translatedInAppLanguage: translatedInAppLanguage, filteredByCategoryId: nil)
     }
-}
-
-// MARK: - Private
-
-extension GetToolFilterLanguagesRepository {
     
-    private func getLanguageFilterPublisher(from languageId: String?, translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolFilterLanguageDomainModel?, Never> {
-        
-        guard let languageId = languageId,
-            let language = languagesRepository.persistence.getDataModelNonThrowing(id: languageId)
-        else {
-            return Just<ToolFilterLanguageDomainModel?>(nil)
-                .eraseToAnyPublisher()
-        }
-        
-        let languageFilter = createLanguageFilterDomainModel(with: language, translatedInAppLanguage: translatedInAppLanguage, filteredByCategoryId: nil)
-        
-        return Just<ToolFilterLanguageDomainModel?>(languageFilter)
-            .eraseToAnyPublisher()
-    }
-    
-    private func createLanguageFilterDomainModelListPublisher(from languageIds: [String], translatedInAppLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) -> AnyPublisher<[ToolFilterLanguageDomainModel], Error> {
+    func createLanguageFilterDomainModelListPublisher(from languageIds: [String], translatedInAppLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) -> AnyPublisher<[ToolFilterLanguageDomainModel], Error> {
                 
         let anyLanguage = createAnyLanguageDomainModel(
             translatedInAppLanguage: translatedInAppLanguage,
@@ -119,6 +80,24 @@ extension GetToolFilterLanguagesRepository {
                 
                 return [anyLanguage] + sortedDomainModels
             }
+            .eraseToAnyPublisher()
+    }
+}
+
+extension GetToolFilterLanguage {
+    
+    private func getLanguageFilterPublisher(from languageId: String?, translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolFilterLanguageDomainModel?, Never> {
+        
+        guard let languageId = languageId,
+            let language = languagesRepository.persistence.getDataModelNonThrowing(id: languageId)
+        else {
+            return Just<ToolFilterLanguageDomainModel?>(nil)
+                .eraseToAnyPublisher()
+        }
+        
+        let languageFilter = createLanguageFilterDomainModel(with: language, translatedInAppLanguage: translatedInAppLanguage, filteredByCategoryId: nil)
+        
+        return Just<ToolFilterLanguageDomainModel?>(languageFilter)
             .eraseToAnyPublisher()
     }
     

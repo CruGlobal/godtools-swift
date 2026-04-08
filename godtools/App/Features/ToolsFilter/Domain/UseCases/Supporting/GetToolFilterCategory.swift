@@ -1,15 +1,14 @@
 //
-//  GetToolFilterCategoriesRepository.swift
+//  GetToolFilterCategory.swift
 //  godtools
 //
-//  Created by Rachael Skeath on 2/29/24.
+//  Created by Rachael Skeath on 3/21/24.
 //  Copyright © 2024 Cru. All rights reserved.
 //
 
 import Foundation
-import Combine
 
-class GetToolFilterCategoriesRepository: GetToolFilterCategoriesRepositoryInterface {
+final class GetToolFilterCategory {
     
     private let resourcesRepository: ResourcesRepository
     private let localizationServices: LocalizationServicesInterface
@@ -20,23 +19,6 @@ class GetToolFilterCategoriesRepository: GetToolFilterCategoriesRepositoryInterf
         self.resourcesRepository = resourcesRepository
         self.localizationServices = localizationServices
         self.stringWithLocaleCount = stringWithLocaleCount
-    }
-    
-    @MainActor func getToolFilterCategoriesPublisher(translatedInAppLanguage: AppLanguageDomainModel, filteredByLanguageId: BCP47LanguageIdentifier?) -> AnyPublisher<[ToolFilterCategoryDomainModel], Error> {
-        
-        return resourcesRepository
-            .persistence
-            .observeCollectionChangesPublisher()
-            .flatMap { _ in
-                
-                let categoryIds = self.resourcesRepository
-                    .getAllToolCategoryIds(filteredByLanguageId: filteredByLanguageId)
-                
-                let categories = self.createCategoryDomainModels(from: categoryIds, translatedInAppLanguage: translatedInAppLanguage, filteredByLanguageId: filteredByLanguageId)
-                
-                return Just(categories)
-            }
-            .eraseToAnyPublisher()
     }
     
     func getAnyCategoryFilterDomainModel(translatedInAppLanguage: AppLanguageDomainModel) -> ToolFilterCategoryDomainModel {
@@ -52,13 +34,8 @@ class GetToolFilterCategoriesRepository: GetToolFilterCategoriesRepositoryInterf
         
         return createCategoryDomainModel(with: categoryId, translatedInAppLanguage: translatedInAppLanguage, filteredByLanguageId: nil)
     }
-}
-
-// MARK: - Private
-
-extension GetToolFilterCategoriesRepository {
     
-    private func createCategoryDomainModels(from ids: [String], translatedInAppLanguage: AppLanguageDomainModel, filteredByLanguageId: String?) -> [ToolFilterCategoryDomainModel] {
+    func createCategoryDomainModels(from ids: [String], translatedInAppLanguage: AppLanguageDomainModel, filteredByLanguageId: String?) -> [ToolFilterCategoryDomainModel] {
         
         let anyCategory = createAnyCategoryDomainModel(translatedInAppLanguage: translatedInAppLanguage, filteredByLanguageId: filteredByLanguageId)
         
@@ -79,6 +56,9 @@ extension GetToolFilterCategoriesRepository {
         
         return [anyCategory] + categories
     }
+}
+
+extension GetToolFilterCategory {
     
     private func createCategoryDomainModel(with categoryId: String, translatedInAppLanguage: AppLanguageDomainModel, filteredByLanguageId: String?) -> ToolFilterCategoryDomainModel {
         

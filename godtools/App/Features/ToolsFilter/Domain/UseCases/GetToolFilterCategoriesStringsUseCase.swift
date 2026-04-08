@@ -1,5 +1,5 @@
 //
-//  GetToolFilterCategoriesInterfaceStringsRepository.swift
+//  GetToolFilterCategoriesStringsUseCase.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 3/21/24.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class GetToolFilterCategoriesInterfaceStringsRepository: GetToolFilterCategoriesInterfaceStringsRepositoryInterface {
+final class GetToolFilterCategoriesStringsUseCase {
     
     private let localizationServices: LocalizationServicesInterface
     
@@ -17,15 +17,15 @@ class GetToolFilterCategoriesInterfaceStringsRepository: GetToolFilterCategories
         self.localizationServices = localizationServices
     }
     
-    func getStringsPublisher(translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolFilterCategoriesInterfaceStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolFilterCategoriesStringsDomainModel, Never> {
         
-        let localeId: String = translateInAppLanguage.localeId
+        let localeId: String = appLanguage.localeId
 
-        let interfaceStrings = ToolFilterCategoriesInterfaceStringsDomainModel(
+        let strings = ToolFilterCategoriesStringsDomainModel(
             navTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: ToolStringKeys.ToolFilter.categoryFilterNavTitle.rawValue)
         )
         
-        return Just(interfaceStrings)
+        return Just(strings)
             .eraseToAnyPublisher()
     }
 }

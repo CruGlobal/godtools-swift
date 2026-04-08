@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class StoreUserToolFiltersUseCase {
+final class StoreUserToolFiltersUseCase {
     
     private let storeUserToolFiltersRepositoryInterface: StoreUserToolFiltersRepositoryInterface
     

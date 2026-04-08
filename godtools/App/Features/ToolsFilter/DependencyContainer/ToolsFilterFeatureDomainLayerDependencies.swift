@@ -10,18 +10,54 @@ import Foundation
 
 class ToolsFilterFeatureDomainLayerDependencies {
     
+    private let coreDataLayer: AppDataLayerDependencies
     private let coreDomainLayer: AppDomainLayerDependencies
     private let dataLayer: ToolsFilterFeatureDataLayerDependencies
     
-    init(coreDomainLayer: AppDomainLayerDependencies, dataLayer: ToolsFilterFeatureDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, dataLayer: ToolsFilterFeatureDataLayerDependencies) {
         
+        self.coreDataLayer = coreDataLayer
         self.coreDomainLayer = coreDomainLayer
         self.dataLayer = dataLayer
     }
     
-    func getUserToolFiltersUseCase() -> GetUserToolFiltersUseCase {
-        return GetUserToolFiltersUseCase(
-            getUserToolFiltersRepositoryInterface: dataLayer.getUserToolFiltersRepositoryInterface()
+    func getToolFilterCategoriesStringsUseCase() -> GetToolFilterCategoriesStringsUseCase {
+        return GetToolFilterCategoriesStringsUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getToolFilterCategoriesUseCase() -> GetToolFilterCategoriesUseCase {
+        return GetToolFilterCategoriesUseCase(
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            getToolFilterCategory: getToolFilterCategory()
+        )
+    }
+    
+    func getToolFilterLanguagesStringsUseCase() -> GetToolFilterLanguagesStringsUseCase {
+        return GetToolFilterLanguagesStringsUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getToolFilterLanguagesUseCase() -> GetToolFilterLanguagesUseCase {
+        return GetToolFilterLanguagesUseCase(
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            getToolFilterLanguage: getToolFilterLanguage()
+        )
+    }
+    
+    func getUserToolFilterCategoryUseCase() -> GetUserToolFilterCategoryUseCase {
+        return GetUserToolFilterCategoryUseCase(
+            userToolFiltersRepository: dataLayer.getUserToolFiltersRepository(),
+            getToolFilterCategory: getToolFilterCategory()
+        )
+    }
+    
+    func getUserToolFilterLanguageUseCase() -> GetUserToolFilterLanguageUseCase {
+        return GetUserToolFilterLanguageUseCase(
+            userToolFiltersRepository: dataLayer.getUserToolFiltersRepository(),
+            getToolFilterLanguage: getToolFilterLanguage()
         )
     }
     
@@ -42,18 +78,27 @@ class ToolsFilterFeatureDomainLayerDependencies {
             storeUserToolFiltersRepositoryInterface: dataLayer.getStoreUserToolFiltersRepositoryInterface()
         )
     }
+}
+
+// MARK: - Supporting
+
+extension ToolsFilterFeatureDomainLayerDependencies {
     
-    func getViewToolFilterCategoriesUseCase() -> ViewToolFilterCategoriesUseCase {
-        return ViewToolFilterCategoriesUseCase(
-            getInterfaceStringsRepository: dataLayer.getToolFilterCategoriesInterfaceStringsRepositoryInterface(), 
-            getToolFilterCategoriesRepository: dataLayer.getToolFilterCategoriesRepositoryInterface()
+    private func getToolFilterCategory() -> GetToolFilterCategory {
+        return GetToolFilterCategory(
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            localizationServices: coreDataLayer.getLocalizationServices(),
+            stringWithLocaleCount: coreDataLayer.getStringWithLocaleCount()
         )
     }
     
-    func getViewToolFilterLanguagesUseCase() -> ViewToolFilterLanguagesUseCase {
-        return ViewToolFilterLanguagesUseCase(
-            getToolFilterLanguagesRepository: dataLayer.getToolFilterLanguagesRepositoryInterface(),
-            getInterfaceStringsRepository: dataLayer.getToolFilterLanguagesInterfaceStringsRepositoryInterface()
+    private func getToolFilterLanguage() -> GetToolFilterLanguage {
+        return GetToolFilterLanguage(
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            languagesRepository: coreDataLayer.getLanguagesRepository(),
+            getTranslatedLanguageName: coreDomainLayer.supporting.getTranslatedLanguageName(),
+            localizationServices: coreDataLayer.getLocalizationServices(),
+            stringWithLocaleCount: coreDataLayer.getStringWithLocaleCount()
         )
     }
 }

@@ -11,16 +11,12 @@ import Foundation
 class ToolsFilterFeatureDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
-    private let coreDomainLayer: AppDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies) {
         
         self.coreDataLayer = coreDataLayer
-        self.coreDomainLayer = coreDomainLayer
     }
-    
-    // MARK: - Data Layer Classes
-    
+        
     func getUserToolFiltersRepository() -> UserToolFiltersRepository {
         return UserToolFiltersRepository(
             cache: RealmUserToolFiltersCache(
@@ -28,39 +24,7 @@ class ToolsFilterFeatureDataLayerDependencies {
             )
         )
     }
-    
-    func getToolFilterCategoriesRepository() -> GetToolFilterCategoriesRepository {
-        return GetToolFilterCategoriesRepository(
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
-            localizationServices: coreDataLayer.getLocalizationServices(),
-            stringWithLocaleCount: coreDataLayer.getStringWithLocaleCount()
-        )
-    }
-    
-    func getToolFilterCategoriesInterfaceStringsRepository() -> GetToolFilterCategoriesInterfaceStringsRepository {
-        return GetToolFilterCategoriesInterfaceStringsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
-    
-    func getToolFilterLanguagesRepository() -> GetToolFilterLanguagesRepository {
-        return GetToolFilterLanguagesRepository(
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
-            languagesRepository: coreDataLayer.getLanguagesRepository(),
-            getTranslatedLanguageName: coreDomainLayer.supporting.getTranslatedLanguageName(),
-            localizationServices: coreDataLayer.getLocalizationServices(),
-            stringWithLocaleCount: coreDataLayer.getStringWithLocaleCount()
-        )
-    }
-    
-    func getToolFilterLanguagesInterfaceStringsRepository() -> GetToolFilterLanguagesInterfaceStringsRepository {
-        return GetToolFilterLanguagesInterfaceStringsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
-    
-    // MARK: - Domain Interface
-    
+        
     func getSearchToolFilterCategoriesRepositoryInterface() -> SearchToolFilterCategoriesRepositoryInterface {
         return SearchToolFilterCategoriesRepository(
             stringSearcher: StringSearcher()
@@ -75,29 +39,5 @@ class ToolsFilterFeatureDataLayerDependencies {
     
     func getStoreUserToolFiltersRepositoryInterface() -> StoreUserToolFiltersRepositoryInterface {
         return StoreUserToolFiltersRepository(userToolFiltersRepository: getUserToolFiltersRepository())
-    }
-    
-    func getToolFilterCategoriesRepositoryInterface() -> GetToolFilterCategoriesRepositoryInterface {
-        return getToolFilterCategoriesRepository()
-    }
-    
-    func getToolFilterCategoriesInterfaceStringsRepositoryInterface() -> GetToolFilterCategoriesInterfaceStringsRepositoryInterface {
-        return getToolFilterCategoriesInterfaceStringsRepository()
-    }
-    
-    func getToolFilterLanguagesRepositoryInterface() -> GetToolFilterLanguagesRepositoryInterface {
-        return getToolFilterLanguagesRepository()
-    }
-    
-    func getToolFilterLanguagesInterfaceStringsRepositoryInterface() -> GetToolFilterLanguagesInterfaceStringsRepositoryInterface {
-        return getToolFilterLanguagesInterfaceStringsRepository()
-    }
-    
-    func getUserToolFiltersRepositoryInterface() -> GetUserToolFiltersRepositoryInterface {
-        return GetUserToolFiltersRepository(
-            userToolFiltersRepository: getUserToolFiltersRepository(),
-            getToolFilterCategoriesRepository: getToolFilterCategoriesRepository(),
-            getToolFilterLanguagesRepository: getToolFilterLanguagesRepository()
-        )
     }
 }

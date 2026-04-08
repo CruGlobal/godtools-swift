@@ -1,5 +1,5 @@
 //
-//  GetToolFilterLanguagesInterfaceStringsRepository.swift
+//  GetToolFilterLanguagesStringsUseCase.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 3/21/24.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class GetToolFilterLanguagesInterfaceStringsRepository: GetToolFilterLanguagesInterfaceStringsRepositoryInterface {
+final class GetToolFilterLanguagesStringsUseCase {
     
     private let localizationServices: LocalizationServicesInterface
     
@@ -17,15 +17,15 @@ class GetToolFilterLanguagesInterfaceStringsRepository: GetToolFilterLanguagesIn
         self.localizationServices = localizationServices
     }
     
-    func getStringsPublisher(translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolFilterLanguagesInterfaceStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolFilterLanguagesStringsDomainModel, Never> {
         
-        let localeId: String = translateInAppLanguage.localeId
+        let localeId: String = appLanguage.localeId
         
-        let interfaceStrings = ToolFilterLanguagesInterfaceStringsDomainModel(
+        let strings = ToolFilterLanguagesStringsDomainModel(
             navTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: ToolStringKeys.ToolFilter.languageFilterNavTitle.rawValue)
         )
         
-        return Just(interfaceStrings)
+        return Just(strings)
             .eraseToAnyPublisher()
     }
 }
