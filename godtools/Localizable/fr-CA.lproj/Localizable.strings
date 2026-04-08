@@ -209,3 +209,5 @@ Retrouvez également la version en ligne à l'adresse : https://knowgod.com/";
 
 // Language Name Strings
 "language_name_fa" = "Perse (Farsi)";
+
+"shareToolQrCode.message" = "Partager par code QR";
