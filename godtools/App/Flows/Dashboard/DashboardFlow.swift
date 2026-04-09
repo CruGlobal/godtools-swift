@@ -597,9 +597,11 @@ extension DashboardFlow {
     private func getToolCategoryFilterSelection() -> UIViewController {
         
         let viewModel = ToolFilterCategorySelectionViewModel(
-            viewToolFilterCategoriesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getViewToolFilterCategoriesUseCase(),
+            getToolFilterCategoriesStringsUseCase: appDiContainer.feature.toolsFilter.domainLayer.getToolFilterCategoriesStringsUseCase(),
+            getToolFilterCategoriesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getToolFilterCategoriesUseCase(),
             searchToolFilterCategoriesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getSearchToolFilterCategoriesUseCase(),
-            getUserToolFiltersUseCase: appDiContainer.feature.toolsFilter.domainLayer.getUserToolFiltersUseCase(),
+            getUserToolFilterCategoryUseCase: appDiContainer.feature.toolsFilter.domainLayer.getUserToolFilterCategoryUseCase(),
+            getUserToolFilterLanguageUseCase: appDiContainer.feature.toolsFilter.domainLayer.getUserToolFilterLanguageUseCase(),
             storeUserToolFiltersUseCase: appDiContainer.feature.toolsFilter.domainLayer.getStoreUserToolFiltersUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             viewSearchBarUseCase: appDiContainer.domainLayer.getViewSearchBarUseCase(),
@@ -630,9 +632,11 @@ extension DashboardFlow {
     private func getToolLanguageFilterSelection() -> UIViewController {
         
         let viewModel = ToolFilterLanguageSelectionViewModel(
-            viewToolFilterLanguagesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getViewToolFilterLanguagesUseCase(),
+            getToolFilterLanguagesStringsUseCase: appDiContainer.feature.toolsFilter.domainLayer.getToolFilterLanguagesStringsUseCase(),
+            getToolFilterLanguagesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getToolFilterLanguagesUseCase(),
             searchToolFilterLanguagesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getSearchToolFilterLanguagesUseCase(),
-            getUserToolFiltersUseCase: appDiContainer.feature.toolsFilter.domainLayer.getUserToolFiltersUseCase(),
+            getUserToolFilterCategoryUseCase: appDiContainer.feature.toolsFilter.domainLayer.getUserToolFilterCategoryUseCase(),
+            getUserToolFilterLanguageUseCase: appDiContainer.feature.toolsFilter.domainLayer.getUserToolFilterLanguageUseCase(),
             storeUserToolFilterUseCase: appDiContainer.feature.toolsFilter.domainLayer.getStoreUserToolFiltersUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             viewSearchBarUseCase: appDiContainer.domainLayer.getViewSearchBarUseCase(),

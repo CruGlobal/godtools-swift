@@ -30,7 +30,7 @@ final class GetToolFilterCategoriesUseCase {
                 let categoryIds = self.resourcesRepository
                     .getAllToolCategoryIds(filteredByLanguageId: filteredByLanguageId)
                 
-                let categories = self.getToolFilterCategory.createCategoryDomainModels(
+                let categories = self.getToolFilterCategory.createCategoryFilters(
                     from: categoryIds,
                     translatedInAppLanguage: appLanguage,
                     filteredByLanguageId: filteredByLanguageId

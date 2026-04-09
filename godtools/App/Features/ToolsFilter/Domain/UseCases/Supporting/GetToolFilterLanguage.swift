@@ -86,21 +86,6 @@ final class GetToolFilterLanguage {
 
 extension GetToolFilterLanguage {
     
-    private func getLanguageFilterPublisher(from languageId: String?, translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolFilterLanguageDomainModel?, Never> {
-        
-        guard let languageId = languageId,
-            let language = languagesRepository.persistence.getDataModelNonThrowing(id: languageId)
-        else {
-            return Just<ToolFilterLanguageDomainModel?>(nil)
-                .eraseToAnyPublisher()
-        }
-        
-        let languageFilter = createLanguageFilterDomainModel(with: language, translatedInAppLanguage: translatedInAppLanguage, filteredByCategoryId: nil)
-        
-        return Just<ToolFilterLanguageDomainModel?>(languageFilter)
-            .eraseToAnyPublisher()
-    }
-    
     private func createLanguageFilterDomainModel(with languageModel: LanguageDataModel, translatedInAppLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) -> ToolFilterLanguageDomainModel {
         
         let toolsAvailableCount: Int = getToolsAvailableCount(for: languageModel.id, filteredByCategoryId: filteredByCategoryId)

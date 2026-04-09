@@ -33,7 +33,7 @@ final class GetUserToolFilterLanguageUseCase {
                     
                 } else {
                     
-                    let defaultLanguageFilterValue = self.getToolFilterLanguage.getAnyLanguageFilterDomainModel(translatedInAppLanguage: appLanguage)
+                    let defaultLanguageFilterValue = self.getToolFilterLanguage.getAnyLanguageFilter(translatedInAppLanguage: appLanguage)
                     
                     return defaultLanguageFilterValue
                 }

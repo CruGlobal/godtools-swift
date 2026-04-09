@@ -34,7 +34,7 @@ final class GetUserToolFilterCategoryUseCase {
                     
                 } else {
                     
-                    let defaultCategoryFilterValue = self.getToolFilterCategory.getAnyCategoryFilterDomainModel(translatedInAppLanguage: appLanguage)
+                    let defaultCategoryFilterValue = self.getToolFilterCategory.getAnyCategoryFilter(translatedInAppLanguage: appLanguage)
                     
                     return defaultCategoryFilterValue
                 }

@@ -21,7 +21,7 @@ final class GetToolFilterCategory {
         self.stringWithLocaleCount = stringWithLocaleCount
     }
     
-    func getAnyCategoryFilterDomainModel(translatedInAppLanguage: AppLanguageDomainModel) -> ToolFilterCategoryDomainModel {
+    func getAnyCategoryFilter(translatedInAppLanguage: AppLanguageDomainModel) -> ToolFilterCategoryDomainModel {
         
         return createAnyCategoryDomainModel(translatedInAppLanguage: translatedInAppLanguage, filteredByLanguageId: nil)
     }
@@ -35,7 +35,7 @@ final class GetToolFilterCategory {
         return createCategoryDomainModel(with: categoryId, translatedInAppLanguage: translatedInAppLanguage, filteredByLanguageId: nil)
     }
     
-    func createCategoryDomainModels(from ids: [String], translatedInAppLanguage: AppLanguageDomainModel, filteredByLanguageId: String?) -> [ToolFilterCategoryDomainModel] {
+    func createCategoryFilters(from ids: [String], translatedInAppLanguage: AppLanguageDomainModel, filteredByLanguageId: String?) -> [ToolFilterCategoryDomainModel] {
         
         let anyCategory = createAnyCategoryDomainModel(translatedInAppLanguage: translatedInAppLanguage, filteredByLanguageId: filteredByLanguageId)
         

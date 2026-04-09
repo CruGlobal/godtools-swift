@@ -14,7 +14,8 @@ import Combine
     private let getToolFilterCategoriesStringsUseCase: GetToolFilterCategoriesStringsUseCase
     private let getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase
     private let searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase
-    private let getUserToolFiltersUseCase: GetUserToolFiltersUseCase
+    private let getUserToolFilterCategoryUseCase: GetUserToolFilterCategoryUseCase
+    private let getUserToolFilterLanguageUseCase: GetUserToolFilterLanguageUseCase
     private let storeUserToolFiltersUseCase: StoreUserToolFiltersUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let viewSearchBarUseCase: ViewSearchBarUseCase
@@ -28,19 +29,19 @@ import Combine
     @Published private var allCategories: [ToolFilterCategoryDomainModel] = [ToolFilterCategoryDomainModel]()
     
     @Published private(set) var strings = ToolFilterCategoriesStringsDomainModel.emptyValue
+    @Published private(set) var selectedLanguage: ToolFilterLanguageDomainModel = ToolFilterAnyLanguageDomainModel(text: "", toolsAvailableText: "", numberOfToolsAvailable: 0)
+    @Published private(set) var selectedCategory: ToolFilterCategoryDomainModel = ToolFilterAnyCategoryDomainModel(text: "", toolsAvailableText: "")
     
     @Published var searchText: String = ""
-    @Published var selectedLanguage: ToolFilterLanguageDomainModel = ToolFilterAnyLanguageDomainModel(text: "", toolsAvailableText: "", numberOfToolsAvailable: 0)
-    @Published var selectedCategory: ToolFilterCategoryDomainModel = ToolFilterAnyCategoryDomainModel(text: "", toolsAvailableText: "")
-    @Published var navTitle: String = ""
     @Published var categorySearchResults: [ToolFilterCategoryDomainModel] = [ToolFilterCategoryDomainModel]()
     
-    init(getToolFilterCategoriesStringsUseCase: GetToolFilterCategoriesStringsUseCase, getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase, searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase, getUserToolFiltersUseCase: GetUserToolFiltersUseCase, storeUserToolFiltersUseCase: StoreUserToolFiltersUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, flowDelegate: FlowDelegate) {
+    init(getToolFilterCategoriesStringsUseCase: GetToolFilterCategoriesStringsUseCase, getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase, searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase, getUserToolFilterCategoryUseCase: GetUserToolFilterCategoryUseCase, getUserToolFilterLanguageUseCase: GetUserToolFilterLanguageUseCase, storeUserToolFiltersUseCase: StoreUserToolFiltersUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, flowDelegate: FlowDelegate) {
         
         self.getToolFilterCategoriesStringsUseCase = getToolFilterCategoriesStringsUseCase
         self.getToolFilterCategoriesUseCase = getToolFilterCategoriesUseCase
         self.searchToolFilterCategoriesUseCase = searchToolFilterCategoriesUseCase
-        self.getUserToolFiltersUseCase = getUserToolFiltersUseCase
+        self.getUserToolFilterCategoryUseCase = getUserToolFilterCategoryUseCase
+        self.getUserToolFilterLanguageUseCase = getUserToolFilterLanguageUseCase
         self.storeUserToolFiltersUseCase = storeUserToolFiltersUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.viewSearchBarUseCase = viewSearchBarUseCase
@@ -53,17 +54,19 @@ import Combine
         
         $appLanguage
             .dropFirst()
-            .map { appLanguage in
+            .map { (appLanguage: AppLanguageDomainModel) in
                 
-                getUserToolFiltersUseCase
-                    .getUserToolFiltersPublisher(translatedInAppLanguage: appLanguage)
+                Publishers.CombineLatest(
+                    getUserToolFilterCategoryUseCase.execute(appLanguage: appLanguage),
+                    getUserToolFilterLanguageUseCase.execute(appLanguage: appLanguage)
+                )
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] userFilters in
+            .sink { [weak self] (categoryFilter: ToolFilterCategoryDomainModel, languageFilter: ToolFilterLanguageDomainModel) in
             
-                self?.selectedLanguage = userFilters.languageFilter
-                self?.selectedCategory = userFilters.categoryFilter
+                self?.selectedCategory = categoryFilter
+                self?.selectedLanguage = languageFilter
             }
             .store(in: &cancellables)
         
