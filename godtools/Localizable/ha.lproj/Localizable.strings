@@ -354,3 +354,5 @@
 "onboardingTutorial.showMoreButton.title" = "Nuna mun karin";
 
 "screenShareTutorial.generateQRCodeButton.title" = "Samar da Lambar QR";
+
+"shareToolQrCode.message" = "Raba ta Lambar QR";

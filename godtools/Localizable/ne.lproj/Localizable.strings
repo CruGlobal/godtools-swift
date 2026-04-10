@@ -379,3 +379,5 @@
 "onboardingTutorial.showMoreButton.title" = "मलाई थप देखाउनुहोस्";
 
 "screenShareTutorial.generateQRCodeButton.title" = "QR कोड उत्पन्न गर्नुहोस्";
+
+"shareToolQrCode.message" = "QR कोडद्वारा सेयर गर्नुहोस्";

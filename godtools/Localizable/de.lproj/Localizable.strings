@@ -388,3 +388,5 @@ Für weitere Infos drücke den Info-Button bei einem Tool.";
 "onboardingTutorial.showMoreButton.title" = "Mehr anzeigen";
 
 "screenShareTutorial.generateQRCodeButton.title" = "QR-Code generieren";
+
+"shareToolQrCode.message" = "Per QR-Code teilen";

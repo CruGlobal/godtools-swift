@@ -390,3 +390,5 @@
 "onboardingTutorial.showMoreButton.title" = "Покажите еще";
 
 "screenShareTutorial.generateQRCodeButton.title" = "Сгенерировать QR-код";
+
+"shareToolQrCode.message" = "Поделиться через QR-код";
