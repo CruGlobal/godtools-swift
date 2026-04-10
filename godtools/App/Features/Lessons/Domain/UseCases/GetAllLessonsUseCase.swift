@@ -23,7 +23,7 @@ final class GetAllLessonsUseCase {
     }
     
     @MainActor func execute(appLanguage: AppLanguageDomainModel, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<[LessonListItemDomainModel], Error> {
-                
+
         return Publishers.CombineLatest(
             resourcesRepository
                 .persistence
@@ -33,19 +33,17 @@ final class GetAllLessonsUseCase {
                 .setFailureType(to: Error.self)
         )
         .flatMap({ (resourcesDidChange: Void, lessonProgressDidChange: Void) -> AnyPublisher<[LessonListItemDomainModel], Error> in
-                        
+
             return self.resourcesRepository
                 .cache
                 .getLessonsPublisher(filterByLanguageId: filterLessonsByLanguage?.languageId, sorted: true)
                 .tryMap { (lessons: [ResourceDataModel]) in
-                    
-                    let lessonsListItems: [LessonListItemDomainModel] = try self.getLessonsListItems.mapLessonsToListItems(
+
+                    return try self.getLessonsListItems.mapLessonsToListItems(
                         lessons: lessons,
                         appLanguage: appLanguage,
                         filterLessonsByLanguage: filterLessonsByLanguage
                     )
-
-                    return lessonsListItems
                 }
                 .eraseToAnyPublisher()
         })

@@ -30,11 +30,11 @@ final class DynalinkDeferredDeepLink {
             
             let result: DeepLinkResult = try await getDeepLinkResult()
             
-            guard result.matched, let url = result.link?.url else {
+            guard result.matched, let fullUrl = result.link?.fullURL else {
                 return nil
             }
             
-            return url
+            return fullUrl
         }
         catch let error {
             

@@ -71,7 +71,19 @@ class PersonalizedToolsDomainLayerDependencies {
             personalizedLessonsRepository: dataLayer.getPersonalizedLessonsRepository(),
             getLanguageElseAppLanguage: coreDomainlayer.supporting.getLanguageElseAppLanguage(),
             lessonProgressRepository: coreDataLayer.getUserLessonProgressRepository(),
-            getLessonsListItems: coreDomainlayer.supporting.getLessonsListItems()
+            getLessonsListItems: coreDomainlayer.supporting.getLessonsListItems(),
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+
+    func getGetPersonalizedToolsUseCase() -> GetPersonalizedToolsUseCase {
+
+        return GetPersonalizedToolsUseCase(
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            personalizedToolsRepository: dataLayer.getPersonalizedToolsRepository(),
+            getLanguageElseAppLanguage: coreDomainlayer.supporting.getLanguageElseAppLanguage(),
+            getToolsListItems: coreDomainlayer.supporting.getToolsListItems(),
+            localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
 }

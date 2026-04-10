@@ -391,3 +391,5 @@
 "onboardingTutorial.showMoreButton.title" = "ተጨማሪ አሳየኝ";
 
 "screenShareTutorial.generateQRCodeButton.title" = "የQR ኮድ ይፍጠሩ";
+
+"shareToolQrCode.message" = "በQR ኮድ ያጋሩ";

@@ -26,28 +26,28 @@ class PersonalizedToolsDataLayerDependencies {
     func getPersonalizedLessonsRepository() -> PersonalizedLessonsRepository {
 
         let persistence: any Persistence<PersonalizedLessonsDataModel, PersonalizedLessonsDataModel>
-        
+
         if #available(iOS 17.4, *), let database = coreDataLayer.getSharedSwiftDatabase() {
-            
+
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
                 dataModelMapping: SwiftPersonalizedLessonsMapping()
             )
         }
         else {
-            
+
             persistence = RealmRepositorySyncPersistence(
                 database: coreDataLayer.getSharedRealmDatabase(),
                 dataModelMapping: RealmPersonalizedLessonsMapping()
             )
         }
-        
+
         let api = PersonalizedToolsApi(
             config: coreDataLayer.getAppConfig(),
             urlSessionPriority: coreDataLayer.getSharedUrlSessionPriority(),
             requestSender: coreDataLayer.getRequestSender()
         )
-        
+
         let cache = PersonalizedLessonsCache(
             persistence: persistence
         )
@@ -55,7 +55,47 @@ class PersonalizedToolsDataLayerDependencies {
         return PersonalizedLessonsRepository(
             persistence: persistence,
             api: api,
-            cache: cache
+            cache: cache,
+            syncInvalidatorPersistence: coreDataLayer.getUserDefaultsCache(),
+            resourcesRepository: coreDataLayer.getResourcesRepository()
+        )
+    }
+
+    func getPersonalizedToolsRepository() -> PersonalizedToolsRepository {
+
+        let persistence: any Persistence<PersonalizedToolsDataModel, PersonalizedToolsDataModel>
+
+        if #available(iOS 17.4, *), let database = coreDataLayer.getSharedSwiftDatabase() {
+
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                dataModelMapping: SwiftPersonalizedToolsMapping()
+            )
+        }
+        else {
+
+            persistence = RealmRepositorySyncPersistence(
+                database: coreDataLayer.getSharedRealmDatabase(),
+                dataModelMapping: RealmPersonalizedToolsMapping()
+            )
+        }
+
+        let api = PersonalizedToolsApi(
+            config: coreDataLayer.getAppConfig(),
+            urlSessionPriority: coreDataLayer.getSharedUrlSessionPriority(),
+            requestSender: coreDataLayer.getRequestSender()
+        )
+
+        let cache = PersonalizedToolsCache(
+            persistence: persistence
+        )
+
+        return PersonalizedToolsRepository(
+            persistence: persistence,
+            api: api,
+            cache: cache,
+            syncInvalidatorPersistence: coreDataLayer.getUserDefaultsCache(),
+            resourcesRepository: coreDataLayer.getResourcesRepository()
         )
     }
 

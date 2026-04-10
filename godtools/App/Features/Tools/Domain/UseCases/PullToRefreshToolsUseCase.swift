@@ -11,24 +11,29 @@ import Combine
 import RequestOperation
 
 final class PullToRefreshToolsUseCase {
-    
+
     private let resourcesRepository: ResourcesRepository
-    
-    init(resourcesRepository: ResourcesRepository) {
-        
+    private let personalizedToolsRepository: PersonalizedToolsRepository
+    private let getLanguageElseAppLanguage: GetLanguageElseAppLanguage
+
+    init(resourcesRepository: ResourcesRepository, personalizedToolsRepository: PersonalizedToolsRepository, getLanguageElseAppLanguage: GetLanguageElseAppLanguage) {
+
         self.resourcesRepository = resourcesRepository
+        self.personalizedToolsRepository = personalizedToolsRepository
+        self.getLanguageElseAppLanguage = getLanguageElseAppLanguage
     }
-    
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<Void, Error> {
-        
+
+    func execute(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterToolsByLanguage: ToolFilterLanguageDomainModel?) -> AnyPublisher<Void, Error> {
+
         let requestPriority: RequestPriority = .high
-        
+
         return Publishers.Merge(
-            refreshResources(
-                requestPriority: requestPriority
-            ),
+            refreshResources(requestPriority: requestPriority),
             refreshPersonalizedTools(
-                requestPriority: requestPriority
+                requestPriority: requestPriority,
+                appLanguage: appLanguage,
+                country: country,
+                filterToolsByLanguage: filterToolsByLanguage
             )
         )
         .eraseToAnyPublisher()
@@ -47,12 +52,30 @@ final class PullToRefreshToolsUseCase {
             .eraseToAnyPublisher()
     }
     
-    private func refreshPersonalizedTools(requestPriority: RequestPriority) -> AnyPublisher<Void, Error> {
-        
-        // TODO: Refresh personalized tools. ~Levi
-        
-        return Just(Void())
-            .setFailureType(to: Error.self)
+    private func refreshPersonalizedTools(requestPriority: RequestPriority, appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterToolsByLanguage: ToolFilterLanguageDomainModel?) -> AnyPublisher<Void, Error> {
+
+        let languageCode: String = getLanguageElseAppLanguage.getLanguageCode(
+            languageId: filterToolsByLanguage?.languageDataModelId,
+            appLanguage: appLanguage
+        )
+
+        let countryIsoRegionCode: String? = {
+            if let isoRegionCode = country?.isoRegionCode, !isoRegionCode.isEmpty {
+                return isoRegionCode
+            }
+            return nil
+        }()
+
+        return personalizedToolsRepository
+            .syncPersonalizedToolsPublisher(
+                requestPriority: requestPriority,
+                country: countryIsoRegionCode,
+                language: languageCode,
+                forceNewSync: true
+            )
+            .map { _ in
+                return ()
+            }
             .eraseToAnyPublisher()
     }
 }
