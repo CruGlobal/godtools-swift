@@ -19,8 +19,9 @@ struct ToolsStringsDomainModel: Sendable {
     let personalizedToolExplanationTitle: String
     let personalizedToolExplanationSubtitle: String
     let changePersonalizedToolSettingsActionLabel: String
+    let viewAllTools: String
 
     static var emptyValue: ToolsStringsDomainModel {
-        ToolsStringsDomainModel(favoritingToolBannerMessage: "", toolSpotlightTitle: "", toolSpotlightSubtitle: "", filterTitle: "", personalizedToolToggleTitle: "", allToolsToggleTitle: "", personalizedToolExplanationTitle: "", personalizedToolExplanationSubtitle: "", changePersonalizedToolSettingsActionLabel: "")
+        ToolsStringsDomainModel(favoritingToolBannerMessage: "", toolSpotlightTitle: "", toolSpotlightSubtitle: "", filterTitle: "", personalizedToolToggleTitle: "", allToolsToggleTitle: "", personalizedToolExplanationTitle: "", personalizedToolExplanationSubtitle: "", changePersonalizedToolSettingsActionLabel: "", viewAllTools: "")
     }
 }
