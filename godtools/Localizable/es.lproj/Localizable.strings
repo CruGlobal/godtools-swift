@@ -384,3 +384,5 @@ Puedes acceer a una versión online en https://knowgod.com/";
 "onboardingTutorial.showMoreButton.title" = "Mostrarme más";
 
 "screenShareTutorial.generateQRCodeButton.title" = "Generar código QR";
+
+"shareToolQrCode.message" = "Compartir por código QR";

@@ -381,3 +381,5 @@
 "onboardingTutorial.showMoreButton.title" = "もっと見せて";
 
 "screenShareTutorial.generateQRCodeButton.title" = "QRコードを生成する";
+
+"shareToolQrCode.message" = "QRコードでシェア";

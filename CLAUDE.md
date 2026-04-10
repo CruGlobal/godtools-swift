@@ -147,6 +147,41 @@ Example scenario:
 @MainActor func testMethodName() async throws { ... }
 ```
 
+**Parameterized tests:**
+
+When multiple test scenarios differ only in input values and expected outcomes, use parameterized tests with the `arguments` parameter instead of duplicating similar test methods. This reduces code duplication and makes test intent clearer.
+
+Example:
+```swift
+struct MyTestArgument {
+    let input: String
+    let expectedOutput: String
+}
+
+@Test(
+    """
+    Given: <initial state>
+    When: <action with different inputs>
+    Then: <expected outcome varies by input>
+    """,
+    arguments: [
+        MyTestArgument(input: "value1", expectedOutput: "result1"),
+        MyTestArgument(input: "value2", expectedOutput: "result2")
+    ]
+)
+func testBehavior(argument: MyTestArgument) async throws {
+    // Test implementation using argument.input and argument.expectedOutput
+}
+```
+
+**Test code clarity:**
+
+Avoid adding comments in test code unless strictly necessary. Well-named tests, variables, and clear assertions should be self-documenting. Use MARK comments for organizational purposes (e.g., `// MARK: - Test Helpers`), but avoid inline comments that simply describe what the code is doing.
+
+**Code coverage:**
+
+When writing tests, check the code coverage for the class (or classes) under test. Aim for coverage as close to 100% as possible, ensuring all significant business logic and meaningful code paths are tested.
+
 ## Code Conventions
 
 **Attribute grouping order in classes/structs:**

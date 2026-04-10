@@ -385,3 +385,5 @@ Toleo la mtandao linaweza kupatikana kwenye https://knowgod.com/";
 "onboardingTutorial.showMoreButton.title" = "Onesha zaidi";
 
 "screenShareTutorial.generateQRCodeButton.title" = "Tengeneza Msimbo wa QR";
+
+"shareToolQrCode.message" = "Shiriki kwa kutumia Msimbo wa QR";

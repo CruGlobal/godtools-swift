@@ -392,3 +392,5 @@ Lai iegūtu vairāk informācijas, nospied pogu \"Apraksts\".";
 "onboardingTutorial.showMoreButton.title" = "Vairāk";
 
 "screenShareTutorial.generateQRCodeButton.title" = "Izveidot QR kodu";
+
+"shareToolQrCode.message" = "Kopīgot, izmantojot QR kodu";
