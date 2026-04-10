@@ -389,3 +389,5 @@ Nhấn nút \"Giới thiệu\" để biết thêm về công cụ.";
 "onboardingTutorial.showMoreButton.title" = "Cho tôi xem nhiều hơn";
 
 "screenShareTutorial.generateQRCodeButton.title" = "Tạo mã QR";
+
+"shareToolQrCode.message" = "Chia sẻ bằng mã QR";

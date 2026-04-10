@@ -385,3 +385,5 @@ https://knowgod.com/";
 "onboardingTutorial.showMoreButton.title" = "Wys My Meer";
 
 "screenShareTutorial.generateQRCodeButton.title" = "Genereer QR-kode";
+
+"shareToolQrCode.message" = "Deel per QR-kode";

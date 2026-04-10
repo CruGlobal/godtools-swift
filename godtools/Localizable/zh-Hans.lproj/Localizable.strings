@@ -390,3 +390,5 @@
 "onboardingTutorial.showMoreButton.title" = "显示更多";
 
 "screenShareTutorial.generateQRCodeButton.title" = "生成二维码";
+
+"shareToolQrCode.message" = "通过二维码分享";

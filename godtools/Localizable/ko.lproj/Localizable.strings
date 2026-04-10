@@ -381,3 +381,5 @@
 "onboardingTutorial.showMoreButton.title" = "더 보기";
 
 "screenShareTutorial.generateQRCodeButton.title" = "QR 코드 생성";
+
+"shareToolQrCode.message" = "QR 코드로 공유하기";
