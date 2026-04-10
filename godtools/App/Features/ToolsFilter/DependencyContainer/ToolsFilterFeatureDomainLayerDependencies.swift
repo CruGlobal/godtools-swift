@@ -63,19 +63,25 @@ class ToolsFilterFeatureDomainLayerDependencies {
     
     func getSearchToolFilterCategoriesUseCase() -> SearchToolFilterCategoriesUseCase {
         return SearchToolFilterCategoriesUseCase(
-            searchToolFilterCategoriesRepository: dataLayer.getSearchToolFilterCategoriesRepositoryInterface()
+            stringSearcher: StringSearcher()
         )
     }
     
     func getSearchToolFilterLanguagesUseCase() -> SearchToolFilterLanguagesUseCase {
         return SearchToolFilterLanguagesUseCase(
-            searchToolFilterLanguagesRepository: dataLayer.getSearchToolFilterLanguagesRepositoryInterface()
+            stringSearcher: StringSearcher()
         )
     }
     
-    func getStoreUserToolFiltersUseCase() -> StoreUserToolFiltersUseCase {
-        return StoreUserToolFiltersUseCase(
-            storeUserToolFiltersRepositoryInterface: dataLayer.getStoreUserToolFiltersRepositoryInterface()
+    func getSelectedToolFilterCategoryUseCase() -> SelectedToolFilterCategoryUseCase {
+        return SelectedToolFilterCategoryUseCase(
+            userToolFiltersRepository: dataLayer.getUserToolFiltersRepository()
+        )
+    }
+    
+    func getSelectedToolFilterLanguageUseCase() -> SelectedToolFilterLanguageUseCase {
+        return SelectedToolFilterLanguageUseCase(
+            userToolFiltersRepository: dataLayer.getUserToolFiltersRepository()
         )
     }
 }

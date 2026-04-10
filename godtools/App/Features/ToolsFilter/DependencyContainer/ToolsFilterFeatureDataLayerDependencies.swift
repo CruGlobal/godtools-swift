@@ -24,20 +24,4 @@ class ToolsFilterFeatureDataLayerDependencies {
             )
         )
     }
-        
-    func getSearchToolFilterCategoriesRepositoryInterface() -> SearchToolFilterCategoriesRepositoryInterface {
-        return SearchToolFilterCategoriesRepository(
-            stringSearcher: StringSearcher()
-        )
-    }
-    
-    func getSearchToolFilterLanguagesRepositoryInterface() -> SearchToolFilterLanguagesRepositoryInterface {
-        return SearchToolFilterLanguagesRepository(
-            stringSearcher: StringSearcher()
-        )
-    }
-    
-    func getStoreUserToolFiltersRepositoryInterface() -> StoreUserToolFiltersRepositoryInterface {
-        return StoreUserToolFiltersRepository(userToolFiltersRepository: getUserToolFiltersRepository())
-    }
 }

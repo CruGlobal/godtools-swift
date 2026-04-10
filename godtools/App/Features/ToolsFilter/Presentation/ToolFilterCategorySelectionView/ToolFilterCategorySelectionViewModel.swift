@@ -11,19 +11,22 @@ import Combine
 
 @MainActor class ToolFilterCategorySelectionViewModel: ObservableObject {
     
+    private static var backgroundCancellables: Set<AnyCancellable> = Set()
+    
     private let getToolFilterCategoriesStringsUseCase: GetToolFilterCategoriesStringsUseCase
     private let getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase
     private let searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase
     private let getUserToolFilterCategoryUseCase: GetUserToolFilterCategoryUseCase
     private let getUserToolFilterLanguageUseCase: GetUserToolFilterLanguageUseCase
-    private let storeUserToolFiltersUseCase: StoreUserToolFiltersUseCase
+    private let selectedToolFilterCategoryUseCase: SelectedToolFilterCategoryUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let viewSearchBarUseCase: ViewSearchBarUseCase
     
-    private var cancellables: Set<AnyCancellable> = Set()
-    private static var staticCancellables: Set<AnyCancellable> = Set()
-    private weak var flowDelegate: FlowDelegate?
     private lazy var searchBarViewModel = SearchBarViewModel(getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, viewSearchBarUseCase: viewSearchBarUseCase)
+    
+    private var cancellables: Set<AnyCancellable> = Set()
+    
+    private weak var flowDelegate: FlowDelegate?
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private var allCategories: [ToolFilterCategoryDomainModel] = [ToolFilterCategoryDomainModel]()
@@ -35,14 +38,14 @@ import Combine
     @Published var searchText: String = ""
     @Published var categorySearchResults: [ToolFilterCategoryDomainModel] = [ToolFilterCategoryDomainModel]()
     
-    init(getToolFilterCategoriesStringsUseCase: GetToolFilterCategoriesStringsUseCase, getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase, searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase, getUserToolFilterCategoryUseCase: GetUserToolFilterCategoryUseCase, getUserToolFilterLanguageUseCase: GetUserToolFilterLanguageUseCase, storeUserToolFiltersUseCase: StoreUserToolFiltersUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, flowDelegate: FlowDelegate) {
+    init(getToolFilterCategoriesStringsUseCase: GetToolFilterCategoriesStringsUseCase, getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase, searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase, getUserToolFilterCategoryUseCase: GetUserToolFilterCategoryUseCase, getUserToolFilterLanguageUseCase: GetUserToolFilterLanguageUseCase, selectedToolFilterCategoryUseCase: SelectedToolFilterCategoryUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, flowDelegate: FlowDelegate) {
         
         self.getToolFilterCategoriesStringsUseCase = getToolFilterCategoriesStringsUseCase
         self.getToolFilterCategoriesUseCase = getToolFilterCategoriesUseCase
         self.searchToolFilterCategoriesUseCase = searchToolFilterCategoriesUseCase
         self.getUserToolFilterCategoryUseCase = getUserToolFilterCategoryUseCase
         self.getUserToolFilterLanguageUseCase = getUserToolFilterLanguageUseCase
-        self.storeUserToolFiltersUseCase = storeUserToolFiltersUseCase
+        self.selectedToolFilterCategoryUseCase = selectedToolFilterCategoryUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.viewSearchBarUseCase = viewSearchBarUseCase
         self.flowDelegate = flowDelegate
@@ -109,7 +112,7 @@ import Combine
         .map { searchText, allCategories in
             
             searchToolFilterCategoriesUseCase
-                .getSearchResultsPublisher(for: searchText, in: allCategories)
+                .execute(for: searchText, in: allCategories)
         }
         .switchToLatest()
         .receive(on: DispatchQueue.main)
@@ -134,12 +137,13 @@ extension ToolFilterCategorySelectionViewModel {
         
         selectedCategory = category
         
-        storeUserToolFiltersUseCase.storeCategoryFilterPublisher(with: category.id)
+        selectedToolFilterCategoryUseCase
+            .execute(id: category.id)
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             }
-            .store(in: &ToolFilterCategorySelectionViewModel.staticCancellables)
+            .store(in: &Self.backgroundCancellables)
         
         flowDelegate?.navigate(step: .categoryTappedFromToolCategoryFilter)
     }
