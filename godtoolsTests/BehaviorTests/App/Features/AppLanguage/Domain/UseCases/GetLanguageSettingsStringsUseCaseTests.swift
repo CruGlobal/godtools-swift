@@ -21,7 +21,7 @@ struct GetLanguageSettingsStringsUseCaseTests {
         Then: The interface strings should be translated into Spanish.
         """
     )
-    @MainActor func interfaceStringsAreTranslatedWhenAppLanguageChanges() async throws {
+    @MainActor func stringsAreTranslatedWhenAppLanguageChanges() async throws {
         
         let getLanguageSettingsStringsUseCase: GetLanguageSettingsStringsUseCase = try getLanguageSettingsStringsUseCase()
         
@@ -29,8 +29,8 @@ struct GetLanguageSettingsStringsUseCaseTests {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var englishInterfaceStringsRef: LanguageSettingsStringsDomainModel?
-        var spanishInterfaceStringsRef: LanguageSettingsStringsDomainModel?
+        var englishStringsRef: LanguageSettingsStringsDomainModel?
+        var spanishStringsRef: LanguageSettingsStringsDomainModel?
         
         var sinkCount: Int = 0
         
@@ -52,7 +52,7 @@ struct GetLanguageSettingsStringsUseCaseTests {
                     })
                     .sink(receiveCompletion: { _ in
                         
-                    }, receiveValue: { (interfaceStrings: LanguageSettingsStringsDomainModel) in
+                    }, receiveValue: { (strings: LanguageSettingsStringsDomainModel) in
                         
                         sinkCount += 1
                         
@@ -60,12 +60,12 @@ struct GetLanguageSettingsStringsUseCaseTests {
                         
                         if sinkCount == 1 {
                             
-                            englishInterfaceStringsRef = interfaceStrings
+                            englishStringsRef = strings
                             appLanguagePublisher.send(LanguageCodeDomainModel.spanish.rawValue)
                         }
                         else if sinkCount == 2 {
                             
-                            spanishInterfaceStringsRef = interfaceStrings
+                            spanishStringsRef = strings
                             
                             // When finished be sure to call:
                             timeoutTask.cancel()
@@ -76,19 +76,19 @@ struct GetLanguageSettingsStringsUseCaseTests {
             }
         }
         
-        #expect(englishInterfaceStringsRef?.navTitle == "Language settings")
-        #expect(englishInterfaceStringsRef?.appInterfaceLanguageTitle == "App interface language")
-        #expect(englishInterfaceStringsRef?.setAppLanguageMessage == "Set the language you'd like the whole app to be displayed in.")
-        #expect(englishInterfaceStringsRef?.toolLanguagesAvailableOfflineTitle == "Tool languages available offline")
-        #expect(englishInterfaceStringsRef?.downloadToolsForOfflineMessage == "Download all the tools in a language to make them available even if you're out of WiFi or cell service. Set the tool language via the options button within a tool.")
-        #expect(englishInterfaceStringsRef?.editDownloadedLanguagesButtonTitle == "Edit downloaded languages")
+        #expect(englishStringsRef?.navTitle == "Language settings")
+        #expect(englishStringsRef?.appInterfaceLanguageTitle == "App interface language")
+        #expect(englishStringsRef?.setAppLanguageMessage == "Set the language you'd like the whole app to be displayed in.")
+        #expect(englishStringsRef?.toolLanguagesAvailableOfflineTitle == "Tool languages available offline")
+        #expect(englishStringsRef?.downloadToolsForOfflineMessage == "Download all the tools in a language to make them available even if you're out of WiFi or cell service. Set the tool language via the options button within a tool.")
+        #expect(englishStringsRef?.editDownloadedLanguagesButtonTitle == "Edit downloaded languages")
                             
-        #expect(spanishInterfaceStringsRef?.navTitle == "Ajustes de idioma")
-        #expect(spanishInterfaceStringsRef?.appInterfaceLanguageTitle == "Idioma de la interfaz de la aplicación")
-        #expect(spanishInterfaceStringsRef?.setAppLanguageMessage == "Establece el idioma en el que deseas que se muestre toda la aplicación.")
-        #expect(spanishInterfaceStringsRef?.toolLanguagesAvailableOfflineTitle == "Idiomas de herramientas disponibles sin conexión")
-        #expect(spanishInterfaceStringsRef?.downloadToolsForOfflineMessage == "Descarga todas las herramientas en un idioma para que estén disponibles incluso si no tienes WiFi o servicio móvil. Establece el idioma de la herramienta mediante el botón de opciones dentro de una herramienta.")
-        #expect(spanishInterfaceStringsRef?.editDownloadedLanguagesButtonTitle == "Editar idiomas descargados")
+        #expect(spanishStringsRef?.navTitle == "Ajustes de idioma")
+        #expect(spanishStringsRef?.appInterfaceLanguageTitle == "Idioma de la interfaz de la aplicación")
+        #expect(spanishStringsRef?.setAppLanguageMessage == "Establece el idioma en el que deseas que se muestre toda la aplicación.")
+        #expect(spanishStringsRef?.toolLanguagesAvailableOfflineTitle == "Idiomas de herramientas disponibles sin conexión")
+        #expect(spanishStringsRef?.downloadToolsForOfflineMessage == "Descarga todas las herramientas en un idioma para que estén disponibles incluso si no tienes WiFi o servicio móvil. Establece el idioma de la herramienta mediante el botón de opciones dentro de una herramienta.")
+        #expect(spanishStringsRef?.editDownloadedLanguagesButtonTitle == "Editar idiomas descargados")
     }
     
     struct TestArgumentChooseAppLanguageButtonTitle {
@@ -119,7 +119,7 @@ struct GetLanguageSettingsStringsUseCaseTests {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var interfaceStringsRef: LanguageSettingsStringsDomainModel?
+        var stringsRef: LanguageSettingsStringsDomainModel?
                         
         await confirmation(expectedCount: 1) { confirmation in
             
@@ -136,9 +136,9 @@ struct GetLanguageSettingsStringsUseCaseTests {
                     )
                     .sink(receiveCompletion: { _ in
                         
-                    }, receiveValue: { (interfaceStrings: LanguageSettingsStringsDomainModel) in
+                    }, receiveValue: { (strings: LanguageSettingsStringsDomainModel) in
                                                 
-                        interfaceStringsRef = interfaceStrings
+                        stringsRef = strings
                         
                         // Place inside a sink or other async closure:
                         confirmation()
@@ -151,7 +151,7 @@ struct GetLanguageSettingsStringsUseCaseTests {
             }
         }
         
-        #expect(interfaceStringsRef?.chooseAppLanguageButtonTitle == argument.expectedValue)
+        #expect(stringsRef?.chooseAppLanguageButtonTitle == argument.expectedValue)
     }
     
     @Test(
@@ -169,7 +169,7 @@ struct GetLanguageSettingsStringsUseCaseTests {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var interfaceStringsRef: LanguageSettingsStringsDomainModel?
+        var stringsRef: LanguageSettingsStringsDomainModel?
                 
         await confirmation(expectedCount: 1) { confirmation in
             
@@ -184,9 +184,9 @@ struct GetLanguageSettingsStringsUseCaseTests {
                     .execute(appLanguage: english.rawValue)
                     .sink(receiveCompletion: { _ in
                         
-                    }, receiveValue: { (interfaceStrings: LanguageSettingsStringsDomainModel) in
+                    }, receiveValue: { (strings: LanguageSettingsStringsDomainModel) in
                         
-                        interfaceStringsRef = interfaceStrings
+                        stringsRef = strings
                         
                         // Place inside a sink or other async closure:
                         confirmation()
@@ -201,7 +201,7 @@ struct GetLanguageSettingsStringsUseCaseTests {
 
         let expectedValue: String = "\(getAppLanguages().count) Languages available"
         
-        #expect(interfaceStringsRef?.numberOfAppLanguagesAvailable == expectedValue)
+        #expect(stringsRef?.numberOfAppLanguagesAvailable == expectedValue)
     }
 }
 

@@ -21,8 +21,8 @@ class ToolScreenShareFlow: Flow {
     private var cancellables: Set<AnyCancellable> = Set()
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
-    @Published private var creatingToolScreenShareSessionTimedOutDomainModel: CreatingToolScreenShareSessionTimedOutDomainModel?
-    @Published private var shareToolScreenShareSessionDomainModel: ShareToolScreenShareSessionDomainModel?
+    @Published private var creatingToolScreenShareSessionTimedOutStringsDomainModel: CreatingToolScreenShareSessionTimedOutStringsDomainModel?
+    @Published private var shareToolScreenShareSessionStringsDomainModel: ShareToolScreenShareSessionStringsDomainModel?
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -39,7 +39,7 @@ class ToolScreenShareFlow: Flow {
         let getToolScreenShareTutorialHasBeenViewedUseCase: GetToolScreenShareTutorialHasBeenViewedUseCase = appDiContainer.feature.toolScreenShare.domainLayer.getToolScreenShareTutorialHasBeenViewedUseCase()
         
         getToolScreenShareTutorialHasBeenViewedUseCase
-            .getViewedPublisher(toolId: toolSettingsObserver.toolId)
+            .execute(toolId: toolSettingsObserver.toolId)
             .receive(on: DispatchQueue.main)
             .first()
             .sink { [weak self] (toolScreenShareTutorialViewed: ToolScreenShareTutorialViewedDomainModel) in
@@ -53,37 +53,37 @@ class ToolScreenShareFlow: Flow {
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
-        let viewCreatingToolScreenShareSessionTimedOutUseCase: ViewCreatingToolScreenShareSessionTimedOutUseCase = appDiContainer.feature.toolScreenShare.domainLayer
-            .getViewCreatingToolScreenShareSessionTimedOutUseCase()
+        let getCreatingToolScreenShareSessionTimedOutStringsUseCase: GetCreatingToolScreenShareSessionTimedOutStringsUseCase = appDiContainer.feature.toolScreenShare.domainLayer
+            .getCreatingToolScreenShareSessionTimedOutStringsUseCase()
         
         $appLanguage
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
                 
-                viewCreatingToolScreenShareSessionTimedOutUseCase
-                    .viewPublisher(appLanguage: appLanguage)
+                getCreatingToolScreenShareSessionTimedOutStringsUseCase
+                    .execute(appLanguage: appLanguage)
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (domainModel: CreatingToolScreenShareSessionTimedOutDomainModel) in
-                self?.creatingToolScreenShareSessionTimedOutDomainModel = domainModel
+            .sink { [weak self] (domainModel: CreatingToolScreenShareSessionTimedOutStringsDomainModel) in
+                self?.creatingToolScreenShareSessionTimedOutStringsDomainModel = domainModel
             }
             .store(in: &cancellables)
         
-        let viewShareToolScreenShareSessionUseCase: ViewShareToolScreenShareSessionUseCase = appDiContainer.feature.toolScreenShare.domainLayer
-            .getViewShareToolScreenShareSessionUseCase()
+        let getShareToolScreenShareSessionStringsUseCase: GetShareToolScreenShareSessionStringsUseCase = appDiContainer.feature.toolScreenShare.domainLayer
+            .getShareToolScreenShareSessionStringsUseCase()
         
         $appLanguage
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
                 
-                viewShareToolScreenShareSessionUseCase
-                    .viewPublisher(appLanguage: appLanguage)
+                getShareToolScreenShareSessionStringsUseCase
+                    .execute(appLanguage: appLanguage)
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (domainModel: ShareToolScreenShareSessionDomainModel) in
-                self?.shareToolScreenShareSessionDomainModel = domainModel
+            .sink { [weak self] (strings: ShareToolScreenShareSessionStringsDomainModel) in
+                self?.shareToolScreenShareSessionStringsDomainModel = strings
             }
             .store(in: &cancellables)
     }
@@ -149,7 +149,7 @@ class ToolScreenShareFlow: Flow {
                 
                 let tractRemoteShareURLBuilder: TractRemoteShareURLBuilder = appDiContainer.feature.toolScreenShare.dataLayer.getTractRemoteShareURLBuilder()
                                 
-                guard let domainModel = shareToolScreenShareSessionDomainModel, let remoteShareUrl = tractRemoteShareURLBuilder.buildRemoteShareURL(toolId: toolSettingsObserver.toolId, primaryLanguageId: toolSettingsObserver.languages.primaryLanguageId, parallelLanguageId: toolSettingsObserver.languages.parallelLanguageId, selectedLanguageId: toolSettingsObserver.languages.selectedLanguageId, page: toolSettingsObserver.pageNumber, subscriberChannelId: channel.id) else {
+                guard let strings = shareToolScreenShareSessionStringsDomainModel, let remoteShareUrl = tractRemoteShareURLBuilder.buildRemoteShareURL(toolId: toolSettingsObserver.toolId, primaryLanguageId: toolSettingsObserver.languages.primaryLanguageId, parallelLanguageId: toolSettingsObserver.languages.parallelLanguageId, selectedLanguageId: toolSettingsObserver.languages.selectedLanguageId, page: toolSettingsObserver.pageNumber, subscriberChannelId: channel.id) else {
                     
                     let viewModel = AlertMessageViewModel(
                         title: "Error",
@@ -171,7 +171,7 @@ class ToolScreenShareFlow: Flow {
                     
                 case .shareLinkTappedFromScreenShareTutorial:
                     presentShareToolScreenShareSessionView(
-                        domainModel: domainModel,
+                        strings: strings,
                         shareUrl: remoteShareUrl
                     )
                 }
@@ -182,12 +182,12 @@ class ToolScreenShareFlow: Flow {
                 
                 case .timedOut:
                    
-                    guard let domainModel = creatingToolScreenShareSessionTimedOutDomainModel else {
+                    guard let strings = creatingToolScreenShareSessionTimedOutStringsDomainModel else {
                         return
                     }
 
                     navigationController.present(
-                        getCreatingToolScreenShareSessionTimedOutView(domainModel: domainModel),
+                        getCreatingToolScreenShareSessionTimedOutView(strings: strings),
                         animated: true,
                         completion: nil
                     )
@@ -246,10 +246,10 @@ class ToolScreenShareFlow: Flow {
         creatingToolScreenShareSessionModal = nil
     }
     
-    private func presentShareToolScreenShareSessionView(domainModel: ShareToolScreenShareSessionDomainModel, shareUrl: String) {
+    private func presentShareToolScreenShareSessionView(strings: ShareToolScreenShareSessionStringsDomainModel, shareUrl: String) {
         
         let view = getShareToolScreenShareSessionView(
-            domainModel: domainModel,
+            strings: strings,
             shareUrl: shareUrl
         )
         
@@ -318,7 +318,8 @@ extension ToolScreenShareFlow {
             toolId: toolId,
             showTutorialPages: showTutorialPages,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewToolScreenShareTutorialUseCase: appDiContainer.feature.toolScreenShare.domainLayer.getViewToolScreenShareTutorialUseCase(),
+            getToolScreenShareTutorialStringsUseCase: appDiContainer.feature.toolScreenShare.domainLayer.getToolScreenShareTutorialStringsUseCase(),
+            getToolScreenShareTutorialUseCase: appDiContainer.feature.toolScreenShare.domainLayer.getToolScreenShareTutorialUseCase(),
             didViewToolScreenShareTutorialUseCase: appDiContainer.feature.toolScreenShare.domainLayer.getDidViewToolScreenShareTutorialUseCase()
         )
         
@@ -366,7 +367,7 @@ extension ToolScreenShareFlow {
             toolId: toolSettingsObserver.toolId,
             createSessionTrigger: createSessionTrigger,
             getCurrentAppLanguage: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewCreatingToolScreenShareSessionUseCase: appDiContainer.feature.toolScreenShare.domainLayer.getViewCreatingToolScreenShareSessionUseCase(),
+            getCreatingToolScreenShareSessionStringsUseCase: appDiContainer.feature.toolScreenShare.domainLayer.getCreatingToolScreenShareSessionStringsUseCase(),
             tractRemoteSharePublisher: toolSettingsObserver.tractRemoteSharePublisher,
             incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase()
         )
@@ -401,11 +402,11 @@ extension ToolScreenShareFlow {
 
 extension ToolScreenShareFlow {
     
-    private func getCreatingToolScreenShareSessionTimedOutView(domainModel: CreatingToolScreenShareSessionTimedOutDomainModel) -> UIViewController {
+    private func getCreatingToolScreenShareSessionTimedOutView(strings: CreatingToolScreenShareSessionTimedOutStringsDomainModel) -> UIViewController {
         
         let viewModel = CreatingToolScreenShareSessionTimedOutViewModel(
             flowDelegate: self,
-            domainModel: domainModel
+            strings: strings
         )
         
         let view = CreatingToolScreenShareSessionTimedOutView(viewModel: viewModel)
@@ -418,15 +419,13 @@ extension ToolScreenShareFlow {
 
 extension ToolScreenShareFlow {
     
-    private func getShareToolScreenShareSessionView(domainModel: ShareToolScreenShareSessionDomainModel, shareUrl: String) -> UIViewController {
-        
-        let strings: ShareToolScreenShareSessionInterfaceStringsDomainModel = domainModel.strings
-        
+    private func getShareToolScreenShareSessionView(strings: ShareToolScreenShareSessionStringsDomainModel, shareUrl: String) -> UIViewController {
+                
         let shareMessage: String = String.localizedStringWithFormat(strings.shareMessage, shareUrl)
 
         let viewModel = ShareToolScreenShareSessionViewModel(
             flowDelegate: self,
-            domainModel: domainModel,
+            strings: strings,
             shareMessage: shareMessage,
             shareUrl: shareUrl,
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
@@ -449,7 +448,7 @@ extension ToolScreenShareFlow {
         let viewModel = ToolScreenShareQRCodeViewModel(
             flowDelegate: self,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewToolScreenShareQRCodeUseCase: appDiContainer.feature.toolScreenShareQRCode.domainLayer.getViewToolScreenShareQRCodeUseCase(),
+            getToolScreenShareQRCodeStringsUseCase: appDiContainer.feature.toolScreenShareQRCode.domainLayer.getToolScreenShareQRCodeStringsUseCase(),
             shareUrl: shareUrl
         )
         

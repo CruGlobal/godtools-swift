@@ -6,9 +6,9 @@ class TemplateDiContainer {
     
     let domainLayer: TemplateDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies) {
         
         self.dataLayer = TemplateDataLayerDependencies(coreDataLayer: coreDataLayer)
-        self.domainLayer = TemplateDomainLayerDependencies(coreDataLayer: coreDataLayer, dataLayer: dataLayer)
+        self.domainLayer = TemplateDomainLayerDependencies(coreDataLayer: coreDataLayer, coreDomainLayer: coreDomainLayer, dataLayer: dataLayer)
     }
 }

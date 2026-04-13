@@ -32,12 +32,12 @@ struct ToolDetailsVersionsView: View {
             ToolDetailsSectionDescriptionTextView(
                 viewModel: viewModel,
                 geometry: geometry,
-                text: viewModel.versionsDescription
+                text: viewModel.toolDetails.versionsDescription
             )
             
             LazyVStack(alignment: .center, spacing: cardSpacing) {
                 
-                ForEach(viewModel.toolVersions) { toolVersion in
+                ForEach(viewModel.toolDetails.versions) { toolVersion in
                              
                     ToolDetailsVersionsCardView(
                         viewModel: viewModel.toolVersionCardWillAppear(toolVersion: toolVersion),

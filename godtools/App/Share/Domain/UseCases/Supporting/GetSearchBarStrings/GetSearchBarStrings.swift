@@ -22,11 +22,11 @@ class GetSearchBarStrings {
         
         let localeId: String = translateInAppLanguage
         
-        let interfaceStrings = SearchBarStringsDomainModel(
+        let strings = SearchBarStringsDomainModel(
             cancel: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "cancel")
         )
         
-        return Just(interfaceStrings)
+        return Just(strings)
             .eraseToAnyPublisher()
     }
 }

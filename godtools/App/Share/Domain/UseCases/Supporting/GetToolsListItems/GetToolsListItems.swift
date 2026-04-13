@@ -42,7 +42,7 @@ final class GetToolsListItems {
             .getStringsPublisher(
                 translateInLanguage: appLanguage
             )
-            .map { (strings: ToolListItemInterfaceStringsDomainModel) in
+            .map { (strings: ToolListItemStringsDomainModel) in
              
                 return tools.map { tool in
                         
@@ -56,7 +56,7 @@ final class GetToolsListItems {
                     }
                     
                     return ToolListItemDomainModel(
-                        interfaceStrings: strings,
+                        strings: strings,
                         analyticsToolAbbreviation: tool.abbreviation,
                         dataModelId: tool.id,
                         bannerImageId: tool.attrBanner,

@@ -15,7 +15,8 @@ import Combine
     private let toolId: String
     private let toolSettingsObserver: ToolSettingsObserver
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
-    private let viewToolSettingsToolLanguageListUseCase: ViewToolSettingsToolLanguagesListUseCase
+    private let getToolSettingsToolLanguagesListStringsUseCase: GetToolSettingsToolLanguagesListStringsUseCase
+    private let getToolSettingsToolLanguagesListUseCase: GetToolSettingsToolLanguagesListUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -23,19 +24,20 @@ import Combine
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     
-    @Published var languages: [ToolSettingsToolLanguageDomainModel] = Array()
-    @Published var selectedLanguageId: String?
-    @Published var showsDeleteLanguageButton: Bool = false
-    @Published var deleteLanguageActionTitle: String = ""
+    @Published private(set) var strings = ToolSettingsToolLanguagesListStringsDomainModel.emptyValue
+    @Published private(set) var languages: [ToolSettingsToolLanguageDomainModel] = Array()
+    @Published private(set) var selectedLanguageId: String?
+    @Published private(set) var showsDeleteLanguageButton: Bool = false
     
-    init(flowDelegate: FlowDelegate, listType: ToolSettingsToolLanguagesListTypeDomainModel, toolId: String, toolSettingsObserver: ToolSettingsObserver, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolSettingsToolLanguageListUseCase: ViewToolSettingsToolLanguagesListUseCase) {
+    init(flowDelegate: FlowDelegate, listType: ToolSettingsToolLanguagesListTypeDomainModel, toolId: String, toolSettingsObserver: ToolSettingsObserver, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolSettingsToolLanguagesListStringsUseCase: GetToolSettingsToolLanguagesListStringsUseCase, getToolSettingsToolLanguagesListUseCase: GetToolSettingsToolLanguagesListUseCase) {
         
         self.flowDelegate = flowDelegate
         self.listType = listType
         self.toolId = toolId
         self.toolSettingsObserver = toolSettingsObserver
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
-        self.viewToolSettingsToolLanguageListUseCase = viewToolSettingsToolLanguageListUseCase
+        self.getToolSettingsToolLanguagesListStringsUseCase = getToolSettingsToolLanguagesListStringsUseCase
+        self.getToolSettingsToolLanguagesListUseCase = getToolSettingsToolLanguagesListUseCase
         
         showsDeleteLanguageButton = listType == .chooseParallelLanguage
         
@@ -44,14 +46,28 @@ import Combine
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
+        $appLanguage.dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+                
+                getToolSettingsToolLanguagesListStringsUseCase
+                    .execute(appLanguage: appLanguage)
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (strings: ToolSettingsToolLanguagesListStringsDomainModel) in
+                
+                self?.strings = strings
+            }
+            .store(in: &cancellables)
+        
         Publishers.CombineLatest(
             $appLanguage.dropFirst(),
             toolSettingsObserver.$languages
         )
         .map { (appLanguage: AppLanguageDomainModel, languages: ToolSettingsLanguages) in
             
-            viewToolSettingsToolLanguageListUseCase
-                .viewPublisher(
+            getToolSettingsToolLanguagesListUseCase
+                .execute(
                     listType: listType,
                     primaryLanguageId: languages.primaryLanguageId,
                     parallelLanguageId: languages.parallelLanguageId,
@@ -63,10 +79,9 @@ import Combine
         .receive(on: DispatchQueue.main)
         .sink(receiveCompletion: { _ in
             
-        }, receiveValue: { [weak self] (domainModel: ViewToolSettingsToolLanguagesListDomainModel) in
+        }, receiveValue: { [weak self] (languages: [ToolSettingsToolLanguageDomainModel]) in
             
-            self?.languages = domainModel.languages
-            self?.deleteLanguageActionTitle = domainModel.interfaceStrings.deleteParallelLanguageActionTitle
+            self?.languages = languages
             
             switch listType {
             case .choosePrimaryLanguage:

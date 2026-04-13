@@ -21,7 +21,7 @@ final class GetAccountStringsUseCase {
         
         let localeId: String = appLanguage.localeId
         
-        let interfaceStrings = AccountStringsDomainModel(
+        let strings = AccountStringsDomainModel(
             navTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.Account.navTitle.rawValue),
             activityButtonTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.Account.activityButtonTitle.rawValue),
             myActivitySectionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.Account.activitySectionTitle.rawValue),
@@ -30,7 +30,7 @@ final class GetAccountStringsUseCase {
             globalAnalyticsTitle: getGlobalAnalyticsTitle(localeId: localeId)
         )
         
-        return Just(interfaceStrings)
+        return Just(strings)
             .eraseToAnyPublisher()
     }
     

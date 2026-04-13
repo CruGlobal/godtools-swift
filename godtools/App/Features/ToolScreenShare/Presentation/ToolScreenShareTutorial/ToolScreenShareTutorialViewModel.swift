@@ -16,7 +16,8 @@ import Combine
     private let toolId: String
     private let showTutorialPages: ShowToolScreenShareTutorialPages
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
-    private let viewToolScreenShareTutorialUseCase: ViewToolScreenShareTutorialUseCase
+    private let getToolScreenShareTutorialStringsUseCase: GetToolScreenShareTutorialStringsUseCase
+    private let getToolScreenShareTutorialUseCase: GetToolScreenShareTutorialUseCase
     private let didViewToolScreenShareTutorialUseCase: DidViewToolScreenShareTutorialUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
@@ -25,25 +26,23 @@ import Combine
     private weak var flowDelegate: FlowDelegate?
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
-    @Published private var interfaceStrings: ToolScreenShareInterfaceStringsDomainModel = ToolScreenShareInterfaceStringsDomainModel.emptyStrings
     
+    @Published private(set) var strings = ToolScreenShareTutorialStringsDomainModel.emptyValue
     @Published private(set) var shareOptions: [ToolScreenShareTutorialShareOption] = []
     @Published private(set) var hidesSkipButton: Bool = false
     @Published private(set) var hidesContinueButton: Bool = false
     @Published private(set) var tutorialPages: [ToolScreenShareTutorialPageDomainModel] = Array()
-    @Published private(set) var generateQRCodeButtonTitle: String = ""
-    @Published private(set) var shareLinkButtonTitle: String = ""
-    @Published private(set) var continueTitle: String = ""
     
     @Published var currentPage: Int = 0
     
-    init(flowDelegate: FlowDelegate, toolId: String, showTutorialPages: ShowToolScreenShareTutorialPages, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolScreenShareTutorialUseCase: ViewToolScreenShareTutorialUseCase, didViewToolScreenShareTutorialUseCase: DidViewToolScreenShareTutorialUseCase) {
+    init(flowDelegate: FlowDelegate, toolId: String, showTutorialPages: ShowToolScreenShareTutorialPages, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolScreenShareTutorialStringsUseCase: GetToolScreenShareTutorialStringsUseCase, getToolScreenShareTutorialUseCase: GetToolScreenShareTutorialUseCase, didViewToolScreenShareTutorialUseCase: DidViewToolScreenShareTutorialUseCase) {
         
         self.flowDelegate = flowDelegate
         self.toolId = toolId
         self.showTutorialPages = showTutorialPages
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
-        self.viewToolScreenShareTutorialUseCase = viewToolScreenShareTutorialUseCase
+        self.getToolScreenShareTutorialStringsUseCase = getToolScreenShareTutorialStringsUseCase
+        self.getToolScreenShareTutorialUseCase = getToolScreenShareTutorialUseCase
         self.didViewToolScreenShareTutorialUseCase = didViewToolScreenShareTutorialUseCase
         
         getCurrentAppLanguageUseCase
@@ -55,33 +54,43 @@ import Combine
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
                 
-                viewToolScreenShareTutorialUseCase
-                    .viewTutorialPublisher(appLanguage: appLanguage)
+                getToolScreenShareTutorialStringsUseCase
+                    .execute(appLanguage: appLanguage)
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (toolScreenShareTutorial: ToolScreenShareTutorialDomainModel) in
+            .sink { [weak self] (strings: ToolScreenShareTutorialStringsDomainModel) in
                 
-                self?.interfaceStrings = toolScreenShareTutorial.interfaceStrings
-                self?.generateQRCodeButtonTitle = toolScreenShareTutorial.interfaceStrings.generateQRCodeActionTitle
-                self?.shareLinkButtonTitle = toolScreenShareTutorial.interfaceStrings.shareLinkActionTitle
-                self?.continueTitle = toolScreenShareTutorial.interfaceStrings.nextTutorialPageActionTitle
+                self?.strings = strings
+            }
+            .store(in: &cancellables)
+        
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
                 
+                getToolScreenShareTutorialUseCase
+                    .execute(appLanguage: appLanguage)
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (pages: [ToolScreenShareTutorialPageDomainModel]) in
+                                
                 let tutorialPages: [ToolScreenShareTutorialPageDomainModel]
                 
                 switch showTutorialPages {
                 
                 case .lastPageWithQRCodeOption:
                    
-                    if let lastPage = toolScreenShareTutorial.pages.last {
+                    if let lastPage = pages.last {
                         tutorialPages = [lastPage]
                     }
                     else {
-                        tutorialPages = toolScreenShareTutorial.pages
+                        tutorialPages = pages
                     }
                     
                 default:
-                    tutorialPages = toolScreenShareTutorial.pages
+                    tutorialPages = pages
                 }
                 
                 self?.tutorialPages = tutorialPages
@@ -134,7 +143,7 @@ import Combine
         didMarkTutorialAsViewed = true
         
         didViewToolScreenShareTutorialUseCase
-            .didViewPublisher(toolId: toolId)
+            .execute(toolId: toolId)
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 

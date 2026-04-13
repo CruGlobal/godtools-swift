@@ -20,15 +20,13 @@ class CreatingToolScreenShareSessionTimedOutViewModel: AlertMessageViewModelType
     let cancelTitle: String? = nil
     let acceptTitle: String
     
-    init(flowDelegate: FlowDelegate, domainModel: CreatingToolScreenShareSessionTimedOutDomainModel) {
+    init(flowDelegate: FlowDelegate, strings: CreatingToolScreenShareSessionTimedOutStringsDomainModel) {
         
         self.flowDelegate = flowDelegate
-        
-        let interfaceStrings: CreatingToolScreenShareSessionTimedOutInterfaceStringsDomainModel = domainModel.interfaceStrings
-        
-        title = interfaceStrings.title
-        message = interfaceStrings.message
-        acceptTitle = interfaceStrings.acceptActionTitle
+                
+        title = strings.title
+        message = strings.message
+        acceptTitle = strings.acceptActionTitle
     }
     
     deinit {

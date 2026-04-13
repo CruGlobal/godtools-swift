@@ -23,16 +23,16 @@ struct GetSearchBarStringsTests {
         Then: The search bar interface strings should be translated in Spanish
         """
     )
-    func TestsearchBarInterfaceStringsTranslated() async {
+    func TestsearchBarStringsTranslated() async {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        let getSearchBarInterfaceStringsRepository = GetSearchBarStrings(localizationServices: Self.getLocalizationServices())
+        let getSearchBarStringsRepository = GetSearchBarStrings(localizationServices: Self.getLocalizationServices())
         
         let appLanguagePublisher: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
         
-        var englishInterfaceStringsRef: SearchBarStringsDomainModel?
-        var spanishInterfaceStringsRef: SearchBarStringsDomainModel?
+        var englishStringsRef: SearchBarStringsDomainModel?
+        var spanishStringsRef: SearchBarStringsDomainModel?
         
         var sinkCount: Int = 0
         
@@ -40,27 +40,27 @@ struct GetSearchBarStringsTests {
             appLanguagePublisher
                 .flatMap { appLanguage in
                     
-                    return getSearchBarInterfaceStringsRepository.getStringsPublisher(translateInAppLanguage: appLanguage)
-                }.sink { interfaceStrings in
+                    return getSearchBarStringsRepository.getStringsPublisher(translateInAppLanguage: appLanguage)
+                }.sink { strings in
                     
                     sinkCount += 1
                     confirmation()
                     
                     if sinkCount == 1 {
                         
-                        englishInterfaceStringsRef = interfaceStrings
+                        englishStringsRef = strings
                         appLanguagePublisher.send(LanguageCodeDomainModel.spanish.rawValue)
                     }
                     else if sinkCount == 2 {
                         
-                        spanishInterfaceStringsRef = interfaceStrings
+                        spanishStringsRef = strings
                     }
                 }
                 .store(in: &cancellables)
         }
         
-        #expect(englishInterfaceStringsRef?.cancel == Self.cancelButtonTextEnglish)
-        #expect(spanishInterfaceStringsRef?.cancel == Self.cancelButtonTextSpanish)
+        #expect(englishStringsRef?.cancel == Self.cancelButtonTextEnglish)
+        #expect(spanishStringsRef?.cancel == Self.cancelButtonTextSpanish)
     }
 }
 

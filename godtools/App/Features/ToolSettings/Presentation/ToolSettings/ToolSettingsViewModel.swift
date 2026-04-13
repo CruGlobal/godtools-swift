@@ -14,7 +14,8 @@ import Combine
         
     private let toolSettingsObserver: ToolSettingsObserver
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
-    private let viewToolSettingsUseCase: ViewToolSettingsUseCase
+    private let getToolSettingsStringsUseCase: GetToolSettingsStringsUseCase
+    private let getToolSettingsUseCase: GetToolSettingsUseCase
     private let getShareablesUseCase: GetShareablesUseCase
     private let getShareableImageUseCase: GetShareableImageUseCase
     
@@ -23,28 +24,22 @@ import Combine
     private weak var flowDelegate: FlowDelegate?
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-    @Published private var interfaceStrings: ToolSettingsInterfaceStringsDomainModel?
     
+    @Published private(set) var strings = ToolSettingsStringsDomainModel.emptyValue
     @Published private(set) var toolOptions: [ToolSettingsOption] = Array()
-    
-    @Published var title: String = ""
-    @Published var shareLinkTitle: String = ""
-    @Published var screenShareTitle: String = ""
-    @Published var trainingTipsIcon: SwiftUI.Image = Image("")
-    @Published var trainingTipsTitle: String = ""
-    @Published var chooseLanguageTitle: String = ""
-    @Published var chooseLanguageToggleMessage: String = ""
-    @Published var primaryLanguageTitle: String = ""
-    @Published var parallelLanguageTitle: String = ""
-    @Published var shareablesTitle: String = ""
-    @Published var shareables: [ShareableDomainModel] = Array()
+    @Published private(set) var trainingTipsIcon: SwiftUI.Image = Image("")
+    @Published private(set) var trainingTipsTitle: String = ""
+    @Published private(set) var primaryLanguageTitle: String = ""
+    @Published private(set) var parallelLanguageTitle: String = ""
+    @Published private(set) var shareables: [ShareableDomainModel] = Array()
         
-    init(flowDelegate: FlowDelegate, toolSettingsObserver: ToolSettingsObserver, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolSettingsUseCase: ViewToolSettingsUseCase, getShareablesUseCase: GetShareablesUseCase, getShareableImageUseCase: GetShareableImageUseCase) {
+    init(flowDelegate: FlowDelegate, toolSettingsObserver: ToolSettingsObserver, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolSettingsStringsUseCase: GetToolSettingsStringsUseCase, getToolSettingsUseCase: GetToolSettingsUseCase, getShareablesUseCase: GetShareablesUseCase, getShareableImageUseCase: GetShareableImageUseCase) {
         
         self.flowDelegate = flowDelegate
         self.toolSettingsObserver = toolSettingsObserver
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
-        self.viewToolSettingsUseCase = viewToolSettingsUseCase
+        self.getToolSettingsStringsUseCase = getToolSettingsStringsUseCase
+        self.getToolSettingsUseCase = getToolSettingsUseCase
         self.getShareablesUseCase = getShareablesUseCase
         self.getShareableImageUseCase = getShareableImageUseCase
         
@@ -53,50 +48,63 @@ import Combine
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
-        Publishers.CombineLatest(
-            $appLanguage.dropFirst(),
-            toolSettingsObserver.$languages
-        )
-        .map { (appLanguage: AppLanguageDomainModel, languages: ToolSettingsLanguages) in
+        $appLanguage.dropFirst()
+        .map { (appLanguage: AppLanguageDomainModel) in
             
-            viewToolSettingsUseCase
-                .viewPublisher(
-                    appLanguage: appLanguage,
-                    toolId: toolSettingsObserver.toolId,
-                    toolLanguageId: languages.selectedLanguageId,
-                    toolPrimaryLanguageId: languages.primaryLanguageId,
-                    toolParallelLanguageId: languages.parallelLanguageId
-                )
+            getToolSettingsStringsUseCase
+                .execute(appLanguage: appLanguage)
         }
         .switchToLatest()
         .receive(on: DispatchQueue.main)
-        .sink { [weak self] (domainModel: ViewToolSettingsDomainModel) in
-                      
+        .sink { [weak self] (strings: ToolSettingsStringsDomainModel) in
+            
+            self?.strings = strings
+        }
+        .store(in: &cancellables)
+        
+        Publishers.CombineLatest3(
+            $appLanguage.dropFirst(),
+            toolSettingsObserver.$languages,
+            $strings.dropFirst()
+        )
+        .map { (appLanguage: AppLanguageDomainModel, languages: ToolSettingsLanguages, strings: ToolSettingsStringsDomainModel) in
+            
+            Publishers.CombineLatest(
+                getToolSettingsUseCase
+                    .execute(
+                        appLanguage: appLanguage,
+                        toolId: toolSettingsObserver.toolId,
+                        toolLanguageId: languages.selectedLanguageId,
+                        toolPrimaryLanguageId: languages.primaryLanguageId,
+                        toolParallelLanguageId: languages.parallelLanguageId
+                    )
+                ,
+                Just(strings)
+                    .setFailureType(to: Error.self)
+            )
+        }
+        .switchToLatest()
+        .receive(on: DispatchQueue.main)
+        .sink(receiveCompletion: { _ in
+            
+        }, receiveValue: { [weak self] (toolSettings: ToolSettingsDomainModel, strings: ToolSettingsStringsDomainModel) in
+            
             self?.toolOptions = Self.getAvailableToolOptions(
-                domainModel: domainModel,
+                domainModel: toolSettings,
                 toolSettingsObserver: toolSettingsObserver
             )
             
-            self?.title = domainModel.interfaceStrings.title
-            self?.shareLinkTitle = domainModel.interfaceStrings.toolOptionShareLink
-            self?.screenShareTitle = domainModel.interfaceStrings.toolOptionScreenShare
-            self?.chooseLanguageTitle = domainModel.interfaceStrings.languageSelectionTitle
-            self?.chooseLanguageToggleMessage = domainModel.interfaceStrings.languageSelectionMessage
-            self?.shareablesTitle = domainModel.interfaceStrings.relatedGraphicsTitle
-            
-            self?.interfaceStrings = domainModel.interfaceStrings
-                            
-            self?.primaryLanguageTitle = domainModel.primaryLanguage?.languageName ?? ""
-            self?.parallelLanguageTitle = domainModel.parallelLanguage?.languageName ?? domainModel.interfaceStrings.chooseParallelLanguageActionTitle
-        }
+            self?.primaryLanguageTitle = toolSettings.primaryLanguage?.languageName ?? ""
+            self?.parallelLanguageTitle = toolSettings.parallelLanguage?.languageName ?? strings.chooseParallelLanguageActionTitle
+        })
         .store(in: &cancellables)
 
         Publishers.CombineLatest(
             toolSettingsObserver.$trainingTipsEnabled,
-            $interfaceStrings
+            $strings
         )
         .receive(on: DispatchQueue.main)
-        .sink { [weak self] (trainingTipsEnabled: Bool, strings: ToolSettingsInterfaceStringsDomainModel?) in
+        .sink { [weak self] (trainingTipsEnabled: Bool, strings: ToolSettingsStringsDomainModel?) in
             
             guard let strings = strings else {
                 return
@@ -125,7 +133,7 @@ import Combine
         print("x deinit: \(type(of: self))")
     }
     
-    private static func getAvailableToolOptions(domainModel: ViewToolSettingsDomainModel, toolSettingsObserver: ToolSettingsObserver) -> [ToolSettingsOption] {
+    private static func getAvailableToolOptions(domainModel: ToolSettingsDomainModel, toolSettingsObserver: ToolSettingsObserver) -> [ToolSettingsOption] {
         
         var toolOptions: [ToolSettingsOption] = Array()
         

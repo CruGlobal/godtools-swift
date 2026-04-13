@@ -79,7 +79,7 @@ struct ToolScreenShareTutorialView: View {
                         if viewModel.shareOptions.contains(.qrCode) {
                             
                             GTWhiteButton(
-                                title: viewModel.generateQRCodeButtonTitle,
+                                title: viewModel.strings.generateQRCodeActionTitle,
                                 font: buttonFont,
                                 width: buttonWidth,
                                 height: Self.continueButtonHeight,
@@ -95,7 +95,7 @@ struct ToolScreenShareTutorialView: View {
                         if viewModel.shareOptions.contains(.shareLink) {
                             
                             GTBlueButton(
-                                title: viewModel.shareLinkButtonTitle,
+                                title: viewModel.strings.shareLinkActionTitle,
                                 font: buttonFont,
                                 width: buttonWidth,
                                 height: Self.continueButtonHeight,
@@ -113,7 +113,7 @@ struct ToolScreenShareTutorialView: View {
                 if !viewModel.hidesContinueButton {
                     
                     GTBlueButton(
-                        title: viewModel.continueTitle,
+                        title: viewModel.strings.nextTutorialPageActionTitle,
                         font: FontLibrary.sfProTextRegular.font(size: 18),
                         width: singleButtonWidth,
                         height: Self.continueButtonHeight,

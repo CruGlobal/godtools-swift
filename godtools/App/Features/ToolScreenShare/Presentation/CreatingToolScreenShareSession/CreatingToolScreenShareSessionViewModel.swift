@@ -16,7 +16,7 @@ import Combine
     private let toolId: String
     private let createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger
     private let getCurrentAppLanguage: GetCurrentAppLanguageUseCase
-    private let viewCreatingToolScreenShareSessionUseCase: ViewCreatingToolScreenShareSessionUseCase
+    private let getCreatingToolScreenShareSessionStringsUseCase: GetCreatingToolScreenShareSessionStringsUseCase
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
     private let incrementUserCounterUseCase: IncrementUserCounterUseCase
     
@@ -26,15 +26,15 @@ import Combine
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
-    @Published var creatingSessionMessage: String = ""
-    
-    init(flowDelegate: FlowDelegate, toolId: String, createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger, getCurrentAppLanguage: GetCurrentAppLanguageUseCase, viewCreatingToolScreenShareSessionUseCase: ViewCreatingToolScreenShareSessionUseCase, tractRemoteSharePublisher: TractRemoteSharePublisher, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
+    @Published private(set) var strings = CreatingToolScreenShareSessionStringsDomainModel.emptyValue
+        
+    init(flowDelegate: FlowDelegate, toolId: String, createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger, getCurrentAppLanguage: GetCurrentAppLanguageUseCase, getCreatingToolScreenShareSessionStringsUseCase: GetCreatingToolScreenShareSessionStringsUseCase, tractRemoteSharePublisher: TractRemoteSharePublisher, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
         
         self.flowDelegate = flowDelegate
         self.toolId = toolId
         self.createSessionTrigger = createSessionTrigger
         self.getCurrentAppLanguage = getCurrentAppLanguage
-        self.viewCreatingToolScreenShareSessionUseCase = viewCreatingToolScreenShareSessionUseCase
+        self.getCreatingToolScreenShareSessionStringsUseCase = getCreatingToolScreenShareSessionStringsUseCase
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
         self.incrementUserCounterUseCase = incrementUserCounterUseCase
         
@@ -47,16 +47,14 @@ import Combine
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
                 
-                viewCreatingToolScreenShareSessionUseCase
-                    .viewPublisher(appLanguage: appLanguage)
+                getCreatingToolScreenShareSessionStringsUseCase
+                    .execute(appLanguage: appLanguage)
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (domainModel: CreatingToolScreenShareSessionDomainModel) in
-                
-                let interfaceStrings: CreatingToolScreenShareSessionInterfaceStringsDomainModel = domainModel.interfaceStrings
-                
-                self?.creatingSessionMessage = interfaceStrings.creatingSessionMessage
+            .sink { [weak self] (strings: CreatingToolScreenShareSessionStringsDomainModel) in
+                                
+                self?.strings = strings
             }
             .store(in: &cancellables)
         
