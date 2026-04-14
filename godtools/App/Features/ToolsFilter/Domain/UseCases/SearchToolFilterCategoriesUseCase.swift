@@ -9,17 +9,20 @@
 import Foundation
 import Combine
 
-class SearchToolFilterCategoriesUseCase {
+final class SearchToolFilterCategoriesUseCase {
     
-    private let searchToolFilterCategoriesRepository: SearchToolFilterCategoriesRepositoryInterface
+    private let stringSearcher: StringSearcher
     
-    init(searchToolFilterCategoriesRepository: SearchToolFilterCategoriesRepositoryInterface) {
+    init(stringSearcher: StringSearcher) {
         
-        self.searchToolFilterCategoriesRepository = searchToolFilterCategoriesRepository
+        self.stringSearcher = stringSearcher
     }
     
-    func getSearchResultsPublisher(for searchText: String, in toolFilterCategories: [ToolFilterCategoryDomainModel]) -> AnyPublisher<[ToolFilterCategoryDomainModel], Never> {
+    func execute(for searchText: String, in toolFilterCategories: [ToolFilterCategoryDomainModel]) -> AnyPublisher<[ToolFilterCategoryDomainModel], Never> {
         
-        return searchToolFilterCategoriesRepository.getSearchResultsPublisher(for: searchText, in: toolFilterCategories)
+        let searchResults = stringSearcher.search(for: searchText, in: toolFilterCategories)
+        
+        return Just(searchResults)
+            .eraseToAnyPublisher()
     }
 }

@@ -22,11 +22,11 @@ final class GetDownloadableLanguagesStringsUseCase {
         
         let localeId: String = appLanguage
         
-        let interfaceStrings = DownloadableLanguagesStringsDomainModel(
+        let strings = DownloadableLanguagesStringsDomainModel(
             navTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: AppLanguageStringKeys.DownloadableLanguages.navTitle.rawValue)
         )
         
-        return Just(interfaceStrings)
+        return Just(strings)
             .eraseToAnyPublisher()
     }
 }

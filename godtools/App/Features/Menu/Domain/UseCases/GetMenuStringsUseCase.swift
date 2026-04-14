@@ -33,7 +33,7 @@ final class GetMenuStringsUseCase {
             versionString = ""
         }
         
-        let interfaceStrings = MenuStringsDomainModel(
+        let strings = MenuStringsDomainModel(
             title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "settings"),
             getStartedTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.SectionTitles.getStarted.rawValue),
             tutorialOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.ItemTitles.tutorial.rawValue),
@@ -61,7 +61,7 @@ final class GetMenuStringsUseCase {
             version: versionString
         )
         
-        return Just(interfaceStrings)
+        return Just(strings)
             .eraseToAnyPublisher()
     }
 }

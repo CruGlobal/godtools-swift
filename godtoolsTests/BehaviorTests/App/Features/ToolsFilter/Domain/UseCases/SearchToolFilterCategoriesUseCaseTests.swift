@@ -1,5 +1,5 @@
 //
-//  SearchToolFilterCategoriesRepositoryTests.swift
+//  SearchToolFilterCategoriesUseCaseTests.swift
 //  godtoolsTests
 //
 //  Created by Levi Eggert on 4/4/24.
@@ -10,7 +10,7 @@ import Testing
 @testable import godtools
 import Combine
 
-struct SearchToolFilterCategoriesRepositoryTests {
+struct SearchToolFilterCategoriesUseCaseTests {
     
     struct TestArgument {
         let searchString: String
@@ -40,32 +40,41 @@ struct SearchToolFilterCategoriesRepositoryTests {
     )
     func showsCategoriesContainingSearchString(argument: TestArgument) async {
         
-        let searchCategoriesRepository = SearchToolFilterCategoriesRepository(
-            stringSearcher: StringSearcher()
-        )
+        let searchToolFilterCategoriesUseCase = getSearchToolFilterCategoriesUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
         
         var searchedCategories: [String] = Array()
-                
-        await confirmation(expectedCount: 1) { confirmation in
+        
+        await withCheckedContinuation { continuation in
             
-            searchCategoriesRepository
-                .getSearchResultsPublisher(for: argument.searchString, in: allCategories)
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
+            
+            searchToolFilterCategoriesUseCase
+                .execute(for: argument.searchString, in: allCategories)
                 .sink { (categories: [ToolFilterCategoryDomainModel]) in
-                    
-                    confirmation()
-                    
+                                        
                     searchedCategories = categories.map({$0.primaryText})
+                    
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
                 }
                 .store(in: &cancellables)
         }
-        
+
         #expect(argument.expectedCategories.elementsEqual(searchedCategories))
     }
 }
 
-extension SearchToolFilterCategoriesRepositoryTests {
+extension SearchToolFilterCategoriesUseCaseTests {
+    
+    private func getSearchToolFilterCategoriesUseCase() -> SearchToolFilterCategoriesUseCase {
+        return SearchToolFilterCategoriesUseCase(stringSearcher: StringSearcher())
+    }
     
     private var allCategories: [ToolFilterCategoryDomainModel] {
         return [

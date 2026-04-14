@@ -20,7 +20,7 @@ final class GetToolsStringsUseCase {
     
     func execute(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolsStringsDomainModel, Never> {
         
-        let interfaceStrings = ToolsStringsDomainModel(
+        let strings = ToolsStringsDomainModel(
             favoritingToolBannerMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "tool_offline_favorite_message"),
             toolSpotlightTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: ToolStringKeys.Spotlight.title.rawValue),
             toolSpotlightSubtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: ToolStringKeys.Spotlight.subtitle.rawValue),
@@ -33,7 +33,7 @@ final class GetToolsStringsUseCase {
             viewAllTools: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "tools.personalizationUnavailable.viewAllTools")
         )
         
-        return Just(interfaceStrings)
+        return Just(strings)
             .eraseToAnyPublisher()
     }
 }

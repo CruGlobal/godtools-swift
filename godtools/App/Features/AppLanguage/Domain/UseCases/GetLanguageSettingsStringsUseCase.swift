@@ -29,7 +29,7 @@ final class GetLanguageSettingsStringsUseCase {
         return getNumberOfAppLanguagesAvailableStringPublisher(translateInAppLanguage: appLanguage)
             .map { (numberOfAppLanguagesInterfaceString: String) in
                 
-                let interfaceStrings = LanguageSettingsStringsDomainModel(
+                let strings = LanguageSettingsStringsDomainModel(
                     navTitle: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsNavTitle.key),
                     appInterfaceLanguageTitle: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsAppInterfaceTitle.key),
                     numberOfAppLanguagesAvailable: numberOfAppLanguagesInterfaceString,
@@ -40,7 +40,7 @@ final class GetLanguageSettingsStringsUseCase {
                     editDownloadedLanguagesButtonTitle: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsToolLanguagesAvailableOfflineEditDownloadedLanguagesButtonTitle.key)
                 )
                 
-                return interfaceStrings
+                return strings
             }
             .eraseToAnyPublisher()
     }

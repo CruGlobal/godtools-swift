@@ -1,5 +1,5 @@
 //
-//  GetToolsInterfaceStringsRepository.swift
+//  ToolsDomainLayerDependencies.swift
 //  godtools
 //
 //  Created by Levi Eggert on 2/6/26.

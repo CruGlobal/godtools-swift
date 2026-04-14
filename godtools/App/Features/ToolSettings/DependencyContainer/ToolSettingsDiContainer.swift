@@ -11,7 +11,6 @@ import Foundation
 class ToolSettingsDiContainer {
     
     private let dataLayer: ToolSettingsDataLayerDependencies
-    private let domainInterfaceLayer: ToolSettingsDomainInterfaceDependencies
     
     let domainLayer: ToolSettingsDomainLayerDependencies
     
@@ -20,7 +19,6 @@ class ToolSettingsDiContainer {
         let dataLayer = ToolSettingsDataLayerDependencies(coreDataLayer: coreDataLayer)
         
         self.dataLayer = dataLayer
-        domainInterfaceLayer = ToolSettingsDomainInterfaceDependencies(coreDataLayer: coreDataLayer, coreDomainLayer: coreDomainLayer, dataLayer: dataLayer)
-        domainLayer = ToolSettingsDomainLayerDependencies(domainInterfaceLayer: domainInterfaceLayer)
+        domainLayer = ToolSettingsDomainLayerDependencies(coreDataLayer: coreDataLayer, coreDomainLayer: coreDomainLayer, dataLayer: dataLayer)
     }
 }

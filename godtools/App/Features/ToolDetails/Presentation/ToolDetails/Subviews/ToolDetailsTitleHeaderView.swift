@@ -21,12 +21,12 @@ struct ToolDetailsTitleHeaderView: View {
         
         VStack(alignment: .leading, spacing: 0) {
             
-            Text(viewModel.name)
+            Text(viewModel.toolDetails.name)
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .font(FontLibrary.sfProDisplayLight.font(size: 28))
                 .frame(maxWidth: .infinity, alignment: .leading)
             
-            Text(viewModel.totalViews)
+            Text(viewModel.toolDetails.numberOfViews)
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .font(FontLibrary.sfProTextRegular.font(size: 16))
                 .frame(maxWidth: .infinity, alignment: .leading)

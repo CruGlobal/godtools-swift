@@ -16,10 +16,8 @@ class ToolScreenShareFeatureDataLayerDependencies {
         
         self.coreDataLayer = coreDataLayer
     }
-    
-    // MARK: - Data Layer Classes
-    
-    private func getToolScreenShareTutorialViewsRepository() -> ToolScreenShareTutorialViewsRepository {
+        
+    func getToolScreenShareTutorialViewsRepository() -> ToolScreenShareTutorialViewsRepository {
         return ToolScreenShareTutorialViewsRepository(
             cache: RealmToolScreenShareTutorialViewsCache(
                 realmDatabase: coreDataLayer.getSharedLegacyRealmDatabase()
@@ -65,50 +63,6 @@ class ToolScreenShareFeatureDataLayerDependencies {
         return TractRemoteShareURLBuilder(
             resourcesRepository: coreDataLayer.getResourcesRepository(),
             languagesRepository: coreDataLayer.getLanguagesRepository()
-        )
-    }
-    
-    // MARK: - Domain Interface
-    
-    func getCreatingToolScreenShareSessionInterfaceStringsRepositoryInterface() -> GetCreatingToolScreenShareSessionInterfaceStringsRepositoryInterface {
-        return GetCreatingToolScreenShareSessionInterfaceStringsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
-    
-    func getCreatingToolScreenShareSessionTimedOutInterfaceStringsRepositoryInterface() -> GetCreatingToolScreenShareSessionTimedOutInterfaceStringsRepositoryInterface {
-        return GetCreatingToolScreenShareSessionTimedOutInterfaceStringsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
-    
-    func getShareToolScreenShareSessionInterfaceStringsRepositoryInterface() -> GetShareToolScreenShareSessionInterfaceStringsRepositoryInterface {
-        return GetShareToolScreenShareSessionInterfaceStringsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
-    
-    func getToolScreenShareTutorialInterfaceStringsRepositoryInterface() -> GetToolScreenShareTutorialInterfaceStringsRepositoryInterface {
-        return GetToolScreenShareTutorialInterfaceStringsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
-    
-    func getToolScreenShareTutorialRepositoryInterface() -> GetToolScreenShareTutorialRepositoryInterface {
-        return GetToolScreenShareTutorialRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
-    
-    func getToolScreenShareTutorialViewedRepositoryInterface() -> GetToolScreenShareTutorialViewedRepositoryInterface {
-        return GetToolScreenShareTutorialViewedRepository(
-            tutorialViewsRepository: getToolScreenShareTutorialViewsRepository()
-        )
-    }
-    
-    func getIncrementNumberOfToolScreenShareTutorialViewsRepositoryInterface() -> IncrementNumberOfToolScreenShareTutorialViewsRepositoryInterface {
-        return IncrementNumberOfToolScreenShareTutorialViewsRepository(
-            tutorialViewsRepository: getToolScreenShareTutorialViewsRepository()
         )
     }
 }

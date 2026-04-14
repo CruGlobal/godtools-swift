@@ -19,7 +19,7 @@ struct GetLessonFilterLanguagesStringsUseCaseTests {
         Then: The interface strings should be translated into Spanish.
         """
     )
-    func lessonFilterInterfaceStringsAreTranslatedWhenAppLanguageChanges() async {
+    func lessonFilterStringsAreTranslatedWhenAppLanguageChanges() async {
         
         var cancellables: Set<AnyCancellable> = Set()
         
