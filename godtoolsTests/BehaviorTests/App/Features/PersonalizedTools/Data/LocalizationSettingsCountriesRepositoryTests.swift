@@ -50,17 +50,26 @@ struct LocalizationSettingsCountriesRepositoryTests {
 
         let repository = LocalizationSettingsCountriesRepository()
 
-        var cancellables: Set<AnyCancellable> = Set()
         var countries: [LocalizationSettingsCountryDataModel] = []
-
-        await confirmation(expectedCount: 1) { confirmation in
-
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        
+        await withCheckedContinuation { continuation in
+            
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
+            
             repository
                 .getCountriesPublisher(appLanguage: argument.appLanguage)
                 .sink { (result: [LocalizationSettingsCountryDataModel]) in
 
                     countries = result
-                    confirmation()
+                    
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
                 }
                 .store(in: &cancellables)
         }
@@ -92,17 +101,26 @@ struct LocalizationSettingsCountriesRepositoryTests {
         let repository = LocalizationSettingsCountriesRepository()
         let appLanguage: AppLanguageDomainModel = "en"
 
-        var cancellables: Set<AnyCancellable> = Set()
         var countries: [LocalizationSettingsCountryDataModel] = []
-
-        await confirmation(expectedCount: 1) { confirmation in
-
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        
+        await withCheckedContinuation { continuation in
+            
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
+            
             repository
                 .getCountriesPublisher(appLanguage: appLanguage)
                 .sink { (result: [LocalizationSettingsCountryDataModel]) in
 
                     countries = result
-                    confirmation()
+                    
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
                 }
                 .store(in: &cancellables)
         }
@@ -125,17 +143,26 @@ struct LocalizationSettingsCountriesRepositoryTests {
         let repository = LocalizationSettingsCountriesRepository()
         let appLanguage: AppLanguageDomainModel = "en"
 
-        var cancellables: Set<AnyCancellable> = Set()
         var countries: [LocalizationSettingsCountryDataModel] = []
-
-        await confirmation(expectedCount: 1) { confirmation in
-
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        
+        await withCheckedContinuation { continuation in
+            
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
+            
             repository
                 .getCountriesPublisher(appLanguage: appLanguage)
                 .sink { (result: [LocalizationSettingsCountryDataModel]) in
 
                     countries = result
-                    confirmation()
+                    
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
                 }
                 .store(in: &cancellables)
         }
@@ -159,17 +186,26 @@ struct LocalizationSettingsCountriesRepositoryTests {
         let repository = LocalizationSettingsCountriesRepository()
         let appLanguage: AppLanguageDomainModel = "en"
 
-        var cancellables: Set<AnyCancellable> = Set()
         var countries: [LocalizationSettingsCountryDataModel] = []
-
-        await confirmation(expectedCount: 1) { confirmation in
-
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        
+        await withCheckedContinuation { continuation in
+            
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
+            
             repository
                 .getCountriesPublisher(appLanguage: appLanguage)
                 .sink { (result: [LocalizationSettingsCountryDataModel]) in
 
                     countries = result
-                    confirmation()
+                    
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
                 }
                 .store(in: &cancellables)
         }
@@ -209,17 +245,26 @@ struct LocalizationSettingsCountriesRepositoryTests {
         let repository = LocalizationSettingsCountriesRepository()
         let appLanguage: AppLanguageDomainModel = "en"
 
-        var cancellables: Set<AnyCancellable> = Set()
         var countries: [LocalizationSettingsCountryDataModel] = []
-
-        await confirmation(expectedCount: 1) { confirmation in
-
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        
+        await withCheckedContinuation { continuation in
+            
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
+            
             repository
                 .getCountriesPublisher(appLanguage: appLanguage)
                 .sink { (result: [LocalizationSettingsCountryDataModel]) in
 
                     countries = result
-                    confirmation()
+                    
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
                 }
                 .store(in: &cancellables)
         }

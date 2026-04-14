@@ -24,23 +24,30 @@ struct SearchLanguageInDownloadableLanguagesUseCaseTests {
         let searchLanguageInDownloadableLanguagesUseCase: SearchLanguageInDownloadableLanguagesUseCase = getSearchLanguageInDownloadableLanguagesUseCase()
         let downloadableLanguagesList: [DownloadableLanguageListItemDomainModel] = getDownloadableLanguagesList()
         
+        var resultRef: [DownloadableLanguageListItemDomainModel] = Array()
+        
         var cancellables: Set<AnyCancellable> = Set()
         
-        var resultRef: [DownloadableLanguageListItemDomainModel] = Array()
-                
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
+            
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
             
             searchLanguageInDownloadableLanguagesUseCase
                 .execute(searchText: "c", downloadableLanguages: downloadableLanguagesList)
                 .sink { (result: [DownloadableLanguageListItemDomainModel]) in
-                    
-                    confirmation()
-                    
+                                        
                     resultRef = result
+                    
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
                 }
                 .store(in: &cancellables)
         }
-        
+
         let searchedLanguages: [String] = resultRef.map({$0.languageId})
         let expectedLanguageIds: [String] = ["1", "2", "4", "7"]
         
@@ -58,20 +65,27 @@ struct SearchLanguageInDownloadableLanguagesUseCaseTests {
         
         let searchLanguageInDownloadableLanguagesUseCase: SearchLanguageInDownloadableLanguagesUseCase = getSearchLanguageInDownloadableLanguagesUseCase()
         let downloadableLanguagesList: [DownloadableLanguageListItemDomainModel] = getDownloadableLanguagesList()
+                
+        var resultRef: [DownloadableLanguageListItemDomainModel] = Array()
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var resultRef: [DownloadableLanguageListItemDomainModel] = Array()
-                
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
+            
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
             
             searchLanguageInDownloadableLanguagesUseCase
                 .execute(searchText: "Ber", downloadableLanguages: downloadableLanguagesList)
                 .sink { (result: [DownloadableLanguageListItemDomainModel]) in
                     
-                    confirmation()
-                    
                     resultRef = result
+                    
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
                 }
                 .store(in: &cancellables)
         }

@@ -41,17 +41,26 @@ struct GetLocalizationSettingsCountryListTests {
 
         let useCase = Self.createUseCase(countries: Self.createMockCountries())
 
-        var cancellables: Set<AnyCancellable> = Set()
         var countryListItems: [LocalizationSettingsCountryListItem] = []
-
-        await confirmation(expectedCount: 1) { confirmation in
-
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        
+        await withCheckedContinuation { continuation in
+            
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
+            
             useCase
                 .execute(appLanguage: "en", showsPreferNotToSay: argument.showsPreferNotToSay)
                 .sink { (results: [LocalizationSettingsCountryListItem]) in
 
-                    confirmation()
                     countryListItems = results
+                    
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
                 }
                 .store(in: &cancellables)
         }
@@ -112,17 +121,26 @@ struct GetLocalizationSettingsCountryListTests {
             appLanguage: argument.appLanguage
         )
 
-        var cancellables: Set<AnyCancellable> = Set()
         var countryListItems: [LocalizationSettingsCountryListItem] = []
-
-        await confirmation(expectedCount: 1) { confirmation in
-
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        
+        await withCheckedContinuation { continuation in
+            
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
+            
             useCase
                 .execute(appLanguage: argument.appLanguage, showsPreferNotToSay: true)
                 .sink { (results: [LocalizationSettingsCountryListItem]) in
 
-                    confirmation()
                     countryListItems = results
+                    
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
                 }
                 .store(in: &cancellables)
         }
@@ -154,17 +172,26 @@ struct GetLocalizationSettingsCountryListTests {
 
         let useCase = Self.createUseCase(countries: [])
 
-        var cancellables: Set<AnyCancellable> = Set()
         var countryListItems: [LocalizationSettingsCountryListItem] = []
-
-        await confirmation(expectedCount: 1) { confirmation in
-
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        
+        await withCheckedContinuation { continuation in
+            
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
+            
             useCase
                 .execute(appLanguage: "en", showsPreferNotToSay: argument.showsPreferNotToSay)
                 .sink { (results: [LocalizationSettingsCountryListItem]) in
 
-                    confirmation()
                     countryListItems = results
+                    
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
                 }
                 .store(in: &cancellables)
         }

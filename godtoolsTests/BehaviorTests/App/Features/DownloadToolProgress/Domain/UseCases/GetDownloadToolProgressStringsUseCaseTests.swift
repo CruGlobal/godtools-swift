@@ -31,38 +31,32 @@ struct GetDownloadToolProgressStringsUseCaseTests {
     func correctMessageShowsWhenDownloadingAFavoritedTool() async throws {
         
         let getDownloadToolProgressStringsUseCase: GetDownloadToolProgressStringsUseCase = try getDownloadToolProgressStringsUseCase()
-        
-        var cancellables: Set<AnyCancellable> = Set()
-                
+                        
         var stringsRef: DownloadToolProgressStringsDomainModel?
         
-        await confirmation(expectedCount: 1) { confirmation in
+        var cancellables: Set<AnyCancellable> = Set()
+        
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
+            
+            getDownloadToolProgressStringsUseCase
+                .execute(
+                    toolId: favoritedToolId,
+                    appLanguage: LanguageCodeDomainModel.english.value
+                )
+                .sink { (strings: DownloadToolProgressStringsDomainModel) in
+                                            
+                    stringsRef = strings
+                                      
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
                     continuation.resume(returning: ())
                 }
-                
-                getDownloadToolProgressStringsUseCase
-                    .execute(
-                        toolId: favoritedToolId,
-                        appLanguage: LanguageCodeDomainModel.english.value
-                    )
-                    .sink { (strings: DownloadToolProgressStringsDomainModel) in
-                                                
-                        stringsRef = strings
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                                
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    }
-                    .store(in: &cancellables)
-            }
+                .store(in: &cancellables)
         }
         
         #expect(stringsRef?.downloadMessage == downloadToolMessage)
@@ -78,38 +72,32 @@ struct GetDownloadToolProgressStringsUseCaseTests {
     func correctMessageShowsWhenDownloadingAToolThatIsNotFavoritedButCanBeFavorited() async throws {
         
         let getDownloadToolProgressStringsUseCase: GetDownloadToolProgressStringsUseCase = try getDownloadToolProgressStringsUseCase()
-        
-        var cancellables: Set<AnyCancellable> = Set()
-              
+                      
         var stringsRef: DownloadToolProgressStringsDomainModel?
         
-        await confirmation(expectedCount: 1) { confirmation in
+        var cancellables: Set<AnyCancellable> = Set()
+        
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
+            
+            getDownloadToolProgressStringsUseCase
+                .execute(
+                    toolId: unFavoritedToolId,
+                    appLanguage: LanguageCodeDomainModel.english.value
+                )
+                .sink { (strings: DownloadToolProgressStringsDomainModel) in
+                                            
+                    stringsRef = strings
+                                   
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
                     continuation.resume(returning: ())
                 }
-                
-                getDownloadToolProgressStringsUseCase
-                    .execute(
-                        toolId: unFavoritedToolId,
-                        appLanguage: LanguageCodeDomainModel.english.value
-                    )
-                    .sink { (strings: DownloadToolProgressStringsDomainModel) in
-                                                
-                        stringsRef = strings
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                                
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    }
-                    .store(in: &cancellables)
-            }
+                .store(in: &cancellables)
         }
         
         #expect(stringsRef?.downloadMessage == favoriteThisToolForOfflineUseMessage)
@@ -125,38 +113,32 @@ struct GetDownloadToolProgressStringsUseCaseTests {
     func correctMessageShowsWhenDownloadingAToolThatCantBeFavorited() async throws {
         
         let getDownloadToolProgressStringsUseCase: GetDownloadToolProgressStringsUseCase = try getDownloadToolProgressStringsUseCase()
-        
-        var cancellables: Set<AnyCancellable> = Set()
-                
+                        
         var stringsRef: DownloadToolProgressStringsDomainModel?
         
-        await confirmation(expectedCount: 1) { confirmation in
+        var cancellables: Set<AnyCancellable> = Set()
+        
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
+            
+            getDownloadToolProgressStringsUseCase
+                .execute(
+                    toolId: unFavoritableToolId,
+                    appLanguage: LanguageCodeDomainModel.english.value
+                )
+                .sink { (strings: DownloadToolProgressStringsDomainModel) in
+                                            
+                    stringsRef = strings
+                                         
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
                     continuation.resume(returning: ())
                 }
-                
-                getDownloadToolProgressStringsUseCase
-                    .execute(
-                        toolId: unFavoritableToolId,
-                        appLanguage: LanguageCodeDomainModel.english.value
-                    )
-                    .sink { (strings: DownloadToolProgressStringsDomainModel) in
-                                                
-                        stringsRef = strings
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                                
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    }
-                    .store(in: &cancellables)
-            }
+                .store(in: &cancellables)
         }
         
         #expect(stringsRef?.downloadMessage == downloadToolMessage)

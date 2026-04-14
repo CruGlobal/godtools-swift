@@ -27,9 +27,7 @@ struct GetToolListItemStringsTests {
         """
     )
     func testToolNameIsTranslated() async {
-                
-        var cancellables: Set<AnyCancellable> = Set()
-        
+                        
         let getToolListItemStrings = GetToolListItemStrings(
             localizationServices: getLocalizationServices()
         )
@@ -39,9 +37,16 @@ struct GetToolListItemStringsTests {
         var englishStringsRef: ToolListItemStringsDomainModel?
         var spanishStringsRef: ToolListItemStringsDomainModel?
         
-        var sinkCount: Int = 0
+        var cancellables: Set<AnyCancellable> = Set()
+        var triggerCount: Int = 0
         
-        await confirmation(expectedCount: 2) { confirmation in
+        await withCheckedContinuation { continuation in
+            
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
+            
             appLanguagePublisher
                 .flatMap { appLanguage in
                     
@@ -49,23 +54,25 @@ struct GetToolListItemStringsTests {
                         .eraseToAnyPublisher()
                 }.sink { (strings: ToolListItemStringsDomainModel) in
                     
-                    sinkCount += 1
-                    confirmation()
+                    triggerCount += 1
                     
-                    if sinkCount == 1 {
+                    if triggerCount == 1 {
                         
                         englishStringsRef = strings
                         appLanguagePublisher.send(LanguageCodeDomainModel.spanish.rawValue)
 
                     }
-                    else if sinkCount == 2 {
+                    else if triggerCount == 2 {
                         
                         spanishStringsRef = strings
+                        
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
                     }
                 }
                 .store(in: &cancellables)
         }
-
         
         #expect(englishStringsRef?.openToolActionTitle == Self.openToolInEnglish)
         #expect(englishStringsRef?.openToolDetailsActionTitle == Self.toolDetailsInEnglish)
