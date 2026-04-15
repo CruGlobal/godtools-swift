@@ -23,10 +23,8 @@ struct GetSearchBarStringsTests {
         Then: The search bar interface strings should be translated in Spanish
         """
     )
-    func TestsearchBarStringsTranslated() async {
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        
+    func searchBarStringsTranslated() async {
+                
         let getSearchBarStringsRepository = GetSearchBarStrings(localizationServices: Self.getLocalizationServices())
         
         let appLanguagePublisher: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
@@ -34,26 +32,36 @@ struct GetSearchBarStringsTests {
         var englishStringsRef: SearchBarStringsDomainModel?
         var spanishStringsRef: SearchBarStringsDomainModel?
         
-        var sinkCount: Int = 0
+        var cancellables: Set<AnyCancellable> = Set()
+        var triggerCount: Int = 0
         
-        await confirmation(expectedCount: 2) { confirmation in
+        await withCheckedContinuation { continuation in
+            
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
+            
             appLanguagePublisher
                 .flatMap { appLanguage in
                     
                     return getSearchBarStringsRepository.getStringsPublisher(translateInAppLanguage: appLanguage)
                 }.sink { strings in
                     
-                    sinkCount += 1
-                    confirmation()
+                    triggerCount += 1
                     
-                    if sinkCount == 1 {
+                    if triggerCount == 1 {
                         
                         englishStringsRef = strings
                         appLanguagePublisher.send(LanguageCodeDomainModel.spanish.rawValue)
                     }
-                    else if sinkCount == 2 {
+                    else if triggerCount == 2 {
                         
                         spanishStringsRef = strings
+                        
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
                     }
                 }
                 .store(in: &cancellables)

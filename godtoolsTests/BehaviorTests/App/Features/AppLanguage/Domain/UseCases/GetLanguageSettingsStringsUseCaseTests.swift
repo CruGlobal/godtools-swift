@@ -26,54 +26,48 @@ struct GetLanguageSettingsStringsUseCaseTests {
         let getLanguageSettingsStringsUseCase: GetLanguageSettingsStringsUseCase = try getLanguageSettingsStringsUseCase()
         
         let appLanguagePublisher: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        
+                
         var englishStringsRef: LanguageSettingsStringsDomainModel?
         var spanishStringsRef: LanguageSettingsStringsDomainModel?
+                
+        var cancellables: Set<AnyCancellable> = Set()
+        var triggerCount: Int = 0
         
-        var sinkCount: Int = 0
-        
-        await confirmation(expectedCount: 2) { confirmation in
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                appLanguagePublisher
-                    .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<LanguageSettingsStringsDomainModel, Error> in
-                        
-                        return getLanguageSettingsStringsUseCase
-                            .execute(appLanguage: appLanguage)
-                            .eraseToAnyPublisher()
-                    })
-                    .sink(receiveCompletion: { _ in
-                        
-                    }, receiveValue: { (strings: LanguageSettingsStringsDomainModel) in
-                        
-                        sinkCount += 1
-                        
-                        confirmation()
-                        
-                        if sinkCount == 1 {
-                            
-                            englishStringsRef = strings
-                            appLanguagePublisher.send(LanguageCodeDomainModel.spanish.rawValue)
-                        }
-                        else if sinkCount == 2 {
-                            
-                            spanishStringsRef = strings
-                            
-                            // When finished be sure to call:
-                            timeoutTask.cancel()
-                            continuation.resume(returning: ())
-                        }
-                    })
-                    .store(in: &cancellables)
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
             }
+            
+            appLanguagePublisher
+                .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<LanguageSettingsStringsDomainModel, Error> in
+                    
+                    return getLanguageSettingsStringsUseCase
+                        .execute(appLanguage: appLanguage)
+                        .eraseToAnyPublisher()
+                })
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { (strings: LanguageSettingsStringsDomainModel) in
+                    
+                    triggerCount += 1
+                    
+                    if triggerCount == 1 {
+                        
+                        englishStringsRef = strings
+                        appLanguagePublisher.send(LanguageCodeDomainModel.spanish.rawValue)
+                    }
+                    else if triggerCount == 2 {
+                        
+                        spanishStringsRef = strings
+                        
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    }
+                })
+                .store(in: &cancellables)
         }
         
         #expect(englishStringsRef?.navTitle == "Language settings")
@@ -116,39 +110,33 @@ struct GetLanguageSettingsStringsUseCaseTests {
     @MainActor func chooseAppLanguageButtonTitleIsTranslatedInMyAppLanguage(argument: TestArgumentChooseAppLanguageButtonTitle) async throws {
         
         let getLanguageSettingsStringsUseCase: GetLanguageSettingsStringsUseCase = try getLanguageSettingsStringsUseCase()
+                
+        var stringsRef: LanguageSettingsStringsDomainModel?
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var stringsRef: LanguageSettingsStringsDomainModel?
-                        
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                getLanguageSettingsStringsUseCase
-                    .execute(
-                        appLanguage: argument.appLanguage.rawValue
-                    )
-                    .sink(receiveCompletion: { _ in
-                        
-                    }, receiveValue: { (strings: LanguageSettingsStringsDomainModel) in
-                                                
-                        stringsRef = strings
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                                
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    })
-                    .store(in: &cancellables)
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
             }
+            
+            getLanguageSettingsStringsUseCase
+                .execute(
+                    appLanguage: argument.appLanguage.rawValue
+                )
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { (strings: LanguageSettingsStringsDomainModel) in
+                                            
+                    stringsRef = strings
+                                                                
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
+                })
+                .store(in: &cancellables)
         }
         
         #expect(stringsRef?.chooseAppLanguageButtonTitle == argument.expectedValue)
@@ -166,37 +154,31 @@ struct GetLanguageSettingsStringsUseCaseTests {
         let getLanguageSettingsStringsUseCase: GetLanguageSettingsStringsUseCase = try getLanguageSettingsStringsUseCase()
         
         let english: LanguageCodeDomainModel = .english
+                
+        var stringsRef: LanguageSettingsStringsDomainModel?
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var stringsRef: LanguageSettingsStringsDomainModel?
-                
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                getLanguageSettingsStringsUseCase
-                    .execute(appLanguage: english.rawValue)
-                    .sink(receiveCompletion: { _ in
-                        
-                    }, receiveValue: { (strings: LanguageSettingsStringsDomainModel) in
-                        
-                        stringsRef = strings
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                        
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    })
-                    .store(in: &cancellables)
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
             }
+            
+            getLanguageSettingsStringsUseCase
+                .execute(appLanguage: english.rawValue)
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { (strings: LanguageSettingsStringsDomainModel) in
+                    
+                    stringsRef = strings
+                                
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
+                })
+                .store(in: &cancellables)
         }
 
         let expectedValue: String = "\(getAppLanguages().count) Languages available"

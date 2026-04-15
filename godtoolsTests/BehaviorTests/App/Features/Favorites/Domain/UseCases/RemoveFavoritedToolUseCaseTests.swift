@@ -42,39 +42,33 @@ struct RemoveFavoritedToolUseCaseTests {
         let testsDiContainer = try getTestsDiContainer(addRealmObjects: realmObjects)
         
         let removeFavoritedToolUseCase: RemoveFavoritedToolUseCase = testsDiContainer.feature.favorites.domainLayer.getRemoveFavoritedToolUseCase()
-                
+                        
+        var remainingResources: [FavoritedResourceDataModel] = Array()
+        
         var cancellables: Set<AnyCancellable> = Set()
         
-        var remainingResources: [FavoritedResourceDataModel] = Array()
-                
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                removeFavoritedToolUseCase
-                    .execute(
-                        toolId: argument.resourceIdToDelete
-                    )
-                    .sink(receiveCompletion: { _ in
-                        
-                    }, receiveValue: { (favoritedResources: [FavoritedResourceDataModel]) in
-                        
-                        remainingResources = favoritedResources
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                                
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    })
-                    .store(in: &cancellables)
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
             }
+            
+            removeFavoritedToolUseCase
+                .execute(
+                    toolId: argument.resourceIdToDelete
+                )
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { (favoritedResources: [FavoritedResourceDataModel]) in
+                    
+                    remainingResources = favoritedResources
+                                       
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
+                })
+                .store(in: &cancellables)
         }
         
         for (expectedId, expectedPosition) in argument.expectedUpdatedIdsAtPositions {

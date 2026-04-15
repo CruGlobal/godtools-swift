@@ -24,18 +24,26 @@ struct SearchCountriesInLocalizationSettingsCountriesListTests {
         let searchCountryList = Self.getSearchCountriesListUseCase()
         let countriesList = Self.getCountriesList()
 
-        var cancellables: Set<AnyCancellable> = Set()
-
         var searchResults: [LocalizationSettingsCountryListItem] = []
-
-        await confirmation(expectedCount: 1) { confirmation in
-
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        
+        await withCheckedContinuation { continuation in
+            
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
+            
             searchCountryList
                 .execute(searchText: "e", in: countriesList)
                 .sink { (results: [LocalizationSettingsCountryListItem]) in
 
-                    confirmation()
                     searchResults = results
+                    
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
                 }
                 .store(in: &cancellables)
         }
@@ -61,18 +69,26 @@ struct SearchCountriesInLocalizationSettingsCountriesListTests {
         let searchCountryList = Self.getSearchCountriesListUseCase()
         let countriesList = Self.getCountriesList()
 
-        var cancellables: Set<AnyCancellable> = Set()
-
         var searchResults: [LocalizationSettingsCountryListItem] = []
-
-        await confirmation(expectedCount: 1) { confirmation in
-
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        
+        await withCheckedContinuation { continuation in
+            
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
+            
             searchCountryList
                 .execute(searchText: "pan", in: countriesList)
                 .sink { (results: [LocalizationSettingsCountryListItem]) in
 
-                    confirmation()
                     searchResults = results
+                    
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
                 }
                 .store(in: &cancellables)
         }

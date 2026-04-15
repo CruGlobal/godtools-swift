@@ -44,36 +44,30 @@ struct ReorderFavoritedToolUseCaseTests {
         let reorderFavoritedToolUseCase: ReorderFavoritedToolUseCase = testsDiContainer.feature.favorites.domainLayer.getReorderFavoritedToolUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
-                
-        await confirmation(expectedCount: 1) { confirmation in
+        
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
+            
+            reorderFavoritedToolUseCase
+                .execute(
+                    toolId: argument.resourceIdToReorder,
+                    originalPosition: argument.originalPosition,
+                    newPosition: argument.newPosition
+                )
+                .receive(on: DispatchQueue.main)
+                .sink { _ in
+                    
+                } receiveValue: { (favoritedResources: [ReorderFavoritedToolDomainModel]) in
+                                                                  
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
                     continuation.resume(returning: ())
                 }
-                
-                reorderFavoritedToolUseCase
-                    .execute(
-                        toolId: argument.resourceIdToReorder,
-                        originalPosition: argument.originalPosition,
-                        newPosition: argument.newPosition
-                    )
-                    .receive(on: DispatchQueue.main)
-                    .sink { _ in
-                        
-                    } receiveValue: { (favoritedResources: [ReorderFavoritedToolDomainModel]) in
-                                                
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                                
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    }
-                    .store(in: &cancellables)
-            }
+                .store(in: &cancellables)
         }
         
         let favoritedResources: [FavoritedResourceDataModel] = try await testsDiContainer.dataLayer.getFavoritedResourcesRepository().cache.getFavoritedResourcesSortedByPosition()
