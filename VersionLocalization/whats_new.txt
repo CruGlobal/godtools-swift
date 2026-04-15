@@ -1,0 +1,4 @@
+- Screen sharing now includes a QR code option to make sharing even easier!
+- Lessons are now sharable!
+- Updated deep linking
+- Includes bug fixes & UI improvements to keep your experience smooth and stable.
