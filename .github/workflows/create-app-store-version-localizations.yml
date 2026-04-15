@@ -18,3 +18,11 @@ jobs:
         env:
           APP_STORE_CONNECT_API_JSON_PAYLOAD: ${{ secrets.APP_STORE_CONNECT_API_JSON_PAYLOAD }}
         run: echo $APP_STORE_CONNECT_API_JSON_PAYLOAD > fastlane/AppleAppStoreApi.json
+
+      - name: Store Current Version
+        id: version
+        run: |
+          echo "version=$(grep -m 1 MARKETING_VERSION godtools.xcodeproj/project.pbxproj | sed 's/;//g' | sed 's/ //g' | sed 's/=//g' | sed 's/MARKETING_VERSION//g' | sed 's/^ *//g' | sed 's/^[[:space:]]*//g')" >> $GITHUB_OUTPUT
+
+      - name: Create Release Notes
+        run: bundle exec fastlane cru_shared_lane_app_store app_version:${{ steps.version.outputs.version }}
