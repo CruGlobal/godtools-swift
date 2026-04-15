@@ -21,14 +21,14 @@ final class GetResumeLessonProgressStringsUseCase {
         
         let localeId: String = appLanguage.localeId
         
-        let interfaceStrings = ResumeLessonProgressStringsDomainModel(
+        let strings = ResumeLessonProgressStringsDomainModel(
             title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.resumeLessonModal.title"),
             subtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.resumeLessonModal.subtitle"),
             startOverButtonText: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.resumeLessonModal.startOverButton"),
             continueButtonText: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.resumeLessonModal.continueButton")
         )
         
-        return Just(interfaceStrings)
+        return Just(strings)
             .eraseToAnyPublisher()
     }
 }

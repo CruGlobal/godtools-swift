@@ -231,6 +231,7 @@ enum FlowStep {
     case closeTappedFromDownloadToolProgress
     
     // localization settings
+    case localizationSettingsFlowCompleted(state: LocalizationSettingsFlowCompletedState)
     case backTappedFromLocalizationSettings
     case countryTappedFromLocalizationSettings(country: LocalizationSettingsCountryListItem)
     case closeTappedFromLocalizationConfirmation

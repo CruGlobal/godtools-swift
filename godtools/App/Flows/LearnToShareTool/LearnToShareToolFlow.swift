@@ -75,7 +75,8 @@ class LearnToShareToolFlow: Flow {
             toolParallelLanguage: toolParallelLanguage,
             toolSelectedLanguageIndex: toolSelectedLanguageIndex,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewLearnToShareToolUseCase: appDiContainer.feature.learnToShareTool.domainLayer.getViewLearnToShareToolUseCase()
+            getLearnToShareToolStringsUseCase: appDiContainer.feature.learnToShareTool.domainLayer.getLearnToShareToolStringsUseCase(),
+            getLearnToShareToolTutorialUseCase: appDiContainer.feature.learnToShareTool.domainLayer.getLearnToShareToolTutorialUseCase()
         )
         
         let view = LearnToShareToolView(viewModel: viewModel)

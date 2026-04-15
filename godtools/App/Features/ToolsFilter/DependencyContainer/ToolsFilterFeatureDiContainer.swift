@@ -15,7 +15,7 @@ class ToolsFilterFeatureDiContainer {
     
     init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies) {
         
-        dataLayer = ToolsFilterFeatureDataLayerDependencies(coreDataLayer: coreDataLayer, coreDomainLayer: coreDomainLayer)
-        domainLayer = ToolsFilterFeatureDomainLayerDependencies(coreDomainLayer: coreDomainLayer, dataLayer: dataLayer)
+        dataLayer = ToolsFilterFeatureDataLayerDependencies(coreDataLayer: coreDataLayer)
+        domainLayer = ToolsFilterFeatureDomainLayerDependencies(coreDataLayer: coreDataLayer, coreDomainLayer: coreDomainLayer, dataLayer: dataLayer)
     }
 }

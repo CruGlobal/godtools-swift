@@ -39,7 +39,7 @@ struct ToolSettingsView: View {
             VStack(alignment: .leading, spacing: 0) {
                          
                 ToolSettingsTopBarView(
-                    title: viewModel.title,
+                    title: viewModel.strings.title,
                     closeTapped: {
                         modalIsHidden = true
                         viewModel.closeTapped()

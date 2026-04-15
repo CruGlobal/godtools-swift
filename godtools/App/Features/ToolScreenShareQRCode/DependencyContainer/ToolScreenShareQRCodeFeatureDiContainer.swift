@@ -13,9 +13,9 @@ class ToolScreenShareQRCodeFeatureDiContainer {
     let dataLayer: ToolScreenShareQRCodeFeatureDataLayerDependencies
     let domainLayer: ToolScreenShareQRCodeFeatureDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies) {
         
         dataLayer = ToolScreenShareQRCodeFeatureDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainLayer = ToolScreenShareQRCodeFeatureDomainLayerDependencies(dataLayer: dataLayer)
+        domainLayer = ToolScreenShareQRCodeFeatureDomainLayerDependencies(coreDataLayer: coreDataLayer, coreDomainLayer: coreDomainLayer, dataLayer: dataLayer)
     }
 }

@@ -31,12 +31,12 @@ final class GetTutorialStringsUseCase {
             completeTutorialActionLocalizedStringKey = "tutorial.continueButton.title.startUsingGodTools"
         }
         
-        let interfaceStrings = TutorialStringsDomainModel(
+        let strings = TutorialStringsDomainModel(
             nextTutorialPageActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: "tutorial.continueButton.title.continue"),
             completeTutorialActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: completeTutorialActionLocalizedStringKey)
         )
         
-        return Just(interfaceStrings)
+        return Just(strings)
             .eraseToAnyPublisher()
     }
 }

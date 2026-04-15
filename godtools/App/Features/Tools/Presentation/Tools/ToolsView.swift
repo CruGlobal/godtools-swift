@@ -37,14 +37,11 @@ struct ToolsView: View {
 
             VStack(alignment: .center, spacing: 0) {
 
-                if GodToolsAppConfig.showsPersonalization {
-                    
-                    PersonalizedToolToggle(
-                        selectedToggle: $viewModel.selectedToggle,
-                        toggleOptions: viewModel.toggleOptions,
-                    )
-                    .padding([.top], Self.personalizedToggleTopPadding)
-                }
+                PersonalizedToolToggle(
+                    selectedToggle: $viewModel.selectedToggle,
+                    toggleOptions: viewModel.toggleOptions,
+                )
+                .padding([.top], Self.personalizedToggleTopPadding)
                 
                 if viewModel.showsFavoritingToolBanner {
 
@@ -75,29 +72,50 @@ struct ToolsView: View {
 
                         LazyVStack(alignment: .center, spacing: toolCardSpacing) {
 
-                            ForEach(viewModel.allTools) { (tool: ToolListItemDomainModel) in
+                            if viewModel.isPersonalizationUnavailable,
+                               let unavailableState = viewModel.personalizationUnavailableState {
 
-                                ToolCardView(
-                                    viewModel: viewModel.getToolItemViewModel(tool: tool),
+                                PersonalizationUnavailableView(
+                                    title: unavailableState.title,
+                                    message: unavailableState.message,
+                                    changeSettingsButtonTitle: viewModel.strings.changePersonalizedToolSettingsActionLabel,
+                                    goToAllLessonsButtonTitle: viewModel.strings.viewAllTools,
                                     geometry: geometry,
-                                    layout: .landscape,
-                                    showsCategory: true,
-                                    navButtonTitleHorizontalPadding: nil,
-                                    favoriteTappedClosure: {
-
-                                        viewModel.toolFavoriteTapped(tool: tool)
+                                    heightMultiplier: 0.45,
+                                    changeSettingsAction: {
+                                        viewModel.localizationSettingsTapped()
                                     },
-                                    toolDetailsTappedClosure: nil,
-                                    openToolTappedClosure: nil,
-                                    toolTappedClosure: {
-
-                                        viewModel.toolTapped(tool: tool)
+                                    goToAllLessonsAction: {
+                                        viewModel.goToAllToolsTapped()
                                     }
                                 )
+
+                            } else {
+
+                                ForEach(viewModel.allTools) { (tool: ToolListItemDomainModel) in
+
+                                    ToolCardView(
+                                        viewModel: viewModel.getToolItemViewModel(tool: tool),
+                                        geometry: geometry,
+                                        layout: .landscape,
+                                        showsCategory: true,
+                                        navButtonTitleHorizontalPadding: nil,
+                                        favoriteTappedClosure: {
+
+                                            viewModel.toolFavoriteTapped(tool: tool)
+                                        },
+                                        toolDetailsTappedClosure: nil,
+                                        openToolTappedClosure: nil,
+                                        toolTappedClosure: {
+
+                                            viewModel.toolTapped(tool: tool)
+                                        }
+                                    )
+                                }
                             }
                         }
 
-                        if viewModel.selectedToggle == .personalized {
+                        if viewModel.selectedToggle == .personalized && !viewModel.isPersonalizationUnavailable {
                             PersonalizedToolFooterView(
                                 title: viewModel.strings.personalizedToolExplanationTitle,
                                 subtitle: viewModel.strings.personalizedToolExplanationSubtitle,
@@ -139,11 +157,13 @@ struct AllToolsView_Preview: PreviewProvider {
             pullToRefreshToolsUseCase: appDiContainer.feature.tools.domainLayer.getPullToRefreshToolsUseCase(),
             getToolsStringsUseCase: appDiContainer.feature.tools.domainLayer.getToolsStringsUseCase(),
             getAllToolsUseCase: appDiContainer.feature.tools.domainLayer.getAllToolsUseCase(),
+            getPersonalizedToolsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getGetPersonalizedToolsUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getLocalizationSettingsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getGetLocalizationSettingsUseCase(),
             favoritingToolMessageCache: appDiContainer.dataLayer.getFavoritingToolMessageCache(),
             getSpotlightToolsUseCase: appDiContainer.feature.spotlightTools.domainLayer.getSpotlightToolsUseCase(),
-            getUserToolFiltersUseCase: appDiContainer.feature.toolsFilter.domainLayer.getUserToolFiltersUseCase(),
+            getUserToolFilterCategoryUseCase: appDiContainer.feature.toolsFilter.domainLayer.getUserToolFilterCategoryUseCase(),
+            getUserToolFilterLanguageUseCase: appDiContainer.feature.toolsFilter.domainLayer.getUserToolFilterLanguageUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToolIsFavoritedUseCase(),
             toggleToolFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToggleToolFavoritedUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),

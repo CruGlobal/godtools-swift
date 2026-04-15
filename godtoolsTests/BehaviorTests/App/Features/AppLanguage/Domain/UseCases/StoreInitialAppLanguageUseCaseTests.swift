@@ -79,32 +79,26 @@ struct StoreInitialAppLanguageUseCaseTests {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                storeInitialAppLanguage
-                    .execute()
-                    .sink(receiveCompletion: { _ in
-                        
-                    }, receiveValue: { (result: AppLanguageDomainModel) in
-                        
-                        resultRef = result
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                                
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    })
-                    .store(in: &cancellables)
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
             }
+            
+            storeInitialAppLanguage
+                .execute()
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { (result: AppLanguageDomainModel) in
+                    
+                    resultRef = result
+                                     
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
+                })
+                .store(in: &cancellables)
         }
         
         #expect(resultRef == argument.expectedValue)
@@ -150,9 +144,7 @@ struct StoreInitialAppLanguageUseCaseTests {
         )
         
         let userAppLanguageRepository = getUserAppLanguageRepository(testsDiContainer: testsDiContainer)
-        
-        //userAppLanguageCache.storeLanguage(appLanguageId: argument.appLanguage?.rawValue ?? "")
-                        
+                                
         let appLanguagesRepository: AppLanguagesRepository = testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesRepository(
             sync: mockAppLanguagesSync
         )
@@ -164,41 +156,35 @@ struct StoreInitialAppLanguageUseCaseTests {
         )
         
         var resultRef: AppLanguageDomainModel?
-        
+                
         var cancellables: Set<AnyCancellable> = Set()
         
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                userAppLanguageRepository
-                    .storeLanguagePublisher(appLanguageId: argument.appLanguage?.rawValue ?? "")
-                    .receive(on: DispatchQueue.main)
-                    .flatMap { _ -> AnyPublisher<AppLanguageDomainModel, Error> in
-                        
-                        return storeInitialAppLanguage
-                            .execute()
-                    }
-                    .sink(receiveCompletion: { _ in
-                        
-                    }, receiveValue: { (result: AppLanguageDomainModel) in
-                        
-                        resultRef = result
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                                
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    })
-                    .store(in: &cancellables)                    
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
             }
+
+            userAppLanguageRepository
+                .storeLanguagePublisher(appLanguageId: argument.appLanguage?.rawValue ?? "")
+                .receive(on: DispatchQueue.main)
+                .flatMap { _ -> AnyPublisher<AppLanguageDomainModel, Error> in
+                    
+                    return storeInitialAppLanguage
+                        .execute()
+                }
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { (result: AppLanguageDomainModel) in
+                    
+                    resultRef = result
+                                      
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
+                })
+                .store(in: &cancellables)
         }
                 
         #expect(resultRef == argument.expectedValue)
@@ -256,32 +242,26 @@ struct StoreInitialAppLanguageUseCaseTests {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                storeInitialAppLanguage
-                    .execute()
-                    .sink(receiveCompletion: { _ in
-                        
-                    }, receiveValue: { (result: AppLanguageDomainModel) in
-                        
-                        resultRef = result
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                                
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    })
-                    .store(in: &cancellables)
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
             }
+            
+            storeInitialAppLanguage
+                .execute()
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { (result: AppLanguageDomainModel) in
+                    
+                    resultRef = result
+                                       
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
+                })
+                .store(in: &cancellables)
         }
         
         #expect(resultRef == argument.expectedValue)

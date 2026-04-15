@@ -39,7 +39,7 @@ class GetLocalizationSettingsConfirmationStringsUseCase {
             )
         }
 
-        let interfaceStrings = LocalizationSettingsConfirmationStringsDomainModel(
+        let strings = LocalizationSettingsConfirmationStringsDomainModel(
             titleHighlightModel: titleHighlightModel,
             description: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "localizationSettings.confirmation.description"),
             detail: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "localizationSettings.confirmation.detail"),
@@ -47,7 +47,7 @@ class GetLocalizationSettingsConfirmationStringsUseCase {
             confirmButton: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "localizationSettings.confirmation.confirmButton")
         )
 
-        return Just(interfaceStrings)
+        return Just(strings)
             .eraseToAnyPublisher()
     }
 }

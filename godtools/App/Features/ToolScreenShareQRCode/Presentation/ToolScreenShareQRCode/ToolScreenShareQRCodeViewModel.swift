@@ -12,7 +12,7 @@ import Combine
 @MainActor class ToolScreenShareQRCodeViewModel: ObservableObject {
     
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
-    private let viewToolScreenShareQRCodeUseCase: ViewToolScreenShareQRCodeUseCase
+    private let getToolScreenShareQRCodeStringsUseCase: GetToolScreenShareQRCodeStringsUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -22,13 +22,13 @@ import Combine
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
-    @Published private(set) var strings = ToolScreenShareQRCodeInterfaceStringsDomainModel.emptyValue
+    @Published private(set) var strings = ToolScreenShareQRCodeStringsDomainModel.emptyValue
     
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolScreenShareQRCodeUseCase: ViewToolScreenShareQRCodeUseCase, shareUrl: String) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolScreenShareQRCodeStringsUseCase: GetToolScreenShareQRCodeStringsUseCase, shareUrl: String) {
         
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
-        self.viewToolScreenShareQRCodeUseCase = viewToolScreenShareQRCodeUseCase
+        self.getToolScreenShareQRCodeStringsUseCase = getToolScreenShareQRCodeStringsUseCase
         self.shareUrl = shareUrl
         
         getCurrentAppLanguageUseCase
@@ -40,14 +40,14 @@ import Combine
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
             
-                viewToolScreenShareQRCodeUseCase
-                    .viewQRCodePublisher(appLanguage: appLanguage)
+                getToolScreenShareQRCodeStringsUseCase
+                    .execute(appLanguage: appLanguage)
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] qrCodeDomainModel in
+            .sink { [weak self] (strings: ToolScreenShareQRCodeStringsDomainModel) in
                 
-                self?.strings = qrCodeDomainModel.interfaceStrings
+                self?.strings = strings
             }
             .store(in: &cancellables)
     }

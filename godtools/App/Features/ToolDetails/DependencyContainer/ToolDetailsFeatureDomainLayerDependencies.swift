@@ -23,20 +23,31 @@ class ToolDetailsFeatureDomainLayerDependencies {
     
     func getToolDetailsLearnToShareToolIsAvailableUseCase() -> GetToolDetailsLearnToShareToolIsAvailableUseCase {
         return GetToolDetailsLearnToShareToolIsAvailableUseCase(
-            getToolDetailsLearnToShareToolIsAvailableRepository: dataLayer.getToolDetailsLearnToShareToolIsAvailableRepository()
-        )
-    }
-    
-    func getToolDetailsMediaUseCase() -> GetToolDetailsMediaUseCase {
-        return GetToolDetailsMediaUseCase(
-            getToolDetailsMediaRepository: dataLayer.getToolDetailsMediaRepository()
+            translationsRepository: coreDataLayer.getTranslationsRepository()
         )
     }
 
-    func getViewToolDetailsUseCase() -> ViewToolDetailsUseCase {
-        return ViewToolDetailsUseCase(
-            getInterfaceStringsRepository: dataLayer.getToolDetailsInterfaceStringsRepository(),
-            getToolDetailsRepository: dataLayer.getToolDetailsRepository()
+    func getToolDetailsMediaUseCase() -> GetToolDetailsMediaUseCase {
+        return GetToolDetailsMediaUseCase(
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            attachmentsRepository: coreDataLayer.getAttachmentsRepository()
+        )
+    }
+    
+    func getToolDetailsStringsUseCase() -> GetToolDetailsStringsUseCase {
+        return GetToolDetailsStringsUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+        
+    func getToolDetailsUseCase() -> GetToolDetailsUseCase {
+        return GetToolDetailsUseCase(
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            languagesRepository: coreDataLayer.getLanguagesRepository(),
+            translationsRepository: coreDataLayer.getTranslationsRepository(),
+            localizationServices: coreDataLayer.getLocalizationServices(),
+            getTranslatedLanguageName: coreDomainLayer.supporting.getTranslatedLanguageName(),
+            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository()
         )
     }
 }

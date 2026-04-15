@@ -194,7 +194,7 @@ struct ToolCardView_Previews: PreviewProvider {
         let appDiContainer = AppDiContainer.createUITestsDiContainer()
             
         let tool = ToolListItemDomainModel(
-            interfaceStrings: ToolListItemInterfaceStringsDomainModel(openToolActionTitle: "Open", openToolDetailsActionTitle: "Tool Details"),
+            strings: ToolListItemStringsDomainModel(openToolActionTitle: "Open", openToolDetailsActionTitle: "Tool Details"),
             analyticsToolAbbreviation: "",
             dataModelId: "1",
             bannerImageId: "1",

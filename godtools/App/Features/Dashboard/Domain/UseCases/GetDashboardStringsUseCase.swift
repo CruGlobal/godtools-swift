@@ -22,13 +22,13 @@ final class GetDashboardStringsUseCase {
         
         let localeId: String = translateInLanguage
         
-        let interfaceStrings = DashboardStringsDomainModel(
+        let strings = DashboardStringsDomainModel(
             lessonsActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "tool_menu_item.lessons"),
             favoritesActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "my_tools"),
             toolsActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "tool_menu_item.tools")
         )
         
-        return Just(interfaceStrings)
+        return Just(strings)
             .eraseToAnyPublisher()
     }
 }

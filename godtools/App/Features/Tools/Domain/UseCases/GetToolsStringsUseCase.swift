@@ -20,7 +20,7 @@ final class GetToolsStringsUseCase {
     
     func execute(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolsStringsDomainModel, Never> {
         
-        let interfaceStrings = ToolsStringsDomainModel(
+        let strings = ToolsStringsDomainModel(
             favoritingToolBannerMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "tool_offline_favorite_message"),
             toolSpotlightTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: ToolStringKeys.Spotlight.title.rawValue),
             toolSpotlightSubtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: ToolStringKeys.Spotlight.subtitle.rawValue),
@@ -29,10 +29,11 @@ final class GetToolsStringsUseCase {
             allToolsToggleTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "dashboard.personalizedToolToggle.allToolsTitle"),
             personalizedToolExplanationTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "dashboard.personalizedToolFooter.title"),
             personalizedToolExplanationSubtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "dashboard.personalizedToolFooter.subtitle"),
-            changePersonalizedToolSettingsActionLabel: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "dashboard.personalizedToolFooter.buttonTitle")
+            changePersonalizedToolSettingsActionLabel: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "dashboard.personalizedToolFooter.buttonTitle"),
+            viewAllTools: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "tools.personalizationUnavailable.viewAllTools")
         )
         
-        return Just(interfaceStrings)
+        return Just(strings)
             .eraseToAnyPublisher()
     }
 }

@@ -22,12 +22,17 @@ struct DidChangeScaleForSpiritualConversationReadinessUseCaseTests {
     func confirmReadinessScaleMinAndMaxValuesAreCorrect() async {
         
         let didChangeSpiritualConversationReadinessScaleUseCase = getDidChangeScaleForSpiritualConversationReadinessUseCase()
+                
+        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
-        
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
+            
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
             
             didChangeSpiritualConversationReadinessScaleUseCase
                 .execute(scale: 5, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
@@ -35,7 +40,9 @@ struct DidChangeScaleForSpiritualConversationReadinessUseCaseTests {
                     
                     readinessScaleRef = readinessScale
                     
-                    confirmation()
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
                 }
                 .store(in: &cancellables)
         }
@@ -54,12 +61,17 @@ struct DidChangeScaleForSpiritualConversationReadinessUseCaseTests {
     func readinessScaleIsTranslatedInEnglish() async {
         
         let didChangeSpiritualConversationReadinessScaleUseCase = getDidChangeScaleForSpiritualConversationReadinessUseCase()
+                
+        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
-        
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
+            
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
             
             didChangeSpiritualConversationReadinessScaleUseCase
                 .execute(scale: 5, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
@@ -67,7 +79,9 @@ struct DidChangeScaleForSpiritualConversationReadinessUseCaseTests {
                     
                     readinessScaleRef = readinessScale
                     
-                    confirmation()
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
                 }
                 .store(in: &cancellables)
         }
@@ -87,12 +101,17 @@ struct DidChangeScaleForSpiritualConversationReadinessUseCaseTests {
     func readinessScaleIsTranslatedInArabic() async {
         
         let didChangeSpiritualConversationReadinessScaleUseCase = getDidChangeScaleForSpiritualConversationReadinessUseCase()
+                
+        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
-        
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
+            
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
             
             didChangeSpiritualConversationReadinessScaleUseCase
                 .execute(scale: 5, translateInAppLanguage: LanguageCodeDomainModel.arabic.rawValue)
@@ -100,7 +119,9 @@ struct DidChangeScaleForSpiritualConversationReadinessUseCaseTests {
                     
                     readinessScaleRef = readinessScale
                     
-                    confirmation()
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
                 }
                 .store(in: &cancellables)
         }
@@ -138,12 +159,17 @@ struct DidChangeScaleForSpiritualConversationReadinessUseCaseTests {
     func readinessScaleIsClampedToMin(argument: TestClampingScale) async {
         
         let didChangeSpiritualConversationReadinessScaleUseCase = getDidChangeScaleForSpiritualConversationReadinessUseCase()
+                
+        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
-        
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
+            
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
             
             didChangeSpiritualConversationReadinessScaleUseCase
                 .execute(scale: argument.scaleValue, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
@@ -151,7 +177,9 @@ struct DidChangeScaleForSpiritualConversationReadinessUseCaseTests {
                     
                     readinessScaleRef = readinessScale
                     
-                    confirmation()
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
                 }
                 .store(in: &cancellables)
         }
@@ -173,12 +201,17 @@ struct DidChangeScaleForSpiritualConversationReadinessUseCaseTests {
     func readinessScaleIsClampedToMax(argument: TestClampingScale) async {
         
         let didChangeSpiritualConversationReadinessScaleUseCase = getDidChangeScaleForSpiritualConversationReadinessUseCase()
+                
+        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
-        
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
+            
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
             
             didChangeSpiritualConversationReadinessScaleUseCase
                 .execute(scale: argument.scaleValue, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
@@ -186,7 +219,9 @@ struct DidChangeScaleForSpiritualConversationReadinessUseCaseTests {
                     
                     readinessScaleRef = readinessScale
                     
-                    confirmation()
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
                 }
                 .store(in: &cancellables)
         }

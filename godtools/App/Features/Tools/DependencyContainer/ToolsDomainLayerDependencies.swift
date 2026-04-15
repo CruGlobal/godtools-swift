@@ -1,5 +1,5 @@
 //
-//  GetToolsInterfaceStringsRepository.swift
+//  ToolsDomainLayerDependencies.swift
 //  godtools
 //
 //  Created by Levi Eggert on 2/6/26.
@@ -9,21 +9,25 @@
 import Foundation
 
 class ToolsDomainLayerDependencies {
-    
+
     private let coreDataLayer: AppDataLayerDependencies
     private let dataLayer: ToolsDataLayerDependencies
     private let coreDomainLayer: AppDomainLayerDependencies
-    
-    init(coreDataLayer: AppDataLayerDependencies, dataLayer: ToolsDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies) {
-        
+    private let personalizedToolsDataLayer: PersonalizedToolsDataLayerDependencies
+
+    init(coreDataLayer: AppDataLayerDependencies, dataLayer: ToolsDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, personalizedToolsDataLayer: PersonalizedToolsDataLayerDependencies) {
+
         self.coreDataLayer = coreDataLayer
         self.dataLayer = dataLayer
         self.coreDomainLayer = coreDomainLayer
+        self.personalizedToolsDataLayer = personalizedToolsDataLayer
     }
-    
+
     func getPullToRefreshToolsUseCase() -> PullToRefreshToolsUseCase {
         return PullToRefreshToolsUseCase(
-            resourcesRepository: coreDataLayer.getResourcesRepository()
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            personalizedToolsRepository: personalizedToolsDataLayer.getPersonalizedToolsRepository(),
+            getLanguageElseAppLanguage: coreDomainLayer.supporting.getLanguageElseAppLanguage()
         )
     }
     

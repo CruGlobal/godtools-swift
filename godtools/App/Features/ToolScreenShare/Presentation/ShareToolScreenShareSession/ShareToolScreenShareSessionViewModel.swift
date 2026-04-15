@@ -11,21 +11,19 @@ import Foundation
 class ShareToolScreenShareSessionViewModel {
     
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
-    private let domainModel: ShareToolScreenShareSessionDomainModel
     private let shareUrl: String
     
+    let strings: ShareToolScreenShareSessionStringsDomainModel
     let shareMessage: String
-    let qrCodeString: String
     
     private weak var flowDelegate: FlowDelegate?
     
-    init(flowDelegate: FlowDelegate?, domainModel: ShareToolScreenShareSessionDomainModel, shareMessage: String, shareUrl: String, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate?, strings: ShareToolScreenShareSessionStringsDomainModel, shareMessage: String, shareUrl: String, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
             
         self.flowDelegate = flowDelegate
-        self.domainModel = domainModel
+        self.strings = strings
         self.shareMessage = shareMessage
         self.shareUrl = shareUrl
-        self.qrCodeString = domainModel.strings.qrCodeActionTitle
         
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
     }

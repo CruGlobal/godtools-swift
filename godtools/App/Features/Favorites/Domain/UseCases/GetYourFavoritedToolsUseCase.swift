@@ -39,7 +39,7 @@ final class GetYourFavoritedToolsUseCase {
                 .persistence
                 .observeCollectionChangesPublisher()
         )
-        .flatMap { (resourcesChanged: Void, strings: ToolListItemInterfaceStringsDomainModel, favoritedResourcesChanged: Void) -> AnyPublisher<[YourFavoritedToolDomainModel], Error> in
+        .flatMap { (resourcesChanged: Void, strings: ToolListItemStringsDomainModel, favoritedResourcesChanged: Void) -> AnyPublisher<[YourFavoritedToolDomainModel], Error> in
             
             return self.favoritedResourcesRepository
                 .getFavoritedResourcesSortedByPositionPublisher()
@@ -57,7 +57,7 @@ final class GetYourFavoritedToolsUseCase {
         .eraseToAnyPublisher()
     }
     
-    private func mapToDomainModels(appLanguage: AppLanguageDomainModel, maxCount: Int?, strings: ToolListItemInterfaceStringsDomainModel, favoritedResources: [FavoritedResourceDataModel]) throws -> [YourFavoritedToolDomainModel] {
+    private func mapToDomainModels(appLanguage: AppLanguageDomainModel, maxCount: Int?, strings: ToolListItemStringsDomainModel, favoritedResources: [FavoritedResourceDataModel]) throws -> [YourFavoritedToolDomainModel] {
         
         let numberOfFavoritedTools: Int = try self.favoritedResourcesRepository.persistence.getObjectCount()
         
@@ -70,7 +70,7 @@ final class GetYourFavoritedToolsUseCase {
         let yourFavoritedTools: [YourFavoritedToolDomainModel] = prefixedFavoritedResources
             .map {
                 YourFavoritedToolDomainModel(
-                    interfaceStrings: strings,
+                    strings: strings,
                     analyticsToolAbbreviation: $0.abbreviation,
                     dataModelId: $0.id,
                     bannerImageId: $0.attrBanner,

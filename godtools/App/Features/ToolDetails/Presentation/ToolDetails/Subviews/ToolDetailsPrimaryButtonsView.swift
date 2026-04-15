@@ -28,7 +28,7 @@ struct ToolDetailsPrimaryButtonsView: View {
         VStack(alignment: .center, spacing: 12) {
             
             GTBlueButton(
-                title: viewModel.openToolButtonTitle,
+                title: viewModel.strings.openToolActionTitle,
                 fontSize: 17,
                 width: primaryButtonWidth,
                 height: primaryButtonHeight,
@@ -40,7 +40,7 @@ struct ToolDetailsPrimaryButtonsView: View {
             if viewModel.showsLearnToShareToolButton {
                 
                 GTBlueButton(
-                    title: viewModel.learnToShareToolButtonTitle,
+                    title: viewModel.strings.learnToShareThisToolActionTitle,
                     fontSize: 17,
                     width: primaryButtonWidth,
                     height: primaryButtonHeight,
