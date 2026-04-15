@@ -13,6 +13,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+
+      - name: Bundle Install
+        uses: ./.github/actions/bundle-install
         
       - name: Import App Store Connect API Key
         env:
