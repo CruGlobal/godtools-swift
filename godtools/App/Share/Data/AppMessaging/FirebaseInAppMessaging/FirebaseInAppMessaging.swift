@@ -24,7 +24,18 @@ class FirebaseInAppMessaging: NSObject, AppMessagingInterface {
     
     func setMessagingDelegate(messagingDelegate: AppMessagingDelegate?) {
         
-        self.messagingDelegate = messagingDelegate
+        if let messagingDelegate = messagingDelegate {
+            
+            sharedInAppMessaging.delegate = self
+            
+            self.messagingDelegate = messagingDelegate
+        }
+        else {
+            
+            sharedInAppMessaging.delegate = nil
+            
+            self.messagingDelegate = nil
+        }
     }
 }
 
