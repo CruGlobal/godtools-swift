@@ -204,7 +204,6 @@
 				App/Share/Application/LaunchEnvironment/UITestsLaunchEnvironment/UITestsLaunchEnvironment.swift,
 				App/Share/Application/LaunchEnvironment/UITestsLaunchEnvironment/UITestsLaunchEnvironmentKey.swift,
 				App/Share/Common/BCP47LanguageIdentifier/BCP47LanguageIdentifier.swift,
-				App/Share/Domain/Entities/LanguageCodeDomainModel.swift,
 			);
 			target = 4F12296B20852BE3008842CC /* godtoolsUITests */;
 		};
