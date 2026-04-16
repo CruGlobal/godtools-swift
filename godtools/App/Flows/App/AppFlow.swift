@@ -590,7 +590,10 @@ extension AppFlow {
 
 extension AppFlow: AppMessagingDelegate {
     
-    func actionTappedWithUrl(url: URL) {
-        navigate(step: .buttonWithUrlTappedFromAppMessage(url: url))
+    func actionTappedWithUrl(url: URL, didOpenUrl: Bool) {
+        
+        if !didOpenUrl {
+            navigate(step: .buttonWithUrlTappedFromAppMessage(url: url))
+        }
     }
 }
