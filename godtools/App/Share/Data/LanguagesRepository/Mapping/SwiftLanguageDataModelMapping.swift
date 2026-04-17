@@ -13,14 +13,14 @@ import RepositorySync
 final class SwiftLanguageDataModelMapping: Mapping {
     
     func toDataModel(externalObject: LanguageCodable) -> LanguageDataModel? {
-        return LanguageDataModel(interface: externalObject)
+        return externalObject.toModel()
     }
     
     func toDataModel(persistObject: SwiftLanguage) -> LanguageDataModel? {
-        return LanguageDataModel(interface: persistObject)
+        return persistObject.toModel()
     }
     
     func toPersistObject(externalObject: LanguageCodable) -> SwiftLanguage? {
-        return SwiftLanguage.createNewFrom(interface: externalObject)
+        return SwiftLanguage.createNewFrom(model: externalObject.toModel())
     }
 }

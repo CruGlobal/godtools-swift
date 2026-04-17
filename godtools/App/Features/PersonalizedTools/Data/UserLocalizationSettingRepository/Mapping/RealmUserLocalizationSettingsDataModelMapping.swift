@@ -12,14 +12,14 @@ import RepositorySync
 final class RealmUserLocalizationSettingsDataModelMapping: Mapping {
     
     func toDataModel(externalObject: UserLocalizationSettingsDataModel) -> UserLocalizationSettingsDataModel? {
-        return UserLocalizationSettingsDataModel(interface: externalObject)
+        return externalObject
     }
     
     func toDataModel(persistObject: RealmUserLocalizationSettings) -> UserLocalizationSettingsDataModel? {
-        return UserLocalizationSettingsDataModel(interface: persistObject)
+        return persistObject.toModel()
     }
     
     func toPersistObject(externalObject: UserLocalizationSettingsDataModel) -> RealmUserLocalizationSettings? {
-        return RealmUserLocalizationSettings.createNewFrom(interface: externalObject)
+        return RealmUserLocalizationSettings.createNewFrom(model: externalObject)
     }
 }

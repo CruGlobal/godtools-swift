@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct AttachmentCodable: AttachmentDataModelInterface, Codable {
+struct AttachmentCodable: Codable {
     
     let file: String
     let fileFilename: String
@@ -69,17 +69,5 @@ struct AttachmentCodable: AttachmentDataModelInterface, Codable {
                 
         // relationships - resource
         resource = try resourceContainer?.decodeIfPresent(ResourceCodable.self, forKey: .data)
-    }
-}
-
-extension AttachmentCodable {
-    
-    var resourceDataModel: ResourceDataModel? {
-       
-        guard let resource = resource else {
-            return nil
-        }
-        
-        return ResourceDataModel(interface: resource)
     }
 }

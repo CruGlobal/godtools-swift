@@ -17,7 +17,7 @@ typealias SwiftPersonalizedTools = SwiftPersonalizedToolsV1.SwiftPersonalizedToo
 enum SwiftPersonalizedToolsV1 {
 
     @Model
-    class SwiftPersonalizedTools: IdentifiableSwiftDataObject, PersonalizedToolsDataModelInterface {
+    class SwiftPersonalizedTools: IdentifiableSwiftDataObject {
 
         var resourceIds: [String] = Array<String>()
         var updatedAt: Date = Date()
@@ -28,20 +28,28 @@ enum SwiftPersonalizedToolsV1 {
 
         }
 
-        func getResourceIds() -> [String] {
-            return resourceIds
+        func mapFrom(model: PersonalizedToolsDataModel) {
+            id = model.id
+            resourceIds = model.resourceIds
+            updatedAt = model.updatedAt
         }
 
-        func mapFrom(interface: PersonalizedToolsDataModelInterface) {
-            id = interface.id
-            resourceIds = interface.getResourceIds()
-            updatedAt = interface.updatedAt
-        }
-
-        static func createNewFrom(interface: PersonalizedToolsDataModelInterface) -> SwiftPersonalizedTools {
+        static func createNewFrom(model: PersonalizedToolsDataModel) -> SwiftPersonalizedTools {
             let object = SwiftPersonalizedTools()
-            object.mapFrom(interface: interface)
+            object.mapFrom(model: model)
             return object
         }
+    }
+}
+
+@available(iOS 17.4, *)
+extension SwiftPersonalizedTools {
+    
+    func toModel() -> PersonalizedToolsDataModel {
+        return PersonalizedToolsDataModel(
+            id: id,
+            updatedAt: updatedAt,
+            resourceIds: resourceIds
+        )
     }
 }

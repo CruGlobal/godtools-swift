@@ -167,8 +167,12 @@ extension UserCountersRepository {
         try cache.writeCounters(counters: remoteCounters)
         
         syncInvalidator.didSync()
+        
+        let counters: [UserCounterDataModel] = remoteCounters.map {
+            $0.toModel()
+        }
                 
-        return try mergeLocalCountersWithCounters(counters: remoteCounters)
+        return try mergeLocalCountersWithCounters(counters: counters)
     }
     
     private func mergeLocalCountersWithCachedCounters() async throws -> [UserCounterDataModel] {
@@ -178,9 +182,9 @@ extension UserCountersRepository {
         return try mergeLocalCountersWithCounters(counters: cachedCounters)
     }
     
-    private func mergeLocalCountersWithCounters(counters: [UserCounterDataModelInterface]) throws -> [UserCounterDataModel] {
+    private func mergeLocalCountersWithCounters(counters: [UserCounterDataModel]) throws -> [UserCounterDataModel] {
         
-        return try counters.map { (counter: UserCounterDataModelInterface) in
+        return try counters.map { (counter: UserCounterDataModel) in
             
             let localCounter: LocalUserCounter? = try localUserCounterIncrement.getCounter(id: counter.id)
             

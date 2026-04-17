@@ -53,7 +53,7 @@ class MockAppLanguagesRepositorySync: AppLanguagesRepositorySyncInterface {
         let realmLanguages: [RealmAppLanguage] = appLanguages.map({
             
             let realmAppLanguage = RealmAppLanguage()
-            realmAppLanguage.mapFrom(interface: $0)
+            realmAppLanguage.mapFrom(model: $0.toModel())
             return realmAppLanguage
         })
         

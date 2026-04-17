@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import RepositorySync
 
-class RealmResource: Object, IdentifiableRealmObject, ResourceDataModelInterface {
+class RealmResource: Object, IdentifiableRealmObject {
     
     @objc dynamic var abbreviation: String = ""
     @objc dynamic var attrAboutBannerAnimation: String = ""
@@ -50,44 +50,75 @@ class RealmResource: Object, IdentifiableRealmObject, ResourceDataModelInterface
         return "id"
     }
     
-    func mapFrom(interface: ResourceDataModelInterface) {
+    func mapFrom(model: ResourceDataModel) {
                 
-        abbreviation = interface.abbreviation
-        attrAboutBannerAnimation = interface.attrAboutBannerAnimation
-        attrAboutOverviewVideoYoutube = interface.attrAboutOverviewVideoYoutube
-        attrBanner = interface.attrBanner
-        attrBannerAbout = interface.attrBannerAbout
-        attrCategory = interface.attrCategory
-        attrDefaultLocale = interface.attrDefaultLocale
-        attrDefaultOrder = interface.attrDefaultOrder
-        attrSpotlight = interface.attrSpotlight
-        defaultVariantId = interface.defaultVariantId
-        id = interface.id
-        isHidden = interface.isHidden
-        manifest = interface.manifest
-        metatoolId = interface.metatoolId
-        name = interface.name
-        oneskyProjectId = interface.oneskyProjectId
-        resourceDescription = interface.resourceDescription
-        resourceType = interface.resourceType
-        totalViews = interface.totalViews
-        type = interface.type
+        abbreviation = model.abbreviation
+        attrAboutBannerAnimation = model.attrAboutBannerAnimation
+        attrAboutOverviewVideoYoutube = model.attrAboutOverviewVideoYoutube
+        attrBanner = model.attrBanner
+        attrBannerAbout = model.attrBannerAbout
+        attrCategory = model.attrCategory
+        attrDefaultLocale = model.attrDefaultLocale
+        attrDefaultOrder = model.attrDefaultOrder
+        attrSpotlight = model.attrSpotlight
+        defaultVariantId = model.defaultVariantId
+        id = model.id
+        isHidden = model.isHidden
+        manifest = model.manifest
+        metatoolId = model.metatoolId
+        name = model.name
+        oneskyProjectId = model.oneskyProjectId
+        resourceDescription = model.resourceDescription
+        resourceType = model.resourceType
+        totalViews = model.totalViews
+        type = model.type
         
         latestTranslationIds.removeAll()
-        latestTranslationIds.append(objectsIn: interface.getLatestTranslationIds())
+        latestTranslationIds.append(objectsIn: model.latestTranslationIds)
         
         attachmentIds.removeAll()
-        attachmentIds.append(objectsIn: interface.getAttachmentIds())
+        attachmentIds.append(objectsIn: model.attachmentIds)
         
         variantIds.removeAll()
-        variantIds.append(objectsIn: interface.getVariantIds())
+        variantIds.append(objectsIn: model.variantIds)
     }
     
-    static func createNewFrom(interface: ResourceDataModelInterface) -> RealmResource {
+    static func createNewFrom(model: ResourceDataModel) -> RealmResource {
         
         let realmResource = RealmResource()
-        realmResource.mapFrom(interface: interface)
+        realmResource.mapFrom(model: model)
         return realmResource
+    }
+}
+
+extension RealmResource {
+    func toModel() -> ResourceDataModel {
+        return ResourceDataModel(
+            abbreviation: abbreviation,
+            attrAboutBannerAnimation: attrAboutBannerAnimation,
+            attrAboutOverviewVideoYoutube: attrAboutOverviewVideoYoutube,
+            attrBanner: attrBanner,
+            attrBannerAbout: attrBannerAbout,
+            attrCategory: attrCategory,
+            attrDefaultLocale: attrDefaultLocale,
+            attrDefaultOrder: attrDefaultOrder,
+            attrSpotlight: attrSpotlight,
+            defaultVariantId: defaultVariantId,
+            id: id,
+            isHidden: isHidden,
+            manifest: manifest,
+            metatoolId: metatoolId,
+            name: name,
+            oneskyProjectId: oneskyProjectId,
+            resourceDescription: resourceDescription,
+            resourceType: resourceType,
+            totalViews: totalViews,
+            type: type,
+            attachmentIds: getAttachmentIds(),
+            languageIds: getLanguageIds(),
+            latestTranslationIds: getLatestTranslationIds(),
+            variantIds: getVariantIds()
+        )
     }
 }
 

@@ -12,11 +12,11 @@ import RepositorySync
 final class RealmUserCounterMapping: Mapping {
     
     func toDataModel(externalObject: UserCounterCodable) -> UserCounterDataModel? {
-        return UserCounterDataModel(interface: externalObject)
+        return externalObject.toModel()
     }
     
     func toDataModel(persistObject: RealmUserCounter) -> UserCounterDataModel? {
-        return UserCounterDataModel(interface: persistObject)
+        return persistObject.toModel()
     }
     
     func toPersistObject(externalObject: UserCounterCodable) -> RealmUserCounter? {

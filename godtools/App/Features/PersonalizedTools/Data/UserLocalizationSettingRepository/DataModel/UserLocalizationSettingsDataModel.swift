@@ -8,21 +8,9 @@
 
 import Foundation
 
-struct UserLocalizationSettingsDataModel: UserLocalizationSettingsDataModelInterface {
+struct UserLocalizationSettingsDataModel {
 
     let id: String
     let createdAt: Date
     let selectedCountryIsoRegionCode: String
-
-    init(id: String, selectedCountryIsoRegionCode: String) {
-        self.id = id
-        self.createdAt = Date()
-        self.selectedCountryIsoRegionCode = selectedCountryIsoRegionCode
-    }
-
-    init(interface: UserLocalizationSettingsDataModelInterface) {
-        self.id = interface.id
-        self.createdAt = interface.createdAt
-        self.selectedCountryIsoRegionCode = interface.selectedCountryIsoRegionCode
-    }
 }

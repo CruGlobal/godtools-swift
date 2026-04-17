@@ -22,14 +22,14 @@ class RealmAppLanguage: Object, IdentifiableRealmObject {
         return "id"
     }
     
-    func mapFrom(interface: AppLanguageDataModelInterface) {
+    func mapFrom(model: AppLanguageDataModel) {
         
-        id = interface.languageId
-        languageCode = interface.languageCode
-        languageId = interface.languageId
-        languageScriptCode = interface.languageScriptCode
+        id = model.languageId
+        languageCode = model.languageCode
+        languageId = model.languageId
+        languageScriptCode = model.languageScriptCode
         
-        switch interface.languageDirection {
+        switch model.languageDirection {
         case .leftToRight:
             realmLanguageDirection = .leftToRight
         case .rightToLeft:
@@ -37,14 +37,14 @@ class RealmAppLanguage: Object, IdentifiableRealmObject {
         }
     }
     
-    static func createNewFrom(interface: AppLanguageDataModelInterface) -> RealmAppLanguage {
+    static func createNewFrom(model: AppLanguageDataModel) -> RealmAppLanguage {
         let object = RealmAppLanguage()
-        object.mapFrom(interface: interface)
+        object.mapFrom(model: model)
         return object
     }
 }
 
-extension RealmAppLanguage: AppLanguageDataModelInterface {
+extension RealmAppLanguage {
     
     var languageDirection: AppLanguageDataModel.Direction {
     
@@ -54,5 +54,17 @@ extension RealmAppLanguage: AppLanguageDataModelInterface {
         case .rightToLeft:
             return .rightToLeft
         }
+    }
+}
+
+extension RealmAppLanguage {
+    
+    func toModel() -> AppLanguageDataModel {
+        
+        return AppLanguageDataModel(
+            languageCode: languageCode,
+            languageDirection: languageDirection,
+            languageScriptCode: languageScriptCode
+        )
     }
 }

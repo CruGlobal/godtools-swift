@@ -13,14 +13,14 @@ import RepositorySync
 final class SwiftResourceDataModelMapping: Mapping {
     
     func toDataModel(externalObject: ResourceCodable) -> ResourceDataModel? {
-        return ResourceDataModel(interface: externalObject)
+        return externalObject.toModel()
     }
     
     func toDataModel(persistObject: SwiftResource) -> ResourceDataModel? {
-        return ResourceDataModel(interface: persistObject)
+        return persistObject.toModel()
     }
     
     func toPersistObject(externalObject: ResourceCodable) -> SwiftResource? {
-        return SwiftResource.createNewFrom(interface: externalObject)
+        return SwiftResource.createNewFrom(model: externalObject.toModel())
     }
 }

@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import RepositorySync
 
-class RealmUserDetails: Object, IdentifiableRealmObject, UserDetailsDataModelInterface {
+class RealmUserDetails: Object, IdentifiableRealmObject {
     
     @objc dynamic var id: String = ""
     @objc dynamic var createdAt: Date?
@@ -23,19 +23,33 @@ class RealmUserDetails: Object, IdentifiableRealmObject, UserDetailsDataModelInt
         return "id"
     }
     
-    func mapFrom(interface: UserDetailsDataModelInterface) {
+    func mapFrom(model: UserDetailsDataModel) {
         
-        id = interface.id
-        createdAt = interface.createdAt
-        familyName = interface.familyName
-        givenName = interface.givenName
-        name = interface.name
-        ssoGuid = interface.ssoGuid
+        id = model.id
+        createdAt = model.createdAt
+        familyName = model.familyName
+        givenName = model.givenName
+        name = model.name
+        ssoGuid = model.ssoGuid
     }
     
-    static func createNewFrom(interface: UserDetailsDataModelInterface) -> RealmUserDetails {
+    static func createNewFrom(model: UserDetailsDataModel) -> RealmUserDetails {
         let object = RealmUserDetails()
-        object.mapFrom(interface: interface)
+        object.mapFrom(model: model)
         return object
+    }
+}
+
+extension RealmUserDetails {
+    
+    func toModel() -> UserDetailsDataModel {
+        return UserDetailsDataModel(
+            id: id,
+            createdAt: createdAt,
+            familyName: familyName,
+            givenName: givenName,
+            name: name,
+            ssoGuid: ssoGuid
+        )
     }
 }

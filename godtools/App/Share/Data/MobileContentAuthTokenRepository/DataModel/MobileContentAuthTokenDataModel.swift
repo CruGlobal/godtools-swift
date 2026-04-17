@@ -8,13 +8,24 @@
 
 import Foundation
 
-struct MobileContentAuthTokenDataModel: MobileContentAuthTokenDataModelInterface {
+struct MobileContentAuthTokenDataModel {
     
     let appleRefreshToken: String?
     let expirationDate: Date?
     let id: String
     let token: String
     let userId: String
+    
+    static func createWithAuthToken(authToken: CachedAuthToken) -> MobileContentAuthTokenDataModel {
+        
+        return MobileContentAuthTokenDataModel(
+            appleRefreshToken: authToken.appleRefreshToken,
+            expirationDate: authToken.expirationDate,
+            id: authToken.id,
+            token: authToken.token,
+            userId: authToken.userId
+        )
+    }
     
     var isExpired: Bool {
         
@@ -26,23 +37,5 @@ struct MobileContentAuthTokenDataModel: MobileContentAuthTokenDataModelInterface
         let isExpired: Bool = secondsTilExpiration >= 0
         
         return isExpired
-    }
-    
-    init(interface: MobileContentAuthTokenDataModelInterface) {
-        
-        appleRefreshToken = nil
-        expirationDate = interface.expirationDate
-        id = interface.id
-        token = ""
-        userId = interface.userId
-    }
-    
-    init(authToken: CachedAuthToken) {
-        
-        appleRefreshToken = authToken.appleRefreshToken
-        expirationDate = authToken.expirationDate
-        id = authToken.id
-        token = authToken.token
-        userId = authToken.userId
     }
 }

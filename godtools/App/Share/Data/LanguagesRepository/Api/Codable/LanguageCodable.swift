@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LanguageCodable: LanguageDataModelInterface, Codable {
+struct LanguageCodable: Codable {
     
     let code: BCP47LanguageIdentifier
     let directionString: String

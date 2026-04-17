@@ -94,6 +94,6 @@ extension UserDetailsRepository {
             getOption: nil
         )
         
-        return UserDetailsDataModel(interface: codable)
+        return codable.toModel()
     }
 }

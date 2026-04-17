@@ -13,14 +13,14 @@ import RepositorySync
 final class SwiftPersonalizedLessonsMapping: Mapping {
     
     func toDataModel(externalObject: PersonalizedLessonsDataModel) -> PersonalizedLessonsDataModel? {
-        return PersonalizedLessonsDataModel(interface: externalObject)
+        return externalObject
     }
     
     func toDataModel(persistObject: SwiftPersonalizedLessons) -> PersonalizedLessonsDataModel? {
-        return PersonalizedLessonsDataModel(interface: persistObject)
+        return persistObject.toModel()
     }
     
     func toPersistObject(externalObject: PersonalizedLessonsDataModel) -> SwiftPersonalizedLessons? {
-        return SwiftPersonalizedLessons.createNewFrom(interface: externalObject)
+        return SwiftPersonalizedLessons.createNewFrom(model: externalObject)
     }
 }

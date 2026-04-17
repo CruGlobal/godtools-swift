@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ResourceCodable: ResourceDataModelInterface, Codable {
+struct ResourceCodable: Codable {
     
     let abbreviation: String
     let attachmentIds: [String]
@@ -172,21 +172,5 @@ struct ResourceCodable: ResourceDataModelInterface, Codable {
         
         // set when initialized from a model.
         languageIds = Array()
-    }
-    
-    func getAttachmentIds() -> [String] {
-        return attachmentIds
-    }
-    
-    func getLanguageIds() -> [String] {
-        return languageIds
-    }
-    
-    func getLatestTranslationIds() -> [String] {
-        return latestTranslationIds
-    }
-    
-    func getVariantIds() -> [String] {
-        return variantIds
     }
 }

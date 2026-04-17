@@ -39,7 +39,7 @@ final class GetToolSettingsToolLanguagesListUseCase {
         let languageIds: [String]
         
         if let resource = resourcesRepository.persistence.getDataModelNonThrowing(id: toolId) {
-            languageIds = resource.getLanguageIds().filter({
+            languageIds = resource.languageIds.filter({
                 !filterOutLanguageIds.contains($0)
             })
         }
