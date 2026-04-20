@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LanguageDataModel {
+struct LanguageDataModel: Sendable {
     
     let code: BCP47LanguageIdentifier
     let directionString: String
