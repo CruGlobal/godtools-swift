@@ -13,14 +13,14 @@ import RepositorySync
 final class SwiftDownloadedTranslationDataModelMapping: Mapping {
     
     func toDataModel(externalObject: DownloadedTranslationDataModel) -> DownloadedTranslationDataModel? {
-        return DownloadedTranslationDataModel(interface: externalObject)
+        return externalObject
     }
     
     func toDataModel(persistObject: SwiftDownloadedTranslation) -> DownloadedTranslationDataModel? {
-        return DownloadedTranslationDataModel(interface: persistObject)
+        return persistObject.toModel()
     }
     
     func toPersistObject(externalObject: DownloadedTranslationDataModel) -> SwiftDownloadedTranslation? {
-        return SwiftDownloadedTranslation.createNewFrom(interface: externalObject)
+        return SwiftDownloadedTranslation.createNewFrom(model: externalObject)
     }
 }

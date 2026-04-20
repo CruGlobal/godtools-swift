@@ -33,7 +33,7 @@ class MobileContentAuthTokenCache {
             let dataModel: MobileContentAuthTokenDataModel?
             
             if let cachedAuthToken = cachedAuthToken {
-                dataModel = MobileContentAuthTokenDataModel(authToken: cachedAuthToken)
+                dataModel = MobileContentAuthTokenDataModel.createWithAuthToken(authToken: cachedAuthToken)
             }
             else {
                 dataModel = nil
@@ -85,7 +85,7 @@ extension MobileContentAuthTokenCache {
             userId: authTokenCodable.userId
         )
         
-        let dataModel = MobileContentAuthTokenDataModel(authToken: cachedAuthToken)
+        let dataModel = MobileContentAuthTokenDataModel.createWithAuthToken(authToken: cachedAuthToken)
                 
         updateHashableAuthTokenSubject(authToken: dataModel)
     }

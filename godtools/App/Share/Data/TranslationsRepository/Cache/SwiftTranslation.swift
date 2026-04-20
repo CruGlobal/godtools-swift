@@ -17,7 +17,7 @@ typealias SwiftTranslation = SwiftTranslationV1.SwiftTranslation
 enum SwiftTranslationV1 {
  
     @Model
-    class SwiftTranslation: IdentifiableSwiftDataObject, TranslationDataModelInterface {
+    class SwiftTranslation: IdentifiableSwiftDataObject {
         
         var isPublished: Bool = false
         var manifestName: String = ""
@@ -39,23 +39,23 @@ enum SwiftTranslationV1 {
             
         }
         
-        func mapFrom(interface: TranslationDataModelInterface) {
-            id = interface.id
-            isPublished = interface.isPublished
-            manifestName = interface.manifestName
-            toolDetailsBibleReferences = interface.toolDetailsBibleReferences
-            toolDetailsConversationStarters = interface.toolDetailsConversationStarters
-            toolDetailsOutline = interface.toolDetailsOutline
-            translatedDescription = interface.translatedDescription
-            translatedName = interface.translatedName
-            translatedTagline = interface.translatedTagline
-            type = interface.type
-            version = interface.version
+        func mapFrom(model: TranslationDataModel) {
+            id = model.id
+            isPublished = model.isPublished
+            manifestName = model.manifestName
+            toolDetailsBibleReferences = model.toolDetailsBibleReferences
+            toolDetailsConversationStarters = model.toolDetailsConversationStarters
+            toolDetailsOutline = model.toolDetailsOutline
+            translatedDescription = model.translatedDescription
+            translatedName = model.translatedName
+            translatedTagline = model.translatedTagline
+            type = model.type
+            version = model.version
         }
         
-        static func createNewFrom(interface: TranslationDataModelInterface) -> SwiftTranslation {
+        static func createNewFrom(model: TranslationDataModel) -> SwiftTranslation {
             let translation = SwiftTranslation()
-            translation.mapFrom(interface: interface)
+            translation.mapFrom(model: model)
             return translation
         }
         
@@ -65,7 +65,7 @@ enum SwiftTranslationV1 {
                 return nil
             }
             
-            return ResourceDataModel(interface: swiftResource)
+            return swiftResource.toModel()
         }
         
         var languageDataModel: LanguageDataModel? {
@@ -74,8 +74,29 @@ enum SwiftTranslationV1 {
                 return nil
             }
             
-            return LanguageDataModel(interface: swiftLanguage)
+            return swiftLanguage.toModel()
         }
+    }
+}
+
+@available(iOS 17.4, *)
+extension SwiftTranslation {
+    func toModel() -> TranslationDataModel {
+        return TranslationDataModel(
+            id: id,
+            isPublished: isPublished,
+            languageDataModel: languageDataModel,
+            manifestName: manifestName,
+            resourceDataModel: resourceDataModel,
+            toolDetailsBibleReferences: toolDetailsBibleReferences,
+            toolDetailsConversationStarters: toolDetailsConversationStarters,
+            toolDetailsOutline: toolDetailsOutline,
+            translatedDescription: translatedDescription,
+            translatedName: translatedName,
+            translatedTagline: translatedTagline,
+            type: type,
+            version: version
+        )
     }
 }
 

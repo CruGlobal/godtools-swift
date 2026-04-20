@@ -12,14 +12,14 @@ import RepositorySync
 final class RealmPersonalizedLessonsMapping: Mapping {
     
     func toDataModel(externalObject: PersonalizedLessonsDataModel) -> PersonalizedLessonsDataModel? {
-        return PersonalizedLessonsDataModel(interface: externalObject)
+        return externalObject
     }
     
     func toDataModel(persistObject: RealmPersonalizedLessons) -> PersonalizedLessonsDataModel? {
-        return PersonalizedLessonsDataModel(interface: persistObject)
+        return persistObject.toModel()
     }
     
     func toPersistObject(externalObject: PersonalizedLessonsDataModel) -> RealmPersonalizedLessons? {
-        return RealmPersonalizedLessons.createNewFrom(interface: externalObject)
+        return RealmPersonalizedLessons.createNewFrom(model: externalObject)
     }
 }

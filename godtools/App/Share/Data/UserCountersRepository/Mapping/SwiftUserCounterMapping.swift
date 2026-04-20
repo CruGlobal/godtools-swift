@@ -13,11 +13,11 @@ import RepositorySync
 final class SwiftUserCounterMapping: Mapping {
     
     func toDataModel(externalObject: UserCounterCodable) -> UserCounterDataModel? {
-        return UserCounterDataModel(interface: externalObject)
+        return externalObject.toModel()
     }
     
     func toDataModel(persistObject: SwiftUserCounter) -> UserCounterDataModel? {
-        return UserCounterDataModel(interface: persistObject)
+        return persistObject.toModel()
     }
     
     func toPersistObject(externalObject: UserCounterCodable) -> SwiftUserCounter? {

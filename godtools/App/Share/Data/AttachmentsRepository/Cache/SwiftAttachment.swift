@@ -17,7 +17,7 @@ typealias SwiftAttachment = SwiftAttachmentV1.SwiftAttachment
 enum SwiftAttachmentV1 {
  
     @Model
-    class SwiftAttachment: IdentifiableSwiftDataObject, AttachmentDataModelInterface {
+    class SwiftAttachment: IdentifiableSwiftDataObject {
         
         var file: String = ""
         var fileFilename: String = ""
@@ -34,18 +34,18 @@ enum SwiftAttachmentV1 {
             
         }
         
-        func mapFrom(interface: AttachmentDataModelInterface) {
-            file = interface.file
-            fileFilename = interface.fileFilename
-            id = interface.id
-            isZipped = interface.isZipped
-            sha256 = interface.sha256
-            type = interface.type
+        func mapFrom(model: AttachmentDataModel) {
+            file = model.file
+            fileFilename = model.fileFilename
+            id = model.id
+            isZipped = model.isZipped
+            sha256 = model.sha256
+            type = model.type
         }
         
-        static func createNewFrom(interface: AttachmentDataModelInterface) -> SwiftAttachment {
+        static func createNewFrom(model: AttachmentDataModel) -> SwiftAttachment {
             let attachment = SwiftAttachment()
-            attachment.mapFrom(interface: interface)
+            attachment.mapFrom(model: model)
             return attachment
         }
         
@@ -55,7 +55,24 @@ enum SwiftAttachmentV1 {
                 return nil
             }
             
-            return ResourceDataModel(interface: swiftResource)
+            return swiftResource.toModel()
         }
+    }
+}
+
+@available(iOS 17.4, *)
+extension SwiftAttachment {
+    
+    func toModel() -> AttachmentDataModel {
+        return AttachmentDataModel(
+            id: id,
+            file: file,
+            fileFilename: fileFilename,
+            isZipped: isZipped,
+            sha256: sha256,
+            type: type,
+            resourceDataModel: resourceDataModel,
+            storedAttachment: nil
+        )
     }
 }

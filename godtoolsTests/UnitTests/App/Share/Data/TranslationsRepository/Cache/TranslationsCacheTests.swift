@@ -220,9 +220,9 @@ extension TranslationsCacheTests {
     @available(iOS 17.4, *)
     private func getSwiftDatabaseObjects() -> [any IdentifiableSwiftDataObject] {
         
-        let english = SwiftLanguage.createNewFrom(interface: getEnglishLanguage())
-        let spanish = SwiftLanguage.createNewFrom(interface: getSpanishLanguage())
-        let vietnamese = SwiftLanguage.createNewFrom(interface: getVietnameseLanguage())
+        let english = SwiftLanguage.createNewFrom(model: getEnglishLanguage().toModel())
+        let spanish = SwiftLanguage.createNewFrom(model: getSpanishLanguage().toModel())
+        let vietnamese = SwiftLanguage.createNewFrom(model: getVietnameseLanguage().toModel())
         
         let resource = SwiftResource()
         resource.id = Self.resourceId
@@ -234,7 +234,7 @@ extension TranslationsCacheTests {
                         
         for translation in realmEnglishTranslations {
             
-            let swiftTranslation = SwiftTranslation.createNewFrom(interface: translation)
+            let swiftTranslation = SwiftTranslation.createNewFrom(model: translation.toModel())
             
             swiftTranslation.language = english
             swiftTranslation.resource = resource
@@ -244,7 +244,7 @@ extension TranslationsCacheTests {
         
         for translation in realmSpanishTranslations {
             
-            let swiftTranslation = SwiftTranslation.createNewFrom(interface: translation)
+            let swiftTranslation = SwiftTranslation.createNewFrom(model: translation.toModel())
             
             swiftTranslation.language = spanish
             swiftTranslation.resource = resource
@@ -254,7 +254,7 @@ extension TranslationsCacheTests {
         
         for translation in realmVietnameseTranslations {
             
-            let swiftTranslation = SwiftTranslation.createNewFrom(interface: translation)
+            let swiftTranslation = SwiftTranslation.createNewFrom(model: translation.toModel())
             
             swiftTranslation.language = vietnamese
             swiftTranslation.resource = resource

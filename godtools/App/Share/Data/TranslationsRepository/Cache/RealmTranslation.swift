@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import RepositorySync
 
-class RealmTranslation: Object, IdentifiableRealmObject, TranslationDataModelInterface {
+class RealmTranslation: Object, IdentifiableRealmObject {
     
     @objc dynamic var id: String = ""
     @objc dynamic var isPublished: Bool = false
@@ -30,31 +30,52 @@ class RealmTranslation: Object, IdentifiableRealmObject, TranslationDataModelInt
     override static func primaryKey() -> String? {
         return "id"
     }
+    
+    func mapFrom(model: TranslationDataModel) {
+        
+        id = model.id
+        isPublished = model.isPublished
+        manifestName = model.manifestName
+        toolDetailsBibleReferences = model.toolDetailsBibleReferences
+        toolDetailsConversationStarters = model.toolDetailsConversationStarters
+        toolDetailsOutline = model.toolDetailsOutline
+        translatedDescription = model.translatedDescription
+        translatedName = model.translatedName
+        translatedTagline = model.translatedTagline
+        type = model.type
+        version = model.version
+    }
+    
+    static func createNewFrom(model: TranslationDataModel) -> RealmTranslation {
+        
+        let realmTranslation = RealmTranslation()
+        realmTranslation.mapFrom(model: model)
+        return realmTranslation
+    }
 }
 
 extension RealmTranslation {
     
-    func mapFrom(interface: TranslationDataModelInterface) {
-        
-        id = interface.id
-        isPublished = interface.isPublished
-        manifestName = interface.manifestName
-        toolDetailsBibleReferences = interface.toolDetailsBibleReferences
-        toolDetailsConversationStarters = interface.toolDetailsConversationStarters
-        toolDetailsOutline = interface.toolDetailsOutline
-        translatedDescription = interface.translatedDescription
-        translatedName = interface.translatedName
-        translatedTagline = interface.translatedTagline
-        type = interface.type
-        version = interface.version
+    func toModel() -> TranslationDataModel {
+        return TranslationDataModel(
+            id: id,
+            isPublished: isPublished,
+            languageDataModel: languageDataModel,
+            manifestName: manifestName,
+            resourceDataModel: resourceDataModel,
+            toolDetailsBibleReferences: toolDetailsBibleReferences,
+            toolDetailsConversationStarters: toolDetailsConversationStarters,
+            toolDetailsOutline: toolDetailsOutline,
+            translatedDescription: translatedDescription,
+            translatedName: translatedName,
+            translatedTagline: translatedTagline,
+            type: type,
+            version: version
+        )
     }
-    
-    static func createNewFrom(interface: TranslationDataModelInterface) -> RealmTranslation {
-        
-        let realmTranslation = RealmTranslation()
-        realmTranslation.mapFrom(interface: interface)
-        return realmTranslation
-    }
+}
+
+extension RealmTranslation {
     
     var resourceDataModel: ResourceDataModel? {
         
@@ -62,7 +83,7 @@ extension RealmTranslation {
             return nil
         }
         
-        return ResourceDataModel(interface: resource)
+        return resource.toModel()
     }
     
     var languageDataModel: LanguageDataModel? {
@@ -71,6 +92,6 @@ extension RealmTranslation {
             return nil
         }
         
-        return LanguageDataModel(interface: language)
+        return language.toModel()
     }
 }

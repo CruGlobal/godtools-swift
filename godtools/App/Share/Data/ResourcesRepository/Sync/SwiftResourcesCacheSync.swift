@@ -61,7 +61,7 @@ class SwiftResourcesCacheSync {
                 
                 for newResource in resourcesPlusLatestTranslationsAndAttachments.resources {
                     
-                    let resource = SwiftResource.createNewFrom(interface: newResource)
+                    let resource = SwiftResource.createNewFrom(model: newResource.toModel())
                     resourcesDictionary[resource.id] = resource
                     
                     newObjectsToStore.append(resource)
@@ -93,7 +93,7 @@ class SwiftResourcesCacheSync {
                 
                 for newTranslation in resourcesPlusLatestTranslationsAndAttachments.translations {
                     
-                    let translation = SwiftTranslation.createNewFrom(interface: newTranslation)
+                    let translation = SwiftTranslation.createNewFrom(model: newTranslation.toModel())
                     
                     if let resourceId = newTranslation.resource?.id {
                         translation.resource = resourcesDictionary[resourceId]
@@ -134,7 +134,7 @@ class SwiftResourcesCacheSync {
                 
                 for newAttachment in resourcesPlusLatestTranslationsAndAttachments.attachments {
                     
-                    let attachment = SwiftAttachment.createNewFrom(interface: newAttachment)
+                    let attachment = SwiftAttachment.createNewFrom(model: newAttachment.toModel())
                     
                     if let resourceId = newAttachment.resource?.id {
                         attachment.resource = resourcesDictionary[resourceId]
@@ -215,10 +215,10 @@ class SwiftResourcesCacheSync {
             let translationIdsToRemove: [String] = existingTranslationsMinusNewlyAddedTranslations.map({$0.id})
             let downloadedTranslationsToRemove: [SwiftDownloadedTranslation] = swiftDatabase.read.objectsNonThrowing(context: context, ids: translationIdsToRemove, sortBy: nil)
 
-            let resourcesRemoved: [ResourceDataModel] = existingResourcesMinusNewlyAddedResources.map({ResourceDataModel(interface: $0)})
-            let translationsRemoved: [TranslationDataModel] = existingTranslationsMinusNewlyAddedTranslations.map({TranslationDataModel(interface: $0)})
-            let attachmentsRemoved: [AttachmentDataModel] = existingAttachmentsMinusNewlyAddedAttachments.map({AttachmentDataModel(interface: $0, storedAttachment: nil)})
-            let downloadedTranslationsRemoved: [DownloadedTranslationDataModel] = downloadedTranslationsToRemove.map({DownloadedTranslationDataModel(interface: $0)})
+            let resourcesRemoved: [ResourceDataModel] = existingResourcesMinusNewlyAddedResources.map({ $0.toModel() })
+            let translationsRemoved: [TranslationDataModel] = existingTranslationsMinusNewlyAddedTranslations.map( {$0.toModel() })
+            let attachmentsRemoved: [AttachmentDataModel] = existingAttachmentsMinusNewlyAddedAttachments.map({ $0.toModel() })
+            let downloadedTranslationsRemoved: [DownloadedTranslationDataModel] = downloadedTranslationsToRemove.map({ $0.toModel() })
             
             // delete realm objects that no longer exist
             var objectsToRemove: [any IdentifiableSwiftDataObject] = Array()

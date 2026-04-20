@@ -8,29 +8,20 @@
 
 import Foundation
 
-struct PersonalizedLessonsDataModel: PersonalizedLessonsDataModelInterface {
+struct PersonalizedLessonsDataModel {
 
     let id: String
     let updatedAt: Date
     let resourceIds: [String]
-
-    init(country: String?, language: String, resourceIds: [String]) throws {
+    
+    static func createFromCountry(country: String?, language: String, resourceIds: [String]) throws -> PersonalizedLessonsDataModel {
         
         let type = PersonalizedLessonsType(country: country, language: language)
         
-        self.id = try PersonalizedLessonsId(type: type).value
-                
-        self.updatedAt = Date()
-        self.resourceIds = resourceIds
-    }
-
-    init(interface: PersonalizedLessonsDataModelInterface) {
-        self.id = interface.id
-        self.updatedAt = interface.updatedAt
-        self.resourceIds = interface.getResourceIds()
-    }
-    
-    func getResourceIds() -> [String] {
-        return resourceIds
+        return PersonalizedLessonsDataModel(
+            id: try PersonalizedLessonsId(type: type).value,
+            updatedAt: Date(),
+            resourceIds: resourceIds
+        )
     }
 }

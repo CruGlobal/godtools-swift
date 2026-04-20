@@ -40,9 +40,21 @@ struct AppLanguageCodable: Codable {
     }
 }
 
-extension AppLanguageCodable: AppLanguageDataModelInterface {
+extension AppLanguageCodable {
     
     var languageDirection: AppLanguageDataModel.Direction {
         return languageDirectionValue == AppLanguageCodable.languageDirectionRightToLeft ? .rightToLeft : .leftToRight
+    }
+}
+
+extension AppLanguageCodable {
+    
+    func toModel() -> AppLanguageDataModel {
+        
+        return AppLanguageDataModel(
+            languageCode: languageCode,
+            languageDirection: languageDirection,
+            languageScriptCode: languageScriptCode
+        )
     }
 }

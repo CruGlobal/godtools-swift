@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct MobileContentAuthTokenDecodable: MobileContentAuthTokenDataModelInterface, Codable {
+struct MobileContentAuthTokenDecodable: Codable {
     
     let appleRefreshToken: String?
     let expirationDate: Date?
@@ -53,5 +53,19 @@ struct MobileContentAuthTokenDecodable: MobileContentAuthTokenDataModelInterface
         ]
         
         return dateFormatter.date(from: dateString)
+    }
+}
+
+extension MobileContentAuthTokenDecodable {
+    
+    func toModel() -> MobileContentAuthTokenDataModel {
+    
+        return MobileContentAuthTokenDataModel(
+            appleRefreshToken: appleRefreshToken,
+            expirationDate: expirationDate,
+            id: id,
+            token: token,
+            userId: userId
+        )
     }
 }

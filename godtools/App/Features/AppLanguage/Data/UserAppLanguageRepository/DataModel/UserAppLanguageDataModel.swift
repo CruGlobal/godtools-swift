@@ -8,20 +8,8 @@
 
 import Foundation
 
-struct UserAppLanguageDataModel: UserAppLanguageDataModelInterface {
+struct UserAppLanguageDataModel {
     
     let id: String
     let languageId: BCP47LanguageIdentifier
-    
-    init(id: String, languageId: BCP47LanguageIdentifier) {
-        
-        self.id = id
-        self.languageId = languageId
-    }
-    
-    init(interface: UserAppLanguageDataModelInterface) {
-        
-        id = interface.id
-        languageId = interface.languageId
-    }
 }

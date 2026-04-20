@@ -32,7 +32,7 @@ final class MobileContentAuthTokenRepository {
                         
             try await cache.storeAuthToken(authTokenCodable: authTokenCodable)
             
-            return .success(MobileContentAuthTokenDataModel(interface: authTokenCodable))
+            return .success(authTokenCodable.toModel())
             
         case .failure(let apiError):
             
@@ -57,7 +57,7 @@ final class MobileContentAuthTokenRepository {
             return nil
         }
         
-        return MobileContentAuthTokenDataModel(authToken: cachedAuthToken)
+        return MobileContentAuthTokenDataModel.createWithAuthToken(authToken: cachedAuthToken)
     }
     
     func getCachedAuthToken() throws -> String? {

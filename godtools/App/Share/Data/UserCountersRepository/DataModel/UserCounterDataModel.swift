@@ -8,20 +8,8 @@
 
 import Foundation
 
-struct UserCounterDataModel: UserCounterDataModelInterface, Sendable {
+struct UserCounterDataModel: Sendable {
     
-    let count: Int
     let id: String
-    
-    init(id: String, count: Int) {
-        
-        self.id = id
-        self.count = count
-    }
-    
-    init(interface: UserCounterDataModelInterface) {
-        
-        self.count = interface.count
-        self.id = interface.id
-    }
+    let count: Int
 }

@@ -12,14 +12,14 @@ import RepositorySync
 final class RealmAppLanguageDataModelMapping: Mapping {
     
     func toDataModel(externalObject: AppLanguageCodable) -> AppLanguageDataModel? {
-        return AppLanguageDataModel(interface: externalObject)
+        return externalObject.toModel()
     }
     
     func toDataModel(persistObject: RealmAppLanguage) -> AppLanguageDataModel? {
-        return AppLanguageDataModel(interface: persistObject)
+        return persistObject.toModel()
     }
     
     func toPersistObject(externalObject: AppLanguageCodable) -> RealmAppLanguage? {
-        return RealmAppLanguage.createNewFrom(interface: externalObject)
+        return RealmAppLanguage.createNewFrom(model: externalObject.toModel())
     }
 }
