@@ -20,11 +20,11 @@ final class GetDeleteAccountProgressStringsUseCase {
     
     func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<DeleteAccountProgressStringsDomainModel, Never> {
         
-        let interfaceStrings = DeleteAccountProgressStringsDomainModel(
+        let strings = DeleteAccountProgressStringsDomainModel(
             title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "deleteAccountProgress.title")
         )
         
-        return Just(interfaceStrings)
+        return Just(strings)
             .eraseToAnyPublisher()
     }
 }

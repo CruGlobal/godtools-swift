@@ -196,7 +196,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				App/Features/AppLanguage/Data/AppLanguagesRepository/AppLanguageDataModel.swift,
-				App/Features/AppLanguage/Data/AppLanguagesRepository/AppLanguageDataModelInterface.swift,
 				App/Share/Application/Accessibility/AccessibilityStrings.swift,
 				App/Share/Application/LaunchEnvironment/LaunchEnvironmentKey.swift,
 				App/Share/Application/LaunchEnvironment/LaunchEnvironmentReader.swift,
@@ -204,7 +203,7 @@
 				App/Share/Application/LaunchEnvironment/UITestsLaunchEnvironment/UITestsLaunchEnvironment.swift,
 				App/Share/Application/LaunchEnvironment/UITestsLaunchEnvironment/UITestsLaunchEnvironmentKey.swift,
 				App/Share/Common/BCP47LanguageIdentifier/BCP47LanguageIdentifier.swift,
-				App/Share/Domain/Entities/LanguageCodeDomainModel.swift,
+				App/Share/Domain/DomainModels/LanguageCodeDomainModel.swift,
 			);
 			target = 4F12296B20852BE3008842CC /* godtoolsUITests */;
 		};
@@ -753,14 +752,10 @@
 			inputPaths = (
 				"$(SRCROOT)/Scripts/Scripts/DownloadInitialResources/DownloadInitialResourcesScript.swift",
 				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/Api/Codable/ResourceCodable.swift",
-				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/DataModel/ResourceDataModelInterface.swift",
 				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/Api/Codable/ResourceType.swift",
 				"$(SRCROOT)/godtools/App/Share/Data/TranslationsRepository/Api/Codable/TranslationCodable.swift",
-				"$(SRCROOT)/godtools/App/Share/Data/TranslationsRepository/DataModel/TranslationDataModelInterface.swift",
 				"$(SRCROOT)/godtools/App/Share/Data/AttachmentsRepository/Api/Codable/AttachmentCodable.swift",
-				"$(SRCROOT)/godtools/App/Share/Data/AttachmentsRepository/DataModel/AttachmentDataModelInterface.swift",
 				"$(SRCROOT)/godtools/App/Share/Data/LanguagesRepository/Api/Codable/LanguageCodable.swift",
-				"$(SRCROOT)/godtools/App/Share/Data/LanguagesRepository/DataModel/LanguageDataModelInterface.swift",
 				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/Api/Codable/ResourcesPlusLatestTranslationsAndAttachmentsCodable.swift",
 				"$(SRCROOT)/godtools/App/Share/Common/SharedAppleExtensions/Foundation/Error/NSError+WithDescription.swift",
 				"$(SRCROOT)/Scripts/Scripts/DownloadInitialResources/GetResourcesAndLanguagesData.swift",
@@ -769,9 +764,6 @@
 				"$(SRCROOT)/Scripts/Scripts/DownloadInitialResources/RequestOperation/Codable/JsonApi/ScriptJsonApiResponseBaseData.swift",
 				"$(SRCROOT)/Scripts/Scripts/DownloadInitialResources/RequestOperation/Codable/JsonApi/ScriptJsonApiResponseDataArray.swift",
 				"$(SRCROOT)/Scripts/Scripts/DownloadInitialResources/RequestOperation/Codable/JsonApi/ScriptJsonApiResponseDataObject.swift",
-				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/DataModel/ResourceDataModel.swift",
-				"$(SRCROOT)/godtools/App/Share/Data/TranslationsRepository/DataModel/TranslationDataModel.swift",
-				"$(SRCROOT)/godtools/App/Share/Data/LanguagesRepository/DataModel/LanguageDataModel.swift",
 				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/Api/Codable/Resource/ResourceDefaultOrderCodable.swift",
 				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/Api/Codable/Resource/ResourceScoreCodable.swift",
 			);
@@ -782,7 +774,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "xcrun --sdk macosx swiftc -parse-as-library $SCRIPT_INPUT_FILE_0 $SCRIPT_INPUT_FILE_1 $SCRIPT_INPUT_FILE_2 $SCRIPT_INPUT_FILE_3 $SCRIPT_INPUT_FILE_4 $SCRIPT_INPUT_FILE_5 $SCRIPT_INPUT_FILE_6 $SCRIPT_INPUT_FILE_7 $SCRIPT_INPUT_FILE_8 $SCRIPT_INPUT_FILE_9 $SCRIPT_INPUT_FILE_10 $SCRIPT_INPUT_FILE_11 $SCRIPT_INPUT_FILE_12 $SCRIPT_INPUT_FILE_13 $SCRIPT_INPUT_FILE_14 $SCRIPT_INPUT_FILE_15 $SCRIPT_INPUT_FILE_16 $SCRIPT_INPUT_FILE_17 $SCRIPT_INPUT_FILE_18 $SCRIPT_INPUT_FILE_19 $SCRIPT_INPUT_FILE_20 $SCRIPT_INPUT_FILE_21 $SCRIPT_INPUT_FILE_22 \\\n  -o DownloadInitialResourcesScript\n  \n./DownloadInitialResourcesScript\n";
+			shellScript = "xcrun --sdk macosx swiftc -parse-as-library $SCRIPT_INPUT_FILE_0 $SCRIPT_INPUT_FILE_1 $SCRIPT_INPUT_FILE_2 $SCRIPT_INPUT_FILE_3 $SCRIPT_INPUT_FILE_4 $SCRIPT_INPUT_FILE_5 $SCRIPT_INPUT_FILE_6 $SCRIPT_INPUT_FILE_7 $SCRIPT_INPUT_FILE_8 $SCRIPT_INPUT_FILE_9 $SCRIPT_INPUT_FILE_10 $SCRIPT_INPUT_FILE_11 $SCRIPT_INPUT_FILE_12 $SCRIPT_INPUT_FILE_13 $SCRIPT_INPUT_FILE_14 $SCRIPT_INPUT_FILE_15 \\\n  -o DownloadInitialResourcesScript\n  \n./DownloadInitialResourcesScript\n";
 		};
 		45AD220F2593C66B00A096A0 /* Run Crashlytics */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -993,7 +985,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 6.3.15;
+				MARKETING_VERSION = 6.3.16;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1194,7 +1186,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 6.3.15;
+				MARKETING_VERSION = 6.3.16;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1337,7 +1329,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 6.3.15;
+				MARKETING_VERSION = 6.3.16;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.beta.FirebaseNotificationService;
@@ -1385,7 +1377,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 6.3.15;
+				MARKETING_VERSION = 6.3.16;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.beta.FirebaseNotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1431,7 +1423,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 6.3.15;
+				MARKETING_VERSION = 6.3.16;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.FirebaseNotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1476,7 +1468,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 6.3.15;
+				MARKETING_VERSION = 6.3.16;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.FirebaseNotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1520,7 +1512,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 6.3.15;
+				MARKETING_VERSION = 6.3.16;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.FirebaseNotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1624,7 +1616,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 6.3.15;
+				MARKETING_VERSION = 6.3.16;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1825,7 +1817,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 6.3.15;
+				MARKETING_VERSION = 6.3.16;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2060,7 +2052,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 6.3.15;
+				MARKETING_VERSION = 6.3.16;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DRELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2242,7 +2234,7 @@
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 11.7.0;
+				minimumVersion = 12.12.0;
 			};
 		};
 		45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {

@@ -12,14 +12,14 @@ import RepositorySync
 final class RealmTranslationDataModelMapping: Mapping {
     
     func toDataModel(externalObject: TranslationCodable) -> TranslationDataModel? {
-        return TranslationDataModel(interface: externalObject)
+        return externalObject.toModel()
     }
     
     func toDataModel(persistObject: RealmTranslation) -> TranslationDataModel? {
-        return TranslationDataModel(interface: persistObject)
+        return persistObject.toModel()
     }
     
     func toPersistObject(externalObject: TranslationCodable) -> RealmTranslation? {
-        return RealmTranslation.createNewFrom(interface: externalObject)
+        return RealmTranslation.createNewFrom(model: externalObject.toModel())
     }
 }

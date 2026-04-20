@@ -43,53 +43,46 @@ struct SetAppLanguageUseCaseTests {
         
         let appLanguageSpanish = LanguageCodeDomainModel.spanish.rawValue
         let realmLanguageSpanish = allLanguages.first(where: { $0.code == appLanguageSpanish.languageCode })
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        
+                
         var lessonLanguageFilterRef: LessonFilterLanguageDomainModel?
         
-        var sinkCount: Int = 0
+        var cancellables: Set<AnyCancellable> = Set()
+        var triggerCount: Int = 0
         
-        await confirmation(expectedCount: 2) { confirmation in
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                getUserLessonFiltersRepository
-                    .execute(
-                        appLanguage: appLanguageSpanish
-                    )
-                    .sink { (userLessonFilters: UserLessonFiltersDomainModel) in
-                        
-                        sinkCount += 1
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                        
-                        if sinkCount == 2 {
-                            
-                            lessonLanguageFilterRef = userLessonFilters.languageFilter
-                            
-                            // When finished be sure to call:
-                            timeoutTask.cancel()
-                            continuation.resume(returning: ())
-                        }
-                    }
-                    .store(in: &cancellables)
-                
-                setAppLanguageUseCase
-                    .execute(appLanguage: LanguageCodeDomainModel.spanish.rawValue)
-                    .sink(receiveCompletion: { completion in
-                        
-                    }, receiveValue: { _ in
-                        
-                    })
-                    .store(in: &cancellables)
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
             }
+            
+            getUserLessonFiltersRepository
+                .execute(
+                    appLanguage: appLanguageSpanish
+                )
+                .sink { (userLessonFilters: UserLessonFiltersDomainModel) in
+                    
+                    triggerCount += 1
+                                    
+                    if triggerCount == 2 {
+                        
+                        lessonLanguageFilterRef = userLessonFilters.languageFilter
+                        
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    }
+                }
+                .store(in: &cancellables)
+            
+            setAppLanguageUseCase
+                .execute(appLanguage: LanguageCodeDomainModel.spanish.rawValue)
+                .sink(receiveCompletion: { completion in
+                    
+                }, receiveValue: { _ in
+                    
+                })
+                .store(in: &cancellables)
         }
         
         #expect(realmLanguageSpanish != nil)

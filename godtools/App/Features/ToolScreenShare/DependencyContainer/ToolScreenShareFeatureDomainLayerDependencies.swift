@@ -10,47 +10,56 @@ import Foundation
 
 class ToolScreenShareFeatureDomainLayerDependencies {
     
+    private let coreDataLayer: AppDataLayerDependencies
+    private let coreDomainLayer: AppDomainLayerDependencies
     private let dataLayer: ToolScreenShareFeatureDataLayerDependencies
     
-    init(dataLayer: ToolScreenShareFeatureDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, dataLayer: ToolScreenShareFeatureDataLayerDependencies) {
         
+        self.coreDataLayer = coreDataLayer
+        self.coreDomainLayer = coreDomainLayer
         self.dataLayer = dataLayer
-    }
-    
-    func getToolScreenShareTutorialHasBeenViewedUseCase() -> GetToolScreenShareTutorialHasBeenViewedUseCase {
-        return GetToolScreenShareTutorialHasBeenViewedUseCase(
-            tutorialViewedRepositoryInterface: dataLayer.getToolScreenShareTutorialViewedRepositoryInterface()
-        )
     }
     
     func getDidViewToolScreenShareTutorialUseCase() -> DidViewToolScreenShareTutorialUseCase {
         return DidViewToolScreenShareTutorialUseCase(
-            incrementNumberOfViewsRepositoryInterface: dataLayer.getIncrementNumberOfToolScreenShareTutorialViewsRepositoryInterface()
+            tutorialViewsRepository: dataLayer.getToolScreenShareTutorialViewsRepository()
         )
     }
     
-    func getViewCreatingToolScreenShareSessionTimedOutUseCase() -> ViewCreatingToolScreenShareSessionTimedOutUseCase {
-        return ViewCreatingToolScreenShareSessionTimedOutUseCase(
-            getInterfaceStringsRepositoryInterface: dataLayer.getCreatingToolScreenShareSessionTimedOutInterfaceStringsRepositoryInterface()
+    func getCreatingToolScreenShareSessionStringsUseCase() -> GetCreatingToolScreenShareSessionStringsUseCase {
+        return GetCreatingToolScreenShareSessionStringsUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
     
-    func getViewCreatingToolScreenShareSessionUseCase() -> ViewCreatingToolScreenShareSessionUseCase {
-        return ViewCreatingToolScreenShareSessionUseCase(
-            getInterfaceStringsRepositoryInterface: dataLayer.getCreatingToolScreenShareSessionInterfaceStringsRepositoryInterface()
+    func getCreatingToolScreenShareSessionTimedOutStringsUseCase() -> GetCreatingToolScreenShareSessionTimedOutStringsUseCase {
+        return GetCreatingToolScreenShareSessionTimedOutStringsUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
     
-    func getViewShareToolScreenShareSessionUseCase() -> ViewShareToolScreenShareSessionUseCase {
-        return ViewShareToolScreenShareSessionUseCase(
-            getInterfaceStringsRepositoryInterface: dataLayer.getShareToolScreenShareSessionInterfaceStringsRepositoryInterface()
+    func getShareToolScreenShareSessionStringsUseCase() -> GetShareToolScreenShareSessionStringsUseCase {
+        return GetShareToolScreenShareSessionStringsUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
     
-    func getViewToolScreenShareTutorialUseCase() -> ViewToolScreenShareTutorialUseCase {
-        return ViewToolScreenShareTutorialUseCase(
-            getInterfaceStringsRepositoryInterface: dataLayer.getToolScreenShareTutorialInterfaceStringsRepositoryInterface(),
-            getTutorialRepositoryInterface: dataLayer.getToolScreenShareTutorialRepositoryInterface()
+    func getToolScreenShareTutorialHasBeenViewedUseCase() -> GetToolScreenShareTutorialHasBeenViewedUseCase {
+        return GetToolScreenShareTutorialHasBeenViewedUseCase(
+            tutorialViewsRepository: dataLayer.getToolScreenShareTutorialViewsRepository()
+        )
+    }
+    
+    func getToolScreenShareTutorialStringsUseCase() -> GetToolScreenShareTutorialStringsUseCase {
+        return GetToolScreenShareTutorialStringsUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getToolScreenShareTutorialUseCase() -> GetToolScreenShareTutorialUseCase {
+        return GetToolScreenShareTutorialUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
 }

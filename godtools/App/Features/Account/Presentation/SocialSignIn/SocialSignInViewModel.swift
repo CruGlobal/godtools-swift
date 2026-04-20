@@ -58,13 +58,13 @@ import Combine
                 }
                 .switchToLatest()
                 .receive(on: DispatchQueue.main)
-                .sink { [weak self] (interfaceStrings: SocialCreateAccountStringsDomainModel) in
+                .sink { [weak self] (strings: SocialCreateAccountStringsDomainModel) in
                     
-                    self?.title = interfaceStrings.title
-                    self?.subtitle = interfaceStrings.subtitle
-                    self?.signInWithAppleButtonTitle = interfaceStrings.createWithAppleActionTitle
-                    self?.signInWithFacebookButtonTitle = interfaceStrings.createWithFacebookActionTitle
-                    self?.signInWithGoogleButtonTitle = interfaceStrings.createWithGoogleActionTitle
+                    self?.title = strings.title
+                    self?.subtitle = strings.subtitle
+                    self?.signInWithAppleButtonTitle = strings.createWithAppleActionTitle
+                    self?.signInWithFacebookButtonTitle = strings.createWithFacebookActionTitle
+                    self?.signInWithGoogleButtonTitle = strings.createWithGoogleActionTitle
                 }
                 .store(in: &cancellables)
         
@@ -78,13 +78,13 @@ import Combine
                 }
                 .switchToLatest()
                 .receive(on: DispatchQueue.main)
-                .sink { [weak self] (interfaceStrings: SocialSignInStringsDomainModel) in
+                .sink { [weak self] (strings: SocialSignInStringsDomainModel) in
                     
-                    self?.title = interfaceStrings.title
-                    self?.subtitle = interfaceStrings.subtitle
-                    self?.signInWithAppleButtonTitle = interfaceStrings.signInWithAppleActionTitle
-                    self?.signInWithFacebookButtonTitle = interfaceStrings.signInWithFacebookActionTitle
-                    self?.signInWithGoogleButtonTitle = interfaceStrings.signInWithGoogleActionTitle
+                    self?.title = strings.title
+                    self?.subtitle = strings.subtitle
+                    self?.signInWithAppleButtonTitle = strings.signInWithAppleActionTitle
+                    self?.signInWithFacebookButtonTitle = strings.signInWithFacebookActionTitle
+                    self?.signInWithGoogleButtonTitle = strings.signInWithGoogleActionTitle
                 }
                 .store(in: &cancellables)
         }

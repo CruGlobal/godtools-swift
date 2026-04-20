@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TranslationDataModel: TranslationDataModelInterface {
+struct TranslationDataModel {
     
     let id: String
     let isPublished: Bool
@@ -23,23 +23,6 @@ struct TranslationDataModel: TranslationDataModelInterface {
     let translatedTagline: String
     let type: String
     let version: Int
-    
-    init(interface: TranslationDataModelInterface) {
-        
-        id = interface.id
-        isPublished = interface.isPublished
-        languageDataModel = interface.languageDataModel
-        manifestName = interface.manifestName
-        resourceDataModel = interface.resourceDataModel
-        toolDetailsBibleReferences = interface.toolDetailsBibleReferences
-        toolDetailsConversationStarters = interface.toolDetailsConversationStarters
-        toolDetailsOutline = interface.toolDetailsOutline
-        translatedDescription = interface.translatedDescription
-        translatedName = interface.translatedName
-        translatedTagline = interface.translatedTagline
-        type = interface.type
-        version = interface.version
-    }
 }
 
 extension TranslationDataModel: Equatable {

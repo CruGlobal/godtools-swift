@@ -23,44 +23,52 @@ struct GetSearchBarStringsTests {
         Then: The search bar interface strings should be translated in Spanish
         """
     )
-    func TestsearchBarInterfaceStringsTranslated() async {
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        let getSearchBarInterfaceStringsRepository = GetSearchBarStrings(localizationServices: Self.getLocalizationServices())
+    func searchBarStringsTranslated() async {
+                
+        let getSearchBarStringsRepository = GetSearchBarStrings(localizationServices: Self.getLocalizationServices())
         
         let appLanguagePublisher: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
         
-        var englishInterfaceStringsRef: SearchBarStringsDomainModel?
-        var spanishInterfaceStringsRef: SearchBarStringsDomainModel?
+        var englishStringsRef: SearchBarStringsDomainModel?
+        var spanishStringsRef: SearchBarStringsDomainModel?
         
-        var sinkCount: Int = 0
+        var cancellables: Set<AnyCancellable> = Set()
+        var triggerCount: Int = 0
         
-        await confirmation(expectedCount: 2) { confirmation in
+        await withCheckedContinuation { continuation in
+            
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
+            
             appLanguagePublisher
                 .flatMap { appLanguage in
                     
-                    return getSearchBarInterfaceStringsRepository.getStringsPublisher(translateInAppLanguage: appLanguage)
-                }.sink { interfaceStrings in
+                    return getSearchBarStringsRepository.getStringsPublisher(translateInAppLanguage: appLanguage)
+                }.sink { strings in
                     
-                    sinkCount += 1
-                    confirmation()
+                    triggerCount += 1
                     
-                    if sinkCount == 1 {
+                    if triggerCount == 1 {
                         
-                        englishInterfaceStringsRef = interfaceStrings
+                        englishStringsRef = strings
                         appLanguagePublisher.send(LanguageCodeDomainModel.spanish.rawValue)
                     }
-                    else if sinkCount == 2 {
+                    else if triggerCount == 2 {
                         
-                        spanishInterfaceStringsRef = interfaceStrings
+                        spanishStringsRef = strings
+                        
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
                     }
                 }
                 .store(in: &cancellables)
         }
         
-        #expect(englishInterfaceStringsRef?.cancel == Self.cancelButtonTextEnglish)
-        #expect(spanishInterfaceStringsRef?.cancel == Self.cancelButtonTextSpanish)
+        #expect(englishStringsRef?.cancel == Self.cancelButtonTextEnglish)
+        #expect(spanishStringsRef?.cancel == Self.cancelButtonTextSpanish)
     }
 }
 

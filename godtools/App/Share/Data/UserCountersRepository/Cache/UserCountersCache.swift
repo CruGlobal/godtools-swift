@@ -53,7 +53,7 @@ extension UserCountersCache {
                 
                 let swiftCounter: SwiftUserCounter = try database.read.object(context: context, id: counter.id) ?? SwiftUserCounter()
                 
-                swiftCounter.mapFrom(interface: counter)
+                swiftCounter.mapFrom(model: counter.toModel())
                 
                 countersToWrite.append(swiftCounter)
             }

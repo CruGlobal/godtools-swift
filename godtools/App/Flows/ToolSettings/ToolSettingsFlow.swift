@@ -48,7 +48,7 @@ class ToolSettingsFlow: Flow {
             .assign(to: &$appLanguage)
         
         getToolScreenShareTutorialHasBeenViewedUseCase
-            .getViewedPublisher(toolId: toolSettingsObserver.toolId)
+            .execute(toolId: toolSettingsObserver.toolId)
             .receive(on: DispatchQueue.main)
             .assign(to: &$toolScreenShareTutorialHasBeenViewedDomainModel)
         
@@ -191,7 +191,8 @@ extension ToolSettingsFlow {
             flowDelegate: self,
             toolSettingsObserver: toolSettingsObserver,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewToolSettingsUseCase: appDiContainer.feature.toolSettings.domainLayer.getViewToolSettingsUseCase(),
+            getToolSettingsStringsUseCase: appDiContainer.feature.toolSettings.domainLayer.getToolSettingsStringsUseCase(),
+            getToolSettingsUseCase: appDiContainer.feature.toolSettings.domainLayer.getToolSettingsUseCase(),
             getShareablesUseCase: appDiContainer.feature.shareables.domainLayer.getShareablesUseCase(),
             getShareableImageUseCase: appDiContainer.feature.shareables.domainLayer.getShareableImageUseCase()
         )
@@ -261,7 +262,8 @@ extension ToolSettingsFlow {
             toolId: toolSettingsObserver.toolId,
             toolSettingsObserver: toolSettingsObserver,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewToolSettingsToolLanguageListUseCase: appDiContainer.feature.toolSettings.domainLayer.getViewToolSettingsToolLanguagesListUseCase()
+            getToolSettingsToolLanguagesListStringsUseCase: appDiContainer.feature.toolSettings.domainLayer.getToolSettingsToolLanguagesListStringsUseCase(),
+            getToolSettingsToolLanguagesListUseCase: appDiContainer.feature.toolSettings.domainLayer.getToolSettingsToolLanguagesListUseCase()
         )
         
         let view = ToolSettingsToolLanguagesListView(viewModel: viewModel)

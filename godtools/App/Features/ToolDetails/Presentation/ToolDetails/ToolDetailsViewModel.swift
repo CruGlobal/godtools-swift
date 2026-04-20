@@ -17,7 +17,8 @@ import Combine
     private static var toggleToolFavoritedCancellables: [ToolId: AnyCancellable?] = Dictionary()
     
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
-    private let viewToolDetailsUseCase: ViewToolDetailsUseCase
+    private let getToolDetailsStringsUseCase: GetToolDetailsStringsUseCase
+    private let getToolDetailsUseCase: GetToolDetailsUseCase
     private let getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase
     private let getToolDetailsLearnToShareToolIsAvailableUseCase: GetToolDetailsLearnToShareToolIsAvailableUseCase
     private let toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase
@@ -39,34 +40,20 @@ import Combine
         }
     }
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-    @Published private var analyticsToolAbbreviation: String = ""
     @Published private var didViewPage: Void?
+    @Published private var analyticsToolAbbreviation: String = ""
     
-    @Published var mediaType: ToolDetailsMediaDomainModel = .empty
-    @Published var name: String = ""
-    @Published var totalViews: String = ""
-    @Published var openToolButtonTitle: String = ""
-    @Published var learnToShareToolButtonTitle: String = ""
-    @Published var addToFavoritesButtonTitle: String = ""
-    @Published var removeFromFavoritesButtonTitle: String = ""
-    @Published var showsLearnToShareToolButton: Bool = false
-    @Published var isFavorited: Bool = false
-    @Published var segments: [String] = Array()
-    @Published var selectedSegment: ToolDetailsSegmentType = .about
-    @Published var aboutDescription: String = ""
-    @Published var conversationStartersTitle: String = ""
-    @Published var conversationStartersContent: String = ""
-    @Published var outlineTitle: String = ""
-    @Published var outlineContent: String = ""
-    @Published var bibleReferencesTitle: String = ""
-    @Published var bibleReferencesContent: String = ""
-    @Published var languagesAvailableTitle: String = ""
-    @Published var languagesAvailable: String = ""
-    @Published var versionsDescription: String = ""
-    @Published var toolVersions: [ToolVersionDomainModel] = Array()
-    @Published var selectedToolVersion: ToolVersionDomainModel?
+    @Published private(set) var strings = ToolDetailsStringsDomainModel.emptyValue
+    @Published private(set) var mediaType: ToolDetailsMediaDomainModel = .empty
+    @Published private(set) var toolDetails = ToolDetailsDomainModel.emptyValue
+    @Published private(set) var isFavorited: Bool = false
+    @Published private(set) var showsLearnToShareToolButton: Bool = false
+    @Published private(set) var segments: [String] = Array()
+    @Published private(set) var selectedSegment: ToolDetailsSegmentType = .about
+    @Published private(set) var selectedToolVersion: ToolVersionDomainModel?
+    @Published private(set) var outlineContent: String = ""// TODO: Should this be set to something? ~Levi
     
-    init(flowDelegate: FlowDelegate, toolId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolDetailsUseCase: ViewToolDetailsUseCase, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, getToolDetailsLearnToShareToolIsAvailableUseCase: GetToolDetailsLearnToShareToolIsAvailableUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, getToolBannerUseCase: GetToolBannerUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, toolId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolDetailsStringsUseCase: GetToolDetailsStringsUseCase, getToolDetailsUseCase: GetToolDetailsUseCase, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, getToolDetailsLearnToShareToolIsAvailableUseCase: GetToolDetailsLearnToShareToolIsAvailableUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, getToolBannerUseCase: GetToolBannerUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         let primaryLanguage: AppLanguageDomainModel = primaryLanguage
         let parallelLanguage: AppLanguageDomainModel? = parallelLanguage != primaryLanguage ? parallelLanguage : nil
@@ -77,7 +64,8 @@ import Combine
         self.parallelLanguage = parallelLanguage
         self.selectedLanguageIndex = selectedLanguageIndex
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
-        self.viewToolDetailsUseCase = viewToolDetailsUseCase
+        self.getToolDetailsStringsUseCase = getToolDetailsStringsUseCase
+        self.getToolDetailsUseCase = getToolDetailsUseCase
         self.getToolDetailsMediaUseCase = getToolDetailsMediaUseCase
         self.getToolDetailsLearnToShareToolIsAvailableUseCase = getToolDetailsLearnToShareToolIsAvailableUseCase
         self.toggleToolFavoritedUseCase = toggleToolFavoritedUseCase
@@ -121,46 +109,55 @@ import Combine
         }
         .store(in: &cancellables)
         
-        Publishers.CombineLatest(
+        $appLanguage.dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+                getToolDetailsStringsUseCase
+                    .execute(appLanguage: appLanguage)
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (strings: ToolDetailsStringsDomainModel) in
+                
+                self?.strings = strings
+            })
+            .store(in: &cancellables)
+        
+        Publishers.CombineLatest3(
             $toolId,
-            $appLanguage.dropFirst()
+            $appLanguage.dropFirst(),
+            $strings.dropFirst()
         )
-        .map { (toolId: String, appLanguage: AppLanguageDomainModel) in
+        .map { (toolId: String, appLanguage: AppLanguageDomainModel, strings: ToolDetailsStringsDomainModel) in
             
-            return viewToolDetailsUseCase
-                .viewPublisher(toolId: toolId, translateInLanguage: appLanguage, toolPrimaryLanguage: primaryLanguage, toolParallelLanguage: parallelLanguage)
-                .eraseToAnyPublisher()
+            return Publishers.CombineLatest(
+                getToolDetailsUseCase
+                    .execute(
+                        toolId: toolId,
+                        appLanguage: appLanguage,
+                        toolPrimaryLanguage: primaryLanguage,
+                        toolParallelLanguage: parallelLanguage
+                    ),
+                Just(strings)
+                    .setFailureType(to: Error.self)
+                    .eraseToAnyPublisher()
+            )
+            .eraseToAnyPublisher()
         }
         .switchToLatest()
         .receive(on: DispatchQueue.main)
         .sink(receiveCompletion: { _ in
             
-        }, receiveValue: { [weak self] (domainModel: ViewToolDetailsDomainModel) in
+        }, receiveValue: { [weak self] (toolDetails: ToolDetailsDomainModel, strings: ToolDetailsStringsDomainModel) in
             
-            self?.analyticsToolAbbreviation = domainModel.toolDetails.analyticsToolAbbreviation
-            
-            self?.openToolButtonTitle = domainModel.interfaceStrings.openToolButtonTitle
-            self?.learnToShareToolButtonTitle = domainModel.interfaceStrings.learnToShareThisToolButtonTitle
-            self?.addToFavoritesButtonTitle = domainModel.interfaceStrings.addToFavoritesButtonTitle
-            self?.removeFromFavoritesButtonTitle = domainModel.interfaceStrings.removeFromFavoritesButtonTitle
-            self?.conversationStartersTitle = domainModel.interfaceStrings.conversationStartersTitle
-            self?.outlineTitle = domainModel.interfaceStrings.outlineTitle
-            self?.bibleReferencesTitle = domainModel.interfaceStrings.bibleReferencesTitle
-            self?.languagesAvailableTitle = domainModel.interfaceStrings.languagesAvailableTitle
-            
-            self?.toolVersions = domainModel.toolDetails.versions
-            self?.name = domainModel.toolDetails.name
-            self?.totalViews = domainModel.toolDetails.numberOfViews
-            self?.isFavorited = domainModel.toolDetails.isFavorited
-            self?.aboutDescription = domainModel.toolDetails.aboutDescription
-            self?.conversationStartersContent = domainModel.toolDetails.conversationStarters
-            self?.bibleReferencesContent = domainModel.toolDetails.bibleReferences
-            self?.languagesAvailable = domainModel.toolDetails.languagesAvailable
-            self?.versionsDescription = domainModel.toolDetails.versionsDescription
-            
+            self?.toolDetails = toolDetails
+            self?.analyticsToolAbbreviation = toolDetails.analyticsToolAbbreviation
+            self?.isFavorited = toolDetails.isFavorited
+                                    
             var segmentTypes: [ToolDetailsSegmentType] = Array()
             segmentTypes.append(.about)
-            if !domainModel.toolDetails.versions.isEmpty {
+            if !toolDetails.versions.isEmpty {
                 segmentTypes.append(.versions)
             }
             
@@ -169,14 +166,14 @@ import Combine
             self?.segments = segmentTypes.map({
                 switch $0 {
                 case .about:
-                    return domainModel.interfaceStrings.aboutButtonTitle
+                    return strings.aboutActionTitle
                 case .versions:
-                    return domainModel.interfaceStrings.versionsButtonTitle
+                    return strings.versionsActionTitle
                 }
             })
             
             if self?.selectedToolVersion == nil {
-                self?.selectedToolVersion = domainModel.toolDetails.versions.filter({$0.id == self?.toolId}).first
+                self?.selectedToolVersion = toolDetails.versions.filter({$0.id == self?.toolId}).first
             }
         })
         .store(in: &cancellables)
@@ -185,7 +182,7 @@ import Combine
             .map { (toolId: String) in
                 
                 getToolDetailsMediaUseCase
-                    .getMediaPublisher(toolId: toolId)
+                    .execute(toolId: toolId)
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
@@ -195,7 +192,7 @@ import Combine
             .map { (toolId: String) in
                 
                 getToolDetailsLearnToShareToolIsAvailableUseCase
-                    .getIsAvailablePublisher(
+                    .execute(
                         toolId: toolId,
                         primaryLanguage: primaryLanguage,
                         parallelLanguage: parallelLanguage

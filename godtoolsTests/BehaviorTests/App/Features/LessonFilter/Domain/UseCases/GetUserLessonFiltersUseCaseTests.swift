@@ -39,35 +39,29 @@ struct GetUserLessonFiltersUseCaseTests {
         let realmObjectsToAdd: [IdentifiableRealmObject] = [spanishLanguage, spanishLesson_0]
         
         let getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase = try getUserLessonFiltersUseCase(addRealmObjects: realmObjectsToAdd)
+                
+        var lessonLanguageFilterRef: LessonFilterLanguageDomainModel?
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var lessonLanguageFilterRef: LessonFilterLanguageDomainModel?
-        
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
+            
+            getUserLessonFiltersUseCase
+                .execute(appLanguage: appLanguageSpanish)
+                .sink { (userLessonFilters: UserLessonFiltersDomainModel) in
+                        
+                    lessonLanguageFilterRef = userLessonFilters.languageFilter
+                             
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
                     continuation.resume(returning: ())
                 }
-                
-                getUserLessonFiltersUseCase
-                    .execute(appLanguage: appLanguageSpanish)
-                    .sink { (userLessonFilters: UserLessonFiltersDomainModel) in
-                            
-                        lessonLanguageFilterRef = userLessonFilters.languageFilter
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                        
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    }
-                    .store(in: &cancellables)
-            }
+                .store(in: &cancellables)
         }
         
         #expect(lessonLanguageFilterRef?.languageNameTranslatedInLanguage == "Español")
@@ -108,35 +102,29 @@ struct GetUserLessonFiltersUseCaseTests {
         let realmObjectsToAdd: [IdentifiableRealmObject] = [spanishLanguage, frenchLanguage, spanishLesson_0, frenchTract_0]
         
         let getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase = try getUserLessonFiltersUseCase(addRealmObjects: realmObjectsToAdd)
+                
+        var lessonLanguageFilterRef: LessonFilterLanguageDomainModel?
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var lessonLanguageFilterRef: LessonFilterLanguageDomainModel?
-        
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
+            
+            getUserLessonFiltersUseCase
+                .execute(appLanguage: appLanguageFrench)
+                .sink { (userLessonFilters: UserLessonFiltersDomainModel) in
+                        
+                    lessonLanguageFilterRef = userLessonFilters.languageFilter
+                                     
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
                     continuation.resume(returning: ())
                 }
-                
-                getUserLessonFiltersUseCase
-                    .execute(appLanguage: appLanguageFrench)
-                    .sink { (userLessonFilters: UserLessonFiltersDomainModel) in
-                            
-                        lessonLanguageFilterRef = userLessonFilters.languageFilter
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                                
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    }
-                    .store(in: &cancellables)
-            }
+                .store(in: &cancellables)
         }
         
         #expect(lessonLanguageFilterRef?.languageNameTranslatedInLanguage == "Français")
@@ -169,43 +157,41 @@ struct GetUserLessonFiltersUseCaseTests {
         let testsDiContainer: TestsDiContainer = try getTestsDiContainer(addRealmObjects: realmObjectsToAdd)
         
         let getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase = getUserLessonFiltersUseCase(testsDiContainer: testsDiContainer)
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        
+                
         var originalLessonLanguageFilterRef: LessonFilterLanguageDomainModel?
         var selectedLessonLanguageFilterRef: LessonFilterLanguageDomainModel?
-        var sinkCount: Int = 0
-    
-        await confirmation(expectedCount: 2) { confirmation in
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        var triggerCount: Int = 0
+        
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let task = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                getUserLessonFiltersUseCase
-                    .execute(appLanguage: appLanguageFrench)
-                    .sink { (userLessonFilters: UserLessonFiltersDomainModel) in
-                        
-                        confirmation()
-                        
-                        sinkCount += 1
-                                                
-                        if sinkCount == 1 {
-                            
-                            originalLessonLanguageFilterRef = userLessonFilters.languageFilter
-                            testsDiContainer.dataLayer.getUserLessonFiltersRepository().storeUserLessonLanguageFilter(with: spanishLanguage.id)
-                        }
-                        else if sinkCount == 2 {
-                            selectedLessonLanguageFilterRef = userLessonFilters.languageFilter
-                            task.cancel()
-                            continuation.resume(returning: ())
-                        }
-                    }
-                    .store(in: &cancellables)
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
             }
+            
+            getUserLessonFiltersUseCase
+                .execute(appLanguage: appLanguageFrench)
+                .sink { (userLessonFilters: UserLessonFiltersDomainModel) in
+                                        
+                    triggerCount += 1
+                                            
+                    if triggerCount == 1 {
+                        
+                        originalLessonLanguageFilterRef = userLessonFilters.languageFilter
+                        testsDiContainer.dataLayer.getUserLessonFiltersRepository().storeUserLessonLanguageFilter(with: spanishLanguage.id)
+                    }
+                    else if triggerCount == 2 {
+                        
+                        selectedLessonLanguageFilterRef = userLessonFilters.languageFilter
+                        
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    }
+                }
+                .store(in: &cancellables)
         }
                 
         #expect(originalLessonLanguageFilterRef?.languageNameTranslatedInLanguage == "Français")

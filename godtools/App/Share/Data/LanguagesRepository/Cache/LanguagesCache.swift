@@ -92,7 +92,7 @@ extension LanguagesCache {
             let swiftLanguage: SwiftLanguage? = swiftPersistence.database.read.objectsNonThrowing(context: swiftPersistence.database.openContext(), query: query).first
             
             if let swiftLanguage = swiftLanguage {
-                return LanguageDataModel(interface: swiftLanguage)
+                return swiftLanguage.toModel()
             }
             else {
                 return nil
@@ -107,7 +107,7 @@ extension LanguagesCache {
             let realmLanguage: RealmLanguage? = realmPersistence.database.read.objects(realm: realm, query: query).first
             
             if let realmLanguage = realmLanguage {
-                return LanguageDataModel(interface: realmLanguage)
+                return realmLanguage.toModel()
             }
             else {
                 return nil

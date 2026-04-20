@@ -18,14 +18,14 @@ class GetToolListItemStrings {
         self.localizationServices = localizationServices
     }
     
-    func getStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolListItemInterfaceStringsDomainModel, Never> {
+    func getStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolListItemStringsDomainModel, Never> {
         
-        let interfaceStrings = ToolListItemInterfaceStringsDomainModel(
+        let strings = ToolListItemStringsDomainModel(
             openToolActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "open"),
             openToolDetailsActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "favorites.favoriteLessons.details")
         )
         
-        return Just(interfaceStrings)
+        return Just(strings)
             .eraseToAnyPublisher()
     }
 }

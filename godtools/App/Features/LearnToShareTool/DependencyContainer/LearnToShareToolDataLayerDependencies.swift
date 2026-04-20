@@ -16,20 +16,4 @@ class LearnToShareToolDataLayerDependencies {
         
         self.coreDataLayer = coreDataLayer
     }
-    
-    // MARK: - Data Layer Classes
-    
-    // MARK: - Domain Interface
-    
-    func getLearnToShareToolInterfaceStringsRepositoryInterface() -> GetLearnToShareToolInterfaceStringsRepositoryInterface {
-        return GetLearnToShareToolInterfaceStringsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
-    
-    func getLearnToShareToolTutorialItemsRepositoryInterface() -> GetLearnToShareToolTutorialItemsRepositoryInterface {
-        return GetLearnToShareToolTutorialItemsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
 }

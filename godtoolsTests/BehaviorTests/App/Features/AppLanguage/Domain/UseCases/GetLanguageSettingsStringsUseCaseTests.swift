@@ -21,74 +21,68 @@ struct GetLanguageSettingsStringsUseCaseTests {
         Then: The interface strings should be translated into Spanish.
         """
     )
-    @MainActor func interfaceStringsAreTranslatedWhenAppLanguageChanges() async throws {
+    @MainActor func stringsAreTranslatedWhenAppLanguageChanges() async throws {
         
         let getLanguageSettingsStringsUseCase: GetLanguageSettingsStringsUseCase = try getLanguageSettingsStringsUseCase()
         
         let appLanguagePublisher: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
-        
+                
+        var englishStringsRef: LanguageSettingsStringsDomainModel?
+        var spanishStringsRef: LanguageSettingsStringsDomainModel?
+                
         var cancellables: Set<AnyCancellable> = Set()
+        var triggerCount: Int = 0
         
-        var englishInterfaceStringsRef: LanguageSettingsStringsDomainModel?
-        var spanishInterfaceStringsRef: LanguageSettingsStringsDomainModel?
-        
-        var sinkCount: Int = 0
-        
-        await confirmation(expectedCount: 2) { confirmation in
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                appLanguagePublisher
-                    .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<LanguageSettingsStringsDomainModel, Error> in
-                        
-                        return getLanguageSettingsStringsUseCase
-                            .execute(appLanguage: appLanguage)
-                            .eraseToAnyPublisher()
-                    })
-                    .sink(receiveCompletion: { _ in
-                        
-                    }, receiveValue: { (interfaceStrings: LanguageSettingsStringsDomainModel) in
-                        
-                        sinkCount += 1
-                        
-                        confirmation()
-                        
-                        if sinkCount == 1 {
-                            
-                            englishInterfaceStringsRef = interfaceStrings
-                            appLanguagePublisher.send(LanguageCodeDomainModel.spanish.rawValue)
-                        }
-                        else if sinkCount == 2 {
-                            
-                            spanishInterfaceStringsRef = interfaceStrings
-                            
-                            // When finished be sure to call:
-                            timeoutTask.cancel()
-                            continuation.resume(returning: ())
-                        }
-                    })
-                    .store(in: &cancellables)
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
             }
+            
+            appLanguagePublisher
+                .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<LanguageSettingsStringsDomainModel, Error> in
+                    
+                    return getLanguageSettingsStringsUseCase
+                        .execute(appLanguage: appLanguage)
+                        .eraseToAnyPublisher()
+                })
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { (strings: LanguageSettingsStringsDomainModel) in
+                    
+                    triggerCount += 1
+                    
+                    if triggerCount == 1 {
+                        
+                        englishStringsRef = strings
+                        appLanguagePublisher.send(LanguageCodeDomainModel.spanish.rawValue)
+                    }
+                    else if triggerCount == 2 {
+                        
+                        spanishStringsRef = strings
+                        
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    }
+                })
+                .store(in: &cancellables)
         }
         
-        #expect(englishInterfaceStringsRef?.navTitle == "Language settings")
-        #expect(englishInterfaceStringsRef?.appInterfaceLanguageTitle == "App interface language")
-        #expect(englishInterfaceStringsRef?.setAppLanguageMessage == "Set the language you'd like the whole app to be displayed in.")
-        #expect(englishInterfaceStringsRef?.toolLanguagesAvailableOfflineTitle == "Tool languages available offline")
-        #expect(englishInterfaceStringsRef?.downloadToolsForOfflineMessage == "Download all the tools in a language to make them available even if you're out of WiFi or cell service. Set the tool language via the options button within a tool.")
-        #expect(englishInterfaceStringsRef?.editDownloadedLanguagesButtonTitle == "Edit downloaded languages")
+        #expect(englishStringsRef?.navTitle == "Language settings")
+        #expect(englishStringsRef?.appInterfaceLanguageTitle == "App interface language")
+        #expect(englishStringsRef?.setAppLanguageMessage == "Set the language you'd like the whole app to be displayed in.")
+        #expect(englishStringsRef?.toolLanguagesAvailableOfflineTitle == "Tool languages available offline")
+        #expect(englishStringsRef?.downloadToolsForOfflineMessage == "Download all the tools in a language to make them available even if you're out of WiFi or cell service. Set the tool language via the options button within a tool.")
+        #expect(englishStringsRef?.editDownloadedLanguagesButtonTitle == "Edit downloaded languages")
                             
-        #expect(spanishInterfaceStringsRef?.navTitle == "Ajustes de idioma")
-        #expect(spanishInterfaceStringsRef?.appInterfaceLanguageTitle == "Idioma de la interfaz de la aplicación")
-        #expect(spanishInterfaceStringsRef?.setAppLanguageMessage == "Establece el idioma en el que deseas que se muestre toda la aplicación.")
-        #expect(spanishInterfaceStringsRef?.toolLanguagesAvailableOfflineTitle == "Idiomas de herramientas disponibles sin conexión")
-        #expect(spanishInterfaceStringsRef?.downloadToolsForOfflineMessage == "Descarga todas las herramientas en un idioma para que estén disponibles incluso si no tienes WiFi o servicio móvil. Establece el idioma de la herramienta mediante el botón de opciones dentro de una herramienta.")
-        #expect(spanishInterfaceStringsRef?.editDownloadedLanguagesButtonTitle == "Editar idiomas descargados")
+        #expect(spanishStringsRef?.navTitle == "Ajustes de idioma")
+        #expect(spanishStringsRef?.appInterfaceLanguageTitle == "Idioma de la interfaz de la aplicación")
+        #expect(spanishStringsRef?.setAppLanguageMessage == "Establece el idioma en el que deseas que se muestre toda la aplicación.")
+        #expect(spanishStringsRef?.toolLanguagesAvailableOfflineTitle == "Idiomas de herramientas disponibles sin conexión")
+        #expect(spanishStringsRef?.downloadToolsForOfflineMessage == "Descarga todas las herramientas en un idioma para que estén disponibles incluso si no tienes WiFi o servicio móvil. Establece el idioma de la herramienta mediante el botón de opciones dentro de una herramienta.")
+        #expect(spanishStringsRef?.editDownloadedLanguagesButtonTitle == "Editar idiomas descargados")
     }
     
     struct TestArgumentChooseAppLanguageButtonTitle {
@@ -116,42 +110,36 @@ struct GetLanguageSettingsStringsUseCaseTests {
     @MainActor func chooseAppLanguageButtonTitleIsTranslatedInMyAppLanguage(argument: TestArgumentChooseAppLanguageButtonTitle) async throws {
         
         let getLanguageSettingsStringsUseCase: GetLanguageSettingsStringsUseCase = try getLanguageSettingsStringsUseCase()
+                
+        var stringsRef: LanguageSettingsStringsDomainModel?
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var interfaceStringsRef: LanguageSettingsStringsDomainModel?
-                        
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                getLanguageSettingsStringsUseCase
-                    .execute(
-                        appLanguage: argument.appLanguage.rawValue
-                    )
-                    .sink(receiveCompletion: { _ in
-                        
-                    }, receiveValue: { (interfaceStrings: LanguageSettingsStringsDomainModel) in
-                                                
-                        interfaceStringsRef = interfaceStrings
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                                
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    })
-                    .store(in: &cancellables)
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
             }
+            
+            getLanguageSettingsStringsUseCase
+                .execute(
+                    appLanguage: argument.appLanguage.rawValue
+                )
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { (strings: LanguageSettingsStringsDomainModel) in
+                                            
+                    stringsRef = strings
+                                                                
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
+                })
+                .store(in: &cancellables)
         }
         
-        #expect(interfaceStringsRef?.chooseAppLanguageButtonTitle == argument.expectedValue)
+        #expect(stringsRef?.chooseAppLanguageButtonTitle == argument.expectedValue)
     }
     
     @Test(
@@ -166,42 +154,36 @@ struct GetLanguageSettingsStringsUseCaseTests {
         let getLanguageSettingsStringsUseCase: GetLanguageSettingsStringsUseCase = try getLanguageSettingsStringsUseCase()
         
         let english: LanguageCodeDomainModel = .english
+                
+        var stringsRef: LanguageSettingsStringsDomainModel?
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var interfaceStringsRef: LanguageSettingsStringsDomainModel?
-                
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                getLanguageSettingsStringsUseCase
-                    .execute(appLanguage: english.rawValue)
-                    .sink(receiveCompletion: { _ in
-                        
-                    }, receiveValue: { (interfaceStrings: LanguageSettingsStringsDomainModel) in
-                        
-                        interfaceStringsRef = interfaceStrings
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                        
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    })
-                    .store(in: &cancellables)
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
             }
+            
+            getLanguageSettingsStringsUseCase
+                .execute(appLanguage: english.rawValue)
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { (strings: LanguageSettingsStringsDomainModel) in
+                    
+                    stringsRef = strings
+                                
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
+                })
+                .store(in: &cancellables)
         }
 
         let expectedValue: String = "\(getAppLanguages().count) Languages available"
         
-        #expect(interfaceStringsRef?.numberOfAppLanguagesAvailable == expectedValue)
+        #expect(stringsRef?.numberOfAppLanguagesAvailable == expectedValue)
     }
 }
 

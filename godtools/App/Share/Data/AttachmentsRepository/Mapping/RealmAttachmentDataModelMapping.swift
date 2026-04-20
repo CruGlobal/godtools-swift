@@ -16,14 +16,14 @@ final class RealmAttachmentDataModelMapping: Mapping {
     }
     
     func toDataModel(externalObject: AttachmentCodable) -> AttachmentDataModel? {
-        return AttachmentDataModel(interface: externalObject, storedAttachment: nil)
+        return externalObject.toModel()
     }
     
     func toDataModel(persistObject: RealmAttachment) -> AttachmentDataModel? {
-        return AttachmentDataModel(interface: persistObject, storedAttachment: nil)
+        return persistObject.toModel()
     }
     
     func toPersistObject(externalObject: AttachmentCodable) -> RealmAttachment? {
-        return RealmAttachment.createNewFrom(interface: externalObject)
+        return RealmAttachment.createNewFrom(model: externalObject.toModel())
     }
 }

@@ -17,7 +17,7 @@ struct SHA256FileModel: SHA256FileModelType {
     init(realmSHA256File: RealmSHA256File) {
         
         sha256WithPathExtension = realmSHA256File.sha256WithPathExtension
-        attachments = Array(realmSHA256File.attachments).map({AttachmentDataModel(interface: $0, storedAttachment: nil)})
-        translations = Array(realmSHA256File.translations).map({TranslationDataModel(interface: $0)})
+        attachments = Array(realmSHA256File.attachments).map({ $0.toModel() })
+        translations = Array(realmSHA256File.translations).map({ $0.toModel() })
     }
 }

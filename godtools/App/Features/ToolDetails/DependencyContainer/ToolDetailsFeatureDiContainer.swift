@@ -15,7 +15,7 @@ class ToolDetailsFeatureDiContainer {
     
     init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies) {
         
-        dataLayer = ToolDetailsFeatureDataLayerDependencies(coreDataLayer: coreDataLayer, coreDomainLayer: coreDomainLayer)
+        dataLayer = ToolDetailsFeatureDataLayerDependencies(coreDataLayer: coreDataLayer)
         domainLayer = ToolDetailsFeatureDomainLayerDependencies(coreDataLayer: coreDataLayer, coreDomainLayer: coreDomainLayer, dataLayer: dataLayer)
     }
 }

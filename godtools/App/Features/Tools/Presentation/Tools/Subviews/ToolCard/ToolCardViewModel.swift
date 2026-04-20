@@ -36,8 +36,8 @@ import Combine
         category = tool.category
         languageAvailability = tool.languageAvailability?.availabilityString
         isFavorited = tool.isFavorited
-        openButtonTitle = tool.interfaceStrings.openToolActionTitle
-        detailsButtonTitle = tool.interfaceStrings.openToolDetailsActionTitle
+        openButtonTitle = tool.strings.openToolActionTitle
+        detailsButtonTitle = tool.strings.openToolDetailsActionTitle
         
         accessibilityWithToolName = AccessibilityStrings.Button.getToolButtonAccessibility(toolButton: accessibility, toolName: tool.name)
             

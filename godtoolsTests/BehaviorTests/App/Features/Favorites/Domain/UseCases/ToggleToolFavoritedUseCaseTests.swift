@@ -42,33 +42,27 @@ struct ToggleToolFavoritedUseCaseTests {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                toggleToolFavoritedUseCase
-                    .execute(
-                        toolId: argument.resourceIdToToggle
-                    )
-                    .receive(on: DispatchQueue.main)
-                    .sink(receiveCompletion: { _ in
-                        
-                    }, receiveValue: { _ in
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                                
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    })
-                    .store(in: &cancellables)
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
             }
+            
+            toggleToolFavoritedUseCase
+                .execute(
+                    toolId: argument.resourceIdToToggle
+                )
+                .receive(on: DispatchQueue.main)
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { _ in
+                                       
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
+                })
+                .store(in: &cancellables)
         }
         
         let favoritedResources: [FavoritedResourceDataModel] = try await testsDiContainer.dataLayer.getFavoritedResourcesRepository().cache.getFavoritedResourcesSortedByPosition()
@@ -101,9 +95,13 @@ extension ToggleToolFavoritedUseCaseTests {
         
         for (resourceId, resourcePosition) in resources {
             
-            let dataModel = FavoritedResourceDataModel(id: resourceId, createdAt: Date(), position: resourcePosition)
+            let dataModel = FavoritedResourceDataModel(
+                id: resourceId,
+                createdAt: Date(),
+                position: resourcePosition
+            )
             
-            resourceObjects.append(RealmFavoritedResource.createNewFrom(interface: dataModel))
+            resourceObjects.append(RealmFavoritedResource.createNewFrom(model: dataModel))
         }
         
         return resourceObjects

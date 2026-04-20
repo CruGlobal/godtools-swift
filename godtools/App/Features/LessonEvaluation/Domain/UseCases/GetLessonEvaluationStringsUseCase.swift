@@ -22,7 +22,7 @@ final class GetLessonEvaluationStringsUseCase {
         
         let localeId: String = translateInAppLanguage
         
-        let interfaceStrings = LessonEvaluationStringsDomainModel(
+        let strings = LessonEvaluationStringsDomainModel(
             title: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: "lesson_evaluation.title"),
             wasThisHelpful: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: "lesson_evaluation.wasThisHelpful"),
             yesActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: "yes"),
@@ -31,7 +31,7 @@ final class GetLessonEvaluationStringsUseCase {
             sendFeedbackActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: "lesson_evaluation.sendButtonTitle")
         )
         
-        return Just(interfaceStrings)
+        return Just(strings)
             .eraseToAnyPublisher()
     }
 }

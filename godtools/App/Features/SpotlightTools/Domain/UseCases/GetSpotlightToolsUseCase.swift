@@ -46,7 +46,7 @@ final class GetSpotlightToolsUseCase {
                 .getStringsPublisher(translateInLanguage: translatedInAppLanguage)
                 .setFailureType(to: Error.self)
         )
-        .flatMap({ (resourcesChanged: Void, interfaceStrings: ToolListItemInterfaceStringsDomainModel) -> AnyPublisher<[SpotlightToolListItemDomainModel], Never> in
+        .flatMap({ (resourcesChanged: Void, strings: ToolListItemStringsDomainModel) -> AnyPublisher<[SpotlightToolListItemDomainModel], Never> in
         
             let spotlightToolResources: [ResourceDataModel] = self.resourcesRepository.getSpotlightTools(sortByDefaultOrder: true)
 
@@ -64,7 +64,7 @@ final class GetSpotlightToolsUseCase {
                     }
                     
                     return SpotlightToolListItemDomainModel(
-                        interfaceStrings: interfaceStrings,
+                        strings: strings,
                         analyticsToolAbbreviation: $0.abbreviation,
                         dataModelId: $0.id,
                         bannerImageId: $0.attrBanner,

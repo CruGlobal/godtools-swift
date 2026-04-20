@@ -8,30 +8,27 @@
 
 import Foundation
 
-struct AppLanguageDataModel: AppLanguageDataModelInterface {
+struct AppLanguageDataModel {
     
     let languageCode: String
     let languageDirection: AppLanguageDataModel.Direction
     let languageScriptCode: String?
-    
-    init(languageCode: String, languageDirection: AppLanguageDataModel.Direction, languageScriptCode: String?) {
-        
-        self.languageCode = languageCode
-        self.languageDirection = languageDirection
-        self.languageScriptCode = languageScriptCode
-    }
-    
-    init(interface: AppLanguageDataModelInterface) {
-        
-        self.languageCode = interface.languageCode
-        self.languageDirection = interface.languageDirection
-        self.languageScriptCode = interface.languageScriptCode
-    }
 }
 
 extension AppLanguageDataModel {
     enum Direction {
         case leftToRight
         case rightToLeft
+    }
+}
+
+extension AppLanguageDataModel {
+    var languageId: BCP47LanguageIdentifier {
+        
+        if let languageScriptCode = languageScriptCode, !languageScriptCode.isEmpty {
+            return languageCode + "-" + languageScriptCode
+        }
+        
+        return languageCode
     }
 }

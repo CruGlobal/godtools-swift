@@ -178,7 +178,6 @@ extension FavoritedResourcesCache {
             }
             
             for index in 0 ..< favoritedResources.count {
-                
                 favoritedResources[index].position = index
             }
             
@@ -191,7 +190,7 @@ extension FavoritedResourcesCache {
             )
             
             let dataModels: [FavoritedResourceDataModel] = favoritedResources.map {
-                FavoritedResourceDataModel(interface: $0)
+                $0.toModel()
             }
             
             return dataModels
@@ -216,7 +215,7 @@ extension FavoritedResourcesCache {
             }
             
             let remainingFavoritedResources: [RealmFavoritedResource] = favoritedResources.map {
-                RealmFavoritedResource.createNewFrom(interface: $0)
+                RealmFavoritedResource.createNewFrom(model: $0.toModel())
             }
             
             for index in 0 ..< remainingFavoritedResources.count {
@@ -235,7 +234,7 @@ extension FavoritedResourcesCache {
             )
 
             let dataModels: [FavoritedResourceDataModel] = remainingFavoritedResources.map {
-                FavoritedResourceDataModel(interface: $0)
+                $0.toModel()
             }
             
             return dataModels
@@ -300,7 +299,7 @@ extension FavoritedResourcesCache {
             )
             
             let dataModels: [FavoritedResourceDataModel] = favoritedResources.map {
-                FavoritedResourceDataModel(interface: $0)
+                $0.toModel()
             }
             
             return dataModels
@@ -312,8 +311,8 @@ extension FavoritedResourcesCache {
             var favoritedResources: [RealmFavoritedResource] = realmPersistence.database.read.objects(
                 realm: realm,
                 query: getRealmQuerySortedByPositionAscending()
-            ).map { (object: RealmFavoritedResource) in
-                RealmFavoritedResource.createNewFrom(interface: object)
+            ).map {
+                RealmFavoritedResource.createNewFrom(realmResource: $0)
             }
             
             let placeholderResource = RealmFavoritedResource()
@@ -356,7 +355,7 @@ extension FavoritedResourcesCache {
             )
             
             let dataModels: [FavoritedResourceDataModel] = favoritedResources.map {
-                FavoritedResourceDataModel(interface: $0)
+                $0.toModel()
             }
             
             return dataModels

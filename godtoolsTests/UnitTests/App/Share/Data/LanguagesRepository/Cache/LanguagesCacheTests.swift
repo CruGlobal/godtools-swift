@@ -224,7 +224,7 @@ extension LanguagesCacheTests {
     private func getSwiftDatabaseObjects() -> [any IdentifiableSwiftDataObject] {
         return allRealmLanguages.map {
             SwiftLanguage.createNewFrom(
-                interface: $0
+                model: $0.toModel()
             )
         }
     }

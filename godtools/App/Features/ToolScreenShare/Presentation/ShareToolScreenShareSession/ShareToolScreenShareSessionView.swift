@@ -22,7 +22,7 @@ class ShareToolScreenShareSessionView {
         self.viewModel = viewModel
                 
         let shareQRCodeActivityItem = QRCodeActivity(
-            title: viewModel.qrCodeString,
+            title: viewModel.strings.qrCodeActionTitle,
             activityType: Self.qrCodeActivityType
         )
         

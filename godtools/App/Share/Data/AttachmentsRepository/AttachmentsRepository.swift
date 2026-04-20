@@ -92,7 +92,7 @@ extension AttachmentsRepository {
         )
         .map { (storedAttachment: StoredAttachmentDataModel) in
             
-            return AttachmentDataModel(interface: attachment, storedAttachment: storedAttachment)
+            return attachment.copy(storedAttachment: storedAttachment)
         }
         .eraseToAnyPublisher()
     }

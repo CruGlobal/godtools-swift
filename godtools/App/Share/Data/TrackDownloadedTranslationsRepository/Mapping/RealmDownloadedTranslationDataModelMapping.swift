@@ -12,14 +12,14 @@ import RepositorySync
 final class RealmDownloadedTranslationDataModelMapping: Mapping {
     
     func toDataModel(externalObject: DownloadedTranslationDataModel) -> DownloadedTranslationDataModel? {
-        return DownloadedTranslationDataModel(interface: externalObject)
+        return externalObject
     }
     
     func toDataModel(persistObject: RealmDownloadedTranslation) -> DownloadedTranslationDataModel? {
-        return DownloadedTranslationDataModel(interface: persistObject)
+        return persistObject.toModel()
     }
     
     func toPersistObject(externalObject: DownloadedTranslationDataModel) -> RealmDownloadedTranslation? {
-        return RealmDownloadedTranslation.createNewFrom(interface: externalObject)
+        return RealmDownloadedTranslation.createNewFrom(model: externalObject)
     }
 }

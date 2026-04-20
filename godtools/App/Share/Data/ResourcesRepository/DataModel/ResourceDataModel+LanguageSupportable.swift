@@ -12,7 +12,7 @@ extension ResourceDataModel: LanguageSupportable {
     
     func supportsLanguage(languageId: String) -> Bool {
         if !languageId.isEmpty {
-            return getLanguageIds().contains(languageId)
+            return languageIds.contains(languageId)
         }
         return false
     }

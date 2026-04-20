@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import RepositorySync
 
-class RealmDownloadedTranslation: Object, IdentifiableRealmObject, DownloadedTranslationDataModelInterface {
+class RealmDownloadedTranslation: Object, IdentifiableRealmObject {
     
     @objc dynamic var id: String = ""
     @objc dynamic var languageId: String = ""
@@ -23,18 +23,32 @@ class RealmDownloadedTranslation: Object, IdentifiableRealmObject, DownloadedTra
         return "translationId"
     }
     
-    func mapFrom(interface: DownloadedTranslationDataModelInterface) {
-        id = interface.id
-        languageId = interface.languageId
-        manifestAndRelatedFilesPersistedToDevice = interface.manifestAndRelatedFilesPersistedToDevice
-        resourceId = interface.resourceId
-        translationId = interface.translationId
-        version = interface.version
+    func mapFrom(model: DownloadedTranslationDataModel) {
+        id = model.id
+        languageId = model.languageId
+        manifestAndRelatedFilesPersistedToDevice = model.manifestAndRelatedFilesPersistedToDevice
+        resourceId = model.resourceId
+        translationId = model.translationId
+        version = model.version
     }
     
-    static func createNewFrom(interface: DownloadedTranslationDataModelInterface) -> RealmDownloadedTranslation {
+    static func createNewFrom(model: DownloadedTranslationDataModel) -> RealmDownloadedTranslation {
         let downloadedTranslation = RealmDownloadedTranslation()
-        downloadedTranslation.mapFrom(interface: interface)
+        downloadedTranslation.mapFrom(model: model)
         return downloadedTranslation
+    }
+}
+
+extension RealmDownloadedTranslation {
+    
+    func toModel() -> DownloadedTranslationDataModel {
+        return DownloadedTranslationDataModel(
+            id: id,
+            languageId: languageId,
+            manifestAndRelatedFilesPersistedToDevice: manifestAndRelatedFilesPersistedToDevice,
+            resourceId: resourceId,
+            translationId: translationId,
+            version: version
+        )
     }
 }

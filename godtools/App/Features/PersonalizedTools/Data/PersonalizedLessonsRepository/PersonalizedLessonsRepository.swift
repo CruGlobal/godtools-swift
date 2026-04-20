@@ -179,7 +179,7 @@ extension PersonalizedLessonsRepository {
             )
         }
         
-        let personalizedLessons = try PersonalizedLessonsDataModel(
+        let personalizedLessons = try PersonalizedLessonsDataModel.createFromCountry(
             country: country,
             language: language,
             resourceIds: resourceCodables.map { $0.id }

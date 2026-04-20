@@ -17,7 +17,7 @@ typealias SwiftLanguage = SwiftLanguageV1.SwiftLanguage
 enum SwiftLanguageV1 {
  
     @Model
-    class SwiftLanguage: IdentifiableSwiftDataObject, LanguageDataModelInterface {
+    class SwiftLanguage: IdentifiableSwiftDataObject {
         
         var code: BCP47LanguageIdentifier = ""
         var directionString: String = ""
@@ -33,19 +33,34 @@ enum SwiftLanguageV1 {
             
         }
         
-        func mapFrom(interface: LanguageDataModelInterface) {
-            code = interface.code
-            directionString = interface.directionString
-            id = interface.id
-            name = interface.name
-            type = interface.type
-            forceLanguageName = interface.forceLanguageName
+        func mapFrom(model: LanguageDataModel) {
+            code = model.code
+            directionString = model.directionString
+            id = model.id
+            name = model.name
+            type = model.type
+            forceLanguageName = model.forceLanguageName
         }
         
-        static func createNewFrom(interface: LanguageDataModelInterface) -> SwiftLanguage {
+        static func createNewFrom(model: LanguageDataModel) -> SwiftLanguage {
             let swiftLanguage = SwiftLanguage()
-            swiftLanguage.mapFrom(interface: interface)
+            swiftLanguage.mapFrom(model: model)
             return swiftLanguage
         }
+    }
+}
+
+@available(iOS 17.4, *)
+extension SwiftLanguage {
+    
+    func toModel() -> LanguageDataModel {
+        return LanguageDataModel(
+            code: code,
+            directionString: directionString,
+            id: id,
+            name: name,
+            type: type,
+            forceLanguageName: forceLanguageName
+        )
     }
 }

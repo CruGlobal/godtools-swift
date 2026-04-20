@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TranslationCodable: TranslationDataModelInterface, Codable {
+struct TranslationCodable: Codable {
     
     let id: String
     let isPublished: Bool
@@ -90,26 +90,5 @@ struct TranslationCodable: TranslationDataModelInterface, Codable {
                 
         // relationships - language
         language = try languageContainer?.decodeIfPresent(LanguageCodable.self, forKey: .data)
-    }
-}
-
-extension TranslationCodable {
-    
-    var resourceDataModel: ResourceDataModel? {
-        
-        guard let resource = resource else {
-            return nil
-        }
-        
-        return ResourceDataModel(interface: resource)
-    }
-    
-    var languageDataModel: LanguageDataModel? {
-        
-        guard let language = language else {
-            return nil
-        }
-        
-        return LanguageDataModel(interface: language)
     }
 }

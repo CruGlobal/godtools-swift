@@ -13,14 +13,14 @@ import RepositorySync
 final class SwiftTranslationDataModelMapping: Mapping {
     
     func toDataModel(externalObject: TranslationCodable) -> TranslationDataModel? {
-        return TranslationDataModel(interface: externalObject)
+        return externalObject.toModel()
     }
     
     func toDataModel(persistObject: SwiftTranslation) -> TranslationDataModel? {
-        return TranslationDataModel(interface: persistObject)
+        return persistObject.toModel()
     }
     
     func toPersistObject(externalObject: TranslationCodable) -> SwiftTranslation? {
-        return SwiftTranslation.createNewFrom(interface: externalObject)
+        return SwiftTranslation.createNewFrom(model: externalObject.toModel())
     }
 }

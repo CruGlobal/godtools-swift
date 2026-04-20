@@ -13,14 +13,14 @@ import RepositorySync
 final class SwiftAttachmentDataModelMapping: Mapping {
     
     func toDataModel(externalObject: AttachmentCodable) -> AttachmentDataModel? {
-        return AttachmentDataModel(interface: externalObject, storedAttachment: nil)
+        return externalObject.toModel()
     }
     
     func toDataModel(persistObject: SwiftAttachment) -> AttachmentDataModel? {
-        return AttachmentDataModel(interface: persistObject, storedAttachment: nil)
+        return persistObject.toModel()
     }
     
     func toPersistObject(externalObject: AttachmentCodable) -> SwiftAttachment? {
-        return SwiftAttachment.createNewFrom(interface: externalObject)
+        return SwiftAttachment.createNewFrom(model: externalObject.toModel())
     }
 }

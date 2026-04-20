@@ -26,13 +26,13 @@ struct ToolDetailsToggleFavoriteButton: View {
         if viewModel.isFavorited {
             
             iconName = ImageCatalog.unfavoriteIcon.name
-            title = viewModel.removeFromFavoritesButtonTitle
+            title = viewModel.strings.removeFromFavoritesActionTitle
             color = Color(.sRGB, red: 229 / 255, green: 91 / 255, blue: 54 / 255, opacity: 1.0)
         }
         else {
             
             iconName = ImageCatalog.favoriteIcon.name
-            title = viewModel.addToFavoritesButtonTitle
+            title = viewModel.strings.addToFavoritesActionTitle
             color = ColorPalette.gtBlue.color
         }
         

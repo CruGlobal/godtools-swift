@@ -17,7 +17,7 @@ typealias SwiftUserDetails = SwiftUserDetailsV1.SwiftUserDetails
 enum SwiftUserDetailsV1 {
     
     @Model
-    class SwiftUserDetails: IdentifiableSwiftDataObject, UserDetailsDataModelInterface {
+    class SwiftUserDetails: IdentifiableSwiftDataObject {
         
         var createdAt: Date?
         var familyName: String?
@@ -31,20 +31,35 @@ enum SwiftUserDetailsV1 {
             
         }
         
-        func mapFrom(interface: UserDetailsDataModelInterface) {
+        func mapFrom(model: UserDetailsDataModel) {
             
-            id = interface.id
-            createdAt = interface.createdAt
-            familyName = interface.familyName
-            givenName = interface.givenName
-            name = interface.name
-            ssoGuid = interface.ssoGuid
+            id = model.id
+            createdAt = model.createdAt
+            familyName = model.familyName
+            givenName = model.givenName
+            name = model.name
+            ssoGuid = model.ssoGuid
         }
         
-        static func createNewFrom(interface: UserDetailsDataModelInterface) -> SwiftUserDetails {
+        static func createNewFrom(model: UserDetailsDataModel) -> SwiftUserDetails {
             let object = SwiftUserDetails()
-            object.mapFrom(interface: interface)
+            object.mapFrom(model: model)
             return object
         }
+    }
+}
+
+@available(iOS 17.4, *)
+extension SwiftUserDetails {
+    
+    func toModel() -> UserDetailsDataModel {
+        return UserDetailsDataModel(
+            id: id,
+            createdAt: createdAt,
+            familyName: familyName,
+            givenName: givenName,
+            name: name,
+            ssoGuid: ssoGuid
+        )
     }
 }

@@ -17,7 +17,7 @@ typealias SwiftDownloadedTranslation = SwiftDownloadedTranslationV1.SwiftDownloa
 enum SwiftDownloadedTranslationV1 {
  
     @Model
-    class SwiftDownloadedTranslation: IdentifiableSwiftDataObject, DownloadedTranslationDataModelInterface {
+    class SwiftDownloadedTranslation: IdentifiableSwiftDataObject {
         
         var languageId: String = ""
         var manifestAndRelatedFilesPersistedToDevice: Bool = false
@@ -31,19 +31,34 @@ enum SwiftDownloadedTranslationV1 {
             
         }
         
-        func mapFrom(interface: DownloadedTranslationDataModelInterface) {
-            id = interface.id
-            languageId = interface.languageId
-            manifestAndRelatedFilesPersistedToDevice = interface.manifestAndRelatedFilesPersistedToDevice
-            resourceId = interface.resourceId
-            translationId = interface.translationId
-            version = interface.version
+        func mapFrom(model: DownloadedTranslationDataModel) {
+            id = model.id
+            languageId = model.languageId
+            manifestAndRelatedFilesPersistedToDevice = model.manifestAndRelatedFilesPersistedToDevice
+            resourceId = model.resourceId
+            translationId = model.translationId
+            version = model.version
         }
         
-        static func createNewFrom(interface: DownloadedTranslationDataModelInterface) -> SwiftDownloadedTranslation {
+        static func createNewFrom(model: DownloadedTranslationDataModel) -> SwiftDownloadedTranslation {
             let downloadedTranslation = SwiftDownloadedTranslation()
-            downloadedTranslation.mapFrom(interface: interface)
+            downloadedTranslation.mapFrom(model: model)
             return downloadedTranslation
         }
+    }
+}
+
+@available(iOS 17.4, *)
+extension SwiftDownloadedTranslation {
+    
+    func toModel() -> DownloadedTranslationDataModel {
+        return DownloadedTranslationDataModel(
+            id: id,
+            languageId: languageId,
+            manifestAndRelatedFilesPersistedToDevice: manifestAndRelatedFilesPersistedToDevice,
+            resourceId: resourceId,
+            translationId: translationId,
+            version: version
+        )
     }
 }

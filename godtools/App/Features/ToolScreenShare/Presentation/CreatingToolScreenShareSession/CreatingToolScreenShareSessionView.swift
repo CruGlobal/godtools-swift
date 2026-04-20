@@ -20,7 +20,7 @@ struct CreatingToolScreenShareSessionView: View {
     var body: some View {
         
         FullScreenDownloadProgressView(
-            downloadMessage: viewModel.creatingSessionMessage,
+            downloadMessage: viewModel.strings.creatingSessionMessage,
             hidesSpinner: false,
             downloadProgress: nil,
             downloadProgressString: nil
