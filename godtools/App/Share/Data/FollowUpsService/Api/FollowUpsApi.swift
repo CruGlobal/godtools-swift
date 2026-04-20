@@ -24,7 +24,7 @@ class FollowUpsApi {
         self.baseUrl = baseUrl
     }
     
-    private func getFollowUpRequest(followUp: FollowUpModelType, urlSession: URLSession) -> URLRequest {
+    private func getFollowUpRequest(followUp: FollowUpModel, urlSession: URLSession) -> URLRequest {
         
         let headers: [String: String] = [
             "Content-Type": "application/vnd.api+json"
@@ -54,7 +54,7 @@ class FollowUpsApi {
         )
     }
     
-    func postFollowUpPublisher(followUp: FollowUpModelType, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
+    func postFollowUpPublisher(followUp: FollowUpModel, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
             
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         

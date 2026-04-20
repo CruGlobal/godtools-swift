@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class RealmFollowUp: Object, FollowUpModelType {
+class RealmFollowUp: Object {
     
     @objc dynamic var id: String = UUID().uuidString
     @objc dynamic var name: String = ""
@@ -21,12 +21,30 @@ class RealmFollowUp: Object, FollowUpModelType {
         return "id"
     }
     
-    func mapFrom(model: FollowUpModelType) {
+    func mapFrom(model: FollowUpModel) {
         
         id = model.id
         name = model.name
         email = model.email
         destinationId = model.destinationId
         languageId = model.languageId
+    }
+    
+    static func createNewFrom(model: FollowUpModel) -> RealmFollowUp {
+        let object = RealmFollowUp()
+        object.mapFrom(model: model)
+        return object
+    }
+}
+
+extension RealmFollowUp {
+    func toModel() -> FollowUpModel {
+        return FollowUpModel(
+            id: id,
+            name: name,
+            email: email,
+            destinationId: destinationId,
+            languageId: languageId
+        )
     }
 }

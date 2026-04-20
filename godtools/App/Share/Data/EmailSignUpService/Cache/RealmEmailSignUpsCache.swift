@@ -28,7 +28,7 @@ class RealmEmailSignUpsCache {
             return nil
         }
         
-        return EmailSignUpModel(model: realmEmailSignUp)
+        return realmEmailSignUp.toModel()
     }
     
     func cacheEmailSignUp(emailSignUp: EmailSignUpModel) {

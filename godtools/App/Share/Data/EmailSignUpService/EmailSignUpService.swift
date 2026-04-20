@@ -35,7 +35,14 @@ class EmailSignUpService {
                 let httpStatusCodeSuccess: Bool = httpStatusCode >= 200 && httpStatusCode < 400
 
                 if httpStatusCodeSuccess {
-                    let registeredEmailSignUp = EmailSignUpModel(model: emailSignUp, isRegistered: true)
+                    
+                    let registeredEmailSignUp = EmailSignUpModel(
+                        email: emailSignUp.email,
+                        firstName: emailSignUp.firstName,
+                        lastName: emailSignUp.lastName,
+                        isRegistered: true
+                    )
+                    
                     self.cache.cacheEmailSignUp(emailSignUp: registeredEmailSignUp)
                 }
 

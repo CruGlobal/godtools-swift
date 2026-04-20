@@ -70,6 +70,7 @@ class TractPageFormViewModel: MobileContentFormViewModel {
         let languageId: Int = Int(renderedPageContext.language.id) ?? 0
         
         let followUpModel = FollowUpModel(
+            id: UUID().uuidString,
             name: name,
             email: email,
             destinationId: destinationId,

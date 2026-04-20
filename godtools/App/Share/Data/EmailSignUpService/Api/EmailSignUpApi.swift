@@ -24,7 +24,7 @@ class EmailSignUpApi {
         self.requestSender = requestSender
     }
     
-    private func getEmailSignUpRequest(emailSignUp: EmailSignUpModelType, urlSession: URLSession) -> URLRequest {
+    private func getEmailSignUpRequest(emailSignUp: EmailSignUpModel, urlSession: URLSession) -> URLRequest {
         
         var body: [String: String] = Dictionary()
         
@@ -51,7 +51,7 @@ class EmailSignUpApi {
         return request
     }
     
-    func postEmailSignUpPublisher(emailSignUp: EmailSignUpModelType, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
+    func postEmailSignUpPublisher(emailSignUp: EmailSignUpModel, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         

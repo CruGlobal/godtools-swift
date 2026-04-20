@@ -93,7 +93,8 @@ final class AuthenticateUserUseCase {
         let emailSignUp = EmailSignUpModel(
             email: authUser.email,
             firstName: authUser.firstName,
-            lastName: authUser.lastName
+            lastName: authUser.lastName,
+            isRegistered: false
         )
         
         emailSignUpService

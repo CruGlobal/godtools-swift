@@ -8,34 +8,10 @@
 
 import Foundation
 
-struct EmailSignUpModel: EmailSignUpModelType {
+struct EmailSignUpModel: Sendable {
     
     let email: String
     let firstName: String?
     let lastName: String?
     let isRegistered: Bool
-    
-    init(email: String, firstName: String?, lastName: String?) {
-        
-        self.email = email
-        self.firstName = firstName
-        self.lastName = lastName
-        self.isRegistered = false
-    }
-    
-    init(model: EmailSignUpModelType) {
-        
-        email = model.email
-        firstName = model.firstName
-        lastName = model.lastName
-        isRegistered = model.isRegistered
-    }
-    
-    init(model: EmailSignUpModelType, isRegistered: Bool) {
-        
-        email = model.email
-        firstName = model.firstName
-        lastName = model.lastName
-        self.isRegistered = isRegistered
-    }
 }

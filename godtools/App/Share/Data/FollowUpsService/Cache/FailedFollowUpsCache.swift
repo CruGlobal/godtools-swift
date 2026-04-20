@@ -21,7 +21,7 @@ class FailedFollowUpsCache {
     func getFailedFollowUps() -> [FollowUpModel] {
         let realm: Realm = realmDatabase.openRealm()
         let realmFollowUps: [RealmFollowUp] = Array(realm.objects(RealmFollowUp.self))
-        return realmFollowUps.map({FollowUpModel(model: $0)})
+        return realmFollowUps.map({ $0.toModel() })
     }
     
     func cacheFailedFollowUps(followUps: [FollowUpModel]) {
