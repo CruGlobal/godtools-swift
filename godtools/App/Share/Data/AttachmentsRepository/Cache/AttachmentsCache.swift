@@ -46,15 +46,15 @@ extension AttachmentsCache {
     
     func getAttachment(id: String) throws -> AttachmentDataModel? {
             
-        let cachedAttachment: AttachmentDataModelInterface?
+        let cachedAttachment: AttachmentDataModel?
         
         if #available(iOS 17.4, *), let swiftDatabase = swiftDatabase {
             let swiftAttachment: SwiftAttachment? = swiftDatabase.read.objectNonThrowing(context: swiftDatabase.openContext(), id: id)
-            cachedAttachment = swiftAttachment
+            cachedAttachment = swiftAttachment?.toModel()
         }
         else if let realmDatabase = realmDatabase, let realm = realmDatabase.openRealmNonThrowing() {
             let realmAttachment: RealmAttachment? = realmDatabase.read.object(realm: realm, id: id)
-            cachedAttachment = realmAttachment
+            cachedAttachment = realmAttachment?.toModel()
         }
         else {
             cachedAttachment = nil
@@ -93,11 +93,8 @@ extension AttachmentsCache {
             
             storedAttachment = nil
         }
-
-        return AttachmentDataModel(
-            interface: cachedAttachment,
-            storedAttachment: storedAttachment
-        )
+        
+        return cachedAttachment.copy(storedAttachment: storedAttachment)
     }
     
     func getAttachmentPublisher(id: String) -> AnyPublisher<AttachmentDataModel?, Error> {

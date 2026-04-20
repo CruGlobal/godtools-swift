@@ -70,7 +70,7 @@ final class GetToolDetailsUseCase {
             toolDataModel.totalViews
         )
         
-        let languageIds: [String] = toolDataModel.getLanguageIds()
+        let languageIds: [String] = toolDataModel.languageIds
         
         return Publishers.CombineLatest(
             getLanguagesAvailablePublisher(languageIds: languageIds, translateInLanguage: appLanguage),
@@ -171,7 +171,7 @@ final class GetToolDetailsUseCase {
                         dataModelId: resourceVariant.id,
                         description: description,
                         name: name,
-                        numberOfLanguages: self.getNumberOfLanguages(translateInLanguage: translateInLanguage, numberOfLanguages: resourceVariant.getLanguageIds().count),
+                        numberOfLanguages: self.getNumberOfLanguages(translateInLanguage: translateInLanguage, numberOfLanguages: resourceVariant.languageIds.count),
                         toolLanguageName: toolPrimaryLanguageName,
                         toolLanguageNameIsSupported: self.getToolSupportsLanguage(resource: resourceVariant, language: toolPrimaryLanguage),
                         toolParallelLanguageName: toolParallelLanguageName,
@@ -212,6 +212,6 @@ final class GetToolDetailsUseCase {
             return false
         }
         
-        return resource.getLanguageIds().contains(languageModel.id)
+        return resource.languageIds.contains(languageModel.id)
     }
 }

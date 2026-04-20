@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import RepositorySync
 
-class RealmPersonalizedTools: Object, IdentifiableRealmObject, PersonalizedToolsDataModelInterface {
+class RealmPersonalizedTools: Object, IdentifiableRealmObject {
 
     @objc dynamic var id: String = ""
     @objc dynamic var updatedAt: Date = Date()
@@ -21,20 +21,31 @@ class RealmPersonalizedTools: Object, IdentifiableRealmObject, PersonalizedTools
         return "id"
     }
 
+    func mapFrom(model: PersonalizedToolsDataModel) {
+        id = model.id
+        updatedAt = model.updatedAt
+        resourceIds.removeAll()
+        resourceIds.append(objectsIn: model.resourceIds)
+    }
+
+    static func createNewFrom(model: PersonalizedToolsDataModel) -> RealmPersonalizedTools {
+        let object = RealmPersonalizedTools()
+        object.mapFrom(model: model)
+        return object
+    }
+}
+
+extension RealmPersonalizedTools {
+    
+    func toModel() -> PersonalizedToolsDataModel {
+        return PersonalizedToolsDataModel(
+            id: id,
+            updatedAt: updatedAt,
+            resourceIds: getResourceIds()
+        )
+    }
+    
     func getResourceIds() -> [String] {
         return Array(resourceIds)
-    }
-
-    func mapFrom(interface: PersonalizedToolsDataModelInterface) {
-        id = interface.id
-        updatedAt = interface.updatedAt
-        resourceIds.removeAll()
-        resourceIds.append(objectsIn: interface.getResourceIds())
-    }
-
-    static func createNewFrom(interface: PersonalizedToolsDataModelInterface) -> RealmPersonalizedTools {
-        let object = RealmPersonalizedTools()
-        object.mapFrom(interface: interface)
-        return object
     }
 }

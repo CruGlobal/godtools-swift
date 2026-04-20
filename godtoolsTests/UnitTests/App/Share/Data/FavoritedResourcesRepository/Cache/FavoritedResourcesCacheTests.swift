@@ -132,9 +132,13 @@ extension FavoritedResourcesCacheTests {
         
         for (resourceId, resourcePosition) in resources {
             
-            let dataModel = FavoritedResourceDataModel(id: resourceId, createdAt: Date(), position: resourcePosition)
+            let dataModel = FavoritedResourceDataModel(
+                id: resourceId,
+                createdAt: Date(),
+                position: resourcePosition
+            )
             
-            resourceObjects.append(RealmFavoritedResource.createNewFrom(interface: dataModel))
+            resourceObjects.append(RealmFavoritedResource.createNewFrom(model: dataModel))
         }
         
         return resourceObjects

@@ -13,14 +13,14 @@ import RepositorySync
 final class SwiftUserLocalizationSettingsDataModelMapping: Mapping {
     
     func toDataModel(externalObject: UserLocalizationSettingsDataModel) -> UserLocalizationSettingsDataModel? {
-        return UserLocalizationSettingsDataModel(interface: externalObject)
+        return externalObject
     }
     
     func toDataModel(persistObject: SwiftUserLocalizationSettings) -> UserLocalizationSettingsDataModel? {
-        return UserLocalizationSettingsDataModel(interface: persistObject)
+        return persistObject.toModel()
     }
     
     func toPersistObject(externalObject: UserLocalizationSettingsDataModel) -> SwiftUserLocalizationSettings? {
-        return SwiftUserLocalizationSettings.createNewFrom(interface: externalObject)
+        return SwiftUserLocalizationSettings.createNewFrom(model: externalObject)
     }
 }

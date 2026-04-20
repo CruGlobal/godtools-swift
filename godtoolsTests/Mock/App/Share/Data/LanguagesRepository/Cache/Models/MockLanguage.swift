@@ -9,7 +9,7 @@
 import Foundation
 @testable import godtools
 
-class MockLanguage: LanguageDataModelInterface {
+class MockLanguage {
     
     var code: BCP47LanguageIdentifier = ""
     var directionString: String = ""
@@ -26,5 +26,12 @@ class MockLanguage: LanguageDataModelInterface {
         mockLanguage.name = name
         
         return mockLanguage
+    }
+}
+
+extension MockLanguage {
+    
+    func toModel() -> LanguageDataModel {
+        return LanguageDataModel(code: code, directionString: directionString, id: id, name: name, type: type, forceLanguageName: forceLanguageName)
     }
 }

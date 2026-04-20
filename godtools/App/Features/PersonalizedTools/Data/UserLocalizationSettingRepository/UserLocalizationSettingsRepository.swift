@@ -30,6 +30,7 @@ class UserLocalizationSettingsRepository: RepositorySync<UserLocalizationSetting
 
         let dataModel = UserLocalizationSettingsDataModel(
             id: Self.sharedUserId,
+            createdAt: Date(),
             selectedCountryIsoRegionCode: isoRegionCode
         )
         

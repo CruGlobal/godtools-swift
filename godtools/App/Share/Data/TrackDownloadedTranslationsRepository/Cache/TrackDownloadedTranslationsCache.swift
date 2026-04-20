@@ -149,10 +149,10 @@ extension TrackDownloadedTranslationsCache {
     func getLatestDownloadedTranslation(resourceId: String, languageId: String) -> DownloadedTranslationDataModel? {
         
         if #available(iOS 17.4, *), let latestTranslation = getSwiftLatestDownloadedTranslations(resourceId: resourceId, languageId: languageId)?.first {
-            return DownloadedTranslationDataModel(interface: latestTranslation)
+            return latestTranslation.toModel()
         }
         else if let latestTranslation = getRealmLatestDownloadedTranslations(resourceId: resourceId, languageId: languageId)?.first {
-            return DownloadedTranslationDataModel(interface: latestTranslation)
+            return latestTranslation.toModel()
         }
         
         return nil

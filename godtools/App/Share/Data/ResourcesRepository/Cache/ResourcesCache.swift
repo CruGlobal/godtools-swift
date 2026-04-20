@@ -349,7 +349,7 @@ extension ResourcesCache {
                 return nil
             }
             
-            return ResourceDataModel(interface: resource)
+            return resource.toModel()
         }
         else if let realmPersistence = getRealmPersistence(), let realm = realmPersistence.database.openRealmNonThrowing() {
             
@@ -366,7 +366,7 @@ extension ResourcesCache {
                 return nil
             }
             
-            return ResourceDataModel(interface: resource)
+            return resource.toModel()
         }
         else {
             
@@ -449,7 +449,7 @@ extension ResourcesCache {
         
         return getFilteredRealmResources(realm: realm, filter: filter)
             .map {
-                ResourceDataModel(interface: $0)
+                $0.toModel()
             }
     }
     
@@ -518,7 +518,7 @@ extension ResourcesCache {
         
         return spotlightToolsResults
             .map {
-                ResourceDataModel(interface: $0)
+                $0.toModel()
             }
     }
 }
@@ -575,7 +575,7 @@ extension ResourcesCache {
         
         return allToolsListResults
             .map {
-                ResourceDataModel(interface: $0)
+                $0.toModel()
             }
     }
     

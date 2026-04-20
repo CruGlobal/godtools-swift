@@ -12,14 +12,14 @@ import RepositorySync
 final class RealmResourceDataModelMapping: Mapping {
     
     func toDataModel(externalObject: ResourceCodable) -> ResourceDataModel? {
-        return ResourceDataModel(interface: externalObject)
+        return externalObject.toModel()
     }
     
     func toDataModel(persistObject: RealmResource) -> ResourceDataModel? {
-        return ResourceDataModel(interface: persistObject)
+        return persistObject.toModel()
     }
     
     func toPersistObject(externalObject: ResourceCodable) -> RealmResource? {
-        return RealmResource.createNewFrom(interface: externalObject)
+        return RealmResource.createNewFrom(model: externalObject.toModel())
     }
 }

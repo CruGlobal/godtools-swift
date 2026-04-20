@@ -50,11 +50,11 @@ extension TranslationsCache {
                 return nil
             }
             
-            return TranslationDataModel(interface: translation)
+            return translation.toModel()
         }
         else if let realmTranslation = getRealmTranslationsSortedByLatestVersion(resourceId: resourceId, languageId: languageId)?.first {
             
-            return TranslationDataModel(interface: realmTranslation)
+            return realmTranslation.toModel()
         }
         
         return nil
@@ -68,11 +68,11 @@ extension TranslationsCache {
                 return nil
             }
             
-            return TranslationDataModel(interface: translation)
+            return translation.toModel()
         }
         else if let realmTranslation = getRealmTranslationsSortedByLatestVersion(resourceId: resourceId, languageCode: languageCode)?.first {
             
-            return TranslationDataModel(interface: realmTranslation)
+            return realmTranslation.toModel()
         }
         
         return nil

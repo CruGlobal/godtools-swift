@@ -179,7 +179,7 @@ extension PersonalizedToolsRepository {
             )
         }
 
-        let personalizedTools = try PersonalizedToolsDataModel(
+        let personalizedTools = try PersonalizedToolsDataModel.createFromCountry(
             country: country,
             language: language,
             resourceIds: resourceCodables.map { $0.id }

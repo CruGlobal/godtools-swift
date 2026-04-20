@@ -95,13 +95,13 @@ class GetToolTranslationsFilesUseCase {
                 
                 let languageManifets: [MobileContentRendererLanguageTranslationManifest] = translationManifests.compactMap({
                     
-                    guard let languageCodable = $0.translation.languageDataModel else {
+                    guard let languageDataModel = $0.translation.languageDataModel else {
                         return nil
                     }
                     
                     return MobileContentRendererLanguageTranslationManifest(
                         manifest: $0.manifest,
-                        language: LanguageDataModel(interface: languageCodable),
+                        language: languageDataModel,
                         translation: $0.translation
                     )
                 })

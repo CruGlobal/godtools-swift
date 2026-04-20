@@ -17,7 +17,7 @@ typealias SwiftPersonalizedLessons = SwiftPersonalizedLessonsV1.SwiftPersonalize
 enum SwiftPersonalizedLessonsV1 {
  
     @Model
-    class SwiftPersonalizedLessons: IdentifiableSwiftDataObject, PersonalizedLessonsDataModelInterface {
+    class SwiftPersonalizedLessons: IdentifiableSwiftDataObject {
         
         var resourceIds: [String] = Array<String>()
         var updatedAt: Date = Date()
@@ -28,20 +28,28 @@ enum SwiftPersonalizedLessonsV1 {
             
         }
         
-        func getResourceIds() -> [String] {
-            return resourceIds
+        func mapFrom(model: PersonalizedLessonsDataModel) {
+            id = model.id
+            resourceIds = model.resourceIds
+            updatedAt = model.updatedAt
         }
         
-        func mapFrom(interface: PersonalizedLessonsDataModelInterface) {
-            id = interface.id
-            resourceIds = interface.getResourceIds()
-            updatedAt = interface.updatedAt
-        }
-        
-        static func createNewFrom(interface: PersonalizedLessonsDataModelInterface) -> SwiftPersonalizedLessons {
+        static func createNewFrom(model: PersonalizedLessonsDataModel) -> SwiftPersonalizedLessons {
             let object = SwiftPersonalizedLessons()
-            object.mapFrom(interface: interface)
+            object.mapFrom(model: model)
             return object
         }
+    }
+}
+
+@available(iOS 17.4, *)
+extension SwiftPersonalizedLessons {
+    
+    func toModel() -> PersonalizedLessonsDataModel {
+        return PersonalizedLessonsDataModel(
+            id: id,
+            updatedAt: updatedAt,
+            resourceIds: resourceIds
+        )
     }
 }

@@ -56,7 +56,7 @@ class RealmResourcesCacheSync {
                         
                         for newResource in resourcesPlusLatestTranslationsAndAttachments.resources {
                             
-                            let resource = RealmResource.createNewFrom(interface: newResource)
+                            let resource = RealmResource.createNewFrom(model: newResource.toModel())
                             resourcesDictionary[resource.id] = resource
                             
                             newObjectsToStore.append(resource)
@@ -87,7 +87,7 @@ class RealmResourcesCacheSync {
                         
                         for newTranslation in resourcesPlusLatestTranslationsAndAttachments.translations {
                             
-                            let translation = RealmTranslation.createNewFrom(interface: newTranslation)
+                            let translation = RealmTranslation.createNewFrom(model: newTranslation.toModel())
                             
                             if let resourceId = newTranslation.resource?.id {
                                 translation.resource = resourcesDictionary[resourceId]
@@ -127,7 +127,7 @@ class RealmResourcesCacheSync {
                         
                         for newAttachment in resourcesPlusLatestTranslationsAndAttachments.attachments {
                             
-                            let attachment = RealmAttachment.createNewFrom(interface: newAttachment)
+                            let attachment = RealmAttachment.createNewFrom(model: newAttachment.toModel())
                             
                             if let resourceId = newAttachment.resource?.id {
                                 attachment.resource = resourcesDictionary[resourceId]
@@ -208,10 +208,10 @@ class RealmResourcesCacheSync {
                     let translationIdsToRemove: [String] = existingTranslationsMinusNewlyAddedTranslations.map({$0.id})
                     let downloadedTranslationsToRemove: [RealmDownloadedTranslation] = Array(realm.objects(RealmDownloadedTranslation.self).filter("\(#keyPath(RealmDownloadedTranslation.translationId)) IN %@", translationIdsToRemove))
 
-                    let resourcesRemoved: [ResourceDataModel] = existingResourcesMinusNewlyAddedResources.map({ResourceDataModel(interface: $0)})
-                    let translationsRemoved: [TranslationDataModel] = existingTranslationsMinusNewlyAddedTranslations.map({TranslationDataModel(interface: $0)})
-                    let attachmentsRemoved: [AttachmentDataModel] = existingAttachmentsMinusNewlyAddedAttachments.map({AttachmentDataModel(interface: $0, storedAttachment: nil)})
-                    let downloadedTranslationsRemoved: [DownloadedTranslationDataModel] = downloadedTranslationsToRemove.map({DownloadedTranslationDataModel(interface: $0)})
+                    let resourcesRemoved: [ResourceDataModel] = existingResourcesMinusNewlyAddedResources.map({ $0.toModel() })
+                    let translationsRemoved: [TranslationDataModel] = existingTranslationsMinusNewlyAddedTranslations.map({ $0.toModel() })
+                    let attachmentsRemoved: [AttachmentDataModel] = existingAttachmentsMinusNewlyAddedAttachments.map({ $0.toModel() })
+                    let downloadedTranslationsRemoved: [DownloadedTranslationDataModel] = downloadedTranslationsToRemove.map({ $0.toModel() })
                     
                     // delete realm objects that no longer exist
                     var objectsToRemove: [Object] = Array()

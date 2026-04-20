@@ -105,7 +105,7 @@ extension RemoveFavoritedToolUseCaseTests {
                 position: resourcePosition
             )
             
-            resourceObjects.append(RealmFavoritedResource.createNewFrom(interface: dataModel))
+            resourceObjects.append(RealmFavoritedResource.createNewFrom(model: dataModel))
         }
         
         return resourceObjects

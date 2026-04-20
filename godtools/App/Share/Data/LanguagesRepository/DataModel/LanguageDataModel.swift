@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LanguageDataModel: LanguageDataModelInterface {
+struct LanguageDataModel {
     
     let code: BCP47LanguageIdentifier
     let directionString: String
@@ -16,16 +16,6 @@ struct LanguageDataModel: LanguageDataModelInterface {
     let name: String
     let type: String
     let forceLanguageName: Bool
-    
-    init(interface: LanguageDataModelInterface) {
-        
-        self.code = interface.code
-        self.directionString = interface.directionString
-        self.id = interface.id
-        self.name = interface.name
-        self.type = interface.type
-        self.forceLanguageName = interface.forceLanguageName
-    }
 }
 
 extension LanguageDataModel: Equatable {

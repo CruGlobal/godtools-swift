@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import RepositorySync
 
-class RealmPersonalizedLessons: Object, IdentifiableRealmObject, PersonalizedLessonsDataModelInterface {
+class RealmPersonalizedLessons: Object, IdentifiableRealmObject {
 
     @objc dynamic var id: String = ""
     @objc dynamic var updatedAt: Date = Date()
@@ -21,20 +21,31 @@ class RealmPersonalizedLessons: Object, IdentifiableRealmObject, PersonalizedLes
         return "id"
     }
 
-    func getResourceIds() -> [String] {
-        return Array(resourceIds)
-    }
-
-    func mapFrom(interface: PersonalizedLessonsDataModelInterface) {
-        id = interface.id
-        updatedAt = interface.updatedAt
+    func mapFrom(model: PersonalizedLessonsDataModel) {
+        id = model.id
+        updatedAt = model.updatedAt
         resourceIds.removeAll()
-        resourceIds.append(objectsIn: interface.getResourceIds())
+        resourceIds.append(objectsIn: model.resourceIds)
     }
     
-    static func createNewFrom(interface: PersonalizedLessonsDataModelInterface) -> RealmPersonalizedLessons {
+    static func createNewFrom(model: PersonalizedLessonsDataModel) -> RealmPersonalizedLessons {
         let object = RealmPersonalizedLessons()
-        object.mapFrom(interface: interface)
+        object.mapFrom(model: model)
         return object
+    }
+}
+
+extension RealmPersonalizedLessons {
+    
+    func toModel() -> PersonalizedLessonsDataModel {
+        return PersonalizedLessonsDataModel(
+            id: id,
+            updatedAt: updatedAt,
+            resourceIds: getResourceIds()
+        )
+    }
+    
+    func getResourceIds() -> [String] {
+        return Array(resourceIds)
     }
 }

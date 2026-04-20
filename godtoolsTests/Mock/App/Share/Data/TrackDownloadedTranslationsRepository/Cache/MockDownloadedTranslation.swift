@@ -9,7 +9,7 @@
 import Foundation
 @testable import godtools
 
-class MockDownloadedTranslation: DownloadedTranslationDataModelInterface {
+class MockDownloadedTranslation {
     
     var id: String = ""
     var languageId: String = ""

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct MobileContentApiUsersMeCodable: Codable, UserDetailsDataModelInterface {
+struct MobileContentApiUsersMeCodable: Codable {
     
     let id: String
     let createdAt: Date?
@@ -60,5 +60,19 @@ struct MobileContentApiUsersMeCodable: Codable, UserDetailsDataModelInterface {
         givenName = try attributesContainer?.decodeIfPresent(String.self, forKey: .givenName)
         name = try attributesContainer?.decodeIfPresent(String.self, forKey: .name)
         ssoGuid = try attributesContainer?.decodeIfPresent(String.self, forKey: .ssoGuid)
+    }
+}
+
+extension MobileContentApiUsersMeCodable {
+    
+    func toModel() -> UserDetailsDataModel {
+        return UserDetailsDataModel(
+            id: id,
+            createdAt: createdAt,
+            familyName: familyName,
+            givenName: givenName,
+            name: name,
+            ssoGuid: ssoGuid
+        )
     }
 }
