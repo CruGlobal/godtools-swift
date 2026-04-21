@@ -47,29 +47,36 @@ final class FollowUpsService {
             return
         }
         
-        var successfulPostedFollowUps: [FollowUpDataModel] = Array()
-        var requestCompletionCount: Int = 0
+        var errors: [Error] = Array()
         
         for failedFollowUp in failedFollowUps {
             
-            let response = try await api.postFollowUp(
-                followUp: failedFollowUp.toFollowUp(),
-                requestPriority: requestPriority
-            )
-            
-            let isSuccess: Bool = response.urlResponse.isSuccessHttpStatusCode
-            
-            requestCompletionCount += 1
-            
-            if isSuccess {
-                successfulPostedFollowUps.append(failedFollowUp)
+            do {
+                
+                try await postAndRemoveFailedFollowUp(
+                    failedFollowUp: failedFollowUp,
+                    requestPriority: requestPriority
+                )
             }
-            
-            let isLastRequest: Bool = requestCompletionCount == failedFollowUps.count
-                            
-            if isLastRequest {
-                cache.deleteFollowUps(followUps: successfulPostedFollowUps)
+            catch let error {
+                errors.append(error)
             }
+        }
+        
+        if let error = errors.first {
+            throw error
+        }
+    }
+    
+    private func postAndRemoveFailedFollowUp(failedFollowUp: FollowUpDataModel, requestPriority: RequestPriority) async throws {
+        
+        let response = try await api.postFollowUp(
+            followUp: failedFollowUp.toFollowUp(),
+            requestPriority: requestPriority
+        )
+        
+        if response.urlResponse.isSuccessHttpStatusCode {
+            cache.deleteFollowUps(followUps: [failedFollowUp])
         }
     }
 }
