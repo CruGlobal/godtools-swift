@@ -1,5 +1,5 @@
 //
-//  ResourceViewModelType.swift
+//  ResourceViewsDataModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 6/25/20.
@@ -8,8 +8,8 @@
 
 import Foundation
 
-protocol ResourceViewModelType {
+struct ResourceViewsDataModel: Sendable {
     
-    var resourceId: String { get }
-    var quantity: Int { get }
+    let resourceId: String
+    let quantity: Int
 }

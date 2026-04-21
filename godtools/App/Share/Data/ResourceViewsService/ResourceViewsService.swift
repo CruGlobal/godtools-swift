@@ -8,96 +8,82 @@
 
 import Foundation
 import RequestOperation
-import Combine
 
-class ResourceViewsService {
+final class ResourceViewsService {
     
-    private let resourceViewsApi: MobileContentResourceViewsApi
+    private let api: ResourceViewsApiInterface
     private let failedResourceViewsCache: FailedResourceViewsCache
     
-    init(resourceViewsApi: MobileContentResourceViewsApi, failedResourceViewsCache: FailedResourceViewsCache) {
+    init(api: ResourceViewsApiInterface, failedResourceViewsCache: FailedResourceViewsCache) {
             
-        self.resourceViewsApi = resourceViewsApi
+        self.api = api
         self.failedResourceViewsCache = failedResourceViewsCache
     }
     
-    func postNewResourceViewPublisher(resourceId: String, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
-                
-        let resourceView = ResourceViewModel(resourceId: resourceId)
+    func postNewResourceView(resourceId: String, requestPriority: RequestPriority) async throws {
         
-        return resourceViewsApi.postResourceViewPublisher(resourceView: resourceView, requestPriority: requestPriority)
-            .mapError { (error: Error) in
-                
-                self.failedResourceViewsCache.cacheFailedResourceViews(resourceViews: [resourceView])
-                
-                return error
-            }
-            .map { (response: RequestDataResponse) in
-                
-                let httpStatusCode: Int = response.urlResponse.httpStatusCode ?? -1
-                let httpStatusCodeFailed: Bool = httpStatusCode < 200 || httpStatusCode >= 400
-                                
-                if httpStatusCodeFailed {
-                    self.failedResourceViewsCache.cacheFailedResourceViews(resourceViews: [resourceView])
-                }
-                
-                return response
-            }
-            .eraseToAnyPublisher()
-    }
-    
-    func postFailedResourceViewsIfNeededPublisher(requestPriority: RequestPriority) -> AnyPublisher<Void, Never> {
-                
-        let failedResourceViews: [ResourceViewModel] = failedResourceViewsCache.getFailedResourceViews()
-                
-        guard !failedResourceViews.isEmpty else {
-            return Just(Void())
-                .eraseToAnyPublisher()
-        }
+        let resourceView = ResourceViewsDataModel(resourceId: resourceId, quantity: 1)
         
-        var successfulPostedResourceViews: [ResourceViewModel] = Array()
-        var requestCompletionCount: Int = 0
-        
-        let requests: [AnyPublisher<Bool, Never>] = failedResourceViews.map { (resourceView: ResourceViewModel) in
+        do {
             
-            return self.resourceViewsApi.postResourceViewPublisher(
-                resourceView: resourceView,
+            let response = try await api.postResourceView(
+                resourceId: resourceView.resourceId,
+                quantity: resourceView.quantity,
                 requestPriority: requestPriority
             )
-            .map { (response: RequestDataResponse) in
+            
+            if !response.urlResponse.isSuccessHttpStatusCode {
                 
-                let httpStatusCode: Int = response.urlResponse.httpStatusCode ?? -1
-                let httpStatusCodeSuccess: Bool = httpStatusCode >= 200 && httpStatusCode < 400
-                                
-                return httpStatusCodeSuccess
+                failedResourceViewsCache.cacheFailedResourceViews(resourceViews: [resourceView])
             }
-            .catch { _ in
-                return Just(false)
-                    .eraseToAnyPublisher()
-            }
-            .map { (isSuccess: Bool) in
+        }
+        catch let error {
+            
+            failedResourceViewsCache.cacheFailedResourceViews(resourceViews: [resourceView])
+            
+            throw error
+        }
+    }
+    
+    func postFailedResourceViewsIfNeeded(requestPriority: RequestPriority) async throws {
                 
-                requestCompletionCount += 1
-                                
-                if isSuccess {
-                    successfulPostedResourceViews.append(resourceView)
-                }
-                
-                let isLastRequest: Bool = requestCompletionCount == failedResourceViews.count
-                                
-                if isLastRequest {
-                    self.failedResourceViewsCache.deleteFailedResourceViews(resourceViews: successfulPostedResourceViews)
-                }
-                
-                return isSuccess
-            }
-            .eraseToAnyPublisher()
+        let failedResourceViews: [ResourceViewsDataModel] = try failedResourceViewsCache.getFailedResourceViews()
+        
+        guard !failedResourceViews.isEmpty else {
+            return
         }
         
-        return Publishers.MergeMany(requests)
-            .map { _ in
-                return Void()
+        var errors: [Error] = Array()
+        
+        for failedResourceView in failedResourceViews {
+            
+            do {
+                
+                try await postAndRemoveFailedResourceViews(
+                    resourceViews: failedResourceView,
+                    requestPriority: requestPriority
+                )
             }
-            .eraseToAnyPublisher()
+            catch let error {
+                errors.append(error)
+            }
+        }
+        
+        if let error = errors.first {
+            throw error
+        }
+    }
+    
+    private func postAndRemoveFailedResourceViews(resourceViews: ResourceViewsDataModel, requestPriority: RequestPriority) async throws {
+        
+        let response = try await api.postResourceView(
+            resourceId: resourceViews.resourceId,
+            quantity: resourceViews.quantity,
+            requestPriority: requestPriority
+        )
+        
+        if response.urlResponse.isSuccessHttpStatusCode {
+            failedResourceViewsCache.deleteFailedResourceViews(resourceViews: [resourceViews])
+        }
     }
 }
