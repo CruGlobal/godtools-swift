@@ -8,28 +8,16 @@
 
 import Foundation
 
-class AttachmentDataModel {
+struct AttachmentDataModel: Sendable {
         
+    let id: String
     let file: String
     let fileFilename: String
-    let id: String
     let isZipped: Bool
     let sha256: String
     let type: String
     let resourceDataModel: ResourceDataModel?
     let storedAttachment: StoredAttachmentDataModel?
-    
-    init(id: String, file: String, fileFilename: String, isZipped: Bool, sha256: String, type: String, resourceDataModel: ResourceDataModel?, storedAttachment: StoredAttachmentDataModel?) {
-        
-        self.id = id
-        self.file = file
-        self.fileFilename = fileFilename
-        self.isZipped = isZipped
-        self.sha256 = sha256
-        self.type = type
-        self.resourceDataModel = resourceDataModel
-        self.storedAttachment = storedAttachment
-    }
     
     func copy(storedAttachment: StoredAttachmentDataModel?) -> AttachmentDataModel {
         

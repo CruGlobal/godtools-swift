@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class RealmEmailSignUp: Object, EmailSignUpModelType {
+class RealmEmailSignUp: Object {
     
     @objc dynamic var email: String = ""
     @objc dynamic var firstName: String?
@@ -20,11 +20,28 @@ class RealmEmailSignUp: Object, EmailSignUpModelType {
         return "email"
     }
     
-    func mapFrom(model: EmailSignUpModelType) {
+    func mapFrom(model: EmailSignUp) {
         
         email = model.email
         firstName = model.firstName
         lastName = model.lastName
         isRegistered = model.isRegistered
+    }
+    
+    static func createNewFrom(model: EmailSignUp) -> RealmEmailSignUp {
+        let object = RealmEmailSignUp()
+        object.mapFrom(model: model)
+        return object
+    }
+}
+
+extension RealmEmailSignUp {
+    func toModel() -> EmailSignUp {
+        return EmailSignUp(
+            email: email,
+            firstName: firstName,
+            lastName: lastName,
+            isRegistered: isRegistered
+        )
     }
 }

@@ -8,94 +8,68 @@
 
 import Foundation
 import RequestOperation
-import Combine
 
-class FollowUpsService {
+final class FollowUpsService {
     
-    private let api: FollowUpsApi
+    private let api: FollowUpsApiInterface
     private let cache: FailedFollowUpsCache
             
-    init(api: FollowUpsApi, cache: FailedFollowUpsCache) {
+    init(api: FollowUpsApiInterface, cache: FailedFollowUpsCache) {
 
         self.api = api
         self.cache = cache
     }
     
-    func postFollowUpPublisher(followUp: FollowUpModel, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
-                            
-        return api.postFollowUpPublisher(followUp: followUp, requestPriority: requestPriority)
-            .mapError { (error: Error) in
-                
-                self.cache.cacheFailedFollowUps(followUps: [followUp])
-                
-                return error
+    func postFollowUp(followUp: FollowUp, requestPriority: RequestPriority) async throws {
+        
+        let followUpDataModel = followUp.toModel(id: UUID().uuidString)
+        
+        do {
+            
+            let response = try await api.postFollowUp(followUp: followUp, requestPriority: requestPriority)
+            
+            if !response.urlResponse.isSuccessHttpStatusCode {
+                cache.cacheFailedFollowUps(followUps: [followUpDataModel])
             }
-            .map { (response: RequestDataResponse) in
-                
-                let httpStatusCode: Int = response.urlResponse.httpStatusCode ?? -1
-                let httpStatusCodeFailed: Bool = httpStatusCode < 200 || httpStatusCode >= 400
-                                
-                if httpStatusCodeFailed {
-                    self.cache.cacheFailedFollowUps(followUps: [followUp])
-                }
-                
-                return response
-            }
-            .eraseToAnyPublisher()
+        }
+        catch let error {
+            cache.cacheFailedFollowUps(followUps: [followUpDataModel])
+            
+            throw error
+        }
     }
     
-    func postFailedFollowUpsIfNeededPublisher(requestPriority: RequestPriority) -> AnyPublisher<Void, Never> {
-                
-        let failedFollowUps: [FollowUpModel] = cache.getFailedFollowUps()
-                
+    func postFailedFollowUpsIfNeeded(requestPriority: RequestPriority) async throws {
+        
+        let failedFollowUps: [FollowUpDataModel] = try cache.getFailedFollowUps()
+        
         guard !failedFollowUps.isEmpty else {
-            return Just(Void())
-                .eraseToAnyPublisher()
+            return
         }
         
-        var successfulPostedFollowUps: [FollowUpModel] = Array()
+        var successfulPostedFollowUps: [FollowUpDataModel] = Array()
         var requestCompletionCount: Int = 0
         
-        let requests: [AnyPublisher<Bool, Never>] = failedFollowUps.map { (followUp: FollowUpModel) in
+        for failedFollowUp in failedFollowUps {
             
-            return self.api.postFollowUpPublisher(
-                followUp: followUp,
+            let response = try await api.postFollowUp(
+                followUp: failedFollowUp.toFollowUp(),
                 requestPriority: requestPriority
             )
-            .map { (response: RequestDataResponse) in
-                
-                let httpStatusCode: Int = response.urlResponse.httpStatusCode ?? -1
-                let httpStatusCodeSuccess: Bool = httpStatusCode >= 200 && httpStatusCode < 400
-                                
-                return httpStatusCodeSuccess
+            
+            let isSuccess: Bool = response.urlResponse.isSuccessHttpStatusCode
+            
+            requestCompletionCount += 1
+            
+            if isSuccess {
+                successfulPostedFollowUps.append(failedFollowUp)
             }
-            .catch { _ in
-                return Just(false)
-                    .eraseToAnyPublisher()
+            
+            let isLastRequest: Bool = requestCompletionCount == failedFollowUps.count
+                            
+            if isLastRequest {
+                cache.deleteFollowUps(followUps: successfulPostedFollowUps)
             }
-            .map { (isSuccess: Bool) in
-                
-                requestCompletionCount += 1
-                                
-                if isSuccess {
-                    successfulPostedFollowUps.append(followUp)
-                }
-                
-                let isLastRequest: Bool = requestCompletionCount == failedFollowUps.count
-                                
-                if isLastRequest {
-                    self.cache.deleteFollowUps(followUps: successfulPostedFollowUps)
-                }
-                
-                return isSuccess
-            }
-            .eraseToAnyPublisher()
         }
-        
-        return Publishers.MergeMany(requests)
-            .map { _ in
-                return Void()
-            }
-            .eraseToAnyPublisher()
     }
 }

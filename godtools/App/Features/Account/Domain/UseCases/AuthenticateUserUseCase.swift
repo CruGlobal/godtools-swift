@@ -10,9 +10,7 @@ import UIKit
 import Combine
 
 final class AuthenticateUserUseCase {
-    
-    private static var backgroundCancellables: Set<AnyCancellable> = Set()
-    
+        
     private let userAuthentication: UserAuthentication
     private let emailSignUpService: EmailSignUpService
     private let firebaseAnalytics: FirebaseAnalyticsInterface
@@ -90,18 +88,19 @@ final class AuthenticateUserUseCase {
     
     private func postEmailSignUp(authUser: AuthUserDomainModel) {
         
-        let emailSignUp = EmailSignUpModel(
+        let emailSignUp = EmailSignUp(
             email: authUser.email,
             firstName: authUser.firstName,
-            lastName: authUser.lastName
+            lastName: authUser.lastName,
+            isRegistered: false
         )
         
-        emailSignUpService
-            .postNewEmailSignUpPublisher(emailSignUp: emailSignUp, requestPriority: .medium)
-            .sink { _ in
-                
-            }
-            .store(in: &Self.backgroundCancellables)
+        Task {
+            try await emailSignUpService.postNewEmailSignUp(
+                emailSignUp: emailSignUp,
+                requestPriority: .medium
+            )
+        }
     }
     
     private func setAnalyticsUserProperties(authUser: AuthUserDomainModel, authPlatform: AuthenticateUserAuthPlatformDomainModel) {
