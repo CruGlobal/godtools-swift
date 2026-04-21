@@ -33,8 +33,11 @@ struct LearnToShareToolItemView: View {
                 let animationWidth: CGFloat = geometry.size.width * 1
                 let animationHeight: CGFloat = (animationWidth / animationAspectRatio.width) * animationAspectRatio.height
                 
-                AnimatedSwiftUIView(viewModel: animationViewModel, contentMode: .scaleAspectFit)
-                    .frame(width: animationWidth, height: animationHeight)
+                AnimatedSwiftUIView(
+                    viewModel: animationViewModel,
+                    contentMode: .scaleAspectFit
+                )
+                .frame(maxWidth: animationWidth, maxHeight: animationHeight)
             
             case .image(let image):
                 
@@ -62,6 +65,7 @@ struct LearnToShareToolItemView: View {
                 .font(FontLibrary.sfProTextRegular.font(size: 17))
                 .multilineTextAlignment(.center)
                 .lineSpacing(5)
+                .fixedSize(horizontal: false, vertical: true)
                 .padding(EdgeInsets(top: 18, leading: contentHorizontalSpacing, bottom: 0, trailing: contentHorizontalSpacing))
         }
         .frame(width: geometry.size.width)

@@ -46,6 +46,7 @@ struct RemoveFavoritedToolUseCaseTests {
         var remainingResources: [FavoritedResourceDataModel] = Array()
         
         var cancellables: Set<AnyCancellable> = Set()
+        var triggerCount: Int = 0
         
         await withCheckedContinuation { continuation in
             
@@ -61,6 +62,12 @@ struct RemoveFavoritedToolUseCaseTests {
                 .sink(receiveCompletion: { _ in
                     
                 }, receiveValue: { (favoritedResources: [FavoritedResourceDataModel]) in
+                    
+                    guard triggerCount == 0 else {
+                        return
+                    }
+                    
+                    triggerCount += 1
                     
                     remainingResources = favoritedResources
                                        

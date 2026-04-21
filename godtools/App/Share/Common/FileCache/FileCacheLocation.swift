@@ -8,15 +8,10 @@
 
 import Foundation
 
-class FileCacheLocation {
+struct FileCacheLocation: Sendable {
     
     let relativeUrlString: String
-        
-    init(relativeUrlString: String) {
-        
-        self.relativeUrlString = relativeUrlString
-    }
-    
+
     var directoryUrl: URL? {
 
         guard let fileUrl = self.fileUrl, fileUrl.pathComponents.count > 1 else {
