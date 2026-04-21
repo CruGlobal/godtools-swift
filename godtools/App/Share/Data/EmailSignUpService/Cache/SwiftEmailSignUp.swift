@@ -35,7 +35,7 @@ enum SwiftEmailSignUpV1 {
 @available(iOS 17.4, *)
 extension SwiftEmailSignUp {
     
-    func mapFrom(model: EmailSignUpModel) {
+    func mapFrom(model: EmailSignUp) {
         
         email = model.email
         firstName = model.firstName
@@ -43,7 +43,7 @@ extension SwiftEmailSignUp {
         isRegistered = model.isRegistered
     }
     
-    static func createNewFrom(model: EmailSignUpModel) -> SwiftEmailSignUp {
+    static func createNewFrom(model: EmailSignUp) -> SwiftEmailSignUp {
         let object = SwiftEmailSignUp()
         object.mapFrom(model: model)
         return object
@@ -52,8 +52,8 @@ extension SwiftEmailSignUp {
 
 @available(iOS 17.4, *)
 extension SwiftEmailSignUp {
-    func toModel() -> EmailSignUpModel {
-        return EmailSignUpModel(
+    func toModel() -> EmailSignUp {
+        return EmailSignUp(
             email: email,
             firstName: firstName,
             lastName: lastName,

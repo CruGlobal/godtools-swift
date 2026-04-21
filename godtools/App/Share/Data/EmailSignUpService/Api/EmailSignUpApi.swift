@@ -10,7 +10,7 @@ import Foundation
 import RequestOperation
 import Combine
 
-class EmailSignUpApi {
+final class EmailSignUpApi: EmailSignUpApiInterface {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let urlSessionPriority: URLSessionPriority
@@ -24,7 +24,7 @@ class EmailSignUpApi {
         self.requestSender = requestSender
     }
     
-    private func getEmailSignUpRequest(emailSignUp: EmailSignUpModel, urlSession: URLSession) -> URLRequest {
+    private func getEmailSignUpRequest(emailSignUp: EmailSignUp, urlSession: URLSession) -> URLRequest {
         
         var body: [String: String] = Dictionary()
         
@@ -51,13 +51,15 @@ class EmailSignUpApi {
         return request
     }
     
-    func postEmailSignUpPublisher(emailSignUp: EmailSignUpModel, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
+    func postEmailSignUp(emailSignUp: EmailSignUp, requestPriority: RequestPriority) async throws -> RequestDataResponse {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
         let urlRequest = getEmailSignUpRequest(emailSignUp: emailSignUp, urlSession: urlSession)
         
-        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
-            .eraseToAnyPublisher()
+        return try await requestSender.sendDataTask(
+            urlRequest: urlRequest,
+            urlSession: urlSession
+        )
     }
 }

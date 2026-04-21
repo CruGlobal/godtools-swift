@@ -1,5 +1,5 @@
 //
-//  EmailSignUpModel.swift
+//  EmailSignUp.swift
 //  godtools
 //
 //  Created by Levi Eggert on 12/22/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct EmailSignUpModel: Sendable {
+struct EmailSignUp: Sendable {
     
     let email: String
     let firstName: String?

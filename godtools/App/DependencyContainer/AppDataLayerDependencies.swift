@@ -152,7 +152,7 @@ class AppDataLayerDependencies {
                 urlSessionPriority: getSharedUrlSessionPriority(),
                 requestSender: getRequestSender()
             ),
-            cache: RealmEmailSignUpsCache(realmDatabase: getSharedLegacyRealmDatabase())
+            cache: RealmEmailSignUpsCache(realmDatabase: getSharedRealmDatabase())
         )
     }
     

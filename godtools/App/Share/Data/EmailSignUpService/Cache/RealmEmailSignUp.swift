@@ -20,7 +20,7 @@ class RealmEmailSignUp: Object {
         return "email"
     }
     
-    func mapFrom(model: EmailSignUpModel) {
+    func mapFrom(model: EmailSignUp) {
         
         email = model.email
         firstName = model.firstName
@@ -28,7 +28,7 @@ class RealmEmailSignUp: Object {
         isRegistered = model.isRegistered
     }
     
-    static func createNewFrom(model: EmailSignUpModel) -> RealmEmailSignUp {
+    static func createNewFrom(model: EmailSignUp) -> RealmEmailSignUp {
         let object = RealmEmailSignUp()
         object.mapFrom(model: model)
         return object
@@ -36,8 +36,8 @@ class RealmEmailSignUp: Object {
 }
 
 extension RealmEmailSignUp {
-    func toModel() -> EmailSignUpModel {
-        return EmailSignUpModel(
+    func toModel() -> EmailSignUp {
+        return EmailSignUp(
             email: email,
             firstName: firstName,
             lastName: lastName,

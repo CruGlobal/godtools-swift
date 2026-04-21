@@ -1,5 +1,5 @@
 //
-//  MockFollowUpsApi.swift
+//  MockEmailSignUpApi.swift
 //  godtools
 //
 //  Created by Levi Eggert on 4/21/26.
@@ -10,7 +10,7 @@ import Foundation
 @testable import godtools
 import RequestOperation
 
-final class MockFollowUpsApi: FollowUpsApiInterface {
+final class MockEmailSignUpApi: EmailSignUpApiInterface {
     
     let result: Result<RequestDataResponse, Error>
     
@@ -19,7 +19,7 @@ final class MockFollowUpsApi: FollowUpsApiInterface {
         self.result = result
     }
     
-    func postFollowUp(followUp: FollowUp, requestPriority: RequestPriority) async throws -> RequestDataResponse {
+    func postEmailSignUp(emailSignUp: EmailSignUp, requestPriority: RequestPriority) async throws -> RequestDataResponse {
         
         switch result {
         case .success(let response):

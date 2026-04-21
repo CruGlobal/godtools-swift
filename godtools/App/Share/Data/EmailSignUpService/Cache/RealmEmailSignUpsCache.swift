@@ -8,51 +8,67 @@
 
 import Foundation
 import RealmSwift
+import RepositorySync
 
-class RealmEmailSignUpsCache {
+final class RealmEmailSignUpsCache {
     
-    private let realmDatabase: LegacyRealmDatabase
+    private let realmDatabase: RealmDatabase
     
-    init(realmDatabase: LegacyRealmDatabase) {
+    init(realmDatabase: RealmDatabase) {
         
         self.realmDatabase = realmDatabase
     }
     
-    func emailIsRegistered(email: String) -> Bool {
-        return getEmailSign(email: email)?.isRegistered ?? false
+    func emailIsRegistered(email: String) throws -> Bool {
+        return try getEmailSignUp(email: email)?.isRegistered ?? false
     }
     
-    func getEmailSign(email: String) -> EmailSignUpModel? {
+    func getEmailSignUp(email: String) throws -> EmailSignUp? {
         
-        guard let realmEmailSignUp = realmDatabase.openRealm().object(ofType: RealmEmailSignUp.self, forPrimaryKey: email) else {
+        let realm = try realmDatabase.openRealm()
+        
+        guard let realmEmailSignUp = realm.object(ofType: RealmEmailSignUp.self, forPrimaryKey: email) else {
             return nil
         }
         
         return realmEmailSignUp.toModel()
     }
     
-    func cacheEmailSignUp(emailSignUp: EmailSignUpModel) {
-          
-        realmDatabase.background { (realm: Realm) in
+    func getEmailSignUps() throws -> [EmailSignUp] {
+        let realm: Realm = try realmDatabase.openRealm()
+        let realmEmailSignUps: [RealmEmailSignUp] = Array(realm.objects(RealmEmailSignUp.self))
+        return realmEmailSignUps.map({ $0.toModel() })
+    }
+    
+    func cacheEmailSignUp(emailSignUp: EmailSignUp) {
+        
+        realmDatabase.write.serialAsync { result in
             
-            let realmEmailSignUp: RealmEmailSignUp
-            
-            if let existingRealmEmailSignUp = realm.object(ofType: RealmEmailSignUp.self, forPrimaryKey: emailSignUp.email) {
-                realmEmailSignUp = existingRealmEmailSignUp
-            }
-            else {
-                realmEmailSignUp = RealmEmailSignUp()
-            }
-            
-            realmEmailSignUp.mapFrom(model: emailSignUp)
-            
-            do {
-                try realm.write {
-                    realm.add(realmEmailSignUp, update: .all)
+            switch result {
+            case .success(let realm):
+                
+                let realmEmailSignUp: RealmEmailSignUp
+                
+                if let existingRealmEmailSignUp = realm.object(ofType: RealmEmailSignUp.self, forPrimaryKey: emailSignUp.email) {
+                    realmEmailSignUp = existingRealmEmailSignUp
                 }
-            }
-            catch let error {
-                assertionFailure(error.localizedDescription)
+                else {
+                    realmEmailSignUp = RealmEmailSignUp()
+                }
+                
+                realmEmailSignUp.mapFrom(model: emailSignUp)
+                
+                do {
+                    try realm.write {
+                        realm.add(realmEmailSignUp, update: .all)
+                    }
+                }
+                catch let error {
+                    assertionFailure(error.localizedDescription)
+                }
+            
+            case .failure( _):
+                break
             }
         }
     }
