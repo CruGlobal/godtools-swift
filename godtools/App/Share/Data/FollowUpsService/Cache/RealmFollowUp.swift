@@ -8,8 +8,9 @@
 
 import Foundation
 import RealmSwift
+import RepositorySync
 
-class RealmFollowUp: Object {
+class RealmFollowUp: Object, IdentifiableRealmObject {
     
     @objc dynamic var id: String = UUID().uuidString
     @objc dynamic var name: String = ""
@@ -21,7 +22,7 @@ class RealmFollowUp: Object {
         return "id"
     }
     
-    func mapFrom(model: FollowUpModel) {
+    func mapFrom(model: FollowUpDataModel) {
         
         id = model.id
         name = model.name
@@ -30,7 +31,7 @@ class RealmFollowUp: Object {
         languageId = model.languageId
     }
     
-    static func createNewFrom(model: FollowUpModel) -> RealmFollowUp {
+    static func createNewFrom(model: FollowUpDataModel) -> RealmFollowUp {
         let object = RealmFollowUp()
         object.mapFrom(model: model)
         return object
@@ -38,8 +39,8 @@ class RealmFollowUp: Object {
 }
 
 extension RealmFollowUp {
-    func toModel() -> FollowUpModel {
-        return FollowUpModel(
+    func toModel() -> FollowUpDataModel {
+        return FollowUpDataModel(
             id: id,
             name: name,
             email: email,

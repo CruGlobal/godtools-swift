@@ -210,7 +210,7 @@ class AppDataLayerDependencies {
         )
         
         let cache = FailedFollowUpsCache(
-            realmDatabase: getSharedLegacyRealmDatabase()
+            realmDatabase: getSharedRealmDatabase()
         )
         
         return FollowUpsService(

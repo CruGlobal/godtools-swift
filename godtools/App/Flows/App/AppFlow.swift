@@ -314,12 +314,11 @@ extension AppFlow {
             })
             .store(in: &cancellables)
         
-        followUpsService
-            .postFailedFollowUpsIfNeededPublisher(requestPriority: .low)
-            .sink { _ in
-                
-            }
-            .store(in: &cancellables)
+        Task {
+            try await followUpsService.postFailedFollowUpsIfNeeded(
+                requestPriority: .low
+            )
+        }
       
         resourceViewsService
             .postFailedResourceViewsIfNeededPublisher(requestPriority: .low)

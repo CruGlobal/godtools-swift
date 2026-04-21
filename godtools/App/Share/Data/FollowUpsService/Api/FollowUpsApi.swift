@@ -8,9 +8,8 @@
 
 import Foundation
 import RequestOperation
-import Combine
 
-class FollowUpsApi {
+final class FollowUpsApi: FollowUpsApiInterface {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let urlSessionPriority: URLSessionPriority
@@ -24,7 +23,7 @@ class FollowUpsApi {
         self.baseUrl = baseUrl
     }
     
-    private func getFollowUpRequest(followUp: FollowUpModel, urlSession: URLSession) -> URLRequest {
+    private func getFollowUpRequest(followUp: FollowUp, urlSession: URLSession) -> URLRequest {
         
         let headers: [String: String] = [
             "Content-Type": "application/vnd.api+json"
@@ -54,13 +53,15 @@ class FollowUpsApi {
         )
     }
     
-    func postFollowUpPublisher(followUp: FollowUpModel, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
-            
+    func postFollowUp(followUp: FollowUp, requestPriority: RequestPriority) async throws -> RequestDataResponse {
+        
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
         let urlRequest = getFollowUpRequest(followUp: followUp, urlSession: urlSession)
         
-        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
-            .eraseToAnyPublisher()
+        return try await requestSender.sendDataTask(
+            urlRequest: urlRequest,
+            urlSession: urlSession
+        )
     }
 }
