@@ -567,12 +567,18 @@ class AppDataLayerDependencies {
         
         let cache = UserCountersCache(persistence: persistence)
         
+        let syncInvalidator = SyncInvalidator(
+            id:  "userCounters.getCounters",
+            timeInterval: .hours(hour: 2),
+            persistence: getUserDefaultsCache()
+        )
+        
         return UserCountersRepository(
             api: api,
             persistence: persistence,
             localUserCounterIncrement: localUserCounterIncrement,
             cache: cache,
-            syncInvalidatorPersistence: getUserDefaultsCache()
+            syncInvalidator: syncInvalidator
         )
     }
     
