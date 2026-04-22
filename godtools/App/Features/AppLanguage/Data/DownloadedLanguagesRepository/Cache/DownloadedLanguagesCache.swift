@@ -1,5 +1,5 @@
 //
-//  RealmDownloadedLanguagesCache.swift
+//  DownloadedLanguagesCache.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 12/12/23.
@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import Combine
 
-final class RealmDownloadedLanguagesCache {
+final class DownloadedLanguagesCache {
     
     private let realmDatabase: LegacyRealmDatabase
     
