@@ -38,9 +38,6 @@ extension RealmUserToolCategoryFilter {
         object.mapFrom(model: model)
         return object
     }
-}
-
-extension RealmUserToolCategoryFilter {
  
     func toModel() -> UserToolCategoryFilterDataModel {
         return UserToolCategoryFilterDataModel(

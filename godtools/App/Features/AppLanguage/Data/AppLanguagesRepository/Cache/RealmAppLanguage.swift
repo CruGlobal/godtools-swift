@@ -21,6 +21,9 @@ class RealmAppLanguage: Object, IdentifiableRealmObject {
     override static func primaryKey() -> String? {
         return "id"
     }
+}
+
+extension RealmAppLanguage {
     
     func mapFrom(model: AppLanguageDataModel) {
         
@@ -42,6 +45,15 @@ class RealmAppLanguage: Object, IdentifiableRealmObject {
         object.mapFrom(model: model)
         return object
     }
+    
+    func toModel() -> AppLanguageDataModel {
+        
+        return AppLanguageDataModel(
+            languageCode: languageCode,
+            languageDirection: languageDirection,
+            languageScriptCode: languageScriptCode
+        )
+    }
 }
 
 extension RealmAppLanguage {
@@ -54,17 +66,5 @@ extension RealmAppLanguage {
         case .rightToLeft:
             return .rightToLeft
         }
-    }
-}
-
-extension RealmAppLanguage {
-    
-    func toModel() -> AppLanguageDataModel {
-        
-        return AppLanguageDataModel(
-            languageCode: languageCode,
-            languageDirection: languageDirection,
-            languageScriptCode: languageScriptCode
-        )
     }
 }

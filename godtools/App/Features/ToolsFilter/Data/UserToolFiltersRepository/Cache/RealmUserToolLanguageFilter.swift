@@ -39,9 +39,6 @@ extension RealmUserToolLanguageFilter {
         object.mapFrom(model: model)
         return object
     }
-}
-
-extension RealmUserToolLanguageFilter {
  
     func toModel() -> UserToolLanguageFilterDataModel {
         return UserToolLanguageFilterDataModel(

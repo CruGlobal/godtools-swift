@@ -37,9 +37,6 @@ extension RealmCompletedTrainingTip {
         object.mapFrom(model: model)
         return object
     }
-}
-
-extension RealmCompletedTrainingTip {
    
     func toModel() -> CompletedTrainingTipDataModel {
         return CompletedTrainingTipDataModel(

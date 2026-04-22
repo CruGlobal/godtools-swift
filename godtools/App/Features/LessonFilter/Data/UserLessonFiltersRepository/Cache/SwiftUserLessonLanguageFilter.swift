@@ -48,10 +48,6 @@ extension SwiftUserLessonLanguageFilter {
         object.mapFrom(model: model)
         return object
     }
-}
-
-@available(iOS 17.4, *)
-extension SwiftUserLessonLanguageFilter {
  
     func toModel() -> UserLessonLanguageFilterDataModel {
         return UserLessonLanguageFilterDataModel(

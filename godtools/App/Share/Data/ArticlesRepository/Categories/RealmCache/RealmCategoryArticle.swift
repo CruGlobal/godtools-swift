@@ -43,9 +43,6 @@ extension RealmCategoryArticle {
         object.mapFrom(model: model)
         return object
     }
-}
-
-extension RealmCategoryArticle {
    
     func toModel() -> CategoryArticleModel {
         return CategoryArticleModel(

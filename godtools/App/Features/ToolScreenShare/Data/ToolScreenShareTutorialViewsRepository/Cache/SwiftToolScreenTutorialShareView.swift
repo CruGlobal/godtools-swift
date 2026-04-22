@@ -44,10 +44,6 @@ extension SwiftToolScreenTutorialShareView {
         object.mapFrom(model: model)
         return object
     }
-}
-
-@available(iOS 17.4, *)
-extension SwiftToolScreenTutorialShareView {
  
     func toModel() -> ToolScreenShareTutorialViewDataModel {
         return ToolScreenShareTutorialViewDataModel(

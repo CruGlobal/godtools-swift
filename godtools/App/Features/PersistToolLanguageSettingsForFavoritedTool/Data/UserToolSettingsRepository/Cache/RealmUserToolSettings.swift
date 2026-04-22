@@ -40,9 +40,6 @@ extension RealmUserToolSettings {
         object.mapFrom(model: model)
         return object
     }
-}
-
-extension RealmUserToolSettings {
  
     func toModel() -> UserToolSettingsDataModel {
         return UserToolSettingsDataModel(

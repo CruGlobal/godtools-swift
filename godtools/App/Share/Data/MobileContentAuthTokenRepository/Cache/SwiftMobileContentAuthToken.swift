@@ -27,24 +27,24 @@ enum SwiftMobileContentAuthTokenV1 {
         init() {
             
         }
-        
-        func mapFrom(model: MobileContentAuthTokenDataModel) {
-            
-            expirationDate = model.expirationDate
-            id = model.id
-            userId = model.userId
-        }
-        
-        static func createNewFrom(model: MobileContentAuthTokenDataModel) -> SwiftMobileContentAuthToken {
-            let object = SwiftMobileContentAuthToken()
-            object.mapFrom(model: model)
-            return object
-        }
     }
 }
 
 @available(iOS 17.4, *)
 extension SwiftMobileContentAuthToken {
+    
+    func mapFrom(model: MobileContentAuthTokenDataModel) {
+        
+        expirationDate = model.expirationDate
+        id = model.id
+        userId = model.userId
+    }
+    
+    static func createNewFrom(model: MobileContentAuthTokenDataModel) -> SwiftMobileContentAuthToken {
+        let object = SwiftMobileContentAuthToken()
+        object.mapFrom(model: model)
+        return object
+    }
     
     func toModel() -> MobileContentAuthTokenDataModel {
     

@@ -59,10 +59,6 @@ extension SwiftArticleAemData {
         object.mapFrom(model: model, ignorePrimaryKey: false)
         return object
     }
-}
-
-@available(iOS 17.4, *)
-extension SwiftArticleAemData {
     
     func toModel() -> ArticleAemData {
         return ArticleAemData(

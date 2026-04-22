@@ -38,9 +38,6 @@ extension RealmDownloadedLanguage {
         object.mapFrom(model: model)
         return object
     }
-}
-
-extension RealmDownloadedLanguage {
     
     func toModel() -> DownloadedLanguageDataModel {
         return DownloadedLanguageDataModel(

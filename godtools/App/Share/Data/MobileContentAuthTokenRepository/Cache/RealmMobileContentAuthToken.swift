@@ -19,6 +19,9 @@ class RealmMobileContentAuthToken: Object, IdentifiableRealmObject {
     override static func primaryKey() -> String? {
         return "userId"
     }
+}
+
+extension RealmMobileContentAuthToken {
     
     func mapFrom(model: MobileContentAuthTokenDataModel) {
         
@@ -32,9 +35,6 @@ class RealmMobileContentAuthToken: Object, IdentifiableRealmObject {
         object.mapFrom(model: model)
         return object
     }
-}
-
-extension RealmMobileContentAuthToken {
     
     func toModel() -> MobileContentAuthTokenDataModel {
     

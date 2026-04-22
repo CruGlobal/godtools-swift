@@ -38,9 +38,6 @@ extension RealmUserLessonProgress {
         object.mapFrom(model: model)
         return object
     }
-}
-
-extension RealmUserLessonProgress {
     
     func toModel() -> UserLessonProgressDataModel {
         return UserLessonProgressDataModel(

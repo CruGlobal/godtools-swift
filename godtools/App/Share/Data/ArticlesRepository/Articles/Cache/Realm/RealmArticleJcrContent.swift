@@ -45,9 +45,6 @@ extension RealmArticleJcrContent {
         object.mapFrom(model: model)
         return object
     }
-}
-
-extension RealmArticleJcrContent {
     
     func toModel() -> ArticleJcrContent {
         return ArticleJcrContent(

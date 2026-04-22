@@ -34,9 +34,6 @@ extension RealmToolScreenShareTutorialView {
         object.mapFrom(model: model)
         return object
     }
-}
-
-extension RealmToolScreenShareTutorialView {
  
     func toModel() -> ToolScreenShareTutorialViewDataModel {
         return ToolScreenShareTutorialViewDataModel(

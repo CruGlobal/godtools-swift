@@ -42,9 +42,6 @@ extension RealmLessonEvaluation {
         object.mapFrom(model: model)
         return object
     }
-}
-
-extension RealmLessonEvaluation {
     
     func toModel() -> LessonEvaluationDataModel {
         return LessonEvaluationDataModel(

@@ -22,7 +22,13 @@ final class ResourceViewsService {
     
     func postNewResourceView(resourceId: String, requestPriority: RequestPriority) async throws {
         
-        let resourceView = ResourceViewsDataModel(resourceId: resourceId, quantity: 1)
+        let id: String = resourceId
+        
+        let resourceView = ResourceViewsDataModel(
+            id: id,
+            resourceId: id,
+            quantity: 1
+        )
         
         do {
             

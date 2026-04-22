@@ -48,10 +48,6 @@ extension SwiftUserToolCategoryFilter {
         object.mapFrom(model: model)
         return object
     }
-}
-
-@available(iOS 17.4, *)
-extension SwiftUserToolCategoryFilter {
  
     func toModel() -> UserToolCategoryFilterDataModel {
         return UserToolCategoryFilterDataModel(

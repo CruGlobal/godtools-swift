@@ -52,10 +52,6 @@ extension SwiftLessonEvaluation {
         object.mapFrom(model: model)
         return object
     }
-}
-
-@available(iOS 17.4, *)
-extension SwiftLessonEvaluation {
     
     func toModel() -> LessonEvaluationDataModel {
         return LessonEvaluationDataModel(

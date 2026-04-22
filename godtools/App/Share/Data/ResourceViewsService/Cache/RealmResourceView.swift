@@ -23,8 +23,21 @@ class RealmResourceView: Object, IdentifiableRealmObject {
 
 extension RealmResourceView {
     
+    func mapFrom(model: ResourceViewsDataModel) {
+        id = model.id
+        resourceId = model.resourceId
+        quantity = model.quantity
+    }
+    
+    static func createNewFrom(model: ResourceViewsDataModel) -> RealmResourceView {
+        let object = RealmResourceView()
+        object.mapFrom(model: model)
+        return object
+    }
+    
     func toModel() -> ResourceViewsDataModel {
         return ResourceViewsDataModel(
+            id: id,
             resourceId: resourceId,
             quantity: quantity
         )

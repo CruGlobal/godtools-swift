@@ -48,9 +48,6 @@ extension RealmArticleAemData {
         object.mapFrom(model: model, ignorePrimaryKey: false)
         return object
     }
-}
-
-extension RealmArticleAemData {
     
     func toModel() -> ArticleAemData {
         return ArticleAemData(

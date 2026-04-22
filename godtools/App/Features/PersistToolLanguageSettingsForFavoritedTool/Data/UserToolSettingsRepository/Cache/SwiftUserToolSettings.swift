@@ -50,10 +50,6 @@ extension SwiftUserToolSettings {
         object.mapFrom(model: model)
         return object
     }
-}
-
-@available(iOS 17.4, *)
-extension SwiftUserToolSettings {
  
     func toModel() -> UserToolSettingsDataModel {
         return UserToolSettingsDataModel(

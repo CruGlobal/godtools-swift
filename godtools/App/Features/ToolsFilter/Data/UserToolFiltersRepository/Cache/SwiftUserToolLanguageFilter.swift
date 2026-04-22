@@ -48,10 +48,6 @@ extension SwiftUserToolLanguageFilter {
         object.mapFrom(model: model)
         return object
     }
-}
-
-@available(iOS 17.4, *)
-extension SwiftUserToolLanguageFilter {
  
     func toModel() -> UserToolLanguageFilterDataModel {
         return UserToolLanguageFilterDataModel(

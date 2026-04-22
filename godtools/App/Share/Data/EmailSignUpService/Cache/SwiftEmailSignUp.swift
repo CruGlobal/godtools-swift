@@ -49,10 +49,6 @@ extension SwiftEmailSignUp {
         object.mapFrom(model: model)
         return object
     }
-}
-
-@available(iOS 17.4, *)
-extension SwiftEmailSignUp {
     
     func toModel() -> EmailSignUpDataModel {
         return EmailSignUpDataModel(

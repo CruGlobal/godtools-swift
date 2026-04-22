@@ -48,10 +48,6 @@ extension SwiftUserLessonProgress {
         object.mapFrom(model: model)
         return object
     }
-}
-
-@available(iOS 17.4, *)
-extension SwiftUserLessonProgress {
     
     func toModel() -> UserLessonProgressDataModel {
         return UserLessonProgressDataModel(

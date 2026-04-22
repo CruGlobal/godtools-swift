@@ -39,9 +39,6 @@ extension RealmEmailSignUp {
         object.mapFrom(model: model)
         return object
     }
-}
-
-extension RealmEmailSignUp {
    
     func toModel() -> EmailSignUpDataModel {
         return EmailSignUpDataModel(

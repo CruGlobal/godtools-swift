@@ -54,10 +54,6 @@ extension SwiftGlobalAnalytics {
         object.mapFrom(model: model)
         return object
     }
-}
-
-@available(iOS 17.4, *)
-extension SwiftGlobalAnalytics {
  
     func toModel() -> GlobalAnalyticsDataModel {
         return GlobalAnalyticsDataModel(

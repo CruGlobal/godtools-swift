@@ -47,10 +47,6 @@ extension SwiftCompletedTrainingTip {
         object.mapFrom(model: model)
         return object
     }
-}
-
-@available(iOS 17.4, *)
-extension SwiftCompletedTrainingTip {
    
     func toModel() -> CompletedTrainingTipDataModel {
         return CompletedTrainingTipDataModel(

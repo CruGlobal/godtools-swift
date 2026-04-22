@@ -10,6 +10,7 @@ import Foundation
 
 struct ResourceViewsDataModel: Sendable {
     
+    let id: String
     let resourceId: String
     let quantity: Int
 }

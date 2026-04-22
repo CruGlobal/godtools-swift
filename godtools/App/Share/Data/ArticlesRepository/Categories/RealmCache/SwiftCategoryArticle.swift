@@ -51,10 +51,6 @@ extension SwiftCategoryArticle {
         object.mapFrom(model: model)
         return object
     }
-}
-
-@available(iOS 17.4, *)
-extension SwiftCategoryArticle {
    
     func toModel() -> CategoryArticleModel {
         return CategoryArticleModel(

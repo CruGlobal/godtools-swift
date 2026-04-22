@@ -52,10 +52,6 @@ extension SwiftArticleJrcContent {
         object.mapFrom(model: model)
         return object
     }
-}
-
-@available(iOS 17.4, *)
-extension SwiftArticleJrcContent {
     
     func toModel() -> ArticleJcrContent {
         return ArticleJcrContent(

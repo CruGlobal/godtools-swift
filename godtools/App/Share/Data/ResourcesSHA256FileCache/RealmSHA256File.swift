@@ -50,9 +50,6 @@ extension RealmSHA256File {
         object.mapFrom(model: model)
         return object
     }
-}
-
-extension RealmSHA256File {
    
     func toModel() -> SHA256FileModel {
         return SHA256FileModel(

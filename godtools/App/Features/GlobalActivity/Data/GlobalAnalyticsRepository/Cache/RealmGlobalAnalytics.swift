@@ -26,7 +26,7 @@ class RealmGlobalAnalytics: Object, IdentifiableRealmObject {
 }
 
 extension RealmGlobalAnalytics {
-    
+ 
     func mapFrom(model: GlobalAnalyticsDataModel) {
         
         countries = model.countries
@@ -44,10 +44,7 @@ extension RealmGlobalAnalytics {
         object.mapFrom(model: model)
         return object
     }
-}
-
-extension RealmGlobalAnalytics {
- 
+    
     func toModel() -> GlobalAnalyticsDataModel {
         return GlobalAnalyticsDataModel(
             id: id,

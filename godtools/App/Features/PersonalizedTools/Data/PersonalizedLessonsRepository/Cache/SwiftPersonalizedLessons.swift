@@ -27,23 +27,23 @@ enum SwiftPersonalizedLessonsV1 {
         init() {
             
         }
-        
-        func mapFrom(model: PersonalizedLessonsDataModel) {
-            id = model.id
-            resourceIds = model.resourceIds
-            updatedAt = model.updatedAt
-        }
-        
-        static func createNewFrom(model: PersonalizedLessonsDataModel) -> SwiftPersonalizedLessons {
-            let object = SwiftPersonalizedLessons()
-            object.mapFrom(model: model)
-            return object
-        }
     }
 }
 
 @available(iOS 17.4, *)
 extension SwiftPersonalizedLessons {
+    
+    func mapFrom(model: PersonalizedLessonsDataModel) {
+        id = model.id
+        resourceIds = model.resourceIds
+        updatedAt = model.updatedAt
+    }
+    
+    static func createNewFrom(model: PersonalizedLessonsDataModel) -> SwiftPersonalizedLessons {
+        let object = SwiftPersonalizedLessons()
+        object.mapFrom(model: model)
+        return object
+    }
     
     func toModel() -> PersonalizedLessonsDataModel {
         return PersonalizedLessonsDataModel(

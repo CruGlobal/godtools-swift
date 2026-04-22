@@ -22,6 +22,9 @@ class RealmUserDetails: Object, IdentifiableRealmObject {
     override static func primaryKey() -> String? {
         return "id"
     }
+}
+
+extension RealmUserDetails {
     
     func mapFrom(model: UserDetailsDataModel) {
         
@@ -38,9 +41,6 @@ class RealmUserDetails: Object, IdentifiableRealmObject {
         object.mapFrom(model: model)
         return object
     }
-}
-
-extension RealmUserDetails {
     
     func toModel() -> UserDetailsDataModel {
         return UserDetailsDataModel(

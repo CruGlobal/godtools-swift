@@ -49,10 +49,7 @@ extension SwiftFollowUp {
         object.mapFrom(model: model)
         return object
     }
-}
-
-@available(iOS 17.4, *)
-extension SwiftFollowUp {
+    
     func toModel() -> FollowUpDataModel {
         return FollowUpDataModel(
             id: id,

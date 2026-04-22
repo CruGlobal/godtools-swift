@@ -48,10 +48,6 @@ extension SwiftDownloadedLanguage {
         object.mapFrom(model: model)
         return object
     }
-}
-
-@available(iOS 17.4, *)
-extension SwiftDownloadedLanguage {
     
     func toModel() -> DownloadedLanguageDataModel {
         return DownloadedLanguageDataModel(
