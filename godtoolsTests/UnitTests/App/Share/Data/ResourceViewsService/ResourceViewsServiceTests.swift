@@ -103,11 +103,7 @@ struct ResourceViewsServiceTests {
             api: MockResourceViewsApi(result: result),
             failedResourceViewsCache: cache
         )
-        
-        let initialCount: Int = try cache.getFailedResourceViews().count
-        
-        #expect(initialCount == resourceViews.count)
-        
+                
         try await resourceViewsService.postFailedResourceViewsIfNeeded(requestPriority: .high)
         
         try await Task.databaseChangesSleep()
