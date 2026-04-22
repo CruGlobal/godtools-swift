@@ -11,9 +11,9 @@ import Combine
 import RequestOperation
 import RepositorySync
 
-class UserCountersRepository {
+final class UserCountersRepository {
     
-    private let api: UserCountersApi
+    private let api: UserCountersApiInterface
     private let localUserCounterIncrement: LocalUserCounterIncrement
     private let cache: UserCountersCache
     private let syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface
@@ -22,7 +22,7 @@ class UserCountersRepository {
     
     let persistence: any Persistence<UserCounterDataModel, UserCounterCodable>
     
-    init(api: UserCountersApi, persistence: any Persistence<UserCounterDataModel, UserCounterCodable>, localUserCounterIncrement: LocalUserCounterIncrement, cache: UserCountersCache, syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface) {
+    init(api: UserCountersApiInterface, persistence: any Persistence<UserCounterDataModel, UserCounterCodable>, localUserCounterIncrement: LocalUserCounterIncrement, cache: UserCountersCache, syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface) {
         
         self.api = api
         self.persistence = persistence

@@ -22,6 +22,12 @@ struct UserCounterCodable: Codable, Sendable {
         case count
     }
     
+    init(id: String, count: Int) {
+        
+        self.id = id
+        self.count = count
+    }
+    
     init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: RootKeys.self)

@@ -19,6 +19,9 @@ class RealmUserCounter: Object, IdentifiableRealmObject {
     override static func primaryKey() -> String? {
         return "id"
     }
+}
+
+extension RealmUserCounter {
     
     func mapFrom(model: UserCounterDataModel) {
         count = model.count

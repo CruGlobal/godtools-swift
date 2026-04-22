@@ -27,17 +27,21 @@ enum SwiftUserCounterV1 {
         init() {
             
         }
-        
-        func mapFrom(model: UserCounterDataModel) {
-            count = model.count
-            id = model.id
-        }
-        
-        static func createNewFrom(model: UserCounterDataModel) -> SwiftUserCounter {
-            let object = SwiftUserCounter()
-            object.mapFrom(model: model)
-            return object
-        }
+    }
+}
+
+@available(iOS 17.4, *)
+extension SwiftUserCounter {
+    
+    func mapFrom(model: UserCounterDataModel) {
+        count = model.count
+        id = model.id
+    }
+    
+    static func createNewFrom(model: UserCounterDataModel) -> SwiftUserCounter {
+        let object = SwiftUserCounter()
+        object.mapFrom(model: model)
+        return object
     }
 }
 
