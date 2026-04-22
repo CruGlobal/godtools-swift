@@ -16,19 +16,19 @@ final class UserCountersRepository {
     private let api: UserCountersApiInterface
     private let localUserCounterIncrement: LocalUserCounterIncrement
     private let cache: UserCountersCache
-    private let syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface
+    private let syncInvalidator: SyncInvalidator
     
     private var cancellables: Set<AnyCancellable> = Set()
     
     let persistence: any Persistence<UserCounterDataModel, UserCounterCodable>
     
-    init(api: UserCountersApiInterface, persistence: any Persistence<UserCounterDataModel, UserCounterCodable>, localUserCounterIncrement: LocalUserCounterIncrement, cache: UserCountersCache, syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface) {
+    init(api: UserCountersApiInterface, persistence: any Persistence<UserCounterDataModel, UserCounterCodable>, localUserCounterIncrement: LocalUserCounterIncrement, cache: UserCountersCache, syncInvalidator: SyncInvalidator) {
         
         self.api = api
         self.persistence = persistence
         self.localUserCounterIncrement = localUserCounterIncrement
         self.cache = cache
-        self.syncInvalidatorPersistence = syncInvalidatorPersistence
+        self.syncInvalidator = syncInvalidator
     }
     
     func getCachedCounter(id: String) throws -> UserCounterDataModel? {
@@ -55,18 +55,9 @@ final class UserCountersRepository {
     
     func deleteCachedCounters() throws {
                 
-        getCountersSyncInvalidator().resetSync()
+        syncInvalidator.resetSync()
         
         try cache.deleteCounters()
-    }
-    
-    private func getCountersSyncInvalidator() -> SyncInvalidator {
-        
-        return SyncInvalidator(
-            id:  "userCounters.getCounters",
-            timeInterval: .hours(hour: 2),
-            persistence: syncInvalidatorPersistence
-        )
     }
 }
 
@@ -153,9 +144,7 @@ extension UserCountersRepository {
     }
     
     private func getCounters(requestPriority: RequestPriority) async throws -> [UserCounterDataModel] {
-                      
-        let syncInvalidator: SyncInvalidator = getCountersSyncInvalidator()
-        
+                              
         guard syncInvalidator.shouldSync else {
             return try await mergeLocalCountersWithCachedCounters()
         }

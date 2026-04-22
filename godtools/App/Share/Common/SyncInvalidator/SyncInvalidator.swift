@@ -8,7 +8,7 @@
 
 import Foundation
 
-public final class SyncInvalidator {
+public final class SyncInvalidator: SyncInvalidatorInterface {
     
     private let id: String
     private let timeInterval: SyncInvalidatorTimeInterval
@@ -53,7 +53,11 @@ public final class SyncInvalidator {
         return shouldSync
     }
     
-    public func didSync(lastSyncDate: Date = Date()) {
+    public func didSync() {
+        didSync(lastSyncDate: Date())
+    }
+    
+    public func didSync(lastSyncDate: Date) {
         storeLastSyncDate(date: lastSyncDate)
     }
     
