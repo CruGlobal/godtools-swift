@@ -8,13 +8,25 @@
 
 import Foundation
 import RealmSwift
+import RepositorySync
 
-class RealmResourceView: Object, ResourceViewModelType {
+class RealmResourceView: Object, IdentifiableRealmObject {
     
+    @objc dynamic var id: String = ""
     @objc dynamic var resourceId: String = ""
     @objc dynamic var quantity: Int = 0
     
     override static func primaryKey() -> String? {
         return "resourceId"
+    }
+}
+
+extension RealmResourceView {
+    
+    func toModel() -> ResourceViewsDataModel {
+        return ResourceViewsDataModel(
+            resourceId: resourceId,
+            quantity: quantity
+        )
     }
 }

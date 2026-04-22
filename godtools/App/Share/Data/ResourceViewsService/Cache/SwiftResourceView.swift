@@ -29,3 +29,14 @@ enum SwiftResourceViewV1 {
         }
     }
 }
+
+@available(iOS 17.4, *)
+extension SwiftResourceView {
+    
+    func toModel() -> ResourceViewsDataModel {
+        return ResourceViewsDataModel(
+            resourceId: resourceId,
+            quantity: quantity
+        )
+    }
+}

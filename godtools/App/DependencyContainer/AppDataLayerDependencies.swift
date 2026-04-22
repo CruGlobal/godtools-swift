@@ -382,12 +382,14 @@ class AppDataLayerDependencies {
     func getResourceViewsService() -> ResourceViewsService {
         
         return ResourceViewsService(
-            resourceViewsApi: MobileContentResourceViewsApi(
+            api: MobileContentResourceViewsApi(
                 config: getAppConfig(),
                 urlSessionPriority: getSharedUrlSessionPriority(),
                 requestSender: getRequestSender()
             ),
-            failedResourceViewsCache: FailedResourceViewsCache(realmDatabase: getSharedLegacyRealmDatabase())
+            failedResourceViewsCache: FailedResourceViewsCache(
+                realmDatabase: getSharedRealmDatabase()
+            )
         )
     }
     

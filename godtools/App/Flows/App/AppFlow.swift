@@ -319,13 +319,12 @@ extension AppFlow {
                 requestPriority: .low
             )
         }
-      
-        resourceViewsService
-            .postFailedResourceViewsIfNeededPublisher(requestPriority: .low)
-            .sink { _ in
-                
-            }
-            .store(in: &cancellables)
+        
+        Task {
+            try await resourceViewsService.postFailedResourceViewsIfNeeded(
+                requestPriority: .low
+            )
+        }
         
         remoteConfigRepository
             .syncDataPublisher()
