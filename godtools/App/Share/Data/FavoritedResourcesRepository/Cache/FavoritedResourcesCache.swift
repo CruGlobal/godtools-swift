@@ -11,7 +11,7 @@ import RepositorySync
 import SwiftData
 import RealmSwift
 
-class FavoritedResourcesCache {
+final class FavoritedResourcesCache {
     
     private let persistence: any Persistence<FavoritedResourceDataModel, FavoritedResourceDataModel>
     
