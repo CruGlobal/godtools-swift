@@ -10,7 +10,7 @@ import Foundation
 import RequestOperation
 import Combine
 
-class MobileContentGlobalAnalyticsApi {
+final class MobileContentGlobalAnalyticsApi {
     
     static let sharedGlobalAnalyticsId: String = "1"
     
@@ -42,7 +42,7 @@ class MobileContentGlobalAnalyticsApi {
         return urlRequest
     }
     
-    func getGlobalAnalyticsPublisher(requestPriority: RequestPriority) -> AnyPublisher<MobileContentGlobalAnalyticsDecodable, Error> {
+    func getGlobalAnalyticsPublisher(requestPriority: RequestPriority) -> AnyPublisher<MobileContentGlobalAnalyticsCodable, Error> {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
@@ -50,10 +50,10 @@ class MobileContentGlobalAnalyticsApi {
 
         return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
             .decodeRequestDataResponseForSuccessCodable()
-            .map { (response: RequestCodableResponse<JsonApiResponseDataObject<MobileContentGlobalAnalyticsDecodable>, NoResponseCodable>) in
+            .map { (response: RequestCodableResponse<JsonApiResponseDataObject<MobileContentGlobalAnalyticsCodable>, NoResponseCodable>) in
                 
                 guard let analytics = response.successCodable?.dataObject else {
-                    return MobileContentGlobalAnalyticsDecodable.createEmpty()
+                    return MobileContentGlobalAnalyticsCodable.createEmpty()
                 }
                 
                 return analytics

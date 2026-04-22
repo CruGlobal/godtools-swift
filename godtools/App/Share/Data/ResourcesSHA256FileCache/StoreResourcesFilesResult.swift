@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct StoreResourcesFilesResult {
+struct StoreResourcesFilesResult: Sendable {
     
     let storedFiles: [FileCacheLocation]
     let deleteResourcesFilesResult: DeleteResourcesFilesResult

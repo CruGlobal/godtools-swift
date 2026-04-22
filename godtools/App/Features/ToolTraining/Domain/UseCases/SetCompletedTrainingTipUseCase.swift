@@ -20,7 +20,12 @@ final class SetCompletedTrainingTipUseCase {
     
     func execute(tip: TrainingTipDomainModel) -> AnyPublisher<TrainingTipDomainModel, Error>  {
         
-        let trainingTipDataModel = CompletedTrainingTipDataModel(trainingTipDomainModel: tip)
+        let trainingTipDataModel = CompletedTrainingTipDataModel(
+            id: tip.trainingTipId,
+            trainingTipId: tip.trainingTipId,
+            languageId: tip.languageId,
+            resourceId: tip.resourceId
+        )
         
         return repository
             .storeCompletedTrainingTip(trainingTipDataModel)

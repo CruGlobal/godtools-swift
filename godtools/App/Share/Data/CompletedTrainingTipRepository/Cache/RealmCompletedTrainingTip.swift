@@ -8,6 +8,7 @@
 
 import Foundation
 import RealmSwift
+import RepositorySync
 
 class RealmCompletedTrainingTip: Object {
     
@@ -19,6 +20,9 @@ class RealmCompletedTrainingTip: Object {
     override static func primaryKey() -> String? {
         return "id"
     }
+}
+
+extension RealmCompletedTrainingTip {
     
     func mapFrom(model: CompletedTrainingTipDataModel) {
         
@@ -26,5 +30,23 @@ class RealmCompletedTrainingTip: Object {
         trainingTipId = model.trainingTipId
         resourceId = model.resourceId
         languageId = model.languageId
+    }
+    
+    static func createNewFrom(model: CompletedTrainingTipDataModel) -> RealmCompletedTrainingTip {
+        let object = RealmCompletedTrainingTip()
+        object.mapFrom(model: model)
+        return object
+    }
+}
+
+extension RealmCompletedTrainingTip {
+   
+    func toModel() -> CompletedTrainingTipDataModel {
+        return CompletedTrainingTipDataModel(
+            id: id,
+            trainingTipId: trainingTipId,
+            languageId: languageId,
+            resourceId: resourceId
+        )
     }
 }

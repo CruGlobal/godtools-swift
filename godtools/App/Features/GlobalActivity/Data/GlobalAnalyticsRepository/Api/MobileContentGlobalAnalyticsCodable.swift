@@ -1,5 +1,5 @@
 //
-//  MobileContentGlobalAnalyticsDecodable.swift
+//  MobileContentGlobalAnalyticsCodable.swift
 //  godtools
 //
 //  Created by Levi Eggert on 1/20/23.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct MobileContentGlobalAnalyticsDecodable: Codable {
+struct MobileContentGlobalAnalyticsCodable: Codable, Sendable {
     
     let countries: Int
     let id: String
@@ -30,8 +30,8 @@ struct MobileContentGlobalAnalyticsDecodable: Codable {
         case gospelPresentations = "gospel-presentations"
     }
     
-    static func createEmpty() -> MobileContentGlobalAnalyticsDecodable {
-        return MobileContentGlobalAnalyticsDecodable(countries: 0, id: "", gospelPresentations: 0, launches: 0, type: "", users: 0)
+    static func createEmpty() -> MobileContentGlobalAnalyticsCodable {
+        return MobileContentGlobalAnalyticsCodable(countries: 0, id: "", gospelPresentations: 0, launches: 0, type: "", users: 0)
     }
     
     init(countries: Int, id: String, gospelPresentations: Int, launches: Int, type: String, users: Int) {
@@ -58,5 +58,20 @@ struct MobileContentGlobalAnalyticsDecodable: Codable {
         gospelPresentations = try attributesContainer.decode(Int.self, forKey: .gospelPresentations)
         launches = try attributesContainer.decode(Int.self, forKey: .launches)
         users = try attributesContainer.decode(Int.self, forKey: .users)
+    }
+}
+
+extension MobileContentGlobalAnalyticsCodable {
+    
+    func toModel() -> GlobalAnalyticsDataModel {
+        return GlobalAnalyticsDataModel(
+            id: id,
+            createdAt: Date(),
+            countries: countries,
+            gospelPresentations: gospelPresentations,
+            launches: launches,
+            users: users,
+            type: type
+        )
     }
 }

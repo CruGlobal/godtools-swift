@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import Combine
 
-class RealmGlobalAnalyticsCache {
+final class RealmGlobalAnalyticsCache {
     
     private let realmDatabase: LegacyRealmDatabase
     
@@ -39,7 +39,7 @@ class RealmGlobalAnalyticsCache {
         
         if let realmObject = realmObject {
             
-            dataModel = GlobalAnalyticsDataModel(realmGlobalAnalytics: realmObject)
+            dataModel = realmObject.toModel()
         }
         else {
             
@@ -49,24 +49,23 @@ class RealmGlobalAnalyticsCache {
         return dataModel
     }
     
-    func storeGlobalAnalyticsPublisher(globalAnalytics: MobileContentGlobalAnalyticsDecodable) -> AnyPublisher<GlobalAnalyticsDataModel, Error> {
+    func storeGlobalAnalyticsPublisher(globalAnalytics: MobileContentGlobalAnalyticsCodable) -> AnyPublisher<GlobalAnalyticsDataModel, Error> {
+        
+        let dataModel: GlobalAnalyticsDataModel = globalAnalytics.toModel()
         
         return realmDatabase.writeObjectsPublisher { (realm: Realm) -> [RealmGlobalAnalytics] in
             
-            let realmGlobalAnalytics: RealmGlobalAnalytics = RealmGlobalAnalytics()
-            realmGlobalAnalytics.mapFrom(decodable: globalAnalytics)
+            let realmGlobalAnalytics = RealmGlobalAnalytics.createNewFrom(model: dataModel)
             
             return [realmGlobalAnalytics]
             
         } mapInBackgroundClosure: { (objects: [RealmGlobalAnalytics]) -> [GlobalAnalyticsDataModel] in
             return objects.map({
-                GlobalAnalyticsDataModel(realmGlobalAnalytics: $0)
+                $0.toModel()
             })
         }
         .map { _ in
-            return GlobalAnalyticsDataModel(
-                mobileContentAnalyticsDecodable: globalAnalytics
-            )
+            return dataModel
         }
         .eraseToAnyPublisher()
     }

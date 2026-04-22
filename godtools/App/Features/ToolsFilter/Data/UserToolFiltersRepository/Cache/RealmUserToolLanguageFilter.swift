@@ -8,16 +8,47 @@
 
 import Foundation
 import RealmSwift
+import RepositorySync
 
-class RealmUserToolLanguageFilter: Object {
+class RealmUserToolLanguageFilter: Object, IdentifiableRealmObject {
     
-    static let filterId = "userToolLanguageFilter"
-    
-    @objc dynamic var createdAt: Date = Date()
+    @objc dynamic var id: String = ""
+    @objc dynamic var filterId: String = ""
     @objc dynamic var languageId: String = ""
-    @objc dynamic var filterId: String = RealmUserToolLanguageFilter.filterId
+    @objc dynamic var createdAt: Date = Date()
+    
     
     override static func primaryKey() -> String? {
         return "filterId"
+    }
+}
+
+extension RealmUserToolLanguageFilter {
+    
+    func mapFrom(model: UserToolLanguageFilterDataModel) {
+        
+        id = model.id
+        filterId = model.filterId
+        languageId = model.languageId
+        createdAt = model.createdAt
+    }
+    
+    static func createNewFrom(model: UserToolLanguageFilterDataModel) -> RealmUserToolLanguageFilter {
+        
+        let object = RealmUserToolLanguageFilter()
+        object.mapFrom(model: model)
+        return object
+    }
+}
+
+extension RealmUserToolLanguageFilter {
+ 
+    func toModel() -> UserToolLanguageFilterDataModel {
+        return UserToolLanguageFilterDataModel(
+            id: id,
+            filterId: filterId,
+            languageId: languageId,
+            createdAt: createdAt
+        )
     }
 }

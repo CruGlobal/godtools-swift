@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class RealmCompletedTrainingTipCache {
+final class RealmCompletedTrainingTipCache {
     
     private let realmDatabase: LegacyRealmDatabase
     
@@ -23,7 +23,7 @@ class RealmCompletedTrainingTipCache {
             return nil
         }
         
-        return CompletedTrainingTipDataModel(realmCompletedTrainingTip: realmCompletedTrainingTip)
+        return realmCompletedTrainingTip.toModel()
     }
         
     func countCompletedTrainingTips() -> Int {
@@ -37,13 +37,12 @@ class RealmCompletedTrainingTipCache {
             
             self.realmDatabase.background { realm in
                 
-                let realmCompletedTrainingTip = RealmCompletedTrainingTip()
-                realmCompletedTrainingTip.mapFrom(model: completedTrainingTip)
+                let realmCompletedTrainingTip = RealmCompletedTrainingTip.createNewFrom(model: completedTrainingTip)
                 
                 do {
                     
                     try realm.write {
-                        realm.add(realmCompletedTrainingTip, update: .all)
+                        realm.add(realmCompletedTrainingTip, update: .modified)
                     }
                     
                     promise(.success(completedTrainingTip))

@@ -8,9 +8,11 @@
 
 import Foundation
 import RealmSwift
+import RepositorySync
 
-class RealmCategoryArticle: Object, CategoryArticleModelType {
+class RealmCategoryArticle: Object, IdentifiableRealmObject {
     
+    @objc dynamic var id: String = ""
     @objc dynamic var aemTag: String = ""
     @objc dynamic var categoryId: String = ""
     @objc dynamic var languageCode: String = ""
@@ -20,5 +22,38 @@ class RealmCategoryArticle: Object, CategoryArticleModelType {
     
     override static func primaryKey() -> String? {
         return "uuid"
+    }
+}
+
+extension RealmCategoryArticle {
+    
+    func mapFrom(model: CategoryArticleModel) {
+        
+        id = model.id
+        aemTag = model.aemTag
+        categoryId = model.categoryId
+        languageCode = model.languageCode
+        uuid = model.uuid.uuidString
+        aemUris.removeAll()
+        aemUris.append(objectsIn: model.aemUris)
+    }
+    
+    static func createNewFrom(model: CategoryArticleModel) -> RealmCategoryArticle {
+        let object = RealmCategoryArticle()
+        object.mapFrom(model: model)
+        return object
+    }
+}
+
+extension RealmCategoryArticle {
+   
+    func toModel() -> CategoryArticleModel {
+        return CategoryArticleModel(
+            id: id,
+            aemTag: aemTag,
+            aemUris: Array(aemUris),
+            categoryId: categoryId,
+            languageCode: languageCode
+        )
     }
 }

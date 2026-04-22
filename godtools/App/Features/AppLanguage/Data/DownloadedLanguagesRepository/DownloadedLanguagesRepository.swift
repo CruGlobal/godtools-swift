@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class DownloadedLanguagesRepository {
+final class DownloadedLanguagesRepository {
     
     private let cache: RealmDownloadedLanguagesCache
     

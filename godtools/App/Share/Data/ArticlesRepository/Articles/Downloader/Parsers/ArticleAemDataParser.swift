@@ -82,6 +82,7 @@ class ArticleAemDataParser {
         let aemWebUrl: String = convertAemUrlToHtmlUrlWithVaration(aemUrl: aemUrl, variation: variation)
         
         let aemData = ArticleAemData(
+            id: aemUrl.absoluteString,
             aemUri: aemUrl.absoluteString,
             articleJcrContent: articleJcrContent,
             webUrl: aemWebUrl,

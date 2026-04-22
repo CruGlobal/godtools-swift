@@ -8,7 +8,7 @@
 
 import Foundation
 
-class LessonEvaluationRepository {
+final class LessonEvaluationRepository {
     
     private let cache: LessonEvaluationRealmCache
     
@@ -47,6 +47,7 @@ class LessonEvaluationRepository {
         }
         
         let lessonEvaluation = LessonEvaluationDataModel(
+            id: lesson.id,
             lastEvaluationAttempt: Date(),
             lessonAbbreviation: lesson.abbreviation,
             lessonEvaluated: lessonIsEvaluated,

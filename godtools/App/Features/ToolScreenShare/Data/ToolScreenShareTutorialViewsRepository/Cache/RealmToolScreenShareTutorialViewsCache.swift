@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import RealmSwift
 
-class RealmToolScreenShareTutorialViewsCache {
+final class RealmToolScreenShareTutorialViewsCache {
     
     private let realmDatabase: LegacyRealmDatabase
     
@@ -27,7 +27,7 @@ class RealmToolScreenShareTutorialViewsCache {
             return nil
         }
         
-        return ToolScreenShareTutorialViewDataModel(realmToolScreenShareView: realmToolScreenShareView)
+        return realmToolScreenShareView.toModel()
     }
     
     func setToolScreenShareNumberOfViews(id: String, numberOfViews: Int) -> Error? {

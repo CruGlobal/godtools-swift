@@ -32,3 +32,39 @@ enum SwiftLessonEvaluationV1 {
         }
     }
 }
+
+@available(iOS 17.4, *)
+extension SwiftLessonEvaluation {
+    
+    func mapFrom(model: LessonEvaluationDataModel) {
+        
+        id = model.id
+        lessonId = model.lessonId
+        lastEvaluationAttempt = model.lastEvaluationAttempt
+        lessonAbbreviation = model.lessonAbbreviation
+        lessonEvaluated = model.lessonEvaluated
+        numberOfEvaluationAttempts = model.numberOfEvaluationAttempts
+    }
+    
+    static func createNewFrom(model: LessonEvaluationDataModel) -> SwiftLessonEvaluation {
+        
+        let object = SwiftLessonEvaluation()
+        object.mapFrom(model: model)
+        return object
+    }
+}
+
+@available(iOS 17.4, *)
+extension SwiftLessonEvaluation {
+    
+    func toModel() -> LessonEvaluationDataModel {
+        return LessonEvaluationDataModel(
+            id: id,
+            lastEvaluationAttempt: lastEvaluationAttempt,
+            lessonAbbreviation: lessonAbbreviation,
+            lessonEvaluated: lessonEvaluated,
+            lessonId: lessonId,
+            numberOfEvaluationAttempts: numberOfEvaluationAttempts
+        )
+    }
+}

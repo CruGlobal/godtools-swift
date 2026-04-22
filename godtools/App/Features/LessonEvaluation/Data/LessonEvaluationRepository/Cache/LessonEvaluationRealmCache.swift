@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class LessonEvaluationRealmCache {
+final class LessonEvaluationRealmCache {
     
     private let realmDatabase: LegacyRealmDatabase
     
@@ -25,6 +25,7 @@ class LessonEvaluationRealmCache {
         }
         
         return LessonEvaluationDataModel(
+            id: cachedLessonEvaluation.lessonId,
             lastEvaluationAttempt: cachedLessonEvaluation.lastEvaluationAttempt,
             lessonAbbreviation: cachedLessonEvaluation.lessonAbbreviation,
             lessonEvaluated: cachedLessonEvaluation.lessonEvaluated,
@@ -52,8 +53,7 @@ class LessonEvaluationRealmCache {
             }
             else {
                 
-                let newLessonEvaluation: RealmLessonEvaluation = RealmLessonEvaluation()
-                newLessonEvaluation.mapFrom(model: lessonEvaluation, ignorePrimaryKey: false)
+                let newLessonEvaluation = RealmLessonEvaluation.createNewFrom(model: lessonEvaluation)
                 
                 do {
                     try realm.write {

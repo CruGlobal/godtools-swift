@@ -8,9 +8,11 @@
 
 import Foundation
 import RealmSwift
+import RepositorySync
 
-class RealmLessonEvaluation: Object {
+class RealmLessonEvaluation: Object, IdentifiableRealmObject {
     
+    @objc dynamic var id: String = ""
     @objc dynamic var lastEvaluationAttempt: Date = Date()
     @objc dynamic var lessonAbbreviation: String = ""
     @objc dynamic var lessonEvaluated: Bool = false
@@ -20,6 +22,9 @@ class RealmLessonEvaluation: Object {
     override static func primaryKey() -> String? {
         return "lessonId"
     }
+}
+
+extension RealmLessonEvaluation {
     
     func mapFrom(model: LessonEvaluationDataModel, ignorePrimaryKey: Bool) {
         
@@ -27,9 +32,31 @@ class RealmLessonEvaluation: Object {
             lessonId = model.lessonId
         }
         
+        id = model.id
         lastEvaluationAttempt = model.lastEvaluationAttempt
         lessonAbbreviation = model.lessonAbbreviation
         lessonEvaluated = model.lessonEvaluated
         numberOfEvaluationAttempts = model.numberOfEvaluationAttempts
+    }
+    
+    static func createNewFrom(model: LessonEvaluationDataModel) -> RealmLessonEvaluation {
+        
+        let object = RealmLessonEvaluation()
+        object.mapFrom(model: model, ignorePrimaryKey: false)
+        return object
+    }
+}
+
+extension RealmLessonEvaluation {
+    
+    func toModel() -> LessonEvaluationDataModel {
+        return LessonEvaluationDataModel(
+            id: id,
+            lastEvaluationAttempt: lastEvaluationAttempt,
+            lessonAbbreviation: lessonAbbreviation,
+            lessonEvaluated: lessonEvaluated,
+            lessonId: lessonId,
+            numberOfEvaluationAttempts: numberOfEvaluationAttempts
+        )
     }
 }

@@ -11,7 +11,7 @@ import RealmSwift
 import GodToolsShared
 import Combine
 
-class RealmCategoryArticlesCache {
+final class RealmCategoryArticlesCache {
     
     private let realmDatabase: LegacyRealmDatabase
     
@@ -25,7 +25,7 @@ class RealmCategoryArticlesCache {
         return realmDatabase.openRealm()
             .objects(RealmCategoryArticle.self)
             .filter(NSPredicate(format: "categoryId == %@ AND languageCode == %@", categoryId, languageCode))
-            .map({CategoryArticleModel(realmModel: $0)})
+            .map({ $0.toModel() })
     }
     
     func getCategoryArticlesPublisher(categoryId: String, languageCode: String) -> AnyPublisher<[CategoryArticleModel], Never> {
@@ -37,7 +37,7 @@ class RealmCategoryArticlesCache {
                 let categoryArticles: [CategoryArticleModel] = realm
                     .objects(RealmCategoryArticle.self)
                     .filter(NSPredicate(format: "categoryId == %@ AND languageCode == %@", categoryId, languageCode))
-                    .map({CategoryArticleModel(realmModel: $0)})
+                    .map({ $0.toModel() })
                 
                 promise(.success(categoryArticles))
             }
@@ -91,6 +91,7 @@ class RealmCategoryArticlesCache {
                     realmCategoryArticle.categoryId = category.id
                     realmCategoryArticle.languageCode = languageCode
                     realmCategoryArticle.uuid = categoryArticleUUID.uuidString
+                    realmCategoryArticle.id = categoryArticleUUID.uuidString
                     
                     categoryArticlesToCache.append(realmCategoryArticle)
                     

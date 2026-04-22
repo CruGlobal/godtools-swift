@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class CompletedTrainingTipRepository {
+final class CompletedTrainingTipRepository {
     
     private let cache: RealmCompletedTrainingTipCache
     
