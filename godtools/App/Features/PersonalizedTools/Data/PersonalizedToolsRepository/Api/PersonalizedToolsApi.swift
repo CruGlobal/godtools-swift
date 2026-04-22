@@ -20,16 +20,14 @@ final class PersonalizedToolsApi {
         case language = "lang"
         case resourceType = "resource_type"
     }
-    
-    private static let fieldsQueryItem = URLQueryItem(name: "fields[resource]", value: "")
-    
+        
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let urlSessionPriority: URLSessionPriority
     private let requestSender: RequestSender
     private let baseUrl: String
-    
+
     init(config: AppConfigInterface, urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
-            
+
         self.urlSessionPriority = urlSessionPriority
         self.requestSender = requestSender
         baseUrl = config.getMobileContentApiBaseUrl()
@@ -40,13 +38,13 @@ final class PersonalizedToolsApi {
         var queryItems: [URLQueryItem]? = JsonApiFilter.buildQueryItems(
             nameValues: [
                 QueryName.country.rawValue: [country],
-                QueryName.language.rawValue: [language],
-                QueryName.resourceType.rawValue: resourceTypes?.map { $0.rawValue } ?? [nil]
+                QueryName.language.rawValue: [language]
             ]
         )
-                
-        queryItems?.append(Self.fieldsQueryItem)
-        
+
+        let resourceTypeQueryItems: [URLQueryItem] = buildResourceTypeQueryItems(resourceTypes: resourceTypes)
+        queryItems?.append(contentsOf: resourceTypeQueryItems)
+
         return requestBuilder
             .build(
                 parameters: RequestBuilderParameters(
@@ -64,13 +62,13 @@ final class PersonalizedToolsApi {
 
         var queryItems: [URLQueryItem]? = JsonApiFilter.buildQueryItems(
             nameValues: [
-                QueryName.language.rawValue: [language],
-                QueryName.resourceType.rawValue: resourceTypes?.map { $0.rawValue } ?? [nil]
+                QueryName.language.rawValue: [language]
             ]
         )
-        
-        queryItems?.append(Self.fieldsQueryItem)
-        
+
+        let resourceTypeQueryItems: [URLQueryItem] = buildResourceTypeQueryItems(resourceTypes: resourceTypes)
+        queryItems?.append(contentsOf: resourceTypeQueryItems)
+
         return requestBuilder
             .build(
                 parameters: RequestBuilderParameters(
@@ -82,6 +80,15 @@ final class PersonalizedToolsApi {
                     queryItems: queryItems
                 )
             )
+    }
+    
+    private func buildResourceTypeQueryItems(resourceTypes: [ResourceType]?) -> [URLQueryItem] {
+
+        guard let resourceTypes = resourceTypes, !resourceTypes.isEmpty else { return [] }
+
+        return resourceTypes.map { resourceType in
+            URLQueryItem(name: "filter[resource_type][]", value: resourceType.rawValue)
+        }
     }
     
     func getAllRankedResources(requestPriority: RequestPriority, country: TwoLetterCountryCode?, language: TwoLetterLanguageCode?, resourceTypes: [ResourceType]?) async throws -> [ResourceCodable] {
