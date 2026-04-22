@@ -26,12 +26,9 @@ class RealmLessonEvaluation: Object, IdentifiableRealmObject {
 
 extension RealmLessonEvaluation {
     
-    func mapFrom(model: LessonEvaluationDataModel, ignorePrimaryKey: Bool) {
+    func mapFrom(model: LessonEvaluationDataModel) {
         
-        if !ignorePrimaryKey {
-            lessonId = model.lessonId
-        }
-        
+        lessonId = model.lessonId
         id = model.id
         lastEvaluationAttempt = model.lastEvaluationAttempt
         lessonAbbreviation = model.lessonAbbreviation
@@ -42,7 +39,7 @@ extension RealmLessonEvaluation {
     static func createNewFrom(model: LessonEvaluationDataModel) -> RealmLessonEvaluation {
         
         let object = RealmLessonEvaluation()
-        object.mapFrom(model: model, ignorePrimaryKey: false)
+        object.mapFrom(model: model)
         return object
     }
 }

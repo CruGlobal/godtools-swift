@@ -10,16 +10,21 @@ import Foundation
 
 final class LessonEvaluationRepository {
     
-    private let cache: LessonEvaluationRealmCache
+    private let cache: LessonEvaluationCache
     
-    init(cache: LessonEvaluationRealmCache) {
+    init(cache: LessonEvaluationCache) {
         
         self.cache = cache
     }
     
     func getLessonEvaluation(lessonId: String) -> LessonEvaluationDataModel? {
         
-        return cache.getLessonEvaluation(lessonId: lessonId)
+        do {
+            return try cache.getLessonEvaluation(lessonId: lessonId)
+        }
+        catch _ {
+            return nil
+        }
     }
     
     func storeLessonEvaluation(lesson: ResourceDataModel, lessonEvaluated: Bool) {
@@ -46,12 +51,14 @@ final class LessonEvaluationRepository {
             lessonIsEvaluated = lessonEvaluated
         }
         
+        let id: String = lesson.id
+        
         let lessonEvaluation = LessonEvaluationDataModel(
-            id: lesson.id,
+            id: id,
             lastEvaluationAttempt: Date(),
             lessonAbbreviation: lesson.abbreviation,
             lessonEvaluated: lessonIsEvaluated,
-            lessonId: lesson.id,
+            lessonId: id,
             numberOfEvaluationAttempts: numberOfAttempts
         )
         
