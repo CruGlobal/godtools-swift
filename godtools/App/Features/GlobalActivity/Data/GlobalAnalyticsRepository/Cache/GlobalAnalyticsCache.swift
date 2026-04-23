@@ -8,7 +8,6 @@
 
 import Foundation
 import RealmSwift
-import Combine
 import RepositorySync
 
 final class GlobalAnalyticsCache {
