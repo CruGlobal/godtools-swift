@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import RequestOperation
 
-class GlobalAnalyticsRepository {
+final class GlobalAnalyticsRepository {
         
     private let api: MobileContentGlobalAnalyticsApi
     private let cache: RealmGlobalAnalyticsCache
@@ -40,7 +40,7 @@ class GlobalAnalyticsRepository {
     private func getGlobalAnalyticsFromRemotePublisher(requestPriority: RequestPriority) -> AnyPublisher<GlobalAnalyticsDataModel, Error> {
         
         return api.getGlobalAnalyticsPublisher(requestPriority: requestPriority)
-            .flatMap({ (globalAnalytics: MobileContentGlobalAnalyticsDecodable) -> AnyPublisher<GlobalAnalyticsDataModel, Error> in
+            .flatMap({ (globalAnalytics: MobileContentGlobalAnalyticsCodable) -> AnyPublisher<GlobalAnalyticsDataModel, Error> in
                 
                 return self.cache.storeGlobalAnalyticsPublisher(globalAnalytics: globalAnalytics)
                     .eraseToAnyPublisher()

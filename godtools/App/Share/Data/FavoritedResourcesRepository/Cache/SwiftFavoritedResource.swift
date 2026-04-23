@@ -47,10 +47,6 @@ extension SwiftFavoritedResource {
         object.mapFrom(model: model)
         return object
     }
-}
-
-@available(iOS 17.4, *)
-extension SwiftFavoritedResource {
     
     func toModel() -> FavoritedResourceDataModel {
         return FavoritedResourceDataModel(

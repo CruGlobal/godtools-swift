@@ -25,6 +25,9 @@ class RealmAttachment: Object, IdentifiableRealmObject {
     override static func primaryKey() -> String? {
         return "id"
     }
+}
+
+extension RealmAttachment {
     
     func mapFrom(model: AttachmentDataModel) {
 
@@ -43,18 +46,6 @@ class RealmAttachment: Object, IdentifiableRealmObject {
         return realmAttachment
     }
     
-    var resourceDataModel: ResourceDataModel? {
-        
-        guard let realmResource = resource else {
-            return nil
-        }
-        
-        return realmResource.toModel()
-    }
-}
-
-extension RealmAttachment {
-    
     func toModel() -> AttachmentDataModel {
         return AttachmentDataModel(
             id: id,
@@ -66,5 +57,14 @@ extension RealmAttachment {
             resourceDataModel: resourceDataModel,
             storedAttachment: nil
         )
+    }
+    
+    var resourceDataModel: ResourceDataModel? {
+        
+        guard let realmResource = resource else {
+            return nil
+        }
+        
+        return realmResource.toModel()
     }
 }

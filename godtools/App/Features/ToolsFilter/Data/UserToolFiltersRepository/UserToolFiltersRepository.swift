@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class UserToolFiltersRepository {
+final class UserToolFiltersRepository {
     
     private let cache: RealmUserToolFiltersCache
     

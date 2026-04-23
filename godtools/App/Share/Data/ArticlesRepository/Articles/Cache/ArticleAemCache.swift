@@ -74,14 +74,14 @@ class ArticleAemCache {
             
             let url: URL = try fileCache.getFile(location: articleAemWebArchive.location)
             
-            let aemData = ArticleAemData(realmModel: realmAemData)
+            let aemData = realmAemData.toModel()
             let aemCacheObject = ArticleAemCacheObject(aemUri: aemUri, aemData: aemData, webArchiveFileUrl: url, fetchWebArchiveFileUrlError: nil)
             
             return aemCacheObject
         }
         catch let error {
             
-            let aemData = ArticleAemData(realmModel: realmAemData)
+            let aemData = realmAemData.toModel()
             let aemCacheObject = ArticleAemCacheObject(aemUri: aemUri, aemData: aemData, webArchiveFileUrl: nil, fetchWebArchiveFileUrlError: error)
             
             return aemCacheObject

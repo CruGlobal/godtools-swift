@@ -21,6 +21,9 @@ class RealmFollowUp: Object, IdentifiableRealmObject {
     override static func primaryKey() -> String? {
         return "id"
     }
+}
+
+extension RealmFollowUp {
     
     func mapFrom(model: FollowUpDataModel) {
         
@@ -36,9 +39,7 @@ class RealmFollowUp: Object, IdentifiableRealmObject {
         object.mapFrom(model: model)
         return object
     }
-}
-
-extension RealmFollowUp {
+    
     func toModel() -> FollowUpDataModel {
         return FollowUpDataModel(
             id: id,

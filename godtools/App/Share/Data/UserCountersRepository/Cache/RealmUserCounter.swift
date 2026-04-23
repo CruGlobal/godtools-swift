@@ -33,9 +33,6 @@ extension RealmUserCounter {
         object.mapFrom(model: model)
         return object
     }
-}
-
-extension RealmUserCounter {
     
     func toModel() -> UserCounterDataModel {
         return UserCounterDataModel(

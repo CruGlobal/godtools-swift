@@ -56,44 +56,45 @@ enum SwiftResourceV1 {
         init() {
             
         }
-        
-        func mapFrom(model: ResourceDataModel) {
-            abbreviation = model.abbreviation
-            attachmentIds = model.attachmentIds
-            attrAboutBannerAnimation = model.attrAboutBannerAnimation
-            attrAboutOverviewVideoYoutube = model.attrAboutOverviewVideoYoutube
-            attrBanner = model.attrBanner
-            attrBannerAbout = model.attrBannerAbout
-            attrCategory = model.attrCategory
-            attrDefaultLocale = model.attrDefaultLocale
-            attrDefaultOrder = model.attrDefaultOrder
-            attrSpotlight = model.attrSpotlight
-            defaultVariantId = model.defaultVariantId
-            id = model.id
-            isHidden = model.isHidden
-            languageIds = model.languageIds
-            latestTranslationIds = model.latestTranslationIds
-            manifest = model.manifest
-            metatoolId = model.metatoolId
-            name = model.name
-            oneskyProjectId = model.oneskyProjectId
-            resourceDescription = model.resourceDescription
-            resourceType = model.resourceType
-            totalViews = model.totalViews
-            type = model.type
-            variantIds = model.variantIds
-        }
-        
-        static func createNewFrom(model: ResourceDataModel) -> SwiftResource {
-            let resource = SwiftResource()
-            resource.mapFrom(model: model)
-            return resource
-        }
     }
 }
 
 @available(iOS 17.4, *)
 extension SwiftResource {
+    
+    func mapFrom(model: ResourceDataModel) {
+        abbreviation = model.abbreviation
+        attachmentIds = model.attachmentIds
+        attrAboutBannerAnimation = model.attrAboutBannerAnimation
+        attrAboutOverviewVideoYoutube = model.attrAboutOverviewVideoYoutube
+        attrBanner = model.attrBanner
+        attrBannerAbout = model.attrBannerAbout
+        attrCategory = model.attrCategory
+        attrDefaultLocale = model.attrDefaultLocale
+        attrDefaultOrder = model.attrDefaultOrder
+        attrSpotlight = model.attrSpotlight
+        defaultVariantId = model.defaultVariantId
+        id = model.id
+        isHidden = model.isHidden
+        languageIds = model.languageIds
+        latestTranslationIds = model.latestTranslationIds
+        manifest = model.manifest
+        metatoolId = model.metatoolId
+        name = model.name
+        oneskyProjectId = model.oneskyProjectId
+        resourceDescription = model.resourceDescription
+        resourceType = model.resourceType
+        totalViews = model.totalViews
+        type = model.type
+        variantIds = model.variantIds
+    }
+    
+    static func createNewFrom(model: ResourceDataModel) -> SwiftResource {
+        let resource = SwiftResource()
+        resource.mapFrom(model: model)
+        return resource
+    }
+    
     func toModel() -> ResourceDataModel {
         return ResourceDataModel(
             abbreviation: abbreviation,

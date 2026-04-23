@@ -43,10 +43,6 @@ extension SwiftUserCounter {
         object.mapFrom(model: model)
         return object
     }
-}
-
-@available(iOS 17.4, *)
-extension SwiftUserCounter {
     
     func toModel() -> UserCounterDataModel {
         return UserCounterDataModel(

@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class ToolScreenShareTutorialViewsRepository {
+final class ToolScreenShareTutorialViewsRepository {
     
     private let cache: RealmToolScreenShareTutorialViewsCache
     

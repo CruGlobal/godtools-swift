@@ -18,17 +18,43 @@ enum SwiftUserToolLanguageFilterV1 {
     
     @Model
     class SwiftUserToolLanguageFilter: IdentifiableSwiftDataObject {
-        
-        static let filterId = "userToolLanguageFilter"
-        
+                
         var createdAt: Date = Date()
         var languageId: String = ""
         
         @Attribute(.unique) var id: String = ""
-        @Attribute(.unique) var filterId: String = SwiftUserToolLanguageFilter.filterId
+        @Attribute(.unique) var filterId: String = ""
         
         init() {
             
         }
+    }
+}
+
+@available(iOS 17.4, *)
+extension SwiftUserToolLanguageFilter {
+    
+    func mapFrom(model: UserToolLanguageFilterDataModel) {
+        
+        id = model.id
+        filterId = model.filterId
+        languageId = model.languageId
+        createdAt = model.createdAt
+    }
+    
+    static func createNewFrom(model: UserToolLanguageFilterDataModel) -> SwiftUserToolLanguageFilter {
+        
+        let object = SwiftUserToolLanguageFilter()
+        object.mapFrom(model: model)
+        return object
+    }
+ 
+    func toModel() -> UserToolLanguageFilterDataModel {
+        return UserToolLanguageFilterDataModel(
+            id: id,
+            filterId: filterId,
+            languageId: languageId,
+            createdAt: createdAt
+        )
     }
 }

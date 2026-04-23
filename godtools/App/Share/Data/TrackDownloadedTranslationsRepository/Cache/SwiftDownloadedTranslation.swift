@@ -30,26 +30,26 @@ enum SwiftDownloadedTranslationV1 {
         init() {
             
         }
-        
-        func mapFrom(model: DownloadedTranslationDataModel) {
-            id = model.id
-            languageId = model.languageId
-            manifestAndRelatedFilesPersistedToDevice = model.manifestAndRelatedFilesPersistedToDevice
-            resourceId = model.resourceId
-            translationId = model.translationId
-            version = model.version
-        }
-        
-        static func createNewFrom(model: DownloadedTranslationDataModel) -> SwiftDownloadedTranslation {
-            let downloadedTranslation = SwiftDownloadedTranslation()
-            downloadedTranslation.mapFrom(model: model)
-            return downloadedTranslation
-        }
     }
 }
 
 @available(iOS 17.4, *)
 extension SwiftDownloadedTranslation {
+    
+    func mapFrom(model: DownloadedTranslationDataModel) {
+        id = model.id
+        languageId = model.languageId
+        manifestAndRelatedFilesPersistedToDevice = model.manifestAndRelatedFilesPersistedToDevice
+        resourceId = model.resourceId
+        translationId = model.translationId
+        version = model.version
+    }
+    
+    static func createNewFrom(model: DownloadedTranslationDataModel) -> SwiftDownloadedTranslation {
+        let downloadedTranslation = SwiftDownloadedTranslation()
+        downloadedTranslation.mapFrom(model: model)
+        return downloadedTranslation
+    }
     
     func toModel() -> DownloadedTranslationDataModel {
         return DownloadedTranslationDataModel(

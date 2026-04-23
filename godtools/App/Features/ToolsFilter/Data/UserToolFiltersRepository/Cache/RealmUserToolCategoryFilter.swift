@@ -8,16 +8,43 @@
 
 import Foundation
 import RealmSwift
+import RepositorySync
 
-class RealmUserToolCategoryFilter: Object {
+class RealmUserToolCategoryFilter: Object, IdentifiableRealmObject {
     
-    static let filterId = "userToolCategoryFilter"
-    
-    @objc dynamic var createdAt: Date = Date()
+    @objc dynamic var id: String = ""
+    @objc dynamic var filterId: String = ""
     @objc dynamic var categoryId: String = ""
-    @objc dynamic var filterId: String = RealmUserToolCategoryFilter.filterId
+    @objc dynamic var createdAt: Date = Date()
     
     override static func primaryKey() -> String? {
         return "filterId"
+    }
+}
+
+extension RealmUserToolCategoryFilter {
+    
+    func mapFrom(model: UserToolCategoryFilterDataModel) {
+        
+        id = model.id
+        filterId = model.filterId
+        categoryId = model.categoryId
+        createdAt = model.createdAt
+    }
+    
+    static func createNewFrom(model: UserToolCategoryFilterDataModel) -> RealmUserToolCategoryFilter {
+        
+        let object = RealmUserToolCategoryFilter()
+        object.mapFrom(model: model)
+        return object
+    }
+ 
+    func toModel() -> UserToolCategoryFilterDataModel {
+        return UserToolCategoryFilterDataModel(
+            id: id,
+            filterId: filterId,
+            categoryId: categoryId,
+            createdAt: createdAt
+        )
     }
 }

@@ -30,3 +30,31 @@ enum SwiftUserLessonLanguageFilterV1 {
         }
     }
 }
+
+@available(iOS 17.4, *)
+extension SwiftUserLessonLanguageFilter {
+    
+    func mapFrom(model: UserLessonLanguageFilterDataModel) {
+        
+        id = model.id
+        createdAt = model.createdAt
+        languageId = model.languageId
+        filterId = model.filterId
+    }
+    
+    static func createNewFrom(model: UserLessonLanguageFilterDataModel) -> SwiftUserLessonLanguageFilter {
+        
+        let object = SwiftUserLessonLanguageFilter()
+        object.mapFrom(model: model)
+        return object
+    }
+ 
+    func toModel() -> UserLessonLanguageFilterDataModel {
+        return UserLessonLanguageFilterDataModel(
+            id: id,
+            createdAt: createdAt,
+            languageId: languageId,
+            filterId: filterId
+        )
+    }
+}

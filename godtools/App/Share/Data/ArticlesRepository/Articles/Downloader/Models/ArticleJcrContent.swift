@@ -8,29 +8,12 @@
 
 import Foundation
 
-struct ArticleJcrContent: ArticleJcrContentType {
+struct ArticleJcrContent: Sendable {
     
+    let id: String
     let aemUri: String
     let canonical: String?
     let tags: [String]
     let title: String?
     let uuid: String?
-    
-    init(aemUri: String, canonical: String?, tags: [String], title: String?, uuid: String?) {
-        
-        self.aemUri = aemUri
-        self.canonical = canonical
-        self.tags = tags
-        self.title = title
-        self.uuid = uuid
-    }
-    
-    init(realmModel: RealmArticleJcrContent) {
-        
-        aemUri = realmModel.aemUri
-        canonical = realmModel.canonical
-        tags = Array(realmModel.tags)
-        title = realmModel.title
-        uuid = realmModel.uuid
-    }
 }

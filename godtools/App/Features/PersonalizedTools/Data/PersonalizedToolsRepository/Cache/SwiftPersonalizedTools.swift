@@ -27,23 +27,23 @@ enum SwiftPersonalizedToolsV1 {
         init() {
 
         }
-
-        func mapFrom(model: PersonalizedToolsDataModel) {
-            id = model.id
-            resourceIds = model.resourceIds
-            updatedAt = model.updatedAt
-        }
-
-        static func createNewFrom(model: PersonalizedToolsDataModel) -> SwiftPersonalizedTools {
-            let object = SwiftPersonalizedTools()
-            object.mapFrom(model: model)
-            return object
-        }
     }
 }
 
 @available(iOS 17.4, *)
 extension SwiftPersonalizedTools {
+    
+    func mapFrom(model: PersonalizedToolsDataModel) {
+        id = model.id
+        resourceIds = model.resourceIds
+        updatedAt = model.updatedAt
+    }
+
+    static func createNewFrom(model: PersonalizedToolsDataModel) -> SwiftPersonalizedTools {
+        let object = SwiftPersonalizedTools()
+        object.mapFrom(model: model)
+        return object
+    }
     
     func toModel() -> PersonalizedToolsDataModel {
         return PersonalizedToolsDataModel(

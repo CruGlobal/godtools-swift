@@ -1,5 +1,5 @@
 //
-//  RealmDownloadedLanguagesCache.swift
+//  DownloadedLanguagesCache.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 12/12/23.
@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import Combine
 
-class RealmDownloadedLanguagesCache {
+final class DownloadedLanguagesCache {
     
     private let realmDatabase: LegacyRealmDatabase
     
@@ -38,7 +38,7 @@ class RealmDownloadedLanguagesCache {
         }
         
         let downloadedLanguages = realmDownloadedLanguages
-            .map { DownloadedLanguageDataModel(realmDownloadedLanguage: $0) }
+            .map { $0.toModel() }
         
         return Just(Array(downloadedLanguages))
             .eraseToAnyPublisher()
@@ -52,7 +52,7 @@ class RealmDownloadedLanguagesCache {
             return nil
         }
         
-        return DownloadedLanguageDataModel(realmDownloadedLanguage: downloadedLanguage)
+        return downloadedLanguage.toModel()
     }
     
     func getDownloadedLanguagePublisher(languageId: String) -> AnyPublisher<DownloadedLanguageDataModel?, Never> {
@@ -61,7 +61,7 @@ class RealmDownloadedLanguagesCache {
             guard let realmDownloadedLanguage = object else {
                 return nil
             }
-            return DownloadedLanguageDataModel(realmDownloadedLanguage: realmDownloadedLanguage)
+            return realmDownloadedLanguage.toModel()
         })
         .flatMap { (dataModel: DownloadedLanguageDataModel?) in
 
@@ -92,18 +92,22 @@ class RealmDownloadedLanguagesCache {
     
     func storeDownloadedLanguagePublisher(languageId: String, downloadComplete: Bool) -> AnyPublisher<DownloadedLanguageDataModel, Error> {
         
-        let downloadedLanguage = DownloadedLanguageDataModel(languageId: languageId, downloadComplete: downloadComplete)
-        
+        let downloadedLanguage = DownloadedLanguageDataModel(
+            id: languageId,
+            createdAt: Date(),
+            languageId: languageId,
+            downloadComplete: downloadComplete
+        )
+                
         return realmDatabase.writeObjectsPublisher { (realm: Realm) -> [RealmDownloadedLanguage] in
             
-            let realmDownloadedLanguage = RealmDownloadedLanguage()
-            realmDownloadedLanguage.mapFrom(dataModel: downloadedLanguage)
+            let realmDownloadedLanguage = RealmDownloadedLanguage.createNewFrom(model: downloadedLanguage)
             
             return [realmDownloadedLanguage]
             
         } mapInBackgroundClosure: { (objects: [RealmDownloadedLanguage]) -> [DownloadedLanguageDataModel] in
             return objects.map({
-                DownloadedLanguageDataModel(realmDownloadedLanguage: $0)
+                $0.toModel()
             })
         }
         .map { _ in

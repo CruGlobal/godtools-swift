@@ -22,6 +22,9 @@ class RealmDownloadedTranslation: Object, IdentifiableRealmObject {
     override static func primaryKey() -> String? {
         return "translationId"
     }
+}
+
+extension RealmDownloadedTranslation {
     
     func mapFrom(model: DownloadedTranslationDataModel) {
         id = model.id
@@ -37,9 +40,6 @@ class RealmDownloadedTranslation: Object, IdentifiableRealmObject {
         downloadedTranslation.mapFrom(model: model)
         return downloadedTranslation
     }
-}
-
-extension RealmDownloadedTranslation {
     
     func toModel() -> DownloadedTranslationDataModel {
         return DownloadedTranslationDataModel(

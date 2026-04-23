@@ -49,9 +49,6 @@ extension RealmFavoritedResource {
         
         return object
     }
-}
-
-extension RealmFavoritedResource {
     
     func toModel() -> FavoritedResourceDataModel {
         return FavoritedResourceDataModel(

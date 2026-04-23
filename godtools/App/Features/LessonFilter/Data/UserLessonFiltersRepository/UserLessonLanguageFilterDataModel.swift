@@ -8,13 +8,10 @@
 
 import Foundation
 
-struct UserLessonLanguageFilterDataModel {
+struct UserLessonLanguageFilterDataModel: Sendable {
     
+    let id: String
     let createdAt: Date
     let languageId: String
-    
-    init(realmUserLessonLanguageFilter: RealmUserLessonLanguageFilter) {
-        createdAt = realmUserLessonLanguageFilter.createdAt
-        languageId = realmUserLessonLanguageFilter.languageId
-    }
+    let filterId: String
 }

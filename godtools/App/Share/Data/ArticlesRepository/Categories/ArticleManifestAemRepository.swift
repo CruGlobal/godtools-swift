@@ -11,7 +11,7 @@ import GodToolsShared
 import Combine
 import RequestOperation
 
-class ArticleManifestAemRepository: ArticleAemRepository {
+final class ArticleManifestAemRepository: ArticleAemRepository {
     
     private let categoryArticlesCache: RealmCategoryArticlesCache
     private let syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface

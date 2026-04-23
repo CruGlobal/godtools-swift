@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class UserLessonFiltersRepository {
+final class UserLessonFiltersRepository {
     
     static let filterId = "userLessonLanguageFilter"
     

@@ -15,3 +15,16 @@ struct EmailSignUp: Sendable {
     let lastName: String?
     let isRegistered: Bool
 }
+
+extension EmailSignUp {
+    
+    func toModel(id: String) -> EmailSignUpDataModel {
+        return EmailSignUpDataModel(
+            id: id,
+            email: email,
+            firstName: firstName,
+            lastName: lastName,
+            isRegistered: isRegistered
+        )
+    }
+}
