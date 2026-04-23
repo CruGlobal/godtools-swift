@@ -22,18 +22,16 @@ final class GetGlobalActivityThisWeekUseCase {
         self.getTranslatedNumberCount = getTranslatedNumberCount
     }
     
-    @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[GlobalActivityDomainModel], Never> {
+    @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[GlobalActivityDomainModel], Error> {
         
         return globalAnalyticsRepository
             .getGlobalAnalyticsChangedPublisher(
                 requestPriority: .high
             )
-            .flatMap({ (dataModel: GlobalAnalyticsDataModel?) -> AnyPublisher<[GlobalActivityDomainModel], Never> in
+            .map { (dataModel: GlobalAnalyticsDataModel?) in
                 
                 guard let dataModel = dataModel else {
-                    
-                    return Just([])
-                        .eraseToAnyPublisher()
+                    return Array()
                 }
                 
                 let localeId = appLanguage
@@ -60,9 +58,8 @@ final class GetGlobalActivityThisWeekUseCase {
                 
                 let activityThisWeek: [GlobalActivityDomainModel] = [usersAnalytics, gospelPresentationAnalytics, launchesAnalytics, countriesAnalytics]
                 
-                return Just(activityThisWeek)
-                    .eraseToAnyPublisher()
-            })
+                return activityThisWeek
+            }
             .eraseToAnyPublisher()
     }
 }
