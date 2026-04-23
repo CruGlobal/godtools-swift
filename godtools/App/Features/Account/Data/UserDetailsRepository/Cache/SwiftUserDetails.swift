@@ -30,27 +30,27 @@ enum SwiftUserDetailsV1 {
         init() {
             
         }
-        
-        func mapFrom(model: UserDetailsDataModel) {
-            
-            id = model.id
-            createdAt = model.createdAt
-            familyName = model.familyName
-            givenName = model.givenName
-            name = model.name
-            ssoGuid = model.ssoGuid
-        }
-        
-        static func createNewFrom(model: UserDetailsDataModel) -> SwiftUserDetails {
-            let object = SwiftUserDetails()
-            object.mapFrom(model: model)
-            return object
-        }
     }
 }
 
 @available(iOS 17.4, *)
 extension SwiftUserDetails {
+    
+    func mapFrom(model: UserDetailsDataModel) {
+        
+        id = model.id
+        createdAt = model.createdAt
+        familyName = model.familyName
+        givenName = model.givenName
+        name = model.name
+        ssoGuid = model.ssoGuid
+    }
+    
+    static func createNewFrom(model: UserDetailsDataModel) -> SwiftUserDetails {
+        let object = SwiftUserDetails()
+        object.mapFrom(model: model)
+        return object
+    }
     
     func toModel() -> UserDetailsDataModel {
         return UserDetailsDataModel(

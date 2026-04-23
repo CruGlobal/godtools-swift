@@ -31,3 +31,32 @@ enum SwiftEmailSignUpV1 {
         }
     }
 }
+
+@available(iOS 17.4, *)
+extension SwiftEmailSignUp {
+    
+    func mapFrom(model: EmailSignUpDataModel) {
+        
+        id = model.id
+        email = model.email
+        firstName = model.firstName
+        lastName = model.lastName
+        isRegistered = model.isRegistered
+    }
+    
+    static func createNewFrom(model: EmailSignUpDataModel) -> SwiftEmailSignUp {
+        let object = SwiftEmailSignUp()
+        object.mapFrom(model: model)
+        return object
+    }
+    
+    func toModel() -> EmailSignUpDataModel {
+        return EmailSignUpDataModel(
+            id: id,
+            email: email,
+            firstName: firstName,
+            lastName: lastName,
+            isRegistered: isRegistered
+        )
+    }
+}

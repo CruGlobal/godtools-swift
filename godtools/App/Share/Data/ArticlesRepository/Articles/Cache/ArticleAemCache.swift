@@ -68,20 +68,20 @@ class ArticleAemCache {
             return nil
         }
         
-        let cacheLocation = ArticleAemWebArchiveFileCacheLocation(filename: realmAemData.webArchiveFilename)
+        let articleAemWebArchive = ArticleAemWebArchive(filename: realmAemData.webArchiveFilename)
         
         do {
             
-            let url: URL = try fileCache.getFile(location: cacheLocation)
+            let url: URL = try fileCache.getFile(location: articleAemWebArchive.location)
             
-            let aemData = ArticleAemData(realmModel: realmAemData)
+            let aemData = realmAemData.toModel()
             let aemCacheObject = ArticleAemCacheObject(aemUri: aemUri, aemData: aemData, webArchiveFileUrl: url, fetchWebArchiveFileUrlError: nil)
             
             return aemCacheObject
         }
         catch let error {
             
-            let aemData = ArticleAemData(realmModel: realmAemData)
+            let aemData = realmAemData.toModel()
             let aemCacheObject = ArticleAemCacheObject(aemUri: aemUri, aemData: aemData, webArchiveFileUrl: nil, fetchWebArchiveFileUrlError: error)
             
             return aemCacheObject
@@ -277,7 +277,7 @@ class ArticleAemCache {
         
         do {
             _ = try fileCache.storeFile(
-                location: ArticleAemWebArchiveFileCacheLocation(filename: webArchiveFilename),
+                location: ArticleAemWebArchive(filename: webArchiveFilename).location,
                 data: webArchivePlistData
             )
             
@@ -294,7 +294,7 @@ class ArticleAemCache {
         do {
             
             try fileCache.removeFile(
-                location: ArticleAemWebArchiveFileCacheLocation(filename: webArchiveFilename)
+                location: ArticleAemWebArchive(filename: webArchiveFilename).location
             )
             
             return nil

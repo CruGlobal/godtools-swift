@@ -11,9 +11,7 @@ import GodToolsShared
 import Combine
 
 class TractViewModel: MobileContentRendererViewModel {
-    
-    private static var backgroundCancellables: Set<AnyCancellable> = Set()
-    
+        
     static let isLiveShareStreamingKey: String = "TractViewModel.isLiveShareStreamKey"
     
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
@@ -154,14 +152,12 @@ class TractViewModel: MobileContentRendererViewModel {
         
         subscribeToLiveShareStreamIfNeeded()
         
-        resourceViewsService
-            .postNewResourceViewPublisher(resourceId: resource.id, requestPriority: .medium)
-            .sink { _ in
-                
-            } receiveValue: { _ in
-                
-            }
-            .store(in: &Self.backgroundCancellables)
+        Task {
+            try await resourceViewsService.postNewResourceView(
+                resourceId: resource.id,
+                requestPriority: .medium
+            )
+        }
     }
     
     private func trackLanguageTapped(tappedLanguage: LanguageDataModel) {

@@ -9,11 +9,11 @@
 import Foundation
 import Combine
 
-class DownloadedLanguagesRepository {
+final class DownloadedLanguagesRepository {
     
-    private let cache: RealmDownloadedLanguagesCache
+    private let cache: DownloadedLanguagesCache
     
-    init(cache: RealmDownloadedLanguagesCache) {
+    init(cache: DownloadedLanguagesCache) {
         
         self.cache = cache
     }

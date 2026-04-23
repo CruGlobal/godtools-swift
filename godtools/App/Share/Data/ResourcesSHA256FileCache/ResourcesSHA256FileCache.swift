@@ -13,7 +13,7 @@ import UIKit
 import RepositorySync
 import Combine
 
-class ResourcesSHA256FileCache {
+final class ResourcesSHA256FileCache {
     
     private static let rootDirectoryName: String = "godtools_resources_files"
     

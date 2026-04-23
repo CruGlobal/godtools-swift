@@ -10,41 +10,39 @@ import Foundation
 import RequestOperation
 import Combine
 
-class EmailSignUpService {
+final class EmailSignUpService {
     
-    private let api: EmailSignUpApi
+    private let api: EmailSignUpApiInterface
     private let cache: RealmEmailSignUpsCache
     
-    init(api: EmailSignUpApi, cache: RealmEmailSignUpsCache) {
+    init(api: EmailSignUpApiInterface, cache: RealmEmailSignUpsCache) {
         
         self.api = api
         self.cache = cache
     }
     
-    func postNewEmailSignUpPublisher(emailSignUp: EmailSignUpModel, requestPriority: RequestPriority) -> AnyPublisher<Void, Never> {
+    func postNewEmailSignUp(emailSignUp: EmailSignUp, requestPriority: RequestPriority) async throws {
         
-        guard !cache.emailIsRegistered(email: emailSignUp.email) else {
-            return Just(Void())
-                .eraseToAnyPublisher()
+        let emailIsRegistered: Bool = try cache.emailIsRegistered(email: emailSignUp.email)
+        
+        guard !emailIsRegistered else {
+            return
         }
         
-        return api.postEmailSignUpPublisher(emailSignUp: emailSignUp, requestPriority: requestPriority)
-            .map { (response: RequestDataResponse) in
-                
-                let httpStatusCode: Int = response.urlResponse.httpStatusCode ?? -1
-                let httpStatusCodeSuccess: Bool = httpStatusCode >= 200 && httpStatusCode < 400
-
-                if httpStatusCodeSuccess {
-                    let registeredEmailSignUp = EmailSignUpModel(model: emailSignUp, isRegistered: true)
-                    self.cache.cacheEmailSignUp(emailSignUp: registeredEmailSignUp)
-                }
-
-                return Void()
-            }
-            .catch { (error: Error) in
-                return Just(Void())
-                    .eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
+        let response = try await api.postEmailSignUp(emailSignUp: emailSignUp, requestPriority: requestPriority)
+        
+        let isSuccess: Bool = response.urlResponse.isSuccessHttpStatusCode
+        
+        if isSuccess {
+            
+            let registeredEmailSignUp = EmailSignUp(
+                email: emailSignUp.email,
+                firstName: emailSignUp.firstName,
+                lastName: emailSignUp.lastName,
+                isRegistered: true
+            )
+            
+            self.cache.cacheEmailSignUp(emailSignUp: registeredEmailSignUp)
+        }
     }
 }

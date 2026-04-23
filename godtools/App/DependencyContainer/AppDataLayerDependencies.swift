@@ -100,14 +100,14 @@ class AppDataLayerDependencies {
             
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftAttachmentDataModelMapping()
+                dataModelMapping: SwiftAttachmentMapping()
             )
         }
         else {
             
             persistence = RealmRepositorySyncPersistence(
                 database: getSharedRealmDatabase(),
-                dataModelMapping: RealmAttachmentDataModelMapping()
+                dataModelMapping: RealmAttachmentMapping()
             )
         }
         
@@ -131,8 +131,28 @@ class AppDataLayerDependencies {
     }
     
     func getCompletedTrainingTipRepository() -> CompletedTrainingTipRepository {
+        
+        let persistence: any Persistence<CompletedTrainingTipDataModel, CompletedTrainingTipDataModel>
+        
+        if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                dataModelMapping: SwiftCompletedTrainingTipMapping()
+            )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                database: getSharedRealmDatabase(),
+                dataModelMapping: RealmCompletedTrainingTipMapping()
+            )
+        }
+        
         return CompletedTrainingTipRepository(
-            cache: RealmCompletedTrainingTipCache(realmDatabase: getSharedLegacyRealmDatabase())
+            cache: CompletedTrainingTipCache(
+                persistence: persistence
+            )
         )
     }
     
@@ -152,7 +172,7 @@ class AppDataLayerDependencies {
                 urlSessionPriority: getSharedUrlSessionPriority(),
                 requestSender: getRequestSender()
             ),
-            cache: RealmEmailSignUpsCache(realmDatabase: getSharedLegacyRealmDatabase())
+            cache: RealmEmailSignUpsCache(realmDatabase: getSharedRealmDatabase())
         )
     }
     
@@ -210,7 +230,7 @@ class AppDataLayerDependencies {
         )
         
         let cache = FailedFollowUpsCache(
-            realmDatabase: getSharedLegacyRealmDatabase()
+            realmDatabase: getSharedRealmDatabase()
         )
         
         return FollowUpsService(
@@ -231,14 +251,14 @@ class AppDataLayerDependencies {
             
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftLanguageDataModelMapping()
+                dataModelMapping: SwiftLanguageMapping()
             )
         }
         else {
             
             persistence = RealmRepositorySyncPersistence(
                 database: getSharedRealmDatabase(),
-                dataModelMapping: RealmLanguageDataModelMapping()
+                dataModelMapping: RealmLanguageMapping()
             )
         }
         
@@ -346,14 +366,14 @@ class AppDataLayerDependencies {
             
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftResourceDataModelMapping()
+                dataModelMapping: SwiftResourceMapping()
             )
         }
         else {
             
             persistence = RealmRepositorySyncPersistence(
                 database: getSharedRealmDatabase(),
-                dataModelMapping: RealmResourceDataModelMapping()
+                dataModelMapping: RealmResourceMapping()
             )
         }
         
@@ -382,12 +402,14 @@ class AppDataLayerDependencies {
     func getResourceViewsService() -> ResourceViewsService {
         
         return ResourceViewsService(
-            resourceViewsApi: MobileContentResourceViewsApi(
+            api: MobileContentResourceViewsApi(
                 config: getAppConfig(),
                 urlSessionPriority: getSharedUrlSessionPriority(),
                 requestSender: getRequestSender()
             ),
-            failedResourceViewsCache: FailedResourceViewsCache(realmDatabase: getSharedLegacyRealmDatabase())
+            failedResourceViewsCache: FailedResourceViewsCache(
+                realmDatabase: getSharedRealmDatabase()
+            )
         )
     }
     
@@ -440,14 +462,14 @@ class AppDataLayerDependencies {
             
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftDownloadedTranslationDataModelMapping()
+                dataModelMapping: SwiftDownloadedTranslationMapping()
             )
         }
         else {
             
             persistence = RealmRepositorySyncPersistence(
                 database: getSharedRealmDatabase(),
-                dataModelMapping: RealmDownloadedTranslationDataModelMapping()
+                dataModelMapping: RealmDownloadedTranslationMapping()
             )
         }
         
@@ -468,14 +490,14 @@ class AppDataLayerDependencies {
             
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftTranslationDataModelMapping()
+                dataModelMapping: SwiftTranslationMapping()
             )
         }
         else {
             
             persistence = RealmRepositorySyncPersistence(
                 database: getSharedRealmDatabase(),
-                dataModelMapping: RealmTranslationDataModelMapping()
+                dataModelMapping: RealmTranslationMapping()
             )
         }
         
@@ -565,12 +587,18 @@ class AppDataLayerDependencies {
         
         let cache = UserCountersCache(persistence: persistence)
         
+        let syncInvalidator = SyncInvalidator(
+            id:  "userCounters.getCounters",
+            timeInterval: .hours(hour: 2),
+            persistence: getUserDefaultsCache()
+        )
+        
         return UserCountersRepository(
             api: api,
             persistence: persistence,
             localUserCounterIncrement: localUserCounterIncrement,
             cache: cache,
-            syncInvalidatorPersistence: getUserDefaultsCache()
+            syncInvalidator: syncInvalidator
         )
     }
     

@@ -107,14 +107,14 @@ class PersonalizedToolsDataLayerDependencies {
             
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftUserLocalizationSettingsDataModelMapping()
+                dataModelMapping: SwiftUserLocalizationSettingsMapping()
             )
         }
         else {
             
             persistence = RealmRepositorySyncPersistence(
                 database: coreDataLayer.getSharedRealmDatabase(),
-                dataModelMapping: RealmUserLocalizationSettingsDataModelMapping()
+                dataModelMapping: RealmUserLocalizationSettingsMapping()
             )
         }
         

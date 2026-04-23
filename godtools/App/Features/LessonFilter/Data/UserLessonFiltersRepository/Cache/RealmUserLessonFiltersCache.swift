@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import Combine
 
-class RealmUserLessonFiltersCache {
+final class RealmUserLessonFiltersCache {
     
     private let realmDatabase: LegacyRealmDatabase
     
@@ -31,7 +31,7 @@ class RealmUserLessonFiltersCache {
         if let realmLanguageFilter = realmDatabase.openRealm()
             .object(ofType: RealmUserLessonLanguageFilter.self, forPrimaryKey: filterId) {
             
-            return UserLessonLanguageFilterDataModel(realmUserLessonLanguageFilter: realmLanguageFilter)
+            return realmLanguageFilter.toModel()
         } else {
             
             return nil
@@ -45,6 +45,8 @@ class RealmUserLessonFiltersCache {
         let realmUserLessonLanguageFilter = RealmUserLessonLanguageFilter()
         realmUserLessonLanguageFilter.languageId = languageId
         realmUserLessonLanguageFilter.filterId = filterId
+        realmUserLessonLanguageFilter.id = filterId
+        realmUserLessonLanguageFilter.createdAt = Date()
         
         do {
             

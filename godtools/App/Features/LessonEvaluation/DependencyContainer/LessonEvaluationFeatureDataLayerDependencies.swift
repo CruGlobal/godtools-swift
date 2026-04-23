@@ -19,7 +19,7 @@ class LessonEvaluationFeatureDataLayerDependencies {
         
     func getLessonEvaluationRepository() -> LessonEvaluationRepository {
         return LessonEvaluationRepository(
-            cache: LessonEvaluationRealmCache(realmDatabase: coreDataLayer.getSharedLegacyRealmDatabase())
+            cache: LessonEvaluationCache(realmDatabase: coreDataLayer.getSharedRealmDatabase())
         )
     }
     

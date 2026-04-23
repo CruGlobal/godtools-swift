@@ -26,14 +26,14 @@ class AppLanguageFeatureDataLayerDependencies {
             
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftAppLanguageDataModelMapping()
+                dataModelMapping: SwiftAppLanguageMapping()
             )
         }
         else {
             
             persistence = RealmRepositorySyncPersistence(
                 database: coreDataLayer.getSharedRealmDatabase(),
-                dataModelMapping: RealmAppLanguageDataModelMapping()
+                dataModelMapping: RealmAppLanguageMapping()
             )
         }
         
@@ -59,7 +59,9 @@ class AppLanguageFeatureDataLayerDependencies {
     }
     
     func getDownloadedLanguagesRepository() -> DownloadedLanguagesRepository {
-        return DownloadedLanguagesRepository(cache: getRealmDownloadedLanguagesCache())
+        return DownloadedLanguagesRepository(
+            cache: DownloadedLanguagesCache(realmDatabase: coreDataLayer.getSharedLegacyRealmDatabase())
+        )
     }
     
     func getToolLanguageDownloader() -> ToolLanguageDownloader {
@@ -71,10 +73,6 @@ class AppLanguageFeatureDataLayerDependencies {
         )
     }
     
-    private func getRealmDownloadedLanguagesCache() -> RealmDownloadedLanguagesCache {
-        return RealmDownloadedLanguagesCache(realmDatabase: coreDataLayer.getSharedLegacyRealmDatabase())
-    }
-    
     func getUserAppLanguageRepository() -> UserAppLanguageRepository {
         
         let persistence: any Persistence<UserAppLanguageDataModel, UserAppLanguageDataModel>
@@ -83,14 +81,14 @@ class AppLanguageFeatureDataLayerDependencies {
             
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftUserAppLanguageDataModelMapping()
+                dataModelMapping: SwiftUserAppLanguageMapping()
             )
         }
         else {
             
             persistence = RealmRepositorySyncPersistence(
                 database: coreDataLayer.getSharedRealmDatabase(),
-                dataModelMapping: RealmUserAppLanguageDataModelMapping()
+                dataModelMapping: RealmUserAppLanguageMapping()
             )
         }
         

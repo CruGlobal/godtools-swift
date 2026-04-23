@@ -33,3 +33,37 @@ enum SwiftGlobalAnalyticsV1 {
         }
     }
 }
+
+@available(iOS 17.4, *)
+extension SwiftGlobalAnalytics {
+    
+    func mapFrom(model: GlobalAnalyticsDataModel) {
+        
+        countries = model.countries
+        createdAt = model.createdAt
+        gospelPresentations = model.gospelPresentations
+        id = model.id
+        launches = model.launches
+        type = model.type
+        users = model.users
+    }
+    
+    static func createNewFrom(model: GlobalAnalyticsDataModel) -> SwiftGlobalAnalytics {
+        
+        let object = SwiftGlobalAnalytics()
+        object.mapFrom(model: model)
+        return object
+    }
+ 
+    func toModel() -> GlobalAnalyticsDataModel {
+        return GlobalAnalyticsDataModel(
+            id: id,
+            createdAt: createdAt,
+            countries: countries,
+            gospelPresentations: gospelPresentations,
+            launches: launches,
+            users: users,
+            type: type
+        )
+    }
+}

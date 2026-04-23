@@ -10,7 +10,6 @@ import UIKit
 
 class AppDiContainer {
         
-    private let failedFollowUpsCache: FailedFollowUpsCache
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
     
     let dataLayer: AppDataLayerDependencies
@@ -98,8 +97,6 @@ class AppDiContainer {
             tutorial: tutorialDiContainer,
             userActivity: userActivityDiContainer
         )
-                                                                
-        failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: dataLayer.getSharedLegacyRealmDatabase())
     }
     
     static func createUITestsDiContainer() -> AppDiContainer {

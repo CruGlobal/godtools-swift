@@ -11,9 +11,7 @@ import GodToolsShared
 import Combine
 
 class TractPageFormViewModel: MobileContentFormViewModel {
-    
-    private static var backgroundCancellables: Set<AnyCancellable> = Set()
-    
+        
     private let followUpService: FollowUpsService
     private let localizationServices: LocalizationServicesInterface
     
@@ -69,21 +67,19 @@ class TractPageFormViewModel: MobileContentFormViewModel {
         
         let languageId: Int = Int(renderedPageContext.language.id) ?? 0
         
-        let followUpModel = FollowUpModel(
+        let followUp = FollowUp(
             name: name,
             email: email,
             destinationId: destinationId,
             languageId: languageId
         )
         
-        followUpService
-            .postFollowUpPublisher(followUp: followUpModel, requestPriority: .medium)
-            .sink { _ in
-                
-            } receiveValue: { _ in
-                
-            }
-            .store(in: &Self.backgroundCancellables)
+        Task {
+            try await followUpService.postFollowUp(
+                followUp: followUp,
+                requestPriority: .medium
+            )
+        }
         
         didSendFollowUpSignal.accept(value: eventIds)
     }

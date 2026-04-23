@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class UserToolSettingsRepository {
+final class UserToolSettingsRepository {
     
     private let cache: RealmUserToolSettingsCache
     
@@ -20,6 +20,8 @@ class UserToolSettingsRepository {
     func storeUserToolSettings(toolId: String, primaryLanguageId: String, parallelLanguageId: String?) {
         
         let dataModel = UserToolSettingsDataModel(
+            id: toolId,
+            createdAt: Date(),
             toolId: toolId,
             primaryLanguageId: primaryLanguageId,
             parallelLanguageId: parallelLanguageId

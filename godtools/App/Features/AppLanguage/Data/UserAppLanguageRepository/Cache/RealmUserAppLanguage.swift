@@ -18,6 +18,9 @@ class RealmUserAppLanguage: Object, IdentifiableRealmObject {
     override static func primaryKey() -> String? {
         return "id"
     }
+}
+
+extension RealmUserAppLanguage {
     
     func mapFrom(model: UserAppLanguageDataModel) {
         id = model.id
@@ -29,11 +32,11 @@ class RealmUserAppLanguage: Object, IdentifiableRealmObject {
         object.mapFrom(model: model)
         return object
     }
-}
-
-extension RealmUserAppLanguage {
     
     func toModel() -> UserAppLanguageDataModel {
-        return UserAppLanguageDataModel(id: id, languageId: languageId)
+        return UserAppLanguageDataModel(
+            id: id,
+            languageId: languageId
+        )
     }
 }

@@ -33,3 +33,40 @@ enum SwiftArticleAemDataV1 {
         }
     }
 }
+
+@available(iOS 17.4, *)
+extension SwiftArticleAemData {
+    
+    func mapFrom(model: ArticleAemData, ignorePrimaryKey: Bool) {
+        
+        if !ignorePrimaryKey {
+            aemUri = model.aemUri
+        }
+        
+        id = model.id
+        
+        if let articleJcrContentModel = model.articleJcrContent {
+            articleJcrContent = SwiftArticleJrcContent.createNewFrom(model: articleJcrContentModel)
+        }
+        
+        webUrl = model.webUrl
+        updatedAt = model.updatedAt
+    }
+    
+    static func createNewFrom(model: ArticleAemData) -> SwiftArticleAemData {
+        
+        let object = SwiftArticleAemData()
+        object.mapFrom(model: model, ignorePrimaryKey: false)
+        return object
+    }
+    
+    func toModel() -> ArticleAemData {
+        return ArticleAemData(
+            id: id,
+            aemUri: aemUri,
+            articleJcrContent: articleJcrContent?.toModel(),
+            webUrl: webUrl,
+            updatedAt: updatedAt
+        )
+    }
+}

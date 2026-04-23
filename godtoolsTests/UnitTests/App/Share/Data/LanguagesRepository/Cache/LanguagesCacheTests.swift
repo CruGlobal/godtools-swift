@@ -207,7 +207,7 @@ extension LanguagesCacheTests {
         
         let persistence = RealmRepositorySyncPersistence(
             database: testsDiContainer.dataLayer.getSharedRealmDatabase(),
-            dataModelMapping: RealmLanguageDataModelMapping()
+            dataModelMapping: RealmLanguageMapping()
         )
         
         return LanguagesCache(

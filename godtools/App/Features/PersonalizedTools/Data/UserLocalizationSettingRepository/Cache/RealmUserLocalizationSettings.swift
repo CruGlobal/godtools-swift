@@ -19,7 +19,10 @@ class RealmUserLocalizationSettings: Object, IdentifiableRealmObject {
     override static func primaryKey() -> String? {
         return "id"
     }
+}
 
+extension RealmUserLocalizationSettings {
+    
     func mapFrom(model: UserLocalizationSettingsDataModel) {
         id = model.id
         createdAt = model.createdAt
@@ -31,9 +34,6 @@ class RealmUserLocalizationSettings: Object, IdentifiableRealmObject {
         object.mapFrom(model: model)
         return object
     }
-}
-
-extension RealmUserLocalizationSettings {
     
     func toModel() -> UserLocalizationSettingsDataModel {
         UserLocalizationSettingsDataModel(

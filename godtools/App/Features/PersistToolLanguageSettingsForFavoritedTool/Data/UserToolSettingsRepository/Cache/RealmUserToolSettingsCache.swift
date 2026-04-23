@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import Combine
 
-class RealmUserToolSettingsCache {
+final class RealmUserToolSettingsCache {
     
     private let realmDatabase: LegacyRealmDatabase
     
@@ -22,8 +22,7 @@ class RealmUserToolSettingsCache {
         
         let realm: Realm = realmDatabase.openRealm()
         
-        let realmToolSettings = RealmUserToolSettings()
-        realmToolSettings.mapFrom(dataModel: dataModel)
+        let realmToolSettings = RealmUserToolSettings.createNewFrom(model: dataModel)
         
         do {
             
@@ -44,7 +43,7 @@ class RealmUserToolSettingsCache {
             return nil
         }
         
-        return UserToolSettingsDataModel(realmObject: realmToolSettings)
+        return realmToolSettings.toModel()
     }
     
     func getUserToolSettingsPublisher(toolId: String) -> AnyPublisher<UserToolSettingsDataModel?, Never> {

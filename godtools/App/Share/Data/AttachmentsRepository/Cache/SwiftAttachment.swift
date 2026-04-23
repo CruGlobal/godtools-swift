@@ -33,35 +33,26 @@ enum SwiftAttachmentV1 {
         init() {
             
         }
-        
-        func mapFrom(model: AttachmentDataModel) {
-            file = model.file
-            fileFilename = model.fileFilename
-            id = model.id
-            isZipped = model.isZipped
-            sha256 = model.sha256
-            type = model.type
-        }
-        
-        static func createNewFrom(model: AttachmentDataModel) -> SwiftAttachment {
-            let attachment = SwiftAttachment()
-            attachment.mapFrom(model: model)
-            return attachment
-        }
-        
-        var resourceDataModel: ResourceDataModel? {
-            
-            guard let swiftResource = resource else {
-                return nil
-            }
-            
-            return swiftResource.toModel()
-        }
     }
 }
 
 @available(iOS 17.4, *)
 extension SwiftAttachment {
+    
+    func mapFrom(model: AttachmentDataModel) {
+        file = model.file
+        fileFilename = model.fileFilename
+        id = model.id
+        isZipped = model.isZipped
+        sha256 = model.sha256
+        type = model.type
+    }
+    
+    static func createNewFrom(model: AttachmentDataModel) -> SwiftAttachment {
+        let attachment = SwiftAttachment()
+        attachment.mapFrom(model: model)
+        return attachment
+    }
     
     func toModel() -> AttachmentDataModel {
         return AttachmentDataModel(
@@ -74,5 +65,14 @@ extension SwiftAttachment {
             resourceDataModel: resourceDataModel,
             storedAttachment: nil
         )
+    }
+    
+    var resourceDataModel: ResourceDataModel? {
+        
+        guard let swiftResource = resource else {
+            return nil
+        }
+        
+        return swiftResource.toModel()
     }
 }

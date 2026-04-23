@@ -20,7 +20,10 @@ class RealmPersonalizedLessons: Object, IdentifiableRealmObject {
     override static func primaryKey() -> String? {
         return "id"
     }
+}
 
+extension RealmPersonalizedLessons {
+    
     func mapFrom(model: PersonalizedLessonsDataModel) {
         id = model.id
         updatedAt = model.updatedAt
@@ -33,9 +36,6 @@ class RealmPersonalizedLessons: Object, IdentifiableRealmObject {
         object.mapFrom(model: model)
         return object
     }
-}
-
-extension RealmPersonalizedLessons {
     
     func toModel() -> PersonalizedLessonsDataModel {
         return PersonalizedLessonsDataModel(

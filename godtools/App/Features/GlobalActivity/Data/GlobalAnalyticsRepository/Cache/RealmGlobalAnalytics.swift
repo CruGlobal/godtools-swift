@@ -8,8 +8,9 @@
 
 import Foundation
 import RealmSwift
+import RepositorySync
 
-class RealmGlobalAnalytics: Object {
+class RealmGlobalAnalytics: Object, IdentifiableRealmObject {
     
     @objc dynamic var countries: Int = 0
     @objc dynamic var createdAt: Date = Date()
@@ -22,15 +23,37 @@ class RealmGlobalAnalytics: Object {
     override static func primaryKey() -> String? {
         return "id"
     }
-    
-    func mapFrom(decodable: MobileContentGlobalAnalyticsDecodable) {
+}
+
+extension RealmGlobalAnalytics {
+ 
+    func mapFrom(model: GlobalAnalyticsDataModel) {
         
-        countries = decodable.countries
-        createdAt = Date()
-        gospelPresentations = decodable.gospelPresentations
-        id = decodable.id
-        launches = decodable.launches
-        type = decodable.type
-        users = decodable.users
+        countries = model.countries
+        createdAt = model.createdAt
+        gospelPresentations = model.gospelPresentations
+        id = model.id
+        launches = model.launches
+        type = model.type
+        users = model.users
+    }
+    
+    static func createNewFrom(model: GlobalAnalyticsDataModel) -> RealmGlobalAnalytics {
+        
+        let object = RealmGlobalAnalytics()
+        object.mapFrom(model: model)
+        return object
+    }
+    
+    func toModel() -> GlobalAnalyticsDataModel {
+        return GlobalAnalyticsDataModel(
+            id: id,
+            createdAt: createdAt,
+            countries: countries,
+            gospelPresentations: gospelPresentations,
+            launches: launches,
+            users: users,
+            type: type
+        )
     }
 }

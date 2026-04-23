@@ -20,6 +20,9 @@ class RealmFavoritedResource: Object, IdentifiableRealmObject {
     override static func primaryKey() -> String? {
         return "resourceId"
     }
+}
+
+extension RealmFavoritedResource {
     
     func mapFrom(model: FavoritedResourceDataModel) {
         
@@ -46,9 +49,6 @@ class RealmFavoritedResource: Object, IdentifiableRealmObject {
         
         return object
     }
-}
-
-extension RealmFavoritedResource {
     
     func toModel() -> FavoritedResourceDataModel {
         return FavoritedResourceDataModel(

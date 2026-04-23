@@ -32,3 +32,33 @@ enum SwiftCategoryArticleV1 {
         }
     }
 }
+
+@available(iOS 17.4, *)
+extension SwiftCategoryArticle {
+    
+    func mapFrom(model: CategoryArticleModel) {
+        
+        id = model.id
+        aemTag = model.aemTag
+        categoryId = model.categoryId
+        languageCode = model.languageCode
+        uuid = model.uuid.uuidString
+        aemUris = model.aemUris
+    }
+    
+    static func createNewFrom(model: CategoryArticleModel) -> SwiftCategoryArticle {
+        let object = SwiftCategoryArticle()
+        object.mapFrom(model: model)
+        return object
+    }
+   
+    func toModel() -> CategoryArticleModel {
+        return CategoryArticleModel(
+            id: id,
+            aemTag: aemTag,
+            aemUris: Array(aemUris),
+            categoryId: categoryId,
+            languageCode: languageCode
+        )
+    }
+}

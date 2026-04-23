@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct CategoryArticleUUID {
+struct CategoryArticleUUID: Sendable {
     
     let uuidString: String
     

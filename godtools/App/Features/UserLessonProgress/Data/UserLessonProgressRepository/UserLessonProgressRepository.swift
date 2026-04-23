@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class UserLessonProgressRepository {
+final class UserLessonProgressRepository {
     
     private let cache: RealmUserLessonProgressCache
     

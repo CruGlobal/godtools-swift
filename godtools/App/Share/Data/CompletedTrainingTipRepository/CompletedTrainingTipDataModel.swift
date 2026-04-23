@@ -8,26 +8,10 @@
 
 import Foundation
 
-struct CompletedTrainingTipDataModel {
+struct CompletedTrainingTipDataModel: Sendable {
     
     let id: String
     let trainingTipId: String
     let languageId: String
     let resourceId: String
-    
-    init(trainingTipDomainModel: TrainingTipDomainModel) {
-        
-        id = trainingTipDomainModel.id
-        trainingTipId = trainingTipDomainModel.trainingTipId
-        languageId = trainingTipDomainModel.languageId
-        resourceId = trainingTipDomainModel.resourceId
-    }
-    
-    init(realmCompletedTrainingTip: RealmCompletedTrainingTip) {
-        
-        id = realmCompletedTrainingTip.id
-        trainingTipId = realmCompletedTrainingTip.trainingTipId
-        languageId = realmCompletedTrainingTip.languageId
-        resourceId = realmCompletedTrainingTip.resourceId
-    }
 }

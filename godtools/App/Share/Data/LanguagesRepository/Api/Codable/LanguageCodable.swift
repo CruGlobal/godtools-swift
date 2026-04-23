@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LanguageCodable: Codable {
+struct LanguageCodable: Codable, Sendable {
     
     let code: BCP47LanguageIdentifier
     let directionString: String

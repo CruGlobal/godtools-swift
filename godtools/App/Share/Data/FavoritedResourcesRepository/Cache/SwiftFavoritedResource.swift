@@ -28,25 +28,25 @@ enum SwiftFavoritedResourceV1 {
         init() {
             
         }
-        
-        func mapFrom(model: FavoritedResourceDataModel) {
-            
-            createdAt = model.createdAt
-            id = model.id
-            resourceId = model.id
-            position = model.position
-        }
-        
-        static func createNewFrom(model: FavoritedResourceDataModel) -> SwiftFavoritedResource {
-            let object = SwiftFavoritedResource()
-            object.mapFrom(model: model)
-            return object
-        }
     }
 }
 
 @available(iOS 17.4, *)
 extension SwiftFavoritedResource {
+    
+    func mapFrom(model: FavoritedResourceDataModel) {
+        
+        createdAt = model.createdAt
+        id = model.id
+        resourceId = model.id
+        position = model.position
+    }
+    
+    static func createNewFrom(model: FavoritedResourceDataModel) -> SwiftFavoritedResource {
+        let object = SwiftFavoritedResource()
+        object.mapFrom(model: model)
+        return object
+    }
     
     func toModel() -> FavoritedResourceDataModel {
         return FavoritedResourceDataModel(

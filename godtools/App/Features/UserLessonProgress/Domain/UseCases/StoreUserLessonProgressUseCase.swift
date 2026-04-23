@@ -27,6 +27,7 @@ final class StoreUserLessonProgressUseCase {
         }
         
         let lessonProgress = UserLessonProgressDataModel(
+            id: lessonId,
             lessonId: lessonId,
             lastViewedPageId: lastViewedPageId,
             progress: progress

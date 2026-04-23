@@ -8,14 +8,10 @@
 
 import Foundation
 
-struct UserToolCategoryFilterDataModel {
+struct UserToolCategoryFilterDataModel: Sendable {
     
-    let createdAt: Date
+    let id: String
+    let filterId: String
     let categoryId: String
-    
-    init(realmUserToolCategoryFilter: RealmUserToolCategoryFilter) {
-        
-        createdAt = realmUserToolCategoryFilter.createdAt
-        categoryId = realmUserToolCategoryFilter.categoryId
-    }
+    let createdAt: Date
 }

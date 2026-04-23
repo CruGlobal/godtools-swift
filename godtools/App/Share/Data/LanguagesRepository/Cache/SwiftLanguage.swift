@@ -32,26 +32,26 @@ enum SwiftLanguageV1 {
         init() {
             
         }
-        
-        func mapFrom(model: LanguageDataModel) {
-            code = model.code
-            directionString = model.directionString
-            id = model.id
-            name = model.name
-            type = model.type
-            forceLanguageName = model.forceLanguageName
-        }
-        
-        static func createNewFrom(model: LanguageDataModel) -> SwiftLanguage {
-            let swiftLanguage = SwiftLanguage()
-            swiftLanguage.mapFrom(model: model)
-            return swiftLanguage
-        }
     }
 }
 
 @available(iOS 17.4, *)
 extension SwiftLanguage {
+    
+    func mapFrom(model: LanguageDataModel) {
+        code = model.code
+        directionString = model.directionString
+        id = model.id
+        name = model.name
+        type = model.type
+        forceLanguageName = model.forceLanguageName
+    }
+    
+    static func createNewFrom(model: LanguageDataModel) -> SwiftLanguage {
+        let swiftLanguage = SwiftLanguage()
+        swiftLanguage.mapFrom(model: model)
+        return swiftLanguage
+    }
     
     func toModel() -> LanguageDataModel {
         return LanguageDataModel(

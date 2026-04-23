@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import Combine
 
-class RealmUserLessonProgressCache {
+final class RealmUserLessonProgressCache {
     
     private let realmDatabase: LegacyRealmDatabase
     
@@ -31,7 +31,7 @@ class RealmUserLessonProgressCache {
         
         if let realmLessonProgress: RealmUserLessonProgress = realmDatabase.readObject(primaryKey: lessonId) {
             
-            return UserLessonProgressDataModel(realmUserLessonProgress: realmLessonProgress)
+            return realmLessonProgress.toModel()
         } else {
             return nil
         }
@@ -42,6 +42,7 @@ class RealmUserLessonProgressCache {
         return realmDatabase.writeObjectsPublisher(updatePolicy: .modified) { realm in
             
             let realmLessonProgress = RealmUserLessonProgress()
+            realmLessonProgress.id = lessonProgress.lessonId
             realmLessonProgress.lessonId = lessonProgress.lessonId
             realmLessonProgress.lastViewedPageId = lessonProgress.lastViewedPageId
             realmLessonProgress.progress = lessonProgress.progress
@@ -51,7 +52,7 @@ class RealmUserLessonProgressCache {
         } mapInBackgroundClosure: { (objects: [RealmUserLessonProgress]) in
             
             objects.map {
-                UserLessonProgressDataModel(realmUserLessonProgress: $0)
+                $0.toModel()
             }
         }
         .map { _ in
