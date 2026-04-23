@@ -28,16 +28,16 @@ final class SetCompletedTrainingTipUseCase {
         )
         
         return repository
-            .storeCompletedTrainingTip(trainingTipDataModel)
-            .flatMap { completedTrainingTipDataModel in
+            .storeCompletedTrainingTipPublisher(
+                completedTrainingTip: trainingTipDataModel
+            )
+            .map { (completedTrainingTipDataModel: CompletedTrainingTipDataModel) in
                 
-                let domainModel = TrainingTipDomainModel(
+                return TrainingTipDomainModel(
                     trainingTipId: completedTrainingTipDataModel.trainingTipId,
                     resourceId: completedTrainingTipDataModel.resourceId,
                     languageId: completedTrainingTipDataModel.languageId
                 )
-                
-                return Just(domainModel)
             }
             .eraseToAnyPublisher()
     }

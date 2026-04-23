@@ -1,5 +1,5 @@
 //
-//  SwiftDownloadedTranslationDataModelMapping.swift
+//  SwiftDownloadedTranslationMapping.swift
 //  godtools
 //
 //  Created by Levi Eggert on 12/3/25.
@@ -10,7 +10,7 @@ import Foundation
 import RepositorySync
 
 @available(iOS 17.4, *)
-final class SwiftDownloadedTranslationDataModelMapping: Mapping {
+final class SwiftDownloadedTranslationMapping: Mapping {
     
     func toDataModel(externalObject: DownloadedTranslationDataModel) -> DownloadedTranslationDataModel? {
         return externalObject

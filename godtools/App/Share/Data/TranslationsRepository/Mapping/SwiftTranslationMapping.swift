@@ -1,5 +1,5 @@
 //
-//  SwiftTranslationDataModelMapping.swift
+//  SwiftTranslationMapping.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/6/25.
@@ -10,7 +10,7 @@ import Foundation
 import RepositorySync
 
 @available(iOS 17.4, *)
-final class SwiftTranslationDataModelMapping: Mapping {
+final class SwiftTranslationMapping: Mapping {
     
     func toDataModel(externalObject: TranslationCodable) -> TranslationDataModel? {
         return externalObject.toModel()

@@ -1,5 +1,5 @@
 //
-//  SwiftUserLocalizationSettingsDataModelMapping.swift
+//  SwiftUserLocalizationSettingsMapping.swift
 //  godtools
 //
 //  Created by Levi Eggert on 2/5/26.
@@ -10,7 +10,7 @@ import Foundation
 import RepositorySync
 
 @available(iOS 17.4, *)
-final class SwiftUserLocalizationSettingsDataModelMapping: Mapping {
+final class SwiftUserLocalizationSettingsMapping: Mapping {
     
     func toDataModel(externalObject: UserLocalizationSettingsDataModel) -> UserLocalizationSettingsDataModel? {
         return externalObject

@@ -1,5 +1,5 @@
 //
-//  SwiftResourceDataModelMapping.swift
+//  SwiftResourceMapping.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/6/25.
@@ -10,7 +10,7 @@ import Foundation
 import RepositorySync
 
 @available(iOS 17.4, *)
-final class SwiftResourceDataModelMapping: Mapping {
+final class SwiftResourceMapping: Mapping {
     
     func toDataModel(externalObject: ResourceCodable) -> ResourceDataModel? {
         return externalObject.toModel()

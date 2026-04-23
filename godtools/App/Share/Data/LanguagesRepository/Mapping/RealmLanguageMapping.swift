@@ -1,5 +1,5 @@
 //
-//  RealmLanguageDataModelMapping.swift
+//  RealmLanguageMapping.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/5/25.
@@ -9,7 +9,7 @@
 import Foundation
 import RepositorySync
 
-final class RealmLanguageDataModelMapping: Mapping {
+final class RealmLanguageMapping: Mapping {
     
     func toDataModel(externalObject: LanguageCodable) -> LanguageDataModel? {
         return externalObject.toModel()

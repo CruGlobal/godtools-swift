@@ -1,5 +1,5 @@
 //
-//  SwiftUserAppLanguageDataModelMapping.swift
+//  SwiftUserAppLanguageMapping.swift
 //  godtools
 //
 //  Created by Levi Eggert on 2/2/26.
@@ -10,7 +10,7 @@ import Foundation
 import RepositorySync
 
 @available(iOS 17.4, *)
-final class SwiftUserAppLanguageDataModelMapping: Mapping {
+final class SwiftUserAppLanguageMapping: Mapping {
     
     func toDataModel(externalObject: UserAppLanguageDataModel) -> UserAppLanguageDataModel? {
         return externalObject
