@@ -168,14 +168,14 @@ extension PersonalizedToolsRepository {
                 requestPriority: requestPriority,
                 country: country,
                 language: language,
-                resourceType: .tract
+                resourceTypes: ResourceType.toolTypes
             )
 
         case .defaultOrder(let language):
             resourceCodables = try await api.getDefaultOrderResources(
                 requestPriority: requestPriority,
                 language: language,
-                resourceType: .tract
+                resourceTypes: ResourceType.toolTypes
             )
         }
 
