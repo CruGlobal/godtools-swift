@@ -1,5 +1,5 @@
 //
-//  RealmUserAppLanguageDataModelMapping.swift
+//  RealmUserAppLanguageMapping.swift
 //  godtools
 //
 //  Created by Levi Eggert on 2/2/26.
@@ -9,7 +9,7 @@
 import Foundation
 import RepositorySync
 
-final class RealmUserAppLanguageDataModelMapping: Mapping {
+final class RealmUserAppLanguageMapping: Mapping {
     
     func toDataModel(externalObject: UserAppLanguageDataModel) -> UserAppLanguageDataModel? {
         return externalObject

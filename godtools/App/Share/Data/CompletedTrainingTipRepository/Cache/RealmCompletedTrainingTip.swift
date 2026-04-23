@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import RepositorySync
 
-class RealmCompletedTrainingTip: Object {
+class RealmCompletedTrainingTip: Object, IdentifiableRealmObject {
     
     @objc dynamic var id: String = ""
     @objc dynamic var trainingTipId: String = ""

@@ -26,14 +26,14 @@ class AppLanguageFeatureDataLayerDependencies {
             
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftAppLanguageDataModelMapping()
+                dataModelMapping: SwiftAppLanguageMapping()
             )
         }
         else {
             
             persistence = RealmRepositorySyncPersistence(
                 database: coreDataLayer.getSharedRealmDatabase(),
-                dataModelMapping: RealmAppLanguageDataModelMapping()
+                dataModelMapping: RealmAppLanguageMapping()
             )
         }
         
@@ -81,14 +81,14 @@ class AppLanguageFeatureDataLayerDependencies {
             
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftUserAppLanguageDataModelMapping()
+                dataModelMapping: SwiftUserAppLanguageMapping()
             )
         }
         else {
             
             persistence = RealmRepositorySyncPersistence(
                 database: coreDataLayer.getSharedRealmDatabase(),
-                dataModelMapping: RealmUserAppLanguageDataModelMapping()
+                dataModelMapping: RealmUserAppLanguageMapping()
             )
         }
         

@@ -100,14 +100,14 @@ class AppDataLayerDependencies {
             
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftAttachmentDataModelMapping()
+                dataModelMapping: SwiftAttachmentMapping()
             )
         }
         else {
             
             persistence = RealmRepositorySyncPersistence(
                 database: getSharedRealmDatabase(),
-                dataModelMapping: RealmAttachmentDataModelMapping()
+                dataModelMapping: RealmAttachmentMapping()
             )
         }
         
@@ -131,8 +131,28 @@ class AppDataLayerDependencies {
     }
     
     func getCompletedTrainingTipRepository() -> CompletedTrainingTipRepository {
+        
+        let persistence: any Persistence<CompletedTrainingTipDataModel, CompletedTrainingTipDataModel>
+        
+        if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                dataModelMapping: SwiftCompletedTrainingTipMapping()
+            )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                database: getSharedRealmDatabase(),
+                dataModelMapping: RealmCompletedTrainingTipMapping()
+            )
+        }
+        
         return CompletedTrainingTipRepository(
-            cache: RealmCompletedTrainingTipCache(realmDatabase: getSharedLegacyRealmDatabase())
+            cache: CompletedTrainingTipCache(
+                persistence: persistence
+            )
         )
     }
     
@@ -231,14 +251,14 @@ class AppDataLayerDependencies {
             
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftLanguageDataModelMapping()
+                dataModelMapping: SwiftLanguageMapping()
             )
         }
         else {
             
             persistence = RealmRepositorySyncPersistence(
                 database: getSharedRealmDatabase(),
-                dataModelMapping: RealmLanguageDataModelMapping()
+                dataModelMapping: RealmLanguageMapping()
             )
         }
         
@@ -346,14 +366,14 @@ class AppDataLayerDependencies {
             
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftResourceDataModelMapping()
+                dataModelMapping: SwiftResourceMapping()
             )
         }
         else {
             
             persistence = RealmRepositorySyncPersistence(
                 database: getSharedRealmDatabase(),
-                dataModelMapping: RealmResourceDataModelMapping()
+                dataModelMapping: RealmResourceMapping()
             )
         }
         
@@ -442,14 +462,14 @@ class AppDataLayerDependencies {
             
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftDownloadedTranslationDataModelMapping()
+                dataModelMapping: SwiftDownloadedTranslationMapping()
             )
         }
         else {
             
             persistence = RealmRepositorySyncPersistence(
                 database: getSharedRealmDatabase(),
-                dataModelMapping: RealmDownloadedTranslationDataModelMapping()
+                dataModelMapping: RealmDownloadedTranslationMapping()
             )
         }
         
@@ -470,14 +490,14 @@ class AppDataLayerDependencies {
             
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftTranslationDataModelMapping()
+                dataModelMapping: SwiftTranslationMapping()
             )
         }
         else {
             
             persistence = RealmRepositorySyncPersistence(
                 database: getSharedRealmDatabase(),
-                dataModelMapping: RealmTranslationDataModelMapping()
+                dataModelMapping: RealmTranslationMapping()
             )
         }
         

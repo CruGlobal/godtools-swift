@@ -1,5 +1,5 @@
 //
-//  SwiftAttachmentDataModelMapping.swift
+//  SwiftAttachmentMapping.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/6/25.
@@ -10,7 +10,7 @@ import Foundation
 import RepositorySync
 
 @available(iOS 17.4, *)
-final class SwiftAttachmentDataModelMapping: Mapping {
+final class SwiftAttachmentMapping: Mapping {
     
     func toDataModel(externalObject: AttachmentCodable) -> AttachmentDataModel? {
         return externalObject.toModel()

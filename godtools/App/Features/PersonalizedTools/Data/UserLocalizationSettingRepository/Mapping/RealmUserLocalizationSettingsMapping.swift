@@ -1,5 +1,5 @@
 //
-//  RealmUserLocalizationSettingsDataModelMapping.swift
+//  RealmUserLocalizationSettingsMapping.swift
 //  godtools
 //
 //  Created by Levi Eggert on 2/5/26.
@@ -9,7 +9,7 @@
 import Foundation
 import RepositorySync
 
-final class RealmUserLocalizationSettingsDataModelMapping: Mapping {
+final class RealmUserLocalizationSettingsMapping: Mapping {
     
     func toDataModel(externalObject: UserLocalizationSettingsDataModel) -> UserLocalizationSettingsDataModel? {
         return externalObject
