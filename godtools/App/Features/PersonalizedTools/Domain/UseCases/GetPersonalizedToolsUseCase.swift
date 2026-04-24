@@ -59,7 +59,8 @@ class GetPersonalizedToolsUseCase {
             return self.personalizedToolsRepository
                 .getPersistedPersonalizedToolsPublisher(
                     country: countryIsoRegionCode,
-                    language: languageCode
+                    language: languageCode,
+                    resourceTypes: ResourceType.toolTypes
                 )
         })
         .flatMap { (resources: [ResourceDataModel]) -> AnyPublisher<ToolsResultDomainModel, Error> in

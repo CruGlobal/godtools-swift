@@ -69,52 +69,60 @@ final class PersonalizedToolsRepository: RepositorySync<PersonalizedToolsDataMod
 
 extension PersonalizedToolsRepository {
 
-    func getPersistedPersonalizedToolsPublisher(country: String?, language: String) -> AnyPublisher<[ResourceDataModel], Error> {
+    func getPersistedPersonalizedToolsPublisher(country: String?, language: String, resourceTypes: [ResourceType]?) -> AnyPublisher<[ResourceDataModel], Error> {
 
         return AnyPublisher() {
-            return try await self.getPersistedPersonalizedTools(country: country, language: language)
+            return try await self.getPersistedPersonalizedTools(country: country, language: language, resourceTypes: resourceTypes)
         }
     }
 
-    func getPersistedPersonalizedTools(country: String?, language: String) async throws -> [ResourceDataModel] {
+    func getPersistedPersonalizedTools(country: String?, language: String, resourceTypes: [ResourceType]?) async throws -> [ResourceDataModel] {
 
         let type = PersonalizedToolsType(country: country, language: language)
 
         switch type {
 
         case .allRanked(let country, let language):
-            return try await getPersistedAllRankedTools(country: country, language: language)
+            return try await getPersistedAllRankedTools(country: country, language: language, resourceTypes: resourceTypes)
 
         case .defaultOrder(let language):
-            return try await getPersistedDefaultOrderTools(language: language)
+            return try await getPersistedDefaultOrderTools(language: language, resourceTypes: resourceTypes)
         }
     }
 
-    func getPersistedAllRankedTools(country: String, language: String) async throws -> [ResourceDataModel] {
+    func getPersistedAllRankedTools(country: String, language: String, resourceTypes: [ResourceType]? = nil) async throws -> [ResourceDataModel] {
 
         let personalizedTools: PersonalizedToolsDataModel? = try persistence.getDataModel(
             id: try PersonalizedToolsId.createForAllRankedTools(country: country, language: language).value
         )
 
-        return try await getPersistedResources(personalizedTools: personalizedTools)
+        return try await getPersistedResources(personalizedTools: personalizedTools, resourceTypes: resourceTypes)
     }
 
-    func getPersistedDefaultOrderTools(language: String) async throws -> [ResourceDataModel] {
+    func getPersistedDefaultOrderTools(language: String, resourceTypes: [ResourceType]? = nil) async throws -> [ResourceDataModel] {
 
         let personalizedTools: PersonalizedToolsDataModel? = try persistence.getDataModel(
             id: PersonalizedToolsId.createForDefaultOrder(language: language).value
         )
 
-        return try await getPersistedResources(personalizedTools: personalizedTools)
+        return try await getPersistedResources(personalizedTools: personalizedTools, resourceTypes: resourceTypes)
     }
 
-    private func getPersistedResources(personalizedTools: PersonalizedToolsDataModel?) async throws -> [ResourceDataModel] {
+    private func getPersistedResources(personalizedTools: PersonalizedToolsDataModel?, resourceTypes: [ResourceType]?) async throws -> [ResourceDataModel] {
 
         guard let personalizedTools = personalizedTools else {
             return Array()
         }
 
-        return try await resourcesRepository.persistence.getDataModelsAsync(getOption: .objectsByIds(ids: personalizedTools.resourceIds))
+        let resources = try await resourcesRepository.persistence.getDataModelsAsync(getOption: .objectsByIds(ids: personalizedTools.resourceIds))
+
+        guard let resourceTypes = resourceTypes, !resourceTypes.isEmpty else {
+            return resources
+        }
+
+        let resourceTypeRawValues = Set(resourceTypes.map { $0.rawValue })
+
+        return resources.filter { resourceTypeRawValues.contains($0.resourceType) }
     }
 }
 
@@ -193,6 +201,6 @@ extension PersonalizedToolsRepository {
 
         syncInvalidator.didSync()
 
-        return try await getPersistedResources(personalizedTools: personalizedTools)
+        return try await getPersistedResources(personalizedTools: personalizedTools, resourceTypes: nil)
     }
 }

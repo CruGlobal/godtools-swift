@@ -64,7 +64,8 @@ class GetPersonalizedLessonsUseCase {
             return self.personalizedToolsRepository
                 .getPersistedPersonalizedToolsPublisher(
                     country: countryIsoRegionCode,
-                    language: languageCode
+                    language: languageCode,
+                    resourceTypes: [.lesson]
                 )
         })
         .tryMap { (resources: [ResourceDataModel]) in
