@@ -12,10 +12,18 @@ import RepositorySync
 
 class RealmUserToolCategoryFilter: Object, IdentifiableRealmObject {
     
-    @objc dynamic var id: String = ""
     @objc dynamic var filterId: String = ""
     @objc dynamic var categoryId: String = ""
     @objc dynamic var createdAt: Date = Date()
+    
+    @objc dynamic var id: String {
+        get {
+            return filterId
+        }
+        set {
+            filterId = newValue
+        }
+    }
     
     override static func primaryKey() -> String? {
         return "filterId"

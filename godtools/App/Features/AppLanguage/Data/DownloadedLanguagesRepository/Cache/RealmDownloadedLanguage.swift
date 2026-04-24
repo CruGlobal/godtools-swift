@@ -12,10 +12,18 @@ import RepositorySync
 
 class RealmDownloadedLanguage: Object, IdentifiableRealmObject {
     
-    @objc dynamic var id: String = ""
     @objc dynamic var createdAt: Date = Date()
     @objc dynamic var languageId: String = ""
     @objc dynamic var downloadComplete: Bool = false
+    
+    @objc dynamic var id: String {
+        get {
+            return languageId
+        }
+        set {
+            languageId = newValue
+        }
+    }
     
     override static func primaryKey() -> String? {
         return "languageId"

@@ -12,9 +12,17 @@ import RepositorySync
 
 class RealmResourceView: Object, IdentifiableRealmObject {
     
-    @objc dynamic var id: String = ""
     @objc dynamic var resourceId: String = ""
     @objc dynamic var quantity: Int = 0
+    
+    @objc dynamic var id: String {
+        get {
+            return resourceId
+        }
+        set {
+            resourceId = newValue
+        }
+    }
     
     override static func primaryKey() -> String? {
         return "resourceId"
