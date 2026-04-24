@@ -12,13 +12,21 @@ import RepositorySync
 
 class RealmArticleJcrContent: Object, IdentifiableRealmObject {
     
-    @objc dynamic var id: String = ""
     @objc dynamic var aemUri: String = ""
     @objc dynamic var canonical: String?
     @objc dynamic var title: String?
     @objc dynamic var uuid: String?
     
     let tags = List<String>()
+    
+    @objc dynamic var id: String {
+        get {
+            return uuid ?? ""
+        }
+        set {
+            uuid = newValue
+        }
+    }
     
     override static func primaryKey() -> String? {
         return "uuid"

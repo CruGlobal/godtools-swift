@@ -20,14 +20,14 @@ final class LessonEvaluationRepository {
     func getLessonEvaluation(lessonId: String) -> LessonEvaluationDataModel? {
         
         do {
-            return try cache.getLessonEvaluation(lessonId: lessonId)
+            return try cache.persistence.getDataModel(id: lessonId)
         }
         catch _ {
             return nil
         }
     }
     
-    func storeLessonEvaluation(lesson: ResourceDataModel, lessonEvaluated: Bool) {
+    func storeLessonEvaluation(lesson: ResourceDataModel, lessonEvaluated: Bool) async throws {
                 
         let cachedLessonIsEvaluated: Bool
         let numberOfAttempts: Int
@@ -62,6 +62,10 @@ final class LessonEvaluationRepository {
             numberOfEvaluationAttempts: numberOfAttempts
         )
         
-        cache.storeLessonEvaluation(lessonEvaluation: lessonEvaluation, completion: nil)
+        _ = try await cache.persistence.writeObjectsAsync(
+            externalObjects: [lessonEvaluation],
+            writeOption: nil,
+            getOption: nil
+        )
     }
 }

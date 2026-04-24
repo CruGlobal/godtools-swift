@@ -24,16 +24,27 @@ final class EvaluateLessonUseCase {
     
     func execute(lessonId: String, feedback: TrackLessonFeedbackDomainModel) -> AnyPublisher<Void, Never> {
         
-        guard let lessonResource = resourcesRepository.persistence.getDataModelNonThrowing(id: lessonId) else {
+        let lessonResource: ResourceDataModel?
+        
+        do {
+            lessonResource = try resourcesRepository.persistence.getDataModel(id: lessonId)
+        }
+        catch _ {
+            lessonResource = nil
+        }
+        
+        guard let lessonResource = lessonResource else {
             return Just(Void())
                 .eraseToAnyPublisher()
         }
         
-        lessonEvaluationRepository.storeLessonEvaluation(
-            lesson: lessonResource,
-            lessonEvaluated: true
-        )
-        
+        Task {
+            try await lessonEvaluationRepository.storeLessonEvaluation(
+                lesson: lessonResource,
+                lessonEvaluated: true
+            )
+        }
+
         lessonFeedbackAnalytics.trackLessonFeedback(
             lesson: lessonResource,
             feedback: feedback

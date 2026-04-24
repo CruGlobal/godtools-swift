@@ -30,14 +30,10 @@ struct MobileContentGlobalAnalyticsCodable: Codable, Sendable {
         case gospelPresentations = "gospel-presentations"
     }
     
-    static func createEmpty() -> MobileContentGlobalAnalyticsCodable {
-        return MobileContentGlobalAnalyticsCodable(countries: 0, id: "", gospelPresentations: 0, launches: 0, type: "", users: 0)
-    }
-    
-    init(countries: Int, id: String, gospelPresentations: Int, launches: Int, type: String, users: Int) {
+    init(id: String, countries: Int, gospelPresentations: Int, launches: Int, type: String, users: Int) {
         
-        self.countries = countries
         self.id = id
+        self.countries = countries
         self.gospelPresentations = gospelPresentations
         self.launches = launches
         self.type = type
@@ -58,6 +54,17 @@ struct MobileContentGlobalAnalyticsCodable: Codable, Sendable {
         gospelPresentations = try attributesContainer.decode(Int.self, forKey: .gospelPresentations)
         launches = try attributesContainer.decode(Int.self, forKey: .launches)
         users = try attributesContainer.decode(Int.self, forKey: .users)
+    }
+    
+    func copy(id: String?) -> MobileContentGlobalAnalyticsCodable {
+        return MobileContentGlobalAnalyticsCodable(
+            id: id ?? self.id,
+            countries: countries,
+            gospelPresentations: gospelPresentations,
+            launches: launches,
+            type: type,
+            users: users
+        )
     }
 }
 

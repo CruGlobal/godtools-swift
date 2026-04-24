@@ -615,9 +615,27 @@ class AppDataLayerDependencies {
     }
     
     func getUserLessonProgressRepository() -> UserLessonProgressRepository {
+        
+        let persistence: any Persistence<UserLessonProgressDataModel, UserLessonProgressDataModel>
+        
+        if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                dataModelMapping: SwiftUserLessonProgressMapping()
+            )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                database: getSharedRealmDatabase(),
+                dataModelMapping: RealmUserLessonProgressMapping()
+            )
+        }
+        
         return UserLessonProgressRepository(
-            cache: RealmUserLessonProgressCache(
-                realmDatabase: getSharedLegacyRealmDatabase()
+            cache: UserLessonProgressCache(
+                persistence: persistence
             )
         )
     }

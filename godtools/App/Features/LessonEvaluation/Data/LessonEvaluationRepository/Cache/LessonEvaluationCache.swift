@@ -12,51 +12,28 @@ import RepositorySync
 
 final class LessonEvaluationCache {
     
-    private let realmDatabase: RealmDatabase
+    let persistence: any Persistence<LessonEvaluationDataModel, LessonEvaluationDataModel>
     
-    init(realmDatabase: RealmDatabase) {
-        
-        self.realmDatabase = realmDatabase
+    init(persistence: any Persistence<LessonEvaluationDataModel, LessonEvaluationDataModel>) {
+                
+        self.persistence = persistence
     }
     
-    func getLessonEvaluation(lessonId: String) throws -> LessonEvaluationDataModel? {
-        
-        guard let cachedLessonEvaluation = try realmDatabase.openRealm().object(ofType: RealmLessonEvaluation.self, forPrimaryKey: lessonId) else {
-            return nil
-        }
-        
-        return LessonEvaluationDataModel(
-            id: cachedLessonEvaluation.lessonId,
-            lastEvaluationAttempt: cachedLessonEvaluation.lastEvaluationAttempt,
-            lessonAbbreviation: cachedLessonEvaluation.lessonAbbreviation,
-            lessonEvaluated: cachedLessonEvaluation.lessonEvaluated,
-            lessonId: cachedLessonEvaluation.lessonId,
-            numberOfEvaluationAttempts: cachedLessonEvaluation.numberOfEvaluationAttempts
-        )
+    @available(iOS 17.4, *)
+    var swiftDatabase: SwiftDatabase? {
+        return getSwiftPersistence()?.database
     }
     
-    func storeLessonEvaluation(lessonEvaluation: LessonEvaluationDataModel, completion: ((_ error: Error?) -> Void)?) {
-        
-        realmDatabase.write.serialAsync { result in
-            
-            switch result {
-            
-            case .success(let realm):
-                
-                let realmLessonEvaluation = RealmLessonEvaluation.createNewFrom(model: lessonEvaluation)
-            
-                do {
-                    try realm.write {
-                        realm.add(realmLessonEvaluation, update: .modified)
-                    }
-                }
-                catch let error {
-                    completion?(error)
-                }
-                
-            case .failure(let error):
-                completion?(error)
-            }
-        }
+    @available(iOS 17.4, *)
+    func getSwiftPersistence() -> SwiftRepositorySyncPersistence<LessonEvaluationDataModel, LessonEvaluationDataModel, SwiftLessonEvaluation>? {
+        return persistence as? SwiftRepositorySyncPersistence<LessonEvaluationDataModel, LessonEvaluationDataModel, SwiftLessonEvaluation>
+    }
+    
+    var realmDatabase: RealmDatabase? {
+        return getRealmPersistence()?.database
+    }
+    
+    func getRealmPersistence() -> RealmRepositorySyncPersistence<LessonEvaluationDataModel, LessonEvaluationDataModel, RealmLessonEvaluation>? {
+        return persistence as? RealmRepositorySyncPersistence<LessonEvaluationDataModel, LessonEvaluationDataModel, RealmLessonEvaluation>
     }
 }
