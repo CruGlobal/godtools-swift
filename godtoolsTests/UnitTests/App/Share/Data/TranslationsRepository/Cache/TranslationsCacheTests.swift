@@ -43,7 +43,7 @@ struct TranslationsCacheTests {
         
         let translationId: String = "e0"
         
-        let translation: TranslationDataModel = try #require(translationsCache.persistence.getDataModelNonThrowing(id: translationId))
+        let translation: TranslationDataModel = try #require(try translationsCache.persistence.getDataModel(id: translationId))
         
         #expect(translation.id == translationId)
         #expect(translation.languageDataModel?.id == Self.englishLanguageId)
@@ -57,7 +57,7 @@ struct TranslationsCacheTests {
         
         let translationId: String = "e0"
         
-        let translation: TranslationDataModel = try #require(translationsCache.getPersistence().getDataModelNonThrowing(id: translationId))
+        let translation: TranslationDataModel = try #require(translationsCache.getPersistence().getDataModel(id: translationId))
         
         #expect(translation.id == translationId)
         #expect(translation.languageDataModel?.id == Self.englishLanguageId)
