@@ -43,7 +43,17 @@ final class GetToolDetailsUseCase {
             versionsDescription: ""
         )
         
-        guard let toolDataModel = resourcesRepository.persistence.getDataModelNonThrowing(id: toolId) else {
+        let toolDataModel: ResourceDataModel?
+        
+        do {
+            toolDataModel = try resourcesRepository.persistence.getDataModel(id: toolId)
+        }
+        catch let error {
+            return Fail(error: error)
+                .eraseToAnyPublisher()
+        }
+        
+        guard let toolDataModel = toolDataModel else {
             return Just(noToolDomainModel)
                 .setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
