@@ -16,13 +16,11 @@ class AppDataLayerDependencies {
         
     private let sharedAppConfig: AppConfigInterface
     private let sharedUrlSessionPriority: URLSessionPriority = URLSessionPriority()
-    private let sharedLegacyRealmDatabase: LegacyRealmDatabase
     private let sharedAnalytics: AnalyticsContainer
     
     init(appConfig: AppConfigInterface) {
         
         sharedAppConfig = appConfig
-        sharedLegacyRealmDatabase = appConfig.getLegacyRealmDatabase()
         
         sharedAnalytics = AnalyticsContainer(
             firebaseAnalytics: Self.getFirebaseAnalytics(appConfig: appConfig)
@@ -455,10 +453,6 @@ class AppDataLayerDependencies {
     
     func getSharedUrlSessionPriority() -> URLSessionPriority {
         return sharedUrlSessionPriority
-    }
-    
-    func getSharedLegacyRealmDatabase() -> LegacyRealmDatabase {
-        return sharedLegacyRealmDatabase
     }
     
     func getSharedRealmDatabase() -> RealmDatabase {
