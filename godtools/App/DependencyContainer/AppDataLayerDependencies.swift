@@ -58,8 +58,26 @@ class AppDataLayerDependencies {
     }
     
     private func getArticleAemCache() -> ArticleAemCache {
+        
+        let persistence: any Persistence<ArticleAemData, ArticleAemData>
+        
+        if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                dataModelMapping: SwiftArticleAemDataMapping()
+            )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                database: getSharedRealmDatabase(),
+                dataModelMapping: RealmArticleAemDataMapping()
+            )
+        }
+        
         return ArticleAemCache(
-            realmDatabase: getSharedLegacyRealmDatabase(),
+            persistence: persistence,
             articleWebArchiver: ArticleWebArchiver(
                 urlSessionPriority: getSharedUrlSessionPriority(),
                 requestSender: getRequestSender()
@@ -82,11 +100,29 @@ class AppDataLayerDependencies {
     }
     
     func getArticleManifestAemRepository() -> ArticleManifestAemRepository {
+        
+        let persistence: any Persistence<CategoryArticleModel, CategoryArticleModel>
+        
+        if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                dataModelMapping: SwiftCategoryArticleMapping()
+            )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                database: getSharedRealmDatabase(),
+                dataModelMapping: RealmCategoryArticleMapping()
+            )
+        }
+        
         return ArticleManifestAemRepository(
             downloader: getArticleAemDownloader(),
             cache: getArticleAemCache(),
-            categoryArticlesCache: RealmCategoryArticlesCache(
-                realmDatabase: getSharedLegacyRealmDatabase()
+            categoryArticlesCache: CategoryArticlesCache(
+                persistence: persistence
             ),
             syncInvalidatorPersistence: getUserDefaultsCache()
         )

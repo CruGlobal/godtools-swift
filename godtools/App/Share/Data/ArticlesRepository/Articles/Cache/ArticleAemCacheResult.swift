@@ -17,7 +17,7 @@ struct ArticleAemCacheResult {
 
 extension ArticleAemCacheResult {
     
-    static func emptyResult() -> ArticleAemCacheResult {
+    static var emptyValue: ArticleAemCacheResult {
         return ArticleAemCacheResult(numberOfArchivedObjects: 0, cacheErrorData: [], saveAemDataToRealmError: nil)
     }
 }
