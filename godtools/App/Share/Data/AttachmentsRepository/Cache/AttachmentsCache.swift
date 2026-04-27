@@ -52,7 +52,9 @@ extension AttachmentsCache {
             let swiftAttachment: SwiftAttachment? = swiftDatabase.read.objectNonThrowing(context: swiftDatabase.openContext(), id: id)
             cachedAttachment = swiftAttachment?.toModel()
         }
-        else if let realmDatabase = realmDatabase, let realm = realmDatabase.openRealmNonThrowing() {
+        else if let realmDatabase = realmDatabase {
+            
+            let realm = try realmDatabase.openRealm()
             let realmAttachment: RealmAttachment? = realmDatabase.read.object(realm: realm, id: id)
             cachedAttachment = realmAttachment?.toModel()
         }

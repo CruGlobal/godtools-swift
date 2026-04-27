@@ -42,7 +42,7 @@ class TranslationsCache {
 
 extension TranslationsCache {
     
-    func getLatestTranslation(resourceId: String, languageId: String) -> TranslationDataModel? {
+    func getLatestTranslation(resourceId: String, languageId: String) throws -> TranslationDataModel? {
                 
         if #available(iOS 17.4, *), let swiftDatabase = swiftDatabase {
             
@@ -52,7 +52,7 @@ extension TranslationsCache {
             
             return translation.toModel()
         }
-        else if let realmTranslation = getRealmTranslationsSortedByLatestVersion(resourceId: resourceId, languageId: languageId)?.first {
+        else if let realmTranslation = try getRealmTranslationsSortedByLatestVersion(resourceId: resourceId, languageId: languageId)?.first {
             
             return realmTranslation.toModel()
         }
@@ -60,7 +60,7 @@ extension TranslationsCache {
         return nil
     }
     
-    func getLatestTranslation(resourceId: String, languageCode: BCP47LanguageIdentifier) -> TranslationDataModel? {
+    func getLatestTranslation(resourceId: String, languageCode: BCP47LanguageIdentifier) throws -> TranslationDataModel? {
         
         if #available(iOS 17.4, *), let swiftDatabase = swiftDatabase {
             
@@ -70,7 +70,7 @@ extension TranslationsCache {
             
             return translation.toModel()
         }
-        else if let realmTranslation = getRealmTranslationsSortedByLatestVersion(resourceId: resourceId, languageCode: languageCode)?.first {
+        else if let realmTranslation = try getRealmTranslationsSortedByLatestVersion(resourceId: resourceId, languageCode: languageCode)?.first {
             
             return realmTranslation.toModel()
         }
@@ -108,11 +108,13 @@ extension TranslationsCache {
             .sortByLatestVersionFirst()
     }
     
-    private func getRealmTranslationsSortedByLatestVersion(resourceId: String, languageId: String) -> Results<RealmTranslation>? {
+    private func getRealmTranslationsSortedByLatestVersion(resourceId: String, languageId: String) throws -> Results<RealmTranslation>? {
         
-        guard let realmDatabase = realmDatabase, let realm = realmDatabase.openRealmNonThrowing() else {
+        guard let realmDatabase = realmDatabase else {
             return nil
         }
+        
+        let realm = try realmDatabase.openRealm()
         
         guard let realmResource = realm.object(ofType: RealmResource.self, forPrimaryKey: resourceId) else {
             
@@ -124,11 +126,13 @@ extension TranslationsCache {
             .sorted(byKeyPath: #keyPath(RealmTranslation.version), ascending: false)
     }
     
-    private func getRealmTranslationsSortedByLatestVersion(resourceId: String, languageCode: BCP47LanguageIdentifier) -> Results<RealmTranslation>? {
+    private func getRealmTranslationsSortedByLatestVersion(resourceId: String, languageCode: BCP47LanguageIdentifier) throws -> Results<RealmTranslation>? {
         
-        guard let realmDatabase = realmDatabase, let realm = realmDatabase.openRealmNonThrowing() else {
+        guard let realmDatabase = realmDatabase else {
             return nil
         }
+        
+        let realm = try realmDatabase.openRealm()
         
         guard let realmResource = realm.object(ofType: RealmResource.self, forPrimaryKey: resourceId) else {
            

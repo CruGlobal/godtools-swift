@@ -60,11 +60,11 @@ final class GetToolDetailsUseCase {
         }
     
         let translation: TranslationDataModel
-        if let appLanguagetranslation = translationsRepository.cache.getLatestTranslation(resourceId: toolId, languageCode: appLanguage) {
+        if let appLanguagetranslation = translationsRepository.getLatestTranslation(resourceId: toolId, languageCode: appLanguage) {
             
             translation = appLanguagetranslation
         }
-        else if let defaultTranslation = translationsRepository.cache.getLatestTranslation(resourceId: toolId, languageCode: toolDataModel.attrDefaultLocale) {
+        else if let defaultTranslation = translationsRepository.getLatestTranslation(resourceId: toolId, languageCode: toolDataModel.attrDefaultLocale) {
             
             translation = defaultTranslation
         }
@@ -137,7 +137,7 @@ final class GetToolDetailsUseCase {
                 .eraseToAnyPublisher()
         }
         
-        return resourcesRepository.cache
+        return resourcesRepository
             .getResourceVariantsPublisher(resourceId: metaToolId)
             .map { (resourceVariants: [ResourceDataModel]) in
                 
@@ -159,12 +159,12 @@ final class GetToolDetailsUseCase {
                     let name: String
                     let description: String
                     
-                    if let appLanguageTranslation = self.translationsRepository.cache.getLatestTranslation(resourceId: resourceVariant.id, languageCode: translateInLanguage) {
+                    if let appLanguageTranslation = self.translationsRepository.getLatestTranslation(resourceId: resourceVariant.id, languageCode: translateInLanguage) {
                         
                         name = appLanguageTranslation.translatedName
                         description = appLanguageTranslation.translatedTagline
                     }
-                    else if let defaultTranslation = self.translationsRepository.cache.getLatestTranslation(resourceId: resourceVariant.id, languageCode: resourceVariant.attrDefaultLocale) {
+                    else if let defaultTranslation = self.translationsRepository.getLatestTranslation(resourceId: resourceVariant.id, languageCode: resourceVariant.attrDefaultLocale) {
                         
                         name = defaultTranslation.translatedName
                         description = defaultTranslation.translatedTagline
@@ -218,7 +218,7 @@ final class GetToolDetailsUseCase {
             return false
         }
         
-        guard let languageModel = languagesRepository.cache.getCachedLanguage(code: language) else {
+        guard let languageModel = languagesRepository.getCachedLanguage(code: language) else {
             return false
         }
         

@@ -27,7 +27,7 @@ final class GetLessonFilterLanguage {
     
     func getLessonLanguageFilterFromLanguageCode(languageCode: String, translatedInAppLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel? {
         
-        guard let language = languagesRepository.cache.getCachedLanguage(code: languageCode) else {
+        guard let language = languagesRepository.getCachedLanguage(code: languageCode) else {
             return nil
         }
         
@@ -45,7 +45,7 @@ final class GetLessonFilterLanguage {
     
     func mapLanguageToLessonFilterLanguageDomainModel(language: LanguageDataModel, translatedInAppLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel {
         
-        let lessonsAvailableCount: Int = resourcesRepository.cache.getLessonsCount(filterByLanguageId: language.id)
+        let lessonsAvailableCount: Int = resourcesRepository.getLessonsCount(filterByLanguageId: language.id)
 
         let languageNameTranslatedInLanguage = getTranslatedLanguageName.getLanguageName(language: language.code, translatedInLanguage: language.code)
         let languageNameTranslatedInAppLanguage = getTranslatedLanguageName.getLanguageName(language: language.code, translatedInLanguage: translatedInAppLanguage)

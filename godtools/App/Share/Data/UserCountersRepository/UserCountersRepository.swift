@@ -31,6 +31,11 @@ final class UserCountersRepository {
         self.syncInvalidator = syncInvalidator
     }
     
+    @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Error> {
+        return persistence
+            .observeCollectionChangesPublisher()
+    }
+    
     func getCachedCounter(id: String) throws -> UserCounterDataModel? {
         
         guard let counter = try persistence.getDataModel(id: id) else {

@@ -12,7 +12,7 @@ import Combine
 
 final class FavoritedResourcesRepository: RepositorySync<FavoritedResourceDataModel, NoExternalDataFetch<FavoritedResourceDataModel>> {
     
-    let cache: FavoritedResourcesCache
+    private let cache: FavoritedResourcesCache
     
     init(persistence: any Persistence<FavoritedResourceDataModel, FavoritedResourceDataModel>, cache: FavoritedResourcesCache) {
         
@@ -22,6 +22,11 @@ final class FavoritedResourcesRepository: RepositorySync<FavoritedResourceDataMo
             externalDataFetch: NoExternalDataFetch<FavoritedResourceDataModel>(),
             persistence: persistence
         )
+    }
+    
+    @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Error> {
+        return persistence
+            .observeCollectionChangesPublisher()
     }
 
     func getResourceIsFavorited(id: String) -> Bool {
@@ -34,6 +39,10 @@ final class FavoritedResourcesRepository: RepositorySync<FavoritedResourceDataMo
         catch _ {
             return false
         }
+    }
+    
+    func getFavoritedResourcesSortedByPosition() async throws -> [FavoritedResourceDataModel] {
+        return try await cache.getFavoritedResourcesSortedByPosition()
     }
     
     func getFavoritedResourcesSortedByPositionPublisher() -> AnyPublisher<[FavoritedResourceDataModel], Error> {

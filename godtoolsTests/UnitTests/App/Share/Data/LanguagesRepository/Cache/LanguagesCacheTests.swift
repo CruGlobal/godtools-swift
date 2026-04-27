@@ -47,7 +47,7 @@ struct LanguagesCacheTests {
         
         let languageCode: String = try #require(argument.queryByLanguageCodes.first?.rawValue)
                         
-        let language: LanguageDataModel? = languagesCache.getCachedLanguage(code: languageCode)
+        let language: LanguageDataModel? = try languagesCache.getCachedLanguage(code: languageCode)
         
         #expect(language?.id == argument.expectedLanguageIds.first)
     }

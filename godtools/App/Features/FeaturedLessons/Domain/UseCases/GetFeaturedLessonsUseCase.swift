@@ -30,11 +30,10 @@ final class GetFeaturedLessonsUseCase {
     
     @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[FeaturedLessonDomainModel], Error> {
             
-        let appLanguageModel: LanguageDataModel? = languagesRepository.cache.getCachedLanguage(code: appLanguage)
+        let appLanguageModel: LanguageDataModel? = languagesRepository.getCachedLanguage(code: appLanguage)
         
         return Publishers.CombineLatest(
             resourcesRepository
-                .persistence
                 .observeCollectionChangesPublisher(),
             lessonProgressRepository
                 .getLessonProgressChangedPublisher()
@@ -43,7 +42,6 @@ final class GetFeaturedLessonsUseCase {
         .flatMap({ (resourcesChanged: Void, lessonProgressDidChange: Void) -> AnyPublisher<[FeaturedLessonDomainModel], Error> in
             
             return self.resourcesRepository
-                .cache
                 .getFeaturedLessonsPublisher(sorted: true)
                 .tryMap { (featuredLessonsDataModels: [ResourceDataModel]) in
                     

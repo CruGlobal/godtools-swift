@@ -14,12 +14,11 @@ import RepositorySync
 
 class TranslationsRepository: RepositorySync<TranslationDataModel, MobileContentTranslationsApi> {
     
+    private let cache: TranslationsCache
     private let infoPlist: InfoPlist
     private let resourcesFileCache: ResourcesSHA256FileCache
     private let trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
     private let remoteConfigRepository: RemoteConfigRepository
-    
-    let cache: TranslationsCache
     
     init(externalDataFetch: MobileContentTranslationsApi, persistence: any Persistence<TranslationDataModel, TranslationCodable>, cache: TranslationsCache, infoPlist: InfoPlist, resourcesFileCache: ResourcesSHA256FileCache, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository, remoteConfigRepository: RemoteConfigRepository) {
         
@@ -33,6 +32,26 @@ class TranslationsRepository: RepositorySync<TranslationDataModel, MobileContent
             externalDataFetch: externalDataFetch,
             persistence: persistence
         )
+    }
+    
+    func getLatestTranslation(resourceId: String, languageId: String) -> TranslationDataModel? {
+        
+        do {
+            return try cache.getLatestTranslation(resourceId: resourceId, languageId: languageId)
+        }
+        catch _ {
+            return nil
+        }
+    }
+    
+    func getLatestTranslation(resourceId: String, languageCode: String) -> TranslationDataModel? {
+        
+        do {
+            return try cache.getLatestTranslation(resourceId: resourceId, languageCode: languageCode)
+        }
+        catch _ {
+            return nil
+        }
     }
 }
 
@@ -235,7 +254,7 @@ extension TranslationsRepository {
                 
                 let latestDownloadedTranslation: TranslationDataModel?
                 
-                if shouldFallbackToLatestDownloadedTranslation, let resourceId = translation.resourceDataModel?.id, let languageId = translation.languageDataModel?.id, let latestTrackedDownloadedTranslation = self.trackDownloadedTranslationsRepository.cache.getLatestDownloadedTranslation(resourceId: resourceId, languageId: languageId) {
+                if shouldFallbackToLatestDownloadedTranslation, let resourceId = translation.resourceDataModel?.id, let languageId = translation.languageDataModel?.id, let latestTrackedDownloadedTranslation = self.trackDownloadedTranslationsRepository.getLatestDownloadedTranslation(resourceId: resourceId, languageId: languageId) {
                     
                     latestDownloadedTranslation = self.persistence.getDataModelNonThrowing(id: latestTrackedDownloadedTranslation.translationId)
                 }
@@ -449,7 +468,6 @@ extension TranslationsRepository {
     func didDownloadTranslationAndRelatedFilesPublisher(translation: TranslationDataModel, files: [FileCacheLocation]) -> AnyPublisher<TranslationFilesDataModel, Error> {
         
         return trackDownloadedTranslationsRepository
-            .cache
             .trackTranslationDownloaded(translation: translation)
             .flatMap({ translationId -> AnyPublisher<TranslationFilesDataModel, Error> in
                 

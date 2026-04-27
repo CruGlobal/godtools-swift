@@ -75,7 +75,7 @@ struct TranslationsCacheTests {
         
         let languageId: String = try #require(argument.languageId)
         
-        let translation = translationsCache.getLatestTranslation(
+        let translation = try translationsCache.getLatestTranslation(
             resourceId: argument.resourceId,
             languageId: languageId
         )

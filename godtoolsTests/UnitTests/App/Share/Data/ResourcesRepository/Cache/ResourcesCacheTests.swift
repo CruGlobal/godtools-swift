@@ -27,7 +27,7 @@ struct ResourcesCacheTests {
         
         let realmResourcesCache = try getResourcesCache()
         
-        #expect(realmResourcesCache.getLessonsCount() == expectedLessonCount)
+        #expect(try realmResourcesCache.getLessonsCount(filterByLanguageId: nil) == expectedLessonCount)
     }
     
     @Test()
@@ -170,7 +170,7 @@ struct ResourcesCacheTests {
         ]
         
         let realmResourcesCache = try getResourcesCache()
-        let realmLessonLanguageIds = realmResourcesCache.getLessonsSupportedLanguageIds()
+        let realmLessonLanguageIds = try realmResourcesCache.getLessonsSupportedLanguageIds()
         
         #expect(realmLessonLanguageIds.sorted() == expectedLanguageIds.sorted())
     }

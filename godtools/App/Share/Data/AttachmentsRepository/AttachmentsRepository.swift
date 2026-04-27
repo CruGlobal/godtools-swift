@@ -13,7 +13,7 @@ import Combine
 
 class AttachmentsRepository: RepositorySync<AttachmentDataModel, MobileContentAttachmentsApi> {
         
-    let cache: AttachmentsCache
+    private let cache: AttachmentsCache
     
     init(externalDataFetch: MobileContentAttachmentsApi, persistence: any Persistence<AttachmentDataModel, AttachmentCodable>, cache: AttachmentsCache) {
         
@@ -23,6 +23,16 @@ class AttachmentsRepository: RepositorySync<AttachmentDataModel, MobileContentAt
             externalDataFetch: externalDataFetch,
             persistence: persistence
         )
+    }
+    
+    func getAttachment(id: String) -> AttachmentDataModel? {
+        
+        do {
+            return try cache.getAttachment(id: id)
+        }
+        catch _ {
+            return nil
+        }
     }
 }
 

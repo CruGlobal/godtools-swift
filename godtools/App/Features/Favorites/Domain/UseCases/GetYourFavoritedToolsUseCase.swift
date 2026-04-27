@@ -30,13 +30,11 @@ final class GetYourFavoritedToolsUseCase {
         
         return Publishers.CombineLatest3(
             resourcesRepository
-                .persistence
                 .observeCollectionChangesPublisher(),
             getToolListItemStrings
                 .getStringsPublisher(translateInLanguage: appLanguage)
                 .setFailureType(to: Error.self),
             favoritedResourcesRepository
-                .persistence
                 .observeCollectionChangesPublisher()
         )
         .flatMap { (resourcesChanged: Void, strings: ToolListItemStringsDomainModel, favoritedResourcesChanged: Void) -> AnyPublisher<[YourFavoritedToolDomainModel], Error> in

@@ -16,12 +16,11 @@ class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResour
     private static let syncInvalidatorIdForResourcesPlustLatestTranslationsAndAttachments: String = "resourcesPlusLatestTranslationAttachments.syncInvalidator.id"
     private static let syncedResourcesFromJsonCacheKey: String = "ResourcesRepository.synced.resources.json"
     
+    private let cache: ResourcesCache
     private let attachmentsRepository: AttachmentsRepository
     private let languagesRepository: LanguagesRepository
     private let syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface
     private let userDefaultsCache: UserDefaultsCacheInterface
-    
-    let cache: ResourcesCache
     
     init(externalDataFetch: MobileContentResourcesApi, persistence: any Persistence<ResourceDataModel, ResourceCodable>, cache: ResourcesCache, attachmentsRepository: AttachmentsRepository, languagesRepository: LanguagesRepository, syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface, userDefaultsCache: UserDefaultsCacheInterface) {
         
@@ -36,23 +35,75 @@ class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResour
             persistence: persistence
         )
     }
-}
-
-// MARK: - Cache
-
-extension ResourcesRepository {
+    
+    @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Error> {
+        return persistence
+            .observeCollectionChangesPublisher()
+    }
+    
+    func getResource(abbreviation: String) -> ResourceDataModel? {
+        
+        do {
+            return try cache.getResource(abbreviation: abbreviation)
+        }
+        catch _ {
+            return nil
+        }
+    }
     
     func getCachedResourcesByFilter(filter: ResourcesFilter) -> [ResourceDataModel] {
         
-        return cache.getResourcesByFilter(filter: filter)
+        do {
+            return try cache.getResourcesByFilter(filter: filter)
+        }
+        catch _ {
+            return Array()
+        }
     }
     
     func getCachedResourcesByFilterPublisher(filter: ResourcesFilter) -> AnyPublisher<[ResourceDataModel], Never> {
         
-        let resources: [ResourceDataModel] = cache.getResourcesByFilter(filter: filter)
-        
-        return Just(resources)
-            .eraseToAnyPublisher()
+        do {
+            
+            let resources: [ResourceDataModel] = try cache.getResourcesByFilter(filter: filter)
+            
+            return Just(resources)
+                .eraseToAnyPublisher()
+        }
+        catch _ {
+            return Just(Array())
+                .eraseToAnyPublisher()
+        }
+    }
+    
+    func getFeaturedLessonsPublisher(sorted: Bool = false) -> AnyPublisher<[ResourceDataModel], Error> {
+        return cache.getFeaturedLessonsPublisher(sorted: sorted)
+    }
+    
+    func getResourceVariantsPublisher(resourceId: String) -> AnyPublisher<[ResourceDataModel], Error> {
+        return cache.getResourceVariantsPublisher(resourceId: resourceId)
+    }
+    
+    func getLessonsPublisher(filterByLanguageId: String? = nil, sorted: Bool = false) -> AnyPublisher<[ResourceDataModel], Error> {
+        return cache.getLessonsPublisher(filterByLanguageId: filterByLanguageId, sorted: sorted)
+    }
+    
+    func getLessonsCount(filterByLanguageId: String? = nil) -> Int {
+        do {
+            return try cache.getLessonsCount(filterByLanguageId: filterByLanguageId)
+        }
+        catch _ {
+            return 0
+        }
+    }
+    
+    func getLessonsSupportedLanguageIds() -> [String] {
+        do {
+            return try cache.getLessonsSupportedLanguageIds()
+        }
+        catch _ {
+            return Array()
+        }
     }
 }
 
@@ -204,7 +255,13 @@ extension ResourcesRepository {
 extension ResourcesRepository {
     
     func getSpotlightTools(sortByDefaultOrder: Bool = false) -> [ResourceDataModel] {
-        return cache.getSpotlightTools(sortByDefaultOrder: sortByDefaultOrder)
+        
+        do {
+            return try cache.getSpotlightTools(sortByDefaultOrder: sortByDefaultOrder)
+        }
+        catch _ {
+            return Array()
+        }
     }
 }
 
@@ -214,25 +271,46 @@ extension ResourcesRepository {
     
     func getAllToolsList(filterByCategory: String?, filterByLanguageId: String?, sortByDefaultOrder: Bool) -> [ResourceDataModel] {
         
-        return cache.getAllToolsList(
-            filterByCategory: filterByCategory,
-            filterByLanguageId: filterByLanguageId,
-            sortByDefaultOrder: sortByDefaultOrder
-        )
+        do {
+            
+            return try cache.getAllToolsList(
+                filterByCategory: filterByCategory,
+                filterByLanguageId: filterByLanguageId,
+                sortByDefaultOrder: sortByDefaultOrder
+            )
+        }
+        catch _ {
+            return Array()
+        }
     }
     
     func getAllToolsListCount(filterByCategory: String?, filterByLanguageId: String?) -> Int {
         
-        return cache.getAllToolsListCount(filterByCategory: filterByCategory, filterByLanguageId: filterByLanguageId)
+        do {
+            return try cache.getAllToolsListCount(filterByCategory: filterByCategory, filterByLanguageId: filterByLanguageId)
+        }
+        catch _ {
+            return 0
+        }
     }
     
     func getAllToolCategoryIds(filteredByLanguageId: String?) -> [String] {
         
-        return cache.getAllToolCategoryIds(filteredByLanguageId: filteredByLanguageId)
+        do {
+            return try cache.getAllToolCategoryIds(filteredByLanguageId: filteredByLanguageId)
+        }
+        catch _ {
+            return Array()
+        }
     }
     
     func getAllToolLanguageIds(filteredByCategoryId: String?) -> [String] {
         
-        return cache.getAllToolLanguageIds(filteredByCategoryId: filteredByCategoryId)
+        do {
+            return try cache.getAllToolLanguageIds(filteredByCategoryId: filteredByCategoryId)
+        }
+        catch _ {
+            return Array()
+        }
     }
 }

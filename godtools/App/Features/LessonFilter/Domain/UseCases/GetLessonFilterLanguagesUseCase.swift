@@ -25,11 +25,10 @@ final class GetLessonFilterLanguagesUseCase {
     @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[LessonFilterLanguageDomainModel], Error> {
             
         return resourcesRepository
-            .persistence
             .observeCollectionChangesPublisher()
             .flatMap { (resourcesChanged: Void) in
                 
-                let languageIds = self.resourcesRepository.cache.getLessonsSupportedLanguageIds()
+                let languageIds = self.resourcesRepository.getLessonsSupportedLanguageIds()
                 
                 return self.createLessonLanguageFilterDomainModelListPublisher(from: languageIds, translatedInAppLanguage: appLanguage)
             }

@@ -84,13 +84,13 @@ extension TrackDownloadedTranslationsCache {
             .objectsNonThrowing(context: database.openContext(), query: query)
     }
     
-    private func getRealmLatestDownloadedTranslations(resourceId: String, languageId: String) -> [RealmDownloadedTranslation]? {
+    private func getRealmLatestDownloadedTranslations(resourceId: String, languageId: String) throws -> [RealmDownloadedTranslation]? {
         
-        guard let realmPersistence = getRealmPersistence(), let realm = realmPersistence.database.openRealmNonThrowing() else {
+        guard let database = realmDatabase else {
             return nil
         }
         
-        let database: RealmDatabase = realmPersistence.database
+        let realm = try database.openRealm()
         
         let resourceIdPredicate = NSPredicate(format: "\(#keyPath(RealmDownloadedTranslation.resourceId)) == %@", resourceId)
         let languageIdPredicate = NSPredicate(format: "\(#keyPath(RealmDownloadedTranslation.languageId)) == %@", languageId)
@@ -146,12 +146,12 @@ extension TrackDownloadedTranslationsCache {
         }
     }
     
-    func getLatestDownloadedTranslation(resourceId: String, languageId: String) -> DownloadedTranslationDataModel? {
+    func getLatestDownloadedTranslation(resourceId: String, languageId: String) throws -> DownloadedTranslationDataModel? {
         
         if #available(iOS 17.4, *), let latestTranslation = getSwiftLatestDownloadedTranslations(resourceId: resourceId, languageId: languageId)?.first {
             return latestTranslation.toModel()
         }
-        else if let latestTranslation = getRealmLatestDownloadedTranslations(resourceId: resourceId, languageId: languageId)?.first {
+        else if let latestTranslation = try getRealmLatestDownloadedTranslations(resourceId: resourceId, languageId: languageId)?.first {
             return latestTranslation.toModel()
         }
         

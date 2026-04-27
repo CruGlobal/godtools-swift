@@ -46,7 +46,7 @@ final class GetToolSettingsUseCase {
     
     private func getHasTipsPublisher(toolId: String, toolLanguageId: String) -> AnyPublisher<Bool, Error> {
         
-        guard let translation = translationsRepository.cache.getLatestTranslation(resourceId: toolId, languageId: toolLanguageId) else {
+        guard let translation = translationsRepository.getLatestTranslation(resourceId: toolId, languageId: toolLanguageId) else {
             return Just(false)
                 .setFailureType(to: Error.self)
                 .eraseToAnyPublisher()

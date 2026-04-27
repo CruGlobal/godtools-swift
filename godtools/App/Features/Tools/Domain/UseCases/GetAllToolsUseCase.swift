@@ -23,7 +23,6 @@ final class GetAllToolsUseCase {
     @MainActor func execute(appLanguage: AppLanguageDomainModel, languageIdForAvailabilityText: String?, filterToolsByCategory: ToolFilterCategoryDomainModel?, filterToolsByLanguage: ToolFilterLanguageDomainModel?) -> AnyPublisher<[ToolListItemDomainModel], Error> {
         
         return resourcesRepository
-            .persistence
             .observeCollectionChangesPublisher()
             .prepend(Void())
             .flatMap({ (resourcesChanged: Void) -> AnyPublisher<[ToolListItemDomainModel], Error> in

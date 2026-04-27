@@ -25,6 +25,16 @@ class UserLocalizationSettingsRepository: RepositorySync<UserLocalizationSetting
             persistence: persistence
         )
     }
+    
+    @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Never> {
+        return persistence
+            .observeCollectionChangesPublisher()
+            .catch { (error: Error) in
+                return Just(Void())
+                    .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+    }
 
     func setCountryPublisher(isoRegionCode: String) -> AnyPublisher<UserLocalizationSettingsDataModel, Error> {
 

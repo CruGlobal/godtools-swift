@@ -41,7 +41,7 @@ class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadIn
                 
         for languageId in supportedLanguageIds {
             
-            guard let translation = translationsRepository.cache.getLatestTranslation(resourceId: resourceId, languageId: languageId) else {
+            guard let translation = translationsRepository.getLatestTranslation(resourceId: resourceId, languageId: languageId) else {
                 return Fail(error: .failedToFetchResourceFromCache(resourceNeeded: .id(value: resourceId)))
                     .eraseToAnyPublisher()
             }
@@ -49,7 +49,7 @@ class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadIn
             translations.append(translation)
         }
         
-        if translations.isEmpty, let defaultTranslation = translationsRepository.cache.getLatestTranslation(resourceId: resourceId, languageCode: resource.attrDefaultLocale) {
+        if translations.isEmpty, let defaultTranslation = translationsRepository.getLatestTranslation(resourceId: resourceId, languageCode: resource.attrDefaultLocale) {
             
             translations = [defaultTranslation]
         }

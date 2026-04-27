@@ -26,10 +26,8 @@ class DownloadLatestToolsForFavoritedToolsUseCase {
         
         return Publishers.CombineLatest(
             resourcesRepository
-                .persistence
                 .observeCollectionChangesPublisher(),
             favoritedResourcesRepository
-                .persistence
                 .observeCollectionChangesPublisher()
         )
         .flatMap { (resourcesChanged: Void, favoritedResourcesChanged: Void) -> AnyPublisher<[FavoritedResourceDataModel], Error> in

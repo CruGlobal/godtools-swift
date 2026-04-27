@@ -13,13 +13,27 @@ import Combine
 
 class LanguagesRepository: RepositorySync<LanguageDataModel, MobileContentLanguagesApi> {
     
-    let cache: LanguagesCache
+    private let cache: LanguagesCache
     
     init(externalDataFetch: MobileContentLanguagesApi, persistence: any Persistence<LanguageDataModel, LanguageCodable>, cache: LanguagesCache) {
         
         self.cache = cache
         
         super.init(externalDataFetch: externalDataFetch, persistence: persistence)
+    }
+    
+    func getCachedLanguage(code: BCP47LanguageIdentifier) -> LanguageDataModel? {
+        
+        do {
+            return try cache.getCachedLanguage(code: code)
+        }
+        catch _ {
+            return nil
+        }
+    }
+    
+    func getCachedLanguagesPublisher(codes: [BCP47LanguageIdentifier]) -> AnyPublisher<[LanguageDataModel], Error> {
+        return cache.getCachedLanguagesPublisher(codes: codes)
     }
 }
 

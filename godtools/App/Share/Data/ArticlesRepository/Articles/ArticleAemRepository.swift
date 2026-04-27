@@ -12,8 +12,9 @@ import Combine
 
 open class ArticleAemRepository: NSObject {
     
+    private let cache: ArticleAemCache
+    
     let downloader: ArticleAemDownloader
-    let cache: ArticleAemCache
     
     init(downloader: ArticleAemDownloader, cache: ArticleAemCache) {
         

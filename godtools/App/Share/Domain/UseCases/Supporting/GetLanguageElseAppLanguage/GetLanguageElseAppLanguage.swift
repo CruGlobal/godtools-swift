@@ -19,7 +19,7 @@ class GetLanguageElseAppLanguage {
     
     func getLanguage(languageId: String?, appLanguage: AppLanguageDomainModel) -> LanguageDataModel? {
         
-        return getLanguage(id: languageId) ?? languagesRepository.cache.getCachedLanguage(code: appLanguage)
+        return getLanguage(id: languageId) ?? languagesRepository.getCachedLanguage(code: appLanguage)
     }
     
     func getLanguageCode(languageId: String?, appLanguage: AppLanguageDomainModel) -> String {

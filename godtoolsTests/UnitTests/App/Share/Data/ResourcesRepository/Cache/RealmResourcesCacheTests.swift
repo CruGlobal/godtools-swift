@@ -19,11 +19,11 @@ struct RealmResourcesCacheTests {
                 
         let resourcesCache: ResourcesCache = try getResourcesCache()
         
-        let gospelTracts: [ResourceDataModel] = resourcesCache.getResourcesByFilter(
+        let gospelTracts: [ResourceDataModel] = try resourcesCache.getResourcesByFilter(
             filter: ResourcesFilter(category: "gospel", resourceTypes: ResourceType.toolTypes)
         )
         
-        let conversationStarters: [ResourceDataModel] = resourcesCache.getResourcesByFilter(
+        let conversationStarters: [ResourceDataModel] = try resourcesCache.getResourcesByFilter(
             filter: ResourcesFilter(category: "conversation_starter", resourceTypes: ResourceType.toolTypes)
         )
         
@@ -36,35 +36,35 @@ struct RealmResourcesCacheTests {
         
         let resourcesCache: ResourcesCache = try getResourcesCache()
         
-        let arabicGospelTracts = resourcesCache.getResourcesByFilter(
+        let arabicGospelTracts = try resourcesCache.getResourcesByFilter(
             filter: ResourcesFilter(category: "gospel", languageModelCode: "ar", resourceTypes: ResourceType.toolTypes)
         )
         
-        let arabicBahrainGospelTracts = resourcesCache.getResourcesByFilter(
+        let arabicBahrainGospelTracts = try resourcesCache.getResourcesByFilter(
             filter: ResourcesFilter(category: "gospel", languageModelCode: "ar-BH", resourceTypes: ResourceType.toolTypes)
         )
         
-        let spanishGospelTracts = resourcesCache.getResourcesByFilter(
+        let spanishGospelTracts = try resourcesCache.getResourcesByFilter(
             filter: ResourcesFilter(category: "gospel", languageModelCode: "es", resourceTypes: ResourceType.toolTypes)
         )
         
-        let englishGospelTracts = resourcesCache.getResourcesByFilter(
+        let englishGospelTracts = try resourcesCache.getResourcesByFilter(
             filter: ResourcesFilter(category: "gospel", languageModelCode: "en", resourceTypes: ResourceType.toolTypes)
         )
         
-        let englishConversationStarterTools = resourcesCache.getResourcesByFilter(
+        let englishConversationStarterTools = try resourcesCache.getResourcesByFilter(
             filter: ResourcesFilter(category: "conversation_starter", languageModelCode: "en", resourceTypes: ResourceType.toolTypes)
         )
         
-        let russianConversationStarterTools = resourcesCache.getResourcesByFilter(
+        let russianConversationStarterTools = try resourcesCache.getResourcesByFilter(
             filter: ResourcesFilter(category: "conversation_starter", languageModelCode: "ru", resourceTypes: ResourceType.toolTypes)
         )
         
-        let chineseSimplifiedConversationStarterTools = resourcesCache.getResourcesByFilter(
+        let chineseSimplifiedConversationStarterTools = try resourcesCache.getResourcesByFilter(
             filter: ResourcesFilter(category: "conversation_starter", languageModelCode: "zh-Hans", resourceTypes: ResourceType.toolTypes)
         )
         
-        let chineseTraditionalConversationStarterTools = resourcesCache.getResourcesByFilter(
+        let chineseTraditionalConversationStarterTools = try resourcesCache.getResourcesByFilter(
             filter: ResourcesFilter(category: "conversation_starter", languageModelCode: "zh-Hant", resourceTypes: ResourceType.toolTypes)
         )
         
@@ -85,9 +85,9 @@ struct RealmResourcesCacheTests {
         let resourcesCache: ResourcesCache = try getResourcesCache()
         
         let allToolsCount: Int = try resourcesCache.persistence.getObjectCount()
-        let hiddenTools = resourcesCache.getResourcesByFilter(filter: ResourcesFilter(resourceTypes: [.article, .chooseYourOwnAdventure, .lesson, .metaTool, .tract], isHidden: true))
-        let visibleTools = resourcesCache.getResourcesByFilter(filter: ResourcesFilter(resourceTypes: [.article, .chooseYourOwnAdventure, .lesson, .metaTool, .tract], isHidden: false))
-        let toolsIgnoringIsHidden = resourcesCache.getResourcesByFilter(filter: ResourcesFilter(resourceTypes: [.article, .chooseYourOwnAdventure, .lesson, .metaTool, .tract], isHidden: nil))
+        let hiddenTools = try resourcesCache.getResourcesByFilter(filter: ResourcesFilter(resourceTypes: [.article, .chooseYourOwnAdventure, .lesson, .metaTool, .tract], isHidden: true))
+        let visibleTools = try resourcesCache.getResourcesByFilter(filter: ResourcesFilter(resourceTypes: [.article, .chooseYourOwnAdventure, .lesson, .metaTool, .tract], isHidden: false))
+        let toolsIgnoringIsHidden = try resourcesCache.getResourcesByFilter(filter: ResourcesFilter(resourceTypes: [.article, .chooseYourOwnAdventure, .lesson, .metaTool, .tract], isHidden: nil))
                 
         #expect(hiddenTools.count == 3)
         #expect(visibleTools.count == allToolsCount - hiddenTools.count)
@@ -99,7 +99,7 @@ struct RealmResourcesCacheTests {
         
         let resourcesCache: ResourcesCache = try getResourcesCache()
         
-        let metatools = resourcesCache.getResourcesByFilter(filter: ResourcesFilter(resourceTypes: [.metaTool]))
+        let metatools = try resourcesCache.getResourcesByFilter(filter: ResourcesFilter(resourceTypes: [.metaTool]))
         
         #expect(metatools.count == 3)
     }
@@ -109,7 +109,7 @@ struct RealmResourcesCacheTests {
         
         let resourcesCache: ResourcesCache = try getResourcesCache()
         
-        let variants = resourcesCache.getResourcesByFilter(filter: ResourcesFilter(variants: .isVariant))
+        let variants = try resourcesCache.getResourcesByFilter(filter: ResourcesFilter(variants: .isVariant))
         
         #expect(variants.count == 15)
     }
@@ -119,7 +119,7 @@ struct RealmResourcesCacheTests {
         
         let resourcesCache: ResourcesCache = try getResourcesCache()
         
-        let defaultVariants = resourcesCache.getResourcesByFilter(filter: ResourcesFilter(variants: .isDefaultVariant))
+        let defaultVariants = try resourcesCache.getResourcesByFilter(filter: ResourcesFilter(variants: .isDefaultVariant))
         
         #expect(defaultVariants.count == 3)
     }
@@ -129,9 +129,9 @@ struct RealmResourcesCacheTests {
         
         let resourcesCache: ResourcesCache = try getResourcesCache()
         
-        let allTools = resourcesCache.getResourcesByFilter(filter: ResourcesFilter())
-        let variants = resourcesCache.getResourcesByFilter(filter: ResourcesFilter(variants: .isVariant))
-        let toolsExcludingVariants = resourcesCache.getResourcesByFilter(filter: ResourcesFilter(variants: .isNotVariant))
+        let allTools = try resourcesCache.getResourcesByFilter(filter: ResourcesFilter())
+        let variants = try resourcesCache.getResourcesByFilter(filter: ResourcesFilter(variants: .isVariant))
+        let toolsExcludingVariants = try resourcesCache.getResourcesByFilter(filter: ResourcesFilter(variants: .isNotVariant))
         
         #expect(toolsExcludingVariants.count == allTools.count - variants.count)
     }

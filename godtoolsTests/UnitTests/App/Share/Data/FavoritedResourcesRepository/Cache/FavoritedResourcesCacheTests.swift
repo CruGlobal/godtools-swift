@@ -151,6 +151,13 @@ extension FavoritedResourcesCacheTests {
             addRealmObjects: createFavoritedResources(resources: addResources)
         )
         
-        return testsDiContainer.dataLayer.getFavoritedResourcesRepository().cache
+        let persistence = RealmRepositorySyncPersistence(
+            database: testsDiContainer.dataLayer.getSharedRealmDatabase(),
+            dataModelMapping: RealmFavoritedResourceMapping()
+        )
+        
+        return FavoritedResourcesCache(
+            persistence: persistence
+        )
     }
 }

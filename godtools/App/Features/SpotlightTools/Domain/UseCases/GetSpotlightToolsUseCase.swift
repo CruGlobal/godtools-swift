@@ -41,7 +41,7 @@ final class GetSpotlightToolsUseCase {
         }
         
         return Publishers.CombineLatest(
-            resourcesRepository.persistence.observeCollectionChangesPublisher(),
+            resourcesRepository.observeCollectionChangesPublisher(),
             getToolListItemStrings
                 .getStringsPublisher(translateInLanguage: translatedInAppLanguage)
                 .setFailureType(to: Error.self)

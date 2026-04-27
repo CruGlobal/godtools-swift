@@ -21,7 +21,6 @@ final class GetToolIsFavoritedUseCase {
     @MainActor func execute(toolId: String) -> AnyPublisher<ToolIsFavoritedDomainModel, Error> {
         
         return favoritedResourcesRepository
-            .persistence
             .observeCollectionChangesPublisher()
             .map { (favoritedResourcesChanged: Void) in
                 

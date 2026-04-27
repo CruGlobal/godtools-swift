@@ -12,7 +12,7 @@ import Combine
 
 class LanguagesCache {
         
-    private let persistence: any Persistence<LanguageDataModel, LanguageCodable>
+    let persistence: any Persistence<LanguageDataModel, LanguageCodable>
     
     init(persistence: any Persistence<LanguageDataModel, LanguageCodable>) {
                 
@@ -81,7 +81,7 @@ extension LanguagesCache {
 
 extension LanguagesCache {
     
-    func getCachedLanguage(code: BCP47LanguageIdentifier) -> LanguageDataModel? {
+    func getCachedLanguage(code: BCP47LanguageIdentifier) throws -> LanguageDataModel? {
         
         if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
             
@@ -98,7 +98,9 @@ extension LanguagesCache {
                 return nil
             }
         }
-        else if let realmPersistence = getRealmPersistence(), let realm = realmPersistence.database.openRealmNonThrowing() {
+        else if let realmPersistence = getRealmPersistence() {
+            
+            let realm = try realmPersistence.database.openRealm()
             
             let query = RealmDatabaseQuery.filter(
                 filter: getLanguageByCodeNSPredicate(code: code)
