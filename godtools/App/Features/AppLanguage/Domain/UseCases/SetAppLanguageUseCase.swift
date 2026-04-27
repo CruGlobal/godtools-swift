@@ -26,7 +26,11 @@ final class SetAppLanguageUseCase {
         
         if let languageModelId = languagesRepository.cache.getCachedLanguage(code: appLanguage)?.id {
             
-            userLessonFiltersRepository.storeUserLessonLanguageFilter(with: languageModelId)
+            Task {
+                try await userLessonFiltersRepository.storeUserLessonLanguageFilter(
+                    languageId: languageModelId
+                )
+            }
         }
         
         return userAppLanguageRepository

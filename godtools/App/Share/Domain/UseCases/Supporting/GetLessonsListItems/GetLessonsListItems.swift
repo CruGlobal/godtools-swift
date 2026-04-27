@@ -29,7 +29,7 @@ final class GetLessonsListItems {
 
             let filterLanguageModel: LanguageDataModel?
             if let filterLanguageId = filterLessonsByLanguage?.languageId {
-                filterLanguageModel = languagesRepository.persistence.getDataModelNonThrowing(id: filterLanguageId)
+                filterLanguageModel = try languagesRepository.persistence.getDataModel(id: filterLanguageId)
             } else {
                 filterLanguageModel = nil
             }

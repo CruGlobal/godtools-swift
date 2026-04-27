@@ -607,9 +607,27 @@ class AppDataLayerDependencies {
     }
     
     func getUserLessonFiltersRepository() -> UserLessonFiltersRepository {
+        
+        let persistence: any Persistence<UserLessonLanguageFilterDataModel, UserLessonLanguageFilterDataModel>
+        
+        if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                dataModelMapping: SwiftUserLessonLanguageFilterMapping()
+            )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                database: getSharedRealmDatabase(),
+                dataModelMapping: RealmUserLessonLanguageFilterMapping()
+            )
+        }
+        
         return UserLessonFiltersRepository(
-            cache: RealmUserLessonFiltersCache(
-                realmDatabase: getSharedLegacyRealmDatabase()
+            cache: UserLessonFiltersCache(
+                persistence: persistence
             )
         )
     }
