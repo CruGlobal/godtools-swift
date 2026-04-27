@@ -37,8 +37,9 @@ final class GetDownloadedLanguagesListUseCase {
         .flatMap { (languages: [LanguageDataModel], downloadLanguagesChanged: Void) -> AnyPublisher<[DownloadedLanguageDataModel], Error> in
             
             return self.downloadedLanguagesRepository
-                .getDownloadedLanguagesPublisher(completedDownloadsOnly: true)
-                .setFailureType(to: Error.self)
+                .getDownloadedLanguagesByDownloadCompletePublisher(
+                    downloadComplete: true
+                )
                 .eraseToAnyPublisher()
         }
         .flatMap { (downloadedLanguageDataModels: [DownloadedLanguageDataModel]) -> AnyPublisher<[LanguageDataModel], Error> in

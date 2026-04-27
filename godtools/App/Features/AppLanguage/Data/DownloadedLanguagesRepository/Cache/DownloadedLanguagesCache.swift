@@ -8,140 +8,116 @@
 
 import Foundation
 import RealmSwift
-import Combine
+import SwiftData
+import RepositorySync
 
 final class DownloadedLanguagesCache {
     
-    private let realmDatabase: LegacyRealmDatabase
+    let persistence: any Persistence<DownloadedLanguageDataModel, DownloadedLanguageDataModel>
     
-    init(realmDatabase: LegacyRealmDatabase) {
-        
-        self.realmDatabase = realmDatabase
-    }
-    
-    @MainActor func getDownloadedLanguagesChangedPublisher() -> AnyPublisher<Void, Never> {
-        
-        return realmDatabase.openRealm()
-            .objects(RealmDownloadedLanguage.self)
-            .objectWillChange
-            .eraseToAnyPublisher()
-    }
-    
-    func getDownloadedLanguagesPublisher(completedDownloadsOnly: Bool) -> AnyPublisher<[DownloadedLanguageDataModel], Never> {
-        
-        var realmDownloadedLanguages = realmDatabase.openRealm()
-            .objects(RealmDownloadedLanguage.self)
-        
-        if completedDownloadsOnly {
-            realmDownloadedLanguages = realmDownloadedLanguages
-                .where { $0.downloadComplete }
-        }
-        
-        let downloadedLanguages = realmDownloadedLanguages
-            .map { $0.toModel() }
-        
-        return Just(Array(downloadedLanguages))
-            .eraseToAnyPublisher()
-    }
-    
-    func getDownloadedLanguage(languageId: String) -> DownloadedLanguageDataModel? {
-        
-        guard let downloadedLanguage = realmDatabase.openRealm()
-            .object(ofType: RealmDownloadedLanguage.self, forPrimaryKey: languageId) else {
-            
-            return nil
-        }
-        
-        return downloadedLanguage.toModel()
-    }
-    
-    func getDownloadedLanguagePublisher(languageId: String) -> AnyPublisher<DownloadedLanguageDataModel?, Never> {
-        
-        return realmDatabase.readObjectPublisher(primaryKey: languageId, mapInBackgroundClosure: { (object: RealmDownloadedLanguage?) in
-            guard let realmDownloadedLanguage = object else {
-                return nil
-            }
-            return realmDownloadedLanguage.toModel()
-        })
-        .flatMap { (dataModel: DownloadedLanguageDataModel?) in
-
-            return Just(dataModel)
-                .eraseToAnyPublisher()
-        }
-        .eraseToAnyPublisher()
-    }
-    
-    func storeDownloadedLanguage(languageId: String, downloadComplete: Bool) {
-        
-        let realm: Realm = realmDatabase.openRealm()
-        
-        let realmDownloadedLanguage = RealmDownloadedLanguage()
-        realmDownloadedLanguage.languageId = languageId
-        realmDownloadedLanguage.downloadComplete = downloadComplete
-        
-        do {
-            
-            try realm.write {
-                realm.add(realmDownloadedLanguage, update: .modified)
-            }
-        }
-        catch let error {
-            print(error)
-        }
-    }
-    
-    func storeDownloadedLanguagePublisher(languageId: String, downloadComplete: Bool) -> AnyPublisher<DownloadedLanguageDataModel, Error> {
-        
-        let downloadedLanguage = DownloadedLanguageDataModel(
-            id: languageId,
-            createdAt: Date(),
-            languageId: languageId,
-            downloadComplete: downloadComplete
-        )
+    init(persistence: any Persistence<DownloadedLanguageDataModel, DownloadedLanguageDataModel>) {
                 
-        return realmDatabase.writeObjectsPublisher { (realm: Realm) -> [RealmDownloadedLanguage] in
-            
-            let realmDownloadedLanguage = RealmDownloadedLanguage.createNewFrom(model: downloadedLanguage)
-            
-            return [realmDownloadedLanguage]
-            
-        } mapInBackgroundClosure: { (objects: [RealmDownloadedLanguage]) -> [DownloadedLanguageDataModel] in
-            return objects.map({
-                $0.toModel()
-            })
-        }
-        .map { _ in
-            return downloadedLanguage
-        }
-        .eraseToAnyPublisher()
-        
+        self.persistence = persistence
     }
     
-    func deleteDownloadedLanguagePublisher(languageId: String) -> AnyPublisher<Void, Error> {
-        
-        return realmDatabase.deleteObjectsInBackgroundPublisher(
-            type: RealmDownloadedLanguage.self,
-            primaryKeyPath: #keyPath(RealmDownloadedLanguage.languageId),
-            primaryKeys: [languageId]
-        )
-        .eraseToAnyPublisher()
+    @available(iOS 17.4, *)
+    var swiftDatabase: SwiftDatabase? {
+        return getSwiftPersistence()?.database
     }
     
-    func markAllDownloadsAsCompleted() {
-            
-        let realm: Realm = realmDatabase.openRealm()
+    @available(iOS 17.4, *)
+    func getSwiftPersistence() -> SwiftRepositorySyncPersistence<DownloadedLanguageDataModel, DownloadedLanguageDataModel, SwiftDownloadedLanguage>? {
+        return persistence as? SwiftRepositorySyncPersistence<DownloadedLanguageDataModel, DownloadedLanguageDataModel, SwiftDownloadedLanguage>
+    }
+    
+    var realmDatabase: RealmDatabase? {
+        return getRealmPersistence()?.database
+    }
+    
+    func getRealmPersistence() -> RealmRepositorySyncPersistence<DownloadedLanguageDataModel, DownloadedLanguageDataModel, RealmDownloadedLanguage>? {
+        return persistence as? RealmRepositorySyncPersistence<DownloadedLanguageDataModel, DownloadedLanguageDataModel, RealmDownloadedLanguage>
+    }
+}
+
+// MARK: - Predicates
+
+extension DownloadedLanguagesCache {
+    
+    @available(iOS 17.4, *)
+    private func getDownloadCompletePredicate(downloadComplete: Bool) -> Predicate<SwiftDownloadedLanguage> {
+     
+        let filter = #Predicate<SwiftDownloadedLanguage> { object in
+            object.downloadComplete == downloadComplete
+        }
         
-        let nonCompletedDownloads = realm
-            .objects(RealmDownloadedLanguage.self)
-            .where { $0.downloadComplete == false }
+        return filter
+    }
+    
+    private func getDownloadCompleteNSPredicate(downloadComplete: Bool) -> NSPredicate {
         
-        _ = realmDatabase.writeObjects(realm: realm, updatePolicy: .modified) { realm in
+        return NSPredicate(format: "\(#keyPath(RealmDownloadedLanguage.downloadComplete)) == %@", NSNumber(value: downloadComplete))
+    }
+}
+
+extension DownloadedLanguagesCache {
+    
+    func getDownloadedLanguagesByDownloadComplete(downloadComplete: Bool) async throws -> [DownloadedLanguageDataModel] {
+        
+        if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
             
-            for language in nonCompletedDownloads {
-                language.downloadComplete = true
+            let query = SwiftDatabaseQuery<SwiftDownloadedLanguage>.filter(
+                filter: getDownloadCompletePredicate(downloadComplete: downloadComplete)
+            )
+            
+            return try await swiftPersistence.getDataModelsAsync(getOption: .allObjects, query: query)
+        }
+        else if let realmPersistence = getRealmPersistence() {
+            
+            let query = RealmDatabaseQuery.filter(
+                filter: getDownloadCompleteNSPredicate(downloadComplete: downloadComplete)
+            )
+            
+            return try await realmPersistence.getDataModelsAsync(getOption: .allObjects, query: query)
+        }
+        
+        return Array()
+    }
+    
+    func deleteDownloadedLanguage(languageId: String) throws {
+            
+        if #available(iOS 17.4, *), let database = swiftDatabase {
+            
+            let context: ModelContext = database.openContext()
+            
+            let objectToDelete: SwiftDownloadedLanguage? = try database.read.object(context: context, id: languageId)
+            
+            if let objectToDelete = objectToDelete {
+                
+                try database.write.context(
+                    context: context,
+                    writeObjects: WriteSwiftObjects(
+                        deleteObjects: [objectToDelete],
+                        insertObjects: nil
+                    )
+                )
             }
+        }
+        else if let realmDatabase = realmDatabase {
             
-            return Array(nonCompletedDownloads)
+            let realm: Realm = try realmDatabase.openRealm()
+            
+            let objectToDelete: RealmDownloadedLanguage? = realmDatabase.read.object(realm: realm, id: languageId)
+            
+            if let objectToDelete = objectToDelete {
+                
+                try realmDatabase.write.realm(realm: realm, writeClosure: { realm in
+                    
+                    return WriteRealmObjects(
+                        deleteObjects: [objectToDelete],
+                        addObjects: []
+                    )
+                }, updatePolicy: .all)
+            }
         }
     }
 }

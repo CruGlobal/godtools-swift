@@ -14,4 +14,14 @@ struct DownloadedLanguageDataModel: Sendable {
     let createdAt: Date
     let languageId: String
     let downloadComplete: Bool
+    
+    func copy(downloadComplete: Bool? = nil) -> DownloadedLanguageDataModel {
+        
+        return DownloadedLanguageDataModel(
+            id: id,
+            createdAt: createdAt,
+            languageId: languageId,
+            downloadComplete: downloadComplete ?? self.downloadComplete
+        )
+    }
 }
