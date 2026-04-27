@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RepositorySync
 
 class PersistToolLanguageSettingsForFavoritedToolDataLayerDependencies {
     
@@ -18,8 +19,28 @@ class PersistToolLanguageSettingsForFavoritedToolDataLayerDependencies {
     }
         
     func getUserToolSettingsRepository() -> UserToolSettingsRepository {
+        
+        let persistence: any Persistence<UserToolSettingsDataModel, UserToolSettingsDataModel>
+        
+        if #available(iOS 17.4, *), let database = coreDataLayer.getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                dataModelMapping: SwiftUserToolSettingsMapping()
+            )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                database: coreDataLayer.getSharedRealmDatabase(),
+                dataModelMapping: RealmUserToolSettingsMapping()
+            )
+        }
+        
         return UserToolSettingsRepository(
-            cache: RealmUserToolSettingsCache(realmDatabase: coreDataLayer.getSharedLegacyRealmDatabase())
+            cache: UserToolSettingsCache(
+                persistence: persistence
+            )
         )
     }
 }

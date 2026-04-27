@@ -11,13 +11,23 @@ import Combine
 
 final class UserToolSettingsRepository {
     
-    private let cache: RealmUserToolSettingsCache
+    private let cache: UserToolSettingsCache
     
-    init(cache: RealmUserToolSettingsCache) {
+    init(cache: UserToolSettingsCache) {
         self.cache = cache
     }
     
-    func storeUserToolSettings(toolId: String, primaryLanguageId: String, parallelLanguageId: String?) {
+    func getUserToolSettings(toolId: String) -> UserToolSettingsDataModel? {
+        
+        do {
+            return try cache.persistence.getDataModel(id: toolId)
+        }
+        catch _ {
+            return nil
+        }
+    }
+    
+    func storeUserToolSettings(toolId: String, primaryLanguageId: String, parallelLanguageId: String?) async throws {
         
         let dataModel = UserToolSettingsDataModel(
             id: toolId,
@@ -27,16 +37,10 @@ final class UserToolSettingsRepository {
             parallelLanguageId: parallelLanguageId
         )
         
-        cache.storeUserToolSettings(dataModel: dataModel)
-    }
-    
-    func getUserToolSettings(toolId: String) -> UserToolSettingsDataModel? {
-        
-        return cache.getUserToolSettings(toolId: toolId)
-    }
-    
-    func getUserToolSettingsPublisher(toolId: String) -> AnyPublisher<UserToolSettingsDataModel?, Never> {
-        
-        return cache.getUserToolSettingsPublisher(toolId: toolId)
+        _ = try await cache.persistence.writeObjectsAsync(
+            externalObjects: [dataModel],
+            writeOption: nil,
+            getOption: nil
+        )
     }
 }
