@@ -204,8 +204,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/realm/realm-core",
       "state" : {
-        "revision" : "15493076ad9fef22c16cc64cbfbf9e5b65c385f9",
-        "version" : "20.1.0"
+        "revision" : "4cc46f8607516226e5465062fdacd088fbd94552",
+        "version" : "20.1.4"
       }
     },
     {
