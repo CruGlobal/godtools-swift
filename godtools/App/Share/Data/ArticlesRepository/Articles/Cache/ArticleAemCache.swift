@@ -8,8 +8,8 @@
 
 import Foundation
 import RealmSwift
-import Combine
 import RequestOperation
+import Combine
 
 class ArticleAemCache {
     
@@ -24,15 +24,7 @@ class ArticleAemCache {
         self.realmDatabase = realmDatabase
         self.articleWebArchiver = articleWebArchiver
     }
-    
-    @MainActor func observeArticleAemCacheObjectsChangedPublisher() -> AnyPublisher<Void, Never> {
-        
-        return realmDatabase.openRealm()
-            .objects(RealmResource.self)
-            .objectWillChange
-            .eraseToAnyPublisher()
-    }
-    
+
     func getAemCacheObjectsPublisher(aemUris: [String]) -> AnyPublisher<[ArticleAemCacheObject], Never> {
         
         return Future() { promise in
