@@ -21,20 +21,20 @@ final class ToolScreenShareTutorialViewsCache {
     }
     
     @available(iOS 17.4, *)
-    var swiftDatabase: SwiftDatabase? {
+    private var swiftDatabase: SwiftDatabase? {
         return getSwiftPersistence()?.database
     }
     
     @available(iOS 17.4, *)
-    func getSwiftPersistence() -> SwiftRepositorySyncPersistence<ToolScreenShareTutorialViewDataModel, ToolScreenShareTutorialViewDataModel, SwiftToolScreenTutorialShareView>? {
+    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<ToolScreenShareTutorialViewDataModel, ToolScreenShareTutorialViewDataModel, SwiftToolScreenTutorialShareView>? {
         return persistence as? SwiftRepositorySyncPersistence<ToolScreenShareTutorialViewDataModel, ToolScreenShareTutorialViewDataModel, SwiftToolScreenTutorialShareView>
     }
     
-    var realmDatabase: RealmDatabase? {
+    private var realmDatabase: RealmDatabase? {
         return getRealmPersistence()?.database
     }
     
-    func getRealmPersistence() -> RealmRepositorySyncPersistence<ToolScreenShareTutorialViewDataModel, ToolScreenShareTutorialViewDataModel, RealmToolScreenShareTutorialView>? {
+    private func getRealmPersistence() -> RealmRepositorySyncPersistence<ToolScreenShareTutorialViewDataModel, ToolScreenShareTutorialViewDataModel, RealmToolScreenShareTutorialView>? {
         return persistence as? RealmRepositorySyncPersistence<ToolScreenShareTutorialViewDataModel, ToolScreenShareTutorialViewDataModel, RealmToolScreenShareTutorialView>
     }
 }

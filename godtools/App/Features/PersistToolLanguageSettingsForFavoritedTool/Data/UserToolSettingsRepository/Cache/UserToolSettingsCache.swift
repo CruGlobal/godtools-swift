@@ -20,20 +20,20 @@ final class UserToolSettingsCache {
     }
     
     @available(iOS 17.4, *)
-    var swiftDatabase: SwiftDatabase? {
+    private var swiftDatabase: SwiftDatabase? {
         return getSwiftPersistence()?.database
     }
     
     @available(iOS 17.4, *)
-    func getSwiftPersistence() -> SwiftRepositorySyncPersistence<UserToolSettingsDataModel, UserToolSettingsDataModel, SwiftUserToolSettings>? {
+    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<UserToolSettingsDataModel, UserToolSettingsDataModel, SwiftUserToolSettings>? {
         return persistence as? SwiftRepositorySyncPersistence<UserToolSettingsDataModel, UserToolSettingsDataModel, SwiftUserToolSettings>
     }
     
-    var realmDatabase: RealmDatabase? {
+    private var realmDatabase: RealmDatabase? {
         return getRealmPersistence()?.database
     }
     
-    func getRealmPersistence() -> RealmRepositorySyncPersistence<UserToolSettingsDataModel, UserToolSettingsDataModel, RealmUserToolSettings>? {
+    private func getRealmPersistence() -> RealmRepositorySyncPersistence<UserToolSettingsDataModel, UserToolSettingsDataModel, RealmUserToolSettings>? {
         return persistence as? RealmRepositorySyncPersistence<UserToolSettingsDataModel, UserToolSettingsDataModel, RealmUserToolSettings>
     }
 }

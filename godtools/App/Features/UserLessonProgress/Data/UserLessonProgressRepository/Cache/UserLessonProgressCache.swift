@@ -20,20 +20,20 @@ final class UserLessonProgressCache {
     }
     
     @available(iOS 17.4, *)
-    var swiftDatabase: SwiftDatabase? {
+    private var swiftDatabase: SwiftDatabase? {
         return getSwiftPersistence()?.database
     }
     
     @available(iOS 17.4, *)
-    func getSwiftPersistence() -> SwiftRepositorySyncPersistence<UserLessonProgressDataModel, UserLessonProgressDataModel, SwiftUserLessonProgress>? {
+    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<UserLessonProgressDataModel, UserLessonProgressDataModel, SwiftUserLessonProgress>? {
         return persistence as? SwiftRepositorySyncPersistence<UserLessonProgressDataModel, UserLessonProgressDataModel, SwiftUserLessonProgress>
     }
     
-    var realmDatabase: RealmDatabase? {
+    private var realmDatabase: RealmDatabase? {
         return getRealmPersistence()?.database
     }
     
-    func getRealmPersistence() -> RealmRepositorySyncPersistence<UserLessonProgressDataModel, UserLessonProgressDataModel, RealmUserLessonProgress>? {
+    private func getRealmPersistence() -> RealmRepositorySyncPersistence<UserLessonProgressDataModel, UserLessonProgressDataModel, RealmUserLessonProgress>? {
         return persistence as? RealmRepositorySyncPersistence<UserLessonProgressDataModel, UserLessonProgressDataModel, RealmUserLessonProgress>
     }
 }

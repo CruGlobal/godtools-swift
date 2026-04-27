@@ -20,20 +20,20 @@ final class CompletedTrainingTipCache {
     }
     
     @available(iOS 17.4, *)
-    var swiftDatabase: SwiftDatabase? {
+    private var swiftDatabase: SwiftDatabase? {
         return getSwiftPersistence()?.database
     }
     
     @available(iOS 17.4, *)
-    func getSwiftPersistence() -> SwiftRepositorySyncPersistence<CompletedTrainingTipDataModel, CompletedTrainingTipDataModel, SwiftCompletedTrainingTip>? {
+    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<CompletedTrainingTipDataModel, CompletedTrainingTipDataModel, SwiftCompletedTrainingTip>? {
         return persistence as? SwiftRepositorySyncPersistence<CompletedTrainingTipDataModel, CompletedTrainingTipDataModel, SwiftCompletedTrainingTip>
     }
     
-    var realmDatabase: RealmDatabase? {
+    private var realmDatabase: RealmDatabase? {
         return getRealmPersistence()?.database
     }
     
-    func getRealmPersistence() -> RealmRepositorySyncPersistence<CompletedTrainingTipDataModel, CompletedTrainingTipDataModel, RealmCompletedTrainingTip>? {
+    private func getRealmPersistence() -> RealmRepositorySyncPersistence<CompletedTrainingTipDataModel, CompletedTrainingTipDataModel, RealmCompletedTrainingTip>? {
         return persistence as? RealmRepositorySyncPersistence<CompletedTrainingTipDataModel, CompletedTrainingTipDataModel, RealmCompletedTrainingTip>
     }
 }

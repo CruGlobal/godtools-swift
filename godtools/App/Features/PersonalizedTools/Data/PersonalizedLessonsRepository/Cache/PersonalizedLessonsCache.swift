@@ -21,20 +21,20 @@ class PersonalizedLessonsCache {
     }
     
     @available(iOS 17.4, *)
-    var swiftDatabase: SwiftDatabase? {
+    private var swiftDatabase: SwiftDatabase? {
         return getSwiftPersistence()?.database
     }
     
     @available(iOS 17.4, *)
-    func getSwiftPersistence() -> SwiftRepositorySyncPersistence<PersonalizedLessonsDataModel, PersonalizedLessonsDataModel, SwiftPersonalizedLessons>? {
+    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<PersonalizedLessonsDataModel, PersonalizedLessonsDataModel, SwiftPersonalizedLessons>? {
         return persistence as? SwiftRepositorySyncPersistence<PersonalizedLessonsDataModel, PersonalizedLessonsDataModel, SwiftPersonalizedLessons>
     }
     
-    var realmDatabase: RealmDatabase? {
+    private var realmDatabase: RealmDatabase? {
         return getRealmPersistence()?.database
     }
     
-    func getRealmPersistence() -> RealmRepositorySyncPersistence<PersonalizedLessonsDataModel, PersonalizedLessonsDataModel, RealmPersonalizedLessons>? {
+    private func getRealmPersistence() -> RealmRepositorySyncPersistence<PersonalizedLessonsDataModel, PersonalizedLessonsDataModel, RealmPersonalizedLessons>? {
         return persistence as? RealmRepositorySyncPersistence<PersonalizedLessonsDataModel, PersonalizedLessonsDataModel, RealmPersonalizedLessons>
     }
 }

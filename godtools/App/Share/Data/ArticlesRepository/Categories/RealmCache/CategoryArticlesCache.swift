@@ -22,20 +22,20 @@ final class CategoryArticlesCache {
     }
     
     @available(iOS 17.4, *)
-    var swiftDatabase: SwiftDatabase? {
+    private var swiftDatabase: SwiftDatabase? {
         return getSwiftPersistence()?.database
     }
     
     @available(iOS 17.4, *)
-    func getSwiftPersistence() -> SwiftRepositorySyncPersistence<CategoryArticleModel, CategoryArticleModel, SwiftCategoryArticle>? {
+    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<CategoryArticleModel, CategoryArticleModel, SwiftCategoryArticle>? {
         return persistence as? SwiftRepositorySyncPersistence<CategoryArticleModel, CategoryArticleModel, SwiftCategoryArticle>
     }
     
-    var realmDatabase: RealmDatabase? {
+    private var realmDatabase: RealmDatabase? {
         return getRealmPersistence()?.database
     }
     
-    func getRealmPersistence() -> RealmRepositorySyncPersistence<CategoryArticleModel, CategoryArticleModel, RealmCategoryArticle>? {
+    private func getRealmPersistence() -> RealmRepositorySyncPersistence<CategoryArticleModel, CategoryArticleModel, RealmCategoryArticle>? {
         return persistence as? RealmRepositorySyncPersistence<CategoryArticleModel, CategoryArticleModel, RealmCategoryArticle>
     }
 }

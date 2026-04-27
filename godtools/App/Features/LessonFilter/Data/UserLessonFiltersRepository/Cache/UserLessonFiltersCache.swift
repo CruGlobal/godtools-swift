@@ -20,20 +20,20 @@ final class UserLessonFiltersCache {
     }
     
     @available(iOS 17.4, *)
-    var swiftDatabase: SwiftDatabase? {
+    private var swiftDatabase: SwiftDatabase? {
         return getSwiftPersistence()?.database
     }
     
     @available(iOS 17.4, *)
-    func getSwiftPersistence() -> SwiftRepositorySyncPersistence<UserLessonLanguageFilterDataModel, UserLessonLanguageFilterDataModel, SwiftUserLessonLanguageFilter>? {
+    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<UserLessonLanguageFilterDataModel, UserLessonLanguageFilterDataModel, SwiftUserLessonLanguageFilter>? {
         return persistence as? SwiftRepositorySyncPersistence<UserLessonLanguageFilterDataModel, UserLessonLanguageFilterDataModel, SwiftUserLessonLanguageFilter>
     }
     
-    var realmDatabase: RealmDatabase? {
+    private var realmDatabase: RealmDatabase? {
         return getRealmPersistence()?.database
     }
     
-    func getRealmPersistence() -> RealmRepositorySyncPersistence<UserLessonLanguageFilterDataModel, UserLessonLanguageFilterDataModel, RealmUserLessonLanguageFilter>? {
+    private func getRealmPersistence() -> RealmRepositorySyncPersistence<UserLessonLanguageFilterDataModel, UserLessonLanguageFilterDataModel, RealmUserLessonLanguageFilter>? {
         return persistence as? RealmRepositorySyncPersistence<UserLessonLanguageFilterDataModel, UserLessonLanguageFilterDataModel, RealmUserLessonLanguageFilter>
     }
 }

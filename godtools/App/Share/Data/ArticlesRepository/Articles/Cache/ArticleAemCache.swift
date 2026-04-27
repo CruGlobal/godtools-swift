@@ -27,20 +27,20 @@ final class ArticleAemCache {
     }
     
     @available(iOS 17.4, *)
-    var swiftDatabase: SwiftDatabase? {
+    private var swiftDatabase: SwiftDatabase? {
         return getSwiftPersistence()?.database
     }
     
     @available(iOS 17.4, *)
-    func getSwiftPersistence() -> SwiftRepositorySyncPersistence<ArticleAemData, ArticleAemData, SwiftArticleAemData>? {
+    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<ArticleAemData, ArticleAemData, SwiftArticleAemData>? {
         return persistence as? SwiftRepositorySyncPersistence<ArticleAemData, ArticleAemData, SwiftArticleAemData>
     }
     
-    var realmDatabase: RealmDatabase? {
+    private var realmDatabase: RealmDatabase? {
         return getRealmPersistence()?.database
     }
     
-    func getRealmPersistence() -> RealmRepositorySyncPersistence<ArticleAemData, ArticleAemData, RealmArticleAemData>? {
+    private func getRealmPersistence() -> RealmRepositorySyncPersistence<ArticleAemData, ArticleAemData, RealmArticleAemData>? {
         return persistence as? RealmRepositorySyncPersistence<ArticleAemData, ArticleAemData, RealmArticleAemData>
     }
 }

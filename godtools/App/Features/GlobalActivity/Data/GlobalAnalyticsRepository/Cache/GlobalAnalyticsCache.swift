@@ -20,20 +20,20 @@ final class GlobalAnalyticsCache {
     }
     
     @available(iOS 17.4, *)
-    var swiftDatabase: SwiftDatabase? {
+    private var swiftDatabase: SwiftDatabase? {
         return getSwiftPersistence()?.database
     }
     
     @available(iOS 17.4, *)
-    func getSwiftPersistence() -> SwiftRepositorySyncPersistence<GlobalAnalyticsDataModel, MobileContentGlobalAnalyticsCodable, SwiftGlobalAnalytics>? {
+    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<GlobalAnalyticsDataModel, MobileContentGlobalAnalyticsCodable, SwiftGlobalAnalytics>? {
         return persistence as? SwiftRepositorySyncPersistence<GlobalAnalyticsDataModel, MobileContentGlobalAnalyticsCodable, SwiftGlobalAnalytics>
     }
     
-    var realmDatabase: RealmDatabase? {
+    private var realmDatabase: RealmDatabase? {
         return getRealmPersistence()?.database
     }
     
-    func getRealmPersistence() -> RealmRepositorySyncPersistence<GlobalAnalyticsDataModel, MobileContentGlobalAnalyticsCodable, RealmGlobalAnalytics>? {
+    private func getRealmPersistence() -> RealmRepositorySyncPersistence<GlobalAnalyticsDataModel, MobileContentGlobalAnalyticsCodable, RealmGlobalAnalytics>? {
         return persistence as? RealmRepositorySyncPersistence<GlobalAnalyticsDataModel, MobileContentGlobalAnalyticsCodable, RealmGlobalAnalytics>
     }
 }

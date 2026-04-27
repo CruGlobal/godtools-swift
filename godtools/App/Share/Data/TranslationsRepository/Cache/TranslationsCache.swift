@@ -20,20 +20,20 @@ class TranslationsCache {
     }
     
     @available(iOS 17.4, *)
-    var swiftDatabase: SwiftDatabase? {
+    private var swiftDatabase: SwiftDatabase? {
         return getSwiftPersistence()?.database
     }
     
     @available(iOS 17.4, *)
-    func getSwiftPersistence() -> SwiftRepositorySyncPersistence<TranslationDataModel, TranslationCodable, SwiftTranslation>? {
+    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<TranslationDataModel, TranslationCodable, SwiftTranslation>? {
         return persistence as? SwiftRepositorySyncPersistence<TranslationDataModel, TranslationCodable, SwiftTranslation>
     }
     
-    var realmDatabase: RealmDatabase? {
+    private var realmDatabase: RealmDatabase? {
         return getRealmPersistence()?.database
     }
     
-    func getRealmPersistence() -> RealmRepositorySyncPersistence<TranslationDataModel, TranslationCodable, RealmTranslation>? {
+    private func getRealmPersistence() -> RealmRepositorySyncPersistence<TranslationDataModel, TranslationCodable, RealmTranslation>? {
         return persistence as? RealmRepositorySyncPersistence<TranslationDataModel, TranslationCodable, RealmTranslation>
     }
 }

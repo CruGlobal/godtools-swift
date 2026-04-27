@@ -20,20 +20,20 @@ final class LessonEvaluationCache {
     }
     
     @available(iOS 17.4, *)
-    var swiftDatabase: SwiftDatabase? {
+    private var swiftDatabase: SwiftDatabase? {
         return getSwiftPersistence()?.database
     }
     
     @available(iOS 17.4, *)
-    func getSwiftPersistence() -> SwiftRepositorySyncPersistence<LessonEvaluationDataModel, LessonEvaluationDataModel, SwiftLessonEvaluation>? {
+    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<LessonEvaluationDataModel, LessonEvaluationDataModel, SwiftLessonEvaluation>? {
         return persistence as? SwiftRepositorySyncPersistence<LessonEvaluationDataModel, LessonEvaluationDataModel, SwiftLessonEvaluation>
     }
     
-    var realmDatabase: RealmDatabase? {
+    private var realmDatabase: RealmDatabase? {
         return getRealmPersistence()?.database
     }
     
-    func getRealmPersistence() -> RealmRepositorySyncPersistence<LessonEvaluationDataModel, LessonEvaluationDataModel, RealmLessonEvaluation>? {
+    private func getRealmPersistence() -> RealmRepositorySyncPersistence<LessonEvaluationDataModel, LessonEvaluationDataModel, RealmLessonEvaluation>? {
         return persistence as? RealmRepositorySyncPersistence<LessonEvaluationDataModel, LessonEvaluationDataModel, RealmLessonEvaluation>
     }
 }
