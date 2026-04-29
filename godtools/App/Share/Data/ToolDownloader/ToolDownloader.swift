@@ -39,26 +39,20 @@ class ToolDownloader {
             
             let isArticle: Bool
             
-            if let resource = resourcesRepository.persistence.getDataModelNonThrowing(id: tool.toolId) {
+            if let resource = resourcesRepository.getResource(id: tool.toolId) {
                 
                 isArticle = resource.resourceTypeEnum == .article
                 
-                do {
-                    
-                    if let resourceBanner = try attachmentsRepository.cache.getAttachment(id: resource.attrBanner) {
-                        attachments.append(resourceBanner)
-                    }
-                    
-                    if let resourceBannerAbout = try attachmentsRepository.cache.getAttachment(id: resource.attrBannerAbout) {
-                        attachments.append(resourceBannerAbout)
-                    }
-                    
-                    if let resourceAboutBannerAnimation = try attachmentsRepository.cache.getAttachment(id: resource.attrAboutBannerAnimation) {
-                        attachments.append(resourceAboutBannerAnimation)
-                    }
+                if let resourceBanner = attachmentsRepository.getAttachment(id: resource.attrBanner) {
+                    attachments.append(resourceBanner)
                 }
-                catch let error {
-                    assertionFailure("Failed to get attachment with error: \(error)")
+                
+                if let resourceBannerAbout = attachmentsRepository.getAttachment(id: resource.attrBannerAbout) {
+                    attachments.append(resourceBannerAbout)
+                }
+                
+                if let resourceAboutBannerAnimation = attachmentsRepository.getAttachment(id: resource.attrAboutBannerAnimation) {
+                    attachments.append(resourceAboutBannerAnimation)
                 }
             }
             else {
@@ -68,7 +62,7 @@ class ToolDownloader {
             
             for language in tool.languages {
                 
-                guard let translation = translationsRepository.cache.getLatestTranslation(resourceId: tool.toolId, languageCode: language) else {
+                guard let translation = translationsRepository.getLatestTranslation(resourceId: tool.toolId, languageCode: language) else {
                     continue
                 }
                 

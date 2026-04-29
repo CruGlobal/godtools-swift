@@ -36,15 +36,6 @@ final class UITestsRealmDatabase {
         )
     }
     
-    static func getLegacyRealmDatabase() -> LegacyRealmDatabase {
-        
-        let legacyRealmDatabase = LegacyRealmDatabase(
-            realmDatabase: Self.getRealmDatabase()
-        )
-                
-        return legacyRealmDatabase
-    }
-    
     static func getRealmDatabase() -> RealmDatabase {
         
         let realmDatabase = RealmDatabase(databaseConfig: getRealmDatabaseConfig())

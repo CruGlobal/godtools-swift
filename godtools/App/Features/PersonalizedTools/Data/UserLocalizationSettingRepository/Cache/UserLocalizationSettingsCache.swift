@@ -11,9 +11,9 @@ import RepositorySync
 import RealmSwift
 import Combine
 
-class UserLocalizationSettingsCache {
+final class UserLocalizationSettingsCache {
         
-    private let persistence: any Persistence<UserLocalizationSettingsDataModel, UserLocalizationSettingsDataModel>
+    let persistence: any Persistence<UserLocalizationSettingsDataModel, UserLocalizationSettingsDataModel>
     
     init(persistence: any Persistence<UserLocalizationSettingsDataModel, UserLocalizationSettingsDataModel>) {
                 
@@ -21,20 +21,20 @@ class UserLocalizationSettingsCache {
     }
     
     @available(iOS 17.4, *)
-    var swiftDatabase: SwiftDatabase? {
+    private var swiftDatabase: SwiftDatabase? {
         return getSwiftPersistence()?.database
     }
     
     @available(iOS 17.4, *)
-    func getSwiftPersistence() -> SwiftRepositorySyncPersistence<UserLocalizationSettingsDataModel, UserLocalizationSettingsDataModel, SwiftUserLocalizationSettings>? {
+    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<UserLocalizationSettingsDataModel, UserLocalizationSettingsDataModel, SwiftUserLocalizationSettings>? {
         return persistence as? SwiftRepositorySyncPersistence<UserLocalizationSettingsDataModel, UserLocalizationSettingsDataModel, SwiftUserLocalizationSettings>
     }
     
-    var realmDatabase: RealmDatabase? {
+    private var realmDatabase: RealmDatabase? {
         return getRealmPersistence()?.database
     }
     
-    func getRealmPersistence() -> RealmRepositorySyncPersistence<UserLocalizationSettingsDataModel, UserLocalizationSettingsDataModel, RealmUserLocalizationSettings>? {
+    private func getRealmPersistence() -> RealmRepositorySyncPersistence<UserLocalizationSettingsDataModel, UserLocalizationSettingsDataModel, RealmUserLocalizationSettings>? {
         return persistence as? RealmRepositorySyncPersistence<UserLocalizationSettingsDataModel, UserLocalizationSettingsDataModel, RealmUserLocalizationSettings>
     }
 }

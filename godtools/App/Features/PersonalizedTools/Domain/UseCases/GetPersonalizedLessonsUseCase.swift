@@ -53,13 +53,13 @@ class GetPersonalizedLessonsUseCase {
         return Publishers.CombineLatest3(
             personalizedToolsRepository
                 .getPersonalizedToolsChanged(requestPriority: .high, country: countryIsoRegionCode, language: languageCode),
-            resourcesRepository.persistence
+            resourcesRepository
                 .observeCollectionChangesPublisher(),
             lessonProgressRepository
                 .getLessonProgressChangedPublisher()
                 .setFailureType(to: Error.self)
         )
-        .flatMap({ (personalizedToolsChanged, resourcesChanged, lessonProgressChanged) -> AnyPublisher<[ResourceDataModel], Error> in
+        .flatMap({ (personalizedLessonsChanged, resourcesChanged, lessonProgressChanged) -> AnyPublisher<[ResourceDataModel], Error> in
 
             return self.personalizedToolsRepository
                 .getPersistedPersonalizedToolsPublisher(

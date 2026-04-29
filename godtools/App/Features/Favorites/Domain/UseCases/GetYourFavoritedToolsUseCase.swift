@@ -30,13 +30,11 @@ final class GetYourFavoritedToolsUseCase {
         
         return Publishers.CombineLatest3(
             resourcesRepository
-                .persistence
                 .observeCollectionChangesPublisher(),
             getToolListItemStrings
                 .getStringsPublisher(translateInLanguage: appLanguage)
                 .setFailureType(to: Error.self),
             favoritedResourcesRepository
-                .persistence
                 .observeCollectionChangesPublisher()
         )
         .flatMap { (resourcesChanged: Void, strings: ToolListItemStringsDomainModel, favoritedResourcesChanged: Void) -> AnyPublisher<[YourFavoritedToolDomainModel], Error> in
@@ -61,10 +59,10 @@ final class GetYourFavoritedToolsUseCase {
         
         let numberOfFavoritedTools: Int = try self.favoritedResourcesRepository.persistence.getObjectCount()
         
-        let prefixedFavoritedResources: [ResourceDataModel] = try favoritedResources
+        let prefixedFavoritedResources: [ResourceDataModel] = favoritedResources
             .prefix(maxCount ?? numberOfFavoritedTools)
             .compactMap {
-                try self.resourcesRepository.persistence.getDataModel(id: $0.id)
+                self.resourcesRepository.getResource(id: $0.id)
             }
         
         let yourFavoritedTools: [YourFavoritedToolDomainModel] = prefixedFavoritedResources

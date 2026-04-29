@@ -12,11 +12,19 @@ import RepositorySync
 
 class RealmEmailSignUp: Object, IdentifiableRealmObject {
     
-    @objc dynamic var id: String = ""
     @objc dynamic var email: String = ""
     @objc dynamic var firstName: String?
     @objc dynamic var lastName: String?
     @objc dynamic var isRegistered: Bool = false
+    
+    @objc dynamic var id: String {
+        get {
+            return email
+        }
+        set {
+            email = newValue
+        }
+    }
     
     override static func primaryKey() -> String? {
         return "email"

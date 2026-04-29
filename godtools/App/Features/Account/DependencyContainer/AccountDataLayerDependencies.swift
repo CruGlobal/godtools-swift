@@ -49,8 +49,7 @@ class AccountDataLayerDependencies {
         )
         
         return UserDetailsRepository(
-            externalDataFetch: api,
-            persistence: persistence,
+            api: api,
             cache: cache
         )
     }

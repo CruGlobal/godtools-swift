@@ -38,10 +38,10 @@ final class GetShareToolUrl {
     
     func getUrl(toolId: String, toolLanguageId: String, pageNumber: Int) -> String? {
                 
-        let resourceType = resourcesRepository.persistence.getDataModelNonThrowing(id: toolId)?.resourceTypeEnum ?? .unknown
+        let resourceType = resourcesRepository.getResource(id: toolId)?.resourceTypeEnum ?? .unknown
 
-        guard let resource = resourcesRepository.persistence.getDataModelNonThrowing(id: toolId),
-              let toolLanguage = languagesRepository.persistence.getDataModelNonThrowing(id: toolLanguageId) else {
+        guard let resource = resourcesRepository.getResource(id: toolId),
+              let toolLanguage = languagesRepository.getLanguage(id: toolLanguageId) else {
             
             return nil
         }

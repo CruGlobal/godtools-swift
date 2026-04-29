@@ -8,7 +8,6 @@
 
 import Foundation
 import RequestOperation
-import RepositorySync
 import Combine
 
 class MobileContentResourcesApi {
@@ -132,26 +131,5 @@ class MobileContentResourcesApi {
                 return resources
             }
             .eraseToAnyPublisher()
-    }
-}
-
-// MARK: - ExternalDataFetchInterface
-
-extension MobileContentResourcesApi: ExternalDataFetchInterface {
-    
-    func getObject(id: String, context: RequestOperationFetchContext) async throws -> [ResourceCodable] {
-        return Array()
-    }
-    
-    func getObjects(context: RequestOperationFetchContext) async throws -> [ResourceCodable] {
-        return Array()
-    }
-    
-    func getObjectPublisher(id: String, context: RequestOperationFetchContext) -> AnyPublisher<[ResourceCodable], Error> {
-        return emptyResponsePublisher()
-    }
-    
-    func getObjectsPublisher(context: RequestOperationFetchContext) -> AnyPublisher<[ResourceCodable], Error> {
-        return emptyResponsePublisher()
     }
 }

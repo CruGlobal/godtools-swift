@@ -20,7 +20,22 @@ final class SelectedToolFilterCategoryUseCase {
     
     func execute(id: String?) -> AnyPublisher<Void, Never> {
         
-        userToolFiltersRepository.storeUserToolCategoryFilter(with: id)
+        if let id = id, !id.isEmpty {
+            
+            Task {
+                try await userToolFiltersRepository
+                    .storeUserCategoryFilter(categoryId: id)
+            }
+        }
+        else {
+            
+            do {
+                try userToolFiltersRepository.deleteUserCategoryFilter()
+            }
+            catch _ {
+                
+            }
+        }
         
         return Just(())
             .eraseToAnyPublisher()

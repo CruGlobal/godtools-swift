@@ -23,7 +23,6 @@ final class GetToolFilterLanguagesUseCase {
     @MainActor func execute(appLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) -> AnyPublisher<[ToolFilterLanguageDomainModel], Error> {
         
         return resourcesRepository
-            .persistence
             .observeCollectionChangesPublisher()
             .flatMap { _ in
                 

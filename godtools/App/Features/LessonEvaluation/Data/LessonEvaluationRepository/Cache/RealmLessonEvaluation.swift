@@ -12,12 +12,20 @@ import RepositorySync
 
 class RealmLessonEvaluation: Object, IdentifiableRealmObject {
     
-    @objc dynamic var id: String = ""
     @objc dynamic var lastEvaluationAttempt: Date = Date()
     @objc dynamic var lessonAbbreviation: String = ""
     @objc dynamic var lessonEvaluated: Bool = false
     @objc dynamic var lessonId: String = ""
     @objc dynamic var numberOfEvaluationAttempts: Int = 0
+    
+    @objc dynamic var id: String {
+        get {
+            return lessonId
+        }
+        set {
+            lessonId = newValue
+        }
+    }
     
     override static func primaryKey() -> String? {
         return "lessonId"

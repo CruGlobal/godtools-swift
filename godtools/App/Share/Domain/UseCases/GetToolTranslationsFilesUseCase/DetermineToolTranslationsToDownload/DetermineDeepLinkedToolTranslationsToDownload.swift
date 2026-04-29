@@ -31,7 +31,7 @@ class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsTo
     }
     
     func getResource() -> ResourceDataModel? {
-        return resourcesRepository.cache.getResource(abbreviation: toolDeepLink.resourceAbbreviation)
+        return resourcesRepository.getResource(abbreviation: toolDeepLink.resourceAbbreviation)
     }
     
     func determineToolTranslationsToDownloadPublisher() -> AnyPublisher<DetermineToolTranslationsToDownloadResult, DetermineToolTranslationsToDownloadError> {
@@ -101,11 +101,11 @@ class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsTo
                 return primaryTranslation
             }
             else if let appLanguage = self.userAppLanguageRepository.getCachedLanguage(),
-                    let appLanguageTranslation = self.translationsRepository.cache.getLatestTranslation(resourceId: resource.id, languageCode: appLanguage.languageId) {
+                    let appLanguageTranslation = self.translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: appLanguage.languageId) {
                 
                 return appLanguageTranslation
             }
-            else if let englishTranslation = self.translationsRepository.cache.getLatestTranslation(resourceId: resource.id, languageCode: LanguageCodeDomainModel.english.value) {
+            else if let englishTranslation = self.translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: LanguageCodeDomainModel.english.value) {
                 
                 return englishTranslation
             }
@@ -136,8 +136,7 @@ class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsTo
     private func getSupportedLanguageIdsPublisher(resource: ResourceDataModel, languageCodes: [String]) -> AnyPublisher<[String], Never> {
         
         return languagesRepository
-            .cache
-            .getCachedLanguagesPublisher(codes: languageCodes)
+            .getLanguagesPublisher(codes: languageCodes)
             .map { (languages: [LanguageDataModel]) in
                 
                 let languageIds: [String] = languages.map({$0.id})
@@ -156,7 +155,7 @@ class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsTo
         
         for languageId in languageIds {
             
-            guard let translation = translationsRepository.cache.getLatestTranslation(resourceId: resourceId, languageId: languageId) else {
+            guard let translation = translationsRepository.getLatestTranslation(resourceId: resourceId, languageId: languageId) else {
                 continue
             }
             

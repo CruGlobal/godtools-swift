@@ -8,10 +8,9 @@
 
 import Foundation
 import RequestOperation
-import Combine
 import RepositorySync
 
-class UserDetailsAPI {
+final class UserDetailsAPI {
     
     private let authSession: MobileContentApiAuthSession
     private let requestBuilder: RequestBuilder = RequestBuilder()
@@ -90,26 +89,5 @@ class UserDetailsAPI {
                 queryItems: nil
             )
         )
-    }
-}
-
-// MARK: - ExternalDataFetchInterface
-
-extension UserDetailsAPI: ExternalDataFetchInterface {
-    
-    func getObject(id: String, context: RequestOperationFetchContext) async throws -> [MobileContentApiUsersMeCodable] {
-        return Array()
-    }
-    
-    func getObjects(context: RequestOperationFetchContext) async throws -> [MobileContentApiUsersMeCodable] {
-        return Array()
-    }
-    
-    func getObjectPublisher(id: String, context: RequestOperationFetchContext) -> AnyPublisher<[MobileContentApiUsersMeCodable], Error> {
-        return emptyResponsePublisher()
-    }
-    
-    func getObjectsPublisher(context: RequestOperationFetchContext) -> AnyPublisher<[MobileContentApiUsersMeCodable], Error> {
-        return emptyResponsePublisher()
     }
 }

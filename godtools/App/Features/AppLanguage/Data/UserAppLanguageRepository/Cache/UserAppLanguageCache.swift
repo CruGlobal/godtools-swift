@@ -22,20 +22,20 @@ class UserAppLanguageCache {
     }
     
     @available(iOS 17.4, *)
-    var swiftDatabase: SwiftDatabase? {
+    private var swiftDatabase: SwiftDatabase? {
         return getSwiftPersistence()?.database
     }
     
     @available(iOS 17.4, *)
-    func getSwiftPersistence() -> SwiftRepositorySyncPersistence<UserAppLanguageDataModel, UserAppLanguageDataModel, SwiftUserAppLanguage>? {
+    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<UserAppLanguageDataModel, UserAppLanguageDataModel, SwiftUserAppLanguage>? {
         return persistence as? SwiftRepositorySyncPersistence<UserAppLanguageDataModel, UserAppLanguageDataModel, SwiftUserAppLanguage>
     }
     
-    var realmDatabase: RealmDatabase? {
+    private var realmDatabase: RealmDatabase? {
         return getRealmPersistence()?.database
     }
     
-    func getRealmPersistence() -> RealmRepositorySyncPersistence<UserAppLanguageDataModel, UserAppLanguageDataModel, RealmUserAppLanguage>? {
+    private func getRealmPersistence() -> RealmRepositorySyncPersistence<UserAppLanguageDataModel, UserAppLanguageDataModel, RealmUserAppLanguage>? {
         return persistence as? RealmRepositorySyncPersistence<UserAppLanguageDataModel, UserAppLanguageDataModel, RealmUserAppLanguage>
     }
 }

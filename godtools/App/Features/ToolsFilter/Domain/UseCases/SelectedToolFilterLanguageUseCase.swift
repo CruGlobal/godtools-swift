@@ -20,8 +20,23 @@ final class SelectedToolFilterLanguageUseCase {
     
     func execute(id: String?) -> AnyPublisher<Void, Never> {
         
-        userToolFiltersRepository.storeUserToolLanguageFilter(with: id)
-        
+        if let id = id, !id.isEmpty {
+            
+            Task {
+                try await userToolFiltersRepository
+                    .storeUserLanguageFilter(languageId: id)
+            }
+        }
+        else {
+            
+            do {
+                try userToolFiltersRepository.deleteUserLanguageFilter()
+            }
+            catch _ {
+                
+            }
+        }
+                
         return Just(())
             .eraseToAnyPublisher()
     }

@@ -20,14 +20,13 @@ final class GetToolScreenShareTutorialHasBeenViewedUseCase {
     
     func execute(toolId: String) -> AnyPublisher<ToolScreenShareTutorialViewedDomainModel, Never> {
         
-        return tutorialViewsRepository
-            .getToolScreenShareTutorialViewPublisher(id: toolId)
-            .map { (toolScreenShare: ToolScreenShareTutorialViewDataModel?) in
-                
-                let numberOfViews: Int = toolScreenShare?.numberOfViews ?? 0
-                
-                return ToolScreenShareTutorialViewedDomainModel(numberOfViews: numberOfViews)
-            }
+        let toolScreenShare: ToolScreenShareTutorialViewDataModel? = tutorialViewsRepository.getToolScreenShareTutorialView(id: toolId)
+        
+        let numberOfViews: Int = toolScreenShare?.numberOfViews ?? 0
+        
+        let domainModel = ToolScreenShareTutorialViewedDomainModel(numberOfViews: numberOfViews)
+        
+        return Just(domainModel)
             .eraseToAnyPublisher()
     }
 }

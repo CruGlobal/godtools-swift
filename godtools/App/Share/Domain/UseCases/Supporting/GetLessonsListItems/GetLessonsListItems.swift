@@ -29,7 +29,7 @@ final class GetLessonsListItems {
 
             let filterLanguageModel: LanguageDataModel?
             if let filterLanguageId = filterLessonsByLanguage?.languageId {
-                filterLanguageModel = languagesRepository.persistence.getDataModelNonThrowing(id: filterLanguageId)
+                filterLanguageModel = languagesRepository.getLanguage(id: filterLanguageId)
             } else {
                 filterLanguageModel = nil
             }
@@ -71,7 +71,7 @@ final class GetLessonsListItems {
     
     private func getToolLanguageAvailability(appLanguage: AppLanguageDomainModel, filterLanguageModel: LanguageDataModel?, resource: ResourceDataModel) -> ToolLanguageAvailabilityDomainModel {
 
-        if let appLanguageModel = languagesRepository.cache.getCachedLanguage(code: appLanguage) {
+        if let appLanguageModel = languagesRepository.getLanguage(code: appLanguage) {
             
             let language: LanguageDataModel
             

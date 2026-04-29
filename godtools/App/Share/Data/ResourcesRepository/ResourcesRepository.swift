@@ -11,48 +11,112 @@ import Combine
 import RequestOperation
 import RepositorySync
 
-class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResourcesApi> {
+final class ResourcesRepository {
             
     private static let syncInvalidatorIdForResourcesPlustLatestTranslationsAndAttachments: String = "resourcesPlusLatestTranslationAttachments.syncInvalidator.id"
     private static let syncedResourcesFromJsonCacheKey: String = "ResourcesRepository.synced.resources.json"
     
+    private let api: MobileContentResourcesApi
+    private let jsonFileCache: ResourcesJsonFileCache
+    private let cache: ResourcesCache
     private let attachmentsRepository: AttachmentsRepository
     private let languagesRepository: LanguagesRepository
     private let syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface
     private let userDefaultsCache: UserDefaultsCacheInterface
     
-    let cache: ResourcesCache
-    
-    init(externalDataFetch: MobileContentResourcesApi, persistence: any Persistence<ResourceDataModel, ResourceCodable>, cache: ResourcesCache, attachmentsRepository: AttachmentsRepository, languagesRepository: LanguagesRepository, syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface, userDefaultsCache: UserDefaultsCacheInterface) {
+    init(api: MobileContentResourcesApi, jsonFileCache: ResourcesJsonFileCache, cache: ResourcesCache, attachmentsRepository: AttachmentsRepository, languagesRepository: LanguagesRepository, syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface, userDefaultsCache: UserDefaultsCacheInterface) {
         
+        self.api = api
+        self.jsonFileCache = jsonFileCache
         self.cache = cache
         self.attachmentsRepository = attachmentsRepository
         self.languagesRepository = languagesRepository
         self.syncInvalidatorPersistence = syncInvalidatorPersistence
         self.userDefaultsCache = userDefaultsCache
-                        
-        super.init(
-            externalDataFetch: externalDataFetch,
-            persistence: persistence
-        )
     }
-}
-
-// MARK: - Cache
-
-extension ResourcesRepository {
+    
+    var persistence: any Persistence<ResourceDataModel, ResourceCodable> {
+        return cache.persistence
+    }
+    
+    @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Error> {
+        return cache
+            .persistence
+            .observeCollectionChangesPublisher()
+    }
+    
+    func getResource(id: String) -> ResourceDataModel? {
+        do {
+            return try cache.persistence.getDataModel(id: id)
+        }
+        catch _ {
+            return nil
+        }
+    }
+    
+    func getResource(abbreviation: String) -> ResourceDataModel? {
+        
+        do {
+            return try cache.getResource(abbreviation: abbreviation)
+        }
+        catch _ {
+            return nil
+        }
+    }
     
     func getCachedResourcesByFilter(filter: ResourcesFilter) -> [ResourceDataModel] {
         
-        return cache.getResourcesByFilter(filter: filter)
+        do {
+            return try cache.getResourcesByFilter(filter: filter)
+        }
+        catch _ {
+            return Array()
+        }
     }
     
     func getCachedResourcesByFilterPublisher(filter: ResourcesFilter) -> AnyPublisher<[ResourceDataModel], Never> {
         
-        let resources: [ResourceDataModel] = cache.getResourcesByFilter(filter: filter)
-        
-        return Just(resources)
-            .eraseToAnyPublisher()
+        do {
+            
+            let resources: [ResourceDataModel] = try cache.getResourcesByFilter(filter: filter)
+            
+            return Just(resources)
+                .eraseToAnyPublisher()
+        }
+        catch _ {
+            return Just(Array())
+                .eraseToAnyPublisher()
+        }
+    }
+    
+    func getFeaturedLessonsPublisher(sorted: Bool = false) -> AnyPublisher<[ResourceDataModel], Error> {
+        return cache.getFeaturedLessonsPublisher(sorted: sorted)
+    }
+    
+    func getResourceVariantsPublisher(resourceId: String) -> AnyPublisher<[ResourceDataModel], Error> {
+        return cache.getResourceVariantsPublisher(resourceId: resourceId)
+    }
+    
+    func getLessonsPublisher(filterByLanguageId: String? = nil, sorted: Bool = false) -> AnyPublisher<[ResourceDataModel], Error> {
+        return cache.getLessonsPublisher(filterByLanguageId: filterByLanguageId, sorted: sorted)
+    }
+    
+    func getLessonsCount(filterByLanguageId: String? = nil) -> Int {
+        do {
+            return try cache.getLessonsCount(filterByLanguageId: filterByLanguageId)
+        }
+        catch _ {
+            return 0
+        }
+    }
+    
+    func getLessonsSupportedLanguageIds() -> [String] {
+        do {
+            return try cache.getLessonsSupportedLanguageIds()
+        }
+        catch _ {
+            return Array()
+        }
     }
 }
 
@@ -62,7 +126,7 @@ extension ResourcesRepository {
     
     func syncResourceAndLatestTranslationsPublisher(resourceId: String, requestPriority: RequestPriority) -> AnyPublisher<Void, Error> {
         
-        return externalDataFetch.getResourcePlusLatestTranslationsAndAttachmentsPublisher(id: resourceId, requestPriority: requestPriority)
+        return api.getResourcePlusLatestTranslationsAndAttachmentsPublisher(id: resourceId, requestPriority: requestPriority)
             .flatMap({ (resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable) -> AnyPublisher<Void, Error> in
                                 
                 return self.cache.syncResources(
@@ -79,7 +143,7 @@ extension ResourcesRepository {
     
     func syncResourceAndLatestTranslationsPublisher(resourceAbbreviation: String, requestPriority: RequestPriority) -> AnyPublisher<Void, Error> {
         
-        return externalDataFetch.getResourcePlusLatestTranslationsAndAttachmentsPublisher(abbreviation: resourceAbbreviation, requestPriority: requestPriority)
+        return api.getResourcePlusLatestTranslationsAndAttachmentsPublisher(abbreviation: resourceAbbreviation, requestPriority: requestPriority)
             .flatMap({ (resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable) -> AnyPublisher<Void, Error> in
                                 
                 return self.cache.syncResources(
@@ -130,19 +194,24 @@ extension ResourcesRepository {
                 .eraseToAnyPublisher()
         }
         
-        return Publishers
-            .CombineLatest(
-                languagesRepository.syncLanguagesFromJsonFileCache(),
-                ResourcesJsonFileCache(jsonServices: JsonServices()).getResourcesPlusLatestTranslationsAndAttachments().publisher
-            )
+        return languagesRepository
+            .syncLanguagesFromJsonFileCachePublisher()
             .receive(on: DispatchQueue.main)
-            .flatMap { (languages: [LanguageDataModel], resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable) -> AnyPublisher<ResourcesCacheSyncResult, Error> in
+            .flatMap { (languages: [LanguageDataModel]) -> AnyPublisher<ResourcesCacheSyncResult, Error> in
                 
-                return self.cache.syncResources(
-                    resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
-                    shouldRemoveDataThatNoLongerExists: true
-                )
-                .eraseToAnyPublisher()
+                do {
+                                        
+                    return self.cache.syncResources(
+                        resourcesPlusLatestTranslationsAndAttachments: try self.jsonFileCache.getResourcesPlusLatestTranslationsAndAttachments(),
+                        shouldRemoveDataThatNoLongerExists: true
+                    )
+                    .eraseToAnyPublisher()
+                }
+                catch let error {
+                    
+                    return Fail(error: error)
+                        .eraseToAnyPublisher()
+                }
             }
             .map { (result: ResourcesCacheSyncResult) in
                 
@@ -179,8 +248,8 @@ extension ResourcesRepository {
         return Publishers
             .CombineLatest(
                 languagesRepository
-                    .syncLanguagesFromRemote(requestPriority: requestPriority),
-                externalDataFetch.getResourcesPlusLatestTranslationsAndAttachments(requestPriority: requestPriority)
+                    .syncLanguagesFromRemotePublisher(requestPriority: requestPriority),
+                api.getResourcesPlusLatestTranslationsAndAttachments(requestPriority: requestPriority)
             )
             .receive(on: DispatchQueue.main)
             .flatMap({ (languages: [LanguageDataModel], resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable) -> AnyPublisher<ResourcesCacheSyncResult, Error> in
@@ -204,7 +273,13 @@ extension ResourcesRepository {
 extension ResourcesRepository {
     
     func getSpotlightTools(sortByDefaultOrder: Bool = false) -> [ResourceDataModel] {
-        return cache.getSpotlightTools(sortByDefaultOrder: sortByDefaultOrder)
+        
+        do {
+            return try cache.getSpotlightTools(sortByDefaultOrder: sortByDefaultOrder)
+        }
+        catch _ {
+            return Array()
+        }
     }
 }
 
@@ -214,25 +289,46 @@ extension ResourcesRepository {
     
     func getAllToolsList(filterByCategory: String?, filterByLanguageId: String?, sortByDefaultOrder: Bool) -> [ResourceDataModel] {
         
-        return cache.getAllToolsList(
-            filterByCategory: filterByCategory,
-            filterByLanguageId: filterByLanguageId,
-            sortByDefaultOrder: sortByDefaultOrder
-        )
+        do {
+            
+            return try cache.getAllToolsList(
+                filterByCategory: filterByCategory,
+                filterByLanguageId: filterByLanguageId,
+                sortByDefaultOrder: sortByDefaultOrder
+            )
+        }
+        catch _ {
+            return Array()
+        }
     }
     
     func getAllToolsListCount(filterByCategory: String?, filterByLanguageId: String?) -> Int {
         
-        return cache.getAllToolsListCount(filterByCategory: filterByCategory, filterByLanguageId: filterByLanguageId)
+        do {
+            return try cache.getAllToolsListCount(filterByCategory: filterByCategory, filterByLanguageId: filterByLanguageId)
+        }
+        catch _ {
+            return 0
+        }
     }
     
     func getAllToolCategoryIds(filteredByLanguageId: String?) -> [String] {
         
-        return cache.getAllToolCategoryIds(filteredByLanguageId: filteredByLanguageId)
+        do {
+            return try cache.getAllToolCategoryIds(filteredByLanguageId: filteredByLanguageId)
+        }
+        catch _ {
+            return Array()
+        }
     }
     
     func getAllToolLanguageIds(filteredByCategoryId: String?) -> [String] {
         
-        return cache.getAllToolLanguageIds(filteredByCategoryId: filteredByCategoryId)
+        do {
+            return try cache.getAllToolLanguageIds(filteredByCategoryId: filteredByCategoryId)
+        }
+        catch _ {
+            return Array()
+        }
     }
 }

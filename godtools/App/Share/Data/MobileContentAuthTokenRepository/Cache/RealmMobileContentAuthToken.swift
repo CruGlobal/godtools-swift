@@ -13,8 +13,16 @@ import RepositorySync
 class RealmMobileContentAuthToken: Object, IdentifiableRealmObject {
     
     @objc dynamic var expirationDate: Date?
-    @objc dynamic var id: String = ""
     @objc dynamic var userId: String = ""
+    
+    @objc dynamic var id: String {
+        get {
+            return userId
+        }
+        set {
+            userId = newValue
+        }
+    }
     
     override static func primaryKey() -> String? {
         return "userId"

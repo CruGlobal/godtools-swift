@@ -11,40 +11,63 @@ import Combine
 import RequestOperation
 
 final class GlobalAnalyticsRepository {
+    
+    static let sharedGlobalAnalyticsId: String = "1"
         
     private let api: MobileContentGlobalAnalyticsApi
-    private let cache: RealmGlobalAnalyticsCache
+    private let cache: GlobalAnalyticsCache
     
     private var cancellables: Set<AnyCancellable> = Set()
     
-    init(api: MobileContentGlobalAnalyticsApi, cache: RealmGlobalAnalyticsCache) {
+    init(api: MobileContentGlobalAnalyticsApi, cache: GlobalAnalyticsCache) {
         
         self.api = api
         self.cache = cache
     }
     
-    @MainActor func getGlobalAnalyticsChangedPublisher(requestPriority: RequestPriority) -> AnyPublisher<GlobalAnalyticsDataModel?, Never> {
+    @MainActor func getGlobalAnalyticsChangedPublisher(requestPriority: RequestPriority) -> AnyPublisher<GlobalAnalyticsDataModel?, Error> {
                 
-        getGlobalAnalyticsFromRemotePublisher(requestPriority: requestPriority)
-            .sink { value in
-                
-            } receiveValue: { value in
-                                
-            }
-            .store(in: &cancellables)
+        AnyPublisher() {
+            return try await self.syncGlobalAnalyticsFromRemote(
+                requestPriority: requestPriority
+            )
+        }
+        .sink { value in
             
-        return cache.getGlobalAnalyticsChangedPublisher(id: MobileContentGlobalAnalyticsApi.sharedGlobalAnalyticsId)
+        } receiveValue: { value in
+                            
+        }
+        .store(in: &cancellables)
+        
+        return cache
+            .persistence
+            .observeCollectionChangesPublisher()
+            .tryMap {
+                return try self.cache
+                    .persistence
+                    .getDataModel(
+                        id: Self.sharedGlobalAnalyticsId
+                    )
+            }
             .eraseToAnyPublisher()
     }
     
-    private func getGlobalAnalyticsFromRemotePublisher(requestPriority: RequestPriority) -> AnyPublisher<GlobalAnalyticsDataModel, Error> {
+    private func syncGlobalAnalyticsFromRemote(requestPriority: RequestPriority) async throws -> GlobalAnalyticsDataModel? {
         
-        return api.getGlobalAnalyticsPublisher(requestPriority: requestPriority)
-            .flatMap({ (globalAnalytics: MobileContentGlobalAnalyticsCodable) -> AnyPublisher<GlobalAnalyticsDataModel, Error> in
-                
-                return self.cache.storeGlobalAnalyticsPublisher(globalAnalytics: globalAnalytics)
-                    .eraseToAnyPublisher()
-            })
-            .eraseToAnyPublisher()
+        let globalAnalyticsCodable: MobileContentGlobalAnalyticsCodable? = try await api.getGlobalAnalytics(requestPriority: requestPriority)
+        
+        guard let globalAnalyticsCodable = globalAnalyticsCodable else {
+            return nil
+        }
+        
+        let sharedGlobalAnalytics = globalAnalyticsCodable.copy(id: Self.sharedGlobalAnalyticsId)
+        
+        _ = try await cache.persistence.writeObjectsAsync(
+            externalObjects: [sharedGlobalAnalytics],
+            writeOption: nil,
+            getOption: nil
+        )
+        
+        return sharedGlobalAnalytics.toModel()
     }
 }

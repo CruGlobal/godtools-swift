@@ -10,7 +10,7 @@ import Foundation
 import RepositorySync
 import Combine
 
-class AppLanguagesRepositorySync: AppLanguagesRepositorySyncInterface {
+final class AppLanguagesRepositorySync: AppLanguagesRepositorySyncInterface {
         
     private let api: AppLanguagesApi
     private let persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>

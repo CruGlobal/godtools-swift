@@ -10,20 +10,29 @@ import Foundation
 import Combine
 import RepositorySync
 
-class UserLocalizationSettingsRepository: RepositorySync<UserLocalizationSettingsDataModel, NoExternalDataFetch<UserLocalizationSettingsDataModel>> {
+final class UserLocalizationSettingsRepository {
 
     static let sharedUserId: String = "user"
     
     private let cache: UserLocalizationSettingsCache
 
-    init(persistence: any Persistence<UserLocalizationSettingsDataModel, UserLocalizationSettingsDataModel>, cache: UserLocalizationSettingsCache) {
+    init(cache: UserLocalizationSettingsCache) {
         
         self.cache = cache
-        
-        super.init(
-            externalDataFetch: NoExternalDataFetch<UserLocalizationSettingsDataModel>(),
-            persistence: persistence
-        )
+    }
+    
+    var persistence: any Persistence<UserLocalizationSettingsDataModel, UserLocalizationSettingsDataModel> {
+        return cache.persistence
+    }
+    
+    @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Never> {
+        return persistence
+            .observeCollectionChangesPublisher()
+            .catch { (error: Error) in
+                return Just(Void())
+                    .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
     }
 
     func setCountryPublisher(isoRegionCode: String) -> AnyPublisher<UserLocalizationSettingsDataModel, Error> {

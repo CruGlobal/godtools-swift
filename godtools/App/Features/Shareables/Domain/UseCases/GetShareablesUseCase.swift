@@ -21,7 +21,7 @@ final class GetShareablesUseCase {
     
     func execute(toolId: String, toolLanguageId: String) -> AnyPublisher<[ShareableDomainModel], Never> {
         
-        guard let translation = translationsRepository.cache.getLatestTranslation(resourceId: toolId, languageId: toolLanguageId) else {
+        guard let translation = translationsRepository.getLatestTranslation(resourceId: toolId, languageId: toolLanguageId) else {
             return Just([])
                 .eraseToAnyPublisher()
         }

@@ -12,7 +12,7 @@ import Combine
 
 class LanguagesCache {
         
-    private let persistence: any Persistence<LanguageDataModel, LanguageCodable>
+    let persistence: any Persistence<LanguageDataModel, LanguageCodable>
     
     init(persistence: any Persistence<LanguageDataModel, LanguageCodable>) {
                 
@@ -20,20 +20,20 @@ class LanguagesCache {
     }
     
     @available(iOS 17.4, *)
-    var swiftDatabase: SwiftDatabase? {
+    private var swiftDatabase: SwiftDatabase? {
         return getSwiftPersistence()?.database
     }
     
     @available(iOS 17.4, *)
-    func getSwiftPersistence() -> SwiftRepositorySyncPersistence<LanguageDataModel, LanguageCodable, SwiftLanguage>? {
+    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<LanguageDataModel, LanguageCodable, SwiftLanguage>? {
         return persistence as? SwiftRepositorySyncPersistence<LanguageDataModel, LanguageCodable, SwiftLanguage>
     }
     
-    var realmDatabase: RealmDatabase? {
+    private var realmDatabase: RealmDatabase? {
         return getRealmPersistence()?.database
     }
     
-    func getRealmPersistence() -> RealmRepositorySyncPersistence<LanguageDataModel, LanguageCodable, RealmLanguage>? {
+    private func getRealmPersistence() -> RealmRepositorySyncPersistence<LanguageDataModel, LanguageCodable, RealmLanguage>? {
         return persistence as? RealmRepositorySyncPersistence<LanguageDataModel, LanguageCodable, RealmLanguage>
     }
 }
@@ -81,7 +81,7 @@ extension LanguagesCache {
 
 extension LanguagesCache {
     
-    func getCachedLanguage(code: BCP47LanguageIdentifier) -> LanguageDataModel? {
+    func getCachedLanguage(code: BCP47LanguageIdentifier) throws -> LanguageDataModel? {
         
         if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
             
@@ -98,7 +98,9 @@ extension LanguagesCache {
                 return nil
             }
         }
-        else if let realmPersistence = getRealmPersistence(), let realm = realmPersistence.database.openRealmNonThrowing() {
+        else if let realmPersistence = getRealmPersistence() {
+            
+            let realm = try realmPersistence.database.openRealm()
             
             let query = RealmDatabaseQuery.filter(
                 filter: getLanguageByCodeNSPredicate(code: code)

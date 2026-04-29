@@ -9,9 +9,8 @@
 import Foundation
 import RequestOperation
 import RepositorySync
-import Combine
 
-class MobileContentLanguagesApi {
+final class MobileContentLanguagesApi {
     
     private enum Path {
         static let languages = "/languages"
@@ -57,7 +56,7 @@ class MobileContentLanguagesApi {
         )
     }
     
-    private func getLanguage(requestPriority: RequestPriority, languageId: String) async throws -> LanguageCodable? {
+    func getLanguage(requestPriority: RequestPriority, languageId: String) async throws -> LanguageCodable? {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
@@ -75,7 +74,7 @@ class MobileContentLanguagesApi {
         return decodeResponse.successCodable?.dataObject
     }
     
-    private func getLanguages(requestPriority: RequestPriority) async throws -> [LanguageCodable] {
+    func getLanguages(requestPriority: RequestPriority) async throws -> [LanguageCodable] {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
@@ -91,98 +90,5 @@ class MobileContentLanguagesApi {
         let decodeResponse: RequestCodableResponse<JsonApiResponseDataArray<LanguageCodable>, NoResponseCodable> = try response.decodeRequestDataResponseForSuccessCodable()
         
         return decodeResponse.successCodable?.dataArray ?? []
-    }
-    
-    private func getLanguagePublisher(requestPriority: RequestPriority, languageId: String) -> AnyPublisher<LanguageCodable?, Error> {
-        
-        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
-        
-        let urlRequest: URLRequest = getLanguageRequest(urlSession: urlSession, languageId: languageId)
-        
-        return requestSender
-            .sendDataTaskPublisher(
-                urlRequest: urlRequest,
-                urlSession: urlSession
-            )
-            .validate()
-            .decodeRequestDataResponseForSuccessCodable()
-            .map { (response: RequestCodableResponse<JsonApiResponseDataObject<LanguageCodable>, NoResponseCodable>) in
-                
-                let language: LanguageCodable? = response.successCodable?.dataObject
-                return language
-            }
-            .eraseToAnyPublisher()
-    }
-    
-    private func getLanguagesPublisher(requestPriority: RequestPriority) -> AnyPublisher<[LanguageCodable], Error> {
-        
-        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
-        
-        let urlRequest: URLRequest = getLanguagesRequest(urlSession: urlSession)
-        
-        return requestSender
-            .sendDataTaskPublisher(
-                urlRequest: urlRequest,
-                urlSession: urlSession
-            )
-            .validate()
-            .decodeRequestDataResponseForSuccessCodable()
-            .map { (response: RequestCodableResponse<JsonApiResponseDataArray<LanguageCodable>, NoResponseCodable>) in
-                
-                let languages: [LanguageCodable] = response.successCodable?.dataArray ?? []
-                return languages
-            }
-            .eraseToAnyPublisher()
-    }
-}
-
-// MARK: - ExternalDataFetchInterface
-
-extension MobileContentLanguagesApi: ExternalDataFetchInterface {
-    
-    func getObject(id: String, context: RequestOperationFetchContext) async throws -> [LanguageCodable] {
-        
-        let language: LanguageCodable? = try await getLanguage(
-            requestPriority: context.requestPriority,
-            languageId: id
-        )
-        
-        guard let language = language else {
-            return Array()
-        }
-        
-        return [language]
-    }
-    
-    func getObjects(context: RequestOperationFetchContext) async throws -> [LanguageCodable] {
-        
-        return try await getLanguages(requestPriority: context.requestPriority)
-    }
-    
-    func getObjectPublisher(id: String, context: RequestOperationFetchContext) -> AnyPublisher<[LanguageCodable], Error> {
-        
-        return getLanguagePublisher(requestPriority: context.requestPriority, languageId: id)
-            .map { (language: LanguageCodable?) in
-                
-                let objects: [LanguageCodable]
-                
-                if let language = language {
-                    objects = [language]
-                } else {
-                    objects = []
-                }
-                
-                return objects
-            }
-            .eraseToAnyPublisher()
-    }
-    
-    func getObjectsPublisher(context: RequestOperationFetchContext) -> AnyPublisher<[LanguageCodable], Error> {
-        
-        return getLanguagesPublisher(requestPriority: context.requestPriority)
-            .map { (languages: [LanguageCodable]) in
-                return languages
-            }
-            .eraseToAnyPublisher()
     }
 }

@@ -180,7 +180,12 @@ struct GetUserLessonFiltersUseCaseTests {
                     if triggerCount == 1 {
                         
                         originalLessonLanguageFilterRef = userLessonFilters.languageFilter
-                        testsDiContainer.dataLayer.getUserLessonFiltersRepository().storeUserLessonLanguageFilter(with: spanishLanguage.id)
+                        
+                        Task {
+                            try await testsDiContainer.dataLayer.getUserLessonFiltersRepository().storeUserLessonLanguageFilter(
+                                languageId: spanishLanguage.id
+                            )
+                        }
                     }
                     else if triggerCount == 2 {
                         

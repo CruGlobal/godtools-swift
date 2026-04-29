@@ -76,7 +76,7 @@ class DashboardFlow: Flow, ToolNavigationFlow, LocalizationSettingsNavigationFlo
             switch state {
             case .userTappedBackFromLocalizationSettings:
                 navigateBackFromLocalizationSettingsFlow()
-            case .userConfirmedLocalizationSetting(let countryListItem):
+            case .userConfirmedLocalizationSetting( _):
                 navigateBackFromLocalizationSettingsFlow()
             }
 
@@ -199,7 +199,7 @@ class DashboardFlow: Flow, ToolNavigationFlow, LocalizationSettingsNavigationFlo
             let primaryLanguage: AppLanguageDomainModel?
             let parallelLanguage: AppLanguageDomainModel?
             
-            if let toolResource = resourcesRepository.persistence.getDataModelNonThrowing(id: tool.dataModelId),
+            if let toolResource = resourcesRepository.getResource(id: tool.dataModelId),
                toolResource.resourceTypeEnum == .article {
                 
                 parallelLanguage = nil
@@ -675,7 +675,7 @@ extension DashboardFlow {
         
         let languageIds: [String]
         
-        if let appLanguageModel = languagesRepository.cache.getCachedLanguage(code: appLanguage) {
+        if let appLanguageModel = languagesRepository.getLanguage(code: appLanguage) {
             languageIds = [appLanguageModel.id]
         }
         else {
@@ -743,11 +743,11 @@ extension DashboardFlow {
         
         var languageIds: [String] = Array()
         
-        if let languageModel = languagesRepository.cache.getCachedLanguage(code: primaryLanguage) {
+        if let languageModel = languagesRepository.getLanguage(code: primaryLanguage) {
             languageIds.append(languageModel.id)
         }
         
-        if let parallelLanguage = parallelLanguage, let languageModel = languagesRepository.cache.getCachedLanguage(code: parallelLanguage) {
+        if let parallelLanguage = parallelLanguage, let languageModel = languagesRepository.getLanguage(code: parallelLanguage) {
             languageIds.append(languageModel.id)
         }
         
@@ -791,7 +791,7 @@ extension DashboardFlow {
         
         let openToolInLanguages: [String]
         
-        if languageIds.isEmpty, let englishLanguage = languagesRepository.cache.getCachedLanguage(code: LanguageCodeDomainModel.english.rawValue) {
+        if languageIds.isEmpty, let englishLanguage = languagesRepository.getLanguage(code: LanguageCodeDomainModel.english.rawValue) {
             
             openToolInLanguages = [englishLanguage.id]
         }

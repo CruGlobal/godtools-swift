@@ -13,11 +13,22 @@ class UserAppLanguageRepository {
         
     private static let sharedUserId: String = "shared-user-id"
     
-    let cache: UserAppLanguageCache
+    private let cache: UserAppLanguageCache
     
     init(cache: UserAppLanguageCache) {
         
         self.cache = cache
+    }
+    
+    @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Never> {
+        return cache
+            .persistence
+            .observeCollectionChangesPublisher()
+            .catch { (error: Error) in
+                return Just(Void())
+                    .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
     }
     
     func deleteLanguage() throws {

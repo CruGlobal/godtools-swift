@@ -11,21 +11,56 @@ import Combine
 
 final class UserLessonProgressRepository {
     
-    private let cache: RealmUserLessonProgressCache
+    private let cache: UserLessonProgressCache
     
-    init(cache: RealmUserLessonProgressCache) {
+    init(cache: UserLessonProgressCache) {
         self.cache = cache
     }
     
     @MainActor func getLessonProgressChangedPublisher() -> AnyPublisher<Void, Never> {
-        return cache.getUserLessonProgressChangedPublisher()
+        return cache.persistence
+            .observeCollectionChangesPublisher()
+            .catch { _ in
+                return Just(Void())
+                    .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
     }
     
-    func storeLessonProgress(_ lessonProgress: UserLessonProgressDataModel) -> AnyPublisher<UserLessonProgressDataModel, Error> {
-        cache.storeUserLessonProgress(lessonProgress)
+    func storeLessonProgressPublisher(lessonId: String, lastViewedPageId: String, progress: Double) -> AnyPublisher<UserLessonProgressDataModel, Error> {
+        
+        return AnyPublisher() {
+            
+            try await self.storeLessonProgress(
+                lessonId: lessonId,
+                lastViewedPageId: lastViewedPageId,
+                progress: progress
+            )
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    private func storeLessonProgress(lessonId: String, lastViewedPageId: String, progress: Double) async throws -> UserLessonProgressDataModel {
+        
+        let dataModel = UserLessonProgressDataModel(
+            id: lessonId,
+            lessonId: lessonId,
+            lastViewedPageId: lastViewedPageId,
+            progress: progress
+        )
+        
+        _ = try await cache.persistence.writeObjectsAsync(externalObjects: [dataModel], writeOption: nil, getOption: nil)
+        
+        return dataModel
     }
     
     func getLessonProgress(lessonId: String) -> UserLessonProgressDataModel? {
-        return cache.getUserLessonProgress(lessonId: lessonId)
+        
+        do {
+            return try cache.persistence.getDataModel(id: lessonId)
+        }
+        catch _ {
+            return nil
+        }
     }
 }

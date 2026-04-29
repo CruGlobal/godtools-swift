@@ -51,7 +51,7 @@ class GetPersonalizedToolsUseCase {
         return Publishers.CombineLatest(
             personalizedToolsRepository
                 .getPersonalizedToolsChanged(requestPriority: .high, country: countryIsoRegionCode, language: languageCode),
-            resourcesRepository.persistence
+            resourcesRepository
                 .observeCollectionChangesPublisher()
         )
         .flatMap({ (personalizedToolsChanged, resourcesChanged) -> AnyPublisher<[ResourceDataModel], Error> in

@@ -16,13 +16,11 @@ class AppDataLayerDependencies {
         
     private let sharedAppConfig: AppConfigInterface
     private let sharedUrlSessionPriority: URLSessionPriority = URLSessionPriority()
-    private let sharedLegacyRealmDatabase: LegacyRealmDatabase
     private let sharedAnalytics: AnalyticsContainer
     
     init(appConfig: AppConfigInterface) {
         
         sharedAppConfig = appConfig
-        sharedLegacyRealmDatabase = appConfig.getLegacyRealmDatabase()
         
         sharedAnalytics = AnalyticsContainer(
             firebaseAnalytics: Self.getFirebaseAnalytics(appConfig: appConfig)
@@ -58,8 +56,26 @@ class AppDataLayerDependencies {
     }
     
     private func getArticleAemCache() -> ArticleAemCache {
+        
+        let persistence: any Persistence<ArticleAemData, ArticleAemData>
+        
+        if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                dataModelMapping: SwiftArticleAemDataMapping()
+            )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                database: getSharedRealmDatabase(),
+                dataModelMapping: RealmArticleAemDataMapping()
+            )
+        }
+        
         return ArticleAemCache(
-            realmDatabase: getSharedLegacyRealmDatabase(),
+            persistence: persistence,
             articleWebArchiver: ArticleWebArchiver(
                 urlSessionPriority: getSharedUrlSessionPriority(),
                 requestSender: getRequestSender()
@@ -82,11 +98,29 @@ class AppDataLayerDependencies {
     }
     
     func getArticleManifestAemRepository() -> ArticleManifestAemRepository {
+        
+        let persistence: any Persistence<CategoryArticleModel, CategoryArticleModel>
+        
+        if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                dataModelMapping: SwiftCategoryArticleMapping()
+            )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                database: getSharedRealmDatabase(),
+                dataModelMapping: RealmCategoryArticleMapping()
+            )
+        }
+        
         return ArticleManifestAemRepository(
             downloader: getArticleAemDownloader(),
             cache: getArticleAemCache(),
-            categoryArticlesCache: RealmCategoryArticlesCache(
-                realmDatabase: getSharedLegacyRealmDatabase()
+            categoryArticlesCache: CategoryArticlesCache(
+                persistence: persistence
             ),
             syncInvalidatorPersistence: getUserDefaultsCache()
         )
@@ -124,8 +158,7 @@ class AppDataLayerDependencies {
         )
         
         return AttachmentsRepository(
-            externalDataFetch: api,
-            persistence: persistence,
+            api: api,
             cache: cache
         )
     }
@@ -200,7 +233,6 @@ class AppDataLayerDependencies {
         }
         
         return FavoritedResourcesRepository(
-            persistence: persistence,
             cache: FavoritedResourcesCache(persistence: persistence)
         )
     }
@@ -271,8 +303,8 @@ class AppDataLayerDependencies {
         let cache = LanguagesCache(persistence: persistence)
                 
         return LanguagesRepository(
-            externalDataFetch: api,
-            persistence: persistence,
+            api: api,
+            jsonFileCache: LanguagesJsonFileCache(jsonServices: JsonServices()),
             cache: cache
         )
     }
@@ -389,8 +421,8 @@ class AppDataLayerDependencies {
         )
         
         return ResourcesRepository(
-            externalDataFetch: api,
-            persistence: persistence,
+            api: api,
+            jsonFileCache: ResourcesJsonFileCache(jsonServices: JsonServices()),
             cache: cache,
             attachmentsRepository: getAttachmentsRepository(),
             languagesRepository: getLanguagesRepository(),
@@ -421,10 +453,6 @@ class AppDataLayerDependencies {
         return sharedUrlSessionPriority
     }
     
-    func getSharedLegacyRealmDatabase() -> LegacyRealmDatabase {
-        return sharedLegacyRealmDatabase
-    }
-    
     func getSharedRealmDatabase() -> RealmDatabase {
         return getAppConfig().getRealmDatabase()
     }
@@ -434,7 +462,7 @@ class AppDataLayerDependencies {
         do {
             return try getAppConfig().getSwiftDatabase()
         }
-        catch let error {
+        catch _ {
             assertionFailure("Failed to get swift database.")
             return nil
         }
@@ -510,8 +538,7 @@ class AppDataLayerDependencies {
         let cache = TranslationsCache(persistence: persistence)
         
         return TranslationsRepository(
-            externalDataFetch: api,
-            persistence: persistence,
+            api: api,
             cache: cache,
             infoPlist: getInfoPlist(),
             resourcesFileCache: getResourcesFileCache(),
@@ -607,17 +634,53 @@ class AppDataLayerDependencies {
     }
     
     func getUserLessonFiltersRepository() -> UserLessonFiltersRepository {
+        
+        let persistence: any Persistence<UserLessonLanguageFilterDataModel, UserLessonLanguageFilterDataModel>
+        
+        if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                dataModelMapping: SwiftUserLessonLanguageFilterMapping()
+            )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                database: getSharedRealmDatabase(),
+                dataModelMapping: RealmUserLessonLanguageFilterMapping()
+            )
+        }
+        
         return UserLessonFiltersRepository(
-            cache: RealmUserLessonFiltersCache(
-                realmDatabase: getSharedLegacyRealmDatabase()
+            cache: UserLessonFiltersCache(
+                persistence: persistence
             )
         )
     }
     
     func getUserLessonProgressRepository() -> UserLessonProgressRepository {
+        
+        let persistence: any Persistence<UserLessonProgressDataModel, UserLessonProgressDataModel>
+        
+        if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                dataModelMapping: SwiftUserLessonProgressMapping()
+            )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                database: getSharedRealmDatabase(),
+                dataModelMapping: RealmUserLessonProgressMapping()
+            )
+        }
+        
         return UserLessonProgressRepository(
-            cache: RealmUserLessonProgressCache(
-                realmDatabase: getSharedLegacyRealmDatabase()
+            cache: UserLessonProgressCache(
+                persistence: persistence
             )
         )
     }

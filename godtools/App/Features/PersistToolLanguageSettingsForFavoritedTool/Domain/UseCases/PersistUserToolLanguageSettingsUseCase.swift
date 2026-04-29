@@ -19,11 +19,13 @@ final class PersistToolLanguageSettingsForFavoritedToolUseCase {
     
     func execute(toolId: String, primaryLanguageId: String, parallelLanguageId: String?) -> AnyPublisher<Bool, Never> {
         
-        userToolSettingsRepository.storeUserToolSettings(
-            toolId: toolId,
-            primaryLanguageId: primaryLanguageId,
-            parallelLanguageId: parallelLanguageId
-        )
+        Task {
+            try await userToolSettingsRepository.storeUserToolSettings(
+                toolId: toolId,
+                primaryLanguageId: primaryLanguageId,
+                parallelLanguageId: parallelLanguageId
+            )
+        }
         
         return Just(true)
             .eraseToAnyPublisher()

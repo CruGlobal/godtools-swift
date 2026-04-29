@@ -8,11 +8,8 @@
 
 import Foundation
 import RequestOperation
-import Combine
 
 final class MobileContentGlobalAnalyticsApi {
-    
-    static let sharedGlobalAnalyticsId: String = "1"
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let urlSessionPriority: URLSessionPriority
@@ -42,22 +39,19 @@ final class MobileContentGlobalAnalyticsApi {
         return urlRequest
     }
     
-    func getGlobalAnalyticsPublisher(requestPriority: RequestPriority) -> AnyPublisher<MobileContentGlobalAnalyticsCodable, Error> {
-        
+    func getGlobalAnalytics(requestPriority: RequestPriority) async throws -> MobileContentGlobalAnalyticsCodable? {
+     
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
         let urlRequest: URLRequest = getGlobalAnalyticsUrlRequest(urlSession: urlSession)
-
-        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
-            .decodeRequestDataResponseForSuccessCodable()
-            .map { (response: RequestCodableResponse<JsonApiResponseDataObject<MobileContentGlobalAnalyticsCodable>, NoResponseCodable>) in
-                
-                guard let analytics = response.successCodable?.dataObject else {
-                    return MobileContentGlobalAnalyticsCodable.createEmpty()
-                }
-                
-                return analytics
-            }
-            .eraseToAnyPublisher()
+        
+        let response = try await requestSender.sendDataTask(
+            urlRequest: urlRequest,
+            urlSession: urlSession
+        )
+        
+        let codableResposne: RequestCodableResponse<JsonApiResponseDataObject<MobileContentGlobalAnalyticsCodable>, NoResponseCodable> = try response.decodeRequestDataResponseForSuccessCodable()
+        
+        return codableResposne.successCodable?.dataObject
     }
 }

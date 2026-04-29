@@ -13,10 +13,10 @@ import RequestOperation
 
 final class ArticleManifestAemRepository: ArticleAemRepository {
     
-    private let categoryArticlesCache: RealmCategoryArticlesCache
+    private let categoryArticlesCache: CategoryArticlesCache
     private let syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface
         
-    init(downloader: ArticleAemDownloader, cache: ArticleAemCache, categoryArticlesCache: RealmCategoryArticlesCache, syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface) {
+    init(downloader: ArticleAemDownloader, cache: ArticleAemCache, categoryArticlesCache: CategoryArticlesCache, syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface) {
         
         self.categoryArticlesCache = categoryArticlesCache
         self.syncInvalidatorPersistence = syncInvalidatorPersistence
@@ -31,7 +31,12 @@ final class ArticleManifestAemRepository: ArticleAemRepository {
     
     func getCategoryArticles(categoryId: String, languageCode: String) -> [CategoryArticleModel] {
         
-        return categoryArticlesCache.getCategoryArticles(categoryId: categoryId, languageCode: languageCode)
+        do {
+            return try categoryArticlesCache.getCategoryArticles(categoryId: categoryId, languageCode: languageCode)
+        }
+        catch _ {
+            return Array()
+        }
     }
     
     func getCategoryArticlesPublisher(categoryId: String, languageCode: String) -> AnyPublisher<[CategoryArticleModel], Never> {

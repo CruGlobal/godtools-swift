@@ -19,7 +19,7 @@ class PersonalizedToolsDataLayerDependencies {
     }
     
     func getLocalizationSettingsCountriesRepository() -> LocalizationSettingsCountriesRepositoryInterface {
-
+        
         return LocalizationSettingsCountriesRepository()
     }
 
@@ -53,7 +53,6 @@ class PersonalizedToolsDataLayerDependencies {
         )
 
         return PersonalizedToolsRepository(
-            persistence: persistence,
             api: api,
             cache: cache,
             syncInvalidatorPersistence: coreDataLayer.getUserDefaultsCache(),
@@ -81,8 +80,9 @@ class PersonalizedToolsDataLayerDependencies {
         }
         
         return UserLocalizationSettingsRepository(
-            persistence: persistence,
-            cache: UserLocalizationSettingsCache(persistence: persistence)
+            cache: UserLocalizationSettingsCache(
+                persistence: persistence
+            )
         )
     }
 }

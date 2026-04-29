@@ -12,4 +12,8 @@ struct ArticleAemDataObjectsThatNeedDownloading {
     
     let aemDataDictionary: [ArticleAemCache.AemUri: ArticleAemData]
     let webArchiveUrls: [WebArchiveUrl]
+    
+    static var emptyValue: ArticleAemDataObjectsThatNeedDownloading {
+        return ArticleAemDataObjectsThatNeedDownloading(aemDataDictionary: [:], webArchiveUrls: [])
+    }
 }

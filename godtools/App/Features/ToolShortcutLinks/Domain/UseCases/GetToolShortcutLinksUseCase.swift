@@ -26,7 +26,6 @@ final class GetToolShortcutLinksUseCase {
     @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[ToolShortcutLinkDomainModel], Error> {
         
         return favoritedResourcesRepository
-            .persistence
             .observeCollectionChangesPublisher()
             .flatMap { (favoritesChanged: Void) -> AnyPublisher<[FavoritedResourceDataModel], Error> in
                 
@@ -71,11 +70,11 @@ final class GetToolShortcutLinksUseCase {
         
         let toolTranslation: TranslationDataModel?
         
-        if let appLanguageTranslation = translationsRepository.cache.getLatestTranslation(resourceId: resource.id, languageCode: appLanguage) {
+        if let appLanguageTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: appLanguage) {
             
             toolTranslation = appLanguageTranslation
         }
-        else if let englishTranslation = translationsRepository.cache.getLatestTranslation(resourceId: resource.id, languageCode: LanguageCodeDomainModel.english.value) {
+        else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: LanguageCodeDomainModel.english.value) {
             
             toolTranslation = englishTranslation
         }
