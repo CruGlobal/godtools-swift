@@ -65,14 +65,14 @@ extension UITestsInitialDataLoader {
             
             do {
                 
-                try resourcesFileCache.storeTranslationFile(
+                _ = try resourcesFileCache.storeTranslationFile(
                     realm: realm,
                     translationId: UITestsRealmObjects.tmtsEnTranslation,
                     fileName: UITestsRealmObjects.tmtsManifest,
                     fileData: tmtsManifestData
                 )
                 
-                try resourcesFileCache.storeTranslationZipFile(
+                _ =  try resourcesFileCache.storeTranslationZipFile(
                     realm: realm,
                     translationId: UITestsRealmObjects.tmtsEnTranslation,
                     zipFileData: tmtsTractData

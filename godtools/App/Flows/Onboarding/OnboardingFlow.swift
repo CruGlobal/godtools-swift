@@ -75,7 +75,7 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow, LocalizationSetting
             case .userClosedChooseAppLanguage:
                 navigateBackFromChooseAppLanguageFlow()
             
-            case .userChoseAppLanguage(let appLanguage):
+            case .userChoseAppLanguage( _):
                 navigateToLocalizationSettings(
                     showsPreferNotToSay: true,
                     shouldStoreCountryWhenSelected: false,
@@ -90,7 +90,7 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow, LocalizationSetting
             case .userTappedBackFromLocalizationSettings:
                 navigateBackFromLocalizationSettingsFlow()
                 
-            case .userConfirmedLocalizationSetting(let countryListItem):
+            case .userConfirmedLocalizationSetting( _):
                 if let tutorialVC = onboardingTutorialViewController {
                     navigationController.popToViewController(tutorialVC, animated: true)
                     localizationSettingsFlow = nil

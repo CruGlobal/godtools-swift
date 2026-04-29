@@ -202,7 +202,7 @@ extension GetTranslatedToolLanguageAvailabilityTests {
     }
     
     private func queryLanguage(id: String, testsDiContainer: TestsDiContainer) throws -> LanguageDataModel? {
-        return try testsDiContainer.dataLayer.getLanguagesRepository().getLanguage(id: id)
+        return try testsDiContainer.dataLayer.getLanguagesRepository().persistence.getDataModel(id: id)
     }
     
     private func getTestsDiContainer() throws -> TestsDiContainer {

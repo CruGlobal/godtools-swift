@@ -102,7 +102,7 @@ class MenuFlow: Flow, LocalizationSettingsNavigationFlow {
             switch state {
             case .userTappedBackFromLocalizationSettings:
                 navigateBackFromLocalizationSettingsFlow()
-            case .userConfirmedLocalizationSetting(let countryListItem):
+            case .userConfirmedLocalizationSetting( _):
                 navigateBackFromLocalizationSettingsFlow()
             }
             
