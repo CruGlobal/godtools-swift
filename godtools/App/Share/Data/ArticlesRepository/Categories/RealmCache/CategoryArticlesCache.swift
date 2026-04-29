@@ -44,6 +44,16 @@ final class CategoryArticlesCache {
 
 extension CategoryArticlesCache {
     
+    @available(iOS 17.4, *)
+    private func getCategoryIdAndLanguageCodePredicate(categoryId: String, languageCode: String) -> Predicate<SwiftCategoryArticle> {
+     
+        let filter = #Predicate<SwiftCategoryArticle> { object in
+            object.categoryId == categoryId && object.languageCode == languageCode
+        }
+        
+        return filter
+    }
+    
     private func getCategoryIdAndLanguageCodeNSPredicate(categoryId: String, languageCode: String) -> NSPredicate {
         
         return NSPredicate(format: "\(#keyPath(RealmCategoryArticle.categoryId)) == %@ AND \(#keyPath(RealmCategoryArticle.languageCode)) == %@", categoryId, languageCode)
@@ -52,58 +62,23 @@ extension CategoryArticlesCache {
 
 extension CategoryArticlesCache {
     
-    func getCategoryArticlesPublisher(categoryId: String, languageCode: String) -> AnyPublisher<[CategoryArticleModel], Never> {
+    func getCategoryArticles(categoryId: String, languageCode: String) async throws -> [CategoryArticleModel] {
         
-        guard let realmDatabase = realmDatabase else {
-            return Just([])
-                .eraseToAnyPublisher()
-        }
-        
-        return Future() { promise in
+        if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
             
-            realmDatabase.write.serialAsync { result in
-                
-                switch result {
-                    
-                case .success( _):
-                    
-                    do {
-                        
-                        let categoryArticles: [CategoryArticleModel] = try self.getCategoryArticles(
-                            categoryId: categoryId,
-                            languageCode: languageCode
-                        )
-                        
-                        promise(.success(categoryArticles))
-                    }
-                    catch _ {
-                        promise(.success([]))
-                    }
-                    
-                case .failure( _):
-                    promise(.success([]))
-                }
-            }
-        }
-        .eraseToAnyPublisher()
-    }
-    
-    func getCategoryArticles(categoryId: String, languageCode: String) throws -> [CategoryArticleModel] {
-        
-        if let realmDatabase = realmDatabase {
-            
-            let realm: Realm = try realmDatabase.openRealm()
-            
-            let query = RealmDatabaseQuery.filter(
-                filter: getCategoryIdAndLanguageCodeNSPredicate(
-                    categoryId: categoryId,
-                    languageCode: languageCode
-                )
+            let query = SwiftDatabaseQuery.filter(
+                filter: getCategoryIdAndLanguageCodePredicate(categoryId: categoryId, languageCode: languageCode)
             )
             
-            let objects: [RealmCategoryArticle] = realmDatabase.read.objects(realm: realm, query: query)
+            return try await swiftPersistence.getDataModelsAsync(getOption: .allObjects, query: query)
+        }
+        else if let realmPersistence = getRealmPersistence() {
             
-            return objects.map { $0.toModel() }
+            let query = RealmDatabaseQuery.filter(
+                filter: getCategoryIdAndLanguageCodeNSPredicate(categoryId: categoryId, languageCode: languageCode)
+            )
+            
+            return try await realmPersistence.getDataModelsAsync(getOption: .allObjects, query: query)
         }
         
         return Array()
