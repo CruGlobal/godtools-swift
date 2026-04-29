@@ -257,7 +257,12 @@ extension TranslationsRepository {
                 
                 if shouldFallbackToLatestDownloadedTranslation, let resourceId = translation.resourceDataModel?.id, let languageId = translation.languageDataModel?.id, let latestTrackedDownloadedTranslation = self.trackDownloadedTranslationsRepository.getLatestDownloadedTranslation(resourceId: resourceId, languageId: languageId) {
                     
-                    latestDownloadedTranslation = self.cache.persistence.getDataModelNonThrowing(id: latestTrackedDownloadedTranslation.translationId)
+                    do {
+                        latestDownloadedTranslation = try self.persistence.getDataModel(id: latestTrackedDownloadedTranslation.translationId)
+                    }
+                    catch _ {
+                        latestDownloadedTranslation = nil
+                    }
                 }
                 else {
                     latestDownloadedTranslation = nil
@@ -466,7 +471,7 @@ extension TranslationsRepository {
 
 extension TranslationsRepository {
     
-    func didDownloadTranslationAndRelatedFilesPublisher(translation: TranslationDataModel, files: [FileCacheLocation]) -> AnyPublisher<TranslationFilesDataModel, Error> {
+    private func didDownloadTranslationAndRelatedFilesPublisher(translation: TranslationDataModel, files: [FileCacheLocation]) -> AnyPublisher<TranslationFilesDataModel, Error> {
         
         return trackDownloadedTranslationsRepository
             .trackTranslationDownloaded(translation: translation)

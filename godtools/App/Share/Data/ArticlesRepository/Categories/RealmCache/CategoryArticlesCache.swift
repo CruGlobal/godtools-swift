@@ -65,7 +65,7 @@ extension CategoryArticlesCache {
                 
                 switch result {
                     
-                case .success(let realm):
+                case .success( _):
                     
                     do {
                         

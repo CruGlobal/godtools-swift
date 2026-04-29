@@ -50,7 +50,15 @@ class SwiftResourcesCacheSync {
             var existingResourcesMinusNewlyAddedResources: [SwiftResource]
             
             if shouldRemoveDataThatNoLongerExists {
-                let allResources: [SwiftResource] = swiftDatabase.read.objectsNonThrowing(context: context, query: nil)
+                
+                let allResources: [SwiftResource]
+                do {
+                    allResources = try swiftDatabase.read.objects(context: context, query: nil)
+                }
+                catch _ {
+                    allResources = Array()
+                }
+                
                 existingResourcesMinusNewlyAddedResources = allResources
             }
             else {
@@ -82,7 +90,15 @@ class SwiftResourcesCacheSync {
             var existingTranslationsMinusNewlyAddedTranslations: [SwiftTranslation]
             
             if shouldRemoveDataThatNoLongerExists {
-                let allTranslations: [SwiftTranslation] = swiftDatabase.read.objectsNonThrowing(context: context, query: nil)
+                
+                let allTranslations: [SwiftTranslation]
+                do {
+                    allTranslations = try swiftDatabase.read.objects(context: context, query: nil)
+                }
+                catch _ {
+                    allTranslations = Array()
+                }
+                
                 existingTranslationsMinusNewlyAddedTranslations = allTranslations
             }
             else {
@@ -100,7 +116,12 @@ class SwiftResourcesCacheSync {
                     }
                     
                     if let languageId = newTranslation.language?.id {
-                        translation.language = swiftDatabase.read.objectNonThrowing(context: context, id: languageId)
+                        do {
+                            translation.language = try swiftDatabase.read.object(context: context, id: languageId)
+                        }
+                        catch _ {
+                            
+                        }
                     }
                     
                     translationsDictionary[translation.id] = translation
@@ -123,7 +144,15 @@ class SwiftResourcesCacheSync {
             var existingAttachmentsMinusNewlyAddedAttachments: [SwiftAttachment]
             
             if shouldRemoveDataThatNoLongerExists {
-                let allAttachments: [SwiftAttachment] = swiftDatabase.read.objectsNonThrowing(context: context, query: nil)
+                
+                let allAttachments: [SwiftAttachment]
+                do {
+                    allAttachments = try swiftDatabase.read.objects(context: context, query: nil)
+                }
+                catch _ {
+                    allAttachments = Array()
+                }
+                
                 existingAttachmentsMinusNewlyAddedAttachments = allAttachments
             }
             else {
@@ -213,7 +242,13 @@ class SwiftResourcesCacheSync {
             //
             
             let translationIdsToRemove: [String] = existingTranslationsMinusNewlyAddedTranslations.map({$0.id})
-            let downloadedTranslationsToRemove: [SwiftDownloadedTranslation] = swiftDatabase.read.objectsNonThrowing(context: context, ids: translationIdsToRemove, sortBy: nil)
+            let downloadedTranslationsToRemove: [SwiftDownloadedTranslation]
+            do {
+                downloadedTranslationsToRemove = try swiftDatabase.read.objects(context: context, ids: translationIdsToRemove, sortBy: nil)
+            }
+            catch _ {
+                downloadedTranslationsToRemove = Array()
+            }
 
             let resourcesRemoved: [ResourceDataModel] = existingResourcesMinusNewlyAddedResources.map({ $0.toModel() })
             let translationsRemoved: [TranslationDataModel] = existingTranslationsMinusNewlyAddedTranslations.map( {$0.toModel() })

@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class GetPersonalizedToolsUseCase {
+final class GetPersonalizedToolsUseCase {
 
     private let resourcesRepository: ResourcesRepository
     private let personalizedToolsRepository: PersonalizedToolsRepository

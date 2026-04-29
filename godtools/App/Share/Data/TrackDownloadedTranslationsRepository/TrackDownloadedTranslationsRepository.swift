@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class TrackDownloadedTranslationsRepository {
+final class TrackDownloadedTranslationsRepository {
     
     private let cache: TrackDownloadedTranslationsCache
     
@@ -28,6 +28,8 @@ class TrackDownloadedTranslationsRepository {
     }
     
     func trackTranslationDownloaded(translation: TranslationDataModel) -> AnyPublisher<[DownloadedTranslationDataModel], Error> {
-        return cache.trackTranslationDownloaded(translation: translation)
+        return AnyPublisher() {
+            return try await self.cache.trackTranslationDownloaded(translation: translation)
+        }
     }
 }

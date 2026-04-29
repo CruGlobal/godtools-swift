@@ -9,7 +9,6 @@
 import Foundation
 import RepositorySync
 import RealmSwift
-import Combine
 
 final class UserLocalizationSettingsCache {
         
@@ -41,34 +40,13 @@ final class UserLocalizationSettingsCache {
 
 extension UserLocalizationSettingsCache {
 
-    func storeUserLocalizationSetting(dataModel: UserLocalizationSettingsDataModel) -> AnyPublisher<Void, Error> {
-
-        return persistence
-            .writeObjectsPublisher(
+    func storeUserLocalizationSetting(dataModel: UserLocalizationSettingsDataModel) async throws {
+        
+        _ = try await persistence
+            .writeObjectsAsync(
                 externalObjects: [dataModel],
                 writeOption: nil,
                 getOption: nil
             )
-            .map { _ in
-                return Void()
-            }
-            .eraseToAnyPublisher()
-    }
-
-    func getUserLocalizationSetting(id: String) -> UserLocalizationSettingsDataModel? {
-
-        return persistence.getDataModelNonThrowing(id: id)
-    }
-
-    func getUserLocalizationSettingPublisher(id: String) -> AnyPublisher<UserLocalizationSettingsDataModel?, Error> {
-
-        return persistence
-            .getDataModelsPublisher(
-                getOption: .object(id: id)
-            )
-            .map {
-                return $0.first
-            }
-            .eraseToAnyPublisher()
     }
 }

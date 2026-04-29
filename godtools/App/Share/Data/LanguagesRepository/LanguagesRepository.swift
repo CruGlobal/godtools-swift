@@ -46,7 +46,7 @@ final class LanguagesRepository {
     func getLanguage(code: BCP47LanguageIdentifier) -> LanguageDataModel? {
         
         do {
-            return try cache.getCachedLanguage(code: code)
+            return try cache.getLanguageByCode(code: code)
         }
         catch _ {
             return nil
@@ -54,7 +54,10 @@ final class LanguagesRepository {
     }
     
     func getLanguagesPublisher(codes: [BCP47LanguageIdentifier]) -> AnyPublisher<[LanguageDataModel], Error> {
-        return cache.getCachedLanguagesPublisher(codes: codes)
+        
+        return AnyPublisher() {
+            try await self.cache.getLanguagesByCodes(codes: codes)
+        }
     }
     
     func getLanguages() async throws -> [LanguageDataModel] {

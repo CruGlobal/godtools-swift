@@ -227,10 +227,9 @@ extension GetLanguageSettingsStringsUseCaseTests {
         
         let appLanguagesRepository = AppLanguagesRepository(
             api: api,
-            persistence: persistence,
+            cache: AppLanguagesCache(persistence: persistence),
             sync: mockAppLanguagesSync
         )
-        
         
         let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
             LanguageCodeDomainModel.english.value: [

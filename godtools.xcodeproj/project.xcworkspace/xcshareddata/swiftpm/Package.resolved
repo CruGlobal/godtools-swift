@@ -222,8 +222,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/CruGlobal/repository-sync-ios",
       "state" : {
-        "revision" : "daf4b7701be37e599f264d703ed81d2b3cb1f85c",
-        "version" : "0.8.2"
+        "revision" : "f872125b1399b63ef4afd2a3fe330547ddcebc02",
+        "version" : "0.10.0"
       }
     },
     {

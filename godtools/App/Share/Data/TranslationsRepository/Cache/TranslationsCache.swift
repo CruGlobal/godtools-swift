@@ -46,7 +46,7 @@ extension TranslationsCache {
                 
         if #available(iOS 17.4, *), let swiftDatabase = swiftDatabase {
             
-            guard let translation = getSwiftTranslationsSortedByLatestVersion(swiftDatabase: swiftDatabase, resourceId: resourceId, languageId: languageId).first else {
+            guard let translation = try getSwiftTranslationsSortedByLatestVersion(swiftDatabase: swiftDatabase, resourceId: resourceId, languageId: languageId).first else {
                 return nil
             }
             
@@ -64,7 +64,7 @@ extension TranslationsCache {
         
         if #available(iOS 17.4, *), let swiftDatabase = swiftDatabase {
             
-            guard let translation = getSwiftTranslationsSortedByLatestVersion(swiftDatabase: swiftDatabase, resourceId: resourceId, languageCode: languageCode).first else {
+            guard let translation = try getSwiftTranslationsSortedByLatestVersion(swiftDatabase: swiftDatabase, resourceId: resourceId, languageCode: languageCode).first else {
                 return nil
             }
             
@@ -79,9 +79,9 @@ extension TranslationsCache {
     }
     
     @available(iOS 17.4, *)
-    private func getResourceLatestTranslations(swiftDatabase: SwiftDatabase, resourceId: String) -> [SwiftTranslation] {
+    private func getResourceLatestTranslations(swiftDatabase: SwiftDatabase, resourceId: String) throws -> [SwiftTranslation] {
         
-        let resource: SwiftResource? = swiftDatabase.read.objectNonThrowing(context: swiftDatabase.openContext(), id: resourceId)
+        let resource: SwiftResource? = try swiftDatabase.read.object(context: swiftDatabase.openContext(), id: resourceId)
         
         guard let resource = resource else {
             return Array()
@@ -93,17 +93,17 @@ extension TranslationsCache {
     }
     
     @available(iOS 17.4, *)
-    private func getSwiftTranslationsSortedByLatestVersion(swiftDatabase: SwiftDatabase, resourceId: String, languageId: String) -> [SwiftTranslation] {
+    private func getSwiftTranslationsSortedByLatestVersion(swiftDatabase: SwiftDatabase, resourceId: String, languageId: String) throws -> [SwiftTranslation] {
         
-        return getResourceLatestTranslations(swiftDatabase: swiftDatabase, resourceId: resourceId)
+        return try getResourceLatestTranslations(swiftDatabase: swiftDatabase, resourceId: resourceId)
             .filterByLanguageId(languageId: languageId)
             .sortByLatestVersionFirst()
     }
     
     @available(iOS 17.4, *)
-    private func getSwiftTranslationsSortedByLatestVersion(swiftDatabase: SwiftDatabase, resourceId: String, languageCode: BCP47LanguageIdentifier) -> [SwiftTranslation] {
+    private func getSwiftTranslationsSortedByLatestVersion(swiftDatabase: SwiftDatabase, resourceId: String, languageCode: BCP47LanguageIdentifier) throws -> [SwiftTranslation] {
         
-        return getResourceLatestTranslations(swiftDatabase: swiftDatabase, resourceId: resourceId)
+        return try getResourceLatestTranslations(swiftDatabase: swiftDatabase, resourceId: resourceId)
             .filterByLanguageCode(languageCode: languageCode)
             .sortByLatestVersionFirst()
     }

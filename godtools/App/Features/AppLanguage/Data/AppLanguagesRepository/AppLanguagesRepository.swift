@@ -13,17 +13,20 @@ import RepositorySync
 final class AppLanguagesRepository {
         
     private let api: AppLanguagesApi
+    private let cache: AppLanguagesCache
     private let sync: AppLanguagesRepositorySyncInterface
-    
-    let persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>
     
     private var cancellables: Set<AnyCancellable> = Set()
         
-    init(api: AppLanguagesApi, persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>, sync: AppLanguagesRepositorySyncInterface) {
+    init(api: AppLanguagesApi, cache: AppLanguagesCache, sync: AppLanguagesRepositorySyncInterface) {
         
         self.api = api
-        self.persistence = persistence
+        self.cache = cache
         self.sync = sync
+    }
+    
+    var persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable> {
+        return cache.persistence
     }
     
     @MainActor func observeNumberOfAppLanguagesPublisher() -> AnyPublisher<Int, Error> {

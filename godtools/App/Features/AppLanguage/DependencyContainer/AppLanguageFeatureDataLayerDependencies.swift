@@ -53,7 +53,9 @@ class AppLanguageFeatureDataLayerDependencies {
         
         return AppLanguagesRepository(
             api: api,
-            persistence: persistence,
+            cache: AppLanguagesCache(
+                persistence: persistence
+            ),
             sync: sync
         )
     }

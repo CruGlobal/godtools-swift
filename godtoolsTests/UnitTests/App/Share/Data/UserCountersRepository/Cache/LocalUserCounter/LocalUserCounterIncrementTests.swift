@@ -44,7 +44,7 @@ struct LocalUserCounterIncrementTests {
                 
         #expect(try localCounterIncrement.getCounter(id: sessionsCounterId) == nil)
         #expect(try localCounterIncrement.getCounter(id: toolOpensCounterId) == nil)
-        #expect(try await localCounterIncrement.getCounters().count == 0)
+        #expect(try localCounterIncrement.getCounters().count == 0)
         
         let sessionCounter: LocalUserCounter = try localCounterIncrement.incrementCounter(id: sessionsCounterId)
         

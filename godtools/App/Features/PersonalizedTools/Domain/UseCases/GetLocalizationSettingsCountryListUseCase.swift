@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class GetLocalizationSettingsCountryListUseCase {
+final class GetLocalizationSettingsCountryListUseCase {
 
     private let countriesRepository: LocalizationSettingsCountriesRepositoryInterface
     private let localizationServices: LocalizationServicesInterface
