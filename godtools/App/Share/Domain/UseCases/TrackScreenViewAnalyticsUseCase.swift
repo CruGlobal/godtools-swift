@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TrackScreenViewAnalyticsUseCase {
+final class TrackScreenViewAnalyticsUseCase {
     
     private let trackScreenViewAnalytics: TrackScreenViewAnalyticsInterface
     

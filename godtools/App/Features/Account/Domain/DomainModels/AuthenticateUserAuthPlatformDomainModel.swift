@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum AuthenticateUserAuthPlatformDomainModel {
+enum AuthenticateUserAuthPlatformDomainModel: Sendable {
     
     case apple
     case facebook

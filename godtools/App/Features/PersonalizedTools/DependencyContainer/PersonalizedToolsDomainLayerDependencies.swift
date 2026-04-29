@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PersonalizedToolsDomainLayerDependencies {
+final class PersonalizedToolsDomainLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     private let dataLayer: PersonalizedToolsDataLayerDependencies

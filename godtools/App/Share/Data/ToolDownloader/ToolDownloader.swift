@@ -11,7 +11,7 @@ import Combine
 import GodToolsShared
 import RequestOperation
 
-class ToolDownloader {
+final class ToolDownloader {
     
     private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TranslationDataModel {
+struct TranslationDataModel: Sendable {
     
     let id: String
     let isPublished: Bool

@@ -9,7 +9,8 @@
 import Foundation
 import Combine
 
-@MainActor class LoadingArticleViewModel: ObservableObject {
+@MainActor
+final class LoadingArticleViewModel: ObservableObject {
     
     private let articleAemRepository: ArticleAemRepository
     private let appLanguage: AppLanguageDomainModel

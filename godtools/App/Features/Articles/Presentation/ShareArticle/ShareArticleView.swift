@@ -8,6 +8,7 @@
 
 import UIKit
 
+@MainActor
 class ShareArticleView {
     
     let controller: UIActivityViewController

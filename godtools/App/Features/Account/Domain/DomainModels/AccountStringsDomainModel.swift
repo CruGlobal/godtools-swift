@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct AccountStringsDomainModel {
+struct AccountStringsDomainModel: Sendable {
     
     let navTitle: String
     let activityButtonTitle: String

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ShareablesDiContainer {
+final class ShareablesDiContainer {
     
     let dataLayer: ShareablesDataLayerDependencies
     let domainLayer: ShareablesDomainLayerDependencies

@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum AuthErrorDomainModel: Error {
+enum AuthErrorDomainModel: Error, Sendable {
     
     case accountAlreadyExists
     case accountNotFound

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class GetTranslatedToolLanguageAvailability {
+final class GetTranslatedToolLanguageAvailability {
     
     static let languageAvailableCheck: String = "✓"
     static let localizedKeyLanguageNotAvailable: String = "lessonCard.languageNotAvailable"

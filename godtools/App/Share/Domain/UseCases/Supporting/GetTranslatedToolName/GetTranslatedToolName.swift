@@ -8,7 +8,7 @@
 
 import Foundation
 
-class GetTranslatedToolName {
+final class GetTranslatedToolName {
     
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository

@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class DownloadLatestToolsForFavoritedToolsUseCase {
+final class DownloadLatestToolsForFavoritedToolsUseCase {
     
     private let favoritedResourcesRepository: FavoritedResourcesRepository
     private let resourcesRepository: ResourcesRepository

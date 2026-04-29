@@ -11,7 +11,7 @@ import Combine
 import GodToolsShared
 import RequestOperation
 
-class GetToolTranslationsFilesUseCase {
+final class GetToolTranslationsFilesUseCase {
             
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository

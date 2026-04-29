@@ -1,5 +1,5 @@
 //
-//  UserDetailsAPI.swift
+//  UserDetailsApi.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 11/18/22.
@@ -10,7 +10,7 @@ import Foundation
 import RequestOperation
 import RepositorySync
 
-final class UserDetailsAPI {
+final class UserDetailsApi {
     
     private let authSession: MobileContentApiAuthSession
     private let requestBuilder: RequestBuilder = RequestBuilder()

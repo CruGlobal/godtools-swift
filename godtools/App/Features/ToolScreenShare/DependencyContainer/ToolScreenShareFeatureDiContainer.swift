@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ToolScreenShareFeatureDiContainer {
+final class ToolScreenShareFeatureDiContainer {
     
     let dataLayer: ToolScreenShareFeatureDataLayerDependencies
     let domainLayer: ToolScreenShareFeatureDomainLayerDependencies

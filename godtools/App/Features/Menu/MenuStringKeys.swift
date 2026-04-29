@@ -8,7 +8,7 @@
 
 import Foundation
 
-class MenuStringKeys {
+struct MenuStringKeys {
     
     enum SectionTitles: String {
         case getStarted = "menu_getStarted"

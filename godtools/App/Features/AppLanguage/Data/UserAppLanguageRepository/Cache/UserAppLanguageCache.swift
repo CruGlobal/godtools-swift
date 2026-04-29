@@ -8,11 +8,10 @@
 
 import Foundation
 import RepositorySync
-import Combine
 import RealmSwift
 import SwiftData
 
-class UserAppLanguageCache {
+final class UserAppLanguageCache {
             
     let persistence: any Persistence<UserAppLanguageDataModel, UserAppLanguageDataModel>
     

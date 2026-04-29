@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AppLanguageFeatureDomainLayerDependencies {
+final class AppLanguageFeatureDomainLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     private let coreDomainLayer: AppDomainLayerDependencies

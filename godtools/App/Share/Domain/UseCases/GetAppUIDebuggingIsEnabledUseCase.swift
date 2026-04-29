@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class GetAppUIDebuggingIsEnabledUseCase {
+final class GetAppUIDebuggingIsEnabledUseCase {
     
     private let appConfig: AppConfigInterface
     

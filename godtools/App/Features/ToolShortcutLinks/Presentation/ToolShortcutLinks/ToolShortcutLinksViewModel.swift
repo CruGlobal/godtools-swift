@@ -10,7 +10,8 @@ import Foundation
 import UIKit
 import Combine
 
-@MainActor class ToolShortcutLinksViewModel: ObservableObject {
+@MainActor
+final class ToolShortcutLinksViewModel: ObservableObject {
     
     enum ShortcutItemType: String {
         case tool

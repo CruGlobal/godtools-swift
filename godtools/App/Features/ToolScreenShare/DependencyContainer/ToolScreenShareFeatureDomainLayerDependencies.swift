@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ToolScreenShareFeatureDomainLayerDependencies {
+final class ToolScreenShareFeatureDomainLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     private let coreDomainLayer: AppDomainLayerDependencies

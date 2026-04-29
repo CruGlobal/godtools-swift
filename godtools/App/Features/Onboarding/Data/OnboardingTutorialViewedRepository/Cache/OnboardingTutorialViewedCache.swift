@@ -8,7 +8,7 @@
 
 import Foundation
 
-class OnboardingTutorialViewedCache {
+final class OnboardingTutorialViewedCache {
         
     private let userDefaultsCache: UserDefaultsCacheInterface
     private let onboardingTutorialViewedCacheKey: String = "keyOnboardingTutorialViewed"

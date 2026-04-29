@@ -9,12 +9,14 @@
 import Foundation
 
 class ToolFilterAnyLanguageDomainModel: ToolFilterLanguageDomainModel {
+    
+    private static let anyFilterId: String = "any_language"
         
     init(text: String, toolsAvailableText: String, numberOfToolsAvailable: Int) {
         
         super.init(
             id: nil,
-            filterId: "any_language",
+            filterId: Self.anyFilterId,
             languageDataModelId: nil,
             languageLocale: nil,
             languageButtonText: text,

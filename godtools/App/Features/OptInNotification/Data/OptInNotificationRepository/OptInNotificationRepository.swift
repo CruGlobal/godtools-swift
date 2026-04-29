@@ -8,7 +8,7 @@
 
 import Foundation
 
-class OptInNotificationRepository: OptInNotificationRepositoryInterface {
+final class OptInNotificationRepository: OptInNotificationRepositoryInterface {
     
     private let cache: OptInNotificationUserDefaultsCache
     private let remoteConfigRepository: RemoteConfigRepository

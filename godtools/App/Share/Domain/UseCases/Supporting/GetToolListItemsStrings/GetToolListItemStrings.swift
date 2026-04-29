@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class GetToolListItemStrings {
+final class GetToolListItemStrings {
     
     private let localizationServices: LocalizationServicesInterface
     

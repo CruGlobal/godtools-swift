@@ -8,7 +8,8 @@
 
 import Foundation
 
-class DownloadArticlesErrorViewModel {
+@MainActor
+final class DownloadArticlesErrorViewModel {
     
     let message: String
     

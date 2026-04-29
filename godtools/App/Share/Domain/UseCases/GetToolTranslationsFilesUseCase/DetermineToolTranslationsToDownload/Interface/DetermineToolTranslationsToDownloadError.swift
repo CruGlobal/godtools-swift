@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum DetermineToolTranslationsToDownloadError: Error {
+enum DetermineToolTranslationsToDownloadError: Error, Sendable {
     
     case failedToFetchResourceFromCache(resourceNeeded: DetermineToolTranslationsResourceNeeded)
 }

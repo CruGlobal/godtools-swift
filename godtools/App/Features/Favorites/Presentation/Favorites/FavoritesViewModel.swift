@@ -10,7 +10,8 @@ import Foundation
 import SwiftUI
 import Combine
 
-@MainActor class FavoritesViewModel: ObservableObject {
+@MainActor
+final class FavoritesViewModel: ObservableObject {
             
     private let resourcesRepository: ResourcesRepository
     private let getFavoritesStringsUseCase: GetFavoritesStringsUseCase

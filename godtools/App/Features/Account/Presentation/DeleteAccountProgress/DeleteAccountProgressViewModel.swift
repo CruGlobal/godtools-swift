@@ -9,7 +9,8 @@
 import Foundation
 import Combine
 
-@MainActor class DeleteAccountProgressViewModel: ObservableObject {
+@MainActor
+final class DeleteAccountProgressViewModel: ObservableObject {
     
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     

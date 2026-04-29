@@ -8,7 +8,7 @@
 
 import Foundation
 
-class LearnToShareToolDomainLayerDependencies {
+final class LearnToShareToolDomainLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     private let coreDomainLayer: AppDomainLayerDependencies

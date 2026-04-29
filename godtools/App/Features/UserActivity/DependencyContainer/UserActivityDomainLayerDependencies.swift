@@ -8,7 +8,7 @@
 
 import Foundation
 
-class UserActivityDomainLayerDependencies {
+final class UserActivityDomainLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     private let coreDomainLayer: AppDomainLayerDependencies

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TrackExitLinkAnalyticsUseCase {
+final class TrackExitLinkAnalyticsUseCase {
     
     private let trackExitLinkAnalytics: TrackExitLinkAnalyticsInterface
     

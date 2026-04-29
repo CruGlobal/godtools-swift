@@ -10,11 +10,13 @@ import Foundation
 
 class ToolFilterAnyCategoryDomainModel: ToolFilterCategoryDomainModel {
     
+    private static let anyFilterId: String = "any_category"
+    
     init(text: String, toolsAvailableText: String) {
         
         super.init(
             id: nil,
-            filterId: "any_category",
+            filterId: Self.anyFilterId,
             categoryButtonText: text,
             primaryText: text,
             toolsAvailableText: toolsAvailableText,

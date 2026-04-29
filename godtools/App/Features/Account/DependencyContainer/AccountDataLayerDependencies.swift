@@ -9,7 +9,7 @@
 import Foundation
 import RepositorySync
 
-class AccountDataLayerDependencies {
+final class AccountDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     
@@ -37,7 +37,7 @@ class AccountDataLayerDependencies {
             )
         }
         
-        let api = UserDetailsAPI(
+        let api = UserDetailsApi(
             config: coreDataLayer.getAppConfig(),
             urlSessionPriority: coreDataLayer.getSharedUrlSessionPriority(),
             mobileContentApiAuthSession: coreDataLayer.getMobileContentApiAuthSession()

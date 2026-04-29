@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 import SocialAuthentication
-import Combine
 import GoogleSignIn
 
 extension GoogleAuthentication: AuthenticationProviderInterface {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class DownloadToolProgressFeatureDataLayerDependencies {
+final class DownloadToolProgressFeatureDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     

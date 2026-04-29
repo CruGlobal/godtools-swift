@@ -9,7 +9,7 @@
 import Foundation
 import RepositorySync
 
-class AppLanguageFeatureDataLayerDependencies {
+final class AppLanguageFeatureDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     

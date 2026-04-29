@@ -10,7 +10,8 @@ import Foundation
 import WebKit
 import Combine
 
-@MainActor class ArticleWebViewModel: NSObject, ObservableObject {
+@MainActor
+final class ArticleWebViewModel: NSObject, ObservableObject {
     
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     

@@ -12,7 +12,8 @@ import SwiftUI
 import UIKit
 import UserNotifications
 
-@MainActor class OptInNotificationViewModel: ObservableObject {
+@MainActor
+final class OptInNotificationViewModel: ObservableObject {
     
     enum NotificationPromptType {
         case allow

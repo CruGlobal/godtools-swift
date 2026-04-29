@@ -10,7 +10,8 @@ import Foundation
 import UIKit
 import Combine
 
-@MainActor class SocialSignInViewModel: ObservableObject {
+@MainActor
+final class SocialSignInViewModel: ObservableObject {
     
     private let presentAuthViewController: UIViewController
     private let authenticationType: SocialSignInAuthenticationType

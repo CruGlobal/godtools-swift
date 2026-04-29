@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum LanguageCodeDomainModel: String {
+enum LanguageCodeDomainModel: String, Sendable {
     
     case afrikaans = "af"
     case arabic = "ar"

@@ -9,7 +9,7 @@
 import Foundation
 import RepositorySync
 
-class GlobalActivityDataLayerDependencies {
+final class GlobalActivityDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     

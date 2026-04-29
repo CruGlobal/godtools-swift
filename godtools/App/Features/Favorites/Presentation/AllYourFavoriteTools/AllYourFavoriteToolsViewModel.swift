@@ -10,7 +10,8 @@ import Foundation
 import Combine
 import SwiftUI
 
-@MainActor class AllYourFavoriteToolsViewModel: ObservableObject {
+@MainActor
+final class AllYourFavoriteToolsViewModel: ObservableObject {
         
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LocalizationSettingsConfirmationStringsDomainModel {
+struct LocalizationSettingsConfirmationStringsDomainModel: Sendable {
 
     let titleHighlightModel: ConfirmAppLanguageHighlightStringDomainModel
     let description: String

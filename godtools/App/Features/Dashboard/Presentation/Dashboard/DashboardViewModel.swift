@@ -10,7 +10,8 @@ import Foundation
 import Combine
 import SwiftUI
 
-@MainActor class DashboardViewModel: ObservableObject {
+@MainActor
+final class DashboardViewModel: ObservableObject {
     
     private let dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase

@@ -10,7 +10,8 @@ import UIKit
 import GodToolsShared
 import Combine
 
-@MainActor class ToolTrainingViewModel: NSObject {
+@MainActor
+final class ToolTrainingViewModel: NSObject {
     
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     

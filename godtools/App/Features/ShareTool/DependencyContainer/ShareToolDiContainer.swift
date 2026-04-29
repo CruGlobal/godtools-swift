@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ShareToolDiContainer {
+final class ShareToolDiContainer {
         
     private let dataLayer: ShareToolDataLayerDependencies
     

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ToolShortcutLinksDomainLayerDependencies {
+final class ToolShortcutLinksDomainLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     private let dataLayer: ToolShortcutLinksDataLayerDependencies

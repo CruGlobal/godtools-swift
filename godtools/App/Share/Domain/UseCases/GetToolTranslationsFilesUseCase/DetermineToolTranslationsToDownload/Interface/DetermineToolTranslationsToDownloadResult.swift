@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct DetermineToolTranslationsToDownloadResult {
+struct DetermineToolTranslationsToDownloadResult: Sendable {
     
     let translations: [TranslationDataModel]
 }

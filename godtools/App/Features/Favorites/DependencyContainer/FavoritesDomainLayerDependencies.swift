@@ -8,7 +8,7 @@
 
 import Foundation
 
-class FavoritesDomainLayerDependencies {
+final class FavoritesDomainLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     private let coreDomainLayer: AppDomainLayerDependencies

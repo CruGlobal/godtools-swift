@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ToolScreenShareTutorialShareOption {
+enum ToolScreenShareTutorialShareOption: Sendable {
     
     case qrCode
     case shareLink

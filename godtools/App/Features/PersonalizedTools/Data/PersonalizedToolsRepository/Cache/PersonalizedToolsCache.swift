@@ -11,7 +11,7 @@ import RealmSwift
 import Combine
 import RepositorySync
 
-class PersonalizedToolsCache {
+final class PersonalizedToolsCache {
 
     let persistence: any Persistence<PersonalizedToolsDataModel, PersonalizedToolsDataModel>
 

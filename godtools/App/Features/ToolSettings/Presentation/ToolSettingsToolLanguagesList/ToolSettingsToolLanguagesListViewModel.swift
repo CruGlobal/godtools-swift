@@ -9,7 +9,8 @@
 import Foundation
 import Combine
 
-@MainActor class ToolSettingsToolLanguagesListViewModel: ObservableObject {
+@MainActor
+final class ToolSettingsToolLanguagesListViewModel: ObservableObject {
         
     private let listType: ToolSettingsToolLanguagesListTypeDomainModel
     private let toolId: String

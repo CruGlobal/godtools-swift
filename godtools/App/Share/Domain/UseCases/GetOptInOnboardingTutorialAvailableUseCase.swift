@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class GetOptInOnboardingTutorialAvailableUseCase {
+final class GetOptInOnboardingTutorialAvailableUseCase {
         
     init() {
         

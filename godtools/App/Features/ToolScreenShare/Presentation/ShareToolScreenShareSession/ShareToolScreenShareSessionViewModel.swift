@@ -8,7 +8,8 @@
 
 import Foundation
 
-class ShareToolScreenShareSessionViewModel {
+@MainActor
+final class ShareToolScreenShareSessionViewModel {
     
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let shareUrl: String

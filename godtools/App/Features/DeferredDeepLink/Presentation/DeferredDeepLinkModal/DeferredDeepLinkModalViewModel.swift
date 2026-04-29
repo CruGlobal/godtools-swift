@@ -9,7 +9,8 @@
 import Foundation
 import Combine
 
-@MainActor class DeferredDeepLinkModalViewModel: ObservableObject {
+@MainActor
+final class DeferredDeepLinkModalViewModel: ObservableObject {
     
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getDeferredDeepLinkModalStringsUseCase: GetDeferredDeepLinkModalStringsUseCase

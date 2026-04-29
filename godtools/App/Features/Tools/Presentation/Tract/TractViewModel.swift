@@ -10,7 +10,8 @@ import UIKit
 import GodToolsShared
 import Combine
 
-class TractViewModel: MobileContentRendererViewModel {
+@MainActor
+final class TractViewModel: MobileContentRendererViewModel {
         
     static let isLiveShareStreamingKey: String = "TractViewModel.isLiveShareStreamKey"
     

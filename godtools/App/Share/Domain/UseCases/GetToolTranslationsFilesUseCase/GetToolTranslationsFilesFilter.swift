@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum GetToolTranslationsFilesFilter {
+enum GetToolTranslationsFilesFilter: Sendable {
     
     case downloadManifestAndRelatedFilesForRenderer
     case downloadManifestForTipsCount

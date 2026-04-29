@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AppLanguageFeatureDiContainer {
+final class AppLanguageFeatureDiContainer {
     
     let dataLayer: AppLanguageFeatureDataLayerDependencies
     let domainLayer: AppLanguageFeatureDomainLayerDependencies

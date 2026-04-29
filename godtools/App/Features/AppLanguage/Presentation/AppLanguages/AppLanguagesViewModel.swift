@@ -9,7 +9,8 @@
 import Foundation
 import Combine
 
-@MainActor class AppLanguagesViewModel: ObservableObject {
+@MainActor
+final class AppLanguagesViewModel: ObservableObject {
     
     private let getAppLanguagesStringsUseCase: GetAppLanguagesStringsUseCase
     private let searchAppLanguageInAppLanguagesListUseCase: SearchAppLanguageInAppLanguagesListUseCase
