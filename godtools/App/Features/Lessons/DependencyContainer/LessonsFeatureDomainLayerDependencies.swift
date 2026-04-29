@@ -40,7 +40,7 @@ class LessonsFeatureDomainLayerDependencies {
     func getPullToRefreshLessonsUseCase() -> PullToRefreshLessonsUseCase {
         return PullToRefreshLessonsUseCase(
             resourcesRepository: coreDataLayer.getResourcesRepository(),
-            personalizedLessonsRepository: personalizedToolsDataLayer.getPersonalizedLessonsRepository(),
+            personalizedToolsRepository: personalizedToolsDataLayer.getPersonalizedToolsRepository(),
             getLanguageElseAppLanguage: coreDomainlayer.supporting.getLanguageElseAppLanguage()
         )
     }
