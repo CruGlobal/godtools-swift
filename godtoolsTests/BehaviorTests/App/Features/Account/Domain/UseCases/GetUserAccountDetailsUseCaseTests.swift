@@ -404,8 +404,7 @@ extension GetUserAccountDetailsUseCaseTests {
         )
         
         let userDetailsRepository = UserDetailsRepository(
-            externalDataFetch: api,
-            persistence: userDetailsPersistence,
+            api: api,
             cache: UserDetailsCache(
                 persistence: userDetailsPersistence,
                 authTokenRepository: authTokenRepository

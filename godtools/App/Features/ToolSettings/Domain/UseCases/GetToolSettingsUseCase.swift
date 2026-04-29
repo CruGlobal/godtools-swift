@@ -61,7 +61,7 @@ final class GetToolSettingsUseCase {
     
     private func getLanguagePublisher(languageId: String?, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolSettingsToolLanguageDomainModel?, Never> {
         
-        guard let languageId = languageId, let language = languagesRepository.persistence.getDataModelNonThrowing(id: languageId) else {
+        guard let languageId = languageId, let language = languagesRepository.getLanguage(id: languageId) else {
             return Just(nil)
                 .eraseToAnyPublisher()
         }

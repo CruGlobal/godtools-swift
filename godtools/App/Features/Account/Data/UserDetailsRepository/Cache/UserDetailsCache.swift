@@ -10,10 +10,11 @@ import Foundation
 import RepositorySync
 import Combine
 
-class UserDetailsCache {
+final class UserDetailsCache {
         
-    private let persistence: any Persistence<UserDetailsDataModel, MobileContentApiUsersMeCodable>
     private let authTokenRepository: MobileContentAuthTokenRepository
+    
+    let persistence: any Persistence<UserDetailsDataModel, MobileContentApiUsersMeCodable>
     
     init(persistence: any Persistence<UserDetailsDataModel, MobileContentApiUsersMeCodable>, authTokenRepository: MobileContentAuthTokenRepository) {
                 

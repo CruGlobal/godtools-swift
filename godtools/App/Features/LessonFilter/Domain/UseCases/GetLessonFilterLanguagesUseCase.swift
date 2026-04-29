@@ -41,8 +41,7 @@ extension GetLessonFilterLanguagesUseCase {
     private func createLessonLanguageFilterDomainModelListPublisher(from languageIds: [String], translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[LessonFilterLanguageDomainModel], Error> {
         
         return languagesRepository
-            .persistence
-            .getDataModelsPublisher(getOption: .objectsByIds(ids: languageIds))
+            .getLanguagesByIdsPublisher(ids: languageIds)
             .map { (languages: [LanguageDataModel]) in
                 
                 let domainModels: [LessonFilterLanguageDomainModel] = languages.compactMap { (language: LanguageDataModel) in

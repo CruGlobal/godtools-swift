@@ -11,7 +11,7 @@ import Combine
 import RequestOperation
 import RepositorySync
 
-final class PersonalizedLessonsRepository: RepositorySync<PersonalizedLessonsDataModel, NoExternalDataFetch<PersonalizedLessonsDataModel>> {
+final class PersonalizedLessonsRepository {
 
     private let api: PersonalizedToolsApi
     private let cache: PersonalizedLessonsCache
@@ -20,17 +20,16 @@ final class PersonalizedLessonsRepository: RepositorySync<PersonalizedLessonsDat
 
     private var cancellables: Set<AnyCancellable> = Set()
 
-    init(persistence: any Persistence<PersonalizedLessonsDataModel, PersonalizedLessonsDataModel>, api: PersonalizedToolsApi, cache: PersonalizedLessonsCache, syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface, resourcesRepository: ResourcesRepository) {
+    init(api: PersonalizedToolsApi, cache: PersonalizedLessonsCache, syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface, resourcesRepository: ResourcesRepository) {
 
         self.api = api
         self.cache = cache
         self.syncInvalidatorPersistence = syncInvalidatorPersistence
         self.resourcesRepository = resourcesRepository
-        
-        super.init(
-            externalDataFetch: NoExternalDataFetch<PersonalizedLessonsDataModel>(),
-            persistence: persistence
-        )
+    }
+    
+    var persistence: any Persistence<PersonalizedLessonsDataModel, PersonalizedLessonsDataModel> {
+        return cache.persistence
     }
     
     private func getSyncInvalidator(id: PersonalizedLessonsId) -> SyncInvalidator {

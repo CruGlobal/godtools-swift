@@ -114,8 +114,7 @@ final class GetToolDetailsUseCase {
     private func getLanguagesAvailablePublisher(languageIds: [String], translateInLanguage: BCP47LanguageIdentifier) -> AnyPublisher<String, Error> {
         
         return languagesRepository
-            .persistence
-            .getDataModelsPublisher(getOption: .objectsByIds(ids: languageIds))
+            .getLanguagesByIdsPublisher(ids: languageIds)
             .map { (languagesDataModels: [LanguageDataModel]) in
                 
                 let languageNamesTranslatedInToolLanguage: [String] = languagesDataModels.map { (languageDataModel: LanguageDataModel) in
@@ -218,7 +217,7 @@ final class GetToolDetailsUseCase {
             return false
         }
         
-        guard let languageModel = languagesRepository.getCachedLanguage(code: language) else {
+        guard let languageModel = languagesRepository.getLanguage(code: language) else {
             return false
         }
         

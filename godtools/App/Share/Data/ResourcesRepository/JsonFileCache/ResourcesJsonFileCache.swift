@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class ResourcesJsonFileCache {
+final class ResourcesJsonFileCache {
     
     private let jsonServices: JsonServices
     
@@ -18,33 +18,17 @@ class ResourcesJsonFileCache {
         self.jsonServices = jsonServices
     }
     
-    func getResourcesPlusLatestTranslationsAndAttachments() -> Result<ResourcesPlusLatestTranslationsAndAttachmentsCodable, Error> {
+    func getResourcesPlusLatestTranslationsAndAttachments() throws -> ResourcesPlusLatestTranslationsAndAttachmentsCodable {
         
-        return parseResourcesJsonFromBundle(fileName: "resources")
+        return try parseResourcesJsonFromBundle(fileName: "resources")
     }
     
-    func parseResourcesJsonFromBundle(fileName: String) -> Result<ResourcesPlusLatestTranslationsAndAttachmentsCodable, Error> {
+    func parseResourcesJsonFromBundle(fileName: String) throws -> ResourcesPlusLatestTranslationsAndAttachmentsCodable {
         
-        let result: Result<Data?, Error> = jsonServices.getJsonData(fileName: fileName)
+        let data: Data = try jsonServices.getJsonData(fileName: fileName)
         
-        switch result {
-            
-        case .success(let data):
-            
-            guard let data = data else {
-                return .failure(NSError.errorWithDescription(description: "Failed to decode resources json data.  Null data."))
-            }
-            
-            do {
-                let object: ResourcesPlusLatestTranslationsAndAttachmentsCodable = try JSONDecoder().decode(ResourcesPlusLatestTranslationsAndAttachmentsCodable.self, from: data)
-                return .success(object)
-            }
-            catch let error {
-                return .failure(error)
-            }
-            
-        case .failure(let error):
-            return .failure(error)
-        }
+        let object: ResourcesPlusLatestTranslationsAndAttachmentsCodable = try JSONDecoder().decode(ResourcesPlusLatestTranslationsAndAttachmentsCodable.self, from: data)
+        
+        return object
     }
 }

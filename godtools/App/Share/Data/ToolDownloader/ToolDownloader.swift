@@ -39,7 +39,7 @@ class ToolDownloader {
             
             let isArticle: Bool
             
-            if let resource = resourcesRepository.persistence.getDataModelNonThrowing(id: tool.toolId) {
+            if let resource = resourcesRepository.getResource(id: tool.toolId) {
                 
                 isArticle = resource.resourceTypeEnum == .article
                 

@@ -11,26 +11,28 @@ import Combine
 import RequestOperation
 import RepositorySync
 
-class UserDetailsRepository: RepositorySync<UserDetailsDataModel, UserDetailsAPI> {
+final class UserDetailsRepository {
     
     private let api: UserDetailsAPI
     private let cache: UserDetailsCache
     
     private var cancellables: Set<AnyCancellable> = Set()
         
-    init(externalDataFetch: UserDetailsAPI, persistence: any Persistence<UserDetailsDataModel, MobileContentApiUsersMeCodable>, cache: UserDetailsCache) {
+    init(api: UserDetailsAPI, cache: UserDetailsCache) {
         
-        self.api = externalDataFetch
+        self.api = api
         self.cache = cache
-        
-        super.init(externalDataFetch: externalDataFetch, persistence: persistence)
+    }
+    
+    var persistence: any Persistence<UserDetailsDataModel, MobileContentApiUsersMeCodable> {
+        return cache.persistence
     }
     
     @MainActor func getAuthUserDetailsChangedPublisher(requestPriority: RequestPriority) -> AnyPublisher<UserDetailsDataModel?, Error> {
         
         makeSinkWithRemote(requestPriority: requestPriority)
         
-        return persistence
+        return cache.persistence
             .observeCollectionChangesPublisher()
             .tryMap { _ in
                 let userDetails: UserDetailsDataModel? = try self.cache.getAuthUserDetails()
@@ -43,10 +45,10 @@ class UserDetailsRepository: RepositorySync<UserDetailsDataModel, UserDetailsAPI
         
         makeSinkWithRemote(requestPriority: requestPriority)
         
-        return persistence
+        return cache.persistence
             .observeCollectionChangesPublisher()
             .tryMap { _ in
-                let userDetails: UserDetailsDataModel? = try self.persistence.getDataModel(id: id)
+                let userDetails: UserDetailsDataModel? = try self.cache.persistence.getDataModel(id: id)
                 return userDetails
             }
             .eraseToAnyPublisher()
@@ -88,7 +90,7 @@ extension UserDetailsRepository {
         
         let codable: MobileContentApiUsersMeCodable = try await api.fetchUserDetails(requestPriority: requestPriority)
         
-        _ = try await persistence.writeObjectsAsync(
+        _ = try await cache.persistence.writeObjectsAsync(
             externalObjects: [codable],
             writeOption: nil,
             getOption: nil

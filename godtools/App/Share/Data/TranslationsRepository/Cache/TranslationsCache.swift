@@ -10,7 +10,7 @@ import Foundation
 import RepositorySync
 import RealmSwift
 
-class TranslationsCache {
+final class TranslationsCache {
          
     let persistence: any Persistence<TranslationDataModel, TranslationCodable>
     

@@ -27,7 +27,7 @@ final class GetLessonFilterLanguage {
     
     func getLessonLanguageFilterFromLanguageCode(languageCode: String, translatedInAppLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel? {
         
-        guard let language = languagesRepository.getCachedLanguage(code: languageCode) else {
+        guard let language = languagesRepository.getLanguage(code: languageCode) else {
             return nil
         }
         
@@ -36,7 +36,7 @@ final class GetLessonFilterLanguage {
     
     func getLessonLanguageFilterFromLanguageId(languageId: String, translatedInAppLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel? {
         
-        guard let language = languagesRepository.persistence.getDataModelNonThrowing(id: languageId) else {
+        guard let language = languagesRepository.getLanguage(id: languageId) else {
             return nil
         }
         

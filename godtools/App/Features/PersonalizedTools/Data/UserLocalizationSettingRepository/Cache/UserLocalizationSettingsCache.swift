@@ -11,9 +11,9 @@ import RepositorySync
 import RealmSwift
 import Combine
 
-class UserLocalizationSettingsCache {
+final class UserLocalizationSettingsCache {
         
-    private let persistence: any Persistence<UserLocalizationSettingsDataModel, UserLocalizationSettingsDataModel>
+    let persistence: any Persistence<UserLocalizationSettingsDataModel, UserLocalizationSettingsDataModel>
     
     init(persistence: any Persistence<UserLocalizationSettingsDataModel, UserLocalizationSettingsDataModel>) {
                 

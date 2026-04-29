@@ -180,7 +180,7 @@ class GetToolTranslationsFilesUseCase {
     private func downloadResourcesFromRemoteAndDetermineTranslationsToDownloadPublisher(requestPriority: RequestPriority, resourceNeeded: DetermineToolTranslationsResourceNeeded, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface) -> AnyPublisher<DetermineToolTranslationsToDownloadResult, Error> {
         
         return languagesRepository
-            .syncLanguagesFromRemote(requestPriority: requestPriority)
+            .syncLanguagesFromRemotePublisher(requestPriority: requestPriority)
             .flatMap({ (languages: [LanguageDataModel]) -> AnyPublisher<Void, Error> in
                 
                 self.syncResourcesPublisher(requestPriority: requestPriority, resourceNeeded: resourceNeeded)

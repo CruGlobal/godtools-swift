@@ -30,7 +30,7 @@ final class GetFeaturedLessonsUseCase {
     
     @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[FeaturedLessonDomainModel], Error> {
             
-        let appLanguageModel: LanguageDataModel? = languagesRepository.getCachedLanguage(code: appLanguage)
+        let appLanguageModel: LanguageDataModel? = languagesRepository.getLanguage(code: appLanguage)
         
         return Publishers.CombineLatest(
             resourcesRepository

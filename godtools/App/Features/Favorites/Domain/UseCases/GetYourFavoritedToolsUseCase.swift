@@ -59,10 +59,10 @@ final class GetYourFavoritedToolsUseCase {
         
         let numberOfFavoritedTools: Int = try self.favoritedResourcesRepository.persistence.getObjectCount()
         
-        let prefixedFavoritedResources: [ResourceDataModel] = try favoritedResources
+        let prefixedFavoritedResources: [ResourceDataModel] = favoritedResources
             .prefix(maxCount ?? numberOfFavoritedTools)
             .compactMap {
-                try self.resourcesRepository.persistence.getDataModel(id: $0.id)
+                self.resourcesRepository.getResource(id: $0.id)
             }
         
         let yourFavoritedTools: [YourFavoritedToolDomainModel] = prefixedFavoritedResources

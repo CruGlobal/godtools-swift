@@ -10,17 +10,20 @@ import Foundation
 import Combine
 import RepositorySync
 
-class AppLanguagesRepository: RepositorySync<AppLanguageDataModel, AppLanguagesApi> {
+final class AppLanguagesRepository {
         
+    private let api: AppLanguagesApi
     private let sync: AppLanguagesRepositorySyncInterface
+    
+    let persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>
     
     private var cancellables: Set<AnyCancellable> = Set()
         
-    init(externalDataFetch: AppLanguagesApi, persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>, sync: AppLanguagesRepositorySyncInterface) {
+    init(api: AppLanguagesApi, persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>, sync: AppLanguagesRepositorySyncInterface) {
         
+        self.api = api
+        self.persistence = persistence
         self.sync = sync
-        
-        super.init(externalDataFetch: externalDataFetch, persistence: persistence)
     }
     
     @MainActor func observeNumberOfAppLanguagesPublisher() -> AnyPublisher<Int, Error> {

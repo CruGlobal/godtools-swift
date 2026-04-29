@@ -11,34 +11,47 @@ import Combine
 import RequestOperation
 import RepositorySync
 
-class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResourcesApi> {
+final class ResourcesRepository {
             
     private static let syncInvalidatorIdForResourcesPlustLatestTranslationsAndAttachments: String = "resourcesPlusLatestTranslationAttachments.syncInvalidator.id"
     private static let syncedResourcesFromJsonCacheKey: String = "ResourcesRepository.synced.resources.json"
     
+    private let api: MobileContentResourcesApi
+    private let jsonFileCache: ResourcesJsonFileCache
     private let cache: ResourcesCache
     private let attachmentsRepository: AttachmentsRepository
     private let languagesRepository: LanguagesRepository
     private let syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface
     private let userDefaultsCache: UserDefaultsCacheInterface
     
-    init(externalDataFetch: MobileContentResourcesApi, persistence: any Persistence<ResourceDataModel, ResourceCodable>, cache: ResourcesCache, attachmentsRepository: AttachmentsRepository, languagesRepository: LanguagesRepository, syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface, userDefaultsCache: UserDefaultsCacheInterface) {
+    init(api: MobileContentResourcesApi, jsonFileCache: ResourcesJsonFileCache, cache: ResourcesCache, attachmentsRepository: AttachmentsRepository, languagesRepository: LanguagesRepository, syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface, userDefaultsCache: UserDefaultsCacheInterface) {
         
+        self.api = api
+        self.jsonFileCache = jsonFileCache
         self.cache = cache
         self.attachmentsRepository = attachmentsRepository
         self.languagesRepository = languagesRepository
         self.syncInvalidatorPersistence = syncInvalidatorPersistence
         self.userDefaultsCache = userDefaultsCache
-                        
-        super.init(
-            externalDataFetch: externalDataFetch,
-            persistence: persistence
-        )
+    }
+    
+    var persistence: any Persistence<ResourceDataModel, ResourceCodable> {
+        return cache.persistence
     }
     
     @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Error> {
-        return persistence
+        return cache
+            .persistence
             .observeCollectionChangesPublisher()
+    }
+    
+    func getResource(id: String) -> ResourceDataModel? {
+        do {
+            return try cache.persistence.getDataModel(id: id)
+        }
+        catch _ {
+            return nil
+        }
     }
     
     func getResource(abbreviation: String) -> ResourceDataModel? {
@@ -113,7 +126,7 @@ extension ResourcesRepository {
     
     func syncResourceAndLatestTranslationsPublisher(resourceId: String, requestPriority: RequestPriority) -> AnyPublisher<Void, Error> {
         
-        return externalDataFetch.getResourcePlusLatestTranslationsAndAttachmentsPublisher(id: resourceId, requestPriority: requestPriority)
+        return api.getResourcePlusLatestTranslationsAndAttachmentsPublisher(id: resourceId, requestPriority: requestPriority)
             .flatMap({ (resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable) -> AnyPublisher<Void, Error> in
                                 
                 return self.cache.syncResources(
@@ -130,7 +143,7 @@ extension ResourcesRepository {
     
     func syncResourceAndLatestTranslationsPublisher(resourceAbbreviation: String, requestPriority: RequestPriority) -> AnyPublisher<Void, Error> {
         
-        return externalDataFetch.getResourcePlusLatestTranslationsAndAttachmentsPublisher(abbreviation: resourceAbbreviation, requestPriority: requestPriority)
+        return api.getResourcePlusLatestTranslationsAndAttachmentsPublisher(abbreviation: resourceAbbreviation, requestPriority: requestPriority)
             .flatMap({ (resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable) -> AnyPublisher<Void, Error> in
                                 
                 return self.cache.syncResources(
@@ -181,19 +194,24 @@ extension ResourcesRepository {
                 .eraseToAnyPublisher()
         }
         
-        return Publishers
-            .CombineLatest(
-                languagesRepository.syncLanguagesFromJsonFileCache(),
-                ResourcesJsonFileCache(jsonServices: JsonServices()).getResourcesPlusLatestTranslationsAndAttachments().publisher
-            )
+        return languagesRepository
+            .syncLanguagesFromJsonFileCachePublisher()
             .receive(on: DispatchQueue.main)
-            .flatMap { (languages: [LanguageDataModel], resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable) -> AnyPublisher<ResourcesCacheSyncResult, Error> in
+            .flatMap { (languages: [LanguageDataModel]) -> AnyPublisher<ResourcesCacheSyncResult, Error> in
                 
-                return self.cache.syncResources(
-                    resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
-                    shouldRemoveDataThatNoLongerExists: true
-                )
-                .eraseToAnyPublisher()
+                do {
+                                        
+                    return self.cache.syncResources(
+                        resourcesPlusLatestTranslationsAndAttachments: try self.jsonFileCache.getResourcesPlusLatestTranslationsAndAttachments(),
+                        shouldRemoveDataThatNoLongerExists: true
+                    )
+                    .eraseToAnyPublisher()
+                }
+                catch let error {
+                    
+                    return Fail(error: error)
+                        .eraseToAnyPublisher()
+                }
             }
             .map { (result: ResourcesCacheSyncResult) in
                 
@@ -230,8 +248,8 @@ extension ResourcesRepository {
         return Publishers
             .CombineLatest(
                 languagesRepository
-                    .syncLanguagesFromRemote(requestPriority: requestPriority),
-                externalDataFetch.getResourcesPlusLatestTranslationsAndAttachments(requestPriority: requestPriority)
+                    .syncLanguagesFromRemotePublisher(requestPriority: requestPriority),
+                api.getResourcesPlusLatestTranslationsAndAttachments(requestPriority: requestPriority)
             )
             .receive(on: DispatchQueue.main)
             .flatMap({ (languages: [LanguageDataModel], resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable) -> AnyPublisher<ResourcesCacheSyncResult, Error> in

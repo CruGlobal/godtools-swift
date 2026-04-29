@@ -52,7 +52,7 @@ class AppLanguageFeatureDataLayerDependencies {
         )
         
         return AppLanguagesRepository(
-            externalDataFetch: api,
+            api: api,
             persistence: persistence,
             sync: sync
         )

@@ -10,18 +10,17 @@ import Foundation
 import RepositorySync
 import Combine
 
-final class FavoritedResourcesRepository: RepositorySync<FavoritedResourceDataModel, NoExternalDataFetch<FavoritedResourceDataModel>> {
+final class FavoritedResourcesRepository {
     
     private let cache: FavoritedResourcesCache
     
-    init(persistence: any Persistence<FavoritedResourceDataModel, FavoritedResourceDataModel>, cache: FavoritedResourcesCache) {
+    init(cache: FavoritedResourcesCache) {
         
         self.cache = cache
-        
-        super.init(
-            externalDataFetch: NoExternalDataFetch<FavoritedResourceDataModel>(),
-            persistence: persistence
-        )
+    }
+    
+    var persistence: any Persistence<FavoritedResourceDataModel, FavoritedResourceDataModel> {
+        return cache.persistence
     }
     
     @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Error> {

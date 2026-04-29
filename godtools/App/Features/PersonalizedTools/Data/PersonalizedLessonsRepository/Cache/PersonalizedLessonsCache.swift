@@ -11,7 +11,7 @@ import RealmSwift
 import Combine
 import RepositorySync
 
-class PersonalizedLessonsCache {
+final class PersonalizedLessonsCache {
     
     let persistence: any Persistence<PersonalizedLessonsDataModel, PersonalizedLessonsDataModel>
     

@@ -13,7 +13,7 @@ import RealmSwift
 
 final class FavoritedResourcesCache {
     
-    private let persistence: any Persistence<FavoritedResourceDataModel, FavoritedResourceDataModel>
+    let persistence: any Persistence<FavoritedResourceDataModel, FavoritedResourceDataModel>
     
     init(persistence: any Persistence<FavoritedResourceDataModel, FavoritedResourceDataModel>) {
                 

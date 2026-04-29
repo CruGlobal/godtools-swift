@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import RequestOperation
 
-class LanguagesJsonFileCache {
+final class LanguagesJsonFileCache {
     
     private let jsonServices: JsonServices
     
@@ -19,33 +19,17 @@ class LanguagesJsonFileCache {
         self.jsonServices = jsonServices
     }
     
-    func getLanguages() -> Result<[LanguageCodable], Error> {
+    func getLanguages() throws -> [LanguageCodable] {
         
-        return parseLanguagesJsonFromBundle(fileName: "languages")
+        return try parseLanguagesJsonFromBundle(fileName: "languages")
     }
     
-    private func parseLanguagesJsonFromBundle(fileName: String) -> Result<[LanguageCodable], Error> {
+    private func parseLanguagesJsonFromBundle(fileName: String) throws -> [LanguageCodable] {
         
-        let result: Result<Data?, Error> = jsonServices.getJsonData(fileName: fileName)
+        let data: Data = try jsonServices.getJsonData(fileName: fileName)
         
-        switch result {
-            
-        case .success(let data):
-            
-            guard let data = data else {
-                return .failure(NSError.errorWithDescription(description: "Failed to decode resources json data.  Null data."))
-            }
-            
-            do {
-                let responseData: JsonApiResponseDataArray<LanguageCodable> = try JSONDecoder().decode(JsonApiResponseDataArray<LanguageCodable>.self, from: data)
-                return .success(responseData.dataArray)
-            }
-            catch let error {
-                return .failure(error)
-            }
-            
-        case .failure(let error):
-            return .failure(error)
-        }
+        let responseData: JsonApiResponseDataArray<LanguageCodable> = try JSONDecoder().decode(JsonApiResponseDataArray<LanguageCodable>.self, from: data)
+        
+        return responseData.dataArray
     }
 }

@@ -12,9 +12,10 @@ import Combine
 
 class AttachmentsCache {
     
-    private let persistence: any Persistence<AttachmentDataModel, AttachmentCodable>
     private let resourcesFileCache: ResourcesSHA256FileCache
     private let bundle: AttachmentsBundleCache
+    
+    let persistence: any Persistence<AttachmentDataModel, AttachmentCodable>
     
     init(persistence: any Persistence<AttachmentDataModel, AttachmentCodable>, resourcesFileCache: ResourcesSHA256FileCache, bundle: AttachmentsBundleCache) {
         

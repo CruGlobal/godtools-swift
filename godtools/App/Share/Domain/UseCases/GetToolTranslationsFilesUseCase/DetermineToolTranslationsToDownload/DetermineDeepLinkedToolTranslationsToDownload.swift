@@ -136,7 +136,7 @@ class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsTo
     private func getSupportedLanguageIdsPublisher(resource: ResourceDataModel, languageCodes: [String]) -> AnyPublisher<[String], Never> {
         
         return languagesRepository
-            .getCachedLanguagesPublisher(codes: languageCodes)
+            .getLanguagesPublisher(codes: languageCodes)
             .map { (languages: [LanguageDataModel]) in
                 
                 let languageIds: [String] = languages.map({$0.id})

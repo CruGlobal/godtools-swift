@@ -11,18 +11,19 @@ import RequestOperation
 import RepositorySync
 import Combine
 
-class AttachmentsRepository: RepositorySync<AttachmentDataModel, MobileContentAttachmentsApi> {
+class AttachmentsRepository {
         
+    private let api: MobileContentAttachmentsApi
     private let cache: AttachmentsCache
     
-    init(externalDataFetch: MobileContentAttachmentsApi, persistence: any Persistence<AttachmentDataModel, AttachmentCodable>, cache: AttachmentsCache) {
+    init(api: MobileContentAttachmentsApi, cache: AttachmentsCache) {
         
+        self.api = api
         self.cache = cache
-        
-        super.init(
-            externalDataFetch: externalDataFetch,
-            persistence: persistence
-        )
+    }
+    
+    var persistence: any Persistence<AttachmentDataModel, AttachmentCodable> {
+        return cache.persistence
     }
     
     func getAttachment(id: String) -> AttachmentDataModel? {
@@ -117,7 +118,7 @@ extension AttachmentsRepository {
                 .eraseToAnyPublisher()
         }
         
-        return externalDataFetch.getAttachmentFilePublisher(url: remoteUrl, requestPriority: requestPriority)
+        return api.getAttachmentFilePublisher(url: remoteUrl, requestPriority: requestPriority)
             .flatMap({ (response: RequestDataResponse) -> AnyPublisher<StoredAttachmentDataModel, Error> in
                 
                 return self.cache.storeAttachmentDataPublisher(

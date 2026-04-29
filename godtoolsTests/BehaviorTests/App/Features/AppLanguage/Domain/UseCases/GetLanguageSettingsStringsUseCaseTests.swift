@@ -226,7 +226,7 @@ extension GetLanguageSettingsStringsUseCaseTests {
         let api = AppLanguagesApi()
         
         let appLanguagesRepository = AppLanguagesRepository(
-            externalDataFetch: api,
+            api: api,
             persistence: persistence,
             sync: mockAppLanguagesSync
         )

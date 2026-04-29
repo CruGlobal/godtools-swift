@@ -35,7 +35,7 @@ final class GetSpotlightToolsUseCase {
         let languageForAvailabilityTextModel: LanguageDataModel?
         
         if let languageForAvailabilityTextId = languageIdForAvailabilityText {
-            languageForAvailabilityTextModel = languagesRepository.persistence.getDataModelNonThrowing(id: languageForAvailabilityTextId)
+            languageForAvailabilityTextModel = languagesRepository.getLanguage(id: languageForAvailabilityTextId)
         } else {
             languageForAvailabilityTextModel = nil
         }

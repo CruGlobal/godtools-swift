@@ -158,8 +158,7 @@ class AppDataLayerDependencies {
         )
         
         return AttachmentsRepository(
-            externalDataFetch: api,
-            persistence: persistence,
+            api: api,
             cache: cache
         )
     }
@@ -234,7 +233,6 @@ class AppDataLayerDependencies {
         }
         
         return FavoritedResourcesRepository(
-            persistence: persistence,
             cache: FavoritedResourcesCache(persistence: persistence)
         )
     }
@@ -305,8 +303,8 @@ class AppDataLayerDependencies {
         let cache = LanguagesCache(persistence: persistence)
                 
         return LanguagesRepository(
-            externalDataFetch: api,
-            persistence: persistence,
+            api: api,
+            jsonFileCache: LanguagesJsonFileCache(jsonServices: JsonServices()),
             cache: cache
         )
     }
@@ -423,8 +421,8 @@ class AppDataLayerDependencies {
         )
         
         return ResourcesRepository(
-            externalDataFetch: api,
-            persistence: persistence,
+            api: api,
+            jsonFileCache: ResourcesJsonFileCache(jsonServices: JsonServices()),
             cache: cache,
             attachmentsRepository: getAttachmentsRepository(),
             languagesRepository: getLanguagesRepository(),
@@ -464,7 +462,7 @@ class AppDataLayerDependencies {
         do {
             return try getAppConfig().getSwiftDatabase()
         }
-        catch let error {
+        catch _ {
             assertionFailure("Failed to get swift database.")
             return nil
         }
@@ -540,8 +538,7 @@ class AppDataLayerDependencies {
         let cache = TranslationsCache(persistence: persistence)
         
         return TranslationsRepository(
-            externalDataFetch: api,
-            persistence: persistence,
+            api: api,
             cache: cache,
             infoPlist: getInfoPlist(),
             resourcesFileCache: getResourcesFileCache(),

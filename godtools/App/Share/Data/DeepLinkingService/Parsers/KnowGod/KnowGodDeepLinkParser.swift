@@ -66,7 +66,14 @@ class KnowGodDeepLinkParser: DeepLinkUrlParserInterface {
     
     private func parseTool(url: URL, pathComponents: [String], queryParameters: [String: Any]) -> ParsedDeepLinkType? {
         
-        let knowGodQueryParameters: KnowGodTractDeepLinkQueryParameters? = JsonServices().decodeJsonObject(jsonObject: queryParameters)
+        let knowGodQueryParameters: KnowGodTractDeepLinkQueryParameters?
+        
+        do {
+            knowGodQueryParameters = try JsonServices().decodeJsonObject(jsonObject: queryParameters)
+        }
+        catch _ {
+            knowGodQueryParameters = nil
+        }
         
         let primaryLanguageCodeFromUrlPath: String? = pathComponents[safe: 0]
         let abbreviationFromUrlPath: String? = pathComponents[safe: 3]

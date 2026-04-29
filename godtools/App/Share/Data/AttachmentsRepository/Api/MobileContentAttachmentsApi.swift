@@ -11,7 +11,7 @@ import RequestOperation
 import RepositorySync
 import Combine
 
-class MobileContentAttachmentsApi {
+final class MobileContentAttachmentsApi {
     
     private let urlSessionPriority: URLSessionPriority
     private let requestSender: RequestSender
@@ -45,26 +45,5 @@ class MobileContentAttachmentsApi {
         return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
             .validate()
             .eraseToAnyPublisher()
-    }
-}
-
-// MARK: - ExternalDataFetchInterface
-
-extension MobileContentAttachmentsApi: ExternalDataFetchInterface {
-    
-    func getObject(id: String, context: RequestOperationFetchContext) async throws -> [AttachmentCodable] {
-        return Array()
-    }
-    
-    func getObjects(context: RequestOperationFetchContext) async throws -> [AttachmentCodable] {
-        return Array()
-    }
-    
-    func getObjectPublisher(id: String, context: RequestOperationFetchContext) -> AnyPublisher<[AttachmentCodable], Error> {
-        return emptyResponsePublisher()
-    }
-    
-    func getObjectsPublisher(context: RequestOperationFetchContext) -> AnyPublisher<[AttachmentCodable], Error> {
-        return emptyResponsePublisher()
     }
 }
