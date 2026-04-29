@@ -29,20 +29,11 @@ final class ArticleManifestAemRepository: ArticleAemRepository {
         return prefix + translationId
     }
     
-    func getCategoryArticles(categoryId: String, languageCode: String) -> [CategoryArticleModel] {
+    func getCategoryArticlesPublisher(categoryId: String, languageCode: String) -> AnyPublisher<[CategoryArticleModel], Error> {
         
-        do {
-            return try categoryArticlesCache.getCategoryArticles(categoryId: categoryId, languageCode: languageCode)
+        return AnyPublisher() {
+            try await self.categoryArticlesCache.getCategoryArticles(categoryId: categoryId, languageCode: languageCode)
         }
-        catch _ {
-            return Array()
-        }
-    }
-    
-    func getCategoryArticlesPublisher(categoryId: String, languageCode: String) -> AnyPublisher<[CategoryArticleModel], Never> {
-        
-        return categoryArticlesCache.getCategoryArticlesPublisher(categoryId: categoryId, languageCode: languageCode)
-            .eraseToAnyPublisher()
     }
     
     func downloadAndCacheManifestAemUrisPublisher(manifest: Manifest, translationId: String, languageCode: String, downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority, forceFetchFromRemote: Bool = false) -> AnyPublisher<ArticleAemRepositoryResult, Never> {
