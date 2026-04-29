@@ -8,7 +8,7 @@
 
 import Foundation
 
-class LessonFeedbackAnalytics {
+final class LessonFeedbackAnalytics {
     
     private static let trackLessonFeedbackActionName: String = "lesson_feedback"
     private static let propertyHelpful: String = "helpful"
@@ -19,7 +19,7 @@ class LessonFeedbackAnalytics {
     
     private let firebaseAnalytics: FirebaseAnalyticsInterface
     
-    required init(firebaseAnalytics: FirebaseAnalyticsInterface) {
+    init(firebaseAnalytics: FirebaseAnalyticsInterface) {
         
         self.firebaseAnalytics = firebaseAnalytics
     }

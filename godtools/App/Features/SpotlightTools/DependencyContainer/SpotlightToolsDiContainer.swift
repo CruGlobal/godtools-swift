@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SpotlightToolsDiContainer {
+final class SpotlightToolsDiContainer {
     
     let dataLayer: SpotlightToolsDataLayerDependencies
     let domainLayer: SpotlightToolsDomainLayerDependencies

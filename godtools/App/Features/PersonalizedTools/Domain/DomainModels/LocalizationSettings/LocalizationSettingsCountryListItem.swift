@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum LocalizationSettingsCountryListItem: Identifiable, StringSearchable {
+enum LocalizationSettingsCountryListItem: Sendable, Identifiable, StringSearchable {
 
     case country(LocalizationSettingsCountryDomainModel)
     case preferNotToSay(LocalizationSettingsPreferNotToSayDomainModel)

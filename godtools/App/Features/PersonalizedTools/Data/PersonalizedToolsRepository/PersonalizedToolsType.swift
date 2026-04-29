@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum PersonalizedToolsType {
+enum PersonalizedToolsType: Sendable {
 
     case allRanked(country: String, language: String)
     case defaultOrder(language: String)

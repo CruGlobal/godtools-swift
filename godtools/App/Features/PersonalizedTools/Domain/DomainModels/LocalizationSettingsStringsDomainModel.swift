@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LocalizationSettingsStringsDomainModel {
+struct LocalizationSettingsStringsDomainModel: Sendable {
 
     let navTitle: String
     let localizationHeaderTitle: String

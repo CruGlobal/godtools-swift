@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface {
+final class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface {
     
     private let resourceId: String
     private let languageIds: [String]

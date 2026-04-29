@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum AuthenticateUserAuthTypeDomainModel {
+enum AuthenticateUserAuthTypeDomainModel: Sendable {
     
     case createAccount
     case signIn

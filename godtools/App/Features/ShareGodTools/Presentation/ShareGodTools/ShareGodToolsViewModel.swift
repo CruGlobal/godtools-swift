@@ -8,7 +8,8 @@
 
 import Foundation
 
-@MainActor class ShareGodToolsViewModel: ObservableObject {
+@MainActor
+final class ShareGodToolsViewModel: ObservableObject {
     
     private let strings: ShareGodToolsStringsDomainModel
     

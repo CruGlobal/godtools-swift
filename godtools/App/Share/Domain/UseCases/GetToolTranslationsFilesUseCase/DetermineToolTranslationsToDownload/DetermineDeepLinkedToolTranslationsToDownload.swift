@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface {
+final class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface {
     
     private let toolDeepLink: ToolDeepLink
     private let resourcesRepository: ResourcesRepository

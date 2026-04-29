@@ -9,7 +9,8 @@
 import Foundation
 import Combine
 
-@MainActor class ResumeLessonProgressModalViewModel: ObservableObject {
+@MainActor
+final class ResumeLessonProgressModalViewModel: ObservableObject {
     
     private weak var flowDelegate: FlowDelegate?
     private let getResumeLessonProgressStringsUseCase: GetResumeLessonProgressStringsUseCase

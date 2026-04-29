@@ -9,7 +9,7 @@
 import Foundation
 import RepositorySync
 
-class ToolScreenShareFeatureDataLayerDependencies {
+final class ToolScreenShareFeatureDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     

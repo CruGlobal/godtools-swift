@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 import Combine
 
-class GetToolBannerUseCase {
+final class GetToolBannerUseCase {
     
     private let attachmentsRepository: AttachmentsRepository
             

@@ -10,7 +10,8 @@ import Foundation
 import GodToolsShared
 import Combine
 
-@MainActor class ArticlesViewModel: NSObject {
+@MainActor
+final class ArticlesViewModel: NSObject {
         
     typealias AemUri = String
     

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct UserLocalizationSettingsDomainModel {
+struct UserLocalizationSettingsDomainModel: Sendable {
 
     let selectedCountry: LocalizationSettingsCountryDomainModel
 }

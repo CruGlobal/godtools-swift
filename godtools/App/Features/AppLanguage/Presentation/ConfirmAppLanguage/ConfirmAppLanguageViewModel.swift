@@ -9,7 +9,8 @@
 import Foundation
 import Combine
 
-@MainActor class ConfirmAppLanguageViewModel: ObservableObject {
+@MainActor
+final class ConfirmAppLanguageViewModel: ObservableObject {
     
     private let selectedLanguage: AppLanguageListItemDomainModel
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase

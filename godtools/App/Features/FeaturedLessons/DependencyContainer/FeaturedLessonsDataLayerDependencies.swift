@@ -8,7 +8,7 @@
 
 import Foundation
 
-class FeaturedLessonsDataLayerDependencies {
+final class FeaturedLessonsDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     

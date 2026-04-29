@@ -13,12 +13,12 @@ import RepositorySync
 
 final class UserDetailsRepository {
     
-    private let api: UserDetailsAPI
+    private let api: UserDetailsApi
     private let cache: UserDetailsCache
     
     private var cancellables: Set<AnyCancellable> = Set()
         
-    init(api: UserDetailsAPI, cache: UserDetailsCache) {
+    init(api: UserDetailsApi, cache: UserDetailsCache) {
         
         self.api = api
         self.cache = cache

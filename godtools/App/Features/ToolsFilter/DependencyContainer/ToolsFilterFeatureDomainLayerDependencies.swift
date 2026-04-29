@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ToolsFilterFeatureDomainLayerDependencies {
+final class ToolsFilterFeatureDomainLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     private let coreDomainLayer: AppDomainLayerDependencies

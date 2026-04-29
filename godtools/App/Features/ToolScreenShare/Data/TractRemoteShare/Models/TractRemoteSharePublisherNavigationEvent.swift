@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TractRemoteSharePublisherNavigationEvent {
+struct TractRemoteSharePublisherNavigationEvent: Sendable {
     
     let card: Int?
     let locale: String?

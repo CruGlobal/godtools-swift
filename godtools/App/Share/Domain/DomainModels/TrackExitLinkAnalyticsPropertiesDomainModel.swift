@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TrackExitLinkAnalyticsPropertiesDomainModel {
+struct TrackExitLinkAnalyticsPropertiesDomainModel: Sendable {
     
     let screenName: String
     let siteSection: String

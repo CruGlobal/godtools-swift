@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct AppLanguageCodable: Codable {
+struct AppLanguageCodable: Codable, Sendable {
     
     private static let languageDirectionLeftToRight: String = "ltr"
     private static let languageDirectionRightToLeft: String = "rtl"

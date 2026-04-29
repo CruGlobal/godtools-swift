@@ -8,7 +8,8 @@
 
 import Foundation
 
-class ArticlesErrorMessageViewModel {
+@MainActor
+final class ArticlesErrorMessageViewModel {
     
     let title: String
     let message: String

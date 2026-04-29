@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct UserLocalizationSettingsDataModel {
+struct UserLocalizationSettingsDataModel: Sendable {
 
     let id: String
     let createdAt: Date

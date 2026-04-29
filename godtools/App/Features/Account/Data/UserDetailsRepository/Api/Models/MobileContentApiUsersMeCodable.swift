@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct MobileContentApiUsersMeCodable: Codable {
+struct MobileContentApiUsersMeCodable: Codable, Sendable {
     
     let id: String
     let createdAt: Date?

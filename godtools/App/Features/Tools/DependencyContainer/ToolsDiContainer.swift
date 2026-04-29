@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ToolsDiContainer {
+final class ToolsDiContainer {
 
     private let dataLayer: ToolsDataLayerDependencies
 

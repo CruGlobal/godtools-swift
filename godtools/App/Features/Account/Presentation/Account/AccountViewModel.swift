@@ -11,7 +11,8 @@ import Combine
 import SwiftUI
 import GodToolsShared
 
-@MainActor class AccountViewModel: ObservableObject {
+@MainActor
+final class AccountViewModel: ObservableObject {
     
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase

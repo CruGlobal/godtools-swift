@@ -8,7 +8,7 @@
 
 import Foundation
 
-class GlobalActivityDiContainer {
+final class GlobalActivityDiContainer {
     
     let dataLayer: GlobalActivityDataLayerDependencies
     let domainLayer: GlobalActivityDomainLayerDependencies

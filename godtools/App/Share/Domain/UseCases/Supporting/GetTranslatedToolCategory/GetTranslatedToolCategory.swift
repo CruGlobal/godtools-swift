@@ -8,7 +8,7 @@
 
 import Foundation
 
-class GetTranslatedToolCategory {
+final class GetTranslatedToolCategory {
     
     static let localizedKeyPrefix: String = "tool_category_"
     

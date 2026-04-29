@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ToolDetailsFeatureDiContainer {
+final class ToolDetailsFeatureDiContainer {
     
     let dataLayer: ToolDetailsFeatureDataLayerDependencies
     let domainLayer: ToolDetailsFeatureDomainLayerDependencies

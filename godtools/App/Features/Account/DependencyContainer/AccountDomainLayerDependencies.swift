@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AccountDomainLayerDependencies {
+final class AccountDomainLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     private let dataLayer: AccountDataLayerDependencies

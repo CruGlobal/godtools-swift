@@ -8,7 +8,7 @@
 
 import Foundation
 
-class DashboardDomainLayerDependencies {
+final class DashboardDomainLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     private let dataLayer: DashboardDataLayerDependencies

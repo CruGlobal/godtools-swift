@@ -8,7 +8,7 @@
 
 import Foundation
 
-class UserLessonProgressDiContainer {
+final class UserLessonProgressDiContainer {
     
     let dataLayer: UserLessonProgressDataLayerDependencies
     let domainLayer: UserLessonProgressDomainLayerDependencies

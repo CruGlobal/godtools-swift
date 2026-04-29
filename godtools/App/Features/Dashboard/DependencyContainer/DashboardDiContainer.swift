@@ -8,7 +8,7 @@
 
 import Foundation
 
-class DashboardDiContainer {
+final class DashboardDiContainer {
     
     let dataLayer: DashboardDataLayerDependencies
     let domainLayer: DashboardDomainLayerDependencies

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class LessonEvaluationFeatureDomainLayerDependencies {
+final class LessonEvaluationFeatureDomainLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     private let coreDomainLayer: AppDomainLayerDependencies

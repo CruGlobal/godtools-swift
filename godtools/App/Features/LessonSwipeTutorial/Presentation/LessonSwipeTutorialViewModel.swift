@@ -9,7 +9,8 @@
 import Foundation
 import Combine
 
-@MainActor class LessonSwipeTutorialViewModel: ObservableObject {
+@MainActor
+final class LessonSwipeTutorialViewModel: ObservableObject {
     
     private let getStringsUseCase: GetLessonSwipeTutorialStringsUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase

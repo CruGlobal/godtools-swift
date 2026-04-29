@@ -9,7 +9,8 @@
 import Foundation
 import Combine
 
-@MainActor class LocalizationSettingsConfirmationViewModel: ObservableObject {
+@MainActor
+final class LocalizationSettingsConfirmationViewModel: ObservableObject {
 
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getLocalizationSettingsConfirmationStringsUseCase: GetLocalizationSettingsConfirmationStringsUseCase

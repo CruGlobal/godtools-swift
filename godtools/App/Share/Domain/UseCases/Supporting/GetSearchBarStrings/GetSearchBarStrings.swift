@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class GetSearchBarStrings {
+final class GetSearchBarStrings {
     
     private let localizationServices: LocalizationServicesInterface
     

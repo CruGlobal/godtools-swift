@@ -9,7 +9,8 @@
 import Foundation
 import Combine
 
-@MainActor class MenuViewModel: ObservableObject {
+@MainActor
+final class MenuViewModel: ObservableObject {
         
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     

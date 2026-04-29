@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ToolSettingsDiContainer {
+final class ToolSettingsDiContainer {
     
     private let dataLayer: ToolSettingsDataLayerDependencies
     

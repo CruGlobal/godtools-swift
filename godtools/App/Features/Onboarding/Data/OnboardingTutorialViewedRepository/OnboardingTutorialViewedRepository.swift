@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import Combine
 
-class OnboardingTutorialViewedRepository {
+final class OnboardingTutorialViewedRepository {
     
     private let cache: OnboardingTutorialViewedCache
     

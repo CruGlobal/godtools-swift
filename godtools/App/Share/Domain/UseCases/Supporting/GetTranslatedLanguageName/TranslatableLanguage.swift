@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol TranslatableLanguage {
+protocol TranslatableLanguage: Sendable {
     
     var languageCode: String { get }
     var localeId: BCP47LanguageIdentifier { get }

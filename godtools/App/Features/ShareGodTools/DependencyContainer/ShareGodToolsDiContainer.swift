@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ShareGodToolsDiContainer {
+final class ShareGodToolsDiContainer {
     
     let dataLayer: ShareGodToolsDataLayerDependencies
     let domainLayer: ShareGodToolsDomainLayerDependencies

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LocalizationSettingsPreferNotToSayDomainModel {
+struct LocalizationSettingsPreferNotToSayDomainModel: Sendable {
 
     let preferNotToSayText: String
 }

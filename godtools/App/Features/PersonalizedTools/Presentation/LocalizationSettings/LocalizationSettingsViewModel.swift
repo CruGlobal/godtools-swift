@@ -9,7 +9,8 @@
 import UIKit
 import Combine
 
-@MainActor class LocalizationSettingsViewModel: ObservableObject {
+@MainActor
+final class LocalizationSettingsViewModel: ObservableObject {
     
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getCountryListUseCase: GetLocalizationSettingsCountryListUseCase

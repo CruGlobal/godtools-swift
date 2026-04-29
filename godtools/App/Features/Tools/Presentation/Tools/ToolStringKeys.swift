@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ToolStringKeys {
+struct ToolStringKeys {
     
     enum Spotlight: String {
         case title = "allTools.spotlight.title"

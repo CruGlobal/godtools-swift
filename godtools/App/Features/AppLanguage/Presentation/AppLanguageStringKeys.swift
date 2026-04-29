@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AppLanguageStringKeys {
+struct AppLanguageStringKeys {
     
     enum LanguageSettings: String {
         case navTitle = "language_settings"

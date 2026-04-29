@@ -9,7 +9,8 @@
 import Foundation
 import Combine
 
-@MainActor class DownloadableLanguagesViewModel: ObservableObject {
+@MainActor
+final class DownloadableLanguagesViewModel: ObservableObject {
     
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getDownloadableLanguagesStringsUseCase: GetDownloadableLanguagesStringsUseCase

@@ -10,7 +10,8 @@ import UIKit
 import GodToolsShared
 import Combine
 
-class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
+@MainActor
+final class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
                 
     private var cancellables: Set<AnyCancellable> = Set()
     

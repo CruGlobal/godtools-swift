@@ -8,7 +8,7 @@
 
 import Foundation
 
-class DeferredDeepLinkDomainLayerDependencies {
+final class DeferredDeepLinkDomainLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     private let dataLayer: DeferredDeepLinkDataLayerDependencies

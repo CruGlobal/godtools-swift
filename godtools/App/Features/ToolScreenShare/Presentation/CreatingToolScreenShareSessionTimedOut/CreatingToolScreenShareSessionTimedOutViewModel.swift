@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class CreatingToolScreenShareSessionTimedOutViewModel: AlertMessageViewModelType {
+final class CreatingToolScreenShareSessionTimedOutViewModel: AlertMessageViewModelType {
         
     private var cancellables = Set<AnyCancellable>()
     
