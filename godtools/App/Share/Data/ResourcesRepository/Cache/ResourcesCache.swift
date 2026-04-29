@@ -8,11 +8,11 @@
 
 import Foundation
 import RealmSwift
-import Combine
 import SwiftData
 import RepositorySync
+import Combine
 
-class ResourcesCache {
+final class ResourcesCache {
     
     private let trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
     
@@ -198,7 +198,7 @@ extension ResourcesCache {
             
             let query = getLessonsSwiftQuery(filterByLanguageId: filterByLanguageId, sorted: false)
             
-            let count: Int = try swiftPersistence.database.read.objectCountNonThrowing(context: swiftPersistence.database.openContext(), query: query)
+            let count: Int = try swiftPersistence.database.read.objectCount(context: swiftPersistence.database.openContext(), query: query)
             
             return count
         }
@@ -208,41 +208,35 @@ extension ResourcesCache {
             
             let query = getLessonsRealmQuery(filterByLanguageId: filterByLanguageId, sorted: false)
             
-            let results: Results<RealmResource> = try realmPersistence.database.read.results(realm: realm, query: query)
+            let results: Results<RealmResource> = realmPersistence.database.read.results(realm: realm, query: query)
             
             return results.count
         }
-        else {
-            
-            return 0
-        }
+        
+        return 0
     }
     
-    func getLessonsPublisher(filterByLanguageId: String?, sorted: Bool) -> AnyPublisher<[ResourceDataModel], Error> {
+    func getLessons(filterByLanguageId: String?, sorted: Bool) async throws -> [ResourceDataModel] {
         
         if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
             
             let query = getLessonsSwiftQuery(filterByLanguageId: filterByLanguageId, sorted: sorted)
             
-            return swiftPersistence
-                .getDataModelsPublisher(getOption: .allObjects, query: query)
+            return try await swiftPersistence
+                .getDataModelsAsync(getOption: .allObjects, query: query)
         }
         else if let realmPersistence = getRealmPersistence() {
             
             let query = getLessonsRealmQuery(filterByLanguageId: filterByLanguageId, sorted: sorted)
             
-            return realmPersistence
-                .getDataModelsPublisher(getOption: .allObjects, query: query)
+            return try await realmPersistence
+                .getDataModelsAsync(getOption: .allObjects, query: query)
         }
-        else {
-            
-            return Just([])
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
+        
+        return Array()
     }
     
-    func getFeaturedLessonsPublisher(sorted: Bool) -> AnyPublisher<[ResourceDataModel], Error> {
+    func getFeaturedLessons(sorted: Bool) async throws -> [ResourceDataModel] {
         
         if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
             
@@ -258,8 +252,8 @@ extension ResourcesCache {
                 sortBy: sorted ? getSortByDefaultOrderDescriptor() : nil
             )
             
-            return swiftPersistence
-                .getDataModelsPublisher(getOption: .allObjects, query: query)
+            return try await swiftPersistence
+                .getDataModelsAsync(getOption: .allObjects, query: query)
         }
         else if let realmPersistence = getRealmPersistence() {
                         
@@ -272,15 +266,11 @@ extension ResourcesCache {
                 sortByKeyPath: sorted ? getSortByDefaultOrderKeyPath() : nil
             )
             
-            return realmPersistence
-                .getDataModelsPublisher(getOption: .allObjects, query: query)
+            return try await realmPersistence
+                .getDataModelsAsync(getOption: .allObjects, query: query)
         }
-        else {
-            
-            return Just([])
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
+        
+        return Array()
     }
     
     func getLessonsSupportedLanguageIds() throws -> [String] {
@@ -293,9 +283,9 @@ extension ResourcesCache {
             
             let context: ModelContext = swiftPersistence.database.openContext()
             
-            let lessons: [SwiftResource] = swiftPersistence
+            let lessons: [SwiftResource] = try swiftPersistence
                 .database
-                .read.objectsNonThrowing(
+                .read.objects(
                     context: context,
                     query: query
                 )
@@ -344,7 +334,7 @@ extension ResourcesCache {
             
             let query = SwiftDatabaseQuery.filter(filter: filter)
             
-            let resources: [SwiftResource] = swiftPersistence.database.read.objectsNonThrowing(
+            let resources: [SwiftResource] = try swiftPersistence.database.read.objects(
                 context: swiftPersistence.database.openContext(),
                 query: query
             )
@@ -380,7 +370,7 @@ extension ResourcesCache {
         }
     }
     
-    func getResourceVariantsPublisher(resourceId: String) -> AnyPublisher<[ResourceDataModel], Error> {
+    func getResourceVariants(resourceId: String) async throws -> [ResourceDataModel] {
         
         if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
             
@@ -390,8 +380,8 @@ extension ResourcesCache {
             
             let query = SwiftDatabaseQuery.filter(filter: filter)
             
-            return swiftPersistence
-                .getDataModelsPublisher(getOption: .allObjects, query: query)
+            return try await swiftPersistence
+                .getDataModelsAsync(getOption: .allObjects, query: query)
         }
         else if let realmPersistence = getRealmPersistence() {
             
@@ -401,18 +391,14 @@ extension ResourcesCache {
                    
             let query = RealmDatabaseQuery(filter: filterPredicate, sortByKeyPath: nil)
             
-            return realmPersistence
-                .getDataModelsPublisher(getOption: .allObjects, query: query)
+            return try await realmPersistence
+                .getDataModelsAsync(getOption: .allObjects, query: query)
         }
-        else {
-            
-            return Just([])
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
+        
+        return Array()
     }
     
-    func getResourcesPublisher(sorted: Bool) -> AnyPublisher<[ResourceDataModel], Error> {
+    func getResources(sorted: Bool) async throws -> [ResourceDataModel] {
         
         if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
             
@@ -421,8 +407,8 @@ extension ResourcesCache {
                 sortBy: sorted ? getSortByDefaultOrderDescriptor() : nil
             )
             
-            return swiftPersistence
-                .getDataModelsPublisher(getOption: .allObjects, query: query)
+            return try await swiftPersistence
+                .getDataModelsAsync(getOption: .allObjects, query: query)
         }
         else if let realmPersistence = getRealmPersistence() {
             
@@ -431,15 +417,11 @@ extension ResourcesCache {
                 sortByKeyPath: sorted ? getSortByDefaultOrderKeyPath() : nil
             )
             
-            return realmPersistence
-                .getDataModelsPublisher(getOption: .allObjects, query: query)
+            return try await realmPersistence
+                .getDataModelsAsync(getOption: .allObjects, query: query)
         }
-        else {
-            
-            return Just([])
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
+        
+        return Array()
     }
 }
 

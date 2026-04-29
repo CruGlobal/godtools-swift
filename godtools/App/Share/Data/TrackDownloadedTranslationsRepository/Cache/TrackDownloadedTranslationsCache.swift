@@ -8,11 +8,10 @@
 
 import Foundation
 import RealmSwift
-import Combine
 import SwiftData
 import RepositorySync
 
-class TrackDownloadedTranslationsCache {
+final class TrackDownloadedTranslationsCache {
     
     private let persistence: any Persistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel>
         
@@ -62,7 +61,7 @@ extension TrackDownloadedTranslationsCache {
 extension TrackDownloadedTranslationsCache {
     
     @available(iOS 17.4, *)
-    private func getSwiftLatestDownloadedTranslations(resourceId: String, languageId: String) -> [SwiftDownloadedTranslation]? {
+    private func getSwiftLatestDownloadedTranslations(resourceId: String, languageId: String) throws -> [SwiftDownloadedTranslation]? {
         
         guard let swiftPersistence = getSwiftPersistence() else {
             return nil
@@ -79,9 +78,9 @@ extension TrackDownloadedTranslationsCache {
             sortBy: getSortByLatestVersionDescriptor()
         )
         
-        return database
+        return try database
             .read
-            .objectsNonThrowing(context: database.openContext(), query: query)
+            .objects(context: database.openContext(), query: query)
     }
     
     private func getRealmLatestDownloadedTranslations(resourceId: String, languageId: String) throws -> [RealmDownloadedTranslation]? {
@@ -106,7 +105,7 @@ extension TrackDownloadedTranslationsCache {
             .objects(realm: realm, query: query)
     }
     
-    func getLatestDownloadedTranslationsPublisher(resourceId: String, languageId: String) -> AnyPublisher<[DownloadedTranslationDataModel], Error> {
+    func getLatestDownloadedTranslationsPublisher(resourceId: String, languageId: String) async throws -> [DownloadedTranslationDataModel] {
         
         if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
             
@@ -119,9 +118,8 @@ extension TrackDownloadedTranslationsCache {
                 sortBy: getSortByLatestVersionDescriptor()
             )
             
-            return swiftPersistence
-                .getDataModelsPublisher(getOption: .allObjects, query: query)
-                .eraseToAnyPublisher()
+            return try await swiftPersistence
+                .getDataModelsAsync(getOption: .allObjects, query: query)
         }
         else if let realmPersistence = getRealmPersistence() {
             
@@ -134,21 +132,16 @@ extension TrackDownloadedTranslationsCache {
                 sortByKeyPath: getSortByLatestVersionKeyPath()
             )
             
-            return realmPersistence
-                .getDataModelsPublisher(getOption: .allObjects, query: query)
-                .eraseToAnyPublisher()
+            return try await realmPersistence
+                .getDataModelsAsync(getOption: .allObjects, query: query)
         }
-        else {
-            
-            return Just([])
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
+        
+        return Array()
     }
     
     func getLatestDownloadedTranslation(resourceId: String, languageId: String) throws -> DownloadedTranslationDataModel? {
         
-        if #available(iOS 17.4, *), let latestTranslation = getSwiftLatestDownloadedTranslations(resourceId: resourceId, languageId: languageId)?.first {
+        if #available(iOS 17.4, *), let latestTranslation = try getSwiftLatestDownloadedTranslations(resourceId: resourceId, languageId: languageId)?.first {
             return latestTranslation.toModel()
         }
         else if let latestTranslation = try getRealmLatestDownloadedTranslations(resourceId: resourceId, languageId: languageId)?.first {
@@ -163,12 +156,10 @@ extension TrackDownloadedTranslationsCache {
 
 extension TrackDownloadedTranslationsCache {
     
-    func trackTranslationDownloaded(translation: TranslationDataModel) -> AnyPublisher<[DownloadedTranslationDataModel], Error> {
+    func trackTranslationDownloaded(translation: TranslationDataModel) async throws -> [DownloadedTranslationDataModel] {
         
         guard let resourceId = translation.resourceDataModel?.id, let languageId = translation.languageDataModel?.id else {
-            let error: Error = NSError.errorWithDescription(description: "Failed to get resourceId and languageId for tracked downloaded translation.")
-            return Fail(error: error)
-                .eraseToAnyPublisher()
+            throw NSError.errorWithDescription(description: "Failed to get resourceId and languageId for tracked downloaded translation.")
         }
         
         let downloadedTranslation = DownloadedTranslationDataModel(
@@ -180,30 +171,13 @@ extension TrackDownloadedTranslationsCache {
             version: translation.version
         )
         
-        if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
-            
-            return swiftPersistence
-                .writeObjectsPublisher(externalObjects: [downloadedTranslation], writeOption: nil, getOption: nil)
-                .map { _ in
-                    return [downloadedTranslation]
-                }
-                .eraseToAnyPublisher()
-        }
-        else if let realmPersistence = getRealmPersistence() {
-            
-            return realmPersistence
-                .writeObjectsPublisher(externalObjects: [downloadedTranslation], writeOption: nil, getOption: nil)
-                .map { _ in
-                    return [downloadedTranslation]
-                }
-                .eraseToAnyPublisher()
-        }
-        else {
-            
-            return Just([downloadedTranslation])
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
+        _ = try await persistence.writeObjectsAsync(
+            externalObjects: [downloadedTranslation],
+            writeOption: nil,
+            getOption: nil
+        )
+        
+        return [downloadedTranslation]
     }
 }
 

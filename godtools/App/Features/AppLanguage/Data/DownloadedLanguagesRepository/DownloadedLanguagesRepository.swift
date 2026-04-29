@@ -34,7 +34,7 @@ final class DownloadedLanguagesRepository {
         do {
             return try cache.persistence.getDataModel(id: languageId)
         }
-        catch let error {
+        catch _ {
             return nil
         }
     }

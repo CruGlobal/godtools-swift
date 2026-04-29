@@ -90,15 +90,24 @@ final class ResourcesRepository {
     }
     
     func getFeaturedLessonsPublisher(sorted: Bool = false) -> AnyPublisher<[ResourceDataModel], Error> {
-        return cache.getFeaturedLessonsPublisher(sorted: sorted)
+        
+        return AnyPublisher() {
+            try await self.cache.getFeaturedLessons(sorted: sorted)
+        }
     }
     
     func getResourceVariantsPublisher(resourceId: String) -> AnyPublisher<[ResourceDataModel], Error> {
-        return cache.getResourceVariantsPublisher(resourceId: resourceId)
+        
+        return AnyPublisher() {
+            try await self.cache.getResourceVariants(resourceId: resourceId)
+        }
     }
     
     func getLessonsPublisher(filterByLanguageId: String? = nil, sorted: Bool = false) -> AnyPublisher<[ResourceDataModel], Error> {
-        return cache.getLessonsPublisher(filterByLanguageId: filterByLanguageId, sorted: sorted)
+        
+        return AnyPublisher() {
+            try await self.cache.getLessons(filterByLanguageId: filterByLanguageId, sorted: sorted)
+        }
     }
     
     func getLessonsCount(filterByLanguageId: String? = nil) -> Int {

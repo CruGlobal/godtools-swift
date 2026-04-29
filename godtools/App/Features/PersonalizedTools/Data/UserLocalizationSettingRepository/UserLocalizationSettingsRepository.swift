@@ -12,7 +12,7 @@ import RepositorySync
 
 final class UserLocalizationSettingsRepository {
 
-    static let sharedUserId: String = "user"
+    private static let sharedUserId: String = "user"
     
     private let cache: UserLocalizationSettingsCache
 
@@ -35,7 +35,7 @@ final class UserLocalizationSettingsRepository {
             .eraseToAnyPublisher()
     }
 
-    func setCountryPublisher(isoRegionCode: String) -> AnyPublisher<UserLocalizationSettingsDataModel, Error> {
+    func storeUserCountry(isoRegionCode: String) async throws {
 
         let dataModel = UserLocalizationSettingsDataModel(
             id: Self.sharedUserId,
@@ -43,15 +43,16 @@ final class UserLocalizationSettingsRepository {
             selectedCountryIsoRegionCode: isoRegionCode
         )
         
-        return cache.storeUserLocalizationSetting(dataModel: dataModel)
-            .map { _ in
-                return dataModel
-            }
-            .eraseToAnyPublisher()
+        try await cache.storeUserLocalizationSetting(dataModel: dataModel)
     }
 
     func getUserLocalizationSettingPublisher() -> AnyPublisher<UserLocalizationSettingsDataModel?, Error> {
         
-        return cache.getUserLocalizationSettingPublisher(id: Self.sharedUserId)
+        return persistence
+            .getDataModelsPublisher(getOption: .object(id: Self.sharedUserId))
+            .map {
+                $0.first
+            }
+            .eraseToAnyPublisher()
     }
 }

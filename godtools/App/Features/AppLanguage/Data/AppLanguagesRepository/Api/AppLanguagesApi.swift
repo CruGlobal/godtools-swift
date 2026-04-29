@@ -8,7 +8,6 @@
 
 import Foundation
 import RepositorySync
-import Combine
 
 final class AppLanguagesApi {
     
@@ -16,7 +15,7 @@ final class AppLanguagesApi {
         
     }
     
-    private func getAppLanguages() -> [AppLanguageCodable] {
+    private func getAppLanguagesList() -> [AppLanguageCodable] {
         
         let allAppLanguages: [AppLanguageCodable] = [
             AppLanguageCodable(languageCode: "af", languageDirection: .leftToRight, languageScriptCode: nil),
@@ -48,10 +47,7 @@ final class AppLanguagesApi {
         return allAppLanguages
     }
     
-    func getAppLanguagesPublisher() -> AnyPublisher<[AppLanguageCodable], Error> {
-        
-        return Just(getAppLanguages())
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
+    func getAppLanguages() async throws -> [AppLanguageCodable] {
+        return getAppLanguagesList()
     }
 }

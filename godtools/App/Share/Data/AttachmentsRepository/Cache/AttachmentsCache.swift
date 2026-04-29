@@ -50,7 +50,7 @@ extension AttachmentsCache {
         let cachedAttachment: AttachmentDataModel?
         
         if #available(iOS 17.4, *), let swiftDatabase = swiftDatabase {
-            let swiftAttachment: SwiftAttachment? = swiftDatabase.read.objectNonThrowing(context: swiftDatabase.openContext(), id: id)
+            let swiftAttachment: SwiftAttachment? = try swiftDatabase.read.object(context: swiftDatabase.openContext(), id: id)
             cachedAttachment = swiftAttachment?.toModel()
         }
         else if let realmDatabase = realmDatabase {

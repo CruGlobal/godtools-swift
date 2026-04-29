@@ -24,31 +24,26 @@ final class AppLanguagesRepositorySync: AppLanguagesRepositorySyncInterface {
     }
     
     func syncPublisher() -> AnyPublisher<Void, Error> {
-
-        guard syncInvalidator.shouldSync else {
-            return Just(Void())
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
+        return AnyPublisher() {
+            try await self.sync()
         }
-                
-        return api
-            .getAppLanguagesPublisher()
-            .flatMap({ (appLanguages: [AppLanguageCodable]) -> AnyPublisher<Void, Error> in
-                
-                return self.persistence
-                    .writeObjectsPublisher(
-                        externalObjects: appLanguages,
-                        writeOption: nil,
-                        getOption: nil
-                    )
-                    .map { _ in
-                        
-                        self.syncInvalidator.didSync()
-                        
-                        return ()
-                    }
-                    .eraseToAnyPublisher()
-            })
-            .eraseToAnyPublisher()
+    }
+    
+    private func sync() async throws {
+        
+        guard syncInvalidator.shouldSync else {
+            return
+        }
+        
+        let appLanguages: [AppLanguageCodable] = try await api.getAppLanguages()
+        
+        _ = try await persistence
+            .writeObjectsAsync(
+                externalObjects: appLanguages,
+                writeOption: nil,
+                getOption: nil
+            )
+        
+        syncInvalidator.didSync()
     }
 }
