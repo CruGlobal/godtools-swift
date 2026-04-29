@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class GetLocalizationSettingsConfirmationStringsUseCase {
+final class GetLocalizationSettingsConfirmationStringsUseCase {
 
     private let localizationServices: LocalizationServicesInterface
 
