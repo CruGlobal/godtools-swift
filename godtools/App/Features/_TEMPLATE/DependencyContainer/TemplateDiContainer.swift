@@ -1,6 +1,6 @@
 import Foundation
 
-class TemplateDiContainer {
+final class TemplateDiContainer {
         
     private let dataLayer: TemplateDataLayerDependencies
     

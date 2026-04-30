@@ -10,18 +10,22 @@ import Foundation
 import RepositorySync
 import Combine
 
-final class FavoritedResourcesRepository: RepositorySync<FavoritedResourceDataModel, NoExternalDataFetch<FavoritedResourceDataModel>> {
+final class FavoritedResourcesRepository {
     
-    let cache: FavoritedResourcesCache
+    private let cache: FavoritedResourcesCache
     
-    init(persistence: any Persistence<FavoritedResourceDataModel, FavoritedResourceDataModel>, cache: FavoritedResourcesCache) {
+    init(cache: FavoritedResourcesCache) {
         
         self.cache = cache
-        
-        super.init(
-            externalDataFetch: NoExternalDataFetch<FavoritedResourceDataModel>(),
-            persistence: persistence
-        )
+    }
+    
+    var persistence: any Persistence<FavoritedResourceDataModel, FavoritedResourceDataModel> {
+        return cache.persistence
+    }
+    
+    @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Error> {
+        return persistence
+            .observeCollectionChangesPublisher()
     }
 
     func getResourceIsFavorited(id: String) -> Bool {
@@ -34,6 +38,10 @@ final class FavoritedResourcesRepository: RepositorySync<FavoritedResourceDataMo
         catch _ {
             return false
         }
+    }
+    
+    func getFavoritedResourcesSortedByPosition() async throws -> [FavoritedResourceDataModel] {
+        return try await cache.getFavoritedResourcesSortedByPosition()
     }
     
     func getFavoritedResourcesSortedByPositionPublisher() -> AnyPublisher<[FavoritedResourceDataModel], Error> {

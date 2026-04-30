@@ -397,15 +397,14 @@ extension GetUserAccountDetailsUseCaseTests {
             dataModelMapping: RealmUserDetailsMapping()
         )
         
-        let api = UserDetailsAPI(
+        let api = UserDetailsApi(
             config: testsDiContainer.dataLayer.getAppConfig(),
             urlSessionPriority: testsDiContainer.dataLayer.getSharedUrlSessionPriority(),
             mobileContentApiAuthSession: testsDiContainer.dataLayer.getMobileContentApiAuthSession()
         )
         
         let userDetailsRepository = UserDetailsRepository(
-            externalDataFetch: api,
-            persistence: userDetailsPersistence,
+            api: api,
             cache: UserDetailsCache(
                 persistence: userDetailsPersistence,
                 authTokenRepository: authTokenRepository

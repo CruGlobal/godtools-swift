@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PersonalizedToolsDomainLayerDependencies {
+final class PersonalizedToolsDomainLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     private let dataLayer: PersonalizedToolsDataLayerDependencies
@@ -68,7 +68,7 @@ class PersonalizedToolsDomainLayerDependencies {
 
         return GetPersonalizedLessonsUseCase(
             resourcesRepository: coreDataLayer.getResourcesRepository(),
-            personalizedLessonsRepository: dataLayer.getPersonalizedLessonsRepository(),
+            personalizedToolsRepository: dataLayer.getPersonalizedToolsRepository(),
             getLanguageElseAppLanguage: coreDomainlayer.supporting.getLanguageElseAppLanguage(),
             lessonProgressRepository: coreDataLayer.getUserLessonProgressRepository(),
             getLessonsListItems: coreDomainlayer.supporting.getLessonsListItems(),

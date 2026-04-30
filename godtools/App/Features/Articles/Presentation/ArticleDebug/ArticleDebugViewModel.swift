@@ -8,7 +8,8 @@
 
 import UIKit
 
-@MainActor class ArticleDebugViewModel: ObservableObject {
+@MainActor
+final class ArticleDebugViewModel: ObservableObject {
     
     private let article: ArticleDomainModel
     

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct PersonalizedLessonsUnavailableDomainModel {
+struct PersonalizedLessonsUnavailableDomainModel: Sendable {
 
     let title: String
     let message: String

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class LessonSwipeTutorialDiContainer {
+final class LessonSwipeTutorialDiContainer {
     
     let dataLayer: LessonSwipeTutorialDataLayerDependencies
     let domainlayer: LessonSwipeTutorialDomainLayerDependencies

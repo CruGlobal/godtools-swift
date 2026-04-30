@@ -9,7 +9,8 @@
 import Foundation
 import Combine
 
-@MainActor class ShareToolQRCodeViewModel: ObservableObject {
+@MainActor
+final class ShareToolQRCodeViewModel: ObservableObject {
     
     private let getShareToolQRCodeStringsUseCase: GetShareToolQRCodeStringsUseCase
     

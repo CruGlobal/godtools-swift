@@ -25,11 +25,11 @@ final class GetDownloadedLanguagesListUseCase {
     @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[DownloadedLanguageListItemDomainModel], Error> {
         
         return Publishers.CombineLatest(
-            languagesRepository.observeDataModelsPublisher(
-                getObjectsType: .allObjects,
-                cachePolicy: .returnCacheDataElseFetch,
-                context: RequestOperationFetchContext(requestPriority: .high)
-            ),
+            languagesRepository
+                .observeCollectionChangesPublisher()
+                .flatMap {
+                    return self.languagesRepository.getLanguagesPublisher()
+                },
             downloadedLanguagesRepository
                 .getDownloadedLanguagesChangedPublisher()
                 .setFailureType(to: Error.self)
@@ -37,8 +37,9 @@ final class GetDownloadedLanguagesListUseCase {
         .flatMap { (languages: [LanguageDataModel], downloadLanguagesChanged: Void) -> AnyPublisher<[DownloadedLanguageDataModel], Error> in
             
             return self.downloadedLanguagesRepository
-                .getDownloadedLanguagesPublisher(completedDownloadsOnly: true)
-                .setFailureType(to: Error.self)
+                .getDownloadedLanguagesByDownloadCompletePublisher(
+                    downloadComplete: true
+                )
                 .eraseToAnyPublisher()
         }
         .flatMap { (downloadedLanguageDataModels: [DownloadedLanguageDataModel]) -> AnyPublisher<[LanguageDataModel], Error> in
@@ -46,8 +47,7 @@ final class GetDownloadedLanguagesListUseCase {
             let downloadedLanguageIds: [String] = downloadedLanguageDataModels.map { $0.languageId }
             
             return self.languagesRepository
-                .persistence
-                .getDataModelsPublisher(getOption: .objectsByIds(ids: downloadedLanguageIds))
+                .getLanguagesByIdsPublisher(ids: downloadedLanguageIds)
                 .eraseToAnyPublisher()
         }
         .map { (languages: [LanguageDataModel]) in

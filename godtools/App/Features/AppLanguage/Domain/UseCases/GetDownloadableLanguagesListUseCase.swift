@@ -32,11 +32,11 @@ final class GetDownloadableLanguagesListUseCase {
     @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[DownloadableLanguageListItemDomainModel], Error> {
         
         return Publishers.CombineLatest(
-            languagesRepository.observeDataModelsPublisher(
-                getObjectsType: .allObjects,
-                cachePolicy: .returnCacheDataElseFetch,
-                context: RequestOperationFetchContext(requestPriority: .high)
-            ),
+            languagesRepository
+                .observeCollectionChangesPublisher()
+                .flatMap {
+                    return self.languagesRepository.getLanguagesPublisher()
+                },
             downloadedLanguagesRepository
                 .getDownloadedLanguagesChangedPublisher()
                 .setFailureType(to: Error.self)

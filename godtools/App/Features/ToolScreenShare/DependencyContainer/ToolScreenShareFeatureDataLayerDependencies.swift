@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import RepositorySync
 
-class ToolScreenShareFeatureDataLayerDependencies {
+final class ToolScreenShareFeatureDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     
@@ -18,9 +19,27 @@ class ToolScreenShareFeatureDataLayerDependencies {
     }
         
     func getToolScreenShareTutorialViewsRepository() -> ToolScreenShareTutorialViewsRepository {
+        
+        let persistence: any Persistence<ToolScreenShareTutorialViewDataModel, ToolScreenShareTutorialViewDataModel>
+        
+        if #available(iOS 17.4, *), let database = coreDataLayer.getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                dataModelMapping: SwiftToolScreenShareTutorialViewMapping()
+            )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                database: coreDataLayer.getSharedRealmDatabase(),
+                dataModelMapping: RealmToolScreenShareTutorialViewMapping()
+            )
+        }
+        
         return ToolScreenShareTutorialViewsRepository(
-            cache: RealmToolScreenShareTutorialViewsCache(
-                realmDatabase: coreDataLayer.getSharedLegacyRealmDatabase()
+            cache: ToolScreenShareTutorialViewsCache(
+                persistence: persistence
             )
         )
     }

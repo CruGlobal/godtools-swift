@@ -23,7 +23,7 @@ final class RealmEmailSignUpsCache {
         return try getEmailSignUp(email: email)?.isRegistered ?? false
     }
     
-    func getEmailSignUp(email: String) throws -> EmailSignUp? {
+    func getEmailSignUp(email: String) throws -> EmailSignUpDataModel? {
         
         let realm = try realmDatabase.openRealm()
         
@@ -34,7 +34,7 @@ final class RealmEmailSignUpsCache {
         return realmEmailSignUp.toModel()
     }
     
-    func getEmailSignUps() throws -> [EmailSignUp] {
+    func getEmailSignUps() throws -> [EmailSignUpDataModel] {
         let realm: Realm = try realmDatabase.openRealm()
         let realmEmailSignUps: [RealmEmailSignUp] = Array(realm.objects(RealmEmailSignUp.self))
         return realmEmailSignUps.map({ $0.toModel() })
@@ -47,20 +47,11 @@ final class RealmEmailSignUpsCache {
             switch result {
             case .success(let realm):
                 
-                let realmEmailSignUp: RealmEmailSignUp
-                
-                if let existingRealmEmailSignUp = realm.object(ofType: RealmEmailSignUp.self, forPrimaryKey: emailSignUp.email) {
-                    realmEmailSignUp = existingRealmEmailSignUp
-                }
-                else {
-                    realmEmailSignUp = RealmEmailSignUp()
-                }
-                
-                realmEmailSignUp.mapFrom(model: emailSignUp)
-                
+                let realmEmailSignUp = RealmEmailSignUp.createNewFrom(model: emailSignUp.toModel(id: emailSignUp.email))
+                                
                 do {
                     try realm.write {
-                        realm.add(realmEmailSignUp, update: .all)
+                        realm.add(realmEmailSignUp, update: .modified)
                     }
                 }
                 catch let error {

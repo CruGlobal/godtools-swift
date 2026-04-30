@@ -13,7 +13,7 @@ import UIKit
 import RepositorySync
 import Combine
 
-class ResourcesSHA256FileCache {
+final class ResourcesSHA256FileCache {
     
     private static let rootDirectoryName: String = "godtools_resources_files"
     
@@ -76,7 +76,7 @@ class ResourcesSHA256FileCache {
         
         _ = try fileCache.storeFile(location: fileCacheLocation, data: fileData)
         
-        let storedResult: StoreResourcesFilesResult = try await realmCreateStoredFileRelationshipsToAttachment(
+        _ = try await realmCreateStoredFileRelationshipsToAttachment(
             attachmentId: attachmentId,
             location: fileCacheLocation
         )
@@ -211,7 +211,7 @@ class ResourcesSHA256FileCache {
         
         _ = try fileCache.storeFile(location: fileCacheLocation, data: fileData)
         
-        let storedResult: StoreResourcesFilesResult = try await realmCreateStoredFileRelationshipsToTranslation(
+        _ = try await realmCreateStoredFileRelationshipsToTranslation(
             translationId: translationId,
             fileCacheLocations: [fileCacheLocation]
         )
@@ -225,7 +225,7 @@ class ResourcesSHA256FileCache {
         
         _ = try fileCache.storeFile(location: fileCacheLocation, data: fileData)
         
-        let storedResult: StoreResourcesFilesResult = try realmCreateStoredFileRelationshipsToTranslation(
+        _ = try realmCreateStoredFileRelationshipsToTranslation(
             realm: realm,
             translationId: translationId,
             fileCacheLocations: [fileCacheLocation]
@@ -260,7 +260,7 @@ class ResourcesSHA256FileCache {
         
         let fileCacheLocations: [FileCacheLocation] = try fileCache.decompressZipFileAndStoreFileContents(zipFileData: zipFileData)
         
-        let storedResult: StoreResourcesFilesResult = try await realmCreateStoredFileRelationshipsToTranslation(
+        _ = try await realmCreateStoredFileRelationshipsToTranslation(
             translationId: translationId,
             fileCacheLocations: fileCacheLocations
         )
@@ -272,7 +272,7 @@ class ResourcesSHA256FileCache {
         
         let fileCacheLocations: [FileCacheLocation] = try fileCache.decompressZipFileAndStoreFileContents(zipFileData: zipFileData)
         
-        let storedResult: StoreResourcesFilesResult = try realmCreateStoredFileRelationshipsToTranslation(
+        _ = try realmCreateStoredFileRelationshipsToTranslation(
             realm: realm,
             translationId: translationId,
             fileCacheLocations: fileCacheLocations

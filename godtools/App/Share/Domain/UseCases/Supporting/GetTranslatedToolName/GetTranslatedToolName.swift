@@ -8,7 +8,7 @@
 
 import Foundation
 
-class GetTranslatedToolName {
+final class GetTranslatedToolName {
     
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
@@ -21,7 +21,7 @@ class GetTranslatedToolName {
     
     func getToolName(toolId: String, translateInLanguage: BCP47LanguageIdentifier) -> String {
         
-        guard let resource = resourcesRepository.persistence.getDataModelNonThrowing(id: toolId) else {
+        guard let resource = resourcesRepository.getResource(id: toolId) else {
             return ""
         }
         
@@ -30,11 +30,11 @@ class GetTranslatedToolName {
     
     func getToolName(resource: ResourceDataModel, translateInLanguage: BCP47LanguageIdentifier) -> String {
         
-        if let languageTranslation = translationsRepository.cache.getLatestTranslation(resourceId: resource.id, languageCode: translateInLanguage) {
+        if let languageTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: translateInLanguage) {
             
             return languageTranslation.translatedName
         }
-        else if let defaultLanguageTranslation = translationsRepository.cache.getLatestTranslation(resourceId: resource.id, languageCode: resource.attrDefaultLocale) {
+        else if let defaultLanguageTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: resource.attrDefaultLocale) {
             
             return defaultLanguageTranslation.translatedName
         }

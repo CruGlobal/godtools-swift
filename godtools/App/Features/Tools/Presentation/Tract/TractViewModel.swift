@@ -10,10 +10,9 @@ import UIKit
 import GodToolsShared
 import Combine
 
-class TractViewModel: MobileContentRendererViewModel {
-    
-    private static var backgroundCancellables: Set<AnyCancellable> = Set()
-    
+@MainActor
+final class TractViewModel: MobileContentRendererViewModel {
+        
     static let isLiveShareStreamingKey: String = "TractViewModel.isLiveShareStreamKey"
     
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
@@ -154,14 +153,12 @@ class TractViewModel: MobileContentRendererViewModel {
         
         subscribeToLiveShareStreamIfNeeded()
         
-        resourceViewsService
-            .postNewResourceViewPublisher(resourceId: resource.id, requestPriority: .medium)
-            .sink { _ in
-                
-            } receiveValue: { _ in
-                
-            }
-            .store(in: &Self.backgroundCancellables)
+        Task {
+            try await resourceViewsService.postNewResourceView(
+                resourceId: resource.id,
+                requestPriority: .medium
+            )
+        }
     }
     
     private func trackLanguageTapped(tappedLanguage: LanguageDataModel) {
@@ -418,7 +415,7 @@ extension TractViewModel {
             super.setRendererPrimaryLanguage(
                 primaryLanguageId: primaryLanguageId,
                 parallelLanguageId: parallelLanguageId,
-                selectedLanguageId: languagesRepository.cache.getCachedLanguage(code: remoteShareSelectedLocale)?.id
+                selectedLanguageId: languagesRepository.getLanguage(code: remoteShareSelectedLocale)?.id
             )
         }
         else {
@@ -438,10 +435,10 @@ extension TractViewModel {
         let attributes = remoteShareNavigationEvent.message?.data?.attributes
                 
         if let primaryLocale = attributes?.primaryLocale, !primaryLocale.isEmpty {
-            return languagesRepository.cache.getCachedLanguage(code: primaryLocale)?.id
+            return languagesRepository.getLanguage(code: primaryLocale)?.id
         }
         else if let locale = attributes?.locale, !locale.isEmpty {
-            return languagesRepository.cache.getCachedLanguage(code: locale)?.id
+            return languagesRepository.getLanguage(code: locale)?.id
         }
         
         return nil
@@ -452,7 +449,7 @@ extension TractViewModel {
         let attributes = remoteShareNavigationEvent.message?.data?.attributes
                 
         if let parallelLocale = attributes?.parallelLocale, !parallelLocale.isEmpty {
-            return languagesRepository.cache.getCachedLanguage(code: parallelLocale)?.id
+            return languagesRepository.getLanguage(code: parallelLocale)?.id
         }
         
         return nil

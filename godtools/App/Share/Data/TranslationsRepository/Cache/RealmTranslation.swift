@@ -30,6 +30,9 @@ class RealmTranslation: Object, IdentifiableRealmObject {
     override static func primaryKey() -> String? {
         return "id"
     }
+}
+
+extension RealmTranslation {
     
     func mapFrom(model: TranslationDataModel) {
         
@@ -52,9 +55,6 @@ class RealmTranslation: Object, IdentifiableRealmObject {
         realmTranslation.mapFrom(model: model)
         return realmTranslation
     }
-}
-
-extension RealmTranslation {
     
     func toModel() -> TranslationDataModel {
         return TranslationDataModel(

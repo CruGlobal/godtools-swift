@@ -11,12 +11,12 @@ import GodToolsShared
 import Combine
 import RequestOperation
 
-class ArticleManifestAemRepository: ArticleAemRepository {
+final class ArticleManifestAemRepository: ArticleAemRepository {
     
-    private let categoryArticlesCache: RealmCategoryArticlesCache
+    private let categoryArticlesCache: CategoryArticlesCache
     private let syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface
         
-    init(downloader: ArticleAemDownloader, cache: ArticleAemCache, categoryArticlesCache: RealmCategoryArticlesCache, syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface) {
+    init(downloader: ArticleAemDownloader, cache: ArticleAemCache, categoryArticlesCache: CategoryArticlesCache, syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface) {
         
         self.categoryArticlesCache = categoryArticlesCache
         self.syncInvalidatorPersistence = syncInvalidatorPersistence
@@ -29,15 +29,11 @@ class ArticleManifestAemRepository: ArticleAemRepository {
         return prefix + translationId
     }
     
-    func getCategoryArticles(categoryId: String, languageCode: String) -> [CategoryArticleModel] {
+    func getCategoryArticlesPublisher(categoryId: String, languageCode: String) -> AnyPublisher<[CategoryArticleModel], Error> {
         
-        return categoryArticlesCache.getCategoryArticles(categoryId: categoryId, languageCode: languageCode)
-    }
-    
-    func getCategoryArticlesPublisher(categoryId: String, languageCode: String) -> AnyPublisher<[CategoryArticleModel], Never> {
-        
-        return categoryArticlesCache.getCategoryArticlesPublisher(categoryId: categoryId, languageCode: languageCode)
-            .eraseToAnyPublisher()
+        return AnyPublisher() {
+            try await self.categoryArticlesCache.getCategoryArticles(categoryId: categoryId, languageCode: languageCode)
+        }
     }
     
     func downloadAndCacheManifestAemUrisPublisher(manifest: Manifest, translationId: String, languageCode: String, downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority, forceFetchFromRemote: Bool = false) -> AnyPublisher<ArticleAemRepositoryResult, Never> {

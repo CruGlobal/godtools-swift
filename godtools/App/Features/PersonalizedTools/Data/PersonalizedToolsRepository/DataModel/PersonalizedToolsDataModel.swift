@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct PersonalizedToolsDataModel {
+struct PersonalizedToolsDataModel: Sendable {
 
     let id: String
     let updatedAt: Date

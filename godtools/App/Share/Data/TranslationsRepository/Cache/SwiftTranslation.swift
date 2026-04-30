@@ -38,49 +38,32 @@ enum SwiftTranslationV1 {
         init() {
             
         }
-        
-        func mapFrom(model: TranslationDataModel) {
-            id = model.id
-            isPublished = model.isPublished
-            manifestName = model.manifestName
-            toolDetailsBibleReferences = model.toolDetailsBibleReferences
-            toolDetailsConversationStarters = model.toolDetailsConversationStarters
-            toolDetailsOutline = model.toolDetailsOutline
-            translatedDescription = model.translatedDescription
-            translatedName = model.translatedName
-            translatedTagline = model.translatedTagline
-            type = model.type
-            version = model.version
-        }
-        
-        static func createNewFrom(model: TranslationDataModel) -> SwiftTranslation {
-            let translation = SwiftTranslation()
-            translation.mapFrom(model: model)
-            return translation
-        }
-        
-        var resourceDataModel: ResourceDataModel? {
-            
-            guard let swiftResource = resource else {
-                return nil
-            }
-            
-            return swiftResource.toModel()
-        }
-        
-        var languageDataModel: LanguageDataModel? {
-            
-            guard let swiftLanguage = language else {
-                return nil
-            }
-            
-            return swiftLanguage.toModel()
-        }
     }
 }
 
 @available(iOS 17.4, *)
 extension SwiftTranslation {
+    
+    func mapFrom(model: TranslationDataModel) {
+        id = model.id
+        isPublished = model.isPublished
+        manifestName = model.manifestName
+        toolDetailsBibleReferences = model.toolDetailsBibleReferences
+        toolDetailsConversationStarters = model.toolDetailsConversationStarters
+        toolDetailsOutline = model.toolDetailsOutline
+        translatedDescription = model.translatedDescription
+        translatedName = model.translatedName
+        translatedTagline = model.translatedTagline
+        type = model.type
+        version = model.version
+    }
+    
+    static func createNewFrom(model: TranslationDataModel) -> SwiftTranslation {
+        let translation = SwiftTranslation()
+        translation.mapFrom(model: model)
+        return translation
+    }
+    
     func toModel() -> TranslationDataModel {
         return TranslationDataModel(
             id: id,
@@ -97,6 +80,24 @@ extension SwiftTranslation {
             type: type,
             version: version
         )
+    }
+    
+    var resourceDataModel: ResourceDataModel? {
+        
+        guard let swiftResource = resource else {
+            return nil
+        }
+        
+        return swiftResource.toModel()
+    }
+    
+    var languageDataModel: LanguageDataModel? {
+        
+        guard let swiftLanguage = language else {
+            return nil
+        }
+        
+        return swiftLanguage.toModel()
     }
 }
 

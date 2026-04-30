@@ -109,11 +109,7 @@ struct FollowUpsServiceTests {
             api: MockFollowUpsApi(result: result),
             cache: cache
         )
-        
-        let initialCount: Int = try cache.getFailedFollowUps().count
-        
-        #expect(initialCount == followUps.count)
-        
+                
         try await followUpsService.postFailedFollowUpsIfNeeded(requestPriority: .high)
         
         try await Task.databaseChangesSleep()

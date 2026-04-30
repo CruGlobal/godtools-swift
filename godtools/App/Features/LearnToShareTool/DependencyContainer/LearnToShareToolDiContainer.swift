@@ -8,7 +8,7 @@
 
 import Foundation
 
-class LearnToShareToolDiContainer {
+final class LearnToShareToolDiContainer {
     
     let dataLayer: LearnToShareToolDataLayerDependencies
     let domainLayer: LearnToShareToolDomainLayerDependencies

@@ -657,7 +657,7 @@ extension MobileContentRendererViewModel {
             let language: LanguageDataModel = pageRenderer.language
             let currentTranslation: TranslationDataModel = pageRenderer.translation
             
-            guard let latestTranslation = translationsRepository.cache.getLatestTranslation(resourceId: resource.id, languageId: language.id) else {
+            guard let latestTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageId: language.id) else {
                 continue
             }
             
@@ -696,7 +696,7 @@ extension MobileContentRendererViewModel {
                     let updatedManifest: Manifest
                     let updatedTranslation: TranslationDataModel
                     
-                    if let latestTranslation = self?.translationsRepository.cache.getLatestTranslation(resourceId: resource.id, languageId: language.id), latestTranslation.version > currentTranslation.version, let manifestFileDataModel = manifestFileDataModels.filter({$0.translation.id == latestTranslation.id}).first {
+                    if let latestTranslation = self?.translationsRepository.getLatestTranslation(resourceId: resource.id, languageId: language.id), latestTranslation.version > currentTranslation.version, let manifestFileDataModel = manifestFileDataModels.filter({$0.translation.id == latestTranslation.id}).first {
                         
                         updatedManifest = manifestFileDataModel.manifest
                         updatedTranslation = manifestFileDataModel.translation

@@ -191,7 +191,7 @@ class RealmResourcesCacheSync {
                             return true
                         }
                         
-                        let latestTrackedDownloadedTranslation: DownloadedTranslationDataModel? = self.trackDownloadedTranslationsRepository.cache.getLatestDownloadedTranslation(resourceId: resourceId, languageId: languageId)
+                        let latestTrackedDownloadedTranslation: DownloadedTranslationDataModel? = self.trackDownloadedTranslationsRepository.getLatestDownloadedTranslation(resourceId: resourceId, languageId: languageId)
                         
                         let translationIsLatestDownloadedTranslation: Bool = latestTrackedDownloadedTranslation?.translationId == $0.id
                         

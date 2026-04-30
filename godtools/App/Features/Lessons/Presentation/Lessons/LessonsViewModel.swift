@@ -10,7 +10,8 @@ import Foundation
 import Combine
 import SwiftUI
 
-@MainActor class LessonsViewModel: ObservableObject {
+@MainActor
+final class LessonsViewModel: ObservableObject {
         
     private let pullToRefreshLessonsUseCase: PullToRefreshLessonsUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase

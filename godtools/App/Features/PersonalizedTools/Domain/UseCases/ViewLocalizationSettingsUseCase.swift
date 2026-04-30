@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class ViewLocalizationSettingsUseCase {
+final class ViewLocalizationSettingsUseCase {
     
     private let localizationServices: LocalizationServicesInterface
     

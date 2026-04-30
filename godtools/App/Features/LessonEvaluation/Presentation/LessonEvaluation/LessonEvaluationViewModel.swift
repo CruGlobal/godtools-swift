@@ -9,7 +9,8 @@
 import Foundation
 import Combine
 
-@MainActor class LessonEvaluationViewModel: ObservableObject {
+@MainActor
+final class LessonEvaluationViewModel: ObservableObject {
     
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
         

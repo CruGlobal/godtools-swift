@@ -9,7 +9,8 @@
 import Foundation
 import Combine
 
-class ShareToolViewModel {
+@MainActor
+final class ShareToolViewModel {
         
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     

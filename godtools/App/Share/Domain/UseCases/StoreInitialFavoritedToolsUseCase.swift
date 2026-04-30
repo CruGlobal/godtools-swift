@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class StoreInitialFavoritedToolsUseCase {
+final class StoreInitialFavoritedToolsUseCase {
     
     private let favoritedResourcesRepository: FavoritedResourcesRepository
     

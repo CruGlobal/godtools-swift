@@ -9,45 +9,58 @@
 import Foundation
 import Combine
 
-class ToolScreenShareTutorialViewsRepository {
+final class ToolScreenShareTutorialViewsRepository {
     
-    private let cache: RealmToolScreenShareTutorialViewsCache
+    private let cache: ToolScreenShareTutorialViewsCache
     
-    init(cache: RealmToolScreenShareTutorialViewsCache) {
+    init(cache: ToolScreenShareTutorialViewsCache) {
         
         self.cache = cache
     }
     
-    func getToolScreenShareTutorialViewPublisher(id: String) -> AnyPublisher<ToolScreenShareTutorialViewDataModel?, Never> {
+    func getToolScreenShareTutorialView(id: String) -> ToolScreenShareTutorialViewDataModel? {
         
-        let cachedToolScreenShareView = cache.getToolScreenShareView(id: id)
-        
-        return Just(cachedToolScreenShareView)
-            .eraseToAnyPublisher()
+        do {
+            return try cache.persistence.getDataModel(id: id)
+        }
+        catch _ {
+            return nil
+        }
     }
     
-    func incrementNumberOfViewsPublisher(id: String, incrementNumberOfViewsBy: Int) -> AnyPublisher<Void, Error> {
+    private func incrementNumberOfViews(id: String, incrementNumberOfViewsBy: Int) async throws {
         
-        let currentNumberOfViews: Int
+        let updateToolScreenShare: ToolScreenShareTutorialViewDataModel
+        let newNumberOfViews: Int
         
-        if let existingToolScreenShareView = cache.getToolScreenShareView(id: id) {
-            currentNumberOfViews = existingToolScreenShareView.numberOfViews
+        let currentToolScreenShare: ToolScreenShareTutorialViewDataModel? = try cache.persistence.getDataModel(id: id)
+        
+        if let currentToolScreenShare = currentToolScreenShare {
+            
+            newNumberOfViews = currentToolScreenShare.numberOfViews + incrementNumberOfViewsBy
+            
+            updateToolScreenShare = currentToolScreenShare.copy(numberOfViews: newNumberOfViews)
         }
         else {
-            currentNumberOfViews = 0
+            
+            newNumberOfViews = incrementNumberOfViewsBy
+            
+            updateToolScreenShare = ToolScreenShareTutorialViewDataModel(
+                id: id,
+                numberOfViews: newNumberOfViews
+            )
         }
         
-        let newNumberOfViews: Int = currentNumberOfViews + incrementNumberOfViewsBy
-        
-        let error: Error? = cache.setToolScreenShareNumberOfViews(id: id, numberOfViews: newNumberOfViews)
-        
-        if let error = error {
-            return Fail(error: error)
-                .eraseToAnyPublisher()
-        }
-        else {
-            return Just(Void()).setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
+        _ = try await cache.persistence.writeObjectsAsync(
+            externalObjects: [updateToolScreenShare],
+            writeOption: nil,
+            getOption: nil
+        )
+    }
+    
+    func incrementNumberOfViewsPublisher(id: String, incrementNumberOfViewsBy: Int = 1) -> AnyPublisher<Void, Error> {
+        return AnyPublisher() {
+            try await self.incrementNumberOfViews(id: id, incrementNumberOfViewsBy: incrementNumberOfViewsBy)
         }
     }
 }

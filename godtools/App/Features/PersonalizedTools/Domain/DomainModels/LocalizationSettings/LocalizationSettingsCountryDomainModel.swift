@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LocalizationSettingsCountryDomainModel {
+struct LocalizationSettingsCountryDomainModel: Sendable {
 
     let isoRegionCode: String
     let countryNameTranslatedInOwnLanguage: String

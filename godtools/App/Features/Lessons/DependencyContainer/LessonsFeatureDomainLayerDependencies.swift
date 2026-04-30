@@ -8,7 +8,7 @@
 
 import Foundation
 
-class LessonsFeatureDomainLayerDependencies {
+final class LessonsFeatureDomainLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     private let dataLayer: LessonsFeatureDataLayerDependencies
@@ -40,7 +40,7 @@ class LessonsFeatureDomainLayerDependencies {
     func getPullToRefreshLessonsUseCase() -> PullToRefreshLessonsUseCase {
         return PullToRefreshLessonsUseCase(
             resourcesRepository: coreDataLayer.getResourcesRepository(),
-            personalizedLessonsRepository: personalizedToolsDataLayer.getPersonalizedLessonsRepository(),
+            personalizedToolsRepository: personalizedToolsDataLayer.getPersonalizedToolsRepository(),
             getLanguageElseAppLanguage: coreDomainlayer.supporting.getLanguageElseAppLanguage()
         )
     }

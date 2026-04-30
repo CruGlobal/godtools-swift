@@ -213,7 +213,7 @@ extension GetLanguageSettingsStringsUseCaseTests {
         
         let persistence = RealmRepositorySyncPersistence(
             database: realmDatabase,
-            dataModelMapping: RealmAppLanguageDataModelMapping()
+            dataModelMapping: RealmAppLanguageMapping()
         )
         
         let appLanguages: [AppLanguageCodable] = getAppLanguages()
@@ -226,11 +226,10 @@ extension GetLanguageSettingsStringsUseCaseTests {
         let api = AppLanguagesApi()
         
         let appLanguagesRepository = AppLanguagesRepository(
-            externalDataFetch: api,
-            persistence: persistence,
+            api: api,
+            cache: AppLanguagesCache(persistence: persistence),
             sync: mockAppLanguagesSync
         )
-        
         
         let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
             LanguageCodeDomainModel.english.value: [

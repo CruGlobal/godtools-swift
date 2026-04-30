@@ -8,21 +8,26 @@
 
 import Foundation
 
-class LessonEvaluationRepository {
+final class LessonEvaluationRepository {
     
-    private let cache: LessonEvaluationRealmCache
+    private let cache: LessonEvaluationCache
     
-    init(cache: LessonEvaluationRealmCache) {
+    init(cache: LessonEvaluationCache) {
         
         self.cache = cache
     }
     
     func getLessonEvaluation(lessonId: String) -> LessonEvaluationDataModel? {
         
-        return cache.getLessonEvaluation(lessonId: lessonId)
+        do {
+            return try cache.persistence.getDataModel(id: lessonId)
+        }
+        catch _ {
+            return nil
+        }
     }
     
-    func storeLessonEvaluation(lesson: ResourceDataModel, lessonEvaluated: Bool) {
+    func storeLessonEvaluation(lesson: ResourceDataModel, lessonEvaluated: Bool) async throws {
                 
         let cachedLessonIsEvaluated: Bool
         let numberOfAttempts: Int
@@ -46,14 +51,21 @@ class LessonEvaluationRepository {
             lessonIsEvaluated = lessonEvaluated
         }
         
+        let id: String = lesson.id
+        
         let lessonEvaluation = LessonEvaluationDataModel(
+            id: id,
             lastEvaluationAttempt: Date(),
             lessonAbbreviation: lesson.abbreviation,
             lessonEvaluated: lessonIsEvaluated,
-            lessonId: lesson.id,
+            lessonId: id,
             numberOfEvaluationAttempts: numberOfAttempts
         )
         
-        cache.storeLessonEvaluation(lessonEvaluation: lessonEvaluation, completion: nil)
+        _ = try await cache.persistence.writeObjectsAsync(
+            externalObjects: [lessonEvaluation],
+            writeOption: nil,
+            getOption: nil
+        )
     }
 }

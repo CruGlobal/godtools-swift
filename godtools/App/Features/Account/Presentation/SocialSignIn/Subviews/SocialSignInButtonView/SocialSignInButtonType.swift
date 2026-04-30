@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum SocialSignInButtonType {
+enum SocialSignInButtonType: Sendable {
     case google
     case facebook
     case apple

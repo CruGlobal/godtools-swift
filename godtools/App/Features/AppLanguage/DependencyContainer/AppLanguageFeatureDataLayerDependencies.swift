@@ -9,7 +9,7 @@
 import Foundation
 import RepositorySync
 
-class AppLanguageFeatureDataLayerDependencies {
+final class AppLanguageFeatureDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     
@@ -26,14 +26,14 @@ class AppLanguageFeatureDataLayerDependencies {
             
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftAppLanguageDataModelMapping()
+                dataModelMapping: SwiftAppLanguageMapping()
             )
         }
         else {
             
             persistence = RealmRepositorySyncPersistence(
                 database: coreDataLayer.getSharedRealmDatabase(),
-                dataModelMapping: RealmAppLanguageDataModelMapping()
+                dataModelMapping: RealmAppLanguageMapping()
             )
         }
         
@@ -52,14 +52,38 @@ class AppLanguageFeatureDataLayerDependencies {
         )
         
         return AppLanguagesRepository(
-            externalDataFetch: api,
-            persistence: persistence,
+            api: api,
+            cache: AppLanguagesCache(
+                persistence: persistence
+            ),
             sync: sync
         )
     }
     
     func getDownloadedLanguagesRepository() -> DownloadedLanguagesRepository {
-        return DownloadedLanguagesRepository(cache: getRealmDownloadedLanguagesCache())
+        
+        let persistence: any Persistence<DownloadedLanguageDataModel, DownloadedLanguageDataModel>
+        
+        if #available(iOS 17.4, *), let database = coreDataLayer.getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                dataModelMapping: SwiftDownloadedLanguageMapping()
+            )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                database: coreDataLayer.getSharedRealmDatabase(),
+                dataModelMapping: RealmDownloadedLanguageMapping()
+            )
+        }
+        
+        return DownloadedLanguagesRepository(
+            cache: DownloadedLanguagesCache(
+                persistence: persistence
+            )
+        )
     }
     
     func getToolLanguageDownloader() -> ToolLanguageDownloader {
@@ -71,10 +95,6 @@ class AppLanguageFeatureDataLayerDependencies {
         )
     }
     
-    private func getRealmDownloadedLanguagesCache() -> RealmDownloadedLanguagesCache {
-        return RealmDownloadedLanguagesCache(realmDatabase: coreDataLayer.getSharedLegacyRealmDatabase())
-    }
-    
     func getUserAppLanguageRepository() -> UserAppLanguageRepository {
         
         let persistence: any Persistence<UserAppLanguageDataModel, UserAppLanguageDataModel>
@@ -83,14 +103,14 @@ class AppLanguageFeatureDataLayerDependencies {
             
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftUserAppLanguageDataModelMapping()
+                dataModelMapping: SwiftUserAppLanguageMapping()
             )
         }
         else {
             
             persistence = RealmRepositorySyncPersistence(
                 database: coreDataLayer.getSharedRealmDatabase(),
-                dataModelMapping: RealmUserAppLanguageDataModelMapping()
+                dataModelMapping: RealmUserAppLanguageMapping()
             )
         }
         

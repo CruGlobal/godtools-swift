@@ -12,9 +12,10 @@ import Combine
 
 class AttachmentsCache {
     
-    private let persistence: any Persistence<AttachmentDataModel, AttachmentCodable>
     private let resourcesFileCache: ResourcesSHA256FileCache
     private let bundle: AttachmentsBundleCache
+    
+    let persistence: any Persistence<AttachmentDataModel, AttachmentCodable>
     
     init(persistence: any Persistence<AttachmentDataModel, AttachmentCodable>, resourcesFileCache: ResourcesSHA256FileCache, bundle: AttachmentsBundleCache) {
         
@@ -24,20 +25,20 @@ class AttachmentsCache {
     }
     
     @available(iOS 17.4, *)
-    var swiftDatabase: SwiftDatabase? {
+    private var swiftDatabase: SwiftDatabase? {
         return getSwiftPersistence()?.database
     }
     
     @available(iOS 17.4, *)
-    func getSwiftPersistence() -> SwiftRepositorySyncPersistence<AttachmentDataModel, AttachmentCodable, SwiftAttachment>? {
+    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<AttachmentDataModel, AttachmentCodable, SwiftAttachment>? {
         return persistence as? SwiftRepositorySyncPersistence<AttachmentDataModel, AttachmentCodable, SwiftAttachment>
     }
     
-    var realmDatabase: RealmDatabase? {
+    private var realmDatabase: RealmDatabase? {
         return getRealmPersistence()?.database
     }
     
-    func getRealmPersistence() -> RealmRepositorySyncPersistence<AttachmentDataModel, AttachmentCodable, RealmAttachment>? {
+    private func getRealmPersistence() -> RealmRepositorySyncPersistence<AttachmentDataModel, AttachmentCodable, RealmAttachment>? {
         return persistence as? RealmRepositorySyncPersistence<AttachmentDataModel, AttachmentCodable, RealmAttachment>
     }
 }
@@ -49,10 +50,12 @@ extension AttachmentsCache {
         let cachedAttachment: AttachmentDataModel?
         
         if #available(iOS 17.4, *), let swiftDatabase = swiftDatabase {
-            let swiftAttachment: SwiftAttachment? = swiftDatabase.read.objectNonThrowing(context: swiftDatabase.openContext(), id: id)
+            let swiftAttachment: SwiftAttachment? = try swiftDatabase.read.object(context: swiftDatabase.openContext(), id: id)
             cachedAttachment = swiftAttachment?.toModel()
         }
-        else if let realmDatabase = realmDatabase, let realm = realmDatabase.openRealmNonThrowing() {
+        else if let realmDatabase = realmDatabase {
+            
+            let realm = try realmDatabase.openRealm()
             let realmAttachment: RealmAttachment? = realmDatabase.read.object(realm: realm, id: id)
             cachedAttachment = realmAttachment?.toModel()
         }

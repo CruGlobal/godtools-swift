@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ToolsResultDomainModel {
+struct ToolsResultDomainModel: Sendable {
 
     let tools: [ToolListItemDomainModel]
     let unavailableStrings: PersonalizedToolsUnavailableDomainModel?

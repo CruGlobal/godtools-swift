@@ -11,9 +11,9 @@ import RepositorySync
 import SwiftData
 import RealmSwift
 
-class FavoritedResourcesCache {
+final class FavoritedResourcesCache {
     
-    private let persistence: any Persistence<FavoritedResourceDataModel, FavoritedResourceDataModel>
+    let persistence: any Persistence<FavoritedResourceDataModel, FavoritedResourceDataModel>
     
     init(persistence: any Persistence<FavoritedResourceDataModel, FavoritedResourceDataModel>) {
                 
@@ -21,20 +21,20 @@ class FavoritedResourcesCache {
     }
     
     @available(iOS 17.4, *)
-    var swiftDatabase: SwiftDatabase? {
+    private var swiftDatabase: SwiftDatabase? {
         return getSwiftPersistence()?.database
     }
     
     @available(iOS 17.4, *)
-    func getSwiftPersistence() -> SwiftRepositorySyncPersistence<FavoritedResourceDataModel, FavoritedResourceDataModel, SwiftFavoritedResource>? {
+    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<FavoritedResourceDataModel, FavoritedResourceDataModel, SwiftFavoritedResource>? {
         return persistence as? SwiftRepositorySyncPersistence<FavoritedResourceDataModel, FavoritedResourceDataModel, SwiftFavoritedResource>
     }
     
-    var realmDatabase: RealmDatabase? {
+    private var realmDatabase: RealmDatabase? {
         return getRealmPersistence()?.database
     }
     
-    func getRealmPersistence() -> RealmRepositorySyncPersistence<FavoritedResourceDataModel, FavoritedResourceDataModel, RealmFavoritedResource>? {
+    private func getRealmPersistence() -> RealmRepositorySyncPersistence<FavoritedResourceDataModel, FavoritedResourceDataModel, RealmFavoritedResource>? {
         return persistence as? RealmRepositorySyncPersistence<FavoritedResourceDataModel, FavoritedResourceDataModel, RealmFavoritedResource>
     }
 }

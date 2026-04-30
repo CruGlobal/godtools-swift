@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ArticleCategory {
+struct ArticleCategory: Sendable {
     
     let aemTags: [String]
     let id: String

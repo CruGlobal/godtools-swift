@@ -10,10 +10,11 @@ import Foundation
 import RepositorySync
 import Combine
 
-class UserDetailsCache {
+final class UserDetailsCache {
         
-    private let persistence: any Persistence<UserDetailsDataModel, MobileContentApiUsersMeCodable>
     private let authTokenRepository: MobileContentAuthTokenRepository
+    
+    let persistence: any Persistence<UserDetailsDataModel, MobileContentApiUsersMeCodable>
     
     init(persistence: any Persistence<UserDetailsDataModel, MobileContentApiUsersMeCodable>, authTokenRepository: MobileContentAuthTokenRepository) {
                 
@@ -22,20 +23,20 @@ class UserDetailsCache {
     }
     
     @available(iOS 17.4, *)
-    var swiftDatabase: SwiftDatabase? {
+    private var swiftDatabase: SwiftDatabase? {
         return getSwiftPersistence()?.database
     }
     
     @available(iOS 17.4, *)
-    func getSwiftPersistence() -> SwiftRepositorySyncPersistence<UserDetailsDataModel, MobileContentApiUsersMeCodable, SwiftUserDetails>? {
+    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<UserDetailsDataModel, MobileContentApiUsersMeCodable, SwiftUserDetails>? {
         return persistence as? SwiftRepositorySyncPersistence<UserDetailsDataModel, MobileContentApiUsersMeCodable, SwiftUserDetails>
     }
     
-    var realmDatabase: RealmDatabase? {
+    private var realmDatabase: RealmDatabase? {
         return getRealmPersistence()?.database
     }
     
-    func getRealmPersistence() -> RealmRepositorySyncPersistence<UserDetailsDataModel, MobileContentApiUsersMeCodable, RealmUserDetails>? {
+    private func getRealmPersistence() -> RealmRepositorySyncPersistence<UserDetailsDataModel, MobileContentApiUsersMeCodable, RealmUserDetails>? {
         return persistence as? RealmRepositorySyncPersistence<UserDetailsDataModel, MobileContentApiUsersMeCodable, RealmUserDetails>
     }
 }

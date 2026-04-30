@@ -42,7 +42,8 @@ enum ProductionSwiftDataSchemaV1: VersionedSchema {
             SwiftUserToolSettingsV1.SwiftUserToolSettings.self,
             SwiftUserLessonLanguageFilterV1.SwiftUserLessonLanguageFilter.self,
             SwiftDownloadedLanguageV1.SwiftDownloadedLanguage.self,
-            SwiftUserDetailsV1.SwiftUserDetails.self
+            SwiftUserDetailsV1.SwiftUserDetails.self,
+            SwiftSHA256FileV1.SwiftSHA256File.self
         ]
     }
 }

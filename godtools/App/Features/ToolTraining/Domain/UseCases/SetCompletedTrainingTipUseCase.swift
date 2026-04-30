@@ -20,19 +20,24 @@ final class SetCompletedTrainingTipUseCase {
     
     func execute(tip: TrainingTipDomainModel) -> AnyPublisher<TrainingTipDomainModel, Error>  {
         
-        let trainingTipDataModel = CompletedTrainingTipDataModel(trainingTipDomainModel: tip)
+        let trainingTipDataModel = CompletedTrainingTipDataModel(
+            id: tip.trainingTipId,
+            trainingTipId: tip.trainingTipId,
+            languageId: tip.languageId,
+            resourceId: tip.resourceId
+        )
         
         return repository
-            .storeCompletedTrainingTip(trainingTipDataModel)
-            .flatMap { completedTrainingTipDataModel in
+            .storeCompletedTrainingTipPublisher(
+                completedTrainingTip: trainingTipDataModel
+            )
+            .map { (completedTrainingTipDataModel: CompletedTrainingTipDataModel) in
                 
-                let domainModel = TrainingTipDomainModel(
+                return TrainingTipDomainModel(
                     trainingTipId: completedTrainingTipDataModel.trainingTipId,
                     resourceId: completedTrainingTipDataModel.resourceId,
                     languageId: completedTrainingTipDataModel.languageId
                 )
-                
-                return Just(domainModel)
             }
             .eraseToAnyPublisher()
     }

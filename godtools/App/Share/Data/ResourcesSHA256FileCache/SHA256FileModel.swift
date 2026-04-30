@@ -8,16 +8,10 @@
 
 import Foundation
 
-struct SHA256FileModel: SHA256FileModelType {
+struct SHA256FileModel: Sendable {
     
+    let id: String
     let sha256WithPathExtension: String
     let attachments: [AttachmentDataModel]
     let translations: [TranslationDataModel]
-    
-    init(realmSHA256File: RealmSHA256File) {
-        
-        sha256WithPathExtension = realmSHA256File.sha256WithPathExtension
-        attachments = Array(realmSHA256File.attachments).map({ $0.toModel() })
-        translations = Array(realmSHA256File.translations).map({ $0.toModel() })
-    }
 }

@@ -27,23 +27,23 @@ enum SwiftUserLocalizationSettingsV1 {
         init() {
             
         }
-        
-        func mapFrom(model: UserLocalizationSettingsDataModel) {
-            createdAt = model.createdAt
-            selectedCountryIsoRegionCode = model.selectedCountryIsoRegionCode
-            id = model.id
-        }
-        
-        static func createNewFrom(model: UserLocalizationSettingsDataModel) -> SwiftUserLocalizationSettings {
-            let object = SwiftUserLocalizationSettings()
-            object.mapFrom(model: model)
-            return object
-        }
     }
 }
 
 @available(iOS 17.4, *)
 extension SwiftUserLocalizationSettings {
+    
+    func mapFrom(model: UserLocalizationSettingsDataModel) {
+        createdAt = model.createdAt
+        selectedCountryIsoRegionCode = model.selectedCountryIsoRegionCode
+        id = model.id
+    }
+    
+    static func createNewFrom(model: UserLocalizationSettingsDataModel) -> SwiftUserLocalizationSettings {
+        let object = SwiftUserLocalizationSettings()
+        object.mapFrom(model: model)
+        return object
+    }
     
     func toModel() -> UserLocalizationSettingsDataModel {
         UserLocalizationSettingsDataModel(

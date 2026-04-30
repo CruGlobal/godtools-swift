@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class ToolLanguageDownloader {
+final class ToolLanguageDownloader {
     
     private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository
@@ -26,7 +26,7 @@ class ToolLanguageDownloader {
     
     func downloadToolLanguagePublisher(languageId: String) -> AnyPublisher<ToolDownloaderDataModel, Error> {
         
-        guard let languageModel = languagesRepository.persistence.getDataModelNonThrowing(id: languageId) else {
+        guard let languageModel = languagesRepository.getLanguage(id: languageId) else {
             
             let error: Error = NSError.errorWithDomain(domain: "ToolLanguageDownloader", code: -1, description: "Internal Error in ToolLanguageDownloader.  Failed to fetch language with language id: \(languageId)")
             
@@ -50,9 +50,14 @@ class ToolLanguageDownloader {
     
     func syncDownloadedLanguagesPublisher() -> AnyPublisher<Void, Error> {
         
-        downloadedLanguagesRepository.markAllDownloadsAsCompleted()
-        
-        return downloadedLanguagesRepository.getDownloadedLanguagesPublisher(completedDownloadsOnly: true)
+        Task {
+            try await downloadedLanguagesRepository.markAllDownloadsAsCompleted()
+        }
+                
+        return downloadedLanguagesRepository
+            .getDownloadedLanguagesByDownloadCompletePublisher(
+                downloadComplete: true
+            )
             .flatMap({ (downloadedLanguages: [DownloadedLanguageDataModel]) -> AnyPublisher<Void, Error> in
                                          
                 let downloadToolLanguageRequests: [AnyPublisher<ToolDownloaderDataModel, Error>] = downloadedLanguages.map({

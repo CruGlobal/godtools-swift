@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class DownloadLatestToolsForFavoritedToolsUseCase {
+final class DownloadLatestToolsForFavoritedToolsUseCase {
     
     private let favoritedResourcesRepository: FavoritedResourcesRepository
     private let resourcesRepository: ResourcesRepository
@@ -26,10 +26,8 @@ class DownloadLatestToolsForFavoritedToolsUseCase {
         
         return Publishers.CombineLatest(
             resourcesRepository
-                .persistence
                 .observeCollectionChangesPublisher(),
             favoritedResourcesRepository
-                .persistence
                 .observeCollectionChangesPublisher()
         )
         .flatMap { (resourcesChanged: Void, favoritedResourcesChanged: Void) -> AnyPublisher<[FavoritedResourceDataModel], Error> in

@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import RepositorySync
 
-class LessonEvaluationFeatureDataLayerDependencies {
+final class LessonEvaluationFeatureDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     
@@ -18,8 +19,28 @@ class LessonEvaluationFeatureDataLayerDependencies {
     }
         
     func getLessonEvaluationRepository() -> LessonEvaluationRepository {
+        
+        let persistence: any Persistence<LessonEvaluationDataModel, LessonEvaluationDataModel>
+        
+        if #available(iOS 17.4, *), let database = coreDataLayer.getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                dataModelMapping: SwiftLessonEvaluationMapping()
+            )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                database: coreDataLayer.getSharedRealmDatabase(),
+                dataModelMapping: RealmLessonEvaluationMapping()
+            )
+        }
+        
         return LessonEvaluationRepository(
-            cache: LessonEvaluationRealmCache(realmDatabase: coreDataLayer.getSharedLegacyRealmDatabase())
+            cache: LessonEvaluationCache(
+                persistence: persistence
+            )
         )
     }
     

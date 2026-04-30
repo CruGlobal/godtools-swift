@@ -26,7 +26,6 @@ final class GetAllLessonsUseCase {
 
         return Publishers.CombineLatest(
             resourcesRepository
-                .persistence
                 .observeCollectionChangesPublisher(),
             lessonProgressRepository
                 .getLessonProgressChangedPublisher()
@@ -35,7 +34,6 @@ final class GetAllLessonsUseCase {
         .flatMap({ (resourcesDidChange: Void, lessonProgressDidChange: Void) -> AnyPublisher<[LessonListItemDomainModel], Error> in
 
             return self.resourcesRepository
-                .cache
                 .getLessonsPublisher(filterByLanguageId: filterLessonsByLanguage?.languageId, sorted: true)
                 .tryMap { (lessons: [ResourceDataModel]) in
 

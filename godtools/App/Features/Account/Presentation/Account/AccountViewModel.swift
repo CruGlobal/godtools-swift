@@ -11,7 +11,8 @@ import Combine
 import SwiftUI
 import GodToolsShared
 
-@MainActor class AccountViewModel: ObservableObject {
+@MainActor
+final class AccountViewModel: ObservableObject {
     
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase
@@ -97,11 +98,13 @@ import GodToolsShared
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (domainModels: [GlobalActivityDomainModel]) in
+            .sink(receiveCompletion: { [weak self] _ in
+                self?.isLoadingGlobalActivityThisWeek = false
+            }, receiveValue: { [weak self] (domainModels: [GlobalActivityDomainModel]) in
                 
                 self?.isLoadingGlobalActivityThisWeek = false
                 self?.globalActivitiesThisWeek = domainModels
-            }
+            })
             .store(in: &cancellables)
         
         Publishers.CombineLatest(

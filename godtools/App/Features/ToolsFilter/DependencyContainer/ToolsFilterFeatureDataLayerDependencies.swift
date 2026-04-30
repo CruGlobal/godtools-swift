@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import RepositorySync
 
-class ToolsFilterFeatureDataLayerDependencies {
+final class ToolsFilterFeatureDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     
@@ -18,9 +19,39 @@ class ToolsFilterFeatureDataLayerDependencies {
     }
         
     func getUserToolFiltersRepository() -> UserToolFiltersRepository {
+        
+        let categoryPersistence: any Persistence<UserToolCategoryFilterDataModel, UserToolCategoryFilterDataModel>
+        let languagePersistence: any Persistence<UserToolLanguageFilterDataModel, UserToolLanguageFilterDataModel>
+        
+        if #available(iOS 17.4, *), let database = coreDataLayer.getSharedSwiftDatabase() {
+            
+            categoryPersistence = SwiftRepositorySyncPersistence(
+                database: database,
+                dataModelMapping: SwiftUserToolCategoryFilterMapping()
+            )
+            
+            languagePersistence = SwiftRepositorySyncPersistence(
+                database: database,
+                dataModelMapping: SwiftUserToolLanguageFilterMapping()
+            )
+        }
+        else {
+            
+            categoryPersistence = RealmRepositorySyncPersistence(
+                database: coreDataLayer.getSharedRealmDatabase(),
+                dataModelMapping: RealmUserToolCategoryFilterMapping()
+            )
+            
+            languagePersistence = RealmRepositorySyncPersistence(
+                database: coreDataLayer.getSharedRealmDatabase(),
+                dataModelMapping: RealmUserToolLanguageFilterMapping()
+            )
+        }
+        
         return UserToolFiltersRepository(
-            cache: RealmUserToolFiltersCache(
-                realmDatabase: coreDataLayer.getSharedLegacyRealmDatabase()
+            cache: UserToolFiltersCache(
+                categoryPersistence: categoryPersistence,
+                languagePersistence: languagePersistence
             )
         )
     }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class LessonSwipeTutorialViewedUserDefaultsCache {
+final class LessonSwipeTutorialViewedUserDefaultsCache {
     
     private let userDefaultsCache: UserDefaultsCacheInterface
     private let lessonSwipeTutorialViewedKey: String = "lessonSwipeTutorialViewed"

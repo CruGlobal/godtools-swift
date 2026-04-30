@@ -21,13 +21,7 @@ final class GetCurrentAppLanguageUseCase {
     @MainActor func execute() -> AnyPublisher<AppLanguageDomainModel, Never> {
                 
         return userAppLanguageRepository
-            .cache
-            .persistence
             .observeCollectionChangesPublisher()
-            .catch { (error: Error) in
-                return Just(Void())
-                    .eraseToAnyPublisher()
-            }
             .flatMap({ (userAppLanguageChanged: Void) -> AnyPublisher<UserAppLanguageDataModel?, Never> in
               
                 return self.userAppLanguageRepository

@@ -28,3 +28,27 @@ enum SwiftToolScreenTutorialShareViewV1 {
         }
     }
 }
+
+@available(iOS 17.4, *)
+extension SwiftToolScreenTutorialShareView {
+    
+    func mapFrom(model: ToolScreenShareTutorialViewDataModel) {
+        
+        id = model.id
+        numberOfViews = model.numberOfViews
+    }
+    
+    static func createNewFrom(model: ToolScreenShareTutorialViewDataModel) -> SwiftToolScreenTutorialShareView {
+        
+        let object = SwiftToolScreenTutorialShareView()
+        object.mapFrom(model: model)
+        return object
+    }
+ 
+    func toModel() -> ToolScreenShareTutorialViewDataModel {
+        return ToolScreenShareTutorialViewDataModel(
+            id: id,
+            numberOfViews: numberOfViews
+        )
+    }
+}

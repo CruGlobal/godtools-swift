@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct FavoritedResourceDataModel {
+struct FavoritedResourceDataModel: Sendable {
     
     let id: String
     let createdAt: Date

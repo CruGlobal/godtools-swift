@@ -8,20 +8,15 @@
 
 import Foundation
 
-struct ToolScreenShareTutorialViewDataModel {
+struct ToolScreenShareTutorialViewDataModel: Sendable {
     
     let id: String
     let numberOfViews: Int
     
-    init(id: String, numberOfViews: Int) {
-        
-        self.id = id
-        self.numberOfViews = numberOfViews
-    }
-    
-    init(realmToolScreenShareView: RealmToolScreenShareTutorialView) {
-            
-        self.id = realmToolScreenShareView.id
-        self.numberOfViews = realmToolScreenShareView.numberOfViews
+    func copy(numberOfViews: Int? = nil) -> ToolScreenShareTutorialViewDataModel {
+        return ToolScreenShareTutorialViewDataModel(
+            id: id,
+            numberOfViews: numberOfViews ?? self.numberOfViews
+        )
     }
 }

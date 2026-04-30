@@ -8,8 +8,9 @@
 
 import Foundation
 
-struct LessonEvaluationDataModel {
+struct LessonEvaluationDataModel: Sendable {
     
+    let id: String
     let lastEvaluationAttempt: Date
     let lessonAbbreviation: String
     let lessonEvaluated: Bool

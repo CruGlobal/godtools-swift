@@ -38,7 +38,7 @@ final class GetToolSettingsToolLanguagesListUseCase {
         
         let languageIds: [String]
         
-        if let resource = resourcesRepository.persistence.getDataModelNonThrowing(id: toolId) {
+        if let resource = resourcesRepository.getResource(id: toolId) {
             languageIds = resource.languageIds.filter({
                 !filterOutLanguageIds.contains($0)
             })
@@ -48,8 +48,7 @@ final class GetToolSettingsToolLanguagesListUseCase {
         }
                     
         return languagesRepository
-            .persistence
-            .getDataModelsPublisher(getOption: .objectsByIds(ids: languageIds))
+            .getLanguagesByIdsPublisher(ids: languageIds)
             .map { (languages: [LanguageDataModel]) in
                 
                 let toolSettingsToolLanguages: [ToolSettingsToolLanguageDomainModel] = languages.map { (language: LanguageDataModel) in

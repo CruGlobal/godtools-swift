@@ -11,15 +11,83 @@ import RequestOperation
 import RepositorySync
 import Combine
 
-class LanguagesRepository: RepositorySync<LanguageDataModel, MobileContentLanguagesApi> {
+final class LanguagesRepository {
     
-    let cache: LanguagesCache
+    private let api: MobileContentLanguagesApi
+    private let jsonFileCache: LanguagesJsonFileCache
+    private let cache: LanguagesCache
     
-    init(externalDataFetch: MobileContentLanguagesApi, persistence: any Persistence<LanguageDataModel, LanguageCodable>, cache: LanguagesCache) {
+    init(api: MobileContentLanguagesApi, jsonFileCache: LanguagesJsonFileCache, cache: LanguagesCache) {
         
+        self.api = api
+        self.jsonFileCache = jsonFileCache
         self.cache = cache
+    }
+    
+    var persistence: any Persistence<LanguageDataModel, LanguageCodable> {
+        return cache.persistence
+    }
+    
+    @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Error> {
+        return cache
+            .persistence
+            .observeCollectionChangesPublisher()
+    }
+    
+    func getLanguage(id: String) -> LanguageDataModel? {
+        do {
+            return try cache.persistence.getDataModel(id: id)
+        }
+        catch _ {
+            return nil
+        }
+    }
+    
+    func getLanguage(code: BCP47LanguageIdentifier) -> LanguageDataModel? {
         
-        super.init(externalDataFetch: externalDataFetch, persistence: persistence)
+        do {
+            return try cache.getLanguageByCode(code: code)
+        }
+        catch _ {
+            return nil
+        }
+    }
+    
+    func getLanguagesPublisher(codes: [BCP47LanguageIdentifier]) -> AnyPublisher<[LanguageDataModel], Error> {
+        
+        return AnyPublisher() {
+            try await self.cache.getLanguagesByCodes(codes: codes)
+        }
+    }
+    
+    func getLanguages() async throws -> [LanguageDataModel] {
+        do {
+            return try await cache.persistence.getDataModelsAsync(getOption: .allObjects)
+        }
+        catch _ {
+            return Array()
+        }
+    }
+    
+    func getLanguagesPublisher() -> AnyPublisher<[LanguageDataModel], Error> {
+        return AnyPublisher() {
+            return try await self.getLanguages()
+        }
+    }
+    
+    func getLanguagesByIds(ids: [String]) async throws -> [LanguageDataModel] {
+        do {
+            return try await cache.persistence.getDataModelsAsync(getOption: .objectsByIds(ids: ids))
+        }
+        catch _ {
+            return Array()
+        }
+    }
+    
+    func getLanguagesByIdsPublisher(ids: [String]) -> AnyPublisher<[LanguageDataModel], Error> {
+        return AnyPublisher() {
+            return try await self.getLanguagesByIds(ids: ids)
+        }
     }
 }
 
@@ -27,39 +95,39 @@ class LanguagesRepository: RepositorySync<LanguageDataModel, MobileContentLangua
 
 extension LanguagesRepository {
     
-    func syncLanguagesFromRemote(requestPriority: RequestPriority) -> AnyPublisher<[LanguageDataModel], Error> {
+    func syncLanguagesFromRemote(requestPriority: RequestPriority) async throws -> [LanguageDataModel] {
         
-        return externalDataFetch.getObjectsPublisher(
-            context: RequestOperationFetchContext(requestPriority: requestPriority)
+        let languages: [LanguageCodable] = try await api.getLanguages(requestPriority: requestPriority)
+        
+        return try await cache.persistence.writeObjectsAsync(
+            externalObjects: languages,
+            writeOption: nil,
+            getOption: .allObjects
         )
-        .flatMap { (languages: [LanguageCodable]) in
-            
-            return super.persistence.writeObjectsPublisher(
-                externalObjects: languages,
-                writeOption: .deleteObjectsNotInExternal,
-                getOption: .allObjects
-            )
-            .eraseToAnyPublisher()
-        }
-        .eraseToAnyPublisher()
     }
     
-    func syncLanguagesFromJsonFileCache() -> AnyPublisher<[LanguageDataModel], Error> {
+    func syncLanguagesFromRemotePublisher(requestPriority: RequestPriority) -> AnyPublisher<[LanguageDataModel], Error> {
         
-        return LanguagesJsonFileCache(
-            jsonServices: JsonServices()
-        )
-        .getLanguages()
-        .publisher
-        .flatMap { (languages: [LanguageCodable]) -> AnyPublisher<[LanguageDataModel], Error> in
-            
-            return super.persistence.writeObjectsPublisher(
-                externalObjects: languages,
-                writeOption: nil,
-                getOption: .allObjects
-            )
-            .eraseToAnyPublisher()
+        return AnyPublisher() {
+            return try await self.syncLanguagesFromRemote(requestPriority: requestPriority)
         }
-        .eraseToAnyPublisher()
+    }
+    
+    func syncLanguagesFromJsonFileCache() async throws -> [LanguageDataModel] {
+        
+        let languages: [LanguageCodable] = try jsonFileCache.getLanguages()
+        
+        return try await cache.persistence.writeObjectsAsync(
+            externalObjects: languages,
+            writeOption: nil,
+            getOption: .allObjects
+        )
+    }
+    
+    func syncLanguagesFromJsonFileCachePublisher() -> AnyPublisher<[LanguageDataModel], Error> {
+        
+        return AnyPublisher() {
+            return try await self.syncLanguagesFromJsonFileCache()
+        }
     }
 }

@@ -13,13 +13,24 @@ import RepositorySync
 class RealmFavoritedResource: Object, IdentifiableRealmObject {
     
     @objc dynamic var createdAt: Date = Date()
-    @objc dynamic var id: String = ""
     @objc dynamic var resourceId: String = ""
     @objc dynamic var position: Int = 0
+    
+    @objc dynamic var id: String {
+        get {
+            return resourceId
+        }
+        set {
+            resourceId = newValue
+        }
+    }
     
     override static func primaryKey() -> String? {
         return "resourceId"
     }
+}
+
+extension RealmFavoritedResource {
     
     func mapFrom(model: FavoritedResourceDataModel) {
         
@@ -46,9 +57,6 @@ class RealmFavoritedResource: Object, IdentifiableRealmObject {
         
         return object
     }
-}
-
-extension RealmFavoritedResource {
     
     func toModel() -> FavoritedResourceDataModel {
         return FavoritedResourceDataModel(

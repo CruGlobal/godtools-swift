@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LessonsResultDomainModel {
+struct LessonsResultDomainModel: Sendable {
 
     let lessons: [LessonListItemDomainModel]
     let unavailableStrings: PersonalizedLessonsUnavailableDomainModel?

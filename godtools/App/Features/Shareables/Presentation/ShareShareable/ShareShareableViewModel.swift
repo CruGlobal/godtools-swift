@@ -9,7 +9,8 @@
 import UIKit
 import Combine
 
-class ShareShareableViewModel {
+@MainActor
+final class ShareShareableViewModel {
         
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     

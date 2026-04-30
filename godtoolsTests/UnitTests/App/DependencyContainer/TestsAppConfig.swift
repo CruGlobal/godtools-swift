@@ -14,11 +14,9 @@ import SwiftData
 
 final class TestsAppConfig: AppConfigInterface {
     
-    private let legacyRealmDatabase: LegacyRealmDatabase
     private let realmDatabase: RealmDatabase
     
-    init(legacyRealmDatabase: LegacyRealmDatabase, realmDatabase: RealmDatabase) {
-        self.legacyRealmDatabase = legacyRealmDatabase
+    init(realmDatabase: RealmDatabase) {
         self.realmDatabase = realmDatabase
     }
     
@@ -72,10 +70,6 @@ final class TestsAppConfig: AppConfigInterface {
     
     private func getMobileContentApiBaseUrlByScheme(scheme: String = "https") -> String {
         return "\(scheme)://mobile-content-api.cru.org"
-    }
-    
-    func getLegacyRealmDatabase() -> LegacyRealmDatabase {
-        return legacyRealmDatabase
     }
     
     func getRealmDatabase() -> RealmDatabase {

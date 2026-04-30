@@ -9,27 +9,46 @@
 import Foundation
 import Combine
 
-class CompletedTrainingTipRepository {
+final class CompletedTrainingTipRepository {
     
-    private let cache: RealmCompletedTrainingTipCache
+    private let cache: CompletedTrainingTipCache
     
-    init(cache: RealmCompletedTrainingTipCache) {
+    init(cache: CompletedTrainingTipCache) {
         
         self.cache = cache
     }
     
     func getCompletedTrainingTip(id: String) -> CompletedTrainingTipDataModel? {
         
-        return cache.getCompletedTrainingTip(id: id)
+        do {
+            return try cache.persistence.getDataModel(id: id)
+        }
+        catch _ {
+            return nil
+        }
     }
     
     func getNumberOfCompletedTrainingTips() -> Int {
         
-        return cache.countCompletedTrainingTips()
+        do {
+            return try cache.persistence.getObjectCount()
+        }
+        catch _ {
+            return 0
+        }
     }
     
-    func storeCompletedTrainingTip(_ completedTrainingTip: CompletedTrainingTipDataModel) -> AnyPublisher<CompletedTrainingTipDataModel, Error> {
+    func storeCompletedTrainingTipPublisher(completedTrainingTip: CompletedTrainingTipDataModel) -> AnyPublisher<CompletedTrainingTipDataModel, Error> {
         
-        return cache.storeCompletedTrainingTip(completedTrainingTip: completedTrainingTip)
+        return AnyPublisher() {
+            
+            _ = try await self.cache.persistence.writeObjectsAsync(
+                externalObjects: [completedTrainingTip],
+                writeOption: nil,
+                getOption: nil
+            )
+            
+            return completedTrainingTip
+        }
     }
 }

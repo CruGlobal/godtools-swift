@@ -61,7 +61,7 @@ class MobileContentRendererManifestResourcesCache {
         do {
             return try resourcesFileCache.getUIImage(location: location)
         }
-        catch let error {
+        catch _ {
             print("\n WARNING: Failed to get resource image: \(location.filenameWithPathExtension ?? "")")
             return nil
         }

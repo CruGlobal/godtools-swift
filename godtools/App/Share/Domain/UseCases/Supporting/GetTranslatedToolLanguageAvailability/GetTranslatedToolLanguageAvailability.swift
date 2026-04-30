@@ -8,7 +8,7 @@
 
 import Foundation
 
-class GetTranslatedToolLanguageAvailability {
+final class GetTranslatedToolLanguageAvailability {
     
     static let languageAvailableCheck: String = "✓"
     static let localizedKeyLanguageNotAvailable: String = "lessonCard.languageNotAvailable"
@@ -32,7 +32,7 @@ class GetTranslatedToolLanguageAvailability {
     
     func getTranslatedLanguageAvailability(toolId: String, language: LanguageDataModel, translateInLanguage: AppLanguageDomainModel) -> ToolLanguageAvailabilityDomainModel {
         
-        guard let resource = resourcesRepository.persistence.getDataModelNonThrowing(id: toolId) else {
+        guard let resource = resourcesRepository.getResource(id: toolId) else {
             return failedToDetermineLanguageAvailability
         }
         
@@ -41,7 +41,7 @@ class GetTranslatedToolLanguageAvailability {
     
     func getTranslatedLanguageAvailability(resource: ResourceDataModel, language: AppLanguageDomainModel, translateInLanguage: AppLanguageDomainModel) -> ToolLanguageAvailabilityDomainModel {
         
-        guard let languageModel = languagesRepository.cache.getCachedLanguage(code: language) else {
+        guard let languageModel = languagesRepository.getLanguage(code: language) else {
             return failedToDetermineLanguageAvailability
         }
         
@@ -50,7 +50,7 @@ class GetTranslatedToolLanguageAvailability {
     
     func getTranslatedLanguageAvailability(resource: ResourceDataModel, language: LanguageDataModel, translateInLanguage: AppLanguageDomainModel) -> ToolLanguageAvailabilityDomainModel {
         
-        guard let translateInLanguageModel = languagesRepository.cache.getCachedLanguage(code: translateInLanguage) else {
+        guard let translateInLanguageModel = languagesRepository.getLanguage(code: translateInLanguage) else {
             return failedToDetermineLanguageAvailability
         }
         

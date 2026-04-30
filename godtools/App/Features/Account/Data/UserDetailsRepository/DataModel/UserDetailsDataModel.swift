@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct UserDetailsDataModel {
+struct UserDetailsDataModel: Sendable {
     
     let id: String
     let createdAt: Date?

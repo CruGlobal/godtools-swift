@@ -9,51 +9,93 @@
 import Foundation
 import Combine
 
-class DownloadedLanguagesRepository {
+final class DownloadedLanguagesRepository {
     
-    private let cache: RealmDownloadedLanguagesCache
+    private let cache: DownloadedLanguagesCache
     
-    init(cache: RealmDownloadedLanguagesCache) {
+    init(cache: DownloadedLanguagesCache) {
         
         self.cache = cache
     }
     
     @MainActor func getDownloadedLanguagesChangedPublisher() -> AnyPublisher<Void, Never> {
         
-        return cache.getDownloadedLanguagesChangedPublisher()
-    }
-    
-    func getDownloadedLanguagesPublisher(completedDownloadsOnly: Bool) -> AnyPublisher<[DownloadedLanguageDataModel], Never> {
-        
-        return cache.getDownloadedLanguagesPublisher(completedDownloadsOnly: completedDownloadsOnly)
+        return cache.persistence
+            .observeCollectionChangesPublisher()
+            .catch { _ in
+                return Just(Void())
+                    .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
     }
     
     func getDownloadedLanguage(languageId: String) -> DownloadedLanguageDataModel? {
         
-        return cache.getDownloadedLanguage(languageId: languageId)
+        do {
+            return try cache.persistence.getDataModel(id: languageId)
+        }
+        catch _ {
+            return nil
+        }
     }
     
-    func getDownloadedLanguagePublisher(languageId: String) -> AnyPublisher<DownloadedLanguageDataModel?, Never> {
+    func getDownloadedLanguagesByDownloadCompletePublisher(downloadComplete: Bool) -> AnyPublisher<[DownloadedLanguageDataModel], Error> {
         
-        return cache.getDownloadedLanguagePublisher(languageId: languageId)
+        return AnyPublisher() {
+            try await self.cache.getDownloadedLanguagesByDownloadComplete(downloadComplete: downloadComplete)
+        }
     }
     
-    func storeDownloadedLanguage(languageId: String, downloadComplete: Bool) {
+    func getDownloadedLanguagesPublisher() -> AnyPublisher<[DownloadedLanguageDataModel], Error> {
+        return AnyPublisher() {
+            try await self.cache.persistence.getDataModelsAsync(getOption: .allObjects)
+        }
+    }
+    
+    func storeDownloadedLanguage(languageId: String, downloadComplete: Bool) async throws -> DownloadedLanguageDataModel {
         
-        cache.storeDownloadedLanguage(languageId: languageId, downloadComplete: downloadComplete)
+        let downloadedLanguage = DownloadedLanguageDataModel(
+            id: languageId,
+            createdAt: Date(),
+            languageId: languageId,
+            downloadComplete: downloadComplete
+        )
+        
+        _ = try await cache.persistence.writeObjectsAsync(
+            externalObjects: [downloadedLanguage],
+            writeOption: nil,
+            getOption: nil
+        )
+        
+        return downloadedLanguage
     }
     
     func storeDownloadedLanguagePublisher(languageId: String, downloadComplete: Bool) -> AnyPublisher<DownloadedLanguageDataModel, Error> {
         
-        return cache.storeDownloadedLanguagePublisher(languageId: languageId, downloadComplete: downloadComplete)
+        return AnyPublisher() {
+            try await self.storeDownloadedLanguage(languageId: languageId, downloadComplete: downloadComplete)
+        }
     }
     
     func deleteDownloadedLanguagePublisher(languageId: String) -> AnyPublisher<Void, Error> {
         
-        return cache.deleteDownloadedLanguagePublisher(languageId: languageId)
+        return AnyPublisher() {
+            try self.cache.deleteDownloadedLanguage(languageId: languageId)
+        }
     }
     
-    func markAllDownloadsAsCompleted() {
-        cache.markAllDownloadsAsCompleted()
+    func markAllDownloadsAsCompleted() async throws {
+        
+        let incompleteDownloads: [DownloadedLanguageDataModel] = try await cache.getDownloadedLanguagesByDownloadComplete(downloadComplete: false)
+        
+        let incompleteToCompletedDownloads = incompleteDownloads.map {
+            $0.copy(downloadComplete: true)
+        }
+        
+        _ = try await cache.persistence.writeObjectsAsync(
+            externalObjects: incompleteToCompletedDownloads,
+            writeOption: nil,
+            getOption: nil
+        )
     }
 }

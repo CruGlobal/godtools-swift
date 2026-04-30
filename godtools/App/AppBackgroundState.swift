@@ -86,7 +86,7 @@ import RequestOperation
     private func syncInitialFavoritedTools(resourcesRepository: ResourcesRepository, launchCountRepository: LaunchCountRepositoryInterface, storeInitialFavoritedToolsUseCase: StoreInitialFavoritedToolsUseCase) {
         
         Publishers.CombineLatest(
-            resourcesRepository.persistence.observeCollectionChangesPublisher().prepend(Void()),
+            resourcesRepository.observeCollectionChangesPublisher().prepend(Void()),
             launchCountRepository.getLaunchCountChangedPublisher()
                 .setFailureType(to: Error.self)
         )

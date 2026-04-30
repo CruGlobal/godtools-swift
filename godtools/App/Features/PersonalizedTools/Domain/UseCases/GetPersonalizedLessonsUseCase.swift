@@ -9,19 +9,19 @@
 import Foundation
 import Combine
 
-class GetPersonalizedLessonsUseCase {
+final class GetPersonalizedLessonsUseCase {
 
     private let resourcesRepository: ResourcesRepository
-    private let personalizedLessonsRepository: PersonalizedLessonsRepository
+    private let personalizedToolsRepository: PersonalizedToolsRepository
     private let getLanguageElseAppLanguage: GetLanguageElseAppLanguage
     private let lessonProgressRepository: UserLessonProgressRepository
     private let getLessonsListItems: GetLessonsListItems
     private let localizationServices: LocalizationServicesInterface
 
-    init(resourcesRepository: ResourcesRepository, personalizedLessonsRepository: PersonalizedLessonsRepository, getLanguageElseAppLanguage: GetLanguageElseAppLanguage, lessonProgressRepository: UserLessonProgressRepository, getLessonsListItems: GetLessonsListItems, localizationServices: LocalizationServicesInterface) {
+    init(resourcesRepository: ResourcesRepository, personalizedToolsRepository: PersonalizedToolsRepository, getLanguageElseAppLanguage: GetLanguageElseAppLanguage, lessonProgressRepository: UserLessonProgressRepository, getLessonsListItems: GetLessonsListItems, localizationServices: LocalizationServicesInterface) {
 
         self.resourcesRepository = resourcesRepository
-        self.personalizedLessonsRepository = personalizedLessonsRepository
+        self.personalizedToolsRepository = personalizedToolsRepository
         self.getLanguageElseAppLanguage = getLanguageElseAppLanguage
         self.lessonProgressRepository = lessonProgressRepository
         self.getLessonsListItems = getLessonsListItems
@@ -51,9 +51,9 @@ class GetPersonalizedLessonsUseCase {
     @MainActor private func getPersonalizedLessonsPublisher(countryIsoRegionCode: String?, languageCode: String, appLanguage: AppLanguageDomainModel, filterLessonsByLanguage: LessonFilterLanguageDomainModel?, hasCountry: Bool) -> AnyPublisher<LessonsResultDomainModel, Error> {
 
         return Publishers.CombineLatest3(
-            personalizedLessonsRepository
-                .getPersonalizedLessonsChanged(requestPriority: .high, country: countryIsoRegionCode, language: languageCode),
-            resourcesRepository.persistence
+            personalizedToolsRepository
+                .getPersonalizedToolsChanged(requestPriority: .high, country: countryIsoRegionCode, language: languageCode),
+            resourcesRepository
                 .observeCollectionChangesPublisher(),
             lessonProgressRepository
                 .getLessonProgressChangedPublisher()
@@ -61,10 +61,11 @@ class GetPersonalizedLessonsUseCase {
         )
         .flatMap({ (personalizedLessonsChanged, resourcesChanged, lessonProgressChanged) -> AnyPublisher<[ResourceDataModel], Error> in
 
-            return self.personalizedLessonsRepository
-                .getPersistedPersonalizedLessonsPublisher(
+            return self.personalizedToolsRepository
+                .getPersistedPersonalizedToolsPublisher(
                     country: countryIsoRegionCode,
-                    language: languageCode
+                    language: languageCode,
+                    resourceTypes: [.lesson]
                 )
         })
         .tryMap { (resources: [ResourceDataModel]) in

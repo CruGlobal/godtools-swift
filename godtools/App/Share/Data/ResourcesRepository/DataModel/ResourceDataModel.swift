@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ResourceDataModel {
+struct ResourceDataModel: Sendable {
     
     let abbreviation: String
     let attrAboutBannerAnimation: String

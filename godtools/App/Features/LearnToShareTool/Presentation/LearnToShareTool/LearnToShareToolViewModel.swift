@@ -9,7 +9,8 @@
 import Foundation
 import Combine
 
-@MainActor class LearnToShareToolViewModel: ObservableObject {
+@MainActor
+final class LearnToShareToolViewModel: ObservableObject {
     
     private let toolId: String
     private let toolPrimaryLanguage: AppLanguageDomainModel

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TractRemoteShareNavigationEvent: Codable {
+struct TractRemoteShareNavigationEvent: Codable, Sendable {
     
     let message: TractRemoteShareNavigationEvent.Message?
     let identifier: ActionCableIdentifier?

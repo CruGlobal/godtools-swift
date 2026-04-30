@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum DetermineToolTranslationsResourceNeeded {
+enum DetermineToolTranslationsResourceNeeded: Sendable {
     
     case abbreviation(value: String)
     case id(value: String)

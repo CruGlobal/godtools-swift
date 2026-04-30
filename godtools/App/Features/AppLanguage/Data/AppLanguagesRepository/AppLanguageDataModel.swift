@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct AppLanguageDataModel {
+struct AppLanguageDataModel: Sendable {
     
     let languageCode: String
     let languageDirection: AppLanguageDataModel.Direction

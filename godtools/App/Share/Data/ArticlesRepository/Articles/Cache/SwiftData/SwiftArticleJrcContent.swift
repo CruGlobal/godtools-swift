@@ -32,3 +32,35 @@ enum SwiftArticleJrcContentV1 {
         }
     }
 }
+
+@available(iOS 17.4, *)
+extension SwiftArticleJrcContent {
+    
+    func mapFrom(model: ArticleJcrContent) {
+        
+        id = model.id
+        aemUri = model.aemUri
+        canonical = model.canonical
+        tags = model.tags
+        title = model.title
+        uuid = model.uuid
+    }
+    
+    static func createNewFrom(model: ArticleJcrContent) -> SwiftArticleJrcContent {
+        
+        let object = SwiftArticleJrcContent()
+        object.mapFrom(model: model)
+        return object
+    }
+    
+    func toModel() -> ArticleJcrContent {
+        return ArticleJcrContent(
+            id: id,
+            aemUri: aemUri,
+            canonical: canonical,
+            tags: Array(tags),
+            title: title,
+            uuid: uuid
+        )
+    }
+}

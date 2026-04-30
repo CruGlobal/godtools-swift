@@ -8,23 +8,54 @@
 
 import Foundation
 import RealmSwift
+import RepositorySync
 
-class RealmUserToolSettings: Object {
+class RealmUserToolSettings: Object, IdentifiableRealmObject {
     
     @Persisted var createdAt: Date = Date()
     @Persisted var toolId: String = ""
     @Persisted var primaryLanguageId: String = ""
     @Persisted var parallelLanguageId: String?
     
+    @objc dynamic var id: String {
+        get {
+            return toolId
+        }
+        set {
+            toolId = newValue
+        }
+    }
+    
     override static func primaryKey() -> String? {
         return "toolId"
     }
+}
+
+extension RealmUserToolSettings {
     
-    func mapFrom(dataModel: UserToolSettingsDataModel) {
+    func mapFrom(model: UserToolSettingsDataModel) {
         
-        createdAt = dataModel.createdAt
-        toolId = dataModel.toolId
-        primaryLanguageId = dataModel.primaryLanguageId
-        parallelLanguageId = dataModel.parallelLanguageId
+        id = model.id
+        createdAt = model.createdAt
+        toolId = model.toolId
+        primaryLanguageId = model.primaryLanguageId
+        parallelLanguageId = model.parallelLanguageId
+    }
+    
+    static func createNewFrom(model: UserToolSettingsDataModel) -> RealmUserToolSettings {
+        
+        let object = RealmUserToolSettings()
+        object.mapFrom(model: model)
+        return object
+    }
+ 
+    func toModel() -> UserToolSettingsDataModel {
+        return UserToolSettingsDataModel(
+            id: id,
+            createdAt: createdAt,
+            toolId: toolId,
+            primaryLanguageId: primaryLanguageId,
+            parallelLanguageId: parallelLanguageId
+        )
     }
 }

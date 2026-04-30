@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct DeleteAccountProgressStringsDomainModel {
+struct DeleteAccountProgressStringsDomainModel: Sendable {
     
     let title: String
     

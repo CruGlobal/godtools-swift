@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct PersonalizedToolsUnavailableDomainModel {
+struct PersonalizedToolsUnavailableDomainModel: Sendable {
 
     let title: String
     let message: String

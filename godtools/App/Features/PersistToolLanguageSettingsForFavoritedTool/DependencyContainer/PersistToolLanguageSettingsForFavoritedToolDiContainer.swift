@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PersistToolLanguageSettingsForFavoritedToolDiContainer {
+final class PersistToolLanguageSettingsForFavoritedToolDiContainer {
     
     let dataLayer: PersistToolLanguageSettingsForFavoritedToolDataLayerDependencies
     let domainLayer: PersistToolLanguageSettingsForFavoritedToolDomainLayerDependencies

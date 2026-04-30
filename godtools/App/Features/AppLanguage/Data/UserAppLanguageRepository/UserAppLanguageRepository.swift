@@ -7,17 +7,33 @@
 //
 
 import Foundation
+import RepositorySync
 import Combine
 
-class UserAppLanguageRepository {
+final class UserAppLanguageRepository {
         
     private static let sharedUserId: String = "shared-user-id"
     
-    let cache: UserAppLanguageCache
+    private let cache: UserAppLanguageCache
     
     init(cache: UserAppLanguageCache) {
         
         self.cache = cache
+    }
+    
+    var persistence: any Persistence<UserAppLanguageDataModel, UserAppLanguageDataModel> {
+        return cache.persistence
+    }
+    
+    @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Never> {
+        return cache
+            .persistence
+            .observeCollectionChangesPublisher()
+            .catch { (error: Error) in
+                return Just(Void())
+                    .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
     }
     
     func deleteLanguage() throws {
@@ -27,9 +43,12 @@ class UserAppLanguageRepository {
     
     func getCachedLanguage() -> UserAppLanguageDataModel? {
         
-        let dataModel: UserAppLanguageDataModel? = cache.persistence.getDataModelNonThrowing(id: Self.sharedUserId)
-        
-        return dataModel
+        do {
+            return try persistence.getDataModel(id: Self.sharedUserId)
+        }
+        catch _ {
+            return nil
+        }
     }
     
     func getCachedLanguagePublisher() -> AnyPublisher<UserAppLanguageDataModel?, Error> {
@@ -49,23 +68,24 @@ class UserAppLanguageRepository {
         }
     }
     
-    func storeLanguagePublisher(appLanguageId: BCP47LanguageIdentifier) -> AnyPublisher<Void, Error> {
+    private func storeLanguage(appLanguageId: BCP47LanguageIdentifier) async throws {
         
         let dataModel = UserAppLanguageDataModel(
             id: Self.sharedUserId,
             languageId: appLanguageId
         )
         
-        return cache
-            .persistence
-            .writeObjectsPublisher(
-                externalObjects: [dataModel],
-                writeOption: nil,
-                getOption: nil
-            )
-            .map { _ in
-                return Void()
-            }
-            .eraseToAnyPublisher()
+        _ = try await self.persistence.writeObjectsAsync(
+            externalObjects: [dataModel],
+            writeOption: nil,
+            getOption: nil
+        )
+    }
+    
+    func storeLanguagePublisher(appLanguageId: BCP47LanguageIdentifier) -> AnyPublisher<Void, Error> {
+        
+        return AnyPublisher() {
+            return try await self.storeLanguage(appLanguageId: appLanguageId)
+        }
     }
 }

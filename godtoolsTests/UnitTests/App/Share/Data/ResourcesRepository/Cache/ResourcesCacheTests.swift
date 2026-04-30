@@ -12,7 +12,6 @@ import Foundation
 import RealmSwift
 import SwiftData
 import RepositorySync
-import Combine
 
 @Suite(.serialized)
 struct ResourcesCacheTests {
@@ -27,7 +26,7 @@ struct ResourcesCacheTests {
         
         let realmResourcesCache = try getResourcesCache()
         
-        #expect(realmResourcesCache.getLessonsCount() == expectedLessonCount)
+        #expect(try realmResourcesCache.getLessonsCount(filterByLanguageId: nil) == expectedLessonCount)
     }
     
     @Test()
@@ -44,37 +43,10 @@ struct ResourcesCacheTests {
         ]
                 
         let realmResourcesCache = try getResourcesCache()
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        var lessonsRef: [ResourceDataModel] = Array()
                 
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            realmResourcesCache
-                .getLessonsPublisher(
-                    filterByLanguageId: nil,
-                    sorted: false
-                )
-                .sink { _ in
-                    
-                } receiveValue: { (lessons: [ResourceDataModel]) in
-                    
-                    lessonsRef = lessons
-                           
-                    // When finished be sure to call:
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                }
-                .store(in: &cancellables)
-        }
-        
-        #expect(lessonsRef.map {$0.id}.sorted() == expectedLessonIds)
+        let lessons: [ResourceDataModel] = try await realmResourcesCache.getLessons(filterByLanguageId: nil, sorted: false)
+                
+        #expect(lessons.map {$0.id}.sorted() == expectedLessonIds)
     }
     
     @Test()
@@ -87,36 +59,12 @@ struct ResourcesCacheTests {
         
         let realmResourcesCache = try getResourcesCache()
         
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        var lessonsRef: [ResourceDataModel] = Array()
+        let lessons: [ResourceDataModel] = try await realmResourcesCache.getLessons(
+            filterByLanguageId: getLanguageId(id: spanishLanguageId),
+            sorted: false
+        )
                 
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            realmResourcesCache
-                .getLessonsPublisher(
-                    filterByLanguageId: getLanguageId(id: spanishLanguageId),
-                    sorted: false
-                )
-                .sink { _ in
-                    
-                } receiveValue: { (lessons: [ResourceDataModel]) in
-                    
-                    lessonsRef = lessons
-          
-                    // When finished be sure to call:
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                }
-                .store(in: &cancellables)
-        }
-        
-        #expect(lessonsRef.map {$0.id}.sorted() == expectedLessonIds)
+        #expect(lessons.map {$0.id}.sorted() == expectedLessonIds)
     }
     
     @Test()
@@ -129,36 +77,10 @@ struct ResourcesCacheTests {
         ]
                 
         let realmResourcesCache = try getResourcesCache()
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        var lessonsRef: [ResourceDataModel] = Array()
                 
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            realmResourcesCache
-                .getFeaturedLessonsPublisher(
-                    sorted: false
-                )
-                .sink { _ in
-                    
-                } receiveValue: { (lessons: [ResourceDataModel]) in
-                    
-                    lessonsRef = lessons
-                    
-                    // When finished be sure to call:
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                }
-                .store(in: &cancellables)
-        }
+        let lessons: [ResourceDataModel] = try await realmResourcesCache.getFeaturedLessons(sorted: false)
 
-        #expect(lessonsRef.map {$0.id}.sorted() == expectedLessonIds)
+        #expect(lessons.map {$0.id}.sorted() == expectedLessonIds)
     }
     
     @Test()
@@ -170,7 +92,7 @@ struct ResourcesCacheTests {
         ]
         
         let realmResourcesCache = try getResourcesCache()
-        let realmLessonLanguageIds = realmResourcesCache.getLessonsSupportedLanguageIds()
+        let realmLessonLanguageIds = try realmResourcesCache.getLessonsSupportedLanguageIds()
         
         #expect(realmLessonLanguageIds.sorted() == expectedLanguageIds.sorted())
     }
@@ -196,14 +118,14 @@ extension ResourcesCacheTests {
         
         let persistence = RealmRepositorySyncPersistence(
             database: realmDatabase,
-            dataModelMapping: RealmResourceDataModelMapping()
+            dataModelMapping: RealmResourceMapping()
         )
         
         let trackDownloadedTranslationsRepository = TrackDownloadedTranslationsRepository(
             cache: TrackDownloadedTranslationsCache(
                 persistence: RealmRepositorySyncPersistence(
                     database: realmDatabase,
-                    dataModelMapping: RealmDownloadedTranslationDataModelMapping()
+                    dataModelMapping: RealmDownloadedTranslationMapping()
                 )
             )
         )

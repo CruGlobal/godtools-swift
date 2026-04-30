@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class GetLocalizationSettingsUseCase {
+final class GetLocalizationSettingsUseCase {
 
     private let userLocalizationSettingsRepository: UserLocalizationSettingsRepository
 
@@ -20,12 +20,7 @@ class GetLocalizationSettingsUseCase {
     @MainActor func execute() -> AnyPublisher<UserLocalizationSettingsDomainModel?, Never> {
         
         return userLocalizationSettingsRepository
-            .persistence
             .observeCollectionChangesPublisher()
-            .catch { (error: Error) in
-                return Just(Void())
-                    .eraseToAnyPublisher()
-            }
             .flatMap { (settingsChanged: Void) -> AnyPublisher<UserLocalizationSettingsDomainModel?, Never> in
                 
                 return self.getUserLocalizationSettings()

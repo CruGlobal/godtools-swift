@@ -11,7 +11,7 @@ import RequestOperation
 import RepositorySync
 import Combine
 
-class MobileContentTranslationsApi {
+final class MobileContentTranslationsApi {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let urlSessionPriority: URLSessionPriority
@@ -77,26 +77,5 @@ class MobileContentTranslationsApi {
         return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
             .validate()
             .eraseToAnyPublisher()
-    }
-}
-
-// MARK: - ExternalDataFetchInterface
-
-extension MobileContentTranslationsApi: ExternalDataFetchInterface {
-    
-    func getObject(id: String, context: RequestOperationFetchContext) async throws -> [TranslationCodable] {
-        return Array()
-    }
-    
-    func getObjects(context: RequestOperationFetchContext) async throws -> [TranslationCodable] {
-        return Array()
-    }
-    
-    func getObjectPublisher(id: String, context: RequestOperationFetchContext) -> AnyPublisher<[TranslationCodable], Error> {
-        return emptyResponsePublisher()
-    }
-    
-    func getObjectsPublisher(context: RequestOperationFetchContext) -> AnyPublisher<[TranslationCodable], Error> {
-        return emptyResponsePublisher()
     }
 }

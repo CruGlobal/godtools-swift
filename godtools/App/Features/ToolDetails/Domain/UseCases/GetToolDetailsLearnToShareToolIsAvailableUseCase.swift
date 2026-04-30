@@ -33,7 +33,7 @@ final class GetToolDetailsLearnToShareToolIsAvailableUseCase {
     
     private func getTranslationHasTipsPublisher(toolId: String, language: BCP47LanguageIdentifier?) -> AnyPublisher<Bool, Never> {
         
-        guard let language = language, let translation = translationsRepository.cache.getLatestTranslation(resourceId: toolId, languageCode: language) else {
+        guard let language = language, let translation = translationsRepository.getLatestTranslation(resourceId: toolId, languageCode: language) else {
             return Just(false)
                 .eraseToAnyPublisher()
         }

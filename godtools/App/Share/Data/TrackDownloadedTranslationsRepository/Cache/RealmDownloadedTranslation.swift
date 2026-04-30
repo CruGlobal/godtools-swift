@@ -12,16 +12,27 @@ import RepositorySync
 
 class RealmDownloadedTranslation: Object, IdentifiableRealmObject {
     
-    @objc dynamic var id: String = ""
     @objc dynamic var languageId: String = ""
     @objc dynamic var manifestAndRelatedFilesPersistedToDevice: Bool = false
     @objc dynamic var resourceId: String = ""
     @objc dynamic var translationId: String = ""
     @objc dynamic var version: Int = -1
     
+    @objc dynamic var id: String {
+        get {
+            return translationId
+        }
+        set {
+            translationId = newValue
+        }
+    }
+    
     override static func primaryKey() -> String? {
         return "translationId"
     }
+}
+
+extension RealmDownloadedTranslation {
     
     func mapFrom(model: DownloadedTranslationDataModel) {
         id = model.id
@@ -37,9 +48,6 @@ class RealmDownloadedTranslation: Object, IdentifiableRealmObject {
         downloadedTranslation.mapFrom(model: model)
         return downloadedTranslation
     }
-}
-
-extension RealmDownloadedTranslation {
     
     func toModel() -> DownloadedTranslationDataModel {
         return DownloadedTranslationDataModel(

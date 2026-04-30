@@ -11,7 +11,7 @@ import RealmSwift
 import Combine
 import RepositorySync
 
-class PersonalizedToolsCache {
+final class PersonalizedToolsCache {
 
     let persistence: any Persistence<PersonalizedToolsDataModel, PersonalizedToolsDataModel>
 
@@ -21,20 +21,20 @@ class PersonalizedToolsCache {
     }
 
     @available(iOS 17.4, *)
-    var swiftDatabase: SwiftDatabase? {
+    private var swiftDatabase: SwiftDatabase? {
         return getSwiftPersistence()?.database
     }
 
     @available(iOS 17.4, *)
-    func getSwiftPersistence() -> SwiftRepositorySyncPersistence<PersonalizedToolsDataModel, PersonalizedToolsDataModel, SwiftPersonalizedTools>? {
+    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<PersonalizedToolsDataModel, PersonalizedToolsDataModel, SwiftPersonalizedTools>? {
         return persistence as? SwiftRepositorySyncPersistence<PersonalizedToolsDataModel, PersonalizedToolsDataModel, SwiftPersonalizedTools>
     }
 
-    var realmDatabase: RealmDatabase? {
+    private var realmDatabase: RealmDatabase? {
         return getRealmPersistence()?.database
     }
 
-    func getRealmPersistence() -> RealmRepositorySyncPersistence<PersonalizedToolsDataModel, PersonalizedToolsDataModel, RealmPersonalizedTools>? {
+    private func getRealmPersistence() -> RealmRepositorySyncPersistence<PersonalizedToolsDataModel, PersonalizedToolsDataModel, RealmPersonalizedTools>? {
         return persistence as? RealmRepositorySyncPersistence<PersonalizedToolsDataModel, PersonalizedToolsDataModel, RealmPersonalizedTools>
     }
 }

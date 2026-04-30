@@ -8,7 +8,7 @@
 
 import Foundation
 
-class UserActivityDiContainer {
+final class UserActivityDiContainer {
     
     let dataLayer: UserActivityDataLayerDependencies
     let domainLayer: UserActivityDomainLayerDependencies

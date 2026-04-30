@@ -22,7 +22,7 @@ final class GetToolDetailsMediaUseCase {
     
     func execute(toolId: String) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
                 
-        guard let resource = resourcesRepository.persistence.getDataModelNonThrowing(id: toolId) else {
+        guard let resource = resourcesRepository.getResource(id: toolId) else {
             
             return Just(.empty)
                 .eraseToAnyPublisher()

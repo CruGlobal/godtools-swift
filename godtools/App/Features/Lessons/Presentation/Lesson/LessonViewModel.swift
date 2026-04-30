@@ -9,7 +9,8 @@
 import UIKit
 import Combine
 
-class LessonViewModel: MobileContentRendererViewModel {
+@MainActor
+final class LessonViewModel: MobileContentRendererViewModel {
     
     private static var storeLessonProgressCancellable: AnyCancellable?
     

@@ -10,7 +10,7 @@ import Foundation
 import GodToolsShared
 import Combine
 
-class GetLessonListItemProgress {
+final class GetLessonListItemProgress {
     
     private let lessonProgressRepository: UserLessonProgressRepository
     private let userCountersRepository: UserCountersRepository

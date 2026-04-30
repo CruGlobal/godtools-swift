@@ -47,7 +47,7 @@ struct LanguagesCacheTests {
         
         let languageCode: String = try #require(argument.queryByLanguageCodes.first?.rawValue)
                         
-        let language: LanguageDataModel? = languagesCache.getCachedLanguage(code: languageCode)
+        let language: LanguageDataModel? = try languagesCache.getLanguageByCode(code: languageCode)
         
         #expect(language?.id == argument.expectedLanguageIds.first)
     }
@@ -74,7 +74,7 @@ struct LanguagesCacheTests {
         
         let languageCode: String = try #require(argument.queryByLanguageCodes.first?.rawValue)
                         
-        let language: LanguageDataModel? = languagesCache.getCachedLanguage(code: languageCode)
+        let language: LanguageDataModel? = languagesCache.getLanguageByCode(code: languageCode)
         
         #expect(language?.id == argument.expectedLanguageIds.first)
     }*/
@@ -98,34 +98,10 @@ struct LanguagesCacheTests {
         let languagesCache: LanguagesCache = try getLanguagesCache()
         
         let languageCodes: [String] = argument.queryByLanguageCodes.map { $0.rawValue }
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        var languagesRef: [LanguageDataModel] = Array()
                 
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            languagesCache
-                .getCachedLanguagesPublisher(codes: languageCodes)
-                .sink(receiveCompletion: { _ in
-                    
-                }, receiveValue: { (languages: [LanguageDataModel]) in
-                    
-                    languagesRef = languages
-                    
-                    // When finished be sure to call:
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                })
-                .store(in: &cancellables)
-        }
-                
-        let languageIds: [String] = languagesRef.map { $0.id }
+        let languages: [LanguageDataModel] = try await languagesCache.getLanguagesByCodes(codes: languageCodes)
+                     
+        let languageIds: [String] = languages.map { $0.id }
 
         #expect(languageIds.sortedAscending() == argument.expectedLanguageIds.sortedAscending())
     }
@@ -152,7 +128,7 @@ struct LanguagesCacheTests {
         
         let languageCodes: [String] = argument.queryByLanguageCodes.map { $0.rawValue }
         
-        let languages: [LanguageDataModel] = languagesCache.getCachedLanguages(codes: languageCodes)
+        let languages: [LanguageDataModel] = languagesCache.getLanguagesByCodes(codes: languageCodes)
         
         let languageIds: [String] = languages.map { $0.id }
 
@@ -207,7 +183,7 @@ extension LanguagesCacheTests {
         
         let persistence = RealmRepositorySyncPersistence(
             database: testsDiContainer.dataLayer.getSharedRealmDatabase(),
-            dataModelMapping: RealmLanguageDataModelMapping()
+            dataModelMapping: RealmLanguageMapping()
         )
         
         return LanguagesCache(

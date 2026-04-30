@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct UserAppLanguageDataModel {
+struct UserAppLanguageDataModel: Sendable {
     
     let id: String
     let languageId: BCP47LanguageIdentifier

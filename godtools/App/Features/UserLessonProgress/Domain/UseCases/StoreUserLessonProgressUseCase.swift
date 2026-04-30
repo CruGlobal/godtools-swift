@@ -26,13 +26,12 @@ final class StoreUserLessonProgressUseCase {
             progress = Double(lastViewedPageNumber) / Double(totalPageCount)
         }
         
-        let lessonProgress = UserLessonProgressDataModel(
-            lessonId: lessonId,
-            lastViewedPageId: lastViewedPageId,
-            progress: progress
-        )
-        
-        return lessonProgressRepository.storeLessonProgress(lessonProgress)
+        return lessonProgressRepository
+            .storeLessonProgressPublisher(
+                lessonId: lessonId,
+                lastViewedPageId: lastViewedPageId,
+                progress: progress
+            )
             .map {
                 UserLessonProgressDomainModel(
                     lessonId: $0.lessonId,

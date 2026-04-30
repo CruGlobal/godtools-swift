@@ -8,11 +8,10 @@
 
 import Foundation
 import RepositorySync
-import Combine
 
-class LanguagesCache {
+final class LanguagesCache {
         
-    private let persistence: any Persistence<LanguageDataModel, LanguageCodable>
+    let persistence: any Persistence<LanguageDataModel, LanguageCodable>
     
     init(persistence: any Persistence<LanguageDataModel, LanguageCodable>) {
                 
@@ -20,20 +19,20 @@ class LanguagesCache {
     }
     
     @available(iOS 17.4, *)
-    var swiftDatabase: SwiftDatabase? {
+    private var swiftDatabase: SwiftDatabase? {
         return getSwiftPersistence()?.database
     }
     
     @available(iOS 17.4, *)
-    func getSwiftPersistence() -> SwiftRepositorySyncPersistence<LanguageDataModel, LanguageCodable, SwiftLanguage>? {
+    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<LanguageDataModel, LanguageCodable, SwiftLanguage>? {
         return persistence as? SwiftRepositorySyncPersistence<LanguageDataModel, LanguageCodable, SwiftLanguage>
     }
     
-    var realmDatabase: RealmDatabase? {
+    private var realmDatabase: RealmDatabase? {
         return getRealmPersistence()?.database
     }
     
-    func getRealmPersistence() -> RealmRepositorySyncPersistence<LanguageDataModel, LanguageCodable, RealmLanguage>? {
+    private func getRealmPersistence() -> RealmRepositorySyncPersistence<LanguageDataModel, LanguageCodable, RealmLanguage>? {
         return persistence as? RealmRepositorySyncPersistence<LanguageDataModel, LanguageCodable, RealmLanguage>
     }
 }
@@ -81,7 +80,7 @@ extension LanguagesCache {
 
 extension LanguagesCache {
     
-    func getCachedLanguage(code: BCP47LanguageIdentifier) -> LanguageDataModel? {
+    func getLanguageByCode(code: BCP47LanguageIdentifier) throws -> LanguageDataModel? {
         
         if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
             
@@ -89,7 +88,7 @@ extension LanguagesCache {
                 filter: getLanguageByCodePredicate(code: code)
             )
             
-            let swiftLanguage: SwiftLanguage? = swiftPersistence.database.read.objectsNonThrowing(context: swiftPersistence.database.openContext(), query: query).first
+            let swiftLanguage: SwiftLanguage? = try swiftPersistence.database.read.objects(context: swiftPersistence.database.openContext(), query: query).first
             
             if let swiftLanguage = swiftLanguage {
                 return swiftLanguage.toModel()
@@ -98,7 +97,9 @@ extension LanguagesCache {
                 return nil
             }
         }
-        else if let realmPersistence = getRealmPersistence(), let realm = realmPersistence.database.openRealmNonThrowing() {
+        else if let realmPersistence = getRealmPersistence() {
+            
+            let realm = try realmPersistence.database.openRealm()
             
             let query = RealmDatabaseQuery.filter(
                 filter: getLanguageByCodeNSPredicate(code: code)
@@ -119,7 +120,7 @@ extension LanguagesCache {
         }
     }
     
-    func getCachedLanguagesPublisher(codes: [BCP47LanguageIdentifier]) -> AnyPublisher<[LanguageDataModel], Error> {
+    func getLanguagesByCodes(codes: [BCP47LanguageIdentifier]) async throws -> [LanguageDataModel] {
         
         if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
                       
@@ -127,9 +128,8 @@ extension LanguagesCache {
                 filter: getLanguagesByCodesPredicate(codes: codes)
             )
             
-            return swiftPersistence
-                .getDataModelsPublisher(getOption: .allObjects, query: query)
-                .eraseToAnyPublisher()
+            return try await swiftPersistence
+                .getDataModelsAsync(getOption: .allObjects, query: query)
         }
         else if let realmPersistence = getRealmPersistence() {
             
@@ -137,15 +137,10 @@ extension LanguagesCache {
                 filter: getLanguagesByCodesNSPredicate(codes: codes)
             )
             
-            return realmPersistence
-                .getDataModelsPublisher(getOption: .allObjects, query: query)
-                .eraseToAnyPublisher()
+            return try await realmPersistence
+                .getDataModelsAsync(getOption: .allObjects, query: query)
         }
-        else {
-            
-            return Just([])
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
+        
+        return Array()
     }
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ToolsDomainLayerDependencies {
+final class ToolsDomainLayerDependencies {
 
     private let coreDataLayer: AppDataLayerDependencies
     private let dataLayer: ToolsDataLayerDependencies

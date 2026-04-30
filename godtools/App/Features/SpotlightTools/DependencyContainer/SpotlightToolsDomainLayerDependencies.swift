@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SpotlightToolsDomainLayerDependencies {
+final class SpotlightToolsDomainLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     private let coreDomainLayer: AppDomainLayerDependencies

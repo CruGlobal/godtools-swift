@@ -10,7 +10,8 @@ import Foundation
 import GodToolsShared
 import Combine
 
-@MainActor class ArticlesViewModel: NSObject {
+@MainActor
+final class ArticlesViewModel: NSObject {
         
     typealias AemUri = String
     
@@ -118,6 +119,10 @@ import Combine
                         categoryId: categoryId,
                         languageCode: language.localeId
                     )
+                    .catch { (error: Error) in
+                        return Just(Array())
+                            .eraseToAnyPublisher()
+                    }
                     .map { (categoryArticles: [CategoryArticleModel]) in
                         
                         var uniqueAemUris: Set<String> = Set()

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ToolScreenShareQRCodeFeatureDomainLayerDependencies {
+final class ToolScreenShareQRCodeFeatureDomainLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     private let coreDomainLayer: AppDomainLayerDependencies

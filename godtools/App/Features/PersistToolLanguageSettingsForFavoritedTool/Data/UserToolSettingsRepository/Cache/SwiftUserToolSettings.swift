@@ -31,3 +31,33 @@ enum SwiftUserToolSettingsV1 {
         }
     }
 }
+
+@available(iOS 17.4, *)
+extension SwiftUserToolSettings {
+    
+    func mapFrom(model: UserToolSettingsDataModel) {
+        
+        id = model.id
+        createdAt = model.createdAt
+        toolId = model.toolId
+        primaryLanguageId = model.primaryLanguageId
+        parallelLanguageId = model.parallelLanguageId
+    }
+    
+    static func createNewFrom(model: UserToolSettingsDataModel) -> SwiftUserToolSettings {
+        
+        let object = SwiftUserToolSettings()
+        object.mapFrom(model: model)
+        return object
+    }
+ 
+    func toModel() -> UserToolSettingsDataModel {
+        return UserToolSettingsDataModel(
+            id: id,
+            createdAt: createdAt,
+            toolId: toolId,
+            primaryLanguageId: primaryLanguageId,
+            parallelLanguageId: parallelLanguageId
+        )
+    }
+}

@@ -7,13 +7,14 @@
 //
 
 import Foundation
-import Combine
 import RequestOperation
+import Combine
 
 open class ArticleAemRepository: NSObject {
     
+    private let cache: ArticleAemCache
+    
     let downloader: ArticleAemDownloader
-    let cache: ArticleAemCache
     
     init(downloader: ArticleAemDownloader, cache: ArticleAemCache) {
         
@@ -21,11 +22,6 @@ open class ArticleAemRepository: NSObject {
         self.cache = cache
         
         super.init()
-    }
-    
-    @MainActor func observeArticleAemCacheObjectsChangedPublisher() -> AnyPublisher<Void, Never> {
-        return cache.observeArticleAemCacheObjectsChangedPublisher()
-            .eraseToAnyPublisher()
     }
     
     func getAemCacheObjectsPublisher(aemUris: [String]) -> AnyPublisher<[ArticleAemCacheObject], Never> {

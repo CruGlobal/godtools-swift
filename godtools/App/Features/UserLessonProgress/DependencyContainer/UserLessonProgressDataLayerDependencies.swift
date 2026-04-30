@@ -8,7 +8,7 @@
 
 import Foundation
 
-class UserLessonProgressDataLayerDependencies {
+final class UserLessonProgressDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     

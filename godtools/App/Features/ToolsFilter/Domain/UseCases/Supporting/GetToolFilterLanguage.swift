@@ -34,7 +34,7 @@ final class GetToolFilterLanguage {
     func getLanguageFilter(from languageId: String?, translatedInAppLanguage: AppLanguageDomainModel) -> ToolFilterLanguageDomainModel? {
         
         guard let languageId = languageId,
-            let language = languagesRepository.persistence.getDataModelNonThrowing(id: languageId)
+            let language = languagesRepository.getLanguage(id: languageId)
         else {
             return nil
         }
@@ -50,8 +50,7 @@ final class GetToolFilterLanguage {
         )
         
         return languagesRepository
-            .persistence
-            .getDataModelsPublisher(getOption: .objectsByIds(ids: languageIds))
+            .getLanguagesByIdsPublisher(ids: languageIds)
             .map { (languages: [LanguageDataModel]) in
 
                 let domainModels: [ToolFilterLanguageDomainModel] = languages.compactMap { (language: LanguageDataModel) in

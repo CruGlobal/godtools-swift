@@ -23,9 +23,14 @@ final class DownloadToolLanguageUseCase {
     }
     
     func execute(languageId: String) -> AnyPublisher<Double, Error> {
-            
-        downloadedLanguagesRepository.storeDownloadedLanguage(languageId: languageId, downloadComplete: false)
         
+        Task {
+            try await downloadedLanguagesRepository.storeDownloadedLanguage(
+                languageId: languageId,
+                downloadComplete: false
+            )
+        }
+                    
         return toolLanguageDownloader
             .downloadToolLanguagePublisher(
                 languageId: languageId

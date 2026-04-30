@@ -8,7 +8,7 @@
 
 import Foundation
 
-class GetTranslatedLanguageName {
+final class GetTranslatedLanguageName {
     
     private let localizationLanguageName: LocalizationLanguageNameInterface
     private let localeLanguageName: LocaleLanguageNameInterface

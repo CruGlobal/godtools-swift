@@ -8,8 +8,9 @@
 
 import Foundation
 import RealmSwift
+import RepositorySync
 
-class RealmArticleJcrContent: Object, ArticleJcrContentType {
+class RealmArticleJcrContent: Object, IdentifiableRealmObject {
     
     @objc dynamic var aemUri: String = ""
     @objc dynamic var canonical: String?
@@ -18,13 +19,49 @@ class RealmArticleJcrContent: Object, ArticleJcrContentType {
     
     let tags = List<String>()
     
+    @objc dynamic var id: String {
+        get {
+            return uuid ?? ""
+        }
+        set {
+            uuid = newValue
+        }
+    }
+    
+    override static func primaryKey() -> String? {
+        return "uuid"
+    }
+}
+
+extension RealmArticleJcrContent {
+    
     func mapFrom(model: ArticleJcrContent) {
         
+        id = model.id
         aemUri = model.aemUri
         canonical = model.canonical
         title = model.title
         uuid = model.uuid
+        
         tags.removeAll()
         tags.append(objectsIn: model.tags)
+    }
+    
+    static func createNewFrom(model: ArticleJcrContent) -> RealmArticleJcrContent {
+        
+        let object = RealmArticleJcrContent()
+        object.mapFrom(model: model)
+        return object
+    }
+    
+    func toModel() -> ArticleJcrContent {
+        return ArticleJcrContent(
+            id: id,
+            aemUri: aemUri,
+            canonical: canonical,
+            tags: Array(tags),
+            title: title,
+            uuid: uuid
+        )
     }
 }

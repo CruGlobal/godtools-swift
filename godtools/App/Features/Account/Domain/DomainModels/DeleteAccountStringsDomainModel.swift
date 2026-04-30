@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct DeleteAccountStringsDomainModel {
+struct DeleteAccountStringsDomainModel: Sendable {
     
     let title: String
     let subtitle: String

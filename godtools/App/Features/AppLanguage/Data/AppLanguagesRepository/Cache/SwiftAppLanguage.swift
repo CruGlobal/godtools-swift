@@ -29,27 +29,40 @@ enum SwiftAppLanguageV1 {
         init() {
             
         }
+    }
+}
+
+@available(iOS 17.4, *)
+extension SwiftAppLanguage {
+    
+    func mapFrom(model: AppLanguageDataModel) {
         
-        func mapFrom(model: AppLanguageDataModel) {
-            
-            id = model.languageId
-            languageCode = model.languageCode
-            languageId = model.languageId
-            languageScriptCode = model.languageScriptCode
-            
-            switch model.languageDirection {
-            case .leftToRight:
-                swiftLanguageDirection = .leftToRight
-            case .rightToLeft:
-                swiftLanguageDirection = .rightToLeft
-            }
-        }
+        id = model.languageId
+        languageCode = model.languageCode
+        languageId = model.languageId
+        languageScriptCode = model.languageScriptCode
         
-        static func createNewFrom(model: AppLanguageDataModel) -> SwiftAppLanguage {
-            let object = SwiftAppLanguage()
-            object.mapFrom(model: model)
-            return object
+        switch model.languageDirection {
+        case .leftToRight:
+            swiftLanguageDirection = .leftToRight
+        case .rightToLeft:
+            swiftLanguageDirection = .rightToLeft
         }
+    }
+    
+    static func createNewFrom(model: AppLanguageDataModel) -> SwiftAppLanguage {
+        let object = SwiftAppLanguage()
+        object.mapFrom(model: model)
+        return object
+    }
+    
+    func toModel() -> AppLanguageDataModel {
+        
+        return AppLanguageDataModel(
+            languageCode: languageCode,
+            languageDirection: languageDirection,
+            languageScriptCode: languageScriptCode
+        )
     }
 }
 
@@ -67,15 +80,3 @@ extension SwiftAppLanguage {
     }
 }
 
-@available(iOS 17.4, *)
-extension SwiftAppLanguage {
-    
-    func toModel() -> AppLanguageDataModel {
-        
-        return AppLanguageDataModel(
-            languageCode: languageCode,
-            languageDirection: languageDirection,
-            languageScriptCode: languageScriptCode
-        )
-    }
-}

@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class ConfirmRemoveToolFromFavoritesAlertViewModel: AlertMessageViewModelType {
+final class ConfirmRemoveToolFromFavoritesAlertViewModel: AlertMessageViewModelType {
     
     private static var removeToolFromFavoritesCancellable: AnyCancellable?
     

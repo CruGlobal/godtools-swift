@@ -9,7 +9,8 @@
 import Foundation
 import Combine
 
-@MainActor class DeleteAccountViewModel: ObservableObject {
+@MainActor
+final class DeleteAccountViewModel: ObservableObject {
    
     private var cancellables: Set<AnyCancellable> = Set()
     

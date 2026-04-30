@@ -8,7 +8,7 @@
 
 import Foundation
 
-class OptInNotificationUserDefaultsCache {
+final class OptInNotificationUserDefaultsCache {
 
     enum Key: String, CaseIterable {
         case lastPrompted = "lastPromptedOptInNotification"

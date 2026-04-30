@@ -8,7 +8,8 @@
 
 import Foundation
 
-class ShareArticleViewModel {
+@MainActor
+final class ShareArticleViewModel {
     
     private let articleAemData: ArticleAemData
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase

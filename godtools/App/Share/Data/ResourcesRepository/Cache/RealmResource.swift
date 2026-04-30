@@ -49,6 +49,9 @@ class RealmResource: Object, IdentifiableRealmObject {
     override static func primaryKey() -> String? {
         return "id"
     }
+}
+
+extension RealmResource {
     
     func mapFrom(model: ResourceDataModel) {
                 
@@ -89,9 +92,7 @@ class RealmResource: Object, IdentifiableRealmObject {
         realmResource.mapFrom(model: model)
         return realmResource
     }
-}
-
-extension RealmResource {
+    
     func toModel() -> ResourceDataModel {
         return ResourceDataModel(
             abbreviation: abbreviation,
