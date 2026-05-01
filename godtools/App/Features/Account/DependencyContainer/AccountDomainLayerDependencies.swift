@@ -56,6 +56,12 @@ final class AccountDomainLayerDependencies {
         )
     }
     
+    func getDidPullToRefreshAccountUseCase() -> DidPullToRefreshAccountUseCase {
+        return DidPullToRefreshAccountUseCase(
+            userCountersSync: coreDataLayer.getSharedUserCountersSync()
+        )
+    }
+    
     func getLogOutUserUseCase() -> LogOutUserUseCase {
         return LogOutUserUseCase(
             userAuthentication: coreDataLayer.getUserAuthentication(),

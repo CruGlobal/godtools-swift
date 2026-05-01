@@ -56,7 +56,8 @@ struct AccountView_Preview: PreviewProvider {
             getGlobalActivityThisWeekUseCase: appDiContainer.feature.globalActivity.domainLayer.getGlobalActivityThisWeekUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             getAccountStringsUseCase: appDiContainer.feature.account.domainLayer.getAccountStringsUseCase(),
-            getGlobalActivityEnabledUseCase: appDiContainer.feature.globalActivity.domainLayer.getGlobalActivityEnabledUseCase()
+            getGlobalActivityEnabledUseCase: appDiContainer.feature.globalActivity.domainLayer.getGlobalActivityEnabledUseCase(),
+            didPullToRefreshAccountUseCase: appDiContainer.feature.account.domainLayer.getDidPullToRefreshAccountUseCase()
         )
     }
     

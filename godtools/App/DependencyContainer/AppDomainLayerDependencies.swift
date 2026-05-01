@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AppDomainLayerDependencies {
+final class AppDomainLayerDependencies {
         
     private let dataLayer: AppDataLayerDependencies
     
