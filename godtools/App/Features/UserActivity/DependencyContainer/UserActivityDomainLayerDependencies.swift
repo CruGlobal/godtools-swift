@@ -27,27 +27,32 @@ final class UserActivityDomainLayerDependencies {
         )
     }
     
-    func getUserActivityBadgeUseCase() -> GetUserActivityBadgeUseCase {
-        return GetUserActivityBadgeUseCase(
+    func getUserActivityUseCase() -> GetUserActivityUseCase {
+        return GetUserActivityUseCase(
+            getUserActivityBadge: getUserActivityBadge(),
+            getUserActivityStats: getUserActivityStats(),
+            userCounterRepository: coreDataLayer.getUserCountersRepository(),
+            completedTrainingTipRepository: coreDataLayer.getCompletedTrainingTipRepository()
+        )
+    }
+}
+
+// MARK: - Supporting
+
+extension UserActivityDomainLayerDependencies {
+    
+    private func getUserActivityBadge() -> GetUserActivityBadge{
+        return GetUserActivityBadge(
             localizationServices: coreDataLayer.getLocalizationServices(),
             stringWithLocaleCount: coreDataLayer.getStringWithLocaleCount()
         )
     }
     
-    func getUserActivityStatsUseCase() -> GetUserActivityStatsUseCase {
-        return GetUserActivityStatsUseCase(
+    private func getUserActivityStats() -> GetUserActivityStats {
+        return GetUserActivityStats(
             localizationServices: coreDataLayer.getLocalizationServices(),
             getTranslatedNumberCount: coreDomainLayer.supporting.getTranslatedNumberCount(),
             stringWithLocaleCount: coreDataLayer.getStringWithLocaleCount()
-        )
-    }
-    
-    func getUserActivityUseCase() -> GetUserActivityUseCase {
-        return GetUserActivityUseCase(
-            getUserActivityBadgeUseCase: getUserActivityBadgeUseCase(),
-            getUserActivityStatsUseCase: getUserActivityStatsUseCase(),
-            userCounterRepository: coreDataLayer.getUserCountersRepository(),
-            completedTrainingTipRepository: coreDataLayer.getCompletedTrainingTipRepository()
         )
     }
 }

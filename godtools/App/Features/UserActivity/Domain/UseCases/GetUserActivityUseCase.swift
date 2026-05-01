@@ -12,15 +12,15 @@ import GodToolsShared
 
 final class GetUserActivityUseCase {
     
-    private let getUserActivityBadgeUseCase: GetUserActivityBadgeUseCase
-    private let getUserActivityStatsUseCase: GetUserActivityStatsUseCase
+    private let getUserActivityBadge: GetUserActivityBadge
+    private let getUserActivityStats: GetUserActivityStats
     private let userCounterRepository: UserCountersRepository
     private let completedTrainingTipRepository: CompletedTrainingTipRepository
     
-    init(getUserActivityBadgeUseCase: GetUserActivityBadgeUseCase, getUserActivityStatsUseCase: GetUserActivityStatsUseCase, userCounterRepository: UserCountersRepository, completedTrainingTipRepository: CompletedTrainingTipRepository) {
+    init(getUserActivityBadge: GetUserActivityBadge, getUserActivityStats: GetUserActivityStats, userCounterRepository: UserCountersRepository, completedTrainingTipRepository: CompletedTrainingTipRepository) {
         
-        self.getUserActivityBadgeUseCase = getUserActivityBadgeUseCase
-        self.getUserActivityStatsUseCase = getUserActivityStatsUseCase
+        self.getUserActivityBadge = getUserActivityBadge
+        self.getUserActivityStats = getUserActivityStats
         self.userCounterRepository = userCounterRepository
         self.completedTrainingTipRepository = completedTrainingTipRepository
     }
@@ -74,8 +74,8 @@ final class GetUserActivityUseCase {
         
         let userActivity = UserActivity(counters: userCounterDictionary)
         
-        let badges = userActivity.badges.map { self.getUserActivityBadgeUseCase.getBadge(from: $0, translatedInAppLanguage: translatedInAppLanguage) }
-        let stats = getUserActivityStatsUseCase.getUserActivityStats(from: userActivity, translatedInAppLanguage: translatedInAppLanguage)
+        let badges = userActivity.badges.map { self.getUserActivityBadge.getBadge(from: $0, translatedInAppLanguage: translatedInAppLanguage) }
+        let stats = getUserActivityStats.getStats(from: userActivity, translatedInAppLanguage: translatedInAppLanguage)
         
         return UserActivityDomainModel(badges: badges, stats: stats)
     }
