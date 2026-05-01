@@ -35,7 +35,9 @@ final class UserCountersSync {
     
     func sync(requestPriority: RequestPriority, forceSync: Bool = false) async throws {
         
-        guard !isSyncing && syncInvalidator.shouldSync else {
+        let shouldSync: Bool = syncInvalidator.shouldSync || forceSync
+        
+        guard !isSyncing && shouldSync else {
             return
         }
         
