@@ -14,6 +14,8 @@ import GodToolsShared
 @MainActor
 final class AccountViewModel: ObservableObject {
     
+    private static var didPullToRefreshCancellable: AnyCancellable?
+    
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase
     private let getUserActivityUseCase: GetUserActivityUseCase
@@ -21,13 +23,13 @@ final class AccountViewModel: ObservableObject {
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let getAccountStringsUseCase: GetAccountStringsUseCase
     private let getGlobalActivityEnabledUseCase: GetGlobalActivityEnabledUseCase
+    private let didPullToRefreshAccountUseCase: DidPullToRefreshAccountUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
-    @Published private var didPullToRefresh: Void = ()
     
     @Published private(set) var strings = AccountStringsDomainModel.emptyValue
     @Published private(set) var isLoadingProfile: Bool = true
@@ -38,7 +40,7 @@ final class AccountViewModel: ObservableObject {
     @Published private(set) var stats = [UserActivityStatDomainModel]()
     @Published private(set) var globalActivityIsEnabled: Bool = false
         
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase, getUserActivityUseCase: GetUserActivityUseCase, getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, getAccountStringsUseCase: GetAccountStringsUseCase, getGlobalActivityEnabledUseCase: GetGlobalActivityEnabledUseCase) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase, getUserActivityUseCase: GetUserActivityUseCase, getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, getAccountStringsUseCase: GetAccountStringsUseCase, getGlobalActivityEnabledUseCase: GetGlobalActivityEnabledUseCase, didPullToRefreshAccountUseCase: DidPullToRefreshAccountUseCase) {
         
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
@@ -48,6 +50,7 @@ final class AccountViewModel: ObservableObject {
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.getAccountStringsUseCase = getAccountStringsUseCase
         self.getGlobalActivityEnabledUseCase = getGlobalActivityEnabledUseCase
+        self.didPullToRefreshAccountUseCase = didPullToRefreshAccountUseCase
         
         getCurrentAppLanguageUseCase
             .execute()
@@ -107,25 +110,23 @@ final class AccountViewModel: ObservableObject {
             })
             .store(in: &cancellables)
         
-        Publishers.CombineLatest(
-            $appLanguage.dropFirst(),
-            $didPullToRefresh
-        )
-        .map { (appLanguage: AppLanguageDomainModel, didPullToRefresh: Void) in
-            
-            getUserActivityUseCase
-                .execute(appLanguage: appLanguage)
-        }
-        .switchToLatest()
-        .receive(on: DispatchQueue.main)
-        .sink(receiveCompletion: { _ in
-            
-        }, receiveValue: { [weak self] (userActivity: UserActivityDomainModel) in
-            
-            self?.badges = userActivity.badges
-            self?.stats = userActivity.stats
-        })
-        .store(in: &cancellables)
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+                
+                getUserActivityUseCase
+                    .execute(appLanguage: appLanguage)
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (userActivity: UserActivityDomainModel) in
+                
+                self?.badges = userActivity.badges
+                self?.stats = userActivity.stats
+            })
+            .store(in: &cancellables)
         
         getGlobalActivityEnabledUseCase
             .execute()
@@ -160,7 +161,14 @@ extension AccountViewModel {
     
     func pullToRefresh() {
         
-        didPullToRefresh = ()
+        Self.didPullToRefreshCancellable = didPullToRefreshAccountUseCase
+            .execute()
+            .sink { _ in
+                
+            } receiveValue: { _ in
+                
+            }
+
     }
     
     func activityViewed() {

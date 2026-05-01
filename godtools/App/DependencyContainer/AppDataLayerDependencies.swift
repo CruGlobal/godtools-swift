@@ -18,6 +18,22 @@ class AppDataLayerDependencies {
     private let sharedUrlSessionPriority: URLSessionPriority = URLSessionPriority()
     private let sharedAnalytics: AnalyticsContainer
     
+    private lazy var sharedUserCountersSync: UserCountersSync = {
+        
+        let syncInvalidator = SyncInvalidator(
+            id:  "UserCountersSync.sync",
+            timeInterval: .hours(hour: 2),
+            persistence: getUserDefaultsCache()
+        )
+        
+        return UserCountersSync(
+            api: getUserCountersApi(),
+            cache: getUserCountersCache(),
+            localActivityCounterCache: getLocalActivityCounterCache(),
+            syncInvalidator: syncInvalidator
+        )
+    }()
+    
     init(appConfig: AppConfigInterface) {
         
         sharedAppConfig = appConfig
@@ -585,50 +601,6 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getUserCountersRepository() -> UserCountersRepository {
-            
-        let api = UserCountersApi(
-            config: getAppConfig(),
-            urlSessionPriority: getSharedUrlSessionPriority(),
-            mobileContentApiAuthSession: getMobileContentApiAuthSession()
-        )
-    
-        let persistence: any Persistence<UserCounterDataModel, UserCounterCodable>
-        
-        if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
-            
-            persistence = SwiftRepositorySyncPersistence(
-                database: database,
-                dataModelMapping: SwiftUserCounterMapping()
-            )
-        }
-        else {
-            
-            persistence = RealmRepositorySyncPersistence(
-                database: getSharedRealmDatabase(),
-                dataModelMapping: RealmUserCounterMapping()
-            )
-        }
-        
-        let localUserCounterIncrement = LocalUserCounterIncrement(persistence: persistence)
-        
-        let cache = UserCountersCache(persistence: persistence)
-        
-        let syncInvalidator = SyncInvalidator(
-            id:  "userCounters.getCounters",
-            timeInterval: .hours(hour: 2),
-            persistence: getUserDefaultsCache()
-        )
-        
-        return UserCountersRepository(
-            api: api,
-            persistence: persistence,
-            localUserCounterIncrement: localUserCounterIncrement,
-            cache: cache,
-            syncInvalidator: syncInvalidator
-        )
-    }
-    
     func getUserDefaultsCache() -> UserDefaultsCacheInterface {
         return getAppConfig().getUserDefaultsCache()
     }
@@ -687,5 +659,80 @@ class AppDataLayerDependencies {
     
     func getWebSocket(url: URL) -> WebSocketInterface {
         return URLSessionWebSocket(url: url)
+    }
+}
+
+// MARK: - User Counters
+
+extension AppDataLayerDependencies {
+    
+    private func getLocalActivityCounterCache() -> LocalActivityCounterCache {
+        
+        let persistence: any Persistence<LocalActivityCountDataModel, LocalActivityCountDataModel>
+        
+        if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                dataModelMapping: SwiftLocalActivityCountMapping()
+            )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                database: getSharedRealmDatabase(),
+                dataModelMapping: RealmLocalActivityCountMapping()
+            )
+        }
+        
+        return LocalActivityCounterCache(persistence: persistence)
+    }
+    
+    func getSharedUserCountersSync() -> UserCountersSync {
+        return sharedUserCountersSync
+    }
+    
+    private func getUserCountersApi() -> UserCountersApi {
+        
+        let api = UserCountersApi(
+            config: getAppConfig(),
+            urlSessionPriority: getSharedUrlSessionPriority(),
+            mobileContentApiAuthSession: getMobileContentApiAuthSession()
+        )
+        
+        return api
+    }
+    
+    private func getUserCountersCache() -> UserCountersCache {
+        
+        let persistence: any Persistence<UserCounterDataModel, UserCounterCodable>
+        
+        if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                dataModelMapping: SwiftUserCounterMapping()
+            )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                database: getSharedRealmDatabase(),
+                dataModelMapping: RealmUserCounterMapping()
+            )
+        }
+                
+        return UserCountersCache(
+            localActivityCounterCache: getLocalActivityCounterCache(),
+            persistence: persistence
+        )
+    }
+    
+    func getUserCountersRepository() -> UserCountersRepository {
+            
+        return UserCountersRepository(
+            localActivityCounterCache: getLocalActivityCounterCache(),
+            cache: getUserCountersCache()
+        )
     }
 }

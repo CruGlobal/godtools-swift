@@ -60,7 +60,7 @@ import RequestOperation
         
         syncUserCounters(
             userIsAuthenticatedUseCase: appDiContainer.feature.account.domainLayer.getUserIsAuthenticatedUseCase(),
-            userCountersRepository: appDiContainer.dataLayer.getUserCountersRepository()
+            userCountersSync: appDiContainer.dataLayer.getSharedUserCountersSync()
         )
     }
     
@@ -111,7 +111,7 @@ import RequestOperation
         .store(in: &cancellables)
     }
     
-    private func syncUserCounters(userIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase, userCountersRepository: UserCountersRepository) {
+    private func syncUserCounters(userIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase, userCountersSync: UserCountersSync) {
                        
         userIsAuthenticatedUseCase
             .execute()
@@ -119,8 +119,8 @@ import RequestOperation
                             
                 if isAuthenticatedDomainModel.isAuthenticated {
                     
-                    return userCountersRepository
-                        .getCountersPublisher(
+                    return userCountersSync
+                        .sync(
                             requestPriority: .high
                         )
                         .map { _ in
