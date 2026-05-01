@@ -1,5 +1,5 @@
 //
-//  GetUserActivityStatsUseCase.swift
+//  GetUserActivityStats.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 3/20/23.
@@ -10,7 +10,7 @@ import Foundation
 import GodToolsShared
 import SwiftUI
 
-final class GetUserActivityStatsUseCase {
+final class GetUserActivityStats {
     
     private let localizationServices: LocalizationServicesInterface
     private let getTranslatedNumberCount: GetTranslatedNumberCount
@@ -23,7 +23,7 @@ final class GetUserActivityStatsUseCase {
         self.stringWithLocaleCount = stringWithLocaleCount
     }
     
-    func getUserActivityStats(from userActivity: UserActivity, translatedInAppLanguage: AppLanguageDomainModel) -> [UserActivityStatDomainModel] {
+    func getStats(from userActivity: UserActivity, translatedInAppLanguage: AppLanguageDomainModel) -> [UserActivityStatDomainModel] {
         
         let toolOpensStat = UserActivityStatDomainModel(
             iconImageName: ImageCatalog.userActivityToolOpens.name,

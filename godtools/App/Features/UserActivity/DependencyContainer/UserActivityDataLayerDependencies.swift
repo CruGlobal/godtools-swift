@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RepositorySync
 
 final class UserActivityDataLayerDependencies {
     

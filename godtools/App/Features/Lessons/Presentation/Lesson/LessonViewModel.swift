@@ -68,7 +68,7 @@ final class LessonViewModel: MobileContentRendererViewModel {
             .execute(
                 lessonId: resourceId,
                 lastViewedPageId: currentPage.id,
-                lastViewedPageNumber: page,
+                lastViewedPageNumber: (page + 1),
                 totalPageCount: getPages().count
             )
             .sink(receiveCompletion: { _ in

@@ -1,5 +1,5 @@
 //
-//  GetUserActivityBadgeUseCase.swift
+//  GetUserActivityBadge.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 1/24/23.
@@ -10,7 +10,7 @@ import Foundation
 import GodToolsShared
 import SwiftUI
 
-final class GetUserActivityBadgeUseCase {
+final class GetUserActivityBadge {
     
     private let localizationServices: LocalizationServicesInterface
     private let stringWithLocaleCount: StringWithLocaleCountInterface
