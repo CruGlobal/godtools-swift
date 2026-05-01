@@ -43,19 +43,30 @@ final class UserCountersSync {
         
         isSyncing = true
         
-        _ = try await pushLocalActivityCountersToRemote(requestPriority: requestPriority)
-        
-        let remoteCounters: [UserCounterCodable] = try await api.fetchUserCounters(requestPriority: requestPriority)
-        
-        _ = try await cache.persistence.writeObjectsAsync(
-            externalObjects: remoteCounters,
-            writeOption: nil,
-            getOption: nil
-        )
-        
-        syncInvalidator.didSync()
-        
-        isSyncing = false
+        do {
+            
+            _ = try await pushLocalActivityCountersToRemote(requestPriority: requestPriority)
+            
+            let remoteCounters: [UserCounterCodable] = try await api.fetchUserCounters(requestPriority: requestPriority)
+            
+            _ = try await cache.persistence.writeObjectsAsync(
+                externalObjects: remoteCounters,
+                writeOption: .deleteObjectsNotInExternal,
+                getOption: nil
+            )
+            
+            syncInvalidator.didSync()
+            
+            isSyncing = false
+        }
+        catch let error {
+            
+            isSyncing = false
+            
+            print(error)
+            
+            throw error
+        }
     }
     
     private func pushLocalActivityCountersToRemote(requestPriority: RequestPriority) async throws -> [UserCounterCodable] {
