@@ -9,7 +9,8 @@
 import UIKit
 import GodToolsShared
 
-@MainActor class MobileContentViewModel: NSObject {
+@MainActor
+class MobileContentViewModel: NSObject {
     
     private let mobileContentAnalytics: MobileContentRendererAnalytics
     

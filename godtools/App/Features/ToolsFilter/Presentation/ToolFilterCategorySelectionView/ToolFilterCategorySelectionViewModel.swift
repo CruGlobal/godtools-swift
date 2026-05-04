@@ -9,7 +9,8 @@
 import Foundation
 import Combine
 
-@MainActor class ToolFilterCategorySelectionViewModel: ObservableObject {
+@MainActor
+class ToolFilterCategorySelectionViewModel: ObservableObject {
     
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     

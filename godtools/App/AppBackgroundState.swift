@@ -10,7 +10,8 @@ import Foundation
 import Combine
 import RequestOperation
 
-@MainActor class AppBackgroundState {
+@MainActor
+class AppBackgroundState {
     
     static let shared: AppBackgroundState = AppBackgroundState()
         

@@ -8,7 +8,8 @@
 
 import Foundation
 
-@MainActor protocol ToolSettingsNavigationFlow: Flow {
+@MainActor
+protocol ToolSettingsNavigationFlow: Flow {
     
     var toolSettingsFlow: ToolSettingsFlow? { get set }
 }

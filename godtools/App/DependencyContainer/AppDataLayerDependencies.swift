@@ -12,7 +12,7 @@ import SocialAuthentication
 import LocalizationServices
 import RepositorySync
 
-class AppDataLayerDependencies {
+final class AppDataLayerDependencies {
         
     private let sharedAppConfig: AppConfigInterface
     private let sharedUrlSessionPriority: URLSessionPriority = URLSessionPriority()

@@ -9,7 +9,8 @@
 import UIKit
 import GodToolsShared
 
-@MainActor class MobileContentPageRenderer {
+@MainActor
+class MobileContentPageRenderer {
     
     private let navigation: MobileContentRendererNavigation
     

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AppDiContainer {
+final class AppDiContainer {
         
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
     
@@ -22,7 +22,9 @@ class AppDiContainer {
             appConfig: appConfig
         )
         
-        domainLayer = AppDomainLayerDependencies(dataLayer: dataLayer)
+        domainLayer = AppDomainLayerDependencies(
+            dataLayer: dataLayer
+        )
                 
         // feature data layer dependencies
         let personalizedToolsDataLayer = PersonalizedToolsDataLayerDependencies(coreDataLayer: dataLayer)

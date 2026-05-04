@@ -8,7 +8,8 @@
 
 import Foundation
 
-@MainActor class OnboardingTutorialReadyForEveryConversationViewModel: ObservableObject {
+@MainActor
+class OnboardingTutorialReadyForEveryConversationViewModel: ObservableObject {
     
     let title: String
     let watchVideoButtonTitle: String
