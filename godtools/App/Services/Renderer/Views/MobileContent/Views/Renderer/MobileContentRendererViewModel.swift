@@ -10,7 +10,8 @@ import UIKit
 import GodToolsShared
 import Combine
 
-@MainActor class MobileContentRendererViewModel: MobileContentPagesViewModel {
+@MainActor
+class MobileContentRendererViewModel: MobileContentPagesViewModel {
     
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     

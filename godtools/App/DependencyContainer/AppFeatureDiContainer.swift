@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AppFeatureDiContainer {
+final class AppFeatureDiContainer {
     
     let account: AccountDiContainer
     let appLanguage: AppLanguageFeatureDiContainer

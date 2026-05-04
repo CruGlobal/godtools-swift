@@ -8,7 +8,8 @@
 
 import Foundation
 
-@MainActor class OnboardingTutorialMediaViewModel: ObservableObject {
+@MainActor
+class OnboardingTutorialMediaViewModel: ObservableObject {
     
     let title: String
     let message: String

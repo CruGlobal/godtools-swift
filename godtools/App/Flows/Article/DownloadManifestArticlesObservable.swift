@@ -10,7 +10,8 @@ import Foundation
 import Combine
 import GodToolsShared
 
-@MainActor class DownloadManifestArticlesObservable: ObservableObject {
+@MainActor
+class DownloadManifestArticlesObservable: ObservableObject {
     
     private let translation: TranslationDataModel
     private let language: LanguageDataModel

@@ -11,7 +11,8 @@ import UIKit
 import SwiftUI
 import Combine
 
-@MainActor class ToolSettingsShareableItemViewModel: ObservableObject {
+@MainActor
+class ToolSettingsShareableItemViewModel: ObservableObject {
     
     private let shareable: ShareableDomainModel
     private let getShareableImageUseCase: GetShareableImageUseCase

@@ -8,7 +8,8 @@
 
 import Foundation
 
-@MainActor protocol LocalizationSettingsNavigationFlow: Flow {
+@MainActor
+protocol LocalizationSettingsNavigationFlow: Flow {
     
     var localizationSettingsFlow: LocalizationSettingsFlow? { get set }
 }

@@ -9,12 +9,14 @@
 import UIKit
 import Combine
 
-@MainActor protocol NavBarItemControllerDelegate: AnyObject {
+@MainActor
+protocol NavBarItemControllerDelegate: AnyObject {
     
     func didChangeBarButtonItemState(controller: NavBarItemController)
 }
 
-@MainActor class NavBarItemController {
+@MainActor
+class NavBarItemController {
         
     private var hidesBarItemPublisher: AnyPublisher<Bool, Never>?
     private var barButtonItem: UIBarButtonItem?
