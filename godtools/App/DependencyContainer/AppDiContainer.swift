@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class AppDiContainer {
+class AppDiContainer {
         
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
     
