@@ -9,7 +9,8 @@
 import UIKit
 import GodToolsShared
 
-@MainActor protocol MobileContentRendererNavigationDelegate: AnyObject {
+@MainActor
+protocol MobileContentRendererNavigationDelegate: AnyObject {
     
     func mobileContentRendererNavigationDismissRenderer(navigation: MobileContentRendererNavigation, event: DismissToolEvent)
     func mobileContentRendererNavigationDeepLink(navigation: MobileContentRendererNavigation, deepLink: MobileContentRendererNavigationDeepLinkType)

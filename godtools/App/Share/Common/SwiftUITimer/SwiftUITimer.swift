@@ -8,7 +8,8 @@
 import Foundation
 import Combine
 
-@MainActor class SwiftUITimer: ObservableObject {
+@MainActor
+class SwiftUITimer: ObservableObject {
     
     private static let defaultRunLoop: RunLoop = .main
     private static let defaultRunLoopMode: RunLoop.Mode = .common

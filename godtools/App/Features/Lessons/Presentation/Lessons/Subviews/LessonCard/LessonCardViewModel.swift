@@ -9,7 +9,8 @@
 import SwiftUI
 import Combine
 
-@MainActor class LessonCardViewModel: ObservableObject {
+@MainActor
+class LessonCardViewModel: ObservableObject {
         
     private let lessonListItem: LessonListItemDomainModelInterface
     

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct AttachmentCodable: Codable {
+struct AttachmentCodable: Codable, Sendable {
     
     let file: String
     let fileFilename: String

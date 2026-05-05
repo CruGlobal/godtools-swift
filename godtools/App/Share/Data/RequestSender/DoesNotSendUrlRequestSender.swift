@@ -10,18 +10,42 @@ import Foundation
 import Combine
 import RequestOperation
 
-class DoesNotSendUrlRequestSender: RequestSender {
+final class DoesNotSendUrlRequestSender: RequestSender {
     
-    override func sendDataTaskPublisher(urlRequest: URLRequest, urlSession: URLSession) -> AnyPublisher<RequestDataResponse, Error> {
-                
+    private func getFakeResponse() throws -> RequestDataResponse {
+        
         let stringData = "String data"
         let data: Data = stringData.data(using: .utf8) ?? Data()
-        let urlResponse: URLResponse = HTTPURLResponse(url: URL(string: "https://mobile-content-api.cru.org")!, statusCode: 200, httpVersion: nil, headerFields: nil)!
+        
+        guard let url = URL(string: "https://mobile-content-api.cru.org") else {
+            throw NSError.errorWithDescription(description: "Failed to create URL with string")
+        }
+
+        let urlResponse: URLResponse = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!
         
         let response = RequestDataResponse(data: data, urlResponse: urlResponse)
         
-        return Just(response)
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
+        return response
+    }
+    
+    override func sendDataTask(urlRequest: URLRequest, urlSession: URLSession) async throws -> RequestDataResponse {
+        
+        return try getFakeResponse()
+    }
+    
+    override func sendDataTaskPublisher(urlRequest: URLRequest, urlSession: URLSession) -> AnyPublisher<RequestDataResponse, Error> {
+        
+        do {
+            
+            let response: RequestDataResponse = try getFakeResponse()
+            
+            return Just(response)
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        }
+        catch let error {
+            return Fail(error: error)
+                .eraseToAnyPublisher()
+        }
     }
 }

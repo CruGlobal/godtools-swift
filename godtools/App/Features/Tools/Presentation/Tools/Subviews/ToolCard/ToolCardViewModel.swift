@@ -10,7 +10,8 @@ import Foundation
 import SwiftUI
 import Combine
 
-@MainActor class ToolCardViewModel: ObservableObject {
+@MainActor
+class ToolCardViewModel: ObservableObject {
         
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     

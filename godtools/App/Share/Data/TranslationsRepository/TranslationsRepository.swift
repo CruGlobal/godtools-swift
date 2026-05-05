@@ -426,7 +426,7 @@ extension TranslationsRepository {
     
     private func getTranslationFileFromRemote(translation: TranslationDataModel, fileName: String, requestPriority: RequestPriority) -> AnyPublisher<FileCacheLocation, Error> {
         
-        return api.getTranslationFile(fileName: fileName, requestPriority: requestPriority)
+        return api.getTranslationFilePublisher(fileName: fileName, requestPriority: requestPriority)
             .flatMap({ (response: RequestDataResponse) -> AnyPublisher<FileCacheLocation, Error> in
                 
                 return self
@@ -444,7 +444,7 @@ extension TranslationsRepository {
     
     func downloadAndCacheTranslationZipFiles(translation: TranslationDataModel, requestPriority: RequestPriority) -> AnyPublisher<TranslationFilesDataModel, Error> {
         
-        return api.getTranslationZipFile(translationId: translation.id, requestPriority: requestPriority)
+        return api.getTranslationZipFilePublisher(translationId: translation.id, requestPriority: requestPriority)
             .flatMap({ (response: RequestDataResponse) -> AnyPublisher<TranslationFilesDataModel, Error> in
                 
                 return self

@@ -8,7 +8,8 @@
 
 import Foundation
 
-@MainActor protocol ChooseAppLanguageNavigationFlow: Flow {
+@MainActor
+protocol ChooseAppLanguageNavigationFlow: Flow {
     
     var chooseAppLanguageFlow: ChooseAppLanguageFlow? { get set }
 }
