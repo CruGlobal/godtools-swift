@@ -8,8 +8,6 @@
 
 import Foundation
 import RequestOperation
-import RepositorySync
-import Combine
 
 final class MobileContentAttachmentsApi {
     
@@ -34,16 +32,5 @@ final class MobileContentAttachmentsApi {
             urlRequest: urlRequest,
             urlSession: urlSession
         )
-    }
-    
-    func getAttachmentFilePublisher(url: URL, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
-        
-        let urlRequest: URLRequest = URLRequest(url: url)
-        
-        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
-
-        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
-            .validate()
-            .eraseToAnyPublisher()
     }
 }

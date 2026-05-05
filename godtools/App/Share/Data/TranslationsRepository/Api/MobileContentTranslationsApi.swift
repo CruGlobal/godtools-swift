@@ -8,7 +8,6 @@
 
 import Foundation
 import RequestOperation
-import RepositorySync
 import Combine
 
 final class MobileContentTranslationsApi {
@@ -41,7 +40,7 @@ final class MobileContentTranslationsApi {
         )
     }
     
-    func getTranslationFile(fileName: String, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
+    func getTranslationFilePublisher(fileName: String, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
@@ -68,7 +67,7 @@ final class MobileContentTranslationsApi {
         )
     }
     
-    func getTranslationZipFile(translationId: String, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
+    func getTranslationZipFilePublisher(translationId: String, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
