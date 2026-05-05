@@ -33,7 +33,7 @@ struct NavMenuButtonGradientView: View {
                 
                 Rectangle()
                     .fill(Color.clear)
-                    .frame(width: 40, height: navHeight)
+                    .frame(width: 14, height: navHeight)
                     .background(
                         LinearGradient(gradient: Gradient(colors: [.white, .white.opacity(0.5), .white.opacity(0)]), startPoint: .leading, endPoint: .trailing)
                     )
