@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AttachmentsBundleCache {
+final class AttachmentsBundleCache {
     
     private let bundle: Bundle = Bundle.main
     

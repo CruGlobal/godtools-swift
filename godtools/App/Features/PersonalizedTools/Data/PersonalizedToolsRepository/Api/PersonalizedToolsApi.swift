@@ -8,7 +8,6 @@
 
 import Foundation
 import RequestOperation
-import Combine
 
 final class PersonalizedToolsApi {
     
@@ -124,48 +123,5 @@ final class PersonalizedToolsApi {
         let codableResponse: RequestCodableResponse<JsonApiResponseDataArray<ResourceCodable>, NoResponseCodable> = try response.decodeRequestDataResponseForSuccessCodable()
         
         return codableResponse.successCodable?.dataArray ?? []
-    }
-    
-    func getAllRankedResourcesPublisher(requestPriority: RequestPriority, country: TwoLetterCountryCode?, language: TwoLetterLanguageCode?, resourceTypes: [ResourceType]?) -> AnyPublisher<[ResourceCodable], Error> {
-
-        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
-
-        let urlRequest: URLRequest = getAllRankedResourcesUrlRequest(
-            urlSession: urlSession,
-            country: country,
-            language: language,
-            resourceTypes: resourceTypes
-        )
-        
-        return requestSender
-            .sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
-            .decodeRequestDataResponseForSuccessCodable()
-            .map { (response: RequestCodableResponse<JsonApiResponseDataArray<ResourceCodable>, NoResponseCodable>) in
-                
-                let resources: [ResourceCodable] = response.successCodable?.dataArray ?? []
-                return resources
-            }
-            .eraseToAnyPublisher()
-    }
-    
-    func getDefaultOrderResourcesPublisher(requestPriority: RequestPriority, language: TwoLetterLanguageCode?, resourceTypes: [ResourceType]?) -> AnyPublisher<[ResourceCodable], Error> {
-
-        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
-
-        let urlRequest: URLRequest = getDefaultOrderResourcesUrlRequest(
-            urlSession: urlSession,
-            language: language,
-            resourceTypes: resourceTypes
-        )
-        
-        return requestSender
-            .sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
-            .decodeRequestDataResponseForSuccessCodable()
-            .map { (response: RequestCodableResponse<JsonApiResponseDataArray<ResourceCodable>, NoResponseCodable>) in
-                
-                let resources: [ResourceCodable] = response.successCodable?.dataArray ?? []
-                return resources
-            }
-            .eraseToAnyPublisher()
     }
 }
