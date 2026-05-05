@@ -8,7 +8,6 @@
 
 import Foundation
 import RequestOperation
-import RepositorySync
 
 final class MobileContentAttachmentsApi {
     

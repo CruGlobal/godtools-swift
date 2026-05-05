@@ -10,7 +10,7 @@ import Foundation
 import RequestOperation
 import Combine
 
-class MobileContentResourcesApi {
+final class MobileContentResourcesApi {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let urlSessionPriority: URLSessionPriority

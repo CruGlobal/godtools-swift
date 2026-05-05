@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import RequestOperation
 
-class DoesNotSendUrlRequestSender: RequestSender {
+final class DoesNotSendUrlRequestSender: RequestSender {
     
     private func getFakeResponse() throws -> RequestDataResponse {
         
