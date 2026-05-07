@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class DisabledRemoteConfigDatabase: RemoteConfigRemoteDatabaseInterface {
+final class DisabledRemoteConfigDatabase: RemoteConfigRemoteDatabaseInterface {
     
     init() {
         

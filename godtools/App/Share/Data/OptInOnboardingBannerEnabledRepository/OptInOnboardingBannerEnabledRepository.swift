@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class OptInOnboardingBannerEnabledRepository {
+final class OptInOnboardingBannerEnabledRepository {
         
     private let cache: OptInOnboardingBannerEnabledCache
     

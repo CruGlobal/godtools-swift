@@ -25,7 +25,7 @@ class KeyboardNotificationObserver: NSObject {
     
     private weak var delegate: KeyboardNotificationObserverDelegate?
         
-    required init(loggingEnabled: Bool) {
+    init(loggingEnabled: Bool) {
         
         self.loggingEnabled = loggingEnabled
         

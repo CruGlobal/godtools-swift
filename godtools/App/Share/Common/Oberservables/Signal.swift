@@ -14,7 +14,7 @@ class Signal {
     
     private var observers: [String: Handler] = Dictionary()
         
-    required init() {
+    init() {
 
     }
     

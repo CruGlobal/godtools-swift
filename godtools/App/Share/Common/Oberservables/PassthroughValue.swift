@@ -14,7 +14,7 @@ class PassthroughValue<T> {
     
     private var observers: [String: Handler] = Dictionary()
         
-    required init() {
+    init() {
 
     }
     

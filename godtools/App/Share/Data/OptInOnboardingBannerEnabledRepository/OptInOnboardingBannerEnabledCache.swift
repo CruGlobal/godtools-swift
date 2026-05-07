@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class OptInOnboardingBannerEnabledCache {
+final class OptInOnboardingBannerEnabledCache {
     
     private let userDefaults: UserDefaults = UserDefaults.standard
     

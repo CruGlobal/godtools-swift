@@ -13,11 +13,11 @@ import Combine
 
 final class LanguagesRepository {
     
-    private let api: MobileContentLanguagesApi
+    private let api: LanguagesApiInterface
     private let jsonFileCache: LanguagesJsonFileCache
     private let cache: LanguagesCache
     
-    init(api: MobileContentLanguagesApi, jsonFileCache: LanguagesJsonFileCache, cache: LanguagesCache) {
+    init(api: LanguagesApiInterface, jsonFileCache: LanguagesJsonFileCache, cache: LanguagesCache) {
         
         self.api = api
         self.jsonFileCache = jsonFileCache

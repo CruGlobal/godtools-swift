@@ -19,7 +19,7 @@ extension RequestDataResponse {
         }
         
         guard let httpUrlResponse = HTTPURLResponse(
-            url: URL(string:"https://godtoolsapp.com")!,
+            url: url,
             statusCode: httpStatusCode,
             httpVersion: nil,
             headerFields: nil

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ArticleAemCacheErrorData {
+struct ArticleAemCacheErrorData: Sendable {
     
     let aemUri: String
     let cacheErrors: [ArticleAemCacheError]

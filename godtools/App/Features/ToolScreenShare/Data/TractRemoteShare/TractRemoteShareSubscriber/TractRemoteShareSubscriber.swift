@@ -24,7 +24,7 @@ final class TractRemoteShareSubscriber: NSObject {
     private var timeoutTimer: Timer?
     private var isSubscribingToChannel: WebSocketChannel?
     
-    required init(webSocket: WebSocketInterface, webSocketChannelSubscriber: WebSocketChannelSubscriberInterface, loggingEnabled: Bool) {
+    init(webSocket: WebSocketInterface, webSocketChannelSubscriber: WebSocketChannelSubscriberInterface, loggingEnabled: Bool) {
         
         self.webSocket = webSocket
         self.webSocketChannelSubscriber = webSocketChannelSubscriber

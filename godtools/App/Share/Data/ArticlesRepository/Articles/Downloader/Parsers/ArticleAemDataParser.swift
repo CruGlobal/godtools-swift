@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ArticleAemDataParser {
+final class ArticleAemDataParser {
     
     private let articleJcrContentParser: ArticleAemJcrContentParser = ArticleAemJcrContentParser()
     private let errorDomain: String = String(describing: ArticleAemDataParser.self)

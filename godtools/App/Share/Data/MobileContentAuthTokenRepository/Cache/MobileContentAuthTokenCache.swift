@@ -12,7 +12,7 @@ import RepositorySync
 import SwiftData
 import RealmSwift
 
-class MobileContentAuthTokenCache {
+final class MobileContentAuthTokenCache {
     
     typealias UserId = String
     

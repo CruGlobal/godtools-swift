@@ -9,7 +9,7 @@
 import Foundation
 import RequestOperation
 
-final class MobileContentAttachmentsApi {
+final class MobileContentAttachmentsApi: AttachmentsApiInterface {
     
     private let urlSessionPriority: URLSessionPriority
     private let requestSender: RequestSender

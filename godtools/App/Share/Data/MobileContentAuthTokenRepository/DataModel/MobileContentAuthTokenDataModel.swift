@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct MobileContentAuthTokenDataModel {
+struct MobileContentAuthTokenDataModel: Sendable {
     
     let appleRefreshToken: String?
     let expirationDate: Date?

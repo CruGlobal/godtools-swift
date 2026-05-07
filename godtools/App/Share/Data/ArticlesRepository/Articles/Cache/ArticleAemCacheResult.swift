@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ArticleAemCacheResult {
+struct ArticleAemCacheResult: Sendable {
     
     let numberOfArchivedObjects: Int
     let cacheErrorData: [ArticleAemCacheErrorData]

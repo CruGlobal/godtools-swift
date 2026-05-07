@@ -18,7 +18,7 @@ final class ToolTrainingAnimatedTransitioning: NSObject, UIViewControllerAnimate
     
     let animationType: AnimationType
     
-    required init(animationType: AnimationType) {
+    init(animationType: AnimationType) {
         
         self.animationType = animationType
         

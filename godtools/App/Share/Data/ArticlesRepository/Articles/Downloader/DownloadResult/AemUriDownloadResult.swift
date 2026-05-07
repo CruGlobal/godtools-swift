@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct AemUriDownloadResult {
+struct AemUriDownloadResult: Sendable {
     
     let articleAemData: ArticleAemData?
     let downloadError: ArticleAemDownloadOperationError?

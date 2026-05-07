@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ArticleAemCacheError: Error {
+enum ArticleAemCacheError: Error, Sendable {
     
     case failedToUpdateRealmArticleAemData(error: Error)
     case failedToRemoveWebArchivePlistData(error: Error)

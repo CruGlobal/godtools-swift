@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ArticleAemRepositoryResult {
+struct ArticleAemRepositoryResult: Sendable {
     
     let downloaderResult: ArticleAemDownloaderResult
     let cacheResult: ArticleAemCacheResult

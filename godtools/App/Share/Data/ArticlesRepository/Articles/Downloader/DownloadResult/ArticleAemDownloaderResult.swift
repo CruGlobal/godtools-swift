@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ArticleAemDownloaderResult {
+struct ArticleAemDownloaderResult: Sendable {
     
     let aemDataObjects: [ArticleAemData]
     let aemDownloadErrors: [ArticleAemDownloadOperationError]

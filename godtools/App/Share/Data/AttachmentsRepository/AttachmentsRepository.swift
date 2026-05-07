@@ -13,10 +13,10 @@ import Combine
 
 final class AttachmentsRepository {
         
-    private let api: MobileContentAttachmentsApi
+    private let api: AttachmentsApiInterface
     private let cache: AttachmentsCache
     
-    init(api: MobileContentAttachmentsApi, cache: AttachmentsCache) {
+    init(api: AttachmentsApiInterface, cache: AttachmentsCache) {
         
         self.api = api
         self.cache = cache

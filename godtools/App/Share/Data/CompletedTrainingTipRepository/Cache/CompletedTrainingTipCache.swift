@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 import RepositorySync
 
 final class CompletedTrainingTipCache {

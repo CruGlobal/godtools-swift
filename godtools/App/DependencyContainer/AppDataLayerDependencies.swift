@@ -221,7 +221,7 @@ final class AppDataLayerDependencies {
                 urlSessionPriority: getSharedUrlSessionPriority(),
                 requestSender: getRequestSender()
             ),
-            cache: RealmEmailSignUpsCache(realmDatabase: getSharedRealmDatabase())
+            cache: EmailSignUpsCache(realmDatabase: getSharedRealmDatabase())
         )
     }
     
@@ -359,7 +359,7 @@ final class AppDataLayerDependencies {
             )
         }
         
-        let api = MobileContentAuthTokenAPI(
+        let api = MobileContentAuthTokenApi(
             config: getAppConfig(),
             urlSessionPriority: getSharedUrlSessionPriority(),
             requestSender: getRequestSender()

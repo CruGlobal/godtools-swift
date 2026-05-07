@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct MobileContentAuthTokenDecodable: Codable {
+struct MobileContentAuthTokenDecodable: Codable, Sendable {
     
     let appleRefreshToken: String?
     let expirationDate: Date?
