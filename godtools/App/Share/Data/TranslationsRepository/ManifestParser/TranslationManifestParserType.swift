@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum TranslationManifestParserType {
+enum TranslationManifestParserType: Sendable {
     
     case manifestOnly
     case renderer

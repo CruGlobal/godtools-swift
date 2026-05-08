@@ -10,7 +10,7 @@ import Foundation
 import GodToolsShared
 import Combine
 
-class ParseTranslationManifestForRenderer: TranslationManifestParser {
+final class ParseTranslationManifestForRenderer: TranslationManifestParser {
          
     init(infoPlist: InfoPlist, resourcesFileCache: ResourcesSHA256FileCache, remoteConfigRepository: RemoteConfigRepository) {
             
