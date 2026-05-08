@@ -112,7 +112,7 @@ final class ToolDownloader {
     private func getDownloadToolTranslationsPublishers(translations: [TranslationDataModel], requestPriority: RequestPriority) -> [AnyPublisher<Void, Error>] {
             
         let downloadTranslationsRequests: [AnyPublisher<Void, Error>] = translations.map { (translation: TranslationDataModel) in
-            self.translationsRepository.downloadAndCacheTranslationFiles(translation: translation, requestPriority: requestPriority)
+            self.translationsRepository.downloadAndCacheTranslationFilesPublisher(translation: translation, requestPriority: requestPriority)
                 .map { _ in
                     return Void()
                 }
@@ -146,7 +146,7 @@ final class ToolDownloader {
                 return nil
             }
             
-            return self.translationsRepository.getTranslationManifestFromCacheElseRemote(
+            return self.translationsRepository.getTranslationManifestFromCacheElseRemotePublisher(
                 translation: translation,
                 manifestParserType: .manifestOnly,
                 requestPriority: requestPriority,

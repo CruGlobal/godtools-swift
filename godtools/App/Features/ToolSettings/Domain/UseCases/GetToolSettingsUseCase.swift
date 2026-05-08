@@ -52,7 +52,7 @@ final class GetToolSettingsUseCase {
                 .eraseToAnyPublisher()
         }
         
-        return translationsRepository.getTranslationManifestFromCache(translation: translation, manifestParserType: .manifestOnly, includeRelatedFiles: false)
+        return translationsRepository.getTranslationManifestFromCachePublisher(translation: translation, manifestParserType: .manifestOnly, includeRelatedFiles: false)
             .map {
                 return $0.manifest.hasTips
             }

@@ -20,49 +20,48 @@ final class GetToolDetailsLearnToShareToolIsAvailableUseCase {
     
     func execute(toolId: String, primaryLanguage: BCP47LanguageIdentifier, parallelLanguage: BCP47LanguageIdentifier?) -> AnyPublisher<Bool, Never> {
         
-        return Publishers.CombineLatest(
-            getTranslationHasTipsPublisher(toolId: toolId, language: primaryLanguage),
-            getTranslationHasTipsPublisher(toolId: toolId, language: parallelLanguage)
-        )
-        .map { (primaryTranslationHasTips: Bool, parallelTranslationHasTips: Bool) in
-            
-            return primaryTranslationHasTips || parallelTranslationHasTips
+        return AnyPublisher() {
+            try await self.asyncExecute(
+                toolId: toolId,
+                primaryLanguage: primaryLanguage,
+                parallelLanguage: parallelLanguage
+            )
+        }
+        .catch { _ in
+            return Just(false)
+                .eraseToAnyPublisher()
         }
         .eraseToAnyPublisher()
     }
     
-    private func getTranslationHasTipsPublisher(toolId: String, language: BCP47LanguageIdentifier?) -> AnyPublisher<Bool, Never> {
+    private func asyncExecute(toolId: String, primaryLanguage: BCP47LanguageIdentifier, parallelLanguage: BCP47LanguageIdentifier?) async throws -> Bool {
         
-        guard let language = language, let translation = translationsRepository.getLatestTranslation(resourceId: toolId, languageCode: language) else {
-            return Just(false)
-                .eraseToAnyPublisher()
+        let primaryHasTips: Bool = try await getTranslationHasTips(toolId: toolId, language: primaryLanguage)
+        
+        if primaryHasTips {
+            return true
+        }
+        
+        return try await getTranslationHasTips(toolId: toolId, language: parallelLanguage)
+    }
+    
+    private func getTranslationHasTips(toolId: String, language: BCP47LanguageIdentifier?) async throws -> Bool {
+        
+        guard let language = language,
+              let translation = translationsRepository.getLatestTranslation(resourceId: toolId, languageCode: language) else {
+            
+            return false
         }
         
         let manifestParserType: TranslationManifestParserType = .manifestOnly
         let includeRelatedFiles: Bool = false
         
-        return translationsRepository.getTranslationManifestFromCache(translation: translation, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
-            .catch({ (cacheError: Error) -> AnyPublisher<TranslationManifestFileDataModel, Error> in
-                
-                return self.translationsRepository.getTranslationManifestFromRemote(
-                    translation: translation,
-                    manifestParserType: manifestParserType,
-                    requestPriority: .high,
-                    includeRelatedFiles: includeRelatedFiles,
-                    shouldFallbackToLatestDownloadedTranslationIfRemoteFails: true
-                )
-                .eraseToAnyPublisher()
-            })
-            .flatMap({ (translationManifestDataModel: TranslationManifestFileDataModel) -> AnyPublisher<Bool, Never> in
-                
-                return Just(translationManifestDataModel.manifest.hasTips)
-                    .eraseToAnyPublisher()
-            })
-            .catch({ (error: Error) -> AnyPublisher<Bool, Never> in
-                
-                return Just(false)
-                    .eraseToAnyPublisher()
-            })
-            .eraseToAnyPublisher()
+        return try await translationsRepository.getTranslationManifestFromCacheElseRemote(
+            translation: translation,
+            manifestParserType: manifestParserType,
+            requestPriority: .high,
+            includeRelatedFiles: includeRelatedFiles,
+            shouldFallbackToLatestDownloadedTranslationIfRemoteFails: true
+        ).manifest.hasTips
     }
 }

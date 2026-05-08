@@ -673,7 +673,7 @@ extension MobileContentRendererViewModel {
             return
         }
         
-        translationsRepository.getTranslationManifestsFromRemote(translations: translationsNeededDownloading, manifestParserType: .renderer, requestPriority: .high, includeRelatedFiles: true, shouldFallbackToLatestDownloadedTranslationIfRemoteFails: false)
+        translationsRepository.getTranslationManifestsFromRemotePublisher(translations: translationsNeededDownloading, manifestParserType: .renderer, requestPriority: .high, includeRelatedFiles: true, shouldFallbackToLatestDownloadedTranslationIfRemoteFails: false)
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 

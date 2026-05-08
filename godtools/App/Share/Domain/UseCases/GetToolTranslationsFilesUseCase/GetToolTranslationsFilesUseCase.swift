@@ -66,12 +66,12 @@ final class GetToolTranslationsFilesUseCase {
                 
                 translationOrder = result.translations
                 
-                return self.translationsRepository.getTranslationManifestsFromCache(translations: translations, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
+                return self.translationsRepository.getTranslationManifestsFromCachePublisher(translations: translations, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
                     .catch({ (error: Error) -> AnyPublisher<[TranslationManifestFileDataModel], Error> in
                         
                         self.initiateDownloadStarted(downloadStarted: downloadStarted)
                             
-                        return self.translationsRepository.getTranslationManifestsFromRemote(translations: translations, manifestParserType: manifestParserType, requestPriority: requestPriority, includeRelatedFiles: includeRelatedFiles, shouldFallbackToLatestDownloadedTranslationIfRemoteFails: true)
+                        return self.translationsRepository.getTranslationManifestsFromRemotePublisher(translations: translations, manifestParserType: manifestParserType, requestPriority: requestPriority, includeRelatedFiles: includeRelatedFiles, shouldFallbackToLatestDownloadedTranslationIfRemoteFails: true)
                             .eraseToAnyPublisher()
                     })
                     .eraseToAnyPublisher()
@@ -80,7 +80,7 @@ final class GetToolTranslationsFilesUseCase {
                     
                 let translations: [TranslationDataModel] = translationManifests.map({ $0.translation })
                 
-                return self.translationsRepository.getTranslationManifestsFromCache(translations: translations, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
+                return self.translationsRepository.getTranslationManifestsFromCachePublisher(translations: translations, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
                     .eraseToAnyPublisher()
             })
             .flatMap({ (translationManifests: [TranslationManifestFileDataModel]) -> AnyPublisher<ToolTranslationsDomainModel, Error> in

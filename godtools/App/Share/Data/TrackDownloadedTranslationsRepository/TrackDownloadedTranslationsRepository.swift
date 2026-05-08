@@ -18,18 +18,16 @@ final class TrackDownloadedTranslationsRepository {
         self.cache = cache
     }
     
-    func getLatestDownloadedTranslation(resourceId: String, languageId: String) -> DownloadedTranslationDataModel? {
-        do {
-            return try cache.getLatestDownloadedTranslation(resourceId: resourceId, languageId: languageId)
-        }
-        catch _ {
-            return nil
-        }
+    func getLatestDownloadedTranslation(resourceId: String, languageId: String) throws -> DownloadedTranslationDataModel? {
+        
+        return try cache.getLatestDownloadedTranslation(
+            resourceId: resourceId,
+            languageId: languageId
+        )
     }
     
-    func trackTranslationDownloaded(translation: TranslationDataModel) -> AnyPublisher<[DownloadedTranslationDataModel], Error> {
-        return AnyPublisher() {
-            return try await self.cache.trackTranslationDownloaded(translation: translation)
-        }
+    func trackTranslationDownloaded(translation: TranslationDataModel) async throws -> [DownloadedTranslationDataModel] {
+        
+        return try await self.cache.trackTranslationDownloaded(translation: translation)
     }
 }

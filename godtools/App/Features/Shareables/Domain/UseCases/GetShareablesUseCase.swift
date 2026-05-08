@@ -26,7 +26,7 @@ final class GetShareablesUseCase {
                 .eraseToAnyPublisher()
         }
         
-        return translationsRepository.getTranslationManifestFromCacheElseRemote(
+        return translationsRepository.getTranslationManifestFromCacheElseRemotePublisher(
             translation: translation,
             manifestParserType: .manifestOnly,
             requestPriority: .medium,
