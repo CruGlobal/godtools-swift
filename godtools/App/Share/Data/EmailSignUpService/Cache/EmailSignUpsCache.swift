@@ -1,5 +1,5 @@
 //
-//  RealmEmailSignUpsCache.swift
+//  EmailSignUpsCache.swift
 //  godtools
 //
 //  Created by Levi Eggert on 12/22/20.
@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import RepositorySync
 
-final class RealmEmailSignUpsCache {
+final class EmailSignUpsCache {
     
     private let realmDatabase: RealmDatabase
     

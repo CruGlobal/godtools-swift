@@ -21,7 +21,7 @@ class ArticlesErrorMessageView: UIView, NibBased {
     @IBOutlet weak private var messageLabel: UILabel!
     @IBOutlet weak private var downloadArticlesButton: UIButton!
     
-    required init() {
+    init() {
         fatalError("init() has not been implemented")
     }
     

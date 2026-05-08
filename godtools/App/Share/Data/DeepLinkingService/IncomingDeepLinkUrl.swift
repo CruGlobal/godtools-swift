@@ -15,7 +15,7 @@ class IncomingDeepLinkUrl {
     let rootPath: String?
     let queryParameters: [String: Any]
     
-    required init(url: URL) {
+    init(url: URL) {
         
         self.url = url
         self.pathComponents = url.pathComponents.filter({$0 != "/"})

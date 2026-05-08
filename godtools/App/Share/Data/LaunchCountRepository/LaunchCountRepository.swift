@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import UIKit
 
-class LaunchCountRepository: LaunchCountRepositoryInterface {
+final class LaunchCountRepository: LaunchCountRepositoryInterface {
     
     static let shared: LaunchCountRepository = LaunchCountRepository()
     

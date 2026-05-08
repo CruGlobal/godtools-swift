@@ -8,11 +8,11 @@
 
 import Foundation
 
-class ToolTrainingTipsOnboardingViewsService {
+final class ToolTrainingTipsOnboardingViewsService {
     
     private let cache: ToolTrainingTipsOnboardingViewsUserDefaultsCache
     
-    required init(cache: ToolTrainingTipsOnboardingViewsUserDefaultsCache) {
+    init(cache: ToolTrainingTipsOnboardingViewsUserDefaultsCache) {
         
         self.cache = cache
     }

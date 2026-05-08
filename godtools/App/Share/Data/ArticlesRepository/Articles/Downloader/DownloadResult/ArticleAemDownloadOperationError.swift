@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ArticleAemDownloadOperationError: Error {
+enum ArticleAemDownloadOperationError: Error, Sendable {
     
     case cancelled
     case failedToParseJson(error: ArticleAemDataParserError)

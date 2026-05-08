@@ -388,7 +388,7 @@ extension GetUserAccountDetailsUseCaseTests {
         )
         
         let authTokenRepository = MobileContentAuthTokenRepository(
-            api: MockMobileContentAuthTokenAPI(fetchedAuthToken: nil),
+            api: MockMobileContentAuthTokenApi(fetchedAuthToken: nil),
             cache: mobileContentAuthTokenCache
         )
         

@@ -13,9 +13,9 @@ import Combine
 final class EmailSignUpService {
     
     private let api: EmailSignUpApiInterface
-    private let cache: RealmEmailSignUpsCache
+    private let cache: EmailSignUpsCache
     
-    init(api: EmailSignUpApiInterface, cache: RealmEmailSignUpsCache) {
+    init(api: EmailSignUpApiInterface, cache: EmailSignUpsCache) {
         
         self.api = api
         self.cache = cache

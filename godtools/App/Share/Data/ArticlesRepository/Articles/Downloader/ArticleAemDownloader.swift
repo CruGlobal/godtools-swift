@@ -171,4 +171,102 @@ class ArticleAemDownloader {
             }
             .eraseToAnyPublisher()
     }
+    
+    private func downloadAemUri(aemUri: String, downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority) async throws(ArticleAemDownloadOperationError) -> ArticleAemData {
+        
+        guard let aemUrl = URL(string: aemUri) else {
+            throw .invalidAemSrcUrl
+        }
+        
+        let cacheTimeInterval: TimeInterval = downloadCachePolicy.getCacheTimeInterval()
+        
+        let urlJsonString: String = aemUri + "." + String(maxAemJsonTreeLevels) + ".json?_=\(cacheTimeInterval)"
+        
+        guard let urlJson: URL = URL(string: urlJsonString) else {
+            throw .invalidAemJsonUrl
+        }
+        
+        let errorDomain: String = "ArticleAemDownloadOperation"
+        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
+        
+        let urlRequest = URLRequest(
+            url: urlJson,
+            cachePolicy: urlSession.configuration.requestCachePolicy,
+            timeoutInterval: urlSession.configuration.timeoutIntervalForRequest
+        )
+        
+        do {
+            
+            let response: RequestDataResponse = try await requestSender.sendDataTask(
+                urlRequest: urlRequest,
+                urlSession: urlSession
+            )
+            
+            let httpStatusCode: Int = response.urlResponse.httpStatusCode ?? -1
+            let isSuccessHttpStatusCode: Bool = httpStatusCode >= 200 && httpStatusCode < 400
+            
+            guard isSuccessHttpStatusCode else {
+                
+                throw ArticleAemDownloadOperationError.httpError(
+                    error: NSError(
+                        domain: errorDomain,
+                        code: -1,
+                        userInfo: [NSLocalizedDescriptionKey: "The request failed with a status code: \(httpStatusCode)"
+                    ])
+                )
+            }
+            
+            do {
+                
+                let json: Any = try JSONSerialization.jsonObject(with: response.data, options: [])
+                
+                guard let jsonDictionary = json as? [String: Any], !jsonDictionary.isEmpty else {
+                    
+                    throw ArticleAemDownloadOperationError.failedToSerializeJson(
+                        error: NSError(
+                            domain: errorDomain,
+                            code: -1,
+                            userInfo: [NSLocalizedDescriptionKey: "Failed to parse jsonData because data does not exist."
+                        ])
+                    )
+                }
+                
+                let aemDataParser = ArticleAemDataParser()
+                
+                let aemParserResult: Result<ArticleAemData, ArticleAemDataParserError> = aemDataParser.parse(
+                    aemUrl: aemUrl,
+                    aemJson: jsonDictionary
+                )
+                
+                switch aemParserResult {
+                
+                case .success(let articleAemData):
+                    return articleAemData
+                    
+                case .failure(let aemParserError):
+                    throw ArticleAemDownloadOperationError.failedToParseJson(error: aemParserError)
+                }
+            }
+            catch let error {
+                throw ArticleAemDownloadOperationError.failedToSerializeJson(error: error)
+            }
+        }
+        catch let error {
+            
+            let errorCode: Int = (error as NSError).code
+            let operationError: ArticleAemDownloadOperationError
+            
+            if errorCode == CFNetworkErrors.cfurlErrorCancelled.rawValue {
+                operationError = .cancelled
+            }
+            else if errorCode == CFNetworkErrors.cfurlErrorNotConnectedToInternet.rawValue {
+                operationError = .noNetworkConnection
+            }
+            else {
+                operationError = .unknownError(error: error)
+            }
+            
+            throw operationError
+        }
+    }
 }

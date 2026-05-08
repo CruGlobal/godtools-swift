@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ArticleAemDownloaderError: Error {
+enum ArticleAemDownloaderError: Error, Sendable {
     
     case cancelled
     case noNetworkConnection

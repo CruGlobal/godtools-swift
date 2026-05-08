@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ArticleAemDataParserError: Error {
+enum ArticleAemDataParserError: Error, Sendable {
     
     case failedToLocateJson(error: Error)
 }

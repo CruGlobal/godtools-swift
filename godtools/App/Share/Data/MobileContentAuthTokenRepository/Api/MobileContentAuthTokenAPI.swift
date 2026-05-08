@@ -1,5 +1,5 @@
 //
-//  MobileContentAuthTokenAPI.swift
+//  MobileContentAuthTokenApi.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 10/31/22.
@@ -9,7 +9,7 @@
 import Foundation
 import RequestOperation
 
-final class MobileContentAuthTokenAPI: MobileContentAuthTokenAPIInterface {
+final class MobileContentAuthTokenApi: MobileContentAuthTokenApiInterface {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let urlSessionPriority: URLSessionPriority

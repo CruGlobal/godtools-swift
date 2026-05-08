@@ -10,7 +10,7 @@
 import Foundation
 import Combine
 
-class RemoteConfigRepository {
+final class RemoteConfigRepository {
         
     private let remoteDatabase: RemoteConfigRemoteDatabaseInterface
     

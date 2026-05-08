@@ -8,7 +8,7 @@
 
 import Foundation
 
-class FirebaseDebugArguments {
+final class FirebaseDebugArguments {
     
     private let enableFirebaseDebugArguments: [String]
     private let disableFirebaseDebugArguments: [String]

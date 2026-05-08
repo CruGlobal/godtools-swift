@@ -8,7 +8,7 @@
 
 import Foundation
 
-class FavoritingToolMessageCache {
+final class FavoritingToolMessageCache {
     
     private let userDefaultsCache: UserDefaultsCacheInterface
         
