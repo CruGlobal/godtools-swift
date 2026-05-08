@@ -172,10 +172,6 @@ class ArticleAemDownloader {
             .eraseToAnyPublisher()
     }
     
-    func download(aemUris: [String], downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority) {
-        
-    }
-    
     private func downloadAemUri(aemUri: String, downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority) async throws(ArticleAemDownloadOperationError) -> ArticleAemData {
         
         guard let aemUrl = URL(string: aemUri) else {
