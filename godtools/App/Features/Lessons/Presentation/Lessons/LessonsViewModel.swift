@@ -64,7 +64,6 @@ final class LessonsViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .execute()
-            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
 
         getLocalizationSettingsUseCase

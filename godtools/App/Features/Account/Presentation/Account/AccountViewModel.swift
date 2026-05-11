@@ -54,7 +54,6 @@ final class AccountViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .execute()
-            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
 
         $appLanguage

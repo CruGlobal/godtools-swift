@@ -31,7 +31,6 @@ final class LocalizationSettingsConfirmationViewModel: ObservableObject {
 
         getCurrentAppLanguageUseCase
             .execute()
-            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
 
         $appLanguage

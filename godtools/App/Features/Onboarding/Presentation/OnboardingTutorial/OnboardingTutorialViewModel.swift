@@ -12,11 +12,8 @@ import Combine
 @MainActor
 final class OnboardingTutorialViewModel: ObservableObject {
     
-    private static let tutorialPages: [OnboardingTutorialPage] = [.readyForEveryConversation, .talkAboutGodWithAnyone, .prepareForTheMomentsThatMatter, .helpSomeoneDiscoverJesus]
     private static let continueButtonContinueAccessibility: AccessibilityStrings.Button = .continueForward
-    
-    private static var trackInBackgroundViewedOnboardingTutorialCancellable: AnyCancellable?
-    
+        
     private let viewedOnboardingTutorialUseCase: ViewedOnboardingTutorialUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getOnboardingTutorialStringsUseCase: GetOnboardingTutorialStringsUseCase
@@ -36,7 +33,7 @@ final class OnboardingTutorialViewModel: ObservableObject {
     @Published private(set) var continueButtonAccessibility: AccessibilityStrings.Button = OnboardingTutorialViewModel.continueButtonContinueAccessibility
     @Published private(set) var hidesSkipButton: Bool = true
     @Published private(set) var showsChooseLanguageButton: Bool = true
-    @Published private(set) var pages: [OnboardingTutorialPage] = Array()
+    @Published private(set) var pages: [OnboardingTutorialPage] = [.readyForEveryConversation, .talkAboutGodWithAnyone, .prepareForTheMomentsThatMatter, .helpSomeoneDiscoverJesus]
     @Published private(set) var continueButtonTitle: String = ""
     
     @Published var currentPage: Int = 0
@@ -50,38 +47,27 @@ final class OnboardingTutorialViewModel: ObservableObject {
         self.trackTutorialVideoAnalytics = trackTutorialVideoAnalytics
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
-                        
-        OnboardingTutorialViewModel.trackInBackgroundViewedOnboardingTutorialCancellable = viewedOnboardingTutorialUseCase
-            .execute()
-            .receive(on: DispatchQueue.main)
-            .sink { (void: Void) in
-                
-            }
+        
+        Task {
+            try await viewedOnboardingTutorialUseCase
+                .execute()
+        }
                 
         getCurrentAppLanguageUseCase
             .execute()
-            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                
-                getOnboardingTutorialStringsUseCase
-                    .execute(appLanguage: appLanguage)
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: OnboardingTutorialStringsDomainModel) in
-                
-                self?.strings = strings
-                self?.pages = OnboardingTutorialViewModel.tutorialPages
+            .sink { [weak self] (appLanauge: AppLanguageDomainModel) in
+                Task {
+                    self?.strings = await getOnboardingTutorialStringsUseCase.execute(appLanguage: appLanauge)
+                }
             }
             .store(in: &cancellables)
         
         Publishers.CombineLatest(
             $currentPage,
-            $pages.dropFirst()
+            $pages
         )
         .receive(on: DispatchQueue.main)
         .sink { [weak self] (currentPage: Int, pages: [OnboardingTutorialPage]) in

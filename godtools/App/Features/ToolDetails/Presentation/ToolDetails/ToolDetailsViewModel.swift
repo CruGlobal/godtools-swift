@@ -76,7 +76,6 @@ final class ToolDetailsViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .execute()
-            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         Publishers.CombineLatest(

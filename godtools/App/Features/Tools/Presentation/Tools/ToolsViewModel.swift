@@ -84,7 +84,6 @@ final class ToolsViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .execute()
-            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         getLocalizationSettingsUseCase

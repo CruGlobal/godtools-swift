@@ -18,11 +18,9 @@ final class ViewedOnboardingTutorialUseCase {
         self.onboardingTutorialViewedRepository = onboardingTutorialViewedRepository
     }
     
-    func execute() -> AnyPublisher<Void, Never> {
+    func execute() async throws {
         
-        onboardingTutorialViewedRepository.storeOnboardingTutorialViewed(viewed: true)
-        
-        return Just(())
-            .eraseToAnyPublisher()
+        onboardingTutorialViewedRepository
+            .storeOnboardingTutorialViewed(viewed: true)
     }
 }
