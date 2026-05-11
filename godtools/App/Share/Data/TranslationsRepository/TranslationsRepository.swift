@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 import GodToolsShared
 import RequestOperation
 import RepositorySync
@@ -142,11 +141,59 @@ extension TranslationsRepository {
 
 extension TranslationsRepository {
     
+    func getTranslationManifestsFromRemote(translations: [TranslationDataModel], manifestParserType: TranslationManifestParserType, requestPriority: RequestPriority, includeRelatedFiles: Bool, shouldFallbackToLatestDownloadedTranslationIfRemoteFails: Bool) async throws -> [TranslationManifestFileDataModel] {
+           
+        var translationManifests: [TranslationManifestFileDataModel] = Array()
+        
+        for translation in translations {
+            
+            let translationManifest = try await getTranslationManifestFromRemote(
+                translation: translation,
+                manifestParserType: manifestParserType,
+                requestPriority: requestPriority,
+                includeRelatedFiles: includeRelatedFiles,
+                shouldFallbackToLatestDownloadedTranslationIfRemoteFails: shouldFallbackToLatestDownloadedTranslationIfRemoteFails
+            )
+            
+            translationManifests.append(translationManifest)
+        }
+        
+        return orderTranslationManifests(translationManifests: translationManifests, by: translations)
+    }
+    
+    private func orderTranslationManifests(translationManifests: [TranslationManifestFileDataModel], by translations: [TranslationDataModel]) -> [TranslationManifestFileDataModel] {
+        
+        var maintainTranslationDownloadOrder: [TranslationManifestFileDataModel] = Array()
+        
+        for translation in translations {
+            
+            let translationManifest: TranslationManifestFileDataModel?
+            
+            if let downloadedTranslationManifest = translationManifests.first(where: {$0.translation.id == translation.id}) {
+                translationManifest = downloadedTranslationManifest
+            }
+            else if let downloadedTranslationManifest = translationManifests.first(where: {$0.translation.resourceDataModel?.id == translation.resourceDataModel?.id && $0.translation.languageDataModel?.id == translation.languageDataModel?.id}) {
+                translationManifest = downloadedTranslationManifest
+            }
+            else {
+                translationManifest = nil
+            }
+            
+            guard let translationManifest = translationManifest else {
+                continue
+            }
+            
+            maintainTranslationDownloadOrder.append(translationManifest)
+        }
+        
+        return maintainTranslationDownloadOrder
+    }
+    
     func getTranslationManifestFromRemote(translation: TranslationDataModel, manifestParserType: TranslationManifestParserType, requestPriority: RequestPriority, includeRelatedFiles: Bool, shouldFallbackToLatestDownloadedTranslationIfRemoteFails: Bool) async throws -> TranslationManifestFileDataModel {
         
         do {
             
-            let fileCacheLocation: FileCacheLocation = try await getTranslationFileFromCacheElseRemote(
+            _ = try await getTranslationFileFromCacheElseRemote(
                 translation: translation,
                 fileName: translation.manifestName,
                 requestPriority: requestPriority
@@ -215,7 +262,7 @@ extension TranslationsRepository {
                 
                 do {
                     
-                    let translationFilesDataModel = try await downloadAndCacheTranslationZipFiles(
+                    _ = try await downloadAndCacheTranslationZipFiles(
                         translation: translation,
                         requestPriority: requestPriority
                     )
@@ -262,7 +309,7 @@ extension TranslationsRepository {
         
         do {
             
-            let fileCacheLocation: FileCacheLocation = try await getTranslationFileFromCacheElseRemote(
+            _ = try await getTranslationFileFromCacheElseRemote(
                 translation: translation,
                 fileName: translation.manifestName,
                 requestPriority: requestPriority

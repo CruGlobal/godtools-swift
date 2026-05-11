@@ -24,46 +24,49 @@ final class GetToolSettingsUseCase {
     
     func execute(appLanguage: AppLanguageDomainModel, toolId: String, toolLanguageId: String, toolPrimaryLanguageId: String, toolParallelLanguageId: String?) -> AnyPublisher<ToolSettingsDomainModel, Error> {
         
-        return Publishers.CombineLatest3(
-            getHasTipsPublisher(toolId: toolId, toolLanguageId: toolLanguageId),
-            getLanguagePublisher(languageId: toolPrimaryLanguageId, translateInLanguage: appLanguage)
-                .setFailureType(to: Error.self),
-            getLanguagePublisher(languageId: toolParallelLanguageId, translateInLanguage: appLanguage)
-                .setFailureType(to: Error.self)
-        )
-        .map {
-            
-            let domainModel = ToolSettingsDomainModel(
-                hasTips: $0,
-                primaryLanguage: $1,
-                parallelLanguage: $2
+        return AnyPublisher() {
+            return try await self.asyncExecute(
+                appLanguage: appLanguage,
+                toolId: toolId,
+                toolLanguageId: toolLanguageId,
+                toolPrimaryLanguageId: toolPrimaryLanguageId,
+                toolParallelLanguageId: toolParallelLanguageId
             )
-            
-            return domainModel
         }
-        .eraseToAnyPublisher()
     }
     
-    private func getHasTipsPublisher(toolId: String, toolLanguageId: String) -> AnyPublisher<Bool, Error> {
+    func asyncExecute(appLanguage: AppLanguageDomainModel, toolId: String, toolLanguageId: String, toolPrimaryLanguageId: String, toolParallelLanguageId: String?) async throws -> ToolSettingsDomainModel {
+        
+        let hasTips: Bool = try await getHasTips(toolId: toolId, toolLanguageId: toolLanguageId)
+        let primaryLanguage: ToolSettingsToolLanguageDomainModel? = getLanguage(languageId: toolPrimaryLanguageId, translateInLanguage: appLanguage)
+        let parallelLanguage: ToolSettingsToolLanguageDomainModel? = getLanguage(languageId: toolParallelLanguageId, translateInLanguage: appLanguage)
+        
+        return ToolSettingsDomainModel(
+            hasTips: hasTips,
+            primaryLanguage: primaryLanguage,
+            parallelLanguage: parallelLanguage
+        )
+    }
+    
+    private func getHasTips(toolId: String, toolLanguageId: String) async throws -> Bool {
         
         guard let translation = translationsRepository.getLatestTranslation(resourceId: toolId, languageId: toolLanguageId) else {
-            return Just(false)
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
+            return false
         }
         
-        return translationsRepository.getTranslationManifestFromCachePublisher(translation: translation, manifestParserType: .manifestOnly, includeRelatedFiles: false)
-            .map {
-                return $0.manifest.hasTips
-            }
-            .eraseToAnyPublisher()
+        return try await translationsRepository.getTranslationManifestFromCache(
+            translation: translation,
+            manifestParserType: .manifestOnly,
+            includeRelatedFiles: false
+        )
+        .manifest
+        .hasTips
     }
     
-    private func getLanguagePublisher(languageId: String?, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolSettingsToolLanguageDomainModel?, Never> {
+    private func getLanguage(languageId: String?, translateInLanguage: AppLanguageDomainModel) -> ToolSettingsToolLanguageDomainModel? {
         
         guard let languageId = languageId, let language = languagesRepository.getLanguage(id: languageId) else {
-            return Just(nil)
-                .eraseToAnyPublisher()
+            return nil
         }
         
         let languageName: String = getTranslatedLanguageName.getLanguageName(
@@ -76,7 +79,6 @@ final class GetToolSettingsUseCase {
             languageName: languageName
         )
         
-        return Just(toolSettingsLanguage)
-            .eraseToAnyPublisher()
+        return toolSettingsLanguage
     }
 }

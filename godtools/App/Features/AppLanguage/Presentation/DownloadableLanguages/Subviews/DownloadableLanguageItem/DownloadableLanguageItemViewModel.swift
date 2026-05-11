@@ -109,13 +109,13 @@ extension DownloadableLanguageItemViewModel {
         
         recycleState.downloadState = .notDownloaded
         
-        removeDownloadedToolLanguageUseCase
-            .execute(languageId: languageId)
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-
-            }
-            .store(in: &Self.backgroundCancellables)
+        do {
+            try removeDownloadedToolLanguageUseCase
+                .execute(languageId: languageId)
+        }
+        catch _ {
+            
+        }
     }
 }
 
@@ -125,6 +125,10 @@ extension DownloadableLanguageItemViewModel {
     
     private static func startLanguageDownload(downloadToolLanguageUseCase: DownloadToolLanguageUseCase, recycleState: DownloadableLanguageItemRecycleState, languageId: String, flowDelegate: FlowDelegate?) {
                   
+        // TODO: Implement. ~Levi
+        
+        
+        /*
         let isDownloading: Bool = recycleState.downloadState.isDownloading
 
         guard !isDownloading else {
@@ -156,7 +160,7 @@ extension DownloadableLanguageItemViewModel {
                 
                 recycleState.downloadState = .downloading(progress: progress)
             }
-            .store(in: &backgroundCancellables)
+            .store(in: &backgroundCancellables)*/
     }
 }
 

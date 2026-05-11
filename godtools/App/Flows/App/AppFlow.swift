@@ -298,29 +298,27 @@ extension AppFlow {
         let resourceViewsService: ResourceViewsService = appDiContainer.dataLayer.getResourceViewsService()
         let remoteConfigRepository: RemoteConfigRepository = appDiContainer.dataLayer.getRemoteConfigRepository()
         
-        resourcesRepository
-            .syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsPublisher(requestPriority: .medium, forceFetchFromRemote: false)
-            .flatMap({ (result: ResourcesCacheSyncResult) -> AnyPublisher<Void, Error> in
-                
-                return toolLanguageDownloader
-                    .syncDownloadedLanguagesPublisher()
-                    .eraseToAnyPublisher()
-            })
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { _ in
-                
-            }, receiveValue: { _ in
-                
-            })
-            .store(in: &cancellables)
+        Task {
+            
+            _ = try await resourcesRepository
+                .syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments(
+                    requestPriority: .medium,
+                    forceFetchFromRemote: false
+                )
+            
+            _ = try await toolLanguageDownloader
+                .syncDownloadedLanguages()
+        }
         
         Task {
+            
             try await followUpsService.postFailedFollowUpsIfNeeded(
                 requestPriority: .low
             )
         }
         
         Task {
+            
             try await resourceViewsService.postFailedResourceViewsIfNeeded(
                 requestPriority: .low
             )

@@ -32,263 +32,255 @@ class SwiftResourcesCacheSync {
         self.trackDownloadedTranslationsRepository = trackDownloadedTranslationsRepository
     }
     
-    func syncResources(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable, shouldRemoveDataThatNoLongerExists: Bool) -> AnyPublisher<ResourcesCacheSyncResult, Error> {
-     
-        return Future() { promise in
-            
-            let swiftDatabase: SwiftDatabase = self.swiftDatabase
-            
-            let context = swiftDatabase.openContext()
-            
-            var newObjectsToStore: [any IdentifiableSwiftDataObject] = Array()
-            
-            var resourcesDictionary: [ResourceId: SwiftResource] = Dictionary()
-            var translationsDictionary: [TranslationId: SwiftTranslation] = Dictionary()
-                            
-            // sync new resourecs
-            
-            var existingResourcesMinusNewlyAddedResources: [SwiftResource]
-            
-            if shouldRemoveDataThatNoLongerExists {
-                
-                let allResources: [SwiftResource]
-                do {
-                    allResources = try swiftDatabase.read.objects(context: context, query: nil)
-                }
-                catch _ {
-                    allResources = Array()
-                }
-                
-                existingResourcesMinusNewlyAddedResources = allResources
-            }
-            else {
-                existingResourcesMinusNewlyAddedResources = Array()
-            }
-            
-            if !resourcesPlusLatestTranslationsAndAttachments.resources.isEmpty {
-                
-                for newResource in resourcesPlusLatestTranslationsAndAttachments.resources {
-                    
-                    let resource = SwiftResource.createNewFrom(model: newResource.toModel())
-                    resourcesDictionary[resource.id] = resource
-                    
-                    newObjectsToStore.append(resource)
-                    
-                    if let index = existingResourcesMinusNewlyAddedResources.firstIndex(where: { $0.id == newResource.id }) {
+    func syncResources(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable, shouldRemoveDataThatNoLongerExists: Bool) throws -> ResourcesCacheSyncResult {
+        
+        let swiftDatabase: SwiftDatabase = self.swiftDatabase
+        
+        let context = swiftDatabase.openContext()
+        
+        var newObjectsToStore: [any IdentifiableSwiftDataObject] = Array()
+        
+        var resourcesDictionary: [ResourceId: SwiftResource] = Dictionary()
+        var translationsDictionary: [TranslationId: SwiftTranslation] = Dictionary()
                         
-                        existingResourcesMinusNewlyAddedResources.remove(at: index)
-                    }
-                }
-            }
-            else {
-                
-                existingResourcesMinusNewlyAddedResources = []
-            }
+        // sync new resourecs
+        
+        var existingResourcesMinusNewlyAddedResources: [SwiftResource]
+        
+        if shouldRemoveDataThatNoLongerExists {
             
-            // sync new translations
-            
-            var existingTranslationsMinusNewlyAddedTranslations: [SwiftTranslation]
-            
-            if shouldRemoveDataThatNoLongerExists {
-                
-                let allTranslations: [SwiftTranslation]
-                do {
-                    allTranslations = try swiftDatabase.read.objects(context: context, query: nil)
-                }
-                catch _ {
-                    allTranslations = Array()
-                }
-                
-                existingTranslationsMinusNewlyAddedTranslations = allTranslations
-            }
-            else {
-                existingTranslationsMinusNewlyAddedTranslations = Array()
-            }
-            
-            if !resourcesPlusLatestTranslationsAndAttachments.translations.isEmpty {
-                
-                for newTranslation in resourcesPlusLatestTranslationsAndAttachments.translations {
-                    
-                    let translation = SwiftTranslation.createNewFrom(model: newTranslation.toModel())
-                    
-                    if let resourceId = newTranslation.resource?.id {
-                        translation.resource = resourcesDictionary[resourceId]
-                    }
-                    
-                    if let languageId = newTranslation.language?.id {
-                        do {
-                            translation.language = try swiftDatabase.read.object(context: context, id: languageId)
-                        }
-                        catch _ {
-                            
-                        }
-                    }
-                    
-                    translationsDictionary[translation.id] = translation
-                    
-                    newObjectsToStore.append(translation)
-                    
-                    if let indexOfNewTranslation = existingTranslationsMinusNewlyAddedTranslations.firstIndex(where: { $0.id == newTranslation.id }) {
-                        
-                        existingTranslationsMinusNewlyAddedTranslations.remove(at: indexOfNewTranslation)
-                    }
-                }
-            }
-            else {
-                
-                existingTranslationsMinusNewlyAddedTranslations = []
-            }
-            
-            // sync new attachments
-            
-            var existingAttachmentsMinusNewlyAddedAttachments: [SwiftAttachment]
-            
-            if shouldRemoveDataThatNoLongerExists {
-                
-                let allAttachments: [SwiftAttachment]
-                do {
-                    allAttachments = try swiftDatabase.read.objects(context: context, query: nil)
-                }
-                catch _ {
-                    allAttachments = Array()
-                }
-                
-                existingAttachmentsMinusNewlyAddedAttachments = allAttachments
-            }
-            else {
-                existingAttachmentsMinusNewlyAddedAttachments = Array()
-            }
-            
-            if !resourcesPlusLatestTranslationsAndAttachments.attachments.isEmpty {
-                
-                for newAttachment in resourcesPlusLatestTranslationsAndAttachments.attachments {
-                    
-                    let attachment = SwiftAttachment.createNewFrom(model: newAttachment.toModel())
-                    
-                    if let resourceId = newAttachment.resource?.id {
-                        attachment.resource = resourcesDictionary[resourceId]
-                    }
-                    
-                    newObjectsToStore.append(attachment)
-                    
-                    if let indexOfNewAttachment = existingAttachmentsMinusNewlyAddedAttachments.firstIndex(where: { $0.id == newAttachment.id }) {
-                        
-                        existingAttachmentsMinusNewlyAddedAttachments.remove(at: indexOfNewAttachment)
-                    }
-                }
-            }
-            else {
-                
-                existingAttachmentsMinusNewlyAddedAttachments = []
-            }
-            
-            // attach variants and default variant, added variants will backlink to metatool
-            // attach latest translations and attach languages to newly added resources
-            
-            for ( _, resource) in resourcesDictionary {
-                
-                for variantId in resource.getVariantIds() {
-                    
-                    guard let variant = resourcesDictionary[variantId] else {
-                        continue
-                    }
-                    
-                    resource.addVariant(variant: variant)
-                }
-                
-                if let defaultVarientId = resource.defaultVariantId, let defaultVariant = resourcesDictionary[defaultVarientId] {
-                    
-                    resource.setDefaultVariant(variant: defaultVariant)
-                }
-                
-                for translationId in resource.getLatestTranslationIds() {
-                    
-                    guard let translation = translationsDictionary[translationId] else {
-                        continue
-                    }
-                    
-                    resource.addLatestTranslation(translation: translation)
-                    
-                    if let language = translation.language {
-                        resource.addLanguage(language: language)
-                    }
-                }
-            }
-            
-            // filter latest downloaded translations from translations to delete
-            
-            existingTranslationsMinusNewlyAddedTranslations = existingTranslationsMinusNewlyAddedTranslations.filter({
-                                    
-                guard let resourceId = $0.resource?.id else {
-                    return true
-                }
-                
-                guard let languageId = $0.language?.id else {
-                    return true
-                }
-                
-                let latestTrackedDownloadedTranslation: DownloadedTranslationDataModel? = self.trackDownloadedTranslationsRepository.getLatestDownloadedTranslation(resourceId: resourceId, languageId: languageId)
-                
-                let translationIsLatestDownloadedTranslation: Bool = latestTrackedDownloadedTranslation?.translationId == $0.id
-                
-                if translationIsLatestDownloadedTranslation {
-                    
-                    return false
-                }
-                
-                return true
-            })
-            
-            //
-            
-            let translationIdsToRemove: [String] = existingTranslationsMinusNewlyAddedTranslations.map({$0.id})
-            let downloadedTranslationsToRemove: [SwiftDownloadedTranslation]
+            let allResources: [SwiftResource]
             do {
-                downloadedTranslationsToRemove = try swiftDatabase.read.objects(context: context, ids: translationIdsToRemove, sortBy: nil)
+                allResources = try swiftDatabase.read.objects(context: context, query: nil)
             }
             catch _ {
-                downloadedTranslationsToRemove = Array()
+                allResources = Array()
             }
-
-            let resourcesRemoved: [ResourceDataModel] = existingResourcesMinusNewlyAddedResources.map({ $0.toModel() })
-            let translationsRemoved: [TranslationDataModel] = existingTranslationsMinusNewlyAddedTranslations.map( {$0.toModel() })
-            let attachmentsRemoved: [AttachmentDataModel] = existingAttachmentsMinusNewlyAddedAttachments.map({ $0.toModel() })
-            let downloadedTranslationsRemoved: [DownloadedTranslationDataModel] = downloadedTranslationsToRemove.map({ $0.toModel() })
             
-            // delete realm objects that no longer exist
-            var objectsToRemove: [any IdentifiableSwiftDataObject] = Array()
-                            
-            objectsToRemove.append(contentsOf: existingResourcesMinusNewlyAddedResources)
-            objectsToRemove.append(contentsOf: existingTranslationsMinusNewlyAddedTranslations)
-            objectsToRemove.append(contentsOf: existingAttachmentsMinusNewlyAddedAttachments)
-            objectsToRemove.append(contentsOf: downloadedTranslationsToRemove)
+            existingResourcesMinusNewlyAddedResources = allResources
+        }
+        else {
+            existingResourcesMinusNewlyAddedResources = Array()
+        }
+        
+        if !resourcesPlusLatestTranslationsAndAttachments.resources.isEmpty {
             
-            do {
+            for newResource in resourcesPlusLatestTranslationsAndAttachments.resources {
                 
-                try swiftDatabase
-                    .write
-                    .context(
-                        context: context,
-                        writeObjects: WriteSwiftObjects(
-                            deleteObjects: objectsToRemove,
-                            insertObjects: newObjectsToStore
-                        )
-                    )
+                let resource = SwiftResource.createNewFrom(model: newResource.toModel())
+                resourcesDictionary[resource.id] = resource
                 
-                let syncResult = ResourcesCacheSyncResult(
-                    resourcesRemoved: resourcesRemoved,
-                    translationsRemoved: translationsRemoved,
-                    attachmentsRemoved: attachmentsRemoved,
-                    downloadedTranslationsRemoved: downloadedTranslationsRemoved
-                )
+                newObjectsToStore.append(resource)
                 
-                promise(.success(syncResult))
-            }
-            catch let error {
-                
-                promise(.failure(error))
+                if let index = existingResourcesMinusNewlyAddedResources.firstIndex(where: { $0.id == newResource.id }) {
+                    
+                    existingResourcesMinusNewlyAddedResources.remove(at: index)
+                }
             }
         }
-        .eraseToAnyPublisher()
+        else {
+            
+            existingResourcesMinusNewlyAddedResources = []
+        }
+        
+        // sync new translations
+        
+        var existingTranslationsMinusNewlyAddedTranslations: [SwiftTranslation]
+        
+        if shouldRemoveDataThatNoLongerExists {
+            
+            let allTranslations: [SwiftTranslation]
+            do {
+                allTranslations = try swiftDatabase.read.objects(context: context, query: nil)
+            }
+            catch _ {
+                allTranslations = Array()
+            }
+            
+            existingTranslationsMinusNewlyAddedTranslations = allTranslations
+        }
+        else {
+            existingTranslationsMinusNewlyAddedTranslations = Array()
+        }
+        
+        if !resourcesPlusLatestTranslationsAndAttachments.translations.isEmpty {
+            
+            for newTranslation in resourcesPlusLatestTranslationsAndAttachments.translations {
+                
+                let translation = SwiftTranslation.createNewFrom(model: newTranslation.toModel())
+                
+                if let resourceId = newTranslation.resource?.id {
+                    translation.resource = resourcesDictionary[resourceId]
+                }
+                
+                if let languageId = newTranslation.language?.id {
+                    do {
+                        translation.language = try swiftDatabase.read.object(context: context, id: languageId)
+                    }
+                    catch _ {
+                        
+                    }
+                }
+                
+                translationsDictionary[translation.id] = translation
+                
+                newObjectsToStore.append(translation)
+                
+                if let indexOfNewTranslation = existingTranslationsMinusNewlyAddedTranslations.firstIndex(where: { $0.id == newTranslation.id }) {
+                    
+                    existingTranslationsMinusNewlyAddedTranslations.remove(at: indexOfNewTranslation)
+                }
+            }
+        }
+        else {
+            
+            existingTranslationsMinusNewlyAddedTranslations = []
+        }
+        
+        // sync new attachments
+        
+        var existingAttachmentsMinusNewlyAddedAttachments: [SwiftAttachment]
+        
+        if shouldRemoveDataThatNoLongerExists {
+            
+            let allAttachments: [SwiftAttachment]
+            do {
+                allAttachments = try swiftDatabase.read.objects(context: context, query: nil)
+            }
+            catch _ {
+                allAttachments = Array()
+            }
+            
+            existingAttachmentsMinusNewlyAddedAttachments = allAttachments
+        }
+        else {
+            existingAttachmentsMinusNewlyAddedAttachments = Array()
+        }
+        
+        if !resourcesPlusLatestTranslationsAndAttachments.attachments.isEmpty {
+            
+            for newAttachment in resourcesPlusLatestTranslationsAndAttachments.attachments {
+                
+                let attachment = SwiftAttachment.createNewFrom(model: newAttachment.toModel())
+                
+                if let resourceId = newAttachment.resource?.id {
+                    attachment.resource = resourcesDictionary[resourceId]
+                }
+                
+                newObjectsToStore.append(attachment)
+                
+                if let indexOfNewAttachment = existingAttachmentsMinusNewlyAddedAttachments.firstIndex(where: { $0.id == newAttachment.id }) {
+                    
+                    existingAttachmentsMinusNewlyAddedAttachments.remove(at: indexOfNewAttachment)
+                }
+            }
+        }
+        else {
+            
+            existingAttachmentsMinusNewlyAddedAttachments = []
+        }
+        
+        // attach variants and default variant, added variants will backlink to metatool
+        // attach latest translations and attach languages to newly added resources
+        
+        for ( _, resource) in resourcesDictionary {
+            
+            for variantId in resource.getVariantIds() {
+                
+                guard let variant = resourcesDictionary[variantId] else {
+                    continue
+                }
+                
+                resource.addVariant(variant: variant)
+            }
+            
+            if let defaultVarientId = resource.defaultVariantId, let defaultVariant = resourcesDictionary[defaultVarientId] {
+                
+                resource.setDefaultVariant(variant: defaultVariant)
+            }
+            
+            for translationId in resource.getLatestTranslationIds() {
+                
+                guard let translation = translationsDictionary[translationId] else {
+                    continue
+                }
+                
+                resource.addLatestTranslation(translation: translation)
+                
+                if let language = translation.language {
+                    resource.addLanguage(language: language)
+                }
+            }
+        }
+        
+        // filter latest downloaded translations from translations to delete
+        
+        existingTranslationsMinusNewlyAddedTranslations = try existingTranslationsMinusNewlyAddedTranslations.filter({
+                                
+            guard let resourceId = $0.resource?.id else {
+                return true
+            }
+            
+            guard let languageId = $0.language?.id else {
+                return true
+            }
+            
+            let latestTrackedDownloadedTranslation: DownloadedTranslationDataModel? = try trackDownloadedTranslationsRepository.getLatestDownloadedTranslation(
+                resourceId: resourceId,
+                languageId: languageId
+            )
+            
+            let translationIsLatestDownloadedTranslation: Bool = latestTrackedDownloadedTranslation?.translationId == $0.id
+            
+            if translationIsLatestDownloadedTranslation {
+                
+                return false
+            }
+            
+            return true
+        })
+        
+        //
+        
+        let translationIdsToRemove: [String] = existingTranslationsMinusNewlyAddedTranslations.map({$0.id})
+        let downloadedTranslationsToRemove: [SwiftDownloadedTranslation]
+        do {
+            downloadedTranslationsToRemove = try swiftDatabase.read.objects(context: context, ids: translationIdsToRemove, sortBy: nil)
+        }
+        catch _ {
+            downloadedTranslationsToRemove = Array()
+        }
+
+        let resourcesRemoved: [ResourceDataModel] = existingResourcesMinusNewlyAddedResources.map({ $0.toModel() })
+        let translationsRemoved: [TranslationDataModel] = existingTranslationsMinusNewlyAddedTranslations.map( {$0.toModel() })
+        let attachmentsRemoved: [AttachmentDataModel] = existingAttachmentsMinusNewlyAddedAttachments.map({ $0.toModel() })
+        let downloadedTranslationsRemoved: [DownloadedTranslationDataModel] = downloadedTranslationsToRemove.map({ $0.toModel() })
+        
+        // delete realm objects that no longer exist
+        var objectsToRemove: [any IdentifiableSwiftDataObject] = Array()
+                        
+        objectsToRemove.append(contentsOf: existingResourcesMinusNewlyAddedResources)
+        objectsToRemove.append(contentsOf: existingTranslationsMinusNewlyAddedTranslations)
+        objectsToRemove.append(contentsOf: existingAttachmentsMinusNewlyAddedAttachments)
+        objectsToRemove.append(contentsOf: downloadedTranslationsToRemove)
+        
+        try swiftDatabase
+            .write
+            .context(
+                context: context,
+                writeObjects: WriteSwiftObjects(
+                    deleteObjects: objectsToRemove,
+                    insertObjects: newObjectsToStore
+                )
+            )
+        
+        let syncResult = ResourcesCacheSyncResult(
+            resourcesRemoved: resourcesRemoved,
+            translationsRemoved: translationsRemoved,
+            attachmentsRemoved: attachmentsRemoved,
+            downloadedTranslationsRemoved: downloadedTranslationsRemoved
+        )
+        
+        return syncResult
     }
 }

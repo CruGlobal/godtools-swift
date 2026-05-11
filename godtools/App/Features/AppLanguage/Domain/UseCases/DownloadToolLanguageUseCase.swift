@@ -22,60 +22,39 @@ final class DownloadToolLanguageUseCase {
         self.toolLanguageDownloader = toolLanguageDownloader
     }
     
-    func execute(languageId: String) -> AnyPublisher<Double, Error> {
+    func execute(languageId: String) async throws -> AsyncThrowingStream<Double, Error> {
         
-        Task {
-            try await downloadedLanguagesRepository.storeDownloadedLanguage(
-                languageId: languageId,
-                downloadComplete: false
-            )
-        }
+        return AsyncThrowingStream { continuation in
+            Task {
+                do {
                     
-        return toolLanguageDownloader
-            .downloadToolLanguagePublisher(
-                languageId: languageId
-            )
-            .catch { (downloadError: Error) -> AnyPublisher<ToolDownloaderDataModel, Error> in
-                
-                return self.downloadedLanguagesRepository.deleteDownloadedLanguagePublisher(languageId: languageId)
-                    .catch { (deleteError: Error) -> AnyPublisher<Void, Error> in
-                       
-                        assertionFailure("Failed to delete object in RealmDatabase. \(deleteError.localizedDescription)")
+                    for try await dataModel in try toolLanguageDownloader.downloadToolLanguage(languageId: languageId) {
                         
-                        return Fail(error: downloadError)
-                            .eraseToAnyPublisher()
-                    }
-                    .flatMap({ (void: Void) -> AnyPublisher<ToolDownloaderDataModel, Error> in
-                        return Fail(error: downloadError)
-                            .eraseToAnyPublisher()
-                    })
-                    .eraseToAnyPublisher()
-            }
-            .flatMap { (dataModel: ToolDownloaderDataModel) -> AnyPublisher<ToolDownloaderDataModel, Error> in
-                
-                let downloadComplete: Bool = dataModel.progress >= 1
-                
-                if downloadComplete {
-                    
-                    return self.downloadedLanguagesRepository
-                        .storeDownloadedLanguagePublisher(
-                            languageId: languageId,
-                            downloadComplete: true
-                        )
-                        .map { _ in
-                            return dataModel
+                        let downloadComplete: Bool = dataModel.progress >= 1
+                        
+                        if downloadComplete {
+                            
+                            _ = try await downloadedLanguagesRepository
+                                .storeDownloadedLanguage(
+                                    languageId: languageId,
+                                    downloadComplete: true
+                                )
                         }
-                        .eraseToAnyPublisher()
+                        
+                        continuation.yield(dataModel.progress)
+                    }
+                    
+                    continuation.finish()
                 }
-                
-                return Just(dataModel)
-                    .setFailureType(to: Error.self)
-                    .eraseToAnyPublisher()
+                catch let error {
+                    
+                    try downloadedLanguagesRepository.deleteDownloadedLanguage(
+                        languageId: languageId
+                    )
+                    
+                    continuation.finish(throwing: error)
+                }
             }
-            .map { (dataModel: ToolDownloaderDataModel) in
-                
-                return dataModel.progress
-            }
-            .eraseToAnyPublisher()
+        }
     }
 }

@@ -25,6 +25,7 @@ final class LessonsViewModel: ObservableObject {
     private let getToolBannerUseCase: GetToolBannerUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
+    private var pullToRefreshLessonsTask: Task<Void, Error>?
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -154,6 +155,7 @@ final class LessonsViewModel: ObservableObject {
     
     deinit {
         print("x deinit: \(type(of: self))")
+        pullToRefreshLessonsTask?.cancel()
     }
     
     // MARK: - Analytics
@@ -235,19 +237,15 @@ extension LessonsViewModel {
     
     func pullToRefresh() {
         
-        pullToRefreshLessonsUseCase
-            .execute(
-                appLanguage: appLanguage,
-                country: localizationSettings?.selectedCountry,
-                filterLessonsByLanguage: lessonFilterLanguageSelection
-            )
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completed in
-
-            }, receiveValue: { _ in
-                
-            })
-            .store(in: &cancellables)
+        pullToRefreshLessonsTask = Task {
+            
+            try await pullToRefreshLessonsUseCase
+                .execute(
+                    appLanguage: appLanguage,
+                    country: localizationSettings?.selectedCountry,
+                    filterLessonsByLanguage: lessonFilterLanguageSelection
+                )
+        }
     }
     
     func pageViewed() {

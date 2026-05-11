@@ -8,7 +8,6 @@
 
 import Foundation
 import GodToolsShared
-import Combine
 import RequestOperation
 
 final class ArticleManifestAemRepository: ArticleAemRepository {
@@ -29,15 +28,13 @@ final class ArticleManifestAemRepository: ArticleAemRepository {
         return prefix + translationId
     }
     
-    func getCategoryArticlesPublisher(categoryId: String, languageCode: String) -> AnyPublisher<[CategoryArticleModel], Error> {
+    func getCategoryArticles(categoryId: String, languageCode: String) async throws -> [CategoryArticleModel] {
         
-        return AnyPublisher() {
-            try await self.categoryArticlesCache.getCategoryArticles(categoryId: categoryId, languageCode: languageCode)
-        }
+        return try await categoryArticlesCache.getCategoryArticles(categoryId: categoryId, languageCode: languageCode)
     }
     
-    func downloadAndCacheManifestAemUrisPublisher(manifest: Manifest, translationId: String, languageCode: String, downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority, forceFetchFromRemote: Bool = false) -> AnyPublisher<ArticleAemRepositoryResult, Never> {
-                
+    func downloadAndCacheManifestAemUris(manifest: Manifest, translationId: String, languageCode: String, downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority, forceFetchFromRemote: Bool = false) async throws {
+        
         let syncInvalidator = SyncInvalidator(
             id: getSyncInvalidatorId(translationId: translationId),
             timeInterval: .days(day: 5),
@@ -45,8 +42,7 @@ final class ArticleManifestAemRepository: ArticleAemRepository {
         )
                 
         guard syncInvalidator.shouldSync || forceFetchFromRemote else {
-            return Just(ArticleAemRepositoryResult.emptyResult())
-                .eraseToAnyPublisher()
+            return
         }
         
         let aemUris: [String] = manifest.aemImports.map({$0.absoluteString})
@@ -58,28 +54,20 @@ final class ArticleManifestAemRepository: ArticleAemRepository {
             )
         })
         
-        return super.downloadAndCachePublisher(
+        let aemDataObjects: [ArticleAemData] = try await super.downloadAndCache(
             aemUris: aemUris,
             downloadCachePolicy: downloadCachePolicy,
             requestPriority: requestPriority
         )
-        .flatMap { (result: ArticleAemRepositoryResult) -> AnyPublisher<ArticleAemRepositoryResult, Never> in
-                                
-            return self.categoryArticlesCache.storeAemDataObjectsForCategoriesPublisher(
-                categories: categories,
-                languageCode: languageCode,
-                aemDataObjects: result.downloaderResult.aemDataObjects
-            )
-            .map { (cacheErrors: [Error]) in
-                
-                if cacheErrors.isEmpty {
-                    syncInvalidator.didSync()
-                }
-                
-                return result
-            }
-            .eraseToAnyPublisher()
+        
+        let errors: [Error] = await categoryArticlesCache.storeAemDataObjectsForCategories(
+            categories: categories,
+            languageCode: languageCode,
+            aemDataObjects: aemDataObjects
+        )
+        
+        if !errors.isEmpty {
+            syncInvalidator.didSync()
         }
-        .eraseToAnyPublisher()
     }
 }

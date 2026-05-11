@@ -34,6 +34,7 @@ final class ToolsViewModel: ObservableObject {
     private let getToolBannerUseCase: GetToolBannerUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
+    private var pullToRefreshToolsTask: Task<Void, Error>?
     
     private weak var flowDelegate: FlowDelegate?
 
@@ -223,6 +224,7 @@ final class ToolsViewModel: ObservableObject {
     
     deinit {
         print("x deinit: \(type(of: self))")
+        pullToRefreshToolsTask?.cancel()
     }
     
     private var analyticsScreenName: String {
@@ -316,20 +318,16 @@ final class ToolsViewModel: ObservableObject {
 extension ToolsViewModel {
     
     func pullToRefresh() {
-
-        pullToRefreshToolsUseCase
-            .execute(
-                appLanguage: appLanguage,
-                country: localizationSettings?.selectedCountry,
-                filterToolsByLanguage: toolFilterLanguageSelection
-            )
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completed in
-
-            }, receiveValue: { _ in
-
-            })
-            .store(in: &cancellables)
+        
+        pullToRefreshToolsTask = Task {
+            
+            try await pullToRefreshToolsUseCase
+                .execute(
+                    appLanguage: appLanguage,
+                    country: localizationSettings?.selectedCountry,
+                    filterToolsByLanguage: toolFilterLanguageSelection
+                )
+        }
     }
     
     func pageViewed() {

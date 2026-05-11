@@ -7,16 +7,15 @@
 //
 
 import Foundation
-import Combine
 
-class LocalizationSettingsCountriesRepository: LocalizationSettingsCountriesRepositoryInterface {
+final class LocalizationSettingsCountriesRepository: LocalizationSettingsCountriesRepositoryInterface {
 
     init() {
 
     }
-
-    func getCountriesPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[LocalizationSettingsCountryDataModel], Never> {
-
+    
+    func getCountries(appLanguage: AppLanguageDomainModel) -> [LocalizationSettingsCountryDataModel] {
+        
         let appLocale = Locale(identifier: appLanguage)
 
         let countries = Locale.Region.isoRegions
@@ -46,9 +45,8 @@ class LocalizationSettingsCountriesRepository: LocalizationSettingsCountriesRepo
             )
         }
         .sorted { $0.countryNameTranslatedInCurrentAppLanguage < $1.countryNameTranslatedInCurrentAppLanguage }
-
-        return Just(countries)
-            .eraseToAnyPublisher()
+        
+        return countries
     }
     
     private func isCountryCode(region: Locale.Region) -> Bool {

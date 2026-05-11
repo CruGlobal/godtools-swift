@@ -1,5 +1,5 @@
 //
-//  DetermineToolTranslationsToDownloadResult.swift
+//  ToolTranslationsToDownload.swift
 //  godtools
 //
 //  Created by Levi Eggert on 7/28/22.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct DetermineToolTranslationsToDownloadResult: Sendable {
+struct ToolTranslationsToDownload: Sendable {
     
     let translations: [TranslationDataModel]
 }

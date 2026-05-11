@@ -10,7 +10,6 @@ import Foundation
 import RealmSwift
 import SwiftData
 import RepositorySync
-import Combine
 
 final class ResourcesCache {
     
@@ -41,12 +40,17 @@ final class ResourcesCache {
     private func getRealmPersistence() -> RealmRepositorySyncPersistence<ResourceDataModel, ResourceCodable, RealmResource>? {
         return persistence as? RealmRepositorySyncPersistence<ResourceDataModel, ResourceCodable, RealmResource>
     }
+}
+
+// MARK: - Sync
+
+extension ResourcesCache {
     
-    func syncResources(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable, shouldRemoveDataThatNoLongerExists: Bool) -> AnyPublisher<ResourcesCacheSyncResult, Error> {
+    func syncResources(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable, shouldRemoveDataThatNoLongerExists: Bool) async throws -> ResourcesCacheSyncResult {
         
         if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
             
-            return SwiftResourcesCacheSync(
+            return try SwiftResourcesCacheSync(
                 swiftDatabase: swiftPersistence.database,
                 trackDownloadedTranslationsRepository: trackDownloadedTranslationsRepository
             )
@@ -54,11 +58,10 @@ final class ResourcesCache {
                 resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
                 shouldRemoveDataThatNoLongerExists: shouldRemoveDataThatNoLongerExists
             )
-            .eraseToAnyPublisher()
         }
         else if let realmPersistence = getRealmPersistence() {
             
-            return RealmResourcesCacheSync(
+            return try await RealmResourcesCacheSync(
                 realmDatabase: realmPersistence.database,
                 trackDownloadedTranslationsRepository: trackDownloadedTranslationsRepository
             )
@@ -66,13 +69,10 @@ final class ResourcesCache {
                 resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
                 shouldRemoveDataThatNoLongerExists: shouldRemoveDataThatNoLongerExists
             )
-            .eraseToAnyPublisher()
         }
         else {
             
-            return Just(ResourcesCacheSyncResult.emptyResult())
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
+            return ResourcesCacheSyncResult.emptyResult()
         }
     }
 }

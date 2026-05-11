@@ -8,9 +8,8 @@
 
 import Foundation
 import RequestOperation
-import Combine
 
-class ArticleAemDownloader {
+final class ArticleAemDownloader {
             
     private let urlSessionPriority: URLSessionPriority
     private let requestSender: RequestSender
@@ -22,53 +21,38 @@ class ArticleAemDownloader {
         self.requestSender = requestSender
     }
     
-    func downloadPublisher(aemUris: [String], downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority) -> AnyPublisher<ArticleAemDownloaderResult, Never> {
-                
-        let requests: [AnyPublisher<AemUriDownloadResult, Never>] = aemUris.map { (aemUri: String) in
+    func download(aemUris: [String], downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority) async throws -> [ArticleAemData] {
+        
+        var aemDataObjects: [ArticleAemData] = Array()
+        
+        for aemUri in aemUris {
             
-            return self.downloadAemUriPublisher(
+            let aemData: ArticleAemData = try await downloadAemUri(
                 aemUri: aemUri,
                 downloadCachePolicy: downloadCachePolicy,
                 requestPriority: requestPriority
             )
-            .eraseToAnyPublisher()
+            
+            aemDataObjects.append(aemData)
         }
         
-        return Publishers.MergeMany(requests)
-            .collect()
-            .map { (results: [AemUriDownloadResult]) in
-                
-                return ArticleAemDownloaderResult(
-                    aemDataObjects: results.compactMap { $0.articleAemData },
-                    aemDownloadErrors: results.compactMap { $0.downloadError }
-                )
-            }
-            .eraseToAnyPublisher()
+        return aemDataObjects
     }
     
-    private func downloadAemUriPublisher(aemUri: String, downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority) -> AnyPublisher<AemUriDownloadResult, Never> {
+    private func downloadAemUri(aemUri: String, downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority) async throws -> ArticleAemData {
         
         guard let aemUrl = URL(string: aemUri) else {
-            
-            let error: ArticleAemDownloadOperationError = .invalidAemSrcUrl
-            
-            return Just(AemUriDownloadResult(articleAemData: nil, downloadError: error))
-                .eraseToAnyPublisher()
+            throw NSError.errorWithDescription(description: "Failed to create aem url from string.")
         }
-                
+        
         let cacheTimeInterval: TimeInterval = downloadCachePolicy.getCacheTimeInterval()
         
         let urlJsonString: String = aemUri + "." + String(maxAemJsonTreeLevels) + ".json?_=\(cacheTimeInterval)"
         
         guard let urlJson: URL = URL(string: urlJsonString) else {
-            
-            let error: ArticleAemDownloadOperationError = .invalidAemJsonUrl
-            
-            return Just(AemUriDownloadResult(articleAemData: nil, downloadError: error))
-                .eraseToAnyPublisher()
+            throw NSError.errorWithDescription(description: "Failed to create json url from string.")
         }
         
-        let errorDomain: String = "ArticleAemDownloadOperation"
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
         let urlRequest = URLRequest(
@@ -77,196 +61,29 @@ class ArticleAemDownloader {
             timeoutInterval: urlSession.configuration.timeoutIntervalForRequest
         )
         
-        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
-            .flatMap { (response: RequestDataResponse) -> AnyPublisher<AemUriDownloadResult, Never> in
-                
-                let httpStatusCode: Int = response.urlResponse.httpStatusCode ?? -1
-                let isSuccessHttpStatusCode: Bool = httpStatusCode >= 200 && httpStatusCode < 400
-                
-                if isSuccessHttpStatusCode {
-                    
-                    // validate json
-                    var jsonDictionary: [String: Any] = Dictionary()
-                    var jsonError: Error?
-                    
-                    do {
-                        let json: Any = try JSONSerialization.jsonObject(with: response.data, options: [])
-                        if let dictionary = json as? [String: Any] {
-                            jsonDictionary = dictionary
-                        }
-                    }
-                    catch let error {
-                        jsonError = error
-                    }
-                    
-                    if jsonDictionary.isEmpty, jsonError == nil {
-                        
-                        jsonError = NSError(
-                            domain: errorDomain,
-                            code: -1,
-                            userInfo: [NSLocalizedDescriptionKey: "Failed to parse jsonData because data does not exist."
-                        ])
-                    }
-                    
-                    if let jsonError = jsonError {
-                        let error: ArticleAemDownloadOperationError = .failedToSerializeJson(error: jsonError)
-                        return Just(AemUriDownloadResult(articleAemData: nil, downloadError: error))
-                            .eraseToAnyPublisher()
-                    }
-                    else {
-                        
-                        let aemDataParser = ArticleAemDataParser()
-                        
-                        let aemParserResult: Result<ArticleAemData, ArticleAemDataParserError> = aemDataParser.parse(
-                            aemUrl: aemUrl,
-                            aemJson: jsonDictionary
-                        )
-                        
-                        switch aemParserResult {
-                        
-                        case .success(let articleAemData):
-                            
-                            return Just(AemUriDownloadResult(articleAemData: articleAemData, downloadError: nil))
-                                .eraseToAnyPublisher()
-
-                        case .failure(let aemParserError):
-                            
-                            let error: ArticleAemDownloadOperationError = .failedToParseJson(error: aemParserError)
-                            return Just(AemUriDownloadResult(articleAemData: nil, downloadError: error))
-                                .eraseToAnyPublisher()
-                        }
-                    }
-                }
-                else {
-                    
-                    let responseError: Error = NSError(
-                        domain: errorDomain,
-                        code: -1,
-                        userInfo: [NSLocalizedDescriptionKey: "The request failed with a status code: \(httpStatusCode)"
-                    ])
-                    
-                    let error: ArticleAemDownloadOperationError = .httpError(error: responseError)
-                    
-                    return Just(AemUriDownloadResult(articleAemData: nil, downloadError: error))
-                        .eraseToAnyPublisher()
-                }
-            }
-            .catch { (error: Error) in
-                
-                let errorCode: Int = (error as NSError).code
-                let operationError: ArticleAemDownloadOperationError
-                
-                if errorCode == CFNetworkErrors.cfurlErrorCancelled.rawValue {
-                    operationError = .cancelled
-                }
-                else if errorCode == CFNetworkErrors.cfurlErrorNotConnectedToInternet.rawValue {
-                    operationError = .noNetworkConnection
-                }
-                else {
-                    operationError = .unknownError(error: error)
-                }
-                
-                return Just(AemUriDownloadResult(articleAemData: nil, downloadError: operationError))
-                    .eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
-    }
-    
-    private func downloadAemUri(aemUri: String, downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority) async throws(ArticleAemDownloadOperationError) -> ArticleAemData {
-        
-        guard let aemUrl = URL(string: aemUri) else {
-            throw .invalidAemSrcUrl
-        }
-        
-        let cacheTimeInterval: TimeInterval = downloadCachePolicy.getCacheTimeInterval()
-        
-        let urlJsonString: String = aemUri + "." + String(maxAemJsonTreeLevels) + ".json?_=\(cacheTimeInterval)"
-        
-        guard let urlJson: URL = URL(string: urlJsonString) else {
-            throw .invalidAemJsonUrl
-        }
-        
-        let errorDomain: String = "ArticleAemDownloadOperation"
-        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
-        
-        let urlRequest = URLRequest(
-            url: urlJson,
-            cachePolicy: urlSession.configuration.requestCachePolicy,
-            timeoutInterval: urlSession.configuration.timeoutIntervalForRequest
+        let response: RequestDataResponse = try await requestSender.sendDataTask(
+            urlRequest: urlRequest,
+            urlSession: urlSession
         )
         
-        do {
-            
-            let response: RequestDataResponse = try await requestSender.sendDataTask(
-                urlRequest: urlRequest,
-                urlSession: urlSession
-            )
-            
-            let httpStatusCode: Int = response.urlResponse.httpStatusCode ?? -1
-            let isSuccessHttpStatusCode: Bool = httpStatusCode >= 200 && httpStatusCode < 400
-            
-            guard isSuccessHttpStatusCode else {
-                
-                throw ArticleAemDownloadOperationError.httpError(
-                    error: NSError(
-                        domain: errorDomain,
-                        code: -1,
-                        userInfo: [NSLocalizedDescriptionKey: "The request failed with a status code: \(httpStatusCode)"
-                    ])
-                )
-            }
-            
-            do {
-                
-                let json: Any = try JSONSerialization.jsonObject(with: response.data, options: [])
-                
-                guard let jsonDictionary = json as? [String: Any], !jsonDictionary.isEmpty else {
-                    
-                    throw ArticleAemDownloadOperationError.failedToSerializeJson(
-                        error: NSError(
-                            domain: errorDomain,
-                            code: -1,
-                            userInfo: [NSLocalizedDescriptionKey: "Failed to parse jsonData because data does not exist."
-                        ])
-                    )
-                }
-                
-                let aemDataParser = ArticleAemDataParser()
-                
-                let aemParserResult: Result<ArticleAemData, ArticleAemDataParserError> = aemDataParser.parse(
-                    aemUrl: aemUrl,
-                    aemJson: jsonDictionary
-                )
-                
-                switch aemParserResult {
-                
-                case .success(let articleAemData):
-                    return articleAemData
-                    
-                case .failure(let aemParserError):
-                    throw ArticleAemDownloadOperationError.failedToParseJson(error: aemParserError)
-                }
-            }
-            catch let error {
-                throw ArticleAemDownloadOperationError.failedToSerializeJson(error: error)
-            }
+        let httpStatusCode: Int = response.urlResponse.httpStatusCode ?? -1
+        let isSuccessHttpStatusCode: Bool = response.urlResponse.isSuccessHttpStatusCode
+        
+        guard isSuccessHttpStatusCode else {
+            throw NSError.errorWithDescription(description: "The request failed with a status code: \(httpStatusCode)")
         }
-        catch let error {
-            
-            let errorCode: Int = (error as NSError).code
-            let operationError: ArticleAemDownloadOperationError
-            
-            if errorCode == CFNetworkErrors.cfurlErrorCancelled.rawValue {
-                operationError = .cancelled
-            }
-            else if errorCode == CFNetworkErrors.cfurlErrorNotConnectedToInternet.rawValue {
-                operationError = .noNetworkConnection
-            }
-            else {
-                operationError = .unknownError(error: error)
-            }
-            
-            throw operationError
+        
+        let json: Any = try JSONSerialization.jsonObject(with: response.data, options: [])
+        
+        guard let jsonDictionary = json as? [String: Any], !jsonDictionary.isEmpty else {
+            throw NSError.errorWithDescription(description: "Failed to parse jsonData because data does not exist.")
         }
+        
+        let aemDataParser = ArticleAemDataParser()
+        
+        return try aemDataParser.parse(
+            aemUrl: aemUrl,
+            aemJson: jsonDictionary
+        )
     }
 }

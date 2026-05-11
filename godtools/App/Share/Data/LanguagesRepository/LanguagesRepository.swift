@@ -24,10 +24,6 @@ final class LanguagesRepository {
         self.cache = cache
     }
     
-    var persistence: any Persistence<LanguageDataModel, LanguageCodable> {
-        return cache.persistence
-    }
-    
     @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Error> {
         return cache
             .persistence
@@ -51,6 +47,10 @@ final class LanguagesRepository {
         catch _ {
             return nil
         }
+    }
+    
+    func getLanguagesByCodes(codes: [BCP47LanguageIdentifier]) async throws -> [LanguageDataModel] {
+        return try await cache.getLanguagesByCodes(codes: codes)
     }
     
     func getLanguagesPublisher(codes: [BCP47LanguageIdentifier]) -> AnyPublisher<[LanguageDataModel], Error> {
@@ -106,13 +106,6 @@ extension LanguagesRepository {
         )
     }
     
-    func syncLanguagesFromRemotePublisher(requestPriority: RequestPriority) -> AnyPublisher<[LanguageDataModel], Error> {
-        
-        return AnyPublisher() {
-            return try await self.syncLanguagesFromRemote(requestPriority: requestPriority)
-        }
-    }
-    
     func syncLanguagesFromJsonFileCache() async throws -> [LanguageDataModel] {
         
         let languages: [LanguageCodable] = try jsonFileCache.getLanguages()
@@ -122,12 +115,5 @@ extension LanguagesRepository {
             writeOption: nil,
             getOption: .allObjects
         )
-    }
-    
-    func syncLanguagesFromJsonFileCachePublisher() -> AnyPublisher<[LanguageDataModel], Error> {
-        
-        return AnyPublisher() {
-            return try await self.syncLanguagesFromJsonFileCache()
-        }
     }
 }

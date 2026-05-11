@@ -13,22 +13,25 @@ final class DownloadArticlesErrorViewModel {
     
     let message: String
     
-    init(appLanguage: AppLanguageDomainModel, localizationServices: LocalizationServicesInterface, error: ArticleAemDownloaderError) {
+    init(appLanguage: AppLanguageDomainModel, localizationServices: LocalizationServicesInterface, error: Error) {
             
-        let notConnectedToNetworkMessage: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.noInternet.key)
-        let cancelledError: String = "The request was cancelled"
-        let unknownError: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.downloadError.key)
-                
-        switch error {
-        
-        case .cancelled:
-            message = cancelledError
+        if error.isUrlErrorCancelledCode {
             
-        case .noNetworkConnection:
-            message = notConnectedToNetworkMessage
+            message = "The request was cancelled"
+        }
+        else if error.isUrlErrorNotConnectedToInternetCode {
             
-        case .unknownError:
-            message = unknownError
+            message = localizationServices.stringForLocaleElseEnglish(
+                localeIdentifier: appLanguage,
+                key: LocalizableStringKeys.noInternet.key
+            )
+        }
+        else {
+            
+            message = localizationServices.stringForLocaleElseEnglish(
+                localeIdentifier: appLanguage,
+                key: LocalizableStringKeys.downloadError.key
+            )
         }
     }
     

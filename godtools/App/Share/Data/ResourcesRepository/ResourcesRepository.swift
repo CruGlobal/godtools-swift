@@ -16,7 +16,7 @@ final class ResourcesRepository {
     private static let syncInvalidatorIdForResourcesPlustLatestTranslationsAndAttachments: String = "resourcesPlusLatestTranslationAttachments.syncInvalidator.id"
     private static let syncedResourcesFromJsonCacheKey: String = "ResourcesRepository.synced.resources.json"
     
-    private let api: MobileContentResourcesApi
+    private let api: ResourcesApiInterface
     private let jsonFileCache: ResourcesJsonFileCache
     private let cache: ResourcesCache
     private let attachmentsRepository: AttachmentsRepository
@@ -24,7 +24,7 @@ final class ResourcesRepository {
     private let syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface
     private let userDefaultsCache: UserDefaultsCacheInterface
     
-    init(api: MobileContentResourcesApi, jsonFileCache: ResourcesJsonFileCache, cache: ResourcesCache, attachmentsRepository: AttachmentsRepository, languagesRepository: LanguagesRepository, syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface, userDefaultsCache: UserDefaultsCacheInterface) {
+    init(api: ResourcesApiInterface, jsonFileCache: ResourcesJsonFileCache, cache: ResourcesCache, attachmentsRepository: AttachmentsRepository, languagesRepository: LanguagesRepository, syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface, userDefaultsCache: UserDefaultsCacheInterface) {
         
         self.api = api
         self.jsonFileCache = jsonFileCache
@@ -133,38 +133,30 @@ final class ResourcesRepository {
 
 extension ResourcesRepository {
     
-    func syncResourceAndLatestTranslationsPublisher(resourceId: String, requestPriority: RequestPriority) -> AnyPublisher<Void, Error> {
+    func syncResourceAndLatestTranslations(resourceId: String, requestPriority: RequestPriority) async throws {
+     
+        let resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable = try await api.getResourcePlusLatestTranslationsAndAttachments(
+            id: resourceId,
+            requestPriority: requestPriority
+        )
         
-        return api.getResourcePlusLatestTranslationsAndAttachmentsPublisher(id: resourceId, requestPriority: requestPriority)
-            .flatMap({ (resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable) -> AnyPublisher<Void, Error> in
-                                
-                return self.cache.syncResources(
-                    resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
-                    shouldRemoveDataThatNoLongerExists: false
-                )
-                .map { _ in
-                    return Void()
-                }
-                .eraseToAnyPublisher()
-            })
-            .eraseToAnyPublisher()
+        _ = try await cache.syncResources(
+            resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
+            shouldRemoveDataThatNoLongerExists: false
+        )
     }
     
-    func syncResourceAndLatestTranslationsPublisher(resourceAbbreviation: String, requestPriority: RequestPriority) -> AnyPublisher<Void, Error> {
+    func syncResourceAndLatestTranslations(resourceAbbreviation: String, requestPriority: RequestPriority) async throws {
+     
+        let resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable = try await api.getResourcePlusLatestTranslationsAndAttachments(
+            abbreviation: resourceAbbreviation,
+            requestPriority: requestPriority
+        )
         
-        return api.getResourcePlusLatestTranslationsAndAttachmentsPublisher(abbreviation: resourceAbbreviation, requestPriority: requestPriority)
-            .flatMap({ (resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable) -> AnyPublisher<Void, Error> in
-                                
-                return self.cache.syncResources(
-                    resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
-                    shouldRemoveDataThatNoLongerExists: false
-                )
-                .map { _ in
-                    return Void()
-                }
-                .eraseToAnyPublisher()
-            })
-            .eraseToAnyPublisher()
+        _ = try await cache.syncResources(
+            resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
+            shouldRemoveDataThatNoLongerExists: false
+        )
     }
 }
 
@@ -181,64 +173,35 @@ extension ResourcesRepository {
         self.userDefaultsCache.commitChanges()
     }
     
-    func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsPublisher(requestPriority: RequestPriority, forceFetchFromRemote: Bool) -> AnyPublisher<ResourcesCacheSyncResult, Error> {
+    func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments(requestPriority: RequestPriority, forceFetchFromRemote: Bool) async throws -> ResourcesCacheSyncResult {
         
-        return syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFile()
-            .setFailureType(to: Error.self)
-            .flatMap { (result: ResourcesCacheSyncResult?) -> AnyPublisher<ResourcesCacheSyncResult, Error> in
-                
-                return self.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote(
-                    requestPriority: requestPriority,
-                    forceFetchFromRemote: forceFetchFromRemote
-                )
-                .eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
+        _ = try await syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFile()
+        
+        return try await syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote(
+            requestPriority: requestPriority,
+            forceFetchFromRemote: forceFetchFromRemote
+        )
     }
     
-    func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFile() -> AnyPublisher<ResourcesCacheSyncResult?, Never> {
-                        
+    func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFile() async throws -> ResourcesCacheSyncResult? {
+        
         guard !syncedResourcesFromJson else {
-            return Just(nil)
-                .eraseToAnyPublisher()
+            return nil
         }
+                
+        _ = try await languagesRepository.syncLanguagesFromJsonFileCache()
         
-        return languagesRepository
-            .syncLanguagesFromJsonFileCachePublisher()
-            .receive(on: DispatchQueue.main)
-            .flatMap { (languages: [LanguageDataModel]) -> AnyPublisher<ResourcesCacheSyncResult, Error> in
-                
-                do {
-                                        
-                    return self.cache.syncResources(
-                        resourcesPlusLatestTranslationsAndAttachments: try self.jsonFileCache.getResourcesPlusLatestTranslationsAndAttachments(),
-                        shouldRemoveDataThatNoLongerExists: true
-                    )
-                    .eraseToAnyPublisher()
-                }
-                catch let error {
-                    
-                    return Fail(error: error)
-                        .eraseToAnyPublisher()
-                }
-            }
-            .map { (result: ResourcesCacheSyncResult) in
-                
-                self.markDidSyncResourcesFromJson()
-                
-                return result
-            }
-            .catch { (error: Error) in
-                
-                self.markDidSyncResourcesFromJson()
-                
-                return Just<ResourcesCacheSyncResult?>(nil)
-                    .eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
+        let result: ResourcesCacheSyncResult = try await cache.syncResources(
+            resourcesPlusLatestTranslationsAndAttachments: try jsonFileCache.getResourcesPlusLatestTranslationsAndAttachments(),
+            shouldRemoveDataThatNoLongerExists: true
+        )
+        
+        markDidSyncResourcesFromJson()
+        
+        return result
     }
     
-    private func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote(requestPriority: RequestPriority, forceFetchFromRemote: Bool) -> AnyPublisher<ResourcesCacheSyncResult, Error> {
+    private func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote(requestPriority: RequestPriority, forceFetchFromRemote: Bool) async throws -> ResourcesCacheSyncResult {
         
         let syncInvalidator = SyncInvalidator(
             id: Self.syncInvalidatorIdForResourcesPlustLatestTranslationsAndAttachments,
@@ -249,31 +212,23 @@ extension ResourcesRepository {
         let shouldFetchFromRemote: Bool = forceFetchFromRemote || syncInvalidator.shouldSync
 
         guard shouldFetchFromRemote else {
-            return Just(ResourcesCacheSyncResult.emptyResult())
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
+            return ResourcesCacheSyncResult.emptyResult()
         }
         
-        return Publishers
-            .CombineLatest(
-                languagesRepository
-                    .syncLanguagesFromRemotePublisher(requestPriority: requestPriority),
-                api.getResourcesPlusLatestTranslationsAndAttachments(requestPriority: requestPriority)
-            )
-            .receive(on: DispatchQueue.main)
-            .flatMap({ (languages: [LanguageDataModel], resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable) -> AnyPublisher<ResourcesCacheSyncResult, Error> in
-                
-                return self.cache.syncResources(
-                    resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
-                    shouldRemoveDataThatNoLongerExists: true
-                )
-                .map { (cacheResult: ResourcesCacheSyncResult) in
-                    syncInvalidator.didSync()
-                    return cacheResult
-                }
-                .eraseToAnyPublisher()
-            })
-            .eraseToAnyPublisher()
+        let languages: [LanguageDataModel] = try await languagesRepository.syncLanguagesFromRemote(
+            requestPriority: requestPriority
+        )
+        
+        let resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable = try await api.getResourcesPlusLatestTranslationsAndAttachments(requestPriority: requestPriority)
+        
+        let cacheResult: ResourcesCacheSyncResult = try await cache.syncResources(
+            resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
+            shouldRemoveDataThatNoLongerExists: true
+        )
+        
+        syncInvalidator.didSync()
+        
+        return cacheResult
     }
 }
 

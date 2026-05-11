@@ -23,36 +23,25 @@ final class PullToRefreshLessonsUseCase {
         self.getLanguageElseAppLanguage = getLanguageElseAppLanguage
     }
     
-    func execute(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<Void, Error> {
+    func execute(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) async throws {
         
         let requestPriority: RequestPriority = .high
         
-        return Publishers.Merge(
-            refreshResources(requestPriority: requestPriority),
-            refreshPersonalizedLessons(
-                requestPriority: requestPriority,
-                appLanguage: appLanguage,
-                country: country,
-                filterLessonsByLanguage: filterLessonsByLanguage
-            )
+        _ = try await resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments(
+            requestPriority: requestPriority,
+            forceFetchFromRemote: true
         )
-        .eraseToAnyPublisher()
+
+        try await refreshPersonalizedLessons(
+            requestPriority: requestPriority,
+            appLanguage: appLanguage,
+            country: country,
+            filterLessonsByLanguage: filterLessonsByLanguage
+        )
     }
     
-    private func refreshResources(requestPriority: RequestPriority) -> AnyPublisher<Void, Error> {
-        
-        return resourcesRepository
-            .syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsPublisher(
-                requestPriority: requestPriority,
-                forceFetchFromRemote: true
-            )
-            .map { _ in
-                return ()
-            }
-            .eraseToAnyPublisher()
-    }
     
-    private func refreshPersonalizedLessons(requestPriority: RequestPriority, appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<Void, Error> {
+    private func refreshPersonalizedLessons(requestPriority: RequestPriority, appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) async throws {
 
         let languageCode: String = getLanguageElseAppLanguage.getLanguageCode(
             languageId: filterLessonsByLanguage?.languageId,
@@ -65,17 +54,13 @@ final class PullToRefreshLessonsUseCase {
             }
             return nil
         }()
-
-        return personalizedToolsRepository
-            .syncPersonalizedToolsPublisher(
+        
+        _ = try await personalizedToolsRepository
+            .syncPersonalizedTools(
                 requestPriority: requestPriority,
                 country: countryIsoRegionCode,
                 language: languageCode,
                 forceNewSync: true
             )
-            .map { _ in
-                return ()
-            }
-            .eraseToAnyPublisher()
     }
 }

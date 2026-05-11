@@ -53,15 +53,20 @@ struct GetLocalizationSettingsCountryListTests {
             }
             
             useCase
-                .execute(appLanguage: "en", showsPreferNotToSay: argument.showsPreferNotToSay)
-                .sink { (results: [LocalizationSettingsCountryListItem]) in
-
+                .execute(
+                    appLanguage: "en",
+                    showsPreferNotToSay: argument.showsPreferNotToSay
+                )
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { (results: [LocalizationSettingsCountryListItem]) in
+                    
                     countryListItems = results
                     
                     // When finished be sure to call:
                     timeoutTask.cancel()
                     continuation.resume(returning: ())
-                }
+                })
                 .store(in: &cancellables)
         }
 
@@ -133,15 +138,20 @@ struct GetLocalizationSettingsCountryListTests {
             }
             
             useCase
-                .execute(appLanguage: argument.appLanguage, showsPreferNotToSay: true)
-                .sink { (results: [LocalizationSettingsCountryListItem]) in
-
+                .execute(
+                    appLanguage: argument.appLanguage,
+                    showsPreferNotToSay: true
+                )
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { (results: [LocalizationSettingsCountryListItem]) in
+                    
                     countryListItems = results
                     
                     // When finished be sure to call:
                     timeoutTask.cancel()
                     continuation.resume(returning: ())
-                }
+                })
                 .store(in: &cancellables)
         }
 
@@ -184,15 +194,20 @@ struct GetLocalizationSettingsCountryListTests {
             }
             
             useCase
-                .execute(appLanguage: "en", showsPreferNotToSay: argument.showsPreferNotToSay)
-                .sink { (results: [LocalizationSettingsCountryListItem]) in
-
+                .execute(
+                    appLanguage: "en",
+                    showsPreferNotToSay: argument.showsPreferNotToSay
+                )
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { (results: [LocalizationSettingsCountryListItem]) in
+                    
                     countryListItems = results
                     
                     // When finished be sure to call:
                     timeoutTask.cancel()
                     continuation.resume(returning: ())
-                }
+                })
                 .store(in: &cancellables)
         }
 

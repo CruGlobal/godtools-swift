@@ -9,7 +9,7 @@
 import UIKit
 import Combine
 
-class ArticleDeepLinkFlow: Flow {
+final class ArticleDeepLinkFlow: Flow {
     
     private let aemUri: String
     
@@ -40,7 +40,7 @@ class ArticleDeepLinkFlow: Flow {
                 
                 self?.appLanguage = appLanguage
                 
-                if let aemCacheObject = appDiContainer.dataLayer.getArticleAemRepository().getAemCacheObject(aemUri: aemUri) {
+                if let aemCacheObject = appDiContainer.dataLayer.getArticleAemRepository().getAemCacheObjectNonThrowing(aemUri: aemUri) {
                     
                     self?.navigateToArticleWebView(aemCacheObject: aemCacheObject, animated: true)
                 }

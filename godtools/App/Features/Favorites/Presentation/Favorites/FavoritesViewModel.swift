@@ -26,6 +26,7 @@ final class FavoritesViewModel: ObservableObject {
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
+    private var pullToRefreshTask: Task<Void, Error>?
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -118,6 +119,8 @@ final class FavoritesViewModel: ObservableObject {
     
     deinit {
         print("x deinit: \(type(of: self))")
+        
+        pullToRefreshTask?.cancel()
     }
     
     private var analyticsScreenName: String {
@@ -231,14 +234,17 @@ extension FavoritesViewModel {
     
     func pullToRefresh() {
         
-        resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsPublisher(requestPriority: .high, forceFetchFromRemote: true)
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completed in
-
-            }, receiveValue: { (result: ResourcesCacheSyncResult) in
-                
-            })
-            .store(in: &cancellables)
+        pullToRefreshTask?.cancel()
+        
+        pullToRefreshTask = Task {
+            
+            _ = try await resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments(
+                requestPriority: .high,
+                forceFetchFromRemote: true
+            )
+            
+            return Void()
+        }
     }
     
     func closeOpenTutorialBannerTapped() {

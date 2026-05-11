@@ -19,30 +19,26 @@ final class GetToolBannerUseCase {
         self.attachmentsRepository = attachmentsRepository
     }
     
-    @MainActor func execute(attachmentId: String) -> AnyPublisher<Image?, Error> {
+    func execute(attachmentId: String) -> AnyPublisher<Image?, Error> {
                 
-        let cachedAttachment: AttachmentDataModel? = attachmentsRepository
-            .getAttachment(id: attachmentId)
-                    
-        if let cachedImage = cachedAttachment?.getImage() {
-            
-            return Just(cachedImage)
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
+        AnyPublisher() {
+            return try await self.asyncExecute(attachmentId: attachmentId)
         }
-        else {
-            
-            return attachmentsRepository
-                .getAttachmentFromCacheElseRemotePublisher(
-                    id: attachmentId,
-                    requestPriority: .high
-                )
-                .map { (attachment: AttachmentDataModel?) in
-                    
-                    return attachment?.getImage()
-                }
-                .receive(on: DispatchQueue.main)
-                .eraseToAnyPublisher()
+    }
+    
+    func asyncExecute(attachmentId: String) async throws -> Image? {
+        
+        let cachedAttachment = try attachmentsRepository.getAttachment(id: attachmentId)
+        
+        if let image = cachedAttachment?.getImage() {
+            return image
         }
+        
+        let attachment = try await attachmentsRepository.getAttachmentFromCacheElseRemote(
+            id: attachmentId,
+            requestPriority: .high
+        )
+        
+        return attachment?.getImage()
     }
 }

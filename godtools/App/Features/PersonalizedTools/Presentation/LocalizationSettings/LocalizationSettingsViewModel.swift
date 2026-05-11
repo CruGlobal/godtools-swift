@@ -57,11 +57,21 @@ final class LocalizationSettingsViewModel: ObservableObject {
         $appLanguage
             .dropFirst()
             .map { appLanguage in
-                getCountryListUseCase.execute(appLanguage: appLanguage, showsPreferNotToSay: showsPreferNotToSay)
+                getCountryListUseCase
+                    .execute(
+                        appLanguage: appLanguage,
+                        showsPreferNotToSay: showsPreferNotToSay
+                    )
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$countriesList)
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (countriesList: [LocalizationSettingsCountryListItem]) in
+                
+                self?.countriesList = countriesList
+            })
+            .store(in: &cancellables)
         
         $appLanguage
             .dropFirst()

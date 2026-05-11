@@ -9,7 +9,6 @@
 import Foundation
 import RequestOperation
 import RepositorySync
-import Combine
 
 final class AttachmentsRepository {
         
@@ -22,48 +21,37 @@ final class AttachmentsRepository {
         self.cache = cache
     }
     
-    var persistence: any Persistence<AttachmentDataModel, AttachmentCodable> {
-        return cache.persistence
-    }
-    
-    func getAttachment(id: String) -> AttachmentDataModel? {
+    func getAttachment(id: String) throws-> AttachmentDataModel? {
         
-        do {
-            return try cache.getAttachment(id: id)
-        }
-        catch _ {
-            return nil
-        }
+        return try cache.getAttachment(id: id)
     }
 }
 
 extension AttachmentsRepository {
     
-    func getAttachmentFromCacheElseRemotePublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<AttachmentDataModel?, Error> {
+    func getAttachmentFromCacheElseRemote(id: String, requestPriority: RequestPriority) async throws -> AttachmentDataModel? {
         
-        let cachedAttachment: AttachmentDataModel? = getAttachment(id: id)
+        let cachedAttachment: AttachmentDataModel? = try cache.getAttachment(id: id)
         
         guard let cachedAttachment = cachedAttachment else {
-            return Just(nil)
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
+            return nil
         }
         
-        return AnyPublisher() {
-            try await self.getAttachmentWithDataFromCacheElseRemote(attachment: cachedAttachment, requestPriority: requestPriority)
-        }
-        .eraseToAnyPublisher()
+        return try await getAttachmentFromCacheElseRemote(
+            attachment: cachedAttachment,
+            requestPriority: requestPriority
+        )
     }
     
-    func downloadAndCacheAttachmentDataIfNeededPublisher(attachment: AttachmentDataModel, requestPriority: RequestPriority) -> AnyPublisher<AttachmentDataModel?, Error> {
-        
-        return AnyPublisher() {
-            try await self.getAttachmentWithDataFromCacheElseRemote(attachment: attachment, requestPriority: requestPriority)
-        }
-        .eraseToAnyPublisher()
+    func downloadAndCacheAttachmentDataIfNeeded(attachment: AttachmentDataModel, requestPriority: RequestPriority) async throws -> AttachmentDataModel {
+            
+        return try await getAttachmentFromCacheElseRemote(
+            attachment: attachment,
+            requestPriority: requestPriority
+        )
     }
     
-    private func getAttachmentWithDataFromCacheElseRemote(attachment: AttachmentDataModel, requestPriority: RequestPriority) async throws -> AttachmentDataModel {
+    private func getAttachmentFromCacheElseRemote(attachment: AttachmentDataModel, requestPriority: RequestPriority) async throws -> AttachmentDataModel {
         
         let cachedAttachment: AttachmentDataModel? = try cache.getAttachment(id: attachment.id)
         

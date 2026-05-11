@@ -9,8 +9,6 @@
 import Foundation
 import RealmSwift
 import RepositorySync
-import GodToolsShared
-import Combine
 
 final class CategoryArticlesCache {
     
@@ -84,19 +82,18 @@ extension CategoryArticlesCache {
         return Array()
     }
     
-    func storeAemDataObjectsForCategoriesPublisher(categories: [ArticleCategory], languageCode: String, aemDataObjects: [ArticleAemData]) -> AnyPublisher<[Error], Never> {
+    func storeAemDataObjectsForCategories(categories: [ArticleCategory], languageCode: String, aemDataObjects: [ArticleAemData]) async -> [Error] {
         
-        return Future() { promise in
-
-            self.storeAemDataObjectsForCategories(categories: categories, languageCode: languageCode, aemDataObjects: aemDataObjects) { (errors: [Error]) in
+        return await withCheckedContinuation { continuation in
+            
+            storeAemDataObjectsForCategoriesWithCompletion(categories: categories, languageCode: languageCode, aemDataObjects: aemDataObjects) { (errors: [Error]) in
                 
-                promise(.success(errors))
+                continuation.resume(returning: errors)
             }
         }
-        .eraseToAnyPublisher()
     }
     
-    private func storeAemDataObjectsForCategories(categories: [ArticleCategory], languageCode: String, aemDataObjects: [ArticleAemData], completion: @escaping ((_ errors: [Error]) -> Void)) {
+    private func storeAemDataObjectsForCategoriesWithCompletion(categories: [ArticleCategory], languageCode: String, aemDataObjects: [ArticleAemData], completion: @escaping ((_ errors: [Error]) -> Void)) {
         
         guard let realmDatabase = realmDatabase else {
             completion([])
