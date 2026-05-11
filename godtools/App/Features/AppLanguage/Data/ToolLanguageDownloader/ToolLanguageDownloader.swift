@@ -25,7 +25,7 @@ final class ToolLanguageDownloader {
     
     func downloadToolLanguage(languageId: String) throws -> AsyncThrowingStream<ToolDownloaderDataModel, Error> {
         
-        guard let languageModel = languagesRepository.getLanguage(id: languageId) else {
+        guard let languageModel = try languagesRepository.getLanguage(id: languageId) else {
             
             throw NSError.errorWithDomain(
                 domain: "ToolLanguageDownloader",
@@ -36,7 +36,7 @@ final class ToolLanguageDownloader {
                 
         let includeToolTypes: [ResourceType] = ResourceType.toolTypes + [.lesson]
         
-        let tools: [ResourceDataModel] = resourcesRepository.getCachedResourcesByFilter(
+        let tools: [ResourceDataModel] = try resourcesRepository.getCachedResourcesByFilter(
             filter: ResourcesFilter(category: nil, languageModelCode: languageModel.code, resourceTypes: includeToolTypes)
         )
         
@@ -60,7 +60,7 @@ final class ToolLanguageDownloader {
         
         for language in downloadedLanguages {
             
-            _ = try await downloadToolLanguage(languageId: language.languageId)
+            _ = try downloadToolLanguage(languageId: language.languageId)
         }
     }
 }

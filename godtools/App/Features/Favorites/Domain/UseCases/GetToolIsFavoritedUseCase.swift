@@ -25,7 +25,7 @@ final class GetToolIsFavoritedUseCase {
             .map { (favoritedResourcesChanged: Void) in
                 
                 return self.favoritedResourcesRepository
-                    .getResourceIsFavorited(id: toolId)
+                    .getResourceIsFavoritedNonThrowing(id: toolId)
             }
             .map { (isFavorited: Bool) in
                 

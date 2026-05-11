@@ -90,7 +90,7 @@ extension GetToolFilterCategory {
     
     private func getToolsAvailableCount(for categoryId: String?, filteredByLanguageId: String?) -> Int {
         
-        return resourcesRepository.getAllToolsListCount(filterByCategory: categoryId, filterByLanguageId: filteredByLanguageId)
+        return resourcesRepository.getAllToolsListCountNonThrowing(filterByCategory: categoryId, filterByLanguageId: filteredByLanguageId)
     }
     
     private func getToolsAvailableText(toolsAvailableCount: Int, translatedInAppLanguage: AppLanguageDomainModel) -> String {

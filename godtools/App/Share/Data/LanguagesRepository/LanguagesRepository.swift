@@ -30,7 +30,8 @@ final class LanguagesRepository {
             .observeCollectionChangesPublisher()
     }
     
-    func getLanguage(id: String) -> LanguageDataModel? {
+    @available(*, deprecated) // Remove and use throws. ~Levi
+    func getLanguageNonThrowing(id: String) -> LanguageDataModel? {
         do {
             return try cache.persistence.getDataModel(id: id)
         }
@@ -39,7 +40,8 @@ final class LanguagesRepository {
         }
     }
     
-    func getLanguage(code: BCP47LanguageIdentifier) -> LanguageDataModel? {
+    @available(*, deprecated) // Remove and use throws. ~Levi
+    func getLanguageNonThrowing(code: BCP47LanguageIdentifier) -> LanguageDataModel? {
         
         do {
             return try cache.getLanguageByCode(code: code)
@@ -49,10 +51,19 @@ final class LanguagesRepository {
         }
     }
     
+    func getLanguage(id: String) throws -> LanguageDataModel? {
+        return try cache.persistence.getDataModel(id: id)
+    }
+    
+    func getLanguage(code: BCP47LanguageIdentifier) throws -> LanguageDataModel? {
+        return try cache.getLanguageByCode(code: code)
+    }
+    
     func getLanguagesByCodes(codes: [BCP47LanguageIdentifier]) async throws -> [LanguageDataModel] {
         return try await cache.getLanguagesByCodes(codes: codes)
     }
     
+    @available(*, deprecated) // Remove and use async throws. ~Levi
     func getLanguagesPublisher(codes: [BCP47LanguageIdentifier]) -> AnyPublisher<[LanguageDataModel], Error> {
         
         return AnyPublisher() {
@@ -61,14 +72,10 @@ final class LanguagesRepository {
     }
     
     func getLanguages() async throws -> [LanguageDataModel] {
-        do {
-            return try await cache.persistence.getDataModelsAsync(getOption: .allObjects)
-        }
-        catch _ {
-            return Array()
-        }
+        return try await cache.persistence.getDataModelsAsync(getOption: .allObjects)
     }
     
+    @available(*, deprecated) // Remove and use async throws. ~Levi
     func getLanguagesPublisher() -> AnyPublisher<[LanguageDataModel], Error> {
         return AnyPublisher() {
             return try await self.getLanguages()
@@ -76,14 +83,10 @@ final class LanguagesRepository {
     }
     
     func getLanguagesByIds(ids: [String]) async throws -> [LanguageDataModel] {
-        do {
-            return try await cache.persistence.getDataModelsAsync(getOption: .objectsByIds(ids: ids))
-        }
-        catch _ {
-            return Array()
-        }
+        return try await cache.persistence.getDataModelsAsync(getOption: .objectsByIds(ids: ids))
     }
     
+    @available(*, deprecated) // Remove and use async throws. ~Levi
     func getLanguagesByIdsPublisher(ids: [String]) -> AnyPublisher<[LanguageDataModel], Error> {
         return AnyPublisher() {
             return try await self.getLanguagesByIds(ids: ids)

@@ -34,10 +34,12 @@ final class GetSpotlightToolsUseCase {
         
         let languageForAvailabilityTextModel: LanguageDataModel?
         
-        if let languageForAvailabilityTextId = languageIdForAvailabilityText {
-            languageForAvailabilityTextModel = languagesRepository.getLanguage(id: languageForAvailabilityTextId)
-        } else {
-            languageForAvailabilityTextModel = nil
+        do {
+            languageForAvailabilityTextModel = try getLanguage(id: languageIdForAvailabilityText)
+        }
+        catch let error {
+            return Fail(error: error)
+                .eraseToAnyPublisher()
         }
         
         return Publishers.CombineLatest(
@@ -48,7 +50,7 @@ final class GetSpotlightToolsUseCase {
         )
         .flatMap({ (resourcesChanged: Void, strings: ToolListItemStringsDomainModel) -> AnyPublisher<[SpotlightToolListItemDomainModel], Never> in
         
-            let spotlightToolResources: [ResourceDataModel] = self.resourcesRepository.getSpotlightTools(sortByDefaultOrder: true)
+            let spotlightToolResources: [ResourceDataModel] = self.resourcesRepository.getSpotlightToolsNonThrowing(sortByDefaultOrder: true)
 
             let spotlightTools: [SpotlightToolListItemDomainModel] = spotlightToolResources
                 .map({
@@ -70,7 +72,7 @@ final class GetSpotlightToolsUseCase {
                         bannerImageId: $0.attrBanner,
                         name: self.getTranslatedToolName.getToolName(resource: $0, translateInLanguage: translatedInAppLanguage),
                         category: self.getTranslatedToolCategory.getTranslatedCategory(resource: $0, translateInLanguage: translatedInAppLanguage),
-                        isFavorited: self.favoritedResourcesRepository.getResourceIsFavorited(id: $0.id),
+                        isFavorited: self.favoritedResourcesRepository.getResourceIsFavoritedNonThrowing(id: $0.id),
                         languageAvailability: toolLanguageAvailability
                     )
                 })
@@ -79,5 +81,14 @@ final class GetSpotlightToolsUseCase {
                 .eraseToAnyPublisher()
         })
         .eraseToAnyPublisher()
+    }
+    
+    private func getLanguage(id: String?) throws -> LanguageDataModel? {
+        
+        guard let id = id else {
+            return nil
+        }
+        
+        return try languagesRepository.getLanguage(id: id)
     }
 }

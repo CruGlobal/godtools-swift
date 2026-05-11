@@ -34,7 +34,7 @@ final class GetToolFilterLanguage {
     func getLanguageFilter(from languageId: String?, translatedInAppLanguage: AppLanguageDomainModel) -> ToolFilterLanguageDomainModel? {
         
         guard let languageId = languageId,
-            let language = languagesRepository.getLanguage(id: languageId)
+            let language = languagesRepository.getLanguageNonThrowing(id: languageId)
         else {
             return nil
         }
@@ -120,7 +120,7 @@ extension GetToolFilterLanguage {
     
     private func getToolsAvailableCount(for languageId: String?, filteredByCategoryId: String?) -> Int {
         
-        return resourcesRepository.getAllToolsListCount(filterByCategory: filteredByCategoryId, filterByLanguageId: languageId)
+        return resourcesRepository.getAllToolsListCountNonThrowing(filterByCategory: filteredByCategoryId, filterByLanguageId: languageId)
     }
     
     private func getToolsAvailableText(toolsAvailableCount: Int, translatedInAppLanguage: AppLanguageDomainModel) -> String {

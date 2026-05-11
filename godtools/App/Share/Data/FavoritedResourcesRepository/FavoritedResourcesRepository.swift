@@ -19,21 +19,21 @@ final class FavoritedResourcesRepository {
         self.cache = cache
     }
     
-    var persistence: any Persistence<FavoritedResourceDataModel, FavoritedResourceDataModel> {
-        return cache.persistence
-    }
-    
     @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Error> {
-        return persistence
+        return cache
+            .persistence
             .observeCollectionChangesPublisher()
     }
+    
+    func getObjectCount() throws -> Int {
+        return try cache.persistence.getObjectCount()
+    }
 
-    func getResourceIsFavorited(id: String) -> Bool {
-        
-        // TODO: Handle Error. ~Levi
-        
+    @available(*, deprecated) // Remove and use throws. ~Levi
+    func getResourceIsFavoritedNonThrowing(id: String) -> Bool {
+                
         do {
-            return try persistence.getDataModel(id: id) != nil
+            return try cache.persistence.getDataModel(id: id) != nil
         }
         catch _ {
             return false
@@ -44,6 +44,7 @@ final class FavoritedResourcesRepository {
         return try await cache.getFavoritedResourcesSortedByPosition()
     }
     
+    @available(*, deprecated) // Remove and use async throws. ~Levi
     func getFavoritedResourcesSortedByPositionPublisher() -> AnyPublisher<[FavoritedResourceDataModel], Error> {
      
         return AnyPublisher() {
@@ -53,6 +54,7 @@ final class FavoritedResourcesRepository {
         .eraseToAnyPublisher()
     }
     
+    @available(*, deprecated) // Remove and use async throws. ~Levi
     func storeFavoritedResourcesPublisher(ids: [String]) -> AnyPublisher<[FavoritedResourceDataModel], Error> {
      
         return AnyPublisher() {
@@ -62,6 +64,7 @@ final class FavoritedResourcesRepository {
         .eraseToAnyPublisher()
     }
     
+    @available(*, deprecated) // Remove and use async throws. ~Levi
     func deleteFavoritedResourcePublisher(id: String) -> AnyPublisher<[FavoritedResourceDataModel], Error> {
         
         return AnyPublisher() {
@@ -71,6 +74,7 @@ final class FavoritedResourcesRepository {
         .eraseToAnyPublisher()
     }
     
+    @available(*, deprecated) // Remove and use async throws. ~Levi
     func reorderFavoritedResourcePublisher(id: String, originalPosition: Int, newPosition: Int) -> AnyPublisher<[FavoritedResourceDataModel], Error> {
         
         return AnyPublisher() {

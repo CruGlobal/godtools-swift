@@ -30,7 +30,7 @@ final class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslat
     }
     
     func getResource() -> ResourceDataModel? {
-        return resourcesRepository.getResource(abbreviation: toolDeepLink.resourceAbbreviation)
+        return resourcesRepository.getResourceNonThrowing(abbreviation: toolDeepLink.resourceAbbreviation)
     }
     
     func determineToolTranslationsToDownload() async throws(DetermineToolTranslationsToDownloadError) -> ToolTranslationsToDownload {

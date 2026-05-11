@@ -29,7 +29,7 @@ final class GetToolDetailsMediaUseCase {
     
     func asyncExecute(toolId: String) async throws -> ToolDetailsMediaDomainModel {
         
-        guard let resource = resourcesRepository.getResource(id: toolId) else {
+        guard let resource = try resourcesRepository.getResource(id: toolId) else {
             return .empty
         }
         

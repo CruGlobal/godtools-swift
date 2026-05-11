@@ -24,7 +24,7 @@ final class SetAppLanguageUseCase {
     
     func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppLanguageDomainModel, Error> {
         
-        if let languageModelId = languagesRepository.getLanguage(code: appLanguage)?.id {
+        if let languageModelId = languagesRepository.getLanguageNonThrowing(code: appLanguage)?.id {
             
             Task {
                 try await userLessonFiltersRepository.storeUserLessonLanguageFilter(

@@ -32,7 +32,7 @@ final class GetTranslatedToolLanguageAvailability {
     
     func getTranslatedLanguageAvailability(toolId: String, language: LanguageDataModel, translateInLanguage: AppLanguageDomainModel) -> ToolLanguageAvailabilityDomainModel {
         
-        guard let resource = resourcesRepository.getResource(id: toolId) else {
+        guard let resource = resourcesRepository.getResourceNonThrowing(id: toolId) else {
             return failedToDetermineLanguageAvailability
         }
         
@@ -41,7 +41,7 @@ final class GetTranslatedToolLanguageAvailability {
     
     func getTranslatedLanguageAvailability(resource: ResourceDataModel, language: AppLanguageDomainModel, translateInLanguage: AppLanguageDomainModel) -> ToolLanguageAvailabilityDomainModel {
         
-        guard let languageModel = languagesRepository.getLanguage(code: language) else {
+        guard let languageModel = languagesRepository.getLanguageNonThrowing(code: language) else {
             return failedToDetermineLanguageAvailability
         }
         
@@ -50,7 +50,7 @@ final class GetTranslatedToolLanguageAvailability {
     
     func getTranslatedLanguageAvailability(resource: ResourceDataModel, language: LanguageDataModel, translateInLanguage: AppLanguageDomainModel) -> ToolLanguageAvailabilityDomainModel {
         
-        guard let translateInLanguageModel = languagesRepository.getLanguage(code: translateInLanguage) else {
+        guard let translateInLanguageModel = languagesRepository.getLanguageNonThrowing(code: translateInLanguage) else {
             return failedToDetermineLanguageAvailability
         }
         

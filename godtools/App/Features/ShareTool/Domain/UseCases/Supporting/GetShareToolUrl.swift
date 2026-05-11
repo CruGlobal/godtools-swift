@@ -36,12 +36,12 @@ final class GetShareToolUrl {
         self.languagesRepository = languagesRepository
     }
     
-    func getUrl(toolId: String, toolLanguageId: String, pageNumber: Int) -> String? {
+    func getUrl(toolId: String, toolLanguageId: String, pageNumber: Int) throws -> String? {
                 
-        let resourceType = resourcesRepository.getResource(id: toolId)?.resourceTypeEnum ?? .unknown
+        let resourceType = try resourcesRepository.getResource(id: toolId)?.resourceTypeEnum ?? .unknown
 
-        guard let resource = resourcesRepository.getResource(id: toolId),
-              let toolLanguage = languagesRepository.getLanguage(id: toolLanguageId) else {
+        guard let resource = try resourcesRepository.getResource(id: toolId),
+              let toolLanguage = try languagesRepository.getLanguage(id: toolLanguageId) else {
             
             return nil
         }

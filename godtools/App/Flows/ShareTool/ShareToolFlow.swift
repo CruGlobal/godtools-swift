@@ -41,31 +41,28 @@ class ShareToolFlow: Flow {
         
         let getShareToolStringsUseCase = appDiContainer.feature.shareTool.domainLayer.getShareToolStringsUseCase()
         
-        getShareToolStringsUseCase
-            .execute(
-                toolId: toolId,
-                toolLanguageId: toolLanguageId,
-                pageNumber: pageNumber,
-                appLanguage: appLanguage
-            )
-            .first()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: ShareToolStringsDomainModel) in
-        
-                guard let weakSelf = self else {
-                    return
-                }
-                            
-                let shareToolView = weakSelf.getShareToolView(
-                    strings: strings,
+        do {
+            
+            let strings = try getShareToolStringsUseCase
+                .execute(
                     toolId: toolId,
-                    toolAnalyticsAbbreviation: toolAnalyticsAbbreviation,
-                    pageNumber: pageNumber
+                    toolLanguageId: toolLanguageId,
+                    pageNumber: pageNumber,
+                    appLanguage: appLanguage
                 )
-                                
-                weakSelf.navigationController.present(shareToolView, animated: true)
-            }
-            .store(in: &cancellables)
+            
+            let shareToolView = getShareToolView(
+                strings: strings,
+                toolId: toolId,
+                toolAnalyticsAbbreviation: toolAnalyticsAbbreviation,
+                pageNumber: pageNumber
+            )
+                            
+            navigationController.present(shareToolView, animated: true)
+        }
+        catch _ {
+            
+        }
     }
     
     deinit {

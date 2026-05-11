@@ -11,7 +11,7 @@ import MessageUI
 import SwiftUI
 import Combine
 
-class AppFlow: NSObject, Flow {
+final class AppFlow: NSObject, Flow {
         
     static let defaultNavBarColor: UIColor = .white
     static let defaultNavBarControlColor: UIColor = ColorPalette.gtBlue.uiColor

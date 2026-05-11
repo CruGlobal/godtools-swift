@@ -106,7 +106,7 @@ extension PersonalizedToolsRepository {
             return Array()
         }
 
-        let resources = try await resourcesRepository.persistence.getDataModelsAsync(getOption: .objectsByIds(ids: personalizedTools.resourceIds))
+        let resources = try await resourcesRepository.getResourcesByIds(ids: personalizedTools.resourceIds)
 
         guard let resourceTypes = resourceTypes, !resourceTypes.isEmpty else {
             return resources

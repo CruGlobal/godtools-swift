@@ -80,7 +80,6 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
         .store(in: &cancellables)
               
         resourcesRepository
-            .persistence
             .observeCollectionChangesPublisher()
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { _ in

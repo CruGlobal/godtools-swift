@@ -16,6 +16,7 @@ class ToolCardViewModel: ObservableObject {
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
+    private var getBannerImageTask: Task<Void, Error>?
 
     let tool: ToolListItemDomainModelInterface
     let accessibilityWithToolName: String
@@ -57,14 +58,18 @@ class ToolCardViewModel: ObservableObject {
         
         let attachmentId: String = tool.bannerImageId
         
-        getToolBannerUseCase
-            .execute(attachmentId:attachmentId)
-            .sink { _ in
-                
-            } receiveValue: { [weak self] (image: Image?) in
-                
-                self?.banner = OptionalImageData(image: image, imageIdForAnimationChange: attachmentId)
-            }
-            .store(in: &cancellables)
+        getBannerImageTask = Task {
+            
+            let image = try await getToolBannerUseCase
+                .execute(
+                    attachmentId: attachmentId
+                )
+            
+            banner = OptionalImageData(image: image, imageIdForAnimationChange: attachmentId)
+        }
+    }
+    
+    deinit {
+        getBannerImageTask?.cancel()
     }
 }

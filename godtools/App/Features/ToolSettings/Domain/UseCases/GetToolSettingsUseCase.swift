@@ -38,8 +38,8 @@ final class GetToolSettingsUseCase {
     func asyncExecute(appLanguage: AppLanguageDomainModel, toolId: String, toolLanguageId: String, toolPrimaryLanguageId: String, toolParallelLanguageId: String?) async throws -> ToolSettingsDomainModel {
         
         let hasTips: Bool = try await getHasTips(toolId: toolId, toolLanguageId: toolLanguageId)
-        let primaryLanguage: ToolSettingsToolLanguageDomainModel? = getLanguage(languageId: toolPrimaryLanguageId, translateInLanguage: appLanguage)
-        let parallelLanguage: ToolSettingsToolLanguageDomainModel? = getLanguage(languageId: toolParallelLanguageId, translateInLanguage: appLanguage)
+        let primaryLanguage: ToolSettingsToolLanguageDomainModel? = try getLanguage(languageId: toolPrimaryLanguageId, translateInLanguage: appLanguage)
+        let parallelLanguage: ToolSettingsToolLanguageDomainModel? = try getLanguage(languageId: toolParallelLanguageId, translateInLanguage: appLanguage)
         
         return ToolSettingsDomainModel(
             hasTips: hasTips,
@@ -63,9 +63,9 @@ final class GetToolSettingsUseCase {
         .hasTips
     }
     
-    private func getLanguage(languageId: String?, translateInLanguage: AppLanguageDomainModel) -> ToolSettingsToolLanguageDomainModel? {
+    private func getLanguage(languageId: String?, translateInLanguage: AppLanguageDomainModel) throws -> ToolSettingsToolLanguageDomainModel? {
         
-        guard let languageId = languageId, let language = languagesRepository.getLanguage(id: languageId) else {
+        guard let languageId = languageId, let language = try languagesRepository.getLanguage(id: languageId) else {
             return nil
         }
         

@@ -27,7 +27,7 @@ final class GetToolFilterCategoriesUseCase {
             .flatMap { _ in
                 
                 let categoryIds = self.resourcesRepository
-                    .getAllToolCategoryIds(filteredByLanguageId: filteredByLanguageId)
+                    .getAllToolCategoryIdsNonThrowing(filteredByLanguageId: filteredByLanguageId)
                 
                 let categories = self.getToolFilterCategory.createCategoryFilters(
                     from: categoryIds,

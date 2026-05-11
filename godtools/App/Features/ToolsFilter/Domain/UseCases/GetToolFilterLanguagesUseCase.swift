@@ -27,7 +27,7 @@ final class GetToolFilterLanguagesUseCase {
             .flatMap { _ in
                 
                 let languageIds = self.resourcesRepository
-                    .getAllToolLanguageIds(filteredByCategoryId: filteredByCategoryId)
+                    .getAllToolLanguageIdsNonThrowing(filteredByCategoryId: filteredByCategoryId)
                 
                 return self.getToolFilterLanguage.createLanguageFilterDomainModelListPublisher(
                     from: languageIds,

@@ -27,7 +27,7 @@ final class GetAllToolsUseCase {
             .prepend(Void())
             .flatMap({ (resourcesChanged: Void) -> AnyPublisher<[ToolListItemDomainModel], Error> in
             
-                let tools: [ResourceDataModel] = self.resourcesRepository.getAllToolsList(
+                let tools: [ResourceDataModel] = self.resourcesRepository.getAllToolsListNonThrowing(
                     filterByCategory: filterToolsByCategory?.id,
                     filterByLanguageId: filterToolsByLanguage?.id,
                     sortByDefaultOrder: true

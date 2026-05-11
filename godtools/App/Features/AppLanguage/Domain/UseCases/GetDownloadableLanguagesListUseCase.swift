@@ -53,7 +53,7 @@ final class GetDownloadableLanguagesListUseCase {
         return try languages
             .compactMap { language in
                 
-                let numberToolsAvailable = getNumberToolsAvailable(for: language.code)
+                let numberToolsAvailable = try getNumberToolsAvailable(for: language.code)
                 if numberToolsAvailable == 0 {
                     return nil
                 }
@@ -88,7 +88,7 @@ final class GetDownloadableLanguagesListUseCase {
 
 extension GetDownloadableLanguagesListUseCase {
     
-    private func getNumberToolsAvailable(for languageCode: BCP47LanguageIdentifier) -> Int {
+    private func getNumberToolsAvailable(for languageCode: BCP47LanguageIdentifier) throws -> Int {
         
         let filter = ResourcesFilter(
             category: nil,
@@ -96,7 +96,7 @@ extension GetDownloadableLanguagesListUseCase {
             resourceTypes: ResourceType.toolTypes
         )
         
-        return resourcesRepository.getCachedResourcesByFilter(filter: filter).count
+        return try resourcesRepository.getCachedResourcesByFilter(filter: filter).count
     }
     
     private func getToolsAvailableText(numberOfTools: Int, translatedIn translationLanguage: AppLanguageDomainModel) -> String {

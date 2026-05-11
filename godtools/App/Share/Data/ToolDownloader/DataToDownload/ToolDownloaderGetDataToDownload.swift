@@ -32,7 +32,7 @@ final class ToolDownloaderGetDataToDownload {
             
             let isArticle: Bool
             
-            if let resource = resourcesRepository.getResource(id: tool.toolId) {
+            if let resource = try resourcesRepository.getResource(id: tool.toolId) {
                 
                 isArticle = resource.resourceTypeEnum == .article
                 
