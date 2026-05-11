@@ -8,7 +8,6 @@
 
 
 import Foundation
-import Combine
 
 final class RemoteConfigRepository {
         
@@ -19,18 +18,11 @@ final class RemoteConfigRepository {
         self.remoteDatabase = remoteDatabase
     }
     
-    func syncDataPublisher() -> AnyPublisher<Void, Never> {
+    func syncData() async throws {
         
-        return remoteDatabase.syncFromRemoteDatabasePublisher()
-            .eraseToAnyPublisher()
+        try await remoteDatabase.syncFromRemoteDatabase()
     }
-    
-    func getRemoteConfigPublisher() -> AnyPublisher<RemoteConfigDataModel?, Never> {
-        
-        return remoteDatabase.getRemoteConfigPublisher()
-            .eraseToAnyPublisher()
-    }
-    
+
     func getRemoteConfig() -> RemoteConfigDataModel? {
         
         return remoteDatabase.getRemoteConfig()

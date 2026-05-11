@@ -127,10 +127,7 @@ final class AccountViewModel: ObservableObject {
             })
             .store(in: &cancellables)
         
-        getGlobalActivityEnabledUseCase
-            .execute()
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$globalActivityIsEnabled)
+        globalActivityIsEnabled = getGlobalActivityEnabledUseCase.execute()
     }
     
     deinit {

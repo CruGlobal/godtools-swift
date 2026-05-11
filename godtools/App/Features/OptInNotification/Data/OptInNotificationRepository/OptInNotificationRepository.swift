@@ -18,10 +18,9 @@ final class OptInNotificationRepository: OptInNotificationRepositoryInterface {
         self.remoteConfigRepository = remoteConfigRepository
     }
     
-    // remoteConfig
     private var remoteConfigData: RemoteConfigDataModel? {
-            remoteConfigRepository.getRemoteConfig()
-        }
+        remoteConfigRepository.getRemoteConfig()
+    }
     
     func getRemoteFeatureEnabled() -> Bool {
         return remoteConfigData?.optInNotificationEnabled ?? true
@@ -40,7 +39,6 @@ final class OptInNotificationRepository: OptInNotificationRepositoryInterface {
         return remoteConfigData?.optInNotificationPromptLimit ?? 5
     }
     
-    // cache
     func getLastPrompted() -> Date? {
         return cache.getLastPrompted()
     }

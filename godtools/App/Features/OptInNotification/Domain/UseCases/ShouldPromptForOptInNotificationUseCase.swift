@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class ShouldPromptForOptInNotificationUseCase {
     
@@ -22,7 +21,7 @@ final class ShouldPromptForOptInNotificationUseCase {
         self.getNotificationStatus = getNotificationStatus
     }
     
-    func execute() -> AnyPublisher<Bool, Error> {
+    func execute() async throws -> Bool {
         
         let onboardingTutorialIsAvailable: Bool = getOnboardingTutorialIsAvailable.getIsAvailable()
         
@@ -35,28 +34,24 @@ final class ShouldPromptForOptInNotificationUseCase {
         let remotePromptLimit = optInNotificationRepository.getRemotePromptLimit()
         let remoteFeatureEnabled = optInNotificationRepository.getRemoteFeatureEnabled()
         
-        return getNotificationStatus
-            .getStatusPublisher()
-            .map { (notificationStatus: PermissionStatusDomainModel) in
-                          
-                guard onboardingTutorialIsAvailable == false else {
-                    return false
-                }
-                
-                guard remoteFeatureEnabled == true else {
-                    return false
-                }
-                
-                guard promptCount < remotePromptLimit else {
-                    return false
-                }
-                
-                guard notificationStatus == .denied || notificationStatus == .undetermined else {
-                    return false
-                }
-                
-                return lastPrompted < remoteTimeDate || isFirstPromptAttempt
-            }
-            .eraseToAnyPublisher()
+        let notificationStatus: PermissionStatusDomainModel = try await getNotificationStatus.getStatus()
+        
+        guard onboardingTutorialIsAvailable == false else {
+            return false
+        }
+        
+        guard remoteFeatureEnabled == true else {
+            return false
+        }
+        
+        guard promptCount < remotePromptLimit else {
+            return false
+        }
+        
+        guard notificationStatus == .denied || notificationStatus == .undetermined else {
+            return false
+        }
+        
+        return lastPrompted < remoteTimeDate || isFirstPromptAttempt
     }
 }

@@ -29,7 +29,6 @@ final class AppFlow: NSObject, Flow {
     private var articleDeepLinkFlow: ArticleDeepLinkFlow?
     private var appLaunchedFromDeepLink: ParsedDeepLinkType?
     private var optInNotificationFlow: OptInNotificationFlow?
-    private var cancellableForAppLaunchedFromTerminatedStateOptions: AnyCancellable?
     private var cancellableForShouldPromptForOptInNotification: AnyCancellable?
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -135,58 +134,46 @@ final class AppFlow: NSObject, Flow {
                 loadInitialData()
                 countAppSessionLaunch()
                 
-                cancellableForAppLaunchedFromTerminatedStateOptions = Publishers.CombineLatest3(
-                    appDiContainer.feature.onboarding.domainLayer.getOnboardingTutorialIsAvailableUseCase().execute(),
-                    appDiContainer.feature.optInNotification.domainLayer.getShouldPromptForOptInNotificationUseCase().execute()
-                        .catch { (error: Error) in
-                            return Just(false)
-                                .eraseToAnyPublisher()
-                        },
-                    appDiContainer.feature.deferredDeepLink.domainLayer.getDeferredDeepLinkUseCase().execute()
-                )
-                .receive(on: DispatchQueue.main)
-                .sink(receiveValue: { [weak self] (onboardingTutorialIsAvailable: Bool, shouldPromptForOptInNotification: Bool, deferredDeepLink: ParsedDeepLinkType?) in
+                Task {
                     
-                    guard let appFlow = self else {
-                        return
-                    }
+                    let onboardingTutorialIsAvailable: Bool = appDiContainer.feature.onboarding.domainLayer.getOnboardingTutorialIsAvailableUseCase().execute()
+                    let shouldPromptForOptInNotification: Bool = try await appDiContainer.feature.optInNotification.domainLayer.getShouldPromptForOptInNotificationUseCase().execute()
+                    let deferredDeepLink: ParsedDeepLinkType? = await appDiContainer.feature.deferredDeepLink.domainLayer.getDeferredDeepLinkUseCase().execute()
+                                        
+                    removeLaunchedFromBackgroundLoadingView(view: loadingView)
                     
-                    appFlow.cancellableForAppLaunchedFromTerminatedStateOptions = nil
-                    
-                    appFlow.removeLaunchedFromBackgroundLoadingView(view: loadingView)
-                    
-                    let launchCount: Int = appFlow.launchCountRepository.getLaunchCount()
+                    let launchCount: Int = launchCountRepository.getLaunchCount()
                     let hasPossibleDeferredDeepLinkInPasteboardForDynalink: Bool = UIPasteboard.general.hasURLs
                     
                     let shouldOpenPasteboardForDeferredDeepLink: Bool = launchCount == 1 && hasPossibleDeferredDeepLinkInPasteboardForDynalink
                     
                     if let deepLink = deferredDeepLink {
                         
-                        appFlow.navigate(step: .deepLink(deepLinkType: deepLink))
+                        navigate(step: .deepLink(deepLinkType: deepLink))
                     }
-                    else if let deepLink = appFlow.appLaunchedFromDeepLink {
+                    else if let deepLink = appLaunchedFromDeepLink {
                         
-                        appFlow.appLaunchedFromDeepLink = nil
-                        appFlow.navigate(step: .deepLink(deepLinkType: deepLink))
+                        appLaunchedFromDeepLink = nil
+                        navigate(step: .deepLink(deepLinkType: deepLink))
                     }
                     else if shouldOpenPasteboardForDeferredDeepLink {
                         
-                        appFlow.navigate(step: .showDeferredDeepLinkModal)
+                        navigate(step: .showDeferredDeepLinkModal)
                         
                     }
                     else if onboardingTutorialIsAvailable {
                         
-                        appFlow.navigate(step: .showOnboardingTutorial(animated: true))
+                        navigate(step: .showOnboardingTutorial(animated: true))
                     }
                     else {
                         
-                        appFlow.dashboardFlow.navigateToDashboard()
+                        dashboardFlow.navigateToDashboard()
 
                         if shouldPromptForOptInNotification {
-                            appFlow.presentOptInNotificationFlow()
+                            presentOptInNotificationFlow()
                         }
                     }
-                })
+                }
                 
             case .fromBackgroundState(let secondsInBackground):
                 
@@ -324,12 +311,11 @@ extension AppFlow {
             )
         }
         
-        remoteConfigRepository
-            .syncDataPublisher()
-            .sink { _ in
-                
-            }
-            .store(in: &cancellables)
+        Task {
+            
+            try await remoteConfigRepository
+                .syncData()
+        }
         
         Task {
             
@@ -540,20 +526,16 @@ extension AppFlow {
 
     private func promptForOptInNotificationIfNeeded() {
         
-        cancellableForShouldPromptForOptInNotification = appDiContainer.feature.optInNotification.domainLayer
-            .getShouldPromptForOptInNotificationUseCase()
-            .execute()
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { _ in
-                
-            }, receiveValue: { [weak self] (shouldPrompt: Bool) in
-                
-                self?.cancellableForShouldPromptForOptInNotification = nil
-                
-                if shouldPrompt {
-                    self?.presentOptInNotificationFlow()
-                }
-            })
+        Task {
+            
+            let shouldPrompt: Bool = try await appDiContainer.feature.optInNotification.domainLayer
+                .getShouldPromptForOptInNotificationUseCase()
+                .execute()
+            
+            if shouldPrompt {
+                presentOptInNotificationFlow()
+            }
+        }
     }
     
     private func presentOptInNotificationFlow() {

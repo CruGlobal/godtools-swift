@@ -46,26 +46,27 @@ final class OptInNotificationViewModel: ObservableObject {
 
         $appLanguage
             .dropFirst()
-            .map { appLanguage in
-                getOptInNotificationStringsUseCase
-                    .execute(appLanguage: appLanguage)
-            }
-            .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: OptInNotificationStringsDomainModel) in
+            .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
                      
-                self?.strings = strings
-                
-                let actionTitle: String
-                
-                switch notificationPromptType {
-                case .allow:
-                    actionTitle = strings.allowNotificationsActionTitle
-                case .settings:
-                    actionTitle = strings.notificationSettingsActionTitle
+                Task {
+                    
+                    let strings = await getOptInNotificationStringsUseCase
+                        .execute(appLanguage: appLanguage)
+                    
+                    self?.strings = strings
+                    
+                    let actionTitle: String
+                    
+                    switch notificationPromptType {
+                    case .allow:
+                        actionTitle = strings.allowNotificationsActionTitle
+                    case .settings:
+                        actionTitle = strings.notificationSettingsActionTitle
+                    }
+                    
+                    self?.notificationsActionTitle = actionTitle
                 }
-                
-                self?.notificationsActionTitle = actionTitle
             }
             .store(in: &cancellables)
     }
