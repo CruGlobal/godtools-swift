@@ -67,7 +67,6 @@ class DashboardFlow: Flow, ToolNavigationFlow, LocalizationSettingsNavigationFlo
 
         case .localizationSettingsTappedFromLessons:
             navigateToLocalizationSettings(
-                showsPreferNotToSay: false,
                 shouldStoreCountryWhenSelected: true,
                 userShouldConfirmSelectedCountry: false
             )
@@ -231,7 +230,6 @@ class DashboardFlow: Flow, ToolNavigationFlow, LocalizationSettingsNavigationFlo
 
         case .localizationSettingsTappedFromTools:
             navigateToLocalizationSettings(
-                showsPreferNotToSay: false,
                 shouldStoreCountryWhenSelected: true,
                 userShouldConfirmSelectedCountry: false
             )
