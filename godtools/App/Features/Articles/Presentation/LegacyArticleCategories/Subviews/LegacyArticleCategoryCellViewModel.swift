@@ -1,5 +1,5 @@
 //
-//  ArticleCategoryCellViewModel.swift
+//  LegacyArticleCategoryCellViewModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 4/14/20.
@@ -9,7 +9,7 @@
 import UIKit
 import GodToolsShared
 
-class ArticleCategoryCellViewModel {
+class LegacyArticleCategoryCellViewModel {
     
     let articleImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     let title: ObservableValue<String?> = ObservableValue(value: "")

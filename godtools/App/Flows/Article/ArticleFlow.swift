@@ -40,7 +40,7 @@ class ArticleFlow: Flow {
             forceFetchFromRemote: false
         )
         
-        let viewModel = ArticleCategoriesViewModel(
+        let viewModel = LegacyArticleCategoriesViewModel(
             flowDelegate: self,
             resource: toolTranslations.tool,
             language: languageTranslationManifest.language,
@@ -58,7 +58,7 @@ class ArticleFlow: Flow {
             accessibilityIdentifier: nil
         )
         
-        let view = ArticleCategoriesView(
+        let view = LegacyArticleCategoriesView(
             viewModel: viewModel,
             navigationBar: AppNavigationBar(
                 appearance: nil,

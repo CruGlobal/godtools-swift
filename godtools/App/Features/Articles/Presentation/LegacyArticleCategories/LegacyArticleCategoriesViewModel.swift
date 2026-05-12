@@ -1,5 +1,5 @@
 //
-//  ArticleCategoriesViewModel.swift
+//  LegacyArticleCategoriesViewModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 4/14/20.
@@ -11,7 +11,7 @@ import GodToolsShared
 import Combine
 
 @MainActor
-final class ArticleCategoriesViewModel {
+final class LegacyArticleCategoriesViewModel {
         
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     
@@ -77,7 +77,7 @@ final class ArticleCategoriesViewModel {
 
 // MARK: - Inputs
 
-extension ArticleCategoriesViewModel {
+extension LegacyArticleCategoriesViewModel {
     
     @objc func backTapped() {
         flowDelegate?.navigate(step: .backTappedFromArticleCategories)
@@ -112,11 +112,11 @@ extension ArticleCategoriesViewModel {
         pageViewCount += 1
     }
     
-    func categoryWillAppear(index: Int) -> ArticleCategoryCellViewModel {
+    func categoryWillAppear(index: Int) -> LegacyArticleCategoryCellViewModel {
         
         let category: GodToolsShared.Category = categories[index]
         
-        return ArticleCategoryCellViewModel(
+        return LegacyArticleCategoryCellViewModel(
             category: category,
             manifestResourcesCache: manifestResourcesCache
         )

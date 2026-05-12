@@ -1,5 +1,5 @@
 //
-//  ArticleCategoriesView.swift
+//  LegacyArticleCategoriesView.swift
 //  godtools
 //
 //  Created by Levi Eggert on 4/14/20.
@@ -8,17 +8,17 @@
 
 import UIKit
 
-class ArticleCategoriesView: AppViewController {
+class LegacyArticleCategoriesView: AppViewController {
     
-    private let viewModel: ArticleCategoriesViewModel
+    private let viewModel: LegacyArticleCategoriesViewModel
     
     private var refreshArticlesControl: UIRefreshControl = UIRefreshControl()
            
     @IBOutlet weak private var categoriesTableView: UITableView!
     
-    init(viewModel: ArticleCategoriesViewModel, navigationBar: AppNavigationBar?) {
+    init(viewModel: LegacyArticleCategoriesViewModel, navigationBar: AppNavigationBar?) {
         self.viewModel = viewModel
-        super.init(nibName: String(describing: ArticleCategoriesView.self), bundle: nil, navigationBar: navigationBar)
+        super.init(nibName: String(describing: LegacyArticleCategoriesView.self), bundle: nil, navigationBar: navigationBar)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -52,8 +52,8 @@ class ArticleCategoriesView: AppViewController {
                 
         // categoriesTableView
         categoriesTableView.register(
-            UINib(nibName: ArticleCategoryCell.nibName, bundle: nil),
-            forCellReuseIdentifier: ArticleCategoryCell.reuseIdentifier
+            UINib(nibName: LegacyArticleCategoryCell.nibName, bundle: nil),
+            forCellReuseIdentifier: LegacyArticleCategoryCell.reuseIdentifier
         )
         categoriesTableView.separatorStyle = .none
         let cellAspectRatio: CGSize = CGSize(width: 15, height: 8)
@@ -97,7 +97,7 @@ class ArticleCategoriesView: AppViewController {
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
 
-extension ArticleCategoriesView: UITableViewDelegate, UITableViewDataSource {
+extension LegacyArticleCategoriesView: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -114,15 +114,15 @@ extension ArticleCategoriesView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = categoriesTableView.dequeueReusableCell(
-            withIdentifier: ArticleCategoryCell.reuseIdentifier,
-            for: indexPath) as? ArticleCategoryCell else {
+            withIdentifier: LegacyArticleCategoryCell.reuseIdentifier,
+            for: indexPath) as? LegacyArticleCategoryCell else {
             
-            assertionFailure("Failed to dequeue reusable cell with identifier :\(ArticleCategoryCell.reuseIdentifier)")
+            assertionFailure("Failed to dequeue reusable cell with identifier :\(LegacyArticleCategoryCell.reuseIdentifier)")
             
             return UITableViewCell()
         }
         
-        let cellViewModel: ArticleCategoryCellViewModel = viewModel.categoryWillAppear(index: indexPath.row)
+        let cellViewModel: LegacyArticleCategoryCellViewModel = viewModel.categoryWillAppear(index: indexPath.row)
         
         cell.configure(viewModel: cellViewModel)
         
