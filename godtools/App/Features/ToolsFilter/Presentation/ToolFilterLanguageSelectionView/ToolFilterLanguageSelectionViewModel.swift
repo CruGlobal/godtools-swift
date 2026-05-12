@@ -11,9 +11,7 @@ import Combine
 
 @MainActor
 class ToolFilterLanguageSelectionViewModel: ObservableObject {
-    
-    private static var backgroundCancellables: Set<AnyCancellable> = Set()
-    
+        
     private let getToolFilterLanguagesStringsUseCase: GetToolFilterLanguagesStringsUseCase
     private let getToolFilterLanguagesUseCase: GetToolFilterLanguagesUseCase
     private let searchToolFilterLanguagesUseCase: SearchToolFilterLanguagesUseCase
@@ -33,10 +31,10 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
     @Published private var allLanguages: [ToolFilterLanguageDomainModel] = [ToolFilterLanguageDomainModel]()
     
     @Published private(set) var strings = ToolFilterLanguagesStringsDomainModel.emptyValue
-    @Published private(set) var selectedCategory: ToolFilterCategoryDomainModel = ToolFilterAnyCategoryDomainModel(text: "Any category", toolsAvailableText: "")
-    @Published private(set) var selectedLanguage: ToolFilterLanguageDomainModel = ToolFilterAnyLanguageDomainModel(text: "", toolsAvailableText: "", numberOfToolsAvailable: 0)
+    @Published private(set) var selectedCategory = ToolFilterCategoryDomainModel.emptyValue
+    @Published private(set) var selectedLanguage = ToolFilterLanguageDomainModel.emptyValue
+    @Published private(set) var languageSearchResults: [ToolFilterLanguageDomainModel] = Array()
     
-    @Published var languageSearchResults: [ToolFilterLanguageDomainModel] = [ToolFilterLanguageDomainModel]()
     @Published var searchText: String = ""
     
     init(getToolFilterLanguagesStringsUseCase: GetToolFilterLanguagesStringsUseCase, getToolFilterLanguagesUseCase: GetToolFilterLanguagesUseCase, searchToolFilterLanguagesUseCase: SearchToolFilterLanguagesUseCase, getUserToolFilterCategoryUseCase: GetUserToolFilterCategoryUseCase, getUserToolFilterLanguageUseCase: GetUserToolFilterLanguageUseCase, selectedToolFilterLanguageUseCase: SelectedToolFilterLanguageUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, flowDelegate: FlowDelegate) {
@@ -94,7 +92,7 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
         .map { (appLanguage: AppLanguageDomainModel, selectedCategory: ToolFilterCategoryDomainModel) in
             
             getToolFilterLanguagesUseCase
-                .execute(appLanguage: appLanguage, filteredByCategoryId: selectedCategory.id)
+                .execute(appLanguage: appLanguage, filteredByCategory: selectedCategory)
         }
         .switchToLatest()
         .receive(on: DispatchQueue.main)
@@ -134,17 +132,15 @@ extension ToolFilterLanguageSelectionViewModel {
         return searchBarViewModel
     }
         
-    func rowTapped(with language: ToolFilterLanguageDomainModel) {
+    func languageTapped(language: ToolFilterLanguageDomainModel) {
         
         selectedLanguage = language
         
-        selectedToolFilterLanguageUseCase
-            .execute(id: language.id)
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                
-            }
-            .store(in: &Self.backgroundCancellables)
+        Task {
+            
+            try await selectedToolFilterLanguageUseCase
+                .execute(language: language)
+        }
         
         flowDelegate?.navigate(step: .languageTappedFromToolLanguageFilter)
     }

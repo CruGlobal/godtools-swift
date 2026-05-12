@@ -20,19 +20,19 @@ final class GetToolFilterCategoriesUseCase {
         self.getToolFilterCategory = getToolFilterCategory
     }
     
-    @MainActor func execute(appLanguage: AppLanguageDomainModel, filteredByLanguageId: BCP47LanguageIdentifier?) -> AnyPublisher<[ToolFilterCategoryDomainModel], Error> {
+    @MainActor func execute(appLanguage: AppLanguageDomainModel, filteredByLanguage: ToolFilterLanguageDomainModel) -> AnyPublisher<[ToolFilterCategoryDomainModel], Error> {
         
         return resourcesRepository
             .observeCollectionChangesPublisher()
             .flatMap { _ in
                 
                 let categoryIds = self.resourcesRepository
-                    .getAllToolCategoryIds(filteredByLanguageId: filteredByLanguageId)
+                    .getAllToolCategoryIds(filteredByLanguageId: filteredByLanguage.filterId)
                 
                 let categories = self.getToolFilterCategory.createCategoryFilters(
                     from: categoryIds,
                     translatedInAppLanguage: appLanguage,
-                    filteredByLanguageId: filteredByLanguageId
+                    filteredByLanguageId: filteredByLanguage.filterId
                 )
                 
                 return Just(categories)
