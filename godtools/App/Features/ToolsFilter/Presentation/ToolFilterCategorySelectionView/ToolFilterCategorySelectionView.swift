@@ -28,11 +28,11 @@ struct ToolFilterCategorySelectionView: View {
             SearchBarView(viewModel: viewModel.getSearchBarViewModel(), searchText: $viewModel.searchText)
             
             List {
-                ForEach(viewModel.categorySearchResults, id: \.filterId) { category in
+                ForEach(viewModel.categorySearchResults) { category in
                     
                     Button {
                         
-                        viewModel.rowTapped(with: category)
+                        viewModel.categoryTapped(category: category)
                         
                     } label: {
                         
