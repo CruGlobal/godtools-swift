@@ -185,9 +185,18 @@ class DashboardFlow: Flow, ToolNavigationFlow, LocalizationSettingsNavigationFlo
             
         case .spotlightToolTappedFromTools(let spotlightTool, let toolFilterLanguage):
             
+            let toolFilterLanguageDataModel: LanguageDataModel?
+            
+            if let languageId = toolFilterLanguage?.id {
+                toolFilterLanguageDataModel = appDiContainer.dataLayer.getLanguagesRepository().getLanguage(id: languageId)
+            }
+            else {
+                toolFilterLanguageDataModel = nil
+            }
+                        
             let toolDetails = getToolDetails(
                 toolId: spotlightTool.dataModelId,
-                parallelLanguage: toolFilterLanguage?.languageLocale,
+                parallelLanguage: toolFilterLanguageDataModel?.localeId,
                 selectedLanguageIndex: 1
             )
             
@@ -195,7 +204,17 @@ class DashboardFlow: Flow, ToolNavigationFlow, LocalizationSettingsNavigationFlo
                         
         case .toolTappedFromTools(let tool, let toolFilterLanguage):
             
+            let toolFilterLanguageDataModel: LanguageDataModel?
+            
+            if let languageId = toolFilterLanguage?.id {
+                toolFilterLanguageDataModel = appDiContainer.dataLayer.getLanguagesRepository().getLanguage(id: languageId)
+            }
+            else {
+                toolFilterLanguageDataModel = nil
+            }
+            
             let resourcesRepository: ResourcesRepository = appDiContainer.dataLayer.getResourcesRepository()
+            
             let primaryLanguage: AppLanguageDomainModel?
             let parallelLanguage: AppLanguageDomainModel?
             
@@ -204,11 +223,10 @@ class DashboardFlow: Flow, ToolNavigationFlow, LocalizationSettingsNavigationFlo
                 
                 parallelLanguage = nil
                 
-                if let toolsFilterLanguageId = toolFilterLanguage?.languageDataModelId,
-                   let toolFilterLanguageLocale = toolFilterLanguage?.languageLocale,
-                   toolResource.supportsLanguage(languageId: toolsFilterLanguageId) {
+                if let toolFilterLanguageDataModel = toolFilterLanguageDataModel,
+                   toolResource.supportsLanguage(languageId: toolFilterLanguageDataModel.id) {
                     
-                    primaryLanguage = toolFilterLanguageLocale
+                    primaryLanguage = toolFilterLanguageDataModel.localeId
                 }
                 else {
                     
@@ -216,8 +234,9 @@ class DashboardFlow: Flow, ToolNavigationFlow, LocalizationSettingsNavigationFlo
                 }
             }
             else {
+                
                 primaryLanguage = nil
-                parallelLanguage = toolFilterLanguage?.languageLocale
+                parallelLanguage = toolFilterLanguageDataModel?.localeId
             }
             
             let toolDetails = getToolDetails(
