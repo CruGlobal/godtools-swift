@@ -13,6 +13,7 @@ import Combine
 extension Persistence {
     
     // TODO: Eventually should be removed in favor of using async await. ~Levi
+    @available(*, deprecated)
     func getDataModelsPublisher(getOption: PersistenceGetOption) -> AnyPublisher<[DataModelType], Error> {
         return AnyPublisher() {
             return try await getDataModelsAsync(getOption: getOption)
