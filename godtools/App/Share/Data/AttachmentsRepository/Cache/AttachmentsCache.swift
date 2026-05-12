@@ -83,9 +83,9 @@ extension AttachmentsCache {
         return cachedAttachment.copy(storedAttachment: storedAttachment)
     }
     
-    func storeAttachmentData(attachment: AttachmentDataModel, data: Data) throws -> StoredAttachmentDataModel {
+    func storeAttachmentData(attachment: AttachmentDataModel, data: Data) async throws -> StoredAttachmentDataModel {
         
-        let location: FileCacheLocation = try resourcesFileCache.storeAttachmentFile(
+        let location: FileCacheLocation = try await resourcesFileCache.storeAttachmentFile(
             attachmentId: attachment.id,
             fileName: attachment.sha256,
             fileData: data

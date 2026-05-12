@@ -76,7 +76,7 @@ extension AttachmentsRepository {
             requestPriority: requestPriority
         )
         
-        let storedAttachment: StoredAttachmentDataModel = try cache.storeAttachmentData(
+        let storedAttachment: StoredAttachmentDataModel = try await cache.storeAttachmentData(
             attachment: attachment,
             data: response.data
         )

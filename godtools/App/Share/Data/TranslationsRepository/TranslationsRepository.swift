@@ -389,7 +389,7 @@ extension TranslationsRepository {
             requestPriority: requestPriority
         )
         
-        return try resourcesFileCache.storeTranslationFile(
+        return try await resourcesFileCache.storeTranslationFile(
             translationId: translation.id,
             fileName: fileName,
             fileData: response.data
@@ -403,7 +403,7 @@ extension TranslationsRepository {
             requestPriority: requestPriority
         )
         
-        let files: [FileCacheLocation] = try resourcesFileCache.storeTranslationZipFile(
+        let files: [FileCacheLocation] = try await resourcesFileCache.storeTranslationZipFile(
             translationId: translation.id,
             zipFileData: response.data
         )
