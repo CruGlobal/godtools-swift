@@ -77,7 +77,6 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow, LocalizationSetting
             
             case .userChoseAppLanguage( _):
                 navigateToLocalizationSettings(
-                    showsPreferNotToSay: true,
                     shouldStoreCountryWhenSelected: false,
                     userShouldConfirmSelectedCountry: true
                 )
