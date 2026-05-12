@@ -218,7 +218,6 @@ extension ArticleAemCache {
                         for archivedObject in aemCacheArchivedObjects {
                             
                             let aemData: ArticleAemData = archivedObject.aemData
-                            let aemUri: String = aemData.aemUri
                             let existingRealmData: RealmArticleAemData? = realm.object(ofType: RealmArticleAemData.self, forPrimaryKey: aemData.aemUri)
                             
                             let realmDataToStore: RealmArticleAemData

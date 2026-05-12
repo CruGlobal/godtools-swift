@@ -47,7 +47,7 @@ final class ArticleManifestAemRepository: ArticleAemRepository {
         
         let aemUris: [String] = manifest.aemImports.map({$0.absoluteString})
         
-        let aemDataObjects: [ArticleAemData] = try await super.downloadAndCache(
+        let download: ArticleAemDownload = try await super.downloadAndCache(
             aemUris: aemUris,
             downloadCachePolicy: downloadCachePolicy,
             requestPriority: requestPriority
@@ -63,7 +63,7 @@ final class ArticleManifestAemRepository: ArticleAemRepository {
         let errors: [Error] = await categoryArticlesCache.storeAemDataObjectsForCategories(
             categories: categories,
             languageCode: languageCode,
-            aemDataObjects: aemDataObjects
+            aemDataObjects: download.aemDataObjects
         )
         
         if !errors.isEmpty {

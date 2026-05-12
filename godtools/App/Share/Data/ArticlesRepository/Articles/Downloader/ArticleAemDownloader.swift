@@ -21,22 +21,30 @@ final class ArticleAemDownloader {
         self.requestSender = requestSender
     }
     
-    func download(aemUris: [String], downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority) async throws -> [ArticleAemData] {
+    func download(aemUris: [String], downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority) async -> ArticleAemDownload {
         
         var aemDataObjects: [ArticleAemData] = Array()
+        var errors: [Error] = Array()
         
         for aemUri in aemUris {
             
-            let aemData: ArticleAemData = try await downloadAemUri(
-                aemUri: aemUri,
-                downloadCachePolicy: downloadCachePolicy,
-                requestPriority: requestPriority
-            )
-            
-            aemDataObjects.append(aemData)
+            do {
+                
+                let aemData: ArticleAemData = try await downloadAemUri(
+                    aemUri: aemUri,
+                    downloadCachePolicy: downloadCachePolicy,
+                    requestPriority: requestPriority
+                )
+                
+                aemDataObjects.append(aemData)
+            }
+            catch let error {
+                
+                errors.append(error)
+            }
         }
         
-        return aemDataObjects
+        return ArticleAemDownload(aemDataObjects: aemDataObjects, errors: errors)
     }
     
     private func downloadAemUri(aemUri: String, downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority) async throws -> ArticleAemData {

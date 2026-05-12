@@ -41,7 +41,7 @@ open class ArticleAemRepository: NSObject {
         return try cache.getAemCacheObjects(aemUris: aemUris)
     }
     
-    func downloadAndCache(aemUris: [String], downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority) async throws -> [ArticleAemData] {
+    func downloadAndCache(aemUris: [String], downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority) async throws -> ArticleAemDownload {
         
         let aemUrisNeedingUpdate: [String]
 
@@ -53,18 +53,18 @@ open class ArticleAemRepository: NSObject {
             aemUrisNeedingUpdate = aemUris
         }
         
-        let aemDataObjects: [ArticleAemData] = try await downloader.download(
+        let download: ArticleAemDownload = await downloader.download(
             aemUris: aemUrisNeedingUpdate,
             downloadCachePolicy: downloadCachePolicy,
             requestPriority: requestPriority
         )
         
         try await cache.storeAemDataObjects(
-            aemDataObjects: aemDataObjects,
+            aemDataObjects: download.aemDataObjects,
             requestPriority: requestPriority
         )
         
-        return aemDataObjects
+        return download
     }
     
     private func filterAemUrisByLastUpdate(aemUris: [String]) throws -> [String] {
