@@ -65,8 +65,6 @@ final class DownloadManifestArticlesObservable: ObservableObject {
                 
                 downloadResult = .failure(error)
             }
-            
-            return Void()
         }
     }
 }
