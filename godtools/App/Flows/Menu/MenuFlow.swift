@@ -93,7 +93,6 @@ class MenuFlow: Flow, LocalizationSettingsNavigationFlow {
             
         case .localizationSettingsTappedFromMenu:
             navigateToLocalizationSettings(
-                showsPreferNotToSay: false,
                 shouldStoreCountryWhenSelected: true,
                 userShouldConfirmSelectedCountry: false
             )
