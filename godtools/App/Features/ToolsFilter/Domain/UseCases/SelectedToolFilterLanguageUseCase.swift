@@ -18,26 +18,14 @@ final class SelectedToolFilterLanguageUseCase {
         self.userToolFiltersRepository = userToolFiltersRepository
     }
     
-    func execute(id: String?) -> AnyPublisher<Void, Never> {
+    func execute(language: ToolFilterLanguageDomainModel) async throws {
         
-        if let id = id, !id.isEmpty {
-            
-            Task {
-                try await userToolFiltersRepository
-                    .storeUserLanguageFilter(languageId: id)
-            }
+        guard language.languageType != .any else {
+            try userToolFiltersRepository.deleteUserLanguageFilter()
+            return
         }
-        else {
-            
-            do {
-                try userToolFiltersRepository.deleteUserLanguageFilter()
-            }
-            catch _ {
-                
-            }
-        }
-                
-        return Just(())
-            .eraseToAnyPublisher()
+        
+        try await userToolFiltersRepository
+            .storeUserLanguageFilter(languageId: language.id)
     }
 }

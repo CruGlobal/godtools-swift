@@ -18,26 +18,14 @@ final class SelectedToolFilterCategoryUseCase {
         self.userToolFiltersRepository = userToolFiltersRepository
     }
     
-    func execute(id: String?) -> AnyPublisher<Void, Never> {
+    func execute(category: ToolFilterCategoryDomainModel) async throws {
         
-        if let id = id, !id.isEmpty {
-            
-            Task {
-                try await userToolFiltersRepository
-                    .storeUserCategoryFilter(categoryId: id)
-            }
-        }
-        else {
-            
-            do {
-                try userToolFiltersRepository.deleteUserCategoryFilter()
-            }
-            catch _ {
-                
-            }
+        guard category.categoryType != .any else {
+            try userToolFiltersRepository.deleteUserCategoryFilter()
+            return
         }
         
-        return Just(())
-            .eraseToAnyPublisher()
+        try await userToolFiltersRepository
+            .storeUserCategoryFilter(categoryId: category.id)
     }
 }

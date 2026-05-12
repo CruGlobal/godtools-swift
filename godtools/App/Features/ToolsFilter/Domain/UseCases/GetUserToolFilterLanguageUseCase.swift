@@ -25,18 +25,16 @@ final class GetUserToolFilterLanguageUseCase {
         return userToolFiltersRepository
             .getUserToolLanguageFilterChangedPublisher()
             .map {
-                let languageId = self.userToolFiltersRepository.getUserToolLanguageFilter()?.languageId
                 
-                if let languageFilter = self.getToolFilterLanguage.getLanguageFilter(from: languageId, translatedInAppLanguage: appLanguage) {
+                let languageId: String? = self.userToolFiltersRepository.getUserToolLanguageFilter()?.languageId
+                
+                if let languageId = languageId,
+                   let languageFilter = self.getToolFilterLanguage.getLanguageFilter(languageId: languageId, translatedInAppLanguage: appLanguage) {
                     
                     return languageFilter
-                    
-                } else {
-                    
-                    let defaultLanguageFilterValue = self.getToolFilterLanguage.getAnyLanguageFilter(translatedInAppLanguage: appLanguage)
-                    
-                    return defaultLanguageFilterValue
                 }
+                
+                return self.getToolFilterLanguage.getAnyLanguageFilter(translatedInAppLanguage: appLanguage)
             }
             .eraseToAnyPublisher()
     }

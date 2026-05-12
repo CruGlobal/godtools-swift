@@ -39,16 +39,16 @@ final class ToolsViewModel: ObservableObject {
     private weak var flowDelegate: FlowDelegate?
 
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-    @Published private var toolFilterCategorySelection: ToolFilterCategoryDomainModel = ToolFilterAnyCategoryDomainModel.emptyValue
-    @Published private var toolFilterLanguageSelection: ToolFilterLanguageDomainModel = ToolFilterAnyLanguageDomainModel.emptyValue
+    @Published private var toolFilterCategorySelection = ToolFilterCategoryDomainModel.emptyValue
+    @Published private var toolFilterLanguageSelection = ToolFilterLanguageDomainModel.emptyValue
     @Published private var localizationSettings: UserLocalizationSettingsDomainModel?
     
     @Published private(set) var toggleOptions: [PersonalizationToggleOption] = ToolsViewModel.getToggleOptions(strings: ToolsStringsDomainModel.emptyValue)
     @Published private(set) var strings: ToolsStringsDomainModel = .emptyValue
     @Published private(set) var showsFavoritingToolBanner: Bool = false
     @Published private(set) var spotlightTools: [SpotlightToolListItemDomainModel] = Array()
-    @Published private(set) var categoryFilterButtonTitle: String = ""
-    @Published private(set) var languageFilterButtonTitle: String = ""
+    @Published private(set) var categoryFilterActionTitle: String = ""
+    @Published private(set) var languageFilterActionTitle: String = ""
     @Published private(set) var allTools: [ToolListItemDomainModel] = Array()
     @Published private(set) var isLoadingAllTools: Bool = true
     @Published private(set) var personalizationUnavailableState: PersonalizedToolsUnavailableDomainModel?
@@ -101,7 +101,7 @@ final class ToolsViewModel: ObservableObject {
             $selectedToggle
         )
         .dropFirst()
-        .map { [weak self] (appLanguage, toolFilters, localizationSettings, toggle) -> AnyPublisher<ToolsResultDomainModel, Error> in
+        .map { [weak self] (appLanguage: AppLanguageDomainModel, toolFilters, localizationSettings: UserLocalizationSettingsDomainModel?, toggle: PersonalizationToggleOptionValue) -> AnyPublisher<ToolsResultDomainModel, Error> in
 
             let (toolFilterCategory, toolFilterLanguage) = toolFilters
 
@@ -125,7 +125,7 @@ final class ToolsViewModel: ObservableObject {
                 return getAllToolsUseCase
                     .execute(
                         appLanguage: appLanguage,
-                        languageIdForAvailabilityText: toolFilterLanguage.languageDataModelId,
+                        languageIdForAvailabilityText: toolFilterLanguage.id,
                         filterToolsByCategory: toolFilterCategory,
                         filterToolsByLanguage: toolFilterLanguage
                     )
@@ -175,7 +175,7 @@ final class ToolsViewModel: ObservableObject {
             getSpotlightToolsUseCase
                 .execute(
                     translatedInAppLanguage: appLanguage,
-                    languageIdForAvailabilityText: toolFilterLanguage.languageDataModelId
+                    languageIdForAvailabilityText: toolFilterLanguage.id
                 )
         }
         .switchToLatest()
@@ -200,7 +200,7 @@ final class ToolsViewModel: ObservableObject {
             .sink { [weak self] (categoryFilter: ToolFilterCategoryDomainModel) in
             
                 self?.toolFilterCategorySelection = categoryFilter
-                self?.categoryFilterButtonTitle = categoryFilter.categoryButtonText
+                self?.categoryFilterActionTitle = categoryFilter.title
             }
             .store(in: &cancellables)
         
@@ -216,7 +216,7 @@ final class ToolsViewModel: ObservableObject {
             .sink { [weak self] (languageFilter: ToolFilterLanguageDomainModel) in
             
                 self?.toolFilterLanguageSelection = languageFilter
-                self?.languageFilterButtonTitle = languageFilter.languageButtonText
+                self?.languageFilterActionTitle = languageFilter.languageNameTranslatedInAppLanguage
             }
             .store(in: &cancellables)
     }

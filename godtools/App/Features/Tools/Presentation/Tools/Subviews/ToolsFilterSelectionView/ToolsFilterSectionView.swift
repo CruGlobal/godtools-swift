@@ -36,7 +36,7 @@ struct ToolsFilterSectionView: View {
             HStack(spacing: buttonSpacing) {
                 let buttonWidth = (width - (contentHorizontalInsets * 2) - buttonSpacing) / 2
                 ToolFilterButtonView(
-                    title: viewModel.categoryFilterButtonTitle,
+                    title: viewModel.categoryFilterActionTitle,
                     width: buttonWidth,
                     accessibility: .toolsCategoryFilter,
                     tappedClosure: {
@@ -46,7 +46,7 @@ struct ToolsFilterSectionView: View {
                 )
                 
                 ToolFilterButtonView(
-                    title: viewModel.languageFilterButtonTitle,
+                    title: viewModel.languageFilterActionTitle,
                     width: buttonWidth,
                     accessibility: .toolsLanguageFilter,
                     tappedClosure: {

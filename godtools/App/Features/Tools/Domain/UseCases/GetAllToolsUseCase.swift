@@ -20,7 +20,7 @@ final class GetAllToolsUseCase {
         self.getToolsListItems = getToolsListItems
     }
     
-    @MainActor func execute(appLanguage: AppLanguageDomainModel, languageIdForAvailabilityText: String?, filterToolsByCategory: ToolFilterCategoryDomainModel?, filterToolsByLanguage: ToolFilterLanguageDomainModel?) -> AnyPublisher<[ToolListItemDomainModel], Error> {
+    @MainActor func execute(appLanguage: AppLanguageDomainModel, languageIdForAvailabilityText: String?, filterToolsByCategory: ToolFilterCategoryDomainModel, filterToolsByLanguage: ToolFilterLanguageDomainModel) -> AnyPublisher<[ToolListItemDomainModel], Error> {
         
         return resourcesRepository
             .observeCollectionChangesPublisher()
@@ -28,8 +28,8 @@ final class GetAllToolsUseCase {
             .flatMap({ (resourcesChanged: Void) -> AnyPublisher<[ToolListItemDomainModel], Error> in
             
                 let tools: [ResourceDataModel] = self.resourcesRepository.getAllToolsListNonThrowing(
-                    filterByCategory: filterToolsByCategory?.id,
-                    filterByLanguageId: filterToolsByLanguage?.id,
+                    filterByCategory: filterToolsByCategory.filterId,
+                    filterByLanguageId: filterToolsByLanguage.filterId,
                     sortByDefaultOrder: true
                 )
 

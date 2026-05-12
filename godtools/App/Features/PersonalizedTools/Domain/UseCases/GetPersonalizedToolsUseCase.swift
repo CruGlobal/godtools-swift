@@ -26,11 +26,11 @@ final class GetPersonalizedToolsUseCase {
         self.localizationServices = localizationServices
     }
 
-    @MainActor func execute(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterToolsByLanguage: ToolFilterLanguageDomainModel?) -> AnyPublisher<ToolsResultDomainModel, Error> {
+    @MainActor func execute(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterToolsByLanguage: ToolFilterLanguageDomainModel) -> AnyPublisher<ToolsResultDomainModel, Error> {
         
         let languageCode: String = getLanguageElseAppLanguage
             .getLanguageCode(
-                languageId: filterToolsByLanguage?.languageDataModelId,
+                languageId: filterToolsByLanguage.filterId,
                 appLanguage: appLanguage
             )
         
@@ -70,7 +70,7 @@ final class GetPersonalizedToolsUseCase {
                 .mapToolsToListItemsPublisher(
                     tools: resources,
                     appLanguage: appLanguage,
-                    languageIdForAvailabilityText: filterToolsByLanguage?.languageDataModelId
+                    languageIdForAvailabilityText: filterToolsByLanguage.filterId
                 )
                 .map { (tools: [ToolListItemDomainModel]) -> ToolsResultDomainModel in
                     

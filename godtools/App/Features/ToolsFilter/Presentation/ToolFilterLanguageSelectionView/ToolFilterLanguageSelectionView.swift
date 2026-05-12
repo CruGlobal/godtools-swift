@@ -28,11 +28,11 @@ struct ToolFilterLanguageSelectionView: View {
             SearchBarView(viewModel: viewModel.getSearchBarViewModel(), searchText: $viewModel.searchText)
             
             List {
-                ForEach(viewModel.languageSearchResults, id: \.filterId) { language in
+                ForEach(viewModel.languageSearchResults) { language in
                     
                     Button {
                         
-                        viewModel.rowTapped(with: language)
+                        viewModel.languageTapped(language: language)
                         
                     } label: {
                         

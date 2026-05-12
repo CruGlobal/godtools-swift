@@ -81,7 +81,7 @@ extension UserToolFiltersCache {
             
             let context: ModelContext = database.openContext()
             
-            let objectToDelete: SwiftDownloadedLanguage? = try database.read.object(context: context, id: id)
+            let objectToDelete: SwiftUserToolLanguageFilter? = try database.read.object(context: context, id: id)
             
             try deleteSwiftObject(swiftObject: objectToDelete, context: context)
         }
@@ -89,7 +89,7 @@ extension UserToolFiltersCache {
             
             let realm: Realm = try realmDatabase.openRealm()
             
-            let objectToDelete: RealmDownloadedLanguage? = realmDatabase.read.object(realm: realm, id: id)
+            let objectToDelete: RealmUserToolLanguageFilter? = realmDatabase.read.object(realm: realm, id: id)
             
             try deleteRealmObject(realmObject: objectToDelete, realm: realm)
         }
