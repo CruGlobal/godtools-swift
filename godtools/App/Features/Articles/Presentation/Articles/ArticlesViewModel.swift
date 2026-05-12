@@ -17,7 +17,7 @@ final class ArticlesViewModel: NSObject {
     
     private let resource: ResourceDataModel
     private let language: LanguageDataModel
-    private let category: GodToolsShared.Category
+    private let category: ArticleCategoryDomainModel
     private let manifest: Manifest
     private let downloadArticlesObservable: DownloadManifestArticlesObservable
     private let articleManifestAemRepository: ArticleManifestAemRepository
@@ -37,7 +37,7 @@ final class ArticlesViewModel: NSObject {
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private var articleAemCacheObjects: [ArticleAemCacheObject] = Array()
     
-    init(flowDelegate: FlowDelegate, resource: ResourceDataModel, language: LanguageDataModel, category: GodToolsShared.Category, manifest: Manifest, downloadArticlesObservable: DownloadManifestArticlesObservable, articleManifestAemRepository: ArticleManifestAemRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, localizationServices: LocalizationServicesInterface, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, resource: ResourceDataModel, language: LanguageDataModel, category: ArticleCategoryDomainModel, manifest: Manifest, downloadArticlesObservable: DownloadManifestArticlesObservable, articleManifestAemRepository: ArticleManifestAemRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, localizationServices: LocalizationServicesInterface, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -56,7 +56,7 @@ final class ArticlesViewModel: NSObject {
             .execute()
             .assign(to: &$appLanguage)
                         
-        navTitle.accept(value: category.label?.text ?? "")
+        navTitle.accept(value: category.title)
         
         downloadArticlesObservable
             .$isDownloading
@@ -122,11 +122,7 @@ final class ArticlesViewModel: NSObject {
             .$downloadResult
             .flatMap { (result: Result<Void, Error>?) -> AnyPublisher<[AemUri], Error> in
                 
-                guard let categoryId = category.id else {
-                    return Just([])
-                        .setFailureType(to: Error.self)
-                        .eraseToAnyPublisher()
-                }
+                let categoryId: String = category.id
                 
                 return AnyPublisher() {
                     let categoryArticles: [CategoryArticleModel] = try await self.articleManifestAemRepository.getCategoryArticles(
@@ -185,7 +181,7 @@ final class ArticlesViewModel: NSObject {
     }
     
     private var analyticsScreenName: String {
-        return "Category : \(category.label?.text ?? "")"
+        return "Category : \(category.title)"
     }
     
     private var analyticsSiteSection: String {

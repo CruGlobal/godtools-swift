@@ -384,6 +384,12 @@ final class AppDataLayerDependencies {
         )
     }
     
+    func getMobileContentRendererManifestResourcesCache() -> MobileContentRendererManifestResourcesCache {
+        return MobileContentRendererManifestResourcesCache(
+            resourcesFileCache: getResourcesFileCache()
+        )
+    }
+    
     func getOptInOnboardingBannerEnabledRepository() -> OptInOnboardingBannerEnabledRepository {
         return OptInOnboardingBannerEnabledRepository(
             cache: OptInOnboardingBannerEnabledCache()

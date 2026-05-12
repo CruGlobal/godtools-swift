@@ -47,18 +47,18 @@ final class ArticleManifestAemRepository: ArticleAemRepository {
         
         let aemUris: [String] = manifest.aemImports.map({$0.absoluteString})
         
+        let aemDataObjects: [ArticleAemData] = try await super.downloadAndCache(
+            aemUris: aemUris,
+            downloadCachePolicy: downloadCachePolicy,
+            requestPriority: requestPriority
+        )
+        
         let categories: [ArticleCategory] = manifest.categories.map({
             ArticleCategory(
                 aemTags: Array($0.aemTags),
                 id: $0.id ?? ""
             )
         })
-        
-        let aemDataObjects: [ArticleAemData] = try await super.downloadAndCache(
-            aemUris: aemUris,
-            downloadCachePolicy: downloadCachePolicy,
-            requestPriority: requestPriority
-        )
         
         let errors: [Error] = await categoryArticlesCache.storeAemDataObjectsForCategories(
             categories: categories,

@@ -6,8 +6,9 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import GodToolsShared
+import UIKit
 import Combine
 
 enum FlowStep {
@@ -179,7 +180,7 @@ enum FlowStep {
     
     // article
     case backTappedFromArticleCategories
-    case articleCategoryTappedFromArticleCategories(resource: ResourceDataModel, language: LanguageDataModel, category: GodToolsShared.Category, manifest: Manifest)
+    case articleCategoryTappedFromArticleCategories(resource: ResourceDataModel, language: LanguageDataModel, category: ArticleCategoryDomainModel, manifest: Manifest)
     case backTappedFromArticles
     case articleTappedFromArticles(resource: ResourceDataModel, aemCacheObject: ArticleAemCacheObject)
     case backTappedFromArticle

@@ -12,6 +12,7 @@ final class AppFeatureDiContainer {
     
     let account: AccountDiContainer
     let appLanguage: AppLanguageFeatureDiContainer
+    let articles: ArticlesDiContainer
     let dashboard: DashboardDiContainer
     let deferredDeepLink: DeferredDeepLinkDiContainer
     let downloadToolProgress: DownloadToolProgressFeatureDiContainer
@@ -46,6 +47,7 @@ final class AppFeatureDiContainer {
     init(
         account: AccountDiContainer,
         appLanguage: AppLanguageFeatureDiContainer,
+        articles: ArticlesDiContainer,
         dashboard: DashboardDiContainer,
         deferredDeepLink: DeferredDeepLinkDiContainer,
         downloadToolProgress: DownloadToolProgressFeatureDiContainer,
@@ -80,6 +82,7 @@ final class AppFeatureDiContainer {
         
         self.account = account
         self.appLanguage = appLanguage
+        self.articles = articles
         self.dashboard = dashboard
         self.deferredDeepLink = deferredDeepLink
         self.downloadToolProgress = downloadToolProgress

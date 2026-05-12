@@ -34,6 +34,7 @@ class AppDiContainer {
         // feature dependency containers
         let accountDiContainer = AccountDiContainer(coreDataLayer: dataLayer)
         let appLanguageDiContainer = AppLanguageFeatureDiContainer(coreDataLayer: dataLayer, coreDomainLayer: domainLayer)
+        let articlesDiContainer = ArticlesDiContainer(coreDataLayer: dataLayer, coreDomainLayer: domainLayer)
         let dashboardDiContainer = DashboardDiContainer(coreDataLayer: dataLayer)
         let deferredDeepLinkDiContainer = DeferredDeepLinkDiContainer(coreDataLayer: dataLayer)
         let downloadToolProgressDiContainer = DownloadToolProgressFeatureDiContainer(coreDataLayer: dataLayer)
@@ -68,6 +69,7 @@ class AppDiContainer {
         feature = AppFeatureDiContainer(
             account: accountDiContainer,
             appLanguage: appLanguageDiContainer,
+            articles: articlesDiContainer,
             dashboard: dashboardDiContainer,
             deferredDeepLink: deferredDeepLinkDiContainer,
             downloadToolProgress: downloadToolProgressDiContainer,
@@ -125,7 +127,7 @@ class AppDiContainer {
             appLanguage: appLanguage,
             toolTranslations: toolTranslations,
             pageViewFactories: pageViewFactories,
-            manifestResourcesCache: getMobileContentRendererManifestResourcesCache()
+            manifestResourcesCache: dataLayer.getMobileContentRendererManifestResourcesCache()
         )
     }
     
@@ -138,10 +140,6 @@ class AppDiContainer {
     
     func getMobileContentRendererEventAnalyticsTracking() -> MobileContentRendererEventAnalyticsTracking {
         return MobileContentRendererEventAnalyticsTracking(firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics)
-    }
-    
-    func getMobileContentRendererManifestResourcesCache() -> MobileContentRendererManifestResourcesCache {
-        return MobileContentRendererManifestResourcesCache(resourcesFileCache: dataLayer.getResourcesFileCache())
     }
     
     @MainActor func getMobileContentRendererNavigation(parentFlow: ToolNavigationFlow, navigationDelegate: MobileContentRendererNavigationDelegate, appLanguage: AppLanguageDomainModel) -> MobileContentRendererNavigation {

@@ -6,6 +6,8 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
+import Foundation
+import SwiftUI
 import UIKit
 import GodToolsShared
 
@@ -52,7 +54,7 @@ class MobileContentRendererManifestResourcesCache {
         return try resourcesFileCache.getUIImage(location: location)
     }
     
-    func getNonThrowingUIImage(resource: Resource) -> UIImage? {
+    func getUIImageNonThrowing(resource: Resource) -> UIImage? {
         
         guard let location = getSHA256FileLocation(resource: resource) else {
             return nil
@@ -63,6 +65,20 @@ class MobileContentRendererManifestResourcesCache {
         }
         catch _ {
             print("\n WARNING: Failed to get resource image: \(location.filenameWithPathExtension ?? "")")
+            return nil
+        }
+    }
+    
+    func getImageNonThrowing(resource: Resource) -> SwiftUI.Image? {
+        
+        guard let location = getSHA256FileLocation(resource: resource) else {
+            return nil
+        }
+        
+        do {
+            return try resourcesFileCache.getImage(location: location)
+        }
+        catch let error {
             return nil
         }
     }

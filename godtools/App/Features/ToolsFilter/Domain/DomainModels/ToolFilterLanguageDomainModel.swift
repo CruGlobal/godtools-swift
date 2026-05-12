@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ToolFilterLanguageDomainModel: Sendable {
+struct ToolFilterLanguageDomainModel: Sendable, Identifiable {
     
     private static let anyLanguageId: String = "any_language"
     
@@ -68,12 +68,6 @@ struct ToolFilterLanguageDomainModel: Sendable {
     
     static var emptyValue: ToolFilterLanguageDomainModel {
         return Self.createAnyLanguage(languageNameTranslatedInAppLanguage: "", toolsAvailable: "", numberOfToolsAvailable: 0)
-    }
-}
-
-extension ToolFilterLanguageDomainModel: Identifiable {
-    var identifier: String {
-        return id
     }
 }
 

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ToolFilterCategoryDomainModel: Sendable {
+struct ToolFilterCategoryDomainModel: Sendable, Identifiable {
     
     private static let anyCategoryId: String = "any_category"
     
@@ -60,12 +60,6 @@ struct ToolFilterCategoryDomainModel: Sendable {
     
     static var emptyValue: ToolFilterCategoryDomainModel {
         return Self.createAnyCategory(title: "", toolsAvailable: "")
-    }
-}
-
-extension ToolFilterCategoryDomainModel: Identifiable {
-    var identifier: String {
-        return id
     }
 }
 
