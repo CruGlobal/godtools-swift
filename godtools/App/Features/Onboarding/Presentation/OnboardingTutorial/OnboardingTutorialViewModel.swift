@@ -55,13 +55,10 @@ final class OnboardingTutorialViewModel: ObservableObject {
                 
         getCurrentAppLanguageUseCase
             .execute()
-            .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .sink { [weak self] (appLanauge: AppLanguageDomainModel) in
-                Task {
-                    self?.strings = await getOnboardingTutorialStringsUseCase.execute(appLanguage: appLanauge)
-                }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
             }
             .store(in: &cancellables)
         
@@ -87,22 +84,9 @@ final class OnboardingTutorialViewModel: ObservableObject {
         print("x deinit: \(type(of: self))")
     }
     
-    func getPage(index: Int) -> OnboardingTutorialPage? {
-        return pages[safe: index]
-    }
-    
-    func getOnboardingTutorialPageAnalyticsProperties(page: OnboardingTutorialPage) -> OnboardingTutorialPageAnalyticsProperties {
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
         
-        let pageOffset: Int = 2
-        let pageIndex: Int = pages.firstIndex(of: page) ?? -1
-        
-        return OnboardingTutorialPageAnalyticsProperties(
-            screenName: "onboarding" + "-" + String(pageIndex + pageOffset),
-            siteSection: "onboarding",
-            siteSubsection: "",
-            contentLanguage: nil,
-            contentLanguageSecondary: nil
-        )
+        strings = getOnboardingTutorialStringsUseCase.execute(appLanguage: appLanguage)
     }
     
     private func updateShowsChooseLanguageButtonState(page: Int) {
@@ -160,6 +144,24 @@ final class OnboardingTutorialViewModel: ObservableObject {
             
             assertionFailure("Failed to fetch page at index:\n  \(page)\n  pages: \(pages)")
         }
+    }
+    
+    func getPage(index: Int) -> OnboardingTutorialPage? {
+        return pages[safe: index]
+    }
+    
+    func getOnboardingTutorialPageAnalyticsProperties(page: OnboardingTutorialPage) -> OnboardingTutorialPageAnalyticsProperties {
+        
+        let pageOffset: Int = 2
+        let pageIndex: Int = pages.firstIndex(of: page) ?? -1
+        
+        return OnboardingTutorialPageAnalyticsProperties(
+            screenName: "onboarding" + "-" + String(pageIndex + pageOffset),
+            siteSection: "onboarding",
+            siteSubsection: "",
+            contentLanguage: nil,
+            contentLanguageSecondary: nil
+        )
     }
     
     func getOnboardingTutorialReadyForEveryConversationViewModel() -> OnboardingTutorialReadyForEveryConversationViewModel {

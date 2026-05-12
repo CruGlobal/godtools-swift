@@ -18,7 +18,7 @@ final class GetOnboardingTutorialStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    @MainActor func execute(appLanguage: AppLanguageDomainModel) async -> OnboardingTutorialStringsDomainModel {
+    func execute(appLanguage: AppLanguageDomainModel) -> OnboardingTutorialStringsDomainModel {
         
         let localeId: String = appLanguage
         
