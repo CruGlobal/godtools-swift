@@ -48,10 +48,8 @@ final class OnboardingTutorialViewModel: ObservableObject {
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         
-        Task {
-            try await viewedOnboardingTutorialUseCase
-                .execute()
-        }
+        viewedOnboardingTutorialUseCase
+            .execute()
                 
         getCurrentAppLanguageUseCase
             .execute()

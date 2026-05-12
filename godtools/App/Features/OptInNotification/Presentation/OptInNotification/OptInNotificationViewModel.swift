@@ -42,37 +42,35 @@ final class OptInNotificationViewModel: ObservableObject {
 
         getCurrentAppLanguageUseCase
             .execute()
-            .assign(to: &$appLanguage)
-
-        $appLanguage
-            .dropFirst()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
-                     
-                Task {
-                    
-                    let strings = await getOptInNotificationStringsUseCase
-                        .execute(appLanguage: appLanguage)
-                    
-                    self?.strings = strings
-                    
-                    let actionTitle: String
-                    
-                    switch notificationPromptType {
-                    case .allow:
-                        actionTitle = strings.allowNotificationsActionTitle
-                    case .settings:
-                        actionTitle = strings.notificationSettingsActionTitle
-                    }
-                    
-                    self?.notificationsActionTitle = actionTitle
-                }
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
             }
             .store(in: &cancellables)
     }
 
     deinit {
         print("x deinit: \(type(of: self))")
+    }
+    
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+        
+        let strings = getOptInNotificationStringsUseCase
+            .execute(appLanguage: appLanguage)
+        
+        let actionTitle: String
+        
+        switch notificationPromptType {
+        case .allow:
+            actionTitle = strings.allowNotificationsActionTitle
+        case .settings:
+            actionTitle = strings.notificationSettingsActionTitle
+        }
+        
+        self.strings = strings
+        
+        notificationsActionTitle = actionTitle
     }
 }
 

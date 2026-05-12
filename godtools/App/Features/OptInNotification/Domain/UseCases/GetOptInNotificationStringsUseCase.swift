@@ -18,7 +18,7 @@ final class GetOptInNotificationStringsUseCase {
         self.localizationServices = localizationServices
     }
 
-    func execute(appLanguage: AppLanguageDomainModel) async -> OptInNotificationStringsDomainModel {
+    func execute(appLanguage: AppLanguageDomainModel) -> OptInNotificationStringsDomainModel {
         
         let strings = OptInNotificationStringsDomainModel(
             title: localizationServices.stringForLocaleElseEnglish(
