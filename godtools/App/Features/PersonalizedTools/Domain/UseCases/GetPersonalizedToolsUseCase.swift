@@ -26,9 +26,9 @@ final class GetPersonalizedToolsUseCase {
         self.localizationServices = localizationServices
     }
 
-    @MainActor func execute(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterToolsByLanguage: ToolFilterLanguageDomainModel?) -> AnyPublisher<ToolsResultDomainModel, Error> {
+    @MainActor func execute(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterToolsByLanguage: ToolFilterLanguageDomainModel) -> AnyPublisher<ToolsResultDomainModel, Error> {
 
-        let languageCode: String = getLanguageElseAppLanguage.getLanguageCode(languageId: filterToolsByLanguage?.languageDataModelId, appLanguage: appLanguage)
+        let languageCode: String = getLanguageElseAppLanguage.getLanguageCode(languageId: filterToolsByLanguage.filterId, appLanguage: appLanguage)
 
         let countryIsoRegionCode: String? = {
             if let isoRegionCode = country?.isoRegionCode, !isoRegionCode.isEmpty {
@@ -41,7 +41,7 @@ final class GetPersonalizedToolsUseCase {
             countryIsoRegionCode: countryIsoRegionCode,
             languageCode: languageCode,
             appLanguage: appLanguage,
-            languageIdForAvailabilityText: filterToolsByLanguage?.languageDataModelId,
+            languageIdForAvailabilityText: filterToolsByLanguage.filterId,
             hasCountry: countryIsoRegionCode != nil
         )
     }
