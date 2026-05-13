@@ -41,7 +41,7 @@ struct ArticleCategoriesView: View {
             }
         }
         .onAppear {
-            
+            viewModel.pageViewed()
         }
         .navigationBarBackButtonHidden(true)
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
