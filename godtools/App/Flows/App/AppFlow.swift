@@ -137,7 +137,7 @@ final class AppFlow: NSObject, Flow {
                 Task {
                     
                     let onboardingTutorialIsAvailable: Bool = appDiContainer.feature.onboarding.domainLayer.getOnboardingTutorialIsAvailableUseCase().execute()
-                    let deferredDeepLink: ParsedDeepLinkType? = await appDiContainer.feature.deferredDeepLink.domainLayer.getDeferredDeepLinkUseCase().execute()
+                    let deferredDeepLink: ParsedDeepLinkType? = await appDiContainer.feature.deferredDeepLink.domainLayer.getDeferredDeepLinkUseCase().execute() // NOTE: I noticed the call to check for deferred deep link will take a second or 2. ~Levi
                                         
                     removeLaunchedFromBackgroundLoadingView(view: loadingView)
                     
