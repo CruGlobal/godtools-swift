@@ -40,7 +40,7 @@ final class ToolDetailsViewModel: ObservableObject {
             showsLearnToShareToolButton = false
         }
     }
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var appLanguage = AppLanguageDomainModel.english
     @Published private var didViewPage: Void?
     @Published private var analyticsToolAbbreviation: String = ""
     

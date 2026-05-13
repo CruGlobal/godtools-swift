@@ -23,7 +23,7 @@ class ShareToolFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: AppNavigationController
     
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var appLanguage = AppLanguageDomainModel.english
     
     init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, navigationController: AppNavigationController, toolId: String, toolLanguageId: String, pageNumber: Int, appLanguage: AppLanguageDomainModel, toolAnalyticsAbbreviation: String) {
         

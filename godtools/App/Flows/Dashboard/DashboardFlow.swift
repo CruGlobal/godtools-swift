@@ -30,7 +30,7 @@ class DashboardFlow: Flow, ToolNavigationFlow, LocalizationSettingsNavigationFlo
     var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
     var localizationSettingsFlow: LocalizationSettingsFlow?
     
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var appLanguage = AppLanguageDomainModel.english
     
     init(appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, rootController: AppRootController) {
         

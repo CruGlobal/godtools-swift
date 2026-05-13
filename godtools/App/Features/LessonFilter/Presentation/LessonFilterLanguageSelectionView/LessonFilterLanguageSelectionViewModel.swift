@@ -26,7 +26,7 @@ final class LessonFilterLanguageSelectionViewModel: ObservableObject {
     private weak var flowDelegate: FlowDelegate?
     private lazy var searchBarViewModel = SearchBarViewModel(getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, viewSearchBarUseCase: viewSearchBarUseCase)
     
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var appLanguage = AppLanguageDomainModel.english
     @Published private var allLanguages: [LessonFilterLanguageDomainModel] = Array()
     
     @Published private(set) var strings = LessonFilterLanguagesStringsDomainModel.emptyValue

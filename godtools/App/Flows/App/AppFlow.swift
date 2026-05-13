@@ -32,7 +32,7 @@ final class AppFlow: NSObject, Flow {
     private var cancellableForShouldPromptForOptInNotification: AnyCancellable?
     private var cancellables: Set<AnyCancellable> = Set()
     
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var appLanguage = AppLanguageDomainModel.english
         
     let appDiContainer: AppDiContainer
     let navigationController: AppNavigationController

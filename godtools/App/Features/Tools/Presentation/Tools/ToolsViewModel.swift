@@ -38,7 +38,7 @@ final class ToolsViewModel: ObservableObject {
     
     private weak var flowDelegate: FlowDelegate?
 
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var appLanguage = AppLanguageDomainModel.english
     @Published private var toolFilterCategorySelection = ToolFilterCategoryDomainModel.emptyValue
     @Published private var toolFilterLanguageSelection = ToolFilterLanguageDomainModel.emptyValue
     @Published private var localizationSettings: UserLocalizationSettingsDomainModel?

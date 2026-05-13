@@ -27,7 +27,7 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
     
     private weak var flowDelegate: FlowDelegate?
         
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var appLanguage = AppLanguageDomainModel.english
     @Published private var allLanguages: [ToolFilterLanguageDomainModel] = [ToolFilterLanguageDomainModel]()
     
     @Published private(set) var strings = ToolFilterLanguagesStringsDomainModel.emptyValue

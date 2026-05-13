@@ -34,7 +34,7 @@ final class ArticlesViewModel: NSObject {
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     let errorMessage: ObservableValue<ArticlesErrorMessageViewModel?> = ObservableValue(value: nil)
         
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var appLanguage = AppLanguageDomainModel.english
     @Published private var articleAemCacheObjects: [ArticleAemCacheObject] = Array()
     
     init(flowDelegate: FlowDelegate, resource: ResourceDataModel, language: LanguageDataModel, category: ArticleCategoryDomainModel, manifest: Manifest, downloadArticlesObservable: DownloadManifestArticlesObservable, articleManifestAemRepository: ArticleManifestAemRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, localizationServices: LocalizationServicesInterface, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {

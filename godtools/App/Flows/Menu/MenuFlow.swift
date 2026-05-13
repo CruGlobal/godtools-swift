@@ -19,7 +19,7 @@ class MenuFlow: Flow, LocalizationSettingsNavigationFlow {
 
     private weak var flowDelegate: FlowDelegate?
     
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var appLanguage = AppLanguageDomainModel.english
     @Published private var shareGodToolsStringsDomainModel: ShareGodToolsStringsDomainModel?
     
     let appDiContainer: AppDiContainer

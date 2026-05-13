@@ -23,7 +23,7 @@ class ToolSettingsFlow: Flow {
     private var downloadToolTranslationsFlow: DownloadToolTranslationsFlow?
     private var cancellables: Set<AnyCancellable> = Set()
     
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var appLanguage = AppLanguageDomainModel.english
     @Published private var toolScreenShareTutorialHasBeenViewedDomainModel: ToolScreenShareTutorialViewedDomainModel = ToolScreenShareTutorialViewedDomainModel(numberOfViews: 0)
     
     private weak var flowDelegate: FlowDelegate?

@@ -29,7 +29,7 @@ final class AllYourFavoriteToolsViewModel: ObservableObject {
     
     private weak var flowDelegate: FlowDelegate?
     
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var appLanguage = AppLanguageDomainModel.english
     
     @Published private(set) var strings = AllYourFavoritedToolsStringsDomainModel.emptyValue
     
