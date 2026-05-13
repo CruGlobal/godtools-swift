@@ -142,20 +142,29 @@ extension TranslationsRepository {
 extension TranslationsRepository {
     
     func getTranslationManifestsFromRemote(translations: [TranslationDataModel], manifestParserType: TranslationManifestParserType, requestPriority: RequestPriority, includeRelatedFiles: Bool, shouldFallbackToLatestDownloadedTranslationIfRemoteFails: Bool) async throws -> [TranslationManifestFileDataModel] {
-           
-        var translationManifests: [TranslationManifestFileDataModel] = Array()
         
-        for translation in translations {
+        let translationManifests = try await withThrowingTaskGroup(of: TranslationManifestFileDataModel.self) { group in
             
-            let translationManifest = try await getTranslationManifestFromRemote(
-                translation: translation,
-                manifestParserType: manifestParserType,
-                requestPriority: requestPriority,
-                includeRelatedFiles: includeRelatedFiles,
-                shouldFallbackToLatestDownloadedTranslationIfRemoteFails: shouldFallbackToLatestDownloadedTranslationIfRemoteFails
-            )
+            for translation in translations {
+                group.addTask {
+                    let translationManifest = try await self.getTranslationManifestFromRemote(
+                        translation: translation,
+                        manifestParserType: manifestParserType,
+                        requestPriority: requestPriority,
+                        includeRelatedFiles: includeRelatedFiles,
+                        shouldFallbackToLatestDownloadedTranslationIfRemoteFails: shouldFallbackToLatestDownloadedTranslationIfRemoteFails
+                    )
+                    return translationManifest
+                }
+            }
             
-            translationManifests.append(translationManifest)
+            var translationManifests: [TranslationManifestFileDataModel] = Array()
+            
+            for try await translationManifest in group {
+                translationManifests.append(translationManifest)
+            }
+            
+            return translationManifests
         }
         
         return orderTranslationManifests(translationManifests: translationManifests, by: translations)
@@ -189,6 +198,31 @@ extension TranslationsRepository {
         return maintainTranslationDownloadOrder
     }
     
+    private func getTranslationManifestRelatedFilesFromCacheElseRemote(translation: TranslationDataModel, manifest: Manifest, requestPriority: RequestPriority) async throws -> [FileCacheLocation] {
+        
+        try await withThrowingTaskGroup(of: FileCacheLocation.self) { group in
+            
+            for relatedFile in manifest.relatedFiles {
+                group.addTask {
+                    let file = try await self.getTranslationFileFromCacheElseRemote(
+                        translation: translation,
+                        fileName: relatedFile,
+                        requestPriority: requestPriority
+                    )
+                    return file
+                }
+            }
+            
+            var relatedFiles: [FileCacheLocation] = Array()
+            
+            for try await file in group {
+                relatedFiles.append(file)
+            }
+            
+            return relatedFiles
+        }
+    }
+    
     func getTranslationManifestFromRemote(translation: TranslationDataModel, manifestParserType: TranslationManifestParserType, requestPriority: RequestPriority, includeRelatedFiles: Bool, shouldFallbackToLatestDownloadedTranslationIfRemoteFails: Bool) async throws -> TranslationManifestFileDataModel {
         
         do {
@@ -217,18 +251,11 @@ extension TranslationsRepository {
                 )
             }
             
-            var relatedFiles: [FileCacheLocation] = Array()
-            
-            for relatedFile in manifest.relatedFiles {
-                
-                let file = try await getTranslationFileFromCacheElseRemote(
-                    translation: translation,
-                    fileName: relatedFile,
-                    requestPriority: requestPriority
-                )
-                
-                relatedFiles.append(file)
-            }
+            let relatedFiles = try await getTranslationManifestRelatedFilesFromCacheElseRemote(
+                translation: translation,
+                manifest: manifest,
+                requestPriority: requestPriority
+            )
             
             return TranslationManifestFileDataModel(
                 manifest: manifest,
@@ -324,20 +351,16 @@ extension TranslationsRepository {
             
             let manifest: Manifest = try await manifestParser.parse(manifestName: translation.manifestName)
             
-            var downloadedFiles: [FileCacheLocation] = Array()
+            let relatedFiles = try await getTranslationManifestRelatedFilesFromCacheElseRemote(
+                translation: translation,
+                manifest: manifest,
+                requestPriority: requestPriority
+            )
             
-            for relatedFile in manifest.relatedFiles {
-                
-                let fileCacheLocation = try await getTranslationFileFromCacheElseRemote(
-                    translation: translation,
-                    fileName: relatedFile,
-                    requestPriority: requestPriority
-                )
-                
-                downloadedFiles.append(fileCacheLocation)
-            }
-            
-            return try await didDownloadTranslationAndRelatedFiles(translation: translation, files: downloadedFiles)
+            return try await didDownloadTranslationAndRelatedFiles(
+                translation: translation,
+                files: relatedFiles
+            )
         }
         catch let error {
 

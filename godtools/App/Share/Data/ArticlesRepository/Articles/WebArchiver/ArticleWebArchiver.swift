@@ -32,14 +32,21 @@ final class ArticleWebArchiver {
         
         do {
             
-            for webArchiveUrl in webArchiveUrls {
+            try await withThrowingTaskGroup(of: ArticleWebArchiveData.self) { group in
                 
-                let webArchiveData: ArticleWebArchiveData = try await archiveUrl(
-                    webArchiveUrl: webArchiveUrl,
-                    urlSession: urlSession
-                )
+                for webArchiveUrl in webArchiveUrls {
+                    group.addTask {
+                        let webArchiveData: ArticleWebArchiveData = try await self.archiveUrl(
+                            webArchiveUrl: webArchiveUrl,
+                            urlSession: urlSession
+                        )
+                        return webArchiveData
+                    }
+                }
                 
-                archives.append(webArchiveData)
+                for try await webArchiveData in group {
+                    archives.append(webArchiveData)
+                }
             }
         }
         catch let error {
@@ -123,34 +130,57 @@ final class ArticleWebArchiver {
     
     private func requestHtmlDocumentResources(resourceUrls: [String], urlSession: URLSession) async throws -> [WebArchiveResource] {
         
-        var downloadedResources: [WebArchiveResource] = Array()
+        try await withThrowingTaskGroup(of: WebArchiveResource.self) { group in
+            
+            for urlString in resourceUrls {
+                
+                guard let url = URL(string: urlString) else {
+                    continue
+                }
+                
+                group.addTask {
+                    let archiveResource = try await self.requestHtmlDocumentResource(url: url, urlSession: urlSession)
+                    return archiveResource
+                }
+            }
+            
+            var downloadedResources: [WebArchiveResource] = Array()
+            
+            for try await archiveResource in group {
+                downloadedResources.append(archiveResource)
+            }
+            
+            return downloadedResources
+        }
+    }
+    
+    private func requestHtmlDocumentResource(url: URL, urlSession: URLSession) async throws -> WebArchiveResource {
         
-        for urlString in resourceUrls {
-            
-            guard let url = URL(string: urlString) else {
-                continue
-            }
-            
-            let urlRequest = URLRequest(url: url)
-            
-            let response: RequestDataResponse = try await requestSender.sendDataTask(urlRequest: urlRequest, urlSession: urlSession)
-            
-            let isSuccessHttpStatusCode: Bool = response.urlResponse.isSuccessHttpStatusCode
-            let mimeType: String = response.urlResponse.mimeType ?? ""
-            
-            guard isSuccessHttpStatusCode && !mimeType.isEmpty else {
-                continue
-            }
-            
-            let webArchiveResource = WebArchiveResource(
-                url: url,
-                data: response.data,
-                mimeType: mimeType
-            )
-            
-            downloadedResources.append(webArchiveResource)
+        let urlRequest = URLRequest(url: url)
+        
+        let response: RequestDataResponse = try await requestSender.sendDataTask(
+            urlRequest: urlRequest,
+            urlSession: urlSession
+        )
+        
+        let httpStatusCode: Int = response.urlResponse.httpStatusCode ?? -1
+        let isSuccessHttpStatusCode: Bool = response.urlResponse.isSuccessHttpStatusCode
+        let mimeType: String = response.urlResponse.mimeType ?? ""
+        
+        guard isSuccessHttpStatusCode else {
+            throw NSError.errorWithDomain(domain: errorDomain, code: -1, description: "The requested html document resource failed with status code: \(httpStatusCode)")
         }
         
-        return downloadedResources
+        guard !mimeType.isEmpty else {
+            throw NSError.errorWithDomain(domain: errorDomain, code: -1, description: "The requested html document resource mimeType is empty.")
+        }
+        
+        let webArchiveResource = WebArchiveResource(
+            url: url,
+            data: response.data,
+            mimeType: mimeType
+        )
+        
+        return webArchiveResource
     }
 }
