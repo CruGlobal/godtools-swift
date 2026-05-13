@@ -26,7 +26,7 @@ final class ToolShortcutLinksViewModel: ObservableObject {
     
     private var cancellables: Set<AnyCancellable> = Set()
     
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var appLanguage = AppLanguageDomainModel.english
     
     @Published private(set) var shortcutLinks: [UIApplicationShortcutItem] = Array()
     

@@ -46,7 +46,7 @@ final class GetToolDetailsUseCase {
         let toolDataModel: ResourceDataModel?
         
         do {
-            toolDataModel = try resourcesRepository.persistence.getDataModel(id: toolId)
+            toolDataModel = try resourcesRepository.getResource(id: toolId)
         }
         catch let error {
             return Fail(error: error)
@@ -98,7 +98,7 @@ final class GetToolDetailsUseCase {
                 aboutDescription: translation.translatedDescription,
                 bibleReferences: translation.toolDetailsBibleReferences,
                 conversationStarters: translation.toolDetailsConversationStarters,
-                isFavorited: self.favoritedResourcesRepository.getResourceIsFavorited(id: toolId),
+                isFavorited: self.favoritedResourcesRepository.getResourceIsFavoritedNonThrowing(id: toolId),
                 languagesAvailable: languagesAvailable,
                 name: translation.translatedName,
                 numberOfViews: numberOfViewsString,
@@ -217,7 +217,7 @@ final class GetToolDetailsUseCase {
             return false
         }
         
-        guard let languageModel = languagesRepository.getLanguage(code: language) else {
+        guard let languageModel = languagesRepository.getLanguageNonThrowing(code: language) else {
             return false
         }
         

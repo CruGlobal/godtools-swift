@@ -40,7 +40,7 @@ final class ToolDetailsViewModel: ObservableObject {
             showsLearnToShareToolButton = false
         }
     }
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var appLanguage = AppLanguageDomainModel.english
     @Published private var didViewPage: Void?
     @Published private var analyticsToolAbbreviation: String = ""
     
@@ -76,7 +76,6 @@ final class ToolDetailsViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .execute()
-            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         Publishers.CombineLatest(
@@ -187,7 +186,14 @@ final class ToolDetailsViewModel: ObservableObject {
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$mediaType)
+            .sink { _ in
+                
+            } receiveValue: { [weak self] (mediaType: ToolDetailsMediaDomainModel) in
+                
+                self?.mediaType = mediaType
+            }
+            .store(in: &cancellables)
+
         
         $toolId
             .map { (toolId: String) in

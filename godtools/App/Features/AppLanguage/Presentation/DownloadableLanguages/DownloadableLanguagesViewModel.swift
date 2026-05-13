@@ -26,7 +26,7 @@ final class DownloadableLanguagesViewModel: ObservableObject {
     
     private weak var flowDelegate: FlowDelegate?
     
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var appLanguage = AppLanguageDomainModel.english
     @Published private var allDownloadableLanguages: [DownloadableLanguageListItemDomainModel] = Array()
     
     @Published private(set) var displayedDownloadableLanguages: [DownloadableLanguageListItemDomainModel] = Array()
@@ -47,7 +47,6 @@ final class DownloadableLanguagesViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .execute()
-            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         $appLanguage

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class ToolLanguageDownloader {
     
@@ -24,19 +23,20 @@ final class ToolLanguageDownloader {
         self.downloadedLanguagesRepository = downloadedLanguagesRepository
     }
     
-    func downloadToolLanguagePublisher(languageId: String) -> AnyPublisher<ToolDownloaderDataModel, Error> {
+    func downloadToolLanguage(languageId: String) throws -> AsyncThrowingStream<ToolDownloaderDataModel, Error> {
         
-        guard let languageModel = languagesRepository.getLanguage(id: languageId) else {
+        guard let languageModel = try languagesRepository.getLanguage(id: languageId) else {
             
-            let error: Error = NSError.errorWithDomain(domain: "ToolLanguageDownloader", code: -1, description: "Internal Error in ToolLanguageDownloader.  Failed to fetch language with language id: \(languageId)")
-            
-            return Fail(error: error)
-                .eraseToAnyPublisher()
+            throw NSError.errorWithDomain(
+                domain: "ToolLanguageDownloader",
+                code: -1,
+                description: "Internal Error in ToolLanguageDownloader.  Failed to fetch language with language id: \(languageId)"
+            )
         }
                 
         let includeToolTypes: [ResourceType] = ResourceType.toolTypes + [.lesson]
         
-        let tools: [ResourceDataModel] = resourcesRepository.getCachedResourcesByFilter(
+        let tools: [ResourceDataModel] = try resourcesRepository.getCachedResourcesByFilter(
             filter: ResourcesFilter(category: nil, languageModelCode: languageModel.code, resourceTypes: includeToolTypes)
         )
         
@@ -44,32 +44,23 @@ final class ToolLanguageDownloader {
             DownloadToolDataModel(toolId: $0.id, languages: [languageModel.code])
         })
                 
-        return toolDownloader.downloadToolsPublisher(tools: downloadTools, requestPriority: .low)
-            .eraseToAnyPublisher()
+        return toolDownloader.downloadToolsStream(
+            tools: downloadTools,
+            requestPriority: .low
+        )
     }
     
-    func syncDownloadedLanguagesPublisher() -> AnyPublisher<Void, Error> {
+    func syncDownloadedLanguages() async throws {
         
-        Task {
-            try await downloadedLanguagesRepository.markAllDownloadsAsCompleted()
+        _ = try await downloadedLanguagesRepository.markAllDownloadsAsCompleted()
+        
+        let downloadedLanguages: [DownloadedLanguageDataModel] = try await downloadedLanguagesRepository.getDownloadedLanguagesByDownloadComplete(
+            downloadComplete: true
+        )
+        
+        for language in downloadedLanguages {
+            
+            _ = try downloadToolLanguage(languageId: language.languageId)
         }
-                
-        return downloadedLanguagesRepository
-            .getDownloadedLanguagesByDownloadCompletePublisher(
-                downloadComplete: true
-            )
-            .flatMap({ (downloadedLanguages: [DownloadedLanguageDataModel]) -> AnyPublisher<Void, Error> in
-                                         
-                let downloadToolLanguageRequests: [AnyPublisher<ToolDownloaderDataModel, Error>] = downloadedLanguages.map({
-                    self.downloadToolLanguagePublisher(languageId: $0.languageId)
-                })
-                                
-                return Publishers.MergeMany(downloadToolLanguageRequests)
-                    .map { _ in
-                        Void()
-                    }
-                    .eraseToAnyPublisher()
-            })
-            .eraseToAnyPublisher()
     }
 }

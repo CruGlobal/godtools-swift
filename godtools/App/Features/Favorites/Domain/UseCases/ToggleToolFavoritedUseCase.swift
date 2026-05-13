@@ -20,7 +20,7 @@ final class ToggleToolFavoritedUseCase {
     
     func execute(toolId: String) -> AnyPublisher<ToolIsFavoritedDomainModel, Error> {
         
-        let resourceIsFavorited: Bool = favoritedResourcesRepository.getResourceIsFavorited(id: toolId)
+        let resourceIsFavorited: Bool = favoritedResourcesRepository.getResourceIsFavoritedNonThrowing(id: toolId)
         
         if resourceIsFavorited {
             

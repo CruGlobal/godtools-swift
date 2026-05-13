@@ -56,8 +56,8 @@ struct GetAllToolsUseCaseTests {
                 .execute(
                     appLanguage: "",
                     languageIdForAvailabilityText: nil,
-                    filterToolsByCategory: nil,
-                    filterToolsByLanguage: nil
+                    filterToolsByCategory: ToolFilterCategoryDomainModel.emptyValue,
+                    filterToolsByLanguage: ToolFilterLanguageDomainModel.emptyValue
                 )
                 .sink(receiveCompletion: { _ in
                     
@@ -98,17 +98,9 @@ struct GetAllToolsUseCaseTests {
         
         var toolsListRef: [ToolListItemDomainModel] = Array()
         
-        let growthCategoryFilter = ToolFilterCategoryDomainModel(
-            categoryId: categoryGrowth,
-            translatedName: "",
-            toolsAvailableText: ""
-        )
+        let growthCategoryFilter = ToolFilterCategoryDomainModel.createCategory(id: categoryGrowth, title: "", toolsAvailable: "")
         
-        let anyLanguageFilter = ToolFilterAnyLanguageDomainModel(
-            text: "",
-            toolsAvailableText: "",
-            numberOfToolsAvailable: 0
-        )
+        let anyLanguageFilter = ToolFilterLanguageDomainModel.createAnyLanguage(languageNameTranslatedInAppLanguage: "", toolsAvailable: "", numberOfToolsAvailable: 0)
         
         await withCheckedContinuation { continuation in
             
@@ -163,19 +155,9 @@ struct GetAllToolsUseCaseTests {
         
         var toolsListRef: [ToolListItemDomainModel] = Array()
         
-        let anyCategoryFilter = ToolFilterAnyCategoryDomainModel(
-            text: "",
-            toolsAvailableText: ""
-        )
+        let anyCategoryFilter = ToolFilterCategoryDomainModel.createAnyCategory(title: "", toolsAvailable: "")
         
-        let russianLanguageFilter = ToolFilterLanguageDomainModel(
-            languageName: "",
-            translatedName: "",
-            toolsAvailableText: "",
-            languageId: russianLanguageId,
-            languageLocaleId: "",
-            numberOfToolsAvailable: 0
-        )
+        let russianLanguageFilter = ToolFilterLanguageDomainModel.createLanguage(id: russianLanguageId, languageName: "", languageNameTranslatedInAppLanguage: "", toolsAvailable: "", numberOfToolsAvailable: 0)
         
         await withCheckedContinuation { continuation in
             
@@ -230,19 +212,9 @@ struct GetAllToolsUseCaseTests {
         
         var toolsListRef: [ToolListItemDomainModel] = Array()
         
-        let anyCategoryFilter = ToolFilterAnyCategoryDomainModel(
-            text: "",
-            toolsAvailableText: ""
-        )
+        let anyCategoryFilter = ToolFilterCategoryDomainModel.createAnyCategory(title: "", toolsAvailable: "")
         
-        let spanishLanguageFilter = ToolFilterLanguageDomainModel(
-            languageName: "",
-            translatedName: "",
-            toolsAvailableText: "",
-            languageId: spanishLanguageId,
-            languageLocaleId: "",
-            numberOfToolsAvailable: 0
-        )
+        let spanishLanguageFilter = ToolFilterLanguageDomainModel.createLanguage(id: spanishLanguageId, languageName: "", languageNameTranslatedInAppLanguage: "", toolsAvailable: "", numberOfToolsAvailable: 0)
         
         await withCheckedContinuation { continuation in
             

@@ -57,12 +57,12 @@ final class GetYourFavoritedToolsUseCase {
     
     private func mapToDomainModels(appLanguage: AppLanguageDomainModel, maxCount: Int?, strings: ToolListItemStringsDomainModel, favoritedResources: [FavoritedResourceDataModel]) throws -> [YourFavoritedToolDomainModel] {
         
-        let numberOfFavoritedTools: Int = try self.favoritedResourcesRepository.persistence.getObjectCount()
+        let numberOfFavoritedTools: Int = try self.favoritedResourcesRepository.getObjectCount()
         
         let prefixedFavoritedResources: [ResourceDataModel] = favoritedResources
             .prefix(maxCount ?? numberOfFavoritedTools)
             .compactMap {
-                self.resourcesRepository.getResource(id: $0.id)
+                self.resourcesRepository.getResourceNonThrowing(id: $0.id)
             }
         
         let yourFavoritedTools: [YourFavoritedToolDomainModel] = prefixedFavoritedResources

@@ -9,10 +9,7 @@
 import Foundation
 import RequestOperation
 
-final class PersonalizedToolsApi {
-    
-    typealias TwoLetterCountryCode = String
-    typealias TwoLetterLanguageCode = String
+final class PersonalizedToolsApi: PersonalizedToolsApiInterface {
     
     enum QueryName: String {
         case country = "country"

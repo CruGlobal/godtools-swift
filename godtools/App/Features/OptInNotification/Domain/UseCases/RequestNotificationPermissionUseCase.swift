@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 import UserNotifications
 
 final class RequestNotificationPermissionUseCase {
@@ -16,15 +15,8 @@ final class RequestNotificationPermissionUseCase {
         
     }
     
-    func execute() -> AnyPublisher<Bool, Error> {
+    func execute() async throws -> Bool {
     
-        return AnyPublisher() {
-            return try await self.requestAuthorization()
-        }
-    }
-    
-    private func requestAuthorization() async throws -> Bool {
-        
         return try await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound])
     }
 }

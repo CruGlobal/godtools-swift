@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct WebArchive: Encodable {
+struct WebArchive: Encodable, Sendable {
     
     enum CodingKeys: String, CodingKey {
         case mainResource = "WebMainResource"
@@ -18,7 +18,8 @@ struct WebArchive: Encodable {
     let mainResource: WebArchiveMainResource
     let webSubresources: [WebArchiveResource]
 }
-struct WebArchiveResource: Encodable {
+
+struct WebArchiveResource: Encodable, Sendable {
     
     enum CodingKeys: String, CodingKey {
         case url = "WebResourceURL"
@@ -37,7 +38,8 @@ struct WebArchiveResource: Encodable {
         try container.encode(mimeType, forKey: .mimeType)
     }
 }
-struct WebArchiveMainResource: Encodable {
+
+struct WebArchiveMainResource: Encodable, Sendable {
     
     enum CodingKeys: String, CodingKey {
         case url = "WebResourceURL"

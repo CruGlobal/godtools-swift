@@ -8,9 +8,8 @@
 
 import Foundation
 import RequestOperation
-import Combine
 
-final class MobileContentTranslationsApi {
+final class MobileContentTranslationsApi: TranslationsApiInterface {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let urlSessionPriority: URLSessionPriority
@@ -40,15 +39,16 @@ final class MobileContentTranslationsApi {
         )
     }
     
-    func getTranslationFilePublisher(fileName: String, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
+    func getTranslationFile(fileName: String, requestPriority: RequestPriority) async throws -> RequestDataResponse {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
         let urlRequest: URLRequest = getTranslationFileRequest(urlSession: urlSession, fileName: fileName)
-                
-        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
-            .validate()
-            .eraseToAnyPublisher()
+        
+        return try await requestSender.sendDataTask(
+            urlRequest: urlRequest,
+            urlSession: urlSession
+        )
     }
     
     // MARK: - Translation Zip File Data
@@ -67,14 +67,15 @@ final class MobileContentTranslationsApi {
         )
     }
     
-    func getTranslationZipFilePublisher(translationId: String, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
+    func getTranslationZipFile(translationId: String, requestPriority: RequestPriority) async throws -> RequestDataResponse {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
         let urlRequest: URLRequest = getTranslationZipFileRequest(urlSession: urlSession, translationId: translationId)
-                
-        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
-            .validate()
-            .eraseToAnyPublisher()
+        
+        return try await requestSender.sendDataTask(
+            urlRequest: urlRequest,
+            urlSession: urlSession
+        )
     }
 }

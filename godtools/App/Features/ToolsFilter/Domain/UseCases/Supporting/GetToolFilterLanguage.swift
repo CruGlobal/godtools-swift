@@ -31,15 +31,13 @@ final class GetToolFilterLanguage {
         return createAnyLanguageDomainModel(translatedInAppLanguage: translatedInAppLanguage, filteredByCategoryId: nil)
     }
     
-    func getLanguageFilter(from languageId: String?, translatedInAppLanguage: AppLanguageDomainModel) -> ToolFilterLanguageDomainModel? {
+    func getLanguageFilter(languageId: String, translatedInAppLanguage: AppLanguageDomainModel) -> ToolFilterLanguageDomainModel? {
         
-        guard let languageId = languageId,
-            let language = languagesRepository.getLanguage(id: languageId)
-        else {
+        guard let language = languagesRepository.getLanguageNonThrowing(id: languageId) else {
             return nil
         }
         
-        return createLanguageFilterDomainModel(with: language, translatedInAppLanguage: translatedInAppLanguage, filteredByCategoryId: nil)
+        return createLanguageFilterDomainModel(language: language, translatedInAppLanguage: translatedInAppLanguage, filteredByCategoryId: nil)
     }
     
     func createLanguageFilterDomainModelListPublisher(from languageIds: [String], translatedInAppLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) -> AnyPublisher<[ToolFilterLanguageDomainModel], Error> {
@@ -56,7 +54,7 @@ final class GetToolFilterLanguage {
                 let domainModels: [ToolFilterLanguageDomainModel] = languages.compactMap { (language: LanguageDataModel) in
                     
                     let domainModel: ToolFilterLanguageDomainModel = self.createLanguageFilterDomainModel(
-                        with: language,
+                        language: language,
                         translatedInAppLanguage: translatedInAppLanguage,
                         filteredByCategoryId: filteredByCategoryId
                     )
@@ -69,12 +67,12 @@ final class GetToolFilterLanguage {
                 }
                 
                 let sortedDomainModels: [ToolFilterLanguageDomainModel] = domainModels
-                    .sorted { language1, language2 in
+                    .sorted { (thisLanguage: ToolFilterLanguageDomainModel, thatLanguage: ToolFilterLanguageDomainModel) in
                         
-                        let language1Name = language1.translatedName ?? language1.primaryText
-                        let language2Name = language2.translatedName ?? language2.primaryText
+                        let thisLanguageName: String = thisLanguage.languageNameTranslatedInAppLanguage
+                        let thatLanguageName: String = thatLanguage.languageNameTranslatedInAppLanguage
                         
-                        return language1Name.lowercased() < language2Name.lowercased()
+                        return thisLanguageName.lowercased() < thatLanguageName.lowercased()
                     }
                 
                 return [anyLanguage] + sortedDomainModels
@@ -85,42 +83,44 @@ final class GetToolFilterLanguage {
 
 extension GetToolFilterLanguage {
     
-    private func createLanguageFilterDomainModel(with languageModel: LanguageDataModel, translatedInAppLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) -> ToolFilterLanguageDomainModel {
+    private func createLanguageFilterDomainModel(language: LanguageDataModel, translatedInAppLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) -> ToolFilterLanguageDomainModel {
         
-        let toolsAvailableCount: Int = getToolsAvailableCount(for: languageModel.id, filteredByCategoryId: filteredByCategoryId)
+        let toolsAvailableCount: Int = getToolsAvailableCount(languageId: language.id, filteredByCategoryId: filteredByCategoryId)
         
-        let languageName = getTranslatedLanguageName.getLanguageName(language: languageModel, translatedInLanguage: languageModel.code)
-        let translatedLanguageName = getTranslatedLanguageName.getLanguageName(language: languageModel, translatedInLanguage: translatedInAppLanguage)
+        let languageName = getTranslatedLanguageName.getLanguageName(language: language, translatedInLanguage: language.code)
+        let languageNameTranslatedInAppLanguage = getTranslatedLanguageName.getLanguageName(language: language, translatedInLanguage: translatedInAppLanguage)
         
-        let toolsAvailableText: String = getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
+        let toolsAvailable: String = getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
         
-        return ToolFilterLanguageDomainModel(
+        return ToolFilterLanguageDomainModel.createLanguage(
+            id: language.id,
             languageName: languageName,
-            translatedName: translatedLanguageName,
-            toolsAvailableText: toolsAvailableText,
-            languageId: languageModel.id,
-            languageLocaleId: languageModel.code,
+            languageNameTranslatedInAppLanguage: languageNameTranslatedInAppLanguage,
+            toolsAvailable: toolsAvailable,
             numberOfToolsAvailable: toolsAvailableCount
         )
     }
     
     private func createAnyLanguageDomainModel(translatedInAppLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) -> ToolFilterLanguageDomainModel {
         
-        let anyLanguageTranslation: String = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: translatedInAppLanguage.localeId, key: ToolStringKeys.ToolFilter.anyLanguageFilterText.rawValue)
+        let languageNameTranslatedInAppLanguage: String = localizationServices.stringForLocaleElseSystemElseEnglish(
+            localeIdentifier: translatedInAppLanguage.localeId,
+            key: ToolStringKeys.ToolFilter.anyLanguageFilterText.rawValue
+        )
         
-        let toolsAvailableCount: Int = getToolsAvailableCount(for: nil, filteredByCategoryId: filteredByCategoryId)
-        let toolsAvailableText: String = getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
+        let toolsAvailableCount: Int = getToolsAvailableCount(languageId: nil, filteredByCategoryId: filteredByCategoryId)
+        let toolsAvailable: String = getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
         
-        return ToolFilterAnyLanguageDomainModel(
-            text: anyLanguageTranslation,
-            toolsAvailableText: toolsAvailableText,
+        return ToolFilterLanguageDomainModel.createAnyLanguage(
+            languageNameTranslatedInAppLanguage: languageNameTranslatedInAppLanguage,
+            toolsAvailable: toolsAvailable,
             numberOfToolsAvailable: toolsAvailableCount
         )
     }
     
-    private func getToolsAvailableCount(for languageId: String?, filteredByCategoryId: String?) -> Int {
+    private func getToolsAvailableCount(languageId: String?, filteredByCategoryId: String?) -> Int {
         
-        return resourcesRepository.getAllToolsListCount(filterByCategory: filteredByCategoryId, filterByLanguageId: languageId)
+        return resourcesRepository.getAllToolsListCountNonThrowing(filterByCategory: filteredByCategoryId, filterByLanguageId: languageId)
     }
     
     private func getToolsAvailableText(toolsAvailableCount: Int, translatedInAppLanguage: AppLanguageDomainModel) -> String {

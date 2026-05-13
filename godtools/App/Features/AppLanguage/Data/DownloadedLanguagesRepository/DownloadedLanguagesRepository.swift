@@ -18,38 +18,26 @@ final class DownloadedLanguagesRepository {
         self.cache = cache
     }
     
-    @MainActor func getDownloadedLanguagesChangedPublisher() -> AnyPublisher<Void, Never> {
+    @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Error> {
         
         return cache.persistence
             .observeCollectionChangesPublisher()
-            .catch { _ in
-                return Just(Void())
-                    .eraseToAnyPublisher()
-            }
             .eraseToAnyPublisher()
     }
     
-    func getDownloadedLanguage(languageId: String) -> DownloadedLanguageDataModel? {
+    func getDownloadedLanguage(languageId: String) throws -> DownloadedLanguageDataModel? {
         
-        do {
-            return try cache.persistence.getDataModel(id: languageId)
-        }
-        catch _ {
-            return nil
-        }
+        return try cache.persistence.getDataModel(id: languageId)
     }
     
-    func getDownloadedLanguagesByDownloadCompletePublisher(downloadComplete: Bool) -> AnyPublisher<[DownloadedLanguageDataModel], Error> {
+    func getDownloadedLanguagesByDownloadComplete(downloadComplete: Bool) async throws -> [DownloadedLanguageDataModel] {
         
-        return AnyPublisher() {
-            try await self.cache.getDownloadedLanguagesByDownloadComplete(downloadComplete: downloadComplete)
-        }
+        return try await cache.getDownloadedLanguagesByDownloadComplete(downloadComplete: downloadComplete)
     }
     
-    func getDownloadedLanguagesPublisher() -> AnyPublisher<[DownloadedLanguageDataModel], Error> {
-        return AnyPublisher() {
-            try await self.cache.persistence.getDataModelsAsync(getOption: .allObjects)
-        }
+    func getDownloadedLanguages() async throws -> [DownloadedLanguageDataModel] {
+        
+        return try await self.cache.persistence.getDataModelsAsync(getOption: .allObjects)
     }
     
     func storeDownloadedLanguage(languageId: String, downloadComplete: Bool) async throws -> DownloadedLanguageDataModel {
@@ -70,18 +58,9 @@ final class DownloadedLanguagesRepository {
         return downloadedLanguage
     }
     
-    func storeDownloadedLanguagePublisher(languageId: String, downloadComplete: Bool) -> AnyPublisher<DownloadedLanguageDataModel, Error> {
+    func deleteDownloadedLanguage(languageId: String) throws {
         
-        return AnyPublisher() {
-            try await self.storeDownloadedLanguage(languageId: languageId, downloadComplete: downloadComplete)
-        }
-    }
-    
-    func deleteDownloadedLanguagePublisher(languageId: String) -> AnyPublisher<Void, Error> {
-        
-        return AnyPublisher() {
-            try self.cache.deleteDownloadedLanguage(languageId: languageId)
-        }
+        try cache.deleteDownloadedLanguage(languageId: languageId)
     }
     
     func markAllDownloadsAsCompleted() async throws {

@@ -384,6 +384,12 @@ final class AppDataLayerDependencies {
         )
     }
     
+    func getMobileContentRendererManifestResourcesCache() -> MobileContentRendererManifestResourcesCache {
+        return MobileContentRendererManifestResourcesCache(
+            resourcesFileCache: getResourcesFileCache()
+        )
+    }
+    
     func getOptInOnboardingBannerEnabledRepository() -> OptInOnboardingBannerEnabledRepository {
         return OptInOnboardingBannerEnabledRepository(
             cache: OptInOnboardingBannerEnabledCache()
@@ -490,11 +496,15 @@ final class AppDataLayerDependencies {
     
     func getToolDownloader() -> ToolDownloader {
         return ToolDownloader(
-            resourcesRepository: getResourcesRepository(),
             languagesRepository: getLanguagesRepository(),
             translationsRepository: getTranslationsRepository(),
             attachmentsRepository: getAttachmentsRepository(),
-            articleManifestAemRepository: getArticleManifestAemRepository()
+            articleManifestAemRepository: getArticleManifestAemRepository(),
+            getToolDataToDownload: ToolDownloaderGetDataToDownload(
+                resourcesRepository: getResourcesRepository(),
+                attachmentsRepository: getAttachmentsRepository(),
+                translationsRepository: getTranslationsRepository()
+            )
         )
     }
     

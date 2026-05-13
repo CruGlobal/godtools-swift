@@ -8,7 +8,6 @@
 
 import Foundation
 import GodToolsShared
-import Combine
 
 class TranslationManifestParser {
     
@@ -40,26 +39,21 @@ class TranslationManifestParser {
         self.resourcesFileCache = resourcesFileCache
     }
     
-    func parsePublisher(manifestName: String) -> AnyPublisher<Manifest, Error> {
+    func parse(manifestName: String) async throws -> Manifest {
         
-        return Future() { promise in
-
-            self.parseAsync(manifestName: manifestName) { (result: Result<Manifest, Error>) in
-                
+        return try await withCheckedThrowingContinuation { continuation in
+            parseWithCompletion(manifestName: manifestName) { result in
                 switch result {
-                    
                 case .success(let manifest):
-                    promise(.success(manifest))
-                    
+                    continuation.resume(returning: manifest)
                 case .failure(let error):
-                    promise(.failure(error))
+                    continuation.resume(throwing: error)
                 }
             }
         }
-        .eraseToAnyPublisher()
     }
     
-    private func parseAsync(manifestName: String, completion: @escaping ((_ result: Result<Manifest, Error>) -> Void)) {
+    private func parseWithCompletion(manifestName: String, completion: @escaping ((_ result: Result<Manifest, Error>) -> Void)) {
                 
         let location: FileCacheLocation = FileCacheLocation(relativeUrlString: manifestName)
         

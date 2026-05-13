@@ -52,7 +52,11 @@ final class GetPersonalizedLessonsUseCase {
 
         return Publishers.CombineLatest3(
             personalizedToolsRepository
-                .getPersonalizedToolsChanged(requestPriority: .high, country: countryIsoRegionCode, language: languageCode),
+                .getPersonalizedToolsChanged(
+                    requestPriority: .high,
+                    country: countryIsoRegionCode,
+                    language: languageCode
+                ),
             resourcesRepository
                 .observeCollectionChangesPublisher(),
             lessonProgressRepository
@@ -61,12 +65,14 @@ final class GetPersonalizedLessonsUseCase {
         )
         .flatMap({ (personalizedLessonsChanged, resourcesChanged, lessonProgressChanged) -> AnyPublisher<[ResourceDataModel], Error> in
 
-            return self.personalizedToolsRepository
-                .getPersistedPersonalizedToolsPublisher(
-                    country: countryIsoRegionCode,
-                    language: languageCode,
-                    resourceTypes: [.lesson]
-                )
+            return AnyPublisher() {
+                try await self.personalizedToolsRepository
+                    .getPersistedPersonalizedTools(
+                        country: countryIsoRegionCode,
+                        language: languageCode,
+                        resourceTypes: [.lesson]
+                    )
+            }
         })
         .tryMap { (resources: [ResourceDataModel]) in
 

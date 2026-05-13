@@ -8,7 +8,6 @@
 
 import Testing
 @testable import godtools
-import Combine
 
 struct GetOnboardingTutorialStringsUseCaseTests {
     
@@ -41,32 +40,10 @@ struct GetOnboardingTutorialStringsUseCaseTests {
         
         let getOnboardingTutorialStringsUseCase = getOnboardingTutorialStringsUseCase()
         
-        var stringsRef: OnboardingTutorialStringsDomainModel?
+        let strings = getOnboardingTutorialStringsUseCase.execute(appLanguage: argument.appLanguage)
         
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            getOnboardingTutorialStringsUseCase
-                .execute(appLanguage: argument.appLanguage)
-                .sink { (strings: OnboardingTutorialStringsDomainModel) in
-                    
-                    stringsRef = strings
-                    
-                    // When finished be sure to call:
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                }
-                .store(in: &cancellables)
-        }
-        
-        #expect(stringsRef?.chooseAppLanguageButtonTitle == argument.expectedChooseLanguageButtonTitle)
-        #expect(stringsRef?.beginTutorialButtonTitle == argument.expectedBeginButtonTitle)
+        #expect(strings.chooseAppLanguageButtonTitle == argument.expectedChooseLanguageButtonTitle)
+        #expect(strings.beginTutorialButtonTitle == argument.expectedBeginButtonTitle)
     }
 }
 

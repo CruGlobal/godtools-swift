@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class RemoveDownloadedToolLanguageUseCase {
     
@@ -18,17 +17,11 @@ final class RemoveDownloadedToolLanguageUseCase {
         self.downloadedLanguagesRepository = downloadedLanguagesRepository
     }
     
-    func execute(languageId: String) -> AnyPublisher<Bool, Never> {
+    func execute(languageId: String) throws {
         
-        return downloadedLanguagesRepository.deleteDownloadedLanguagePublisher(languageId: languageId)
-            .map { _ in
-                
-                return true
-            }
-            .catch { _ in
-                
-                return Just(false)
-            }
-            .eraseToAnyPublisher()
+        try downloadedLanguagesRepository
+            .deleteDownloadedLanguage(
+                languageId: languageId
+            )
     }
 }

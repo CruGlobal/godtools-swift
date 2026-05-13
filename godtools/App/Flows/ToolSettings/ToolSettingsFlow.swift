@@ -23,7 +23,7 @@ class ToolSettingsFlow: Flow {
     private var downloadToolTranslationsFlow: DownloadToolTranslationsFlow?
     private var cancellables: Set<AnyCancellable> = Set()
     
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var appLanguage = AppLanguageDomainModel.english
     @Published private var toolScreenShareTutorialHasBeenViewedDomainModel: ToolScreenShareTutorialViewedDomainModel = ToolScreenShareTutorialViewedDomainModel(numberOfViews: 0)
     
     private weak var flowDelegate: FlowDelegate?
@@ -219,7 +219,7 @@ extension ToolSettingsFlow {
     
     private func presentShareTool() {
         
-        let toolAbbreviation: String = appDiContainer.dataLayer.getResourcesRepository().getResource(id: toolSettingsObserver.toolId)?.abbreviation ?? ""
+        let toolAbbreviation: String = appDiContainer.dataLayer.getResourcesRepository().getResourceNonThrowing(id: toolSettingsObserver.toolId)?.abbreviation ?? ""
         
         shareToolFlow = ShareToolFlow(
             flowDelegate: self,

@@ -8,14 +8,8 @@
 
 import Foundation
 
-class ArticleWebArchiveData {
+struct ArticleWebArchiveData: Sendable {
     
     let webArchiveUrl: WebArchiveUrl
     let webArchivePlistData: Data
-    
-    init(webArchiveUrl: WebArchiveUrl, webArchivePlistData: Data) {
-        
-        self.webArchiveUrl = webArchiveUrl
-        self.webArchivePlistData = webArchivePlistData
-    }
 }

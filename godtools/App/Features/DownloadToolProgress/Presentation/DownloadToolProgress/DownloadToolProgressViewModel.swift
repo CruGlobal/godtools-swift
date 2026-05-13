@@ -35,7 +35,6 @@ final class DownloadToolProgressViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .execute()
-            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         progressTimer.start(lengthSeconds: initialProgressDownloadLengthSeconds, changed: { (progress: Double) in

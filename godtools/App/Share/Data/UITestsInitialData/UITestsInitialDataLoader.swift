@@ -28,7 +28,9 @@ final class UITestsInitialDataLoader {
             
             addInitialRealmObjects(realm: realm)
             
-            loadTranslationManifests(realm: realm)
+            Task {
+                await loadTranslationManifests()
+            }
         }
         catch let error {
             assertionFailure("\n UITestsRealmDatabase: Failed to get realm with error.\n  error: \(error)")
@@ -59,21 +61,19 @@ extension UITestsInitialDataLoader {
 
 extension UITestsInitialDataLoader {
     
-    private func loadTranslationManifests(realm: Realm) {
+    private func loadTranslationManifests() async {
                 
         if let tmtsManifestData = PreviewAssets.tmtsManifest.data, let tmtsTractData = PreviewAssets.tmtsTract.data {
             
             do {
                 
-                _ = try resourcesFileCache.storeTranslationFile(
-                    realm: realm,
+                _ = try await resourcesFileCache.storeTranslationFile(
                     translationId: UITestsRealmObjects.tmtsEnTranslation,
                     fileName: UITestsRealmObjects.tmtsManifest,
                     fileData: tmtsManifestData
                 )
                 
-                _ =  try resourcesFileCache.storeTranslationZipFile(
-                    realm: realm,
+                _ =  try await resourcesFileCache.storeTranslationZipFile(
                     translationId: UITestsRealmObjects.tmtsEnTranslation,
                     zipFileData: tmtsTractData
                 )

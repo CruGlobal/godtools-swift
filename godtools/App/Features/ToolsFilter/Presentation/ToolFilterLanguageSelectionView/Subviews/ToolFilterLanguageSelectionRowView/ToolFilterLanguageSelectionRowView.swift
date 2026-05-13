@@ -27,21 +27,30 @@ struct ToolFilterLanguageSelectionRowView: View {
                 
                 HStack(spacing: 9.5) {
                     
-                    let titleFont = isSelected ? FontLibrary.sfProTextBold : FontLibrary.sfProTextRegular
+                    let titleFontLibrary: FontLibrary = isSelected ? FontLibrary.sfProTextBold : FontLibrary.sfProTextRegular
+                    let titleFont: Font = titleFontLibrary.font(size: 15)
                     
-                    Text(language.primaryText)
-                        .font(titleFont.font(size: 15))
-                        .foregroundColor(ColorPalette.gtGrey.color)
-                    
-                    if let translatedName = language.translatedName {
+                    if let languageName = language.languageName, !languageName.isEmpty {
+                     
+                        getPrimaryText(
+                            text: languageName,
+                            font: titleFont
+                        )
                         
-                        Text(translatedName)
+                        Text(language.languageNameTranslatedInAppLanguage)
                             .font(FontLibrary.sfProTextRegular.font(size: 15))
                             .foregroundColor(ToolFilterLanguageSelectionRowView.lightGrey)
                     }
+                    else {
+                        
+                        getPrimaryText(
+                            text: language.languageNameTranslatedInAppLanguage,
+                            font: titleFont
+                        )
+                    }
                 }
                 
-                Text(language.toolsAvailableText)
+                Text(language.toolsAvailable)
                     .font(FontLibrary.sfProTextRegular.font(size: 12))
                     .foregroundColor(ToolFilterLanguageSelectionRowView.lightGrey)
             }
@@ -49,5 +58,11 @@ struct ToolFilterLanguageSelectionRowView: View {
             
             Spacer()
         }
+    }
+    
+    private func getPrimaryText(text: String, font: Font) -> Text {
+        Text(text)
+            .font(font)
+            .foregroundColor(ColorPalette.gtGrey.color)
     }
 }

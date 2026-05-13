@@ -49,13 +49,14 @@ final class DownloadLatestToolsForFavoritedToolsUseCase {
                 .eraseToAnyPublisher()
         }
         .flatMap { (tools: [DownloadToolDataModel]) -> AnyPublisher<Void, Error> in
-                        
-            return self.toolDownloader
-                .downloadToolsPublisher(tools: tools, requestPriority: .medium)
-                .map { _ in
-                    return Void()
-                }
-                .eraseToAnyPublisher()
+                
+            return AnyPublisher() {
+                try await self.toolDownloader
+                    .downloadTools(
+                        tools: tools,
+                        requestPriority: .medium
+                    )
+            }
         }
         .eraseToAnyPublisher()
     }

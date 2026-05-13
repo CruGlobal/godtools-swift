@@ -18,7 +18,7 @@ final class ResumeLessonProgressModalViewModel: ObservableObject {
     
     private var cancellables: Set<AnyCancellable> = Set()
     
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var appLanguage = AppLanguageDomainModel.english
     
     @Published private(set) var strings = ResumeLessonProgressStringsDomainModel.emptyValue
     
@@ -30,7 +30,6 @@ final class ResumeLessonProgressModalViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .execute()
-            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         $appLanguage

@@ -38,7 +38,7 @@ final class GetToolSettingsToolLanguagesListUseCase {
         
         let languageIds: [String]
         
-        if let resource = resourcesRepository.getResource(id: toolId) {
+        if let resource = resourcesRepository.getResourceNonThrowing(id: toolId) {
             languageIds = resource.languageIds.filter({
                 !filterOutLanguageIds.contains($0)
             })

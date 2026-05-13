@@ -19,7 +19,7 @@ final class LessonSwipeTutorialViewModel: ObservableObject {
     
     private weak var flowDelegate: FlowDelegate?
 
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var appLanguage = AppLanguageDomainModel.english
     
     @Published private(set) var strings: LessonSwipeTutorialStringsDomainModel = LessonSwipeTutorialStringsDomainModel.emptyValue
 
@@ -30,7 +30,6 @@ final class LessonSwipeTutorialViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .execute()
-            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         $appLanguage

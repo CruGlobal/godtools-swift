@@ -22,7 +22,7 @@ final class DashboardViewModel: ObservableObject {
     
     private weak var flowDelegate: FlowDelegate?
         
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var appLanguage = AppLanguageDomainModel.english
     
     @Published var tabs: [DashboardTabTypeDomainModel] = [.lessons, .favorites, .tools]
     @Published var lessonsButtonTitle: String = ""
@@ -39,7 +39,6 @@ final class DashboardViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .execute()
-            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         $appLanguage

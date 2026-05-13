@@ -8,7 +8,6 @@
 
 import Testing
 @testable import godtools
-import Combine
 
 struct LocalizationSettingsCountriesRepositoryTests {
 
@@ -50,29 +49,9 @@ struct LocalizationSettingsCountriesRepositoryTests {
 
         let repository = LocalizationSettingsCountriesRepository()
 
-        var countries: [LocalizationSettingsCountryDataModel] = []
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            repository
-                .getCountriesPublisher(appLanguage: argument.appLanguage)
-                .sink { (result: [LocalizationSettingsCountryDataModel]) in
-
-                    countries = result
-                    
-                    // When finished be sure to call:
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                }
-                .store(in: &cancellables)
-        }
+        let countries: [LocalizationSettingsCountryDataModel] = repository.getCountries(
+            appLanguage: argument.appLanguage
+        )
 
         #expect(!countries.isEmpty)
 
@@ -100,30 +79,10 @@ struct LocalizationSettingsCountriesRepositoryTests {
 
         let repository = LocalizationSettingsCountriesRepository()
         let appLanguage: AppLanguageDomainModel = "en"
-
-        var countries: [LocalizationSettingsCountryDataModel] = []
         
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            repository
-                .getCountriesPublisher(appLanguage: appLanguage)
-                .sink { (result: [LocalizationSettingsCountryDataModel]) in
-
-                    countries = result
-                    
-                    // When finished be sure to call:
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                }
-                .store(in: &cancellables)
-        }
+        let countries: [LocalizationSettingsCountryDataModel] = repository.getCountries(
+            appLanguage: appLanguage
+        )
 
         let countryNames = countries.map { $0.countryNameTranslatedInCurrentAppLanguage }
         let sortedNames = countryNames.sorted()
@@ -142,30 +101,10 @@ struct LocalizationSettingsCountriesRepositoryTests {
 
         let repository = LocalizationSettingsCountriesRepository()
         let appLanguage: AppLanguageDomainModel = "en"
-
-        var countries: [LocalizationSettingsCountryDataModel] = []
         
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            repository
-                .getCountriesPublisher(appLanguage: appLanguage)
-                .sink { (result: [LocalizationSettingsCountryDataModel]) in
-
-                    countries = result
-                    
-                    // When finished be sure to call:
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                }
-                .store(in: &cancellables)
-        }
+        let countries: [LocalizationSettingsCountryDataModel] = repository.getCountries(
+            appLanguage: appLanguage
+        )
 
         for country in countries {
             let code = country.isoRegionCode
@@ -185,30 +124,10 @@ struct LocalizationSettingsCountriesRepositoryTests {
 
         let repository = LocalizationSettingsCountriesRepository()
         let appLanguage: AppLanguageDomainModel = "en"
-
-        var countries: [LocalizationSettingsCountryDataModel] = []
         
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            repository
-                .getCountriesPublisher(appLanguage: appLanguage)
-                .sink { (result: [LocalizationSettingsCountryDataModel]) in
-
-                    countries = result
-                    
-                    // When finished be sure to call:
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                }
-                .store(in: &cancellables)
-        }
+        let countries: [LocalizationSettingsCountryDataModel] = repository.getCountries(
+            appLanguage: appLanguage
+        )
 
         for country in countries {
             #expect(!country.countryNameTranslatedInCurrentAppLanguage.isEmpty)
@@ -244,30 +163,10 @@ struct LocalizationSettingsCountriesRepositoryTests {
 
         let repository = LocalizationSettingsCountriesRepository()
         let appLanguage: AppLanguageDomainModel = "en"
-
-        var countries: [LocalizationSettingsCountryDataModel] = []
         
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            repository
-                .getCountriesPublisher(appLanguage: appLanguage)
-                .sink { (result: [LocalizationSettingsCountryDataModel]) in
-
-                    countries = result
-                    
-                    // When finished be sure to call:
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                }
-                .store(in: &cancellables)
-        }
+        let countries: [LocalizationSettingsCountryDataModel] = repository.getCountries(
+            appLanguage: appLanguage
+        )
 
         let country = countries.first(where: { $0.isoRegionCode == argument.isoCode })
         #expect(country?.countryNameTranslatedInOwnLanguage == argument.expectedEndonym)

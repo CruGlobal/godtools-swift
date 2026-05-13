@@ -22,12 +22,9 @@ final class UserCountersRepository {
         self.cache = cache
     }
     
-    private var persistence: any Persistence<UserCounterDataModel, UserCounterCodable> {
-        return cache.persistence
-    }
-    
     @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Error> {
-        return persistence
+        return cache
+            .persistence
             .observeCollectionChangesPublisher()
     }
     
