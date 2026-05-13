@@ -158,7 +158,6 @@ final class AppFlow: NSObject, Flow {
                     else if shouldOpenPasteboardForDeferredDeepLink {
                         
                         navigate(step: .showDeferredDeepLinkModal)
-                        
                     }
                     else if onboardingTutorialIsAvailable {
                         
