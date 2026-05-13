@@ -8,7 +8,6 @@
 
 import Testing
 @testable import godtools
-import Combine
 
 struct GetOnboardingTutorialIsAvailableUseCaseTests {
     
@@ -26,31 +25,9 @@ struct GetOnboardingTutorialIsAvailableUseCaseTests {
             tutorialViewed: false
         )
         
-        var isAvailableRef: Bool?
+        let isAvailable: Bool = getOnboardingIsAvailable.execute()
         
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            getOnboardingIsAvailable
-                .execute()
-                .sink { (isAvailable: Bool) in
-                                        
-                    isAvailableRef = isAvailable
-                    
-                    // When finished be sure to call:
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                }
-                .store(in: &cancellables)
-        }
-        
-        #expect(isAvailableRef == true)
+        #expect(isAvailable == true)
     }
     
     @Test(
@@ -67,37 +44,9 @@ struct GetOnboardingTutorialIsAvailableUseCaseTests {
             tutorialViewed: true
         )
         
-        var isAvailableRef: Bool?
+        let isAvailable: Bool = getOnboardingIsAvailable.execute()
         
-        var cancellables: Set<AnyCancellable> = Set()
-        var triggerCount: Int = 0
-        
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            getOnboardingIsAvailable
-                .execute()
-                .sink { (isAvailable: Bool) in
-                    
-                    triggerCount += 1
-                    
-                    isAvailableRef = isAvailable
-                    
-                    if triggerCount == 1 {
-                        
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    }
-                }
-                .store(in: &cancellables)
-        }
-        
-        #expect(isAvailableRef == false)
+        #expect(isAvailable == false)
     }
     
     @Test(
@@ -114,37 +63,9 @@ struct GetOnboardingTutorialIsAvailableUseCaseTests {
             tutorialViewed: false
         )
         
-        var isAvailableRef: Bool?
+        let isAvailable: Bool = getOnboardingIsAvailable.execute()
         
-        var cancellables: Set<AnyCancellable> = Set()
-        var triggerCount: Int = 0
-        
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            getOnboardingIsAvailable
-                .execute()
-                .sink { (isAvailable: Bool) in
-                    
-                    triggerCount += 1
-                    
-                    isAvailableRef = isAvailable
-                    
-                    if triggerCount == 1 {
-                        
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    }
-                }
-                .store(in: &cancellables)
-        }
-        
-        #expect(isAvailableRef == false)
+        #expect(isAvailable == false)
     }
 }
 
