@@ -12,6 +12,8 @@ import RequestOperation
 import RepositorySync
 
 final class PersonalizedToolsRepository {
+    
+    private static var isSyncing: Bool = false
 
     private let api: PersonalizedToolsApiInterface
     private let cache: PersonalizedToolsCache
@@ -132,7 +134,7 @@ extension PersonalizedToolsRepository {
             id: personalizedToolId
         )
 
-        let shouldSync: Bool = syncInvalidator.shouldSync || forceNewSync
+        let shouldSync: Bool = (syncInvalidator.shouldSync || forceNewSync) && !Self.isSyncing
 
         guard shouldSync else {
 
@@ -145,6 +147,8 @@ extension PersonalizedToolsRepository {
                 return try await getPersistedDefaultOrderTools(language: language)
             }
         }
+        
+        Self.isSyncing = true
 
         let resourceCodables: [ResourceCodable]
 
@@ -179,6 +183,8 @@ extension PersonalizedToolsRepository {
         )
 
         syncInvalidator.didSync()
+        
+        Self.isSyncing = false
 
         return try await getPersistedResources(personalizedTools: personalizedTools, resourceTypes: nil)
     }

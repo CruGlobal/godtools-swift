@@ -104,7 +104,7 @@ extension LanguagesRepository {
         
         return try await cache.persistence.writeObjectsAsync(
             externalObjects: languages,
-            writeOption: nil,
+            writeOption: .deleteObjectsNotInExternal,
             getOption: .allObjects
         )
     }

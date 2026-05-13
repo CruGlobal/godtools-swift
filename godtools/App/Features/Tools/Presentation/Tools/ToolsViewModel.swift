@@ -92,10 +92,10 @@ final class ToolsViewModel: ObservableObject {
             .assign(to: &$localizationSettings)
         
         Publishers.CombineLatest4(
-            $appLanguage,
+            $appLanguage.dropFirst(),
             Publishers.CombineLatest(
-                $toolFilterCategorySelection,
-                $toolFilterLanguageSelection,
+                $toolFilterCategorySelection.dropFirst(),
+                $toolFilterLanguageSelection.dropFirst(),
             ),
             $localizationSettings,
             $selectedToggle

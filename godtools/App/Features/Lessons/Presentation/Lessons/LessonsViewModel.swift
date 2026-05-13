@@ -88,7 +88,7 @@ final class LessonsViewModel: ObservableObject {
             .store(in: &cancellables)
 
         Publishers.CombineLatest4(
-            $appLanguage,
+            $appLanguage.dropFirst(),
             $lessonFilterLanguageSelection,
             $localizationSettings,
             $selectedToggle
