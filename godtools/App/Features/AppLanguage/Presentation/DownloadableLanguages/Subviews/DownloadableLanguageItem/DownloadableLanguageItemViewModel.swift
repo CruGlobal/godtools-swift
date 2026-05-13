@@ -88,6 +88,10 @@ class DownloadableLanguageItemViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     private var languageId: String {
         return downloadableLanguage.languageId
     }
@@ -125,8 +129,39 @@ extension DownloadableLanguageItemViewModel {
     
     private static func startLanguageDownload(downloadToolLanguageUseCase: DownloadToolLanguageUseCase, recycleState: DownloadableLanguageItemRecycleState, languageId: String, flowDelegate: FlowDelegate?) {
                   
-        // TODO: Implement. ~Levi
         
+        let isDownloading: Bool = recycleState.downloadState.isDownloading
+
+        guard !isDownloading else {
+            return
+        }
+        
+        recycleState.downloadState = .downloading(progress: 0)
+        
+        //Self.languageDownloads[languageId] = languageDownloadWithAnimateDownloadProgress // TODO: What to do with reference. ~Levi
+        
+        Task {
+            
+            do {
+                
+                for try await progress in downloadToolLanguageUseCase.execute(languageId: languageId) {
+                    
+                    recycleState.downloadState = .downloading(progress: progress)
+                }
+                
+                recycleState.downloadState = .downloaded
+            }
+            catch let error {
+                
+                recycleState.downloadError = error
+                recycleState.downloadError = nil
+                recycleState.downloadState = .notDownloaded
+            }
+        }
+        
+        
+        
+        // TODO: Implement. ~Levi
         
         /*
         let isDownloading: Bool = recycleState.downloadState.isDownloading
