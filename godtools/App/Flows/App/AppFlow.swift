@@ -137,7 +137,6 @@ final class AppFlow: NSObject, Flow {
                 Task {
                     
                     let onboardingTutorialIsAvailable: Bool = appDiContainer.feature.onboarding.domainLayer.getOnboardingTutorialIsAvailableUseCase().execute()
-                    let shouldPromptForOptInNotification: Bool = try await appDiContainer.feature.optInNotification.domainLayer.getShouldPromptForOptInNotificationUseCase().execute()
                     let deferredDeepLink: ParsedDeepLinkType? = await appDiContainer.feature.deferredDeepLink.domainLayer.getDeferredDeepLinkUseCase().execute()
                                         
                     removeLaunchedFromBackgroundLoadingView(view: loadingView)
@@ -168,10 +167,8 @@ final class AppFlow: NSObject, Flow {
                     else {
                         
                         dashboardFlow.navigateToDashboard()
-
-                        if shouldPromptForOptInNotification {
-                            presentOptInNotificationFlow()
-                        }
+                        
+                        promptForOptInNotificationIfNeeded()
                     }
                 }
                 
