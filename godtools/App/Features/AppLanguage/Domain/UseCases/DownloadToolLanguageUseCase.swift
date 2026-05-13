@@ -22,7 +22,7 @@ final class DownloadToolLanguageUseCase {
         self.toolLanguageDownloader = toolLanguageDownloader
     }
     
-    func execute(languageId: String) async throws -> AsyncThrowingStream<Double, Error> {
+    func execute(languageId: String) -> AsyncThrowingStream<Double, Error> {
         
         return AsyncThrowingStream { continuation in
             Task {
