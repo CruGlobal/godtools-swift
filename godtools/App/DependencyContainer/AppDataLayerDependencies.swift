@@ -221,7 +221,7 @@ final class AppDataLayerDependencies {
                 urlSessionPriority: getSharedUrlSessionPriority(),
                 requestSender: getRequestSender()
             ),
-            cache: RealmEmailSignUpsCache(realmDatabase: getSharedRealmDatabase())
+            cache: EmailSignUpsCache(realmDatabase: getSharedRealmDatabase())
         )
     }
     
@@ -359,7 +359,7 @@ final class AppDataLayerDependencies {
             )
         }
         
-        let api = MobileContentAuthTokenAPI(
+        let api = MobileContentAuthTokenApi(
             config: getAppConfig(),
             urlSessionPriority: getSharedUrlSessionPriority(),
             requestSender: getRequestSender()
@@ -381,6 +381,12 @@ final class AppDataLayerDependencies {
             requestSender: getRequestSender(),
             mobileContentAuthTokenRepository: getMobileContentAuthTokenRepository(),
             userAuthentication: getUserAuthentication()
+        )
+    }
+    
+    func getMobileContentRendererManifestResourcesCache() -> MobileContentRendererManifestResourcesCache {
+        return MobileContentRendererManifestResourcesCache(
+            resourcesFileCache: getResourcesFileCache()
         )
     }
     
@@ -490,11 +496,15 @@ final class AppDataLayerDependencies {
     
     func getToolDownloader() -> ToolDownloader {
         return ToolDownloader(
-            resourcesRepository: getResourcesRepository(),
             languagesRepository: getLanguagesRepository(),
             translationsRepository: getTranslationsRepository(),
             attachmentsRepository: getAttachmentsRepository(),
-            articleManifestAemRepository: getArticleManifestAemRepository()
+            articleManifestAemRepository: getArticleManifestAemRepository(),
+            getToolDataToDownload: ToolDownloaderGetDataToDownload(
+                resourcesRepository: getResourcesRepository(),
+                attachmentsRepository: getAttachmentsRepository(),
+                translationsRepository: getTranslationsRepository()
+            )
         )
     }
     

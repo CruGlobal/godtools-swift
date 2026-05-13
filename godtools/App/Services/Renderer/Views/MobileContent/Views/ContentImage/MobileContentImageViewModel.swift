@@ -24,7 +24,7 @@ class MobileContentImageViewModel: MobileContentViewModel {
         self.mobileContentAnalytics = mobileContentAnalytics
         self.imageWidth = MobileContentViewWidth(dimension: imageModel.width)
              
-        if let resource = imageModel.resource, let cachedImage = renderedPageContext.resourcesCache.getNonThrowingUIImage(resource: resource) {
+        if let resource = imageModel.resource, let cachedImage = renderedPageContext.resourcesCache.getUIImageNonThrowing(resource: resource) {
             image = cachedImage
         }
         else {

@@ -30,7 +30,7 @@ class DashboardFlow: Flow, ToolNavigationFlow, LocalizationSettingsNavigationFlo
     var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
     var localizationSettingsFlow: LocalizationSettingsFlow?
     
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var appLanguage = AppLanguageDomainModel.english
     
     init(appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, rootController: AppRootController) {
         
@@ -67,7 +67,6 @@ class DashboardFlow: Flow, ToolNavigationFlow, LocalizationSettingsNavigationFlo
 
         case .localizationSettingsTappedFromLessons:
             navigateToLocalizationSettings(
-                showsPreferNotToSay: false,
                 shouldStoreCountryWhenSelected: true,
                 userShouldConfirmSelectedCountry: false
             )
@@ -185,9 +184,18 @@ class DashboardFlow: Flow, ToolNavigationFlow, LocalizationSettingsNavigationFlo
             
         case .spotlightToolTappedFromTools(let spotlightTool, let toolFilterLanguage):
             
+            let toolFilterLanguageDataModel: LanguageDataModel?
+            
+            if let languageId = toolFilterLanguage?.id {
+                toolFilterLanguageDataModel = appDiContainer.dataLayer.getLanguagesRepository().getLanguageNonThrowing(id: languageId)
+            }
+            else {
+                toolFilterLanguageDataModel = nil
+            }
+                        
             let toolDetails = getToolDetails(
                 toolId: spotlightTool.dataModelId,
-                parallelLanguage: toolFilterLanguage?.languageLocale,
+                parallelLanguage: toolFilterLanguageDataModel?.localeId,
                 selectedLanguageIndex: 1
             )
             
@@ -195,20 +203,29 @@ class DashboardFlow: Flow, ToolNavigationFlow, LocalizationSettingsNavigationFlo
                         
         case .toolTappedFromTools(let tool, let toolFilterLanguage):
             
+            let toolFilterLanguageDataModel: LanguageDataModel?
+            
+            if let languageId = toolFilterLanguage?.id {
+                toolFilterLanguageDataModel = appDiContainer.dataLayer.getLanguagesRepository().getLanguageNonThrowing(id: languageId)
+            }
+            else {
+                toolFilterLanguageDataModel = nil
+            }
+            
             let resourcesRepository: ResourcesRepository = appDiContainer.dataLayer.getResourcesRepository()
+            
             let primaryLanguage: AppLanguageDomainModel?
             let parallelLanguage: AppLanguageDomainModel?
             
-            if let toolResource = resourcesRepository.getResource(id: tool.dataModelId),
+            if let toolResource = resourcesRepository.getResourceNonThrowing(id: tool.dataModelId),
                toolResource.resourceTypeEnum == .article {
                 
                 parallelLanguage = nil
                 
-                if let toolsFilterLanguageId = toolFilterLanguage?.languageDataModelId,
-                   let toolFilterLanguageLocale = toolFilterLanguage?.languageLocale,
-                   toolResource.supportsLanguage(languageId: toolsFilterLanguageId) {
+                if let toolFilterLanguageDataModel = toolFilterLanguageDataModel,
+                   toolResource.supportsLanguage(languageId: toolFilterLanguageDataModel.id) {
                     
-                    primaryLanguage = toolFilterLanguageLocale
+                    primaryLanguage = toolFilterLanguageDataModel.localeId
                 }
                 else {
                     
@@ -216,8 +233,9 @@ class DashboardFlow: Flow, ToolNavigationFlow, LocalizationSettingsNavigationFlo
                 }
             }
             else {
+                
                 primaryLanguage = nil
-                parallelLanguage = toolFilterLanguage?.languageLocale
+                parallelLanguage = toolFilterLanguageDataModel?.localeId
             }
             
             let toolDetails = getToolDetails(
@@ -231,7 +249,6 @@ class DashboardFlow: Flow, ToolNavigationFlow, LocalizationSettingsNavigationFlo
 
         case .localizationSettingsTappedFromTools:
             navigateToLocalizationSettings(
-                showsPreferNotToSay: false,
                 shouldStoreCountryWhenSelected: true,
                 userShouldConfirmSelectedCountry: false
             )
@@ -675,7 +692,7 @@ extension DashboardFlow {
         
         let languageIds: [String]
         
-        if let appLanguageModel = languagesRepository.getLanguage(code: appLanguage) {
+        if let appLanguageModel = languagesRepository.getLanguageNonThrowing(code: appLanguage) {
             languageIds = [appLanguageModel.id]
         }
         else {
@@ -743,11 +760,11 @@ extension DashboardFlow {
         
         var languageIds: [String] = Array()
         
-        if let languageModel = languagesRepository.getLanguage(code: primaryLanguage) {
+        if let languageModel = languagesRepository.getLanguageNonThrowing(code: primaryLanguage) {
             languageIds.append(languageModel.id)
         }
         
-        if let parallelLanguage = parallelLanguage, let languageModel = languagesRepository.getLanguage(code: parallelLanguage) {
+        if let parallelLanguage = parallelLanguage, let languageModel = languagesRepository.getLanguageNonThrowing(code: parallelLanguage) {
             languageIds.append(languageModel.id)
         }
         
@@ -791,7 +808,7 @@ extension DashboardFlow {
         
         let openToolInLanguages: [String]
         
-        if languageIds.isEmpty, let englishLanguage = languagesRepository.getLanguage(code: LanguageCodeDomainModel.english.rawValue) {
+        if languageIds.isEmpty, let englishLanguage = languagesRepository.getLanguageNonThrowing(code: LanguageCodeDomainModel.english.rawValue) {
             
             openToolInLanguages = [englishLanguage.id]
         }

@@ -193,7 +193,7 @@ extension ArticleWebViewModel {
     @objc func debugTapped() {
         
         let url: URL?
-        let urlType: ArticleUrlType?
+        let urlType: ArticleDomainModel.UrlType?
         
         if let webUrl = URL(string: aemCacheObject.aemData.webUrl) {
             url = webUrl

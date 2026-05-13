@@ -24,7 +24,7 @@ final class LocalizationSettingsViewModel: ObservableObject {
     private weak var flowDelegate: FlowDelegate?
     private lazy var searchBarViewModel = SearchBarViewModel(getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, viewSearchBarUseCase: viewSearchBarUseCase)
 
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var appLanguage = AppLanguageDomainModel.english
     @Published private var countriesList: [LocalizationSettingsCountryListItem] = Array()
     @Published private(set) var selectedCountryIsoRegionCode: String?
 
@@ -44,7 +44,6 @@ final class LocalizationSettingsViewModel: ObservableObject {
 
         getCurrentAppLanguageUseCase
             .execute()
-            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
 
         getLocalizationSettingsUseCase.execute()
@@ -57,11 +56,21 @@ final class LocalizationSettingsViewModel: ObservableObject {
         $appLanguage
             .dropFirst()
             .map { appLanguage in
-                getCountryListUseCase.execute(appLanguage: appLanguage, showsPreferNotToSay: showsPreferNotToSay)
+                getCountryListUseCase
+                    .execute(
+                        appLanguage: appLanguage,
+                        showsPreferNotToSay: showsPreferNotToSay
+                    )
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$countriesList)
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (countriesList: [LocalizationSettingsCountryListItem]) in
+                
+                self?.countriesList = countriesList
+            })
+            .store(in: &cancellables)
         
         $appLanguage
             .dropFirst()

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetDeferredDeepLinkUseCase {
     
@@ -22,35 +21,24 @@ final class GetDeferredDeepLinkUseCase {
         self.launchCountRepository = launchCountRepository
     }
     
-    func execute() -> AnyPublisher<ParsedDeepLinkType?, Never> {
+    func execute() async -> ParsedDeepLinkType? {
          
         let launchCount: Int = launchCountRepository.getLaunchCount()
         
         guard launchCount == 1 else {
-            return Just(nil)
-                .eraseToAnyPublisher()
+            return nil
         }
         
-        let deepLinkService: DeepLinkingService = self.deepLinkService
+        let url: URL? = await dynalinkDeferredDeepLink.getDeepLinkUrl()
         
-        return dynalinkDeferredDeepLink
-            .getDeepLinkUrlPublisher()
-            .map { (url: URL?) in
-                
-                guard let url = url else {
-                    return nil
-                }
-                                
-                let incomingDeepLink = IncomingDeepLinkUrl(url: url)
-                
-                let parsedDeepLink = deepLinkService.parseDeepLink(incomingDeepLink: .url(incomingUrl: incomingDeepLink))
-                
-                return parsedDeepLink
-            }
-            .catch { (error: Error) in
-                return Just(nil)
-                    .eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
+        guard let url = url else {
+            return nil
+        }
+        
+        let incomingDeepLink = IncomingDeepLinkUrl(url: url)
+        
+        let parsedDeepLink = deepLinkService.parseDeepLink(incomingDeepLink: .url(incomingUrl: incomingDeepLink))
+        
+        return parsedDeepLink
     }
 }

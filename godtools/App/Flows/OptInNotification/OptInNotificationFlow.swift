@@ -11,16 +11,13 @@ import UIKit
 import Combine
 
 class OptInNotificationFlow: Flow {
-    
-    private var cancellables: Set<AnyCancellable> = Set()
-    private var checkNotificationStatusCancellable: AnyCancellable?
-    
+        
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
     let navigationController: AppNavigationController
     
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var appLanguage = AppLanguageDomainModel.english
     
     init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, presentOnNavigationController: AppNavigationController) {
         
@@ -33,38 +30,32 @@ class OptInNotificationFlow: Flow {
             .execute()
             .assign(to: &$appLanguage)
         
-        
-        checkNotificationStatusCancellable = appDiContainer.feature
-            .optInNotification
-            .domainLayer
-            .getCheckNotificationStatusUseCase()
-            .execute()
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { _ in
-                
-            }, receiveValue: { [weak self] (status: PermissionStatusDomainModel) in
-                
-                self?.checkNotificationStatusCancellable = nil
-                
-                guard let weakSelf = self else {
-                    return
-                }
-                
-                let notificationPromptType: OptInNotificationViewModel.NotificationPromptType
-                
-                switch status {
-                case .undetermined:
-                    notificationPromptType = .allow
-                default:
-                    notificationPromptType = .settings
-                }
-                                
-                let optInNotificationView: UIViewController = weakSelf.getOptInNotificationView(
-                    notificationPromptType: notificationPromptType
-                )
-                
-                presentOnNavigationController.present(optInNotificationView, animated: true)
-            })
+        Task {
+            
+            let status: PermissionStatusDomainModel = try await appDiContainer.feature
+                .optInNotification
+                .domainLayer
+                .getCheckNotificationStatusUseCase()
+                .execute()
+            
+            let notificationPromptType: OptInNotificationViewModel.NotificationPromptType
+            
+            switch status {
+            case .undetermined:
+                notificationPromptType = .allow
+            default:
+                notificationPromptType = .settings
+            }
+                            
+            let optInNotificationView: UIViewController = getOptInNotificationView(
+                notificationPromptType: notificationPromptType
+            )
+            
+            presentOnNavigationController.present(
+                optInNotificationView,
+                animated: true
+            )
+        }
         
         appDiContainer.feature.optInNotification.dataLayer.getOptInNotificationRepository().recordPrompt()
     }
@@ -142,21 +133,15 @@ extension OptInNotificationFlow {
     
     private func presentRequestNotificationPermission() {
         
-        appDiContainer.feature.optInNotification.domainLayer
-            .getRequestNotificationPermissionUseCase()
-            .execute()
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { _ in
-                
-            }, receiveValue: { [weak self] (granted: Bool) in
-                
-                if granted {
-                    self?.navigate(step: .allowTappedFromRequestNotificationPermission)
-                }
-                else {
-                    self?.navigate(step: .dontAllowTappedFromRequestNotificationPermission)
-                }
-            })
-            .store(in: &cancellables)
+        Task {
+            
+            let granted: Bool = try await appDiContainer.feature.optInNotification.domainLayer
+                .getRequestNotificationPermissionUseCase()
+                .execute()
+                        
+            navigate(
+                step: granted ? .allowTappedFromRequestNotificationPermission : .dontAllowTappedFromRequestNotificationPermission
+            )
+        }
     }
 }

@@ -40,35 +40,13 @@ class ArticleFlow: Flow {
             forceFetchFromRemote: false
         )
         
-        let viewModel = ArticleCategoriesViewModel(
-            flowDelegate: self,
-            resource: toolTranslations.tool,
-            language: languageTranslationManifest.language,
-            manifest: languageTranslationManifest.manifest,
-            downloadArticlesObservable: downloadArticlesObservable,
-            manifestResourcesCache: appDiContainer.getMobileContentRendererManifestResourcesCache(),
-            incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase(),
-            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
+        sharedNavigationController.pushViewController(
+            getArticleCategories(
+                toolTranslations: toolTranslations,
+                languageTranslationManifest: languageTranslationManifest
+            ),
+            animated: true
         )
-        
-        let backButton = AppBackBarItem(
-            target: viewModel,
-            action: #selector(viewModel.backTapped),
-            accessibilityIdentifier: nil
-        )
-        
-        let view = ArticleCategoriesView(
-            viewModel: viewModel,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: backButton,
-                leadingItems: [],
-                trailingItems: []
-            )
-        )
-        
-        sharedNavigationController.pushViewController(view, animated: true)
     }
     
     deinit {
@@ -127,7 +105,43 @@ class ArticleFlow: Flow {
 
 extension ArticleFlow {
     
-    private func getArticles(resource: ResourceDataModel, language: LanguageDataModel, category: GodToolsShared.Category, manifest: Manifest) -> UIViewController {
+    private func getArticleCategories(toolTranslations: ToolTranslationsDomainModel, languageTranslationManifest: MobileContentRendererLanguageTranslationManifest) -> UIViewController {
+        
+        let viewModel = ArticleCategoriesViewModel(
+            flowDelegate: self,
+            resource: toolTranslations.tool,
+            language: languageTranslationManifest.language,
+            translation: languageTranslationManifest.translation,
+            manifest: languageTranslationManifest.manifest,
+            getArticleCategoriesUseCase: appDiContainer.feature.articles.domainLayer.getArticleCategoriesUseCase(),
+            pullToRefreshArticlesUseCase: appDiContainer.feature.articles.domainLayer.getPullToRefreshArticlesUseCase(),
+            incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase(),
+            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
+        )
+        
+        let view = ArticleCategoriesView(viewModel: viewModel)
+        
+        let backButton = AppBackBarItem(
+            target: viewModel,
+            action: #selector(viewModel.backTapped),
+            accessibilityIdentifier: nil
+        )
+
+        let viewContoller = AppHostingController(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                appearance: nil,
+                backButton: backButton,
+                leadingItems: [],
+                trailingItems: []
+            )
+        )
+        
+        return viewContoller
+    }
+    
+    private func getArticles(resource: ResourceDataModel, language: LanguageDataModel, category: ArticleCategoryDomainModel, manifest: Manifest) -> UIViewController {
         
         let viewModel = ArticlesViewModel(
             flowDelegate: self,

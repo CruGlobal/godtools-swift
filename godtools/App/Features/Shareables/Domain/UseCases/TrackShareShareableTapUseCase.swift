@@ -24,7 +24,7 @@ final class TrackShareShareableTapUseCase {
         
         do {
             
-            let resource: ResourceDataModel? = try resourcesRepository.persistence.getDataModel(id: toolId)
+            let resource: ResourceDataModel? = try resourcesRepository.getResource(id: toolId)
             
             let action = TrackActionModel(
                 screenName: "",

@@ -7,11 +7,9 @@
 //
 
 import Foundation
-import Combine
 
 protocol RemoteConfigRemoteDatabaseInterface {
     
-    func syncFromRemoteDatabasePublisher() -> AnyPublisher<Void, Never>
-    func getRemoteConfigPublisher() -> AnyPublisher<RemoteConfigDataModel?, Never>
+    func syncFromRemoteDatabase() async throws
     func getRemoteConfig() -> RemoteConfigDataModel?
 }

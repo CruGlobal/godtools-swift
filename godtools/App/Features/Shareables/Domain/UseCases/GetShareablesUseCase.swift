@@ -19,44 +19,44 @@ final class GetShareablesUseCase {
         self.translationsRepository = translationsRepository
     }
     
-    func execute(toolId: String, toolLanguageId: String) -> AnyPublisher<[ShareableDomainModel], Never> {
+    func execute(toolId: String, toolLanguageId: String) -> AnyPublisher<[ShareableDomainModel], Error> {
+        
+        return AnyPublisher() {
+            try await self.asyncExecute(toolId: toolId, toolLanguageId: toolLanguageId)
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    private func asyncExecute(toolId: String, toolLanguageId: String) async throws -> [ShareableDomainModel] {
         
         guard let translation = translationsRepository.getLatestTranslation(resourceId: toolId, languageId: toolLanguageId) else {
-            return Just([])
-                .eraseToAnyPublisher()
+            return Array()
         }
         
-        return translationsRepository.getTranslationManifestFromCacheElseRemote(
+        let dataModel: TranslationManifestFileDataModel = try await translationsRepository.getTranslationManifestFromCacheElseRemote(
             translation: translation,
             manifestParserType: .manifestOnly,
             requestPriority: .medium,
             includeRelatedFiles: true,
             shouldFallbackToLatestDownloadedTranslationIfRemoteFails: false
         )
-        .map { (dataModel: TranslationManifestFileDataModel) in
-                        
-            let manifestShareables: [Shareable] = dataModel.manifest.shareables
-                .sorted(by: { $0.order < $1.order })
+        
+        let manifestShareables: [Shareable] = dataModel.manifest.shareables
+            .sorted(by: { $0.order < $1.order })
+        
+        let shareables: [ShareableDomainModel] = manifestShareables.compactMap {
             
-            let shareables: [ShareableDomainModel] = manifestShareables.compactMap {
-                
-                guard let shareableImage = $0 as? ShareableImage, let dataModelId = shareableImage.id else {
-                    return nil
-                }
-                
-                return ShareableDomainModel(
-                    dataModelId: dataModelId,
-                    imageName: shareableImage.resource?.localName ?? "",
-                    title: shareableImage.description_?.text ?? ""
-                )
+            guard let shareableImage = $0 as? ShareableImage, let dataModelId = shareableImage.id else {
+                return nil
             }
             
-            return shareables
+            return ShareableDomainModel(
+                dataModelId: dataModelId,
+                imageName: shareableImage.resource?.localName ?? "",
+                title: shareableImage.description_?.text ?? ""
+            )
         }
-        .catch { _ in
-            return Just([])
-                .eraseToAnyPublisher()
-        }
-        .eraseToAnyPublisher()
+        
+        return shareables
     }
 }

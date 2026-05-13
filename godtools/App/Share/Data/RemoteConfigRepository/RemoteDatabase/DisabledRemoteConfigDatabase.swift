@@ -7,24 +7,15 @@
 //
 
 import Foundation
-import Combine
 
-class DisabledRemoteConfigDatabase: RemoteConfigRemoteDatabaseInterface {
+final class DisabledRemoteConfigDatabase: RemoteConfigRemoteDatabaseInterface {
     
     init() {
         
     }
     
-    func syncFromRemoteDatabasePublisher() -> AnyPublisher<Void, Never> {
+    func syncFromRemoteDatabase() async throws {
         
-        return Just(Void())
-            .eraseToAnyPublisher()
-    }
-    
-    func getRemoteConfigPublisher() -> AnyPublisher<RemoteConfigDataModel?, Never> {
-        
-        return Just(nil)
-            .eraseToAnyPublisher()
     }
     
     func getRemoteConfig() -> RemoteConfigDataModel? {

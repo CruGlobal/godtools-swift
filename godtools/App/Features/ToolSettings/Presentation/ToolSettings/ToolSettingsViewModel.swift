@@ -24,7 +24,7 @@ final class ToolSettingsViewModel: ObservableObject {
     
     private weak var flowDelegate: FlowDelegate?
     
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var appLanguage = AppLanguageDomainModel.english
     
     @Published private(set) var strings = ToolSettingsStringsDomainModel.emptyValue
     @Published private(set) var toolOptions: [ToolSettingsOption] = Array()
@@ -46,7 +46,6 @@ final class ToolSettingsViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .execute()
-            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         $appLanguage.dropFirst()
@@ -127,7 +126,13 @@ final class ToolSettingsViewModel: ObservableObject {
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$shareables)
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (shareables: [ShareableDomainModel]) in
+                
+                self?.shareables = shareables
+            })
+            .store(in: &cancellables)
     }
     
     deinit {

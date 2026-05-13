@@ -9,7 +9,7 @@
 import Foundation
 import GodToolsShared
 
-class TranslationManifestParserFactory: IosXmlPullParserFactory {
+final class TranslationManifestParserFactory: IosXmlPullParserFactory {
     
     private let resourcesFileCache: ResourcesSHA256FileCache
     

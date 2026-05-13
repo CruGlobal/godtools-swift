@@ -45,7 +45,6 @@ final class SocialSignInViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .execute()
-            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         switch authenticationType {

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 import UserNotifications
 
 final class CheckNotificationStatusUseCase {
@@ -19,10 +18,8 @@ final class CheckNotificationStatusUseCase {
         self.getNotificationStatus = getNotificationStatus
     }
     
-    func execute() -> AnyPublisher<PermissionStatusDomainModel, Error> {
+    func execute() async throws -> PermissionStatusDomainModel {
        
-        return AnyPublisher() {
-            return try await self.getNotificationStatus.getStatus()
-        }
+        return try await getNotificationStatus.getStatus()
     }
 }

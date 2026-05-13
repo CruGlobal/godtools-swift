@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct DownloadedTranslationDataModel {
+struct DownloadedTranslationDataModel: Sendable {
     
     let id: String
     let languageId: String

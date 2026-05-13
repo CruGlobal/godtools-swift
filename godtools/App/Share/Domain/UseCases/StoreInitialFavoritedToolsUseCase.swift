@@ -22,9 +22,7 @@ final class StoreInitialFavoritedToolsUseCase {
         
         do {
         
-            let favoritedResourceCount: Int = try favoritedResourcesRepository
-                .persistence
-                .getObjectCount()
+            let favoritedResourceCount: Int = try favoritedResourcesRepository.getObjectCount()
             
             guard favoritedResourceCount == 0 else {
                 return Just(Void())

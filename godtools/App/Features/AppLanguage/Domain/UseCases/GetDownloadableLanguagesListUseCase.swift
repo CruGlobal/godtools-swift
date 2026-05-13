@@ -33,59 +33,62 @@ final class GetDownloadableLanguagesListUseCase {
         
         return Publishers.CombineLatest(
             languagesRepository
-                .observeCollectionChangesPublisher()
-                .flatMap {
-                    return self.languagesRepository.getLanguagesPublisher()
-                },
+                .observeCollectionChangesPublisher(),
             downloadedLanguagesRepository
-                .getDownloadedLanguagesChangedPublisher()
-                .setFailureType(to: Error.self)
+                .observeCollectionChangesPublisher()
         )
-        .map { (languages: [LanguageDataModel], downloadLanguagesChanged: Void) in
+        .flatMap { (languagesChanged: Void, downloadedLanguagesChanged: Void) -> AnyPublisher<[DownloadableLanguageListItemDomainModel], Error> in
             
-            return languages
-                .compactMap { language in
-                    
-                    let numberToolsAvailable = self.getNumberToolsAvailable(for: language.code)
-                    if numberToolsAvailable == 0 {
-                        return nil
-                    }
-                    
-                    let languageNameInOwnLanguage = self.getTranslatedLanguageName.getLanguageName(
-                        language: language,
-                        translatedInLanguage: language.code
-                    )
-                    let languageNameInAppLanguage = self.getTranslatedLanguageName.getLanguageName(
-                        language: language,
-                        translatedInLanguage: appLanguage
-                    )
-                    
-                    let toolsAvailableText = self.getToolsAvailableText(numberOfTools: numberToolsAvailable, translatedIn: appLanguage)
-                    
-                    let downloadStatus = self.getDownloadStatus(for: language.id)
-                    
-                    return DownloadableLanguageListItemDomainModel(
-                        languageId: language.id,
-                        languageNameInOwnLanguage: languageNameInOwnLanguage,
-                        languageNameInAppLanguage: languageNameInAppLanguage,
-                        toolsAvailableText: toolsAvailableText,
-                        downloadStatus: downloadStatus
-                    )
-                }
-                .sorted { language1, language2 in
-                    
-                    return self.getSortOrder(language1: language1, language2: language2)
-                }
+            return AnyPublisher() {
+                return try await self.asyncExecute(appLanguage: appLanguage)
+            }
         }
         .eraseToAnyPublisher()
     }
+    
+    func asyncExecute(appLanguage: AppLanguageDomainModel) async throws -> [DownloadableLanguageListItemDomainModel] {
+        
+        let languages: [LanguageDataModel] = try await languagesRepository.getLanguages()
+        
+        return try languages
+            .compactMap { language in
+                
+                let numberToolsAvailable = try getNumberToolsAvailable(for: language.code)
+                if numberToolsAvailable == 0 {
+                    return nil
+                }
+                
+                let languageNameInOwnLanguage = getTranslatedLanguageName.getLanguageName(
+                    language: language,
+                    translatedInLanguage: language.code
+                )
+                let languageNameInAppLanguage = getTranslatedLanguageName.getLanguageName(
+                    language: language,
+                    translatedInLanguage: appLanguage
+                )
+                
+                let toolsAvailableText = getToolsAvailableText(numberOfTools: numberToolsAvailable, translatedIn: appLanguage)
+                
+                let downloadStatus = try getDownloadStatus(for: language.id)
+                
+                return DownloadableLanguageListItemDomainModel(
+                    languageId: language.id,
+                    languageNameInOwnLanguage: languageNameInOwnLanguage,
+                    languageNameInAppLanguage: languageNameInAppLanguage,
+                    toolsAvailableText: toolsAvailableText,
+                    downloadStatus: downloadStatus
+                )
+            }
+            .sorted { language1, language2 in
+                
+                return getSortOrder(language1: language1, language2: language2)
+            }
+    }
 }
-
-// MARK: - Private
 
 extension GetDownloadableLanguagesListUseCase {
     
-    private func getNumberToolsAvailable(for languageCode: BCP47LanguageIdentifier) -> Int {
+    private func getNumberToolsAvailable(for languageCode: BCP47LanguageIdentifier) throws -> Int {
         
         let filter = ResourcesFilter(
             category: nil,
@@ -93,7 +96,7 @@ extension GetDownloadableLanguagesListUseCase {
             resourceTypes: ResourceType.toolTypes
         )
         
-        return resourcesRepository.getCachedResourcesByFilter(filter: filter).count
+        return try resourcesRepository.getCachedResourcesByFilter(filter: filter).count
     }
     
     private func getToolsAvailableText(numberOfTools: Int, translatedIn translationLanguage: AppLanguageDomainModel) -> String {
@@ -108,9 +111,9 @@ extension GetDownloadableLanguagesListUseCase {
         return stringWithLocaleCount.getString(format: formatString, locale: Locale(identifier: localeId), count: numberOfTools)
     }
     
-    private func getDownloadStatus(for languageId: String) -> LanguageDownloadStatusDomainModel {
+    private func getDownloadStatus(for languageId: String) throws -> LanguageDownloadStatusDomainModel {
         
-        guard let downloadedLanguage = downloadedLanguagesRepository.getDownloadedLanguage(languageId: languageId) else {
+        guard let downloadedLanguage = try downloadedLanguagesRepository.getDownloadedLanguage(languageId: languageId) else {
             
             return .notDownloaded
         }

@@ -70,11 +70,11 @@ extension EmailSignUpServiceTests {
         )
     }
     
-    private func getCache() throws -> RealmEmailSignUpsCache {
+    private func getCache() throws -> EmailSignUpsCache {
         
         let testsDiContainer = try getTestsDiContainer()
         
-        let cache = RealmEmailSignUpsCache(realmDatabase: testsDiContainer.dataLayer.getSharedRealmDatabase())
+        let cache = EmailSignUpsCache(realmDatabase: testsDiContainer.dataLayer.getSharedRealmDatabase())
         
         return cache
     }

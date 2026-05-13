@@ -18,7 +18,7 @@ final class GetOnboardingTutorialStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<OnboardingTutorialStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> OnboardingTutorialStringsDomainModel {
         
         let localeId: String = appLanguage
         
@@ -37,7 +37,6 @@ final class GetOnboardingTutorialStringsUseCase {
             helpSomeoneDiscoverJesusMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "onboardingTutorial.3.message")
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

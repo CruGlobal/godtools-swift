@@ -16,7 +16,7 @@ final class ResourcesRepository {
     private static let syncInvalidatorIdForResourcesPlustLatestTranslationsAndAttachments: String = "resourcesPlusLatestTranslationAttachments.syncInvalidator.id"
     private static let syncedResourcesFromJsonCacheKey: String = "ResourcesRepository.synced.resources.json"
     
-    private let api: MobileContentResourcesApi
+    private let api: ResourcesApiInterface
     private let jsonFileCache: ResourcesJsonFileCache
     private let cache: ResourcesCache
     private let attachmentsRepository: AttachmentsRepository
@@ -24,7 +24,7 @@ final class ResourcesRepository {
     private let syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface
     private let userDefaultsCache: UserDefaultsCacheInterface
     
-    init(api: MobileContentResourcesApi, jsonFileCache: ResourcesJsonFileCache, cache: ResourcesCache, attachmentsRepository: AttachmentsRepository, languagesRepository: LanguagesRepository, syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface, userDefaultsCache: UserDefaultsCacheInterface) {
+    init(api: ResourcesApiInterface, jsonFileCache: ResourcesJsonFileCache, cache: ResourcesCache, attachmentsRepository: AttachmentsRepository, languagesRepository: LanguagesRepository, syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface, userDefaultsCache: UserDefaultsCacheInterface) {
         
         self.api = api
         self.jsonFileCache = jsonFileCache
@@ -35,17 +35,14 @@ final class ResourcesRepository {
         self.userDefaultsCache = userDefaultsCache
     }
     
-    var persistence: any Persistence<ResourceDataModel, ResourceCodable> {
-        return cache.persistence
-    }
-    
     @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Error> {
         return cache
             .persistence
             .observeCollectionChangesPublisher()
     }
     
-    func getResource(id: String) -> ResourceDataModel? {
+    @available(*, deprecated) // Remove and use throws. ~Levi
+    func getResourceNonThrowing(id: String) -> ResourceDataModel? {
         do {
             return try cache.persistence.getDataModel(id: id)
         }
@@ -54,7 +51,8 @@ final class ResourcesRepository {
         }
     }
     
-    func getResource(abbreviation: String) -> ResourceDataModel? {
+    @available(*, deprecated) // Remove and use throws. ~Levi
+    func getResourceNonThrowing(abbreviation: String) -> ResourceDataModel? {
         
         do {
             return try cache.getResource(abbreviation: abbreviation)
@@ -64,36 +62,24 @@ final class ResourcesRepository {
         }
     }
     
-    func getCachedResourcesByFilter(filter: ResourcesFilter) -> [ResourceDataModel] {
-        
-        do {
-            return try cache.getResourcesByFilter(filter: filter)
-        }
-        catch _ {
-            return Array()
-        }
+    func getResource(id: String) throws -> ResourceDataModel? {
+        return try cache.persistence.getDataModel(id: id)
     }
     
-    func getCachedResourcesByFilterPublisher(filter: ResourcesFilter) -> AnyPublisher<[ResourceDataModel], Never> {
-        
-        do {
-            
-            let resources: [ResourceDataModel] = try cache.getResourcesByFilter(filter: filter)
-            
-            return Just(resources)
-                .eraseToAnyPublisher()
-        }
-        catch _ {
-            return Just(Array())
-                .eraseToAnyPublisher()
-        }
+    func getResource(abbreviation: String) throws -> ResourceDataModel? {
+        return try cache.getResource(abbreviation: abbreviation)
     }
     
-    func getFeaturedLessonsPublisher(sorted: Bool = false) -> AnyPublisher<[ResourceDataModel], Error> {
-        
-        return AnyPublisher() {
-            try await self.cache.getFeaturedLessons(sorted: sorted)
-        }
+    func getResourcesByIds(ids: [String]) async throws -> [ResourceDataModel] {
+        return try await cache.persistence.getDataModelsAsync(getOption: .objectsByIds(ids: ids))
+    }
+    
+    func getCachedResourcesByFilter(filter: ResourcesFilter) throws -> [ResourceDataModel] {
+        return try cache.getResourcesByFilter(filter: filter)
+    }
+    
+    func getFeaturedLessons(sorted: Bool = false) async throws -> [ResourceDataModel] {
+        return try await self.cache.getFeaturedLessons(sorted: sorted)
     }
     
     func getResourceVariantsPublisher(resourceId: String) -> AnyPublisher<[ResourceDataModel], Error> {
@@ -110,7 +96,8 @@ final class ResourcesRepository {
         }
     }
     
-    func getLessonsCount(filterByLanguageId: String? = nil) -> Int {
+    @available(*, deprecated) // Remove and use throws. ~Levi
+    func getLessonsCountNonThrowing(filterByLanguageId: String? = nil) -> Int {
         do {
             return try cache.getLessonsCount(filterByLanguageId: filterByLanguageId)
         }
@@ -119,7 +106,8 @@ final class ResourcesRepository {
         }
     }
     
-    func getLessonsSupportedLanguageIds() -> [String] {
+    @available(*, deprecated) // Remove and use throws. ~Levi
+    func getLessonsSupportedLanguageIdsNonThrowing() -> [String] {
         do {
             return try cache.getLessonsSupportedLanguageIds()
         }
@@ -133,38 +121,30 @@ final class ResourcesRepository {
 
 extension ResourcesRepository {
     
-    func syncResourceAndLatestTranslationsPublisher(resourceId: String, requestPriority: RequestPriority) -> AnyPublisher<Void, Error> {
+    func syncResourceAndLatestTranslations(resourceId: String, requestPriority: RequestPriority) async throws {
+     
+        let resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable = try await api.getResourcePlusLatestTranslationsAndAttachments(
+            id: resourceId,
+            requestPriority: requestPriority
+        )
         
-        return api.getResourcePlusLatestTranslationsAndAttachmentsPublisher(id: resourceId, requestPriority: requestPriority)
-            .flatMap({ (resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable) -> AnyPublisher<Void, Error> in
-                                
-                return self.cache.syncResources(
-                    resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
-                    shouldRemoveDataThatNoLongerExists: false
-                )
-                .map { _ in
-                    return Void()
-                }
-                .eraseToAnyPublisher()
-            })
-            .eraseToAnyPublisher()
+        _ = try await cache.syncResources(
+            resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
+            shouldRemoveDataThatNoLongerExists: false
+        )
     }
     
-    func syncResourceAndLatestTranslationsPublisher(resourceAbbreviation: String, requestPriority: RequestPriority) -> AnyPublisher<Void, Error> {
+    func syncResourceAndLatestTranslations(resourceAbbreviation: String, requestPriority: RequestPriority) async throws {
+     
+        let resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable = try await api.getResourcePlusLatestTranslationsAndAttachments(
+            abbreviation: resourceAbbreviation,
+            requestPriority: requestPriority
+        )
         
-        return api.getResourcePlusLatestTranslationsAndAttachmentsPublisher(abbreviation: resourceAbbreviation, requestPriority: requestPriority)
-            .flatMap({ (resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable) -> AnyPublisher<Void, Error> in
-                                
-                return self.cache.syncResources(
-                    resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
-                    shouldRemoveDataThatNoLongerExists: false
-                )
-                .map { _ in
-                    return Void()
-                }
-                .eraseToAnyPublisher()
-            })
-            .eraseToAnyPublisher()
+        _ = try await cache.syncResources(
+            resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
+            shouldRemoveDataThatNoLongerExists: false
+        )
     }
 }
 
@@ -181,64 +161,35 @@ extension ResourcesRepository {
         self.userDefaultsCache.commitChanges()
     }
     
-    func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsPublisher(requestPriority: RequestPriority, forceFetchFromRemote: Bool) -> AnyPublisher<ResourcesCacheSyncResult, Error> {
+    func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments(requestPriority: RequestPriority, forceFetchFromRemote: Bool) async throws -> ResourcesCacheSyncResult {
         
-        return syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFile()
-            .setFailureType(to: Error.self)
-            .flatMap { (result: ResourcesCacheSyncResult?) -> AnyPublisher<ResourcesCacheSyncResult, Error> in
-                
-                return self.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote(
-                    requestPriority: requestPriority,
-                    forceFetchFromRemote: forceFetchFromRemote
-                )
-                .eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
+        _ = try await syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFile()
+        
+        return try await syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote(
+            requestPriority: requestPriority,
+            forceFetchFromRemote: forceFetchFromRemote
+        )
     }
     
-    func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFile() -> AnyPublisher<ResourcesCacheSyncResult?, Never> {
-                        
+    func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFile() async throws -> ResourcesCacheSyncResult? {
+        
         guard !syncedResourcesFromJson else {
-            return Just(nil)
-                .eraseToAnyPublisher()
+            return nil
         }
+                
+        _ = try await languagesRepository.syncLanguagesFromJsonFileCache()
         
-        return languagesRepository
-            .syncLanguagesFromJsonFileCachePublisher()
-            .receive(on: DispatchQueue.main)
-            .flatMap { (languages: [LanguageDataModel]) -> AnyPublisher<ResourcesCacheSyncResult, Error> in
-                
-                do {
-                                        
-                    return self.cache.syncResources(
-                        resourcesPlusLatestTranslationsAndAttachments: try self.jsonFileCache.getResourcesPlusLatestTranslationsAndAttachments(),
-                        shouldRemoveDataThatNoLongerExists: true
-                    )
-                    .eraseToAnyPublisher()
-                }
-                catch let error {
-                    
-                    return Fail(error: error)
-                        .eraseToAnyPublisher()
-                }
-            }
-            .map { (result: ResourcesCacheSyncResult) in
-                
-                self.markDidSyncResourcesFromJson()
-                
-                return result
-            }
-            .catch { (error: Error) in
-                
-                self.markDidSyncResourcesFromJson()
-                
-                return Just<ResourcesCacheSyncResult?>(nil)
-                    .eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
+        let result: ResourcesCacheSyncResult = try await cache.syncResources(
+            resourcesPlusLatestTranslationsAndAttachments: try jsonFileCache.getResourcesPlusLatestTranslationsAndAttachments(),
+            shouldRemoveDataThatNoLongerExists: true
+        )
+        
+        markDidSyncResourcesFromJson()
+        
+        return result
     }
     
-    private func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote(requestPriority: RequestPriority, forceFetchFromRemote: Bool) -> AnyPublisher<ResourcesCacheSyncResult, Error> {
+    private func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote(requestPriority: RequestPriority, forceFetchFromRemote: Bool) async throws -> ResourcesCacheSyncResult {
         
         let syncInvalidator = SyncInvalidator(
             id: Self.syncInvalidatorIdForResourcesPlustLatestTranslationsAndAttachments,
@@ -249,31 +200,23 @@ extension ResourcesRepository {
         let shouldFetchFromRemote: Bool = forceFetchFromRemote || syncInvalidator.shouldSync
 
         guard shouldFetchFromRemote else {
-            return Just(ResourcesCacheSyncResult.emptyResult())
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
+            return ResourcesCacheSyncResult.emptyResult()
         }
         
-        return Publishers
-            .CombineLatest(
-                languagesRepository
-                    .syncLanguagesFromRemotePublisher(requestPriority: requestPriority),
-                api.getResourcesPlusLatestTranslationsAndAttachments(requestPriority: requestPriority)
-            )
-            .receive(on: DispatchQueue.main)
-            .flatMap({ (languages: [LanguageDataModel], resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable) -> AnyPublisher<ResourcesCacheSyncResult, Error> in
-                
-                return self.cache.syncResources(
-                    resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
-                    shouldRemoveDataThatNoLongerExists: true
-                )
-                .map { (cacheResult: ResourcesCacheSyncResult) in
-                    syncInvalidator.didSync()
-                    return cacheResult
-                }
-                .eraseToAnyPublisher()
-            })
-            .eraseToAnyPublisher()
+        let languages: [LanguageDataModel] = try await languagesRepository.syncLanguagesFromRemote(
+            requestPriority: requestPriority
+        )
+        
+        let resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable = try await api.getResourcesPlusLatestTranslationsAndAttachments(requestPriority: requestPriority)
+        
+        let cacheResult: ResourcesCacheSyncResult = try await cache.syncResources(
+            resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
+            shouldRemoveDataThatNoLongerExists: true
+        )
+        
+        syncInvalidator.didSync()
+        
+        return cacheResult
     }
 }
 
@@ -281,7 +224,8 @@ extension ResourcesRepository {
 
 extension ResourcesRepository {
     
-    func getSpotlightTools(sortByDefaultOrder: Bool = false) -> [ResourceDataModel] {
+    @available(*, deprecated) // Remove and use throws. ~Levi
+    func getSpotlightToolsNonThrowing(sortByDefaultOrder: Bool = false) -> [ResourceDataModel] {
         
         do {
             return try cache.getSpotlightTools(sortByDefaultOrder: sortByDefaultOrder)
@@ -296,7 +240,8 @@ extension ResourcesRepository {
 
 extension ResourcesRepository {
     
-    func getAllToolsList(filterByCategory: String?, filterByLanguageId: String?, sortByDefaultOrder: Bool) -> [ResourceDataModel] {
+    @available(*, deprecated) // Remove and use throws. ~Levi
+    func getAllToolsListNonThrowing(filterByCategory: String?, filterByLanguageId: String?, sortByDefaultOrder: Bool) -> [ResourceDataModel] {
         
         do {
             
@@ -311,7 +256,8 @@ extension ResourcesRepository {
         }
     }
     
-    func getAllToolsListCount(filterByCategory: String?, filterByLanguageId: String?) -> Int {
+    @available(*, deprecated) // Remove and use throws. ~Levi
+    func getAllToolsListCountNonThrowing(filterByCategory: String?, filterByLanguageId: String?) -> Int {
         
         do {
             return try cache.getAllToolsListCount(filterByCategory: filterByCategory, filterByLanguageId: filterByLanguageId)
@@ -321,7 +267,8 @@ extension ResourcesRepository {
         }
     }
     
-    func getAllToolCategoryIds(filteredByLanguageId: String?) -> [String] {
+    @available(*, deprecated) // Remove and use throws. ~Levi
+    func getAllToolCategoryIdsNonThrowing(filteredByLanguageId: String?) -> [String] {
         
         do {
             return try cache.getAllToolCategoryIds(filteredByLanguageId: filteredByLanguageId)
@@ -331,7 +278,8 @@ extension ResourcesRepository {
         }
     }
     
-    func getAllToolLanguageIds(filteredByCategoryId: String?) -> [String] {
+    @available(*, deprecated) // Remove and use throws. ~Levi
+    func getAllToolLanguageIdsNonThrowing(filteredByCategoryId: String?) -> [String] {
         
         do {
             return try cache.getAllToolLanguageIds(filteredByCategoryId: filteredByCategoryId)

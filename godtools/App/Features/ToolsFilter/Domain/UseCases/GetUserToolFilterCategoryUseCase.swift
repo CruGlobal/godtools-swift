@@ -26,18 +26,13 @@ final class GetUserToolFilterCategoryUseCase {
             .getUserToolCategoryFilterChangedPublisher()
             .map {
                 
-                let categoryId = self.userToolFiltersRepository.getUserToolCategoryFilter()?.categoryId
+                let categoryId: String? = self.userToolFiltersRepository.getUserToolCategoryFilter()?.categoryId
                 
-                if let categoryFilter = self.getToolFilterCategory.getCategoryFilter(from: categoryId, translatedInAppLanguage: appLanguage) {
-                    
-                    return categoryFilter
-                    
-                } else {
-                    
-                    let defaultCategoryFilterValue = self.getToolFilterCategory.getAnyCategoryFilter(translatedInAppLanguage: appLanguage)
-                    
-                    return defaultCategoryFilterValue
+                if let categoryId = categoryId {
+                    return self.getToolFilterCategory.getCategoryFilter(categoryId: categoryId, translatedInAppLanguage: appLanguage)
                 }
+                
+                return self.getToolFilterCategory.getAnyCategoryFilter(translatedInAppLanguage: appLanguage)
                 
             }
             .eraseToAnyPublisher()

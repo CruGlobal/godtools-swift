@@ -33,7 +33,7 @@ final class GetToolsListItems {
         let languageForAvailabilityTextModel: LanguageDataModel?
         
         if let languageForAvailabilityTextId = languageIdForAvailabilityText {
-            languageForAvailabilityTextModel = languagesRepository.getLanguage(id: languageForAvailabilityTextId)
+            languageForAvailabilityTextModel = languagesRepository.getLanguageNonThrowing(id: languageForAvailabilityTextId)
         } else {
             languageForAvailabilityTextModel = nil
         }
@@ -62,7 +62,7 @@ final class GetToolsListItems {
                         bannerImageId: tool.attrBanner,
                         name: self.getTranslatedToolName.getToolName(resource: tool, translateInLanguage: appLanguage),
                         category: self.getTranslatedToolCategory.getTranslatedCategory(resource: tool, translateInLanguage: appLanguage),
-                        isFavorited: self.favoritedResourcesRepository.getResourceIsFavorited(id: tool.id),
+                        isFavorited: self.favoritedResourcesRepository.getResourceIsFavoritedNonThrowing(id: tool.id),
                         languageAvailability: toolLanguageAvailability
                     )
                 }

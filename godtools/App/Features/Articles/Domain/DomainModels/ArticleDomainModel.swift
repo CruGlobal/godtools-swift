@@ -8,9 +8,13 @@
 
 import Foundation
 
-// NOTE: This will most likely get paired with a use case once we can refactor the Articles feature to use SwiftUI/Combine and UseCases. ~Levi
 struct ArticleDomainModel: Sendable {
     
+    enum UrlType: Sendable {
+        case fileUrl
+        case url
+    }
+    
     let url: URL?
-    let urlType: ArticleUrlType?
+    let urlType: UrlType?
 }

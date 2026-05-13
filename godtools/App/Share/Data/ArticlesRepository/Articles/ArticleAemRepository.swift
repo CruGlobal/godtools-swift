@@ -8,13 +8,11 @@
 
 import Foundation
 import RequestOperation
-import Combine
 
 open class ArticleAemRepository: NSObject {
     
     private let cache: ArticleAemCache
-    
-    let downloader: ArticleAemDownloader
+    private let downloader: ArticleAemDownloader
     
     init(downloader: ArticleAemDownloader, cache: ArticleAemCache) {
         
@@ -24,52 +22,52 @@ open class ArticleAemRepository: NSObject {
         super.init()
     }
     
-    func getAemCacheObjectsPublisher(aemUris: [String]) -> AnyPublisher<[ArticleAemCacheObject], Never> {
+    @available(*, deprecated) // Remove and use throws. ~Levi
+    func getAemCacheObjectNonThrowing(aemUri: String) -> ArticleAemCacheObject? {
+        do {
+            return try cache.getAemCacheObject(aemUri: aemUri)
+        }
+        catch _ {
+            return nil
+        }
+    }
+    
+    func getAemCacheObject(aemUri: String) throws -> ArticleAemCacheObject? {
+        return try cache.getAemCacheObject(aemUri: aemUri)
+    }
+    
+    func getAemCacheObjects(aemUris: [String]) throws -> [ArticleAemCacheObject] {
         
-        return cache.getAemCacheObjectsPublisher(aemUris: aemUris)
-            .eraseToAnyPublisher()
+        return try cache.getAemCacheObjects(aemUris: aemUris)
     }
     
-    func getAemCacheObject(aemUri: String) -> ArticleAemCacheObject? {
-        return cache.getAemCacheObject(aemUri: aemUri)
-    }
-    
-    func downloadAndCachePublisher(aemUris: [String], downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority) -> AnyPublisher<ArticleAemRepositoryResult, Never> {
+    func downloadAndCache(aemUris: [String], downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority) async throws -> ArticleAemDownload {
         
         let aemUrisNeedingUpdate: [String]
 
         switch downloadCachePolicy {
             
         case .fetchFromCacheUpToNextHour:
-            aemUrisNeedingUpdate = filterAemUrisByLastUpdate(aemUris: aemUris)
+            aemUrisNeedingUpdate = try filterAemUrisByLastUpdate(aemUris: aemUris)
         case .ignoreCache:
             aemUrisNeedingUpdate = aemUris
         }
         
-        return downloader.downloadPublisher(
+        let download: ArticleAemDownload = await downloader.download(
             aemUris: aemUrisNeedingUpdate,
             downloadCachePolicy: downloadCachePolicy,
             requestPriority: requestPriority
         )
-        .flatMap { (downloaderResult: ArticleAemDownloaderResult) -> AnyPublisher<ArticleAemRepositoryResult, Never> in
-            
-            return self.cache.storeAemDataObjectsPublisher(
-                aemDataObjects: downloaderResult.aemDataObjects,
-                requestPriority: requestPriority
-            )
-            .map { (cacheResult: ArticleAemCacheResult) in
-                
-                return ArticleAemRepositoryResult(
-                    downloaderResult: downloaderResult,
-                    cacheResult: cacheResult
-                )
-            }
-            .eraseToAnyPublisher()
-        }
-        .eraseToAnyPublisher()
+        
+        try await cache.storeAemDataObjects(
+            aemDataObjects: download.aemDataObjects,
+            requestPriority: requestPriority
+        )
+        
+        return download
     }
     
-    private func filterAemUrisByLastUpdate(aemUris: [String]) -> [String] {
+    private func filterAemUrisByLastUpdate(aemUris: [String]) throws -> [String] {
         
         var aemUrisNeedingUpdate: [String] = Array()
         
@@ -79,7 +77,7 @@ open class ArticleAemRepository: NSObject {
             
             let shouldUpdateAemUri: Bool
             
-            if let aemCacheObject = cache.getAemCacheObject(aemUri: aemUri) {
+            if let aemCacheObject = try cache.getAemCacheObject(aemUri: aemUri) {
                 
                 let lastUpdatedAt: Date = aemCacheObject.aemData.updatedAt
                 let secondsSinceLastUpdate: Double = Date().timeIntervalSince(lastUpdatedAt)

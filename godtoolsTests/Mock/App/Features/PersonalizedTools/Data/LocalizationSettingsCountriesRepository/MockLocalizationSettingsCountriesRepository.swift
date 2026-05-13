@@ -8,7 +8,6 @@
 
 import Foundation
 @testable import godtools
-import Combine
 
 class MockLocalizationSettingsCountriesRepository: LocalizationSettingsCountriesRepositoryInterface {
 
@@ -17,9 +16,8 @@ class MockLocalizationSettingsCountriesRepository: LocalizationSettingsCountries
     init(countries: [LocalizationSettingsCountryDataModel]) {
         self.countries = countries
     }
-
-    func getCountriesPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[LocalizationSettingsCountryDataModel], Never> {
-        return Just(countries)
-            .eraseToAnyPublisher()
+    
+    func getCountries(appLanguage: AppLanguageDomainModel) -> [LocalizationSettingsCountryDataModel] {
+        return countries
     }
 }

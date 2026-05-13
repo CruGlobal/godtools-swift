@@ -16,7 +16,7 @@ protocol LocalizationSettingsNavigationFlow: Flow {
 
 extension LocalizationSettingsNavigationFlow {
     
-    func navigateToLocalizationSettings(showsPreferNotToSay: Bool, shouldStoreCountryWhenSelected: Bool, userShouldConfirmSelectedCountry: Bool) {
+    func navigateToLocalizationSettings(shouldStoreCountryWhenSelected: Bool, userShouldConfirmSelectedCountry: Bool, showsPreferNotToSay: Bool = true) {
         
         guard localizationSettingsFlow == nil else {
             return

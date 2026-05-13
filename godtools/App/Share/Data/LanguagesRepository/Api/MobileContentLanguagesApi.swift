@@ -9,7 +9,7 @@
 import Foundation
 import RequestOperation
 
-final class MobileContentLanguagesApi {
+final class MobileContentLanguagesApi: LanguagesApiInterface {
     
     private enum Path {
         static let languages = "/languages"

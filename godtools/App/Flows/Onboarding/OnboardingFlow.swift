@@ -10,7 +10,7 @@ import UIKit
 import SwiftUI
 import Combine
 
-class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow, LocalizationSettingsNavigationFlow {
+final class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow, LocalizationSettingsNavigationFlow {
         
     @Published private var currentAppLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
@@ -77,7 +77,6 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow, LocalizationSetting
             
             case .userChoseAppLanguage( _):
                 navigateToLocalizationSettings(
-                    showsPreferNotToSay: true,
                     shouldStoreCountryWhenSelected: false,
                     userShouldConfirmSelectedCountry: true
                 )

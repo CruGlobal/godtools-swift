@@ -12,20 +12,26 @@ import RequestOperation
 import RepositorySync
 
 final class PersonalizedToolsRepository {
+    
+    private static var isSyncing: Bool = false
 
-    private let api: PersonalizedToolsApi
+    private let api: PersonalizedToolsApiInterface
     private let cache: PersonalizedToolsCache
     private let syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface
     private let resourcesRepository: ResourcesRepository
 
-    private var cancellables: Set<AnyCancellable> = Set()
-
-    init(api: PersonalizedToolsApi, cache: PersonalizedToolsCache, syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface, resourcesRepository: ResourcesRepository) {
+    private var syncPersonalizedToolsTask: Task<Void, Error>?
+    
+    init(api: PersonalizedToolsApiInterface, cache: PersonalizedToolsCache, syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface, resourcesRepository: ResourcesRepository) {
 
         self.api = api
         self.cache = cache
         self.syncInvalidatorPersistence = syncInvalidatorPersistence
         self.resourcesRepository = resourcesRepository
+    }
+    
+    deinit {
+        syncPersonalizedToolsTask?.cancel()
     }
     
     var persistence: any Persistence<PersonalizedToolsDataModel, PersonalizedToolsDataModel> {
@@ -45,18 +51,14 @@ final class PersonalizedToolsRepository {
 
     @MainActor func getPersonalizedToolsChanged(requestPriority: RequestPriority, country: String?, language: String, forceNewSync: Bool = false) -> AnyPublisher<Void, Error> {
 
-        syncPersonalizedToolsPublisher(
-            requestPriority: requestPriority,
-            country: country,
-            language: language,
-            forceNewSync: forceNewSync
-        )
-        .sink { completion in
-
-        } receiveValue: { _ in
-
+        syncPersonalizedToolsTask = Task {
+            _ = try await syncPersonalizedTools(
+                requestPriority: requestPriority,
+                country: country,
+                language: language,
+                forceNewSync: forceNewSync
+            )
         }
-        .store(in: &cancellables)
 
         return persistence
             .observeCollectionChangesPublisher()
@@ -67,13 +69,6 @@ final class PersonalizedToolsRepository {
 // MARK: - Persistence
 
 extension PersonalizedToolsRepository {
-
-    func getPersistedPersonalizedToolsPublisher(country: String?, language: String, resourceTypes: [ResourceType]?) -> AnyPublisher<[ResourceDataModel], Error> {
-
-        return AnyPublisher() {
-            return try await self.getPersistedPersonalizedTools(country: country, language: language, resourceTypes: resourceTypes)
-        }
-    }
 
     func getPersistedPersonalizedTools(country: String?, language: String, resourceTypes: [ResourceType]?) async throws -> [ResourceDataModel] {
 
@@ -113,7 +108,7 @@ extension PersonalizedToolsRepository {
             return Array()
         }
 
-        let resources = try await resourcesRepository.persistence.getDataModelsAsync(getOption: .objectsByIds(ids: personalizedTools.resourceIds))
+        let resources = try await resourcesRepository.getResourcesByIds(ids: personalizedTools.resourceIds)
 
         guard let resourceTypes = resourceTypes, !resourceTypes.isEmpty else {
             return resources
@@ -129,20 +124,7 @@ extension PersonalizedToolsRepository {
 
 extension PersonalizedToolsRepository {
 
-    func syncPersonalizedToolsPublisher(requestPriority: RequestPriority, country: String?, language: String, forceNewSync: Bool = false) -> AnyPublisher<[ResourceDataModel], Error> {
-
-        return AnyPublisher() {
-
-            return try await self.syncPersonalizedTools(
-                requestPriority: requestPriority,
-                country: country,
-                language: language,
-                forceNewSync: forceNewSync
-            )
-        }
-    }
-
-    private func syncPersonalizedTools(requestPriority: RequestPriority, country: String?, language: String, forceNewSync: Bool = false) async throws -> [ResourceDataModel] {
+    func syncPersonalizedTools(requestPriority: RequestPriority, country: String?, language: String, forceNewSync: Bool = false) async throws -> [ResourceDataModel] {
 
         let type = PersonalizedToolsType(country: country, language: language)
 
@@ -152,7 +134,7 @@ extension PersonalizedToolsRepository {
             id: personalizedToolId
         )
 
-        let shouldSync: Bool = syncInvalidator.shouldSync || forceNewSync
+        let shouldSync: Bool = (syncInvalidator.shouldSync || forceNewSync) && !Self.isSyncing
 
         guard shouldSync else {
 
@@ -165,6 +147,8 @@ extension PersonalizedToolsRepository {
                 return try await getPersistedDefaultOrderTools(language: language)
             }
         }
+        
+        Self.isSyncing = true
 
         let resourceCodables: [ResourceCodable]
 
@@ -199,6 +183,8 @@ extension PersonalizedToolsRepository {
         )
 
         syncInvalidator.didSync()
+        
+        Self.isSyncing = false
 
         return try await getPersistedResources(personalizedTools: personalizedTools, resourceTypes: nil)
     }

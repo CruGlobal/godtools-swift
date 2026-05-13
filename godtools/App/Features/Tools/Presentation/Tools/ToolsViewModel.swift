@@ -34,20 +34,21 @@ final class ToolsViewModel: ObservableObject {
     private let getToolBannerUseCase: GetToolBannerUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
+    private var pullToRefreshToolsTask: Task<Void, Error>?
     
     private weak var flowDelegate: FlowDelegate?
 
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-    @Published private var toolFilterCategorySelection: ToolFilterCategoryDomainModel = ToolFilterAnyCategoryDomainModel.emptyValue
-    @Published private var toolFilterLanguageSelection: ToolFilterLanguageDomainModel = ToolFilterAnyLanguageDomainModel.emptyValue
+    @Published private var appLanguage = AppLanguageDomainModel.english
+    @Published private var toolFilterCategorySelection = ToolFilterCategoryDomainModel.emptyValue
+    @Published private var toolFilterLanguageSelection = ToolFilterLanguageDomainModel.emptyValue
     @Published private var localizationSettings: UserLocalizationSettingsDomainModel?
     
     @Published private(set) var toggleOptions: [PersonalizationToggleOption] = ToolsViewModel.getToggleOptions(strings: ToolsStringsDomainModel.emptyValue)
     @Published private(set) var strings: ToolsStringsDomainModel = .emptyValue
     @Published private(set) var showsFavoritingToolBanner: Bool = false
     @Published private(set) var spotlightTools: [SpotlightToolListItemDomainModel] = Array()
-    @Published private(set) var categoryFilterButtonTitle: String = ""
-    @Published private(set) var languageFilterButtonTitle: String = ""
+    @Published private(set) var categoryFilterActionTitle: String = ""
+    @Published private(set) var languageFilterActionTitle: String = ""
     @Published private(set) var allTools: [ToolListItemDomainModel] = Array()
     @Published private(set) var isLoadingAllTools: Bool = true
     @Published private(set) var personalizationUnavailableState: PersonalizedToolsUnavailableDomainModel?
@@ -83,7 +84,6 @@ final class ToolsViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .execute()
-            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         getLocalizationSettingsUseCase
@@ -92,16 +92,16 @@ final class ToolsViewModel: ObservableObject {
             .assign(to: &$localizationSettings)
         
         Publishers.CombineLatest4(
-            $appLanguage,
+            $appLanguage.dropFirst(),
             Publishers.CombineLatest(
-                $toolFilterCategorySelection,
-                $toolFilterLanguageSelection,
+                $toolFilterCategorySelection.dropFirst(),
+                $toolFilterLanguageSelection.dropFirst(),
             ),
             $localizationSettings,
             $selectedToggle
         )
         .dropFirst()
-        .map { [weak self] (appLanguage, toolFilters, localizationSettings, toggle) -> AnyPublisher<ToolsResultDomainModel, Error> in
+        .map { [weak self] (appLanguage: AppLanguageDomainModel, toolFilters, localizationSettings: UserLocalizationSettingsDomainModel?, toggle: PersonalizationToggleOptionValue) -> AnyPublisher<ToolsResultDomainModel, Error> in
 
             let (toolFilterCategory, toolFilterLanguage) = toolFilters
 
@@ -125,7 +125,7 @@ final class ToolsViewModel: ObservableObject {
                 return getAllToolsUseCase
                     .execute(
                         appLanguage: appLanguage,
-                        languageIdForAvailabilityText: toolFilterLanguage.languageDataModelId,
+                        languageIdForAvailabilityText: toolFilterLanguage.id,
                         filterToolsByCategory: toolFilterCategory,
                         filterToolsByLanguage: toolFilterLanguage
                     )
@@ -175,7 +175,7 @@ final class ToolsViewModel: ObservableObject {
             getSpotlightToolsUseCase
                 .execute(
                     translatedInAppLanguage: appLanguage,
-                    languageIdForAvailabilityText: toolFilterLanguage.languageDataModelId
+                    languageIdForAvailabilityText: toolFilterLanguage.id
                 )
         }
         .switchToLatest()
@@ -200,7 +200,7 @@ final class ToolsViewModel: ObservableObject {
             .sink { [weak self] (categoryFilter: ToolFilterCategoryDomainModel) in
             
                 self?.toolFilterCategorySelection = categoryFilter
-                self?.categoryFilterButtonTitle = categoryFilter.categoryButtonText
+                self?.categoryFilterActionTitle = categoryFilter.title
             }
             .store(in: &cancellables)
         
@@ -216,13 +216,14 @@ final class ToolsViewModel: ObservableObject {
             .sink { [weak self] (languageFilter: ToolFilterLanguageDomainModel) in
             
                 self?.toolFilterLanguageSelection = languageFilter
-                self?.languageFilterButtonTitle = languageFilter.languageButtonText
+                self?.languageFilterActionTitle = languageFilter.languageNameTranslatedInAppLanguage
             }
             .store(in: &cancellables)
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+        pullToRefreshToolsTask?.cancel()
     }
     
     private var analyticsScreenName: String {
@@ -316,20 +317,16 @@ final class ToolsViewModel: ObservableObject {
 extension ToolsViewModel {
     
     func pullToRefresh() {
-
-        pullToRefreshToolsUseCase
-            .execute(
-                appLanguage: appLanguage,
-                country: localizationSettings?.selectedCountry,
-                filterToolsByLanguage: toolFilterLanguageSelection
-            )
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completed in
-
-            }, receiveValue: { _ in
-
-            })
-            .store(in: &cancellables)
+        
+        pullToRefreshToolsTask = Task {
+            
+            try await pullToRefreshToolsUseCase
+                .execute(
+                    appLanguage: appLanguage,
+                    country: localizationSettings?.selectedCountry,
+                    filterToolsByLanguage: toolFilterLanguageSelection
+                )
+        }
     }
     
     func pageViewed() {

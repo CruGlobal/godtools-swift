@@ -48,7 +48,7 @@ final class GetToolShortcutLinksUseCase {
             .prefix(self.maxNumberOfToolShortcutLinks)
             .compactMap { (favoritedResource: FavoritedResourceDataModel) in
                 
-                guard let resource = try resourcesRepository.persistence.getDataModel(id: favoritedResource.id) else {
+                guard let resource = try resourcesRepository.getResourceNonThrowing(id: favoritedResource.id) else {
                     return nil
                 }
                 

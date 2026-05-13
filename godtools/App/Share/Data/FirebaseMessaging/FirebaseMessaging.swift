@@ -10,7 +10,7 @@ import Foundation
 import FirebaseMessaging
 import Combine
 
-class FirebaseMessaging {
+final class FirebaseMessaging {
     
     static let shared: FirebaseMessaging = FirebaseMessaging()
     

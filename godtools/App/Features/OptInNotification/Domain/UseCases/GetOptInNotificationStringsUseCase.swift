@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetOptInNotificationStringsUseCase {
 
@@ -18,7 +17,7 @@ final class GetOptInNotificationStringsUseCase {
         self.localizationServices = localizationServices
     }
 
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<OptInNotificationStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> OptInNotificationStringsDomainModel {
         
         let strings = OptInNotificationStringsDomainModel(
             title: localizationServices.stringForLocaleElseEnglish(
@@ -35,7 +34,6 @@ final class GetOptInNotificationStringsUseCase {
                     localeIdentifier: appLanguage, key: "optInNotification.maybeLater")
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

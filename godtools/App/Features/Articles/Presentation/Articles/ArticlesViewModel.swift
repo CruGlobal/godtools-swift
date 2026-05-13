@@ -17,7 +17,7 @@ final class ArticlesViewModel: NSObject {
     
     private let resource: ResourceDataModel
     private let language: LanguageDataModel
-    private let category: GodToolsShared.Category
+    private let category: ArticleCategoryDomainModel
     private let manifest: Manifest
     private let downloadArticlesObservable: DownloadManifestArticlesObservable
     private let articleManifestAemRepository: ArticleManifestAemRepository
@@ -34,10 +34,10 @@ final class ArticlesViewModel: NSObject {
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     let errorMessage: ObservableValue<ArticlesErrorMessageViewModel?> = ObservableValue(value: nil)
         
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var appLanguage = AppLanguageDomainModel.english
     @Published private var articleAemCacheObjects: [ArticleAemCacheObject] = Array()
     
-    init(flowDelegate: FlowDelegate, resource: ResourceDataModel, language: LanguageDataModel, category: GodToolsShared.Category, manifest: Manifest, downloadArticlesObservable: DownloadManifestArticlesObservable, articleManifestAemRepository: ArticleManifestAemRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, localizationServices: LocalizationServicesInterface, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, resource: ResourceDataModel, language: LanguageDataModel, category: ArticleCategoryDomainModel, manifest: Manifest, downloadArticlesObservable: DownloadManifestArticlesObservable, articleManifestAemRepository: ArticleManifestAemRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, localizationServices: LocalizationServicesInterface, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -56,7 +56,7 @@ final class ArticlesViewModel: NSObject {
             .execute()
             .assign(to: &$appLanguage)
                         
-        navTitle.accept(value: category.label?.text ?? "")
+        navTitle.accept(value: category.title)
         
         downloadArticlesObservable
             .$isDownloading
@@ -69,12 +69,25 @@ final class ArticlesViewModel: NSObject {
         
         Publishers.CombineLatest3(
             $appLanguage.dropFirst(),
-            downloadArticlesObservable.$articleAemRepositoryResult,
+            downloadArticlesObservable.$downloadResult,
             $articleAemCacheObjects.dropFirst()
         )
-        .map { (appLanguage: AppLanguageDomainModel, result: ArticleAemRepositoryResult, articleAemCacheObjects: [ArticleAemCacheObject]) in
+        .map { (appLanguage: AppLanguageDomainModel, downloadResult: Result<Void, Error>?, articleAemCacheObjects: [ArticleAemCacheObject]) in
             
-            let downloadError: ArticleAemDownloaderError? = result.downloaderResult.downloadError
+            let downloadError: Error?
+            
+            if let downloadResult = downloadResult {
+                switch downloadResult {
+                case .success( _):
+                    downloadError = nil
+                case .failure(let error):
+                    downloadError = error
+                }
+            }
+            else {
+                downloadError = nil
+            }
+            
             let noCachedResults: Bool = articleAemCacheObjects.isEmpty
             
             if let downloadError = downloadError, noCachedResults {
@@ -106,63 +119,60 @@ final class ArticlesViewModel: NSObject {
         .store(in: &cancellables)
         
         downloadArticlesObservable
-            .$articleAemRepositoryResult
-            .flatMap { (articleAemRepositoryResult: ArticleAemRepositoryResult) -> AnyPublisher<[AemUri], Never> in
+            .$downloadResult
+            .flatMap { (result: Result<Void, Error>?) -> AnyPublisher<[AemUri], Error> in
                 
-                guard let categoryId = category.id else {
-                    return Just([])
-                        .eraseToAnyPublisher()
-                }
+                let categoryId: String = category.id
                 
-                return articleManifestAemRepository
-                    .getCategoryArticlesPublisher(
+                return AnyPublisher() {
+                    let categoryArticles: [CategoryArticleModel] = try await self.articleManifestAemRepository.getCategoryArticles(
                         categoryId: categoryId,
                         languageCode: language.localeId
                     )
-                    .catch { (error: Error) in
-                        return Just(Array())
-                            .eraseToAnyPublisher()
-                    }
-                    .map { (categoryArticles: [CategoryArticleModel]) in
-                        
-                        var uniqueAemUris: Set<String> = Set()
-                        
-                        for article in categoryArticles {
-                            for uri in article.aemUris {
-                                uniqueAemUris.insert(uri)
-                            }
+                    
+                    return categoryArticles
+                }
+                .map { (categoryArticles: [CategoryArticleModel]) in
+                    
+                    var uniqueAemUris: Set<String> = Set()
+                    
+                    for article in categoryArticles {
+                        for uri in article.aemUris {
+                            uniqueAemUris.insert(uri)
                         }
-                        
-                        return uniqueAemUris.sorted()
                     }
-                    .eraseToAnyPublisher()
+                    
+                    return uniqueAemUris.sorted()
+                }
+                .eraseToAnyPublisher()
             }
-            .flatMap { (aemUris: [String]) -> AnyPublisher<[ArticleAemCacheObject], Never> in
+            .tryMap { (aemUris: [String]) in
                 
-                return articleManifestAemRepository.getAemCacheObjectsPublisher(aemUris: aemUris)
-                    .map { (aemCacheObjects: [ArticleAemCacheObject]) in
-                        
-                        let sortedAemCacheObjects: [ArticleAemCacheObject] = aemCacheObjects.sorted(by: {
-                            let thisTitle: String? = $0.aemData.articleJcrContent?.title
-                            let thatTitle: String? = $1.aemData.articleJcrContent?.title
-                            
-                            if let thisTitle = thisTitle, let thatTitle = thatTitle {
-                                return thisTitle < thatTitle
-                            }
-                            
-                            return false
-                        })
-                        
-                        return sortedAemCacheObjects
+                let aemCacheObjects: [ArticleAemCacheObject] = try articleManifestAemRepository.getAemCacheObjects(
+                    aemUris: aemUris
+                )
+                
+                let sortedAemCacheObjects: [ArticleAemCacheObject] = aemCacheObjects.sorted(by: {
+                    let thisTitle: String? = $0.aemData.articleJcrContent?.title
+                    let thatTitle: String? = $1.aemData.articleJcrContent?.title
+                    
+                    if let thisTitle = thisTitle, let thatTitle = thatTitle {
+                        return thisTitle < thatTitle
                     }
-                    .eraseToAnyPublisher()
+                    
+                    return false
+                })
+                
+                return sortedAemCacheObjects
             }
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (aemCacheObjects: [ArticleAemCacheObject]) in
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (aemCacheObjects: [ArticleAemCacheObject]) in
                 
                 self?.articleAemCacheObjects = aemCacheObjects
                 self?.numberOfArticles.accept(value: aemCacheObjects.count)
-            }
+            })
             .store(in: &cancellables)
     }
     
@@ -171,7 +181,7 @@ final class ArticlesViewModel: NSObject {
     }
     
     private var analyticsScreenName: String {
-        return "Category : \(category.label?.text ?? "")"
+        return "Category : \(category.title)"
     }
     
     private var analyticsSiteSection: String {

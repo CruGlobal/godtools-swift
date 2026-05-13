@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct RemoteConfigDataModel {
+struct RemoteConfigDataModel: Sendable {
     
     let globalActivityIsEnabled: Bool?
     let toolContentFeaturePageCollectionPageEnabled: Bool?

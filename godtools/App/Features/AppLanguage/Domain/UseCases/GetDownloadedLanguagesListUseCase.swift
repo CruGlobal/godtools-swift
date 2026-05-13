@@ -26,54 +26,51 @@ final class GetDownloadedLanguagesListUseCase {
         
         return Publishers.CombineLatest(
             languagesRepository
-                .observeCollectionChangesPublisher()
-                .flatMap {
-                    return self.languagesRepository.getLanguagesPublisher()
-                },
+                .observeCollectionChangesPublisher(),
             downloadedLanguagesRepository
-                .getDownloadedLanguagesChangedPublisher()
-                .setFailureType(to: Error.self)
+                .observeCollectionChangesPublisher()
         )
-        .flatMap { (languages: [LanguageDataModel], downloadLanguagesChanged: Void) -> AnyPublisher<[DownloadedLanguageDataModel], Error> in
+        .flatMap { (languagesChanged: Void, downloadLanguagesChanged: Void) -> AnyPublisher<[DownloadedLanguageListItemDomainModel], Error> in
             
-            return self.downloadedLanguagesRepository
-                .getDownloadedLanguagesByDownloadCompletePublisher(
-                    downloadComplete: true
-                )
-                .eraseToAnyPublisher()
-        }
-        .flatMap { (downloadedLanguageDataModels: [DownloadedLanguageDataModel]) -> AnyPublisher<[LanguageDataModel], Error> in
-                            
-            let downloadedLanguageIds: [String] = downloadedLanguageDataModels.map { $0.languageId }
-            
-            return self.languagesRepository
-                .getLanguagesByIdsPublisher(ids: downloadedLanguageIds)
-                .eraseToAnyPublisher()
-        }
-        .map { (languages: [LanguageDataModel]) in
-            
-            let languagesList: [DownloadedLanguageListItemDomainModel] = languages.map { (language: LanguageDataModel) in
-                
-                let languageNameInOwnLanguage = self.getTranslatedLanguageName.getLanguageName(
-                    language: language,
-                    translatedInLanguage: language.code
-                )
-                let languageNameInAppLanguage = self.getTranslatedLanguageName.getLanguageName(
-                    language: language,
-                    translatedInLanguage: appLanguage
-                )
-                
-                return DownloadedLanguageListItemDomainModel(
-                    languageId: language.id,
-                    languageCode: language.code,
-                    languageNameInOwnLanguage: languageNameInOwnLanguage,
-                    languageNameInAppLanguage: languageNameInAppLanguage
-                )
+            return AnyPublisher() {
+                return try await self.asyncExecute(appLanguage: appLanguage)
             }
-            
-            return languagesList
         }
         .eraseToAnyPublisher()
+    }
+    
+    func asyncExecute(appLanguage: AppLanguageDomainModel) async throws -> [DownloadedLanguageListItemDomainModel] {
+                
+        let downloadedLanguageDataModels: [DownloadedLanguageDataModel] = try await downloadedLanguagesRepository.getDownloadedLanguagesByDownloadComplete(
+            downloadComplete: true
+        )
+        
+        let downloadedLanguageIds: [String] = downloadedLanguageDataModels.map { $0.languageId }
+        
+        let languages: [LanguageDataModel] = try await languagesRepository.getLanguagesByIds(
+            ids: downloadedLanguageIds
+        )
+        
+        let languagesList: [DownloadedLanguageListItemDomainModel] = languages.map { (language: LanguageDataModel) in
+            
+            let languageNameInOwnLanguage = getTranslatedLanguageName.getLanguageName(
+                language: language,
+                translatedInLanguage: language.code
+            )
+            let languageNameInAppLanguage = getTranslatedLanguageName.getLanguageName(
+                language: language,
+                translatedInLanguage: appLanguage
+            )
+            
+            return DownloadedLanguageListItemDomainModel(
+                languageId: language.id,
+                languageCode: language.code,
+                languageNameInOwnLanguage: languageNameInOwnLanguage,
+                languageNameInAppLanguage: languageNameInAppLanguage
+            )
+        }
+        
+        return languagesList
     }
 }
 

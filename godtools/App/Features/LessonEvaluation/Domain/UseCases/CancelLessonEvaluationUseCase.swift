@@ -25,7 +25,7 @@ final class CancelLessonEvaluationUseCase {
         let lessonResource: ResourceDataModel?
         
         do {
-            lessonResource = try resourcesRepository.persistence.getDataModel(id: lessonId)
+            lessonResource = try resourcesRepository.getResource(id: lessonId)
         }
         catch _ {
             lessonResource = nil

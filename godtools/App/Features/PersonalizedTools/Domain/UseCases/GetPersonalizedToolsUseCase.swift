@@ -26,57 +26,58 @@ final class GetPersonalizedToolsUseCase {
         self.localizationServices = localizationServices
     }
 
-    @MainActor func execute(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterToolsByLanguage: ToolFilterLanguageDomainModel?) -> AnyPublisher<ToolsResultDomainModel, Error> {
-
-        let languageCode: String = getLanguageElseAppLanguage.getLanguageCode(languageId: filterToolsByLanguage?.languageDataModelId, appLanguage: appLanguage)
-
+    @MainActor func execute(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterToolsByLanguage: ToolFilterLanguageDomainModel) -> AnyPublisher<ToolsResultDomainModel, Error> {
+        
+        let languageCode: String = getLanguageElseAppLanguage
+            .getLanguageCode(
+                languageId: filterToolsByLanguage.filterId,
+                appLanguage: appLanguage
+            )
+        
         let countryIsoRegionCode: String? = {
             if let isoRegionCode = country?.isoRegionCode, !isoRegionCode.isEmpty {
                 return isoRegionCode
             }
             return nil
         }()
-
-        return getPersonalizedToolsPublisher(
-            countryIsoRegionCode: countryIsoRegionCode,
-            languageCode: languageCode,
-            appLanguage: appLanguage,
-            languageIdForAvailabilityText: filterToolsByLanguage?.languageDataModelId,
-            hasCountry: countryIsoRegionCode != nil
-        )
-    }
-
-    @MainActor private func getPersonalizedToolsPublisher(countryIsoRegionCode: String?, languageCode: String, appLanguage: AppLanguageDomainModel, languageIdForAvailabilityText: String?, hasCountry: Bool) -> AnyPublisher<ToolsResultDomainModel, Error> {
-
+        
+        let hasCountry: Bool = countryIsoRegionCode != nil
+        
         return Publishers.CombineLatest(
             personalizedToolsRepository
-                .getPersonalizedToolsChanged(requestPriority: .high, country: countryIsoRegionCode, language: languageCode),
+                .getPersonalizedToolsChanged(
+                    requestPriority: .high,
+                    country: countryIsoRegionCode,
+                    language: languageCode
+                ),
             resourcesRepository
                 .observeCollectionChangesPublisher()
         )
-        .flatMap({ (personalizedToolsChanged, resourcesChanged) -> AnyPublisher<[ResourceDataModel], Error> in
-
-            return self.personalizedToolsRepository
-                .getPersistedPersonalizedToolsPublisher(
-                    country: countryIsoRegionCode,
-                    language: languageCode,
-                    resourceTypes: ResourceType.toolTypes
-                )
-        })
+        .flatMap { (personalizedToolsChanged, resourcesChanged) -> AnyPublisher<[ResourceDataModel], Error> in
+            
+            return AnyPublisher() {
+                try await self.personalizedToolsRepository
+                    .getPersistedPersonalizedTools(
+                        country: countryIsoRegionCode,
+                        language: languageCode,
+                        resourceTypes: ResourceType.toolTypes
+                    )
+            }
+        }
         .flatMap { (resources: [ResourceDataModel]) -> AnyPublisher<ToolsResultDomainModel, Error> in
-
+            
             return self.getToolsListItems
                 .mapToolsToListItemsPublisher(
                     tools: resources,
                     appLanguage: appLanguage,
-                    languageIdForAvailabilityText: languageIdForAvailabilityText
+                    languageIdForAvailabilityText: filterToolsByLanguage.filterId
                 )
                 .map { (tools: [ToolListItemDomainModel]) -> ToolsResultDomainModel in
-
+                    
                     if self.shouldShowUnavailableState(hasCountry: hasCountry, tools: tools) {
                         return self.getToolsUnavailable(appLanguage: appLanguage)
                     }
-
+                    
                     return ToolsResultDomainModel(
                         tools: tools,
                         unavailableStrings: nil

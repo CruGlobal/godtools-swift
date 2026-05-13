@@ -8,23 +8,17 @@
 
 import Foundation
 
-class ArticleWebArchiverResult {
+struct ArticleWebArchiverResult: Sendable {
     
-    let successfulArchives: [ArticleWebArchiveData]
-    let failedArchives: [ArticleWebArchiveError]
-    let totalAttemptedArchives: Int
-    
-    init(successfulArchives: [ArticleWebArchiveData], failedArchives: [ArticleWebArchiveError], totalAttemptedArchives: Int) {
-        
-        self.successfulArchives = successfulArchives
-        self.failedArchives = failedArchives
-        self.totalAttemptedArchives = totalAttemptedArchives
-    }
+    let archives: [ArticleWebArchiveData]
+    let errors: [Error]
     
     var networkFailed: Bool {
         
-        for operationError in failedArchives where operationError.networkFailed {
-            return true
+        for error in errors {
+            if error.isUrlErrorNotConnectedToInternetCode {
+                return true
+            }
         }
         
         return false
@@ -33,12 +27,11 @@ class ArticleWebArchiverResult {
 
 extension ArticleWebArchiverResult {
     
-    static func getEmptyResult() -> ArticleWebArchiverResult {
+    static var emptyValue: ArticleWebArchiverResult {
         
         return ArticleWebArchiverResult(
-            successfulArchives: [],
-            failedArchives: [],
-            totalAttemptedArchives: 0
+            archives: [],
+            errors: []
         )
     }
 }

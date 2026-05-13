@@ -15,7 +15,7 @@ final class LoadingArticleViewModel: ObservableObject {
     private let articleAemRepository: ArticleAemRepository
     private let appLanguage: AppLanguageDomainModel
     
-    private var downloadArticleOperation: OperationQueue?
+    private var downloadArticleTask: Task<Void, Never>?
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
@@ -29,40 +29,40 @@ final class LoadingArticleViewModel: ObservableObject {
         self.appLanguage = appLanguage
         self.message = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "Download in progress")
         
-        articleAemRepository
-            .downloadAndCachePublisher(
-                aemUris: [aemUri],
-                downloadCachePolicy: .fetchFromCacheUpToNextHour,
-                requestPriority: .high
-            )
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (result: ArticleAemRepositoryResult) in
+        downloadArticleTask = Task { [weak self] in
+            
+            do {
                 
-                if let aemCacheObject = articleAemRepository.getAemCacheObject(aemUri: aemUri) {
+                _ = try await articleAemRepository
+                    .downloadAndCache(
+                        aemUris: [aemUri],
+                        downloadCachePolicy: .fetchFromCacheUpToNextHour,
+                        requestPriority: .high
+                    )
+                
+                if let aemCacheObject = articleAemRepository.getAemCacheObjectNonThrowing(aemUri: aemUri) {
                     
                     self?.flowDelegate?.navigate(step: .didDownloadArticleFromLoadingArticle(aemCacheObject: aemCacheObject))
                 }
-                else {
-                    
-                    let errorTitle: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.error.key)
-                    let errorMessage: String
-                    
-                    if let downloadError = result.downloaderResult.downloadError {
-                        errorMessage = DownloadArticlesErrorViewModel(appLanguage: appLanguage, localizationServices: localizationServices, error: downloadError).message
-                    }
-                    else {
-                        errorMessage = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.downloadError.key)
-                    }
-                    
-                    let alertMessage = AlertMessage(title: errorTitle, message: errorMessage)
-                    
-                    self?.flowDelegate?.navigate(step: .didFailToDownloadArticleFromLoadingArticle(alertMessage: alertMessage))
-                }
             }
-            .store(in: &cancellables)
+            catch let error {
+                
+                let errorTitle: String = localizationServices.stringForLocaleElseEnglish(
+                    localeIdentifier: appLanguage,
+                    key: LocalizableStringKeys.error.key
+                )
+                
+                let errorMessage: String = DownloadArticlesErrorViewModel(appLanguage: appLanguage, localizationServices: localizationServices, error: error).message
+                
+                let alertMessage = AlertMessage(title: errorTitle, message: errorMessage)
+                
+                self?.flowDelegate?.navigate(step: .didFailToDownloadArticleFromLoadingArticle(alertMessage: alertMessage))
+            }
+        }
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+        downloadArticleTask?.cancel()
     }
 }

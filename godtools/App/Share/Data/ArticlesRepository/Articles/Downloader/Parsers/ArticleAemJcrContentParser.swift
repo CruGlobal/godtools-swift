@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ArticleAemJcrContentParser {
+final class ArticleAemJcrContentParser {
     
     init() {
         

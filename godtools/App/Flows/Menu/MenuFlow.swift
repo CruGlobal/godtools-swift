@@ -19,7 +19,7 @@ class MenuFlow: Flow, LocalizationSettingsNavigationFlow {
 
     private weak var flowDelegate: FlowDelegate?
     
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var appLanguage = AppLanguageDomainModel.english
     @Published private var shareGodToolsStringsDomainModel: ShareGodToolsStringsDomainModel?
     
     let appDiContainer: AppDiContainer
@@ -93,7 +93,6 @@ class MenuFlow: Flow, LocalizationSettingsNavigationFlow {
             
         case .localizationSettingsTappedFromMenu:
             navigateToLocalizationSettings(
-                showsPreferNotToSay: false,
                 shouldStoreCountryWhenSelected: true,
                 userShouldConfirmSelectedCountry: false
             )

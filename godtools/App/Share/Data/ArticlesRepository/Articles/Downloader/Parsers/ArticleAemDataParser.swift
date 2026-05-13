@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ArticleAemDataParser {
+final class ArticleAemDataParser {
     
     private let articleJcrContentParser: ArticleAemJcrContentParser = ArticleAemJcrContentParser()
     private let errorDomain: String = String(describing: ArticleAemDataParser.self)
@@ -50,7 +50,7 @@ class ArticleAemDataParser {
         return htmlUrlString
     }
     
-    func parse(aemUrl: URL, aemJson: [String: Any]) -> Result<ArticleAemData, ArticleAemDataParserError> {
+    func parse(aemUrl: URL, aemJson: [String: Any]) throws -> ArticleAemData {
                      
         let variation: String
         let variationJson: [String: Any]
@@ -60,14 +60,7 @@ class ArticleAemDataParser {
             variation = preferredVariation
             
             guard let variationJsonDictionary = aemJson[preferredVariation] as? [String: Any] else {
-                
-                let variationJsonError: Error = NSError(
-                    domain: errorDomain,
-                    code: -1,
-                    userInfo: [NSLocalizedDescriptionKey: "Failed to parse aem import json result because json for the preferred variation does not exist.\n variation: \(variation)"
-                ])
-                
-                return .failure(.failedToLocateJson(error: variationJsonError))
+                throw NSError.errorWithDescription(description: "Failed to parse aem import json result because json for the preferred variation does not exist.\n variation: \(variation)")
             }
             
             variationJson = variationJsonDictionary
@@ -81,15 +74,13 @@ class ArticleAemDataParser {
         
         let aemWebUrl: String = convertAemUrlToHtmlUrlWithVaration(aemUrl: aemUrl, variation: variation)
         
-        let aemData = ArticleAemData(
+        return ArticleAemData(
             id: aemUrl.absoluteString,
             aemUri: aemUrl.absoluteString,
             articleJcrContent: articleJcrContent,
             webUrl: aemWebUrl,
             updatedAt: Date()
-        )
-        
-        return .success(aemData)
+        )   
     }
     
     /*

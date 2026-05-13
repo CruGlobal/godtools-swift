@@ -28,7 +28,7 @@ final class GetLessonFilterLanguagesUseCase {
             .observeCollectionChangesPublisher()
             .flatMap { (resourcesChanged: Void) in
                 
-                let languageIds = self.resourcesRepository.getLessonsSupportedLanguageIds()
+                let languageIds = self.resourcesRepository.getLessonsSupportedLanguageIdsNonThrowing()
                 
                 return self.createLessonLanguageFilterDomainModelListPublisher(from: languageIds, translatedInAppLanguage: appLanguage)
             }

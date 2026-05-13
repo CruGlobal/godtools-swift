@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 import UserNotifications
 
 final class GetNotificationStatus {
@@ -34,12 +33,6 @@ final class GetNotificationStatus {
         
         @unknown default:
             return .unknown
-        }
-    }
-    
-    func getStatusPublisher() -> AnyPublisher<PermissionStatusDomainModel, Error> {
-        return AnyPublisher() {
-            return try await self.getStatus()
         }
     }
 }

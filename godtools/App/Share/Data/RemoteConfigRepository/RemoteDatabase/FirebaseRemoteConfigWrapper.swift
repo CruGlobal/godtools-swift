@@ -7,10 +7,9 @@
 //
 
 import Foundation
-import Combine
 import FirebaseRemoteConfig
 
-class FirebaseRemoteConfigWrapper: RemoteConfigRemoteDatabaseInterface {
+final class FirebaseRemoteConfigWrapper: RemoteConfigRemoteDatabaseInterface {
     
     private let remoteConfig: RemoteConfig = RemoteConfig.remoteConfig()
     
@@ -18,25 +17,11 @@ class FirebaseRemoteConfigWrapper: RemoteConfigRemoteDatabaseInterface {
         
     }
     
-    func syncFromRemoteDatabasePublisher() -> AnyPublisher<Void, Never> {
+    func syncFromRemoteDatabase() async throws {
         
         // NOTE: By default RemoteConfig fetches new data after 12 hours have elapsed. Can be configured in RemoteConfigSettings. ~Levi
         
-        return fetchAndActivatePublisher()
-            .catch { _ in
-                return Just(RemoteConfigFetchAndActivateStatus.error)
-                    .eraseToAnyPublisher()
-            }
-            .map { _ in
-                Void()
-            }
-            .eraseToAnyPublisher()
-    }
-    
-    func getRemoteConfigPublisher() -> AnyPublisher<RemoteConfigDataModel?, Never> {
-        
-        return Just(getRemoteConfigDataModel())
-            .eraseToAnyPublisher()
+        _ = try await fetchAndActivate()
     }
     
     func getRemoteConfig() -> RemoteConfigDataModel? {
@@ -53,24 +38,9 @@ class FirebaseRemoteConfigWrapper: RemoteConfigRemoteDatabaseInterface {
             optInNotificationTimeInterval: Int(truncating: remoteConfig.configValue(forKey: "ui_opt_in_notification_time_interval").numberValue)
         )
     }
-}
-
-extension FirebaseRemoteConfigWrapper {
     
-    private func fetchAndActivatePublisher() -> AnyPublisher<RemoteConfigFetchAndActivateStatus, Error> {
+    private func fetchAndActivate() async throws -> RemoteConfigFetchAndActivateStatus {
         
-        return Future() { promise in
-            
-            self.remoteConfig.fetchAndActivate { (status: RemoteConfigFetchAndActivateStatus, error: Error?) in
-                
-                if let error = error {
-                    promise(.failure(error))
-                }
-                else {
-                    promise(.success(status))
-                }
-            }
-        }
-        .eraseToAnyPublisher()
+        return try await remoteConfig.fetchAndActivate()
     }
 }

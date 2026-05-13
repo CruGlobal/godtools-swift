@@ -88,6 +88,10 @@ class DownloadableLanguageItemViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     private var languageId: String {
         return downloadableLanguage.languageId
     }
@@ -109,13 +113,13 @@ extension DownloadableLanguageItemViewModel {
         
         recycleState.downloadState = .notDownloaded
         
-        removeDownloadedToolLanguageUseCase
-            .execute(languageId: languageId)
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-
-            }
-            .store(in: &Self.backgroundCancellables)
+        do {
+            try removeDownloadedToolLanguageUseCase
+                .execute(languageId: languageId)
+        }
+        catch _ {
+            
+        }
     }
 }
 
@@ -125,6 +129,41 @@ extension DownloadableLanguageItemViewModel {
     
     private static func startLanguageDownload(downloadToolLanguageUseCase: DownloadToolLanguageUseCase, recycleState: DownloadableLanguageItemRecycleState, languageId: String, flowDelegate: FlowDelegate?) {
                   
+        
+        let isDownloading: Bool = recycleState.downloadState.isDownloading
+
+        guard !isDownloading else {
+            return
+        }
+        
+        recycleState.downloadState = .downloading(progress: 0)
+        
+        //Self.languageDownloads[languageId] = languageDownloadWithAnimateDownloadProgress // TODO: What to do with reference. ~Levi
+        
+        Task {
+            
+            do {
+                
+                for try await progress in downloadToolLanguageUseCase.execute(languageId: languageId) {
+                    
+                    recycleState.downloadState = .downloading(progress: progress)
+                }
+                
+                recycleState.downloadState = .downloaded
+            }
+            catch let error {
+                
+                recycleState.downloadError = error
+                recycleState.downloadError = nil
+                recycleState.downloadState = .notDownloaded
+            }
+        }
+        
+        
+        
+        // TODO: Implement. ~Levi
+        
+        /*
         let isDownloading: Bool = recycleState.downloadState.isDownloading
 
         guard !isDownloading else {
@@ -156,7 +195,7 @@ extension DownloadableLanguageItemViewModel {
                 
                 recycleState.downloadState = .downloading(progress: progress)
             }
-            .store(in: &backgroundCancellables)
+            .store(in: &backgroundCancellables)*/
     }
 }
 

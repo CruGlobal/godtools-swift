@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class LaunchCountCache {
+final class LaunchCountCache {
     
     private let userDefaults: UserDefaults = UserDefaults.standard
     

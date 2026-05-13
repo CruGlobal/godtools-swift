@@ -20,11 +20,19 @@ final class ShareToolQRCodeUseCase {
     
     func execute(toolId: String, toolLanguageId: String, pageNumber: Int) -> AnyPublisher<ShareToolQRCodeDomainModel, Error> {
         
-        let urlString: String? = getShareToolUrl.getUrl(
-            toolId: toolId,
-            toolLanguageId: toolLanguageId,
-            pageNumber: pageNumber
-        )
+        let urlString: String?
+        
+        do {
+            urlString = try getShareToolUrl.getUrl(
+                toolId: toolId,
+                toolLanguageId: toolLanguageId,
+                pageNumber: pageNumber
+            )
+        }
+        catch let error {
+            return Fail(error: error)
+                .eraseToAnyPublisher()
+        }
         
         guard let urlString = urlString, !urlString.isEmpty else {
             

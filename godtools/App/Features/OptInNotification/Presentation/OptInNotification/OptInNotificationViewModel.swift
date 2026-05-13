@@ -28,7 +28,7 @@ final class OptInNotificationViewModel: ObservableObject {
 
     private weak var flowDelegate: FlowDelegate?
 
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var appLanguage = AppLanguageDomainModel.english
     
     @Published private(set) var strings = OptInNotificationStringsDomainModel.emptyValue
     @Published private(set) var notificationsActionTitle: String = ""
@@ -42,36 +42,35 @@ final class OptInNotificationViewModel: ObservableObject {
 
         getCurrentAppLanguageUseCase
             .execute()
-            .assign(to: &$appLanguage)
-
-        $appLanguage
-            .dropFirst()
-            .map { appLanguage in
-                getOptInNotificationStringsUseCase
-                    .execute(appLanguage: appLanguage)
-            }
-            .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: OptInNotificationStringsDomainModel) in
-                     
-                self?.strings = strings
-                
-                let actionTitle: String
-                
-                switch notificationPromptType {
-                case .allow:
-                    actionTitle = strings.allowNotificationsActionTitle
-                case .settings:
-                    actionTitle = strings.notificationSettingsActionTitle
-                }
-                
-                self?.notificationsActionTitle = actionTitle
+            .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
             }
             .store(in: &cancellables)
     }
 
     deinit {
         print("x deinit: \(type(of: self))")
+    }
+    
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+        
+        let strings = getOptInNotificationStringsUseCase
+            .execute(appLanguage: appLanguage)
+        
+        let actionTitle: String
+        
+        switch notificationPromptType {
+        case .allow:
+            actionTitle = strings.allowNotificationsActionTitle
+        case .settings:
+            actionTitle = strings.notificationSettingsActionTitle
+        }
+        
+        self.strings = strings
+        
+        notificationsActionTitle = actionTitle
     }
 }
 
