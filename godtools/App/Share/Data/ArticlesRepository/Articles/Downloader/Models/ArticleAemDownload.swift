@@ -19,4 +19,11 @@ struct ArticleAemDownload: Sendable {
             errors: errors ?? self.errors
         )
     }
+    
+    func copyByAppendingErrors(errors: [Error]) -> ArticleAemDownload {
+        return ArticleAemDownload(
+            aemDataObjects: aemDataObjects,
+            errors: self.errors + errors
+        )
+    }
 }

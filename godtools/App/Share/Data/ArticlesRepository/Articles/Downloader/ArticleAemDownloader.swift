@@ -23,28 +23,60 @@ final class ArticleAemDownloader {
     
     func download(aemUris: [String], downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority) async -> ArticleAemDownload {
         
+        let results: [DownloadArticleAemResult] = await downloadAemUris(
+            aemUris: aemUris,
+            downloadCachePolicy: downloadCachePolicy,
+            requestPriority: requestPriority
+        )
+        
         var aemDataObjects: [ArticleAemData] = Array()
         var errors: [Error] = Array()
         
-        for aemUri in aemUris {
+        for result in results {
             
-            do {
-                
-                let aemData: ArticleAemData = try await downloadAemUri(
-                    aemUri: aemUri,
-                    downloadCachePolicy: downloadCachePolicy,
-                    requestPriority: requestPriority
-                )
-                
-                aemDataObjects.append(aemData)
+            if let aemDataObject = result.data {
+                aemDataObjects.append(aemDataObject)
             }
-            catch let error {
-                
+            
+            if let error = result.error {
                 errors.append(error)
             }
         }
         
-        return ArticleAemDownload(aemDataObjects: aemDataObjects, errors: errors)
+        return ArticleAemDownload(
+            aemDataObjects: aemDataObjects,
+            errors: errors
+        )
+    }
+    
+    private func downloadAemUris(aemUris: [String], downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority) async -> [DownloadArticleAemResult] {
+        
+        await withTaskGroup(of: DownloadArticleAemResult.self) { group in
+            
+            for aemUri in aemUris {
+                group.addTask {
+                    do {
+                        let aemData: ArticleAemData = try await self.downloadAemUri(
+                            aemUri: aemUri,
+                            downloadCachePolicy: downloadCachePolicy,
+                            requestPriority: requestPriority
+                        )
+                        return DownloadArticleAemResult(data: aemData, error: nil)
+                    }
+                    catch let error {
+                        return DownloadArticleAemResult(data: nil, error: error)
+                    }
+                }
+            }
+            
+            var results: [DownloadArticleAemResult] = Array()
+            
+            for await result in group {
+                results.append(result)
+            }
+            
+            return results
+        }
     }
     
     private func downloadAemUri(aemUri: String, downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority) async throws -> ArticleAemData {
