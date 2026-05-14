@@ -18,7 +18,6 @@ class DownloadableLanguageItemViewModel: ObservableObject {
     
     private static var inMemoryStateForRecycle: [LanguageId: DownloadableLanguageItemRecycleState] = Dictionary()
     private static var languageDownloads: [LanguageId: AnimateDownloadProgress] = Dictionary()
-    private static var languageDownloadTasks: [LanguageId: Task<Void, Error>] = Dictionary()
     private static var resetIsMarkedForRemovalTimers: [LanguageId: SwiftUITimer] = Dictionary()
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     
