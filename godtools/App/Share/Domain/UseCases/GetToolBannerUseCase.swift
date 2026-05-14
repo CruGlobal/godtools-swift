@@ -13,21 +13,22 @@ import Combine
 final class GetToolBannerUseCase {
     
     private let attachmentsRepository: AttachmentsRepository
-            
+    
     init(attachmentsRepository: AttachmentsRepository) {
         
         self.attachmentsRepository = attachmentsRepository
     }
     
-    @MainActor func execute(attachmentId: String) async throws -> Image? {
+    @MainActor func execute(attachmentId: String) async throws -> Data? {
         
-        if let cachedImage = try attachmentsRepository.getAttachment(id: attachmentId)?.getImage() {
-            return cachedImage
+
+        if let cachedImageData = try attachmentsRepository.getAttachment(id: attachmentId)?.getImageData() {
+            return cachedImageData
         }
         
         return try await attachmentsRepository.getAttachmentFromCacheElseRemote(
             id: attachmentId,
             requestPriority: .high
-        )?.getImage()
+        )?.getImageData()
     }
 }

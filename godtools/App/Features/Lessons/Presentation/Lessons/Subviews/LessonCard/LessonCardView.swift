@@ -110,7 +110,8 @@ struct LessonCardView_Previews: PreviewProvider {
         
         let viewModel = LessonCardViewModel(
             lessonListItem: lessonListItem,
-            getToolBannerUseCase: appDiContainer.domainLayer.getToolBannerUseCase()
+            getToolBannerUseCase: appDiContainer.domainLayer.getToolBannerUseCase(),
+            inMemoryDataCache: appDiContainer.dataLayer.getSharedInMemoryDataCache()
         )
         
         GeometryReader { geometry in
