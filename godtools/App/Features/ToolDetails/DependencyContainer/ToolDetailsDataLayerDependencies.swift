@@ -1,14 +1,14 @@
 //
-//  TutorialFeatureDataLayerDependencies.swift
+//  ToolDetailsDataLayerDependencies.swift
 //  godtools
 //
-//  Created by Levi Eggert on 11/2/23.
+//  Created by Levi Eggert on 9/26/23.
 //  Copyright © 2023 Cru. All rights reserved.
 //
 
 import Foundation
 
-final class TutorialFeatureDataLayerDependencies {
+final class ToolDetailsDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     

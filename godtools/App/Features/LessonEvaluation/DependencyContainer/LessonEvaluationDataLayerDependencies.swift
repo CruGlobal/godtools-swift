@@ -1,5 +1,5 @@
 //
-//  LessonEvaluationFeatureDataLayerDependencies.swift
+//  LessonEvaluationDataLayerDependencies.swift
 //  godtools
 //
 //  Created by Levi Eggert on 10/25/23.
@@ -9,7 +9,7 @@
 import Foundation
 import RepositorySync
 
-final class LessonEvaluationFeatureDataLayerDependencies {
+final class LessonEvaluationDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     

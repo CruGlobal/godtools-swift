@@ -1,5 +1,5 @@
 //
-//  ToolScreenShareQRCodeFeatureDomainLayerDependencies.swift
+//  ToolScreenShareQRCodeDomainLayerDependencies.swift
 //  godtools
 //
 //  Created by Levi Eggert on 6/13/25.
@@ -8,13 +8,13 @@
 
 import Foundation
 
-final class ToolScreenShareQRCodeFeatureDomainLayerDependencies {
+final class ToolScreenShareQRCodeDomainLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     private let coreDomainLayer: AppDomainLayerDependencies
-    private let dataLayer: ToolScreenShareQRCodeFeatureDataLayerDependencies
+    private let dataLayer: ToolScreenShareQRCodeDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, dataLayer: ToolScreenShareQRCodeFeatureDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, dataLayer: ToolScreenShareQRCodeDataLayerDependencies) {
         
         self.coreDataLayer = coreDataLayer
         self.coreDomainLayer = coreDomainLayer

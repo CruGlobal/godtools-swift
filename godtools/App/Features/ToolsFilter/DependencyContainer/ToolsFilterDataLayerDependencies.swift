@@ -1,5 +1,5 @@
 //
-//  ToolsFilterFeatureDataLayerDependencies.swift
+//  ToolsFilterDataLayerDependencies.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/17/23.
@@ -9,7 +9,7 @@
 import Foundation
 import RepositorySync
 
-final class ToolsFilterFeatureDataLayerDependencies {
+final class ToolsFilterDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     

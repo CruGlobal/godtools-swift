@@ -1,14 +1,14 @@
 //
-//  LessonsFeatureDataLayerDependencies.swift
+//  ToolScreenShareQRCodeDataLayerDependencies.swift
 //  godtools
 //
-//  Created by Levi Eggert on 10/2/23.
-//  Copyright © 2023 Cru. All rights reserved.
+//  Created by Levi Eggert on 6/13/25.
+//  Copyright © 2025 Cru. All rights reserved.
 //
 
 import Foundation
 
-final class LessonsFeatureDataLayerDependencies {
+final class ToolScreenShareQRCodeDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     

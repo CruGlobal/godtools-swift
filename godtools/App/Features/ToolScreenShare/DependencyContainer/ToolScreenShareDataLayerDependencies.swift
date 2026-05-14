@@ -1,5 +1,5 @@
 //
-//  ToolScreenShareFeatureDataLayerDependencies.swift
+//  ToolScreenShareDataLayerDependencies.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/6/23.
@@ -9,7 +9,7 @@
 import Foundation
 import RepositorySync
 
-final class ToolScreenShareFeatureDataLayerDependencies {
+final class ToolScreenShareDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     

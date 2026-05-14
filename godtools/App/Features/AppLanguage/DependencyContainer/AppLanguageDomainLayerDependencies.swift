@@ -1,5 +1,5 @@
 //
-//  AppLanguageFeatureDomainLayerDependencies.swift
+//  AppLanguageDomainLayerDependencies.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/26/23.
@@ -8,13 +8,13 @@
 
 import Foundation
 
-final class AppLanguageFeatureDomainLayerDependencies {
+final class AppLanguageDomainLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     private let coreDomainLayer: AppDomainLayerDependencies
-    private let dataLayer: AppLanguageFeatureDataLayerDependencies
+    private let dataLayer: AppLanguageDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, dataLayer: AppLanguageFeatureDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, dataLayer: AppLanguageDataLayerDependencies) {
         
         self.coreDataLayer = coreDataLayer
         self.coreDomainLayer = coreDomainLayer

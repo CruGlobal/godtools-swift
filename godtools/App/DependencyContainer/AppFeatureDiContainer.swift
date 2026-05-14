@@ -11,18 +11,18 @@ import Foundation
 final class AppFeatureDiContainer {
     
     let account: AccountDiContainer
-    let appLanguage: AppLanguageFeatureDiContainer
+    let appLanguage: AppLanguageDiContainer
     let articles: ArticlesDiContainer
     let dashboard: DashboardDiContainer
     let deferredDeepLink: DeferredDeepLinkDiContainer
-    let downloadToolProgress: DownloadToolProgressFeatureDiContainer
+    let downloadToolProgress: DownloadToolProgressDiContainer
     let favorites: FavoritesDiContainer
     let featuredLessons: FeaturedLessonsDiContainer
     let globalActivity: GlobalActivityDiContainer
     let learnToShareTool: LearnToShareToolDiContainer
-    let lessonEvaluation: LessonEvaluationFeatureDiContainer
+    let lessonEvaluation: LessonEvaluationDiContainer
     let lessonFilter: LessonFilterDiContainer
-    let lessons: LessonsFeatureDiContainer
+    let lessons: LessonsDiContainer
     let lessonProgress: UserLessonProgressDiContainer
     let lessonSwipeTutorial: LessonSwipeTutorialDiContainer
     let menu: MenuDiContainer
@@ -34,30 +34,30 @@ final class AppFeatureDiContainer {
     let shareGodTools: ShareGodToolsDiContainer
     let shareTool: ShareToolDiContainer
     let spotlightTools: SpotlightToolsDiContainer
-    let toolDetails: ToolDetailsFeatureDiContainer
+    let toolDetails: ToolDetailsDiContainer
     let tools: ToolsDiContainer
-    let toolScreenShare: ToolScreenShareFeatureDiContainer
-    let toolScreenShareQRCode: ToolScreenShareQRCodeFeatureDiContainer
+    let toolScreenShare: ToolScreenShareDiContainer
+    let toolScreenShareQRCode: ToolScreenShareQRCodeDiContainer
     let toolSettings: ToolSettingsDiContainer
-    let toolsFilter: ToolsFilterFeatureDiContainer
+    let toolsFilter: ToolsFilterDiContainer
     let toolShortcutLinks: ToolShortcutLinksDiContainer
-    let tutorial: TutorialFeatureDiContainer
+    let tutorial: TutorialDiContainer
     let userActivity: UserActivityDiContainer
     
     init(
         account: AccountDiContainer,
-        appLanguage: AppLanguageFeatureDiContainer,
+        appLanguage: AppLanguageDiContainer,
         articles: ArticlesDiContainer,
         dashboard: DashboardDiContainer,
         deferredDeepLink: DeferredDeepLinkDiContainer,
-        downloadToolProgress: DownloadToolProgressFeatureDiContainer,
+        downloadToolProgress: DownloadToolProgressDiContainer,
         favorites: FavoritesDiContainer,
         featuredLessons: FeaturedLessonsDiContainer,
         globalActivity: GlobalActivityDiContainer,
         learnToShareTool: LearnToShareToolDiContainer,
-        lessonEvaluation: LessonEvaluationFeatureDiContainer,
+        lessonEvaluation: LessonEvaluationDiContainer,
         lessonFilter: LessonFilterDiContainer,
-        lessons: LessonsFeatureDiContainer,
+        lessons: LessonsDiContainer,
         lessonProgress: UserLessonProgressDiContainer,
         lessonSwipeTutorial: LessonSwipeTutorialDiContainer,
         menu: MenuDiContainer,
@@ -69,14 +69,14 @@ final class AppFeatureDiContainer {
         shareGodTools: ShareGodToolsDiContainer,
         shareTool: ShareToolDiContainer,
         spotlightTools: SpotlightToolsDiContainer,
-        toolDetails: ToolDetailsFeatureDiContainer,
+        toolDetails: ToolDetailsDiContainer,
         tools: ToolsDiContainer,
-        toolScreenShare: ToolScreenShareFeatureDiContainer,
-        toolScreenShareQRCode: ToolScreenShareQRCodeFeatureDiContainer,
+        toolScreenShare: ToolScreenShareDiContainer,
+        toolScreenShareQRCode: ToolScreenShareQRCodeDiContainer,
         toolSettings: ToolSettingsDiContainer,
-        toolsFilter: ToolsFilterFeatureDiContainer,
+        toolsFilter: ToolsFilterDiContainer,
         toolShortcutLinks: ToolShortcutLinksDiContainer,
-        tutorial: TutorialFeatureDiContainer,
+        tutorial: TutorialDiContainer,
         userActivity: UserActivityDiContainer
     ) {
         

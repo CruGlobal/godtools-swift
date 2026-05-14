@@ -1,5 +1,5 @@
 //
-//  LessonsFeatureDomainLayerDependencies.swift
+//  LessonsDomainLayerDependencies.swift
 //  godtools
 //
 //  Created by Levi Eggert on 10/2/23.
@@ -8,14 +8,14 @@
 
 import Foundation
 
-final class LessonsFeatureDomainLayerDependencies {
+final class LessonsDomainLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
-    private let dataLayer: LessonsFeatureDataLayerDependencies
+    private let dataLayer: LessonsDataLayerDependencies
     private let coreDomainlayer: AppDomainLayerDependencies
     private let personalizedToolsDataLayer: PersonalizedToolsDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, dataLayer: LessonsFeatureDataLayerDependencies, coreDomainlayer: AppDomainLayerDependencies, personalizedToolsDataLayer: PersonalizedToolsDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, dataLayer: LessonsDataLayerDependencies, coreDomainlayer: AppDomainLayerDependencies, personalizedToolsDataLayer: PersonalizedToolsDataLayerDependencies) {
         
         self.coreDataLayer = coreDataLayer
         self.dataLayer = dataLayer

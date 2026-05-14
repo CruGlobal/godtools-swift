@@ -1,5 +1,5 @@
 //
-//  DownloadToolProgressFeatureDomainLayerDependencies.swift
+//  DownloadToolProgressDomainLayerDependencies.swift
 //  godtools
 //
 //  Created by Levi Eggert on 10/27/23.
@@ -8,12 +8,12 @@
 
 import Foundation
 
-final class DownloadToolProgressFeatureDomainLayerDependencies {
+final class DownloadToolProgressDomainLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
-    private let dataLayer: DownloadToolProgressFeatureDataLayerDependencies
+    private let dataLayer: DownloadToolProgressDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, dataLayer: DownloadToolProgressFeatureDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, dataLayer: DownloadToolProgressDataLayerDependencies) {
         
         self.coreDataLayer = coreDataLayer
         self.dataLayer = dataLayer

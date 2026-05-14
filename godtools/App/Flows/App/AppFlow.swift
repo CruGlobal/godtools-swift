@@ -122,7 +122,7 @@ final class AppFlow: NSObject, Flow {
                 
                 AppBackgroundState.shared.start(appDiContainer: appDiContainer)
                             
-                ApplicationLayout.shared.configure(appLanguageFeatureDiContainer: appDiContainer.feature.appLanguage)
+                ApplicationLayout.shared.configure(appLanguageDiContainer: appDiContainer.feature.appLanguage)
             }
             
             switch launchState {

@@ -1,5 +1,5 @@
 //
-//  ToolsFilterFeatureDomainLayerDependencies.swift
+//  ToolsFilterDomainLayerDependencies.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/17/23.
@@ -8,13 +8,13 @@
 
 import Foundation
 
-final class ToolsFilterFeatureDomainLayerDependencies {
+final class ToolsFilterDomainLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     private let coreDomainLayer: AppDomainLayerDependencies
-    private let dataLayer: ToolsFilterFeatureDataLayerDependencies
+    private let dataLayer: ToolsFilterDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, dataLayer: ToolsFilterFeatureDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, dataLayer: ToolsFilterDataLayerDependencies) {
         
         self.coreDataLayer = coreDataLayer
         self.coreDomainLayer = coreDomainLayer
@@ -88,7 +88,7 @@ final class ToolsFilterFeatureDomainLayerDependencies {
 
 // MARK: - Supporting
 
-extension ToolsFilterFeatureDomainLayerDependencies {
+extension ToolsFilterDomainLayerDependencies {
     
     private func getToolFilterCategory() -> GetToolFilterCategory {
         return GetToolFilterCategory(

@@ -1,5 +1,5 @@
 //
-//  AppLanguageFeatureDataLayerDependencies.swift
+//  AppLanguageDataLayerDependencies.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/26/23.
@@ -9,7 +9,7 @@
 import Foundation
 import RepositorySync
 
-final class AppLanguageFeatureDataLayerDependencies {
+final class AppLanguageDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     

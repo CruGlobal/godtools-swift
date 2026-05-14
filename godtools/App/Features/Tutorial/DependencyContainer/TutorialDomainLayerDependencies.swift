@@ -1,5 +1,5 @@
 //
-//  TutorialFeatureDomainLayerDependencies.swift
+//  TutorialDomainLayerDependencies.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/2/23.
@@ -8,12 +8,12 @@
 
 import Foundation
 
-final class TutorialFeatureDomainLayerDependencies {
+final class TutorialDomainLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
-    private let dataLayer: TutorialFeatureDataLayerDependencies
+    private let dataLayer: TutorialDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, dataLayer: TutorialFeatureDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, dataLayer: TutorialDataLayerDependencies) {
         
         self.coreDataLayer = coreDataLayer
         self.dataLayer = dataLayer

@@ -1,5 +1,5 @@
 //
-//  ToolScreenShareFeatureDomainLayerDependencies.swift
+//  ToolScreenShareDomainLayerDependencies.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/6/23.
@@ -8,13 +8,13 @@
 
 import Foundation
 
-final class ToolScreenShareFeatureDomainLayerDependencies {
+final class ToolScreenShareDomainLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     private let coreDomainLayer: AppDomainLayerDependencies
-    private let dataLayer: ToolScreenShareFeatureDataLayerDependencies
+    private let dataLayer: ToolScreenShareDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, dataLayer: ToolScreenShareFeatureDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, dataLayer: ToolScreenShareDataLayerDependencies) {
         
         self.coreDataLayer = coreDataLayer
         self.coreDomainLayer = coreDomainLayer

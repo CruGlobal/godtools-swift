@@ -1,5 +1,5 @@
 //
-//  LessonEvaluationFeatureDomainLayerDependencies.swift
+//  LessonEvaluationDomainLayerDependencies.swift
 //  godtools
 //
 //  Created by Levi Eggert on 10/25/23.
@@ -8,13 +8,13 @@
 
 import Foundation
 
-final class LessonEvaluationFeatureDomainLayerDependencies {
+final class LessonEvaluationDomainLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     private let coreDomainLayer: AppDomainLayerDependencies
-    private let dataLayer: LessonEvaluationFeatureDataLayerDependencies
+    private let dataLayer: LessonEvaluationDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, dataLayer: LessonEvaluationFeatureDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, dataLayer: LessonEvaluationDataLayerDependencies) {
         
         self.coreDataLayer = coreDataLayer
         self.coreDomainLayer = coreDomainLayer

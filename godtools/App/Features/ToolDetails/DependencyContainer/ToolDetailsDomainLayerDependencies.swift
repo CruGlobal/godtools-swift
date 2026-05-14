@@ -1,5 +1,5 @@
 //
-//  ToolDetailsFeatureDomainLayerDependencies.swift
+//  ToolDetailsDomainLayerDependencies.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/26/23.
@@ -8,13 +8,13 @@
 
 import Foundation
 
-final class ToolDetailsFeatureDomainLayerDependencies {
+final class ToolDetailsDomainLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     private let coreDomainLayer: AppDomainLayerDependencies
-    private let dataLayer: ToolDetailsFeatureDataLayerDependencies
+    private let dataLayer: ToolDetailsDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, dataLayer: ToolDetailsFeatureDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, dataLayer: ToolDetailsDataLayerDependencies) {
         
         self.coreDataLayer = coreDataLayer
         self.coreDomainLayer = coreDomainLayer
