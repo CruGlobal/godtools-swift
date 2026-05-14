@@ -21,7 +21,7 @@ final class ToolDownloaderGetDataToDownload {
         self.translationsRepository = translationsRepository
     }
     
-    func getData(tools: [DownloadToolDataModel]) throws -> ToolDownloaderDataToDownload {
+    func getData(tools: [DownloadToolData]) throws -> ToolDownloaderDataToDownload {
         
         var nonArticleTranslations: [TranslationDataModel] = Array()
         var articleTranslations: [TranslationDataModel] = Array()

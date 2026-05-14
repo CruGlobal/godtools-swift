@@ -29,7 +29,7 @@ class ToolCardViewModel: ObservableObject {
     @Published private(set) var detailsButtonTitle: String = ""
     @Published private(set) var openButtonTitle: String = ""
             
-    init(tool: ToolListItemDomainModelInterface, accessibility: AccessibilityStrings.Button, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getToolBannerUseCase: GetToolBannerUseCase) {
+    init(tool: ToolListItemDomainModelInterface, accessibility: AccessibilityStrings.Button, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getToolBannerUseCase: GetToolBannerUseCase, inMemoryDataCache: InMemoryDataCache) {
         
         self.tool = tool
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
@@ -58,18 +58,33 @@ class ToolCardViewModel: ObservableObject {
         
         let attachmentId: String = tool.bannerImageId
         
-        getBannerImageTask = Task {
+        if let imageData = inMemoryDataCache.getData(id: attachmentId), let image = imageData.toImage() {
             
-            let image = try await getToolBannerUseCase
-                .execute(
-                    attachmentId: attachmentId
-                )
+            banner = getBanner(image: image, attachmentId: attachmentId)
+        }
+        else {
             
-            banner = OptionalImageData(image: image, imageIdForAnimationChange: attachmentId)
+            getBannerImageTask = Task {
+                
+                let imageData = try await getToolBannerUseCase
+                    .execute(
+                        attachmentId: attachmentId
+                    )
+                
+                if let imageData = imageData {
+                    inMemoryDataCache.cacheData(id: attachmentId, data: imageData)
+                }
+                
+                banner = getBanner(image: imageData?.toImage(), attachmentId: attachmentId)
+            }
         }
     }
     
     deinit {
         getBannerImageTask?.cancel()
+    }
+    
+    private func getBanner(image: Image?, attachmentId: String) -> OptionalImageData {
+        return OptionalImageData(image: image, imageIdForAnimationChange: attachmentId)
     }
 }

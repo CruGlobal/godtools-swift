@@ -29,7 +29,7 @@ class ToolDetailsVersionsCardViewModel: ObservableObject {
     
     @Published private(set) var banner: OptionalImageData?
     
-    init(toolVersion: ToolVersionDomainModel, getToolBannerUseCase: GetToolBannerUseCase, isSelected: Bool) {
+    init(toolVersion: ToolVersionDomainModel, getToolBannerUseCase: GetToolBannerUseCase, inMemoryDataCache: InMemoryDataCache, isSelected: Bool) {
         
         self.toolVersion = toolVersion
         self.isSelected = isSelected
@@ -44,18 +44,33 @@ class ToolDetailsVersionsCardViewModel: ObservableObject {
         
         let attachmentId: String = toolVersion.bannerImageId
         
-        getBannerImageTask = Task {
+        if let imageData = inMemoryDataCache.getData(id: attachmentId), let image = imageData.toImage() {
             
-            let image = try await getToolBannerUseCase
-                .execute(
-                    attachmentId: attachmentId
-                )
+            banner = getBanner(image: image, attachmentId: attachmentId)
+        }
+        else {
             
-            banner = OptionalImageData(image: image, imageIdForAnimationChange: attachmentId)
+            getBannerImageTask = Task {
+                
+                let imageData = try await getToolBannerUseCase
+                    .execute(
+                        attachmentId: attachmentId
+                    )
+                
+                if let imageData = imageData {
+                    inMemoryDataCache.cacheData(id: attachmentId, data: imageData)
+                }
+                
+                banner = getBanner(image: imageData?.toImage(), attachmentId: attachmentId)
+            }
         }
     }
     
     deinit {
         getBannerImageTask?.cancel()
+    }
+    
+    private func getBanner(image: Image?, attachmentId: String) -> OptionalImageData {
+        return OptionalImageData(image: image, imageIdForAnimationChange: attachmentId)
     }
 }

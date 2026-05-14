@@ -12,6 +12,11 @@ import UIKit
 
 extension AttachmentDataModel {
     
+    func getImageData() -> Data? {
+        
+        return storedAttachment?.data
+    }
+    
     func getImage() -> Image? {
         
         guard let uiImage = getUIImage() else {

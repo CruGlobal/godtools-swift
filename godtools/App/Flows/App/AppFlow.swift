@@ -122,7 +122,7 @@ final class AppFlow: NSObject, Flow {
                 
                 AppBackgroundState.shared.start(appDiContainer: appDiContainer)
                             
-                ApplicationLayout.shared.configure(appLanguageFeatureDiContainer: appDiContainer.feature.appLanguage)
+                ApplicationLayout.shared.configure(appLanguageDiContainer: appDiContainer.feature.appLanguage)
             }
             
             switch launchState {
@@ -131,7 +131,6 @@ final class AppFlow: NSObject, Flow {
                 
                 let loadingView: UIView = attachLaunchedFromBackgroundLoadingView()
                 
-                loadInitialData()
                 countAppSessionLaunch()
                 
                 Task {
@@ -169,6 +168,8 @@ final class AppFlow: NSObject, Flow {
                         
                         promptForOptInNotificationIfNeeded()
                     }
+                    
+                    loadInitialData()
                 }
                 
             case .fromBackgroundState(let secondsInBackground):

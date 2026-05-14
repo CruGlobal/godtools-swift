@@ -26,7 +26,7 @@ class LessonCardViewModel: ObservableObject {
     @Published private(set) var attachmentsDownloadProgressValue: Double = 0
     @Published private(set) var translationDownloadProgressValue: Double = 0
     
-    init(lessonListItem: LessonListItemDomainModelInterface, getToolBannerUseCase: GetToolBannerUseCase) {
+    init(lessonListItem: LessonListItemDomainModelInterface, getToolBannerUseCase: GetToolBannerUseCase, inMemoryDataCache: InMemoryDataCache) {
         
         self.lessonListItem = lessonListItem
         self.title = lessonListItem.name
@@ -51,18 +51,33 @@ class LessonCardViewModel: ObservableObject {
         
         let attachmentId: String = lessonListItem.bannerImageId
         
-        getBannerImageTask = Task {
+        if let imageData = inMemoryDataCache.getData(id: attachmentId), let image = imageData.toImage() {
             
-            let image = try await getToolBannerUseCase
-                .execute(
-                    attachmentId: attachmentId
-                )
+            banner = getBanner(image: image, attachmentId: attachmentId)
+        }
+        else {
             
-            banner = OptionalImageData(image: image, imageIdForAnimationChange: attachmentId)
+            getBannerImageTask = Task {
+                
+                let imageData = try await getToolBannerUseCase
+                    .execute(
+                        attachmentId: attachmentId
+                    )
+                
+                if let imageData = imageData {
+                    inMemoryDataCache.cacheData(id: attachmentId, data: imageData)
+                }
+                
+                banner = getBanner(image: imageData?.toImage(), attachmentId: attachmentId)
+            }
         }
     }
     
     deinit {
         getBannerImageTask?.cancel()
+    }
+    
+    private func getBanner(image: Image?, attachmentId: String) -> OptionalImageData {
+        return OptionalImageData(image: image, imageIdForAnimationChange: attachmentId)
     }
 }
