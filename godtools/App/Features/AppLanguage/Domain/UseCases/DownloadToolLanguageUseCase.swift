@@ -11,18 +11,30 @@ import Combine
 
 final class DownloadToolLanguageUseCase {
     
-    private let resourcesRepository: ResourcesRepository
     private let toolLanguageDownloader: ToolLanguageDownloader
     
-    init(resourcesRepository: ResourcesRepository, toolLanguageDownloader: ToolLanguageDownloader) {
+    init(toolLanguageDownloader: ToolLanguageDownloader) {
         
-        self.resourcesRepository = resourcesRepository
         self.toolLanguageDownloader = toolLanguageDownloader
     }
     
-    func execute(languageId: String) throws -> AsyncThrowingStream<Double, Error> {
+    @MainActor func execute(languageId: String) -> AnyPublisher<Double, Error> {
         
-        return try toolLanguageDownloader
-            .downloadToolLanguage(languageId: languageId)
+        Task {
+            try await toolLanguageDownloader
+                .downloadToolLanguage(languageId: languageId)
+        }
+        
+        return toolLanguageDownloader
+            .observeCollectionChanges()
+            .tryMap { _ in
+                
+                let toolLanguageDownload: ToolLanguageDownloadDataModel? = try self.toolLanguageDownloader.getToolLanguageDownload(
+                    languageId: languageId
+                )
+                
+                return toolLanguageDownload?.downloadProgress ?? 0
+            }
+            .eraseToAnyPublisher()
     }
 }

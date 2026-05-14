@@ -87,7 +87,30 @@ final class AppLanguageDataLayerDependencies {
     }
     
     func getToolLanguageDownloader() -> ToolLanguageDownloader {
+        
+        let persistence: any Persistence<ToolLanguageDownloadDataModel, ToolLanguageDownloadDataModel>
+        
+        if #available(iOS 17.4, *), let database = coreDataLayer.getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                dataModelMapping: SwiftToolLanguageDownloadMapping()
+            )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                database: coreDataLayer.getSharedRealmDatabase(),
+                dataModelMapping: RealmToolLanguageDownloadMapping()
+            )
+        }
+        
+        let cache = ToolLanguageDownloadCache(
+            persistence: persistence
+        )
+        
         return ToolLanguageDownloader(
+            cache: cache,
             resourcesRepository: coreDataLayer.getResourcesRepository(),
             languagesRepository: coreDataLayer.getLanguagesRepository(),
             toolDownloader: coreDataLayer.getToolDownloader(),
