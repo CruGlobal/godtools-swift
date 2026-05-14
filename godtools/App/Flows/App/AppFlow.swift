@@ -131,7 +131,6 @@ final class AppFlow: NSObject, Flow {
                 
                 let loadingView: UIView = attachLaunchedFromBackgroundLoadingView()
                 
-                loadInitialData()
                 countAppSessionLaunch()
                 
                 Task {
@@ -169,6 +168,8 @@ final class AppFlow: NSObject, Flow {
                         
                         promptForOptInNotificationIfNeeded()
                     }
+                    
+                    loadInitialData()
                 }
                 
             case .fromBackgroundState(let secondsInBackground):
