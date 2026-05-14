@@ -155,7 +155,8 @@ struct LessonsView_Preview: PreviewProvider {
             getUserLessonFiltersUseCase: appDiContainer.feature.lessonFilter.domainLayer.getUserLessonFiltersUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
-            getToolBannerUseCase: appDiContainer.domainLayer.getToolBannerUseCase()
+            getToolBannerUseCase: appDiContainer.domainLayer.getToolBannerUseCase(),
+            inMemoryDataCache: appDiContainer.dataLayer.getSharedInMemoryDataCache()
         )
         
         return viewModel

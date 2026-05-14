@@ -54,7 +54,8 @@ final class DashboardPresentationLayerDependencies {
             getUserLessonFiltersUseCase: appDiContainer.feature.lessonFilter.domainLayer.getUserLessonFiltersUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
-            getToolBannerUseCase: appDiContainer.domainLayer.getToolBannerUseCase()
+            getToolBannerUseCase: appDiContainer.domainLayer.getToolBannerUseCase(),
+            inMemoryDataCache: appDiContainer.dataLayer.getSharedInMemoryDataCache()
         )
     }
     
@@ -68,6 +69,7 @@ final class DashboardPresentationLayerDependencies {
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToolIsFavoritedUseCase(),
             getToolBannerUseCase: appDiContainer.domainLayer.getToolBannerUseCase(),
+            inMemoryDataCache: appDiContainer.dataLayer.getSharedInMemoryDataCache(),
             disableOptInOnboardingBannerUseCase: appDiContainer.domainLayer.getDisableOptInOnboardingBannerUseCase(),
             getFeaturedLessonsUseCase: appDiContainer.feature.featuredLessons.domainLayer.getFeaturedLessonsUseCase(),
             getOptInOnboardingBannerEnabledUseCase: appDiContainer.domainLayer.getOptInOnboardingBannerEnabledUseCase(),
@@ -94,7 +96,8 @@ final class DashboardPresentationLayerDependencies {
             toggleToolFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToggleToolFavoritedUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
-            getToolBannerUseCase: appDiContainer.domainLayer.getToolBannerUseCase()
+            getToolBannerUseCase: appDiContainer.domainLayer.getToolBannerUseCase(),
+            inMemoryDataCache: appDiContainer.dataLayer.getSharedInMemoryDataCache()
         )
     }
 }

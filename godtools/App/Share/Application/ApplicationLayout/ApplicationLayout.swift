@@ -38,7 +38,7 @@ class ApplicationLayout: ObservableObject {
         semanticContentAttributeSubject = CurrentValueSubject(currentDirection.semanticContentAttribute)
     }
         
-    func configure(appLanguageFeatureDiContainer: AppLanguageFeatureDiContainer) {
+    func configure(appLanguageDiContainer: AppLanguageDiContainer) {
         
         guard !isConfigured else {
             return
@@ -46,13 +46,13 @@ class ApplicationLayout: ObservableObject {
         
         isConfigured = true
         
-        let getCurrentAppLanguageUseCase = appLanguageFeatureDiContainer.domainLayer.getCurrentAppLanguageUseCase()
+        let getCurrentAppLanguageUseCase = appLanguageDiContainer.domainLayer.getCurrentAppLanguageUseCase()
         
         getCurrentAppLanguageUseCase
             .execute()
             .assign(to: &$appLanguage)
         
-        let getInterfaceLayoutDirectionUseCase = appLanguageFeatureDiContainer.domainLayer.getInterfaceLayoutDirectionUseCase()
+        let getInterfaceLayoutDirectionUseCase = appLanguageDiContainer.domainLayer.getInterfaceLayoutDirectionUseCase()
 
         $appLanguage
             .dropFirst()

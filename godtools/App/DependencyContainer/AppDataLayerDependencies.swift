@@ -17,6 +17,7 @@ final class AppDataLayerDependencies {
     private let sharedAppConfig: AppConfigInterface
     private let sharedUrlSessionPriority: URLSessionPriority = URLSessionPriority()
     private let sharedAnalytics: AnalyticsContainer
+    private let sharedInMemoryDataCache: InMemoryDataCache = InMemoryDataCache()
     
     private lazy var sharedUserCountersSync: UserCountersSync = {
         
@@ -469,6 +470,10 @@ final class AppDataLayerDependencies {
     
     func getSharedFirebaseMessaging() -> FirebaseMessaging {
         return FirebaseMessaging.shared
+    }
+    
+    func getSharedInMemoryDataCache() -> InMemoryDataCache {
+        return sharedInMemoryDataCache
     }
     
     func getSharedUrlSessionPriority() -> URLSessionPriority {

@@ -26,7 +26,19 @@ final class ToolDownloader {
         self.getToolDataToDownload = getToolDataToDownload
     }
     
-    private func downloadToolsWithProgressClosure(tools: [DownloadToolDataModel], requestPriority: RequestPriority, onProgress: ((_ dataModel: ToolDownloaderDataModel) -> Void), onComplete: (() -> Void)) async throws {
+    func downloadTools(tools: [DownloadToolData], requestPriority: RequestPriority) async throws {
+        
+        try await downloadToolsWithProgressClosure(
+            tools: tools,
+            requestPriority: requestPriority,
+            onProgress: { _ in
+            },
+            onComplete: {
+                
+            })
+    }
+    
+    func downloadToolsWithProgressClosure(tools: [DownloadToolData], requestPriority: RequestPriority, onProgress: ((_ progress: Double) -> Void), onComplete: (() -> Void)) async throws {
         
         let downloadData: ToolDownloaderDataToDownload = try getToolDataToDownload.getData(tools: tools)
         
@@ -34,51 +46,39 @@ final class ToolDownloader {
         
         let totalNumberOfDownloads: Int = downloadData.nonArticleTranslations.count + downloadData.attachments.count + downloadData.articleTranslations.count
         
-        for translation in downloadData.nonArticleTranslations {
+        try await downloadTranslations(translations: downloadData.nonArticleTranslations, requestPriority: requestPriority, onDownloaded: {
             
-            _ = try await translationsRepository.downloadAndCacheTranslationFiles(
-                translation: translation,
-                requestPriority: requestPriority
-            )
-            
-            downloadCount += 1
-        }
+            downloadCount = incrementDownloadCount(downloadCount: downloadCount, totalNumberOfDownloads: totalNumberOfDownloads, updateProgress: onProgress)
+        })
         
-        for attachment in downloadData.attachments {
+        try await downloadAttachments(attachments: downloadData.attachments, requestPriority: requestPriority, onDownloaded: {
             
-            _ = try await attachmentsRepository.downloadAndCacheAttachmentDataIfNeeded(
-                attachment: attachment,
-                requestPriority: requestPriority
-            )
+            downloadCount = incrementDownloadCount(downloadCount: downloadCount, totalNumberOfDownloads: totalNumberOfDownloads, updateProgress: onProgress)
+        })
+        
+        try await downloadTranslationsAndManifests(translations: downloadData.articleTranslations, requestPriority: requestPriority, onDownloaded: {
             
-            downloadCount += 1
-        }
-
-        for translation in downloadData.articleTranslations {
-         
-            guard let languageCode = translation.languageDataModel?.code else {
-                downloadCount += 1
-                continue
-            }
-            
-            let translationManifestDataModel = try await translationsRepository.getTranslationManifestFromCacheElseRemote(
-                translation: translation,
-                manifestParserType: .manifestOnly,
-                requestPriority: requestPriority,
-                includeRelatedFiles: true,
-                shouldFallbackToLatestDownloadedTranslationIfRemoteFails: false
-            )
-
-            _ = try await articleManifestAemRepository.downloadAndCacheManifestAemUris(
-                manifest: translationManifestDataModel.manifest,
-                translationId: translation.id,
-                languageCode: languageCode,
-                downloadCachePolicy: .ignoreCache,
-                requestPriority: requestPriority
-            )
-            
-            downloadCount += 1
-        }
+            downloadCount = incrementDownloadCount(downloadCount: downloadCount, totalNumberOfDownloads: totalNumberOfDownloads, updateProgress: onProgress)
+        })
+               
+        onComplete()
+    }
+    
+    private func incrementDownloadCount(downloadCount: Int, totalNumberOfDownloads: Int, updateProgress: ((_ progress: Double) -> Void)) -> Int {
+        
+        let newDownloadCount: Int = downloadCount + 1
+        
+        let progress: Double = getProgress(
+            downloadCount: newDownloadCount,
+            totalNumberOfDownloads: totalNumberOfDownloads
+        )
+        
+        updateProgress(progress)
+        
+        return newDownloadCount
+    }
+    
+    private func getProgress(downloadCount: Int, totalNumberOfDownloads: Int) -> Double {
         
         let progress: Double
         
@@ -89,56 +89,85 @@ final class ToolDownloader {
             progress = Double(downloadCount) / Double(totalNumberOfDownloads)
         }
         
-        let dataModel = ToolDownloaderDataModel(
-            attachments: downloadData.attachments,
-            progress: progress,
-            translations: downloadData.nonArticleTranslations + downloadData.articleTranslations
-        )
-        
-        onProgress(dataModel)
-        
-        if downloadCount >= totalNumberOfDownloads {
-            onComplete()
-        }
+        return progress
     }
     
-    func downloadToolsStream(tools: [DownloadToolDataModel], requestPriority: RequestPriority) -> AsyncThrowingStream<ToolDownloaderDataModel, Error> {
+    private func downloadTranslations(translations: [TranslationDataModel], requestPriority: RequestPriority, onDownloaded: (() -> Void)) async throws {
+        
+        try await withThrowingTaskGroup(of: Void.self) { group in
+            
+            for translation in translations {
                 
-        return AsyncThrowingStream { continuation in
-           
-            Task {
-                
-                do {
-                
-                    try await downloadToolsWithProgressClosure(
-                        tools: tools,
-                        requestPriority: requestPriority,
-                        onProgress: { (dataModel: ToolDownloaderDataModel) in
-                            
-                            continuation.yield(dataModel)
-                        },
-                        onComplete: {
-                            
-                            continuation.finish(throwing: nil)
-                        })
-                }
-                catch let error {
+                group.addTask {
                     
-                    continuation.finish(throwing: error)
+                    _ = try await self.translationsRepository.downloadAndCacheTranslationFiles(
+                        translation: translation,
+                        requestPriority: requestPriority
+                    )
                 }
+            }
+            
+            for try await _ in group {
+                onDownloaded()
             }
         }
     }
     
-    func downloadTools(tools: [DownloadToolDataModel], requestPriority: RequestPriority) async throws {
+    private func downloadAttachments(attachments: [AttachmentDataModel], requestPriority: RequestPriority, onDownloaded: (() -> Void)) async throws {
         
-        try await downloadToolsWithProgressClosure(
-            tools: tools,
-            requestPriority: requestPriority,
-            onProgress: { _ in
-            },
-            onComplete: {
+        try await withThrowingTaskGroup(of: Void.self) { group in
+            
+            for attachment in attachments {
                 
-            })
+                group.addTask {
+                    
+                    _ = try await self.attachmentsRepository.downloadAndCacheAttachmentDataIfNeeded(
+                        attachment: attachment,
+                        requestPriority: requestPriority
+                    )
+                }
+            }
+            
+            for try await _ in group {
+                onDownloaded()
+            }
+        }
+    }
+    
+    private func downloadTranslationsAndManifests(translations: [TranslationDataModel], requestPriority: RequestPriority, onDownloaded: (() -> Void)) async throws {
+        
+        try await withThrowingTaskGroup(of: Void.self) { group in
+            
+            for translation in translations {
+                
+                guard let languageCode = translation.languageDataModel?.code else {
+                    onDownloaded()
+                    continue
+                }
+                
+                group.addTask {
+
+                    let translationManifestDataModel = try await self.translationsRepository.getTranslationManifestFromCacheElseRemote(
+                        translation: translation,
+                        manifestParserType: .manifestOnly,
+                        requestPriority: requestPriority,
+                        includeRelatedFiles: true,
+                        shouldFallbackToLatestDownloadedTranslationIfRemoteFails: false
+                    )
+
+                    _ = try await self.articleManifestAemRepository.downloadAndCacheManifestAemUris(
+                        manifest: translationManifestDataModel.manifest,
+                        translationId: translation.id,
+                        languageCode: languageCode,
+                        downloadCachePolicy: .ignoreCache,
+                        requestPriority: requestPriority
+                    )
+                }
+            }
+            
+            for try await _ in group {
+                onDownloaded()
+            }
+        }
     }
 }

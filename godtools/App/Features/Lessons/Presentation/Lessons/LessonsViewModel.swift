@@ -23,6 +23,7 @@ final class LessonsViewModel: ObservableObject {
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let getToolBannerUseCase: GetToolBannerUseCase
+    private let inMemoryDataCache: InMemoryDataCache
     
     private var cancellables: Set<AnyCancellable> = Set()
     private var pullToRefreshLessonsTask: Task<Void, Error>?
@@ -48,7 +49,7 @@ final class LessonsViewModel: ObservableObject {
                 !isLoadingLessons
     }
         
-    init(flowDelegate: FlowDelegate, pullToRefreshLessonsUseCase: PullToRefreshLessonsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase, getLessonsStringsUseCase: GetLessonsStringsUseCase, getAllLessonsUseCase: GetAllLessonsUseCase, getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getToolBannerUseCase: GetToolBannerUseCase) {
+    init(flowDelegate: FlowDelegate, pullToRefreshLessonsUseCase: PullToRefreshLessonsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase, getLessonsStringsUseCase: GetLessonsStringsUseCase, getAllLessonsUseCase: GetAllLessonsUseCase, getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getToolBannerUseCase: GetToolBannerUseCase, inMemoryDataCache: InMemoryDataCache) {
 
         self.flowDelegate = flowDelegate
         self.pullToRefreshLessonsUseCase = pullToRefreshLessonsUseCase
@@ -61,6 +62,7 @@ final class LessonsViewModel: ObservableObject {
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.getToolBannerUseCase = getToolBannerUseCase
+        self.inMemoryDataCache = inMemoryDataCache
         
         getCurrentAppLanguageUseCase
             .execute()
@@ -230,7 +232,8 @@ extension LessonsViewModel {
         
         return LessonCardViewModel(
             lessonListItem: lessonListItem,
-            getToolBannerUseCase: getToolBannerUseCase
+            getToolBannerUseCase: getToolBannerUseCase,
+            inMemoryDataCache: inMemoryDataCache
         )
     }
     

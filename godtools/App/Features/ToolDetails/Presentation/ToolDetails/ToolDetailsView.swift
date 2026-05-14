@@ -121,6 +121,7 @@ struct ToolDetailsView_Preview: PreviewProvider {
             getToolDetailsLearnToShareToolIsAvailableUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsLearnToShareToolIsAvailableUseCase(),
             toggleToolFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToggleToolFavoritedUseCase(),
             getToolBannerUseCase: appDiContainer.domainLayer.getToolBannerUseCase(),
+            inMemoryDataCache: appDiContainer.dataLayer.getSharedInMemoryDataCache(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
         )
