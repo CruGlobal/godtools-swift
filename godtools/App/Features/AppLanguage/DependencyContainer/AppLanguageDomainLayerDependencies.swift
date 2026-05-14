@@ -74,7 +74,6 @@ final class AppLanguageDomainLayerDependencies {
     
     func getDownloadToolLanguageUseCase() -> DownloadToolLanguageUseCase {
         return DownloadToolLanguageUseCase(
-            downloadedLanguagesRepository: dataLayer.getDownloadedLanguagesRepository(),
             resourcesRepository: coreDataLayer.getResourcesRepository(),
             toolLanguageDownloader: dataLayer.getToolLanguageDownloader()
         )

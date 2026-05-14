@@ -35,10 +35,10 @@ final class DownloadLatestToolsForFavoritedToolsUseCase {
             return self.favoritedResourcesRepository
                 .getFavoritedResourcesSortedByPositionPublisher()
         }
-        .flatMap { (favoritedTools: [FavoritedResourceDataModel]) -> AnyPublisher<[DownloadToolDataModel], Error> in
+        .flatMap { (favoritedTools: [FavoritedResourceDataModel]) -> AnyPublisher<[DownloadToolData], Error> in
                         
-            let tools: [DownloadToolDataModel] = favoritedTools.map({
-                DownloadToolDataModel(
+            let tools: [DownloadToolData] = favoritedTools.map({
+                DownloadToolData(
                     toolId: $0.id,
                     languages: [appLanguage]
                 )
@@ -48,7 +48,7 @@ final class DownloadLatestToolsForFavoritedToolsUseCase {
                 .setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
         }
-        .flatMap { (tools: [DownloadToolDataModel]) -> AnyPublisher<Void, Error> in
+        .flatMap { (tools: [DownloadToolData]) -> AnyPublisher<Void, Error> in
                 
             return AnyPublisher() {
                 try await self.toolDownloader

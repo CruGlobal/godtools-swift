@@ -144,7 +144,7 @@ extension DownloadableLanguageItemViewModel {
             
             do {
                 
-                for try await progress in downloadToolLanguageUseCase.execute(languageId: languageId) {
+                for try await progress in try downloadToolLanguageUseCase.execute(languageId: languageId) {
                     
                     recycleState.downloadState = .downloading(progress: progress)
                 }

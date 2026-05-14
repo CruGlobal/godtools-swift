@@ -26,7 +26,23 @@ final class ToolDownloader {
         self.getToolDataToDownload = getToolDataToDownload
     }
     
-    private func downloadToolsWithProgressClosure(tools: [DownloadToolDataModel], requestPriority: RequestPriority, onProgress: ((_ dataModel: ToolDownloaderDataModel) -> Void), onComplete: (() -> Void)) async throws {
+    private func updateProgress(downloadCount: Int, totalNumberOfDownloads: Int, onProgress: ((_ progress: Double) -> Void)) -> Double {
+        
+        let progress: Double
+        
+        if downloadCount >= totalNumberOfDownloads {
+            progress = 1
+        }
+        else {
+            progress = Double(downloadCount) / Double(totalNumberOfDownloads)
+        }
+        
+        onProgress(progress)
+        
+        return progress
+    }
+    
+    private func downloadToolsWithProgressClosure(tools: [DownloadToolData], requestPriority: RequestPriority, onProgress: ((_ progress: Double) -> Void), onComplete: (() -> Void)) async throws {
         
         let downloadData: ToolDownloaderDataToDownload = try getToolDataToDownload.getData(tools: tools)
         
@@ -42,6 +58,7 @@ final class ToolDownloader {
             )
             
             downloadCount += 1
+            _ = updateProgress(downloadCount: downloadCount, totalNumberOfDownloads: totalNumberOfDownloads, onProgress: onProgress)
         }
         
         for attachment in downloadData.attachments {
@@ -52,12 +69,14 @@ final class ToolDownloader {
             )
             
             downloadCount += 1
+            _ = updateProgress(downloadCount: downloadCount, totalNumberOfDownloads: totalNumberOfDownloads, onProgress: onProgress)
         }
 
         for translation in downloadData.articleTranslations {
          
             guard let languageCode = translation.languageDataModel?.code else {
                 downloadCount += 1
+                _ = updateProgress(downloadCount: downloadCount, totalNumberOfDownloads: totalNumberOfDownloads, onProgress: onProgress)
                 continue
             }
             
@@ -78,31 +97,15 @@ final class ToolDownloader {
             )
             
             downloadCount += 1
+            _ = updateProgress(downloadCount: downloadCount, totalNumberOfDownloads: totalNumberOfDownloads, onProgress: onProgress)
         }
-        
-        let progress: Double
-        
-        if downloadCount >= totalNumberOfDownloads {
-            progress = 1
-        }
-        else {
-            progress = Double(downloadCount) / Double(totalNumberOfDownloads)
-        }
-        
-        let dataModel = ToolDownloaderDataModel(
-            attachments: downloadData.attachments,
-            progress: progress,
-            translations: downloadData.nonArticleTranslations + downloadData.articleTranslations
-        )
-        
-        onProgress(dataModel)
-        
+                     
         if downloadCount >= totalNumberOfDownloads {
             onComplete()
         }
     }
     
-    func downloadToolsStream(tools: [DownloadToolDataModel], requestPriority: RequestPriority) -> AsyncThrowingStream<ToolDownloaderDataModel, Error> {
+    func downloadToolsStream(tools: [DownloadToolData], requestPriority: RequestPriority) -> AsyncThrowingStream<Double, Error> {
                 
         return AsyncThrowingStream { continuation in
            
@@ -113,24 +116,24 @@ final class ToolDownloader {
                     try await downloadToolsWithProgressClosure(
                         tools: tools,
                         requestPriority: requestPriority,
-                        onProgress: { (dataModel: ToolDownloaderDataModel) in
-                            
-                            continuation.yield(dataModel)
+                        onProgress: { (progress: Double) in
+                                                        
+                            continuation.yield(progress)
                         },
                         onComplete: {
-                            
+                                                        
                             continuation.finish(throwing: nil)
                         })
                 }
                 catch let error {
-                    
+                                        
                     continuation.finish(throwing: error)
                 }
             }
         }
     }
     
-    func downloadTools(tools: [DownloadToolDataModel], requestPriority: RequestPriority) async throws {
+    func downloadTools(tools: [DownloadToolData], requestPriority: RequestPriority) async throws {
         
         try await downloadToolsWithProgressClosure(
             tools: tools,

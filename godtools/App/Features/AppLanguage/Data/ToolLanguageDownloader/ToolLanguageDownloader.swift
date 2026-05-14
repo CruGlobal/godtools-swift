@@ -23,7 +23,7 @@ final class ToolLanguageDownloader {
         self.downloadedLanguagesRepository = downloadedLanguagesRepository
     }
     
-    func downloadToolLanguage(languageId: String) throws -> AsyncThrowingStream<ToolDownloaderDataModel, Error> {
+    func downloadToolLanguage(languageId: String) throws -> AsyncThrowingStream<Double, Error> {
         
         guard let languageModel = try languagesRepository.getLanguage(id: languageId) else {
             
@@ -40,14 +40,50 @@ final class ToolLanguageDownloader {
             filter: ResourcesFilter(category: nil, languageModelCode: languageModel.code, resourceTypes: includeToolTypes)
         )
         
-        let downloadTools: [DownloadToolDataModel] = tools.map({
-            DownloadToolDataModel(toolId: $0.id, languages: [languageModel.code])
+        let downloadTools: [DownloadToolData] = tools.map({
+            DownloadToolData(toolId: $0.id, languages: [languageModel.code])
         })
+        
+        return AsyncThrowingStream { continuation in
+            
+            Task {
                 
-        return toolDownloader.downloadToolsStream(
-            tools: downloadTools,
-            requestPriority: .low
-        )
+                do {
+                    
+                    _ = try await downloadedLanguagesRepository
+                        .storeDownloadedLanguage(
+                            languageId: languageId,
+                            downloadComplete: false
+                        )
+                    
+                    for try await progress in toolDownloader.downloadToolsStream(tools: downloadTools, requestPriority: .low) {
+                        
+                        let downloadComplete: Bool = progress >= 1
+                        
+                        guard downloadComplete else {
+                            continuation.yield(progress)
+                            return
+                        }
+                        
+                        _ = try await downloadedLanguagesRepository
+                            .storeDownloadedLanguage(
+                                languageId: languageId,
+                                downloadComplete: true
+                            )
+                        
+                        continuation.finish()
+                    }
+                }
+                catch let error {
+                    
+                    try downloadedLanguagesRepository.deleteDownloadedLanguage(
+                        languageId: languageId
+                    )
+                    
+                    continuation.finish(throwing: error)
+                }
+            }
+        }
     }
     
     func syncDownloadedLanguages() async throws {

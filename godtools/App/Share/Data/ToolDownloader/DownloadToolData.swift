@@ -1,5 +1,5 @@
 //
-//  DownloadToolDataModel.swift
+//  DownloadToolData.swift
 //  godtools
 //
 //  Created by Levi Eggert on 2/13/24.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct DownloadToolDataModel {
+struct DownloadToolData: Sendable {
     
     let toolId: String
     let languages: [BCP47LanguageIdentifier]
