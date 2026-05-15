@@ -121,7 +121,7 @@ class AppBackgroundState {
                 if isAuthenticatedDomainModel.isAuthenticated {
                     
                     return userCountersSync
-                        .sync(
+                        .syncPublisher(
                             requestPriority: .high
                         )
                         .map { _ in

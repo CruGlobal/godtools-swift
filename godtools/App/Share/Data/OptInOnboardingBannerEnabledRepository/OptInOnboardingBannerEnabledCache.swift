@@ -13,7 +13,7 @@ final class OptInOnboardingBannerEnabledCache {
     
     private let userDefaults: UserDefaults = UserDefaults.standard
     
-    func getEnabled() -> AnyPublisher<Bool, Never> {
+    func getEnabledPublisher() -> AnyPublisher<Bool, Never> {
         
         return userDefaults.publisher(for: \.enabled)
             .eraseToAnyPublisher()

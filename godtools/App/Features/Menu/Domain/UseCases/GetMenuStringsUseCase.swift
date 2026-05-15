@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetMenuStringsUseCase {
     
@@ -20,7 +19,7 @@ final class GetMenuStringsUseCase {
         self.infoPlist = infoPlist
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<MenuStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> MenuStringsDomainModel {
         
         let localeId: String = appLanguage
         
@@ -61,7 +60,6 @@ final class GetMenuStringsUseCase {
             version: versionString
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

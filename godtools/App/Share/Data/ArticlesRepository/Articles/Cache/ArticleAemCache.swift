@@ -96,10 +96,10 @@ extension ArticleAemCache {
         )
     }
     
-    func storeAemDataObjects(aemDataObjects: [ArticleAemData], requestPriority: RequestPriority) async throws {
+    func storeAemDataObjects(aemDataObjects: [ArticleAemData], requestPriority: RequestPriority) async throws -> ArticleWebArchiverResult {
      
         guard let realmDatabase = realmDatabase else {
-            return
+            throw NSError.errorWithDescription(description: "RealmDatabase is null.")
         }
         
         let realm: Realm = try realmDatabase.openRealm()
@@ -130,6 +130,8 @@ extension ArticleAemCache {
         }
         
         try await storeAemCacheArchivedObjects(aemCacheArchivedObjects: aemCacheArchivedObjects)
+        
+        return webArchiverResults
     }
     
     private func filterAemDataObjectsThatNeedDownloaded(aemDataObjects: [ArticleAemData], realm: Realm) throws -> ArticleAemDataObjectsThatNeedDownloading {

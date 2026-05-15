@@ -68,6 +68,10 @@ final class TestsAppConfig: AppConfigInterface {
         return getMobileContentApiBaseUrlByScheme()
     }
     
+    func getMobileContentCDNBaseUrl() -> String {
+        return GodToolsAppConfig.getMobileContentCDNBaseUrl(environment: .production)
+    }
+    
     private func getMobileContentApiBaseUrlByScheme(scheme: String = "https") -> String {
         return "\(scheme)://mobile-content-api.cru.org"
     }

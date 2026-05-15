@@ -12,6 +12,9 @@ import RepositorySync
 
 class GodToolsAppConfig: AppConfigInterface {
 
+    private static let mobileContentCDNProduction: String = "https://mobilecontent.cru.org"
+    private static let mobileContentCDNStaging: String = "https://mobilecontent-stage.cru.org"
+    
     private let appBuild: AppBuild
         
     init() {
@@ -110,6 +113,10 @@ class GodToolsAppConfig: AppConfigInterface {
         return Self.getMobileContentApiBaseUrlByScheme(environment: environment)
     }
     
+    func getMobileContentCDNBaseUrl() -> String {
+        return Self.getMobileContentCDNBaseUrl(environment: environment)
+    }
+    
     func getRealmDatabase() -> RealmDatabase {
         
         let config: RealmDatabaseConfig
@@ -169,6 +176,17 @@ extension GodToolsAppConfig {
             return "\(scheme)://mobile-content-api-stage.cru.org"
         case .production:
             return "\(scheme)://mobile-content-api.cru.org"
+        }
+    }
+    
+    static func getMobileContentCDNBaseUrl(environment: AppEnvironment) -> String {
+        
+        switch environment {
+        
+        case .staging:
+            return Self.mobileContentCDNStaging
+        case .production:
+            return Self.mobileContentCDNProduction
         }
     }
     

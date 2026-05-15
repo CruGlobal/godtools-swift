@@ -18,9 +18,9 @@ final class OptInOnboardingBannerEnabledRepository {
         self.cache = cache
     }
     
-    func getEnabled() -> AnyPublisher<Bool, Never> {
+    func getEnabledPublisher() -> AnyPublisher<Bool, Never> {
 
-        return cache.getEnabled()
+        return cache.getEnabledPublisher()
     }
     
     func storeEnabled(enabled: Bool) {

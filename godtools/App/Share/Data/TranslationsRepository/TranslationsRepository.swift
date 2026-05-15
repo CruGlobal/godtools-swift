@@ -14,15 +14,17 @@ import RepositorySync
 final class TranslationsRepository {
     
     private let api: TranslationsApiInterface
+    private let cdn: TranslationsCdnInterface
     private let cache: TranslationsCache
     private let infoPlist: InfoPlist
     private let resourcesFileCache: ResourcesSHA256FileCache
     private let trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
     private let remoteConfigRepository: RemoteConfigRepository
     
-    init(api: TranslationsApiInterface, cache: TranslationsCache, infoPlist: InfoPlist, resourcesFileCache: ResourcesSHA256FileCache, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository, remoteConfigRepository: RemoteConfigRepository) {
+    init(api: TranslationsApiInterface, cdn: TranslationsCdnInterface, cache: TranslationsCache, infoPlist: InfoPlist, resourcesFileCache: ResourcesSHA256FileCache, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository, remoteConfigRepository: RemoteConfigRepository) {
         
         self.api = api
+        self.cdn = cdn
         self.cache = cache
         self.infoPlist = infoPlist
         self.resourcesFileCache = resourcesFileCache
@@ -99,11 +101,11 @@ extension TranslationsRepository {
         
         var relatedFiles: [FileCacheLocation] = Array()
         
-        for relatedFile in manifest.relatedFiles {
+        for manifestFile in manifest.relatedFiles {
             
             let fileCacheLocation = try getTranslationFileFromCache(
                 translation: translation,
-                fileName: relatedFile
+                file: .manifestFile(manifestFile: manifestFile)
             )
             
             relatedFiles.append(fileCacheLocation)
@@ -202,13 +204,16 @@ extension TranslationsRepository {
         
         try await withThrowingTaskGroup(of: FileCacheLocation.self) { group in
             
-            for relatedFile in manifest.relatedFiles {
+            for manifestFile in manifest.relatedFiles {
+                
                 group.addTask {
+                
                     let file = try await self.getTranslationFileFromCacheElseRemote(
                         translation: translation,
-                        fileName: relatedFile,
+                        file: .manifestFile(manifestFile: manifestFile),
                         requestPriority: requestPriority
                     )
+                    
                     return file
                 }
             }
@@ -229,7 +234,7 @@ extension TranslationsRepository {
             
             _ = try await getTranslationFileFromCacheElseRemote(
                 translation: translation,
-                fileName: translation.manifestName,
+                file: .translationManifest(translation: translation),
                 requestPriority: requestPriority
             )
             
@@ -338,7 +343,7 @@ extension TranslationsRepository {
             
             _ = try await getTranslationFileFromCacheElseRemote(
                 translation: translation,
-                fileName: translation.manifestName,
+                file: .translationManifest(translation: translation),
                 requestPriority: requestPriority
             )
             
@@ -373,26 +378,28 @@ extension TranslationsRepository {
         }
     }
     
-    private func getTranslationFileFromCacheElseRemote(translation: TranslationDataModel, fileName: String, requestPriority: RequestPriority) async throws -> FileCacheLocation {
+    private func getTranslationFileFromCacheElseRemote(translation: TranslationDataModel, file: TranslationFile, requestPriority: RequestPriority) async throws -> FileCacheLocation {
         
         do {
             
             return try getTranslationFileFromCache(
                 translation: translation,
-                fileName: fileName
+                file: file
             )
         }
         catch _ {
             
             return try await getTranslationFileFromRemote(
                 translation: translation,
-                fileName: fileName,
+                file: file,
                 requestPriority: requestPriority
             )
         }
     }
     
-    private func getTranslationFileFromCache(translation: TranslationDataModel, fileName: String) throws -> FileCacheLocation {
+    private func getTranslationFileFromCache(translation: TranslationDataModel, file: TranslationFile) throws -> FileCacheLocation {
+        
+        let fileName = try file.fileName
         
         let fileCacheLocation = FileCacheLocation(relativeUrlString: fileName)
         
@@ -405,12 +412,36 @@ extension TranslationsRepository {
         return fileCacheLocation
     }
     
-    private func getTranslationFileFromRemote(translation: TranslationDataModel, fileName: String, requestPriority: RequestPriority) async throws -> FileCacheLocation {
+    private func getTranslationFileFromRemote(translation: TranslationDataModel, file: TranslationFile, requestPriority: RequestPriority) async throws -> FileCacheLocation {
         
-        let response: RequestDataResponse = try await api.getTranslationFile(
-            fileName: fileName,
-            requestPriority: requestPriority
-        )
+        let fileName = try file.fileName
+        
+        let response: RequestDataResponse
+        
+        switch file {
+        
+        case .manifestFile(let manifestFile):
+            
+            do {
+                response = try await cdn.getManifestFile(
+                    manifestFile: manifestFile,
+                    requestPriority: requestPriority
+                ).validate()
+            }
+            catch _ {
+                response = try await api.getTranslationFile(
+                    fileName: fileName,
+                    requestPriority: requestPriority
+                )
+            }
+       
+        case .translationManifest(let translation):
+            
+            response = try await api.getTranslationFile(
+                fileName: fileName,
+                requestPriority: requestPriority
+            )
+        }
         
         return try await resourcesFileCache.storeTranslationFile(
             translationId: translation.id,
