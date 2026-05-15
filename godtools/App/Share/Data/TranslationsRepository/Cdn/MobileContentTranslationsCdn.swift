@@ -55,10 +55,6 @@ final class MobileContentTranslationsCdn: TranslationsCdnInterface {
             urlSession: urlSession
         )
         
-        guard requestDataResponse.urlResponse.isSuccessHttpStatusCode else {
-            throw NSError.errorWithDescription(description: "HTTP request failed.")
-        }
-        
         guard requestDataResponse.data.toSha256Hash() == checksumSha256.lowercased() else {
             throw NSError.errorWithDescription(description: "Failed to validate checksumSha256.")
         }

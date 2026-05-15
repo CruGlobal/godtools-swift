@@ -426,7 +426,7 @@ extension TranslationsRepository {
                 response = try await cdn.getManifestFile(
                     manifestFile: manifestFile,
                     requestPriority: requestPriority
-                )
+                ).validate()
             }
             catch _ {
                 response = try await api.getTranslationFile(
