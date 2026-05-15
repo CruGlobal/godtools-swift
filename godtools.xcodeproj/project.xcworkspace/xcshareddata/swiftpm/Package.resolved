@@ -69,8 +69,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/CruGlobal/godtools-shared-swift.git",
       "state" : {
-        "revision" : "3ef5ca9f0a70a16f1a5735ee93d594f3938272bc",
-        "version" : "1.2.0"
+        "revision" : "26d93fc5290486672ebe402e8695b628fa5e4303"
       }
     },
     {
