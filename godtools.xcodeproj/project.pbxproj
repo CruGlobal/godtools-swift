@@ -2193,8 +2193,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CruGlobal/godtools-shared-swift.git";
 			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 1.2.0;
+				kind = revision;
+				revision = 26d93fc5290486672ebe402e8695b628fa5e4303;
 			};
 		};
 		45C15DF72F6C78F1006B9020 /* XCRemoteSwiftPackageReference "dynalinks-ios-sdk" */ = {
