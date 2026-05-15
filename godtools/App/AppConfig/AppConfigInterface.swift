@@ -25,6 +25,7 @@ protocol AppConfigInterface {
     func getFirebaseGoogleServiceFileName() -> String
     func getGoogleAuthenticationConfiguration() -> GoogleAuthenticationConfiguration?
     func getMobileContentApiBaseUrl() -> String
+    func getMobileContentCDNBaseUrl() -> String
     func getRealmDatabase() -> RealmDatabase
     @available(iOS 17.4, *)
     func getSwiftDatabase() throws -> SwiftDatabase?

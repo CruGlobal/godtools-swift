@@ -62,7 +62,11 @@ class UITestsAppConfig: AppConfigInterface {
     }
     
     func getMobileContentApiBaseUrl() -> String {
-        return GodToolsAppConfig.getMobileContentApiBaseUrlByScheme(environment: environment, scheme: "https")
+        return GodToolsAppConfig.getMobileContentApiBaseUrlByScheme(environment: environment)
+    }
+    
+    func getMobileContentCDNBaseUrl() -> String {
+        return GodToolsAppConfig.getMobileContentCDNBaseUrl(environment: environment)
     }
     
     func getRealmDatabase() -> RealmDatabase {
