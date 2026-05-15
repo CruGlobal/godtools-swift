@@ -109,10 +109,9 @@ final class MobileContentTranslationsApi: TranslationsApiInterface {
             urlRequest: cdnUrlRequest,
             urlSession: urlSession
         )
-                    
-        let isValidChecksum: Bool = requestDataResponse.data.toSha256Hash() == checksumSha256.lowercased()
-        
-        guard isValidChecksum else {
+                           
+        guard requestDataResponse.urlResponse.isSuccessHttpStatusCode &&
+              requestDataResponse.data.toSha256Hash() == checksumSha256.lowercased() else {
             
             return try await getTranslationFileFromApi(
                 fileName: fileName,
