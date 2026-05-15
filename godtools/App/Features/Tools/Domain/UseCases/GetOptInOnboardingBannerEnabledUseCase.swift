@@ -21,11 +21,13 @@ final class GetOptInOnboardingBannerEnabledUseCase {
     }
         
     func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<Bool, Never> {
+        
+        let tutorialAvailable: Bool = getOptInOnboardingTutorialAvailableUseCase.execute(appLanguage: appLanguage)
+        
+        return optInOnboardingBannerEnabledRepository
+            .getEnabledPublisher()
+            .map { (bannerEnabled: Bool) in
                 
-        return Publishers
-            .CombineLatest(getOptInOnboardingTutorialAvailableUseCase.getIsAvailablePublisher(appLanguage: appLanguage), optInOnboardingBannerEnabledRepository.getEnabled())
-            .map { (tutorialAvailable: Bool, bannerEnabled: Bool) in
-                                
                 return tutorialAvailable && bannerEnabled
             }
             .eraseToAnyPublisher()

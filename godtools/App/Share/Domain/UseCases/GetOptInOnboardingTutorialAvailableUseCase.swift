@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetOptInOnboardingTutorialAvailableUseCase {
         
@@ -15,11 +14,10 @@ final class GetOptInOnboardingTutorialAvailableUseCase {
         
     }
         
-    func getIsAvailablePublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<Bool, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> Bool {
         
         let isAvailable: Bool = appLanguage == LanguageCodeDomainModel.english.value
         
-        return Just(isAvailable)
-            .eraseToAnyPublisher()
+        return isAvailable
     }
 }

@@ -155,17 +155,17 @@ extension ToolTrainingViewModel {
     
     func viewLoaded() {
         
-        let trainingTipCompleted = TrainingTipDomainModel(trainingTipId: trainingTipId, resourceId: resource.id, languageId: language.id)
-        
-        setCompletedTrainingTipUseCase
-            .execute(tip: trainingTipCompleted)
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                
-            } receiveValue: { _ in
-                
-            }
-            .store(in: &Self.backgroundCancellables)
+        Task {
+            
+            let trainingTipCompleted = TrainingTipDomainModel(
+                trainingTipId: trainingTipId,
+                resourceId: resource.id,
+                languageId: language.id
+            )
+            
+            try await setCompletedTrainingTipUseCase
+                .execute(tip: trainingTipCompleted)
+        }
     }
     
     func overlayTapped() {
