@@ -99,11 +99,11 @@ extension TranslationsRepository {
         
         var relatedFiles: [FileCacheLocation] = Array()
         
-        for relatedFile in manifest.relatedFiles {
+        for manifestFile in manifest.relatedFiles {
             
             let fileCacheLocation = try getTranslationFileFromCache(
                 translation: translation,
-                fileName: relatedFile
+                file: .manifestFile(manifestFile: manifestFile)
             )
             
             relatedFiles.append(fileCacheLocation)
@@ -202,13 +202,16 @@ extension TranslationsRepository {
         
         try await withThrowingTaskGroup(of: FileCacheLocation.self) { group in
             
-            for relatedFile in manifest.relatedFiles {
+            for manifestFile in manifest.relatedFiles {
+                
                 group.addTask {
+                
                     let file = try await self.getTranslationFileFromCacheElseRemote(
                         translation: translation,
-                        fileName: relatedFile,
+                        file: .manifestFile(manifestFile: manifestFile),
                         requestPriority: requestPriority
                     )
+                    
                     return file
                 }
             }
@@ -229,7 +232,7 @@ extension TranslationsRepository {
             
             _ = try await getTranslationFileFromCacheElseRemote(
                 translation: translation,
-                fileName: translation.manifestName,
+                file: .translationManifest(translation: translation),
                 requestPriority: requestPriority
             )
             
@@ -338,7 +341,7 @@ extension TranslationsRepository {
             
             _ = try await getTranslationFileFromCacheElseRemote(
                 translation: translation,
-                fileName: translation.manifestName,
+                file: .translationManifest(translation: translation),
                 requestPriority: requestPriority
             )
             
@@ -373,26 +376,28 @@ extension TranslationsRepository {
         }
     }
     
-    private func getTranslationFileFromCacheElseRemote(translation: TranslationDataModel, fileName: String, requestPriority: RequestPriority) async throws -> FileCacheLocation {
+    private func getTranslationFileFromCacheElseRemote(translation: TranslationDataModel, file: TranslationFile, requestPriority: RequestPriority) async throws -> FileCacheLocation {
         
         do {
             
             return try getTranslationFileFromCache(
                 translation: translation,
-                fileName: fileName
+                file: file
             )
         }
         catch _ {
             
             return try await getTranslationFileFromRemote(
                 translation: translation,
-                fileName: fileName,
+                file: file,
                 requestPriority: requestPriority
             )
         }
     }
     
-    private func getTranslationFileFromCache(translation: TranslationDataModel, fileName: String) throws -> FileCacheLocation {
+    private func getTranslationFileFromCache(translation: TranslationDataModel, file: TranslationFile) throws -> FileCacheLocation {
+        
+        let fileName = try file.fileName
         
         let fileCacheLocation = FileCacheLocation(relativeUrlString: fileName)
         
@@ -405,10 +410,12 @@ extension TranslationsRepository {
         return fileCacheLocation
     }
     
-    private func getTranslationFileFromRemote(translation: TranslationDataModel, fileName: String, requestPriority: RequestPriority) async throws -> FileCacheLocation {
+    private func getTranslationFileFromRemote(translation: TranslationDataModel, file: TranslationFile, requestPriority: RequestPriority) async throws -> FileCacheLocation {
+        
+        let fileName = try file.fileName
         
         let response: RequestDataResponse = try await api.getTranslationFile(
-            fileName: fileName,
+            file: file,
             requestPriority: requestPriority
         )
         
