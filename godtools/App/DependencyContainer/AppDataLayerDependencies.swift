@@ -566,10 +566,17 @@ final class AppDataLayerDependencies {
             requestSender: getRequestSender()
         )
         
+        let cdn = MobileContentTranslationsCdn(
+            config: getAppConfig(),
+            urlSessionPriority: getSharedUrlSessionPriority(),
+            requestSender: getRequestSender()
+        )
+        
         let cache = TranslationsCache(persistence: persistence)
         
         return TranslationsRepository(
             api: api,
+            cdn: cdn,
             cache: cache,
             infoPlist: getInfoPlist(),
             resourcesFileCache: getResourcesFileCache(),

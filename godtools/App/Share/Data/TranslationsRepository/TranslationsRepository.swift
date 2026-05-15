@@ -14,15 +14,17 @@ import RepositorySync
 final class TranslationsRepository {
     
     private let api: TranslationsApiInterface
+    private let cdn: TranslationsCdnInterface
     private let cache: TranslationsCache
     private let infoPlist: InfoPlist
     private let resourcesFileCache: ResourcesSHA256FileCache
     private let trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
     private let remoteConfigRepository: RemoteConfigRepository
     
-    init(api: TranslationsApiInterface, cache: TranslationsCache, infoPlist: InfoPlist, resourcesFileCache: ResourcesSHA256FileCache, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository, remoteConfigRepository: RemoteConfigRepository) {
+    init(api: TranslationsApiInterface, cdn: TranslationsCdnInterface, cache: TranslationsCache, infoPlist: InfoPlist, resourcesFileCache: ResourcesSHA256FileCache, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository, remoteConfigRepository: RemoteConfigRepository) {
         
         self.api = api
+        self.cdn = cdn
         self.cache = cache
         self.infoPlist = infoPlist
         self.resourcesFileCache = resourcesFileCache
@@ -414,10 +416,32 @@ extension TranslationsRepository {
         
         let fileName = try file.fileName
         
-        let response: RequestDataResponse = try await api.getTranslationFile(
-            file: file,
-            requestPriority: requestPriority
-        )
+        let response: RequestDataResponse
+        
+        switch file {
+        
+        case .manifestFile(let manifestFile):
+            
+            do {
+                response = try await cdn.getManifestFile(
+                    manifestFile: manifestFile,
+                    requestPriority: requestPriority
+                )
+            }
+            catch _ {
+                response = try await api.getTranslationFile(
+                    fileName: fileName,
+                    requestPriority: requestPriority
+                )
+            }
+       
+        case .translationManifest(let translation):
+            
+            response = try await api.getTranslationFile(
+                fileName: fileName,
+                requestPriority: requestPriority
+            )
+        }
         
         return try await resourcesFileCache.storeTranslationFile(
             translationId: translation.id,

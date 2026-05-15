@@ -11,6 +11,6 @@ import RequestOperation
 
 protocol TranslationsApiInterface {
     
-    func getTranslationFile(file: TranslationFile, requestPriority: RequestPriority) async throws -> RequestDataResponse
+    func getTranslationFile(fileName: String, requestPriority: RequestPriority) async throws -> RequestDataResponse
     func getTranslationZipFile(translationId: String, requestPriority: RequestPriority) async throws -> RequestDataResponse
 }
