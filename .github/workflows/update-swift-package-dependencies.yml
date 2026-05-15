@@ -19,6 +19,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
+      - name: Bundle Install
+        uses: ./.github/actions/bundle-install
+
       - name: Resolve Dependencies
         id: resolution
         uses: GetSidetrack/action-xcodeproj-spm-update@main
