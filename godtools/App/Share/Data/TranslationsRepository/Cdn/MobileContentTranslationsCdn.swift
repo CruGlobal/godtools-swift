@@ -60,7 +60,6 @@ final class MobileContentTranslationsCdn: TranslationsCdnInterface {
         }
         
         guard requestDataResponse.data.toSha256Hash() == checksumSha256.lowercased() else {
-            
             throw NSError.errorWithDescription(description: "Failed to validate checksumSha256.")
         }
         
