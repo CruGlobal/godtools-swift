@@ -27,7 +27,7 @@ final class UserCountersSync {
         self.syncInvalidator = syncInvalidator
     }
     
-    func sync(requestPriority: RequestPriority, forceSync: Bool = false) -> AnyPublisher<Void, Error> {
+    func syncPublisher(requestPriority: RequestPriority, forceSync: Bool = false) -> AnyPublisher<Void, Error> {
         return AnyPublisher() {
             return try await self.sync(requestPriority: requestPriority, forceSync: forceSync)
         }

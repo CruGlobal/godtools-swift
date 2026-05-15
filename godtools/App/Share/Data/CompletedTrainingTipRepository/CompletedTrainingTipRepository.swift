@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class CompletedTrainingTipRepository {
     
@@ -38,17 +37,19 @@ final class CompletedTrainingTipRepository {
         }
     }
     
-    func storeCompletedTrainingTipPublisher(completedTrainingTip: CompletedTrainingTipDataModel) -> AnyPublisher<CompletedTrainingTipDataModel, Error> {
+    func storeCompletedTrainingTip(id: String, resourceId: String, languageId: String) async throws {
         
-        return AnyPublisher() {
-            
-            _ = try await self.cache.persistence.writeObjectsAsync(
-                externalObjects: [completedTrainingTip],
-                writeOption: nil,
-                getOption: nil
-            )
-            
-            return completedTrainingTip
-        }
+        let trainingTipDataModel = CompletedTrainingTipDataModel(
+            id: id,
+            trainingTipId: id,
+            languageId: resourceId,
+            resourceId: languageId
+        )
+        
+        _ = try await cache.persistence.writeObjectsAsync(
+            externalObjects: [trainingTipDataModel],
+            writeOption: nil,
+            getOption: nil
+        )
     }
 }

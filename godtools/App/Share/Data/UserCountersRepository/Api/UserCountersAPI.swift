@@ -8,7 +8,6 @@
 
 import Foundation
 import RequestOperation
-import Combine
 import RepositorySync
 
 final class UserCountersApi: UserCountersApiInterface {

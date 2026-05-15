@@ -51,20 +51,10 @@ final class MenuViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .execute()
-            .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                
-                getMenuStringsUseCase
-                    .execute(appLanguage: appLanguage)
-            }
-            .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: MenuStringsDomainModel) in
-                
-                self?.strings = strings
+            .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
             }
             .store(in: &cancellables)
     
@@ -93,17 +83,6 @@ final class MenuViewModel: ObservableObject {
                 }
             }
             .store(in: &cancellables)
-        
-        $appLanguage
-            .dropFirst()
-            .map { appLanguage in
-                
-                getOptInOnboardingTutorialAvailableUseCase
-                    .getIsAvailablePublisher(appLanguage: appLanguage)
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$showsTutorialOption)
     }
     
     deinit {
@@ -128,6 +107,15 @@ final class MenuViewModel: ObservableObject {
     
     private var analyticsSiteSubSection: String {
         return ""
+    }
+    
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+        
+        strings = getMenuStringsUseCase
+            .execute(appLanguage: appLanguage)
+        
+        showsTutorialOption = getOptInOnboardingTutorialAvailableUseCase
+            .execute(appLanguage: appLanguage)
     }
 }
 
