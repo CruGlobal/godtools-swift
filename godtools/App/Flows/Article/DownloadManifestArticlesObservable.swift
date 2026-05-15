@@ -46,7 +46,7 @@ final class DownloadManifestArticlesObservable: ObservableObject {
             
             do {
                 
-                try await articleManifestAemRepository.downloadAndCacheManifestAemUris(
+                let download = try await articleManifestAemRepository.downloadAndCacheManifestAemUris(
                     manifest: manifest,
                     translationId: translation.id,
                     languageCode: language.localeId,
@@ -57,7 +57,12 @@ final class DownloadManifestArticlesObservable: ObservableObject {
                 
                 isDownloading = false
                 
-                downloadResult = .success(Void())
+                if let error = download.firstErrorNotConnectedToInternet {
+                    downloadResult = .failure(error)
+                }
+                else {
+                    downloadResult = .success(Void())
+                }
             }
             catch let error {
              

@@ -33,7 +33,7 @@ final class ArticleManifestAemRepository: ArticleAemRepository {
         return try await categoryArticlesCache.getCategoryArticles(categoryId: categoryId, languageCode: languageCode)
     }
     
-    func downloadAndCacheManifestAemUris(manifest: Manifest, translationId: String, languageCode: String, downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority, forceFetchFromRemote: Bool = false) async throws {
+    func downloadAndCacheManifestAemUris(manifest: Manifest, translationId: String, languageCode: String, downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority, forceFetchFromRemote: Bool = false) async throws -> ArticleAemDownload {
         
         let syncInvalidator = SyncInvalidator(
             id: getSyncInvalidatorId(translationId: translationId),
@@ -42,7 +42,7 @@ final class ArticleManifestAemRepository: ArticleAemRepository {
         )
                 
         guard syncInvalidator.shouldSync || forceFetchFromRemote else {
-            return
+            return ArticleAemDownload.emptyValue
         }
         
         let aemUris: [String] = manifest.aemImports.map({$0.absoluteString})
@@ -60,14 +60,16 @@ final class ArticleManifestAemRepository: ArticleAemRepository {
             )
         })
         
-        let errors: [Error] = await categoryArticlesCache.storeAemDataObjectsForCategories(
+        _ = await categoryArticlesCache.storeAemDataObjectsForCategories(
             categories: categories,
             languageCode: languageCode,
             aemDataObjects: download.aemDataObjects
         )
         
-        if !errors.isEmpty {
+        if !download.networkFailed {
             syncInvalidator.didSync()
         }
+        
+        return download
     }
 }
