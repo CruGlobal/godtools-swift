@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   update_xcode_project_swift_package_dependencies:
-    runs-on: macos-26
+    runs-on: macos-latest
 
     steps:
       - name: Checkout code
@@ -23,7 +23,7 @@ jobs:
         id: resolution
         uses: GetSidetrack/action-xcodeproj-spm-update@main
         with:
-          workspace: 'godtools.xcworkspace'
+          workspace: 'godtools.xcodeproj'
           scheme: 'GodTools-Production'
           forceResolution: true
           failWhenOutdated: false
