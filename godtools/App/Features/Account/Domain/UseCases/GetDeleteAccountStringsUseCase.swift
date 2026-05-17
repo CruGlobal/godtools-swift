@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetDeleteAccountStringsUseCase {
     
@@ -18,7 +17,7 @@ final class GetDeleteAccountStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<DeleteAccountStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> DeleteAccountStringsDomainModel {
         
         let strings = DeleteAccountStringsDomainModel(
             title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: MenuStringKeys.DeleteAccount.title.rawValue),
@@ -27,7 +26,6 @@ final class GetDeleteAccountStringsUseCase {
             cancelActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: MenuStringKeys.DeleteAccount.cancelButtonTitle.rawValue)
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

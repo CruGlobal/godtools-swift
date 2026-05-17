@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetDeleteAccountProgressStringsUseCase {
     
@@ -18,13 +17,12 @@ final class GetDeleteAccountProgressStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<DeleteAccountProgressStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> DeleteAccountProgressStringsDomainModel {
         
         let strings = DeleteAccountProgressStringsDomainModel(
             title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "deleteAccountProgress.title")
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }
