@@ -10,37 +10,50 @@ import Foundation
 
 final class ToolsDomainLayerDependencies {
 
-    private let coreDataLayer: AppDataLayerDependencies
+    private let core: AppCoreDiContainer
     private let dataLayer: ToolsDataLayerDependencies
-    private let coreDomainLayer: AppDomainLayerDependencies
     private let personalizedToolsDataLayer: PersonalizedToolsDataLayerDependencies
+    private let tutorialDomainLayer: TutorialDomainLayerDependencies
 
-    init(coreDataLayer: AppDataLayerDependencies, dataLayer: ToolsDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, personalizedToolsDataLayer: PersonalizedToolsDataLayerDependencies) {
+    init(core: AppCoreDiContainer, dataLayer: ToolsDataLayerDependencies, personalizedToolsDataLayer: PersonalizedToolsDataLayerDependencies, tutorialDomainLayer: TutorialDomainLayerDependencies) {
 
-        self.coreDataLayer = coreDataLayer
+        self.core = core
         self.dataLayer = dataLayer
-        self.coreDomainLayer = coreDomainLayer
         self.personalizedToolsDataLayer = personalizedToolsDataLayer
+        self.tutorialDomainLayer = tutorialDomainLayer
+    }
+    
+    func getDisableOptInOnboardingBannerUseCase() -> DisableOptInOnboardingBannerUseCase {
+        return DisableOptInOnboardingBannerUseCase(
+            optInOnboardingBannerEnabledRepository: dataLayer.getOptInOnboardingBannerEnabledRepository()
+        )
+    }
+    
+    func getOptInOnboardingBannerEnabledUseCase() -> GetOptInOnboardingBannerEnabledUseCase {
+        return GetOptInOnboardingBannerEnabledUseCase(
+            getTutorialIsAvailableUseCase: tutorialDomainLayer.getTutorialIsAvailableUseCase(),
+            optInOnboardingBannerEnabledRepository: dataLayer.getOptInOnboardingBannerEnabledRepository()
+        )
     }
 
     func getPullToRefreshToolsUseCase() -> PullToRefreshToolsUseCase {
         return PullToRefreshToolsUseCase(
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            resourcesRepository: core.dataLayer.getResourcesRepository(),
             personalizedToolsRepository: personalizedToolsDataLayer.getPersonalizedToolsRepository(),
-            getLanguageElseAppLanguage: coreDomainLayer.supporting.getLanguageElseAppLanguage()
+            getLanguageElseAppLanguage: core.domainLayer.supporting.getLanguageElseAppLanguage()
         )
     }
     
     func getToolsStringsUseCase() -> GetToolsStringsUseCase {
         return GetToolsStringsUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
     
     func getAllToolsUseCase() -> GetAllToolsUseCase {
         return GetAllToolsUseCase(
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
-            getToolsListItems: coreDomainLayer.supporting.getToolsListItems()
+            resourcesRepository: core.dataLayer.getResourcesRepository(),
+            getToolsListItems: core.domainLayer.supporting.getToolsListItems()
         )
     }
 }

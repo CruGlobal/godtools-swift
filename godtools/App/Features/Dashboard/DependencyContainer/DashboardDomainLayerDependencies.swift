@@ -10,18 +10,18 @@ import Foundation
 
 final class DashboardDomainLayerDependencies {
     
-    private let coreDataLayer: AppDataLayerDependencies
+    private let core: AppCoreDiContainer
     private let dataLayer: DashboardDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, dataLayer: DashboardDataLayerDependencies) {
+    init(core: AppCoreDiContainer, dataLayer: DashboardDataLayerDependencies) {
         
-        self.coreDataLayer = coreDataLayer
+        self.core = core
         self.dataLayer = dataLayer
     }
     
     func getDashboardStringsUseCase() -> GetDashboardStringsUseCase {
         return GetDashboardStringsUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
 }

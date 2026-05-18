@@ -10,45 +10,43 @@ import Foundation
 
 final class LessonFilterDomainLayerDependencies {
     
-    private let coreDataLayer: AppDataLayerDependencies
-    private let coreDomainLayer: AppDomainLayerDependencies
+    private let core: AppCoreDiContainer
     private let dataLayer: LessonFilterDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, dataLayer: LessonFilterDataLayerDependencies) {
+    init(core: AppCoreDiContainer, dataLayer: LessonFilterDataLayerDependencies) {
         
-        self.coreDataLayer = coreDataLayer
-        self.coreDomainLayer = coreDomainLayer
+        self.core = core
         self.dataLayer = dataLayer
     }
     
     func getLessonFilterLangauge() -> GetLessonFilterLanguage {
         return GetLessonFilterLanguage(
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
-            languagesRepository: coreDataLayer.getLanguagesRepository(),
-            getTranslatedLanguageName: coreDomainLayer.supporting.getTranslatedLanguageName(),
-            localizationServices: coreDataLayer.getLocalizationServices(),
-            stringWithLocaleCount: coreDataLayer.getStringWithLocaleCount()
+            resourcesRepository: core.dataLayer.getResourcesRepository(),
+            languagesRepository: core.dataLayer.getLanguagesRepository(),
+            getTranslatedLanguageName: core.domainLayer.supporting.getTranslatedLanguageName(),
+            localizationServices: core.dataLayer.getLocalizationServices(),
+            stringWithLocaleCount: core.dataLayer.getStringWithLocaleCount()
         )
     }
     
     func getLessonFilterLanguagesStringsUseCase() -> GetLessonFilterLanguagesStringsUseCase {
         
         return GetLessonFilterLanguagesStringsUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
     
     func getLessonFilterLanguagesUseCase() -> GetLessonFilterLanguagesUseCase {
         return GetLessonFilterLanguagesUseCase(
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
-            languagesRepository: coreDataLayer.getLanguagesRepository(),
+            resourcesRepository: core.dataLayer.getResourcesRepository(),
+            languagesRepository: core.dataLayer.getLanguagesRepository(),
             getLessonFilterLangauge: getLessonFilterLangauge()
         )
     }
     
     func getUserLessonFiltersUseCase() -> GetUserLessonFiltersUseCase {
         return GetUserLessonFiltersUseCase(
-            userLessonFiltersRepository: coreDataLayer.getUserLessonFiltersRepository(),
+            userLessonFiltersRepository: core.dataLayer.getUserLessonFiltersRepository(),
             getLessonFilterLanguage: getLessonFilterLangauge()
         )
     }
@@ -61,7 +59,7 @@ final class LessonFilterDomainLayerDependencies {
     
     func getStoreUserLessonFiltersUseCase() -> StoreUserLessonFiltersUseCase {
         return StoreUserLessonFiltersUseCase(
-            userLessonFiltersRepository: coreDataLayer.getUserLessonFiltersRepository()
+            userLessonFiltersRepository: core.dataLayer.getUserLessonFiltersRepository()
         )
     }
 }

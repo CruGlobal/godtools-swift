@@ -13,9 +13,9 @@ final class AppLanguageDiContainer {
     let dataLayer: AppLanguageDataLayerDependencies
     let domainLayer: AppLanguageDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies) {
+    init(core: AppCoreDiContainer) {
         
-        dataLayer = AppLanguageDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainLayer = AppLanguageDomainLayerDependencies(coreDataLayer: coreDataLayer, coreDomainLayer: coreDomainLayer, dataLayer: dataLayer)
+        dataLayer = AppLanguageDataLayerDependencies(coreDataLayer: core.dataLayer)
+        domainLayer = AppLanguageDomainLayerDependencies(core: core, dataLayer: dataLayer)
     }
 }

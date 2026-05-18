@@ -13,9 +13,9 @@ final class ToolScreenShareQRCodeDiContainer {
     let dataLayer: ToolScreenShareQRCodeDataLayerDependencies
     let domainLayer: ToolScreenShareQRCodeDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies) {
+    init(core: AppCoreDiContainer) {
         
-        dataLayer = ToolScreenShareQRCodeDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainLayer = ToolScreenShareQRCodeDomainLayerDependencies(coreDataLayer: coreDataLayer, coreDomainLayer: coreDomainLayer, dataLayer: dataLayer)
+        dataLayer = ToolScreenShareQRCodeDataLayerDependencies(coreDataLayer: core.dataLayer)
+        domainLayer = ToolScreenShareQRCodeDomainLayerDependencies(core: core, dataLayer: dataLayer)
     }
 }

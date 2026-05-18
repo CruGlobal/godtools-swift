@@ -10,38 +10,36 @@ import Foundation
 
 final class LessonsDomainLayerDependencies {
     
-    private let coreDataLayer: AppDataLayerDependencies
+    private let core: AppCoreDiContainer
     private let dataLayer: LessonsDataLayerDependencies
-    private let coreDomainlayer: AppDomainLayerDependencies
     private let personalizedToolsDataLayer: PersonalizedToolsDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, dataLayer: LessonsDataLayerDependencies, coreDomainlayer: AppDomainLayerDependencies, personalizedToolsDataLayer: PersonalizedToolsDataLayerDependencies) {
+    init(core: AppCoreDiContainer, dataLayer: LessonsDataLayerDependencies, personalizedToolsDataLayer: PersonalizedToolsDataLayerDependencies) {
         
-        self.coreDataLayer = coreDataLayer
+        self.core = core
         self.dataLayer = dataLayer
-        self.coreDomainlayer = coreDomainlayer
         self.personalizedToolsDataLayer = personalizedToolsDataLayer
     }
     
     func getAllLessonsUseCase() -> GetAllLessonsUseCase {
         return GetAllLessonsUseCase(
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
-            lessonProgressRepository: coreDataLayer.getUserLessonProgressRepository(),
-            getLessonsListItems: coreDomainlayer.supporting.getLessonsListItems()
+            resourcesRepository: core.dataLayer.getResourcesRepository(),
+            lessonProgressRepository: core.dataLayer.getUserLessonProgressRepository(),
+            getLessonsListItems: core.domainLayer.supporting.getLessonsListItems()
         )
     }
     
     func getLessonsStringsUseCase() -> GetLessonsStringsUseCase {
         return GetLessonsStringsUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
     
     func getPullToRefreshLessonsUseCase() -> PullToRefreshLessonsUseCase {
         return PullToRefreshLessonsUseCase(
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            resourcesRepository: core.dataLayer.getResourcesRepository(),
             personalizedToolsRepository: personalizedToolsDataLayer.getPersonalizedToolsRepository(),
-            getLanguageElseAppLanguage: coreDomainlayer.supporting.getLanguageElseAppLanguage()
+            getLanguageElseAppLanguage: core.domainLayer.supporting.getLanguageElseAppLanguage()
         )
     }
 }

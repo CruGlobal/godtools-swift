@@ -13,9 +13,9 @@ final class SpotlightToolsDiContainer {
     let dataLayer: SpotlightToolsDataLayerDependencies
     let domainLayer: SpotlightToolsDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies) {
+    init(core: AppCoreDiContainer) {
         
-        self.dataLayer = SpotlightToolsDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainLayer = SpotlightToolsDomainLayerDependencies(coreDataLayer: coreDataLayer, coreDomainLayer: coreDomainLayer, dataLayer: dataLayer)
+        self.dataLayer = SpotlightToolsDataLayerDependencies(coreDataLayer: core.dataLayer)
+        domainLayer = SpotlightToolsDomainLayerDependencies(core: core, dataLayer: dataLayer)
     }
 }

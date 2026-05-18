@@ -10,26 +10,24 @@ import Foundation
 
 final class SpotlightToolsDomainLayerDependencies {
     
-    private let coreDataLayer: AppDataLayerDependencies
-    private let coreDomainLayer: AppDomainLayerDependencies
+    private let core: AppCoreDiContainer
     private let dataLayer: SpotlightToolsDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, dataLayer: SpotlightToolsDataLayerDependencies) {
+    init(core: AppCoreDiContainer, dataLayer: SpotlightToolsDataLayerDependencies) {
         
-        self.coreDataLayer = coreDataLayer
-        self.coreDomainLayer = coreDomainLayer
+        self.core = core
         self.dataLayer = dataLayer
     }
     
     func getSpotlightToolsUseCase() -> GetSpotlightToolsUseCase {
         return GetSpotlightToolsUseCase(
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
-            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository(),
-            languagesRepository: coreDataLayer.getLanguagesRepository(),
-            getTranslatedToolName: coreDomainLayer.supporting.getTranslatedToolName(),
-            getTranslatedToolCategory: coreDomainLayer.supporting.getTranslatedToolCategory(),
-            getToolListItemStrings: coreDomainLayer.supporting.getToolListItemStrings(),
-            getTranslatedToolLanguageAvailability: coreDomainLayer.supporting.getTranslatedToolLanguageAvailability()
+            resourcesRepository: core.dataLayer.getResourcesRepository(),
+            favoritedResourcesRepository: core.dataLayer.getFavoritedResourcesRepository(),
+            languagesRepository: core.dataLayer.getLanguagesRepository(),
+            getTranslatedToolName: core.domainLayer.supporting.getTranslatedToolName(),
+            getTranslatedToolCategory: core.domainLayer.supporting.getTranslatedToolCategory(),
+            getToolListItemStrings: core.domainLayer.supporting.getToolListItemStrings(),
+            getTranslatedToolLanguageAvailability: core.domainLayer.supporting.getTranslatedToolLanguageAvailability()
         )
     }
 }

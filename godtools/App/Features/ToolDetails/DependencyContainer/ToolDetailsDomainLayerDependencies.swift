@@ -10,44 +10,42 @@ import Foundation
 
 final class ToolDetailsDomainLayerDependencies {
     
-    private let coreDataLayer: AppDataLayerDependencies
-    private let coreDomainLayer: AppDomainLayerDependencies
+    private let core: AppCoreDiContainer
     private let dataLayer: ToolDetailsDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, dataLayer: ToolDetailsDataLayerDependencies) {
+    init(core: AppCoreDiContainer, dataLayer: ToolDetailsDataLayerDependencies) {
         
-        self.coreDataLayer = coreDataLayer
-        self.coreDomainLayer = coreDomainLayer
+        self.core = core
         self.dataLayer = dataLayer
     }
     
     func getToolDetailsLearnToShareToolIsAvailableUseCase() -> GetToolDetailsLearnToShareToolIsAvailableUseCase {
         return GetToolDetailsLearnToShareToolIsAvailableUseCase(
-            translationsRepository: coreDataLayer.getTranslationsRepository()
+            translationsRepository: core.dataLayer.getTranslationsRepository()
         )
     }
 
     func getToolDetailsMediaUseCase() -> GetToolDetailsMediaUseCase {
         return GetToolDetailsMediaUseCase(
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
-            attachmentsRepository: coreDataLayer.getAttachmentsRepository()
+            resourcesRepository: core.dataLayer.getResourcesRepository(),
+            attachmentsRepository: core.dataLayer.getAttachmentsRepository()
         )
     }
     
     func getToolDetailsStringsUseCase() -> GetToolDetailsStringsUseCase {
         return GetToolDetailsStringsUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
         
     func getToolDetailsUseCase() -> GetToolDetailsUseCase {
         return GetToolDetailsUseCase(
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
-            languagesRepository: coreDataLayer.getLanguagesRepository(),
-            translationsRepository: coreDataLayer.getTranslationsRepository(),
-            localizationServices: coreDataLayer.getLocalizationServices(),
-            getTranslatedLanguageName: coreDomainLayer.supporting.getTranslatedLanguageName(),
-            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository()
+            resourcesRepository: core.dataLayer.getResourcesRepository(),
+            languagesRepository: core.dataLayer.getLanguagesRepository(),
+            translationsRepository: core.dataLayer.getTranslationsRepository(),
+            localizationServices: core.dataLayer.getLocalizationServices(),
+            getTranslatedLanguageName: core.domainLayer.supporting.getTranslatedLanguageName(),
+            favoritedResourcesRepository: core.dataLayer.getFavoritedResourcesRepository()
         )
     }
 }

@@ -10,23 +10,24 @@ import Foundation
 
 final class UserLessonProgressDomainLayerDependencies {
     
+    private let core: AppCoreDiContainer
     private let dataLayer: UserLessonProgressDataLayerDependencies
-    private let coreDataLayer: AppDataLayerDependencies
     
-    init(dataLayer: UserLessonProgressDataLayerDependencies, coreDataLayer: AppDataLayerDependencies) {
+    init(core: AppCoreDiContainer, dataLayer: UserLessonProgressDataLayerDependencies) {
+        
+        self.core = core
         self.dataLayer = dataLayer
-        self.coreDataLayer = coreDataLayer
     }
     
     func getResumeLessonProgressStringsUseCase() -> GetResumeLessonProgressStringsUseCase {
         return GetResumeLessonProgressStringsUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
     
     func getStoreUserLessonProgressUseCase() -> StoreUserLessonProgressUseCase {
         return StoreUserLessonProgressUseCase(
-            lessonProgressRepository: coreDataLayer.getUserLessonProgressRepository()
+            lessonProgressRepository: core.dataLayer.getUserLessonProgressRepository()
         )
     }
 }
