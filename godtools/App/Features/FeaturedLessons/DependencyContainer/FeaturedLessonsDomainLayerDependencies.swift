@@ -10,25 +10,23 @@ import Foundation
 
 final class FeaturedLessonsDomainLayerDependencies {
     
-    private let coreDataLayer: AppDataLayerDependencies
-    private let coreDomainLayer: AppDomainLayerDependencies
+    private let core: AppCoreDiContainer
     private let dataLayer: FeaturedLessonsDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, dataLayer: FeaturedLessonsDataLayerDependencies) {
+    init(core: AppCoreDiContainer, dataLayer: FeaturedLessonsDataLayerDependencies) {
         
-        self.coreDataLayer = coreDataLayer
-        self.coreDomainLayer = coreDomainLayer
+        self.core = core
         self.dataLayer = dataLayer
     }
     
     func getFeaturedLessonsUseCase() -> GetFeaturedLessonsUseCase {
         return GetFeaturedLessonsUseCase(
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
-            languagesRepository: coreDataLayer.getLanguagesRepository(),
-            getTranslatedToolName: coreDomainLayer.supporting.getTranslatedToolName(),
-            getTranslatedToolLanguageAvailability: coreDomainLayer.supporting.getTranslatedToolLanguageAvailability(),
-            lessonProgressRepository: coreDataLayer.getUserLessonProgressRepository(),
-            getLessonListItemProgress: coreDomainLayer.supporting.getLessonListItemProgress()
+            resourcesRepository: core.dataLayer.getResourcesRepository(),
+            languagesRepository: core.dataLayer.getLanguagesRepository(),
+            getTranslatedToolName: core.domainLayer.supporting.getTranslatedToolName(),
+            getTranslatedToolLanguageAvailability: core.domainLayer.supporting.getTranslatedToolLanguageAvailability(),
+            lessonProgressRepository: core.dataLayer.getUserLessonProgressRepository(),
+            getLessonListItemProgress: core.domainLayer.supporting.getLessonListItemProgress()
         )
     }
 }

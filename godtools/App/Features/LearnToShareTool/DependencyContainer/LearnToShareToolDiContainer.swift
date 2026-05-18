@@ -13,9 +13,9 @@ final class LearnToShareToolDiContainer {
     let dataLayer: LearnToShareToolDataLayerDependencies
     let domainLayer: LearnToShareToolDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies) {
+    init(core: AppCoreDiContainer) {
         
-        dataLayer = LearnToShareToolDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainLayer = LearnToShareToolDomainLayerDependencies(coreDataLayer: coreDataLayer, coreDomainLayer: coreDomainLayer, dataLayer: dataLayer)
+        dataLayer = LearnToShareToolDataLayerDependencies(coreDataLayer: core.dataLayer)
+        domainLayer = LearnToShareToolDomainLayerDependencies(core: core, dataLayer: dataLayer)
     }
 }

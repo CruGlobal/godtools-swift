@@ -10,18 +10,18 @@ import Foundation
 
 final class OnboardingDomainLayerDependencies {
     
-    private let coreDataLayer: AppDataLayerDependencies
+    private let core: AppCoreDiContainer
     private let dataLayer: OnboardingDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, dataLayer: OnboardingDataLayerDependencies) {
+    init(core: AppCoreDiContainer, dataLayer: OnboardingDataLayerDependencies) {
         
-        self.coreDataLayer = coreDataLayer
+        self.core = core
         self.dataLayer = dataLayer
     }
     
     func getOnboardingTutorialIsAvailable() -> GetOnboardingTutorialIsAvailable {
         return GetOnboardingTutorialIsAvailable(
-            launchCountRepository: coreDataLayer.getLaunchCountRepository(),
+            launchCountRepository: core.dataLayer.getLaunchCountRepository(),
             onboardingTutorialViewedRepository: dataLayer.getOnboardingTutorialViewedRepository()
         )
     }
@@ -34,7 +34,7 @@ final class OnboardingDomainLayerDependencies {
     
     func getOnboardingTutorialStringsUseCase() -> GetOnboardingTutorialStringsUseCase {
         return GetOnboardingTutorialStringsUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
     

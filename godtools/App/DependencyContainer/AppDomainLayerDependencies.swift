@@ -26,12 +26,6 @@ final class AppDomainLayerDependencies {
         )
     }
     
-    func getDisableOptInOnboardingBannerUseCase() -> DisableOptInOnboardingBannerUseCase {
-        return DisableOptInOnboardingBannerUseCase(
-            optInOnboardingBannerEnabledRepository: dataLayer.getOptInOnboardingBannerEnabledRepository()
-        )
-    }
-    
     func getDownloadLatestToolsForFavoritedToolsUseCase() -> DownloadLatestToolsForFavoritedToolsUseCase {
         return DownloadLatestToolsForFavoritedToolsUseCase(
             favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository(),
@@ -40,17 +34,6 @@ final class AppDomainLayerDependencies {
         )
     }
     
-    func getOptInOnboardingBannerEnabledUseCase() -> GetOptInOnboardingBannerEnabledUseCase {
-        return GetOptInOnboardingBannerEnabledUseCase(
-            getOptInOnboardingTutorialAvailableUseCase: getOptInOnboardingTutorialAvailableUseCase(),
-            optInOnboardingBannerEnabledRepository: dataLayer.getOptInOnboardingBannerEnabledRepository()
-        )
-    }
-    
-    func getOptInOnboardingTutorialAvailableUseCase() -> GetOptInOnboardingTutorialAvailableUseCase {
-        return GetOptInOnboardingTutorialAvailableUseCase()
-    }
-
     func getSetCompletedTrainingTipUseCase() -> SetCompletedTrainingTipUseCase {
         return SetCompletedTrainingTipUseCase(
             repository: dataLayer.getCompletedTrainingTipRepository()

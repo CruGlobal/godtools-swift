@@ -13,9 +13,9 @@ final class DeferredDeepLinkDiContainer {
     let dataLayer: DeferredDeepLinkDataLayerDependencies
     let domainLayer: DeferredDeepLinkDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(core: AppCoreDiContainer) {
         
-        dataLayer = DeferredDeepLinkDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainLayer = DeferredDeepLinkDomainLayerDependencies(coreDataLayer: coreDataLayer, dataLayer: dataLayer)
+        dataLayer = DeferredDeepLinkDataLayerDependencies(coreDataLayer: core.dataLayer)
+        domainLayer = DeferredDeepLinkDomainLayerDependencies(core: core, dataLayer: dataLayer)
     }
 }

@@ -10,12 +10,12 @@ import Foundation
 
 final class AccountDomainLayerDependencies {
     
-    private let coreDataLayer: AppDataLayerDependencies
+    private let core: AppCoreDiContainer
     private let dataLayer: AccountDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, dataLayer: AccountDataLayerDependencies) {
+    init(core: AppCoreDiContainer, dataLayer: AccountDataLayerDependencies) {
         
-        self.coreDataLayer = coreDataLayer
+        self.core = core
         self.dataLayer = dataLayer
     }
     
@@ -25,73 +25,73 @@ final class AccountDomainLayerDependencies {
     
     func getAccountStringsUseCase() -> GetAccountStringsUseCase {
         return GetAccountStringsUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
     
     func getAuthenticateUserUseCase() -> AuthenticateUserUseCase {
         return AuthenticateUserUseCase(
-            userAuthentication: coreDataLayer.getUserAuthentication(),
-            emailSignUpService: coreDataLayer.getEmailSignUpService(),
-            firebaseAnalytics: coreDataLayer.getAnalytics().firebaseAnalytics
+            userAuthentication: core.dataLayer.getUserAuthentication(),
+            emailSignUpService: core.dataLayer.getEmailSignUpService(),
+            firebaseAnalytics: core.dataLayer.getAnalytics().firebaseAnalytics
         )
     }
     
     func getDeleteAccountProgressStringsUseCase() -> GetDeleteAccountProgressStringsUseCase {
         return GetDeleteAccountProgressStringsUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
     
     func getDeleteAccountStringsUseCase() -> GetDeleteAccountStringsUseCase {
         return GetDeleteAccountStringsUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
     
     func getDeleteAccountUseCase() -> DeleteAccountUseCase {
         return DeleteAccountUseCase(
-            userAuthentication: coreDataLayer.getUserAuthentication(),
+            userAuthentication: core.dataLayer.getUserAuthentication(),
             userDetailsRepository: dataLayer.getUserDetailsRepository()
         )
     }
     
     func getDidPullToRefreshAccountUseCase() -> DidPullToRefreshAccountUseCase {
         return DidPullToRefreshAccountUseCase(
-            userCountersSync: coreDataLayer.getSharedUserCountersSync()
+            userCountersSync: core.dataLayer.getSharedUserCountersSync()
         )
     }
     
     func getLogOutUserUseCase() -> LogOutUserUseCase {
         return LogOutUserUseCase(
-            userAuthentication: coreDataLayer.getUserAuthentication(),
-            firebaseAnalytics: coreDataLayer.getAnalytics().firebaseAnalytics,
-            userCountersRepository: coreDataLayer.getUserCountersRepository()
+            userAuthentication: core.dataLayer.getUserAuthentication(),
+            firebaseAnalytics: core.dataLayer.getAnalytics().firebaseAnalytics,
+            userCountersRepository: core.dataLayer.getUserCountersRepository()
         )
     }
     
     func getSocialCreateAccountStringsUseCase() -> GetSocialCreateAccountStringsUseCase {
         return GetSocialCreateAccountStringsUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
     
     func getSocialSignInStringsUseCase() -> GetSocialSignInStringsUseCase {
         return GetSocialSignInStringsUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
     
     func getUserAccountDetailsUseCase() -> GetUserAccountDetailsUseCase {
         return GetUserAccountDetailsUseCase(
             userDetailsRepository: dataLayer.getUserDetailsRepository(),
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
     
     func getUserIsAuthenticatedUseCase() -> GetUserIsAuthenticatedUseCase {
         return GetUserIsAuthenticatedUseCase(
-            userAuthentication: coreDataLayer.getUserAuthentication()
+            userAuthentication: core.dataLayer.getUserAuthentication()
         )
     }
 }

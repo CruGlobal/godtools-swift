@@ -10,67 +10,65 @@ import Foundation
 
 final class FavoritesDomainLayerDependencies {
     
-    private let coreDataLayer: AppDataLayerDependencies
-    private let coreDomainLayer: AppDomainLayerDependencies
+    private let core: AppCoreDiContainer
     private let dataLayer: FavoritesDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, dataLayer: FavoritesDataLayerDependencies) {
+    init(core: AppCoreDiContainer, dataLayer: FavoritesDataLayerDependencies) {
         
-        self.coreDataLayer = coreDataLayer
-        self.coreDomainLayer = coreDomainLayer
+        self.core = core
         self.dataLayer = dataLayer
     }
     
     func getAllYourFavoritedToolsStringsUseCase() -> GetAllYourFavoritedToolsStringsUseCase {
         return GetAllYourFavoritedToolsStringsUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
     
     func getConfirmRemoveToolFromFavoritesStringsUseCase() -> GetConfirmRemoveToolFromFavoritesStringsUseCase {
         return GetConfirmRemoveToolFromFavoritesStringsUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices(),
-            getTranslatedToolName: coreDomainLayer.supporting.getTranslatedToolName()
+            localizationServices: core.dataLayer.getLocalizationServices(),
+            getTranslatedToolName: core.domainLayer.supporting.getTranslatedToolName()
         )
     }
     
     func getFavoritesStringsUseCase() -> GetFavoritesStringsUseCase {
         return GetFavoritesStringsUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
     
     func getRemoveFavoritedToolUseCase() -> RemoveFavoritedToolUseCase {
         return RemoveFavoritedToolUseCase(
-            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository()
+            favoritedResourcesRepository: core.dataLayer.getFavoritedResourcesRepository()
         )
     }
     
     func getReorderFavoritedToolUseCase() -> ReorderFavoritedToolUseCase {
         return ReorderFavoritedToolUseCase(
-            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository()
+            favoritedResourcesRepository: core.dataLayer.getFavoritedResourcesRepository()
         )
     }
     
     func getToggleToolFavoritedUseCase() -> ToggleToolFavoritedUseCase {
         return ToggleToolFavoritedUseCase(
-            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository()
+            favoritedResourcesRepository: core.dataLayer.getFavoritedResourcesRepository()
         )
     }
     
     func getToolIsFavoritedUseCase() -> GetToolIsFavoritedUseCase {
         return GetToolIsFavoritedUseCase(
-            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository()
+            favoritedResourcesRepository: core.dataLayer.getFavoritedResourcesRepository()
         )
     }
     
     func getYourFavoritedToolsUseCase() -> GetYourFavoritedToolsUseCase {
         return GetYourFavoritedToolsUseCase(
-            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository(),
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
-            getTranslatedToolName: coreDomainLayer.supporting.getTranslatedToolName(),
-            getTranslatedToolCategory: coreDomainLayer.supporting.getTranslatedToolCategory(),
-            getToolListItemStrings: coreDomainLayer.supporting.getToolListItemStrings()
+            favoritedResourcesRepository: core.dataLayer.getFavoritedResourcesRepository(),
+            resourcesRepository: core.dataLayer.getResourcesRepository(),
+            getTranslatedToolName: core.domainLayer.supporting.getTranslatedToolName(),
+            getTranslatedToolCategory: core.domainLayer.supporting.getTranslatedToolCategory(),
+            getToolListItemStrings: core.domainLayer.supporting.getToolListItemStrings()
         )
     }
 }
