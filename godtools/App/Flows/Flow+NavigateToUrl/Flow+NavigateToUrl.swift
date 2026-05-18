@@ -12,7 +12,7 @@ extension Flow {
     
     func navigateToURL(url: URL, screenName: String, siteSection: String, siteSubSection: String, appLanguage: String?, contentLanguage: String?, contentLanguageSecondary: String?) {
         
-        appDiContainer.domainLayer.getTrackExitLinkAnalyticsUseCase().trackExitLinkAnalytics(
+        appDiContainer.core.domainLayer.getTrackExitLinkAnalyticsUseCase().trackExitLinkAnalytics(
             screenName: screenName,
             siteSection: siteSection,
             siteSubSection: siteSubSection,

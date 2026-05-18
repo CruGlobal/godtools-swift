@@ -219,7 +219,7 @@ extension ToolSettingsFlow {
     
     private func presentShareTool() {
         
-        let toolAbbreviation: String = appDiContainer.dataLayer.getResourcesRepository().getResourceNonThrowing(id: toolSettingsObserver.toolId)?.abbreviation ?? ""
+        let toolAbbreviation: String = appDiContainer.core.dataLayer.getResourcesRepository().getResourceNonThrowing(id: toolSettingsObserver.toolId)?.abbreviation ?? ""
         
         shareToolFlow = ShareToolFlow(
             flowDelegate: self,

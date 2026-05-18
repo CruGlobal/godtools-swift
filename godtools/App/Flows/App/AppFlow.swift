@@ -52,8 +52,8 @@ final class AppFlow: NSObject, Flow {
         self.navigationController = AppNavigationController(navigationBarAppearance: navigationBarAppearance, hidesNavigationBar: true)
         self.rootView = AppRootView(appRootController: rootController)
         self.deepLinkingService = appDeepLinkingService
-        self.appMessaging = appDiContainer.dataLayer.getAppMessaging()
-        self.launchCountRepository = appDiContainer.dataLayer.getLaunchCountRepository()
+        self.appMessaging = appDiContainer.core.dataLayer.getAppMessaging()
+        self.launchCountRepository = appDiContainer.core.dataLayer.getLaunchCountRepository()
         self.dashboardFlow = DashboardFlow(appDiContainer: appDiContainer, sharedNavigationController: navigationController, rootController: rootController)
         
         if let deepLinkUrl = deepLinkUrl {
@@ -276,11 +276,11 @@ extension AppFlow {
     
     private func loadInitialData() {
         
-        let resourcesRepository: ResourcesRepository = appDiContainer.dataLayer.getResourcesRepository()
+        let resourcesRepository: ResourcesRepository = appDiContainer.core.dataLayer.getResourcesRepository()
         let toolLanguageDownloader: ToolLanguageDownloader = appDiContainer.feature.appLanguage.dataLayer.getToolLanguageDownloader()
-        let followUpsService: FollowUpsService = appDiContainer.dataLayer.getFollowUpsService()
-        let resourceViewsService: ResourceViewsService = appDiContainer.dataLayer.getResourceViewsService()
-        let remoteConfigRepository: RemoteConfigRepository = appDiContainer.dataLayer.getRemoteConfigRepository()
+        let followUpsService: FollowUpsService = appDiContainer.core.dataLayer.getFollowUpsService()
+        let resourceViewsService: ResourceViewsService = appDiContainer.core.dataLayer.getResourceViewsService()
+        let remoteConfigRepository: RemoteConfigRepository = appDiContainer.core.dataLayer.getRemoteConfigRepository()
         
         Task {
             
@@ -316,7 +316,7 @@ extension AppFlow {
         
         Task {
             
-            let userAuthentication: UserAuthentication = appDiContainer.dataLayer.getUserAuthentication()
+            let userAuthentication: UserAuthentication = appDiContainer.core.dataLayer.getUserAuthentication()
             
             _ = try await userAuthentication.renewToken()
             _ = try await userAuthentication.getAuthUser()
@@ -472,7 +472,7 @@ extension AppFlow {
             flowDelegate: self,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getDeferredDeepLinkModalStringsUseCase: appDiContainer.feature.deferredDeepLink.domainLayer.getDeferredDeepLinkModalStringsUseCase(),
-            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
+            trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase(),
             deepLinkingService: deepLinkingService
         )
         

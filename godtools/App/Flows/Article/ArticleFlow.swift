@@ -32,7 +32,7 @@ class ArticleFlow: Flow {
             translation: languageTranslationManifest.translation,
             language: languageTranslationManifest.language,
             manifest: languageTranslationManifest.manifest,
-            articleManifestAemRepository: appDiContainer.dataLayer.getArticleManifestAemRepository()
+            articleManifestAemRepository: appDiContainer.core.dataLayer.getArticleManifestAemRepository()
         )
         
         downloadArticlesObservable.downloadArticles(
@@ -82,8 +82,8 @@ class ArticleFlow: Flow {
             
             let viewModel = ShareArticleViewModel(
                 articleAemData: articleAemData,
-                trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-                trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
+                trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+                trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase()
             )
             
             let view = ShareArticleView(viewModel: viewModel)
@@ -116,8 +116,8 @@ extension ArticleFlow {
             getArticleCategoriesUseCase: appDiContainer.feature.articles.domainLayer.getArticleCategoriesUseCase(),
             pullToRefreshArticlesUseCase: appDiContainer.feature.articles.domainLayer.getPullToRefreshArticlesUseCase(),
             incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase(),
-            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
+            trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+            trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase()
         )
         
         let view = ArticleCategoriesView(viewModel: viewModel)
@@ -150,10 +150,10 @@ extension ArticleFlow {
             category: category,
             manifest: manifest,
             downloadArticlesObservable: downloadArticlesObservable,
-            articleManifestAemRepository: appDiContainer.dataLayer.getArticleManifestAemRepository(),
+            articleManifestAemRepository: appDiContainer.core.dataLayer.getArticleManifestAemRepository(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase()
+            localizationServices: appDiContainer.core.dataLayer.getLocalizationServices(),
+            trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase()
         )
         
         let backButton = AppBackBarItem(
@@ -182,8 +182,8 @@ extension ArticleFlow {
             flowType: .tool(resource: resource),
             aemCacheObject: aemCacheObject,
             incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase(),
-            getAppUIDebuggingIsEnabledUseCase: appDiContainer.domainLayer.getAppUIDebuggingIsEnabledUseCase(),
-            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase()
+            getAppUIDebuggingIsEnabledUseCase: appDiContainer.core.domainLayer.getAppUIDebuggingIsEnabledUseCase(),
+            trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase()
         )
         
         let backButton = AppBackBarItem(
