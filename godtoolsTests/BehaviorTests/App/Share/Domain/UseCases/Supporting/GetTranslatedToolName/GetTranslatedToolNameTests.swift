@@ -94,8 +94,8 @@ extension GetTranslatedToolNameTests {
     
     private func getTranslatedToolName(testsDiContainer: TestsDiContainer) -> GetTranslatedToolName {
         return GetTranslatedToolName(
-            resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
-            translationsRepository: testsDiContainer.dataLayer.getTranslationsRepository()
+            resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),
+            translationsRepository: testsDiContainer.core.dataLayer.getTranslationsRepository()
         )
     }
     

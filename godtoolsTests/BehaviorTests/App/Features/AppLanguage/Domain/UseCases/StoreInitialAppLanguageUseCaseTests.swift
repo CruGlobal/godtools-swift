@@ -45,7 +45,7 @@ struct StoreInitialAppLanguageUseCaseTests {
         
         let testsDiContainer = try getTestsDiContainer()
         
-        let realmDatabase: RealmDatabase = testsDiContainer.dataLayer.getSharedRealmDatabase()
+        let realmDatabase: RealmDatabase = testsDiContainer.core.dataLayer.getSharedRealmDatabase()
                 
         let appLanguages: [AppLanguageCodable] = [
             AppLanguageCodable(languageCode: "ar", languageDirection: .rightToLeft, languageScriptCode: nil),
@@ -127,7 +127,7 @@ struct StoreInitialAppLanguageUseCaseTests {
         
         let testsDiContainer = try getTestsDiContainer()
         
-        let realmDatabase: RealmDatabase = testsDiContainer.dataLayer.getSharedRealmDatabase()
+        let realmDatabase: RealmDatabase = testsDiContainer.core.dataLayer.getSharedRealmDatabase()
         
         let appLanguages: [AppLanguageCodable] = [
             AppLanguageCodable(languageCode: "ar", languageDirection: .rightToLeft, languageScriptCode: nil),
@@ -208,7 +208,7 @@ struct StoreInitialAppLanguageUseCaseTests {
         
         let testsDiContainer = try getTestsDiContainer()
         
-        let realmDatabase: RealmDatabase = testsDiContainer.dataLayer.getSharedRealmDatabase()
+        let realmDatabase: RealmDatabase = testsDiContainer.core.dataLayer.getSharedRealmDatabase()
         
         let appLanguages: [AppLanguageCodable] = [
             AppLanguageCodable(languageCode: "ar", languageDirection: .rightToLeft, languageScriptCode: nil),
@@ -281,7 +281,7 @@ extension StoreInitialAppLanguageUseCaseTests {
     private func getUserAppLanguageRepository(testsDiContainer: TestsDiContainer) -> UserAppLanguageRepository {
         
         let persistence = RealmRepositorySyncPersistence(
-            database: testsDiContainer.dataLayer.getSharedRealmDatabase(),
+            database: testsDiContainer.core.dataLayer.getSharedRealmDatabase(),
             dataModelMapping: RealmUserAppLanguageMapping()
         )
         

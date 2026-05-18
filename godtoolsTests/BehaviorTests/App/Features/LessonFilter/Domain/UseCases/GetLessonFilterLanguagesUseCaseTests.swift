@@ -238,8 +238,8 @@ extension GetLessonFilterLanguagesUseCaseTests {
         let testsDiContainer = try getTestsDiContainer()
         
         let getLessonFilterLanguagesRepository = GetLessonFilterLanguagesUseCase(
-            resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
-            languagesRepository: testsDiContainer.dataLayer.getLanguagesRepository(),
+            resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),
+            languagesRepository: testsDiContainer.core.dataLayer.getLanguagesRepository(),
             getLessonFilterLangauge: getLessonFilterLangauge(testsDiContainer: testsDiContainer)
         )
         
@@ -275,8 +275,8 @@ extension GetLessonFilterLanguagesUseCaseTests {
     
     private func getLessonFilterLangauge(testsDiContainer: TestsDiContainer) -> GetLessonFilterLanguage {
         return GetLessonFilterLanguage(
-            resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
-            languagesRepository: testsDiContainer.dataLayer.getLanguagesRepository(),
+            resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),
+            languagesRepository: testsDiContainer.core.dataLayer.getLanguagesRepository(),
             getTranslatedLanguageName: getTranslatedLanguageName(),
             localizationServices: getLocalizationServices(),
             stringWithLocaleCount: getStringWithLocaleCount()
