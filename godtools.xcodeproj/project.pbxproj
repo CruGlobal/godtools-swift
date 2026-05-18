@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		452556442C383C3F00AA0046 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 452556432C383C3F00AA0046 /* RealmSwift */; };
 		452556452C383C3F00AA0046 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 452556432C383C3F00AA0046 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		453103A32FBB9EEB00A1293A /* SwiftData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4531035B2FBB9E0900A1293A /* SwiftData.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		4548320B2F0C4EFC00CF9CF0 /* RepositorySync in Frameworks */ = {isa = PBXBuildFile; productRef = 4548320A2F0C4EFC00CF9CF0 /* RepositorySync */; };
 		4548320D2F0C4F0900CF9CF0 /* RepositorySync in Frameworks */ = {isa = PBXBuildFile; productRef = 4548320C2F0C4F0900CF9CF0 /* RepositorySync */; };
 		4581EAA32BFBE194008115FF /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4581EAA22BFBE194008115FF /* RealmSwift */; };
@@ -144,6 +145,7 @@
 		407763C996134F95C162DFB6 /* libPods-godtoolsTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-godtoolsTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		451F7A802ABD2F1100006EF2 /* Quick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		451F7A822ABD2F1400006EF2 /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4531035B2FBB9E0900A1293A /* SwiftData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftData.framework; path = System/Library/Frameworks/SwiftData.framework; sourceTree = SDKROOT; };
 		45AD217E2593ABC800A096A0 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		45B4DA262F50CD3E007EF287 /* FirebaseNotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FirebaseNotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F12296C20852BE3008842CC /* godtoolsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = godtoolsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -331,6 +333,7 @@
 				45CF09702784B910007F13D3 /* RequestOperation in Frameworks */,
 				4593DEFE2EABFD45004E1C8D /* GodToolsShared in Frameworks */,
 				45C15DF92F6C78F1006B9020 /* DynalinksSDK in Frameworks */,
+				453103A32FBB9EEB00A1293A /* SwiftData.framework in Frameworks */,
 				45DF96512D386C1C00C6AE68 /* FirebaseRemoteConfig in Frameworks */,
 				45E7D4C42977430A008C7503 /* ZipArchive in Frameworks */,
 				45B0F6A72DBBCC300011FF1D /* FirebaseMessaging in Frameworks */,
@@ -360,6 +363,7 @@
 		20ECC28E617DF10976739E6B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4531035B2FBB9E0900A1293A /* SwiftData.framework */,
 				451F7A822ABD2F1400006EF2 /* Nimble.framework */,
 				451F7A802ABD2F1100006EF2 /* Quick.framework */,
 				4F2500611F0C1E8D00364FBC /* AdSupport.framework */,
