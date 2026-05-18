@@ -133,7 +133,7 @@ extension FollowUpsServiceTests {
         
         let testsDiContainer = try getTestsDiContainer(addRealmObjects: addRealmObjects)
         
-        let cache = FailedFollowUpsCache(realmDatabase: testsDiContainer.dataLayer.getSharedRealmDatabase())
+        let cache = FailedFollowUpsCache(realmDatabase: testsDiContainer.core.dataLayer.getSharedRealmDatabase())
         
         return cache
     }

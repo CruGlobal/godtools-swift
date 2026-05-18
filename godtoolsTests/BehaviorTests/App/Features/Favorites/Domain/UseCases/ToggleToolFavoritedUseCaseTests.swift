@@ -65,7 +65,7 @@ struct ToggleToolFavoritedUseCaseTests {
                 .store(in: &cancellables)
         }
         
-        let favoritedResources: [FavoritedResourceDataModel] = try await testsDiContainer.dataLayer.getFavoritedResourcesRepository().getFavoritedResourcesSortedByPosition()
+        let favoritedResources: [FavoritedResourceDataModel] = try await testsDiContainer.core.dataLayer.getFavoritedResourcesRepository().getFavoritedResourcesSortedByPosition()
         
         for (expectedId, expectedPosition) in argument.expectedUpdatedIdsAtPositions {
             

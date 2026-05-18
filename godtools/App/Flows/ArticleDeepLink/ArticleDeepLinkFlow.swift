@@ -40,7 +40,7 @@ final class ArticleDeepLinkFlow: Flow {
                 
                 self?.appLanguage = appLanguage
                 
-                if let aemCacheObject = appDiContainer.dataLayer.getArticleAemRepository().getAemCacheObjectNonThrowing(aemUri: aemUri) {
+                if let aemCacheObject = appDiContainer.core.dataLayer.getArticleAemRepository().getAemCacheObjectNonThrowing(aemUri: aemUri) {
                     
                     self?.navigateToArticleWebView(aemCacheObject: aemCacheObject, animated: true)
                 }
@@ -66,7 +66,7 @@ final class ArticleDeepLinkFlow: Flow {
             
         case .didFailToDownloadArticleFromLoadingArticle(let alertMessage):
             
-            let localizationServices: LocalizationServicesInterface = appDiContainer.dataLayer.getLocalizationServices()
+            let localizationServices: LocalizationServicesInterface = appDiContainer.core.dataLayer.getLocalizationServices()
             let appLanguage: AppLanguageDomainModel = self.appLanguage
             
             navigationController.dismiss(animated: true) { [weak self] in
@@ -102,8 +102,8 @@ extension ArticleDeepLinkFlow {
             flowDelegate: self,
             aemUri: aemUri,
             appLanguage: appLanguage,
-            articleAemRepository: appDiContainer.dataLayer.getArticleAemRepository(),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices()
+            articleAemRepository: appDiContainer.core.dataLayer.getArticleAemRepository(),
+            localizationServices: appDiContainer.core.dataLayer.getLocalizationServices()
         )
         
         let navigationBar = AppNavigationBar(
@@ -128,8 +128,8 @@ extension ArticleDeepLinkFlow {
             flowType: .deeplink,
             aemCacheObject: aemCacheObject,
             incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase(),
-            getAppUIDebuggingIsEnabledUseCase: appDiContainer.domainLayer.getAppUIDebuggingIsEnabledUseCase(),
-            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase()
+            getAppUIDebuggingIsEnabledUseCase: appDiContainer.core.domainLayer.getAppUIDebuggingIsEnabledUseCase(),
+            trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase()
         )
         
         let backButton = AppBackBarItem(

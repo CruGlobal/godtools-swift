@@ -65,7 +65,7 @@ class LessonFlow: ToolNavigationFlow, Flow {
     }
     
     private var userLessonProgress: UserLessonProgressDataModel? {
-        return appDiContainer.dataLayer.getUserLessonProgressRepository().getLessonProgress(lessonId: lesson.id)
+        return appDiContainer.core.dataLayer.getUserLessonProgressRepository().getLessonProgress(lessonId: lesson.id)
     }
     
     private var userLessonProgressPage: MobileContentRendererInitialPage? {
@@ -262,11 +262,11 @@ extension LessonFlow {
             initialPage: initialPage,
             initialPageConfig: initialPageConfig,
             initialPageSubIndex: initialPageSubIndex,
-            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
-            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
+            resourcesRepository: appDiContainer.core.dataLayer.getResourcesRepository(),
+            translationsRepository: appDiContainer.core.dataLayer.getTranslationsRepository(),
             mobileContentEventAnalytics: appDiContainer.getMobileContentRendererEventAnalyticsTracking(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getTranslatedLanguageName: appDiContainer.domainLayer.supporting.getTranslatedLanguageName(),
+            getTranslatedLanguageName: appDiContainer.core.domainLayer.supporting.getTranslatedLanguageName(),
             storeLessonProgressUseCase: appDiContainer.feature.lessonProgress.domainLayer.getStoreUserLessonProgressUseCase(),
             trainingTipsEnabled: trainingTipsEnabled,
             incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase()

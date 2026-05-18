@@ -182,7 +182,7 @@ struct GetUserLessonFiltersUseCaseTests {
                         originalLessonLanguageFilterRef = userLessonFilters.languageFilter
                         
                         Task {
-                            try await testsDiContainer.dataLayer.getUserLessonFiltersRepository().storeUserLessonLanguageFilter(
+                            try await testsDiContainer.core.dataLayer.getUserLessonFiltersRepository().storeUserLessonLanguageFilter(
                                 languageId: spanishLanguage.id
                             )
                         }
@@ -227,15 +227,15 @@ extension GetUserLessonFiltersUseCaseTests {
     private func getUserLessonFiltersUseCase(testsDiContainer: TestsDiContainer) -> GetUserLessonFiltersUseCase {
                 
         return GetUserLessonFiltersUseCase(
-            userLessonFiltersRepository: testsDiContainer.dataLayer.getUserLessonFiltersRepository(),
+            userLessonFiltersRepository: testsDiContainer.core.dataLayer.getUserLessonFiltersRepository(),
             getLessonFilterLanguage: getLessonFilterLangauge(testsDiContainer: testsDiContainer)
         )
     }
     
     private func getLessonFilterLangauge(testsDiContainer: TestsDiContainer) -> GetLessonFilterLanguage {
         return GetLessonFilterLanguage(
-            resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
-            languagesRepository: testsDiContainer.dataLayer.getLanguagesRepository(),
+            resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),
+            languagesRepository: testsDiContainer.core.dataLayer.getLanguagesRepository(),
             getTranslatedLanguageName: getTranslatedLanguageName(),
             localizationServices: getLocalizationServices(),
             stringWithLocaleCount: getStringWithLocaleCount()

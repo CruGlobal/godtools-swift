@@ -152,7 +152,7 @@ extension FavoritedResourcesCacheTests {
         )
         
         let persistence = RealmRepositorySyncPersistence(
-            database: testsDiContainer.dataLayer.getSharedRealmDatabase(),
+            database: testsDiContainer.core.dataLayer.getSharedRealmDatabase(),
             dataModelMapping: RealmFavoritedResourceMapping()
         )
         

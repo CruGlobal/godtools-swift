@@ -188,9 +188,9 @@ extension GetDownloadToolProgressStringsUseCaseTests {
         ]
         
         let getDownloadToolProgressStringsUseCase = GetDownloadToolProgressStringsUseCase(
-            resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
+            resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),
             localizationServices: MockLocalizationServices(localizableStrings: localizableStrings),
-            favoritedResourcesRepository: testsDiContainer.dataLayer.getFavoritedResourcesRepository()
+            favoritedResourcesRepository: testsDiContainer.core.dataLayer.getFavoritedResourcesRepository()
         )
         
         return getDownloadToolProgressStringsUseCase

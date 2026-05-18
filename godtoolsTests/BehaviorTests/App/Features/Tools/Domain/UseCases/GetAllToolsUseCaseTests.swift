@@ -431,8 +431,8 @@ extension GetAllToolsUseCaseTests {
         let testsDiContainer: TestsDiContainer = try getTestsDiContainer()
         
         return GetAllToolsUseCase(
-            resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
-            getToolsListItems: testsDiContainer.domainLayer.supporting.getToolsListItems()
+            resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),
+            getToolsListItems: testsDiContainer.core.domainLayer.supporting.getToolsListItems()
         )
     }
 }

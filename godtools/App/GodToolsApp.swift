@@ -15,7 +15,7 @@ struct GodToolsApp: App {
         case uiTests
     }
     
-    private static let appDeepLinkingService: DeepLinkingService = appDiContainer.dataLayer.getDeepLinkingService()
+    private static let appDeepLinkingService: DeepLinkingService = appDiContainer.core.dataLayer.getDeepLinkingService()
     private static let appDiContainer = AppDiContainer(appConfig: appConfig)
     private static let uiTestsLaunchEnvironment: UITestsLaunchEnvironment = UITestsLaunchEnvironment()
     
@@ -55,6 +55,7 @@ struct GodToolsApp: App {
             deepLinkUrl = Self.processUITestsDeepLink()
             
             Self.appDiContainer
+                .core
                 .dataLayer
                 .getUITestsInitialDataLoader()
                 .loadData()
@@ -65,11 +66,11 @@ struct GodToolsApp: App {
         }
 
         if Self.appConfig.firebaseEnabled {
-            Self.appDiContainer.dataLayer.getFirebaseConfiguration().configure()
+            Self.appDiContainer.core.dataLayer.getFirebaseConfiguration().configure()
         }
         
         if Self.appConfig.buildConfig == .analyticsLogging {
-            Self.appDiContainer.dataLayer.getFirebaseDebugArguments().enable()
+            Self.appDiContainer.core.dataLayer.getFirebaseDebugArguments().enable()
         }
         
         Self.configureDynalinkDeferredDeepLinking()
@@ -82,13 +83,13 @@ struct GodToolsApp: App {
         
         if Self.appConfig.buildConfig == .release {
             GodToolsParserLogger.shared.start(
-                errorReporting: Self.appDiContainer.dataLayer.getErrorReporting(),
-                firebaseErrorReporting: Self.appDiContainer.dataLayer.getFirebaseNonFatalErrorReporting()
+                errorReporting: Self.appDiContainer.core.dataLayer.getErrorReporting(),
+                firebaseErrorReporting: Self.appDiContainer.core.dataLayer.getFirebaseNonFatalErrorReporting()
             )
         }
         
         if Self.appConfig.firebaseEnabled {
-            Self.appDiContainer.dataLayer.getAnalytics().firebaseAnalytics.configure()
+            Self.appDiContainer.core.dataLayer.getAnalytics().firebaseAnalytics.configure()
         }
         
         toolShortcutLinksViewModel = ToolShortcutLinksViewModel(
@@ -227,7 +228,7 @@ extension GodToolsApp {
         
         if let toolDeepLinkUrlString = ToolShortcutLinksViewModel.getToolDeepLinkUrl(shortcutItem: shortcutItem), let toolDeepLinkUrl = URL(string: toolDeepLinkUrlString) {
             
-            let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
+            let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase()
             
             trackActionAnalyticsUseCase.trackAction(
                 screenName: "",

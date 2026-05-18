@@ -74,7 +74,7 @@ extension EmailSignUpServiceTests {
         
         let testsDiContainer = try getTestsDiContainer()
         
-        let cache = EmailSignUpsCache(realmDatabase: testsDiContainer.dataLayer.getSharedRealmDatabase())
+        let cache = EmailSignUpsCache(realmDatabase: testsDiContainer.core.dataLayer.getSharedRealmDatabase())
         
         return cache
     }

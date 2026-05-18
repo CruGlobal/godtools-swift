@@ -155,7 +155,7 @@ class MenuFlow: Flow, LocalizationSettingsNavigationFlow {
             navigationController.present(getShareGodToolsView(), animated: true, completion: nil)
             
         case .sendFeedbackTappedFromMenu:
-            let sendFeedbackWebContent = SendFeedbackWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
+            let sendFeedbackWebContent = SendFeedbackWebContent(localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
             
             pushWebContentView(
                 webContent: sendFeedbackWebContent,
@@ -167,7 +167,7 @@ class MenuFlow: Flow, LocalizationSettingsNavigationFlow {
             navigationController.popViewController(animated: true)
             
         case .reportABugTappedFromMenu:
-            let reportABugWebContent = ReportABugWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
+            let reportABugWebContent = ReportABugWebContent(localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
             
             pushWebContentView(
                 webContent: reportABugWebContent,
@@ -179,7 +179,7 @@ class MenuFlow: Flow, LocalizationSettingsNavigationFlow {
             navigationController.popViewController(animated: true)
             
         case .askAQuestionTappedFromMenu:
-            let askAQuestionWebContent = AskAQuestionWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
+            let askAQuestionWebContent = AskAQuestionWebContent(localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
             
             pushWebContentView(
                 webContent: askAQuestionWebContent,
@@ -192,7 +192,7 @@ class MenuFlow: Flow, LocalizationSettingsNavigationFlow {
             
         case .leaveAReviewTappedFromMenu(let screenName, let siteSection, let siteSubSection, let contentLanguage, let contentLanguageSecondary):
             
-            let appleAppId: String = appDiContainer.dataLayer.getAppConfig().getAppleAppId()
+            let appleAppId: String = appDiContainer.core.dataLayer.getAppConfig().getAppleAppId()
             
             guard let writeReviewURL = URL(string: "https://apps.apple.com/app/id\(appleAppId)?action=write-review") else {
                 let error: Error = NSError.errorWithDescription(description: "Failed to open to apple review.  Invalid URL.")
@@ -203,7 +203,7 @@ class MenuFlow: Flow, LocalizationSettingsNavigationFlow {
             navigateToURL(url: writeReviewURL, screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, appLanguage: appLanguage, contentLanguage: contentLanguage, contentLanguageSecondary: contentLanguageSecondary)
             
         case .shareAStoryWithUsTappedFromMenu:
-            let shareStoryWebContent = ShareAStoryWithUsWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
+            let shareStoryWebContent = ShareAStoryWithUsWebContent(localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
             
             pushWebContentView(
                 webContent: shareStoryWebContent,
@@ -216,7 +216,7 @@ class MenuFlow: Flow, LocalizationSettingsNavigationFlow {
             
         case .termsOfUseTappedFromMenu:
             
-            let termsOfUserWebContent = TermsOfUseWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
+            let termsOfUserWebContent = TermsOfUseWebContent(localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
             
             pushWebContentView(
                 webContent: termsOfUserWebContent,
@@ -229,7 +229,7 @@ class MenuFlow: Flow, LocalizationSettingsNavigationFlow {
             
         case .privacyPolicyTappedFromMenu:
             
-            let privacyPolicyWebContent = PrivacyPolicyWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
+            let privacyPolicyWebContent = PrivacyPolicyWebContent(localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
             
             pushWebContentView(
                 webContent: privacyPolicyWebContent,
@@ -242,7 +242,7 @@ class MenuFlow: Flow, LocalizationSettingsNavigationFlow {
             
         case .copyrightInfoTappedFromMenu:
             
-            let copyrightInfoWebContent = CopyrightInfoWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
+            let copyrightInfoWebContent = CopyrightInfoWebContent(localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
             
             pushWebContentView(
                 webContent: copyrightInfoWebContent,
@@ -272,7 +272,7 @@ class MenuFlow: Flow, LocalizationSettingsNavigationFlow {
 
         case .didFinishAccountDeletionWithSuccessFromDeleteAccountProgress:
             
-            let localizationServices: LocalizationServicesInterface = appDiContainer.dataLayer.getLocalizationServices()
+            let localizationServices: LocalizationServicesInterface = appDiContainer.core.dataLayer.getLocalizationServices()
             let appLanguage: AppLanguageDomainModel = self.appLanguage
             
             navigationController.dismissPresented(animated: true) {
@@ -292,7 +292,7 @@ class MenuFlow: Flow, LocalizationSettingsNavigationFlow {
             }
             
         case .copyFirebaseDeviceTokenTappedFromMenu:
-            if appDiContainer.dataLayer.getAppConfig().isDebug {
+            if appDiContainer.core.dataLayer.getAppConfig().isDebug {
                 copyFirebaseDeviceTokenToClipboard()
             }
             
@@ -395,16 +395,16 @@ extension MenuFlow {
             getAccountCreationIsSupportedUseCase: appDiContainer.feature.account.domainLayer.getAccountCreationIsSupportedUseCase(),
             getUserIsAuthenticatedUseCase: appDiContainer.feature.account.domainLayer.getUserIsAuthenticatedUseCase(),
             logOutUserUseCase: appDiContainer.feature.account.domainLayer.getLogOutUserUseCase(),
-            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
-            appConfig: appDiContainer.dataLayer.getAppConfig()
+            trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+            trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase(),
+            appConfig: appDiContainer.core.dataLayer.getAppConfig()
         )
         
         let view = MenuView(viewModel: viewModel)
         
         let doneButton = AppInterfaceStringBarItem(
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
+            localizationServices: appDiContainer.core.dataLayer.getLocalizationServices(),
             localizedStringKey: "done",
             color: nil,
             target: viewModel,
@@ -509,7 +509,7 @@ extension MenuFlow {
     
     private func getAuthErrorAlertMessage(authError: AuthErrorDomainModel) -> AlertMessageType {
         
-        let localizationServices: LocalizationServicesInterface = appDiContainer.dataLayer.getLocalizationServices()
+        let localizationServices: LocalizationServicesInterface = appDiContainer.core.dataLayer.getLocalizationServices()
         let appLanguageLocaleId = appLanguage.localeId
         
         let message: String
@@ -544,7 +544,7 @@ extension MenuFlow {
             getUserAccountDetailsUseCase: appDiContainer.feature.account.domainLayer.getUserAccountDetailsUseCase(),
             getUserActivityUseCase: appDiContainer.feature.userActivity.domainLayer.getUserActivityUseCase(),
             getGlobalActivityThisWeekUseCase: appDiContainer.feature.globalActivity.domainLayer.getGlobalActivityThisWeekUseCase(),
-            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+            trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             getAccountStringsUseCase: appDiContainer.feature.account.domainLayer.getAccountStringsUseCase(),
             getGlobalActivityEnabledUseCase: appDiContainer.feature.globalActivity.domainLayer.getGlobalActivityEnabledUseCase(),
             didPullToRefreshAccountUseCase: appDiContainer.feature.account.domainLayer.getDidPullToRefreshAccountUseCase()
@@ -622,7 +622,7 @@ extension MenuFlow {
     
     private func getConfirmDeleteAccountView() -> UIViewController {
         
-        let localizationServices: LocalizationServicesInterface = appDiContainer.dataLayer.getLocalizationServices()
+        let localizationServices: LocalizationServicesInterface = appDiContainer.core.dataLayer.getLocalizationServices()
         
         let viewController = UIAlertController(
             title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.confirmDeleteAccountTitle.key),
@@ -687,7 +687,7 @@ extension MenuFlow {
             flowDelegate: self,
             webContent: webContent,
             backTappedFromWebContentStep: backTappedFromWebContentStep,
-            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase()
+            trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase()
         )
         
         let backButton = AppBackBarItem(
@@ -728,7 +728,7 @@ extension MenuFlow {
     
     private func copyFirebaseDeviceTokenToClipboard() {
         
-        appDiContainer.dataLayer.getSharedFirebaseMessaging()
+        appDiContainer.core.dataLayer.getSharedFirebaseMessaging()
             .getDeviceTokenPublisher()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in

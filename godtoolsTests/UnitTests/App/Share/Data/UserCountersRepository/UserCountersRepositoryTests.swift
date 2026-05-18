@@ -22,7 +22,7 @@ extension UserCountersRepositoryTests {
         
         let testsDiContainer = try TestsDiContainer(realmFileName: String(describing: UserCountersRepositoryTests.self))
         
-        return testsDiContainer.dataLayer.getUserCountersRepository()
+        return testsDiContainer.core.dataLayer.getUserCountersRepository()
     }
 }
 

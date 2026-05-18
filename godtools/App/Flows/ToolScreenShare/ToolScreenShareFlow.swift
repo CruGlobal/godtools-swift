@@ -333,7 +333,7 @@ extension ToolScreenShareFlow {
         
         let skipButton = AppSkipBarItem(
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
+            localizationServices: appDiContainer.core.dataLayer.getLocalizationServices(),
             target: viewModel,
             action: #selector(viewModel.skipTapped),
             accessibilityIdentifier: AccessibilityStrings.Button.skip.id,
@@ -428,7 +428,7 @@ extension ToolScreenShareFlow {
             strings: strings,
             shareMessage: shareMessage,
             shareUrl: shareUrl,
-            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
+            trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase()
         )
         
         let view = ShareToolScreenShareSessionView(

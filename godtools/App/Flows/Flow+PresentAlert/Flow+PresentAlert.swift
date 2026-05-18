@@ -17,7 +17,7 @@ extension Flow {
     
     func presentAlert(appLanguage: AppLanguageDomainModel, title: String, message: String) {
         
-        let localizationServices: LocalizationServicesInterface = appDiContainer.dataLayer.getLocalizationServices()
+        let localizationServices: LocalizationServicesInterface = appDiContainer.core.dataLayer.getLocalizationServices()
                 
         let viewModel = AlertMessageViewModel(
             title: title,

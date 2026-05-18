@@ -32,12 +32,12 @@ struct SetAppLanguageUseCaseTests {
         
         let setAppLanguageUseCase = SetAppLanguageUseCase(
             userAppLanguageRepository: testsDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository(),
-            userLessonFiltersRepository: testsDiContainer.dataLayer.getUserLessonFiltersRepository(),
-            languagesRepository: testsDiContainer.dataLayer.getLanguagesRepository()
+            userLessonFiltersRepository: testsDiContainer.core.dataLayer.getUserLessonFiltersRepository(),
+            languagesRepository: testsDiContainer.core.dataLayer.getLanguagesRepository()
         )
         
         let getUserLessonFiltersRepository = GetUserLessonFiltersUseCase(
-            userLessonFiltersRepository: testsDiContainer.dataLayer.getUserLessonFiltersRepository(),
+            userLessonFiltersRepository: testsDiContainer.core.dataLayer.getUserLessonFiltersRepository(),
             getLessonFilterLanguage: testsDiContainer.feature.lessonFilter.domainLayer.getLessonFilterLangauge()
         )
         

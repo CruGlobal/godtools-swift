@@ -129,7 +129,7 @@ final class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow, LocalizationS
                         page: page
                     )
                     
-                    appDiContainer.domainLayer.getTrackActionAnalyticsUseCase().trackAction(
+                    appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase().trackAction(
                         screenName: pageAnalytics.screenName,
                         actionName: "Onboarding Start",
                         siteSection: pageAnalytics.siteSection,
@@ -211,16 +211,16 @@ extension OnboardingFlow {
             viewedOnboardingTutorialUseCase: appDiContainer.feature.onboarding.domainLayer.getViewedOnboardingTutorialUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getOnboardingTutorialStringsUseCase: appDiContainer.feature.onboarding.domainLayer.getOnboardingTutorialStringsUseCase(),
-            trackTutorialVideoAnalytics: appDiContainer.dataLayer.getTutorialVideoAnalytics(),
-            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
+            trackTutorialVideoAnalytics: appDiContainer.core.dataLayer.getTutorialVideoAnalytics(),
+            trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+            trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase()
         )
                 
         let view = OnboardingTutorialView(viewModel: viewModel)
         
         let skipButton = AppSkipBarItem(
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
+            localizationServices: appDiContainer.core.dataLayer.getLocalizationServices(),
             target: viewModel,
             action: #selector(viewModel.skipTapped),
             accessibilityIdentifier: AccessibilityStrings.Button.skip.id,

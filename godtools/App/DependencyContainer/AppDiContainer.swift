@@ -13,8 +13,6 @@ class AppDiContainer {
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
     
     let core: AppCoreDiContainer
-    let dataLayer: AppDataLayerDependencies
-    let domainLayer: AppDomainLayerDependencies
     let feature: AppFeatureDiContainer
     
     init(appConfig: AppConfigInterface) {
@@ -79,8 +77,6 @@ class AppDiContainer {
         )
         
         self.core = core
-        self.dataLayer = dataLayer
-        self.domainLayer = domainLayer
         self.feature = feature
     }
     
@@ -108,19 +104,19 @@ class AppDiContainer {
             appLanguage: appLanguage,
             toolTranslations: toolTranslations,
             pageViewFactories: pageViewFactories,
-            manifestResourcesCache: dataLayer.getMobileContentRendererManifestResourcesCache()
+            manifestResourcesCache: core.dataLayer.getMobileContentRendererManifestResourcesCache()
         )
     }
     
     func getMobileContentRendererAnalytics() -> MobileContentRendererAnalytics {
         return MobileContentRendererAnalytics(
-            analytics: dataLayer.getAnalytics(),
+            analytics: core.dataLayer.getAnalytics(),
             userAnalytics: getMobileContentRendererUserAnalytics()
         )
     }
     
     func getMobileContentRendererEventAnalyticsTracking() -> MobileContentRendererEventAnalyticsTracking {
-        return MobileContentRendererEventAnalyticsTracking(firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics)
+        return MobileContentRendererEventAnalyticsTracking(firebaseAnalytics: core.dataLayer.getAnalytics().firebaseAnalytics)
     }
     
     @MainActor func getMobileContentRendererNavigation(parentFlow: ToolNavigationFlow, navigationDelegate: MobileContentRendererNavigationDelegate, appLanguage: AppLanguageDomainModel) -> MobileContentRendererNavigation {
@@ -143,7 +139,7 @@ class AppDiContainer {
         return ToolTrainingTipsOnboardingViewsService(
             cache: ToolTrainingTipsOnboardingViewsUserDefaultsCache(
                 userDefaultsCache: sharedUserDefaultsCache,
-                getTranslatedToolName: domainLayer.supporting.getTranslatedToolName()
+                getTranslatedToolName: core.domainLayer.supporting.getTranslatedToolName()
             )
         )
     }
