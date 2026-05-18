@@ -127,7 +127,7 @@ extension ResourceViewsServiceTests {
         
         let testsDiContainer = try getTestsDiContainer(addRealmObjects: addRealmObjects)
         
-        let cache = FailedResourceViewsCache(realmDatabase: testsDiContainer.dataLayer.getSharedRealmDatabase())
+        let cache = FailedResourceViewsCache(realmDatabase: testsDiContainer.core.dataLayer.getSharedRealmDatabase())
         
         return cache
     }
