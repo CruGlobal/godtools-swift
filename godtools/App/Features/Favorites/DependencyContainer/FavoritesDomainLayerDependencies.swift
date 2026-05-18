@@ -32,6 +32,14 @@ final class FavoritesDomainLayerDependencies {
         )
     }
     
+    func getDownloadLatestToolsForFavoritedToolsUseCase() -> DownloadLatestToolsForFavoritedToolsUseCase {
+        return DownloadLatestToolsForFavoritedToolsUseCase(
+            favoritedResourcesRepository: core.dataLayer.getFavoritedResourcesRepository(),
+            resourcesRepository: core.dataLayer.getResourcesRepository(),
+            toolDownloader: core.dataLayer.getToolDownloader()
+        )
+    }
+    
     func getFavoritesStringsUseCase() -> GetFavoritesStringsUseCase {
         return GetFavoritesStringsUseCase(
             localizationServices: core.dataLayer.getLocalizationServices()
@@ -46,6 +54,12 @@ final class FavoritesDomainLayerDependencies {
     
     func getReorderFavoritedToolUseCase() -> ReorderFavoritedToolUseCase {
         return ReorderFavoritedToolUseCase(
+            favoritedResourcesRepository: core.dataLayer.getFavoritedResourcesRepository()
+        )
+    }
+    
+    func getStoreInitialFavoritedToolsUseCase() -> StoreInitialFavoritedToolsUseCase {
+        return StoreInitialFavoritedToolsUseCase(
             favoritedResourcesRepository: core.dataLayer.getFavoritedResourcesRepository()
         )
     }

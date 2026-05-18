@@ -208,8 +208,8 @@ struct ToolCardView_Previews: PreviewProvider {
             tool: tool,
             accessibility: .tool,
             getToolIsFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToolIsFavoritedUseCase(),
-            getToolBannerUseCase: appDiContainer.domainLayer.getToolBannerUseCase(),
-            inMemoryDataCache: appDiContainer.dataLayer.getSharedInMemoryDataCache()
+            getToolBannerUseCase: appDiContainer.core.domainLayer.getToolBannerUseCase(),
+            inMemoryDataCache: appDiContainer.core.dataLayer.getSharedInMemoryDataCache()
         )
     }
     

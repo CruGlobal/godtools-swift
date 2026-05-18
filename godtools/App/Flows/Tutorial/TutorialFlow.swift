@@ -72,9 +72,9 @@ extension TutorialFlow {
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getTutorialStringsUseCase: appDiContainer.feature.tutorial.domainLayer.getTutorialStringsUseCase(),
             getTutorialUseCase: appDiContainer.feature.tutorial.domainLayer.getTutorialUseCase(),
-            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
-            tutorialVideoAnalytics: appDiContainer.dataLayer.getTutorialVideoAnalytics()
+            trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+            trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase(),
+            tutorialVideoAnalytics: appDiContainer.core.dataLayer.getTutorialVideoAnalytics()
         )
         
         let view = TutorialView(viewModel: viewModel)

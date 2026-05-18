@@ -65,7 +65,7 @@ class TractFlow: ToolNavigationFlow, ToolSettingsNavigationFlow {
             
             if isScreenSharing {
                 
-                let localizationServices: LocalizationServicesInterface = appDiContainer.dataLayer.getLocalizationServices()
+                let localizationServices: LocalizationServicesInterface = appDiContainer.core.dataLayer.getLocalizationServices()
                                 
                 let viewModel = AlertMessageViewModel(
                     title: nil,
@@ -155,14 +155,14 @@ extension TractFlow {
             renderer: renderer,
             tractRemoteSharePublisher: appDiContainer.feature.toolScreenShare.dataLayer.getTractRemoteSharePublisher(),
             tractRemoteShareSubscriber: appDiContainer.feature.toolScreenShare.dataLayer.getTractRemoteShareSubscriber(),
-            languagesRepository: appDiContainer.dataLayer.getLanguagesRepository(),
-            resourceViewsService: appDiContainer.dataLayer.getResourceViewsService(),
-            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
-            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
-            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
+            languagesRepository: appDiContainer.core.dataLayer.getLanguagesRepository(),
+            resourceViewsService: appDiContainer.core.dataLayer.getResourceViewsService(),
+            trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase(),
+            resourcesRepository: appDiContainer.core.dataLayer.getResourcesRepository(),
+            translationsRepository: appDiContainer.core.dataLayer.getTranslationsRepository(),
             mobileContentEventAnalytics: appDiContainer.getMobileContentRendererEventAnalyticsTracking(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getTranslatedLanguageName: appDiContainer.domainLayer.supporting.getTranslatedLanguageName(),
+            getTranslatedLanguageName: appDiContainer.core.domainLayer.supporting.getTranslatedLanguageName(),
             liveShareStream: liveShareStream,
             initialPage: initialPage,
             initialPageSubIndex: initialPageSubIndex,

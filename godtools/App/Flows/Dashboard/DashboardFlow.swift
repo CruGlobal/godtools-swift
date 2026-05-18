@@ -187,7 +187,7 @@ class DashboardFlow: Flow, ToolNavigationFlow, LocalizationSettingsNavigationFlo
             let toolFilterLanguageDataModel: LanguageDataModel?
             
             if let languageId = toolFilterLanguage?.id {
-                toolFilterLanguageDataModel = appDiContainer.dataLayer.getLanguagesRepository().getLanguageNonThrowing(id: languageId)
+                toolFilterLanguageDataModel = appDiContainer.core.dataLayer.getLanguagesRepository().getLanguageNonThrowing(id: languageId)
             }
             else {
                 toolFilterLanguageDataModel = nil
@@ -206,13 +206,13 @@ class DashboardFlow: Flow, ToolNavigationFlow, LocalizationSettingsNavigationFlo
             let toolFilterLanguageDataModel: LanguageDataModel?
             
             if let languageId = toolFilterLanguage?.id {
-                toolFilterLanguageDataModel = appDiContainer.dataLayer.getLanguagesRepository().getLanguageNonThrowing(id: languageId)
+                toolFilterLanguageDataModel = appDiContainer.core.dataLayer.getLanguagesRepository().getLanguageNonThrowing(id: languageId)
             }
             else {
                 toolFilterLanguageDataModel = nil
             }
             
-            let resourcesRepository: ResourcesRepository = appDiContainer.dataLayer.getResourcesRepository()
+            let resourcesRepository: ResourcesRepository = appDiContainer.core.dataLayer.getResourcesRepository()
             
             let primaryLanguage: AppLanguageDomainModel?
             let parallelLanguage: AppLanguageDomainModel?
@@ -471,7 +471,7 @@ extension DashboardFlow {
             getLessonFilterLanguagesUseCase: appDiContainer.feature.lessonFilter.domainLayer.getLessonFilterLanguagesUseCase(),
             getUserLessonFiltersUseCase: appDiContainer.feature.lessonFilter.domainLayer.getUserLessonFiltersUseCase(),
             storeUserLessonFiltersUseCase: appDiContainer.feature.lessonFilter.domainLayer.getStoreUserLessonFiltersUseCase(),
-            viewSearchBarUseCase: appDiContainer.domainLayer.getViewSearchBarUseCase(),
+            viewSearchBarUseCase: appDiContainer.core.domainLayer.getViewSearchBarUseCase(),
             searchLessonFilterLanguagesUseCase: appDiContainer.feature.lessonFilter.domainLayer.getSearchLessonFilterLanguagesUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             flowDelegate: self
@@ -549,10 +549,10 @@ extension DashboardFlow {
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToolIsFavoritedUseCase(),
             reorderFavoritedToolUseCase: appDiContainer.feature.favorites.domainLayer.getReorderFavoritedToolUseCase(),
-            getToolBannerUseCase: appDiContainer.domainLayer.getToolBannerUseCase(),
-            inMemoryDataCache: appDiContainer.dataLayer.getSharedInMemoryDataCache(),
-            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
+            getToolBannerUseCase: appDiContainer.core.domainLayer.getToolBannerUseCase(),
+            inMemoryDataCache: appDiContainer.core.dataLayer.getSharedInMemoryDataCache(),
+            trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+            trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase()
         )
         
         let view = AllYourFavoriteToolsView(viewModel: viewModel)
@@ -622,7 +622,7 @@ extension DashboardFlow {
             getUserToolFilterLanguageUseCase: appDiContainer.feature.toolsFilter.domainLayer.getUserToolFilterLanguageUseCase(),
             selectedToolFilterCategoryUseCase: appDiContainer.feature.toolsFilter.domainLayer.getSelectedToolFilterCategoryUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewSearchBarUseCase: appDiContainer.domainLayer.getViewSearchBarUseCase(),
+            viewSearchBarUseCase: appDiContainer.core.domainLayer.getViewSearchBarUseCase(),
             flowDelegate: self
         )
         
@@ -657,7 +657,7 @@ extension DashboardFlow {
             getUserToolFilterLanguageUseCase: appDiContainer.feature.toolsFilter.domainLayer.getUserToolFilterLanguageUseCase(),
             selectedToolFilterLanguageUseCase: appDiContainer.feature.toolsFilter.domainLayer.getSelectedToolFilterLanguageUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewSearchBarUseCase: appDiContainer.domainLayer.getViewSearchBarUseCase(),
+            viewSearchBarUseCase: appDiContainer.core.domainLayer.getViewSearchBarUseCase(),
             flowDelegate: self
         )
         
@@ -689,7 +689,7 @@ extension DashboardFlow {
     
     private func navigateToToolInAppLanguage(toolDataModelId: String, trainingTipsEnabled: Bool, toolOpenedFrom: ToolOpenedFrom, persistToolLanguageSettings: PersistToolLanguageSettingsInterface?) {
         
-        let languagesRepository: LanguagesRepository = appDiContainer.dataLayer.getLanguagesRepository()
+        let languagesRepository: LanguagesRepository = appDiContainer.core.dataLayer.getLanguagesRepository()
         
         let languageIds: [String]
         
@@ -757,7 +757,7 @@ extension DashboardFlow {
     
     private func navigateToTool(toolDataModelId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, toolOpenedFrom: ToolOpenedFrom, persistToolLanguageSettings: PersistToolLanguageSettingsInterface?) {
         
-        let languagesRepository: LanguagesRepository = appDiContainer.dataLayer.getLanguagesRepository()
+        let languagesRepository: LanguagesRepository = appDiContainer.core.dataLayer.getLanguagesRepository()
         
         var languageIds: [String] = Array()
         
@@ -805,7 +805,7 @@ extension DashboardFlow {
         
     private func navigateToTool(toolDataModelId: String, languageIds: [String], selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, toolOpenedFrom: ToolOpenedFrom, persistToolLanguageSettings: PersistToolLanguageSettingsInterface?) {
         
-        let languagesRepository: LanguagesRepository = appDiContainer.dataLayer.getLanguagesRepository()
+        let languagesRepository: LanguagesRepository = appDiContainer.core.dataLayer.getLanguagesRepository()
         
         let openToolInLanguages: [String]
         
@@ -851,10 +851,10 @@ extension DashboardFlow {
             getToolDetailsMediaUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsMediaUseCase(),
             getToolDetailsLearnToShareToolIsAvailableUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsLearnToShareToolIsAvailableUseCase(),
             toggleToolFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToggleToolFavoritedUseCase(),
-            getToolBannerUseCase: appDiContainer.domainLayer.getToolBannerUseCase(),
-            inMemoryDataCache: appDiContainer.dataLayer.getSharedInMemoryDataCache(),
-            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
+            getToolBannerUseCase: appDiContainer.core.domainLayer.getToolBannerUseCase(),
+            inMemoryDataCache: appDiContainer.core.dataLayer.getSharedInMemoryDataCache(),
+            trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+            trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase()
         )
         
         let view = ToolDetailsView(viewModel: viewModel)
