@@ -19,4 +19,15 @@ class RealmSHA256File: Object, SHA256FileModelType {
     override static func primaryKey() -> String? {
         return "sha256WithPathExtension"
     }
+    
+    func copy() -> RealmSHA256File {
+        
+        let object = RealmSHA256File()
+        
+        object.sha256WithPathExtension = sha256WithPathExtension
+        object.attachments.append(objectsIn: attachments)
+        object.translations.append(objectsIn: translations)
+        
+        return object
+    }
 }
