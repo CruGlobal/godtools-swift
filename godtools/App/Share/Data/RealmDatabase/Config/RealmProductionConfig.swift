@@ -26,10 +26,56 @@ final class RealmProductionConfig {
             }
         }
         
+        let objectTypes: [ObjectBase.Type]?
+        
+        if #available(iOS 16.0, *) {
+            
+            // TODO: Providing the class names resolves a crash in iOS 16.  Once this open issue is resolved can this go away? ~Levi
+            // Open Issue: https://github.com/realm/realm-swift/issues/8794
+            
+            objectTypes = [
+                RealmAppLanguage.self,
+                RealmArticleAemData.self,
+                RealmArticleJcrContent.self,
+                RealmAttachment.self,
+                RealmCategoryArticle.self,
+                RealmCompletedTrainingTip.self,
+                RealmDownloadedLanguage.self,
+                RealmDownloadedTranslation.self,
+                RealmEmailSignUp.self,
+                RealmFavoritedResource.self,
+                RealmFollowUp.self,
+                RealmGlobalAnalytics.self,
+                RealmLanguage.self,
+                RealmLessonEvaluation.self,
+                RealmMobileContentAuthToken.self,
+                RealmPersonalizedLessons.self,
+                RealmResource.self,
+                RealmResourceView.self,
+                RealmSHA256File.self,
+                RealmToolScreenShareTutorialView.self,
+                RealmTranslation.self,
+                RealmUserAppLanguage.self,
+                RealmUserCounter.self,
+                RealmUserDetails.self,
+                RealmUserLessonLanguageFilter.self,
+                RealmUserLessonProgress.self,
+                RealmUserLocalizationSettings.self,
+                RealmUserToolCategoryFilter.self,
+                RealmUserToolLanguageFilter.self,
+                RealmUserToolSettings.self
+            ]
+        }
+        else {
+            
+            objectTypes = nil
+        }
+        
         return RealmDatabaseConfig(
             fileName: Self.diskFileName,
             schemaVersion: Self.schemaVersion,
-            migrationBlock: migrationBlock
+            migrationBlock: migrationBlock,
+            objectTypes: objectTypes
         )
     }
 }
