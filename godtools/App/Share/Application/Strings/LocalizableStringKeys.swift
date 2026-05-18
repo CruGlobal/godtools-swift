@@ -35,6 +35,19 @@ enum LocalizableStringKeys: String {
     case noInternetTitle = "no_internet_title"
     case ok = "OK"
     case requiredMissingField = "required_field_missing"
+    case settings = "settings"
+    case tutorialContinueButtonTitleCloseTutorial = "tutorial.continueButton.title.closeTutorial"
+    case tutorialContinueButtonTitleContinue = "tutorial.continueButton.title.continue"
+    case tutorialContinueButtonTitleStartUsingGodTools = "tutorial.continueButton.title.startUsingGodTools"
+    case tutorialFindTutorialTitle = "tutorial.findTutorial.title"
+    case tutorialLessonMessage = "tutorial.lesson.message"
+    case tutorialLessonTitle = "tutorial.lesson.title"
+    case tutorialScreenShareMessage = "tutorial.screenShare.message"
+    case tutorialScreenShareTitle = "tutorial.screenShare.title"
+    case tutorialToolMessage = "tutorial.tool.message"
+    case tutorialToolTitle = "tutorial.tool.title"
+    case tutorialToolTipMessage = "tutorial.toolTip.message"
+    case tutorialToolTipTitle = "tutorial.toolTip.title"
 }
 
 extension LocalizableStringKeys {

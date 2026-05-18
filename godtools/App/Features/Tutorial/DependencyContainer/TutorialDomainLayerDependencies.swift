@@ -10,24 +10,35 @@ import Foundation
 
 final class TutorialDomainLayerDependencies {
     
-    private let coreDataLayer: AppDataLayerDependencies
+    private let core: AppCoreDiContainer
     private let dataLayer: TutorialDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, dataLayer: TutorialDataLayerDependencies) {
+    init(core: AppCoreDiContainer, dataLayer: TutorialDataLayerDependencies) {
         
-        self.coreDataLayer = coreDataLayer
+        self.core = core
         self.dataLayer = dataLayer
+    }
+    
+    func getTutorialIsAvailableUseCase() -> GetTutorialIsAvailableUseCase {
+        return GetTutorialIsAvailableUseCase(
+            getTutorialType: getTutorialType()
+        )
     }
     
     func getTutorialStringsUseCase() -> GetTutorialStringsUseCase {
         return GetTutorialStringsUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
+    }
+    
+    func getTutorialType() -> GetTutorialType {
+        return GetTutorialType()
     }
     
     func getTutorialUseCase() -> GetTutorialUseCase {
         return GetTutorialUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices(),
+            getTutorialType: getTutorialType()
         )
     }
 }

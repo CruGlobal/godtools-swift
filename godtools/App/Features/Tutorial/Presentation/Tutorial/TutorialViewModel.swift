@@ -45,35 +45,10 @@ final class TutorialViewModel: ObservableObject {
                 
         getCurrentAppLanguageUseCase
             .execute()
-            .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                
-                getTutorialStringsUseCase
-                    .execute(appLanguage: appLanguage)
-            }
-            .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: TutorialStringsDomainModel) in
-                
-                self?.strings = strings
-            }
-            .store(in: &cancellables)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                
-                getTutorialUseCase
-                    .execute(appLanguage: appLanguage)
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (tutorial: TutorialDomainModel) in
-                
-                self?.tutorialPages = tutorial.pages
+            .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
             }
             .store(in: &cancellables)
         
@@ -104,6 +79,13 @@ final class TutorialViewModel: ObservableObject {
     
     deinit {
         print("x deinit: \(type(of: self))")
+    }
+    
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+        
+        strings = getTutorialStringsUseCase.execute(appLanguage: appLanguage)
+        
+        tutorialPages = getTutorialUseCase.execute(appLanguage: appLanguage).pages
     }
     
     private func getAnalyticsScreenName(tutorialItemIndex: Int) -> String {
