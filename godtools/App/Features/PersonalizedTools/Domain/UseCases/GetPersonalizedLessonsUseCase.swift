@@ -61,7 +61,6 @@ final class GetPersonalizedLessonsUseCase {
                 .observeCollectionChangesPublisher(),
             lessonProgressRepository
                 .getLessonProgressChangedPublisher()
-                .setFailureType(to: Error.self)
         )
         .flatMap({ (personalizedLessonsChanged, resourcesChanged, lessonProgressChanged) -> AnyPublisher<[ResourceDataModel], Error> in
 

@@ -17,13 +17,9 @@ final class UserLessonProgressRepository {
         self.cache = cache
     }
     
-    @MainActor func getLessonProgressChangedPublisher() -> AnyPublisher<Void, Never> {
+    @MainActor func getLessonProgressChangedPublisher() -> AnyPublisher<Void, Error> {
         return cache.persistence
             .observeCollectionChangesPublisher()
-            .catch { _ in
-                return Just(Void())
-                    .eraseToAnyPublisher()
-            }
             .eraseToAnyPublisher()
     }
     
