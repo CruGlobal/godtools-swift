@@ -18,17 +18,22 @@ final class StoreUserLessonProgressUseCase {
     
     func execute(lessonId: String, viewedPageId: String, viewedPageNumber: Int, totalPageCount: Int) async throws -> UserLessonProgressDomainModel {
         
-        let firstPageNumber: Int = 0
-        let isFirstPage: Bool = viewedPageNumber == firstPageNumber
-        let pageCount: Int = totalPageCount - 1 // Excludes final things to try page. ~Levi
+        let finalThingsToTryPageCount: Int = 1
+        let excludedPageCount: Int = finalThingsToTryPageCount // Excludes final things to try page. ~Levi
+        let startingPageNumber: Int = 1
+        let numberOfPages: Int = totalPageCount - excludedPageCount
         
-        guard !isFirstPage && pageCount > 0 else {
+        let pageNumber: Int = clampViewedPageNumber(viewedPageNumber: viewedPageNumber, min: startingPageNumber, max: numberOfPages, startingPageNumber: startingPageNumber)
+        
+        let isFirstPage: Bool = pageNumber == startingPageNumber
+        
+        guard !isFirstPage && numberOfPages > 0 else {
             return UserLessonProgressDomainModel(lessonId: lessonId, lastViewedPageId: viewedPageId, progress: 0)
         }
         
-        let reachedCompletion: Bool = viewedPageNumber >= pageCount - 1
+        let reachedCompletion: Bool = pageNumber >= numberOfPages
         
-        let progress: Double = reachedCompletion ? 1 : Double(viewedPageNumber) / Double(pageCount)
+        let progress: Double = reachedCompletion ? 1 : Double(pageNumber) / Double(numberOfPages + excludedPageCount)
         
         _ = try await lessonProgressRepository
             .storeLessonProgress(
@@ -42,5 +47,24 @@ final class StoreUserLessonProgressUseCase {
             lastViewedPageId: viewedPageId,
             progress: progress
         )
+    }
+    
+    private func clampViewedPageNumber(viewedPageNumber: Int, min: Int, max: Int, startingPageNumber: Int) -> Int {
+                
+        let initialPage: Int = viewedPageNumber + startingPageNumber
+        
+        let pageNumber: Int
+        
+        if initialPage < min {
+            pageNumber = min
+        }
+        else if initialPage > max {
+            pageNumber = max
+        }
+        else {
+            pageNumber = initialPage
+        }
+        
+        return pageNumber
     }
 }
