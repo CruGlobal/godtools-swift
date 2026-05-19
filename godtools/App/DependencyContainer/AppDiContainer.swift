@@ -9,8 +9,6 @@
 import UIKit
 
 class AppDiContainer {
-        
-    private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
     
     let core: AppCoreDiContainer
     let feature: AppFeatureDiContainer
@@ -84,10 +82,6 @@ class AppDiContainer {
         return AppDiContainer(appConfig: UITestsAppConfig())
     }
     
-    func getCardJumpService() -> CardJumpService {
-        return CardJumpService(cardJumpCache: CardJumpUserDefaultsCache(userDefaultsCache: sharedUserDefaultsCache))
-    }
-    
     func getUrlOpener() -> UrlOpenerInterface {
         return OpenUrlWithSwiftUI() // TODO: GT-2466 Return OpenUrlWithUIKit() once supporting FBSDK 17.3+ ~Levi
     }
@@ -132,15 +126,6 @@ class AppDiContainer {
     private func getMobileContentRendererUserAnalytics() -> MobileContentRendererUserAnalytics {
         return MobileContentRendererUserAnalytics(
             incrementUserCounterUseCase: feature.userActivity.domainLayer.getIncrementUserCounterUseCase()
-        )
-    }
-    
-    func getToolTrainingTipsOnboardingViews() -> ToolTrainingTipsOnboardingViewsService {
-        return ToolTrainingTipsOnboardingViewsService(
-            cache: ToolTrainingTipsOnboardingViewsUserDefaultsCache(
-                userDefaultsCache: sharedUserDefaultsCache,
-                getTranslatedToolName: core.domainLayer.supporting.getTranslatedToolName()
-            )
         )
     }
 }

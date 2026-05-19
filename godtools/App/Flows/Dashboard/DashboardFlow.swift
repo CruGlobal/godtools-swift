@@ -885,14 +885,22 @@ extension DashboardFlow {
     
     private func navigateToLearnToShareTool(toolId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?, toolOpenedFrom: ToolOpenedFrom) {
         
-        let toolTrainingTipsOnboardingViews: ToolTrainingTipsOnboardingViewsService = appDiContainer.getToolTrainingTipsOnboardingViews()
-                    
-        let toolTrainingTipReachedMaximumViews: Bool = toolTrainingTipsOnboardingViews.getToolTrainingTipReachedMaximumViews(toolId: toolId, primaryLanguage: primaryLanguage)
-        
-        if !toolTrainingTipReachedMaximumViews {
+        let learnToShareTutorialIsAvailable: Bool = appDiContainer
+            .feature
+            .learnToShareTool
+            .domainLayer
+            .getLearnToShareToolTutorialIsAvailableUseCase()
+            .execute(appLanguage: primaryLanguage, toolId: toolId)
+                
+        if learnToShareTutorialIsAvailable {
             
-            toolTrainingTipsOnboardingViews.storeToolTrainingTipViewed(toolId: toolId, primaryLanguage: primaryLanguage)
-            
+            appDiContainer
+                .feature
+                .learnToShareTool
+                .domainLayer
+                .getViewedLearnToShareToolTutorialUseCase()
+                .execute(appLanguage: primaryLanguage, toolId: toolId)
+                        
             let learnToShareToolFlow = LearnToShareToolFlow(
                 flowDelegate: self,
                 appDiContainer: appDiContainer,

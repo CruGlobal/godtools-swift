@@ -19,6 +19,13 @@ final class LearnToShareToolDomainLayerDependencies {
         self.dataLayer = dataLayer
     }
     
+    func getLearnToShareToolTutorialIsAvailableUseCase() -> LearnToShareToolTutorialIsAvailableUseCase {
+        return LearnToShareToolTutorialIsAvailableUseCase(
+            toolTrainingTipsOnboardingViewsRepository: dataLayer.getToolTrainingTipsOnboardingViewsRepository(),
+            getTranslatedToolName: core.domainLayer.supporting.getTranslatedToolName()
+        )
+    }
+    
     func getLearnToShareToolStringsUseCase() -> GetLearnToShareToolStringsUseCase {
         return GetLearnToShareToolStringsUseCase(
             localizationServices: core.dataLayer.getLocalizationServices()
@@ -28,6 +35,13 @@ final class LearnToShareToolDomainLayerDependencies {
     func getLearnToShareToolTutorialUseCase() -> GetLearnToShareToolTutorialUseCase {
         return GetLearnToShareToolTutorialUseCase(
             localizationServices: core.dataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getViewedLearnToShareToolTutorialUseCase() -> ViewedLearnToShareToolTutorialUseCase {
+        return ViewedLearnToShareToolTutorialUseCase(
+            toolTrainingTipsOnboardingViewsRepository: dataLayer.getToolTrainingTipsOnboardingViewsRepository(),
+            getTranslatedToolName: core.domainLayer.supporting.getTranslatedToolName()
         )
     }
 }

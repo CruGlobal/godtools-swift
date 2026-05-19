@@ -16,4 +16,12 @@ final class LearnToShareToolDataLayerDependencies {
         
         self.coreDataLayer = coreDataLayer
     }
+    
+    func getToolTrainingTipsOnboardingViewsRepository() -> ToolTrainingTipsOnboardingViewsRepository {
+        return ToolTrainingTipsOnboardingViewsRepository(
+            cache: ToolTrainingTipsOnboardingViewsCache(
+                userDefaultsCache: coreDataLayer.getUserDefaultsCache()
+            )
+        )
+    }
 }
