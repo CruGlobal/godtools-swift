@@ -13,9 +13,9 @@ final class MenuDiContainer {
     let dataLayer: MenuDataLayerDependencies
     let domainLayer: MenuDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(core: AppCoreDiContainer) {
         
-        dataLayer = MenuDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainLayer = MenuDomainLayerDependencies(coreDataLayer: coreDataLayer, dataLayer: dataLayer)
+        dataLayer = MenuDataLayerDependencies(coreDataLayer: core.dataLayer)
+        domainLayer = MenuDomainLayerDependencies(core: core, dataLayer: dataLayer)
     }
 }

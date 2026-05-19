@@ -50,18 +50,18 @@ class AppBackgroundState {
             .store(in: &cancellables)
         
         syncLatestToolsForFavoritedTools(
-            downloadLatestToolsForFavoritedToolsUseCase: appDiContainer.domainLayer.getDownloadLatestToolsForFavoritedToolsUseCase()
+            downloadLatestToolsForFavoritedToolsUseCase: appDiContainer.feature.favorites.domainLayer.getDownloadLatestToolsForFavoritedToolsUseCase()
         )
                 
         syncInitialFavoritedTools(
-            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
-            launchCountRepository: appDiContainer.dataLayer.getLaunchCountRepository(),
-            storeInitialFavoritedToolsUseCase: appDiContainer.domainLayer.getStoreInitialFavoritedToolsUseCase()
+            resourcesRepository: appDiContainer.core.dataLayer.getResourcesRepository(),
+            launchCountRepository: appDiContainer.core.dataLayer.getLaunchCountRepository(),
+            storeInitialFavoritedToolsUseCase: appDiContainer.feature.favorites.domainLayer.getStoreInitialFavoritedToolsUseCase()
         )
         
         syncUserCounters(
             userIsAuthenticatedUseCase: appDiContainer.feature.account.domainLayer.getUserIsAuthenticatedUseCase(),
-            userCountersSync: appDiContainer.dataLayer.getSharedUserCountersSync()
+            userCountersSync: appDiContainer.core.dataLayer.getSharedUserCountersSync()
         )
     }
     

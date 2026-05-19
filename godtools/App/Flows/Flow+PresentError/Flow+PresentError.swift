@@ -18,7 +18,7 @@ extension Flow {
             return
         }
 
-        let localizationServices: LocalizationServicesInterface = appDiContainer.dataLayer.getLocalizationServices()
+        let localizationServices: LocalizationServicesInterface = appDiContainer.core.dataLayer.getLocalizationServices()
         
         let title: String
         let message: String

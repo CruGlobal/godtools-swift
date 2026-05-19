@@ -14,11 +14,11 @@ final class ToolSettingsDiContainer {
     
     let domainLayer: ToolSettingsDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies) {
+    init(core: AppCoreDiContainer) {
         
-        let dataLayer = ToolSettingsDataLayerDependencies(coreDataLayer: coreDataLayer)
+        let dataLayer = ToolSettingsDataLayerDependencies(coreDataLayer: core.dataLayer)
         
         self.dataLayer = dataLayer
-        domainLayer = ToolSettingsDomainLayerDependencies(coreDataLayer: coreDataLayer, coreDomainLayer: coreDomainLayer, dataLayer: dataLayer)
+        domainLayer = ToolSettingsDomainLayerDependencies(core: core, dataLayer: dataLayer)
     }
 }

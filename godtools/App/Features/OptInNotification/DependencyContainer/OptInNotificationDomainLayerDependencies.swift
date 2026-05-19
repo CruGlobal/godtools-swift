@@ -10,13 +10,13 @@ import Foundation
 
 final class OptInNotificationDomainLayerDependencies {
 
-    private let coreDataLayer: AppDataLayerDependencies
+    private let core: AppCoreDiContainer
     private let dataLayer: OptInNotificationDataLayerDependencies
     private let getOnboardingTutorialIsAvailable: GetOnboardingTutorialIsAvailable
 
-    init(coreDataLayer: AppDataLayerDependencies, dataLayer: OptInNotificationDataLayerDependencies, getOnboardingTutorialIsAvailable: GetOnboardingTutorialIsAvailable) {
+    init(core: AppCoreDiContainer, dataLayer: OptInNotificationDataLayerDependencies, getOnboardingTutorialIsAvailable: GetOnboardingTutorialIsAvailable) {
 
-        self.coreDataLayer = coreDataLayer
+        self.core = core
         self.dataLayer = dataLayer
         self.getOnboardingTutorialIsAvailable = getOnboardingTutorialIsAvailable
     }
@@ -33,7 +33,7 @@ final class OptInNotificationDomainLayerDependencies {
     
     func getOptInNotificationStringsUseCase() -> GetOptInNotificationStringsUseCase {
         return GetOptInNotificationStringsUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
     

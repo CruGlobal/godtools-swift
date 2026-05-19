@@ -10,14 +10,12 @@ import Foundation
 
 final class ToolScreenShareDomainLayerDependencies {
     
-    private let coreDataLayer: AppDataLayerDependencies
-    private let coreDomainLayer: AppDomainLayerDependencies
+    private let core: AppCoreDiContainer
     private let dataLayer: ToolScreenShareDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, dataLayer: ToolScreenShareDataLayerDependencies) {
+    init(core: AppCoreDiContainer, dataLayer: ToolScreenShareDataLayerDependencies) {
         
-        self.coreDataLayer = coreDataLayer
-        self.coreDomainLayer = coreDomainLayer
+        self.core = core
         self.dataLayer = dataLayer
     }
     
@@ -29,19 +27,19 @@ final class ToolScreenShareDomainLayerDependencies {
     
     func getCreatingToolScreenShareSessionStringsUseCase() -> GetCreatingToolScreenShareSessionStringsUseCase {
         return GetCreatingToolScreenShareSessionStringsUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
     
     func getCreatingToolScreenShareSessionTimedOutStringsUseCase() -> GetCreatingToolScreenShareSessionTimedOutStringsUseCase {
         return GetCreatingToolScreenShareSessionTimedOutStringsUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
     
     func getShareToolScreenShareSessionStringsUseCase() -> GetShareToolScreenShareSessionStringsUseCase {
         return GetShareToolScreenShareSessionStringsUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
     
@@ -53,13 +51,13 @@ final class ToolScreenShareDomainLayerDependencies {
     
     func getToolScreenShareTutorialStringsUseCase() -> GetToolScreenShareTutorialStringsUseCase {
         return GetToolScreenShareTutorialStringsUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
     
     func getToolScreenShareTutorialUseCase() -> GetToolScreenShareTutorialUseCase {
         return GetToolScreenShareTutorialUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
 }

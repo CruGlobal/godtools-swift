@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SharedUserDefaultsCache: UserDefaultsCacheInterface {
+final class SharedUserDefaultsCache: UserDefaultsCacheInterface {
     
     private let userDefaults: UserDefaults = UserDefaults.standard
     

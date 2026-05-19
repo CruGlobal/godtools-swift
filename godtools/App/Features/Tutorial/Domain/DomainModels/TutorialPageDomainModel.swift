@@ -14,6 +14,10 @@ struct TutorialPageDomainModel: Sendable {
     let message: String
     let media: TutorialPageMediaDomainModel
     
+    static var emptyValue: TutorialPageDomainModel {
+        return TutorialPageDomainModel(title: "", message: "", videoId: nil, animatedResource: nil, imageName: nil)
+    }
+    
     init(title: String, message: String, videoId: String?, animatedResource: AnimatedResource?, imageName: String?) {
         
         self.title = title

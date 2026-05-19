@@ -17,30 +17,23 @@ final class UserLessonProgressRepository {
         self.cache = cache
     }
     
-    @MainActor func getLessonProgressChangedPublisher() -> AnyPublisher<Void, Never> {
+    @MainActor func getLessonProgressChangedPublisher() -> AnyPublisher<Void, Error> {
         return cache.persistence
             .observeCollectionChangesPublisher()
-            .catch { _ in
-                return Just(Void())
-                    .eraseToAnyPublisher()
-            }
             .eraseToAnyPublisher()
     }
     
-    func storeLessonProgressPublisher(lessonId: String, lastViewedPageId: String, progress: Double) -> AnyPublisher<UserLessonProgressDataModel, Error> {
+    func getLessonProgress(lessonId: String) -> UserLessonProgressDataModel? {
         
-        return AnyPublisher() {
-            
-            try await self.storeLessonProgress(
-                lessonId: lessonId,
-                lastViewedPageId: lastViewedPageId,
-                progress: progress
-            )
+        do {
+            return try cache.persistence.getDataModel(id: lessonId)
         }
-        .eraseToAnyPublisher()
+        catch _ {
+            return nil
+        }
     }
     
-    private func storeLessonProgress(lessonId: String, lastViewedPageId: String, progress: Double) async throws -> UserLessonProgressDataModel {
+    func storeLessonProgress(lessonId: String, lastViewedPageId: String, progress: Double) async throws -> UserLessonProgressDataModel {
         
         let dataModel = UserLessonProgressDataModel(
             id: lessonId,
@@ -52,15 +45,5 @@ final class UserLessonProgressRepository {
         _ = try await cache.persistence.writeObjectsAsync(externalObjects: [dataModel], writeOption: nil, getOption: nil)
         
         return dataModel
-    }
-    
-    func getLessonProgress(lessonId: String) -> UserLessonProgressDataModel? {
-        
-        do {
-            return try cache.persistence.getDataModel(id: lessonId)
-        }
-        catch _ {
-            return nil
-        }
     }
 }

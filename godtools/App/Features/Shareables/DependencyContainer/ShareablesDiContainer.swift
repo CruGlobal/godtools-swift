@@ -13,9 +13,9 @@ final class ShareablesDiContainer {
     let dataLayer: ShareablesDataLayerDependencies
     let domainLayer: ShareablesDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(core: AppCoreDiContainer) {
         
-        dataLayer = ShareablesDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainLayer = ShareablesDomainLayerDependencies(coreDataLayer: coreDataLayer, dataLayer: dataLayer)
+        dataLayer = ShareablesDataLayerDependencies(coreDataLayer: core.dataLayer)
+        domainLayer = ShareablesDomainLayerDependencies(core: core, dataLayer: dataLayer)
     }
 }

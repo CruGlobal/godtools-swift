@@ -160,16 +160,16 @@ struct AllToolsView_Preview: PreviewProvider {
             getPersonalizedToolsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getGetPersonalizedToolsUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getLocalizationSettingsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getGetLocalizationSettingsUseCase(),
-            favoritingToolMessageCache: appDiContainer.dataLayer.getFavoritingToolMessageCache(),
+            favoritingToolMessageCache: appDiContainer.core.dataLayer.getFavoritingToolMessageCache(),
             getSpotlightToolsUseCase: appDiContainer.feature.spotlightTools.domainLayer.getSpotlightToolsUseCase(),
             getUserToolFilterCategoryUseCase: appDiContainer.feature.toolsFilter.domainLayer.getUserToolFilterCategoryUseCase(),
             getUserToolFilterLanguageUseCase: appDiContainer.feature.toolsFilter.domainLayer.getUserToolFilterLanguageUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToolIsFavoritedUseCase(),
             toggleToolFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToggleToolFavoritedUseCase(),
-            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
-            getToolBannerUseCase: appDiContainer.domainLayer.getToolBannerUseCase(),
-            inMemoryDataCache: appDiContainer.dataLayer.getSharedInMemoryDataCache()
+            trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+            trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase(),
+            getToolBannerUseCase: appDiContainer.core.domainLayer.getToolBannerUseCase(),
+            inMemoryDataCache: appDiContainer.core.dataLayer.getSharedInMemoryDataCache()
         )
         
         return viewModel

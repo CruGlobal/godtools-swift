@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct KeyboardStateChange {
+struct KeyboardStateChange: Sendable {
     
     let keyboardState: KeyboardState
     let keyboardHeight: Double

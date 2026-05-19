@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "tutorial_in_menu_non_english.png",
+      "filename" : "tutorial_find_this@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "tutorial_in_menu_non_english@2x.png",
+      "filename" : "tutorial_find_this@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "tutorial_in_menu_non_english@3x.png",
+      "filename" : "tutorial_find_this@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

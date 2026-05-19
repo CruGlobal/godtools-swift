@@ -10,20 +10,20 @@ import Foundation
 
 final class DownloadToolProgressDomainLayerDependencies {
     
-    private let coreDataLayer: AppDataLayerDependencies
+    private let core: AppCoreDiContainer
     private let dataLayer: DownloadToolProgressDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, dataLayer: DownloadToolProgressDataLayerDependencies) {
+    init(core: AppCoreDiContainer, dataLayer: DownloadToolProgressDataLayerDependencies) {
         
-        self.coreDataLayer = coreDataLayer
+        self.core = core
         self.dataLayer = dataLayer
     }
     
     func getDownloadToolProgressStringsUseCase() -> GetDownloadToolProgressStringsUseCase {
         return GetDownloadToolProgressStringsUseCase(
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
-            localizationServices: coreDataLayer.getLocalizationServices(),
-            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository()
+            resourcesRepository: core.dataLayer.getResourcesRepository(),
+            localizationServices: core.dataLayer.getLocalizationServices(),
+            favoritedResourcesRepository: core.dataLayer.getFavoritedResourcesRepository()
         )
     }
 }

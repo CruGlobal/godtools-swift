@@ -10,20 +10,18 @@ import Foundation
 
 final class UserActivityDomainLayerDependencies {
     
-    private let coreDataLayer: AppDataLayerDependencies
-    private let coreDomainLayer: AppDomainLayerDependencies
+    private let core: AppCoreDiContainer
     private let dataLayer: UserActivityDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, dataLayer: UserActivityDataLayerDependencies) {
+    init(core: AppCoreDiContainer, dataLayer: UserActivityDataLayerDependencies) {
         
-        self.coreDataLayer = coreDataLayer
-        self.coreDomainLayer = coreDomainLayer
+        self.core = core
         self.dataLayer = dataLayer
     }
     
     func getIncrementUserCounterUseCase() -> IncrementUserCounterUseCase {
         return IncrementUserCounterUseCase(
-            userCountersRepository: coreDataLayer.getUserCountersRepository()
+            userCountersRepository: core.dataLayer.getUserCountersRepository()
         )
     }
     
@@ -31,8 +29,8 @@ final class UserActivityDomainLayerDependencies {
         return GetUserActivityUseCase(
             getUserActivityBadge: getUserActivityBadge(),
             getUserActivityStats: getUserActivityStats(),
-            userCounterRepository: coreDataLayer.getUserCountersRepository(),
-            completedTrainingTipRepository: coreDataLayer.getCompletedTrainingTipRepository()
+            userCounterRepository: core.dataLayer.getUserCountersRepository(),
+            completedTrainingTipRepository: core.dataLayer.getCompletedTrainingTipRepository()
         )
     }
 }
@@ -43,16 +41,16 @@ extension UserActivityDomainLayerDependencies {
     
     private func getUserActivityBadge() -> GetUserActivityBadge{
         return GetUserActivityBadge(
-            localizationServices: coreDataLayer.getLocalizationServices(),
-            stringWithLocaleCount: coreDataLayer.getStringWithLocaleCount()
+            localizationServices: core.dataLayer.getLocalizationServices(),
+            stringWithLocaleCount: core.dataLayer.getStringWithLocaleCount()
         )
     }
     
     private func getUserActivityStats() -> GetUserActivityStats {
         return GetUserActivityStats(
-            localizationServices: coreDataLayer.getLocalizationServices(),
-            getTranslatedNumberCount: coreDomainLayer.supporting.getTranslatedNumberCount(),
-            stringWithLocaleCount: coreDataLayer.getStringWithLocaleCount()
+            localizationServices: core.dataLayer.getLocalizationServices(),
+            getTranslatedNumberCount: core.domainLayer.supporting.getTranslatedNumberCount(),
+            stringWithLocaleCount: core.dataLayer.getStringWithLocaleCount()
         )
     }
 }

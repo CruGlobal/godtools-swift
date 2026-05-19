@@ -10,19 +10,19 @@ import Foundation
 
 final class MenuDomainLayerDependencies {
     
-    private let coreDataLayer: AppDataLayerDependencies
+    private let core: AppCoreDiContainer
     private let dataLayer: MenuDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, dataLayer: MenuDataLayerDependencies) {
+    init(core: AppCoreDiContainer, dataLayer: MenuDataLayerDependencies) {
         
-        self.coreDataLayer = coreDataLayer
+        self.core = core
         self.dataLayer = dataLayer
     }
     
     func getMenuStringsUseCase() -> GetMenuStringsUseCase {
         return GetMenuStringsUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices(),
-            infoPlist: coreDataLayer.getInfoPlist()
+            localizationServices: core.dataLayer.getLocalizationServices(),
+            infoPlist: core.dataLayer.getInfoPlist()
         )
     }
 }

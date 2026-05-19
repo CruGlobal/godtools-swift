@@ -326,8 +326,8 @@ extension GetAllLessonsUseCaseTests {
         let testsDiContainer = try getTestsDiContainer(addRealmObjects: getRealmObjects())
         
         return GetAllLessonsUseCase(
-            resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
-            lessonProgressRepository: testsDiContainer.dataLayer.getUserLessonProgressRepository(),
+            resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),
+            lessonProgressRepository: testsDiContainer.core.dataLayer.getUserLessonProgressRepository(),
             getLessonsListItems: getLessonsListItems(testsDiContainer: testsDiContainer)
         )
     }
@@ -343,25 +343,25 @@ extension GetAllLessonsUseCaseTests {
     private func getLessonsListItems(testsDiContainer: TestsDiContainer) -> GetLessonsListItems {
         
         return GetLessonsListItems(
-            languagesRepository: testsDiContainer.dataLayer.getLanguagesRepository(),
+            languagesRepository: testsDiContainer.core.dataLayer.getLanguagesRepository(),
             getTranslatedToolName: getTranslatedToolName(testsDiContainer: testsDiContainer),
             getTranslatedToolLanguageAvailability: getTranslatedToolLanguageAvailability(testsDiContainer: testsDiContainer),
-            getLessonListItemProgress: testsDiContainer.domainLayer.supporting.getLessonListItemProgress()
+            getLessonListItemProgress: testsDiContainer.core.domainLayer.supporting.getLessonListItemProgress()
         )
     }
     
     private func getTranslatedToolName(testsDiContainer: TestsDiContainer) -> GetTranslatedToolName {
         return GetTranslatedToolName(
-            resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
-            translationsRepository: testsDiContainer.dataLayer.getTranslationsRepository()
+            resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),
+            translationsRepository: testsDiContainer.core.dataLayer.getTranslationsRepository()
         )
     }
     
     private func getTranslatedToolLanguageAvailability(testsDiContainer: TestsDiContainer) -> GetTranslatedToolLanguageAvailability {
         return GetTranslatedToolLanguageAvailability(
             localizationServices: getLocalizationServices(),
-            resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
-            languagesRepository: testsDiContainer.dataLayer.getLanguagesRepository(),
+            resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),
+            languagesRepository: testsDiContainer.core.dataLayer.getLanguagesRepository(),
             getTranslatedLanguageName: getTranslatedLanguageName()
         )
     }

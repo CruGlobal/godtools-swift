@@ -8,14 +8,16 @@
 
 import Foundation
 
-class ArticleAemWebArchiveFileCache: FileCache {
+final class ArticleAemWebArchiveFileCache {
     
     private static let rootDirectoryName: String = "articles"
     
+    let fileCache: FileCache
+    
     init() {
-                
-        super.init(rootDirectory: ArticleAemWebArchiveFileCache.rootDirectoryName)
         
+        fileCache = FileCache(rootDirectory: ArticleAemWebArchiveFileCache.rootDirectoryName)
+                        
         do {
             try deleteLegacyArticlesDirectory()
         }
@@ -28,10 +30,10 @@ class ArticleAemWebArchiveFileCache: FileCache {
                 
         let legacyDirectoryName: String = "articles_webarchives"
         
-        let documentsDirectory = try getUserDocumentsDirectory()
+        let documentsDirectory = try fileCache.getUserDocumentsDirectory()
         
         let legacyDirectory: URL = documentsDirectory.appendingPathComponent(legacyDirectoryName)
         
-        _ = try removeItem(url: legacyDirectory)
+        _ = try fileCache.removeItem(url: legacyDirectory)
     }
 }

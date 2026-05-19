@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Signal {
+final class Signal {
     
     typealias Handler = (() -> Void)
     

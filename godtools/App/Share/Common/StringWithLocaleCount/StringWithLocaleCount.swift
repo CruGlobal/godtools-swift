@@ -8,7 +8,7 @@
 
 import Foundation
 
-class StringWithLocaleCount: StringWithLocaleCountInterface {
+final class StringWithLocaleCount: StringWithLocaleCountInterface {
     
     init() {
         

@@ -198,11 +198,11 @@ struct GetTranslatedToolLanguageAvailabilityTests {
 extension GetTranslatedToolLanguageAvailabilityTests {
     
     private func queryResource(id: String, testsDiContainer: TestsDiContainer) throws -> ResourceDataModel? {
-        return try testsDiContainer.dataLayer.getResourcesRepository().getResource(id: id)
+        return try testsDiContainer.core.dataLayer.getResourcesRepository().getResource(id: id)
     }
     
     private func queryLanguage(id: String, testsDiContainer: TestsDiContainer) throws -> LanguageDataModel? {
-        return try testsDiContainer.dataLayer.getLanguagesRepository().getLanguage(id: id)
+        return try testsDiContainer.core.dataLayer.getLanguagesRepository().getLanguage(id: id)
     }
     
     private func getTestsDiContainer() throws -> TestsDiContainer {
@@ -216,8 +216,8 @@ extension GetTranslatedToolLanguageAvailabilityTests {
     private func getTranslatedToolLanguageAvailability(testsDiContainer: TestsDiContainer) -> GetTranslatedToolLanguageAvailability {
         return GetTranslatedToolLanguageAvailability(
             localizationServices: getLocalizationServices(),
-            resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
-            languagesRepository: testsDiContainer.dataLayer.getLanguagesRepository(),
+            resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),
+            languagesRepository: testsDiContainer.core.dataLayer.getLanguagesRepository(),
             getTranslatedLanguageName: getTranslatedLanguageName()
         )
     }

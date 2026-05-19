@@ -10,39 +10,37 @@ import Foundation
 
 final class ToolsFilterDomainLayerDependencies {
     
-    private let coreDataLayer: AppDataLayerDependencies
-    private let coreDomainLayer: AppDomainLayerDependencies
+    private let core: AppCoreDiContainer
     private let dataLayer: ToolsFilterDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, dataLayer: ToolsFilterDataLayerDependencies) {
+    init(core: AppCoreDiContainer, dataLayer: ToolsFilterDataLayerDependencies) {
         
-        self.coreDataLayer = coreDataLayer
-        self.coreDomainLayer = coreDomainLayer
+        self.core = core
         self.dataLayer = dataLayer
     }
     
     func getToolFilterCategoriesStringsUseCase() -> GetToolFilterCategoriesStringsUseCase {
         return GetToolFilterCategoriesStringsUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
     
     func getToolFilterCategoriesUseCase() -> GetToolFilterCategoriesUseCase {
         return GetToolFilterCategoriesUseCase(
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            resourcesRepository: core.dataLayer.getResourcesRepository(),
             getToolFilterCategory: getToolFilterCategory()
         )
     }
     
     func getToolFilterLanguagesStringsUseCase() -> GetToolFilterLanguagesStringsUseCase {
         return GetToolFilterLanguagesStringsUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
     
     func getToolFilterLanguagesUseCase() -> GetToolFilterLanguagesUseCase {
         return GetToolFilterLanguagesUseCase(
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            resourcesRepository: core.dataLayer.getResourcesRepository(),
             getToolFilterLanguage: getToolFilterLanguage()
         )
     }
@@ -92,19 +90,19 @@ extension ToolsFilterDomainLayerDependencies {
     
     private func getToolFilterCategory() -> GetToolFilterCategory {
         return GetToolFilterCategory(
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
-            localizationServices: coreDataLayer.getLocalizationServices(),
-            stringWithLocaleCount: coreDataLayer.getStringWithLocaleCount()
+            resourcesRepository: core.dataLayer.getResourcesRepository(),
+            localizationServices: core.dataLayer.getLocalizationServices(),
+            stringWithLocaleCount: core.dataLayer.getStringWithLocaleCount()
         )
     }
     
     private func getToolFilterLanguage() -> GetToolFilterLanguage {
         return GetToolFilterLanguage(
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
-            languagesRepository: coreDataLayer.getLanguagesRepository(),
-            getTranslatedLanguageName: coreDomainLayer.supporting.getTranslatedLanguageName(),
-            localizationServices: coreDataLayer.getLocalizationServices(),
-            stringWithLocaleCount: coreDataLayer.getStringWithLocaleCount()
+            resourcesRepository: core.dataLayer.getResourcesRepository(),
+            languagesRepository: core.dataLayer.getLanguagesRepository(),
+            getTranslatedLanguageName: core.domainLayer.supporting.getTranslatedLanguageName(),
+            localizationServices: core.dataLayer.getLocalizationServices(),
+            stringWithLocaleCount: core.dataLayer.getStringWithLocaleCount()
         )
     }
 }

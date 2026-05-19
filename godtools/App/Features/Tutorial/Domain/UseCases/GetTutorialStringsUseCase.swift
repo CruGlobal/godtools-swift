@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetTutorialStringsUseCase {
     
@@ -18,25 +17,24 @@ final class GetTutorialStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<TutorialStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> TutorialStringsDomainModel {
         
         let localeId: String = appLanguage
         
         let completeTutorialActionLocalizedStringKey: String
         
         if appLanguage == LanguageCodeDomainModel.english.value {
-            completeTutorialActionLocalizedStringKey = "tutorial.continueButton.title.closeTutorial"
+            completeTutorialActionLocalizedStringKey = LocalizableStringKeys.tutorialContinueButtonTitleCloseTutorial.key
         }
         else {
-            completeTutorialActionLocalizedStringKey = "tutorial.continueButton.title.startUsingGodTools"
+            completeTutorialActionLocalizedStringKey = LocalizableStringKeys.tutorialContinueButtonTitleStartUsingGodTools.key
         }
         
         let strings = TutorialStringsDomainModel(
-            nextTutorialPageActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: "tutorial.continueButton.title.continue"),
+            nextTutorialPageActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.tutorialContinueButtonTitleContinue.key),
             completeTutorialActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: completeTutorialActionLocalizedStringKey)
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

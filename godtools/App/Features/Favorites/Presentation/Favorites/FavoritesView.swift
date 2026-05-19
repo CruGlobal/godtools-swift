@@ -26,12 +26,6 @@ struct FavoritesView: View {
                   
             AccessibilityScreenElementView(screenAccessibility: .dashboardFavorites)
             
-            if viewModel.isLoadingYourFavoritedTools {
-                CenteredCircularProgressView(
-                    progressColor: ColorPalette.gtGrey.color
-                )
-            }
-            
             VStack(alignment: .leading, spacing: 0) {
                 
                 if viewModel.showsOpenTutorialBanner {
@@ -83,8 +77,6 @@ struct FavoritesView: View {
                     
                     viewModel.pullToRefresh()
                 }
-                .opacity(viewModel.isLoadingYourFavoritedTools ? 0 : 1)
-                .animation(.easeOut, value: !viewModel.isLoadingYourFavoritedTools)
             }
         }//end GeometryReader
         .onAppear {
@@ -104,18 +96,18 @@ struct FavoritesView_Preview: PreviewProvider {
         
         let viewModel = FavoritesViewModel(
             flowDelegate: MockFlowDelegate(),
-            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
+            resourcesRepository: appDiContainer.core.dataLayer.getResourcesRepository(),
             getFavoritesStringsUseCase: appDiContainer.feature.favorites.domainLayer.getFavoritesStringsUseCase(),
             getYourFavoritedToolsUseCase: appDiContainer.feature.favorites.domainLayer.getYourFavoritedToolsUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToolIsFavoritedUseCase(),
-            getToolBannerUseCase: appDiContainer.domainLayer.getToolBannerUseCase(),
-            inMemoryDataCache: appDiContainer.dataLayer.getSharedInMemoryDataCache(),
-            disableOptInOnboardingBannerUseCase: appDiContainer.domainLayer.getDisableOptInOnboardingBannerUseCase(),
+            getToolBannerUseCase: appDiContainer.core.domainLayer.getToolBannerUseCase(),
+            inMemoryDataCache: appDiContainer.core.dataLayer.getSharedInMemoryDataCache(),
+            disableOptInOnboardingBannerUseCase: appDiContainer.feature.tools.domainLayer.getDisableOptInOnboardingBannerUseCase(),
             getFeaturedLessonsUseCase: appDiContainer.feature.featuredLessons.domainLayer.getFeaturedLessonsUseCase(),
-            getOptInOnboardingBannerEnabledUseCase: appDiContainer.domainLayer.getOptInOnboardingBannerEnabledUseCase(),
-            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
+            getOptInOnboardingBannerEnabledUseCase: appDiContainer.feature.tools.domainLayer.getOptInOnboardingBannerEnabledUseCase(),
+            trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+            trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase()
         )
         
         return viewModel

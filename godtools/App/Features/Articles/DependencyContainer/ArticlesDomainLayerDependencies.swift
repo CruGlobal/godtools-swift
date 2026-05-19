@@ -10,21 +10,19 @@ import Foundation
 
 final class ArticlesDomainLayerDependencies {
     
-    private let coreDataLayer: AppDataLayerDependencies
-    private let coreDomainLayer: AppDomainLayerDependencies
+    private let core: AppCoreDiContainer
     private let dataLayer: ArticlesDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, dataLayer: ArticlesDataLayerDependencies) {
+    init(core: AppCoreDiContainer, dataLayer: ArticlesDataLayerDependencies) {
         
-        self.coreDataLayer = coreDataLayer
-        self.coreDomainLayer = coreDomainLayer
+        self.core = core
         self.dataLayer = dataLayer
     }
     
     func getArticleCategoriesUseCase() -> GetArticleCategoriesUseCase {
         
         return GetArticleCategoriesUseCase(
-            manifestResourcesCache: coreDataLayer.getMobileContentRendererManifestResourcesCache(),
+            manifestResourcesCache: core.dataLayer.getMobileContentRendererManifestResourcesCache(),
 
         )
     }
@@ -32,7 +30,7 @@ final class ArticlesDomainLayerDependencies {
     func getPullToRefreshArticlesUseCase() -> PullToRefreshArticlesUseCase {
         
         return PullToRefreshArticlesUseCase(
-            articleManifestAemRepository: coreDataLayer.getArticleManifestAemRepository()
+            articleManifestAemRepository: core.dataLayer.getArticleManifestAemRepository()
         )
     }
 }

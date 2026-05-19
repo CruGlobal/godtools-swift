@@ -105,7 +105,7 @@ extension LocalizationSettingsFlow {
             getLocalizationSettingsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getGetLocalizationSettingsUseCase(),
             searchCountriesUseCase: appDiContainer.feature.personalizedTools.domainLayer.getSearchCountriesInLocalizationSettingsCountriesListUseCase(),
             viewLocalizationSettingsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getViewLocalizationSettingsUseCase(),
-            viewSearchBarUseCase: appDiContainer.domainLayer.getViewSearchBarUseCase()
+            viewSearchBarUseCase: appDiContainer.core.domainLayer.getViewSearchBarUseCase()
         )
         
         let view = LocalizationSettingsView(viewModel: viewModel)

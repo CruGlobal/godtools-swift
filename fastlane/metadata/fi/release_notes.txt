@@ -1,0 +1,1 @@
+Korjasimme bugeja ja paransimme käyttöliittymää

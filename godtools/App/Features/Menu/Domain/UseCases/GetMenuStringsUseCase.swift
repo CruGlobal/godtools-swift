@@ -33,7 +33,7 @@ final class GetMenuStringsUseCase {
         }
         
         let strings = MenuStringsDomainModel(
-            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "settings"),
+            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.settings.key),
             getStartedTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.SectionTitles.getStarted.rawValue),
             tutorialOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.ItemTitles.tutorial.rawValue),
             languageSettingsOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.ItemTitles.languageSettings.rawValue),
