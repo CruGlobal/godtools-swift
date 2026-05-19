@@ -61,11 +61,17 @@ extension UserCountersCache {
     
     func getCounter(id: String) throws -> UserCounterDataModel? {
         
-        guard let counter = try persistence.getDataModel(id: id) else {
+        let localCounter: LocalActivityCountDataModel? = try localActivityCounterCache.persistence.getDataModel(id: id)
+        let counter: UserCounterDataModel? = try persistence.getDataModel(id: id)
+        
+        if localCounter == nil && counter == nil {
             return nil
         }
         
-        return try mergeLocalCounterWithCounter(counter: counter)
+        let localCount: Int = localCounter?.count ?? 0
+        let counterCount: Int = counter?.count ?? 0
+        
+        return UserCounterDataModel(id: id, count: localCount + counterCount)
     }
     
     private func mergeLocalCounterWithCounter(counter: UserCounterDataModel) throws -> UserCounterDataModel {
