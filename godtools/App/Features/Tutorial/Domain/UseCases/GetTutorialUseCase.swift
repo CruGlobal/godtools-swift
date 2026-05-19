@@ -60,7 +60,7 @@ final class GetTutorialUseCase {
             title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.tutorialLessonTitle.key),
             message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.tutorialLessonMessage.key),
             videoId: nil,
-            animatedResource: .mainBundleJsonFile(filename: "tutorial_lessons"),
+            animatedResource: .mainBundleJsonFile(filename: LottieJson.tutorialLessons.fileName),
             imageName: nil
         )
     }
@@ -79,7 +79,7 @@ final class GetTutorialUseCase {
             title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.tutorialToolTipTitle.key),
             message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.tutorialToolTipMessage.key),
             videoId: nil,
-            animatedResource: .mainBundleJsonFile(filename: "tutorial_tooltip"),
+            animatedResource: .mainBundleJsonFile(filename: LottieJson.tutorialToolTip.fileName),
             imageName: nil
         )
     }
@@ -89,7 +89,7 @@ final class GetTutorialUseCase {
             title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.tutorialScreenShareTitle.key),
             message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.tutorialScreenShareMessage.key),
             videoId: nil,
-            animatedResource: .mainBundleJsonFile(filename: "tutorial_screenshare"),
+            animatedResource: .mainBundleJsonFile(filename: LottieJson.tutorialScreenShare.fileName),
             imageName: nil
         )
     }
@@ -100,7 +100,7 @@ final class GetTutorialUseCase {
             message: "",
             videoId: nil,
             animatedResource: nil,
-            imageName: ImageCatalog.tutorialInMenuEnglish.name
+            imageName: ImageCatalog.tutorialFindThis.name
         )
     }
 }
