@@ -13,9 +13,9 @@ final class FavoritesDiContainer {
     let dataLayer: FavoritesDataLayerDependencies
     let domainLayer: FavoritesDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies) {
+    init(core: AppCoreDiContainer) {
         
-        dataLayer = FavoritesDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainLayer = FavoritesDomainLayerDependencies(coreDataLayer: coreDataLayer, coreDomainLayer: coreDomainLayer, dataLayer: dataLayer)
+        dataLayer = FavoritesDataLayerDependencies(coreDataLayer: core.dataLayer)
+        domainLayer = FavoritesDomainLayerDependencies(core: core, dataLayer: dataLayer)
     }
 }

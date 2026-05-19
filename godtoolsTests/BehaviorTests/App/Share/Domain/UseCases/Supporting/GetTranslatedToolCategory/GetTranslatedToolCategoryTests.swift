@@ -98,7 +98,7 @@ extension GetTranslatedToolCategoryTests {
     private func getTranslatedToolCategory(testsDiContainer: TestsDiContainer) -> GetTranslatedToolCategory {
         return GetTranslatedToolCategory(
             localizationServices: getLocalizationServices(),
-            resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository()
+            resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository()
         )
     }
     

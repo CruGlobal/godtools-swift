@@ -41,7 +41,7 @@ protocol MobileContentRendererNavigationDelegate: AnyObject {
     
     func buttonWithUrlTapped(url: URL, analyticsScreenName: String, analyticsSiteSection: String, analyticsSiteSubSection: String, languages: MobileContentRendererLanguages) {
         
-        let deepLinkingService: DeepLinkingService = appDiContainer.dataLayer.getDeepLinkingService()
+        let deepLinkingService: DeepLinkingService = appDiContainer.core.dataLayer.getDeepLinkingService()
         let deepLink: ParsedDeepLinkType? = deepLinkingService.parseDeepLink(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
         
         if let deepLink = deepLink {
@@ -106,8 +106,8 @@ protocol MobileContentRendererNavigationDelegate: AnyObject {
         let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
             resourceId: toolId,
             languageIds: languageIds,
-            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
-            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository()
+            resourcesRepository: appDiContainer.core.dataLayer.getResourcesRepository(),
+            translationsRepository: appDiContainer.core.dataLayer.getTranslationsRepository()
         )
         
         downloadToolTranslationsFlow = DownloadToolTranslationsFlow(
@@ -153,7 +153,7 @@ protocol MobileContentRendererNavigationDelegate: AnyObject {
             languageTranslationManifest: languageTranslationManifest,
             pageViewFactories: pageViewFactories,
             navigation: navigation,
-            manifestResourcesCache: appDiContainer.dataLayer.getMobileContentRendererManifestResourcesCache()
+            manifestResourcesCache: appDiContainer.core.dataLayer.getMobileContentRendererManifestResourcesCache()
         )
                            
         let viewModel = ToolTrainingViewModel(
@@ -161,10 +161,10 @@ protocol MobileContentRendererNavigationDelegate: AnyObject {
             renderedPageContext: event.renderedPageContext,
             trainingTipId: event.trainingTipId,
             tipModel: event.tipModel,
-            setCompletedTrainingTipUseCase: appDiContainer.domainLayer.getSetCompletedTrainingTipUseCase(),
-            getTrainingTipCompletedUseCase: appDiContainer.domainLayer.getTrainingTipCompletedUseCase(),
-            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
+            setCompletedTrainingTipUseCase: appDiContainer.core.domainLayer.getSetCompletedTrainingTipUseCase(),
+            getTrainingTipCompletedUseCase: appDiContainer.core.domainLayer.getTrainingTipCompletedUseCase(),
+            trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+            localizationServices: appDiContainer.core.dataLayer.getLocalizationServices(),
             closeTappedClosure: { [weak self] in
                 self?.dismissToolTraining()
             }

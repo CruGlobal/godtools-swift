@@ -13,9 +13,9 @@ final class TutorialDiContainer {
     let dataLayer: TutorialDataLayerDependencies
     let domainLayer: TutorialDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(dataLayer: TutorialDataLayerDependencies, domainLayer: TutorialDomainLayerDependencies) {
         
-        dataLayer = TutorialDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainLayer = TutorialDomainLayerDependencies(coreDataLayer: coreDataLayer, dataLayer: dataLayer)
+        self.dataLayer = dataLayer
+        self.domainLayer = domainLayer
     }
 }

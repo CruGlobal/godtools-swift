@@ -372,7 +372,7 @@ extension GetUserAccountDetailsUseCaseTests {
             createdAt: createdAt
         )
         
-        let realmDatabase: RealmDatabase = testsDiContainer.dataLayer.getSharedRealmDatabase()
+        let realmDatabase: RealmDatabase = testsDiContainer.core.dataLayer.getSharedRealmDatabase()
         
         let mockMobileContentAuthTokenKeychainAccessor = MockMobileContentAuthTokenKeychainAccessor()
         mockMobileContentAuthTokenKeychainAccessor.setUserId(Self.userId)
@@ -398,9 +398,9 @@ extension GetUserAccountDetailsUseCaseTests {
         )
         
         let api = UserDetailsApi(
-            config: testsDiContainer.dataLayer.getAppConfig(),
-            urlSessionPriority: testsDiContainer.dataLayer.getSharedUrlSessionPriority(),
-            mobileContentApiAuthSession: testsDiContainer.dataLayer.getMobileContentApiAuthSession()
+            config: testsDiContainer.core.dataLayer.getAppConfig(),
+            urlSessionPriority: testsDiContainer.core.dataLayer.getSharedUrlSessionPriority(),
+            mobileContentApiAuthSession: testsDiContainer.core.dataLayer.getMobileContentApiAuthSession()
         )
         
         let userDetailsRepository = UserDetailsRepository(

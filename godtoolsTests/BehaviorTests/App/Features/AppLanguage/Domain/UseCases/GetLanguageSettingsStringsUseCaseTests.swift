@@ -209,7 +209,7 @@ extension GetLanguageSettingsStringsUseCaseTests {
             addRealmObjects: []
         )
         
-        let realmDatabase: RealmDatabase = testsDiContainer.dataLayer.getSharedRealmDatabase()
+        let realmDatabase: RealmDatabase = testsDiContainer.core.dataLayer.getSharedRealmDatabase()
         
         let persistence = RealmRepositorySyncPersistence(
             database: realmDatabase,

@@ -30,7 +30,7 @@ class DownloadToolTranslationsFlow: Flow {
         self.appDiContainer = appDiContainer
         self.navigationController = presentInFlow.navigationController
         self.determineToolTranslationsToDownload = determineToolTranslationsToDownload
-        self.getToolTranslationsFilesUseCase = appDiContainer.domainLayer.getToolTranslationsFilesUseCase()
+        self.getToolTranslationsFilesUseCase = appDiContainer.core.domainLayer.getToolTranslationsFilesUseCase()
         self.didDownloadToolTranslations = didDownloadToolTranslations
         
         getToolTranslationsFilesUseCase.getToolTranslationsFilesPublisher(filter: .downloadManifestAndRelatedFilesForRenderer, determineToolTranslationsToDownload: determineToolTranslationsToDownload, downloadStarted: { [weak self] in

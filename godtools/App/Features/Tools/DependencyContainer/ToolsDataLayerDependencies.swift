@@ -16,4 +16,10 @@ final class ToolsDataLayerDependencies {
         
         self.coreDataLayer = coreDataLayer
     }
+    
+    func getOptInOnboardingBannerEnabledRepository() -> OptInOnboardingBannerEnabledRepository {
+        return OptInOnboardingBannerEnabledRepository(
+            cache: OptInOnboardingBannerEnabledCache()
+        )
+    }
 }

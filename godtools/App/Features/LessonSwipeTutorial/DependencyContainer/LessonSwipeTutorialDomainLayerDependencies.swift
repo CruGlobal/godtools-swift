@@ -10,18 +10,18 @@ import Foundation
 
 final class LessonSwipeTutorialDomainLayerDependencies {
     
-    private let coreDataLayer: AppDataLayerDependencies
+    private let core: AppCoreDiContainer
     private let dataLayer: LessonSwipeTutorialDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, dataLayer: LessonSwipeTutorialDataLayerDependencies) {
+    init(core: AppCoreDiContainer, dataLayer: LessonSwipeTutorialDataLayerDependencies) {
         
-        self.coreDataLayer = coreDataLayer
+        self.core = core
         self.dataLayer = dataLayer
     }
     
     func getLessonSwipeTutorialStringsUseCase() -> GetLessonSwipeTutorialStringsUseCase {
         return GetLessonSwipeTutorialStringsUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
     

@@ -16,7 +16,7 @@ final class MenuViewModel: ObservableObject {
     
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getMenuStringsUseCase: GetMenuStringsUseCase
-    private let getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase
+    private let getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
     private let getAccountCreationIsSupportedUseCase: GetAccountCreationIsSupportedUseCase
     private let getUserIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase
@@ -35,12 +35,12 @@ final class MenuViewModel: ObservableObject {
     @Published private(set) var accountSectionVisibility: MenuAccountSectionVisibility = .hidden
     @Published private(set) var showsTutorialOption: Bool = false
     
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getMenuStringsUseCase: GetMenuStringsUseCase, getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAccountCreationIsSupportedUseCase: GetAccountCreationIsSupportedUseCase, getUserIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase, logOutUserUseCase: LogOutUserUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, appConfig: AppConfigInterface) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getMenuStringsUseCase: GetMenuStringsUseCase, getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAccountCreationIsSupportedUseCase: GetAccountCreationIsSupportedUseCase, getUserIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase, logOutUserUseCase: LogOutUserUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, appConfig: AppConfigInterface) {
         
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getMenuStringsUseCase = getMenuStringsUseCase
-        self.getOptInOnboardingTutorialAvailableUseCase = getOptInOnboardingTutorialAvailableUseCase
+        self.getTutorialIsAvailableUseCase = getTutorialIsAvailableUseCase
         self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
         self.getAccountCreationIsSupportedUseCase = getAccountCreationIsSupportedUseCase
         self.getUserIsAuthenticatedUseCase = getUserIsAuthenticatedUseCase
@@ -114,7 +114,7 @@ final class MenuViewModel: ObservableObject {
         strings = getMenuStringsUseCase
             .execute(appLanguage: appLanguage)
         
-        showsTutorialOption = getOptInOnboardingTutorialAvailableUseCase
+        showsTutorialOption = getTutorialIsAvailableUseCase
             .execute(appLanguage: appLanguage)
     }
 }

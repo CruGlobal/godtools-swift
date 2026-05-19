@@ -17,13 +17,13 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
                 
         var pageViewFactories: [MobileContentPageViewFactoryType] = Array()
         
-        let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase = appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase()
+        let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase = appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase()
         let mobileContentAnalytics: MobileContentRendererAnalytics = appDiContainer.getMobileContentRendererAnalytics()
-        let localizationServices: LocalizationServicesInterface = appDiContainer.dataLayer.getLocalizationServices()
-        let followUpsService: FollowUpsService = appDiContainer.dataLayer.getFollowUpsService()
+        let localizationServices: LocalizationServicesInterface = appDiContainer.core.dataLayer.getLocalizationServices()
+        let followUpsService: FollowUpsService = appDiContainer.core.dataLayer.getFollowUpsService()
         let cardJumpService: CardJumpService = appDiContainer.getCardJumpService()
         
-        let getTrainingTipCompletedUseCase = appDiContainer.domainLayer.getTrainingTipCompletedUseCase()
+        let getTrainingTipCompletedUseCase = appDiContainer.core.domainLayer.getTrainingTipCompletedUseCase()
                 
         switch type {
         

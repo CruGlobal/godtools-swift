@@ -10,34 +10,32 @@ import Foundation
 
 final class AppLanguageDomainLayerDependencies {
     
-    private let coreDataLayer: AppDataLayerDependencies
-    private let coreDomainLayer: AppDomainLayerDependencies
+    private let core: AppCoreDiContainer
     private let dataLayer: AppLanguageDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, dataLayer: AppLanguageDataLayerDependencies) {
+    init(core: AppCoreDiContainer, dataLayer: AppLanguageDataLayerDependencies) {
         
-        self.coreDataLayer = coreDataLayer
-        self.coreDomainLayer = coreDomainLayer
+        self.core = core
         self.dataLayer = dataLayer
     }
     
     func getAppLanguagesListUseCase() -> GetAppLanguagesListUseCase {
         return GetAppLanguagesListUseCase(
             appLanguagesRepository: dataLayer.getAppLanguagesRepository(),
-            getTranslatedLanguageName: coreDomainLayer.supporting.getTranslatedLanguageName()
+            getTranslatedLanguageName: core.domainLayer.supporting.getTranslatedLanguageName()
         )
     }
     
     func getAppLanguagesStringsUseCase() -> GetAppLanguagesStringsUseCase {
         return GetAppLanguagesStringsUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
     
     func getConfirmAppLanguageStringsUseCase() -> GetConfirmAppLanguageStringsUseCase {
         return GetConfirmAppLanguageStringsUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices(),
-            getTranslatedLanguageName: coreDomainLayer.supporting.getTranslatedLanguageName()
+            localizationServices: core.dataLayer.getLocalizationServices(),
+            getTranslatedLanguageName: core.domainLayer.supporting.getTranslatedLanguageName()
         )
     }
     
@@ -49,26 +47,26 @@ final class AppLanguageDomainLayerDependencies {
     
     func getDownloadableLanguagesListUseCase() -> GetDownloadableLanguagesListUseCase {
         return GetDownloadableLanguagesListUseCase(
-            languagesRepository: coreDataLayer.getLanguagesRepository(),
+            languagesRepository: core.dataLayer.getLanguagesRepository(),
             downloadedLanguagesRepository: dataLayer.getDownloadedLanguagesRepository(),
-            getTranslatedLanguageName: coreDomainLayer.supporting.getTranslatedLanguageName(),
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
-            localizationServices: coreDataLayer.getLocalizationServices(),
-            stringWithLocaleCount: coreDataLayer.getStringWithLocaleCount()
+            getTranslatedLanguageName: core.domainLayer.supporting.getTranslatedLanguageName(),
+            resourcesRepository: core.dataLayer.getResourcesRepository(),
+            localizationServices: core.dataLayer.getLocalizationServices(),
+            stringWithLocaleCount: core.dataLayer.getStringWithLocaleCount()
         )
     }
     
     func getDownloadableLanguagesStringsUseCase() -> GetDownloadableLanguagesStringsUseCase {
         return GetDownloadableLanguagesStringsUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
     
     func getDownloadedLanguagesListUseCase() -> GetDownloadedLanguagesListUseCase {
         return GetDownloadedLanguagesListUseCase(
-            languagesRepository: coreDataLayer.getLanguagesRepository(),
+            languagesRepository: core.dataLayer.getLanguagesRepository(),
             downloadedLanguagesRepository: dataLayer.getDownloadedLanguagesRepository(),
-            getTranslatedLanguageName: coreDomainLayer.supporting.getTranslatedLanguageName()
+            getTranslatedLanguageName: core.domainLayer.supporting.getTranslatedLanguageName()
         )
     }
     
@@ -86,8 +84,8 @@ final class AppLanguageDomainLayerDependencies {
     
     func getLanguageSettingsStringsUseCase() -> GetLanguageSettingsStringsUseCase {
         return GetLanguageSettingsStringsUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices(),
-            getTranslatedLanguageName: coreDomainLayer.supporting.getTranslatedLanguageName(),
+            localizationServices: core.dataLayer.getLocalizationServices(),
+            getTranslatedLanguageName: core.domainLayer.supporting.getTranslatedLanguageName(),
             appLanguagesRepository: dataLayer.getAppLanguagesRepository()
         )
     }
@@ -113,14 +111,14 @@ final class AppLanguageDomainLayerDependencies {
     func getSetAppLanguageUseCase() -> SetAppLanguageUseCase {
         return SetAppLanguageUseCase(
             userAppLanguageRepository: dataLayer.getUserAppLanguageRepository(),
-            userLessonFiltersRepository: coreDataLayer.getUserLessonFiltersRepository(),
-            languagesRepository: coreDataLayer.getLanguagesRepository()
+            userLessonFiltersRepository: core.dataLayer.getUserLessonFiltersRepository(),
+            languagesRepository: core.dataLayer.getLanguagesRepository()
         )
     }
     
     func getStoreInitialAppLanguageUseCase() -> StoreInitialAppLanguageUseCase {
         return StoreInitialAppLanguageUseCase(
-            deviceSystemLanguage: coreDataLayer.getDeviceSystemLanguage(),
+            deviceSystemLanguage: core.dataLayer.getDeviceSystemLanguage(),
             userAppLanguageRepository: dataLayer.getUserAppLanguageRepository(),
             appLanguagesRepository: dataLayer.getAppLanguagesRepository()
         )

@@ -14,9 +14,9 @@ final class PersonalizedToolsDiContainer {
 
     let domainLayer: PersonalizedToolsDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, coreDomainlayer: AppDomainLayerDependencies, personalizedToolsDataLayer: PersonalizedToolsDataLayerDependencies) {
+    init(core: AppCoreDiContainer, personalizedToolsDataLayer: PersonalizedToolsDataLayerDependencies) {
         
         self.dataLayer = personalizedToolsDataLayer
-        self.domainLayer = PersonalizedToolsDomainLayerDependencies(coreDataLayer: coreDataLayer, dataLayer: dataLayer, coreDomainlayer: coreDomainlayer)
+        self.domainLayer = PersonalizedToolsDomainLayerDependencies(core: core, dataLayer: dataLayer)
     }
 }

@@ -10,26 +10,24 @@ import Foundation
 
 final class LearnToShareToolDomainLayerDependencies {
     
-    private let coreDataLayer: AppDataLayerDependencies
-    private let coreDomainLayer: AppDomainLayerDependencies
+    private let core: AppCoreDiContainer
     private let dataLayer: LearnToShareToolDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies, dataLayer: LearnToShareToolDataLayerDependencies) {
+    init(core: AppCoreDiContainer, dataLayer: LearnToShareToolDataLayerDependencies) {
         
-        self.coreDataLayer = coreDataLayer
-        self.coreDomainLayer = coreDomainLayer
+        self.core = core
         self.dataLayer = dataLayer
     }
     
     func getLearnToShareToolStringsUseCase() -> GetLearnToShareToolStringsUseCase {
         return GetLearnToShareToolStringsUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
     
     func getLearnToShareToolTutorialUseCase() -> GetLearnToShareToolTutorialUseCase {
         return GetLearnToShareToolTutorialUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
 }

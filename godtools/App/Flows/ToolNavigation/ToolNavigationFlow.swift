@@ -25,9 +25,9 @@ extension ToolNavigationFlow {
         
         let determineDeepLinkedToolTranslationsToDownload = DetermineDeepLinkedToolTranslationsToDownload(
             toolDeepLink: toolDeepLink,
-            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
-            languagesRepository: appDiContainer.dataLayer.getLanguagesRepository(),
-            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
+            resourcesRepository: appDiContainer.core.dataLayer.getResourcesRepository(),
+            languagesRepository: appDiContainer.core.dataLayer.getLanguagesRepository(),
+            translationsRepository: appDiContainer.core.dataLayer.getTranslationsRepository(),
             userAppLanguageRepository: appDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository()
         )
         
@@ -49,8 +49,8 @@ extension ToolNavigationFlow {
         let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
             resourceId: resourceId,
             languageIds: languageIds,
-            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
-            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository()
+            resourcesRepository: appDiContainer.core.dataLayer.getResourcesRepository(),
+            translationsRepository: appDiContainer.core.dataLayer.getTranslationsRepository()
         )
         
         navigateToToolAndDetermineToolTranslationsToDownload(
@@ -110,6 +110,7 @@ extension ToolNavigationFlow {
             let error: Error = NSError.errorWithDescription(description: "Error navigating to tool. Found 0 translations downloaded for app language \(appLanguage) and tool abbreviation: \(toolTranslations.tool.abbreviation)")
             
             appDiContainer
+                .core
                 .dataLayer
                 .getErrorReporting()
                 .reportError(error: error)

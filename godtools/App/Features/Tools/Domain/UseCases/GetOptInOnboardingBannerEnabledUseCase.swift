@@ -11,18 +11,18 @@ import Combine
 
 final class GetOptInOnboardingBannerEnabledUseCase {
     
-    private let getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase
+    private let getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase
     private let optInOnboardingBannerEnabledRepository: OptInOnboardingBannerEnabledRepository
     
-    init(getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, optInOnboardingBannerEnabledRepository: OptInOnboardingBannerEnabledRepository) {
+    init(getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase, optInOnboardingBannerEnabledRepository: OptInOnboardingBannerEnabledRepository) {
         
-        self.getOptInOnboardingTutorialAvailableUseCase = getOptInOnboardingTutorialAvailableUseCase
+        self.getTutorialIsAvailableUseCase = getTutorialIsAvailableUseCase
         self.optInOnboardingBannerEnabledRepository = optInOnboardingBannerEnabledRepository
     }
         
     func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<Bool, Never> {
         
-        let tutorialAvailable: Bool = getOptInOnboardingTutorialAvailableUseCase.execute(appLanguage: appLanguage)
+        let tutorialAvailable: Bool = getTutorialIsAvailableUseCase.execute(appLanguage: appLanguage)
         
         return optInOnboardingBannerEnabledRepository
             .getEnabledPublisher()

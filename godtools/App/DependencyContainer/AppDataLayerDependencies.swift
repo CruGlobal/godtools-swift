@@ -391,12 +391,6 @@ final class AppDataLayerDependencies {
         )
     }
     
-    func getOptInOnboardingBannerEnabledRepository() -> OptInOnboardingBannerEnabledRepository {
-        return OptInOnboardingBannerEnabledRepository(
-            cache: OptInOnboardingBannerEnabledCache()
-        )
-    }
-    
     func getRemoteConfigRepository() -> RemoteConfigRepository {
         return RemoteConfigRepository(
             remoteDatabase: sharedAppConfig.firebaseEnabled ? FirebaseRemoteConfigWrapper() : DisabledRemoteConfigDatabase()

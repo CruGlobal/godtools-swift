@@ -10,22 +10,20 @@ import Foundation
 
 final class PersonalizedToolsDomainLayerDependencies {
     
-    private let coreDataLayer: AppDataLayerDependencies
+    private let core: AppCoreDiContainer
     private let dataLayer: PersonalizedToolsDataLayerDependencies
-    private let coreDomainlayer: AppDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, dataLayer: PersonalizedToolsDataLayerDependencies, coreDomainlayer: AppDomainLayerDependencies) {
+    init(core: AppCoreDiContainer, dataLayer: PersonalizedToolsDataLayerDependencies) {
         
-        self.coreDataLayer = coreDataLayer
+        self.core = core
         self.dataLayer = dataLayer
-        self.coreDomainlayer = coreDomainlayer
     }
     
     func getLocalizationSettingsCountryListUseCase() -> GetLocalizationSettingsCountryListUseCase {
 
         return GetLocalizationSettingsCountryListUseCase(
             countriesRepository: dataLayer.getLocalizationSettingsCountriesRepository(),
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
     
@@ -39,14 +37,14 @@ final class PersonalizedToolsDomainLayerDependencies {
     func getViewLocalizationSettingsUseCase() -> ViewLocalizationSettingsUseCase {
 
         return ViewLocalizationSettingsUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
 
     func getLocalizationSettingsConfirmationStringsUseCase() -> GetLocalizationSettingsConfirmationStringsUseCase {
 
         return GetLocalizationSettingsConfirmationStringsUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
     
@@ -67,23 +65,23 @@ final class PersonalizedToolsDomainLayerDependencies {
     func getGetPersonalizedLessonsUseCase() -> GetPersonalizedLessonsUseCase {
 
         return GetPersonalizedLessonsUseCase(
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            resourcesRepository: core.dataLayer.getResourcesRepository(),
             personalizedToolsRepository: dataLayer.getPersonalizedToolsRepository(),
-            getLanguageElseAppLanguage: coreDomainlayer.supporting.getLanguageElseAppLanguage(),
-            lessonProgressRepository: coreDataLayer.getUserLessonProgressRepository(),
-            getLessonsListItems: coreDomainlayer.supporting.getLessonsListItems(),
-            localizationServices: coreDataLayer.getLocalizationServices()
+            getLanguageElseAppLanguage: core.domainLayer.supporting.getLanguageElseAppLanguage(),
+            lessonProgressRepository: core.dataLayer.getUserLessonProgressRepository(),
+            getLessonsListItems: core.domainLayer.supporting.getLessonsListItems(),
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
 
     func getGetPersonalizedToolsUseCase() -> GetPersonalizedToolsUseCase {
 
         return GetPersonalizedToolsUseCase(
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            resourcesRepository: core.dataLayer.getResourcesRepository(),
             personalizedToolsRepository: dataLayer.getPersonalizedToolsRepository(),
-            getLanguageElseAppLanguage: coreDomainlayer.supporting.getLanguageElseAppLanguage(),
-            getToolsListItems: coreDomainlayer.supporting.getToolsListItems(),
-            localizationServices: coreDataLayer.getLocalizationServices()
+            getLanguageElseAppLanguage: core.domainLayer.supporting.getLanguageElseAppLanguage(),
+            getToolsListItems: core.domainLayer.supporting.getToolsListItems(),
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
 }
