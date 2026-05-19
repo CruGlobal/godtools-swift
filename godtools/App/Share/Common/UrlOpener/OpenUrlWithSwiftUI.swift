@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-class OpenUrlWithSwiftUI: UrlOpenerInterface {
+final class OpenUrlWithSwiftUI: UrlOpenerInterface {
     
     init() {
         

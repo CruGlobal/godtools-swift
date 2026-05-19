@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SignalValue<T> {
+final class SignalValue<T> {
     
     typealias Handler = ((_ value: T) -> Void)
     

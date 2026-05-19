@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum KeyboardState {
+enum KeyboardState: Sendable {
     
     case didHide
     case didShow

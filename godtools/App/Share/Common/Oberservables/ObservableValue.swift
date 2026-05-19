@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ObservableValue<T> {
+final class ObservableValue<T> {
     
     typealias Handler = ((_ value: T) -> Void)
     

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class LocaleLanguageScriptName: LocaleLanguageScriptNameInterface {
+final class LocaleLanguageScriptName: LocaleLanguageScriptNameInterface {
     
     init() {
         

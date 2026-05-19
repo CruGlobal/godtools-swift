@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum AppLaunchState {
+enum AppLaunchState: Sendable {
     
     case inBackground
     case fromBackgroundState(secondsInBackground: TimeInterval)
