@@ -180,6 +180,12 @@ final class AppDataLayerDependencies {
         )
     }
     
+    func getCardJumpService() -> CardJumpService {
+        return CardJumpService(
+            cardJumpCache: CardJumpUserDefaultsCache(userDefaultsCache: getUserDefaultsCache())
+        )
+    }
+    
     func getCompletedTrainingTipRepository() -> CompletedTrainingTipRepository {
         
         let persistence: any Persistence<CompletedTrainingTipDataModel, CompletedTrainingTipDataModel>
