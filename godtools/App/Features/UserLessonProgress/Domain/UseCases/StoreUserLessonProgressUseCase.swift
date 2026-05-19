@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class StoreUserLessonProgressUseCase {
     
@@ -17,28 +16,31 @@ final class StoreUserLessonProgressUseCase {
         self.lessonProgressRepository = lessonProgressRepository
     }
     
-    func execute(lessonId: String, lastViewedPageId: String, lastViewedPageNumber: Int, totalPageCount: Int) -> AnyPublisher<UserLessonProgressDomainModel, Error> {
+    func execute(lessonId: String, viewedPageId: String, viewedPageNumber: Int, totalPageCount: Int) async throws -> UserLessonProgressDomainModel {
         
-        let progress: Double
-        if totalPageCount < 1 {
-            progress = 0
-        } else {
-            progress = Double(lastViewedPageNumber) / Double(totalPageCount)
+        let firstPageNumber: Int = 0
+        let isFirstPage: Bool = viewedPageNumber == firstPageNumber
+        let pageCount: Int = totalPageCount - 1 // Excludes final things to try page. ~Levi
+        
+        guard !isFirstPage && pageCount > 0 else {
+            return UserLessonProgressDomainModel(lessonId: lessonId, lastViewedPageId: viewedPageId, progress: 0)
         }
         
-        return lessonProgressRepository
-            .storeLessonProgressPublisher(
+        let reachedCompletion: Bool = viewedPageNumber >= pageCount - 1
+        
+        let progress: Double = reachedCompletion ? 1 : Double(viewedPageNumber) / Double(pageCount)
+        
+        _ = try await lessonProgressRepository
+            .storeLessonProgress(
                 lessonId: lessonId,
-                lastViewedPageId: lastViewedPageId,
+                lastViewedPageId: viewedPageId,
                 progress: progress
             )
-            .map {
-                UserLessonProgressDomainModel(
-                    lessonId: $0.lessonId,
-                    lastViewedPageId: $0.lastViewedPageId,
-                    progress: $0.progress
-                )
-            }
-            .eraseToAnyPublisher()
+        
+        return UserLessonProgressDomainModel(
+            lessonId: lessonId,
+            lastViewedPageId: viewedPageId,
+            progress: progress
+        )
     }
 }
