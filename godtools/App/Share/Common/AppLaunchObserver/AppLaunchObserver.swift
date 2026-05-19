@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import Combine
 
-class AppLaunchObserver {
+final class AppLaunchObserver {
         
     private var resignedActiveDate: Date?
     private var appIsInBackground: Bool = false

@@ -15,7 +15,7 @@ final class ArticleAemCache {
     
     typealias AemUri = String
     
-    private let fileCache: ArticleAemWebArchiveFileCache = ArticleAemWebArchiveFileCache()
+    private let webArchiveFileCache: ArticleAemWebArchiveFileCache = ArticleAemWebArchiveFileCache()
     private let persistence: any Persistence<ArticleAemData, ArticleAemData>
     private let articleWebArchiver: ArticleWebArchiver
     
@@ -85,7 +85,7 @@ extension ArticleAemCache {
         
         let articleAemWebArchive = ArticleAemWebArchive(filename: realmAemData.webArchiveFilename)
         
-        let url: URL = try fileCache.getFile(location: articleAemWebArchive.location)
+        let url: URL = try webArchiveFileCache.fileCache.getFile(location: articleAemWebArchive.location)
         
         let aemData = realmAemData.toModel()
         
@@ -272,7 +272,7 @@ extension ArticleAemCache {
     
     private func storeWebArchivePlistData(webArchiveFilename: String, webArchivePlistData: Data) throws {
         
-        _ = try fileCache.storeFile(
+        _ = try webArchiveFileCache.fileCache.storeFile(
             location: ArticleAemWebArchive(filename: webArchiveFilename).location,
             data: webArchivePlistData
         )
@@ -280,7 +280,7 @@ extension ArticleAemCache {
     
     private func removeWebArchivePlistData(webArchiveFilename: String) throws {
         
-        try fileCache.removeFile(
+        try webArchiveFileCache.fileCache.removeFile(
             location: ArticleAemWebArchive(filename: webArchiveFilename).location
         )
     }

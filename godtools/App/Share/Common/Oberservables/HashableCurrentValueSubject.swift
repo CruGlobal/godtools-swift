@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class HashableCurrentValueSubject<HashType: Hashable, ValueType, FailureType: Error> {
+final class HashableCurrentValueSubject<HashType: Hashable, ValueType, FailureType: Error> {
     
     private var currentValueSubjectDictionary: [HashType: CurrentValueSubject<ValueType?, FailureType>] = Dictionary()
     

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct JsonServices {
+final class JsonServices {
     
     private let bundle: Bundle
     

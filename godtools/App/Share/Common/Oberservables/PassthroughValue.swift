@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PassthroughValue<T> {
+final class PassthroughValue<T> {
     
     typealias Handler = ((_ value: T) -> Void)
     

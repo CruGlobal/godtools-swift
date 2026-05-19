@@ -14,7 +14,7 @@ protocol KeyboardNotificationObserverDelegate: AnyObject {
     func keyboardHeightDidChange(keyboardObserver: KeyboardNotificationObserver, keyboardHeight: Double)
 }
 
-class KeyboardNotificationObserver: NSObject {
+final class KeyboardNotificationObserver: NSObject {
         
     private(set) var keyboardState: KeyboardState = .didHide
     private(set) var keyboardHeight: Double = 0
