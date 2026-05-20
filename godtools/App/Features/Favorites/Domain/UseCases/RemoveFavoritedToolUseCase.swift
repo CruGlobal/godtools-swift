@@ -18,16 +18,9 @@ final class RemoveFavoritedToolUseCase {
         self.favoritedResourcesRepository = favoritedResourcesRepository
     }
     
-    func execute(toolId: String) -> AnyPublisher<[FavoritedResourceDataModel], Error> {
+    func execute(toolId: String) async throws -> [FavoritedResourceDataModel] {
         
-        return favoritedResourcesRepository
-            .deleteFavoritedResourcePublisher(
-                id: toolId
-            )
-            .map { (favoritedResources: [FavoritedResourceDataModel]) in
-                
-                return favoritedResources
-            }
-            .eraseToAnyPublisher()
+        return try await favoritedResourcesRepository
+            .deleteFavoritedResource(id: toolId)
     }
 }

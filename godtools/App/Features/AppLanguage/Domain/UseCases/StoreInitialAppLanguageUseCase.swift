@@ -22,46 +22,46 @@ final class StoreInitialAppLanguageUseCase {
         self.appLanguagesRepository = appLanguagesRepository
     }
     
-    func execute() -> AnyPublisher<AppLanguageDomainModel, Error> {
+    @MainActor func execute() -> AnyPublisher<AppLanguageDomainModel, Error> {
         
-        return Publishers.CombineLatest(
-            userAppLanguageRepository
-                .getCachedLanguagePublisher(),
-            appLanguagesRepository
-                .getLanguagesPublisher()
-        )
-        .flatMap({ (userAppLanguage: UserAppLanguageDataModel?, appLanguages: [AppLanguageDataModel]) -> AnyPublisher<AppLanguageDomainModel, Error> in
-            
-            if let userAppLanguage = userAppLanguage {
-                return Just(userAppLanguage.languageId)
-                    .setFailureType(to: Error.self)
-                    .eraseToAnyPublisher()
-            }
-            
-            let deviceLocale: Locale = self.deviceSystemLanguage.getLocale()
-            
-            let deviceAppLanguage: AppLanguageDataModel? = appLanguages.first(where: {
-                $0.localeId == deviceLocale.identifier
-            })
-                        
-            let appLanguageToStore: AppLanguageDomainModel
-            
-            if let deviceAppLanguage = deviceAppLanguage {
-                appLanguageToStore = deviceAppLanguage.languageId
-            }
-            else {
-                appLanguageToStore = LanguageCodeDomainModel.english.rawValue
-            }
-            
-            return self.userAppLanguageRepository
-                .storeLanguagePublisher(
-                    appLanguageId: appLanguageToStore
-                )
-                .map { _ in
-                    appLanguageToStore
+        return appLanguagesRepository
+            .observeCollectionChangesPublisher()
+            .flatMap { _ in
+                
+                return AnyPublisher() {
+                    try await self.asyncExecute()
                 }
-                .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    private func asyncExecute() async throws -> AppLanguageDomainModel {
+        
+        let userAppLanguage: UserAppLanguageDataModel? = userAppLanguageRepository.getLanguage()
+        
+        if let userAppLanguage = userAppLanguage {
+            return userAppLanguage.languageId
+        }
+        
+        let appLanguages: [AppLanguageDataModel] = try await appLanguagesRepository.getLanguages()
+
+        let deviceLocale: Locale = deviceSystemLanguage.getLocale()
+        
+        let deviceAppLanguage: AppLanguageDataModel? = appLanguages.first(where: {
+            $0.localeId == deviceLocale.identifier
         })
-        .eraseToAnyPublisher()
+                    
+        let appLanguageToStore: AppLanguageDomainModel
+        
+        if let deviceAppLanguage = deviceAppLanguage {
+            appLanguageToStore = deviceAppLanguage.languageId
+        }
+        else {
+            appLanguageToStore = LanguageCodeDomainModel.english.rawValue
+        }
+        
+        try await userAppLanguageRepository.storeLanguage(appLanguageId: appLanguageToStore)
+        
+        return appLanguageToStore
     }
 }

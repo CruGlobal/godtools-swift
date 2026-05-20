@@ -39,30 +39,23 @@ final class GetYourFavoritedToolsUseCase {
         )
         .flatMap { (resourcesChanged: Void, strings: ToolListItemStringsDomainModel, favoritedResourcesChanged: Void) -> AnyPublisher<[YourFavoritedToolDomainModel], Error> in
             
-            return self.favoritedResourcesRepository
-                .getFavoritedResourcesSortedByPositionPublisher()
-                .tryMap { (favoritedResources: [FavoritedResourceDataModel]) in
-                    
-                    return try self.mapToDomainModels(
-                        appLanguage: appLanguage,
-                        maxCount: maxCount,
-                        strings: strings,
-                        favoritedResources: favoritedResources
-                    )
-                }
-                .eraseToAnyPublisher()
+            return AnyPublisher() {
+                try await self.asyncExecute(appLanguage: appLanguage, maxCount: maxCount, strings: strings)
+            }
         }
         .eraseToAnyPublisher()
     }
     
-    private func mapToDomainModels(appLanguage: AppLanguageDomainModel, maxCount: Int?, strings: ToolListItemStringsDomainModel, favoritedResources: [FavoritedResourceDataModel]) throws -> [YourFavoritedToolDomainModel] {
+    private func asyncExecute(appLanguage: AppLanguageDomainModel, maxCount: Int?, strings: ToolListItemStringsDomainModel) async throws -> [YourFavoritedToolDomainModel] {
+        
+        let favoritedResources: [FavoritedResourceDataModel] = try await favoritedResourcesRepository.getFavoritedResourcesSortedByPosition()
         
         let numberOfFavoritedTools: Int = try self.favoritedResourcesRepository.getObjectCount()
         
         let prefixedFavoritedResources: [ResourceDataModel] = favoritedResources
             .prefix(maxCount ?? numberOfFavoritedTools)
             .compactMap {
-                self.resourcesRepository.getResourceNonThrowing(id: $0.id)
+                self.resourcesRepository.getResourceById(id: $0.id)
             }
         
         let yourFavoritedTools: [YourFavoritedToolDomainModel] = prefixedFavoritedResources

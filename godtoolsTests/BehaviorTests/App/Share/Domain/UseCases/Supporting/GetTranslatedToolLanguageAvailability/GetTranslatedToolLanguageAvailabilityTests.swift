@@ -52,7 +52,7 @@ struct GetTranslatedToolLanguageAvailabilityTests {
         let testsDiContainer: TestsDiContainer = try getTestsDiContainer()
         let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability(testsDiContainer: testsDiContainer)
         
-        let language: LanguageDataModel = try #require(try queryLanguage(id: argument.availableInLanguageCode, testsDiContainer: testsDiContainer))
+        let language: LanguageDataModel = try #require(queryLanguage(id: argument.availableInLanguageCode, testsDiContainer: testsDiContainer))
         
         let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(
             toolId: toolId,
@@ -97,7 +97,7 @@ struct GetTranslatedToolLanguageAvailabilityTests {
         let testsDiContainer: TestsDiContainer = try getTestsDiContainer()
         let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability(testsDiContainer: testsDiContainer)
         
-        let language: LanguageDataModel = try #require(try queryLanguage(id: argument.availableInLanguageCode, testsDiContainer: testsDiContainer))
+        let language: LanguageDataModel = try #require(queryLanguage(id: argument.availableInLanguageCode, testsDiContainer: testsDiContainer))
         
         let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(
             toolId: toolId,
@@ -136,7 +136,7 @@ struct GetTranslatedToolLanguageAvailabilityTests {
         let testsDiContainer: TestsDiContainer = try getTestsDiContainer()
         let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability(testsDiContainer: testsDiContainer)
                 
-        let resource: ResourceDataModel = try #require(try queryResource(id: toolId, testsDiContainer: testsDiContainer))
+        let resource: ResourceDataModel = try #require(queryResource(id: toolId, testsDiContainer: testsDiContainer))
         
         let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(
             resource: resource,
@@ -181,7 +181,7 @@ struct GetTranslatedToolLanguageAvailabilityTests {
         let testsDiContainer: TestsDiContainer = try getTestsDiContainer()
         let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability(testsDiContainer: testsDiContainer)
                 
-        let resource: ResourceDataModel = try #require(try queryResource(id: toolId, testsDiContainer: testsDiContainer))
+        let resource: ResourceDataModel = try #require(queryResource(id: toolId, testsDiContainer: testsDiContainer))
         
         let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(
             resource: resource,
@@ -197,12 +197,12 @@ struct GetTranslatedToolLanguageAvailabilityTests {
 
 extension GetTranslatedToolLanguageAvailabilityTests {
     
-    private func queryResource(id: String, testsDiContainer: TestsDiContainer) throws -> ResourceDataModel? {
-        return try testsDiContainer.core.dataLayer.getResourcesRepository().getResource(id: id)
+    private func queryResource(id: String, testsDiContainer: TestsDiContainer) -> ResourceDataModel? {
+        return testsDiContainer.core.dataLayer.getResourcesRepository().getResourceById(id: id)
     }
     
-    private func queryLanguage(id: String, testsDiContainer: TestsDiContainer) throws -> LanguageDataModel? {
-        return try testsDiContainer.core.dataLayer.getLanguagesRepository().getLanguage(id: id)
+    private func queryLanguage(id: String, testsDiContainer: TestsDiContainer) -> LanguageDataModel? {
+        return testsDiContainer.core.dataLayer.getLanguagesRepository().getLanguageById(id: id)
     }
     
     private func getTestsDiContainer() throws -> TestsDiContainer {

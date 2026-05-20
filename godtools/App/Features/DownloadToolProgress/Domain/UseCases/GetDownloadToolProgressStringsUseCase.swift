@@ -28,7 +28,7 @@ final class GetDownloadToolProgressStringsUseCase {
         
         let resource: ResourceDataModel?
         
-        if let toolId = toolId, let resourceModel = resourcesRepository.getResourceNonThrowing(id: toolId) {
+        if let toolId = toolId, let resourceModel = resourcesRepository.getResourceById(id: toolId) {
             resource = resourceModel
         }
         else {
@@ -39,7 +39,7 @@ final class GetDownloadToolProgressStringsUseCase {
         let toolIsFavorited: Bool
         
         if let resource = resource {
-            toolIsFavorited = favoritedResourcesRepository.getResourceIsFavoritedNonThrowing(id: resource.id)
+            toolIsFavorited = favoritedResourcesRepository.getResourceIsFavorited(id: resource.id)
         }
         else {
             toolIsFavorited = false

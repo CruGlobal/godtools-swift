@@ -19,7 +19,7 @@ class GetLanguageElseAppLanguage {
     
     func getLanguage(languageId: String?, appLanguage: AppLanguageDomainModel) -> LanguageDataModel? {
         
-        return getLanguage(id: languageId) ?? languagesRepository.getLanguageNonThrowing(code: appLanguage)
+        return getLanguage(id: languageId) ?? languagesRepository.getLanguageByCode(code: appLanguage)
     }
     
     func getLanguageCode(languageId: String?, appLanguage: AppLanguageDomainModel) -> String {
@@ -30,7 +30,7 @@ class GetLanguageElseAppLanguage {
     private func getLanguage(id: String?) -> LanguageDataModel? {
         
         if let languageId = id,
-           let language = languagesRepository.getLanguageNonThrowing(id: languageId) {
+           let language = languagesRepository.getLanguageById(id: languageId) {
             
             return language
         }

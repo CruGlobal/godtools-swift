@@ -18,6 +18,7 @@ final class AppLanguagesViewModel: ObservableObject {
     private let getAppLanguagesListUseCase: GetAppLanguagesListUseCase
     private let viewSearchBarUseCase: ViewSearchBarUseCase
     
+    private var getAppLanguagesTask: Task<Void, Error>?
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
@@ -42,22 +43,11 @@ final class AppLanguagesViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .execute()
-            .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                getAppLanguagesListUseCase
-                    .execute(appLanguage: appLanguage)
-            }
-            .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { _ in
-                
-            }, receiveValue: { [weak self] (appLanguages: [AppLanguageListItemDomainModel]) in
-                
-                self?.appLanguagesList = appLanguages
-            })
+            .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
+            }
             .store(in: &cancellables)
         
         $appLanguage
@@ -89,6 +79,21 @@ final class AppLanguagesViewModel: ObservableObject {
     
     deinit {
         print("x deinit: \(type(of: self))")
+        getAppLanguagesTask?.cancel()
+    }
+    
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+        
+        refreshAppLanguagesList(appLanguage: appLanguage)
+    }
+    
+    private func refreshAppLanguagesList(appLanguage: AppLanguageDomainModel) {
+        
+        getAppLanguagesTask?.cancel()
+        
+        getAppLanguagesTask = Task {
+            appLanguagesList = try await getAppLanguagesListUseCase.execute(appLanguage: appLanguage)
+        }
     }
 }
 

@@ -15,7 +15,7 @@ final class ToolsViewModel: ObservableObject {
     
     typealias ToolId = String
     
-    private static var favoriteToolCancellables: [ToolId: AnyCancellable?] = Dictionary()
+    private static var favoriteToolTasks: [ToolId: Task<Void, Error>] = Dictionary()
     
     private let pullToRefreshToolsUseCase: PullToRefreshToolsUseCase
     private let getToolsStringsUseCase: GetToolsStringsUseCase
@@ -293,16 +293,13 @@ final class ToolsViewModel: ObservableObject {
     
     private func toggleToolIsFavorited(toolId: String) {
         
-        ToolsViewModel.favoriteToolCancellables[toolId] = toggleToolFavoritedUseCase
-            .execute(
-                toolId: toolId
-            )
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { _ in
-                
-            }, receiveValue: { (domainModel: ToolIsFavoritedDomainModel) in
-                
-            })
+        Self.favoriteToolTasks[toolId]?.cancel()
+        
+        Self.favoriteToolTasks[toolId] = Task {
+            
+            _ = try await toggleToolFavoritedUseCase
+                .execute(toolId: toolId)
+        }
     }
     
     private static func getToggleOptions(strings: ToolsStringsDomainModel) -> [PersonalizationToggleOption] {

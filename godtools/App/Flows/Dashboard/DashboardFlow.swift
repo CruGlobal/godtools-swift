@@ -187,7 +187,7 @@ class DashboardFlow: Flow, ToolNavigationFlow, LocalizationSettingsNavigationFlo
             let toolFilterLanguageDataModel: LanguageDataModel?
             
             if let languageId = toolFilterLanguage?.id {
-                toolFilterLanguageDataModel = appDiContainer.core.dataLayer.getLanguagesRepository().getLanguageNonThrowing(id: languageId)
+                toolFilterLanguageDataModel = appDiContainer.core.dataLayer.getLanguagesRepository().getLanguageById(id: languageId)
             }
             else {
                 toolFilterLanguageDataModel = nil
@@ -206,7 +206,7 @@ class DashboardFlow: Flow, ToolNavigationFlow, LocalizationSettingsNavigationFlo
             let toolFilterLanguageDataModel: LanguageDataModel?
             
             if let languageId = toolFilterLanguage?.id {
-                toolFilterLanguageDataModel = appDiContainer.core.dataLayer.getLanguagesRepository().getLanguageNonThrowing(id: languageId)
+                toolFilterLanguageDataModel = appDiContainer.core.dataLayer.getLanguagesRepository().getLanguageById(id: languageId)
             }
             else {
                 toolFilterLanguageDataModel = nil
@@ -217,7 +217,7 @@ class DashboardFlow: Flow, ToolNavigationFlow, LocalizationSettingsNavigationFlo
             let primaryLanguage: AppLanguageDomainModel?
             let parallelLanguage: AppLanguageDomainModel?
             
-            if let toolResource = resourcesRepository.getResourceNonThrowing(id: tool.dataModelId),
+            if let toolResource = resourcesRepository.getResourceById(id: tool.dataModelId),
                toolResource.resourceTypeEnum == .article {
                 
                 parallelLanguage = nil
@@ -693,7 +693,7 @@ extension DashboardFlow {
         
         let languageIds: [String]
         
-        if let appLanguageModel = languagesRepository.getLanguageNonThrowing(code: appLanguage) {
+        if let appLanguageModel = languagesRepository.getLanguageByCode(code: appLanguage) {
             languageIds = [appLanguageModel.id]
         }
         else {
@@ -761,11 +761,11 @@ extension DashboardFlow {
         
         var languageIds: [String] = Array()
         
-        if let languageModel = languagesRepository.getLanguageNonThrowing(code: primaryLanguage) {
+        if let languageModel = languagesRepository.getLanguageByCode(code: primaryLanguage) {
             languageIds.append(languageModel.id)
         }
         
-        if let parallelLanguage = parallelLanguage, let languageModel = languagesRepository.getLanguageNonThrowing(code: parallelLanguage) {
+        if let parallelLanguage = parallelLanguage, let languageModel = languagesRepository.getLanguageByCode(code: parallelLanguage) {
             languageIds.append(languageModel.id)
         }
         
@@ -809,7 +809,7 @@ extension DashboardFlow {
         
         let openToolInLanguages: [String]
         
-        if languageIds.isEmpty, let englishLanguage = languagesRepository.getLanguageNonThrowing(code: LanguageCodeDomainModel.english.rawValue) {
+        if languageIds.isEmpty, let englishLanguage = languagesRepository.getLanguageByCode(code: LanguageCodeDomainModel.english.rawValue) {
             
             openToolInLanguages = [englishLanguage.id]
         }

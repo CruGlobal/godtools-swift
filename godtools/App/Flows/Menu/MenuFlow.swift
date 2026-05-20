@@ -583,7 +583,7 @@ extension MenuFlow {
         
         let viewModel = DeleteAccountViewModel(
             flowDelegate: self,
-            getCurrentAppLanguage: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getDeleteAccountStringsUseCase: appDiContainer.feature.account.domainLayer.getDeleteAccountStringsUseCase()
         )
         
@@ -649,7 +649,7 @@ extension MenuFlow {
         
         let viewModel = DeleteAccountProgressViewModel(
             flowDelegate: self,
-            getCurrentAppLanguage: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getDeleteAccountProgressStringsUseCase: appDiContainer.feature.account.domainLayer.getDeleteAccountProgressStringsUseCase(),
             deleteAccountUseCase: appDiContainer.feature.account.domainLayer.getDeleteAccountUseCase()
         )

@@ -25,7 +25,7 @@ final class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDown
     }
     
     func getResource() -> ResourceDataModel? {
-        return resourcesRepository.getResourceNonThrowing(id: resourceId)
+        return resourcesRepository.getResourceById(id: resourceId)
     }
     
     func determineToolTranslationsToDownload() async throws(DetermineToolTranslationsToDownloadError) -> ToolTranslationsToDownload {

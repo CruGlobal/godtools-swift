@@ -20,31 +20,25 @@ final class GetAppLanguagesListUseCase {
         self.getTranslatedLanguageName = getTranslatedLanguageName
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[AppLanguageListItemDomainModel], Error> {
+    func execute(appLanguage: AppLanguageDomainModel) async throws -> [AppLanguageListItemDomainModel] {
         
-        return appLanguagesRepository
-            .getLanguagesPublisher()
-            .flatMap({ (languages: [AppLanguageDataModel]) -> AnyPublisher<[AppLanguageListItemDomainModel], Error> in
-                
-                let appLanguagesList: [AppLanguageListItemDomainModel] = languages.map { (languageDataModel: AppLanguageDataModel) in
-                                                            
-                    let languageNameTranslatedInOwnLanguage: String = self.getTranslatedLanguageName.getLanguageName(language: languageDataModel, translatedInLanguage: languageDataModel.languageId)
-                    let languageNameTranslatedInCurrentAppLanguage: String = self.getTranslatedLanguageName.getLanguageName(language: languageDataModel, translatedInLanguage: appLanguage)
-                    
-                    return AppLanguageListItemDomainModel(
-                        language: languageDataModel.languageId,
-                        languageNameTranslatedInOwnLanguage: languageNameTranslatedInOwnLanguage,
-                        languageNameTranslatedInCurrentAppLanguage: languageNameTranslatedInCurrentAppLanguage
-                    )
-                }
-                .sorted { (thisAppLanguage: AppLanguageListItemDomainModel, thatAppLanguage: AppLanguageListItemDomainModel) in
-                    return thisAppLanguage.languageNameTranslatedInCurrentAppLanguage < thatAppLanguage.languageNameTranslatedInCurrentAppLanguage
-                }
-                
-                return Just(appLanguagesList)
-                    .setFailureType(to: Error.self)
-                    .eraseToAnyPublisher()
-            })
-            .eraseToAnyPublisher()
+        let languages: [AppLanguageDataModel] = try await appLanguagesRepository.getLanguages()
+        
+        let appLanguagesList: [AppLanguageListItemDomainModel] = languages.map { (languageDataModel: AppLanguageDataModel) in
+                                                    
+            let languageNameTranslatedInOwnLanguage: String = self.getTranslatedLanguageName.getLanguageName(language: languageDataModel, translatedInLanguage: languageDataModel.languageId)
+            let languageNameTranslatedInCurrentAppLanguage: String = self.getTranslatedLanguageName.getLanguageName(language: languageDataModel, translatedInLanguage: appLanguage)
+            
+            return AppLanguageListItemDomainModel(
+                language: languageDataModel.languageId,
+                languageNameTranslatedInOwnLanguage: languageNameTranslatedInOwnLanguage,
+                languageNameTranslatedInCurrentAppLanguage: languageNameTranslatedInCurrentAppLanguage
+            )
+        }
+        .sorted { (thisAppLanguage: AppLanguageListItemDomainModel, thatAppLanguage: AppLanguageListItemDomainModel) in
+            return thisAppLanguage.languageNameTranslatedInCurrentAppLanguage < thatAppLanguage.languageNameTranslatedInCurrentAppLanguage
+        }
+        
+        return appLanguagesList
     }
 }

@@ -6,7 +6,7 @@
 //  Copyright © 2024 Cru. All rights reserved.
 //
 
-class DisabledInAppMessaging: AppMessagingInterface {
+final class DisabledInAppMessaging: AppMessagingInterface {
     
     private(set) weak var messagingDelegate: AppMessagingDelegate?
     

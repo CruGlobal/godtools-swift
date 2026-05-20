@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetToolDetailsUseCase {
     
@@ -28,50 +27,24 @@ final class GetToolDetailsUseCase {
         self.favoritedResourcesRepository = favoritedResourcesRepository
     }
     
-    func execute(toolId: String, appLanguage: BCP47LanguageIdentifier, toolPrimaryLanguage: BCP47LanguageIdentifier, toolParallelLanguage: BCP47LanguageIdentifier?) -> AnyPublisher<ToolDetailsDomainModel, Error> {
+    func execute(toolId: String, appLanguage: BCP47LanguageIdentifier, toolPrimaryLanguage: BCP47LanguageIdentifier, toolParallelLanguage: BCP47LanguageIdentifier?) async throws -> ToolDetailsDomainModel {
         
-        let noToolDomainModel = ToolDetailsDomainModel(
-            analyticsToolAbbreviation: "",
-            aboutDescription: "",
-            bibleReferences: "",
-            conversationStarters: "",
-            isFavorited: false,
-            languagesAvailable: "",
-            name: "",
-            numberOfViews: "",
-            versions: [],
-            versionsDescription: ""
-        )
-        
-        let toolDataModel: ResourceDataModel?
-        
-        do {
-            toolDataModel = try resourcesRepository.getResource(id: toolId)
-        }
-        catch let error {
-            return Fail(error: error)
-                .eraseToAnyPublisher()
-        }
+        let toolDataModel: ResourceDataModel? = resourcesRepository.getResourceById(id: toolId)
         
         guard let toolDataModel = toolDataModel else {
-            return Just(noToolDomainModel)
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
+            return ToolDetailsDomainModel.emptyValue
         }
     
         let translation: TranslationDataModel
+        
         if let appLanguagetranslation = translationsRepository.getLatestTranslation(resourceId: toolId, languageCode: appLanguage) {
-            
             translation = appLanguagetranslation
         }
         else if let defaultTranslation = translationsRepository.getLatestTranslation(resourceId: toolId, languageCode: toolDataModel.attrDefaultLocale) {
-            
             translation = defaultTranslation
         }
         else {
-            return Just(noToolDomainModel)
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
+            return ToolDetailsDomainModel.emptyValue
         }
         
         let numberOfViewsString: String = String(
@@ -82,122 +55,109 @@ final class GetToolDetailsUseCase {
         
         let languageIds: [String] = toolDataModel.languageIds
         
-        return Publishers.CombineLatest(
-            getLanguagesAvailablePublisher(languageIds: languageIds, translateInLanguage: appLanguage),
-            getToolVersionsPublisher(
-                toolDataModel: toolDataModel,
-                translateInLanguage: appLanguage,
-                toolPrimaryLanguage: toolPrimaryLanguage,
-                toolParallelLanguage: toolParallelLanguage
-            )
-        )
-        .map { (languagesAvailable: String, toolVersions: [ToolVersionDomainModel]) in
-            
-            let toolDetails = ToolDetailsDomainModel(
-                analyticsToolAbbreviation: toolDataModel.abbreviation,
-                aboutDescription: translation.translatedDescription,
-                bibleReferences: translation.toolDetailsBibleReferences,
-                conversationStarters: translation.toolDetailsConversationStarters,
-                isFavorited: self.favoritedResourcesRepository.getResourceIsFavoritedNonThrowing(id: toolId),
-                languagesAvailable: languagesAvailable,
-                name: translation.translatedName,
-                numberOfViews: numberOfViewsString,
-                versions: toolVersions,
-                versionsDescription: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "toolDetails.versions.message")
-            )
-            
-            return toolDetails
-        }
-        .eraseToAnyPublisher()
-    }
-    
-    private func getLanguagesAvailablePublisher(languageIds: [String], translateInLanguage: BCP47LanguageIdentifier) -> AnyPublisher<String, Error> {
+        let languagesAvailable: String = try await getLanguagesAvailable(languageIds: languageIds, translateInLanguage: appLanguage)
         
-        return languagesRepository
-            .getLanguagesByIdsPublisher(ids: languageIds)
-            .map { (languagesDataModels: [LanguageDataModel]) in
-                
-                let languageNamesTranslatedInToolLanguage: [String] = languagesDataModels.map { (languageDataModel: LanguageDataModel) in
-                    self.getTranslatedLanguageName.getLanguageName(language: languageDataModel, translatedInLanguage: translateInLanguage)
-                }
-                
-                let languagesAvailable: String = languageNamesTranslatedInToolLanguage.map({$0}).sorted(by: { $0 < $1 }).joined(separator: ", ")
-                
-                return languagesAvailable
-            }
-            .eraseToAnyPublisher()
+        let toolVersions: [ToolVersionDomainModel] = try await getToolVersions(
+            toolDataModel: toolDataModel,
+            translateInLanguage: appLanguage,
+            toolPrimaryLanguage: toolPrimaryLanguage,
+            toolParallelLanguage: toolParallelLanguage
+        )
+        
+        let toolDetails = ToolDetailsDomainModel(
+            analyticsToolAbbreviation: toolDataModel.abbreviation,
+            aboutDescription: translation.translatedDescription,
+            bibleReferences: translation.toolDetailsBibleReferences,
+            conversationStarters: translation.toolDetailsConversationStarters,
+            isFavorited: favoritedResourcesRepository.getResourceIsFavorited(id: toolId),
+            languagesAvailable: languagesAvailable,
+            name: translation.translatedName,
+            numberOfViews: numberOfViewsString,
+            versions: toolVersions,
+            versionsDescription: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "toolDetails.versions.message")
+        )
+        
+        return toolDetails
     }
     
-    private func getToolVersionsPublisher(toolDataModel: ResourceDataModel, translateInLanguage: BCP47LanguageIdentifier, toolPrimaryLanguage: BCP47LanguageIdentifier, toolParallelLanguage: BCP47LanguageIdentifier?) -> AnyPublisher<[ToolVersionDomainModel], Error> {
+    private func getLanguagesAvailable(languageIds: [String], translateInLanguage: BCP47LanguageIdentifier) async throws -> String {
+        
+        let languagesDataModels: [LanguageDataModel] = try await languagesRepository.getLanguagesByIds(ids: languageIds)
+        
+        let languageNamesTranslatedInToolLanguage: [String] = languagesDataModels.map { (languageDataModel: LanguageDataModel) in
+            getTranslatedLanguageName.getLanguageName(language: languageDataModel, translatedInLanguage: translateInLanguage)
+        }
+        
+        let languagesAvailable: String = languageNamesTranslatedInToolLanguage.map({$0}).sorted(by: { $0 < $1 }).joined(separator: ", ")
+        
+        return languagesAvailable
+    }
+    
+    private func getToolVersions(toolDataModel: ResourceDataModel, translateInLanguage: BCP47LanguageIdentifier, toolPrimaryLanguage: BCP47LanguageIdentifier, toolParallelLanguage: BCP47LanguageIdentifier?) async throws -> [ToolVersionDomainModel] {
         
         guard let metaToolId = toolDataModel.metatoolId, !metaToolId.isEmpty else {
-            return Just([])
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
+            return Array()
         }
         
-        return resourcesRepository
-            .getResourceVariantsPublisher(resourceId: metaToolId)
-            .map { (resourceVariants: [ResourceDataModel]) in
+        let resourceVariants: [ResourceDataModel] = try await resourcesRepository
+            .getResourceVariants(resourceId: metaToolId)
+        
+        let toolPrimaryLanguageName: String = getTranslatedLanguageName.getLanguageName(language: toolPrimaryLanguage, translatedInLanguage: translateInLanguage)
+        
+        let toolParallelLanguageName: String?
+        
+        if let toolParallelLanguage = toolParallelLanguage {
+            toolParallelLanguageName = getTranslatedLanguageName.getLanguageName(language: toolParallelLanguage, translatedInLanguage: translateInLanguage)
+        }
+        else {
+            toolParallelLanguageName = nil
+        }
                 
-                let toolPrimaryLanguageName: String = self.getTranslatedLanguageName.getLanguageName(language: toolPrimaryLanguage, translatedInLanguage: translateInLanguage)
+        var toolVersions: [ToolVersionDomainModel] = Array()
+        
+        for resourceVariant in resourceVariants {
+            
+            let name: String
+            let description: String
+            
+            if let appLanguageTranslation = translationsRepository.getLatestTranslation(resourceId: resourceVariant.id, languageCode: translateInLanguage) {
                 
-                let toolParallelLanguageName: String?
-                
-                if let toolParallelLanguage = toolParallelLanguage {
-                    toolParallelLanguageName = self.getTranslatedLanguageName.getLanguageName(language: toolParallelLanguage, translatedInLanguage: translateInLanguage)
-                }
-                else {
-                    toolParallelLanguageName = nil
-                }
-                        
-                var toolVersions: [ToolVersionDomainModel] = Array()
-                
-                for resourceVariant in resourceVariants {
-                    
-                    let name: String
-                    let description: String
-                    
-                    if let appLanguageTranslation = self.translationsRepository.getLatestTranslation(resourceId: resourceVariant.id, languageCode: translateInLanguage) {
-                        
-                        name = appLanguageTranslation.translatedName
-                        description = appLanguageTranslation.translatedTagline
-                    }
-                    else if let defaultTranslation = self.translationsRepository.getLatestTranslation(resourceId: resourceVariant.id, languageCode: resourceVariant.attrDefaultLocale) {
-                        
-                        name = defaultTranslation.translatedName
-                        description = defaultTranslation.translatedTagline
-                    }
-                    else {
-                        
-                        name = resourceVariant.name
-                        description = resourceVariant.resourceDescription
-                    }
-                    
-                    let toolVersion = ToolVersionDomainModel(
-                        analyticsToolAbbreviation: resourceVariant.abbreviation,
-                        bannerImageId: resourceVariant.attrBanner,
-                        dataModelId: resourceVariant.id,
-                        description: description,
-                        name: name,
-                        numberOfLanguages: self.getNumberOfLanguages(translateInLanguage: translateInLanguage, numberOfLanguages: resourceVariant.languageIds.count),
-                        toolLanguageName: toolPrimaryLanguageName,
-                        toolLanguageNameIsSupported: self.getToolSupportsLanguage(resource: resourceVariant, language: toolPrimaryLanguage),
-                        toolParallelLanguageName: toolParallelLanguageName,
-                        toolParallelLanguageNameIsSupported: self.getToolSupportsLanguage(resource: resourceVariant, language: toolParallelLanguage)
-                    )
-                    
-                    toolVersions.append(toolVersion)
-                }
-                    
-                return toolVersions
+                name = appLanguageTranslation.translatedName
+                description = appLanguageTranslation.translatedTagline
             }
-            .eraseToAnyPublisher()
+            else if let defaultTranslation = translationsRepository.getLatestTranslation(resourceId: resourceVariant.id, languageCode: resourceVariant.attrDefaultLocale) {
+                
+                name = defaultTranslation.translatedName
+                description = defaultTranslation.translatedTagline
+            }
+            else {
+                
+                name = resourceVariant.name
+                description = resourceVariant.resourceDescription
+            }
+            
+            let toolVersion = ToolVersionDomainModel(
+                analyticsToolAbbreviation: resourceVariant.abbreviation,
+                bannerImageId: resourceVariant.attrBanner,
+                dataModelId: resourceVariant.id,
+                description: description,
+                name: name,
+                numberOfLanguages: getNumberOfLanguages(translateInLanguage: translateInLanguage, numberOfLanguages: resourceVariant.languageIds.count),
+                toolLanguageName: toolPrimaryLanguageName,
+                toolLanguageNameIsSupported: getToolSupportsLanguage(resource: resourceVariant, language: toolPrimaryLanguage),
+                toolParallelLanguageName: toolParallelLanguageName,
+                toolParallelLanguageNameIsSupported: getToolSupportsLanguage(resource: resourceVariant, language: toolParallelLanguage)
+            )
+            
+            toolVersions.append(toolVersion)
+        }
+            
+        return toolVersions
     }
     
     private func getNumberOfLanguages(translateInLanguage: BCP47LanguageIdentifier, numberOfLanguages: Int) -> String {
         
-        let localizedNumberOfLanguages = self.localizationServices.stringForLocaleElseSystemElseEnglish(
+        let localizedNumberOfLanguages = localizationServices.stringForLocaleElseSystemElseEnglish(
             localeIdentifier: translateInLanguage,
             key: LocalizableStringDictKeys.toolDetailsToolVersionNumberOfLanguages.key
         )
@@ -217,7 +177,7 @@ final class GetToolDetailsUseCase {
             return false
         }
         
-        guard let languageModel = languagesRepository.getLanguageNonThrowing(code: language) else {
+        guard let languageModel = languagesRepository.getLanguageByCode(code: language) else {
             return false
         }
         

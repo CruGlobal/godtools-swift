@@ -22,18 +22,13 @@ open class ArticleAemRepository: NSObject {
         super.init()
     }
     
-    @available(*, deprecated) // Remove and use throws. ~Levi
-    func getAemCacheObjectNonThrowing(aemUri: String) -> ArticleAemCacheObject? {
+    func getAemCacheObject(aemUri: String) -> ArticleAemCacheObject? {
         do {
             return try cache.getAemCacheObject(aemUri: aemUri)
         }
         catch _ {
             return nil
         }
-    }
-    
-    func getAemCacheObject(aemUri: String) throws -> ArticleAemCacheObject? {
-        return try cache.getAemCacheObject(aemUri: aemUri)
     }
     
     func getAemCacheObjects(aemUris: [String]) throws -> [ArticleAemCacheObject] {

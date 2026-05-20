@@ -221,30 +221,26 @@ extension AllYourFavoriteToolsViewModel {
     }
     
     func toolMoved(fromOffsets source: IndexSet, toOffset destination: Int) {
+        
         for index in source {
-            guard index < favoritedTools.count else { continue }
-            let toolToMove = favoritedTools[index]
             
-            var newIndex: Int
-            if index < destination {
-                newIndex = destination - 1
-            } else {
-                newIndex = destination
+            guard index < favoritedTools.count && index >= 0 else {
+                continue
             }
             
-            reorderFavoritedToolUseCase
-                .execute(
-                    toolId: toolToMove.id,
-                    originalPosition: index,
-                    newPosition: newIndex
-                )
-                .sink { _ in
-                    
-                } receiveValue: { _ in
-                    
-                }
-                .store(in: &Self.backgroundCancellables)
-
+            let toolToMove: YourFavoritedToolDomainModel = favoritedTools[index]
+            
+            let newPosition: Int = index < destination ? destination - 1 : destination
+            
+            Task {
+                
+                try await reorderFavoritedToolUseCase
+                    .execute(
+                        toolId: toolToMove.id,
+                        originalPosition: index,
+                        newPosition: newPosition
+                    )
+            }
         }
     }
 }

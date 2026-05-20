@@ -14,6 +14,8 @@ final class DeleteAccountProgressViewModel: ObservableObject {
     
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     
+    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    private let getDeleteAccountProgressStringsUseCase: GetDeleteAccountProgressStringsUseCase
     private let deleteAccountUseCase: DeleteAccountUseCase
     private let minimumSecondsToDisplayDeleteAccountProgress: TimeInterval = 2
     
@@ -25,27 +27,21 @@ final class DeleteAccountProgressViewModel: ObservableObject {
     
     @Published private(set) var strings = DeleteAccountProgressStringsDomainModel.emptyValue
     
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguage: GetCurrentAppLanguageUseCase, getDeleteAccountProgressStringsUseCase: GetDeleteAccountProgressStringsUseCase, deleteAccountUseCase: DeleteAccountUseCase) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getDeleteAccountProgressStringsUseCase: GetDeleteAccountProgressStringsUseCase, deleteAccountUseCase: DeleteAccountUseCase) {
         
-        self.flowDelegate = flowDelegate
+        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
+        self.getDeleteAccountProgressStringsUseCase = getDeleteAccountProgressStringsUseCase
         self.deleteAccountUseCase = deleteAccountUseCase
+        self.flowDelegate = flowDelegate
         
-        getCurrentAppLanguage
+        getCurrentAppLanguageUseCase
             .execute()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                getDeleteAccountProgressStringsUseCase
-                    .execute(appLanguage: appLanguage)
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: DeleteAccountProgressStringsDomainModel) in
-                self?.strings = strings
-            }
+            .sink(receiveValue: { [weak self] (appLanguage: AppLanguageDomainModel) in
+                
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
+            })
             .store(in: &cancellables)
         
         deleteAccount()
@@ -53,6 +49,12 @@ final class DeleteAccountProgressViewModel: ObservableObject {
     
     deinit {
         print("x deinit: \(type(of: self))")
+    }
+    
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+        
+        strings = getDeleteAccountProgressStringsUseCase
+            .execute(appLanguage: appLanguage)
     }
     
     private func deleteAccount() {

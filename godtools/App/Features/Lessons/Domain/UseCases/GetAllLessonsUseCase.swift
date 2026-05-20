@@ -32,19 +32,23 @@ final class GetAllLessonsUseCase {
         )
         .flatMap({ (resourcesDidChange: Void, lessonProgressDidChange: Void) -> AnyPublisher<[LessonListItemDomainModel], Error> in
 
-            return self.resourcesRepository
-                .getLessonsPublisher(filterByLanguageId: filterLessonsByLanguage?.languageId, sorted: true)
-                .tryMap { (lessons: [ResourceDataModel]) in
-
-                    return try self.getLessonsListItems.mapLessonsToListItems(
-                        lessons: lessons,
-                        appLanguage: appLanguage,
-                        filterLessonsByLanguage: filterLessonsByLanguage
-                    )
-                }
-                .eraseToAnyPublisher()
+            return AnyPublisher() {
+                try await self.asyncExecute(appLanguage: appLanguage, filterLessonsByLanguage: filterLessonsByLanguage)
+            }
         })
         .eraseToAnyPublisher()
 
+    }
+    
+    private func asyncExecute(appLanguage: AppLanguageDomainModel, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) async throws -> [LessonListItemDomainModel] {
+        
+        let lessons: [ResourceDataModel] = try await resourcesRepository
+            .getLessons(filterByLanguageId: filterLessonsByLanguage?.languageId, sorted: true)
+        
+        return try getLessonsListItems.mapLessonsToListItems(
+            lessons: lessons,
+            appLanguage: appLanguage,
+            filterLessonsByLanguage: filterLessonsByLanguage
+        )
     }
 }

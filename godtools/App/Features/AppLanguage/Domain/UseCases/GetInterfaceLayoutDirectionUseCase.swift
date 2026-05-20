@@ -18,18 +18,14 @@ final class GetInterfaceLayoutDirectionUseCase {
         self.appLanguagesRepository = appLanguagesRepository
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppInterfaceLayoutDirectionDomainModel, Error> {
+    func execute(appLanguage: AppLanguageDomainModel) -> AppInterfaceLayoutDirectionDomainModel {
         
-        return appLanguagesRepository
-            .getLanguagePublisher(languageId: appLanguage)
-            .map { (dataModel: AppLanguageDataModel?) in
-                
-                guard let dataModel = dataModel else {
-                    return .leftToRight
-                }
-                
-                return dataModel.languageDirection == .leftToRight ? .leftToRight : .rightToLeft
-            }
-            .eraseToAnyPublisher()
+        let language: AppLanguageDataModel? = appLanguagesRepository.getLanguage(id: appLanguage)
+        
+        guard let language = language else {
+            return .leftToRight
+        }
+        
+        return language.languageDirection == .leftToRight ? .leftToRight : .rightToLeft
     }
 }

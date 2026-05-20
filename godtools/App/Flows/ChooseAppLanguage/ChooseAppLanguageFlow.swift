@@ -11,8 +11,6 @@ import SwiftUI
 import Combine
 
 class ChooseAppLanguageFlow: Flow {
-    
-    private static var setAppLanguageInBackgroundCancellable: AnyCancellable?
         
     private weak var flowDelegate: FlowDelegate?
     
@@ -47,14 +45,11 @@ class ChooseAppLanguageFlow: Flow {
         case .appLanguageChangeConfirmed(let appLanguage):
             
             let setAppLanguageUseCase: SetAppLanguageUseCase = appDiContainer.feature.appLanguage.domainLayer.getSetAppLanguageUseCase()
-            
-            ChooseAppLanguageFlow.setAppLanguageInBackgroundCancellable = setAppLanguageUseCase.execute(appLanguage: appLanguage.language)
-                .receive(on: DispatchQueue.main)
-                .sink(receiveCompletion: { _ in
-                    
-                }, receiveValue: { _ in
-                    
-                })
+                        
+            Task {
+                _ = try await setAppLanguageUseCase
+                    .execute(appLanguage: appLanguage.language)
+            }
             
             navigationController.dismiss(animated: true)
             

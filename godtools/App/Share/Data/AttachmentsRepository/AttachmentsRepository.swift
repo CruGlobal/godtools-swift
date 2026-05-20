@@ -9,6 +9,7 @@
 import Foundation
 import RequestOperation
 import RepositorySync
+import Combine
 
 final class AttachmentsRepository {
         
@@ -21,9 +22,20 @@ final class AttachmentsRepository {
         self.cache = cache
     }
     
-    func getAttachment(id: String) throws-> AttachmentDataModel? {
+    @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Error> {
+        return cache
+            .persistence
+            .observeCollectionChangesPublisher()
+    }
+    
+    func getAttachment(id: String) -> AttachmentDataModel? {
         
-        return try cache.getAttachment(id: id)
+        do {
+            return try cache.getAttachment(id: id)
+        }
+        catch _ {
+            return nil
+        }
     }
 }
 

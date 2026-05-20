@@ -366,7 +366,7 @@ extension ToolScreenShareFlow {
             flowDelegate: self,
             toolId: toolSettingsObserver.toolId,
             createSessionTrigger: createSessionTrigger,
-            getCurrentAppLanguage: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getCreatingToolScreenShareSessionStringsUseCase: appDiContainer.feature.toolScreenShare.domainLayer.getCreatingToolScreenShareSessionStringsUseCase(),
             tractRemoteSharePublisher: toolSettingsObserver.tractRemoteSharePublisher,
             incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase()

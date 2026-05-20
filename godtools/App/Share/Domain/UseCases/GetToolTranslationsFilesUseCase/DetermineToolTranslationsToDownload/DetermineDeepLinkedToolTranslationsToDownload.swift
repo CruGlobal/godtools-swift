@@ -30,7 +30,7 @@ final class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslat
     }
     
     func getResource() -> ResourceDataModel? {
-        return resourcesRepository.getResourceNonThrowing(abbreviation: toolDeepLink.resourceAbbreviation)
+        return resourcesRepository.getResourceByAbbreviation(abbreviation: toolDeepLink.resourceAbbreviation)
     }
     
     func determineToolTranslationsToDownload() async throws(DetermineToolTranslationsToDownloadError) -> ToolTranslationsToDownload {
@@ -83,7 +83,7 @@ final class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslat
             
             return primaryTranslation
         }
-        else if let appLanguage = self.userAppLanguageRepository.getCachedLanguage(),
+        else if let appLanguage = self.userAppLanguageRepository.getLanguage(),
                 let appLanguageTranslation = self.translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: appLanguage.languageId) {
             
             return appLanguageTranslation

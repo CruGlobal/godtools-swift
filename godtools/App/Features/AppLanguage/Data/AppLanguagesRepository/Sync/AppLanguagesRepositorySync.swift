@@ -23,13 +23,7 @@ final class AppLanguagesRepositorySync: AppLanguagesRepositorySyncInterface {
         self.syncInvalidator = syncInvalidator
     }
     
-    func syncPublisher() -> AnyPublisher<Void, Error> {
-        return AnyPublisher() {
-            try await self.sync()
-        }
-    }
-    
-    private func sync() async throws {
+    func sync() async throws {
         
         guard syncInvalidator.shouldSync else {
             return

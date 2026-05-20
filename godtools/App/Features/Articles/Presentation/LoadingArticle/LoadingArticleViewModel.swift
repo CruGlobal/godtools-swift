@@ -40,7 +40,7 @@ final class LoadingArticleViewModel: ObservableObject {
                         requestPriority: .high
                     )
                 
-                if let aemCacheObject = articleAemRepository.getAemCacheObjectNonThrowing(aemUri: aemUri) {
+                if let aemCacheObject = articleAemRepository.getAemCacheObject(aemUri: aemUri) {
                     
                     self?.flowDelegate?.navigate(step: .didDownloadArticleFromLoadingArticle(aemCacheObject: aemCacheObject))
                 }
