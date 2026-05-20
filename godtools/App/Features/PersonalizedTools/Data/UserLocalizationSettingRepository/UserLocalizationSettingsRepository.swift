@@ -21,14 +21,12 @@ final class UserLocalizationSettingsRepository {
         self.cache = cache
     }
     
-    var persistence: any Persistence<UserLocalizationSettingsDataModel, UserLocalizationSettingsDataModel> {
-        return cache.persistence
-    }
-    
     @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Never> {
-        return persistence
+        
+        return cache
+            .persistence
             .observeCollectionChangesPublisher()
-            .catch { (error: Error) in
+            .catch { _ in
                 return Just(Void())
                     .eraseToAnyPublisher()
             }
@@ -46,13 +44,13 @@ final class UserLocalizationSettingsRepository {
         try await cache.storeUserLocalizationSetting(dataModel: dataModel)
     }
 
-    func getUserLocalizationSettingPublisher() -> AnyPublisher<UserLocalizationSettingsDataModel?, Error> {
+    func getUserLocalizationSetting() -> UserLocalizationSettingsDataModel? {
         
-        return persistence
-            .getDataModelsPublisher(getOption: .object(id: Self.sharedUserId))
-            .map {
-                $0.first
-            }
-            .eraseToAnyPublisher()
+        do {
+            return try cache.persistence.getDataModel(id: Self.sharedUserId)
+        }
+        catch _ {
+            return nil
+        }
     }
 }

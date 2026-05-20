@@ -66,14 +66,16 @@ final class ToolSettingsToolLanguagesListViewModel: ObservableObject {
         )
         .map { (appLanguage: AppLanguageDomainModel, languages: ToolSettingsLanguages) in
             
-            getToolSettingsToolLanguagesListUseCase
-                .execute(
-                    listType: listType,
-                    primaryLanguageId: languages.primaryLanguageId,
-                    parallelLanguageId: languages.parallelLanguageId,
-                    toolId: toolId,
-                    appLanguage: appLanguage
-                )
+            return AnyPublisher() {
+                try await self.getToolSettingsToolLanguagesListUseCase
+                    .execute(
+                        listType: listType,
+                        primaryLanguageId: languages.primaryLanguageId,
+                        parallelLanguageId: languages.parallelLanguageId,
+                        toolId: toolId,
+                        appLanguage: appLanguage
+                    )
+            }
         }
         .switchToLatest()
         .receive(on: DispatchQueue.main)

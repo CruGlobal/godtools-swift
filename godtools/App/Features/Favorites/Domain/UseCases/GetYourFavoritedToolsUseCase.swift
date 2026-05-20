@@ -28,16 +28,15 @@ final class GetYourFavoritedToolsUseCase {
     
     @MainActor func execute(appLanguage: AppLanguageDomainModel, maxCount: Int?) -> AnyPublisher<[YourFavoritedToolDomainModel], Error> {
         
-        return Publishers.CombineLatest3(
+        let strings: ToolListItemStringsDomainModel = getToolListItemStrings.getStrings(appLanguage: appLanguage)
+        
+        return Publishers.CombineLatest(
             resourcesRepository
                 .observeCollectionChangesPublisher(),
-            getToolListItemStrings
-                .getStringsPublisher(translateInLanguage: appLanguage)
-                .setFailureType(to: Error.self),
             favoritedResourcesRepository
                 .observeCollectionChangesPublisher()
         )
-        .flatMap { (resourcesChanged: Void, strings: ToolListItemStringsDomainModel, favoritedResourcesChanged: Void) -> AnyPublisher<[YourFavoritedToolDomainModel], Error> in
+        .flatMap { (resourcesChanged: Void, favoritedResourcesChanged: Void) -> AnyPublisher<[YourFavoritedToolDomainModel], Error> in
             
             return AnyPublisher() {
                 try await self.asyncExecute(appLanguage: appLanguage, maxCount: maxCount, strings: strings)

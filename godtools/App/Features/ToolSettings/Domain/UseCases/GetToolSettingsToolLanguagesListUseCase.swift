@@ -22,7 +22,7 @@ final class GetToolSettingsToolLanguagesListUseCase {
         self.getTranslatedLanguageName = getTranslatedLanguageName
     }
     
-    func execute(listType: ToolSettingsToolLanguagesListTypeDomainModel, primaryLanguageId: String, parallelLanguageId: String?, toolId: String, appLanguage: AppLanguageDomainModel) -> AnyPublisher<[ToolSettingsToolLanguageDomainModel], Error> {
+    func execute(listType: ToolSettingsToolLanguagesListTypeDomainModel, primaryLanguageId: String, parallelLanguageId: String?, toolId: String, appLanguage: AppLanguageDomainModel) async throws -> [ToolSettingsToolLanguageDomainModel] {
         
         var filterOutLanguageIds: [String] = Array()
         
@@ -46,29 +46,25 @@ final class GetToolSettingsToolLanguagesListUseCase {
         else {
             languageIds = Array()
         }
+        
+        let languages: [LanguageDataModel] = try await languagesRepository.getLanguagesByIds(ids: languageIds)
                     
-        return languagesRepository
-            .getLanguagesByIdsPublisher(ids: languageIds)
-            .map { (languages: [LanguageDataModel]) in
-                
-                let toolSettingsToolLanguages: [ToolSettingsToolLanguageDomainModel] = languages.map { (language: LanguageDataModel) in
-                    
-                    let languageName: String = self.getTranslatedLanguageName.getLanguageName(
-                        language: language,
-                        translatedInLanguage: appLanguage
-                    )
-                    
-                    return ToolSettingsToolLanguageDomainModel(
-                        dataModelId: language.id,
-                        languageName: languageName
-                    )
-                }
-                
-                return toolSettingsToolLanguages
-                    .sorted {
-                        $0.languageName < $1.languageName
-                    }
+        let toolSettingsToolLanguages: [ToolSettingsToolLanguageDomainModel] = languages.map { (language: LanguageDataModel) in
+            
+            let languageName: String = self.getTranslatedLanguageName.getLanguageName(
+                language: language,
+                translatedInLanguage: appLanguage
+            )
+            
+            return ToolSettingsToolLanguageDomainModel(
+                dataModelId: language.id,
+                languageName: languageName
+            )
+        }
+        
+        return toolSettingsToolLanguages
+            .sorted {
+                $0.languageName < $1.languageName
             }
-            .eraseToAnyPublisher()
     }
 }

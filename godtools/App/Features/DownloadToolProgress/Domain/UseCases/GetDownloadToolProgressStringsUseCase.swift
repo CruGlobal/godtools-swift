@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetDownloadToolProgressStringsUseCase {
     
@@ -22,7 +21,7 @@ final class GetDownloadToolProgressStringsUseCase {
         self.favoritedResourcesRepository = favoritedResourcesRepository
     }
     
-    func execute(toolId: String?, appLanguage: AppLanguageDomainModel) -> AnyPublisher<DownloadToolProgressStringsDomainModel, Never> {
+    func execute(toolId: String?, appLanguage: AppLanguageDomainModel) -> DownloadToolProgressStringsDomainModel {
                         
         let localeId: String = appLanguage
         
@@ -58,7 +57,6 @@ final class GetDownloadToolProgressStringsUseCase {
             downloadMessage: downloadMessage
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

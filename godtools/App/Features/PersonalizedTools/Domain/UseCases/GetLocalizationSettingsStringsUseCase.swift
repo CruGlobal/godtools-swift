@@ -1,5 +1,5 @@
 //
-//  ViewLocalizationSettingsUseCase.swift
+//  GetLocalizationSettingsStringsUseCase.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 11/25/25.
@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import Combine
 
-final class ViewLocalizationSettingsUseCase {
+final class GetLocalizationSettingsStringsUseCase {
     
     private let localizationServices: LocalizationServicesInterface
     
@@ -17,7 +16,7 @@ final class ViewLocalizationSettingsUseCase {
         self.localizationServices = localizationServices
     }
 
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<LocalizationSettingsStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> LocalizationSettingsStringsDomainModel {
 
         let strings = LocalizationSettingsStringsDomainModel(
             navTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "localizationSettings.navBar.title"),
@@ -25,7 +24,6 @@ final class ViewLocalizationSettingsUseCase {
             localizationHeaderDescription: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "localizationSettings.localizationHeader.description")
         )
 
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

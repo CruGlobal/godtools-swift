@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class DidChangeScaleForSpiritualConversationReadinessUseCase {
     
@@ -21,7 +20,7 @@ final class DidChangeScaleForSpiritualConversationReadinessUseCase {
         self.getTranslatedNumberCount = getTranslatedNumberCount
     }
     
-    func execute(scale: Int, translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<SpiritualConversationReadinessScaleDomainModel, Never> {
+    func execute(scale: Int, appLanguage: AppLanguageDomainModel) -> SpiritualConversationReadinessScaleDomainModel {
         
         let clampedScale: Int
         
@@ -36,13 +35,12 @@ final class DidChangeScaleForSpiritualConversationReadinessUseCase {
         }
         
         let domainModel = SpiritualConversationReadinessScaleDomainModel(
-            minScale: mapScaleToDomainModel(scale: Self.minScaleValue, translateInAppLanguage: translateInAppLanguage),
-            maxScale: mapScaleToDomainModel(scale: Self.maxScaleValue, translateInAppLanguage: translateInAppLanguage),
-            scale: mapScaleToDomainModel(scale: clampedScale, translateInAppLanguage: translateInAppLanguage)
+            minScale: mapScaleToDomainModel(scale: Self.minScaleValue, translateInAppLanguage: appLanguage),
+            maxScale: mapScaleToDomainModel(scale: Self.maxScaleValue, translateInAppLanguage: appLanguage),
+            scale: mapScaleToDomainModel(scale: clampedScale, translateInAppLanguage: appLanguage)
         )
         
-        return Just(domainModel)
-            .eraseToAnyPublisher()
+        return domainModel
     }
     
     private func mapScaleToDomainModel(scale: Int, translateInAppLanguage: AppLanguageDomainModel) -> LessonEvaluationScaleDomainModel {

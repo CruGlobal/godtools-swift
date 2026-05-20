@@ -77,7 +77,7 @@ extension ChooseAppLanguageFlow {
             searchAppLanguageInAppLanguagesListUseCase: appDiContainer.feature.appLanguage.domainLayer.getSearchAppLanguageInAppLanguagesListUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getAppLanguagesListUseCase: appDiContainer.feature.appLanguage.domainLayer.getAppLanguagesListUseCase(),
-            viewSearchBarUseCase: appDiContainer.core.domainLayer.getViewSearchBarUseCase()
+            getSearchBarStringsUseCase: appDiContainer.core.domainLayer.getSearchBarStringsUseCase()
         )
         
         let view = AppLanguagesView(viewModel: viewModel)

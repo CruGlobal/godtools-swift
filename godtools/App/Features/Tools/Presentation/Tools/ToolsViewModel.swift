@@ -176,7 +176,7 @@ final class ToolsViewModel: ObservableObject {
             
             getSpotlightToolsUseCase
                 .execute(
-                    translatedInAppLanguage: appLanguage,
+                    appLanguage: appLanguage,
                     languageIdForAvailabilityText: toolFilterLanguage.id
                 )
         }

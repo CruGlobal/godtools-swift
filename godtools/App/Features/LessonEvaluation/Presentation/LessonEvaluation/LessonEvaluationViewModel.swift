@@ -16,6 +16,8 @@ final class LessonEvaluationViewModel: ObservableObject {
         
     private let lessonId: String
     private let pageIndexReached: Int
+    private let getLessonEvaluationStringsUseCase: GetLessonEvaluationStringsUseCase
+    private let didChangeScaleForSpiritualConversationReadinessUseCase: DidChangeScaleForSpiritualConversationReadinessUseCase
     private let evaluateLessonUseCase: EvaluateLessonUseCase
     private let cancelLessonEvaluationUseCase: CancelLessonEvaluationUseCase
     
@@ -45,43 +47,46 @@ final class LessonEvaluationViewModel: ObservableObject {
         self.flowDelegate = flowDelegate
         self.lessonId = lessonId
         self.pageIndexReached = pageIndexReached
+        self.getLessonEvaluationStringsUseCase = getLessonEvaluationStringsUseCase
+        self.didChangeScaleForSpiritualConversationReadinessUseCase = didChangeScaleForSpiritualConversationReadinessUseCase
         self.evaluateLessonUseCase = evaluateLessonUseCase
         self.cancelLessonEvaluationUseCase = cancelLessonEvaluationUseCase
         
         getCurrentAppLanguageUseCase
             .execute()
-            .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                
-                getLessonEvaluationStringsUseCase
-                    .execute(translateInAppLanguage: appLanguage)
-            }
-            .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$strings)
+            .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
+                self?.appLanguage = appLanguage
+                self?.didSetApplanguage(appLanguage: appLanguage)
+            }
+            .store(in: &cancellables)
         
         Publishers.CombineLatest(
             $appLanguage.dropFirst(),
             $readyToShareFaithScaleIntValue
         )
-        .map { (appLanguage: AppLanguageDomainModel, scale: Int) in
-            
-            didChangeScaleForSpiritualConversationReadinessUseCase
-                .execute(scale: scale, translateInAppLanguage: appLanguage)
-        }
-        .switchToLatest()
         .receive(on: DispatchQueue.main)
-        .sink { [weak self] (domainModel: SpiritualConversationReadinessScaleDomainModel) in
-            self?.readyToShareFaithScale = domainModel
+        .sink { [weak self] (appLanguage: AppLanguageDomainModel, scale: Int) in
+            
+            self?.didSetAppLanguage(appLanguage: appLanguage, readyToShareFaithScaleValue: scale)
         }
         .store(in: &cancellables)
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+    }
+    
+    private func didSetApplanguage(appLanguage: AppLanguageDomainModel) {
+        
+        strings = getLessonEvaluationStringsUseCase
+            .execute(appLanguage: appLanguage)
+    }
+    
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel, readyToShareFaithScaleValue: Int) {
+        
+        readyToShareFaithScale = didChangeScaleForSpiritualConversationReadinessUseCase
+            .execute(scale: readyToShareFaithScaleValue, appLanguage: appLanguage)
     }
 }
 

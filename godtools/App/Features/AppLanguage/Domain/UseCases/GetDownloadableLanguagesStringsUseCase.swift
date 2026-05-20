@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetDownloadableLanguagesStringsUseCase {
     
@@ -18,7 +17,7 @@ final class GetDownloadableLanguagesStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<DownloadableLanguagesStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> DownloadableLanguagesStringsDomainModel {
         
         let localeId: String = appLanguage
         
@@ -26,7 +25,6 @@ final class GetDownloadableLanguagesStringsUseCase {
             navTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: AppLanguageStringKeys.DownloadableLanguages.navTitle.rawValue)
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

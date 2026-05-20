@@ -64,27 +64,23 @@ final class GetPersonalizedToolsUseCase {
                     )
             }
         }
-        .flatMap { (resources: [ResourceDataModel]) -> AnyPublisher<ToolsResultDomainModel, Error> in
+        .map { (resources: [ResourceDataModel])  in
             
-            return self.getToolsListItems
-                .mapToolsToListItemsPublisher(
+            let tools: [ToolListItemDomainModel] = self.getToolsListItems
+                .mapToolsToListItems(
                     tools: resources,
                     appLanguage: appLanguage,
                     languageIdForAvailabilityText: filterToolsByLanguage.filterId
                 )
-                .map { (tools: [ToolListItemDomainModel]) -> ToolsResultDomainModel in
-                    
-                    if self.shouldShowUnavailableState(hasCountry: hasCountry, tools: tools) {
-                        return self.getToolsUnavailable(appLanguage: appLanguage)
-                    }
-                    
-                    return ToolsResultDomainModel(
-                        tools: tools,
-                        unavailableStrings: nil
-                    )
-                }
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
+            
+            if self.shouldShowUnavailableState(hasCountry: hasCountry, tools: tools) {
+                return self.getToolsUnavailable(appLanguage: appLanguage)
+            }
+            
+            return ToolsResultDomainModel(
+                tools: tools,
+                unavailableStrings: nil
+            )
         }
         .eraseToAnyPublisher()
     }
@@ -92,8 +88,8 @@ final class GetPersonalizedToolsUseCase {
     private func getToolsUnavailable(appLanguage: AppLanguageDomainModel) -> ToolsResultDomainModel {
 
         let unavailableState = PersonalizedToolsUnavailableDomainModel(
-            title: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "tools.personalizationUnavailable.title"),
-            message: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "tools.personalizationUnavailable.message")
+            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "tools.personalizationUnavailable.title"),
+            message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "tools.personalizationUnavailable.message")
         )
 
         return ToolsResultDomainModel(

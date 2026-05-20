@@ -60,13 +60,6 @@ final class LanguagesRepository {
     func getLanguagesByIds(ids: [String]) async throws -> [LanguageDataModel] {
         return try await cache.persistence.getDataModelsAsync(getOption: .objectsByIds(ids: ids))
     }
-    
-    @available(*, deprecated) // Remove and use async throws. ~Levi
-    func getLanguagesByIdsPublisher(ids: [String]) -> AnyPublisher<[LanguageDataModel], Error> {
-        return AnyPublisher() {
-            return try await self.getLanguagesByIds(ids: ids)
-        }
-    }
 }
 
 // MARK: - Sync

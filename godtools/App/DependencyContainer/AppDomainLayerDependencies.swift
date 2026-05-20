@@ -26,6 +26,12 @@ final class AppDomainLayerDependencies {
         )
     }
     
+    func getSearchBarStringsUseCase() -> GetSearchBarStringsUseCase {
+        return GetSearchBarStringsUseCase(
+            localizationServices: dataLayer.getLocalizationServices()
+        )
+    }
+    
     func getSetCompletedTrainingTipUseCase() -> SetCompletedTrainingTipUseCase {
         return SetCompletedTrainingTipUseCase(
             repository: dataLayer.getCompletedTrainingTipRepository()
@@ -67,12 +73,6 @@ final class AppDomainLayerDependencies {
     func getTrainingTipCompletedUseCase() -> GetTrainingTipCompletedUseCase {
         return GetTrainingTipCompletedUseCase(
             repository: dataLayer.getCompletedTrainingTipRepository()
-        )
-    }
-    
-    func getViewSearchBarUseCase() -> ViewSearchBarUseCase {
-        return ViewSearchBarUseCase(
-            getSearchBarStrings: supporting.getSearchBarStrings()
         )
     }
 }

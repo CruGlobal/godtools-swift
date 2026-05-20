@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetToolListItemStrings {
     
@@ -18,14 +17,13 @@ final class GetToolListItemStrings {
         self.localizationServices = localizationServices
     }
     
-    func getStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolListItemStringsDomainModel, Never> {
+    func getStrings(appLanguage: AppLanguageDomainModel) -> ToolListItemStringsDomainModel {
         
         let strings = ToolListItemStringsDomainModel(
-            openToolActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "open"),
-            openToolDetailsActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "favorites.favoriteLessons.details")
+            openToolActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "open"),
+            openToolDetailsActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "favorites.favoriteLessons.details")
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

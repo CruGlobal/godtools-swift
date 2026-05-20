@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetLanguageSettingsStringsUseCase {
     
@@ -22,20 +21,7 @@ final class GetLanguageSettingsStringsUseCase {
         self.appLanguagesRepository = appLanguagesRepository
     }
     
-    @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<LanguageSettingsStringsDomainModel, Error> {
-        
-        return appLanguagesRepository
-            .observeCollectionChangesPublisher()
-            .flatMap { _ in
-                    
-                return AnyPublisher() {
-                    try await self.asyncExecute(appLanguage: appLanguage)
-                }
-            }
-            .eraseToAnyPublisher()
-    }
-    
-    private func asyncExecute(appLanguage: AppLanguageDomainModel) async throws -> LanguageSettingsStringsDomainModel {
+    func execute(appLanguage: AppLanguageDomainModel) -> LanguageSettingsStringsDomainModel {
         
         let localeId: String = appLanguage
         

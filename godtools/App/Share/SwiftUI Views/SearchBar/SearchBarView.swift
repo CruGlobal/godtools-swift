@@ -12,14 +12,14 @@ struct SearchBarView: View {
     
     private static let ultraLightGrey = Color.getColorWithRGB(red: 246, green: 246, blue: 246, opacity: 1)
     
+    private let strings: SearchBarStringsDomainModel
+    
     @Binding private var searchText: String
-    
-    @ObservedObject private var viewModel: SearchBarViewModel
-    
-    init(viewModel: SearchBarViewModel, searchText: Binding<String>) {
         
-        self.viewModel = viewModel
+    init(searchText: Binding<String>, strings: SearchBarStringsDomainModel) {
+        
         self._searchText = searchText
+        self.strings = strings
     }
     
     var body: some View {
@@ -28,7 +28,7 @@ struct SearchBarView: View {
             Rectangle()
                 .fill(SearchBarView.ultraLightGrey)
 
-            SearchBar(viewModel: viewModel, searchText: $searchText)
+            SearchBar(searchText: $searchText, strings: strings)
                 .padding(10)
         }
         .fixedSize(horizontal: false, vertical: true)

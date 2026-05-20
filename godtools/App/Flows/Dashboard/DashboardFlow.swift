@@ -471,7 +471,7 @@ extension DashboardFlow {
             getLessonFilterLanguagesUseCase: appDiContainer.feature.lessonFilter.domainLayer.getLessonFilterLanguagesUseCase(),
             getUserLessonFiltersUseCase: appDiContainer.feature.lessonFilter.domainLayer.getUserLessonFiltersUseCase(),
             storeUserLessonFiltersUseCase: appDiContainer.feature.lessonFilter.domainLayer.getStoreUserLessonFiltersUseCase(),
-            viewSearchBarUseCase: appDiContainer.core.domainLayer.getViewSearchBarUseCase(),
+            getSearchBarStringsUseCase: appDiContainer.core.domainLayer.getSearchBarStringsUseCase(),
             searchLessonFilterLanguagesUseCase: appDiContainer.feature.lessonFilter.domainLayer.getSearchLessonFilterLanguagesUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             flowDelegate: self
@@ -622,7 +622,7 @@ extension DashboardFlow {
             getUserToolFilterLanguageUseCase: appDiContainer.feature.toolsFilter.domainLayer.getUserToolFilterLanguageUseCase(),
             selectedToolFilterCategoryUseCase: appDiContainer.feature.toolsFilter.domainLayer.getSelectedToolFilterCategoryUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewSearchBarUseCase: appDiContainer.core.domainLayer.getViewSearchBarUseCase(),
+            getSearchBarStringsUseCase: appDiContainer.core.domainLayer.getSearchBarStringsUseCase(),
             flowDelegate: self
         )
         
@@ -657,7 +657,7 @@ extension DashboardFlow {
             getUserToolFilterLanguageUseCase: appDiContainer.feature.toolsFilter.domainLayer.getUserToolFilterLanguageUseCase(),
             selectedToolFilterLanguageUseCase: appDiContainer.feature.toolsFilter.domainLayer.getSelectedToolFilterLanguageUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewSearchBarUseCase: appDiContainer.core.domainLayer.getViewSearchBarUseCase(),
+            getSearchBarStringsUseCase: appDiContainer.core.domainLayer.getSearchBarStringsUseCase(),
             flowDelegate: self
         )
         

@@ -435,7 +435,7 @@ extension TranslationsRepository {
                 )
             }
        
-        case .translationManifest(let translation):
+        case .translationManifest( _):
             
             response = try await api.getTranslationFile(
                 fileName: fileName,
