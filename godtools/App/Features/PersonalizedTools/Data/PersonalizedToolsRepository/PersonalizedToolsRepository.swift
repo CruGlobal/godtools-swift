@@ -34,10 +34,6 @@ final class PersonalizedToolsRepository {
         syncPersonalizedToolsTask?.cancel()
     }
     
-    var persistence: any Persistence<PersonalizedToolsDataModel, PersonalizedToolsDataModel> {
-        return cache.persistence
-    }
-
     private func getSyncInvalidator(id: PersonalizedToolsId) -> SyncInvalidator {
 
         let id: String = "\(String(describing: PersonalizedToolsRepository.self)).syncPersonalizedTools.\(id.value)"
@@ -60,7 +56,8 @@ final class PersonalizedToolsRepository {
             )
         }
 
-        return persistence
+        return cache
+            .persistence
             .observeCollectionChangesPublisher()
             .eraseToAnyPublisher()
     }
@@ -86,7 +83,7 @@ extension PersonalizedToolsRepository {
 
     func getPersistedAllRankedTools(country: String, language: String, resourceTypes: [ResourceType]? = nil) async throws -> [ResourceDataModel] {
 
-        let personalizedTools: PersonalizedToolsDataModel? = try persistence.getDataModel(
+        let personalizedTools: PersonalizedToolsDataModel? = try cache.persistence.getDataModel(
             id: try PersonalizedToolsId.createForAllRankedTools(country: country, language: language).value
         )
 
@@ -95,7 +92,7 @@ extension PersonalizedToolsRepository {
 
     func getPersistedDefaultOrderTools(language: String, resourceTypes: [ResourceType]? = nil) async throws -> [ResourceDataModel] {
 
-        let personalizedTools: PersonalizedToolsDataModel? = try persistence.getDataModel(
+        let personalizedTools: PersonalizedToolsDataModel? = try cache.persistence.getDataModel(
             id: PersonalizedToolsId.createForDefaultOrder(language: language).value
         )
 
@@ -176,7 +173,7 @@ extension PersonalizedToolsRepository {
             resourceIds: resourceCodables.map { $0.id }
         )
 
-        _ = try await persistence.writeObjectsAsync(
+        _ = try await cache.persistence.writeObjectsAsync(
             externalObjects: [personalizedTools],
             writeOption: nil,
             getOption: nil

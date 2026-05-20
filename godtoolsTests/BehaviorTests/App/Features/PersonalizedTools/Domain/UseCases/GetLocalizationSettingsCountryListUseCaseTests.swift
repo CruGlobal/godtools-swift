@@ -1,5 +1,5 @@
 //
-//  GetLocalizationSettingsCountryListTests.swift
+//  GetLocalizationSettingsCountryListUseCaseTests.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 3/20/26.
@@ -10,7 +10,7 @@ import Testing
 @testable import godtools
 import Combine
 
-struct GetLocalizationSettingsCountryListTests {
+struct GetLocalizationSettingsCountryListUseCaseTests {
 
     struct PreferNotToSayTestArgument {
         let showsPreferNotToSay: Bool
@@ -225,7 +225,7 @@ struct GetLocalizationSettingsCountryListTests {
 
 // MARK: - Test Helpers
 
-extension GetLocalizationSettingsCountryListTests {
+extension GetLocalizationSettingsCountryListUseCaseTests {
 
     private static func createUseCase(
         countries: [LocalizationSettingsCountryDataModel],

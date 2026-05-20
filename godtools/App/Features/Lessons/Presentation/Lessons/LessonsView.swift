@@ -28,12 +28,6 @@ struct LessonsView: View {
                     
             AccessibilityScreenElementView(screenAccessibility: .dashboardLessons)
             
-            if viewModel.isLoadingLessons {
-                CenteredCircularProgressView(
-                    progressColor: ColorPalette.gtGrey.color
-                )
-            }
-
             VStack(alignment: .center, spacing: 0) {
 
                 PersonalizedToolToggle(
@@ -72,12 +66,11 @@ struct LessonsView: View {
 
                         LazyVStack(alignment: .center, spacing: lessonCardSpacing) {
 
-                            if viewModel.isPersonalizationUnavailable,
-                               let unavailableState = viewModel.personalizationUnavailableState {
+                            if viewModel.selectedToggle == .personalized, let personalizedLessonsUnavailable = viewModel.personalizedLessons.unavailableStrings {
 
                                 PersonalizationUnavailableView(
-                                    title: unavailableState.title,
-                                    message: unavailableState.message,
+                                    title: personalizedLessonsUnavailable.title,
+                                    message: personalizedLessonsUnavailable.message,
                                     changeSettingsButtonTitle: viewModel.strings.changeSettings,
                                     goToAllLessonsButtonTitle: viewModel.strings.viewAllLessons,
                                     geometry: geometry,
@@ -92,7 +85,7 @@ struct LessonsView: View {
 
                             } else {
 
-                                ForEach(viewModel.lessons) { (lessonListItem: LessonListItemDomainModel) in
+                                ForEach(viewModel.lessonsList) { (lessonListItem: LessonListItemDomainModel) in
 
                                     LessonCardView(
                                         viewModel: viewModel.getLessonViewModel(lessonListItem: lessonListItem),
@@ -107,7 +100,7 @@ struct LessonsView: View {
                         }
                         .padding([.top], lessonCardSpacing)
 
-                        if viewModel.selectedToggle == .personalized && !viewModel.isPersonalizationUnavailable {
+                        if viewModel.selectedToggle == .personalized && viewModel.personalizedLessons.unavailableStrings == nil {
                             PersonalizedToolFooterView(
                                 title: viewModel.strings.personalizedLessonExplanationTitle,
                                 subtitle: viewModel.strings.personalizedLessonExplanationSubtitle,
@@ -124,8 +117,6 @@ struct LessonsView: View {
                 } refreshHandler: {
                     viewModel.pullToRefresh()
                 }
-                .opacity(viewModel.isLoadingLessons ? 0 : 1)
-                .animation(.easeOut, value: !viewModel.isLoadingLessons)
             }
             .animation(.spring(response: 0.5, dampingFraction: 0.75), value: viewModel.selectedToggle)
             .onAppear {

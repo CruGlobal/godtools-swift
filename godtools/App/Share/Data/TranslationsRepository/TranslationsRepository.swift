@@ -31,11 +31,7 @@ final class TranslationsRepository {
         self.trackDownloadedTranslationsRepository = trackDownloadedTranslationsRepository
         self.remoteConfigRepository = remoteConfigRepository
     }
-    
-    var persistence: any Persistence<TranslationDataModel, TranslationCodable> {
-        return cache.persistence
-    }
-    
+
     func getLatestTranslation(resourceId: String, languageId: String) -> TranslationDataModel? {
         
         do {
@@ -283,7 +279,7 @@ extension TranslationsRepository {
                let languageId = translation.languageDataModel?.id,
                let latestTrackedDownloadedTranslation = try trackDownloadedTranslationsRepository.getLatestDownloadedTranslation(resourceId: resourceId, languageId: languageId) {
                 
-                latestDownloadedTranslation = try persistence.getDataModel(id: latestTrackedDownloadedTranslation.translationId)
+                latestDownloadedTranslation = try cache.persistence.getDataModel(id: latestTrackedDownloadedTranslation.translationId)
             }
             else {
                 

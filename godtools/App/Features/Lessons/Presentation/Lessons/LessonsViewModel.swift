@@ -33,22 +33,16 @@ final class LessonsViewModel: ObservableObject {
     @Published private var appLanguage = AppLanguageDomainModel.english
     @Published private var lessonFilterLanguageSelection: LessonFilterLanguageDomainModel?
     @Published private var localizationSettings: UserLocalizationSettingsDomainModel?
+    @Published private var allLessonsList: [LessonListItemDomainModel] = Array()
     
     @Published private(set) var toggleOptions: [PersonalizationToggleOption] = []
     @Published private(set) var strings: LessonsStringsDomainModel = .emptyValue
     @Published private(set) var languageFilterButtonTitle: String = ""
-    @Published private(set) var lessons: [LessonListItemDomainModel] = []
-    @Published private(set) var isLoadingLessons: Bool = true
-    @Published private(set) var personalizationUnavailableState: PersonalizedLessonsUnavailableDomainModel?
+    @Published private(set) var personalizedLessons = PersonalizedLessonsDomainModel.emptyValue
+    @Published private(set) var lessonsList: [LessonListItemDomainModel] = []
 
     @Published var selectedToggle: PersonalizationToggleOptionValue = .personalized
 
-    var isPersonalizationUnavailable: Bool {
-        return selectedToggle == .personalized &&
-                personalizationUnavailableState != nil &&
-                !isLoadingLessons
-    }
-        
     init(flowDelegate: FlowDelegate, pullToRefreshLessonsUseCase: PullToRefreshLessonsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase, getLessonsStringsUseCase: GetLessonsStringsUseCase, getAllLessonsUseCase: GetAllLessonsUseCase, getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getToolBannerUseCase: GetToolBannerUseCase, inMemoryDataCache: InMemoryDataCache) {
 
         self.flowDelegate = flowDelegate
@@ -88,51 +82,78 @@ final class LessonsViewModel: ObservableObject {
                 self?.toggleOptions = Self.getToggleOptions(strings: strings)
             }
             .store(in: &cancellables)
-
-        Publishers.CombineLatest4(
+        
+        Publishers.CombineLatest3(
             $appLanguage.dropFirst(),
-            $lessonFilterLanguageSelection,
             $localizationSettings,
-            $selectedToggle
+            $lessonFilterLanguageSelection
         )
-        .dropFirst()
-        .map { (appLanguage, languageFilter, localizationSettings, toggle) -> AnyPublisher<LessonsResultDomainModel, Error> in
-
-            switch toggle {
-
-            case .personalized:
-                return getPersonalizedLessonsUseCase
-                    .execute(
-                        appLanguage: appLanguage,
-                        country: localizationSettings?.selectedCountry,
-                        filterLessonsByLanguage: languageFilter
-                    )
-
-            case .all:
-                return getAllLessonsUseCase
-                    .execute(
-                        appLanguage: appLanguage,
-                        filterLessonsByLanguage: languageFilter
-                    )
-                    .map { lessons in
-                        LessonsResultDomainModel(
-                            lessons: lessons,
-                            unavailableStrings: nil
-                        )
-                    }
-                    .eraseToAnyPublisher()
-            }
+        .map { (appLanguage: AppLanguageDomainModel, localizationSettings: UserLocalizationSettingsDomainModel?, languageFilter: LessonFilterLanguageDomainModel?) in
+            
+            getPersonalizedLessonsUseCase
+                .execute(
+                    appLanguage: appLanguage,
+                    country: localizationSettings?.selectedCountry,
+                    filterLessonsByLanguage: languageFilter
+                )
         }
         .switchToLatest()
         .receive(on: DispatchQueue.main)
-        .sink(receiveCompletion: { _ in
-
-        }, receiveValue: { [weak self] (result: LessonsResultDomainModel) in
-
-            self?.lessons = result.lessons
-            self?.personalizationUnavailableState = result.unavailableStrings
-            self?.isLoadingLessons = false
-        })
+        .sink { _ in
+            
+        } receiveValue: { [weak self] (personalizedLessons: PersonalizedLessonsDomainModel) in
+            
+            self?.personalizedLessons = personalizedLessons
+        }
+        .store(in: &cancellables)
+        
+        Publishers.CombineLatest(
+            $appLanguage.dropFirst(),
+            $lessonFilterLanguageSelection
+        )
+        .map { (appLanguage: AppLanguageDomainModel, languageFilter: LessonFilterLanguageDomainModel?) in
+            
+            getAllLessonsUseCase
+                .execute(
+                    appLanguage: appLanguage,
+                    filterLessonsByLanguage: languageFilter
+                )
+        }
+        .switchToLatest()
+        .receive(on: DispatchQueue.main)
+        .sink { _ in
+            
+        } receiveValue: { [weak self] (lessons: [LessonListItemDomainModel]) in
+            
+            self?.allLessonsList = lessons
+        }
+        .store(in: &cancellables)
+        
+        Publishers.CombineLatest3(
+            $personalizedLessons,
+            $allLessonsList,
+            $selectedToggle
+        )
+        .map { (personalizedLessons: PersonalizedLessonsDomainModel, allLessons: [LessonListItemDomainModel], toggle: PersonalizationToggleOptionValue) in
+            
+            let lessonsList: [LessonListItemDomainModel]
+            
+            switch toggle {
+            case .personalized:
+                lessonsList = personalizedLessons.lessons
+            case .all:
+                lessonsList = allLessons
+            }
+            
+            return Just(lessonsList)
+                .eraseToAnyPublisher()
+        }
+        .switchToLatest()
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] (lessonsList: [LessonListItemDomainModel]) in
+            
+            self?.lessonsList = lessonsList
+        }
         .store(in: &cancellables)
     
         $appLanguage
