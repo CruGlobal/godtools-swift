@@ -18,13 +18,12 @@ final class GetAppLanguagesStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppLanguagesStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> AppLanguagesStringsDomainModel {
                 
         let strings = AppLanguagesStringsDomainModel(
             navTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: AppLanguageStringKeys.AppLanguages.navTitle.rawValue)
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

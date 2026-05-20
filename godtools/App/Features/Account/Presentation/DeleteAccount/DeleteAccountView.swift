@@ -82,7 +82,7 @@ struct DeleteAccountView_Preview: PreviewProvider {
         
         let viewModel = DeleteAccountViewModel(
             flowDelegate: MockFlowDelegate(),
-            getCurrentAppLanguage: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getDeleteAccountStringsUseCase: appDiContainer.feature.account.domainLayer.getDeleteAccountStringsUseCase()
         )
         

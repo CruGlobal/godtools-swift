@@ -14,8 +14,8 @@ import Combine
 final class ToolDetailsViewModel: ObservableObject {
     
     typealias ToolId = String
-    
-    private static var toggleToolFavoritedCancellables: [ToolId: AnyCancellable?] = Dictionary()
+
+    private static var favoriteToolTasks: [ToolId: Task<Void, Error>] = Dictionary()
     
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getToolDetailsStringsUseCase: GetToolDetailsStringsUseCase
@@ -134,13 +134,15 @@ final class ToolDetailsViewModel: ObservableObject {
         .map { (toolId: String, appLanguage: AppLanguageDomainModel, strings: ToolDetailsStringsDomainModel) in
             
             return Publishers.CombineLatest(
-                getToolDetailsUseCase
-                    .execute(
-                        toolId: toolId,
-                        appLanguage: appLanguage,
-                        toolPrimaryLanguage: primaryLanguage,
-                        toolParallelLanguage: parallelLanguage
-                    ),
+                AnyPublisher() {
+                    try await getToolDetailsUseCase
+                        .execute(
+                            toolId: toolId,
+                            appLanguage: appLanguage,
+                            toolPrimaryLanguage: primaryLanguage,
+                            toolParallelLanguage: parallelLanguage
+                        )
+                },
                 Just(strings)
                     .setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
@@ -288,19 +290,15 @@ extension ToolDetailsViewModel {
     
     func toggleFavorited() {
         
-        let toolId: String = self.toolId
+        Self.favoriteToolTasks[toolId]?.cancel()
         
-        ToolDetailsViewModel.toggleToolFavoritedCancellables[toolId] = toggleToolFavoritedUseCase
-            .execute(
-                toolId: toolId
-            )
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { _ in
-                
-            }, receiveValue: { [weak self] (domainModel: ToolIsFavoritedDomainModel) in
-                
-                self?.isFavorited = domainModel.isFavorited
-            })
+        Self.favoriteToolTasks[toolId] = Task {
+            
+            let domainModel = try await toggleToolFavoritedUseCase
+                .execute(toolId: toolId)
+            
+            isFavorited = domainModel.isFavorited
+        }
     }
     
     func segmentTapped(index: Int) {

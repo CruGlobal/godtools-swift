@@ -17,19 +17,17 @@ final class ReorderFavoritedToolUseCase {
         self.favoritedResourcesRepository = favoritedResourcesRepository
     }
     
-    func execute(toolId: String, originalPosition: Int, newPosition: Int) -> AnyPublisher<[ReorderFavoritedToolDomainModel], Error> {
+    func execute(toolId: String, originalPosition: Int, newPosition: Int) async throws -> [ReorderFavoritedToolDomainModel] {
         
-        return favoritedResourcesRepository
-            .reorderFavoritedResourcePublisher(
+        let favoritesReordered: [FavoritedResourceDataModel] = try await favoritedResourcesRepository
+            .reorderFavoritedResource(
                 id: toolId,
                 originalPosition: originalPosition,
                 newPosition: newPosition
             )
-            .map { favoritesReordered in
-                return favoritesReordered.map {
-                    ReorderFavoritedToolDomainModel(dataModelId: $0.id, position: $0.position)
-                }
-            }
-            .eraseToAnyPublisher()
+        
+        return favoritesReordered.map {
+            ReorderFavoritedToolDomainModel(dataModelId: $0.id, position: $0.position)
+        }
     }
 }

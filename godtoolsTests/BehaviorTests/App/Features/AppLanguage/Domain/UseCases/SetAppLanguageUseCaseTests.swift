@@ -75,14 +75,10 @@ struct SetAppLanguageUseCaseTests {
                 }
                 .store(in: &cancellables)
             
-            setAppLanguageUseCase
-                .execute(appLanguage: LanguageCodeDomainModel.spanish.rawValue)
-                .sink(receiveCompletion: { completion in
-                    
-                }, receiveValue: { _ in
-                    
-                })
-                .store(in: &cancellables)
+            Task {
+                try await setAppLanguageUseCase
+                    .execute(appLanguage: LanguageCodeDomainModel.spanish.rawValue)
+            }
         }
         
         #expect(realmLanguageSpanish != nil)

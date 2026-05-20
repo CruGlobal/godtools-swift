@@ -8,7 +8,6 @@
 
 import Testing
 @testable import godtools
-import Combine
 
 struct GetToolScreenShareQRCodeStringsUseCaseTests {
    
@@ -17,7 +16,7 @@ struct GetToolScreenShareQRCodeStringsUseCaseTests {
     
     @Test("""
         Given: User is viewing tool screen share qr code.
-        When: The app language is set.
+        When: The app language is set to spanish.
         Then: The interface strings should be translated in the app language.
         """
     )
@@ -25,53 +24,11 @@ struct GetToolScreenShareQRCodeStringsUseCaseTests {
                 
         let getToolScreenShareQRCodeStringsUseCase = getToolScreenShareQRCodeStringsUseCase()
         
-        let appLanguagePublisher: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
-        
-        var englishStringsRef: ToolScreenShareQRCodeStringsDomainModel?
-        var spanishStringsRef: ToolScreenShareQRCodeStringsDomainModel?
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        var triggerCount: Int = 0
-        
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            appLanguagePublisher
-                .flatMap { appLanguage in
-                    
-                    return getToolScreenShareQRCodeStringsUseCase
-                        .execute(appLanguage: appLanguage)
-                }.sink { strings in
-                    
-                    triggerCount += 1
-                    
-                    if triggerCount == 1 {
-                        
-                        englishStringsRef = strings
-                        appLanguagePublisher.send(LanguageCodeDomainModel.spanish.rawValue)
+        let strings = getToolScreenShareQRCodeStringsUseCase
+            .execute(appLanguage: LanguageCodeDomainModel.spanish.value)
 
-                    }
-                    else if triggerCount == 2 {
-                        
-                        spanishStringsRef = strings
-                        
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    }
-                }
-                .store(in: &cancellables)
-        }
-
-        #expect(englishStringsRef?.qrCodeDescription == "Scan this QR code to join along with me")
-        #expect(spanishStringsRef?.qrCodeDescription == "Escanea este código QR para unirte a mí")
-        
-        #expect(englishStringsRef?.closeButtonTitle == "Close")
-        #expect(spanishStringsRef?.closeButtonTitle == "Cerrar")
+        #expect(strings.qrCodeDescription == "Escanea este código QR para unirte a mí")
+        #expect(strings.closeButtonTitle == "Cerrar")
     }
 }
 

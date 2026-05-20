@@ -23,7 +23,7 @@ struct DownloadableLanguagesView: View {
             
             AccessibilityScreenElementView(screenAccessibility: .downloadableLanguages)
                                     
-            SearchBarView(viewModel: viewModel.getSearchBarViewModel(), searchText: $viewModel.searchText)
+            SearchBarView(searchText: $viewModel.searchText, strings: viewModel.searchBarStrings)
             
             List {
                 ForEach(viewModel.displayedDownloadableLanguages) { downloadableLanguage in

@@ -26,20 +26,6 @@ final class PersonalizedToolsDomainLayerDependencies {
             localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
-    
-    func getSearchCountriesInLocalizationSettingsCountriesListUseCase() -> SearchCountriesInLocalizationSettingsCountriesListUseCase {
-        
-        return SearchCountriesInLocalizationSettingsCountriesListUseCase(
-            stringSearcher: StringSearcher()
-        )
-    }
-    
-    func getViewLocalizationSettingsUseCase() -> ViewLocalizationSettingsUseCase {
-
-        return ViewLocalizationSettingsUseCase(
-            localizationServices: core.dataLayer.getLocalizationServices()
-        )
-    }
 
     func getLocalizationSettingsConfirmationStringsUseCase() -> GetLocalizationSettingsConfirmationStringsUseCase {
 
@@ -48,10 +34,24 @@ final class PersonalizedToolsDomainLayerDependencies {
         )
     }
     
-    func getGetLocalizationSettingsUseCase() -> GetLocalizationSettingsUseCase {
+    func getLocalizationSettingsStringsUseCase() -> GetLocalizationSettingsStringsUseCase {
+
+        return GetLocalizationSettingsStringsUseCase(
+            localizationServices: core.dataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getLocalizationSettingsUseCase() -> GetLocalizationSettingsUseCase {
 
         return GetLocalizationSettingsUseCase(
             userLocalizationSettingsRepository: dataLayer.getUserLocalizationSettingsRepository()
+        )
+    }
+    
+    func getSearchCountriesInLocalizationSettingsCountriesListUseCase() -> SearchCountriesInLocalizationSettingsCountriesListUseCase {
+        
+        return SearchCountriesInLocalizationSettingsCountriesListUseCase(
+            stringSearcher: StringSearcher()
         )
     }
 
@@ -62,7 +62,7 @@ final class PersonalizedToolsDomainLayerDependencies {
         )
     }
 
-    func getGetPersonalizedLessonsUseCase() -> GetPersonalizedLessonsUseCase {
+    func getPersonalizedLessonsUseCase() -> GetPersonalizedLessonsUseCase {
 
         return GetPersonalizedLessonsUseCase(
             resourcesRepository: core.dataLayer.getResourcesRepository(),
@@ -74,7 +74,7 @@ final class PersonalizedToolsDomainLayerDependencies {
         )
     }
 
-    func getGetPersonalizedToolsUseCase() -> GetPersonalizedToolsUseCase {
+    func getPersonalizedToolsUseCase() -> GetPersonalizedToolsUseCase {
 
         return GetPersonalizedToolsUseCase(
             resourcesRepository: core.dataLayer.getResourcesRepository(),

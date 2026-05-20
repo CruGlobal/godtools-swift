@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetDownloadToolProgressStringsUseCase {
     
@@ -22,13 +21,13 @@ final class GetDownloadToolProgressStringsUseCase {
         self.favoritedResourcesRepository = favoritedResourcesRepository
     }
     
-    func execute(toolId: String?, appLanguage: AppLanguageDomainModel) -> AnyPublisher<DownloadToolProgressStringsDomainModel, Never> {
+    func execute(toolId: String?, appLanguage: AppLanguageDomainModel) -> DownloadToolProgressStringsDomainModel {
                         
         let localeId: String = appLanguage
         
         let resource: ResourceDataModel?
         
-        if let toolId = toolId, let resourceModel = resourcesRepository.getResourceNonThrowing(id: toolId) {
+        if let toolId = toolId, let resourceModel = resourcesRepository.getResourceById(id: toolId) {
             resource = resourceModel
         }
         else {
@@ -39,7 +38,7 @@ final class GetDownloadToolProgressStringsUseCase {
         let toolIsFavorited: Bool
         
         if let resource = resource {
-            toolIsFavorited = favoritedResourcesRepository.getResourceIsFavoritedNonThrowing(id: resource.id)
+            toolIsFavorited = favoritedResourcesRepository.getResourceIsFavorited(id: resource.id)
         }
         else {
             toolIsFavorited = false
@@ -58,7 +57,6 @@ final class GetDownloadToolProgressStringsUseCase {
             downloadMessage: downloadMessage
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

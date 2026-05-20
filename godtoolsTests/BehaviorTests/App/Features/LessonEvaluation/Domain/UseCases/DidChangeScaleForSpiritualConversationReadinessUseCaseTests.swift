@@ -8,7 +8,6 @@
 
 import Testing
 @testable import godtools
-import Combine
 
 struct DidChangeScaleForSpiritualConversationReadinessUseCaseTests {
     
@@ -22,33 +21,12 @@ struct DidChangeScaleForSpiritualConversationReadinessUseCaseTests {
     func confirmReadinessScaleMinAndMaxValuesAreCorrect() async {
         
         let didChangeSpiritualConversationReadinessScaleUseCase = getDidChangeScaleForSpiritualConversationReadinessUseCase()
+        
+        let readinessScale = didChangeSpiritualConversationReadinessScaleUseCase
+            .execute(scale: 5, appLanguage: LanguageCodeDomainModel.english.rawValue)
                 
-        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            didChangeSpiritualConversationReadinessScaleUseCase
-                .execute(scale: 5, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
-                .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
-                    
-                    readinessScaleRef = readinessScale
-                    
-                    // When finished be sure to call:
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                }
-                .store(in: &cancellables)
-        }
-        
-        #expect(readinessScaleRef?.minScale.integerValue == 1)
-        #expect(readinessScaleRef?.maxScale.integerValue == 10)
+        #expect(readinessScale.minScale.integerValue == 1)
+        #expect(readinessScale.maxScale.integerValue == 10)
     }
     
     @Test(
@@ -61,34 +39,13 @@ struct DidChangeScaleForSpiritualConversationReadinessUseCaseTests {
     func readinessScaleIsTranslatedInEnglish() async {
         
         let didChangeSpiritualConversationReadinessScaleUseCase = getDidChangeScaleForSpiritualConversationReadinessUseCase()
-                
-        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
         
-        var cancellables: Set<AnyCancellable> = Set()
+        let readinessScale = didChangeSpiritualConversationReadinessScaleUseCase
+            .execute(scale: 5, appLanguage: LanguageCodeDomainModel.english.rawValue)
         
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            didChangeSpiritualConversationReadinessScaleUseCase
-                .execute(scale: 5, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
-                .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
-                    
-                    readinessScaleRef = readinessScale
-                    
-                    // When finished be sure to call:
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                }
-                .store(in: &cancellables)
-        }
-        
-        #expect(readinessScaleRef?.minScale.valueTranslatedInAppLanguage == "1")
-        #expect(readinessScaleRef?.maxScale.valueTranslatedInAppLanguage == "10")
-        #expect(readinessScaleRef?.scale.valueTranslatedInAppLanguage == "5")
+        #expect(readinessScale.minScale.valueTranslatedInAppLanguage == "1")
+        #expect(readinessScale.maxScale.valueTranslatedInAppLanguage == "10")
+        #expect(readinessScale.scale.valueTranslatedInAppLanguage == "5")
     }
     
     @Test(
@@ -101,42 +58,22 @@ struct DidChangeScaleForSpiritualConversationReadinessUseCaseTests {
     func readinessScaleIsTranslatedInArabic() async {
         
         let didChangeSpiritualConversationReadinessScaleUseCase = getDidChangeScaleForSpiritualConversationReadinessUseCase()
-                
-        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
         
-        var cancellables: Set<AnyCancellable> = Set()
+        let readinessScale = didChangeSpiritualConversationReadinessScaleUseCase
+            .execute(scale: 5, appLanguage: LanguageCodeDomainModel.arabic.rawValue)
         
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            didChangeSpiritualConversationReadinessScaleUseCase
-                .execute(scale: 5, translateInAppLanguage: LanguageCodeDomainModel.arabic.rawValue)
-                .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
-                    
-                    readinessScaleRef = readinessScale
-                    
-                    // When finished be sure to call:
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                }
-                .store(in: &cancellables)
-        }
         
         if #available(iOS 18, *) {
             
-            #expect(readinessScaleRef?.minScale.valueTranslatedInAppLanguage == "1")
-            #expect(readinessScaleRef?.maxScale.valueTranslatedInAppLanguage == "10")
-            #expect(readinessScaleRef?.scale.valueTranslatedInAppLanguage == "5")
+            #expect(readinessScale.minScale.valueTranslatedInAppLanguage == "1")
+            #expect(readinessScale.maxScale.valueTranslatedInAppLanguage == "10")
+            #expect(readinessScale.scale.valueTranslatedInAppLanguage == "5")
         }
         else {
             
-            #expect(readinessScaleRef?.minScale.valueTranslatedInAppLanguage == "١")
-            #expect(readinessScaleRef?.maxScale.valueTranslatedInAppLanguage == "١٠")
-            #expect(readinessScaleRef?.scale.valueTranslatedInAppLanguage == "٥")
+            #expect(readinessScale.minScale.valueTranslatedInAppLanguage == "١")
+            #expect(readinessScale.maxScale.valueTranslatedInAppLanguage == "١٠")
+            #expect(readinessScale.scale.valueTranslatedInAppLanguage == "٥")
         }
     }
     
@@ -159,32 +96,11 @@ struct DidChangeScaleForSpiritualConversationReadinessUseCaseTests {
     func readinessScaleIsClampedToMin(argument: TestClampingScale) async {
         
         let didChangeSpiritualConversationReadinessScaleUseCase = getDidChangeScaleForSpiritualConversationReadinessUseCase()
-                
-        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
         
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            didChangeSpiritualConversationReadinessScaleUseCase
-                .execute(scale: argument.scaleValue, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
-                .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
-                    
-                    readinessScaleRef = readinessScale
-                    
-                    // When finished be sure to call:
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                }
-                .store(in: &cancellables)
-        }
-        
-        #expect(readinessScaleRef?.scale.integerValue == 1)
+        let readinessScale = didChangeSpiritualConversationReadinessScaleUseCase
+            .execute(scale: argument.scaleValue, appLanguage: LanguageCodeDomainModel.english.rawValue)
+
+        #expect(readinessScale.scale.integerValue == 1)
     }
     
     @Test(
@@ -201,32 +117,11 @@ struct DidChangeScaleForSpiritualConversationReadinessUseCaseTests {
     func readinessScaleIsClampedToMax(argument: TestClampingScale) async {
         
         let didChangeSpiritualConversationReadinessScaleUseCase = getDidChangeScaleForSpiritualConversationReadinessUseCase()
+        
+        let readinessScale = didChangeSpiritualConversationReadinessScaleUseCase
+            .execute(scale: argument.scaleValue, appLanguage: LanguageCodeDomainModel.english.rawValue)
                 
-        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            didChangeSpiritualConversationReadinessScaleUseCase
-                .execute(scale: argument.scaleValue, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
-                .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
-                    
-                    readinessScaleRef = readinessScale
-                    
-                    // When finished be sure to call:
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                }
-                .store(in: &cancellables)
-        }
-        
-        #expect(readinessScaleRef?.scale.integerValue == 10)
+        #expect(readinessScale.scale.integerValue == 10)
     }
 }
 

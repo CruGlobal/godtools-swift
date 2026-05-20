@@ -78,7 +78,7 @@ class MobileContentRendererManifestResourcesCache {
         do {
             return try resourcesFileCache.getImage(location: location)
         }
-        catch let error {
+        catch _ {
             return nil
         }
     }

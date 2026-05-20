@@ -102,10 +102,10 @@ extension LocalizationSettingsFlow {
             showsPreferNotToSay: showsPreferNotToSay,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getCountryListUseCase: appDiContainer.feature.personalizedTools.domainLayer.getLocalizationSettingsCountryListUseCase(),
-            getLocalizationSettingsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getGetLocalizationSettingsUseCase(),
+            getLocalizationSettingsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getLocalizationSettingsUseCase(),
             searchCountriesUseCase: appDiContainer.feature.personalizedTools.domainLayer.getSearchCountriesInLocalizationSettingsCountriesListUseCase(),
-            viewLocalizationSettingsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getViewLocalizationSettingsUseCase(),
-            viewSearchBarUseCase: appDiContainer.core.domainLayer.getViewSearchBarUseCase()
+            getLocalizationSettingsStringsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getLocalizationSettingsStringsUseCase(),
+            getSearchBarStringsUseCase: appDiContainer.core.domainLayer.getSearchBarStringsUseCase()
         )
         
         let view = LocalizationSettingsView(viewModel: viewModel)

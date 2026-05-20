@@ -27,28 +27,32 @@ final class GetToolShortcutLinksUseCase {
         
         return favoritedResourcesRepository
             .observeCollectionChangesPublisher()
-            .flatMap { (favoritesChanged: Void) -> AnyPublisher<[FavoritedResourceDataModel], Error> in
+            .flatMap { (favoritesChanged: Void) -> AnyPublisher<[ToolShortcutLinkDomainModel], Error> in
                 
-                return self.favoritedResourcesRepository
-                    .getFavoritedResourcesSortedByPositionPublisher()
-            }
-            .tryMap { (favoritedResources: [FavoritedResourceDataModel]) in
-                
-                return try self.getToolShortcutLinks(
-                    appLanguage: appLanguage,
-                    favoritedResources: favoritedResources
-                )
+                return AnyPublisher() {
+                    try await self.asyncExecute(appLanguage: appLanguage)
+                }
             }
             .eraseToAnyPublisher()
     }
     
-    private func getToolShortcutLinks(appLanguage: AppLanguageDomainModel, favoritedResources: [FavoritedResourceDataModel]) throws -> [ToolShortcutLinkDomainModel] {
+    private func asyncExecute(appLanguage: AppLanguageDomainModel) async throws -> [ToolShortcutLinkDomainModel] {
         
-        let toolShortcutLinks: [ToolShortcutLinkDomainModel] = try favoritedResources
+        let favoritedResources: [FavoritedResourceDataModel] = try await favoritedResourcesRepository.getFavoritedResourcesSortedByPosition()
+        
+        return getToolShortcutLinks(
+            appLanguage: appLanguage,
+            favoritedResources: favoritedResources
+        )
+    }
+    
+    private func getToolShortcutLinks(appLanguage: AppLanguageDomainModel, favoritedResources: [FavoritedResourceDataModel]) -> [ToolShortcutLinkDomainModel] {
+        
+        let toolShortcutLinks: [ToolShortcutLinkDomainModel] = favoritedResources
             .prefix(self.maxNumberOfToolShortcutLinks)
             .compactMap { (favoritedResource: FavoritedResourceDataModel) in
                 
-                guard let resource = try resourcesRepository.getResourceNonThrowing(id: favoritedResource.id) else {
+                guard let resource = resourcesRepository.getResourceById(id: favoritedResource.id) else {
                     return nil
                 }
                 

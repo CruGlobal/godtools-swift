@@ -99,9 +99,10 @@ class AppBackgroundState {
                     .eraseToAnyPublisher()
             }
             
-            return storeInitialFavoritedToolsUseCase
-                .execute()
-                .eraseToAnyPublisher()
+            return AnyPublisher() {
+                try await storeInitialFavoritedToolsUseCase
+                    .execute()
+            }
         }
         .receive(on: DispatchQueue.main)
         .sink(receiveCompletion: { _ in

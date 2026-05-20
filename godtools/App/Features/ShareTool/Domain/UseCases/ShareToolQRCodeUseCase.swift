@@ -18,33 +18,18 @@ final class ShareToolQRCodeUseCase {
         self.getShareToolUrl = getShareToolUrl
     }
     
-    func execute(toolId: String, toolLanguageId: String, pageNumber: Int) -> AnyPublisher<ShareToolQRCodeDomainModel, Error> {
+    func execute(toolId: String, toolLanguageId: String, pageNumber: Int) throws -> ShareToolQRCodeDomainModel {
         
-        let urlString: String?
-        
-        do {
-            urlString = try getShareToolUrl.getUrl(
-                toolId: toolId,
-                toolLanguageId: toolLanguageId,
-                pageNumber: pageNumber
-            )
-        }
-        catch let error {
-            return Fail(error: error)
-                .eraseToAnyPublisher()
-        }
+        let urlString: String? = getShareToolUrl.getUrl(
+            toolId: toolId,
+            toolLanguageId: toolLanguageId,
+            pageNumber: pageNumber
+        )
         
         guard let urlString = urlString, !urlString.isEmpty else {
-            
-            let error: Error = NSError.errorWithDescription(description: "Failed to get share tool url.")
-            return Fail(error: error)
-                .eraseToAnyPublisher()
+            throw NSError.errorWithDescription(description: "Failed to get share tool url.")
         }
         
-        let domainModel = ShareToolQRCodeDomainModel(url: urlString)
-        
-        return Just(domainModel)
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
+        return ShareToolQRCodeDomainModel(url: urlString)
     }
 }

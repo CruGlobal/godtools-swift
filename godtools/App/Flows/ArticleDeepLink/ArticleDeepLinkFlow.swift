@@ -40,7 +40,7 @@ final class ArticleDeepLinkFlow: Flow {
                 
                 self?.appLanguage = appLanguage
                 
-                if let aemCacheObject = appDiContainer.core.dataLayer.getArticleAemRepository().getAemCacheObjectNonThrowing(aemUri: aemUri) {
+                if let aemCacheObject = appDiContainer.core.dataLayer.getArticleAemRepository().getAemCacheObject(aemUri: aemUri) {
                     
                     self?.navigateToArticleWebView(aemCacheObject: aemCacheObject, animated: true)
                 }

@@ -94,7 +94,7 @@ final class GetToolTranslationsFilesUseCase {
                 includeRelatedFiles: includeRelatedFiles
             )
         }
-        catch let error {
+        catch _ {
             
             initiateDownloadStarted(downloadStarted: downloadStarted)
             

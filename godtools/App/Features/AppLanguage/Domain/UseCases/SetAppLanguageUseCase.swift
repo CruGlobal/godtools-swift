@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class SetAppLanguageUseCase {
     
@@ -22,22 +21,18 @@ final class SetAppLanguageUseCase {
         self.languagesRepository = languagesRepository
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppLanguageDomainModel, Error> {
+    func execute(appLanguage: AppLanguageDomainModel) async throws -> AppLanguageDomainModel {
         
-        if let languageModelId = languagesRepository.getLanguageNonThrowing(code: appLanguage)?.id {
+        if let languageModelId = languagesRepository.getLanguageByCode(code: appLanguage)?.id {
             
-            Task {
-                try await userLessonFiltersRepository.storeUserLessonLanguageFilter(
-                    languageId: languageModelId
-                )
-            }
+            try await userLessonFiltersRepository.storeUserLessonLanguageFilter(
+                languageId: languageModelId
+            )
         }
         
-        return userAppLanguageRepository
-            .storeLanguagePublisher(appLanguageId: appLanguage)
-            .map { _ in
-                return appLanguage
-            }
-            .eraseToAnyPublisher()
+        try await userAppLanguageRepository
+            .storeLanguage(appLanguageId: appLanguage)
+        
+        return appLanguage
     }
 }

@@ -21,7 +21,7 @@ final class ToolDownloaderGetDataToDownload {
         self.translationsRepository = translationsRepository
     }
     
-    func getData(tools: [DownloadToolData]) throws -> ToolDownloaderDataToDownload {
+    func getData(tools: [DownloadToolData]) -> ToolDownloaderDataToDownload {
         
         var nonArticleTranslations: [TranslationDataModel] = Array()
         var articleTranslations: [TranslationDataModel] = Array()
@@ -32,19 +32,19 @@ final class ToolDownloaderGetDataToDownload {
             
             let isArticle: Bool
             
-            if let resource = try resourcesRepository.getResource(id: tool.toolId) {
+            if let resource = resourcesRepository.getResourceById(id: tool.toolId) {
                 
                 isArticle = resource.resourceTypeEnum == .article
                 
-                if let resourceBanner = try attachmentsRepository.getAttachment(id: resource.attrBanner) {
+                if let resourceBanner = attachmentsRepository.getAttachment(id: resource.attrBanner) {
                     attachments.append(resourceBanner)
                 }
                 
-                if let resourceBannerAbout = try attachmentsRepository.getAttachment(id: resource.attrBannerAbout) {
+                if let resourceBannerAbout = attachmentsRepository.getAttachment(id: resource.attrBannerAbout) {
                     attachments.append(resourceBannerAbout)
                 }
                 
-                if let resourceAboutBannerAnimation = try attachmentsRepository.getAttachment(id: resource.attrAboutBannerAnimation) {
+                if let resourceAboutBannerAnimation = attachmentsRepository.getAttachment(id: resource.attrAboutBannerAnimation) {
                     attachments.append(resourceAboutBannerAnimation)
                 }
             }

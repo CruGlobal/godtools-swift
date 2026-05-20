@@ -28,10 +28,9 @@ final class FavoritedResourcesRepository {
     func getObjectCount() throws -> Int {
         return try cache.persistence.getObjectCount()
     }
-
-    @available(*, deprecated) // Remove and use throws. ~Levi
-    func getResourceIsFavoritedNonThrowing(id: String) -> Bool {
-                
+    
+    func getResourceIsFavorited(id: String) -> Bool {
+        
         do {
             return try cache.persistence.getDataModel(id: id) != nil
         }
@@ -44,43 +43,18 @@ final class FavoritedResourcesRepository {
         return try await cache.getFavoritedResourcesSortedByPosition()
     }
     
-    @available(*, deprecated) // Remove and use async throws. ~Levi
-    func getFavoritedResourcesSortedByPositionPublisher() -> AnyPublisher<[FavoritedResourceDataModel], Error> {
+    func storeFavoritedResources(ids: [String]) async throws -> [FavoritedResourceDataModel] {
      
-        return AnyPublisher() {
-            
-            return try await self.cache.getFavoritedResourcesSortedByPosition()
-        }
-        .eraseToAnyPublisher()
+        return try await self.cache.storeFavoritedResources(ids: ids)
     }
     
-    @available(*, deprecated) // Remove and use async throws. ~Levi
-    func storeFavoritedResourcesPublisher(ids: [String]) -> AnyPublisher<[FavoritedResourceDataModel], Error> {
-     
-        return AnyPublisher() {
-            
-            return try await self.cache.storeFavoritedResources(ids: ids)
-        }
-        .eraseToAnyPublisher()
-    }
-    
-    @available(*, deprecated) // Remove and use async throws. ~Levi
-    func deleteFavoritedResourcePublisher(id: String) -> AnyPublisher<[FavoritedResourceDataModel], Error> {
+    func deleteFavoritedResource(id: String) async throws -> [FavoritedResourceDataModel] {
         
-        return AnyPublisher() {
-            
-            return try await self.cache.deleteFavoritedResource(id: id)
-        }
-        .eraseToAnyPublisher()
+        return try await self.cache.deleteFavoritedResource(id: id)
     }
     
-    @available(*, deprecated) // Remove and use async throws. ~Levi
-    func reorderFavoritedResourcePublisher(id: String, originalPosition: Int, newPosition: Int) -> AnyPublisher<[FavoritedResourceDataModel], Error> {
+    func reorderFavoritedResource(id: String, originalPosition: Int, newPosition: Int) async throws -> [FavoritedResourceDataModel] {
         
-        return AnyPublisher() {
-            
-            return try await self.cache.reorderFavoritedResource(id: id, originalPosition: originalPosition, newPosition: newPosition)
-        }
-        .eraseToAnyPublisher()
+        return try await cache.reorderFavoritedResource(id: id, originalPosition: originalPosition, newPosition: newPosition)
     }
 }

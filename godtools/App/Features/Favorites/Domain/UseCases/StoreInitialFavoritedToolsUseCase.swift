@@ -18,32 +18,17 @@ final class StoreInitialFavoritedToolsUseCase {
         self.favoritedResourcesRepository = favoritedResourcesRepository
     }
     
-    func execute() -> AnyPublisher<Void, Error> {
+    func execute() async throws {
         
-        do {
+        let favoritedResourceCount: Int = try favoritedResourcesRepository.getObjectCount()
         
-            let favoritedResourceCount: Int = try favoritedResourcesRepository.getObjectCount()
-            
-            guard favoritedResourceCount == 0 else {
-                return Just(Void())
-                    .setFailureType(to: Error.self)
-                    .eraseToAnyPublisher()
-            }
-            
-            let favoritedResourceIdsToStore: [String] = ["2", "1", "4", "8"].reversed()
-            
-            return favoritedResourcesRepository
-                .storeFavoritedResourcesPublisher(ids: favoritedResourceIdsToStore)
-                .map { _ in
-                    return Void()
-                }
-                .eraseToAnyPublisher()
-            
+        guard favoritedResourceCount == 0 else {
+            return
         }
-        catch let error {
-            
-            return Fail(error: error)
-                .eraseToAnyPublisher()
-        }
+        
+        let favoritedResourceIdsToStore: [String] = ["2", "1", "4", "8"].reversed()
+        
+        _ = try await favoritedResourcesRepository
+            .storeFavoritedResources(ids: favoritedResourceIdsToStore)
     }
 }

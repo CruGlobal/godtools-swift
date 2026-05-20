@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetToolScreenShareQRCodeStringsUseCase {
     
@@ -17,7 +16,7 @@ final class GetToolScreenShareQRCodeStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolScreenShareQRCodeStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> ToolScreenShareQRCodeStringsDomainModel {
         
         let localeId: String = appLanguage
         
@@ -26,7 +25,6 @@ final class GetToolScreenShareQRCodeStringsUseCase {
             closeButtonTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: "toolScreenShare.qrCode.closeButtonTitle")
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

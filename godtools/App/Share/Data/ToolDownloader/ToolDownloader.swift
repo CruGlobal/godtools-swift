@@ -40,7 +40,7 @@ final class ToolDownloader {
     
     func downloadToolsWithProgressClosure(tools: [DownloadToolData], requestPriority: RequestPriority, onProgress: ((_ progress: Double) -> Void), onComplete: (() -> Void)) async throws {
         
-        let downloadData: ToolDownloaderDataToDownload = try getToolDataToDownload.getData(tools: tools)
+        let downloadData: ToolDownloaderDataToDownload = getToolDataToDownload.getData(tools: tools)
         
         var downloadCount: Int = 0
         

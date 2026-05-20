@@ -11,7 +11,7 @@ import Combine
 
 final class ConfirmRemoveToolFromFavoritesAlertViewModel: AlertMessageViewModelType {
     
-    private static var removeToolFromFavoritesCancellable: AnyCancellable?
+    private static var removeToolFromFavoritesTask: Task<Void, Error>?
     
     private let toolId: String
     private let strings: ConfirmRemoveToolFromFavoritesStringsDomainModel
@@ -48,15 +48,12 @@ final class ConfirmRemoveToolFromFavoritesAlertViewModel: AlertMessageViewModelT
         
         didConfirmToolRemovalSubject?.send(Void())
         
-        ConfirmRemoveToolFromFavoritesAlertViewModel.removeToolFromFavoritesCancellable = removeFavoritedToolUseCase
-            .execute(
-                toolId: toolId
-            )
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { _ in
-                
-            }, receiveValue: { _ in
-                
-            })
+        Self.removeToolFromFavoritesTask?.cancel()
+        
+        Self.removeToolFromFavoritesTask = Task {
+            
+            _ = try await removeFavoritedToolUseCase
+                .execute(toolId: toolId)
+        }
     }
 }

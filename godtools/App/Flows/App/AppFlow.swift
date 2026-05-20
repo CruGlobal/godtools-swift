@@ -454,14 +454,10 @@ extension AppFlow {
             
             let userAppLanguageRepository: UserAppLanguageRepository = appDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository()
             
-            userAppLanguageRepository
-                .storeLanguagePublisher(appLanguageId: appLanguage)
-                .sink(receiveCompletion: { _ in
-                    
-                }, receiveValue: { _ in
-                    
-                })
-                .store(in: &cancellables)
+            Task {
+                try await userAppLanguageRepository
+                    .storeLanguage(appLanguageId: appLanguage)
+            }
                         
             navigateToOnboarding(animated: true)
         }

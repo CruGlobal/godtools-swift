@@ -41,7 +41,7 @@ struct StoreInitialAppLanguageUseCaseTests {
             )
         ]
     )
-    func noAppLanguageSetDefaultsToDeviceLanguageWhenSupported(argument: TestArgument) async throws {
+    @MainActor func noAppLanguageSetDefaultsToDeviceLanguageWhenSupported(argument: TestArgument) async throws {
         
         let testsDiContainer = try getTestsDiContainer()
         
@@ -123,7 +123,7 @@ struct StoreInitialAppLanguageUseCaseTests {
             )
         ]
     )
-    func appLanguageSetAndSupportedShowsMyAppLanguage(argument: TestArgument) async throws {
+    @MainActor func appLanguageSetAndSupportedShowsMyAppLanguage(argument: TestArgument) async throws {
         
         let testsDiContainer = try getTestsDiContainer()
         
@@ -155,8 +155,13 @@ struct StoreInitialAppLanguageUseCaseTests {
             appLanguagesRepository: appLanguagesRepository
         )
         
+        let storeAppLanguage: String = try #require(argument.appLanguage?.rawValue)
+        
+        try await userAppLanguageRepository
+            .storeLanguage(appLanguageId: storeAppLanguage)
+        
         var resultRef: AppLanguageDomainModel?
-                
+        
         var cancellables: Set<AnyCancellable> = Set()
         
         await withCheckedContinuation { continuation in
@@ -165,25 +170,19 @@ struct StoreInitialAppLanguageUseCaseTests {
                 try await Task.defaultTestSleep()
                 continuation.resume(returning: ())
             }
-
-            userAppLanguageRepository
-                .storeLanguagePublisher(appLanguageId: argument.appLanguage?.rawValue ?? "")
-                .receive(on: DispatchQueue.main)
-                .flatMap { _ -> AnyPublisher<AppLanguageDomainModel, Error> in
+            
+            storeInitialAppLanguage
+                .execute()
+                .sink { _ in
                     
-                    return storeInitialAppLanguage
-                        .execute()
-                }
-                .sink(receiveCompletion: { _ in
+                } receiveValue: { (appLanguage: BCP47LanguageIdentifier) in
                     
-                }, receiveValue: { (result: AppLanguageDomainModel) in
+                    resultRef = appLanguage
                     
-                    resultRef = result
-                                      
                     // When finished be sure to call:
                     timeoutTask.cancel()
                     continuation.resume(returning: ())
-                })
+                }
                 .store(in: &cancellables)
         }
                 
@@ -204,7 +203,7 @@ struct StoreInitialAppLanguageUseCaseTests {
             )
         ]
     )
-    func noAppLanguageSetAndDeviceLanguageIsNotASupportedAppLanguage(argument: TestArgument) async throws {
+    @MainActor func noAppLanguageSetAndDeviceLanguageIsNotASupportedAppLanguage(argument: TestArgument) async throws {
         
         let testsDiContainer = try getTestsDiContainer()
         

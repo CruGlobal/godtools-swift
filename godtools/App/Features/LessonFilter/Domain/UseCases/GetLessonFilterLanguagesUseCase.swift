@@ -26,44 +26,39 @@ final class GetLessonFilterLanguagesUseCase {
             
         return resourcesRepository
             .observeCollectionChangesPublisher()
-            .flatMap { (resourcesChanged: Void) in
+            .flatMap { (resourcesChanged: Void) -> AnyPublisher<[LessonFilterLanguageDomainModel], Error> in
                 
-                let languageIds = self.resourcesRepository.getLessonsSupportedLanguageIdsNonThrowing()
-                
-                return self.createLessonLanguageFilterDomainModelListPublisher(from: languageIds, translatedInAppLanguage: appLanguage)
+                return AnyPublisher() {
+                    try await self.asyncExecute(appLanguage: appLanguage)
+                }
             }
             .eraseToAnyPublisher()
     }
-}
-
-extension GetLessonFilterLanguagesUseCase {
     
-    private func createLessonLanguageFilterDomainModelListPublisher(from languageIds: [String], translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[LessonFilterLanguageDomainModel], Error> {
+    private func asyncExecute(appLanguage: AppLanguageDomainModel) async throws -> [LessonFilterLanguageDomainModel] {
         
-        return languagesRepository
-            .getLanguagesByIdsPublisher(ids: languageIds)
-            .map { (languages: [LanguageDataModel]) in
-                
-                let domainModels: [LessonFilterLanguageDomainModel] = languages.compactMap { (language: LanguageDataModel) in
-                    
-                    let domainModel: LessonFilterLanguageDomainModel = self.getLessonFilterLangauge.mapLanguageToLessonFilterLanguageDomainModel(
-                        language: language,
-                        translatedInAppLanguage: translatedInAppLanguage
-                    )
-                    
-                    guard domainModel.lessonsAvailableCount > 0 else {
-                        return nil
-                    }
-                    
-                    return domainModel
-                }
-                
-                return domainModels
-                    .sorted { (language1: LessonFilterLanguageDomainModel, language2: LessonFilterLanguageDomainModel) in
-                        
-                        return language1.languageNameTranslatedInAppLanguage.lowercased() < language2.languageNameTranslatedInAppLanguage.lowercased()
-                    }
+        let languageIds = self.resourcesRepository.getLessonsSupportedLanguageIds()
+        
+        let languages: [LanguageDataModel] = try await languagesRepository.getLanguagesByIds(ids: languageIds)
+        
+        let domainModels: [LessonFilterLanguageDomainModel] = languages.compactMap { (language: LanguageDataModel) in
+            
+            let domainModel: LessonFilterLanguageDomainModel = self.getLessonFilterLangauge.mapLanguageToLessonFilterLanguageDomainModel(
+                language: language,
+                translatedInAppLanguage: appLanguage
+            )
+            
+            guard domainModel.lessonsAvailableCount > 0 else {
+                return nil
             }
-            .eraseToAnyPublisher()
+            
+            return domainModel
+        }
+        
+        return domainModels
+            .sorted { (language1: LessonFilterLanguageDomainModel, language2: LessonFilterLanguageDomainModel) in
+                
+                return language1.languageNameTranslatedInAppLanguage.lowercased() < language2.languageNameTranslatedInAppLanguage.lowercased()
+            }
     }
 }

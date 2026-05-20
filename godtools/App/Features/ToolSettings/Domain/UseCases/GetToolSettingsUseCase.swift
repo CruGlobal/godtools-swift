@@ -65,7 +65,7 @@ final class GetToolSettingsUseCase {
     
     private func getLanguage(languageId: String?, translateInLanguage: AppLanguageDomainModel) throws -> ToolSettingsToolLanguageDomainModel? {
         
-        guard let languageId = languageId, let language = try languagesRepository.getLanguage(id: languageId) else {
+        guard let languageId = languageId, let language = languagesRepository.getLanguageById(id: languageId) else {
             return nil
         }
         

@@ -20,7 +20,7 @@ struct LessonFilterLanguageSelectionView: View {
         
         VStack(spacing: 0) {
             
-            SearchBarView(viewModel: viewModel.getSearchBarViewModel(), searchText: $viewModel.searchText)
+            SearchBarView(searchText: $viewModel.searchText, strings: viewModel.searchBarStrings)
             
             List {
                 ForEach(viewModel.languageSearchResults) { language in

@@ -50,33 +50,34 @@ class ApplicationLayout: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .execute()
-            .assign(to: &$appLanguage)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
+                
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage, appLanguageDiContainer: appLanguageDiContainer)
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel, appLanguageDiContainer: AppLanguageDiContainer) {
+        
+        refreshLayoutDirection(appLanguage: appLanguage, appLanguageDiContainer: appLanguageDiContainer)
+    }
+    
+    private func refreshLayoutDirection(appLanguage: AppLanguageDomainModel, appLanguageDiContainer: AppLanguageDiContainer) {
         
         let getInterfaceLayoutDirectionUseCase = appLanguageDiContainer.domainLayer.getInterfaceLayoutDirectionUseCase()
-
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                
-                getInterfaceLayoutDirectionUseCase
-                    .execute(appLanguage: appLanguage)
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { _ in
-                
-            }, receiveValue: { [weak self] (interfaceLayoutDirection: AppInterfaceLayoutDirectionDomainModel) in
-                
-                let newLayoutDirection: ApplicationLayoutDirection = interfaceLayoutDirection == .leftToRight ? .leftToRight : .rightToLeft
-                
-                if newLayoutDirection != self?.currentDirection {
-                    
-                    self?.currentDirection = newLayoutDirection
-                    
-                    self?.layoutDirection = newLayoutDirection.layoutDirection
-                    self?.semanticContentAttributeSubject.send(newLayoutDirection.semanticContentAttribute)
-                }
-            })
-            .store(in: &cancellables)
+        
+        let interfaceLayoutDirection: AppInterfaceLayoutDirectionDomainModel = getInterfaceLayoutDirectionUseCase.execute(appLanguage: appLanguage)
+        
+        let newLayoutDirection: ApplicationLayoutDirection = interfaceLayoutDirection == .leftToRight ? .leftToRight : .rightToLeft
+        
+        if newLayoutDirection != currentDirection {
+            
+            currentDirection = newLayoutDirection
+            
+            layoutDirection = newLayoutDirection.layoutDirection
+            semanticContentAttributeSubject.send(newLayoutDirection.semanticContentAttribute)
+        }
     }
 }

@@ -25,23 +25,23 @@ final class GetAllToolsUseCase {
         return resourcesRepository
             .observeCollectionChangesPublisher()
             .prepend(Void())
-            .flatMap({ (resourcesChanged: Void) -> AnyPublisher<[ToolListItemDomainModel], Error> in
+            .map { _ in
             
-                let tools: [ResourceDataModel] = self.resourcesRepository.getAllToolsListNonThrowing(
+                let tools: [ResourceDataModel] = self.resourcesRepository.getAllToolsList(
                     filterByCategory: filterToolsByCategory.filterId,
                     filterByLanguageId: filterToolsByLanguage.filterId,
                     sortByDefaultOrder: true
                 )
 
-                return self.getToolsListItems
-                    .mapToolsToListItemsPublisher(
+                let toolListItems = self.getToolsListItems
+                    .mapToolsToListItems(
                         tools: tools,
                         appLanguage: appLanguage,
                         languageIdForAvailabilityText: languageIdForAvailabilityText
                     )
-                    .setFailureType(to: Error.self)
-                    .eraseToAnyPublisher()
-            })
+                
+                return toolListItems
+            }
             .eraseToAnyPublisher()
     }
 }

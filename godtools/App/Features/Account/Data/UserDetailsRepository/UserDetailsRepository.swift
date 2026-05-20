@@ -24,10 +24,6 @@ final class UserDetailsRepository {
         self.cache = cache
     }
     
-    var persistence: any Persistence<UserDetailsDataModel, MobileContentApiUsersMeCodable> {
-        return cache.persistence
-    }
-    
     @MainActor func getAuthUserDetailsChangedPublisher(requestPriority: RequestPriority) -> AnyPublisher<UserDetailsDataModel?, Error> {
         
         makeSinkWithRemote(requestPriority: requestPriority)

@@ -24,7 +24,7 @@ struct LocalizationSettingsView: View {
             
             AccessibilityScreenElementView(screenAccessibility: .localizationSettings)
                         
-            SearchBarView(viewModel: viewModel.getSearchBarViewModel(), searchText: $viewModel.searchText)
+            SearchBarView(searchText: $viewModel.searchText, strings: viewModel.searchBarStrings)
             
             ZStack(alignment: .leading) {
                 Rectangle()

@@ -1,5 +1,5 @@
 //
-//  GetSearchBarStrings.swift
+//  GetSearchBarStringsUseCase.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 12/4/23.
@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import Combine
 
-final class GetSearchBarStrings {
+final class GetSearchBarStringsUseCase {
     
     private let localizationServices: LocalizationServicesInterface
     
@@ -18,15 +17,14 @@ final class GetSearchBarStrings {
         self.localizationServices = localizationServices
     }
     
-    func getStringsPublisher(translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<SearchBarStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> SearchBarStringsDomainModel {
         
-        let localeId: String = translateInAppLanguage
+        let localeId: String = appLanguage
         
         let strings = SearchBarStringsDomainModel(
             cancel: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "cancel")
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

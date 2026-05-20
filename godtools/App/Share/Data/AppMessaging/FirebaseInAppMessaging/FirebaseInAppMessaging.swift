@@ -9,7 +9,7 @@
 import Foundation
 import FirebaseInAppMessaging
 
-class FirebaseInAppMessaging: NSObject, AppMessagingInterface {
+final class FirebaseInAppMessaging: NSObject, AppMessagingInterface {
     
     static let shared: FirebaseInAppMessaging = FirebaseInAppMessaging()
     

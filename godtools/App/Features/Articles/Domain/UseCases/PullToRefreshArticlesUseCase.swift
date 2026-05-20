@@ -20,7 +20,7 @@ final class PullToRefreshArticlesUseCase {
     
     func execute(translation: TranslationDataModel, language: LanguageDataModel, manifest: Manifest) async throws {
         
-        try await articleManifestAemRepository.downloadAndCacheManifestAemUris(
+        _ = try await articleManifestAemRepository.downloadAndCacheManifestAemUris(
             manifest: manifest,
             translationId: translation.id,
             languageCode: language.localeId,

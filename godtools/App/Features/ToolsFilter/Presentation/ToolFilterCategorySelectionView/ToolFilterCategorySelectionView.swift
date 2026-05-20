@@ -25,7 +25,7 @@ struct ToolFilterCategorySelectionView: View {
             
             AccessibilityScreenElementView(screenAccessibility: .toolsCategoryFilters)
             
-            SearchBarView(viewModel: viewModel.getSearchBarViewModel(), searchText: $viewModel.searchText)
+            SearchBarView(searchText: $viewModel.searchText, strings: viewModel.searchBarStrings)
             
             List {
                 ForEach(viewModel.categorySearchResults) { category in
