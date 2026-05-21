@@ -63,27 +63,28 @@ struct LessonsView: View {
                         }
                         .padding(.bottom, 15)
                         .padding(.horizontal, contentHorizontalInsets)
+                        
+                        if viewModel.selectedToggle == .personalized, let personalizedLessonsUnavailable = viewModel.personalizedLessons.unavailableStrings {
 
-                        LazyVStack(alignment: .center, spacing: lessonCardSpacing) {
+                            PersonalizationUnavailableView(
+                                title: personalizedLessonsUnavailable.title,
+                                message: personalizedLessonsUnavailable.message,
+                                changeSettingsButtonTitle: viewModel.strings.changeSettings,
+                                goToAllLessonsButtonTitle: viewModel.strings.viewAllLessons,
+                                geometry: geometry,
+                                heightMultiplier: 0.7,
+                                changeSettingsAction: {
+                                    viewModel.localizationSettingsTapped()
+                                },
+                                goToAllLessonsAction: {
+                                    viewModel.goToAllLessonsTapped()
+                                }
+                            )
 
-                            if viewModel.selectedToggle == .personalized, let personalizedLessonsUnavailable = viewModel.personalizedLessons.unavailableStrings {
-
-                                PersonalizationUnavailableView(
-                                    title: personalizedLessonsUnavailable.title,
-                                    message: personalizedLessonsUnavailable.message,
-                                    changeSettingsButtonTitle: viewModel.strings.changeSettings,
-                                    goToAllLessonsButtonTitle: viewModel.strings.viewAllLessons,
-                                    geometry: geometry,
-                                    heightMultiplier: 0.7,
-                                    changeSettingsAction: {
-                                        viewModel.localizationSettingsTapped()
-                                    },
-                                    goToAllLessonsAction: {
-                                        viewModel.goToAllLessonsTapped()
-                                    }
-                                )
-
-                            } else {
+                        }
+                        else if !viewModel.lessonsList.isEmpty {
+                            
+                            LazyVStack(alignment: .center, spacing: lessonCardSpacing) {
 
                                 ForEach(viewModel.lessonsList) { (lessonListItem: LessonListItemDomainModel) in
 
@@ -97,10 +98,11 @@ struct LessonsView: View {
                                     )
                                 }
                             }
+                            .padding([.top], lessonCardSpacing)
                         }
-                        .padding([.top], lessonCardSpacing)
 
                         if viewModel.selectedToggle == .personalized && viewModel.personalizedLessons.unavailableStrings == nil {
+                            
                             PersonalizedToolFooterView(
                                 title: viewModel.strings.personalizedLessonExplanationTitle,
                                 subtitle: viewModel.strings.personalizedLessonExplanationSubtitle,
