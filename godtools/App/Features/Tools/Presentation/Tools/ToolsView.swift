@@ -63,28 +63,27 @@ struct ToolsView: View {
 
                         ToolsFilterSectionView(viewModel: viewModel, contentHorizontalInsets: contentHorizontalInsets, width: geometry.size.width)
                             .padding([.bottom], 18)
+                        
+                        if viewModel.selectedToggle == .personalized, let personalizedToolsUnavailable = viewModel.personalizedTools.unavailableStrings {
 
-                        LazyVStack(alignment: .center, spacing: toolCardSpacing) {
-
-                            if viewModel.selectedToggle == .personalized, let personalizedToolsUnavailable = viewModel.personalizedTools.unavailableStrings {
-
-                                PersonalizationUnavailableView(
-                                    title: personalizedToolsUnavailable.title,
-                                    message: personalizedToolsUnavailable.message,
-                                    changeSettingsButtonTitle: viewModel.strings.changePersonalizedToolSettingsActionLabel,
-                                    goToAllLessonsButtonTitle: viewModel.strings.viewAllTools,
-                                    geometry: geometry,
-                                    heightMultiplier: 0.45,
-                                    changeSettingsAction: {
-                                        viewModel.localizationSettingsTapped()
-                                    },
-                                    goToAllLessonsAction: {
-                                        viewModel.goToAllToolsTapped()
-                                    }
-                                )
-
-                            } else {
-
+                            PersonalizationUnavailableView(
+                                title: personalizedToolsUnavailable.title,
+                                message: personalizedToolsUnavailable.message,
+                                changeSettingsButtonTitle: viewModel.strings.changePersonalizedToolSettingsActionLabel,
+                                goToAllLessonsButtonTitle: viewModel.strings.viewAllTools,
+                                geometry: geometry,
+                                heightMultiplier: 0.45,
+                                changeSettingsAction: {
+                                    viewModel.localizationSettingsTapped()
+                                },
+                                goToAllLessonsAction: {
+                                    viewModel.goToAllToolsTapped()
+                                }
+                            )
+                        }
+                        else if !viewModel.toolsList.isEmpty {
+                            
+                            LazyVStack(alignment: .center, spacing: toolCardSpacing) {
                                 ForEach(viewModel.toolsList) { (tool: ToolListItemDomainModel) in
 
                                     ToolCardView(
@@ -107,7 +106,7 @@ struct ToolsView: View {
                                 }
                             }
                         }
-
+                        
                         if viewModel.selectedToggle == .personalized && viewModel.personalizedTools.unavailableStrings == nil {
                             
                             PersonalizedToolFooterView(
