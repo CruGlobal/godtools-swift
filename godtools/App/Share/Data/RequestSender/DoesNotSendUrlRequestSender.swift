@@ -7,10 +7,9 @@
 //
 
 import Foundation
-import Combine
 import RequestOperation
 
-final class DoesNotSendUrlRequestSender: RequestSender {
+final class DoesNotSendUrlRequestSender: RequestSenderInterface {
     
     private func getFakeResponse() throws -> RequestDataResponse {
         
@@ -28,24 +27,8 @@ final class DoesNotSendUrlRequestSender: RequestSender {
         return response
     }
     
-    override func sendDataTask(urlRequest: URLRequest, urlSession: URLSession) async throws -> RequestDataResponse {
+    func sendDataTask(urlRequest: URLRequest, urlSession: URLSession) async throws -> RequestDataResponse {
         
         return try getFakeResponse()
-    }
-    
-    override func sendDataTaskPublisher(urlRequest: URLRequest, urlSession: URLSession) -> AnyPublisher<RequestDataResponse, Error> {
-        
-        do {
-            
-            let response: RequestDataResponse = try getFakeResponse()
-            
-            return Just(response)
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
-        catch let error {
-            return Fail(error: error)
-                .eraseToAnyPublisher()
-        }
     }
 }

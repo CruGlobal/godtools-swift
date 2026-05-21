@@ -13,11 +13,11 @@ import Fuzi
 final class ArticleWebArchiver {
     
     private let urlSessionPriority: URLSessionPriority
-    private let requestSender: RequestSender
+    private let requestSender: RequestSenderInterface
     private let includeJavascript: Bool = true
     private let errorDomain: String = "ArticleWebArchiver"
         
-    init(urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
+    init(urlSessionPriority: URLSessionPriority, requestSender: RequestSenderInterface) {
         
         self.urlSessionPriority = urlSessionPriority
         self.requestSender = requestSender
@@ -92,7 +92,7 @@ final class ArticleWebArchiver {
             throw NSError.errorWithDomain(domain: errorDomain, code: -1, description: "Invalid url host.")
         }
         
-        let urlRequest: URLRequest = URLRequest(url: url)
+        let urlRequest: URLRequest = try URLRequest(url: url)
         
         let response: RequestDataResponse = try await requestSender.sendDataTask(urlRequest: urlRequest, urlSession: urlSession)
         

@@ -12,10 +12,10 @@ import RequestOperation
 final class ArticleAemDownloader {
             
     private let urlSessionPriority: URLSessionPriority
-    private let requestSender: RequestSender
+    private let requestSender: RequestSenderInterface
     private let maxAemJsonTreeLevels: Int = 9999
         
-    init(urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
+    init(urlSessionPriority: URLSessionPriority, requestSender: RequestSenderInterface) {
         
         self.urlSessionPriority = urlSessionPriority
         self.requestSender = requestSender

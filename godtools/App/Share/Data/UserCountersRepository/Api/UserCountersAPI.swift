@@ -28,7 +28,7 @@ final class UserCountersApi: UserCountersApiInterface {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
-        let fetchRequest = getUserCountersRequest(urlSession: urlSession)
+        let fetchRequest: URLRequest = try getUserCountersRequest(urlSession: urlSession)
         
         let data: Data = try await authSession.sendAuthenticatedRequest(
             urlRequest: fetchRequest,
@@ -43,14 +43,14 @@ final class UserCountersApi: UserCountersApiInterface {
         return codable.dataArray
     }
     
-    private func getUserCountersRequest(urlSession: URLSession) -> URLRequest {
+    private func getUserCountersRequest(urlSession: URLSession) throws -> URLRequest {
         
         let headers: [String: String] = [
             "Content-Type": "application/vnd.api+json"
         ]
         
         return requestBuilder.build(
-            parameters: RequestBuilderParameters(
+            parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseURL + "/users/me/counters",
                 method: .get,
@@ -65,7 +65,7 @@ final class UserCountersApi: UserCountersApiInterface {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
-        let incrementRequest = getIncrementUserCountersRequest(id: id, increment: increment, urlSession: urlSession)
+        let incrementRequest: URLRequest = try getIncrementUserCountersRequest(id: id, increment: increment, urlSession: urlSession)
         
         let data: Data = try await authSession.sendAuthenticatedRequest(
             urlRequest: incrementRequest,
@@ -80,7 +80,7 @@ final class UserCountersApi: UserCountersApiInterface {
         return codable.dataObject
     }
     
-    private func getIncrementUserCountersRequest(id: String, increment: Int, urlSession: URLSession) -> URLRequest {
+    private func getIncrementUserCountersRequest(id: String, increment: Int, urlSession: URLSession) throws -> URLRequest {
         
         let headers: [String: String] = [
             "Content-Type": "application/vnd.api+json"
@@ -96,7 +96,7 @@ final class UserCountersApi: UserCountersApiInterface {
         ]
         
         return requestBuilder.build(
-            parameters: RequestBuilderParameters(
+            parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseURL + "/users/me/counters/\(id)",
                 method: .patch,
