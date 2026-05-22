@@ -1,5 +1,5 @@
 //
-//  LessonsResultDomainModel.swift
+//  PersonalizedLessonsDomainModel.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 3/4/26.
@@ -8,13 +8,13 @@
 
 import Foundation
 
-struct LessonsResultDomainModel: Sendable {
+struct PersonalizedLessonsDomainModel: Sendable {
 
     let lessons: [LessonListItemDomainModel]
     let unavailableStrings: PersonalizedLessonsUnavailableDomainModel?
 
-    static var empty: LessonsResultDomainModel {
-        LessonsResultDomainModel(
+    static var emptyValue: PersonalizedLessonsDomainModel {
+        PersonalizedLessonsDomainModel(
             lessons: [],
             unavailableStrings: nil
         )

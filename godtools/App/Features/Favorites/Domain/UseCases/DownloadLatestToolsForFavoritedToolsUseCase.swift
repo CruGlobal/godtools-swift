@@ -30,34 +30,26 @@ final class DownloadLatestToolsForFavoritedToolsUseCase {
             favoritedResourcesRepository
                 .observeCollectionChangesPublisher()
         )
-        .flatMap { (resourcesChanged: Void, favoritedResourcesChanged: Void) -> AnyPublisher<[FavoritedResourceDataModel], Error> in
+        .flatMap { (resourcesChanged: Void, favoritedResourcesChanged: Void) -> AnyPublisher<Void, Error> in
                         
-            return self.favoritedResourcesRepository
-                .getFavoritedResourcesSortedByPositionPublisher()
-        }
-        .flatMap { (favoritedTools: [FavoritedResourceDataModel]) -> AnyPublisher<[DownloadToolData], Error> in
-                        
-            let tools: [DownloadToolData] = favoritedTools.map({
-                DownloadToolData(
-                    toolId: $0.id,
-                    languages: [appLanguage]
-                )
-            })
-            
-            return Just(tools)
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
-        .flatMap { (tools: [DownloadToolData]) -> AnyPublisher<Void, Error> in
-                
             return AnyPublisher() {
-                try await self.toolDownloader
-                    .downloadTools(
-                        tools: tools,
-                        requestPriority: .medium
-                    )
+                try await self.asyncExecute(appLanguage: appLanguage)
             }
         }
         .eraseToAnyPublisher()
+    }
+    
+    private func asyncExecute(appLanguage: AppLanguageDomainModel) async throws {
+        
+        let favoritedTools: [FavoritedResourceDataModel] = try await favoritedResourcesRepository.getFavoritedResourcesSortedByPosition()
+        
+        let tools: [DownloadToolData] = favoritedTools.map({
+            DownloadToolData(
+                toolId: $0.id,
+                languages: [appLanguage]
+            )
+        })
+        
+        try await toolDownloader.downloadTools(tools: tools, requestPriority: .medium)
     }
 }

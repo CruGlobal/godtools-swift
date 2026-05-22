@@ -22,15 +22,8 @@ final class CancelLessonEvaluationUseCase {
     
     func execute(lessonId: String) -> AnyPublisher<Void, Never> {
         
-        let lessonResource: ResourceDataModel?
-        
-        do {
-            lessonResource = try resourcesRepository.getResource(id: lessonId)
-        }
-        catch _ {
-            lessonResource = nil
-        }
-        
+        let lessonResource: ResourceDataModel? = resourcesRepository.getResourceById(id: lessonId)
+
         guard let lessonResource = lessonResource else {
             return Just(Void())
                 .eraseToAnyPublisher()

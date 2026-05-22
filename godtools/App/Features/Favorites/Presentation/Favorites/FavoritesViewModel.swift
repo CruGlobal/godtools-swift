@@ -37,7 +37,6 @@ final class FavoritesViewModel: ObservableObject {
     @Published private(set) var showsOpenTutorialBanner: Bool = false
     @Published private(set) var featuredLessons: [FeaturedLessonDomainModel] = Array()
     @Published private(set) var yourFavoritedTools: [YourFavoritedToolDomainModel] = Array()
-    @Published private(set) var isLoadingYourFavoritedTools: Bool = true
     
     init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, getFavoritesStringsUseCase: GetFavoritesStringsUseCase, getYourFavoritedToolsUseCase: GetYourFavoritedToolsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getToolBannerUseCase: GetToolBannerUseCase, inMemoryDataCache: InMemoryDataCache, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
@@ -78,28 +77,38 @@ final class FavoritesViewModel: ObservableObject {
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
                 
-                Publishers.CombineLatest(
-                    getYourFavoritedToolsUseCase
-                        .execute(
-                            appLanguage: appLanguage,
-                            maxCount: 5
-                        ),
-                    getFeaturedLessonsUseCase
-                        .execute(
-                            appLanguage: appLanguage
-                        )
-                )
+                getFeaturedLessonsUseCase
+                    .execute(
+                        appLanguage: appLanguage
+                    )
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { _ in
                 
-            }, receiveValue: { [weak self] (yourFavoritedTools: [YourFavoritedToolDomainModel], featuredLessons: [FeaturedLessonDomainModel]) in
+            }, receiveValue: { [weak self] (featuredLessons: [FeaturedLessonDomainModel]) in
                 
                 self?.featuredLessons = featuredLessons
-                self?.yourFavoritedTools = yourFavoritedTools
+            })
+            .store(in: &cancellables)
+        
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
                 
-                self?.isLoadingYourFavoritedTools = false
+                getYourFavoritedToolsUseCase
+                    .execute(
+                        appLanguage: appLanguage,
+                        maxCount: 5
+                    )
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (yourFavoritedTools: [YourFavoritedToolDomainModel]) in
+                
+                self?.yourFavoritedTools = yourFavoritedTools
             })
             .store(in: &cancellables)
         

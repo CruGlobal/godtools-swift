@@ -415,7 +415,7 @@ extension TractViewModel {
             super.setRendererPrimaryLanguage(
                 primaryLanguageId: primaryLanguageId,
                 parallelLanguageId: parallelLanguageId,
-                selectedLanguageId: languagesRepository.getLanguageNonThrowing(code: remoteShareSelectedLocale)?.id
+                selectedLanguageId: languagesRepository.getLanguageByCode(code: remoteShareSelectedLocale)?.id
             )
         }
         else {
@@ -435,10 +435,10 @@ extension TractViewModel {
         let attributes = remoteShareNavigationEvent.message?.data?.attributes
                 
         if let primaryLocale = attributes?.primaryLocale, !primaryLocale.isEmpty {
-            return languagesRepository.getLanguageNonThrowing(code: primaryLocale)?.id
+            return languagesRepository.getLanguageByCode(code: primaryLocale)?.id
         }
         else if let locale = attributes?.locale, !locale.isEmpty {
-            return languagesRepository.getLanguageNonThrowing(code: locale)?.id
+            return languagesRepository.getLanguageByCode(code: locale)?.id
         }
         
         return nil
@@ -449,7 +449,7 @@ extension TractViewModel {
         let attributes = remoteShareNavigationEvent.message?.data?.attributes
                 
         if let parallelLocale = attributes?.parallelLocale, !parallelLocale.isEmpty {
-            return languagesRepository.getLanguageNonThrowing(code: parallelLocale)?.id
+            return languagesRepository.getLanguageByCode(code: parallelLocale)?.id
         }
         
         return nil

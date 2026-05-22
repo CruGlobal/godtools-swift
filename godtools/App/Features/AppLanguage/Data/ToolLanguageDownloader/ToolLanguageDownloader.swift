@@ -37,7 +37,7 @@ final class ToolLanguageDownloader {
     
     func downloadToolLanguage(languageId: String) async throws {
         
-        guard let languageModel = try languagesRepository.getLanguage(id: languageId) else {
+        guard let languageModel = languagesRepository.getLanguageById(id: languageId) else {
             
             throw NSError.errorWithDomain(
                 domain: "ToolLanguageDownloader",

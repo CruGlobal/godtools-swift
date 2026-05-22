@@ -26,7 +26,7 @@ final class GetPersonalizedToolsUseCase {
         self.localizationServices = localizationServices
     }
 
-    @MainActor func execute(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterToolsByLanguage: ToolFilterLanguageDomainModel) -> AnyPublisher<ToolsResultDomainModel, Error> {
+    @MainActor func execute(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterToolsByLanguage: ToolFilterLanguageDomainModel) -> AnyPublisher<PersonalizedToolsDomainModel, Error> {
         
         let languageCode: String = getLanguageElseAppLanguage
             .getLanguageCode(
@@ -64,45 +64,31 @@ final class GetPersonalizedToolsUseCase {
                     )
             }
         }
-        .flatMap { (resources: [ResourceDataModel]) -> AnyPublisher<ToolsResultDomainModel, Error> in
+        .map { (resources: [ResourceDataModel])  in
             
-            return self.getToolsListItems
-                .mapToolsToListItemsPublisher(
+            let tools: [ToolListItemDomainModel] = self.getToolsListItems
+                .mapToolsToListItems(
                     tools: resources,
                     appLanguage: appLanguage,
                     languageIdForAvailabilityText: filterToolsByLanguage.filterId
                 )
-                .map { (tools: [ToolListItemDomainModel]) -> ToolsResultDomainModel in
-                    
-                    if self.shouldShowUnavailableState(hasCountry: hasCountry, tools: tools) {
-                        return self.getToolsUnavailable(appLanguage: appLanguage)
-                    }
-                    
-                    return ToolsResultDomainModel(
-                        tools: tools,
-                        unavailableStrings: nil
-                    )
-                }
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
+            
+            let showsPersonalizationUnavailable: Bool = !hasCountry && tools.isEmpty
+            let unavailableStrings: PersonalizedToolsUnavailableDomainModel? = showsPersonalizationUnavailable ? self.getToolsUnavailable(appLanguage: appLanguage) : nil
+            
+            return PersonalizedToolsDomainModel(
+                tools: tools,
+                unavailableStrings: unavailableStrings
+            )
         }
         .eraseToAnyPublisher()
     }
 
-    private func getToolsUnavailable(appLanguage: AppLanguageDomainModel) -> ToolsResultDomainModel {
+    private func getToolsUnavailable(appLanguage: AppLanguageDomainModel) -> PersonalizedToolsUnavailableDomainModel {
 
-        let unavailableState = PersonalizedToolsUnavailableDomainModel(
-            title: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "tools.personalizationUnavailable.title"),
-            message: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "tools.personalizationUnavailable.message")
+        return PersonalizedToolsUnavailableDomainModel(
+            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "tools.personalizationUnavailable.title"),
+            message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "tools.personalizationUnavailable.message")
         )
-
-        return ToolsResultDomainModel(
-            tools: [],
-            unavailableStrings: unavailableState
-        )
-    }
-
-    private func shouldShowUnavailableState(hasCountry: Bool, tools: [ToolListItemDomainModel]) -> Bool {
-        return !hasCountry && tools.isEmpty
     }
 }

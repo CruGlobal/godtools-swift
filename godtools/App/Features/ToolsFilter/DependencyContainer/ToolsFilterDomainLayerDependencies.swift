@@ -41,6 +41,7 @@ final class ToolsFilterDomainLayerDependencies {
     func getToolFilterLanguagesUseCase() -> GetToolFilterLanguagesUseCase {
         return GetToolFilterLanguagesUseCase(
             resourcesRepository: core.dataLayer.getResourcesRepository(),
+            languagesRepository: core.dataLayer.getLanguagesRepository(),
             getToolFilterLanguage: getToolFilterLanguage()
         )
     }

@@ -8,7 +8,6 @@
 
 import Testing
 @testable import godtools
-import Combine
 
 struct GetAppLanguagesStringsUseCaseTests {
     
@@ -38,31 +37,10 @@ struct GetAppLanguagesStringsUseCaseTests {
         
         let getAppLanguagesStringsUseCase = getAppLanguagesStringsUseCase()
         
-        var stringsRef: AppLanguagesStringsDomainModel?
+        let strings = getAppLanguagesStringsUseCase
+            .execute(appLanguage: argument.appLanguage)
         
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            getAppLanguagesStringsUseCase
-                .execute(appLanguage: argument.appLanguage)
-                .sink { (strings: AppLanguagesStringsDomainModel) in
-                    
-                    stringsRef = strings
-                    
-                    // When finished be sure to call:
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                }
-                .store(in: &cancellables)
-        }
-        
-        #expect(stringsRef?.navTitle == argument.expectedNavTitle)
+        #expect(strings.navTitle == argument.expectedNavTitle)
     }
 }
 

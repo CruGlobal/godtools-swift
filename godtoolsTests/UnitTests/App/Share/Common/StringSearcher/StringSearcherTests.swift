@@ -8,7 +8,6 @@
 
 import Testing
 @testable import godtools
-import Combine
 
 struct StringSearcherTests {
     

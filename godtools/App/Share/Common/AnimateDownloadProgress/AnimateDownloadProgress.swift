@@ -10,7 +10,7 @@ import Foundation
 import Combine
 
 @MainActor
-class AnimateDownloadProgress {
+final class AnimateDownloadProgress {
         
     static let defaultAnimationInterval: TimeInterval = 0.2
     static let defaultAnimateProgressIncrement: TimeInterval = 0.1

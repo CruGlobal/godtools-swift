@@ -9,7 +9,6 @@
 import Testing
 import Foundation
 @testable import godtools
-import Combine
 import RepositorySync
 
 @Suite(.serialized)
@@ -43,32 +42,12 @@ struct ReorderFavoritedToolUseCaseTests {
         
         let reorderFavoritedToolUseCase: ReorderFavoritedToolUseCase = testsDiContainer.feature.favorites.domainLayer.getReorderFavoritedToolUseCase()
         
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            reorderFavoritedToolUseCase
-                .execute(
-                    toolId: argument.resourceIdToReorder,
-                    originalPosition: argument.originalPosition,
-                    newPosition: argument.newPosition
-                )
-                .receive(on: DispatchQueue.main)
-                .sink { _ in
-                    
-                } receiveValue: { (favoritedResources: [ReorderFavoritedToolDomainModel]) in
-                                                                  
-                    // When finished be sure to call:
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                }
-                .store(in: &cancellables)
-        }
+        _ = try await reorderFavoritedToolUseCase
+            .execute(
+                toolId: argument.resourceIdToReorder,
+                originalPosition: argument.originalPosition,
+                newPosition: argument.newPosition
+            )
         
         let favoritedResources: [FavoritedResourceDataModel] = try await testsDiContainer.core.dataLayer.getFavoritedResourcesRepository().getFavoritedResourcesSortedByPosition()
         

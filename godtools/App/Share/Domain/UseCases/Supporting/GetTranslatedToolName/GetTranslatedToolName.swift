@@ -21,7 +21,7 @@ final class GetTranslatedToolName {
     
     func getToolName(toolId: String, translateInLanguage: BCP47LanguageIdentifier) -> String {
         
-        guard let resource = resourcesRepository.getResourceNonThrowing(id: toolId) else {
+        guard let resource = resourcesRepository.getResourceById(id: toolId) else {
             return ""
         }
         

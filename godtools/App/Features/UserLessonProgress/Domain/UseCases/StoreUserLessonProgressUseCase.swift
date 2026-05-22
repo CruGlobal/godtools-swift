@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class StoreUserLessonProgressUseCase {
     
@@ -17,28 +16,55 @@ final class StoreUserLessonProgressUseCase {
         self.lessonProgressRepository = lessonProgressRepository
     }
     
-    func execute(lessonId: String, lastViewedPageId: String, lastViewedPageNumber: Int, totalPageCount: Int) -> AnyPublisher<UserLessonProgressDomainModel, Error> {
+    func execute(lessonId: String, viewedPageId: String, viewedPageNumber: Int, totalPageCount: Int) async throws -> UserLessonProgressDomainModel {
         
-        let progress: Double
-        if totalPageCount < 1 {
-            progress = 0
-        } else {
-            progress = Double(lastViewedPageNumber) / Double(totalPageCount)
+        let finalThingsToTryPageCount: Int = 1
+        let excludedPageCount: Int = finalThingsToTryPageCount // Excludes final things to try page. ~Levi
+        let startingPageNumber: Int = 1
+        let numberOfPages: Int = totalPageCount - excludedPageCount
+        
+        let pageNumber: Int = clampViewedPageNumber(viewedPageNumber: viewedPageNumber, min: startingPageNumber, max: numberOfPages, startingPageNumber: startingPageNumber)
+        
+        let isFirstPage: Bool = pageNumber == startingPageNumber
+        
+        guard !isFirstPage && numberOfPages > 0 else {
+            return UserLessonProgressDomainModel(lessonId: lessonId, lastViewedPageId: viewedPageId, progress: 0)
         }
         
-        return lessonProgressRepository
-            .storeLessonProgressPublisher(
+        let reachedCompletion: Bool = pageNumber >= numberOfPages
+        
+        let progress: Double = reachedCompletion ? 1 : Double(pageNumber) / Double(numberOfPages + excludedPageCount)
+        
+        _ = try await lessonProgressRepository
+            .storeLessonProgress(
                 lessonId: lessonId,
-                lastViewedPageId: lastViewedPageId,
+                lastViewedPageId: viewedPageId,
                 progress: progress
             )
-            .map {
-                UserLessonProgressDomainModel(
-                    lessonId: $0.lessonId,
-                    lastViewedPageId: $0.lastViewedPageId,
-                    progress: $0.progress
-                )
-            }
-            .eraseToAnyPublisher()
+        
+        return UserLessonProgressDomainModel(
+            lessonId: lessonId,
+            lastViewedPageId: viewedPageId,
+            progress: progress
+        )
+    }
+    
+    private func clampViewedPageNumber(viewedPageNumber: Int, min: Int, max: Int, startingPageNumber: Int) -> Int {
+                
+        let initialPage: Int = viewedPageNumber + startingPageNumber
+        
+        let pageNumber: Int
+        
+        if initialPage < min {
+            pageNumber = min
+        }
+        else if initialPage > max {
+            pageNumber = max
+        }
+        else {
+            pageNumber = initialPage
+        }
+        
+        return pageNumber
     }
 }

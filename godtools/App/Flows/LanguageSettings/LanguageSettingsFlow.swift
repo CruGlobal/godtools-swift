@@ -119,7 +119,7 @@ extension LanguageSettingsFlow {
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getDownloadableLanguagesStringsUseCase: appDiContainer.feature.appLanguage.domainLayer.getDownloadableLanguagesStringsUseCase(),
             getDownloadableLanguagesListUseCase: appDiContainer.feature.appLanguage.domainLayer.getDownloadableLanguagesListUseCase(),
-            viewSearchBarUseCase: appDiContainer.core.domainLayer.getViewSearchBarUseCase(), searchLanguageInDownloadableLanguagesUseCase: appDiContainer.feature.appLanguage.domainLayer.getSearchLanguageInDownloadableLanguagesUseCase(),
+            getSearchBarStringsUseCase: appDiContainer.core.domainLayer.getSearchBarStringsUseCase(), searchLanguageInDownloadableLanguagesUseCase: appDiContainer.feature.appLanguage.domainLayer.getSearchLanguageInDownloadableLanguagesUseCase(),
             downloadToolLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getDownloadToolLanguageUseCase(),
             removeDownloadedToolLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getRemoveDownloadedToolLanguageUseCase()
         )

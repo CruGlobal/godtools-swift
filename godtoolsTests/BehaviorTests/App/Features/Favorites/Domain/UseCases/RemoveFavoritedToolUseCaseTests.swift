@@ -9,7 +9,6 @@
 import Testing
 import Foundation
 @testable import godtools
-import Combine
 import RepositorySync
 import RealmSwift
 
@@ -42,41 +41,9 @@ struct RemoveFavoritedToolUseCaseTests {
         let testsDiContainer = try getTestsDiContainer(addRealmObjects: realmObjects)
         
         let removeFavoritedToolUseCase: RemoveFavoritedToolUseCase = testsDiContainer.feature.favorites.domainLayer.getRemoveFavoritedToolUseCase()
-                        
-        var remainingResources: [FavoritedResourceDataModel] = Array()
         
-        var cancellables: Set<AnyCancellable> = Set()
-        var triggerCount: Int = 0
-        
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            removeFavoritedToolUseCase
-                .execute(
-                    toolId: argument.resourceIdToDelete
-                )
-                .sink(receiveCompletion: { _ in
-                    
-                }, receiveValue: { (favoritedResources: [FavoritedResourceDataModel]) in
-                    
-                    guard triggerCount == 0 else {
-                        return
-                    }
-                    
-                    triggerCount += 1
-                    
-                    remainingResources = favoritedResources
-                                       
-                    // When finished be sure to call:
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                })
-                .store(in: &cancellables)
-        }
+        let remainingResources: [FavoritedResourceDataModel] = try await removeFavoritedToolUseCase
+            .execute(toolId: argument.resourceIdToDelete)
         
         for (expectedId, expectedPosition) in argument.expectedUpdatedIdsAtPositions {
             

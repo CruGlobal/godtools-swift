@@ -11,10 +11,10 @@ import Combine
 
 @MainActor
 final class LessonViewModel: MobileContentRendererViewModel {
-    
-    private static var storeLessonProgressCancellable: AnyCancellable?
-    
+        
     private let storeLessonProgressUseCase: StoreUserLessonProgressUseCase
+    
+    private var storeLessonProgressTask: Task<Void, Error>?
     
     let progress: ObservableValue<AnimatableValue<CGFloat>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
     
@@ -62,20 +62,18 @@ final class LessonViewModel: MobileContentRendererViewModel {
         
         let resourceId: String = currentPageRenderer.value.resource.id
         
-        Self.storeLessonProgressCancellable?.cancel()
+        storeLessonProgressTask?.cancel()
         
-        Self.storeLessonProgressCancellable = storeLessonProgressUseCase
-            .execute(
-                lessonId: resourceId,
-                lastViewedPageId: currentPage.id,
-                lastViewedPageNumber: (page + 1),
-                totalPageCount: getPages().count
-            )
-            .sink(receiveCompletion: { _ in
-                
-            }, receiveValue: { _ in
-                
-            })
+        storeLessonProgressTask = Task {
+            
+            _ = try await storeLessonProgressUseCase
+                .execute(
+                    lessonId: resourceId,
+                    viewedPageId: currentPage.id,
+                    viewedPageNumber: page,
+                    totalPageCount: getPages().count
+                )
+        }
     }
 }
 

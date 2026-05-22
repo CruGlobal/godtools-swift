@@ -37,23 +37,11 @@ final class LanguageSettingsViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .execute()
-            .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                
-                getLanguageSettingsStringsUseCase
-                    .execute(appLanguage: appLanguage)
-            }
-            .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { _ in
-                
-            }, receiveValue: { [weak self] (strings: LanguageSettingsStringsDomainModel) in
-                              
-                self?.strings = strings
-            })
+            .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
+                self?.appLanguage = appLanguage
+                self?.didSetApplanguage(appLanguage: appLanguage)
+            }
             .store(in: &cancellables)
         
         $appLanguage
@@ -76,6 +64,12 @@ final class LanguageSettingsViewModel: ObservableObject {
     
     deinit {
         print("x deinit: \(type(of: self))")
+    }
+    
+    private func didSetApplanguage(appLanguage: AppLanguageDomainModel) {
+        
+        strings = getLanguageSettingsStringsUseCase
+            .execute(appLanguage: appLanguage)
     }
 }
 

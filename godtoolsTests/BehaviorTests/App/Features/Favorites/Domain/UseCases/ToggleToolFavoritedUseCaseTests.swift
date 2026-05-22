@@ -9,7 +9,6 @@
 import Testing
 import Foundation
 @testable import godtools
-import Combine
 import RepositorySync
 
 @Suite(.serialized)
@@ -40,30 +39,10 @@ struct ToggleToolFavoritedUseCaseTests {
                 
         let toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase = testsDiContainer.feature.favorites.domainLayer.getToggleToolFavoritedUseCase()
         
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            toggleToolFavoritedUseCase
-                .execute(
-                    toolId: argument.resourceIdToToggle
-                )
-                .receive(on: DispatchQueue.main)
-                .sink(receiveCompletion: { _ in
-                    
-                }, receiveValue: { _ in
-                                       
-                    // When finished be sure to call:
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                })
-                .store(in: &cancellables)
-        }
+        _ = try await toggleToolFavoritedUseCase
+            .execute(
+                toolId: argument.resourceIdToToggle
+            )
         
         let favoritedResources: [FavoritedResourceDataModel] = try await testsDiContainer.core.dataLayer.getFavoritedResourcesRepository().getFavoritedResourcesSortedByPosition()
         

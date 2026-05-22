@@ -28,7 +28,7 @@ final class GetPersonalizedLessonsUseCase {
         self.localizationServices = localizationServices
     }
 
-    @MainActor func execute(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<LessonsResultDomainModel, Error> {
+    @MainActor func execute(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<PersonalizedLessonsDomainModel, Error> {
 
         let languageCode: String = getLanguageElseAppLanguage.getLanguageCode(languageId: filterLessonsByLanguage?.languageId, appLanguage: appLanguage)
 
@@ -48,7 +48,7 @@ final class GetPersonalizedLessonsUseCase {
         )
     }
 
-    @MainActor private func getPersonalizedLessonsPublisher(countryIsoRegionCode: String?, languageCode: String, appLanguage: AppLanguageDomainModel, filterLessonsByLanguage: LessonFilterLanguageDomainModel?, hasCountry: Bool) -> AnyPublisher<LessonsResultDomainModel, Error> {
+    @MainActor private func getPersonalizedLessonsPublisher(countryIsoRegionCode: String?, languageCode: String, appLanguage: AppLanguageDomainModel, filterLessonsByLanguage: LessonFilterLanguageDomainModel?, hasCountry: Bool) -> AnyPublisher<PersonalizedLessonsDomainModel, Error> {
 
         return Publishers.CombineLatest3(
             personalizedToolsRepository
@@ -61,7 +61,6 @@ final class GetPersonalizedLessonsUseCase {
                 .observeCollectionChangesPublisher(),
             lessonProgressRepository
                 .getLessonProgressChangedPublisher()
-                .setFailureType(to: Error.self)
         )
         .flatMap({ (personalizedLessonsChanged, resourcesChanged, lessonProgressChanged) -> AnyPublisher<[ResourceDataModel], Error> in
 
@@ -81,33 +80,23 @@ final class GetPersonalizedLessonsUseCase {
                 appLanguage: appLanguage,
                 filterLessonsByLanguage: filterLessonsByLanguage
             )
+            
+            let showsPersonalizationUnavailable: Bool = !hasCountry && lessons.isEmpty
+            let unavailableStrings: PersonalizedLessonsUnavailableDomainModel? = showsPersonalizationUnavailable ? self.getLessonsUnavailable(appLanguage: appLanguage) : nil
 
-            if self.shouldShowUnavailableState(hasCountry: hasCountry, lessons: lessons) {
-                return self.getLessonsUnavailable(appLanguage: appLanguage)
-            }
-
-            return LessonsResultDomainModel(
+            return PersonalizedLessonsDomainModel(
                 lessons: lessons,
-                unavailableStrings: nil
+                unavailableStrings: unavailableStrings
             )
         }
         .eraseToAnyPublisher()
     }
     
-    private func getLessonsUnavailable(appLanguage: AppLanguageDomainModel) -> LessonsResultDomainModel {
+    private func getLessonsUnavailable(appLanguage: AppLanguageDomainModel) -> PersonalizedLessonsUnavailableDomainModel {
 
-        let unavailableState = PersonalizedLessonsUnavailableDomainModel(
-            title: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "lessons.personalizationUnavailable.title"),
-            message: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "lessons.personalizationUnavailable.message")
+        return PersonalizedLessonsUnavailableDomainModel(
+            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "lessons.personalizationUnavailable.title"),
+            message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "lessons.personalizationUnavailable.message")
         )
-
-        return LessonsResultDomainModel(
-            lessons: [],
-            unavailableStrings: unavailableState
-        )
-    }
-
-    private func shouldShowUnavailableState(hasCountry: Bool, lessons: [LessonListItemDomainModel]) -> Bool {
-        return !hasCountry && lessons.isEmpty
     }
 }

@@ -12,6 +12,7 @@ import Combine
 @MainActor
 final class DownloadToolProgressViewModel: ObservableObject {
     
+    private let toolId: String?
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getDownloadToolProgressStringsUseCase: GetDownloadToolProgressStringsUseCase
     private let progressTimer: ProgressTimer = ProgressTimer()
@@ -30,38 +31,35 @@ final class DownloadToolProgressViewModel: ObservableObject {
     init(flowDelegate: FlowDelegate, toolId: String?, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getDownloadToolProgressStringsUseCase: GetDownloadToolProgressStringsUseCase) {
                 
         self.flowDelegate = flowDelegate
+        self.toolId = toolId
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getDownloadToolProgressStringsUseCase = getDownloadToolProgressStringsUseCase
         
         getCurrentAppLanguageUseCase
             .execute()
-            .assign(to: &$appLanguage)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
+                self?.appLanguage = appLanguage
+                self?.didSetApplanguage(appLanguage: appLanguage)
+            }
+            .store(in: &cancellables)
         
         progressTimer.start(lengthSeconds: initialProgressDownloadLengthSeconds, changed: { (progress: Double) in
 
         }, completed: { [weak self] in
             self?.didCompleteProgressTimerClosure?()
         })
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                
-                getDownloadToolProgressStringsUseCase
-                    .execute(toolId: toolId, appLanguage: appLanguage)
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: DownloadToolProgressStringsDomainModel) in
-                
-                self?.strings = strings
-            }
-            .store(in: &cancellables)
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
         progressTimer.stop()
+    }
+    
+    private func didSetApplanguage(appLanguage: AppLanguageDomainModel) {
+        
+        strings = getDownloadToolProgressStringsUseCase
+            .execute(toolId: toolId, appLanguage: appLanguage)
     }
     
     func completeDownloadProgress(didCompleteProgress: @escaping (() -> Void)) {

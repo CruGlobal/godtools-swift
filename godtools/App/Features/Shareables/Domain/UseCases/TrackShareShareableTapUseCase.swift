@@ -22,32 +22,24 @@ final class TrackShareShareableTapUseCase {
     
     func execute(toolId: String, shareableId: String) -> AnyPublisher<Void, Error> {
         
-        do {
-            
-            let resource: ResourceDataModel? = try resourcesRepository.getResource(id: toolId)
-            
-            let action = TrackActionModel(
-                screenName: "",
-                actionName: AnalyticsConstants.ActionNames.shareShareable,
-                siteSection: resource?.abbreviation ?? "",
-                siteSubSection: "",
-                appLanguage: nil,
-                contentLanguage: nil,
-                secondaryContentLanguage: nil,
-                url: nil,
-                data: [AnalyticsConstants.Keys.shareableId: shareableId]
-            )
-            
-            trackActionAnalytics.trackAction(trackAction: action)
-            
-            return Just(())
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
-        catch let error {
-            
-            return Fail(error: error)
-                .eraseToAnyPublisher()
-        }
+        let resource: ResourceDataModel? = resourcesRepository.getResourceById(id: toolId)
+        
+        let action = TrackActionModel(
+            screenName: "",
+            actionName: AnalyticsConstants.ActionNames.shareShareable,
+            siteSection: resource?.abbreviation ?? "",
+            siteSubSection: "",
+            appLanguage: nil,
+            contentLanguage: nil,
+            secondaryContentLanguage: nil,
+            url: nil,
+            data: [AnalyticsConstants.Keys.shareableId: shareableId]
+        )
+        
+        trackActionAnalytics.trackAction(trackAction: action)
+        
+        return Just(())
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
     }
 }

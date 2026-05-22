@@ -34,26 +34,22 @@ final class ToolScreenShareQRCodeViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .execute()
-            .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-            
-                getToolScreenShareQRCodeStringsUseCase
-                    .execute(appLanguage: appLanguage)
-            }
-            .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: ToolScreenShareQRCodeStringsDomainModel) in
-                
-                self?.strings = strings
+            .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
+                self?.appLanguage = appLanguage
+                self?.didSetApplanguage(appLanguage: appLanguage)
             }
             .store(in: &cancellables)
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+    }
+    
+    private func didSetApplanguage(appLanguage: AppLanguageDomainModel) {
+        
+        strings = getToolScreenShareQRCodeStringsUseCase
+            .execute(appLanguage: appLanguage)
     }
 }
 

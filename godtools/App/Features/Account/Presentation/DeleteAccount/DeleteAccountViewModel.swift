@@ -12,6 +12,9 @@ import Combine
 @MainActor
 final class DeleteAccountViewModel: ObservableObject {
    
+    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    private let getDeleteAccountStringsUseCase: GetDeleteAccountStringsUseCase
+    
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
@@ -20,31 +23,31 @@ final class DeleteAccountViewModel: ObservableObject {
     
     @Published private(set) var strings = DeleteAccountStringsDomainModel.emptyValue
     
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguage: GetCurrentAppLanguageUseCase, getDeleteAccountStringsUseCase: GetDeleteAccountStringsUseCase) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getDeleteAccountStringsUseCase: GetDeleteAccountStringsUseCase) {
         
+        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
+        self.getDeleteAccountStringsUseCase = getDeleteAccountStringsUseCase
         self.flowDelegate = flowDelegate
         
-        getCurrentAppLanguage
+        getCurrentAppLanguageUseCase
             .execute()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                getDeleteAccountStringsUseCase
-                    .execute(appLanguage: appLanguage)
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: DeleteAccountStringsDomainModel) in
-                self?.strings = strings
-            }
+            .sink(receiveValue: { [weak self] (appLanguage: AppLanguageDomainModel) in
+                
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
+            })
             .store(in: &cancellables)
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+    }
+    
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+        
+        strings = getDeleteAccountStringsUseCase
+            .execute(appLanguage: appLanguage)
     }
 }
 

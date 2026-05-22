@@ -12,7 +12,6 @@ import Foundation
 import RealmSwift
 import SwiftData
 import RepositorySync
-import Combine
 
 @Suite(.serialized)
 struct LanguagesCacheTests {

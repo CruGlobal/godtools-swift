@@ -8,7 +8,6 @@
 
 import Foundation
 @testable import godtools
-import Combine
 import RealmSwift
 import RepositorySync
 
@@ -25,27 +24,13 @@ class MockAppLanguagesRepositorySync: AppLanguagesRepositorySyncInterface {
         try addAppLanguagesToRealm(appLanguages: appLanguages)
     }
     
-    func syncPublisher() -> AnyPublisher<Void, Error> {
-                
+    func sync() async throws {
+        
         guard appLanguages.isEmpty else {
-            return Just(Void())
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
+            return
         }
         
-        do {
-            
-            try addAppLanguagesToRealm(appLanguages: appLanguages)
-            
-            return Just(Void())
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
-        catch let error {
-            
-            return Fail(error: error)
-                .eraseToAnyPublisher()
-        }
+        try addAppLanguagesToRealm(appLanguages: appLanguages)
     }
     
     private func addAppLanguagesToRealm(appLanguages: [AppLanguageCodable]) throws {

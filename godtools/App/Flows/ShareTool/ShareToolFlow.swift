@@ -41,28 +41,22 @@ class ShareToolFlow: Flow {
         
         let getShareToolStringsUseCase = appDiContainer.feature.shareTool.domainLayer.getShareToolStringsUseCase()
         
-        do {
-            
-            let strings = try getShareToolStringsUseCase
-                .execute(
-                    toolId: toolId,
-                    toolLanguageId: toolLanguageId,
-                    pageNumber: pageNumber,
-                    appLanguage: appLanguage
-                )
-            
-            let shareToolView = getShareToolView(
-                strings: strings,
+        let strings = getShareToolStringsUseCase
+            .execute(
                 toolId: toolId,
-                toolAnalyticsAbbreviation: toolAnalyticsAbbreviation,
-                pageNumber: pageNumber
+                toolLanguageId: toolLanguageId,
+                pageNumber: pageNumber,
+                appLanguage: appLanguage
             )
-                            
-            navigationController.present(shareToolView, animated: true)
-        }
-        catch _ {
-            
-        }
+        
+        let shareToolView = getShareToolView(
+            strings: strings,
+            toolId: toolId,
+            toolAnalyticsAbbreviation: toolAnalyticsAbbreviation,
+            pageNumber: pageNumber
+        )
+                        
+        navigationController.present(shareToolView, animated: true)
     }
     
     deinit {
@@ -89,31 +83,27 @@ class ShareToolFlow: Flow {
     
     private func getShareToolUrlForQRCode() {
         
-        appDiContainer.feature.shareTool.domainLayer
-            .getShareToolQRCodeUseCase()
-            .execute(
-                toolId: toolId,
-                toolLanguageId: toolLanguageId,
-                pageNumber: pageNumber
-            )
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] completiom in
-                
-                switch completiom {
-                case .finished:
-                    break
-                case .failure(let error):
-                    self?.handleGetShareToolUrlCompleted(result: .failure(error))
-                }
-                
-            } receiveValue: { [weak self] (shareToolQrCode: ShareToolQRCodeDomainModel) in
-
-                self?.handleGetShareToolUrlCompleted(result: .success(shareToolQrCode))
-            }
-            .store(in: &cancellables)
-    }
-    
-    private func handleGetShareToolUrlCompleted(result: Result<ShareToolQRCodeDomainModel, Error>) {
+        let result: Result<ShareToolQRCodeDomainModel, Error>
+        
+        do {
+        
+            let shareToolQrCode: ShareToolQRCodeDomainModel = try appDiContainer
+                .feature
+                .shareTool
+                .domainLayer
+                .getShareToolQRCodeUseCase()
+                .execute(
+                    toolId: toolId,
+                    toolLanguageId: toolLanguageId,
+                    pageNumber: pageNumber
+                )
+            
+            result = .success(shareToolQrCode)
+        }
+        catch let error {
+            
+            result = .failure(error)
+        }
         
         let appLanguage: AppLanguageDomainModel = self.appLanguage
         

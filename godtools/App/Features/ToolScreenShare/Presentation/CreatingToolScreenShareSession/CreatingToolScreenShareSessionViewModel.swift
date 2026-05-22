@@ -16,7 +16,7 @@ final class CreatingToolScreenShareSessionViewModel: ObservableObject {
         
     private let toolId: String
     private let createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger
-    private let getCurrentAppLanguage: GetCurrentAppLanguageUseCase
+    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getCreatingToolScreenShareSessionStringsUseCase: GetCreatingToolScreenShareSessionStringsUseCase
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
     private let incrementUserCounterUseCase: IncrementUserCounterUseCase
@@ -29,17 +29,17 @@ final class CreatingToolScreenShareSessionViewModel: ObservableObject {
     
     @Published private(set) var strings = CreatingToolScreenShareSessionStringsDomainModel.emptyValue
         
-    init(flowDelegate: FlowDelegate, toolId: String, createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger, getCurrentAppLanguage: GetCurrentAppLanguageUseCase, getCreatingToolScreenShareSessionStringsUseCase: GetCreatingToolScreenShareSessionStringsUseCase, tractRemoteSharePublisher: TractRemoteSharePublisher, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
+    init(flowDelegate: FlowDelegate, toolId: String, createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getCreatingToolScreenShareSessionStringsUseCase: GetCreatingToolScreenShareSessionStringsUseCase, tractRemoteSharePublisher: TractRemoteSharePublisher, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
         
         self.flowDelegate = flowDelegate
         self.toolId = toolId
         self.createSessionTrigger = createSessionTrigger
-        self.getCurrentAppLanguage = getCurrentAppLanguage
+        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getCreatingToolScreenShareSessionStringsUseCase = getCreatingToolScreenShareSessionStringsUseCase
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
         self.incrementUserCounterUseCase = incrementUserCounterUseCase
         
-        getCurrentAppLanguage
+        getCurrentAppLanguageUseCase
             .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)

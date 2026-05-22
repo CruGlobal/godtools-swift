@@ -1,5 +1,5 @@
 //
-//  SearchCountriesInLocalizationSettingsCountriesListTests.swift
+//  SearchCountriesInLocalizationSettingsCountriesListUseCaseTests.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 12/10/25.
@@ -10,7 +10,7 @@ import Testing
 @testable import godtools
 import Combine
 
-struct SearchCountriesInLocalizationSettingsCountriesListTests {
+struct SearchCountriesInLocalizationSettingsCountriesListUseCaseTests {
 
     @Test(
         """
@@ -103,7 +103,7 @@ struct SearchCountriesInLocalizationSettingsCountriesListTests {
     }
 }
 
-extension SearchCountriesInLocalizationSettingsCountriesListTests {
+extension SearchCountriesInLocalizationSettingsCountriesListUseCaseTests {
 
     private static func getSearchCountriesListUseCase() -> SearchCountriesInLocalizationSettingsCountriesListUseCase {
 

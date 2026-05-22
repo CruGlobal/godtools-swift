@@ -41,8 +41,7 @@ final class ResourcesRepository {
             .observeCollectionChangesPublisher()
     }
     
-    @available(*, deprecated) // Remove and use throws. ~Levi
-    func getResourceNonThrowing(id: String) -> ResourceDataModel? {
+    func getResourceById(id: String) -> ResourceDataModel? {
         do {
             return try cache.persistence.getDataModel(id: id)
         }
@@ -51,8 +50,7 @@ final class ResourcesRepository {
         }
     }
     
-    @available(*, deprecated) // Remove and use throws. ~Levi
-    func getResourceNonThrowing(abbreviation: String) -> ResourceDataModel? {
+    func getResourceByAbbreviation(abbreviation: String) -> ResourceDataModel? {
         
         do {
             return try cache.getResource(abbreviation: abbreviation)
@@ -60,14 +58,6 @@ final class ResourcesRepository {
         catch _ {
             return nil
         }
-    }
-    
-    func getResource(id: String) throws -> ResourceDataModel? {
-        return try cache.persistence.getDataModel(id: id)
-    }
-    
-    func getResource(abbreviation: String) throws -> ResourceDataModel? {
-        return try cache.getResource(abbreviation: abbreviation)
     }
     
     func getResourcesByIds(ids: [String]) async throws -> [ResourceDataModel] {
@@ -82,22 +72,17 @@ final class ResourcesRepository {
         return try await self.cache.getFeaturedLessons(sorted: sorted)
     }
     
-    func getResourceVariantsPublisher(resourceId: String) -> AnyPublisher<[ResourceDataModel], Error> {
+    func getResourceVariants(resourceId: String) async throws -> [ResourceDataModel] {
         
-        return AnyPublisher() {
-            try await self.cache.getResourceVariants(resourceId: resourceId)
-        }
+        return try await cache.getResourceVariants(resourceId: resourceId)
     }
     
-    func getLessonsPublisher(filterByLanguageId: String? = nil, sorted: Bool = false) -> AnyPublisher<[ResourceDataModel], Error> {
+    func getLessons(filterByLanguageId: String? = nil, sorted: Bool = false) async throws -> [ResourceDataModel] {
         
-        return AnyPublisher() {
-            try await self.cache.getLessons(filterByLanguageId: filterByLanguageId, sorted: sorted)
-        }
+        return try await self.cache.getLessons(filterByLanguageId: filterByLanguageId, sorted: sorted)
     }
     
-    @available(*, deprecated) // Remove and use throws. ~Levi
-    func getLessonsCountNonThrowing(filterByLanguageId: String? = nil) -> Int {
+    func getLessonsCount(filterByLanguageId: String? = nil) -> Int {
         do {
             return try cache.getLessonsCount(filterByLanguageId: filterByLanguageId)
         }
@@ -106,8 +91,7 @@ final class ResourcesRepository {
         }
     }
     
-    @available(*, deprecated) // Remove and use throws. ~Levi
-    func getLessonsSupportedLanguageIdsNonThrowing() -> [String] {
+    func getLessonsSupportedLanguageIds() -> [String] {
         do {
             return try cache.getLessonsSupportedLanguageIds()
         }
@@ -203,7 +187,7 @@ extension ResourcesRepository {
             return ResourcesCacheSyncResult.emptyResult()
         }
         
-        let languages: [LanguageDataModel] = try await languagesRepository.syncLanguagesFromRemote(
+        _ = try await languagesRepository.syncLanguagesFromRemote(
             requestPriority: requestPriority
         )
         
@@ -224,8 +208,7 @@ extension ResourcesRepository {
 
 extension ResourcesRepository {
     
-    @available(*, deprecated) // Remove and use throws. ~Levi
-    func getSpotlightToolsNonThrowing(sortByDefaultOrder: Bool = false) -> [ResourceDataModel] {
+    func getSpotlightTools(sortByDefaultOrder: Bool = false) -> [ResourceDataModel] {
         
         do {
             return try cache.getSpotlightTools(sortByDefaultOrder: sortByDefaultOrder)
@@ -240,8 +223,7 @@ extension ResourcesRepository {
 
 extension ResourcesRepository {
     
-    @available(*, deprecated) // Remove and use throws. ~Levi
-    func getAllToolsListNonThrowing(filterByCategory: String?, filterByLanguageId: String?, sortByDefaultOrder: Bool) -> [ResourceDataModel] {
+    func getAllToolsList(filterByCategory: String?, filterByLanguageId: String?, sortByDefaultOrder: Bool) -> [ResourceDataModel] {
         
         do {
             
@@ -256,8 +238,7 @@ extension ResourcesRepository {
         }
     }
     
-    @available(*, deprecated) // Remove and use throws. ~Levi
-    func getAllToolsListCountNonThrowing(filterByCategory: String?, filterByLanguageId: String?) -> Int {
+    func getAllToolsListCount(filterByCategory: String?, filterByLanguageId: String?) -> Int {
         
         do {
             return try cache.getAllToolsListCount(filterByCategory: filterByCategory, filterByLanguageId: filterByLanguageId)
@@ -267,8 +248,7 @@ extension ResourcesRepository {
         }
     }
     
-    @available(*, deprecated) // Remove and use throws. ~Levi
-    func getAllToolCategoryIdsNonThrowing(filteredByLanguageId: String?) -> [String] {
+    func getAllToolCategoryIds(filteredByLanguageId: String?) -> [String] {
         
         do {
             return try cache.getAllToolCategoryIds(filteredByLanguageId: filteredByLanguageId)
@@ -278,8 +258,7 @@ extension ResourcesRepository {
         }
     }
     
-    @available(*, deprecated) // Remove and use throws. ~Levi
-    func getAllToolLanguageIdsNonThrowing(filteredByCategoryId: String?) -> [String] {
+    func getAllToolLanguageIds(filteredByCategoryId: String?) -> [String] {
         
         do {
             return try cache.getAllToolLanguageIds(filteredByCategoryId: filteredByCategoryId)

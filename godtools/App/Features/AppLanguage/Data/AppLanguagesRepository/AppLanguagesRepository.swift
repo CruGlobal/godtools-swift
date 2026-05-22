@@ -16,7 +16,7 @@ final class AppLanguagesRepository {
     private let cache: AppLanguagesCache
     private let sync: AppLanguagesRepositorySyncInterface
     
-    private var cancellables: Set<AnyCancellable> = Set()
+    private var syncTask: Task<Void, Error>?
         
     init(api: AppLanguagesApi, cache: AppLanguagesCache, sync: AppLanguagesRepositorySyncInterface) {
         
@@ -25,72 +25,58 @@ final class AppLanguagesRepository {
         self.sync = sync
     }
     
-    var persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable> {
-        return cache.persistence
+    deinit {
+        syncTask?.cancel()
     }
     
-    @MainActor func observeNumberOfAppLanguagesPublisher() -> AnyPublisher<Int, Error> {
+    @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Error> {
         
-        sync.syncPublisher()
-            .sink(receiveCompletion: { _ in
-                
-            }, receiveValue: { _ in
-                
-            })
-            .store(in: &cancellables)
+        syncAppLanguages()
         
-        return persistence
+        return cache
+            .persistence
             .observeCollectionChangesPublisher()
-            .tryMap { _ in
-                return try self
-                    .persistence
-                    .getObjectCount()
-            }
-            .eraseToAnyPublisher()
     }
     
-    @MainActor func observeAppLanguagesPublisher() -> AnyPublisher<[AppLanguageDataModel], Error> {
-        
-        sync.syncPublisher()
-            .sink(receiveCompletion: { _ in
-                
-            }, receiveValue: { _ in
-                
-            })
-            .store(in: &cancellables)
-        
-        return persistence
-            .observeCollectionChangesPublisher()
-            .flatMap({ (changes: Void) -> AnyPublisher<[AppLanguageDataModel], Error> in
-                
-                return self.persistence
-                    .getDataModelsPublisher(getOption: .allObjects)
-                    .eraseToAnyPublisher()
-            })
-            .eraseToAnyPublisher()
+    var numberOfAppLanguages: Int {
+        do {
+            return try cache.persistence.getObjectCount()
+        }
+        catch _ {
+            return 0
+        }
     }
     
-    func getLanguagesPublisher() -> AnyPublisher<[AppLanguageDataModel], Error> {
+    func getLanguage(id: String) -> AppLanguageDataModel? {
         
-        return sync.syncPublisher()
-            .flatMap({ (syncCompleted: Void) -> AnyPublisher<[AppLanguageDataModel], Error> in
-                
-                return self.persistence
-                    .getDataModelsPublisher(getOption: .allObjects)
-                    .eraseToAnyPublisher()
-            })
-            .eraseToAnyPublisher()
+        syncAppLanguages()
+        
+        do {
+            return try cache.persistence.getDataModel(id: id)
+        }
+        catch _ {
+            return nil
+        }
     }
-
-    func getLanguagePublisher(languageId: BCP47LanguageIdentifier) -> AnyPublisher<AppLanguageDataModel?, Error> {
+    
+    func getLanguages() async throws -> [AppLanguageDataModel] {
         
-        return sync.syncPublisher()
-            .tryMap { _ in
-                
-                let dataModel: AppLanguageDataModel? = try self.persistence.getDataModel(id: languageId)
-                
-                return dataModel
-            }
-            .eraseToAnyPublisher()
+        syncAppLanguages()
+        
+        return try await cache.persistence.getDataModelsAsync(getOption: .allObjects)
+    }
+    
+    private func syncAppLanguages() {
+        
+        guard syncTask == nil else {
+            return
+        }
+        
+        syncTask = Task { [weak self] in
+            
+            try await self?.sync.sync()
+            
+            self?.syncTask = nil
+        }
     }
 }

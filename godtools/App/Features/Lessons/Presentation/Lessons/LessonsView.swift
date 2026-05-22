@@ -28,12 +28,6 @@ struct LessonsView: View {
                     
             AccessibilityScreenElementView(screenAccessibility: .dashboardLessons)
             
-            if viewModel.isLoadingLessons {
-                CenteredCircularProgressView(
-                    progressColor: ColorPalette.gtGrey.color
-                )
-            }
-
             VStack(alignment: .center, spacing: 0) {
 
                 PersonalizedToolToggle(
@@ -69,30 +63,30 @@ struct LessonsView: View {
                         }
                         .padding(.bottom, 15)
                         .padding(.horizontal, contentHorizontalInsets)
+                        
+                        if viewModel.selectedToggle == .personalized, let personalizedLessonsUnavailable = viewModel.personalizedLessons.unavailableStrings {
 
-                        LazyVStack(alignment: .center, spacing: lessonCardSpacing) {
+                            PersonalizationUnavailableView(
+                                title: personalizedLessonsUnavailable.title,
+                                message: personalizedLessonsUnavailable.message,
+                                changeSettingsButtonTitle: viewModel.strings.changeSettings,
+                                goToAllLessonsButtonTitle: viewModel.strings.viewAllLessons,
+                                geometry: geometry,
+                                heightMultiplier: 0.7,
+                                changeSettingsAction: {
+                                    viewModel.localizationSettingsTapped()
+                                },
+                                goToAllLessonsAction: {
+                                    viewModel.goToAllLessonsTapped()
+                                }
+                            )
 
-                            if viewModel.isPersonalizationUnavailable,
-                               let unavailableState = viewModel.personalizationUnavailableState {
+                        }
+                        else if !viewModel.lessonsList.isEmpty {
+                            
+                            LazyVStack(alignment: .center, spacing: lessonCardSpacing) {
 
-                                PersonalizationUnavailableView(
-                                    title: unavailableState.title,
-                                    message: unavailableState.message,
-                                    changeSettingsButtonTitle: viewModel.strings.changeSettings,
-                                    goToAllLessonsButtonTitle: viewModel.strings.viewAllLessons,
-                                    geometry: geometry,
-                                    heightMultiplier: 0.7,
-                                    changeSettingsAction: {
-                                        viewModel.localizationSettingsTapped()
-                                    },
-                                    goToAllLessonsAction: {
-                                        viewModel.goToAllLessonsTapped()
-                                    }
-                                )
-
-                            } else {
-
-                                ForEach(viewModel.lessons) { (lessonListItem: LessonListItemDomainModel) in
+                                ForEach(viewModel.lessonsList) { (lessonListItem: LessonListItemDomainModel) in
 
                                     LessonCardView(
                                         viewModel: viewModel.getLessonViewModel(lessonListItem: lessonListItem),
@@ -104,10 +98,11 @@ struct LessonsView: View {
                                     )
                                 }
                             }
+                            .padding([.top], lessonCardSpacing)
                         }
-                        .padding([.top], lessonCardSpacing)
 
-                        if viewModel.selectedToggle == .personalized && !viewModel.isPersonalizationUnavailable {
+                        if viewModel.selectedToggle == .personalized && viewModel.personalizedLessons.unavailableStrings == nil {
+                            
                             PersonalizedToolFooterView(
                                 title: viewModel.strings.personalizedLessonExplanationTitle,
                                 subtitle: viewModel.strings.personalizedLessonExplanationSubtitle,
@@ -124,8 +119,6 @@ struct LessonsView: View {
                 } refreshHandler: {
                     viewModel.pullToRefresh()
                 }
-                .opacity(viewModel.isLoadingLessons ? 0 : 1)
-                .animation(.easeOut, value: !viewModel.isLoadingLessons)
             }
             .animation(.spring(response: 0.5, dampingFraction: 0.75), value: viewModel.selectedToggle)
             .onAppear {
@@ -148,8 +141,8 @@ struct LessonsView_Preview: PreviewProvider {
             flowDelegate: MockFlowDelegate(),
             pullToRefreshLessonsUseCase: appDiContainer.feature.lessons.domainLayer.getPullToRefreshLessonsUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getLocalizationSettingsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getGetLocalizationSettingsUseCase(),
-            getPersonalizedLessonsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getGetPersonalizedLessonsUseCase(),
+            getLocalizationSettingsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getLocalizationSettingsUseCase(),
+            getPersonalizedLessonsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getPersonalizedLessonsUseCase(),
             getLessonsStringsUseCase: appDiContainer.feature.lessons.domainLayer.getLessonsStringsUseCase(),
             getAllLessonsUseCase: appDiContainer.feature.lessons.domainLayer.getAllLessonsUseCase(),
             getUserLessonFiltersUseCase: appDiContainer.feature.lessonFilter.domainLayer.getUserLessonFiltersUseCase(),

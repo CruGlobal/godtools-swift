@@ -9,7 +9,6 @@
 import Testing
 import Foundation
 @testable import godtools
-import Combine
 import RepositorySync
 
 @Suite(.serialized)

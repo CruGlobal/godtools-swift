@@ -1,5 +1,5 @@
 //
-//  ToolsResultDomainModel.swift
+//  PersonalizedToolsDomainModel.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 3/9/26.
@@ -8,13 +8,13 @@
 
 import Foundation
 
-struct ToolsResultDomainModel: Sendable {
+struct PersonalizedToolsDomainModel: Sendable {
 
     let tools: [ToolListItemDomainModel]
     let unavailableStrings: PersonalizedToolsUnavailableDomainModel?
 
-    static var empty: ToolsResultDomainModel {
-        ToolsResultDomainModel(
+    static var emptyValue: PersonalizedToolsDomainModel {
+        PersonalizedToolsDomainModel(
             tools: [],
             unavailableStrings: nil
         )

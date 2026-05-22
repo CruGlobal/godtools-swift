@@ -29,72 +29,64 @@ final class GetFeaturedLessonsUseCase {
     }
     
     @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[FeaturedLessonDomainModel], Error> {
-            
-        let appLanguageModel: LanguageDataModel?
-        
-        do {
-            appLanguageModel = try languagesRepository.getLanguage(code: appLanguage)
-        }
-        catch let error {
-            return Fail(error: error)
-                .eraseToAnyPublisher()
-        }
-        
+                    
         return Publishers.CombineLatest(
             resourcesRepository
                 .observeCollectionChangesPublisher(),
             lessonProgressRepository
                 .getLessonProgressChangedPublisher()
-                .setFailureType(to: Error.self)
         )
         .flatMap({ (resourcesChanged: Void, lessonProgressDidChange: Void) -> AnyPublisher<[FeaturedLessonDomainModel], Error> in
             
             return AnyPublisher() {
-                try await self.resourcesRepository
-                    .getFeaturedLessons(sorted: true)
+                try await self.asyncExecute(appLanguage: appLanguage)
             }
-            .tryMap { (featuredLessonsDataModels: [ResourceDataModel]) in
-                
-                let featuredLessons: [FeaturedLessonDomainModel] = try featuredLessonsDataModels.map { (resource: ResourceDataModel) in
-
-                    let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel
-                    
-                    if let language = appLanguageModel {
-                        toolLanguageAvailability = self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: resource, language: language, translateInLanguage: language)
-                    }
-                    else {
-                        toolLanguageAvailability = ToolLanguageAvailabilityDomainModel(availabilityString: "", isAvailable: false)
-                    }
-                    
-                    let lessonProgress = try self.getLessonListItemProgress.getLessonProgress(
-                        lesson: resource,
-                        appLanguage: appLanguage
-                    )
-                    
-                    let nameLanguageDirection: LanguageDirectionDomainModel
-                    
-                    if let filterLanguageModel = appLanguageModel {
-                        nameLanguageDirection = filterLanguageModel.languageDirectionDomainModel
-                    } else {
-                        nameLanguageDirection = .leftToRight
-                    }
-                    
-                    return FeaturedLessonDomainModel(
-                        analyticsToolName: resource.abbreviation,
-                        availabilityInAppLanguage: toolLanguageAvailability,
-                        bannerImageId: resource.attrBanner,
-                        dataModelId: resource.id,
-                        name: self.getTranslatedToolName.getToolName(resource: resource, translateInLanguage: appLanguage),
-                        nameLanguageDirection: nameLanguageDirection,
-                        lessonProgress: lessonProgress
-                    )
-                }
-                
-                return featuredLessons
-            }
-            .eraseToAnyPublisher()
-                
         })
         .eraseToAnyPublisher()
+    }
+    
+    private func asyncExecute(appLanguage: AppLanguageDomainModel) async throws -> [FeaturedLessonDomainModel] {
+        
+        let appLanguageModel: LanguageDataModel? = languagesRepository.getLanguageByCode(code: appLanguage)
+        
+        let featuredLessonsDataModels: [ResourceDataModel] = try await resourcesRepository
+            .getFeaturedLessons(sorted: true)
+        
+        let featuredLessons: [FeaturedLessonDomainModel] = try featuredLessonsDataModels.map { (resource: ResourceDataModel) in
+
+            let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel
+            
+            if let language = appLanguageModel {
+                toolLanguageAvailability = self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: resource, language: language, translateInLanguage: language)
+            }
+            else {
+                toolLanguageAvailability = ToolLanguageAvailabilityDomainModel(availabilityString: "", isAvailable: false)
+            }
+            
+            let lessonProgress = try self.getLessonListItemProgress.getLessonProgress(
+                lesson: resource,
+                appLanguage: appLanguage
+            )
+            
+            let nameLanguageDirection: LanguageDirectionDomainModel
+            
+            if let filterLanguageModel = appLanguageModel {
+                nameLanguageDirection = filterLanguageModel.languageDirectionDomainModel
+            } else {
+                nameLanguageDirection = .leftToRight
+            }
+            
+            return FeaturedLessonDomainModel(
+                analyticsToolName: resource.abbreviation,
+                availabilityInAppLanguage: toolLanguageAvailability,
+                bannerImageId: resource.attrBanner,
+                dataModelId: resource.id,
+                name: self.getTranslatedToolName.getToolName(resource: resource, translateInLanguage: appLanguage),
+                nameLanguageDirection: nameLanguageDirection,
+                lessonProgress: lessonProgress
+            )
+        }
+        
+        return featuredLessons
     }
 }

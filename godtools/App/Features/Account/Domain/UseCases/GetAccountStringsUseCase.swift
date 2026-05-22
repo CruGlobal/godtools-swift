@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetAccountStringsUseCase {
     
@@ -17,7 +16,7 @@ final class GetAccountStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<AccountStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> AccountStringsDomainModel {
         
         let localeId: String = appLanguage.localeId
         
@@ -30,8 +29,7 @@ final class GetAccountStringsUseCase {
             globalAnalyticsTitle: getGlobalAnalyticsTitle(localeId: localeId)
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
     
     private func getGlobalAnalyticsTitle(localeId: BCP47LanguageIdentifier) -> String {

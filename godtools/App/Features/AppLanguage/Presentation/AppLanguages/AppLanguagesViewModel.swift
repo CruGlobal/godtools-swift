@@ -16,61 +16,37 @@ final class AppLanguagesViewModel: ObservableObject {
     private let searchAppLanguageInAppLanguagesListUseCase: SearchAppLanguageInAppLanguagesListUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getAppLanguagesListUseCase: GetAppLanguagesListUseCase
-    private let viewSearchBarUseCase: ViewSearchBarUseCase
+    private let getSearchBarStringsUseCase: GetSearchBarStringsUseCase
     
+    private var getAppLanguagesTask: Task<Void, Error>?
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
-    private lazy var searchBarViewModel = SearchBarViewModel(getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, viewSearchBarUseCase: viewSearchBarUseCase)
     
     @Published private var appLanguage = AppLanguageDomainModel.english
     @Published private var appLanguagesList: [AppLanguageListItemDomainModel] = Array()
     
+    @Published private(set) var searchBarStrings = SearchBarStringsDomainModel.emptyValue
     @Published private(set) var strings = AppLanguagesStringsDomainModel.emptyValue
     
     @Published var searchText: String = ""
     @Published var appLanguageSearchResults: [AppLanguageListItemDomainModel] = Array()
     
-    init(flowDelegate: FlowDelegate, getAppLanguagesStringsUseCase: GetAppLanguagesStringsUseCase, searchAppLanguageInAppLanguagesListUseCase: SearchAppLanguageInAppLanguagesListUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getAppLanguagesListUseCase: GetAppLanguagesListUseCase, viewSearchBarUseCase: ViewSearchBarUseCase) {
+    init(flowDelegate: FlowDelegate, getAppLanguagesStringsUseCase: GetAppLanguagesStringsUseCase, searchAppLanguageInAppLanguagesListUseCase: SearchAppLanguageInAppLanguagesListUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getAppLanguagesListUseCase: GetAppLanguagesListUseCase, getSearchBarStringsUseCase: GetSearchBarStringsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.getAppLanguagesStringsUseCase = getAppLanguagesStringsUseCase
         self.searchAppLanguageInAppLanguagesListUseCase = searchAppLanguageInAppLanguagesListUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getAppLanguagesListUseCase = getAppLanguagesListUseCase
-        self.viewSearchBarUseCase = viewSearchBarUseCase
+        self.getSearchBarStringsUseCase = getSearchBarStringsUseCase
         
         getCurrentAppLanguageUseCase
             .execute()
-            .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                getAppLanguagesListUseCase
-                    .execute(appLanguage: appLanguage)
-            }
-            .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { _ in
-                
-            }, receiveValue: { [weak self] (appLanguages: [AppLanguageListItemDomainModel]) in
-                
-                self?.appLanguagesList = appLanguages
-            })
-            .store(in: &cancellables)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                getAppLanguagesStringsUseCase
-                    .execute(appLanguage: appLanguage)
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: AppLanguagesStringsDomainModel) in
-                
-                self?.strings = strings
+            .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
             }
             .store(in: &cancellables)
         
@@ -89,6 +65,27 @@ final class AppLanguagesViewModel: ObservableObject {
     
     deinit {
         print("x deinit: \(type(of: self))")
+        getAppLanguagesTask?.cancel()
+    }
+    
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+        
+        searchBarStrings = getSearchBarStringsUseCase
+            .execute(appLanguage: appLanguage)
+        
+        strings = getAppLanguagesStringsUseCase
+            .execute(appLanguage: appLanguage)
+        
+        refreshAppLanguagesList(appLanguage: appLanguage)
+    }
+    
+    private func refreshAppLanguagesList(appLanguage: AppLanguageDomainModel) {
+        
+        getAppLanguagesTask?.cancel()
+        
+        getAppLanguagesTask = Task {
+            appLanguagesList = try await getAppLanguagesListUseCase.execute(appLanguage: appLanguage)
+        }
     }
 }
 
@@ -104,10 +101,5 @@ extension AppLanguagesViewModel {
     func appLanguageTapped(appLanguage: AppLanguageListItemDomainModel) {
         
         flowDelegate?.navigate(step: .appLanguageTappedFromAppLanguages(appLanguage: appLanguage))
-    }
-    
-    func getSearchBarViewModel() -> SearchBarViewModel {
-        
-        return searchBarViewModel
     }
 }
