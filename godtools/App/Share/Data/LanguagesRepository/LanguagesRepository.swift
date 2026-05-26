@@ -70,7 +70,7 @@ extension LanguagesRepository {
         
         let languages: [LanguageCodable] = try await api.getLanguages(requestPriority: requestPriority)
         
-        return try await cache.persistence.writeObjectsAsync(
+        return try await cache.persistence.writeObjects(
             externalObjects: languages,
             writeOption: .deleteObjectsNotInExternal,
             getOption: .allObjects
@@ -81,7 +81,7 @@ extension LanguagesRepository {
         
         let languages: [LanguageCodable] = try jsonFileCache.getLanguages()
         
-        return try await cache.persistence.writeObjectsAsync(
+        return try await cache.persistence.writeObjects(
             externalObjects: languages,
             writeOption: nil,
             getOption: .allObjects

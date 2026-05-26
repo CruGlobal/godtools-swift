@@ -171,7 +171,7 @@ extension TrackDownloadedTranslationsCache {
             version: translation.version
         )
         
-        _ = try await persistence.writeObjectsAsync(
+        _ = try await persistence.writeObjects(
             externalObjects: [downloadedTranslation],
             writeOption: nil,
             getOption: nil

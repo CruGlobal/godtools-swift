@@ -49,7 +49,7 @@ final class UserCountersSync {
             
             let remoteCounters: [UserCounterCodable] = try await api.fetchUserCounters(requestPriority: requestPriority)
             
-            _ = try await cache.persistence.writeObjectsAsync(
+            _ = try await cache.persistence.writeObjects(
                 externalObjects: remoteCounters,
                 writeOption: .deleteObjectsNotInExternal,
                 getOption: nil

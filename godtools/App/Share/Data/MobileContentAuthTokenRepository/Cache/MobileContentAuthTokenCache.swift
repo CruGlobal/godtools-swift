@@ -72,7 +72,7 @@ extension MobileContentAuthTokenCache {
         
         try keychainAccessor.saveMobileContentAuthToken(authTokenCodable: authTokenCodable)
         
-        _ = try await persistence.writeObjectsAsync(
+        _ = try await persistence.writeObjects(
             externalObjects: [authTokenCodable],
             writeOption: nil,
             getOption: nil

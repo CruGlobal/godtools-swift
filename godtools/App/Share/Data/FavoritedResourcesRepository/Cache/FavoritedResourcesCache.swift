@@ -132,7 +132,7 @@ extension FavoritedResourcesCache {
         
         if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
             
-            _ = try await swiftPersistence.writeObjectsAsync(
+            _ = try await swiftPersistence.writeObjects(
                 externalObjects: allFavoritedResourcesSorted,
                 writeOption: nil,
                 getOption: nil
@@ -142,7 +142,7 @@ extension FavoritedResourcesCache {
         }
         else if let realmPersistence = getRealmPersistence() {
             
-            _ = try await realmPersistence.writeObjectsAsync(
+            _ = try await realmPersistence.writeObjects(
                 externalObjects: allFavoritedResourcesSorted,
                 writeOption: nil,
                 getOption: nil

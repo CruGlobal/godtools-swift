@@ -79,7 +79,7 @@ final class UserToolFiltersRepository {
             createdAt: Date()
         )
         
-        _ = try await cache.categoryPersistence.writeObjectsAsync(
+        _ = try await cache.categoryPersistence.writeObjects(
             externalObjects: [categoryFilter],
             writeOption: nil,
             getOption: nil
@@ -102,7 +102,7 @@ final class UserToolFiltersRepository {
             createdAt: Date()
         )
         
-        _ = try await cache.languagePersistence.writeObjectsAsync(
+        _ = try await cache.languagePersistence.writeObjects(
             externalObjects: [languageFilter],
             writeOption: nil,
             getOption: nil

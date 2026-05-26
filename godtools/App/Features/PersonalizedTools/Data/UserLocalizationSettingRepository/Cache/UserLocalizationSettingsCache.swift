@@ -43,7 +43,7 @@ extension UserLocalizationSettingsCache {
     func storeUserLocalizationSetting(dataModel: UserLocalizationSettingsDataModel) async throws {
         
         _ = try await persistence
-            .writeObjectsAsync(
+            .writeObjects(
                 externalObjects: [dataModel],
                 writeOption: nil,
                 getOption: nil

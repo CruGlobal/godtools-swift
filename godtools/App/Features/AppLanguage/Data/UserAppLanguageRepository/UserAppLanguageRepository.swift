@@ -50,7 +50,7 @@ final class UserAppLanguageRepository {
             languageId: appLanguageId
         )
         
-        _ = try await cache.persistence.writeObjectsAsync(
+        _ = try await cache.persistence.writeObjects(
             externalObjects: [dataModel],
             writeOption: nil,
             getOption: nil
