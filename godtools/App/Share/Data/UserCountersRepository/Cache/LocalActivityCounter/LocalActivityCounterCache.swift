@@ -46,7 +46,7 @@ extension LocalActivityCounterCache {
     }
     
     func getCounters() async throws -> [LocalActivityCountDataModel] {
-        return try await persistence.getDataModelsAsync(getOption: .allObjects)
+        return try await persistence.getDataModels(getOption: .allObjects)
     }
     
     private func incrementLocalCount(localCount: Int) -> Int {

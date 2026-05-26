@@ -37,7 +37,7 @@ final class DownloadedLanguagesRepository {
     
     func getDownloadedLanguages() async throws -> [DownloadedLanguageDataModel] {
         
-        return try await self.cache.persistence.getDataModelsAsync(getOption: .allObjects)
+        return try await self.cache.persistence.getDataModels(getOption: .allObjects)
     }
     
     func storeDownloadedLanguage(languageId: String, downloadComplete: Bool) async throws -> DownloadedLanguageDataModel {

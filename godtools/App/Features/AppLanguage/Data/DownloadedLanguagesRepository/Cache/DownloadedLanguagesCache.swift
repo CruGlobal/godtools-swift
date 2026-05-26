@@ -69,7 +69,7 @@ extension DownloadedLanguagesCache {
                 filter: getDownloadCompletePredicate(downloadComplete: downloadComplete)
             )
             
-            return try await swiftPersistence.getDataModelsAsync(getOption: .allObjects, query: query)
+            return try await swiftPersistence.getDataModels(getOption: .allObjects, query: query)
         }
         else if let realmPersistence = getRealmPersistence() {
             
@@ -77,7 +77,7 @@ extension DownloadedLanguagesCache {
                 filter: getDownloadCompleteNSPredicate(downloadComplete: downloadComplete)
             )
             
-            return try await realmPersistence.getDataModelsAsync(getOption: .allObjects, query: query)
+            return try await realmPersistence.getDataModels(getOption: .allObjects, query: query)
         }
         
         return Array()

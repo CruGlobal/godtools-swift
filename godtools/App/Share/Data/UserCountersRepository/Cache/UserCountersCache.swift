@@ -46,7 +46,7 @@ extension UserCountersCache {
     
     func mergeLocalCountersWithCachedCounters() async throws -> [UserCounterDataModel] {
         
-        let cachedCounters: [UserCounterDataModel] = try await persistence.getDataModelsAsync(getOption: .allObjects)
+        let cachedCounters: [UserCounterDataModel] = try await persistence.getDataModels(getOption: .allObjects)
         
         return try mergeLocalCountersWithCounters(counters: cachedCounters)
     }

@@ -71,7 +71,7 @@ final class UserCountersSync {
     
     private func pushLocalActivityCountersToRemote(requestPriority: RequestPriority) async throws -> [UserCounterCodable] {
         
-        let localActivityCounters: [LocalActivityCountDataModel] = try await localActivityCounterCache.persistence.getDataModelsAsync(getOption: .allObjects)
+        let localActivityCounters: [LocalActivityCountDataModel] = try await localActivityCounterCache.persistence.getDataModels(getOption: .allObjects)
         
         var updatedCounters: [UserCounterCodable] = Array()
         

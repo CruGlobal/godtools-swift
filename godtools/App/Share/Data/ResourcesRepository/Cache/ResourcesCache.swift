@@ -223,14 +223,14 @@ extension ResourcesCache {
             let query = getLessonsSwiftQuery(filterByLanguageId: filterByLanguageId, sorted: sorted)
             
             return try await swiftPersistence
-                .getDataModelsAsync(getOption: .allObjects, query: query)
+                .getDataModels(getOption: .allObjects, query: query)
         }
         else if let realmPersistence = getRealmPersistence() {
             
             let query = getLessonsRealmQuery(filterByLanguageId: filterByLanguageId, sorted: sorted)
             
             return try await realmPersistence
-                .getDataModelsAsync(getOption: .allObjects, query: query)
+                .getDataModels(getOption: .allObjects, query: query)
         }
         
         return Array()
@@ -253,7 +253,7 @@ extension ResourcesCache {
             )
             
             return try await swiftPersistence
-                .getDataModelsAsync(getOption: .allObjects, query: query)
+                .getDataModels(getOption: .allObjects, query: query)
         }
         else if let realmPersistence = getRealmPersistence() {
                         
@@ -267,7 +267,7 @@ extension ResourcesCache {
             )
             
             return try await realmPersistence
-                .getDataModelsAsync(getOption: .allObjects, query: query)
+                .getDataModels(getOption: .allObjects, query: query)
         }
         
         return Array()
@@ -381,7 +381,7 @@ extension ResourcesCache {
             let query = SwiftDatabaseQuery.filter(filter: filter)
             
             return try await swiftPersistence
-                .getDataModelsAsync(getOption: .allObjects, query: query)
+                .getDataModels(getOption: .allObjects, query: query)
         }
         else if let realmPersistence = getRealmPersistence() {
             
@@ -392,7 +392,7 @@ extension ResourcesCache {
             let query = RealmDatabaseQuery(filter: filterPredicate, sortByKeyPath: nil)
             
             return try await realmPersistence
-                .getDataModelsAsync(getOption: .allObjects, query: query)
+                .getDataModels(getOption: .allObjects, query: query)
         }
         
         return Array()
@@ -408,7 +408,7 @@ extension ResourcesCache {
             )
             
             return try await swiftPersistence
-                .getDataModelsAsync(getOption: .allObjects, query: query)
+                .getDataModels(getOption: .allObjects, query: query)
         }
         else if let realmPersistence = getRealmPersistence() {
             
@@ -418,7 +418,7 @@ extension ResourcesCache {
             )
             
             return try await realmPersistence
-                .getDataModelsAsync(getOption: .allObjects, query: query)
+                .getDataModels(getOption: .allObjects, query: query)
         }
         
         return Array()

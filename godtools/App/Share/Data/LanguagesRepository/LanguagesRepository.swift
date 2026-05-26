@@ -54,11 +54,11 @@ final class LanguagesRepository {
     }
     
     func getLanguages() async throws -> [LanguageDataModel] {
-        return try await cache.persistence.getDataModelsAsync(getOption: .allObjects)
+        return try await cache.persistence.getDataModels(getOption: .allObjects)
     }
     
     func getLanguagesByIds(ids: [String]) async throws -> [LanguageDataModel] {
-        return try await cache.persistence.getDataModelsAsync(getOption: .objectsByIds(ids: ids))
+        return try await cache.persistence.getDataModels(getOption: .objectsByIds(ids: ids))
     }
 }
 

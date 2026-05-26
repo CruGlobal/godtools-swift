@@ -119,7 +119,7 @@ extension TrackDownloadedTranslationsCache {
             )
             
             return try await swiftPersistence
-                .getDataModelsAsync(getOption: .allObjects, query: query)
+                .getDataModels(getOption: .allObjects, query: query)
         }
         else if let realmPersistence = getRealmPersistence() {
             
@@ -133,7 +133,7 @@ extension TrackDownloadedTranslationsCache {
             )
             
             return try await realmPersistence
-                .getDataModelsAsync(getOption: .allObjects, query: query)
+                .getDataModels(getOption: .allObjects, query: query)
         }
         
         return Array()

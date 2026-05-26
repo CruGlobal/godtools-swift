@@ -90,7 +90,7 @@ extension FavoritedResourcesCache {
         
         if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
             
-            let favorites: [FavoritedResourceDataModel] = try await swiftPersistence.getDataModelsAsync(
+            let favorites: [FavoritedResourceDataModel] = try await swiftPersistence.getDataModels(
                 getOption: .allObjects,
                 query: getSwiftQuerySortedByPositionAscending()
             )
@@ -99,7 +99,7 @@ extension FavoritedResourcesCache {
         }
         else if let realmPersistence = getRealmPersistence() {
             
-            let favorites: [FavoritedResourceDataModel] = try await realmPersistence.getDataModelsAsync(
+            let favorites: [FavoritedResourceDataModel] = try await realmPersistence.getDataModels(
                 getOption: .allObjects,
                 query: getRealmQuerySortedByPositionAscending()
             )

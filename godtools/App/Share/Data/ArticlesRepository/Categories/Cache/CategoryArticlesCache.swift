@@ -68,7 +68,7 @@ extension CategoryArticlesCache {
                 filter: getCategoryIdAndLanguageCodePredicate(categoryId: categoryId, languageCode: languageCode)
             )
             
-            return try await swiftPersistence.getDataModelsAsync(getOption: .allObjects, query: query)
+            return try await swiftPersistence.getDataModels(getOption: .allObjects, query: query)
         }
         else if let realmPersistence = getRealmPersistence() {
             
@@ -76,7 +76,7 @@ extension CategoryArticlesCache {
                 filter: getCategoryIdAndLanguageCodeNSPredicate(categoryId: categoryId, languageCode: languageCode)
             )
             
-            return try await realmPersistence.getDataModelsAsync(getOption: .allObjects, query: query)
+            return try await realmPersistence.getDataModels(getOption: .allObjects, query: query)
         }
         
         return Array()
