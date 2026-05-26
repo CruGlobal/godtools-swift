@@ -28,10 +28,6 @@ final class ToolLanguageDownloadCache {
         return persistence as? SwiftRepositorySyncPersistence<ToolLanguageDownloadDataModel, ToolLanguageDownloadDataModel, SwiftToolLanguageDownload>
     }
     
-    private var realmDatabase: RealmDatabase? {
-        return getRealmPersistence()?.database
-    }
-    
     private func getRealmPersistence() -> RealmRepositorySyncPersistence<ToolLanguageDownloadDataModel, ToolLanguageDownloadDataModel, RealmToolLanguageDownload>? {
         return persistence as? RealmRepositorySyncPersistence<ToolLanguageDownloadDataModel, ToolLanguageDownloadDataModel, RealmToolLanguageDownload>
     }

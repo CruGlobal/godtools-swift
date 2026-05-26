@@ -30,10 +30,6 @@ final class LocalActivityCounterCache {
         return persistence as? SwiftRepositorySyncPersistence<LocalActivityCountDataModel, LocalActivityCountDataModel, SwiftLocalActivityCount>
     }
     
-    private var realmDatabase: RealmDatabase? {
-        return getRealmPersistence()?.database
-    }
-    
     private func getRealmPersistence() -> RealmRepositorySyncPersistence<LocalActivityCountDataModel, LocalActivityCountDataModel, RealmLocalActivityCount>? {
         return persistence as? RealmRepositorySyncPersistence<LocalActivityCountDataModel, LocalActivityCountDataModel, RealmLocalActivityCount>
     }

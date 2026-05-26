@@ -29,10 +29,6 @@ final class UserLocalizationSettingsCache {
         return persistence as? SwiftRepositorySyncPersistence<UserLocalizationSettingsDataModel, UserLocalizationSettingsDataModel, SwiftUserLocalizationSettings>
     }
     
-    private var realmDatabase: RealmDatabase? {
-        return getRealmPersistence()?.database
-    }
-    
     private func getRealmPersistence() -> RealmRepositorySyncPersistence<UserLocalizationSettingsDataModel, UserLocalizationSettingsDataModel, RealmUserLocalizationSettings>? {
         return persistence as? RealmRepositorySyncPersistence<UserLocalizationSettingsDataModel, UserLocalizationSettingsDataModel, RealmUserLocalizationSettings>
     }

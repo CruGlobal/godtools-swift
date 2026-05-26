@@ -30,10 +30,6 @@ final class UserToolFiltersCache {
         return getCategorySwiftPersistence()?.database
     }
     
-    private var realmDatabase: RealmDatabase? {
-        return getCategoryRealmPersistence()?.database
-    }
-    
     @available(iOS 17.4, *)
     private func getCategorySwiftPersistence() -> SwiftRepositorySyncPersistence<UserToolCategoryFilterDataModel, UserToolCategoryFilterDataModel, SwiftUserToolCategoryFilter>? {
         return categoryPersistence as? SwiftRepositorySyncPersistence<UserToolCategoryFilterDataModel, UserToolCategoryFilterDataModel, SwiftUserToolCategoryFilter>

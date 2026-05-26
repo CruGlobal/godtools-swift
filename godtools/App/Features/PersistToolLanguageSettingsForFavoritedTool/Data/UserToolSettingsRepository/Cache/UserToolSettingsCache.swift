@@ -29,10 +29,6 @@ final class UserToolSettingsCache {
         return persistence as? SwiftRepositorySyncPersistence<UserToolSettingsDataModel, UserToolSettingsDataModel, SwiftUserToolSettings>
     }
     
-    private var realmDatabase: RealmDatabase? {
-        return getRealmPersistence()?.database
-    }
-    
     private func getRealmPersistence() -> RealmRepositorySyncPersistence<UserToolSettingsDataModel, UserToolSettingsDataModel, RealmUserToolSettings>? {
         return persistence as? RealmRepositorySyncPersistence<UserToolSettingsDataModel, UserToolSettingsDataModel, RealmUserToolSettings>
     }

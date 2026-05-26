@@ -28,11 +28,7 @@ final class GlobalAnalyticsCache {
     private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<GlobalAnalyticsDataModel, MobileContentGlobalAnalyticsCodable, SwiftGlobalAnalytics>? {
         return persistence as? SwiftRepositorySyncPersistence<GlobalAnalyticsDataModel, MobileContentGlobalAnalyticsCodable, SwiftGlobalAnalytics>
     }
-    
-    private var realmDatabase: RealmDatabase? {
-        return getRealmPersistence()?.database
-    }
-    
+
     private func getRealmPersistence() -> RealmRepositorySyncPersistence<GlobalAnalyticsDataModel, MobileContentGlobalAnalyticsCodable, RealmGlobalAnalytics>? {
         return persistence as? RealmRepositorySyncPersistence<GlobalAnalyticsDataModel, MobileContentGlobalAnalyticsCodable, RealmGlobalAnalytics>
     }

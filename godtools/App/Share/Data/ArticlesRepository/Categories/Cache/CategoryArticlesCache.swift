@@ -29,10 +29,6 @@ final class CategoryArticlesCache {
         return persistence as? SwiftRepositorySyncPersistence<CategoryArticleModel, CategoryArticleModel, SwiftCategoryArticle>
     }
     
-    private var realmDatabase: RealmDatabase? {
-        return getRealmPersistence()?.database
-    }
-    
     private func getRealmPersistence() -> RealmRepositorySyncPersistence<CategoryArticleModel, CategoryArticleModel, RealmCategoryArticle>? {
         return persistence as? RealmRepositorySyncPersistence<CategoryArticleModel, CategoryArticleModel, RealmCategoryArticle>
     }
