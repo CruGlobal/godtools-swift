@@ -379,7 +379,7 @@ extension GetUserAccountDetailsUseCaseTests {
         
         let authTokenPersistence: any Persistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenDecodable> = RealmRepositorySyncPersistence(
             database: realmDatabase,
-            dataModelMapping: RealmMobileContentAuthTokenMapping()
+            mapping: RealmMobileContentAuthTokenMapping()
         )
         
         let mobileContentAuthTokenCache = MobileContentAuthTokenCache(
@@ -394,7 +394,7 @@ extension GetUserAccountDetailsUseCaseTests {
         
         let userDetailsPersistence: any Persistence<UserDetailsDataModel, MobileContentApiUsersMeCodable> = RealmRepositorySyncPersistence(
             database: realmDatabase,
-            dataModelMapping: RealmUserDetailsMapping()
+            mapping: RealmUserDetailsMapping()
         )
         
         let api = UserDetailsApi(

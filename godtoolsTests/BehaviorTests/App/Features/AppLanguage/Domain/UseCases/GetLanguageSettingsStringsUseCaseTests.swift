@@ -113,7 +113,7 @@ extension GetLanguageSettingsStringsUseCaseTests {
         
         let persistence = RealmRepositorySyncPersistence(
             database: realmDatabase,
-            dataModelMapping: RealmAppLanguageMapping()
+            mapping: RealmAppLanguageMapping()
         )
         
         let appLanguages: [AppLanguageCodable] = getAppLanguages()

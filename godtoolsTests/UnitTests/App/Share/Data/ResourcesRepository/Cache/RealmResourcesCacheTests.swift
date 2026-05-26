@@ -151,7 +151,7 @@ extension RealmResourcesCacheTests {
         
         return RealmRepositorySyncPersistence(
             database: try getRealmDatabase(),
-            dataModelMapping: RealmResourceMapping()
+            mapping: RealmResourceMapping()
         )
     }
     
@@ -161,7 +161,7 @@ extension RealmResourcesCacheTests {
             cache: TrackDownloadedTranslationsCache(
                 persistence: RealmRepositorySyncPersistence(
                     database: try getRealmDatabase(),
-                    dataModelMapping: RealmDownloadedTranslationMapping()
+                    mapping: RealmDownloadedTranslationMapping()
                 )
             )
         )

@@ -100,7 +100,7 @@ extension LocalActivityCounterCacheTests {
         
         let realmPersistence = RealmRepositorySyncPersistence<LocalActivityCountDataModel, LocalActivityCountDataModel, RealmLocalActivityCount>(
             database: testsDiContainer.core.dataLayer.getSharedRealmDatabase(),
-            dataModelMapping: RealmLocalActivityCountMapping()
+            mapping: RealmLocalActivityCountMapping()
         )
         
         return LocalActivityCounterCache(

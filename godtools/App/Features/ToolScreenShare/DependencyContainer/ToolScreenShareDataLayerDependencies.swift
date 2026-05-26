@@ -26,14 +26,14 @@ final class ToolScreenShareDataLayerDependencies {
             
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftToolScreenShareTutorialViewMapping()
+                mapping: SwiftToolScreenShareTutorialViewMapping()
             )
         }
         else {
             
             persistence = RealmRepositorySyncPersistence(
                 database: coreDataLayer.getSharedRealmDatabase(),
-                dataModelMapping: RealmToolScreenShareTutorialViewMapping()
+                mapping: RealmToolScreenShareTutorialViewMapping()
             )
         }
         

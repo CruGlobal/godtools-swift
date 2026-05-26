@@ -26,14 +26,14 @@ final class GlobalActivityDataLayerDependencies {
             
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftGlobalAnalyticsMapping()
+                mapping: SwiftGlobalAnalyticsMapping()
             )
         }
         else {
             
             persistence = RealmRepositorySyncPersistence(
                 database: coreDataLayer.getSharedRealmDatabase(),
-                dataModelMapping: RealmGlobalAnalyticsMapping()
+                mapping: RealmGlobalAnalyticsMapping()
             )
         }
         

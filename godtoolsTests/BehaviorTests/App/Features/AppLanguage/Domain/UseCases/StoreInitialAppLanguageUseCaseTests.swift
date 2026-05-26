@@ -281,7 +281,7 @@ extension StoreInitialAppLanguageUseCaseTests {
         
         let persistence = RealmRepositorySyncPersistence(
             database: testsDiContainer.core.dataLayer.getSharedRealmDatabase(),
-            dataModelMapping: RealmUserAppLanguageMapping()
+            mapping: RealmUserAppLanguageMapping()
         )
         
         let cache = UserAppLanguageCache(
