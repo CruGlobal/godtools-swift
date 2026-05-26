@@ -20,17 +20,10 @@ final class DeleteAccountUseCase {
         self.userDetailsRepository = userDetailsRepository
     }
     
-    func execute() -> AnyPublisher<Void, Error> {
+    func execute() async throws {
         
-        return AnyPublisher() {
-            return try await self.userDetailsRepository.deleteAuthUserDetails(
-                requestPriority: .high
-            )
-        }
-        .tryMap { _ in
-            try self.userAuthentication.signOut()
-            return Void()
-        }
-        .eraseToAnyPublisher()
+        _ = try await userDetailsRepository.deleteAuthUserDetails(requestPriority: .high)
+        
+        try await userAuthentication.signOut()
     }
 }

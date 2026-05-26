@@ -113,12 +113,9 @@ extension DownloadableLanguageItemViewModel {
         
         recycleState.downloadState = .notDownloaded
         
-        do {
-            try removeDownloadedToolLanguageUseCase
+        Task {
+            try await removeDownloadedToolLanguageUseCase
                 .execute(languageId: languageId)
-        }
-        catch _ {
-            
         }
     }
 }

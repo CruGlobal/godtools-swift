@@ -58,9 +58,9 @@ final class DownloadedLanguagesRepository {
         return downloadedLanguage
     }
     
-    func deleteDownloadedLanguage(languageId: String) throws {
+    func deleteDownloadedLanguage(languageId: String) async throws {
         
-        try cache.deleteDownloadedLanguage(languageId: languageId)
+        try await cache.deleteDownloadedLanguage(languageId: languageId)
     }
     
     func markAllDownloadsAsCompleted() async throws {

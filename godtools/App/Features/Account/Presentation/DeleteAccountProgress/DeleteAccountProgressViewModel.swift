@@ -11,9 +11,7 @@ import Combine
 
 @MainActor
 final class DeleteAccountProgressViewModel: ObservableObject {
-    
-    private static var backgroundCancellables: Set<AnyCancellable> = Set()
-    
+        
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getDeleteAccountProgressStringsUseCase: GetDeleteAccountProgressStringsUseCase
     private let deleteAccountUseCase: DeleteAccountUseCase
@@ -61,29 +59,25 @@ final class DeleteAccountProgressViewModel: ObservableObject {
         
         let startDeleteAccountTime = Date()
         
-        deleteAccountUseCase
-            .execute()
-            .receive(on: DispatchQueue.main)
-            .delay(for: .seconds(getRemainingSecondsToDisplayDeleteAccountProgress(startTime: startDeleteAccountTime)), scheduler: DispatchQueue.main)
-            .sink { [weak self] subscribersCompletion in
-                
-                let deleteAccountError: Error?
-                
-                switch subscribersCompletion {
-                    
-                case .finished:
-                    deleteAccountError = nil
-                    
-                case .failure(let error):
-                    deleteAccountError = error
-                }
-                
-                self?.didFinishAccountDeletion(error: deleteAccountError)
-                
-            } receiveValue: { _ in
-                
+        Task {
+            
+            let error: Error?
+            
+            do {
+                try await deleteAccountUseCase
+                    .execute()
+                error = nil
             }
-            .store(in: &Self.backgroundCancellables)
+            catch let deleteAccountError {
+                error = deleteAccountError
+            }
+            
+            let seconds = getRemainingSecondsToDisplayDeleteAccountProgress(startTime: startDeleteAccountTime)
+            
+            try await Task.sleep(for: .seconds(seconds))
+            
+            didFinishAccountDeletion(error: error)
+        }
     }
     
     private func getRemainingSecondsToDisplayDeleteAccountProgress(startTime: Date) -> TimeInterval {

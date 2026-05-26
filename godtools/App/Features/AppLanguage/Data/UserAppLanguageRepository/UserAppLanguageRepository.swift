@@ -28,9 +28,9 @@ final class UserAppLanguageRepository {
             .eraseToAnyPublisher()
     }
     
-    func deleteLanguage() throws {
+    func deleteLanguage() async throws {
         
-        try cache.deleteLanguage(id: Self.sharedUserId)
+        try await cache.deleteLanguage(id: Self.sharedUserId)
     }
     
     func getLanguage() -> UserAppLanguageDataModel? {

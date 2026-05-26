@@ -63,7 +63,7 @@ struct StoreInitialAppLanguageUseCaseTests {
         
         let userAppLanguageRepository = getUserAppLanguageRepository(testsDiContainer: testsDiContainer)
         
-        try userAppLanguageRepository.deleteLanguage()
+        try await userAppLanguageRepository.deleteLanguage()
                         
         let appLanguagesRepository: AppLanguagesRepository = testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesRepository(
             sync: mockAppLanguagesSync
@@ -225,7 +225,7 @@ struct StoreInitialAppLanguageUseCaseTests {
         
         let userAppLanguageRepository = getUserAppLanguageRepository(testsDiContainer: testsDiContainer)
         
-        try userAppLanguageRepository.deleteLanguage()
+        try await userAppLanguageRepository.deleteLanguage()
                                 
         let appLanguagesRepository: AppLanguagesRepository = testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesRepository(
             sync: mockAppLanguagesSync

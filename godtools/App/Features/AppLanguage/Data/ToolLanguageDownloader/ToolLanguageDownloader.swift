@@ -140,7 +140,7 @@ final class ToolLanguageDownloader {
                     getOption: nil
                 )
                         
-            try downloadedLanguagesRepository.deleteDownloadedLanguage(
+            try await downloadedLanguagesRepository.deleteDownloadedLanguage(
                 languageId: languageId
             )
             

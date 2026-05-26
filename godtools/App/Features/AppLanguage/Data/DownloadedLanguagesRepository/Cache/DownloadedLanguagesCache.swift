@@ -79,41 +79,8 @@ extension DownloadedLanguagesCache {
         return Array()
     }
     
-    func deleteDownloadedLanguage(languageId: String) throws {
+    func deleteDownloadedLanguage(languageId: String) async throws {
             
-        if #available(iOS 17.4, *), let database = swiftDatabase {
-            
-            let context: ModelContext = database.openContext()
-            
-            let objectToDelete: SwiftDownloadedLanguage? = try database.read.object(context: context, id: languageId)
-            
-            if let objectToDelete = objectToDelete {
-                
-                try database.write.context(
-                    context: context,
-                    writeObjects: WriteSwiftObjects(
-                        deleteObjects: [objectToDelete],
-                        insertObjects: nil
-                    )
-                )
-            }
-        }
-        else if let realmDatabase = realmDatabase {
-            
-            let realm: Realm = try realmDatabase.openRealm()
-            
-            let objectToDelete: RealmDownloadedLanguage? = realmDatabase.read.object(realm: realm, id: languageId)
-            
-            if let objectToDelete = objectToDelete {
-                
-                try realmDatabase.write.realm(realm: realm, writeClosure: { realm in
-                    
-                    return WriteRealmObjects(
-                        deleteObjects: [objectToDelete],
-                        addObjects: []
-                    )
-                }, updatePolicy: .all)
-            }
-        }
+        _ = try await persistence.deleteObjectsByIds(ids: [languageId], getOption: nil)
     }
 }

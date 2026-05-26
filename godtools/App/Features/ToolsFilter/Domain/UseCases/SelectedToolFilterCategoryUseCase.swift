@@ -21,7 +21,7 @@ final class SelectedToolFilterCategoryUseCase {
     func execute(category: ToolFilterCategoryDomainModel) async throws {
         
         guard category.categoryType != .any else {
-            try userToolFiltersRepository.deleteUserCategoryFilter()
+            try await userToolFiltersRepository.deleteUserCategoryFilter()
             return
         }
         

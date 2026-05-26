@@ -109,11 +109,11 @@ final class UserToolFiltersRepository {
         )
     }
     
-    func deleteUserCategoryFilter() throws {
-        try cache.deleteToolCategoryFilter(id: Self.userToolCategoryFilterId)
+    func deleteUserCategoryFilter() async throws {
+        try await cache.deleteToolCategoryFilter(id: Self.userToolCategoryFilterId)
     }
     
-    func deleteUserLanguageFilter() throws {
-        try cache.deleteToolLanguageFilter(id: Self.userToolLanguageFilterId)
+    func deleteUserLanguageFilter() async throws {
+        try await cache.deleteToolLanguageFilter(id: Self.userToolLanguageFilterId)
     }
 }
