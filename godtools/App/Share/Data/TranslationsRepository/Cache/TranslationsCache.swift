@@ -106,7 +106,7 @@ extension TranslationsCache {
     
     private func getRealmTranslationsSortedByLatestVersion(resourceId: String, languageId: String) throws -> Results<RealmTranslation>? {
         
-        guard let realmDatabase = realmDatabase else {
+        guard let realmDatabase = getRealmPersistence()?.database else {
             return nil
         }
         
@@ -124,7 +124,7 @@ extension TranslationsCache {
     
     private func getRealmTranslationsSortedByLatestVersion(resourceId: String, languageCode: BCP47LanguageIdentifier) throws -> Results<RealmTranslation>? {
         
-        guard let realmDatabase = realmDatabase else {
+        guard let realmDatabase = getRealmPersistence()?.database else {
             return nil
         }
         

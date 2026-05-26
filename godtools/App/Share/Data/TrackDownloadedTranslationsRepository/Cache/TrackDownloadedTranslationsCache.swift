@@ -81,7 +81,7 @@ extension TrackDownloadedTranslationsCache {
     
     private func getRealmLatestDownloadedTranslations(resourceId: String, languageId: String) throws -> [RealmDownloadedTranslation]? {
         
-        guard let database = realmDatabase else {
+        guard let database = getRealmPersistence()?.database else {
             return nil
         }
         

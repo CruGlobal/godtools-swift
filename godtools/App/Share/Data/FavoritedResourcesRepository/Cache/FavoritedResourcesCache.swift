@@ -166,4 +166,53 @@ extension FavoritedResourcesCache {
         
         return favoritedResourcesToUpdate
     }
+    
+    func reorderFavoritedResource(id: String, originalPosition: Int, newPosition: Int) async throws -> [FavoritedResourceDataModel] {
+        
+        let resourceToUpdate: FavoritedResourceDataModel? = try persistence.getDataModel(id: id)
+        
+        guard let resourceToUpdate = resourceToUpdate, resourceToUpdate.position == originalPosition && resourceToUpdate.position != newPosition else {
+            return try await getFavoritedResourcesSortedByPosition()
+        }
+        
+        let placeholderId: String = "placeholder"
+        
+        var favoritedResources: [FavoritedResourceDataModel] = try await getFavoritedResourcesSortedByPosition()
+        
+        let placeholderResource = FavoritedResourceDataModel(id: placeholderId, createdAt: Date(), position: 0)
+        
+        favoritedResources.insert(placeholderResource, at: originalPosition)
+        
+        guard let index = favoritedResources.firstIndex(where: { $0.id == id }) else {
+            return try await getFavoritedResourcesSortedByPosition()
+        }
+        
+        let resourceToMove: FavoritedResourceDataModel = favoritedResources.remove(at: index)
+        
+        if newPosition > originalPosition {
+            favoritedResources.insert(resourceToMove, at: newPosition + 1)
+        }
+        else {
+            favoritedResources.insert(resourceToMove, at: newPosition)
+        }
+                    
+        guard let placeholderIndex = favoritedResources.firstIndex(where: { $0.id == placeholderId }) else {
+            return try await getFavoritedResourcesSortedByPosition()
+        }
+        
+        favoritedResources.remove(at: placeholderIndex)
+        
+        var updatedFavoritedResources: [FavoritedResourceDataModel] = Array()
+        
+        for index in 0 ..< favoritedResources.count {
+            
+            updatedFavoritedResources.append(
+                favoritedResources[index].copy(position: index)
+            )
+        }
+        
+        try await persistence.writeObjects(externalObjects: updatedFavoritedResources)
+        
+        return updatedFavoritedResources
+    }
 }

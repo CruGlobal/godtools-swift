@@ -56,113 +56,33 @@ extension LocalActivityCounterCache {
         return newCount
     }
     
-    func incrementCounter(id: String) throws -> LocalActivityCountDataModel {
-                
-        let newCount: Int
+    func incrementCounter(id: String) async throws -> LocalActivityCountDataModel {
         
-        if #available(iOS 17.4, *), let database = getSwiftPersistence()?.database {
-            
-            let context: ModelContext = database.openContext()
-            
-            let counter: SwiftLocalActivityCount = try database.read.object(context: context, id: id) ?? SwiftLocalActivityCount()
-            
-            newCount = incrementLocalCount(localCount: counter.count)
-            
-            counter.id = id
-            counter.count = newCount
-            
-            try database.write.context(
-                context: context,
-                writeObjects: WriteSwiftObjects(deleteObjects: nil, insertObjects: [counter])
-            )
-        }
-        else if let database = getRealmPersistence()?.database {
-            
-            let realm: Realm = try database.openRealm()
-            
-            let counter: RealmLocalActivityCount
-            
-            let existingCounter: RealmLocalActivityCount? = database.read.object(realm: realm, id: id)
-            
-            if let existingCounter = existingCounter {
-                counter = existingCounter
-            }
-            else {
-                counter = RealmLocalActivityCount()
-                counter.id = id
-            }
-            
-            newCount = incrementLocalCount(localCount: counter.count)
-
-            try database.write.realm(
-                realm: realm,
-                writeClosure: { realm in
-                    
-                    counter.count = newCount
-                    
-                    return WriteRealmObjects(deleteObjects: nil, addObjects: [counter])
-                },
-                updatePolicy: .modified
-            )
-        }
-        else {
-            
-            newCount = 1
-        }
+        let counter: LocalActivityCountDataModel = try persistence.getDataModel(id: id) ?? LocalActivityCountDataModel(id: id, count: 0)
         
-        return LocalActivityCountDataModel(
-            id: id,
-            count: newCount
-        )
+        let newCount: Int = incrementLocalCount(localCount: counter.count)
+        
+        let updatedCounter = counter.copy(count: newCount)
+        
+        try await persistence.writeObjects(externalObjects: [updatedCounter])
+        
+        return updatedCounter
     }
     
-    func decrementCount(id: String, decrementBy: Int) throws {
+    func decrementCount(id: String, decrementBy: Int) async throws {
         
-        if #available(iOS 17.4, *), let database = getSwiftPersistence()?.database {
-            
-            let context: ModelContext = database.openContext()
-            
-            let counter: SwiftLocalActivityCount? = try database.read.object(context: context, id: id)
-            
-            guard let counter = counter else {
-                return
-            }
-            
-            counter.count -= decrementBy
-            
-            if counter.count < 0 {
-                counter.count = 0
-            }
-            
-            try database.write.context(
-                context: context,
-                writeObjects: WriteSwiftObjects(deleteObjects: nil, insertObjects: [counter])
-            )
+        let counter: LocalActivityCountDataModel? = try persistence.getDataModel(id: id)
+        
+        guard let counter = counter else {
+            return
         }
-        else if let database = getRealmPersistence()?.database {
-            
-            let realm: Realm = try database.openRealm()
-            
-            let counter: RealmLocalActivityCount? = database.read.object(realm: realm, id: id)
-            
-            guard let counter = counter else {
-                return
-            }
-            
-            try database.write.realm(
-                realm: realm,
-                writeClosure: { realm in
-                    
-                    counter.count -= decrementBy
-                    
-                    if counter.count < 0 {
-                        counter.count = 0
-                    }
-                    
-                    return WriteRealmObjects(deleteObjects: nil, addObjects: [counter])
-                },
-                updatePolicy: .modified
-            )
-        }
+        
+        let decrementedCount: Int = counter.count - decrementBy
+        
+        let newCount: Int = decrementedCount < 0 ? 0 : decrementedCount
+        
+        let updatedCounter = counter.copy(count: newCount)
+        
+        try await persistence.writeObjects(externalObjects: [updatedCounter])
     }
 }
