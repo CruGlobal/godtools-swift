@@ -82,47 +82,8 @@ extension UserCountersCache {
         )
     }
     
-    func deleteCounters() throws {
-                
-        if #available(iOS 17.4, *), let database = getSwiftPersistence()?.database {
-            
-            let context: ModelContext = database.openContext()
-            
-            let counters: [SwiftUserCounter] = try database.read.objects(context: context, query: nil)
-            
-            guard counters.count > 0 else {
-                return
-            }
-            
-            try database.write.context(
-                context: context,
-                writeObjects: WriteSwiftObjects(
-                    deleteObjects: counters,
-                    insertObjects: nil
-                )
-            )
-        }
-        else if let database = getRealmPersistence()?.database {
-            
-            let realm: Realm = try database.openRealm()
-            
-            let counters: [RealmUserCounter] = database.read.objects(realm: realm, query: nil)
-            
-            guard counters.count > 0 else {
-                return
-            }
-            
-            try database.write.realm(
-                realm: realm,
-                writeClosure: { (realm: Realm) in
-                    
-                    return WriteRealmObjects(
-                        deleteObjects: counters,
-                        addObjects: nil
-                    )
-                },
-                updatePolicy: .modified
-            )
-        }
+    func deleteCounters() async throws {
+        
+        try await persistence.deleteCollection()
     }
 }

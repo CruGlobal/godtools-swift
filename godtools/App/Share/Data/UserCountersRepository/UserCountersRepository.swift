@@ -55,8 +55,8 @@ final class UserCountersRepository {
         }
     }
     
-    func deleteCachedCounters() throws {
+    func deleteCounters() async throws {
                         
-        try cache.deleteCounters()
+        try await cache.deleteCounters()
     }
 }

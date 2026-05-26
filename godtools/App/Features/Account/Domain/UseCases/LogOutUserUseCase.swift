@@ -24,7 +24,7 @@ final class LogOutUserUseCase {
     
     func execute() async throws -> Bool {
         
-        try userCountersRepository.deleteCachedCounters()
+        try await userCountersRepository.deleteCounters()
         
         try await userAuthentication.signOut()
         
