@@ -505,14 +505,33 @@ final class AppDataLayerDependencies {
     
     func getResourceViewsService() -> ResourceViewsService {
         
+        let persistence: any Persistence<ResourceViewDataModel, ResourceViewDataModel>
+        
+        if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                mapping: SwiftResourceViewMapping()
+            )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                databaseConfig: getSharedRealmDatabaseConfig(),
+                mapping: RealmResourceViewMapping()
+            )
+        }
+        
+        let api = MobileContentResourceViewsApi(
+            config: getAppConfig(),
+            urlSessionPriority: getSharedUrlSessionPriority(),
+            requestSender: getRequestSender()
+        )
+        
         return ResourceViewsService(
-            api: MobileContentResourceViewsApi(
-                config: getAppConfig(),
-                urlSessionPriority: getSharedUrlSessionPriority(),
-                requestSender: getRequestSender()
-            ),
-            failedResourceViewsCache: FailedResourceViewsCache(
-                realmDatabase: getSharedRealmDatabase()
+            api: api,
+            cache: FailedResourceViewsCache(
+                persistence: persistence
             )
         )
     }
