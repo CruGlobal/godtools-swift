@@ -18,11 +18,13 @@ final class ResourcesSHA256FileCache {
     
     private let fileCache: FileCache
     private let realmDatabase: RealmDatabase
+    private let realmDataWrite: RealmDataWrite
     
-    init(realmDatabase: RealmDatabase) {
+    init(realmDatabase: RealmDatabase, realmDataWrite: RealmDataWrite) {
         
         self.fileCache = FileCache(rootDirectory: ResourcesSHA256FileCache.rootDirectoryName)
         self.realmDatabase = realmDatabase
+        self.realmDataWrite = realmDataWrite
     }
     
     func getFileExists(location: FileCacheLocation) throws -> Bool {
@@ -83,7 +85,7 @@ final class ResourcesSHA256FileCache {
     
     private func createStoredFileRelationshipsToAttachmentWithCompletion(attachmentId: String, location: FileCacheLocation, completion: @escaping ((_ result: Result<StoreResourcesFilesResult, Error>) -> Void)) {
         
-        realmDatabase.write.serialAsync { result in
+        realmDataWrite.serialAsync { result in
             
             switch result {
                 
@@ -190,7 +192,7 @@ final class ResourcesSHA256FileCache {
     
     private func createStoredFileRelationshipsToTranslationWithCompletion(translationId: String, fileCacheLocations: [FileCacheLocation], completion: @escaping ((_ result: Result<StoreResourcesFilesResult, Error>) -> Void)) {
         
-        realmDatabase.write.serialAsync { result in
+        realmDataWrite.serialAsync { result in
             
             switch result {
             

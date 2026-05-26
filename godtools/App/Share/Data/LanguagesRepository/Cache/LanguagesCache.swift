@@ -125,7 +125,8 @@ extension LanguagesCache {
             )
             
             return try await swiftPersistence
-                .getDataModels(getOption: .allObjects, query: query)
+                .newActorRead()
+                .getDataModels(query: query)
         }
         else if let realmPersistence = getRealmPersistence() {
             
@@ -134,7 +135,8 @@ extension LanguagesCache {
             )
             
             return try await realmPersistence
-                .getDataModels(getOption: .allObjects, query: query)
+                .newActorRead()
+                .getDataModels(query: query)
         }
         
         return Array()
