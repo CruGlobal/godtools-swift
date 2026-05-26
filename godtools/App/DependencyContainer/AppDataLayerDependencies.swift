@@ -98,7 +98,7 @@ final class AppDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                databaseConfig: getSharedRealmDatabaseConfig(),
+                database: getSharedRealmDatabase(),
                 mapping: RealmArticleAemDataMapping()
             )
         }
@@ -108,7 +108,9 @@ final class AppDataLayerDependencies {
             articleWebArchiver: ArticleWebArchiver(
                 urlSessionPriority: getSharedUrlSessionPriority(),
                 requestSender: getRequestSender()
-            )
+            ),
+            realmDatabase: getSharedRealmDatabase(),
+            realmDataWrite: getRealmDataWrite()
         )
     }
     
@@ -140,7 +142,7 @@ final class AppDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                databaseConfig: getSharedRealmDatabaseConfig(),
+                database: getSharedRealmDatabase(),
                 mapping: RealmCategoryArticleMapping()
             )
         }
@@ -149,7 +151,8 @@ final class AppDataLayerDependencies {
             downloader: getArticleAemDownloader(),
             cache: getArticleAemCache(),
             categoryArticlesCache: CategoryArticlesCache(
-                persistence: persistence
+                persistence: persistence,
+                realmDataWrite: getRealmDataWrite()
             ),
             syncInvalidatorPersistence: getUserDefaultsCache()
         )
@@ -169,7 +172,7 @@ final class AppDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                databaseConfig: getSharedRealmDatabaseConfig(),
+                database: getSharedRealmDatabase(),
                 mapping: RealmAttachmentMapping()
             )
         }
@@ -212,7 +215,7 @@ final class AppDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                databaseConfig: getSharedRealmDatabaseConfig(),
+                database: getSharedRealmDatabase(),
                 mapping: RealmCompletedTrainingTipMapping()
             )
         }
@@ -248,7 +251,7 @@ final class AppDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                databaseConfig: getSharedRealmDatabaseConfig(),
+                database: getSharedRealmDatabase(),
                 mapping: RealmEmailSignUpMapping()
             )
         }
@@ -282,7 +285,7 @@ final class AppDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                databaseConfig: getSharedRealmDatabaseConfig(),
+                database: getSharedRealmDatabase(),
                 mapping: RealmFavoritedResourceMapping()
             )
         }
@@ -322,7 +325,7 @@ final class AppDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                databaseConfig: getSharedRealmDatabaseConfig(),
+                database: getSharedRealmDatabase(),
                 mapping: RealmFollowUpMapping()
             )
         }
@@ -361,7 +364,7 @@ final class AppDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                databaseConfig: getSharedRealmDatabaseConfig(),
+                database: getSharedRealmDatabase(),
                 mapping: RealmLanguageMapping()
             )
         }
@@ -410,7 +413,7 @@ final class AppDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                databaseConfig: getSharedRealmDatabaseConfig(),
+                database: getSharedRealmDatabase(),
                 mapping: RealmMobileContentAuthTokenMapping()
             )
         }
@@ -446,6 +449,10 @@ final class AppDataLayerDependencies {
         )
     }
     
+    private func getRealmDataWrite() -> RealmDataWrite {
+        return RealmDataWrite(config: getSharedRealmDatabaseConfig().config)
+    }
+    
     func getRemoteConfigRepository() -> RemoteConfigRepository {
         return RemoteConfigRepository(
             remoteDatabase: sharedAppConfig.firebaseEnabled ? FirebaseRemoteConfigWrapper() : DisabledRemoteConfigDatabase()
@@ -458,7 +465,8 @@ final class AppDataLayerDependencies {
     
     func getResourcesFileCache() -> ResourcesSHA256FileCache {
         return ResourcesSHA256FileCache(
-            realmDatabase: getSharedRealmDatabase()
+            realmDatabase: getSharedRealmDatabase(),
+            realmDataWrite: getRealmDataWrite()
         )
     }
     
@@ -476,7 +484,7 @@ final class AppDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                databaseConfig: getSharedRealmDatabaseConfig(),
+                database: getSharedRealmDatabase(),
                 mapping: RealmResourceMapping()
             )
         }
@@ -489,6 +497,8 @@ final class AppDataLayerDependencies {
         
         let cache = ResourcesCache(
             persistence: persistence,
+            realmDatabase: getSharedRealmDatabase(),
+            realmDataWrite: getRealmDataWrite(),
             trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository()
         )
         
@@ -517,7 +527,7 @@ final class AppDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                databaseConfig: getSharedRealmDatabaseConfig(),
+                database: getSharedRealmDatabase(),
                 mapping: RealmResourceViewMapping()
             )
         }
@@ -599,7 +609,7 @@ final class AppDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                databaseConfig: getSharedRealmDatabaseConfig(),
+                database: getSharedRealmDatabase(),
                 mapping: RealmDownloadedTranslationMapping()
             )
         }
@@ -627,7 +637,7 @@ final class AppDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                databaseConfig: getSharedRealmDatabaseConfig(),
+                database: getSharedRealmDatabase(),
                 mapping: RealmTranslationMapping()
             )
         }
@@ -713,7 +723,7 @@ final class AppDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                databaseConfig: getSharedRealmDatabaseConfig(),
+                database: getSharedRealmDatabase(),
                 mapping: RealmUserLessonLanguageFilterMapping()
             )
         }
@@ -739,7 +749,7 @@ final class AppDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                databaseConfig: getSharedRealmDatabaseConfig(),
+                database: getSharedRealmDatabase(),
                 mapping: RealmUserLessonProgressMapping()
             )
         }
@@ -774,7 +784,7 @@ extension AppDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                databaseConfig: getSharedRealmDatabaseConfig(),
+                database: getSharedRealmDatabase(),
                 mapping: RealmLocalActivityCountMapping()
             )
         }
@@ -811,7 +821,7 @@ extension AppDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                databaseConfig: getSharedRealmDatabaseConfig(),
+                database: getSharedRealmDatabase(),
                 mapping: RealmUserCounterMapping()
             )
         }

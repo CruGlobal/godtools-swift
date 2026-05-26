@@ -32,7 +32,7 @@ final class AccountDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                databaseConfig: coreDataLayer.getSharedRealmDatabaseConfig(),
+                database: coreDataLayer.getSharedRealmDatabase(),
                 mapping: RealmUserDetailsMapping()
             )
         }

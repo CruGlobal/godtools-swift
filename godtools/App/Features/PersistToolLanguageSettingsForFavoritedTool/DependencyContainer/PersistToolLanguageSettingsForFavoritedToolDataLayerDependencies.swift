@@ -32,7 +32,7 @@ final class PersistToolLanguageSettingsForFavoritedToolDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                databaseConfig: coreDataLayer.getSharedRealmDatabaseConfig(),
+                database: coreDataLayer.getSharedRealmDatabase(),
                 mapping: RealmUserToolSettingsMapping()
             )
         }

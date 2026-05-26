@@ -32,7 +32,7 @@ final class GlobalActivityDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                databaseConfig: coreDataLayer.getSharedRealmDatabaseConfig(),
+                database: coreDataLayer.getSharedRealmDatabase(),
                 mapping: RealmGlobalAnalyticsMapping()
             )
         }

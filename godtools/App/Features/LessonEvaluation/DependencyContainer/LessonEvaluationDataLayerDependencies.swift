@@ -32,7 +32,7 @@ final class LessonEvaluationDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                databaseConfig: coreDataLayer.getSharedRealmDatabaseConfig(),
+                database: coreDataLayer.getSharedRealmDatabase(),
                 mapping: RealmLessonEvaluationMapping()
             )
         }

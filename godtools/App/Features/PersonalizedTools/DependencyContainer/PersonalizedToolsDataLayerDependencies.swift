@@ -37,7 +37,7 @@ final class PersonalizedToolsDataLayerDependencies {
         else {
 
             persistence = RealmRepositorySyncPersistence(
-                databaseConfig: coreDataLayer.getSharedRealmDatabaseConfig(),
+                database: coreDataLayer.getSharedRealmDatabase(),
                 mapping: RealmPersonalizedToolsMapping()
             )
         }
@@ -74,7 +74,7 @@ final class PersonalizedToolsDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                databaseConfig: coreDataLayer.getSharedRealmDatabaseConfig(),
+                database: coreDataLayer.getSharedRealmDatabase(),
                 mapping: RealmUserLocalizationSettingsMapping()
             )
         }

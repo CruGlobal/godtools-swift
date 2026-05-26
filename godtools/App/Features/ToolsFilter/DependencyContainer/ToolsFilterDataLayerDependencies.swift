@@ -38,12 +38,12 @@ final class ToolsFilterDataLayerDependencies {
         else {
             
             categoryPersistence = RealmRepositorySyncPersistence(
-                databaseConfig: coreDataLayer.getSharedRealmDatabaseConfig(),
+                database: coreDataLayer.getSharedRealmDatabase(),
                 mapping: RealmUserToolCategoryFilterMapping()
             )
             
             languagePersistence = RealmRepositorySyncPersistence(
-                databaseConfig: coreDataLayer.getSharedRealmDatabaseConfig(),
+                database: coreDataLayer.getSharedRealmDatabase(),
                 mapping: RealmUserToolLanguageFilterMapping()
             )
         }
