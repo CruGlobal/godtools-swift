@@ -32,7 +32,7 @@ final class ToolScreenShareDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                database: coreDataLayer.getSharedRealmDatabase(),
+                databaseConfig: coreDataLayer.getSharedRealmDatabaseConfig(),
                 mapping: RealmToolScreenShareTutorialViewMapping()
             )
         }

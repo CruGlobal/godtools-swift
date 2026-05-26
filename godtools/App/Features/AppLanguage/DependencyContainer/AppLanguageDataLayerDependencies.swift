@@ -32,7 +32,7 @@ final class AppLanguageDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                database: coreDataLayer.getSharedRealmDatabase(),
+                databaseConfig: coreDataLayer.getSharedRealmDatabaseConfig(),
                 mapping: RealmAppLanguageMapping()
             )
         }
@@ -74,7 +74,7 @@ final class AppLanguageDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                database: coreDataLayer.getSharedRealmDatabase(),
+                databaseConfig: coreDataLayer.getSharedRealmDatabaseConfig(),
                 mapping: RealmDownloadedLanguageMapping()
             )
         }
@@ -100,7 +100,7 @@ final class AppLanguageDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                database: coreDataLayer.getSharedRealmDatabase(),
+                databaseConfig: coreDataLayer.getSharedRealmDatabaseConfig(),
                 mapping: RealmToolLanguageDownloadMapping()
             )
         }
@@ -132,7 +132,7 @@ final class AppLanguageDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                database: coreDataLayer.getSharedRealmDatabase(),
+                databaseConfig: coreDataLayer.getSharedRealmDatabaseConfig(),
                 mapping: RealmUserAppLanguageMapping()
             )
         }

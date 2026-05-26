@@ -18,6 +18,8 @@ final class AppDataLayerDependencies {
     private let sharedUrlSessionPriority: URLSessionPriority = URLSessionPriority()
     private let sharedAnalytics: AnalyticsContainer
     private let sharedInMemoryDataCache: InMemoryDataCache = InMemoryDataCache()
+    private let sharedRealmDatabaseConfig: RealmDatabaseConfig
+    private let sharedRealmDatabase: RealmDatabase
     
     private lazy var sharedUserCountersSync: UserCountersSync = {
         
@@ -42,6 +44,16 @@ final class AppDataLayerDependencies {
         sharedAnalytics = AnalyticsContainer(
             firebaseAnalytics: Self.getFirebaseAnalytics(appConfig: appConfig)
         )
+        
+        do {
+            sharedRealmDatabaseConfig = try appConfig.getRealmDatabaseConfig()
+        }
+        catch let error {
+            assertionFailure(error.localizedDescription)
+            sharedRealmDatabaseConfig = try! RealmDatabaseConfig.createInMemoryConfig()
+        }
+        
+        sharedRealmDatabase = RealmDatabase(databaseConfig: sharedRealmDatabaseConfig)
     }
     
     private static func getFirebaseAnalytics(appConfig: AppConfigInterface) -> FirebaseAnalyticsInterface {
@@ -86,7 +98,7 @@ final class AppDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                database: getSharedRealmDatabase(),
+                databaseConfig: getSharedRealmDatabaseConfig(),
                 mapping: RealmArticleAemDataMapping()
             )
         }
@@ -128,7 +140,7 @@ final class AppDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                database: getSharedRealmDatabase(),
+                databaseConfig: getSharedRealmDatabaseConfig(),
                 mapping: RealmCategoryArticleMapping()
             )
         }
@@ -157,7 +169,7 @@ final class AppDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                database: getSharedRealmDatabase(),
+                databaseConfig: getSharedRealmDatabaseConfig(),
                 mapping: RealmAttachmentMapping()
             )
         }
@@ -200,7 +212,7 @@ final class AppDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                database: getSharedRealmDatabase(),
+                databaseConfig: getSharedRealmDatabaseConfig(),
                 mapping: RealmCompletedTrainingTipMapping()
             )
         }
@@ -250,7 +262,7 @@ final class AppDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                database: getSharedRealmDatabase(),
+                databaseConfig: getSharedRealmDatabaseConfig(),
                 mapping: RealmFavoritedResourceMapping()
             )
         }
@@ -312,7 +324,7 @@ final class AppDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                database: getSharedRealmDatabase(),
+                databaseConfig: getSharedRealmDatabaseConfig(),
                 mapping: RealmLanguageMapping()
             )
         }
@@ -361,7 +373,7 @@ final class AppDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                database: getSharedRealmDatabase(),
+                databaseConfig: getSharedRealmDatabaseConfig(),
                 mapping: RealmMobileContentAuthTokenMapping()
             )
         }
@@ -427,7 +439,7 @@ final class AppDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                database: getSharedRealmDatabase(),
+                databaseConfig: getSharedRealmDatabaseConfig(),
                 mapping: RealmResourceMapping()
             )
         }
@@ -480,8 +492,12 @@ final class AppDataLayerDependencies {
         return sharedUrlSessionPriority
     }
     
+    func getSharedRealmDatabaseConfig() -> RealmDatabaseConfig {
+        return sharedRealmDatabaseConfig
+    }
+    
     func getSharedRealmDatabase() -> RealmDatabase {
-        return getAppConfig().getRealmDatabase()
+        return sharedRealmDatabase
     }
     
     @available(iOS 17.4, *)
@@ -527,7 +543,7 @@ final class AppDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                database: getSharedRealmDatabase(),
+                databaseConfig: getSharedRealmDatabaseConfig(),
                 mapping: RealmDownloadedTranslationMapping()
             )
         }
@@ -555,7 +571,7 @@ final class AppDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                database: getSharedRealmDatabase(),
+                databaseConfig: getSharedRealmDatabaseConfig(),
                 mapping: RealmTranslationMapping()
             )
         }
@@ -641,7 +657,7 @@ final class AppDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                database: getSharedRealmDatabase(),
+                databaseConfig: getSharedRealmDatabaseConfig(),
                 mapping: RealmUserLessonLanguageFilterMapping()
             )
         }
@@ -667,7 +683,7 @@ final class AppDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                database: getSharedRealmDatabase(),
+                databaseConfig: getSharedRealmDatabaseConfig(),
                 mapping: RealmUserLessonProgressMapping()
             )
         }
@@ -702,7 +718,7 @@ extension AppDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                database: getSharedRealmDatabase(),
+                databaseConfig: getSharedRealmDatabaseConfig(),
                 mapping: RealmLocalActivityCountMapping()
             )
         }
@@ -739,7 +755,7 @@ extension AppDataLayerDependencies {
         else {
             
             persistence = RealmRepositorySyncPersistence(
-                database: getSharedRealmDatabase(),
+                databaseConfig: getSharedRealmDatabaseConfig(),
                 mapping: RealmUserCounterMapping()
             )
         }
