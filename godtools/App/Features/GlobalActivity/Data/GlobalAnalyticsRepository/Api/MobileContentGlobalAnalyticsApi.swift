@@ -13,20 +13,20 @@ final class MobileContentGlobalAnalyticsApi {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let urlSessionPriority: URLSessionPriority
-    private let requestSender: RequestSender
+    private let requestSender: RequestSenderInterface
     private let baseUrl: String
     
-    init(baseUrl: String, urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
+    init(baseUrl: String, urlSessionPriority: URLSessionPriority, requestSender: RequestSenderInterface) {
         
         self.urlSessionPriority = urlSessionPriority
         self.requestSender = requestSender
         self.baseUrl = baseUrl
     }
       
-    private func getGlobalAnalyticsUrlRequest(urlSession: URLSession) -> URLRequest {
+    private func getGlobalAnalyticsUrlRequest(urlSession: URLSession) throws -> URLRequest {
         
-        let urlRequest: URLRequest = requestBuilder.build(
-            parameters: RequestBuilderParameters(
+        let urlRequest: URLRequest = try requestBuilder.build(
+            parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseUrl + "/analytics/global",
                 method: .get,
@@ -43,7 +43,7 @@ final class MobileContentGlobalAnalyticsApi {
      
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
-        let urlRequest: URLRequest = getGlobalAnalyticsUrlRequest(urlSession: urlSession)
+        let urlRequest: URLRequest = try getGlobalAnalyticsUrlRequest(urlSession: urlSession)
         
         let response = try await requestSender.sendDataTask(
             urlRequest: urlRequest,

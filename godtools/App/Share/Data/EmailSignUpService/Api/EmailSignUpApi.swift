@@ -13,17 +13,17 @@ final class EmailSignUpApi: EmailSignUpApiInterface {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let urlSessionPriority: URLSessionPriority
-    private let requestSender: RequestSender
+    private let requestSender: RequestSenderInterface
     private let baseUrl: String = "https://campaign-forms.cru.org"
     private let campaignId: String = "3fb6022c-5ef9-458c-928a-0380c4a0e57b"
     
-    init(urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
+    init(urlSessionPriority: URLSessionPriority, requestSender: RequestSenderInterface) {
         
         self.urlSessionPriority = urlSessionPriority
         self.requestSender = requestSender
     }
     
-    private func getEmailSignUpRequest(emailSignUp: EmailSignUp, urlSession: URLSession) -> URLRequest {
+    private func getEmailSignUpRequest(emailSignUp: EmailSignUp, urlSession: URLSession) throws -> URLRequest {
         
         var body: [String: String] = Dictionary()
         
@@ -37,7 +37,7 @@ final class EmailSignUpApi: EmailSignUpApiInterface {
         }
         
         let request: URLRequest = requestBuilder.build(
-            parameters: RequestBuilderParameters(
+            parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseUrl + "/forms",
                 method: .post,
@@ -54,7 +54,7 @@ final class EmailSignUpApi: EmailSignUpApiInterface {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
-        let urlRequest = getEmailSignUpRequest(emailSignUp: emailSignUp, urlSession: urlSession)
+        let urlRequest = try getEmailSignUpRequest(emailSignUp: emailSignUp, urlSession: urlSession)
         
         return try await requestSender.sendDataTask(
             urlRequest: urlRequest,
