@@ -12,55 +12,14 @@ import RepositorySync
 
 final class EmailSignUpsCache {
     
-    private let realmDatabase: RealmDatabase
+    let persistence: any Persistence<EmailSignUpDataModel, EmailSignUpDataModel>
     
-    init(realmDatabase: RealmDatabase) {
+    init(persistence: any Persistence<EmailSignUpDataModel, EmailSignUpDataModel>) {
         
-        self.realmDatabase = realmDatabase
+        self.persistence = persistence
     }
     
-    func emailIsRegistered(email: String) throws -> Bool {
-        return try getEmailSignUp(email: email)?.isRegistered ?? false
-    }
-    
-    func getEmailSignUp(email: String) throws -> EmailSignUpDataModel? {
-        
-        let realm = try realmDatabase.openRealm()
-        
-        guard let realmEmailSignUp = realm.object(ofType: RealmEmailSignUp.self, forPrimaryKey: email) else {
-            return nil
-        }
-        
-        return realmEmailSignUp.toModel()
-    }
-    
-    func getEmailSignUps() throws -> [EmailSignUpDataModel] {
-        let realm: Realm = try realmDatabase.openRealm()
-        let realmEmailSignUps: [RealmEmailSignUp] = Array(realm.objects(RealmEmailSignUp.self))
-        return realmEmailSignUps.map({ $0.toModel() })
-    }
-    
-    func cacheEmailSignUp(emailSignUp: EmailSignUp) {
-        
-        realmDatabase.write.serialAsync { result in
-            
-            switch result {
-            case .success(let realm):
-                
-                let realmEmailSignUp = RealmEmailSignUp.createNewFrom(model: emailSignUp.toModel(id: emailSignUp.email))
-                                
-                do {
-                    try realm.write {
-                        realm.add(realmEmailSignUp, update: .modified)
-                    }
-                }
-                catch let error {
-                    assertionFailure(error.localizedDescription)
-                }
-            
-            case .failure( _):
-                break
-            }
-        }
+    func getEmailIsRegistered(email: String) throws -> Bool {
+        return try persistence.getDataModel(id: email)?.isRegistered ?? false
     }
 }

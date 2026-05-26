@@ -235,12 +235,32 @@ final class AppDataLayerDependencies {
     }
     
     func getEmailSignUpService() -> EmailSignUpService {
+        
+        let persistence: any Persistence<EmailSignUpDataModel, EmailSignUpDataModel>
+        
+        if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                mapping: SwiftEmailSignUpMapping()
+            )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                databaseConfig: getSharedRealmDatabaseConfig(),
+                mapping: RealmEmailSignUpMapping()
+            )
+        }
+        
+        let api = EmailSignUpApi(
+            urlSessionPriority: getSharedUrlSessionPriority(),
+            requestSender: getRequestSender()
+        )
+        
         return EmailSignUpService(
-            api: EmailSignUpApi(
-                urlSessionPriority: getSharedUrlSessionPriority(),
-                requestSender: getRequestSender()
-            ),
-            cache: EmailSignUpsCache(realmDatabase: getSharedRealmDatabase())
+            api: api,
+            cache: EmailSignUpsCache(persistence: persistence)
         )
     }
     

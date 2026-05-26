@@ -15,4 +15,24 @@ struct EmailSignUpDataModel: Sendable {
     let firstName: String?
     let lastName: String?
     let isRegistered: Bool
+    
+    init(id: String, email: String, firstName: String?, lastName: String?, isRegistered: Bool) {
+        self.id = id
+        self.email = email
+        self.firstName = firstName
+        self.lastName = lastName
+        self.isRegistered = isRegistered
+    }
+    
+    init(id: String, emailSignUp: EmailSignUp) {
+        self.id = id
+        self.email = emailSignUp.email
+        self.firstName = emailSignUp.firstName
+        self.lastName = emailSignUp.lastName
+        self.isRegistered = emailSignUp.isRegistered
+    }
+    
+    func toEmailSignUp() -> EmailSignUp {
+        return EmailSignUp(email: email, firstName: firstName, lastName: lastName, isRegistered: isRegistered)
+    }
 }
