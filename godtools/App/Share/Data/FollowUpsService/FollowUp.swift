@@ -15,15 +15,3 @@ struct FollowUp: Sendable {
     let destinationId: Int
     let languageId: Int
 }
-
-extension FollowUp {
-    func toModel(id: String) -> FollowUpDataModel {
-        return FollowUpDataModel(
-            id: id,
-            name: name,
-            email: email,
-            destinationId: destinationId,
-            languageId: languageId
-        )
-    }
-}

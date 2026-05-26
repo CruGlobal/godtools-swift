@@ -290,6 +290,23 @@ final class AppDataLayerDependencies {
     
     func getFollowUpsService() -> FollowUpsService {
         
+        let persistence: any Persistence<FollowUpDataModel, FollowUpDataModel>
+        
+        if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                mapping: SwiftFollowUpMapping()
+            )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                databaseConfig: getSharedRealmDatabaseConfig(),
+                mapping: RealmFollowUpMapping()
+            )
+        }
+        
         let api = FollowUpsApi(
             baseUrl: getAppConfig().getMobileContentApiBaseUrl(),
             urlSessionPriority: getSharedUrlSessionPriority(),
@@ -297,7 +314,7 @@ final class AppDataLayerDependencies {
         )
         
         let cache = FailedFollowUpsCache(
-            realmDatabase: getSharedRealmDatabase()
+            persistence: persistence
         )
         
         return FollowUpsService(
