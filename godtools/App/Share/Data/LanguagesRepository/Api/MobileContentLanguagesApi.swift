@@ -17,20 +17,20 @@ final class MobileContentLanguagesApi: LanguagesApiInterface {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let urlSessionPriority: URLSessionPriority
-    private let requestSender: RequestSender
+    private let requestSender: RequestSenderInterface
     private let baseUrl: String
     
-    init(config: AppConfigInterface, urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
+    init(config: AppConfigInterface, urlSessionPriority: URLSessionPriority, requestSender: RequestSenderInterface) {
             
         self.urlSessionPriority = urlSessionPriority
         self.requestSender = requestSender
         baseUrl = config.getMobileContentApiBaseUrl()
     }
     
-    private func getLanguageRequest(urlSession: URLSession, languageId: String) -> URLRequest {
+    private func getLanguageRequest(urlSession: URLSession, languageId: String) throws -> URLRequest {
         
         return requestBuilder.build(
-            parameters: RequestBuilderParameters(
+            parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseUrl + Path.languages + "/" + languageId,
                 method: .get,
@@ -41,10 +41,10 @@ final class MobileContentLanguagesApi: LanguagesApiInterface {
         )
     }
     
-    private func getLanguagesRequest(urlSession: URLSession) -> URLRequest {
+    private func getLanguagesRequest(urlSession: URLSession) throws -> URLRequest {
         
         return requestBuilder.build(
-            parameters: RequestBuilderParameters(
+            parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseUrl + Path.languages,
                 method: .get,
@@ -59,7 +59,7 @@ final class MobileContentLanguagesApi: LanguagesApiInterface {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
-        let urlRequest: URLRequest = getLanguageRequest(urlSession: urlSession, languageId: languageId)
+        let urlRequest: URLRequest = try getLanguageRequest(urlSession: urlSession, languageId: languageId)
         
         let response: RequestDataResponse = try await requestSender.sendDataTask(
             urlRequest: urlRequest,
@@ -77,7 +77,7 @@ final class MobileContentLanguagesApi: LanguagesApiInterface {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
-        let urlRequest: URLRequest = getLanguagesRequest(urlSession: urlSession)
+        let urlRequest: URLRequest = try getLanguagesRequest(urlSession: urlSession)
         
         let response: RequestDataResponse = try await requestSender.sendDataTask(
             urlRequest: urlRequest,

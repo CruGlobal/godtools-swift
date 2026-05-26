@@ -403,7 +403,7 @@ final class AppDataLayerDependencies {
         )
     }
     
-    func getRequestSender() -> RequestSender {
+    func getRequestSender() -> RequestSenderInterface {
         return sharedAppConfig.urlRequestsEnabled ? RequestSender() : DoesNotSendUrlRequestSender()
     }
     

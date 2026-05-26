@@ -19,17 +19,17 @@ final class PersonalizedToolsApi: PersonalizedToolsApiInterface {
         
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let urlSessionPriority: URLSessionPriority
-    private let requestSender: RequestSender
+    private let requestSender: RequestSenderInterface
     private let baseUrl: String
 
-    init(config: AppConfigInterface, urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
+    init(config: AppConfigInterface, urlSessionPriority: URLSessionPriority, requestSender: RequestSenderInterface) {
 
         self.urlSessionPriority = urlSessionPriority
         self.requestSender = requestSender
         baseUrl = config.getMobileContentApiBaseUrl()
     }
     
-    private func getAllRankedResourcesUrlRequest(urlSession: URLSession, country: TwoLetterCountryCode?, language: TwoLetterLanguageCode?, resourceTypes: [ResourceType]?) -> URLRequest {
+    private func getAllRankedResourcesUrlRequest(urlSession: URLSession, country: TwoLetterCountryCode?, language: TwoLetterLanguageCode?, resourceTypes: [ResourceType]?) throws -> URLRequest {
 
         var queryItems: [URLQueryItem]? = JsonApiFilter.buildQueryItems(
             nameValues: [
@@ -43,7 +43,7 @@ final class PersonalizedToolsApi: PersonalizedToolsApiInterface {
 
         return requestBuilder
             .build(
-                parameters: RequestBuilderParameters(
+                parameters: try RequestBuilderParameters(
                     configuration: urlSession.configuration,
                     urlString: baseUrl + "/resources/featured",
                     method: .get,
@@ -54,7 +54,7 @@ final class PersonalizedToolsApi: PersonalizedToolsApiInterface {
             )
     }
     
-    private func getDefaultOrderResourcesUrlRequest(urlSession: URLSession, language: TwoLetterLanguageCode?, resourceTypes: [ResourceType]?) -> URLRequest {
+    private func getDefaultOrderResourcesUrlRequest(urlSession: URLSession, language: TwoLetterLanguageCode?, resourceTypes: [ResourceType]?) throws -> URLRequest {
 
         var queryItems: [URLQueryItem]? = JsonApiFilter.buildQueryItems(
             nameValues: [
@@ -67,7 +67,7 @@ final class PersonalizedToolsApi: PersonalizedToolsApiInterface {
 
         return requestBuilder
             .build(
-                parameters: RequestBuilderParameters(
+                parameters: try RequestBuilderParameters(
                     configuration: urlSession.configuration,
                     urlString: baseUrl + "/resources/default_order",
                     method: .get,
@@ -91,7 +91,7 @@ final class PersonalizedToolsApi: PersonalizedToolsApiInterface {
 
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
 
-        let urlRequest: URLRequest = getAllRankedResourcesUrlRequest(
+        let urlRequest: URLRequest = try getAllRankedResourcesUrlRequest(
             urlSession: urlSession,
             country: country,
             language: language,
@@ -109,7 +109,7 @@ final class PersonalizedToolsApi: PersonalizedToolsApiInterface {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
-        let urlRequest: URLRequest = getDefaultOrderResourcesUrlRequest(
+        let urlRequest: URLRequest = try getDefaultOrderResourcesUrlRequest(
             urlSession: urlSession,
             language: language,
             resourceTypes: resourceTypes

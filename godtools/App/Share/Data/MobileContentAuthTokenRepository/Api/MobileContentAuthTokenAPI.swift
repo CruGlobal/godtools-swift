@@ -13,17 +13,17 @@ final class MobileContentAuthTokenApi: MobileContentAuthTokenApiInterface {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let urlSessionPriority: URLSessionPriority
-    private let requestSender: RequestSender
+    private let requestSender: RequestSenderInterface
     private let baseURL: String
     
-    init(config: AppConfigInterface, urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
+    init(config: AppConfigInterface, urlSessionPriority: URLSessionPriority, requestSender: RequestSenderInterface) {
         
         self.urlSessionPriority = urlSessionPriority
         self.requestSender = requestSender
         baseURL = config.getMobileContentApiBaseUrl()
     }
     
-    private func getAuthTokenRequest(urlSession: URLSession, providerToken: MobileContentAuthProviderToken, createUser: Bool) -> URLRequest {
+    private func getAuthTokenRequest(urlSession: URLSession, providerToken: MobileContentAuthProviderToken, createUser: Bool) throws -> URLRequest {
         
         var attributes: [String: Any] = Dictionary()
         
@@ -66,7 +66,7 @@ final class MobileContentAuthTokenApi: MobileContentAuthTokenApiInterface {
         ]
         
         return requestBuilder.build(
-            parameters: RequestBuilderParameters(
+            parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseURL + "/auth",
                 method: .post,
@@ -81,7 +81,7 @@ final class MobileContentAuthTokenApi: MobileContentAuthTokenApiInterface {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: .high)
                 
-        let urlRequest: URLRequest = getAuthTokenRequest(urlSession: urlSession, providerToken: providerToken, createUser: createUser)
+        let urlRequest: URLRequest = try getAuthTokenRequest(urlSession: urlSession, providerToken: providerToken, createUser: createUser)
         
         let response: RequestDataResponse = try await requestSender.sendDataTask(
             urlRequest: urlRequest,
