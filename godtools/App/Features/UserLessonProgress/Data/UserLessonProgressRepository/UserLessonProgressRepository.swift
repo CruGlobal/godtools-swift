@@ -42,7 +42,7 @@ final class UserLessonProgressRepository {
             progress: progress
         )
         
-        _ = try await cache.persistence.writeObjectsAsync(externalObjects: [dataModel], writeOption: nil, getOption: nil)
+        _ = try await cache.persistence.writeObjects(externalObjects: [dataModel], writeOption: nil, getOption: nil)
         
         return dataModel
     }

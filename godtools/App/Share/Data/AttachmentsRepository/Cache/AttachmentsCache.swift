@@ -33,10 +33,6 @@ final class AttachmentsCache {
         return persistence as? SwiftRepositorySyncPersistence<AttachmentDataModel, AttachmentCodable, SwiftAttachment>
     }
     
-    private var realmDatabase: RealmDatabase? {
-        return getRealmPersistence()?.database
-    }
-    
     private func getRealmPersistence() -> RealmRepositorySyncPersistence<AttachmentDataModel, AttachmentCodable, RealmAttachment>? {
         return persistence as? RealmRepositorySyncPersistence<AttachmentDataModel, AttachmentCodable, RealmAttachment>
     }

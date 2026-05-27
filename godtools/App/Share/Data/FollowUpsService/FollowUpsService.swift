@@ -22,18 +22,31 @@ final class FollowUpsService {
     
     func postFollowUp(followUp: FollowUp, requestPriority: RequestPriority) async throws {
         
-        let followUpDataModel = followUp.toModel(id: UUID().uuidString)
+        let followUpDataModel = FollowUpDataModel(
+            id: UUID().uuidString,
+            followUp: followUp
+        )
         
         do {
             
             let response = try await api.postFollowUp(followUp: followUp, requestPriority: requestPriority)
             
             if !response.urlResponse.isSuccessHttpStatusCode {
-                cache.cacheFailedFollowUps(followUps: [followUpDataModel])
+                
+                _ = try await cache.persistence.writeObjects(
+                    externalObjects: [followUpDataModel],
+                    writeOption: nil,
+                    getOption: nil
+                )
             }
         }
         catch let error {
-            cache.cacheFailedFollowUps(followUps: [followUpDataModel])
+            
+            _ = try await cache.persistence.writeObjects(
+                externalObjects: [followUpDataModel],
+                writeOption: nil,
+                getOption: nil
+            )
             
             throw error
         }
@@ -41,7 +54,7 @@ final class FollowUpsService {
     
     func postFailedFollowUpsIfNeeded(requestPriority: RequestPriority) async throws {
         
-        let failedFollowUps: [FollowUpDataModel] = try cache.getFailedFollowUps()
+        let failedFollowUps: [FollowUpDataModel] = try await cache.persistence.getDataModels(getOption: .allObjects)
         
         guard !failedFollowUps.isEmpty else {
             return
@@ -76,7 +89,7 @@ final class FollowUpsService {
         )
         
         if response.urlResponse.isSuccessHttpStatusCode {
-            cache.deleteFollowUps(followUps: [failedFollowUp])
+            _ = try await cache.persistence.deleteObjectsByIds(ids: [failedFollowUp.id], getOption: nil)
         }
     }
 }

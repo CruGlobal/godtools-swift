@@ -141,36 +141,12 @@ extension RealmResourcesCacheTests {
     
     private func getResourcesCache() throws -> ResourcesCache {
         
-        return ResourcesCache(
-            persistence: try getRealmPersistence(),
-            trackDownloadedTranslationsRepository: try getTrackDownloadedTranslationsRepository()
-        )
-    }
-    
-    private func getRealmPersistence() throws -> RealmRepositorySyncPersistence<ResourceDataModel, ResourceCodable, RealmResource> {
+        let databaseConfig = try RealmDatabaseConfig.createInMemoryConfig()
         
-        return RealmRepositorySyncPersistence(
-            database: try getRealmDatabase(),
-            dataModelMapping: RealmResourceMapping()
+        let realmDatabase = RealmDatabase(
+            databaseConfig: databaseConfig
         )
-    }
-    
-    private func getTrackDownloadedTranslationsRepository() throws -> TrackDownloadedTranslationsRepository {
-             
-        return TrackDownloadedTranslationsRepository(
-            cache: TrackDownloadedTranslationsCache(
-                persistence: RealmRepositorySyncPersistence(
-                    database: try getRealmDatabase(),
-                    dataModelMapping: RealmDownloadedTranslationMapping()
-                )
-            )
-        )
-    }
-    
-    private func getRealmDatabase() throws -> RealmDatabase {
-        
-        let realmDatabase = RealmDatabase(databaseConfig: RealmDatabaseConfig.createInMemoryConfig())
-                
+                        
         let realm: Realm = try realmDatabase.openRealm()
                 
         let languages: [RealmLanguage] = getLanguages()
@@ -195,8 +171,23 @@ extension RealmResourcesCacheTests {
             
             assertionFailure(error.localizedDescription)
         }
-
-        return realmDatabase
+        
+        return ResourcesCache(
+            persistence: RealmRepositorySyncPersistence(
+                database: realmDatabase,
+                mapping: RealmResourceMapping()
+            ),
+            realmDatabase: realmDatabase,
+            realmDataWrite: RealmDataWrite(config: databaseConfig.config),
+            trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository(
+                cache: TrackDownloadedTranslationsCache(
+                    persistence: RealmRepositorySyncPersistence(
+                        database: realmDatabase,
+                        mapping: RealmDownloadedTranslationMapping()
+                    )
+                )
+            )
+        )
     }
     
     private func getNewLanguage(id: String, code: BCP47LanguageIdentifier) -> RealmLanguage {

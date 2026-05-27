@@ -17,11 +17,13 @@ final class RealmResourcesCacheSync {
     typealias TranslationId = String
     
     private let realmDatabase: RealmDatabase
+    private let realmDataWrite: RealmDataWrite
     private let trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
     
-    init(realmDatabase: RealmDatabase, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository) {
+    init(realmDatabase: RealmDatabase, realmDataWrite: RealmDataWrite, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository) {
         
         self.realmDatabase = realmDatabase
+        self.realmDataWrite = realmDataWrite
         self.trackDownloadedTranslationsRepository = trackDownloadedTranslationsRepository
     }
     
@@ -44,7 +46,7 @@ final class RealmResourcesCacheSync {
     
     private func syncResourcesWithCompletion(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable, shouldRemoveDataThatNoLongerExists: Bool, completion: @escaping ((_ result: Result<ResourcesCacheSyncResult, Error>) -> Void)) {
      
-        self.realmDatabase.write.serialAsync(asyncClosure: { [weak self] (result: Result<Realm, Error>) in
+        realmDataWrite.serialAsync(asyncClosure: { [weak self] (result: Result<Realm, Error>) in
             
             guard let weakSelf = self else {
                 return

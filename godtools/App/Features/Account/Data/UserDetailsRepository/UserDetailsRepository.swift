@@ -86,7 +86,7 @@ extension UserDetailsRepository {
         
         let codable: MobileContentApiUsersMeCodable = try await api.fetchUserDetails(requestPriority: requestPriority)
         
-        _ = try await cache.persistence.writeObjectsAsync(
+        _ = try await cache.persistence.writeObjects(
             externalObjects: [codable],
             writeOption: nil,
             getOption: nil

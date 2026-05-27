@@ -13,16 +13,21 @@ import RepositorySync
 final class RealmProductionConfig {
     
     static let diskFileName: String = "godtools_realm"
-    static let schemaVersion: UInt64 = 43
+    static let schemaVersion: UInt64 = 44
     
-    func createConfig() -> RealmDatabaseConfig {
+    func createConfig() throws -> RealmDatabaseConfig {
         
         let migrationBlock = { @Sendable (migration: Migration, oldSchemaVersion: UInt64) in
-                                    
-            if (oldSchemaVersion < 1) {
-                // Nothing to do!
-                // Realm will automatically detect new properties and removed properties
-                // And will update the schema on disk automatically
+            
+            let realmMigrations = Self.getMigrations(oldSchemaVersion: oldSchemaVersion)
+            
+            for realmMigration in realmMigrations {
+                
+                guard realmMigration.shouldMigrate else {
+                    continue
+                }
+                
+                realmMigration.migrate(migration: migration)
             }
         }
         
@@ -64,11 +69,18 @@ final class RealmProductionConfig {
             RealmUserToolSettings.self
         ]
         
-        return RealmDatabaseConfig(
+        return try RealmDatabaseConfig(
             fileName: Self.diskFileName,
             schemaVersion: Self.schemaVersion,
             migrationBlock: migrationBlock,
             objectTypes: objectTypes
         )
+    }
+    
+    private static func getMigrations(oldSchemaVersion: UInt64) -> [RealmMigrationInterface] {
+        
+        return [
+            MigrateRealmPrimaryKeyToIdForIdentifiable(oldSchemaVersion: oldSchemaVersion)
+        ]
     }
 }

@@ -11,9 +11,7 @@ import Combine
 
 @MainActor
 final class MenuViewModel: ObservableObject {
-        
-    private static var backgroundCancellables: Set<AnyCancellable> = Set()
-    
+            
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getMenuStringsUseCase: GetMenuStringsUseCase
     private let getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase
@@ -166,15 +164,10 @@ extension MenuViewModel {
     
     func logoutTapped() {
         
-        logOutUserUseCase
-            .execute()
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { _ in
-                
-            }, receiveValue: { (finished: Bool) in
-                
-            })
-            .store(in: &Self.backgroundCancellables)
+        Task {
+            _ = try await logOutUserUseCase
+                .execute()
+        }
     }
     
     func deleteAccountTapped() {

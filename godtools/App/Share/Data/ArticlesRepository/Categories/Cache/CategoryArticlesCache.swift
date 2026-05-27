@@ -12,11 +12,14 @@ import RepositorySync
 
 final class CategoryArticlesCache {
     
+    private let realmDataWrite: RealmDataWrite
+    
     let persistence: any Persistence<CategoryArticleModel, CategoryArticleModel>
     
-    init(persistence: any Persistence<CategoryArticleModel, CategoryArticleModel>) {
+    init(persistence: any Persistence<CategoryArticleModel, CategoryArticleModel>, realmDataWrite: RealmDataWrite) {
                 
         self.persistence = persistence
+        self.realmDataWrite = realmDataWrite
     }
     
     @available(iOS 17.4, *)
@@ -27,10 +30,6 @@ final class CategoryArticlesCache {
     @available(iOS 17.4, *)
     private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<CategoryArticleModel, CategoryArticleModel, SwiftCategoryArticle>? {
         return persistence as? SwiftRepositorySyncPersistence<CategoryArticleModel, CategoryArticleModel, SwiftCategoryArticle>
-    }
-    
-    private var realmDatabase: RealmDatabase? {
-        return getRealmPersistence()?.database
     }
     
     private func getRealmPersistence() -> RealmRepositorySyncPersistence<CategoryArticleModel, CategoryArticleModel, RealmCategoryArticle>? {
@@ -68,7 +67,9 @@ extension CategoryArticlesCache {
                 filter: getCategoryIdAndLanguageCodePredicate(categoryId: categoryId, languageCode: languageCode)
             )
             
-            return try await swiftPersistence.getDataModelsAsync(getOption: .allObjects, query: query)
+            return try await swiftPersistence
+                .newActorRead()
+                .getDataModels(query: query)            
         }
         else if let realmPersistence = getRealmPersistence() {
             
@@ -76,7 +77,9 @@ extension CategoryArticlesCache {
                 filter: getCategoryIdAndLanguageCodeNSPredicate(categoryId: categoryId, languageCode: languageCode)
             )
             
-            return try await realmPersistence.getDataModelsAsync(getOption: .allObjects, query: query)
+            return try await realmPersistence
+                .newActorRead()
+                .getDataModels(query: query)
         }
         
         return Array()
@@ -95,12 +98,7 @@ extension CategoryArticlesCache {
     
     private func storeAemDataObjectsForCategoriesWithCompletion(categories: [ArticleCategory], languageCode: String, aemDataObjects: [ArticleAemData], completion: @escaping ((_ errors: [Error]) -> Void)) {
         
-        guard let realmDatabase = realmDatabase else {
-            completion([])
-            return
-        }
-        
-        realmDatabase.write.serialAsync { result in
+        realmDataWrite.serialAsync { result in
             
             switch result {
             case .success(let realm):

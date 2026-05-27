@@ -28,11 +28,7 @@ final class UserLessonFiltersCache {
     private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<UserLessonLanguageFilterDataModel, UserLessonLanguageFilterDataModel, SwiftUserLessonLanguageFilter>? {
         return persistence as? SwiftRepositorySyncPersistence<UserLessonLanguageFilterDataModel, UserLessonLanguageFilterDataModel, SwiftUserLessonLanguageFilter>
     }
-    
-    private var realmDatabase: RealmDatabase? {
-        return getRealmPersistence()?.database
-    }
-    
+
     private func getRealmPersistence() -> RealmRepositorySyncPersistence<UserLessonLanguageFilterDataModel, UserLessonLanguageFilterDataModel, RealmUserLessonLanguageFilter>? {
         return persistence as? RealmRepositorySyncPersistence<UserLessonLanguageFilterDataModel, UserLessonLanguageFilterDataModel, RealmUserLessonLanguageFilter>
     }

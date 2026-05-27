@@ -18,11 +18,15 @@ final class ArticleAemCache {
     private let webArchiveFileCache: ArticleAemWebArchiveFileCache = ArticleAemWebArchiveFileCache()
     private let persistence: any Persistence<ArticleAemData, ArticleAemData>
     private let articleWebArchiver: ArticleWebArchiver
+    private let realmDatabase: RealmDatabase
+    private let realmDataWrite: RealmDataWrite
     
-    init(persistence: any Persistence<ArticleAemData, ArticleAemData>, articleWebArchiver: ArticleWebArchiver) {
+    init(persistence: any Persistence<ArticleAemData, ArticleAemData>, articleWebArchiver: ArticleWebArchiver, realmDatabase: RealmDatabase, realmDataWrite: RealmDataWrite) {
         
         self.persistence = persistence
         self.articleWebArchiver = articleWebArchiver
+        self.realmDatabase = realmDatabase
+        self.realmDataWrite = realmDataWrite
     }
     
     @available(iOS 17.4, *)
@@ -34,11 +38,7 @@ final class ArticleAemCache {
     private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<ArticleAemData, ArticleAemData, SwiftArticleAemData>? {
         return persistence as? SwiftRepositorySyncPersistence<ArticleAemData, ArticleAemData, SwiftArticleAemData>
     }
-    
-    private var realmDatabase: RealmDatabase? {
-        return getRealmPersistence()?.database
-    }
-    
+
     private func getRealmPersistence() -> RealmRepositorySyncPersistence<ArticleAemData, ArticleAemData, RealmArticleAemData>? {
         return persistence as? RealmRepositorySyncPersistence<ArticleAemData, ArticleAemData, RealmArticleAemData>
     }
@@ -48,20 +48,12 @@ extension ArticleAemCache {
     
     func getAemCacheObject(aemUri: String) throws -> ArticleAemCacheObject? {
         
-        guard let realmDatabase = realmDatabase else {
-            return nil
-        }
-        
         let realm: Realm = try realmDatabase.openRealm()
         
         return try getAemCacheObject(aemUri: aemUri, realm: realm)
     }
     
     func getAemCacheObjects(aemUris: [String]) throws -> [ArticleAemCacheObject] {
-        
-        guard let realmDatabase = realmDatabase else {
-            return Array()
-        }
         
         let realm: Realm = try realmDatabase.openRealm()
         
@@ -98,10 +90,6 @@ extension ArticleAemCache {
     
     func storeAemDataObjects(aemDataObjects: [ArticleAemData], requestPriority: RequestPriority) async throws -> ArticleWebArchiverResult {
      
-        guard let realmDatabase = realmDatabase else {
-            throw NSError.errorWithDescription(description: "RealmDatabase is null.")
-        }
-        
         let realm: Realm = try realmDatabase.openRealm()
         
         let aemDataObjectsThatNeedDownloading: ArticleAemDataObjectsThatNeedDownloading = try filterAemDataObjectsThatNeedDownloaded(
@@ -198,12 +186,7 @@ extension ArticleAemCache {
     
     private func storeAemCacheArchivedObjectsWithCompletion(aemCacheArchivedObjects: [ArticleAemCacheArchivedObject], completion: @escaping ((_ errors: [Error]) -> Void)) {
         
-        guard let realmDatabase = realmDatabase else {
-            completion([])
-            return
-        }
-        
-        realmDatabase.write.serialAsync { result in
+        realmDataWrite.serialAsync { result in
             
             var errors: [Error] = Array()
             
@@ -267,7 +250,7 @@ extension ArticleAemCache {
             
             completion(errors)
             
-        }//end realmDatabase.write.serialAsync
+        }//end serialAsync
     }
     
     private func storeWebArchivePlistData(webArchiveFilename: String, webArchivePlistData: Data) throws {

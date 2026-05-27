@@ -138,7 +138,7 @@ final class UserAuthentication {
         }
     }
     
-    func signOut() throws {
+    func signOut() async throws {
         
         let allProviders: [AuthenticationProviderInterface] = Array(authenticationProviders.values)
         
@@ -148,7 +148,7 @@ final class UserAuthentication {
         
         lastAuthenticatedProviderCache.deleteLastAuthenticatedProvider()
         
-        try mobileContentAuthTokenRepository.deleteCachedAuthToken()
+        try await mobileContentAuthTokenRepository.deleteCachedAuthToken()
     }
 
     private func renewAppleToken(appleProvider: AppleAuthentication) async throws -> AuthenticationProviderResponse {

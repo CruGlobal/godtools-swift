@@ -32,10 +32,6 @@ final class UserDetailsCache {
         return persistence as? SwiftRepositorySyncPersistence<UserDetailsDataModel, MobileContentApiUsersMeCodable, SwiftUserDetails>
     }
     
-    private var realmDatabase: RealmDatabase? {
-        return getRealmPersistence()?.database
-    }
-    
     private func getRealmPersistence() -> RealmRepositorySyncPersistence<UserDetailsDataModel, MobileContentApiUsersMeCodable, RealmUserDetails>? {
         return persistence as? RealmRepositorySyncPersistence<UserDetailsDataModel, MobileContentApiUsersMeCodable, RealmUserDetails>
     }

@@ -122,7 +122,7 @@ extension TranslationsCacheTests {
         
         let persistence = RealmRepositorySyncPersistence(
             database: realmDatabase,
-            dataModelMapping: RealmTranslationMapping()
+            mapping: RealmTranslationMapping()
         )
         
         return TranslationsCache(

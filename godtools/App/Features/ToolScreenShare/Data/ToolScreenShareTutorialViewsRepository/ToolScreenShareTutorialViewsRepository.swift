@@ -51,7 +51,7 @@ final class ToolScreenShareTutorialViewsRepository {
             )
         }
         
-        _ = try await cache.persistence.writeObjectsAsync(
+        _ = try await cache.persistence.writeObjects(
             externalObjects: [updateToolScreenShare],
             writeOption: nil,
             getOption: nil

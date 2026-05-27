@@ -30,10 +30,6 @@ final class AppLanguagesCache {
         return persistence as? SwiftRepositorySyncPersistence<AppLanguageDataModel, AppLanguageCodable, SwiftAppLanguage>
     }
     
-    private var realmDatabase: RealmDatabase? {
-        return getRealmPersistence()?.database
-    }
-    
     private func getRealmPersistence() -> RealmRepositorySyncPersistence<AppLanguageDataModel, AppLanguageCodable, RealmAppLanguage>? {
         return persistence as? RealmRepositorySyncPersistence<AppLanguageDataModel, AppLanguageCodable, RealmAppLanguage>
     }

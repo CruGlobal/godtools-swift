@@ -37,7 +37,7 @@ final class DownloadedLanguagesRepository {
     
     func getDownloadedLanguages() async throws -> [DownloadedLanguageDataModel] {
         
-        return try await self.cache.persistence.getDataModelsAsync(getOption: .allObjects)
+        return try await self.cache.persistence.getDataModels(getOption: .allObjects)
     }
     
     func storeDownloadedLanguage(languageId: String, downloadComplete: Bool) async throws -> DownloadedLanguageDataModel {
@@ -49,7 +49,7 @@ final class DownloadedLanguagesRepository {
             downloadComplete: downloadComplete
         )
         
-        _ = try await cache.persistence.writeObjectsAsync(
+        _ = try await cache.persistence.writeObjects(
             externalObjects: [downloadedLanguage],
             writeOption: nil,
             getOption: nil
@@ -58,9 +58,9 @@ final class DownloadedLanguagesRepository {
         return downloadedLanguage
     }
     
-    func deleteDownloadedLanguage(languageId: String) throws {
+    func deleteDownloadedLanguage(languageId: String) async throws {
         
-        try cache.deleteDownloadedLanguage(languageId: languageId)
+        try await cache.deleteDownloadedLanguage(languageId: languageId)
     }
     
     func markAllDownloadsAsCompleted() async throws {
@@ -71,7 +71,7 @@ final class DownloadedLanguagesRepository {
             $0.copy(downloadComplete: true)
         }
         
-        _ = try await cache.persistence.writeObjectsAsync(
+        _ = try await cache.persistence.writeObjects(
             externalObjects: incompleteToCompletedDownloads,
             writeOption: nil,
             getOption: nil

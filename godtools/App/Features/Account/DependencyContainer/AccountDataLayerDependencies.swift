@@ -26,14 +26,14 @@ final class AccountDataLayerDependencies {
             
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftUserDetailsMapping()
+                mapping: SwiftUserDetailsMapping()
             )
         }
         else {
             
             persistence = RealmRepositorySyncPersistence(
                 database: coreDataLayer.getSharedRealmDatabase(),
-                dataModelMapping: RealmUserDetailsMapping()
+                mapping: RealmUserDetailsMapping()
             )
         }
         

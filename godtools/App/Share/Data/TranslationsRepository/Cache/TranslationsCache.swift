@@ -29,10 +29,6 @@ final class TranslationsCache {
         return persistence as? SwiftRepositorySyncPersistence<TranslationDataModel, TranslationCodable, SwiftTranslation>
     }
     
-    private var realmDatabase: RealmDatabase? {
-        return getRealmPersistence()?.database
-    }
-    
     private func getRealmPersistence() -> RealmRepositorySyncPersistence<TranslationDataModel, TranslationCodable, RealmTranslation>? {
         return persistence as? RealmRepositorySyncPersistence<TranslationDataModel, TranslationCodable, RealmTranslation>
     }
@@ -110,7 +106,7 @@ extension TranslationsCache {
     
     private func getRealmTranslationsSortedByLatestVersion(resourceId: String, languageId: String) throws -> Results<RealmTranslation>? {
         
-        guard let realmDatabase = realmDatabase else {
+        guard let realmDatabase = getRealmPersistence()?.database else {
             return nil
         }
         
@@ -128,7 +124,7 @@ extension TranslationsCache {
     
     private func getRealmTranslationsSortedByLatestVersion(resourceId: String, languageCode: BCP47LanguageIdentifier) throws -> Results<RealmTranslation>? {
         
-        guard let realmDatabase = realmDatabase else {
+        guard let realmDatabase = getRealmPersistence()?.database else {
             return nil
         }
         

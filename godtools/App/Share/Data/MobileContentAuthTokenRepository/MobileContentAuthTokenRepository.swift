@@ -65,12 +65,12 @@ final class MobileContentAuthTokenRepository {
         return try getCachedAuthTokenModel()?.token
     }
     
-    func deleteCachedAuthToken() throws {
+    func deleteCachedAuthToken() async throws {
         
         guard let userId = getUserId() else {
             return
         }
         
-        try cache.deleteAuthToken(for: userId)
+        try await cache.deleteAuthToken(userId: userId)
     }
 }
