@@ -35,15 +35,9 @@ final class MigrateRealmPrimaryKeyToIdForIdentifiable: RealmMigrationInterface {
     private func migrateObject(object: Object, migration: Migration) {
         
         migration.enumerateObjects(ofType: object.className) { (oldObject: MigrationObject?, newObject: MigrationObject?) in
-                            
-            print("\n Migrating Realm Object")
-            print("  className: \(object.className)")
-            print("  primaryKey: \(object.primaryKey)")
-            
+
             let primaryKeyValue: String = oldObject?[object.primaryKey] as? String ?? ""
-            
-            print("    primaryKeyValue: \(primaryKeyValue)")
-            
+                        
             newObject?["id"] = primaryKeyValue
         }
     }
