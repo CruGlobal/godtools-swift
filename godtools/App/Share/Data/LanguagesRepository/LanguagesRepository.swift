@@ -58,7 +58,7 @@ final class LanguagesRepository {
     }
     
     func getLanguagesByIds(ids: [String]) async throws -> [LanguageDataModel] {
-        return try await cache.persistence.getDataModels(getOption: .objectsByIds(ids: ids))
+        return try await cache.persistence.getDataModels(getOption: .objectsByIds(ids: Set(ids)))
     }
 }
 
