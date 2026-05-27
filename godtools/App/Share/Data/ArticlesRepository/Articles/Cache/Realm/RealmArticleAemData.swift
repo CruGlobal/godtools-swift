@@ -12,20 +12,16 @@ import RepositorySync
 
 class RealmArticleAemData: Object, IdentifiableRealmObject {
     
-    @objc dynamic var aemUri: String = ""
+    @objc dynamic var id: String = ""
+    @objc dynamic var aemUri: String = "" {
+        didSet {
+            id = aemUri
+        }
+    }
     @objc dynamic var articleJcrContent: RealmArticleJcrContent?
     @objc dynamic var webUrl: String = ""
     @objc dynamic var webArchiveFilename: String = ""
     @objc dynamic var updatedAt: Date = Date()
-    
-    @objc dynamic var id: String {
-        get {
-            return aemUri
-        }
-        set {
-            aemUri = newValue
-        }
-    }
     
     override static func primaryKey() -> String? {
         return "aemUri"

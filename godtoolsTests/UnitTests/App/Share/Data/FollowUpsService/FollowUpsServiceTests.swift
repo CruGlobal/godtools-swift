@@ -38,7 +38,7 @@ struct FollowUpsServiceTests {
       
         try await Task.databaseChangesSleep()
         
-        let count: Int = try cache.getFailedFollowUps().count
+        let count: Int = try cache.persistence.getObjectCount()
         
         #expect(count == 1)
     }
@@ -61,7 +61,7 @@ struct FollowUpsServiceTests {
       
         try await Task.databaseChangesSleep()
         
-        let count: Int = try cache.getFailedFollowUps().count
+        let count: Int = try cache.persistence.getObjectCount()
         
         #expect(count == 1)
     }
@@ -84,7 +84,7 @@ struct FollowUpsServiceTests {
       
         try await Task.databaseChangesSleep()
         
-        let count: Int = try cache.getFailedFollowUps().count
+        let count: Int = try cache.persistence.getObjectCount()
         
         #expect(count == 0)
     }
@@ -114,7 +114,7 @@ struct FollowUpsServiceTests {
         
         try await Task.databaseChangesSleep()
         
-        let count: Int = try cache.getFailedFollowUps().count
+        let count: Int = try cache.persistence.getObjectCount()
         
         #expect(count == 0)
     }
@@ -132,8 +132,13 @@ extension FollowUpsServiceTests {
     private func getCache(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> FailedFollowUpsCache {
         
         let testsDiContainer = try getTestsDiContainer(addRealmObjects: addRealmObjects)
-        
-        let cache = FailedFollowUpsCache(realmDatabase: testsDiContainer.core.dataLayer.getSharedRealmDatabase())
+
+        let cache = FailedFollowUpsCache(
+            persistence: RealmRepositorySyncPersistence(
+                database: testsDiContainer.core.dataLayer.getSharedRealmDatabase(),
+                mapping: RealmFollowUpMapping()
+            )
+        )
         
         return cache
     }

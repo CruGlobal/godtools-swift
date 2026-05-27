@@ -46,7 +46,7 @@ final class CompletedTrainingTipRepository {
             resourceId: languageId
         )
         
-        _ = try await cache.persistence.writeObjectsAsync(
+        _ = try await cache.persistence.writeObjects(
             externalObjects: [trainingTipDataModel],
             writeOption: nil,
             getOption: nil

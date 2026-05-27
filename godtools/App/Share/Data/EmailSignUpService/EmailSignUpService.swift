@@ -22,8 +22,8 @@ final class EmailSignUpService {
     
     func postNewEmailSignUp(emailSignUp: EmailSignUp, requestPriority: RequestPriority) async throws {
         
-        let emailIsRegistered: Bool = try cache.emailIsRegistered(email: emailSignUp.email)
-        
+        let emailIsRegistered: Bool = try cache.getEmailIsRegistered(email: emailSignUp.email)
+                
         guard !emailIsRegistered else {
             return
         }
@@ -34,14 +34,20 @@ final class EmailSignUpService {
         
         if isSuccess {
             
-            let registeredEmailSignUp = EmailSignUp(
+            let registeredEmailSignUp = EmailSignUpDataModel(
+                id: emailSignUp.email,
                 email: emailSignUp.email,
                 firstName: emailSignUp.firstName,
                 lastName: emailSignUp.lastName,
                 isRegistered: true
             )
             
-            self.cache.cacheEmailSignUp(emailSignUp: registeredEmailSignUp)
+            _ = try await cache.persistence
+                .writeObjects(
+                    externalObjects: [registeredEmailSignUp],
+                    writeOption: nil,
+                    getOption: nil
+                )
         }
     }
 }

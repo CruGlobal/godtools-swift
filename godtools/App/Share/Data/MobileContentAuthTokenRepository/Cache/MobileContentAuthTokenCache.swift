@@ -57,10 +57,6 @@ final class MobileContentAuthTokenCache {
         return persistence as? SwiftRepositorySyncPersistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenDecodable, SwiftMobileContentAuthToken>
     }
     
-    private var realmDatabase: RealmDatabase? {
-        return getRealmPersistence()?.database
-    }
-    
     private func getRealmPersistence() -> RealmRepositorySyncPersistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenDecodable, RealmMobileContentAuthToken>? {
         return persistence as? RealmRepositorySyncPersistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenDecodable, RealmMobileContentAuthToken>
     }
@@ -72,7 +68,7 @@ extension MobileContentAuthTokenCache {
         
         try keychainAccessor.saveMobileContentAuthToken(authTokenCodable: authTokenCodable)
         
-        _ = try await persistence.writeObjectsAsync(
+        _ = try await persistence.writeObjects(
             externalObjects: [authTokenCodable],
             writeOption: nil,
             getOption: nil
@@ -116,42 +112,11 @@ extension MobileContentAuthTokenCache {
         return keychainAccessor.getMobileContentUserId()
     }
     
-    func deleteAuthToken(for userId: String) throws {
+    func deleteAuthToken(userId: String) async throws {
         
         keychainAccessor.deleteMobileContentAuthTokenAndUserId(userId: userId)
         
-        if #available(iOS 17.4, *), let database = getSwiftPersistence()?.database {
-            
-            let context: ModelContext = database.openContext()
-            
-            let object: SwiftMobileContentAuthToken? = try database.read.object(context: context, id: userId)
-            
-            guard let object = object else {
-                return
-            }
-            
-            try database.write.context(
-                context: context,
-                writeObjects: WriteSwiftObjects(
-                    deleteObjects: [object],
-                    insertObjects: nil
-                )
-            )
-        }
-        else if let database = getRealmPersistence()?.database {
-            
-            let realm: Realm = try database.openRealm()
-            
-            let object: RealmMobileContentAuthToken? = database.read.object(realm: realm, id: userId)
-            
-            guard let object = object else {
-                return
-            }
-            
-            try database.write.realm(realm: realm, writeClosure: { realm in
-                return WriteRealmObjects(deleteObjects: [object], addObjects: nil)
-            }, updatePolicy: .modified)
-        }
+        _ = try await persistence.deleteObjectsByIds(ids: [userId], getOption: nil)
         
         updateHashableAuthTokenSubject(authToken: nil)
     }

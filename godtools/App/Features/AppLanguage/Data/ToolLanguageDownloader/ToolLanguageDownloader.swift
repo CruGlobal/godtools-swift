@@ -57,7 +57,7 @@ final class ToolLanguageDownloader {
         
         _ = try await cache
             .persistence
-            .writeObjectsAsync(
+            .writeObjects(
                 externalObjects: [downloadDataModel],
                 writeOption: nil,
                 getOption: nil
@@ -94,7 +94,7 @@ final class ToolLanguageDownloader {
                     
                     _ = try await cache
                         .persistence
-                        .writeObjectsAsync(
+                        .writeObjects(
                             externalObjects: [progressDataModel],
                             writeOption: nil,
                             getOption: nil
@@ -111,7 +111,7 @@ final class ToolLanguageDownloader {
                     
                     _ = try await cache
                         .persistence
-                        .writeObjectsAsync(
+                        .writeObjects(
                             externalObjects: [progressDataModel],
                             writeOption: nil,
                             getOption: nil
@@ -134,13 +134,13 @@ final class ToolLanguageDownloader {
             
             _ = try await cache
                 .persistence
-                .writeObjectsAsync(
+                .writeObjects(
                     externalObjects: [errorDataModel],
                     writeOption: nil,
                     getOption: nil
                 )
                         
-            try downloadedLanguagesRepository.deleteDownloadedLanguage(
+            try await downloadedLanguagesRepository.deleteDownloadedLanguage(
                 languageId: languageId
             )
             

@@ -32,7 +32,7 @@ final class AppLanguagesRepositorySync: AppLanguagesRepositorySyncInterface {
         let appLanguages: [AppLanguageCodable] = try await api.getAppLanguages()
         
         _ = try await persistence
-            .writeObjectsAsync(
+            .writeObjects(
                 externalObjects: appLanguages,
                 writeOption: nil,
                 getOption: nil

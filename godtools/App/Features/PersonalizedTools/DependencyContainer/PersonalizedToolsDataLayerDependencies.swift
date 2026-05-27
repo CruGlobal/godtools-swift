@@ -31,14 +31,14 @@ final class PersonalizedToolsDataLayerDependencies {
 
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftPersonalizedToolsMapping()
+                mapping: SwiftPersonalizedToolsMapping()
             )
         }
         else {
 
             persistence = RealmRepositorySyncPersistence(
                 database: coreDataLayer.getSharedRealmDatabase(),
-                dataModelMapping: RealmPersonalizedToolsMapping()
+                mapping: RealmPersonalizedToolsMapping()
             )
         }
 
@@ -68,14 +68,14 @@ final class PersonalizedToolsDataLayerDependencies {
             
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftUserLocalizationSettingsMapping()
+                mapping: SwiftUserLocalizationSettingsMapping()
             )
         }
         else {
             
             persistence = RealmRepositorySyncPersistence(
                 database: coreDataLayer.getSharedRealmDatabase(),
-                dataModelMapping: RealmUserLocalizationSettingsMapping()
+                mapping: RealmUserLocalizationSettingsMapping()
             )
         }
         

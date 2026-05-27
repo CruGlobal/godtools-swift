@@ -62,7 +62,7 @@ final class LessonEvaluationRepository {
             numberOfEvaluationAttempts: numberOfAttempts
         )
         
-        _ = try await cache.persistence.writeObjectsAsync(
+        _ = try await cache.persistence.writeObjects(
             externalObjects: [lessonEvaluation],
             writeOption: nil,
             getOption: nil

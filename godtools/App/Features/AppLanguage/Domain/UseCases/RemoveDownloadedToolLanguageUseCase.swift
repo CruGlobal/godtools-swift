@@ -17,9 +17,9 @@ final class RemoveDownloadedToolLanguageUseCase {
         self.downloadedLanguagesRepository = downloadedLanguagesRepository
     }
     
-    func execute(languageId: String) throws {
+    func execute(languageId: String) async throws {
         
-        try downloadedLanguagesRepository
+        try await downloadedLanguagesRepository
             .deleteDownloadedLanguage(
                 languageId: languageId
             )

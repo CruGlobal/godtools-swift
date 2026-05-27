@@ -26,14 +26,14 @@ final class PersistToolLanguageSettingsForFavoritedToolDataLayerDependencies {
             
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftUserToolSettingsMapping()
+                mapping: SwiftUserToolSettingsMapping()
             )
         }
         else {
             
             persistence = RealmRepositorySyncPersistence(
                 database: coreDataLayer.getSharedRealmDatabase(),
-                dataModelMapping: RealmUserToolSettingsMapping()
+                mapping: RealmUserToolSettingsMapping()
             )
         }
         

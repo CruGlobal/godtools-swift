@@ -27,24 +27,24 @@ final class ToolsFilterDataLayerDependencies {
             
             categoryPersistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftUserToolCategoryFilterMapping()
+                mapping: SwiftUserToolCategoryFilterMapping()
             )
             
             languagePersistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftUserToolLanguageFilterMapping()
+                mapping: SwiftUserToolLanguageFilterMapping()
             )
         }
         else {
             
             categoryPersistence = RealmRepositorySyncPersistence(
                 database: coreDataLayer.getSharedRealmDatabase(),
-                dataModelMapping: RealmUserToolCategoryFilterMapping()
+                mapping: RealmUserToolCategoryFilterMapping()
             )
             
             languagePersistence = RealmRepositorySyncPersistence(
                 database: coreDataLayer.getSharedRealmDatabase(),
-                dataModelMapping: RealmUserToolLanguageFilterMapping()
+                mapping: RealmUserToolLanguageFilterMapping()
             )
         }
         

@@ -27,11 +27,7 @@ final class CompletedTrainingTipCache {
     private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<CompletedTrainingTipDataModel, CompletedTrainingTipDataModel, SwiftCompletedTrainingTip>? {
         return persistence as? SwiftRepositorySyncPersistence<CompletedTrainingTipDataModel, CompletedTrainingTipDataModel, SwiftCompletedTrainingTip>
     }
-    
-    private var realmDatabase: RealmDatabase? {
-        return getRealmPersistence()?.database
-    }
-    
+
     private func getRealmPersistence() -> RealmRepositorySyncPersistence<CompletedTrainingTipDataModel, CompletedTrainingTipDataModel, RealmCompletedTrainingTip>? {
         return persistence as? RealmRepositorySyncPersistence<CompletedTrainingTipDataModel, CompletedTrainingTipDataModel, RealmCompletedTrainingTip>
     }

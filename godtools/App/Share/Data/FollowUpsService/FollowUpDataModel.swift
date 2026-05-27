@@ -15,9 +15,25 @@ struct FollowUpDataModel: Sendable {
     let email: String
     let destinationId: Int
     let languageId: Int
-}
-
-extension FollowUpDataModel {
+    
+    init(id: String, name: String, email: String, destinationId: Int, languageId: Int) {
+        
+        self.id = id
+        self.name = name
+        self.email = email
+        self.destinationId = destinationId
+        self.languageId = languageId
+    }
+    
+    init(id: String, followUp: FollowUp) {
+        
+        self.id = id
+        self.name = followUp.name
+        self.email = followUp.email
+        self.destinationId = followUp.destinationId
+        self.languageId = followUp.languageId
+    }
+    
     func toFollowUp() -> FollowUp {
         return FollowUp(name: name, email: email, destinationId: destinationId, languageId: languageId)
     }

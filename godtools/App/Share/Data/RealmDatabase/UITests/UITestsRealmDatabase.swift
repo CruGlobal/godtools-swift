@@ -18,7 +18,7 @@ final class UITestsRealmDatabase {
         
     }
     
-    private static func getRealmDatabaseConfig() -> RealmDatabaseConfig {
+    static func getRealmDatabaseConfig() throws -> RealmDatabaseConfig {
         
         let migrationBlock = { @Sendable (migration: Migration, oldSchemaVersion: UInt64) in
                                     
@@ -29,17 +29,10 @@ final class UITestsRealmDatabase {
             }
         }
         
-        return RealmDatabaseConfig(
+        return try RealmDatabaseConfig(
             fileName: Self.diskFileName,
             schemaVersion: RealmProductionConfig.schemaVersion,
             migrationBlock: migrationBlock
         )
-    }
-    
-    static func getRealmDatabase() -> RealmDatabase {
-        
-        let realmDatabase = RealmDatabase(databaseConfig: getRealmDatabaseConfig())
-        
-        return realmDatabase
     }
 }

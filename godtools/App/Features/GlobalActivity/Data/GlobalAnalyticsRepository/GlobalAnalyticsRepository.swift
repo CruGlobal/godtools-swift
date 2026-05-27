@@ -62,7 +62,7 @@ final class GlobalAnalyticsRepository {
         
         let sharedGlobalAnalytics = globalAnalyticsCodable.copy(id: Self.sharedGlobalAnalyticsId)
         
-        _ = try await cache.persistence.writeObjectsAsync(
+        _ = try await cache.persistence.writeObjects(
             externalObjects: [sharedGlobalAnalytics],
             writeOption: nil,
             getOption: nil

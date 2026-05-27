@@ -118,20 +118,22 @@ extension ResourcesCacheTests {
         
         let persistence = RealmRepositorySyncPersistence(
             database: realmDatabase,
-            dataModelMapping: RealmResourceMapping()
+            mapping: RealmResourceMapping()
         )
         
         let trackDownloadedTranslationsRepository = TrackDownloadedTranslationsRepository(
             cache: TrackDownloadedTranslationsCache(
                 persistence: RealmRepositorySyncPersistence(
                     database: realmDatabase,
-                    dataModelMapping: RealmDownloadedTranslationMapping()
+                    mapping: RealmDownloadedTranslationMapping()
                 )
             )
         )
         
         return ResourcesCache(
             persistence: persistence,
+            realmDatabase: realmDatabase,
+            realmDataWrite: RealmDataWrite(config: realmDatabase.databaseConfig.config),
             trackDownloadedTranslationsRepository: trackDownloadedTranslationsRepository
         )
     }

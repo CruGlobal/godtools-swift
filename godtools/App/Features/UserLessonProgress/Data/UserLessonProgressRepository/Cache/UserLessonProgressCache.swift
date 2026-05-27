@@ -29,10 +29,6 @@ final class UserLessonProgressCache {
         return persistence as? SwiftRepositorySyncPersistence<UserLessonProgressDataModel, UserLessonProgressDataModel, SwiftUserLessonProgress>
     }
     
-    private var realmDatabase: RealmDatabase? {
-        return getRealmPersistence()?.database
-    }
-    
     private func getRealmPersistence() -> RealmRepositorySyncPersistence<UserLessonProgressDataModel, UserLessonProgressDataModel, RealmUserLessonProgress>? {
         return persistence as? RealmRepositorySyncPersistence<UserLessonProgressDataModel, UserLessonProgressDataModel, RealmUserLessonProgress>
     }

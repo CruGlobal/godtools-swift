@@ -76,8 +76,8 @@ final class TestsAppConfig: AppConfigInterface {
         return "\(scheme)://mobile-content-api.cru.org"
     }
     
-    func getRealmDatabase() -> RealmDatabase {
-        return realmDatabase
+    func getRealmDatabaseConfig() throws -> RealmDatabaseConfig {
+        return realmDatabase.databaseConfig
     }
     
     @available(iOS 17.4, *)

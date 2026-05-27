@@ -63,7 +63,7 @@ final class AppLanguagesRepository {
         
         syncAppLanguages()
         
-        return try await cache.persistence.getDataModelsAsync(getOption: .allObjects)
+        return try await cache.persistence.getDataModels(getOption: .allObjects)
     }
     
     private func syncAppLanguages() {

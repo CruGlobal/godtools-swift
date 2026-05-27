@@ -26,14 +26,14 @@ final class AppLanguageDataLayerDependencies {
             
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftAppLanguageMapping()
+                mapping: SwiftAppLanguageMapping()
             )
         }
         else {
             
             persistence = RealmRepositorySyncPersistence(
                 database: coreDataLayer.getSharedRealmDatabase(),
-                dataModelMapping: RealmAppLanguageMapping()
+                mapping: RealmAppLanguageMapping()
             )
         }
         
@@ -68,14 +68,14 @@ final class AppLanguageDataLayerDependencies {
             
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftDownloadedLanguageMapping()
+                mapping: SwiftDownloadedLanguageMapping()
             )
         }
         else {
             
             persistence = RealmRepositorySyncPersistence(
                 database: coreDataLayer.getSharedRealmDatabase(),
-                dataModelMapping: RealmDownloadedLanguageMapping()
+                mapping: RealmDownloadedLanguageMapping()
             )
         }
         
@@ -94,14 +94,14 @@ final class AppLanguageDataLayerDependencies {
             
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftToolLanguageDownloadMapping()
+                mapping: SwiftToolLanguageDownloadMapping()
             )
         }
         else {
             
             persistence = RealmRepositorySyncPersistence(
                 database: coreDataLayer.getSharedRealmDatabase(),
-                dataModelMapping: RealmToolLanguageDownloadMapping()
+                mapping: RealmToolLanguageDownloadMapping()
             )
         }
         
@@ -126,14 +126,14 @@ final class AppLanguageDataLayerDependencies {
             
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftUserAppLanguageMapping()
+                mapping: SwiftUserAppLanguageMapping()
             )
         }
         else {
             
             persistence = RealmRepositorySyncPersistence(
                 database: coreDataLayer.getSharedRealmDatabase(),
-                dataModelMapping: RealmUserAppLanguageMapping()
+                mapping: RealmUserAppLanguageMapping()
             )
         }
         
