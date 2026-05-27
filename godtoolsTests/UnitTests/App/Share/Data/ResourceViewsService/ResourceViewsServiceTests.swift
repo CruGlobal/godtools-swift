@@ -24,7 +24,7 @@ struct ResourceViewsServiceTests {
         
         let resourceViewsService = ResourceViewsService(
             api: MockResourceViewsApi(result: result),
-            failedResourceViewsCache: cache
+            cache: cache
         )
                 
         do {
@@ -36,7 +36,7 @@ struct ResourceViewsServiceTests {
       
         try await Task.databaseChangesSleep()
         
-        let count: Int = try cache.getFailedResourceViews().count
+        let count: Int = try cache.persistence.getObjectCount()
         
         #expect(count == 1)
     }
@@ -50,14 +50,14 @@ struct ResourceViewsServiceTests {
         
         let resourceViewsService = ResourceViewsService(
             api: MockResourceViewsApi(result: result),
-            failedResourceViewsCache: cache
+            cache: cache
         )
                 
         try await resourceViewsService.postNewResourceView(resourceId: "1", requestPriority: .high)
       
         try await Task.databaseChangesSleep()
         
-        let count: Int = try cache.getFailedResourceViews().count
+        let count: Int = try cache.persistence.getObjectCount()
         
         #expect(count == 1)
     }
@@ -71,14 +71,14 @@ struct ResourceViewsServiceTests {
         
         let resourceViewsService = ResourceViewsService(
             api: MockResourceViewsApi(result: result),
-            failedResourceViewsCache: cache
+            cache: cache
         )
                 
         try await resourceViewsService.postNewResourceView(resourceId: "1", requestPriority: .high)
       
         try await Task.databaseChangesSleep()
         
-        let count: Int = try cache.getFailedResourceViews().count
+        let count: Int = try cache.persistence.getObjectCount()
         
         #expect(count == 0)
     }
@@ -101,14 +101,14 @@ struct ResourceViewsServiceTests {
         
         let resourceViewsService = ResourceViewsService(
             api: MockResourceViewsApi(result: result),
-            failedResourceViewsCache: cache
+            cache: cache
         )
                 
         try await resourceViewsService.postFailedResourceViewsIfNeeded(requestPriority: .high)
         
         try await Task.databaseChangesSleep()
         
-        let count: Int = try cache.getFailedResourceViews().count
+        let count: Int = try cache.persistence.getObjectCount()
         
         #expect(count == 0)
     }
@@ -127,7 +127,12 @@ extension ResourceViewsServiceTests {
         
         let testsDiContainer = try getTestsDiContainer(addRealmObjects: addRealmObjects)
         
-        let cache = FailedResourceViewsCache(realmDatabase: testsDiContainer.core.dataLayer.getSharedRealmDatabase())
+        let cache = FailedResourceViewsCache(
+            persistence: RealmRepositorySyncPersistence(
+                database: testsDiContainer.core.dataLayer.getSharedRealmDatabase(),
+                mapping: RealmResourceViewMapping()
+            )
+        )
         
         return cache
     }

@@ -128,13 +128,15 @@ extension FavoritedResourcesCache {
             )
         }
         
-        _ = try await persistence.writeObjects(
+        let favoritedResources: [FavoritedResourceDataModel] = try await persistence.writeObjects(
             externalObjects: allFavoritedResourcesSorted,
             writeOption: nil,
-            getOption: nil
+            getOption: .allObjects
         )
         
-        return try await getFavoritedResourcesSortedByPosition()
+        return favoritedResources.sorted(by: {
+            $0.position < $1.position
+        })
     }
     
     func deleteFavoritedResource(id: String) async throws -> [FavoritedResourceDataModel] {
@@ -211,7 +213,9 @@ extension FavoritedResourcesCache {
             )
         }
         
-        try await persistence.writeObjects(externalObjects: updatedFavoritedResources)
+        try await persistence.writeObjects(
+            externalObjects: updatedFavoritedResources
+        )
         
         return updatedFavoritedResources
     }

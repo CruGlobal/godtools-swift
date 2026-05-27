@@ -20,7 +20,9 @@ extension UserCountersRepositoryTests {
     
     private func getUserCountersRepository() throws -> UserCountersRepository {
         
-        let testsDiContainer = try TestsDiContainer(realmFileName: String(describing: UserCountersRepositoryTests.self))
+        let testsDiContainer = try TestsDiContainer.createWithRealmFile(
+            realmFileName: String(describing: UserCountersRepositoryTests.self)
+        )
         
         return testsDiContainer.core.dataLayer.getUserCountersRepository()
     }

@@ -11,29 +11,25 @@ import Testing
 @testable import godtools
 import RequestOperation
 import RepositorySync
+import SwiftData
 
-@Suite(.serialized)
 struct EmailSignUpServiceTests {
     
     @Test()
     func postNewEmailSignUpWithSuccessHttpStatusCodeIsPersisted() async throws {
         
-        let cache = try getCache()
+        let persistence = try getPersistence()
         
-        let result: Result<RequestDataResponse, Error> = .success(try RequestDataResponse.createWithHttpStatusCode(httpStatusCode: 200))
-        
-        let emailSignUpService = EmailSignUpService(
-            api: MockEmailSignUpApi(result: result),
-            cache: cache
+        let emailSignUpService = try getEmailSignUpService(
+            apiResult: .success(try RequestDataResponse.createWithHttpStatusCode(httpStatusCode: 200)),
+            persistence: persistence
         )
         
         let emailSignUp = EmailSignUp(email: "", firstName: nil, lastName: nil, isRegistered: false)
         
         try await emailSignUpService.postNewEmailSignUp(emailSignUp: emailSignUp, requestPriority: .high)
-      
-        try await Task.databaseChangesSleep()
-        
-        let count: Int = try cache.getEmailSignUps().count
+              
+        let count: Int = try persistence.getObjectCount()
         
         #expect(count == 1)
     }
@@ -41,22 +37,18 @@ struct EmailSignUpServiceTests {
     @Test()
     func postNewEmailSignUpWithBadHttpStatusCodeIsNotPersisted() async throws {
         
-        let cache = try getCache()
+        let persistence = try getPersistence()
         
-        let result: Result<RequestDataResponse, Error> = .success(try RequestDataResponse.createWithHttpStatusCode(httpStatusCode: 400))
-        
-        let emailSignUpService = EmailSignUpService(
-            api: MockEmailSignUpApi(result: result),
-            cache: cache
+        let emailSignUpService = try getEmailSignUpService(
+            apiResult: .success(try RequestDataResponse.createWithHttpStatusCode(httpStatusCode: 400)),
+            persistence: persistence
         )
         
         let emailSignUp = EmailSignUp(email: "", firstName: nil, lastName: nil, isRegistered: false)
         
         try await emailSignUpService.postNewEmailSignUp(emailSignUp: emailSignUp, requestPriority: .high)
-      
-        try await Task.databaseChangesSleep()
-        
-        let count: Int = try cache.getEmailSignUps().count
+              
+        let count: Int = try persistence.getObjectCount()
         
         #expect(count == 0)
     }
@@ -64,18 +56,23 @@ struct EmailSignUpServiceTests {
 
 extension EmailSignUpServiceTests {
     
-    private func getTestsDiContainer() throws -> TestsDiContainer {
-        return try TestsDiContainer(
-            realmFileName: String(describing: EmailSignUpServiceTests.self)
+    private func getPersistence() throws -> any Persistence<EmailSignUpDataModel, EmailSignUpDataModel> {
+        
+        let databaseConfig = try RealmDatabaseConfig.createInMemoryConfig()
+        
+        return RealmRepositorySyncPersistence(
+            database: RealmDatabase(databaseConfig: databaseConfig),
+            mapping: RealmEmailSignUpMapping()
         )
     }
     
-    private func getCache() throws -> EmailSignUpsCache {
-        
-        let testsDiContainer = try getTestsDiContainer()
-        
-        let cache = EmailSignUpsCache(realmDatabase: testsDiContainer.core.dataLayer.getSharedRealmDatabase())
-        
-        return cache
+    private func getEmailSignUpService(apiResult: Result<RequestDataResponse, Error>, persistence: any Persistence<EmailSignUpDataModel, EmailSignUpDataModel>) throws -> EmailSignUpService {
+                
+        return EmailSignUpService(
+            api: MockEmailSignUpApi(result: apiResult),
+            cache: EmailSignUpsCache(
+                persistence: persistence
+            )
+        )
     }
 }

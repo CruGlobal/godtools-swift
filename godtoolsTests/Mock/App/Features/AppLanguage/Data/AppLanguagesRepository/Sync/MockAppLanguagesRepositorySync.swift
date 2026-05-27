@@ -44,16 +44,9 @@ class MockAppLanguagesRepositorySync: AppLanguagesRepositorySyncInterface {
         
         let realm: Realm = try realmDatabase.openRealm()
         
-        try realmDatabase.write.realm(
-            realm: realm,
-            writeClosure: { (realm: Realm) in
-                return WriteRealmObjects(
-                    deleteObjects: nil,
-                    addObjects: realmLanguages
-                )
-            },
-            updatePolicy: .modified
-        )
+        try realm.write {
+            realm.add(realmLanguages, update: .modified)
+        }
     }
     
     static func getSampleAppLanguages() -> [AppLanguageCodable] {

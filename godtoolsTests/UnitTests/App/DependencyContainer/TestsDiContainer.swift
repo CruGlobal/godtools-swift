@@ -35,25 +35,47 @@ class TestsDiContainer: AppDiContainer {
             }
         )
         
-        let realmDatabase = RealmDatabase(databaseConfig: RealmDatabaseConfig(config: config))
+        let databaseConfig = try RealmDatabaseConfig(config: config)
+        
+        let realmDatabase = RealmDatabase(databaseConfig: databaseConfig)
                 
         let realm: Realm = try realmDatabase.openRealm()
         
-        try realmDatabase.write.realm(
-            realm: realm,
-            writeClosure: { (realm: Realm) in
-                return WriteRealmObjects(
-                    deleteObjects: nil,
-                    addObjects: addRealmObjects
-                )
-            },
-            updatePolicy: .modified
-        )
+        try realm.write {
+            realm.add(addRealmObjects, update: .modified)
+        }
         
         let appConfig = TestsAppConfig(
             realmDatabase: realmDatabase
         )
         
         self.init(testsAppConfig: appConfig)
+    }
+    
+    static func createWithRealmFile(realmFileName: String) throws -> TestsDiContainer {
+        
+        let fileUrl = URL(fileURLWithPath: RLMRealmPathForFile(realmFileName), isDirectory: false)
+        
+        if FileManager.default.getFilePathExists(url: fileUrl) {
+            try FileManager.default.removeUrl(url: fileUrl)
+        }
+        
+        let config = Realm.Configuration(
+            fileURL: fileUrl,
+            schemaVersion: 1,
+            migrationBlock: { (_, _) in
+                
+            }
+        )
+        
+        let databaseConfig = try RealmDatabaseConfig(config: config)
+        
+        let realmDatabase = RealmDatabase(databaseConfig: databaseConfig)
+        
+        return TestsDiContainer(
+            testsAppConfig: TestsAppConfig(
+                realmDatabase: realmDatabase
+            )
+        )
     }
 }

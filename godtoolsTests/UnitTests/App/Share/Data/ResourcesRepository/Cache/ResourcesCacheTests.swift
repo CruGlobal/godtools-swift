@@ -132,6 +132,8 @@ extension ResourcesCacheTests {
         
         return ResourcesCache(
             persistence: persistence,
+            realmDatabase: realmDatabase,
+            realmDataWrite: RealmDataWrite(config: realmDatabase.databaseConfig.config),
             trackDownloadedTranslationsRepository: trackDownloadedTranslationsRepository
         )
     }
