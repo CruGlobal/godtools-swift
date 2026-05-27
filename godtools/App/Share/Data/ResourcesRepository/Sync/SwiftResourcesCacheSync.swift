@@ -236,7 +236,7 @@ class SwiftResourcesCacheSync {
         
         //
         
-        let translationIdsToRemove: [String] = existingTranslationsMinusNewlyAddedTranslations.map({$0.id})
+        let translationIdsToRemove: Set<String> = Set(existingTranslationsMinusNewlyAddedTranslations.map({$0.id}))
         let downloadedTranslationsToRemove: [SwiftDownloadedTranslation]
         do {
             downloadedTranslationsToRemove = try swiftDatabase.read.objects(context: context, ids: translationIdsToRemove, sortBy: nil)
@@ -258,15 +258,21 @@ class SwiftResourcesCacheSync {
         objectsToRemove.append(contentsOf: existingAttachmentsMinusNewlyAddedAttachments)
         objectsToRemove.append(contentsOf: downloadedTranslationsToRemove)
         
-        try swiftDatabase
-            .write
-            .context(
-                context: context,
-                writeObjects: WriteSwiftObjects(
-                    deleteObjects: objectsToRemove,
-                    insertObjects: newObjectsToStore
-                )
-            )
+        if objectsToRemove.count > 0 {
+            for object in objectsToRemove {
+                context.delete(object)
+            }
+        }
+        
+        if newObjectsToStore.count > 0 {
+            for object in newObjectsToStore {
+                context.insert(object)
+            }
+        }
+        
+        if context.hasChanges {
+            try context.save()
+        }
         
         let syncResult = ResourcesCacheSyncResult(
             resourcesRemoved: resourcesRemoved,

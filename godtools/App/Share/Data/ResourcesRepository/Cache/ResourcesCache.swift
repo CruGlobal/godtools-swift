@@ -488,7 +488,7 @@ extension ResourcesCache {
     
     func getSpotlightTools(sortByDefaultOrder: Bool) throws -> [ResourceDataModel] {
         
-        guard let realmDatabase = realmDatabase else {
+        guard let realmDatabase = getRealmPersistence()?.database else {
             return []
         }
         
@@ -530,7 +530,7 @@ extension ResourcesCache {
     
     private func getAllToolsListResults(filterByCategory: String?, filterByLanguageId: String?, sortByDefaultOrder: Bool) throws -> Results<RealmResource>? {
         
-        guard let realmDatabase = realmDatabase else {
+        guard let realmDatabase = getRealmPersistence()?.database else {
             return nil
         }
         
