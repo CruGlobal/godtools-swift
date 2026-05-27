@@ -105,7 +105,7 @@ final class UserCountersSync {
             requestPriority: requestPriority
         )
         
-        try localActivityCounterCache
+        try await localActivityCounterCache
             .decrementCount(id: counterId, decrementBy: count)
         
         return remoteCounter
