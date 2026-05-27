@@ -12,20 +12,16 @@ import RepositorySync
 
 class RealmSHA256File: Object, IdentifiableRealmObject {
     
-    @objc dynamic var sha256WithPathExtension: String = ""
+    @objc dynamic var id: String = ""
+    @objc dynamic var sha256WithPathExtension: String = "" {
+        didSet {
+            id = sha256WithPathExtension
+        }
+    }
     
     let attachments = List<RealmAttachment>()
     let translations = List<RealmTranslation>()
-    
-    @objc dynamic var id: String {
-        get {
-            return sha256WithPathExtension
-        }
-        set {
-            sha256WithPathExtension = newValue
-        }
-    }
-        
+ 
     override static func primaryKey() -> String? {
         return "sha256WithPathExtension"
     }
