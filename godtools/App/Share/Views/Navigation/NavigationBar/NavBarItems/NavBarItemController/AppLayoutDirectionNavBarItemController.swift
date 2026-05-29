@@ -9,6 +9,7 @@
 import UIKit
 import Combine
 
+@MainActor
 class AppLayoutDirectionNavBarItemController: NavBarItemController {
     
     private let layoutDirectionBasedBarItem: AppLayoutDirectionBasedBarItem

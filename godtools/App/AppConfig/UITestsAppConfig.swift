@@ -11,7 +11,7 @@ import SocialAuthentication
 import RepositorySync
 import SwiftData
 
-class UITestsAppConfig: AppConfigInterface {
+final class UITestsAppConfig: AppConfigInterface {
     
     init() {
         

@@ -115,7 +115,7 @@ extension GetLanguageSettingsStringsUseCaseTests {
         let appLanguages: [AppLanguageCodable] = getAppLanguages()
         
         let mockAppLanguagesSync = try await MockAppLanguagesRepositorySync(
-            testsDiContainer: testsDiContainer,
+            persistence: testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesPersistence(),
             appLanguages: appLanguages
         )
         

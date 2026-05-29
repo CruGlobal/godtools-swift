@@ -9,7 +9,8 @@
 import Foundation
 import Combine
 
-final class ConfirmRemoveToolFromFavoritesAlertViewModel: AlertMessageViewModelType {
+@MainActor
+final class ConfirmRemoveToolFromFavoritesAlertViewModel {
     
     private static var removeToolFromFavoritesTask: Task<Void, Error>?
     
@@ -18,8 +19,8 @@ final class ConfirmRemoveToolFromFavoritesAlertViewModel: AlertMessageViewModelT
     private let removeFavoritedToolUseCase: RemoveFavoritedToolUseCase
     private let didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?
     
-    let title: String?
-    let message: String?
+    let title: String
+    let message: String
     let cancelTitle: String?
     let acceptTitle: String
     

@@ -9,6 +9,7 @@
 import UIKit
 import Combine
 
+@MainActor
 class NavBarItem {
     
     let controllerType: NavBarItemControllerType

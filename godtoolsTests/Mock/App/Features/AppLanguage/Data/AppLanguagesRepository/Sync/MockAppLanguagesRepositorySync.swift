@@ -10,14 +10,14 @@ import Foundation
 @testable import godtools
 import RepositorySync
 
-final class MockAppLanguagesRepositorySync: AppLanguagesRepositorySyncInterface {
+final class MockAppLanguagesRepositorySync: AppLanguagesRepositorySyncInterface, Sendable {
     
-    private let testsDiContainer: TestsDiContainer
+    private let persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>
     private let appLanguages: [AppLanguageCodable]
     
-    init(testsDiContainer: TestsDiContainer, appLanguages: [AppLanguageCodable]) async throws {
+    init(persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>, appLanguages: [AppLanguageCodable]) async throws {
         
-        self.testsDiContainer = testsDiContainer
+        self.persistence = persistence
         self.appLanguages = appLanguages
         
         try await addAppLanguages(appLanguages: appLanguages)
@@ -34,7 +34,6 @@ final class MockAppLanguagesRepositorySync: AppLanguagesRepositorySyncInterface 
     
     private func addAppLanguages(appLanguages: [AppLanguageCodable]) async throws {
         
-        try await testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesPersistence()
-            .writeObjects(externalObjects: appLanguages)
+        try await persistence.writeObjects(externalObjects: appLanguages)
     }
 }

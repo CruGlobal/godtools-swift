@@ -8,6 +8,7 @@
 
 import UIKit
 
+@MainActor
 protocol TrainingPageViewDelegate: AnyObject {
     
     func trainingPageButtonWithUrlTapped(trainingPage: TrainingPageView, url: URL)

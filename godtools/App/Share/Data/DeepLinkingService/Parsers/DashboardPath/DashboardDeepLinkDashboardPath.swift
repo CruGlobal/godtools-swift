@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum DashboardDeepLinkDashboardPath: String {
+enum DashboardDeepLinkDashboardPath: String, Sendable {
     
     case dashboard = "dashboard"
     case tools = "tools"

@@ -58,10 +58,7 @@ struct StoreInitialAppLanguageUseCaseTests {
             AppLanguageCodable(languageCode: "lv", languageDirection: .leftToRight, languageScriptCode: nil)
         ]
         
-        let mockAppLanguagesSync: AppLanguagesRepositorySyncInterface = try await MockAppLanguagesRepositorySync(
-            testsDiContainer: testsDiContainer,
-            appLanguages: appLanguages
-        )
+        let mockAppLanguagesSync: AppLanguagesRepositorySyncInterface = try await getMockAppLanguagesRepositorySync(appLanguages: appLanguages)
         
         let userAppLanguageRepository = testsDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository()
         
@@ -136,10 +133,7 @@ struct StoreInitialAppLanguageUseCaseTests {
             AppLanguageCodable(languageCode: "lv", languageDirection: .leftToRight, languageScriptCode: nil)
         ]
         
-        let mockAppLanguagesSync: AppLanguagesRepositorySyncInterface = try await MockAppLanguagesRepositorySync(
-            testsDiContainer: testsDiContainer,
-            appLanguages: appLanguages
-        )
+        let mockAppLanguagesSync: AppLanguagesRepositorySyncInterface = try await getMockAppLanguagesRepositorySync(appLanguages: appLanguages)
         
         let userAppLanguageRepository = testsDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository()
                                 
@@ -155,8 +149,7 @@ struct StoreInitialAppLanguageUseCaseTests {
         
         let storeAppLanguage: String = try #require(argument.appLanguage?.rawValue)
         
-        try await userAppLanguageRepository
-            .storeLanguage(appLanguageId: storeAppLanguage)
+        try await userAppLanguageRepository.storeLanguage(appLanguageId: storeAppLanguage)
         
         var resultRef: AppLanguageDomainModel?
         
@@ -212,10 +205,7 @@ struct StoreInitialAppLanguageUseCaseTests {
             AppLanguageCodable(languageCode: "lv", languageDirection: .leftToRight, languageScriptCode: nil)
         ]
         
-        let mockAppLanguagesSync: AppLanguagesRepositorySyncInterface = try await MockAppLanguagesRepositorySync(
-            testsDiContainer: testsDiContainer,
-            appLanguages: appLanguages
-        )
+        let mockAppLanguagesSync: AppLanguagesRepositorySyncInterface = try await getMockAppLanguagesRepositorySync(appLanguages: appLanguages)
         
         let userAppLanguageRepository = testsDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository()
         
@@ -258,5 +248,17 @@ struct StoreInitialAppLanguageUseCaseTests {
         }
         
         #expect(resultRef == argument.expectedValue)
+    }
+}
+
+extension StoreInitialAppLanguageUseCaseTests {
+    
+    @MainActor
+    private func getMockAppLanguagesRepositorySync(appLanguages: [AppLanguageCodable]) async throws -> MockAppLanguagesRepositorySync {
+        
+        return try await MockAppLanguagesRepositorySync(
+            persistence: testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesPersistence(),
+            appLanguages: appLanguages
+        )
     }
 }

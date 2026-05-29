@@ -9,6 +9,7 @@
 import UIKit
 import Combine
 
+@MainActor
 class AppLanguageSettingsBarItem: NavBarItem {
     
     init(color: UIColor?, target: AnyObject, action: Selector, accessibilityIdentifier: String?, hidesBarItemPublisher: AnyPublisher<Bool, Never>? = nil) {

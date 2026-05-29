@@ -8,6 +8,7 @@
 
 import UIKit
 
+@MainActor
 protocol MobileContentFlowItemViewDelegate: AnyObject {
     
     func flowItemViewDidChangeVisibilityState(flowItemView: MobileContentFlowItemView, previousVisibilityState: MobileContentViewVisibilityState, visibilityState: MobileContentViewVisibilityState)

@@ -9,6 +9,7 @@
 import UIKit
 import GodToolsShared
 
+@MainActor
 protocol TractPageModalViewDelegate: AnyObject {
     
     func tractPageModalListenerActivated(modalView: TractPageModalView)

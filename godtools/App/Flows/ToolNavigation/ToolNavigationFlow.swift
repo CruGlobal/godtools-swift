@@ -115,14 +115,14 @@ extension ToolNavigationFlow {
                 .getErrorReporting()
                 .reportError(error: error)
             
-            let viewModel = AlertMessageViewModel(
+            let view = AlertMessageView(
                 title: "Internal Error",
                 message: "Found 0 translations downloaded.  Ensure you have a network connection and try again.",
+                acceptTitle: "OK",
                 cancelTitle: nil,
-                acceptTitle: "OK"
+                acceptTapped: nil,
+                cancelTapped: nil
             )
-            
-            let view = AlertMessageView(viewModel: viewModel)
             
             navigationController.present(view.controller, animated: true, completion: nil)
             
@@ -192,13 +192,14 @@ extension ToolNavigationFlow {
             
         case .unknown:
             
-            let viewModel = AlertMessageViewModel(
+            let view = AlertMessageView(
                 title: "Internal Error",
                 message: "Attempted to navigate to a tool with an unknown resource type.",
+                acceptTitle: "OK",
                 cancelTitle: nil,
-                acceptTitle: "OK"
+                acceptTapped: nil,
+                cancelTapped: nil
             )
-            let view = AlertMessageView(viewModel: viewModel)
             
             navigationController.present(view.controller, animated: true, completion: nil)
             

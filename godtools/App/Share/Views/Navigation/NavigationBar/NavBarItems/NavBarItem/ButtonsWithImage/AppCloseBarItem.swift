@@ -9,6 +9,7 @@
 import UIKit
 import Combine
 
+@MainActor
 class AppCloseBarItem: NavBarItem {
     
     init(color: UIColor?, target: AnyObject, action: Selector, accessibilityIdentifier: String? = AccessibilityStrings.Button.close.rawValue, hidesBarItemPublisher: AnyPublisher<Bool, Never>? = nil) {
