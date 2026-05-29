@@ -9,7 +9,7 @@
 import Foundation
 import RequestOperation
 
-final class MobileContentAuthTokenApi: MobileContentAuthTokenApiInterface {
+final class MobileContentAuthTokenApi: AuthTokenApiInterface {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let urlSessionPriority: URLSessionPriority
@@ -65,7 +65,7 @@ final class MobileContentAuthTokenApi: MobileContentAuthTokenApiInterface {
             "Content-Type": "application/vnd.api+json"
         ]
         
-        return requestBuilder.build(
+        return try requestBuilder.build(
             parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseURL + "/auth",

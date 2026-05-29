@@ -9,7 +9,7 @@
 import Foundation
 import RequestOperation
 
-protocol ResourceViewsApiInterface {
+protocol ResourceViewsApiInterface: Sendable {
     
     func postResourceView(resourceId: String, quantity: Int, requestPriority: RequestPriority) async throws -> RequestDataResponse
 }

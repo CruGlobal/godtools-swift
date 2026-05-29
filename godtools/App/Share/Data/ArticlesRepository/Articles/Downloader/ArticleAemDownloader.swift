@@ -9,7 +9,7 @@
 import Foundation
 import RequestOperation
 
-final class ArticleAemDownloader {
+final class ArticleAemDownloader: ArticleAemDownloaderInterface {
             
     private let urlSessionPriority: URLSessionPriority
     private let requestSender: RequestSenderInterface

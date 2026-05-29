@@ -9,7 +9,7 @@
 import Foundation
 import RequestOperation
 
-protocol AttachmentsApiInterface {
+protocol AttachmentsApiInterface: Sendable {
     
     func getAttachmentFile(url: URL, requestPriority: RequestPriority) async throws -> RequestDataResponse
 }
