@@ -8,12 +8,13 @@
 
 import UIKit
 
+@MainActor
 protocol ArticlesErrorMessageViewDelegate: AnyObject {
     
     func articlesErrorMessageViewDownloadArticlesButtonTapped(articlesErrorMessageView: ArticlesErrorMessageView)
 }
 
-class ArticlesErrorMessageView: UIView, NibBased {
+final class ArticlesErrorMessageView: UIView, NibBased {
     
     private weak var delegate: ArticlesErrorMessageViewDelegate?
     

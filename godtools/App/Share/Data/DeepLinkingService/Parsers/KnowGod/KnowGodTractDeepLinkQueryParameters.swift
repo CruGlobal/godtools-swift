@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct KnowGodTractDeepLinkQueryParameters: Codable {
+struct KnowGodTractDeepLinkQueryParameters: Codable, Sendable {
     
     let abbreviation: String?
     let icid: String?

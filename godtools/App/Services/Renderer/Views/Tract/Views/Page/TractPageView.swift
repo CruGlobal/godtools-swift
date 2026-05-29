@@ -7,6 +7,7 @@
 //
 import UIKit
 
+@MainActor
 protocol TractPageViewDelegate: AnyObject {
     
     func tractPageCardPositionChanged(pageView: TractPageView, page: Int, cardPosition: Int?, animated: Bool)
