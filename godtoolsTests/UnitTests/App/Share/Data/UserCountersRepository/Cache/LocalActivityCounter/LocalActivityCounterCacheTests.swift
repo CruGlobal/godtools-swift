@@ -11,7 +11,6 @@ import Testing
 @testable import godtools
 import RepositorySync
 
-@Suite(.serialized)
 struct LocalActivityCounterCacheTests {
         
     private let sessionsCounterId: String = "sessions"
@@ -20,7 +19,11 @@ struct LocalActivityCounterCacheTests {
     @Test()
     func initialCountShouldBe1() async throws {
         
-        let cache: LocalActivityCounterCache = try getLocalActivityCounterCache()
+        let persistence = try getPersistence()
+        
+        let cache = try getLocalActivityCounterCache(
+            persistence: persistence
+        )
         
         let counterId: String = toolOpensCounterId
         
@@ -40,7 +43,11 @@ struct LocalActivityCounterCacheTests {
     @Test()
     func getCountersReturnsAllCounters() async throws {
         
-        let cache: LocalActivityCounterCache = try getLocalActivityCounterCache()
+        let persistence = try getPersistence()
+        
+        let cache = try getLocalActivityCounterCache(
+            persistence: persistence
+        )
                 
         #expect(try cache.getCounter(id: sessionsCounterId) == nil)
         #expect(try cache.getCounter(id: toolOpensCounterId) == nil)
@@ -64,7 +71,11 @@ struct LocalActivityCounterCacheTests {
     @Test()
     func decrementCounters() async throws {
         
-        let cache: LocalActivityCounterCache = try getLocalActivityCounterCache()
+        let persistence = try getPersistence()
+        
+        let cache = try getLocalActivityCounterCache(
+            persistence: persistence
+        )
         
         #expect(try cache.getCounter(id: sessionsCounterId) == nil)
         #expect(try cache.getCounter(id: toolOpensCounterId) == nil)
@@ -94,19 +105,24 @@ struct LocalActivityCounterCacheTests {
 
 extension LocalActivityCounterCacheTests {
     
-    private func getLocalActivityCounterCache() throws -> LocalActivityCounterCache {
+    private func getPersistence() throws -> RealmRepositorySyncPersistence<LocalActivityCountDataModel, LocalActivityCountDataModel, RealmLocalActivityCount> {
         
-        let testsDiContainer = try TestsDiContainer.createWithRealmFile(
-            realmFileName: String(describing: LocalActivityCounterCacheTests.self)
-        )
+        let databaseConfig = try RealmDatabaseConfig.createInMemoryConfig()
         
-        let realmPersistence = RealmRepositorySyncPersistence<LocalActivityCountDataModel, LocalActivityCountDataModel, RealmLocalActivityCount>(
-            database: testsDiContainer.core.dataLayer.getSharedRealmDatabase(),
+        let database = RealmDatabase(databaseConfig: databaseConfig)
+        
+        let persistence = RealmRepositorySyncPersistence(
+            database: database,
             mapping: RealmLocalActivityCountMapping()
         )
+                
+        return persistence
+    }
+    
+    private func getLocalActivityCounterCache(persistence: any Persistence<LocalActivityCountDataModel, LocalActivityCountDataModel>) throws -> LocalActivityCounterCache {
         
         return LocalActivityCounterCache(
-            persistence: realmPersistence
+            persistence: persistence
         )
     }
 }

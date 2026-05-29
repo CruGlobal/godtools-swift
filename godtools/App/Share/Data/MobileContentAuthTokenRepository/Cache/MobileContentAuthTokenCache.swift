@@ -12,7 +12,7 @@ import RepositorySync
 import SwiftData
 import RealmSwift
 
-final class MobileContentAuthTokenCache {
+final class MobileContentAuthTokenCache: MobileContentAuthTokenCacheInterface {
     
     typealias UserId = String
     
@@ -33,7 +33,7 @@ final class MobileContentAuthTokenCache {
             let dataModel: MobileContentAuthTokenDataModel?
             
             if let cachedAuthToken = cachedAuthToken {
-                dataModel = MobileContentAuthTokenDataModel.createWithAuthToken(authToken: cachedAuthToken)
+                dataModel = cachedAuthToken.toModel()
             }
             else {
                 dataModel = nil
@@ -60,9 +60,24 @@ final class MobileContentAuthTokenCache {
     private func getRealmPersistence() -> RealmRepositorySyncPersistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenDecodable, RealmMobileContentAuthToken>? {
         return persistence as? RealmRepositorySyncPersistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenDecodable, RealmMobileContentAuthToken>
     }
-}
-
-extension MobileContentAuthTokenCache {
+    
+    func getAuthTokenChangedPublisher() -> AnyPublisher<MobileContentAuthTokenDataModel?, Never> {
+        
+        return MobileContentAuthTokenCache
+            .sharedHashableAuthTokenSubject
+            .getValueChangedPublisher(
+                hash: MobileContentAuthTokenCache.sharedAuthUserId
+            )
+            .eraseToAnyPublisher()
+    }
+    
+    private func updateHashableAuthTokenSubject(authToken: MobileContentAuthTokenDataModel?) {
+        
+        MobileContentAuthTokenCache.sharedHashableAuthTokenSubject.storeValue(
+            hash: MobileContentAuthTokenCache.sharedAuthUserId,
+            value: authToken
+        )
+    }
     
     func storeAuthToken(authTokenCodable: MobileContentAuthTokenDecodable) async throws {
         
@@ -81,14 +96,14 @@ extension MobileContentAuthTokenCache {
             userId: authTokenCodable.userId
         )
         
-        let dataModel = MobileContentAuthTokenDataModel.createWithAuthToken(authToken: cachedAuthToken)
+        let dataModel = cachedAuthToken.toModel()
                 
         updateHashableAuthTokenSubject(authToken: dataModel)
     }
     
     func getCachedAuthToken() throws -> CachedAuthToken? {
         
-        guard let userId = getUserId(), let authToken = getAuthToken(for: userId) else {
+        guard let userId = getUserId(), let authToken = getMobileContentAuthToken(userId: userId) else {
             return nil
         }
         
@@ -102,7 +117,7 @@ extension MobileContentAuthTokenCache {
         )
     }
     
-    func getAuthToken(for userId: String) -> String? {
+    private func getMobileContentAuthToken(userId: String) -> String? {
         
         return keychainAccessor.getMobileContentAuthToken(userId: userId)
     }
@@ -119,28 +134,5 @@ extension MobileContentAuthTokenCache {
         _ = try await persistence.deleteObjectsByIds(ids: [userId], getOption: nil)
         
         updateHashableAuthTokenSubject(authToken: nil)
-    }
-}
-
-// MARK: - AuthToken CurrentValueSubject
-
-extension MobileContentAuthTokenCache {
-    
-    func getAuthTokenChangedPublisher() -> AnyPublisher<MobileContentAuthTokenDataModel?, Never> {
-        
-        return MobileContentAuthTokenCache
-            .sharedHashableAuthTokenSubject
-            .getValueChangedPublisher(
-                hash: MobileContentAuthTokenCache.sharedAuthUserId
-            )
-            .eraseToAnyPublisher()
-    }
-    
-    func updateHashableAuthTokenSubject(authToken: MobileContentAuthTokenDataModel?) {
-        
-        MobileContentAuthTokenCache.sharedHashableAuthTokenSubject.storeValue(
-            hash: MobileContentAuthTokenCache.sharedAuthUserId,
-            value: authToken
-        )
     }
 }

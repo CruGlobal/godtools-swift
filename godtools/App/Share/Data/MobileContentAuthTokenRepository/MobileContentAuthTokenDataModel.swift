@@ -16,17 +16,6 @@ struct MobileContentAuthTokenDataModel: Sendable {
     let token: String
     let userId: String
     
-    static func createWithAuthToken(authToken: CachedAuthToken) -> MobileContentAuthTokenDataModel {
-        
-        return MobileContentAuthTokenDataModel(
-            appleRefreshToken: authToken.appleRefreshToken,
-            expirationDate: authToken.expirationDate,
-            id: authToken.id,
-            token: authToken.token,
-            userId: authToken.userId
-        )
-    }
-    
     var isExpired: Bool {
         
         guard let expirationDate = self.expirationDate else {

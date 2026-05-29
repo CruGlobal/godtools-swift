@@ -44,13 +44,13 @@ final class AccountDataLayerDependencies {
         )
         
         let cache = UserDetailsCache(
-            persistence: persistence,
-            authTokenRepository: coreDataLayer.getMobileContentAuthTokenRepository()
+            persistence: persistence
         )
         
         return UserDetailsRepository(
             api: api,
-            cache: cache
+            cache: cache,
+            authTokenRepository: coreDataLayer.getMobileContentAuthTokenRepository()
         )
     }
 }

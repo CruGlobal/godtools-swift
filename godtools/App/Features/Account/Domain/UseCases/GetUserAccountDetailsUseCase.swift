@@ -29,7 +29,7 @@ final class GetUserAccountDetailsUseCase {
             )
             .tryMap { (changedUserDetails: UserDetailsDataModel?) in
                 
-                let cachedAuthUserDetails: UserDetailsDataModel? = try self.userDetailsRepository.getCachedAuthUserDetails()
+                let cachedAuthUserDetails: UserDetailsDataModel? = try self.userDetailsRepository.getAuthUserDetails()
                 
                 guard let cachedAuthUserDetails = cachedAuthUserDetails else {
                     return UserAccountDetailsDomainModel.emptyValue
