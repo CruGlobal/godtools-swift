@@ -10,7 +10,7 @@ import Foundation
 import RepositorySync
 import Combine
 
-final class UserAppLanguageRepository {
+final class UserAppLanguageRepository: Sendable {
         
     private static let sharedUserId: String = "shared-user-id"
     
