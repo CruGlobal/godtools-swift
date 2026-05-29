@@ -83,6 +83,9 @@ final class ArticleDeepLinkFlow: Flow {
                 self?.navigationController.present(view.controller, animated: true, completion: nil)
             }
             
+        case .backTappedFromArticle:
+            navigationController.popViewController(animated: true)
+            
         default:
             break
         }
