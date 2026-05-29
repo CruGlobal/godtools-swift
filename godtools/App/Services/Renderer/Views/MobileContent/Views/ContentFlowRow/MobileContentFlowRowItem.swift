@@ -8,6 +8,7 @@
 
 import UIKit
 
+@MainActor
 protocol MobileContentFlowRowItem: MobileContentView {
     
     var itemWidth: MobileContentViewWidth { get }

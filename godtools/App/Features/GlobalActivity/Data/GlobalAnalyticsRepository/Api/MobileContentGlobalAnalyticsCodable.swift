@@ -30,7 +30,14 @@ struct MobileContentGlobalAnalyticsCodable: Codable, Sendable {
         case gospelPresentations = "gospel-presentations"
     }
     
-    init(id: String, countries: Int, gospelPresentations: Int, launches: Int, type: String, users: Int) {
+    init(
+        id: String = "",
+        countries: Int = 0,
+        gospelPresentations: Int = 0,
+        launches: Int = 0,
+        type: String = "",
+        users: Int = 0
+    ) {
         
         self.id = id
         self.countries = countries

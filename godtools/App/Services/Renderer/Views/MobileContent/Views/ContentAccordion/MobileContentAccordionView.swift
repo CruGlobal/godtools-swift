@@ -8,6 +8,7 @@
 
 import UIKit
 
+@MainActor
 protocol MobileContentAccordionViewDelegate: AnyObject {
     
     func accordionViewDidChangeSectionViewContentHiddenState(accordionView: MobileContentAccordionView, sectionView: MobileContentAccordionSectionView, contentIsHidden: Bool, contentHeight: CGFloat)

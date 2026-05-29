@@ -9,7 +9,8 @@
 import Foundation
 import WebKit
 
-class WebContentView: AppViewController {
+@MainActor
+final class WebContentView: AppViewController {
     
     private let viewModel: WebContentViewModel
     private let webView: WKWebView = WKWebView(frame: UIScreen.main.bounds)

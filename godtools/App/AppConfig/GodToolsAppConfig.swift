@@ -10,7 +10,7 @@ import Foundation
 import SocialAuthentication
 import RepositorySync
 
-class GodToolsAppConfig: AppConfigInterface {
+final class GodToolsAppConfig: AppConfigInterface {
 
     private static let mobileContentCDNProduction: String = "https://mobilecontent.cru.org"
     private static let mobileContentCDNStaging: String = "https://mobilecontent-stage.cru.org"

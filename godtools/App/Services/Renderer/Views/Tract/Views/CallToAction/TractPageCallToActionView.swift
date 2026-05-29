@@ -8,6 +8,7 @@
 
 import UIKit
 
+@MainActor
 protocol TractPageCallToActionViewDelegate: AnyObject {
     
     func tractPageCallToActionNextButtonTapped(callToActionView: TractPageCallToActionView)

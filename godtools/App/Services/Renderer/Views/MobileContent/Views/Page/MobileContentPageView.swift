@@ -9,6 +9,7 @@
 import UIKit
 import GodToolsShared
 
+@MainActor
 protocol MobileContentPageViewDelegate: AnyObject {
     
     func pageViewDidReceiveEvent(pageView: MobileContentPageView, eventId: EventId) -> ProcessedEventResult?

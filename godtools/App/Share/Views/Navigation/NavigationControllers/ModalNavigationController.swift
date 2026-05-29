@@ -8,6 +8,7 @@
 
 import UIKit
 
+@MainActor
 class ModalNavigationController: AppNavigationController {
         
     private let rootView: UIViewController

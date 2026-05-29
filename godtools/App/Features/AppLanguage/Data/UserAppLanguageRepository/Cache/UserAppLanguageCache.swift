@@ -11,7 +11,7 @@ import RepositorySync
 import RealmSwift
 import SwiftData
 
-final class UserAppLanguageCache {
+final class UserAppLanguageCache: Sendable {
             
     let persistence: any Persistence<UserAppLanguageDataModel, UserAppLanguageDataModel>
     

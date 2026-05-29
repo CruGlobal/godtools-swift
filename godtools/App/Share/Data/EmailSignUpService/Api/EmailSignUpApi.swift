@@ -36,7 +36,7 @@ final class EmailSignUpApi: EmailSignUpApiInterface {
             body["last_name"] = lastName
         }
         
-        let request: URLRequest = requestBuilder.build(
+        let request: URLRequest = try requestBuilder.build(
             parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseUrl + "/forms",

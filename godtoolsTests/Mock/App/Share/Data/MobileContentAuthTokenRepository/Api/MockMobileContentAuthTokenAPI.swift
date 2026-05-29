@@ -9,7 +9,7 @@
 @testable import godtools
 import Foundation
 
-final class MockMobileContentAuthTokenApi: MobileContentAuthTokenApiInterface {
+final class MockMobileContentAuthTokenApi: AuthTokenApiInterface {
     
     private let fetchedAuthToken: MobileContentAuthTokenDecodable?
     

@@ -9,6 +9,7 @@
 import UIKit
 import SwiftUI
 
+@MainActor
 class AppHostingController<Content: View>: UIHostingController<Content>, UIViewControllerTransitioningDelegate {
         
     private let navigationBar: AppNavigationBar?

@@ -8,7 +8,8 @@
 
 import UIKit
 
-class NavBarItemData {
+@MainActor
+final class NavBarItemData {
     
     let contentType: NavBarItemContentType
     let style: UIBarButtonItem.Style

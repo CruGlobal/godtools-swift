@@ -12,7 +12,7 @@ import RequestOperation
 open class ArticleAemRepository: NSObject {
     
     private let cache: ArticleAemCache
-    private let downloader: ArticleAemDownloader
+    private let downloader: ArticleAemDownloaderInterface
     
     init(downloader: ArticleAemDownloader, cache: ArticleAemCache) {
         

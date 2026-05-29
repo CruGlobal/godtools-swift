@@ -10,7 +10,7 @@ import Foundation
 import RequestOperation
 import Fuzi
 
-final class ArticleWebArchiver {
+final class ArticleWebArchiver: ArticleWebArchiverInterface {
     
     private let urlSessionPriority: URLSessionPriority
     private let requestSender: RequestSenderInterface
@@ -92,7 +92,7 @@ final class ArticleWebArchiver {
             throw NSError.errorWithDomain(domain: errorDomain, code: -1, description: "Invalid url host.")
         }
         
-        let urlRequest: URLRequest = try URLRequest(url: url)
+        let urlRequest: URLRequest = URLRequest(url: url)
         
         let response: RequestDataResponse = try await requestSender.sendDataTask(urlRequest: urlRequest, urlSession: urlSession)
         

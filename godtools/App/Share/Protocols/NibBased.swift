@@ -8,6 +8,7 @@
 
 import UIKit
 
+@MainActor
 protocol NibBased: AnyObject {
     static var nibName: String { get }
 }

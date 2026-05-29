@@ -10,7 +10,7 @@ import Foundation
 import SocialAuthentication
 import RepositorySync
 
-protocol AppConfigInterface {
+protocol AppConfigInterface: Sendable {
     
     var analyticsEnabled: Bool { get }
     var buildConfig: AppBuildConfiguration { get }

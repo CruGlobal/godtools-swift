@@ -67,16 +67,17 @@ class TractFlow: ToolNavigationFlow, ToolSettingsNavigationFlow {
                 
                 let localizationServices: LocalizationServicesInterface = appDiContainer.core.dataLayer.getLocalizationServices()
                                 
-                let viewModel = AlertMessageViewModel(
-                    title: nil,
+                let view = AlertMessageView(
+                    title: "",
                     message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "exit_tract_remote_share_session.message"),
-                    cancelTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "no").uppercased(),
                     acceptTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "yes").uppercased(),
-                    flowDelegate: self,
-                    acceptTappedFlowStep: .acceptTappedFromExitToolRemoteShare
+                    cancelTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "no").uppercased(),
+                    acceptTapped: { [weak self] in
+                        
+                        self?.navigate(step: .acceptTappedFromExitToolRemoteShare)
+                    },
+                    cancelTapped: nil
                 )
-                
-                let view = AlertMessageView(viewModel: viewModel)
                 
                 navigationController.present(view.controller, animated: true, completion: nil)
             }

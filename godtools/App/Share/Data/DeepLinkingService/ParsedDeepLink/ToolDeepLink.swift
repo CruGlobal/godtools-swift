@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ToolDeepLink: Equatable {
+struct ToolDeepLink: Equatable, Sendable {
     
     let resourceAbbreviation: String
     let primaryLanguageCodes: [String]

@@ -8,6 +8,7 @@
 
 import UIKit
 
+@MainActor
 class AppViewController: UIViewController {
     
     private let navigationBar: AppNavigationBar?

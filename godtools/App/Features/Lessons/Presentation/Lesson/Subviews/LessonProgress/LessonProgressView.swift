@@ -9,6 +9,7 @@
 import UIKit
 import SwiftUI
 
+@MainActor
 protocol LessonProgressViewDelegate: AnyObject {
     
     func shareLessonTapped()

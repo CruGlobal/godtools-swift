@@ -9,6 +9,7 @@
 import UIKit
 import Combine
 
+@MainActor
 class AppInterfaceStringBarItem: NavBarItem {
     
     let localizedStringKey: String

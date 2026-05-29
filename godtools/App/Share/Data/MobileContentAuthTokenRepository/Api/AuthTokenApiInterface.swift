@@ -1,5 +1,5 @@
 //
-//  MobileContentAuthTokenApiInterface.swift
+//  AuthTokenApiInterface.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 8/6/25.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol MobileContentAuthTokenApiInterface {
+protocol AuthTokenApiInterface: Sendable {
     
     func fetchAuthToken(providerToken: MobileContentAuthProviderToken, createUser: Bool) async throws -> Result<MobileContentAuthTokenDecodable, MobileContentApiError>
 }

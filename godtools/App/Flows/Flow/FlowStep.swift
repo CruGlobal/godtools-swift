@@ -191,7 +191,7 @@ enum FlowStep {
     
     // article deep link
     case didDownloadArticleFromLoadingArticle(aemCacheObject: ArticleAemCacheObject)
-    case didFailToDownloadArticleFromLoadingArticle(alertMessage: AlertMessageType)
+    case didFailToDownloadArticleFromLoadingArticle(alertMessage: AlertMessage)
     
     // choose your own adventure
     case toolSettingsTappedFromChooseYourOwnAdventure(toolSettingsObserver: ToolSettingsObserver)
