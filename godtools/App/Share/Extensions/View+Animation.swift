@@ -10,10 +10,12 @@ import SwiftUI
 
 extension View {
     
+    @MainActor
     private static var animationsDisabled: Bool {
         return GodToolsApp.appLaunchType == .uiTests
     }
     
+    @MainActor
     public func animateIfEnabled<V>(_ animation: Animation?, value: V) -> some View where V : Equatable {
         return self.animation(Self.animationsDisabled ? nil : animation, value: value)
     }
