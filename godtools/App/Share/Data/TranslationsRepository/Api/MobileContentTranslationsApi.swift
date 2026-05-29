@@ -27,7 +27,7 @@ final class MobileContentTranslationsApi: TranslationsApiInterface {
     
     private func getTranslationFileRequest(urlSession: URLSession, fileName: String) throws -> URLRequest {
         
-        return requestBuilder.build(
+        return try requestBuilder.build(
             parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseUrl + "/translations/files/" + fileName,
@@ -55,7 +55,7 @@ final class MobileContentTranslationsApi: TranslationsApiInterface {
     
     private func getTranslationZipFileRequest(urlSession: URLSession, translationId: String) throws -> URLRequest {
         
-        return requestBuilder.build(
+        return try requestBuilder.build(
             parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseUrl + "/translations/" + translationId,

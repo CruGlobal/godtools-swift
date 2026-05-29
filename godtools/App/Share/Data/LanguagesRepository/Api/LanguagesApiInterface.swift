@@ -9,7 +9,7 @@
 import Foundation
 import RequestOperation
 
-protocol LanguagesApiInterface {
+protocol LanguagesApiInterface: Sendable {
     
     func getLanguage(requestPriority: RequestPriority, languageId: String) async throws -> LanguageCodable?
     func getLanguages(requestPriority: RequestPriority) async throws -> [LanguageCodable]

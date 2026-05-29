@@ -9,7 +9,7 @@
 import Foundation
 import RequestOperation
 
-protocol ResourcesApiInterface {
+protocol ResourcesApiInterface: Sendable {
     
     func getResourcePlusLatestTranslationsAndAttachments(id: String, requestPriority: RequestPriority) async throws -> ResourcesPlusLatestTranslationsAndAttachmentsCodable
     func getResourcePlusLatestTranslationsAndAttachments(abbreviation: String, requestPriority: RequestPriority) async throws -> ResourcesPlusLatestTranslationsAndAttachmentsCodable

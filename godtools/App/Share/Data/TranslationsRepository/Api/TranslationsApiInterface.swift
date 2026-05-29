@@ -9,7 +9,7 @@
 import Foundation
 import RequestOperation
 
-protocol TranslationsApiInterface {
+protocol TranslationsApiInterface: Sendable {
     
     func getTranslationFile(fileName: String, requestPriority: RequestPriority) async throws -> RequestDataResponse
     func getTranslationZipFile(translationId: String, requestPriority: RequestPriority) async throws -> RequestDataResponse

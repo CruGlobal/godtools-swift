@@ -17,11 +17,11 @@ final class ArticleAemCache {
     
     private let webArchiveFileCache: ArticleAemWebArchiveFileCache = ArticleAemWebArchiveFileCache()
     private let persistence: any Persistence<ArticleAemData, ArticleAemData>
-    private let articleWebArchiver: ArticleWebArchiver
+    private let articleWebArchiver: ArticleWebArchiverInterface
     private let realmDatabase: RealmDatabase
     private let realmDataWrite: RealmDataWrite
     
-    init(persistence: any Persistence<ArticleAemData, ArticleAemData>, articleWebArchiver: ArticleWebArchiver, realmDatabase: RealmDatabase, realmDataWrite: RealmDataWrite) {
+    init(persistence: any Persistence<ArticleAemData, ArticleAemData>, articleWebArchiver: ArticleWebArchiverInterface, realmDatabase: RealmDatabase, realmDataWrite: RealmDataWrite) {
         
         self.persistence = persistence
         self.articleWebArchiver = articleWebArchiver

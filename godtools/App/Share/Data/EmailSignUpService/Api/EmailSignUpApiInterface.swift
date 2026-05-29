@@ -9,7 +9,7 @@
 import Foundation
 import RequestOperation
 
-protocol EmailSignUpApiInterface {
+protocol EmailSignUpApiInterface: Sendable {
     
     func postEmailSignUp(emailSignUp: EmailSignUp, requestPriority: RequestPriority) async throws -> RequestDataResponse
 }

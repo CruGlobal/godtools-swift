@@ -28,7 +28,7 @@ final class MobileContentTranslationsCdn: TranslationsCdnInterface {
         
         let fileName = try manifestFile.fileName
         
-        return requestBuilder.build(
+        return try requestBuilder.build(
             parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseUrl + "/translations/files/" + fileName,
@@ -48,7 +48,7 @@ final class MobileContentTranslationsCdn: TranslationsCdnInterface {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
-        let urlRequest: URLRequest = try try getManifestFileUrlRequest(urlSession: urlSession, manifestFile: manifestFile)
+        let urlRequest: URLRequest = try getManifestFileUrlRequest(urlSession: urlSession, manifestFile: manifestFile)
         
         let requestDataResponse = try await requestSender.sendDataTask(
             urlRequest: urlRequest,

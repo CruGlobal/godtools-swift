@@ -9,7 +9,7 @@
 import Foundation
 import RequestOperation
 
-final class MobileContentApiAuthSession {
+final class MobileContentApiAuthSession: MobileContentApiAuthSessionInterface {
     
     private let requestSender: RequestSenderInterface
     

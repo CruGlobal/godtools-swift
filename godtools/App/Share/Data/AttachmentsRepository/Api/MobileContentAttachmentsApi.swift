@@ -24,7 +24,7 @@ final class MobileContentAttachmentsApi: AttachmentsApiInterface {
     
     func getAttachmentFile(url: URL, requestPriority: RequestPriority) async throws -> RequestDataResponse {
         
-        let urlRequest: URLRequest = try URLRequest(url: url)
+        let urlRequest: URLRequest = URLRequest(url: url)
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         

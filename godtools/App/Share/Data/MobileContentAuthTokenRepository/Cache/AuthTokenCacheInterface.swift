@@ -1,5 +1,5 @@
 //
-//  MobileContentAuthTokenCacheInterface.swift
+//  AuthTokenCacheInterface.swift
 //  godtools
 //
 //  Created by Levi Eggert on 5/28/26.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-protocol MobileContentAuthTokenCacheInterface {
+protocol AuthTokenCacheInterface {
     
     func getUserId() -> String?
     func getCachedAuthToken() throws -> CachedAuthToken?

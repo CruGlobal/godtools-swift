@@ -49,7 +49,7 @@ final class UserDetailsApi: UserDetailsApiInterface {
             "Content-Type": "application/vnd.api+json"
         ]
         
-        return requestBuilder.build(
+        return try requestBuilder.build(
             parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseURL + "/users/me",
@@ -79,7 +79,7 @@ final class UserDetailsApi: UserDetailsApiInterface {
             "Content-Type": "application/vnd.api+json"
         ]
         
-        return requestBuilder.build(
+        return try requestBuilder.build(
             parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseURL + "/users/me",

@@ -41,7 +41,7 @@ final class FollowUpsApi: FollowUpsApiInterface {
             ]
         ]
         
-        return requestBuilder.build(
+        return try requestBuilder.build(
             parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseUrl + "/follow_ups",

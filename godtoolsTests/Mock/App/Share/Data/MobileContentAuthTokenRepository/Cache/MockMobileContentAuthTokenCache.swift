@@ -10,7 +10,7 @@ import Foundation
 @testable import godtools
 import Combine
 
-final class MockMobileContentAuthTokenCache: MobileContentAuthTokenCacheInterface {
+final class MockMobileContentAuthTokenCache: AuthTokenCacheInterface {
     
     init() {
         

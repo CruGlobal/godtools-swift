@@ -29,7 +29,7 @@ final class MobileContentLanguagesApi: LanguagesApiInterface {
     
     private func getLanguageRequest(urlSession: URLSession, languageId: String) throws -> URLRequest {
         
-        return requestBuilder.build(
+        return try requestBuilder.build(
             parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseUrl + Path.languages + "/" + languageId,
@@ -43,7 +43,7 @@ final class MobileContentLanguagesApi: LanguagesApiInterface {
     
     private func getLanguagesRequest(urlSession: URLSession) throws -> URLRequest {
         
-        return requestBuilder.build(
+        return try requestBuilder.build(
             parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseUrl + Path.languages,

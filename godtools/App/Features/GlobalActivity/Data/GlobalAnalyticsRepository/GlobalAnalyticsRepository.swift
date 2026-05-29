@@ -14,7 +14,7 @@ final class GlobalAnalyticsRepository {
     
     static let sharedGlobalAnalyticsId: String = "1"
         
-    private let api: MobileContentGlobalAnalyticsApi
+    private let api: GlobalAnalyticsApiInterface
     private let cache: GlobalAnalyticsCache
     
     private var cancellables: Set<AnyCancellable> = Set()
