@@ -100,13 +100,17 @@ final class ArticleDeepLinkFlow: Flow {
 extension ArticleDeepLinkFlow {
     
     private func getLoadingArticleView(appLanguage: AppLanguageDomainModel) -> UIViewController {
-        
+
         let viewModel = LoadingArticleViewModel(
             flowDelegate: self,
             aemUri: aemUri,
             appLanguage: appLanguage,
             articleAemRepository: appDiContainer.core.dataLayer.getArticleAemRepository(),
             localizationServices: appDiContainer.core.dataLayer.getLocalizationServices()
+        )
+        
+        let view = LoadingArticleView(
+            viewModel: viewModel
         )
         
         let navigationBar = AppNavigationBar(
@@ -116,12 +120,11 @@ extension ArticleDeepLinkFlow {
             trailingItems: []
         )
         
-        let view = LoadingArticleView(
-            viewModel: viewModel,
-            navigationBar: navigationBar
-        )
+        let hostingView = AppHostingController<LoadingArticleView>(rootView: view, navigationBar: navigationBar)
         
-        return view
+        hostingView.modalPresentationStyle = .overCurrentContext
+        
+        return hostingView
     }
     
     private func getArticleWebView(aemCacheObject: ArticleAemCacheObject) -> UIViewController {
