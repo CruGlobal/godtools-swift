@@ -9,7 +9,7 @@
 import Foundation
 import RepositorySync
 
-final class AppLanguagesApi {
+final class AppLanguagesApi: AppLanguagesApiInterface {
     
     init() {
         

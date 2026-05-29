@@ -21,4 +21,9 @@ struct ResourceViewDataModel: Sendable {
             quantity: quantity ?? self.quantity
         )
     }
+    
+    static func random() -> ResourceViewDataModel {
+        let id: String = UUID().uuidString
+        return ResourceViewDataModel(id: id, resourceId: id, quantity: 0)
+    }
 }

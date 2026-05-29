@@ -9,18 +9,10 @@
 import Testing
 @testable import godtools
 import Foundation
-import RealmSwift
-import SwiftData
 import RepositorySync
 
-@Suite(.serialized)
 struct LanguagesCacheTests {
         
-    struct TestLanguage {
-        let id: String
-        let code: LanguageCodeDomainModel
-    }
-    
     struct TestArgument {
         let queryByLanguageCodes: [LanguageCodeDomainModel]
         let expectedLanguageIds: [String]
@@ -40,71 +32,19 @@ struct LanguagesCacheTests {
             expectedLanguageIds: ["l"]
         )
     ])
-    func realmQueryLanguageByCode(argument: TestArgument) async throws {
-                
-        let languagesCache: LanguagesCache = try getLanguagesCache()
-        
-        let languageCode: String = try #require(argument.queryByLanguageCodes.first?.rawValue)
-                        
-        let language: LanguageDataModel? = try languagesCache.getLanguageByCode(code: languageCode)
-        
-        #expect(language?.id == argument.expectedLanguageIds.first)
-    }
-    /*
-    @Test(arguments: [
-        TestArgument(
-            queryByLanguageCodes: [LanguageCodeDomainModel.english],
-            expectedLanguageIds: ["c"]
-        ),
-        TestArgument(
-            queryByLanguageCodes: [LanguageCodeDomainModel.spanish],
-            expectedLanguageIds: ["i"]
-        ),
-        TestArgument(
-            queryByLanguageCodes: [LanguageCodeDomainModel.finnish],
-            expectedLanguageIds: ["l"]
-        )
-    ])
     func queryLanguageByCode(argument: TestArgument) async throws {
                 
-        let languagesCache: LanguagesCache = try getLanguagesCache(
-            swiftPersistenceIsEnabled: true
-        )
+        let persistence = try await getPersistence()
+        
+        let cache = getCache(persistence: persistence)
         
         let languageCode: String = try #require(argument.queryByLanguageCodes.first?.rawValue)
                         
-        let language: LanguageDataModel? = languagesCache.getLanguageByCode(code: languageCode)
+        let language: LanguageDataModel? = try cache.getLanguageByCode(code: languageCode)
         
         #expect(language?.id == argument.expectedLanguageIds.first)
-    }*/
-    
-    @Test(arguments: [
-        TestArgument(
-            queryByLanguageCodes: [LanguageCodeDomainModel.english, LanguageCodeDomainModel.spanish],
-            expectedLanguageIds: ["c", "i"]
-        ),
-        TestArgument(
-            queryByLanguageCodes: [LanguageCodeDomainModel.russian, LanguageCodeDomainModel.vietnamese, LanguageCodeDomainModel.french, LanguageCodeDomainModel.chinese],
-            expectedLanguageIds: ["j", "b", "d", "h"]
-        ),
-        TestArgument(
-            queryByLanguageCodes: [],
-            expectedLanguageIds: []
-        )
-    ])
-    func realmQueryLanguagesByCodes(argument: TestArgument) async  throws {
-        
-        let languagesCache: LanguagesCache = try getLanguagesCache()
-        
-        let languageCodes: [String] = argument.queryByLanguageCodes.map { $0.rawValue }
-                
-        let languages: [LanguageDataModel] = try await languagesCache.getLanguagesByCodes(codes: languageCodes)
-                     
-        let languageIds: [String] = languages.map { $0.id }
-
-        #expect(languageIds.sortedAscending() == argument.expectedLanguageIds.sortedAscending())
     }
-    /*
+
     @Test(arguments: [
         TestArgument(
             queryByLanguageCodes: [LanguageCodeDomainModel.english, LanguageCodeDomainModel.spanish],
@@ -121,91 +61,62 @@ struct LanguagesCacheTests {
     ])
     func queryLanguagesByCodes(argument: TestArgument) async  throws {
         
-        let languagesCache: LanguagesCache = try getLanguagesCache(
-            swiftPersistenceIsEnabled: true
-        )
+        let persistence = try await getPersistence()
         
+        let cache = getCache(persistence: persistence)
+                
         let languageCodes: [String] = argument.queryByLanguageCodes.map { $0.rawValue }
-        
-        let languages: [LanguageDataModel] = languagesCache.getLanguagesByCodes(codes: languageCodes)
-        
+                
+        let languages: [LanguageDataModel] = try await cache.getLanguagesByCodes(codes: languageCodes)
+                     
         let languageIds: [String] = languages.map { $0.id }
 
         #expect(languageIds.sortedAscending() == argument.expectedLanguageIds.sortedAscending())
-    }*/
+    }
 }
 
 extension LanguagesCacheTests {
     
-    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
-                
-        return try TestsDiContainer(
-            realmFileName: String(describing: LanguagesCacheTests.self),
-            addRealmObjects: addRealmObjects
-        )
-    }
-    
-    private var allTestLanguages: [TestLanguage] {
-        return [
-            TestLanguage(id: "a", code: LanguageCodeDomainModel.arabic),
-            TestLanguage(id: "b", code: LanguageCodeDomainModel.chinese),
-            TestLanguage(id: "c", code: LanguageCodeDomainModel.english),
-            TestLanguage(id: "d", code: LanguageCodeDomainModel.french),
-            TestLanguage(id: "e", code: LanguageCodeDomainModel.hebrew),
-            TestLanguage(id: "f", code: LanguageCodeDomainModel.latvian),
-            TestLanguage(id: "g", code: LanguageCodeDomainModel.portuguese),
-            TestLanguage(id: "h", code: LanguageCodeDomainModel.russian),
-            TestLanguage(id: "i", code: LanguageCodeDomainModel.spanish),
-            TestLanguage(id: "j", code: LanguageCodeDomainModel.vietnamese),
-            TestLanguage(id: "k", code: LanguageCodeDomainModel.filipino),
-            TestLanguage(id: "l", code: LanguageCodeDomainModel.finnish)
-        ]
-    }
-    
-    private var allRealmLanguages: [RealmLanguage] {
-        return allTestLanguages.map {
-            MockRealmLanguage.createLanguage(
-                language: $0.code,
-                name: $0.code.rawValue,
-                id: $0.id
-            )
-        }
-    }
-    
-    private func getRealmDatabaseObjects() -> [IdentifiableRealmObject] {
-        return allRealmLanguages
-    }
-    
-    private func getLanguagesCache() throws -> LanguagesCache {
+    private func getPersistence() async throws -> any Persistence<LanguageDataModel, LanguageCodable> {
         
-        let testsDiContainer = try getTestsDiContainer(addRealmObjects: getRealmDatabaseObjects())
+        let databaseConfig = try RealmDatabaseConfig.createInMemoryConfig()
+        
+        let database = RealmDatabase(databaseConfig: databaseConfig)
         
         let persistence = RealmRepositorySyncPersistence(
-            database: testsDiContainer.core.dataLayer.getSharedRealmDatabase(),
+            database: database,
             mapping: RealmLanguageMapping()
         )
         
+        _ = try await persistence.writeObjects(
+            externalObjects: getLanguages()
+        )
+                
+        return persistence
+    }
+    
+    private func getCache(persistence: any Persistence<LanguageDataModel, LanguageCodable>) -> LanguagesCache {
+                
         return LanguagesCache(
             persistence: persistence
         )
     }
-}
-
-// MARK: - SwiftDatabase
-
-extension LanguagesCacheTests {
     
-    @available(iOS 17.4, *)
-    private func getSwiftDatabaseObjects() -> [any IdentifiableSwiftDataObject] {
-        return allRealmLanguages.map {
-            SwiftLanguage.createNewFrom(
-                model: $0.toModel()
-            )
-        }
-    }
-    
-    @available(iOS 17.4, *)
-    private func getSwiftDatabase() throws -> SwiftDatabase {
-        return try TestsInMemorySwiftDatabase().createDatabase(addObjectsToDatabase: getSwiftDatabaseObjects())
+    private func getLanguages() -> [LanguageCodable] {
+        
+        return [
+            LanguageCodable.create(id: "a", code: LanguageCodeDomainModel.arabic.rawValue),
+            LanguageCodable.create(id: "b", code: LanguageCodeDomainModel.chinese.rawValue),
+            LanguageCodable.create(id: "c", code: LanguageCodeDomainModel.english.rawValue),
+            LanguageCodable.create(id: "d", code: LanguageCodeDomainModel.french.rawValue),
+            LanguageCodable.create(id: "e", code: LanguageCodeDomainModel.hebrew.rawValue),
+            LanguageCodable.create(id: "f", code: LanguageCodeDomainModel.latvian.rawValue),
+            LanguageCodable.create(id: "g", code: LanguageCodeDomainModel.portuguese.rawValue),
+            LanguageCodable.create(id: "h", code: LanguageCodeDomainModel.russian.rawValue),
+            LanguageCodable.create(id: "i", code: LanguageCodeDomainModel.spanish.rawValue),
+            LanguageCodable.create(id: "j", code: LanguageCodeDomainModel.vietnamese.rawValue),
+            LanguageCodable.create(id: "k", code: LanguageCodeDomainModel.filipino.rawValue),
+            LanguageCodable.create(id: "l", code: LanguageCodeDomainModel.finnish.rawValue)
+        ]
     }
 }

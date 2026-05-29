@@ -10,7 +10,7 @@ import Foundation
 import RequestOperation
 import RepositorySync
 
-final class UserDetailsApi {
+final class UserDetailsApi: UserDetailsApiInterface {
     
     private let authSession: MobileContentApiAuthSession
     private let requestBuilder: RequestBuilder = RequestBuilder()

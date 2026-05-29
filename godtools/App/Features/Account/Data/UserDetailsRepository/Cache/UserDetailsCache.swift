@@ -12,14 +12,11 @@ import Combine
 
 final class UserDetailsCache {
         
-    private let authTokenRepository: MobileContentAuthTokenRepository
-    
     let persistence: any Persistence<UserDetailsDataModel, MobileContentApiUsersMeCodable>
     
-    init(persistence: any Persistence<UserDetailsDataModel, MobileContentApiUsersMeCodable>, authTokenRepository: MobileContentAuthTokenRepository) {
+    init(persistence: any Persistence<UserDetailsDataModel, MobileContentApiUsersMeCodable>) {
                 
         self.persistence = persistence
-        self.authTokenRepository = authTokenRepository
     }
     
     @available(iOS 17.4, *)
@@ -34,18 +31,5 @@ final class UserDetailsCache {
     
     private func getRealmPersistence() -> RealmRepositorySyncPersistence<UserDetailsDataModel, MobileContentApiUsersMeCodable, RealmUserDetails>? {
         return persistence as? RealmRepositorySyncPersistence<UserDetailsDataModel, MobileContentApiUsersMeCodable, RealmUserDetails>
-    }
-}
-
-extension UserDetailsCache {
-
-    func getAuthUserDetails() throws -> UserDetailsDataModel? {
-        
-        guard let userId = authTokenRepository.getUserId() else {
-            return nil
-        }
-        
-        return try persistence
-            .getDataModel(id: userId)
     }
 }

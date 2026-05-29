@@ -11,7 +11,6 @@ import Foundation
 @testable import godtools
 import RepositorySync
 
-@Suite(.serialized)
 struct FavoritedResourcesCacheTests {
     
     struct StoreTestArgument {
@@ -29,11 +28,13 @@ struct FavoritedResourcesCacheTests {
     )
     func storeFavoritedResources(argument: StoreTestArgument) async throws {
         
-        let favoritedResourcesCache: FavoritedResourcesCache = try await getFavoritedResourcesCache(
-            addResources: argument.initialResources
+        let persistence = try await getPersistence(
+            addObjects: createFavoritedResources(resources: argument.initialResources)
         )
         
-        let favoritedResources: [FavoritedResourceDataModel] = try await favoritedResourcesCache
+        let cache = getCache(persistence: persistence)
+        
+        let favoritedResources: [FavoritedResourceDataModel] = try await cache
             .storeFavoritedResources(ids: argument.resourceIdsToAdd)
                 
         for (expectedId, expectedPosition) in argument.expectedUpdatedIdsAtPositions {
@@ -66,12 +67,14 @@ struct FavoritedResourcesCacheTests {
         ]
     )
     func deleteFavoritedResource(argument: DeleteTestArgument) async throws {
-                
-        let favoritedResourcesCache: FavoritedResourcesCache = try await getFavoritedResourcesCache(
-            addResources: argument.initialResources
+        
+        let persistence = try await getPersistence(
+            addObjects: createFavoritedResources(resources: argument.initialResources)
         )
         
-        let remainingResources: [FavoritedResourceDataModel] = try await favoritedResourcesCache
+        let cache = getCache(persistence: persistence)
+                
+        let remainingResources: [FavoritedResourceDataModel] = try await cache
             .deleteFavoritedResource(id: argument.resourceIdToDelete)
         
         for (expectedId, expectedPosition) in argument.expectedUpdatedIdsAtPositions {
@@ -108,12 +111,18 @@ struct FavoritedResourcesCacheTests {
     )
     func reorderFavoritedResources(argument: ReorderTestArgument) async throws {
         
-        let favoritedResourcesCache: FavoritedResourcesCache = try await getFavoritedResourcesCache(
-            addResources: argument.initialResources
+        let persistence = try await getPersistence(
+            addObjects: createFavoritedResources(resources: argument.initialResources)
         )
         
-        let favoritedResources: [FavoritedResourceDataModel] = try await favoritedResourcesCache
-            .reorderFavoritedResource(id: argument.resourceIdToReorder, originalPosition: argument.originalPosition, newPosition: argument.newPosition)
+        let cache = getCache(persistence: persistence)
+        
+        let favoritedResources: [FavoritedResourceDataModel] = try await cache
+            .reorderFavoritedResource(
+                id: argument.resourceIdToReorder,
+                originalPosition: argument.originalPosition,
+                newPosition: argument.newPosition
+            )
                 
         for (expectedId, expectedPosition) in argument.expectedUpdatedIdsAtPositions {
             
@@ -149,23 +158,24 @@ extension FavoritedResourcesCacheTests {
         return favoritedResources
     }
     
-    private func getFavoritedResourcesCache(addResources: [String: Int]) async throws -> FavoritedResourcesCache {
-            
-        let testsDiContainer = try TestsDiContainer.createWithRealmFile(
-            realmFileName: String(describing: FavoritedResourcesCacheTests.self)
-        )
+    private func getPersistence(addObjects: [FavoritedResourceDataModel]) async throws -> RealmRepositorySyncPersistence<FavoritedResourceDataModel, FavoritedResourceDataModel, RealmFavoritedResource> {
+        
+        let databaseConfig = try RealmDatabaseConfig.createInMemoryConfig()
+        
+        let database = RealmDatabase(databaseConfig: databaseConfig)
         
         let persistence = RealmRepositorySyncPersistence(
-            database: testsDiContainer.core.dataLayer.getSharedRealmDatabase(),
+            database: database,
             mapping: RealmFavoritedResourceMapping()
         )
         
-        _ = try await persistence.writeObjects(
-            externalObjects: createFavoritedResources(resources: addResources),
-            writeOption: .deleteObjectsNotInExternal,
-            getOption: nil
-        )
+        _ = try await persistence.writeObjects(externalObjects: addObjects)
         
+        return persistence
+    }
+    
+    private func getCache(persistence: any Persistence<FavoritedResourceDataModel, FavoritedResourceDataModel>) -> FavoritedResourcesCache {
+            
         return FavoritedResourcesCache(
             persistence: persistence
         )

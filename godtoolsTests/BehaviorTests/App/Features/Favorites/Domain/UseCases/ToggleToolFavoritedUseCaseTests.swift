@@ -11,11 +11,10 @@ import Foundation
 @testable import godtools
 import RepositorySync
 
-@Suite(.serialized)
 struct ToggleToolFavoritedUseCaseTests {
     
     struct TestArgument {
-        let resourcesInRealmIdsAtPositions: [String: Int]
+        let initialFavoritedResources: [String: Int]
         let resourceIdToToggle: String
         let expectedUpdatedIdsAtPositions: [String: Int]
     }
@@ -27,28 +26,32 @@ struct ToggleToolFavoritedUseCaseTests {
        Then: If the tool is favorited, the tool should be removed from the favorites list.  If not favorited, the tool should be added to favorites at position 0.  Any existing favorite tool positions should update accordingly.
        """,
        arguments: [
-        TestArgument(resourcesInRealmIdsAtPositions: ["A": 0, "B": 1], resourceIdToToggle: "C", expectedUpdatedIdsAtPositions: ["C": 0, "A": 1, "B": 2]),
-        TestArgument(resourcesInRealmIdsAtPositions: [:], resourceIdToToggle: "A", expectedUpdatedIdsAtPositions: ["A": 0]),
-        TestArgument(resourcesInRealmIdsAtPositions: ["A": 0, "B": 1, "C": 2], resourceIdToToggle: "A", expectedUpdatedIdsAtPositions: ["B": 0, "C": 1]),
-        TestArgument(resourcesInRealmIdsAtPositions: ["A": 0], resourceIdToToggle: "A", expectedUpdatedIdsAtPositions: [:])
+        TestArgument(initialFavoritedResources: ["A": 0, "B": 1], resourceIdToToggle: "C", expectedUpdatedIdsAtPositions: ["C": 0, "A": 1, "B": 2]),
+        TestArgument(initialFavoritedResources: [:], resourceIdToToggle: "A", expectedUpdatedIdsAtPositions: ["A": 0]),
+        TestArgument(initialFavoritedResources: ["A": 0, "B": 1, "C": 2], resourceIdToToggle: "A", expectedUpdatedIdsAtPositions: ["B": 0, "C": 1]),
+        TestArgument(initialFavoritedResources: ["A": 0], resourceIdToToggle: "A", expectedUpdatedIdsAtPositions: [:])
        ]
     )
     func testToggleToolFavorited(argument: TestArgument) async throws {
         
-        let testsDiContainer: TestsDiContainer = try getTestsDiContainer(addResources: argument.resourcesInRealmIdsAtPositions)
-                
-        let toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase = testsDiContainer.feature.favorites.domainLayer.getToggleToolFavoritedUseCase()
+        let persistence = try await getPersistence(addObjects: createFavoritedResources(resources: argument.initialFavoritedResources))
         
-        _ = try await toggleToolFavoritedUseCase
+        let repository = getRepository(persistence: persistence)
+        
+        let useCase = getUseCase(repository: repository)
+                
+        _ = try await useCase
             .execute(
                 toolId: argument.resourceIdToToggle
             )
         
-        let favoritedResources: [FavoritedResourceDataModel] = try await testsDiContainer.core.dataLayer.getFavoritedResourcesRepository().getFavoritedResourcesSortedByPosition()
+        let favoritedResources: [FavoritedResourceDataModel] = try await repository.getFavoritedResourcesSortedByPosition()
         
         for (expectedId, expectedPosition) in argument.expectedUpdatedIdsAtPositions {
             
-            let actualPosition: Int = try #require(favoritedResources.first(where: { $0.id == expectedId })?.position)
+            let favoritedResource: FavoritedResourceDataModel = try #require(favoritedResources.first(where: { $0.id == expectedId }))
+            
+            let actualPosition: Int = favoritedResource.position
             
             #expect(
                 actualPosition == expectedPosition,
@@ -60,17 +63,39 @@ struct ToggleToolFavoritedUseCaseTests {
 
 extension ToggleToolFavoritedUseCaseTests {
     
-    private func getTestsDiContainer(addResources: [String: Int]) throws -> TestsDiContainer {
-                
-        return try TestsDiContainer(
-            realmFileName: String(describing: ToggleToolFavoritedUseCaseTests.self),
-            addRealmObjects: getFavoritedResources(resources: addResources)
+    private func getPersistence(addObjects: [FavoritedResourceDataModel]) async throws -> RealmRepositorySyncPersistence<FavoritedResourceDataModel, FavoritedResourceDataModel, RealmFavoritedResource> {
+        
+        let databaseConfig = try RealmDatabaseConfig.createInMemoryConfig()
+        
+        let database = RealmDatabase(databaseConfig: databaseConfig)
+        
+        let persistence = RealmRepositorySyncPersistence(
+            database: database,
+            mapping: RealmFavoritedResourceMapping()
+        )
+        
+        _ = try await persistence.writeObjects(externalObjects: addObjects)
+        
+        return persistence
+    }
+    
+    private func getRepository(persistence: any Persistence<FavoritedResourceDataModel, FavoritedResourceDataModel>) -> FavoritedResourcesRepository {
+        
+        return FavoritedResourcesRepository(
+            cache: FavoritedResourcesCache(persistence: persistence)
         )
     }
     
-    private func getFavoritedResources(resources: [String: Int]) -> [RealmFavoritedResource] {
+    private func getUseCase(repository: FavoritedResourcesRepository) -> ToggleToolFavoritedUseCase {
         
-        var resourceObjects = [RealmFavoritedResource]()
+        return ToggleToolFavoritedUseCase(
+            favoritedResourcesRepository: repository
+        )
+    }
+    
+    private func createFavoritedResources(resources: [String: Int]) -> [FavoritedResourceDataModel] {
+        
+        var favoritedResources = [FavoritedResourceDataModel]()
         
         for (resourceId, resourcePosition) in resources {
             
@@ -80,9 +105,9 @@ extension ToggleToolFavoritedUseCaseTests {
                 position: resourcePosition
             )
             
-            resourceObjects.append(RealmFavoritedResource.createNewFrom(model: dataModel))
+            favoritedResources.append(dataModel)
         }
         
-        return resourceObjects
+        return favoritedResources
     }
 }

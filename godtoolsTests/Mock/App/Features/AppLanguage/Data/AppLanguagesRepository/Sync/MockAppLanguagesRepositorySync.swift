@@ -8,20 +8,19 @@
 
 import Foundation
 @testable import godtools
-import RealmSwift
 import RepositorySync
 
-class MockAppLanguagesRepositorySync: AppLanguagesRepositorySyncInterface {
+final class MockAppLanguagesRepositorySync: AppLanguagesRepositorySyncInterface {
     
-    private let realmDatabase: RealmDatabase
+    private let testsDiContainer: TestsDiContainer
     private let appLanguages: [AppLanguageCodable]
     
-    init(realmDatabase: RealmDatabase, appLanguages: [AppLanguageCodable]) throws {
+    init(testsDiContainer: TestsDiContainer, appLanguages: [AppLanguageCodable]) async throws {
         
-        self.realmDatabase = realmDatabase
+        self.testsDiContainer = testsDiContainer
         self.appLanguages = appLanguages
         
-        try addAppLanguagesToRealm(appLanguages: appLanguages)
+        try await addAppLanguages(appLanguages: appLanguages)
     }
     
     func sync() async throws {
@@ -30,40 +29,12 @@ class MockAppLanguagesRepositorySync: AppLanguagesRepositorySyncInterface {
             return
         }
         
-        try addAppLanguagesToRealm(appLanguages: appLanguages)
+        try await addAppLanguages(appLanguages: appLanguages)
     }
     
-    private func addAppLanguagesToRealm(appLanguages: [AppLanguageCodable]) throws {
+    private func addAppLanguages(appLanguages: [AppLanguageCodable]) async throws {
         
-        let realmLanguages: [RealmAppLanguage] = appLanguages.map({
-            
-            let realmAppLanguage = RealmAppLanguage()
-            realmAppLanguage.mapFrom(model: $0.toModel())
-            return realmAppLanguage
-        })
-        
-        let realm: Realm = try realmDatabase.openRealm()
-        
-        try realm.write {
-            realm.add(realmLanguages, update: .modified)
-        }
-    }
-    
-    static func getSampleAppLanguages() -> [AppLanguageCodable] {
-        
-        return [
-            AppLanguageCodable(languageCode: "am", languageDirection: .leftToRight, languageScriptCode: nil),
-            AppLanguageCodable(languageCode: "ar", languageDirection: .rightToLeft, languageScriptCode: nil),
-            AppLanguageCodable(languageCode: "en", languageDirection: .leftToRight, languageScriptCode: nil),
-            AppLanguageCodable(languageCode: "es", languageDirection: .leftToRight, languageScriptCode: nil),
-            AppLanguageCodable(languageCode: "fa", languageDirection: .rightToLeft, languageScriptCode: nil),
-            AppLanguageCodable(languageCode: "he", languageDirection: .rightToLeft, languageScriptCode: nil),
-            AppLanguageCodable(languageCode: "ja", languageDirection: .leftToRight, languageScriptCode: nil),
-            AppLanguageCodable(languageCode: "lv", languageDirection: .leftToRight, languageScriptCode: nil),
-            AppLanguageCodable(languageCode: "pt", languageDirection: .leftToRight, languageScriptCode: nil),
-            AppLanguageCodable(languageCode: "ru", languageDirection: .leftToRight, languageScriptCode: nil),
-            AppLanguageCodable(languageCode: "zh", languageDirection: .leftToRight, languageScriptCode: "Hans"),
-            AppLanguageCodable(languageCode: "zh", languageDirection: .leftToRight, languageScriptCode: "Hant")
-        ]
+        try await testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesPersistence()
+            .writeObjects(externalObjects: appLanguages)
     }
 }

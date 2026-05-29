@@ -12,7 +12,6 @@ import Combine
 import RealmSwift
 import RepositorySync
 
-@Suite(.serialized)
 struct GetUserLessonFiltersUseCaseTests {
     
     @Test(
@@ -211,10 +210,7 @@ extension GetUserLessonFiltersUseCaseTests {
     
     private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject]) throws -> TestsDiContainer {
                 
-        return try TestsDiContainer(
-            realmFileName: String(describing: GetUserLessonFiltersUseCaseTests.self),
-            addRealmObjects: addRealmObjects
-        )
+        return try TestsDiContainer(addRealmObjects: addRealmObjects)
     }
     
     private func getUserLessonFiltersUseCase(addRealmObjects: [IdentifiableRealmObject]) throws -> GetUserLessonFiltersUseCase {
