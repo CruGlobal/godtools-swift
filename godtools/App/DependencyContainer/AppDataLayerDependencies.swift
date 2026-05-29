@@ -271,7 +271,7 @@ final class AppDataLayerDependencies {
         return getFirebaseNonFatalErrorReporting()
     }
     
-    func getFavoritedResourcesRepository() -> FavoritedResourcesRepository {
+    func getFavoritedResourcesPersistence() -> any Persistence<FavoritedResourceDataModel, FavoritedResourceDataModel> {
         
         let persistence: any Persistence<FavoritedResourceDataModel, FavoritedResourceDataModel>
         
@@ -290,8 +290,13 @@ final class AppDataLayerDependencies {
             )
         }
         
+        return persistence
+    }
+    
+    func getFavoritedResourcesRepository() -> FavoritedResourcesRepository {
+        
         return FavoritedResourcesRepository(
-            cache: FavoritedResourcesCache(persistence: persistence)
+            cache: FavoritedResourcesCache(persistence: getFavoritedResourcesPersistence())
         )
     }
     
@@ -350,8 +355,8 @@ final class AppDataLayerDependencies {
         return InfoPlist()
     }
     
-    func getLanguagesRepository() -> LanguagesRepository {
-                
+    func getLanguagesPersistence() -> any Persistence<LanguageDataModel, LanguageCodable> {
+        
         let persistence: any Persistence<LanguageDataModel, LanguageCodable>
         
         if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
@@ -369,13 +374,18 @@ final class AppDataLayerDependencies {
             )
         }
         
+        return persistence
+    }
+    
+    func getLanguagesRepository() -> LanguagesRepository {
+                
         let api = MobileContentLanguagesApi(
             config: getAppConfig(),
             urlSessionPriority: getSharedUrlSessionPriority(),
             requestSender: getRequestSender()
         )
         
-        let cache = LanguagesCache(persistence: persistence)
+        let cache = LanguagesCache(persistence: getLanguagesPersistence())
                 
         return LanguagesRepository(
             api: api,
@@ -470,8 +480,8 @@ final class AppDataLayerDependencies {
         )
     }
     
-    func getResourcesRepository() -> ResourcesRepository {
-                
+    func getResourcesPersistence() -> any Persistence<ResourceDataModel, ResourceCodable> {
+        
         let persistence: any Persistence<ResourceDataModel, ResourceCodable>
         
         if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
@@ -489,6 +499,11 @@ final class AppDataLayerDependencies {
             )
         }
         
+        return persistence
+    }
+    
+    func getResourcesRepository() -> ResourcesRepository {
+                
         let api = MobileContentResourcesApi(
             config: getAppConfig(),
             urlSessionPriority: getSharedUrlSessionPriority(),
@@ -496,7 +511,7 @@ final class AppDataLayerDependencies {
         )
         
         let cache = ResourcesCache(
-            persistence: persistence,
+            persistence: getResourcesPersistence(),
             realmDatabase: getSharedRealmDatabase(),
             realmDataWrite: getRealmDataWrite(),
             trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository()

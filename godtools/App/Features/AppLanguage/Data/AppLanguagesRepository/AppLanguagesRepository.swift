@@ -12,13 +12,13 @@ import RepositorySync
 
 final class AppLanguagesRepository {
         
-    private let api: AppLanguagesApi
+    private let api: AppLanguagesApiInterface
     private let cache: AppLanguagesCache
     private let sync: AppLanguagesRepositorySyncInterface
     
     private var syncTask: Task<Void, Error>?
         
-    init(api: AppLanguagesApi, cache: AppLanguagesCache, sync: AppLanguagesRepositorySyncInterface) {
+    init(api: AppLanguagesApiInterface, cache: AppLanguagesCache, sync: AppLanguagesRepositorySyncInterface) {
         
         self.api = api
         self.cache = cache

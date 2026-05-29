@@ -17,8 +17,8 @@ final class AppLanguageDataLayerDependencies {
         
         self.coreDataLayer = coreDataLayer
     }
-        
-    func getAppLanguagesRepository(sync: AppLanguagesRepositorySyncInterface? = nil) -> AppLanguagesRepository {
+    
+    func getAppLanguagesPersistence() -> any Persistence<AppLanguageDataModel, AppLanguageCodable> {
         
         let persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>
         
@@ -36,6 +36,13 @@ final class AppLanguageDataLayerDependencies {
                 mapping: RealmAppLanguageMapping()
             )
         }
+        
+        return persistence
+    }
+        
+    func getAppLanguagesRepository(sync: AppLanguagesRepositorySyncInterface? = nil) -> AppLanguagesRepository {
+        
+        let persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable> = getAppLanguagesPersistence()
         
         let api = AppLanguagesApi()
         
@@ -118,7 +125,7 @@ final class AppLanguageDataLayerDependencies {
         )
     }
     
-    func getUserAppLanguageRepository() -> UserAppLanguageRepository {
+    func getUserAppLanguagePersistence() -> any Persistence<UserAppLanguageDataModel, UserAppLanguageDataModel> {
         
         let persistence: any Persistence<UserAppLanguageDataModel, UserAppLanguageDataModel>
         
@@ -137,7 +144,14 @@ final class AppLanguageDataLayerDependencies {
             )
         }
         
-        let cache = UserAppLanguageCache(persistence: persistence)
+        return persistence
+    }
+    
+    func getUserAppLanguageRepository() -> UserAppLanguageRepository {
+        
+        let cache = UserAppLanguageCache(
+            persistence: getUserAppLanguagePersistence()
+        )
         
         return UserAppLanguageRepository(
             cache: cache

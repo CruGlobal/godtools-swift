@@ -12,14 +12,7 @@ import Combine
 import Foundation
 import RepositorySync
 
-@Suite(.serialized)
 struct GetUserAccountDetailsUseCaseTests {
-    
-    private static let userId = "test-user-id"
-    private static let userFamilyName = "Smith"
-    private static let userGivenName = "John"
-    private static let userFullName = "John Smith"
-    private static let userCreatedAt = Date()
     
     struct TestArgument {
         let appLanguage: LanguageCodeDomainModel
@@ -39,7 +32,22 @@ struct GetUserAccountDetailsUseCaseTests {
     )
     @MainActor func testGetUserAccountDetailsInAppLanguage(argument: TestArgument) async throws {
         
-        let getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase = try getUserAccountDetailsUseCase()
+        let giveName: String = "GivenName"
+        let familyName: String = "FamilyName"
+        let name: String = "GivenName FamilyName"
+        let createdAt: Date = Date()
+        
+        let userDetails = MobileContentApiUsersMeCodable(
+            id: UUID().uuidString,
+            createdAt: createdAt,
+            familyName: familyName,
+            givenName: giveName,
+            name: name,
+            ssoGuid: "ssoGuid",
+            type: "type"
+        )
+        
+        let useCase = try await getUseCase(userDetails: userDetails)
         
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
@@ -51,7 +59,7 @@ struct GetUserAccountDetailsUseCaseTests {
                 continuation.resume(returning: ())
             }
             
-            getUserAccountDetailsUseCase
+            useCase
                 .execute(
                     appLanguage: argument.appLanguage.rawValue
                 )
@@ -73,10 +81,10 @@ struct GetUserAccountDetailsUseCaseTests {
         }
         
         let locale = Locale(identifier: argument.appLanguage.rawValue)
-        let createdAtDateString = getDateFormatter(locale: locale).string(from: Self.userCreatedAt)
+        let createdAtDateString = getDateFormatter(locale: locale).string(from: createdAt)
         let joinedOnStringExpected = "\(argument.joinedOnString) \(createdAtDateString)"
         
-        #expect(userAccountDetails?.name == Self.userFullName)
+        #expect(userAccountDetails?.name == name)
         #expect(userAccountDetails?.joinedOnString == joinedOnStringExpected)
     }
     
@@ -89,7 +97,7 @@ struct GetUserAccountDetailsUseCaseTests {
     )
     @MainActor func testGetNilUserDetails() async throws {
         
-        let getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase = try getUserAccountDetailsUseCase(emptyRealm: true)
+        let useCase = try await getUseCase(userDetails: nil)
                 
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
@@ -101,7 +109,7 @@ struct GetUserAccountDetailsUseCaseTests {
                 continuation.resume(returning: ())
             }
             
-            getUserAccountDetailsUseCase
+            useCase
                 .execute(
                     appLanguage: LanguageCodeDomainModel.english.rawValue
                 )
@@ -135,8 +143,21 @@ struct GetUserAccountDetailsUseCaseTests {
     )
     @MainActor func testGetUserDetailsWithNilName() async throws {
         
-        let getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase = try getUserAccountDetailsUseCase(name: nil)
-                
+        let giveName: String = "GivenName"
+        let familyName: String = "FamilyName"
+        
+        let userDetails = MobileContentApiUsersMeCodable(
+            id: UUID().uuidString,
+            createdAt: Date(),
+            familyName: familyName,
+            givenName: giveName,
+            name: nil,
+            ssoGuid: "ssoGuid",
+            type: "type"
+        )
+        
+        let useCase = try await getUseCase(userDetails: userDetails)
+                        
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
         
@@ -147,7 +168,7 @@ struct GetUserAccountDetailsUseCaseTests {
                 continuation.resume(returning: ())
             }
             
-            getUserAccountDetailsUseCase
+            useCase
                 .execute(
                     appLanguage: LanguageCodeDomainModel.english.rawValue
                 )
@@ -168,7 +189,7 @@ struct GetUserAccountDetailsUseCaseTests {
                 .store(in: &cancellables)
         }
         
-        #expect(userAccountDetails?.name == "\(Self.userGivenName) \(Self.userFamilyName)")
+        #expect(userAccountDetails?.name == "\(giveName) \(familyName)")
     }
     
     @Test(
@@ -180,7 +201,19 @@ struct GetUserAccountDetailsUseCaseTests {
     )
     @MainActor func testGetUserDetailsWithNilFamilyAndFullNames() async throws {
         
-        let getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase = try getUserAccountDetailsUseCase(familyName: nil, name: nil)
+        let giveName: String = "User GivenName"
+        
+        let userDetails = MobileContentApiUsersMeCodable(
+            id: UUID().uuidString,
+            createdAt: Date(),
+            familyName: nil,
+            givenName: giveName,
+            name: nil,
+            ssoGuid: "ssoGuid",
+            type: "type"
+        )
+        
+        let useCase = try await getUseCase(userDetails: userDetails)
                 
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
@@ -192,7 +225,7 @@ struct GetUserAccountDetailsUseCaseTests {
                 continuation.resume(returning: ())
             }
             
-            getUserAccountDetailsUseCase
+            useCase
                 .execute(
                     appLanguage: LanguageCodeDomainModel.english.rawValue
                 )
@@ -213,20 +246,30 @@ struct GetUserAccountDetailsUseCaseTests {
                 .store(in: &cancellables)
         }
         
-        #expect(userAccountDetails?.name == Self.userGivenName)
+        #expect(userAccountDetails?.name == giveName)
     }
     
     @Test(
         """
-        Given: User is logged in but all names are nil
+        Given: User is logged in but all names are nil.
         When: The user navigates to the Activity page
-        Then: Activity page should populate the user's name with an empty string
+        Then: Activity page should populate the user's name with an empty string.
         """
     )
     @MainActor func testGetUserDetailsWithAllNilNames() async throws {
         
-        let getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase = try getUserAccountDetailsUseCase(familyName: nil, givenName: nil, name: nil)
+        let userDetails = MobileContentApiUsersMeCodable(
+            id: UUID().uuidString,
+            createdAt: Date(),
+            familyName: nil,
+            givenName: nil,
+            name: nil,
+            ssoGuid: "ssoGuid",
+            type: "type"
+        )
         
+        let useCase = try await getUseCase(userDetails: userDetails)
+                
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
         
@@ -237,7 +280,7 @@ struct GetUserAccountDetailsUseCaseTests {
                 continuation.resume(returning: ())
             }
             
-            getUserAccountDetailsUseCase
+            useCase
                 .execute(
                     appLanguage: LanguageCodeDomainModel.english.rawValue
                 )
@@ -270,8 +313,18 @@ struct GetUserAccountDetailsUseCaseTests {
     )
     @MainActor func testGetUserDetailsWithNilJoinedOn() async throws {
         
-        let getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase = try getUserAccountDetailsUseCase(createdAt: nil)
+        let userDetails = MobileContentApiUsersMeCodable(
+            id: UUID().uuidString,
+            createdAt: nil,
+            familyName: "familyName",
+            givenName: "givenName",
+            name: "name",
+            ssoGuid: "ssoGuid",
+            type: "type"
+        )
         
+        let useCase = try await getUseCase(userDetails: userDetails)
+                
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
         
@@ -282,7 +335,7 @@ struct GetUserAccountDetailsUseCaseTests {
                 continuation.resume(returning: ())
             }
             
-            getUserAccountDetailsUseCase
+            useCase
                 .execute(
                     appLanguage: LanguageCodeDomainModel.english.rawValue
                 )
@@ -309,42 +362,44 @@ struct GetUserAccountDetailsUseCaseTests {
 
 extension GetUserAccountDetailsUseCaseTests {
     
-    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
+    private func getUseCase(userDetails: MobileContentApiUsersMeCodable?) async throws -> GetUserAccountDetailsUseCase {
+        
+        let testsDiContainer = try TestsDiContainer()
+        
+        let userDetailsPersistence: any Persistence<UserDetailsDataModel, MobileContentApiUsersMeCodable> = RealmRepositorySyncPersistence(
+            database: testsDiContainer.core.dataLayer.getSharedRealmDatabase(),
+            mapping: RealmUserDetailsMapping()
+        )
+        
+        if let userDetails = userDetails {
+            try await userDetailsPersistence.writeObjects(externalObjects: [userDetails])
+        }
                 
-        return try TestsDiContainer(
-            realmFileName: String(describing: GetUserAccountDetailsUseCaseTests.self),
-            addRealmObjects: addRealmObjects
+        let userDetailsRepository = UserDetailsRepository(
+            api: MockUserDatailsApi(
+                user: MobileContentApiUsersMeCodable.emptyValue
+            ),
+            cache: UserDetailsCache(
+                persistence: userDetailsPersistence
+            ),
+            authTokenRepository: MobileContentAuthTokenRepository(
+                api: MockMobileContentAuthTokenApi(fetchedAuthToken: nil),
+                cache: MobileContentAuthTokenCache(
+                    mobileContentAuthTokenKeychainAccessor: MockMobileContentAuthTokenKeychainAccessor(userId: userDetails?.id),
+                    persistence: RealmRepositorySyncPersistence(
+                        database: testsDiContainer.core.dataLayer.getSharedRealmDatabase(),
+                        mapping: RealmMobileContentAuthTokenMapping()
+                    )
+                )
+            )
+        )
+        
+        return GetUserAccountDetailsUseCase(
+            userDetailsRepository: userDetailsRepository,
+            localizationServices: getLocalizationServices()
         )
     }
     
-    private func getTestsDiContainer(emptyRealm: Bool, familyName: String?, givenName: String?, name: String?, createdAt: Date?) throws -> TestsDiContainer {
-        
-        let realmObjects: [IdentifiableRealmObject]
-        
-        if emptyRealm {
-            
-            realmObjects = Array()
-        }
-        else {
-            
-            let userDetails = RealmUserDetails()
-            userDetails.id = Self.userId
-            userDetails.familyName = familyName
-            userDetails.givenName = givenName
-            userDetails.name = name
-            userDetails.createdAt = createdAt
-            
-            let realmAuthTokenData = RealmMobileContentAuthToken()
-            realmAuthTokenData.userId = Self.userId
-            
-            realmObjects = [userDetails, realmAuthTokenData]
-        }
-        
-        let testsDiContainer: TestsDiContainer = try getTestsDiContainer(addRealmObjects: realmObjects)
-        
-        return testsDiContainer
-    }
-
     private func getLocalizationServices() -> MockLocalizationServices {
         
         let accountJoinedOn = "account.joinedOn"
@@ -359,64 +414,6 @@ extension GetUserAccountDetailsUseCaseTests {
         ]
         
         return MockLocalizationServices(localizableStrings: localizableStrings)
-    }
-
-    
-    private func getUserAccountDetailsUseCase(emptyRealm: Bool = false, familyName: String? = userFamilyName, givenName: String? = userGivenName, name: String? = userFullName, createdAt: Date? = userCreatedAt) throws -> GetUserAccountDetailsUseCase {
-        
-        let testsDiContainer: TestsDiContainer = try getTestsDiContainer(
-            emptyRealm: emptyRealm,
-            familyName: familyName,
-            givenName: givenName,
-            name: name,
-            createdAt: createdAt
-        )
-        
-        let realmDatabase: RealmDatabase = testsDiContainer.core.dataLayer.getSharedRealmDatabase()
-        
-        let mockMobileContentAuthTokenKeychainAccessor = MockMobileContentAuthTokenKeychainAccessor()
-        mockMobileContentAuthTokenKeychainAccessor.setUserId(Self.userId)
-        
-        let authTokenPersistence: any Persistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenDecodable> = RealmRepositorySyncPersistence(
-            database: realmDatabase,
-            mapping: RealmMobileContentAuthTokenMapping()
-        )
-        
-        let mobileContentAuthTokenCache = MobileContentAuthTokenCache(
-            mobileContentAuthTokenKeychainAccessor: mockMobileContentAuthTokenKeychainAccessor,
-            persistence: authTokenPersistence
-        )
-        
-        let authTokenRepository = MobileContentAuthTokenRepository(
-            api: MockMobileContentAuthTokenApi(fetchedAuthToken: nil),
-            cache: mobileContentAuthTokenCache
-        )
-        
-        let userDetailsPersistence: any Persistence<UserDetailsDataModel, MobileContentApiUsersMeCodable> = RealmRepositorySyncPersistence(
-            database: realmDatabase,
-            mapping: RealmUserDetailsMapping()
-        )
-        
-        let api = UserDetailsApi(
-            config: testsDiContainer.core.dataLayer.getAppConfig(),
-            urlSessionPriority: testsDiContainer.core.dataLayer.getSharedUrlSessionPriority(),
-            mobileContentApiAuthSession: testsDiContainer.core.dataLayer.getMobileContentApiAuthSession()
-        )
-        
-        let userDetailsRepository = UserDetailsRepository(
-            api: api,
-            cache: UserDetailsCache(
-                persistence: userDetailsPersistence,
-                authTokenRepository: authTokenRepository
-            )
-        )
-        
-        let getUserAccountDetailsRepository = GetUserAccountDetailsUseCase(
-            userDetailsRepository: userDetailsRepository,
-            localizationServices: getLocalizationServices()
-        )
-        
-        return getUserAccountDetailsRepository
     }
     
     private func getDateFormatter(locale: Locale) -> DateFormatter {

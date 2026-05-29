@@ -1,5 +1,5 @@
 //
-//  CachedAuthToken.swift
+//  Cachedswift
 //  godtools
 //
 //  Created by Levi Eggert on 2/21/26.
@@ -23,5 +23,18 @@ struct CachedAuthToken: Sendable {
         self.id = userId
         self.token = token
         self.userId = userId
+    }
+}
+
+extension CachedAuthToken {
+    
+    func toModel() -> MobileContentAuthTokenDataModel {
+        return MobileContentAuthTokenDataModel(
+            appleRefreshToken: appleRefreshToken,
+            expirationDate: expirationDate,
+            id: id,
+            token: token,
+            userId: userId
+        )
     }
 }

@@ -19,63 +19,25 @@ class TestsDiContainer: AppDiContainer {
         super.init(appConfig: testsAppConfig)
     }
     
-    convenience init(realmFileName: String, addRealmObjects: [IdentifiableRealmObject] = Array()) throws {
+    convenience init(addRealmObjects: [IdentifiableRealmObject] = Array()) throws {
         
-        let fileUrl = URL(fileURLWithPath: RLMRealmPathForFile(realmFileName), isDirectory: false)
+        let databaseConfig = try RealmDatabaseConfig.createInMemoryConfig()
         
-        if FileManager.default.getFilePathExists(url: fileUrl) {
-            try FileManager.default.removeUrl(url: fileUrl)
-        }
+        let database = RealmDatabase(databaseConfig: databaseConfig)
         
-        let config = Realm.Configuration(
-            fileURL: fileUrl,
-            schemaVersion: 1,
-            migrationBlock: { (_, _) in
-                
+        if addRealmObjects.count > 0 {
+            
+            let realm: Realm = try database.openRealm()
+            
+            try realm.write {
+                realm.add(addRealmObjects, update: .modified)
             }
-        )
-        
-        let databaseConfig = try RealmDatabaseConfig(config: config)
-        
-        let realmDatabase = RealmDatabase(databaseConfig: databaseConfig)
-                
-        let realm: Realm = try realmDatabase.openRealm()
-        
-        try realm.write {
-            realm.add(addRealmObjects, update: .modified)
         }
         
         let appConfig = TestsAppConfig(
-            realmDatabase: realmDatabase
+            realmDatabase: database
         )
         
         self.init(testsAppConfig: appConfig)
-    }
-    
-    static func createWithRealmFile(realmFileName: String) throws -> TestsDiContainer {
-        
-        let fileUrl = URL(fileURLWithPath: RLMRealmPathForFile(realmFileName), isDirectory: false)
-        
-        if FileManager.default.getFilePathExists(url: fileUrl) {
-            try FileManager.default.removeUrl(url: fileUrl)
-        }
-        
-        let config = Realm.Configuration(
-            fileURL: fileUrl,
-            schemaVersion: 1,
-            migrationBlock: { (_, _) in
-                
-            }
-        )
-        
-        let databaseConfig = try RealmDatabaseConfig(config: config)
-        
-        let realmDatabase = RealmDatabase(databaseConfig: databaseConfig)
-        
-        return TestsDiContainer(
-            testsAppConfig: TestsAppConfig(
-                realmDatabase: realmDatabase
-            )
-        )
     }
 }
