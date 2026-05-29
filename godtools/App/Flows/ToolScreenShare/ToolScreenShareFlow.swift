@@ -150,14 +150,15 @@ class ToolScreenShareFlow: Flow {
                 let tractRemoteShareURLBuilder: TractRemoteShareURLBuilder = appDiContainer.feature.toolScreenShare.dataLayer.getTractRemoteShareURLBuilder()
                                 
                 guard let strings = shareToolScreenShareSessionStringsDomainModel, let remoteShareUrl = tractRemoteShareURLBuilder.buildRemoteShareURL(toolId: toolSettingsObserver.toolId, primaryLanguageId: toolSettingsObserver.languages.primaryLanguageId, parallelLanguageId: toolSettingsObserver.languages.parallelLanguageId, selectedLanguageId: toolSettingsObserver.languages.selectedLanguageId, page: toolSettingsObserver.pageNumber, subscriberChannelId: channel.id) else {
-                    
-                    let viewModel = AlertMessageViewModel(
+
+                    let view = AlertMessageView(
                         title: "Error",
                         message: "Failed to create remote share url.",
+                        acceptTitle: "OK",
                         cancelTitle: nil,
-                        acceptTitle: "OK"
+                        acceptTapped: nil,
+                        cancelTapped: nil
                     )
-                    let view = AlertMessageView(viewModel: viewModel)
                     
                     navigationController.present(view.controller, animated: true, completion: nil)
                     

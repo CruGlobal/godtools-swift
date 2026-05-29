@@ -9,14 +9,15 @@
 import Foundation
 import Combine
 
-final class CreatingToolScreenShareSessionTimedOutViewModel: AlertMessageViewModelType {
+@MainActor
+final class CreatingToolScreenShareSessionTimedOutViewModel {
         
     private var cancellables = Set<AnyCancellable>()
     
     private weak var flowDelegate: FlowDelegate?
     
-    let title: String?
-    let message: String?
+    let title: String
+    let message: String
     let cancelTitle: String? = nil
     let acceptTitle: String
     

@@ -9,6 +9,7 @@
 import UIKit
 import Combine
 
+@MainActor
 class AppLayoutDirectionBasedBarItem: NavBarItem {
     
     let leftToRightImage: UIImage?

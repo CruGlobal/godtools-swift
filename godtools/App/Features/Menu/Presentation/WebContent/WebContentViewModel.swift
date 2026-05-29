@@ -8,7 +8,8 @@
 
 import Foundation
 
-class WebContentViewModel {
+@MainActor
+final class WebContentViewModel {
     
     private let webContent: WebContentType
     private let backTappedFromWebContentStep: FlowStep

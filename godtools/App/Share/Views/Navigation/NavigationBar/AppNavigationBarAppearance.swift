@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+@MainActor
 class AppNavigationBarAppearance {
     
     let backgroundColor: UIColor
