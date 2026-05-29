@@ -15,7 +15,7 @@ final class LoadingArticleViewModel: ObservableObject {
     private let articleAemRepository: ArticleAemRepository
     private let appLanguage: AppLanguageDomainModel
     
-    private var downloadArticleTask: Task<Void, Never>?
+    private var downloadArticleTask: Task<Void, Error>?
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
@@ -31,6 +31,9 @@ final class LoadingArticleViewModel: ObservableObject {
         
         downloadArticleTask = Task { [weak self] in
             
+            let cacheObject: ArticleAemCacheObject?
+            let alertMessage: AlertMessage?
+            
             do {
                 
                 _ = try await articleAemRepository
@@ -40,10 +43,8 @@ final class LoadingArticleViewModel: ObservableObject {
                         requestPriority: .high
                     )
                 
-                if let aemCacheObject = articleAemRepository.getAemCacheObject(aemUri: aemUri) {
-                    
-                    self?.flowDelegate?.navigate(step: .didDownloadArticleFromLoadingArticle(aemCacheObject: aemCacheObject))
-                }
+                cacheObject = articleAemRepository.getAemCacheObject(aemUri: aemUri)
+                alertMessage = nil
             }
             catch let error {
                 
@@ -54,9 +55,25 @@ final class LoadingArticleViewModel: ObservableObject {
                 
                 let errorMessage: String = DownloadArticlesErrorViewModel(appLanguage: appLanguage, localizationServices: localizationServices, error: error).message
                 
-                let alertMessage = AlertMessage(title: errorTitle, message: errorMessage)
+                alertMessage = AlertMessage(title: errorTitle, message: errorMessage)
+                cacheObject = nil
+            }
+            
+            try await Task.sleep(for: .seconds(1))
+            
+            if let cacheObject = cacheObject {
                 
-                self?.flowDelegate?.navigate(step: .didFailToDownloadArticleFromLoadingArticle(alertMessage: alertMessage))
+                self?.flowDelegate?.navigate(
+                    step: .didDownloadArticleFromLoadingArticle(aemCacheObject: cacheObject)
+                )
+            }
+            else {
+                
+                self?.flowDelegate?.navigate(
+                    step: .didFailToDownloadArticleFromLoadingArticle(
+                        alertMessage: alertMessage ?? AlertMessage(title: "Internal Error", message: "Failed to fetch aem uri from cache.")
+                    )
+                )
             }
         }
     }
