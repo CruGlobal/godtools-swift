@@ -15,6 +15,7 @@ struct PersonalizationUnavailableView: View {
     static let buttonHeight: CGFloat = 38
     static let buttonWidthMultiplier: CGFloat = 0.6
     static let buttonCornerRadius: CGFloat = 20
+    static let buttonFont: Font = FontLibrary.sfProTextSemibold.font(size: 14)
 
     private let buttonWidth: CGFloat
     private let title: String
@@ -64,7 +65,7 @@ struct PersonalizationUnavailableView: View {
 
                 GTWhiteButton(
                     title: changeSettingsButtonTitle,
-                    font: FontLibrary.sfProTextSemibold.font(size: 14),
+                    font: Self.buttonFont,
                     width: buttonWidth,
                     height: Self.buttonHeight,
                     cornerRadius: Self.buttonCornerRadius,
@@ -75,7 +76,7 @@ struct PersonalizationUnavailableView: View {
 
                 GTBlueButton(
                     title: goToAllLessonsButtonTitle,
-                    font: FontLibrary.sfProTextSemibold.font(size: 14),
+                    font: Self.buttonFont,
                     width: buttonWidth,
                     height: Self.buttonHeight,
                     cornerRadius: Self.buttonCornerRadius,

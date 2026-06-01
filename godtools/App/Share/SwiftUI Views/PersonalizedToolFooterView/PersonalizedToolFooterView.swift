@@ -54,7 +54,7 @@ struct PersonalizedToolFooterView: View {
 
                 GTBlueButton(
                     title: buttonTitle,
-                    font: FontLibrary.sfProTextSemibold.font(size: 16),
+                    font: PersonalizationUnavailableView.buttonFont,
                     width: geometry.size.width * PersonalizationUnavailableView.buttonWidthMultiplier,
                     height: PersonalizationUnavailableView.buttonHeight,
                     cornerRadius: PersonalizationUnavailableView.buttonCornerRadius,
