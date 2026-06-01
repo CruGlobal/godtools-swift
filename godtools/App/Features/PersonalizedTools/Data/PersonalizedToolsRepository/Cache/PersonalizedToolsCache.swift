@@ -30,10 +30,6 @@ final class PersonalizedToolsCache {
         return persistence as? SwiftRepositorySyncPersistence<PersonalizedToolsDataModel, PersonalizedToolsDataModel, SwiftPersonalizedTools>
     }
 
-    private var realmDatabase: RealmDatabase? {
-        return getRealmPersistence()?.database
-    }
-
     private func getRealmPersistence() -> RealmRepositorySyncPersistence<PersonalizedToolsDataModel, PersonalizedToolsDataModel, RealmPersonalizedTools>? {
         return persistence as? RealmRepositorySyncPersistence<PersonalizedToolsDataModel, PersonalizedToolsDataModel, RealmPersonalizedTools>
     }

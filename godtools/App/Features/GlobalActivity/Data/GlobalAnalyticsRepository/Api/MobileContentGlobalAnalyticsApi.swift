@@ -9,7 +9,7 @@
 import Foundation
 import RequestOperation
 
-final class MobileContentGlobalAnalyticsApi {
+final class MobileContentGlobalAnalyticsApi: GlobalAnalyticsApiInterface {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let urlSessionPriority: URLSessionPriority

@@ -14,12 +14,12 @@ struct FavoritedResourceDataModel: Sendable {
     let createdAt: Date
     let position: Int
     
-    func copy(position: Int) -> FavoritedResourceDataModel {
+    func copy(position: Int?) -> FavoritedResourceDataModel {
         
         return FavoritedResourceDataModel(
             id: id,
             createdAt: createdAt,
-            position: position
+            position: position ?? self.position
         )
     }
 }

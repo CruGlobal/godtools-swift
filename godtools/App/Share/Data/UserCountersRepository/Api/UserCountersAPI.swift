@@ -49,7 +49,7 @@ final class UserCountersApi: UserCountersApiInterface {
             "Content-Type": "application/vnd.api+json"
         ]
         
-        return requestBuilder.build(
+        return try requestBuilder.build(
             parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseURL + "/users/me/counters",
@@ -95,7 +95,7 @@ final class UserCountersApi: UserCountersApiInterface {
             ]
         ]
         
-        return requestBuilder.build(
+        return try requestBuilder.build(
             parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseURL + "/users/me/counters/\(id)",

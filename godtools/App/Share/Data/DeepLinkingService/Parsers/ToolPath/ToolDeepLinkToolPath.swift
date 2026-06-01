@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ToolDeepLinkToolPath: String {
+enum ToolDeepLinkToolPath: String, Sendable {
     
     case article = "article"
     case cyoa = "cyoa"

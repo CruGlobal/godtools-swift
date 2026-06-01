@@ -12,7 +12,6 @@ import Foundation
 import Combine
 import RepositorySync
 
-@Suite(.serialized)
 struct StoreInitialAppLanguageUseCaseTests {
     
     struct TestArgument {
@@ -20,6 +19,13 @@ struct StoreInitialAppLanguageUseCaseTests {
         let appLanguage: LanguageCodeDomainModel?
         let deviceLanguage: LanguageCodeDomainModel
         let expectedValue: String
+    }
+    
+    private let testsDiContainer: TestsDiContainer
+    
+    init() throws {
+        
+        testsDiContainer = try TestsDiContainer()
     }
     
     @Test(
@@ -42,11 +48,7 @@ struct StoreInitialAppLanguageUseCaseTests {
         ]
     )
     @MainActor func noAppLanguageSetDefaultsToDeviceLanguageWhenSupported(argument: TestArgument) async throws {
-        
-        let testsDiContainer = try getTestsDiContainer()
-        
-        let realmDatabase: RealmDatabase = testsDiContainer.core.dataLayer.getSharedRealmDatabase()
-                
+                                
         let appLanguages: [AppLanguageCodable] = [
             AppLanguageCodable(languageCode: "ar", languageDirection: .rightToLeft, languageScriptCode: nil),
             AppLanguageCodable(languageCode: "en", languageDirection: .leftToRight, languageScriptCode: nil),
@@ -56,14 +58,11 @@ struct StoreInitialAppLanguageUseCaseTests {
             AppLanguageCodable(languageCode: "lv", languageDirection: .leftToRight, languageScriptCode: nil)
         ]
         
-        let mockAppLanguagesSync: AppLanguagesRepositorySyncInterface = try MockAppLanguagesRepositorySync(
-            realmDatabase: realmDatabase,
-            appLanguages: appLanguages
-        )
+        let mockAppLanguagesSync: AppLanguagesRepositorySyncInterface = try await getMockAppLanguagesRepositorySync(appLanguages: appLanguages)
         
-        let userAppLanguageRepository = getUserAppLanguageRepository(testsDiContainer: testsDiContainer)
+        let userAppLanguageRepository = testsDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository()
         
-        try userAppLanguageRepository.deleteLanguage()
+        try await userAppLanguageRepository.deleteLanguage()
                         
         let appLanguagesRepository: AppLanguagesRepository = testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesRepository(
             sync: mockAppLanguagesSync
@@ -124,11 +123,7 @@ struct StoreInitialAppLanguageUseCaseTests {
         ]
     )
     @MainActor func appLanguageSetAndSupportedShowsMyAppLanguage(argument: TestArgument) async throws {
-        
-        let testsDiContainer = try getTestsDiContainer()
-        
-        let realmDatabase: RealmDatabase = testsDiContainer.core.dataLayer.getSharedRealmDatabase()
-        
+                        
         let appLanguages: [AppLanguageCodable] = [
             AppLanguageCodable(languageCode: "ar", languageDirection: .rightToLeft, languageScriptCode: nil),
             AppLanguageCodable(languageCode: "en", languageDirection: .leftToRight, languageScriptCode: nil),
@@ -138,12 +133,9 @@ struct StoreInitialAppLanguageUseCaseTests {
             AppLanguageCodable(languageCode: "lv", languageDirection: .leftToRight, languageScriptCode: nil)
         ]
         
-        let mockAppLanguagesSync: AppLanguagesRepositorySyncInterface = try MockAppLanguagesRepositorySync(
-            realmDatabase: realmDatabase,
-            appLanguages: appLanguages
-        )
+        let mockAppLanguagesSync: AppLanguagesRepositorySyncInterface = try await getMockAppLanguagesRepositorySync(appLanguages: appLanguages)
         
-        let userAppLanguageRepository = getUserAppLanguageRepository(testsDiContainer: testsDiContainer)
+        let userAppLanguageRepository = testsDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository()
                                 
         let appLanguagesRepository: AppLanguagesRepository = testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesRepository(
             sync: mockAppLanguagesSync
@@ -157,8 +149,7 @@ struct StoreInitialAppLanguageUseCaseTests {
         
         let storeAppLanguage: String = try #require(argument.appLanguage?.rawValue)
         
-        try await userAppLanguageRepository
-            .storeLanguage(appLanguageId: storeAppLanguage)
+        try await userAppLanguageRepository.storeLanguage(appLanguageId: storeAppLanguage)
         
         var resultRef: AppLanguageDomainModel?
         
@@ -204,11 +195,7 @@ struct StoreInitialAppLanguageUseCaseTests {
         ]
     )
     @MainActor func noAppLanguageSetAndDeviceLanguageIsNotASupportedAppLanguage(argument: TestArgument) async throws {
-        
-        let testsDiContainer = try getTestsDiContainer()
-        
-        let realmDatabase: RealmDatabase = testsDiContainer.core.dataLayer.getSharedRealmDatabase()
-        
+                        
         let appLanguages: [AppLanguageCodable] = [
             AppLanguageCodable(languageCode: "ar", languageDirection: .rightToLeft, languageScriptCode: nil),
             AppLanguageCodable(languageCode: "en", languageDirection: .leftToRight, languageScriptCode: nil),
@@ -218,14 +205,11 @@ struct StoreInitialAppLanguageUseCaseTests {
             AppLanguageCodable(languageCode: "lv", languageDirection: .leftToRight, languageScriptCode: nil)
         ]
         
-        let mockAppLanguagesSync: AppLanguagesRepositorySyncInterface = try MockAppLanguagesRepositorySync(
-            realmDatabase: realmDatabase,
-            appLanguages: appLanguages
-        )
+        let mockAppLanguagesSync: AppLanguagesRepositorySyncInterface = try await getMockAppLanguagesRepositorySync(appLanguages: appLanguages)
         
-        let userAppLanguageRepository = getUserAppLanguageRepository(testsDiContainer: testsDiContainer)
+        let userAppLanguageRepository = testsDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository()
         
-        try userAppLanguageRepository.deleteLanguage()
+        try await userAppLanguageRepository.deleteLanguage()
                                 
         let appLanguagesRepository: AppLanguagesRepository = testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesRepository(
             sync: mockAppLanguagesSync
@@ -269,25 +253,12 @@ struct StoreInitialAppLanguageUseCaseTests {
 
 extension StoreInitialAppLanguageUseCaseTests {
     
-    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
-                
-        return try TestsDiContainer(
-            realmFileName: String(describing: StoreInitialAppLanguageUseCaseTests.self),
-            addRealmObjects: addRealmObjects
-        )
-    }
-    
-    private func getUserAppLanguageRepository(testsDiContainer: TestsDiContainer) -> UserAppLanguageRepository {
+    @MainActor
+    private func getMockAppLanguagesRepositorySync(appLanguages: [AppLanguageCodable]) async throws -> MockAppLanguagesRepositorySync {
         
-        let persistence = RealmRepositorySyncPersistence(
-            database: testsDiContainer.core.dataLayer.getSharedRealmDatabase(),
-            dataModelMapping: RealmUserAppLanguageMapping()
+        return try await MockAppLanguagesRepositorySync(
+            persistence: testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesPersistence(),
+            appLanguages: appLanguages
         )
-        
-        let cache = UserAppLanguageCache(
-            persistence: persistence
-        )
-        
-        return UserAppLanguageRepository(cache: cache)
     }
 }

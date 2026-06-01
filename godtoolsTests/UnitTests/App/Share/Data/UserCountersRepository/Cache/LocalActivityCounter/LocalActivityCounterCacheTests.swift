@@ -11,7 +11,6 @@ import Testing
 @testable import godtools
 import RepositorySync
 
-@Suite(.serialized)
 struct LocalActivityCounterCacheTests {
         
     private let sessionsCounterId: String = "sessions"
@@ -20,15 +19,19 @@ struct LocalActivityCounterCacheTests {
     @Test()
     func initialCountShouldBe1() async throws {
         
-        let cache: LocalActivityCounterCache = try getLocalActivityCounterCache()
+        let persistence = try getPersistence()
+        
+        let cache = try getLocalActivityCounterCache(
+            persistence: persistence
+        )
         
         let counterId: String = toolOpensCounterId
         
         #expect(try cache.getCounter(id: counterId) == nil)
         
-        let updateCounter_1: LocalActivityCountDataModel = try cache.incrementCounter(id: counterId)
-        let updateCounter_2: LocalActivityCountDataModel = try cache.incrementCounter(id: counterId)
-        let updateCounter_3: LocalActivityCountDataModel = try cache.incrementCounter(id: counterId)
+        let updateCounter_1: LocalActivityCountDataModel = try await cache.incrementCounter(id: counterId)
+        let updateCounter_2: LocalActivityCountDataModel = try await cache.incrementCounter(id: counterId)
+        let updateCounter_3: LocalActivityCountDataModel = try await cache.incrementCounter(id: counterId)
         
         #expect(updateCounter_1.count == 1)
         
@@ -40,16 +43,20 @@ struct LocalActivityCounterCacheTests {
     @Test()
     func getCountersReturnsAllCounters() async throws {
         
-        let cache: LocalActivityCounterCache = try getLocalActivityCounterCache()
+        let persistence = try getPersistence()
+        
+        let cache = try getLocalActivityCounterCache(
+            persistence: persistence
+        )
                 
         #expect(try cache.getCounter(id: sessionsCounterId) == nil)
         #expect(try cache.getCounter(id: toolOpensCounterId) == nil)
         #expect(try await cache.getCounters().count == 0)
         
-        let sessionCounter: LocalActivityCountDataModel = try cache.incrementCounter(id: sessionsCounterId)
+        let sessionCounter: LocalActivityCountDataModel = try await cache.incrementCounter(id: sessionsCounterId)
         
-        _ = try cache.incrementCounter(id: toolOpensCounterId)
-        let toolOpensCounter: LocalActivityCountDataModel = try cache.incrementCounter(id: toolOpensCounterId)
+        _ = try await cache.incrementCounter(id: toolOpensCounterId)
+        let toolOpensCounter: LocalActivityCountDataModel = try await cache.incrementCounter(id: toolOpensCounterId)
         
         #expect(sessionCounter.count == 1)
         
@@ -64,27 +71,31 @@ struct LocalActivityCounterCacheTests {
     @Test()
     func decrementCounters() async throws {
         
-        let cache: LocalActivityCounterCache = try getLocalActivityCounterCache()
+        let persistence = try getPersistence()
+        
+        let cache = try getLocalActivityCounterCache(
+            persistence: persistence
+        )
         
         #expect(try cache.getCounter(id: sessionsCounterId) == nil)
         #expect(try cache.getCounter(id: toolOpensCounterId) == nil)
         #expect(try await cache.getCounters().count == 0)
         
-        _ = try cache.incrementCounter(id: sessionsCounterId)
-        _ = try cache.incrementCounter(id: sessionsCounterId)
+        _ = try await cache.incrementCounter(id: sessionsCounterId)
+        _ = try await cache.incrementCounter(id: sessionsCounterId)
         
-        _ = try cache.incrementCounter(id: toolOpensCounterId)
-        _ = try cache.incrementCounter(id: toolOpensCounterId)
-        _ = try cache.incrementCounter(id: toolOpensCounterId)
-        _ = try cache.incrementCounter(id: toolOpensCounterId)
+        _ = try await cache.incrementCounter(id: toolOpensCounterId)
+        _ = try await cache.incrementCounter(id: toolOpensCounterId)
+        _ = try await cache.incrementCounter(id: toolOpensCounterId)
+        _ = try await cache.incrementCounter(id: toolOpensCounterId)
         
         #expect(try cache.getCounter(id: sessionsCounterId)?.count == 2)
         
         #expect(try cache.getCounter(id: toolOpensCounterId)?.count == 4)
         
-        try cache.decrementCount(id: sessionsCounterId, decrementBy: 3)
+        try await cache.decrementCount(id: sessionsCounterId, decrementBy: 3)
         
-        try cache.decrementCount(id: toolOpensCounterId, decrementBy: 2)
+        try await cache.decrementCount(id: toolOpensCounterId, decrementBy: 2)
         
         #expect(try cache.getCounter(id: sessionsCounterId)?.count == 0)
         
@@ -94,17 +105,24 @@ struct LocalActivityCounterCacheTests {
 
 extension LocalActivityCounterCacheTests {
     
-    private func getLocalActivityCounterCache() throws -> LocalActivityCounterCache {
+    private func getPersistence() throws -> RealmRepositorySyncPersistence<LocalActivityCountDataModel, LocalActivityCountDataModel, RealmLocalActivityCount> {
         
-        let testsDiContainer = try TestsDiContainer(realmFileName: String(describing: LocalActivityCounterCacheTests.self))
+        let databaseConfig = try RealmDatabaseConfig.createInMemoryConfig()
         
-        let realmPersistence = RealmRepositorySyncPersistence<LocalActivityCountDataModel, LocalActivityCountDataModel, RealmLocalActivityCount>(
-            database: testsDiContainer.core.dataLayer.getSharedRealmDatabase(),
-            dataModelMapping: RealmLocalActivityCountMapping()
+        let database = RealmDatabase(databaseConfig: databaseConfig)
+        
+        let persistence = RealmRepositorySyncPersistence(
+            database: database,
+            mapping: RealmLocalActivityCountMapping()
         )
+                
+        return persistence
+    }
+    
+    private func getLocalActivityCounterCache(persistence: any Persistence<LocalActivityCountDataModel, LocalActivityCountDataModel>) throws -> LocalActivityCounterCache {
         
         return LocalActivityCounterCache(
-            persistence: realmPersistence
+            persistence: persistence
         )
     }
 }

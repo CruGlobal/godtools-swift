@@ -13,7 +13,6 @@ import Combine
 import RealmSwift
 import RepositorySync
 
-@Suite(.serialized)
 struct GetAllToolsUseCaseTests {
     
     private let categoryConversationStarter: String = "conversation_starter"
@@ -39,7 +38,7 @@ struct GetAllToolsUseCaseTests {
     )
     @MainActor func anyCategoryAndAnyLanguageShouldShowAllTools() async throws {
         
-        let getAllToolsUseCase = try getAllToolsUseCase()
+        let useCase = try getUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -52,7 +51,7 @@ struct GetAllToolsUseCaseTests {
                 continuation.resume(returning: ())
             }
             
-            getAllToolsUseCase
+            useCase
                 .execute(
                     appLanguage: "",
                     languageIdForAvailabilityText: nil,
@@ -92,7 +91,7 @@ struct GetAllToolsUseCaseTests {
     )
     @MainActor func categoryGrowthCategoryAndAnyLanguageShouldShowCategoryGrowthTools() async throws {
         
-        let getAllToolsUseCase = try getAllToolsUseCase()
+        let useCase = try getUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -109,7 +108,7 @@ struct GetAllToolsUseCaseTests {
                 continuation.resume(returning: ())
             }
             
-            getAllToolsUseCase
+            useCase
                 .execute(
                     appLanguage: "",
                     languageIdForAvailabilityText: nil,
@@ -149,7 +148,7 @@ struct GetAllToolsUseCaseTests {
     )
     @MainActor func categoryIsAnyAndLanguageIsRussianShouldShowToolsThatSupportRussian() async throws {
         
-        let getAllToolsUseCase = try getAllToolsUseCase()
+        let useCase = try getUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -166,7 +165,7 @@ struct GetAllToolsUseCaseTests {
                 continuation.resume(returning: ())
             }
             
-            getAllToolsUseCase
+            useCase
                 .execute(
                     appLanguage: "",
                     languageIdForAvailabilityText: nil,
@@ -206,7 +205,7 @@ struct GetAllToolsUseCaseTests {
     )
     @MainActor func categoryIsAnyAndLanguageIsSpanishShouldShowToolsThatSupportSpanish() async throws {
         
-        let getAllToolsUseCase = try getAllToolsUseCase()
+        let useCase = try getUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -223,7 +222,7 @@ struct GetAllToolsUseCaseTests {
                 continuation.resume(returning: ())
             }
             
-            getAllToolsUseCase
+            useCase
                 .execute(
                     appLanguage: "",
                     languageIdForAvailabilityText: nil,
@@ -375,11 +374,13 @@ struct GetAllToolsUseCaseTests {
 
 extension GetAllToolsUseCaseTests {
     
-    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
-                
-        return try TestsDiContainer(
-            realmFileName: String(describing: GetAllToolsUseCaseTests.self),
-            addRealmObjects: allTools + addRealmObjects
+    private func getUseCase() throws -> GetAllToolsUseCase {
+        
+        let testsDiContainer: TestsDiContainer = try TestsDiContainer(addRealmObjects: allTools)
+        
+        return GetAllToolsUseCase(
+            resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),
+            getToolsListItems: testsDiContainer.core.domainLayer.supporting.getToolsListItems()
         )
     }
     
@@ -424,15 +425,5 @@ extension GetAllToolsUseCaseTests {
         return allTools.filter { (resource: RealmResource) in
             resource.getLanguages().contains(where: {$0.code == language.rawValue})
         }
-    }
-    
-    private func getAllToolsUseCase() throws -> GetAllToolsUseCase {
-        
-        let testsDiContainer: TestsDiContainer = try getTestsDiContainer()
-        
-        return GetAllToolsUseCase(
-            resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),
-            getToolsListItems: testsDiContainer.core.domainLayer.supporting.getToolsListItems()
-        )
     }
 }

@@ -29,10 +29,6 @@ final class UserLocalizationSettingsCache {
         return persistence as? SwiftRepositorySyncPersistence<UserLocalizationSettingsDataModel, UserLocalizationSettingsDataModel, SwiftUserLocalizationSettings>
     }
     
-    private var realmDatabase: RealmDatabase? {
-        return getRealmPersistence()?.database
-    }
-    
     private func getRealmPersistence() -> RealmRepositorySyncPersistence<UserLocalizationSettingsDataModel, UserLocalizationSettingsDataModel, RealmUserLocalizationSettings>? {
         return persistence as? RealmRepositorySyncPersistence<UserLocalizationSettingsDataModel, UserLocalizationSettingsDataModel, RealmUserLocalizationSettings>
     }
@@ -43,7 +39,7 @@ extension UserLocalizationSettingsCache {
     func storeUserLocalizationSetting(dataModel: UserLocalizationSettingsDataModel) async throws {
         
         _ = try await persistence
-            .writeObjectsAsync(
+            .writeObjects(
                 externalObjects: [dataModel],
                 writeOption: nil,
                 getOption: nil

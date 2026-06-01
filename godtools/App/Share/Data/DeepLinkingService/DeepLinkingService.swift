@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class DeepLinkingService {
+final class DeepLinkingService {
     
     private let manifest: DeepLinkingManifestInterface
     private let lastParsedDeepLinkSubject: PassthroughSubject<ParsedDeepLinkType?, Never> = PassthroughSubject()

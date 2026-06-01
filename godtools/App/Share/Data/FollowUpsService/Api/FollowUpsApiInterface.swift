@@ -9,7 +9,7 @@
 import Foundation
 import RequestOperation
 
-protocol FollowUpsApiInterface {
+protocol FollowUpsApiInterface: Sendable {
     
     func postFollowUp(followUp: FollowUp, requestPriority: RequestPriority) async throws -> RequestDataResponse
 }

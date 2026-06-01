@@ -12,19 +12,15 @@ import RepositorySync
 
 class RealmUserToolSettings: Object, IdentifiableRealmObject {
     
-    @Persisted var createdAt: Date = Date()
-    @Persisted var toolId: String = ""
-    @Persisted var primaryLanguageId: String = ""
-    @Persisted var parallelLanguageId: String?
-    
-    @objc dynamic var id: String {
-        get {
-            return toolId
-        }
-        set {
-            toolId = newValue
+    @objc dynamic var id: String = ""
+    @objc dynamic var createdAt: Date = Date()
+    @objc dynamic var toolId: String = "" {
+        didSet {
+            id = toolId
         }
     }
+    @objc dynamic var primaryLanguageId: String = ""
+    @objc dynamic var parallelLanguageId: String?
     
     override static func primaryKey() -> String? {
         return "toolId"

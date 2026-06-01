@@ -12,4 +12,11 @@ struct LocalActivityCountDataModel: Sendable {
     
     let id: String
     let count: Int
+    
+    func copy(count: Int?) -> LocalActivityCountDataModel {
+        return LocalActivityCountDataModel(
+            id: id,
+            count: count ?? self.count
+        )
+    }
 }

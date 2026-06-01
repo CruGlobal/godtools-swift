@@ -39,7 +39,7 @@ final class MobileContentResourceViewsApi: ResourceViewsApiInterface {
             ]
         ]
         
-        return requestBuilder.build(
+        return try requestBuilder.build(
             parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseUrl + "/views",

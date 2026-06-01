@@ -11,11 +11,10 @@ import Foundation
 @testable import godtools
 import RepositorySync
 
-@Suite(.serialized)
 struct ReorderFavoritedToolUseCaseTests {
 
     struct TestArgument {
-        let resourcesInRealmIdsAtPositions: [String: Int]
+        let initialResources: [String: Int]
         let resourceIdToReorder: String
         let originalPosition: Int
         let newPosition: Int
@@ -29,20 +28,20 @@ struct ReorderFavoritedToolUseCaseTests {
        Then: The tool's position should update, and surrounding tool positions should update accordingly.
        """,
        arguments: [
-        TestArgument(resourcesInRealmIdsAtPositions: ["A": 0, "B": 1, "C": 2, "D": 3, "E": 4], resourceIdToReorder: "C", originalPosition: 2, newPosition: 0, expectedUpdatedIdsAtPositions: ["C": 0, "A": 1, "B": 2, "D": 3, "E": 4]),
-        TestArgument(resourcesInRealmIdsAtPositions: ["A": 0, "B": 1, "C": 2, "D": 3, "E": 4], resourceIdToReorder: "A", originalPosition: 0, newPosition: 4, expectedUpdatedIdsAtPositions: ["B": 0, "C": 1, "D": 2, "E": 3, "A": 4]),
-        TestArgument(resourcesInRealmIdsAtPositions: ["A": 0, "B": 1, "C": 2, "D": 3, "E": 4], resourceIdToReorder: "E", originalPosition: 4, newPosition: 2, expectedUpdatedIdsAtPositions: ["A": 0, "B": 1, "E": 2, "C": 3, "D": 4])
+        TestArgument(initialResources: ["A": 0, "B": 1, "C": 2, "D": 3, "E": 4], resourceIdToReorder: "C", originalPosition: 2, newPosition: 0, expectedUpdatedIdsAtPositions: ["C": 0, "A": 1, "B": 2, "D": 3, "E": 4]),
+        TestArgument(initialResources: ["A": 0, "B": 1, "C": 2, "D": 3, "E": 4], resourceIdToReorder: "A", originalPosition: 0, newPosition: 4, expectedUpdatedIdsAtPositions: ["B": 0, "C": 1, "D": 2, "E": 3, "A": 4]),
+        TestArgument(initialResources: ["A": 0, "B": 1, "C": 2, "D": 3, "E": 4], resourceIdToReorder: "E", originalPosition: 4, newPosition: 2, expectedUpdatedIdsAtPositions: ["A": 0, "B": 1, "E": 2, "C": 3, "D": 4])
        ]
     )
     func testReorderFavorites(argument: TestArgument) async throws {
         
-        let testsDiContainer: TestsDiContainer = try getTestsDiContainer(
-            addResources: argument.resourcesInRealmIdsAtPositions
+        let testsDiContainer: TestsDiContainer = try await getTestsDiContainer(
+            addResources: argument.initialResources
         )
         
-        let reorderFavoritedToolUseCase: ReorderFavoritedToolUseCase = testsDiContainer.feature.favorites.domainLayer.getReorderFavoritedToolUseCase()
+        let useCase = testsDiContainer.feature.favorites.domainLayer.getReorderFavoritedToolUseCase()
         
-        _ = try await reorderFavoritedToolUseCase
+        _ = try await useCase
             .execute(
                 toolId: argument.resourceIdToReorder,
                 originalPosition: argument.originalPosition,
@@ -65,17 +64,21 @@ struct ReorderFavoritedToolUseCaseTests {
 
 extension ReorderFavoritedToolUseCaseTests {
     
-    private func getTestsDiContainer(addResources: [String: Int]) throws -> TestsDiContainer {
+    private func getTestsDiContainer(addResources: [String: Int]) async throws -> TestsDiContainer {
                 
-        return try TestsDiContainer(
-            realmFileName: String(describing: ReorderFavoritedToolUseCaseTests.self),
-            addRealmObjects: getFavoritedResources(resources: addResources)
-        )
+        let testsDiContainer = try TestsDiContainer()
+        
+        let favoritedResources = getFavoritedResources(resources: addResources)
+        
+        try await testsDiContainer.core.dataLayer.getFavoritedResourcesPersistence()
+            .writeObjects(externalObjects: favoritedResources)
+        
+        return testsDiContainer
     }
     
-    private func getFavoritedResources(resources: [String: Int]) -> [RealmFavoritedResource] {
+    private func getFavoritedResources(resources: [String: Int]) -> [FavoritedResourceDataModel] {
         
-        var resourceObjects = [RealmFavoritedResource]()
+        var favoritedResources = [FavoritedResourceDataModel]()
         
         for (resourceId, resourcePosition) in resources {
             
@@ -85,9 +88,9 @@ extension ReorderFavoritedToolUseCaseTests {
                 position: resourcePosition
             )
             
-            resourceObjects.append(RealmFavoritedResource.createNewFrom(model: dataModel))
+            favoritedResources.append(dataModel)
         }
         
-        return resourceObjects
+        return favoritedResources
     }
 }

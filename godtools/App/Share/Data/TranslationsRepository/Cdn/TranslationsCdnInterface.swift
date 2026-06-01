@@ -10,7 +10,7 @@ import Foundation
 import RequestOperation
 import GodToolsShared
 
-protocol TranslationsCdnInterface {
+protocol TranslationsCdnInterface: Sendable {
     
     func getManifestFile(manifestFile: ManifestFile, requestPriority: RequestPriority) async throws -> RequestDataResponse
 }

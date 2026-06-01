@@ -8,12 +8,14 @@
 
 import UIKit
 
+@MainActor
 protocol KeyboardNotificationObserverDelegate: AnyObject {
     
     func keyboardStateDidChange(keyboardObserver: KeyboardNotificationObserver, keyboardStateChange: KeyboardStateChange)
     func keyboardHeightDidChange(keyboardObserver: KeyboardNotificationObserver, keyboardHeight: Double)
 }
 
+@MainActor
 final class KeyboardNotificationObserver: NSObject {
         
     private(set) var keyboardState: KeyboardState = .didHide
@@ -30,10 +32,6 @@ final class KeyboardNotificationObserver: NSObject {
         self.loggingEnabled = loggingEnabled
         
         super.init()
-    }
-    
-    deinit {
-        stopObservingKeyboardChanges()
     }
     
     func startObservingKeyboardChanges(delegate: KeyboardNotificationObserverDelegate) {

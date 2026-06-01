@@ -8,14 +8,21 @@
 
 import UIKit
 
-class ConfirmRemoveToolFromFavoritesAlertView: AlertMessageView {
+final class ConfirmRemoveToolFromFavoritesAlertView: AlertMessageView {
     
     init(viewModel: ConfirmRemoveToolFromFavoritesAlertViewModel) {
         
-        super.init(viewModel: viewModel)
-    }
-    
-    required init(viewModel: AlertMessageViewModelType) {
-        fatalError("init(viewModel:) has not been implemented")
+        super.init(
+            title: viewModel.title,
+            message: viewModel.message,
+            acceptTitle: viewModel.acceptTitle,
+            cancelTitle: viewModel.cancelTitle,
+            acceptTapped: {
+                viewModel.acceptTapped()
+            },
+            cancelTapped: {
+                viewModel.cancelTapped()
+            }
+        )
     }
 }

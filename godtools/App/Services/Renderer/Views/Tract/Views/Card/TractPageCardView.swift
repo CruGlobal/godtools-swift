@@ -9,6 +9,7 @@
 import UIKit
 import GodToolsShared
 
+@MainActor
 protocol TractPageCardViewDelegate: AnyObject {
     
     func tractPageCardHeaderTapped(cardView: TractPageCardView)
@@ -88,8 +89,6 @@ class TractPageCardView: MobileContentView, NibBased {
     
     deinit {
         print("x deinit: \(type(of: self))")
-        
-        keyboardObserver.stopObservingKeyboardChanges()
         
         if let backgroundImageParent = self.backgroundImageParent {
             backgroundImageView.removeParentBoundsChangeObserver(parentView: backgroundImageParent)
@@ -248,9 +247,14 @@ class TractPageCardView: MobileContentView, NibBased {
         super.viewDidAppear(navigationEvent: navigationEvent)
         
         relayoutBottomGradient()
+        
+        if formView != nil {
+            keyboardObserver.startObservingKeyboardChanges(delegate: self)
+        }
     }
     
     override func viewDidDisappear() {
+        keyboardObserver.stopObservingKeyboardChanges()
         formView?.resignCurrentEditedTextField()
     }
     

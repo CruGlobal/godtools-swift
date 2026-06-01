@@ -30,10 +30,6 @@ final class TrackDownloadedTranslationsCache {
         return persistence as? SwiftRepositorySyncPersistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel, SwiftDownloadedTranslation>
     }
     
-    private var realmDatabase: RealmDatabase? {
-        return getRealmPersistence()?.database
-    }
-    
     private func getRealmPersistence() -> RealmRepositorySyncPersistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel, RealmDownloadedTranslation>? {
         return persistence as? RealmRepositorySyncPersistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel, RealmDownloadedTranslation>
     }
@@ -85,7 +81,7 @@ extension TrackDownloadedTranslationsCache {
     
     private func getRealmLatestDownloadedTranslations(resourceId: String, languageId: String) throws -> [RealmDownloadedTranslation]? {
         
-        guard let database = realmDatabase else {
+        guard let database = getRealmPersistence()?.database else {
             return nil
         }
         
@@ -119,7 +115,8 @@ extension TrackDownloadedTranslationsCache {
             )
             
             return try await swiftPersistence
-                .getDataModelsAsync(getOption: .allObjects, query: query)
+                .newActorRead()
+                .getDataModels(query: query)
         }
         else if let realmPersistence = getRealmPersistence() {
             
@@ -133,7 +130,8 @@ extension TrackDownloadedTranslationsCache {
             )
             
             return try await realmPersistence
-                .getDataModelsAsync(getOption: .allObjects, query: query)
+                .newActorRead()
+                .getDataModels(query: query)
         }
         
         return Array()
@@ -171,7 +169,7 @@ extension TrackDownloadedTranslationsCache {
             version: translation.version
         )
         
-        _ = try await persistence.writeObjectsAsync(
+        _ = try await persistence.writeObjects(
             externalObjects: [downloadedTranslation],
             writeOption: nil,
             getOption: nil

@@ -41,7 +41,7 @@ final class PersonalizedToolsApi: PersonalizedToolsApiInterface {
         let resourceTypeQueryItems: [URLQueryItem] = buildResourceTypeQueryItems(resourceTypes: resourceTypes)
         queryItems?.append(contentsOf: resourceTypeQueryItems)
 
-        return requestBuilder
+        return try requestBuilder
             .build(
                 parameters: try RequestBuilderParameters(
                     configuration: urlSession.configuration,
@@ -65,7 +65,7 @@ final class PersonalizedToolsApi: PersonalizedToolsApiInterface {
         let resourceTypeQueryItems: [URLQueryItem] = buildResourceTypeQueryItems(resourceTypes: resourceTypes)
         queryItems?.append(contentsOf: resourceTypeQueryItems)
 
-        return requestBuilder
+        return try requestBuilder
             .build(
                 parameters: try RequestBuilderParameters(
                     configuration: urlSession.configuration,

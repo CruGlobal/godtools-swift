@@ -8,20 +8,19 @@
 
 import Foundation
 @testable import godtools
-import RealmSwift
 import RepositorySync
 
-class MockAppLanguagesRepositorySync: AppLanguagesRepositorySyncInterface {
+final class MockAppLanguagesRepositorySync: AppLanguagesRepositorySyncInterface, Sendable {
     
-    private let realmDatabase: RealmDatabase
+    private let persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>
     private let appLanguages: [AppLanguageCodable]
     
-    init(realmDatabase: RealmDatabase, appLanguages: [AppLanguageCodable]) throws {
+    init(persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>, appLanguages: [AppLanguageCodable]) async throws {
         
-        self.realmDatabase = realmDatabase
+        self.persistence = persistence
         self.appLanguages = appLanguages
         
-        try addAppLanguagesToRealm(appLanguages: appLanguages)
+        try await addAppLanguages(appLanguages: appLanguages)
     }
     
     func sync() async throws {
@@ -30,47 +29,11 @@ class MockAppLanguagesRepositorySync: AppLanguagesRepositorySyncInterface {
             return
         }
         
-        try addAppLanguagesToRealm(appLanguages: appLanguages)
+        try await addAppLanguages(appLanguages: appLanguages)
     }
     
-    private func addAppLanguagesToRealm(appLanguages: [AppLanguageCodable]) throws {
+    private func addAppLanguages(appLanguages: [AppLanguageCodable]) async throws {
         
-        let realmLanguages: [RealmAppLanguage] = appLanguages.map({
-            
-            let realmAppLanguage = RealmAppLanguage()
-            realmAppLanguage.mapFrom(model: $0.toModel())
-            return realmAppLanguage
-        })
-        
-        let realm: Realm = try realmDatabase.openRealm()
-        
-        try realmDatabase.write.realm(
-            realm: realm,
-            writeClosure: { (realm: Realm) in
-                return WriteRealmObjects(
-                    deleteObjects: nil,
-                    addObjects: realmLanguages
-                )
-            },
-            updatePolicy: .modified
-        )
-    }
-    
-    static func getSampleAppLanguages() -> [AppLanguageCodable] {
-        
-        return [
-            AppLanguageCodable(languageCode: "am", languageDirection: .leftToRight, languageScriptCode: nil),
-            AppLanguageCodable(languageCode: "ar", languageDirection: .rightToLeft, languageScriptCode: nil),
-            AppLanguageCodable(languageCode: "en", languageDirection: .leftToRight, languageScriptCode: nil),
-            AppLanguageCodable(languageCode: "es", languageDirection: .leftToRight, languageScriptCode: nil),
-            AppLanguageCodable(languageCode: "fa", languageDirection: .rightToLeft, languageScriptCode: nil),
-            AppLanguageCodable(languageCode: "he", languageDirection: .rightToLeft, languageScriptCode: nil),
-            AppLanguageCodable(languageCode: "ja", languageDirection: .leftToRight, languageScriptCode: nil),
-            AppLanguageCodable(languageCode: "lv", languageDirection: .leftToRight, languageScriptCode: nil),
-            AppLanguageCodable(languageCode: "pt", languageDirection: .leftToRight, languageScriptCode: nil),
-            AppLanguageCodable(languageCode: "ru", languageDirection: .leftToRight, languageScriptCode: nil),
-            AppLanguageCodable(languageCode: "zh", languageDirection: .leftToRight, languageScriptCode: "Hans"),
-            AppLanguageCodable(languageCode: "zh", languageDirection: .leftToRight, languageScriptCode: "Hant")
-        ]
+        try await persistence.writeObjects(externalObjects: appLanguages)
     }
 }

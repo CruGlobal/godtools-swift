@@ -21,7 +21,7 @@ final class SelectedToolFilterLanguageUseCase {
     func execute(language: ToolFilterLanguageDomainModel) async throws {
         
         guard language.languageType != .any else {
-            try userToolFiltersRepository.deleteUserLanguageFilter()
+            try await userToolFiltersRepository.deleteUserLanguageFilter()
             return
         }
         

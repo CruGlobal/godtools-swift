@@ -28,12 +28,13 @@ class TestsInMemorySwiftDatabase {
         
         let context: ModelContext = database.openContext()
         
-        try database
-            .write
-            .context(
-                context: context,
-                writeObjects: WriteSwiftObjects(deleteObjects: nil, insertObjects: addObjectsToDatabase)
-            )
+        for object in addObjectsToDatabase {
+            context.insert(object)
+        }
+        
+        if context.hasChanges {
+            try context.save()
+        }
         
         return database
     }

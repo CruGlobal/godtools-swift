@@ -13,7 +13,6 @@ import RealmSwift
 import SwiftData
 import RepositorySync
 
-@Suite(.serialized)
 struct ResourcesCacheTests {
 
     private let englishLanguageId: Int = 0
@@ -24,9 +23,9 @@ struct ResourcesCacheTests {
         
         let expectedLessonCount: Int = 7
         
-        let realmResourcesCache = try getResourcesCache()
+        let cache = try getCache()
         
-        #expect(try realmResourcesCache.getLessonsCount(filterByLanguageId: nil) == expectedLessonCount)
+        #expect(try cache.getLessonsCount(filterByLanguageId: nil) == expectedLessonCount)
     }
     
     @Test()
@@ -41,10 +40,10 @@ struct ResourcesCacheTests {
             getLessonId(id: 7),
             getLessonId(id: 8)
         ]
+              
+        let cache = try getCache()
                 
-        let realmResourcesCache = try getResourcesCache()
-                
-        let lessons: [ResourceDataModel] = try await realmResourcesCache.getLessons(filterByLanguageId: nil, sorted: false)
+        let lessons: [ResourceDataModel] = try await cache.getLessons(filterByLanguageId: nil, sorted: false)
                 
         #expect(lessons.map {$0.id}.sorted() == expectedLessonIds)
     }
@@ -57,9 +56,9 @@ struct ResourcesCacheTests {
             getLessonId(id: 6)
         ]
         
-        let realmResourcesCache = try getResourcesCache()
+        let cache = try getCache()
         
-        let lessons: [ResourceDataModel] = try await realmResourcesCache.getLessons(
+        let lessons: [ResourceDataModel] = try await cache.getLessons(
             filterByLanguageId: getLanguageId(id: spanishLanguageId),
             sorted: false
         )
@@ -76,9 +75,9 @@ struct ResourcesCacheTests {
             getLessonId(id: 8)
         ]
                 
-        let realmResourcesCache = try getResourcesCache()
+        let cache = try getCache()
                 
-        let lessons: [ResourceDataModel] = try await realmResourcesCache.getFeaturedLessons(sorted: false)
+        let lessons: [ResourceDataModel] = try await cache.getFeaturedLessons(sorted: false)
 
         #expect(lessons.map {$0.id}.sorted() == expectedLessonIds)
     }
@@ -91,8 +90,9 @@ struct ResourcesCacheTests {
             getLanguageId(id: spanishLanguageId)
         ]
         
-        let realmResourcesCache = try getResourcesCache()
-        let realmLessonLanguageIds = try realmResourcesCache.getLessonsSupportedLanguageIds()
+        let cache = try getCache()
+        
+        let realmLessonLanguageIds = try cache.getLessonsSupportedLanguageIds()
         
         #expect(realmLessonLanguageIds.sorted() == expectedLanguageIds.sorted())
     }
@@ -100,38 +100,32 @@ struct ResourcesCacheTests {
 
 extension ResourcesCacheTests {
     
-    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
-                
-        return try TestsDiContainer(
-            realmFileName: String(describing: ResourcesCacheTests.self),
-            addRealmObjects: addRealmObjects
-        )
-    }
-    
-    private func getResourcesCache() throws -> ResourcesCache {
+    private func getCache() throws -> ResourcesCache {
         
-        let testsDiContainer = try getTestsDiContainer(
-            addRealmObjects: getRealmDatabaseObjects()
+        let testsDiContainer = try TestsDiContainer(
+            addRealmObjects: getRealmResources()
         )
         
         let realmDatabase: RealmDatabase = testsDiContainer.core.dataLayer.getSharedRealmDatabase()
         
         let persistence = RealmRepositorySyncPersistence(
             database: realmDatabase,
-            dataModelMapping: RealmResourceMapping()
+            mapping: RealmResourceMapping()
         )
         
         let trackDownloadedTranslationsRepository = TrackDownloadedTranslationsRepository(
             cache: TrackDownloadedTranslationsCache(
                 persistence: RealmRepositorySyncPersistence(
                     database: realmDatabase,
-                    dataModelMapping: RealmDownloadedTranslationMapping()
+                    mapping: RealmDownloadedTranslationMapping()
                 )
             )
         )
         
         return ResourcesCache(
             persistence: persistence,
+            realmDatabase: realmDatabase,
+            realmDataWrite: RealmDataWrite(config: realmDatabase.databaseConfig.config),
             trackDownloadedTranslationsRepository: trackDownloadedTranslationsRepository
         )
     }
@@ -272,10 +266,6 @@ extension ResourcesCacheTests {
         
         return getRealmLessons() + getRealmTracts()
     }
-    
-    private func getRealmDatabaseObjects() -> [IdentifiableRealmObject] {
-        return getRealmResources()
-    }
 }
 
 // MARK: - SwiftDatabase
@@ -372,16 +362,6 @@ extension ResourcesCacheTests {
     private func getResources() -> [SwiftResource] {
         
         return getLessons() + getTracts()
-    }
-    
-    @available(iOS 17.4, *)
-    private func getSwiftDatabaseObjects() -> [any IdentifiableSwiftDataObject] {
-        return getResources()
-    }
-    
-    @available(iOS 17.4, *)
-    private func getSwiftDatabase() throws -> SwiftDatabase {
-        return try TestsInMemorySwiftDatabase().createDatabase(addObjectsToDatabase: getSwiftDatabaseObjects())
     }
 }
 

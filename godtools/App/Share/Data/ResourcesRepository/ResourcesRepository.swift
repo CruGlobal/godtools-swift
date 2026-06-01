@@ -61,7 +61,7 @@ final class ResourcesRepository {
     }
     
     func getResourcesByIds(ids: [String]) async throws -> [ResourceDataModel] {
-        return try await cache.persistence.getDataModelsAsync(getOption: .objectsByIds(ids: ids))
+        return try await cache.persistence.getDataModels(getOption: .objectsByIds(ids: Set(ids)))
     }
     
     func getCachedResourcesByFilter(filter: ResourcesFilter) throws -> [ResourceDataModel] {

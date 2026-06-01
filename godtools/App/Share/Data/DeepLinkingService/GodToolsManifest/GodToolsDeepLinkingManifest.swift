@@ -8,7 +8,7 @@
 
 import Foundation
 
-class GodToolsDeepLinkingManifest: DeepLinkingManifestInterface {
+final class GodToolsDeepLinkingManifest: DeepLinkingManifestInterface {
     
     private static let schemeGodTools: String = "godtools"
     private static let schemeHttps: String = "https"

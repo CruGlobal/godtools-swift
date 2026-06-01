@@ -22,25 +22,15 @@ final class LogOutUserUseCase {
         self.userCountersRepository = userCountersRepository
     }
     
-    func execute() -> AnyPublisher<Bool, Error> {
+    func execute() async throws -> Bool {
         
-        do {
-            
-            try userCountersRepository.deleteCachedCounters()
-            
-            try userAuthentication.signOut()
-            
-            setAnalyticsUserProperties()
-            
-            return Just(true)
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
-        catch let error {
-            
-            return Fail(error: error)
-                .eraseToAnyPublisher()
-        }
+        try await userCountersRepository.deleteCounters()
+        
+        try await userAuthentication.signOut()
+        
+        setAnalyticsUserProperties()
+        
+        return true
     }
     
     private func setAnalyticsUserProperties() {

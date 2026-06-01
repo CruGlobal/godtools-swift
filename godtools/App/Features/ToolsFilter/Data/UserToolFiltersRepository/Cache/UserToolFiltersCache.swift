@@ -30,10 +30,6 @@ final class UserToolFiltersCache {
         return getCategorySwiftPersistence()?.database
     }
     
-    private var realmDatabase: RealmDatabase? {
-        return getCategoryRealmPersistence()?.database
-    }
-    
     @available(iOS 17.4, *)
     private func getCategorySwiftPersistence() -> SwiftRepositorySyncPersistence<UserToolCategoryFilterDataModel, UserToolCategoryFilterDataModel, SwiftUserToolCategoryFilter>? {
         return categoryPersistence as? SwiftRepositorySyncPersistence<UserToolCategoryFilterDataModel, UserToolCategoryFilterDataModel, SwiftUserToolCategoryFilter>
@@ -55,74 +51,13 @@ final class UserToolFiltersCache {
 
 extension UserToolFiltersCache {
     
-    func deleteToolCategoryFilter(id: String) throws {
+    func deleteToolCategoryFilter(id: String) async throws {
         
-        if #available(iOS 17.4, *), let database = swiftDatabase {
-            
-            let context: ModelContext = database.openContext()
-            
-            let objectToDelete: SwiftUserToolCategoryFilter? = try database.read.object(context: context, id: id)
-            
-            try deleteSwiftObject(swiftObject: objectToDelete, context: context)
-        }
-        else if let realmDatabase = realmDatabase {
-            
-            let realm: Realm = try realmDatabase.openRealm()
-            
-            let objectToDelete: RealmUserToolCategoryFilter? = realmDatabase.read.object(realm: realm, id: id)
-            
-            try deleteRealmObject(realmObject: objectToDelete, realm: realm)
-        }
+        _ = try await categoryPersistence.deleteObjectsByIds(ids: [id], getOption: nil)
     }
     
-    func deleteToolLanguageFilter(id: String) throws {
+    func deleteToolLanguageFilter(id: String) async throws {
         
-        if #available(iOS 17.4, *), let database = swiftDatabase {
-            
-            let context: ModelContext = database.openContext()
-            
-            let objectToDelete: SwiftUserToolLanguageFilter? = try database.read.object(context: context, id: id)
-            
-            try deleteSwiftObject(swiftObject: objectToDelete, context: context)
-        }
-        else if let realmDatabase = realmDatabase {
-            
-            let realm: Realm = try realmDatabase.openRealm()
-            
-            let objectToDelete: RealmUserToolLanguageFilter? = realmDatabase.read.object(realm: realm, id: id)
-            
-            try deleteRealmObject(realmObject: objectToDelete, realm: realm)
-        }
-    }
-    
-    @available(iOS 17.4, *)
-    private func deleteSwiftObject(swiftObject: (any IdentifiableSwiftDataObject)?, context: ModelContext) throws {
-        
-        guard let swiftObject = swiftObject, let database = swiftDatabase else {
-            return
-        }
-        
-        try database.write.context(
-            context: context,
-            writeObjects: WriteSwiftObjects(
-                deleteObjects: [swiftObject],
-                insertObjects: nil
-            )
-        )
-    }
-    
-    private func deleteRealmObject(realmObject: (any IdentifiableRealmObject)?, realm: Realm) throws {
-        
-        guard let realmObject = realmObject, let realmDatabase = realmDatabase else {
-            return
-        }
-        
-        try realmDatabase.write.realm(realm: realm, writeClosure: { realm in
-            
-            return WriteRealmObjects(
-                deleteObjects: [realmObject],
-                addObjects: []
-            )
-        }, updatePolicy: .all)
+        _ = try await languagePersistence.deleteObjectsByIds(ids: [id], getOption: nil)
     }
 }

@@ -30,6 +30,27 @@ struct LanguageCodable: Codable, Sendable {
         case forceLanguageName = "force-language-name"
     }
     
+    static func create(id: String, code: BCP47LanguageIdentifier) -> LanguageCodable {
+        return LanguageCodable(code: code, directionString: "", id: id, name: "", type: "", forceLanguageName: false)
+    }
+    
+    init(
+        code: BCP47LanguageIdentifier = "",
+        directionString: String = "",
+        id: String = "",
+        name: String = "",
+        type: String = "",
+        forceLanguageName: Bool = false
+    ) {
+        
+        self.code = code
+        self.directionString = directionString
+        self.id = id
+        self.name = name
+        self.type = type
+        self.forceLanguageName = forceLanguageName
+    }
+    
     init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: RootKeys.self)

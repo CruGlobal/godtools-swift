@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum AppBuildConfiguration {
+enum AppBuildConfiguration: Sendable {
     
     case analyticsLogging
     case production

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AppBuild {
+final class AppBuild: Sendable {
 
     let configuration: AppBuildConfiguration
     let environment: AppEnvironment

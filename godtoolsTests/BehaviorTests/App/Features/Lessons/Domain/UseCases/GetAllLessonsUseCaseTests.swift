@@ -11,7 +11,6 @@ import Testing
 import Combine
 import RepositorySync
 
-@Suite(.serialized)
 struct GetAllLessonsUseCaseTests {
     
     @Test(
@@ -313,17 +312,9 @@ extension GetAllLessonsUseCaseTests {
         return allLanguages + lessons
     }
     
-    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
-                
-        return try TestsDiContainer(
-            realmFileName: String(describing: GetAllLessonsUseCaseTests.self),
-            addRealmObjects: addRealmObjects
-        )
-    }
-    
     private func getAllLessonsUseCase() throws -> GetAllLessonsUseCase {
                 
-        let testsDiContainer = try getTestsDiContainer(addRealmObjects: getRealmObjects())
+        let testsDiContainer = try TestsDiContainer(addRealmObjects: getRealmObjects())
         
         return GetAllLessonsUseCase(
             resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),

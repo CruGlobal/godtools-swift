@@ -173,7 +173,7 @@ extension PersonalizedToolsRepository {
             resourceIds: resourceCodables.map { $0.id }
         )
 
-        _ = try await cache.persistence.writeObjectsAsync(
+        _ = try await cache.persistence.writeObjects(
             externalObjects: [personalizedTools],
             writeOption: nil,
             getOption: nil

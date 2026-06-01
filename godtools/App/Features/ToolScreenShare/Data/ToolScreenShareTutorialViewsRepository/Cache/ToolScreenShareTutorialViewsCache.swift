@@ -30,10 +30,6 @@ final class ToolScreenShareTutorialViewsCache {
         return persistence as? SwiftRepositorySyncPersistence<ToolScreenShareTutorialViewDataModel, ToolScreenShareTutorialViewDataModel, SwiftToolScreenTutorialShareView>
     }
     
-    private var realmDatabase: RealmDatabase? {
-        return getRealmPersistence()?.database
-    }
-    
     private func getRealmPersistence() -> RealmRepositorySyncPersistence<ToolScreenShareTutorialViewDataModel, ToolScreenShareTutorialViewDataModel, RealmToolScreenShareTutorialView>? {
         return persistence as? RealmRepositorySyncPersistence<ToolScreenShareTutorialViewDataModel, ToolScreenShareTutorialViewDataModel, RealmToolScreenShareTutorialView>
     }

@@ -9,16 +9,13 @@
 @testable import godtools
 import Foundation
 
-final class MockMobileContentAuthTokenApi {
+final class MockMobileContentAuthTokenApi: AuthTokenApiInterface {
     
     private let fetchedAuthToken: MobileContentAuthTokenDecodable?
     
     init(fetchedAuthToken: MobileContentAuthTokenDecodable?) {
         self.fetchedAuthToken = fetchedAuthToken
     }
-}
-
-extension MockMobileContentAuthTokenApi: MobileContentAuthTokenApiInterface {
     
     func fetchAuthToken(providerToken: MobileContentAuthProviderToken, createUser: Bool) async throws -> Result<MobileContentAuthTokenDecodable, MobileContentApiError> {
         

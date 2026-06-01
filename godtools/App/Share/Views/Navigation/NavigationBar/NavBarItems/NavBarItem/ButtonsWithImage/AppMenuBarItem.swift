@@ -9,6 +9,7 @@
 import UIKit
 import Combine
 
+@MainActor
 class AppMenuBarItem: NavBarItem {
     
     init(color: UIColor?, target: AnyObject, action: Selector, accessibilityIdentifier: String?, hidesBarItemPublisher: AnyPublisher<Bool, Never>? = nil) {

@@ -26,14 +26,14 @@ final class AccountDataLayerDependencies {
             
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftUserDetailsMapping()
+                mapping: SwiftUserDetailsMapping()
             )
         }
         else {
             
             persistence = RealmRepositorySyncPersistence(
                 database: coreDataLayer.getSharedRealmDatabase(),
-                dataModelMapping: RealmUserDetailsMapping()
+                mapping: RealmUserDetailsMapping()
             )
         }
         
@@ -44,13 +44,13 @@ final class AccountDataLayerDependencies {
         )
         
         let cache = UserDetailsCache(
-            persistence: persistence,
-            authTokenRepository: coreDataLayer.getMobileContentAuthTokenRepository()
+            persistence: persistence
         )
         
         return UserDetailsRepository(
             api: api,
-            cache: cache
+            cache: cache,
+            authTokenRepository: coreDataLayer.getMobileContentAuthTokenRepository()
         )
     }
 }

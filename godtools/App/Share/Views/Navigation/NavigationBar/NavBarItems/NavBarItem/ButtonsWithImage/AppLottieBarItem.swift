@@ -10,7 +10,8 @@ import UIKit
 import Combine
 import Lottie
 
-class AppLottieBarItem: NavBarItem {
+@MainActor
+final class AppLottieBarItem: NavBarItem {
     
     init(animationName: String, color: UIColor?, target: AnyObject?, action: Selector?, accessibilityIdentifier: String?, hidesBarItemPublisher: AnyPublisher<Bool, Never>? = nil) {
         

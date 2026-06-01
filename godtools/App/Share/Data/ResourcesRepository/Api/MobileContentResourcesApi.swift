@@ -27,7 +27,7 @@ final class MobileContentResourcesApi: ResourcesApiInterface {
     
     private func getResourcePlusLatestTranslationsAndAttachmentsRequest(urlSession: URLSession, id: String) throws -> URLRequest {
         
-        return requestBuilder.build(
+        return try requestBuilder.build(
             parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseUrl + "/resources/\(id)?include=latest-translations,attachments",
@@ -62,7 +62,7 @@ final class MobileContentResourcesApi: ResourcesApiInterface {
     
     private func getResourcePlusLatestTranslationsAndAttachmentsRequest(urlSession: URLSession, abbreviation: String) throws -> URLRequest {
                 
-        return requestBuilder.build(
+        return try requestBuilder.build(
             parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseUrl + "/resources?filter[abbreviation]=\(abbreviation)&include=latest-translations,attachments",
@@ -99,7 +99,7 @@ final class MobileContentResourcesApi: ResourcesApiInterface {
     
     private func getResourcesPlusLatestTranslationsAndAttachmentsRequest(urlSession: URLSession) throws -> URLRequest {
         
-        return requestBuilder.build(
+        return try requestBuilder.build(
             parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseUrl + "/resources?filter[system]=GodTools&include=latest-translations,attachments",
