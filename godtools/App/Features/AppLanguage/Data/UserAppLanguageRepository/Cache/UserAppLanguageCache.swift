@@ -11,7 +11,7 @@ import RepositorySync
 import RealmSwift
 import SwiftData
 
-final class UserAppLanguageCache {
+final class UserAppLanguageCache: Sendable {
             
     let persistence: any Persistence<UserAppLanguageDataModel, UserAppLanguageDataModel>
     
@@ -30,10 +30,6 @@ final class UserAppLanguageCache {
         return persistence as? SwiftRepositorySyncPersistence<UserAppLanguageDataModel, UserAppLanguageDataModel, SwiftUserAppLanguage>
     }
     
-    private var realmDatabase: RealmDatabase? {
-        return getRealmPersistence()?.database
-    }
-    
     private func getRealmPersistence() -> RealmRepositorySyncPersistence<UserAppLanguageDataModel, UserAppLanguageDataModel, RealmUserAppLanguage>? {
         return persistence as? RealmRepositorySyncPersistence<UserAppLanguageDataModel, UserAppLanguageDataModel, RealmUserAppLanguage>
     }
@@ -41,41 +37,8 @@ final class UserAppLanguageCache {
 
 extension UserAppLanguageCache {
     
-    func deleteLanguage(id: String) throws {
+    func deleteLanguage(id: String) async throws {
             
-        if #available(iOS 17.4, *), let database = swiftDatabase {
-            
-            let context: ModelContext = database.openContext()
-            
-            let objectToDelete: SwiftUserAppLanguage? = try database.read.object(context: context, id: id)
-            
-            if let objectToDelete = objectToDelete {
-                
-                try database.write.context(
-                    context: context,
-                    writeObjects: WriteSwiftObjects(
-                        deleteObjects: [objectToDelete],
-                        insertObjects: nil
-                    )
-                )
-            }
-        }
-        else if let realmDatabase = realmDatabase {
-            
-            let realm: Realm = try realmDatabase.openRealm()
-            
-            let objectToDelete: RealmUserAppLanguage? = realmDatabase.read.object(realm: realm, id: id)
-            
-            if let objectToDelete = objectToDelete {
-                
-                try realmDatabase.write.realm(realm: realm, writeClosure: { realm in
-                    
-                    return WriteRealmObjects(
-                        deleteObjects: [objectToDelete],
-                        addObjects: []
-                    )
-                }, updatePolicy: .all)
-            }
-        }
+        _ = try await persistence.deleteObjectsByIds(ids: [id], getOption: nil)
     }
 }

@@ -10,6 +10,7 @@ import SwiftUI
 
 extension View {
     
+    @MainActor
     func flipVertically(shouldFlip: Bool = true) -> some View {
         return rotationEffect(.degrees(shouldFlip ? -180 : 0))
     }

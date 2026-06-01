@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 protocol FlowDelegate: AnyObject {
     
     func navigate(step: FlowStep)

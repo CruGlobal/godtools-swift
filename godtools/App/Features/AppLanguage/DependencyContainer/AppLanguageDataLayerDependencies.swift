@@ -17,8 +17,8 @@ final class AppLanguageDataLayerDependencies {
         
         self.coreDataLayer = coreDataLayer
     }
-        
-    func getAppLanguagesRepository(sync: AppLanguagesRepositorySyncInterface? = nil) -> AppLanguagesRepository {
+    
+    func getAppLanguagesPersistence() -> any Persistence<AppLanguageDataModel, AppLanguageCodable> {
         
         let persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>
         
@@ -26,16 +26,23 @@ final class AppLanguageDataLayerDependencies {
             
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftAppLanguageMapping()
+                mapping: SwiftAppLanguageMapping()
             )
         }
         else {
             
             persistence = RealmRepositorySyncPersistence(
                 database: coreDataLayer.getSharedRealmDatabase(),
-                dataModelMapping: RealmAppLanguageMapping()
+                mapping: RealmAppLanguageMapping()
             )
         }
+        
+        return persistence
+    }
+        
+    func getAppLanguagesRepository(sync: AppLanguagesRepositorySyncInterface? = nil) -> AppLanguagesRepository {
+        
+        let persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable> = getAppLanguagesPersistence()
         
         let api = AppLanguagesApi()
         
@@ -68,14 +75,14 @@ final class AppLanguageDataLayerDependencies {
             
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftDownloadedLanguageMapping()
+                mapping: SwiftDownloadedLanguageMapping()
             )
         }
         else {
             
             persistence = RealmRepositorySyncPersistence(
                 database: coreDataLayer.getSharedRealmDatabase(),
-                dataModelMapping: RealmDownloadedLanguageMapping()
+                mapping: RealmDownloadedLanguageMapping()
             )
         }
         
@@ -94,14 +101,14 @@ final class AppLanguageDataLayerDependencies {
             
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftToolLanguageDownloadMapping()
+                mapping: SwiftToolLanguageDownloadMapping()
             )
         }
         else {
             
             persistence = RealmRepositorySyncPersistence(
                 database: coreDataLayer.getSharedRealmDatabase(),
-                dataModelMapping: RealmToolLanguageDownloadMapping()
+                mapping: RealmToolLanguageDownloadMapping()
             )
         }
         
@@ -118,7 +125,7 @@ final class AppLanguageDataLayerDependencies {
         )
     }
     
-    func getUserAppLanguageRepository() -> UserAppLanguageRepository {
+    func getUserAppLanguagePersistence() -> any Persistence<UserAppLanguageDataModel, UserAppLanguageDataModel> {
         
         let persistence: any Persistence<UserAppLanguageDataModel, UserAppLanguageDataModel>
         
@@ -126,18 +133,25 @@ final class AppLanguageDataLayerDependencies {
             
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftUserAppLanguageMapping()
+                mapping: SwiftUserAppLanguageMapping()
             )
         }
         else {
             
             persistence = RealmRepositorySyncPersistence(
                 database: coreDataLayer.getSharedRealmDatabase(),
-                dataModelMapping: RealmUserAppLanguageMapping()
+                mapping: RealmUserAppLanguageMapping()
             )
         }
         
-        let cache = UserAppLanguageCache(persistence: persistence)
+        return persistence
+    }
+    
+    func getUserAppLanguageRepository() -> UserAppLanguageRepository {
+        
+        let cache = UserAppLanguageCache(
+            persistence: getUserAppLanguagePersistence()
+        )
         
         return UserAppLanguageRepository(
             cache: cache

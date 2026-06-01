@@ -13,17 +13,17 @@ final class MobileContentResourceViewsApi: ResourceViewsApiInterface {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let urlSessionPriority: URLSessionPriority
-    private let requestSender: RequestSender
+    private let requestSender: RequestSenderInterface
     private let baseUrl: String
     
-    init(config: AppConfigInterface, urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
+    init(config: AppConfigInterface, urlSessionPriority: URLSessionPriority, requestSender: RequestSenderInterface) {
                     
         self.urlSessionPriority = urlSessionPriority
         self.requestSender = requestSender
         baseUrl = config.getMobileContentApiBaseUrl()
     }
     
-    private func getResourceViewRequest(resourceId: String, quantity: Int, urlSession: URLSession) -> URLRequest {
+    private func getResourceViewRequest(resourceId: String, quantity: Int, urlSession: URLSession) throws -> URLRequest {
         
         let headers: [String: String] = [
             "Content-Type": "application/vnd.api+json"
@@ -39,8 +39,8 @@ final class MobileContentResourceViewsApi: ResourceViewsApiInterface {
             ]
         ]
         
-        return requestBuilder.build(
-            parameters: RequestBuilderParameters(
+        return try requestBuilder.build(
+            parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseUrl + "/views",
                 method: .post,
@@ -55,7 +55,7 @@ final class MobileContentResourceViewsApi: ResourceViewsApiInterface {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
-        let urlRequest = getResourceViewRequest(
+        let urlRequest: URLRequest = try getResourceViewRequest(
             resourceId: resourceId,
             quantity: quantity,
             urlSession: urlSession

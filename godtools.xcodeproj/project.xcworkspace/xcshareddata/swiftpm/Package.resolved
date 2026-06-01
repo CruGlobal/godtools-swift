@@ -221,8 +221,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/CruGlobal/repository-sync-ios",
       "state" : {
-        "revision" : "6501919f95827bac058e69eba6e722e2915f1c12",
-        "version" : "0.10.1"
+        "revision" : "fd0a9c4cf7e60edbc6ed3d8c98fee2afbde4cc0b",
+        "version" : "1.3.0"
       }
     },
     {
@@ -230,8 +230,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/CruGlobal/request-operation-ios.git",
       "state" : {
-        "revision" : "d33710ca31fdac0126a4d76e65f31848b38bc973",
-        "version" : "1.13.4"
+        "revision" : "4c46d241d3b3d83231dd3830ca4f2c0c509cf5d7",
+        "version" : "2.1.0"
       }
     },
     {

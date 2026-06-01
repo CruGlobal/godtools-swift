@@ -8,7 +8,7 @@
 
 import Foundation
 
-class LegacyKnowGodDeepLinkParser: DeepLinkUrlParserInterface {
+final class LegacyKnowGodDeepLinkParser: DeepLinkUrlParserInterface {
     
     required init() {
         

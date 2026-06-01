@@ -33,6 +33,17 @@ struct MobileContentApiUsersMeCodable: Codable, Sendable {
         case ssoGuid = "sso-guid"
     }
     
+    init(id: String, createdAt: Date?, familyName: String?, givenName: String?, name: String?, ssoGuid: String?, type: String) {
+        
+        self.id = id
+        self.createdAt = createdAt
+        self.familyName = familyName
+        self.givenName = givenName
+        self.name = name
+        self.ssoGuid = ssoGuid
+        self.type = type
+    }
+    
     init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: RootKeys.self)
@@ -60,6 +71,18 @@ struct MobileContentApiUsersMeCodable: Codable, Sendable {
         givenName = try attributesContainer?.decodeIfPresent(String.self, forKey: .givenName)
         name = try attributesContainer?.decodeIfPresent(String.self, forKey: .name)
         ssoGuid = try attributesContainer?.decodeIfPresent(String.self, forKey: .ssoGuid)
+    }
+    
+    static var emptyValue: MobileContentApiUsersMeCodable {
+        return MobileContentApiUsersMeCodable(
+            id: "",
+            createdAt: nil,
+            familyName: nil,
+            givenName: nil,
+            name: nil,
+            ssoGuid: nil,
+            type: ""
+        )
     }
 }
 

@@ -10,14 +10,14 @@ import Foundation
 import RequestOperation
 import Fuzi
 
-final class ArticleWebArchiver {
+final class ArticleWebArchiver: ArticleWebArchiverInterface {
     
     private let urlSessionPriority: URLSessionPriority
-    private let requestSender: RequestSender
+    private let requestSender: RequestSenderInterface
     private let includeJavascript: Bool = true
     private let errorDomain: String = "ArticleWebArchiver"
         
-    init(urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
+    init(urlSessionPriority: URLSessionPriority, requestSender: RequestSenderInterface) {
         
         self.urlSessionPriority = urlSessionPriority
         self.requestSender = requestSender

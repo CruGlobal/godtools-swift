@@ -9,7 +9,7 @@
 import Foundation
 import RequestOperation
 
-protocol PersonalizedToolsApiInterface {
+protocol PersonalizedToolsApiInterface: Sendable {
     
     typealias TwoLetterCountryCode = String
     typealias TwoLetterLanguageCode = String

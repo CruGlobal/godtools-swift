@@ -6,12 +6,11 @@
 //  Copyright © 2024 Cru. All rights reserved.
 //
 
+import Foundation
 import Testing
 @testable import godtools
-import RealmSwift
 import RepositorySync
 
-@Suite(.serialized)
 struct GetDownloadToolProgressStringsUseCaseTests {
     
     private let favoritedToolId: String = "1"
@@ -29,9 +28,9 @@ struct GetDownloadToolProgressStringsUseCaseTests {
     )
     func correctMessageShowsWhenDownloadingAFavoritedTool() async throws {
         
-        let getDownloadToolProgressStringsUseCase: GetDownloadToolProgressStringsUseCase = try getDownloadToolProgressStringsUseCase()
+        let useCase = try await getUseCase()
         
-        let strings = getDownloadToolProgressStringsUseCase
+        let strings = useCase
             .execute(
                 toolId: favoritedToolId,
                 appLanguage: LanguageCodeDomainModel.english.value
@@ -49,9 +48,9 @@ struct GetDownloadToolProgressStringsUseCaseTests {
     )
     func correctMessageShowsWhenDownloadingAToolThatIsNotFavoritedButCanBeFavorited() async throws {
         
-        let getDownloadToolProgressStringsUseCase: GetDownloadToolProgressStringsUseCase = try getDownloadToolProgressStringsUseCase()
+        let useCase = try await getUseCase()
         
-        let strings = getDownloadToolProgressStringsUseCase
+        let strings = useCase
             .execute(
                 toolId: unFavoritedToolId,
                 appLanguage: LanguageCodeDomainModel.english.value
@@ -69,9 +68,9 @@ struct GetDownloadToolProgressStringsUseCaseTests {
     )
     func correctMessageShowsWhenDownloadingAToolThatCantBeFavorited() async throws {
         
-        let getDownloadToolProgressStringsUseCase: GetDownloadToolProgressStringsUseCase = try getDownloadToolProgressStringsUseCase()
+        let useCase = try await getUseCase()
         
-        let strings = getDownloadToolProgressStringsUseCase
+        let strings = useCase
             .execute(
                 toolId: unFavoritableToolId,
                 appLanguage: LanguageCodeDomainModel.english.value
@@ -82,39 +81,19 @@ struct GetDownloadToolProgressStringsUseCaseTests {
 }
 
 extension GetDownloadToolProgressStringsUseCaseTests {
-    
-    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
-                
-        return try TestsDiContainer(
-            realmFileName: String(describing: GetDownloadToolProgressStringsUseCaseTests.self),
-            addRealmObjects: addRealmObjects
-        )
-    }
-    
-    private func getRealmObjects() -> [IdentifiableRealmObject] {
-        
-        let resource_1 = RealmResource()
-        let favoritedResource_1 = RealmFavoritedResource()
-        resource_1.id = favoritedToolId
-        resource_1.resourceType = ResourceType.tract.rawValue
-        favoritedResource_1.resourceId = favoritedToolId
-        
-        let resource_2 = RealmResource()
-        resource_2.id = unFavoritedToolId
-        resource_2.resourceType = ResourceType.tract.rawValue
-        
-        let resource_3 = RealmResource()
-        resource_3.id = unFavoritableToolId
-        resource_3.resourceType = ResourceType.lesson.rawValue
-        
-        let realmObjects: [IdentifiableRealmObject] = [resource_1, favoritedResource_1, resource_2, resource_3]
-        
-        return realmObjects
-    }
  
-    private func getDownloadToolProgressStringsUseCase() throws -> GetDownloadToolProgressStringsUseCase {
+    private func getUseCase() async throws -> GetDownloadToolProgressStringsUseCase {
         
-        let testsDiContainer = try getTestsDiContainer(addRealmObjects: getRealmObjects())
+        let testsDiContainer = try TestsDiContainer()
+        
+        let favoritedTract = ResourceCodable(id: favoritedToolId, resourceType: ResourceType.tract.rawValue)
+        let unfavoritedTract = ResourceCodable(id: unFavoritedToolId, resourceType: ResourceType.tract.rawValue)
+        let unfavoritable = ResourceCodable(id: unFavoritableToolId, resourceType: ResourceType.lesson.rawValue)
+        
+        let favorite0 = FavoritedResourceDataModel(id: favoritedTract.id, createdAt: Date(), position: 0)
+        
+        try await testsDiContainer.core.dataLayer.getResourcesPersistence().writeObjects(externalObjects: [favoritedTract, unfavoritedTract, unfavoritable])
+        try await testsDiContainer.core.dataLayer.getFavoritedResourcesPersistence().writeObjects(externalObjects: [favorite0])
         
         let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
             LanguageCodeDomainModel.english.value: [

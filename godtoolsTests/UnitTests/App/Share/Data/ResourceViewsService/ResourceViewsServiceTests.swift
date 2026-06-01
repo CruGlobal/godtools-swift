@@ -12,31 +12,26 @@ import Testing
 import RequestOperation
 import RepositorySync
 
-@Suite(.serialized)
 struct ResourceViewsServiceTests {
         
     @Test()
     func postedResourceViewsWithErrorArePersisted() async throws {
                 
-        let cache = try getCache()
+        let persistence = try await getPersistence(addObjects: [])
         
-        let result: Result<RequestDataResponse, Error> = .failure(NSError.errorWithDescription(description: "error 1"))
-        
-        let resourceViewsService = ResourceViewsService(
-            api: MockResourceViewsApi(result: result),
-            failedResourceViewsCache: cache
+        let resourceViewsService = getResourceViewsService(
+            apiResult: .failure(NSError.errorWithDescription(description: "error 1")),
+            persistence: persistence
         )
-                
+             
         do {
             try await resourceViewsService.postNewResourceView(resourceId: "1", requestPriority: .high)
         }
         catch _ {
             
         }
-      
-        try await Task.databaseChangesSleep()
-        
-        let count: Int = try cache.getFailedResourceViews().count
+              
+        let count: Int = try persistence.getObjectCount()
         
         #expect(count == 1)
     }
@@ -44,20 +39,16 @@ struct ResourceViewsServiceTests {
     @Test()
     func postedResourceViewsWithBadHttpStatusCodeArePersisted() async throws {
         
-        let cache = try getCache()
+        let persistence = try await getPersistence(addObjects: [])
         
-        let result: Result<RequestDataResponse, Error> = .success(try RequestDataResponse.createWithHttpStatusCode(httpStatusCode: 400))
-        
-        let resourceViewsService = ResourceViewsService(
-            api: MockResourceViewsApi(result: result),
-            failedResourceViewsCache: cache
+        let resourceViewsService = getResourceViewsService(
+            apiResult: .success(try RequestDataResponse.createWithHttpStatusCode(httpStatusCode: 400)),
+            persistence: persistence
         )
-                
-        try await resourceViewsService.postNewResourceView(resourceId: "1", requestPriority: .high)
-      
-        try await Task.databaseChangesSleep()
         
-        let count: Int = try cache.getFailedResourceViews().count
+        try await resourceViewsService.postNewResourceView(resourceId: "1", requestPriority: .high)
+              
+        let count: Int = try persistence.getObjectCount()
         
         #expect(count == 1)
     }
@@ -65,20 +56,16 @@ struct ResourceViewsServiceTests {
     @Test()
     func postedResourceViewsWithSuccessHttpStatusCodeAreNotPersisted() async throws {
         
-        let cache = try getCache()
+        let persistence = try await getPersistence(addObjects: [])
         
-        let result: Result<RequestDataResponse, Error> = .success(try RequestDataResponse.createWithHttpStatusCode(httpStatusCode: 200))
-        
-        let resourceViewsService = ResourceViewsService(
-            api: MockResourceViewsApi(result: result),
-            failedResourceViewsCache: cache
+        let resourceViewsService = getResourceViewsService(
+            apiResult: .success(try RequestDataResponse.createWithHttpStatusCode(httpStatusCode: 200)),
+            persistence: persistence
         )
-                
+                        
         try await resourceViewsService.postNewResourceView(resourceId: "1", requestPriority: .high)
-      
-        try await Task.databaseChangesSleep()
-        
-        let count: Int = try cache.getFailedResourceViews().count
+              
+        let count: Int = try persistence.getObjectCount()
         
         #expect(count == 0)
     }
@@ -87,48 +74,51 @@ struct ResourceViewsServiceTests {
     func postingFailedResourceViewsIfNeededAreRemovedFromTheLocalDatabase() async throws {
         
         let resourceViews = [
-            RealmResourceView.random(),
-            RealmResourceView.random(),
-            RealmResourceView.random(),
-            RealmResourceView.random(),
-            RealmResourceView.random(),
-            RealmResourceView.random()
+            ResourceViewDataModel.random(),
+            ResourceViewDataModel.random(),
+            ResourceViewDataModel.random(),
+            ResourceViewDataModel.random(),
+            ResourceViewDataModel.random()
         ]
         
-        let cache = try getCache(addRealmObjects: resourceViews)
+        let persistence = try await getPersistence(addObjects: resourceViews)
         
-        let result: Result<RequestDataResponse, Error> = .success(try RequestDataResponse.createWithHttpStatusCode(httpStatusCode: 200))
-        
-        let resourceViewsService = ResourceViewsService(
-            api: MockResourceViewsApi(result: result),
-            failedResourceViewsCache: cache
+        let resourceViewsService = getResourceViewsService(
+            apiResult: .success(try RequestDataResponse.createWithHttpStatusCode(httpStatusCode: 200)),
+            persistence: persistence
         )
-                
+                        
         try await resourceViewsService.postFailedResourceViewsIfNeeded(requestPriority: .high)
-        
-        try await Task.databaseChangesSleep()
-        
-        let count: Int = try cache.getFailedResourceViews().count
+                
+        let count: Int = try persistence.getObjectCount()
         
         #expect(count == 0)
     }
 }
 
 extension ResourceViewsServiceTests {
-    
-    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject]) throws -> TestsDiContainer {
-        return try TestsDiContainer(
-            realmFileName: String(describing: ResourceViewsServiceTests.self),
-            addRealmObjects: addRealmObjects
+        
+    private func getPersistence(addObjects: [ResourceViewDataModel]) async throws -> RealmRepositorySyncPersistence<ResourceViewDataModel, ResourceViewDataModel, RealmResourceView> {
+        
+        let databaseConfig = try RealmDatabaseConfig.createInMemoryConfig()
+        
+        let database = RealmDatabase(databaseConfig: databaseConfig)
+        
+        let persistence = RealmRepositorySyncPersistence(
+            database: database,
+            mapping: RealmResourceViewMapping()
         )
+        
+        _ = try await persistence.writeObjects(externalObjects: addObjects)
+        
+        return persistence
     }
     
-    private func getCache(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> FailedResourceViewsCache {
-        
-        let testsDiContainer = try getTestsDiContainer(addRealmObjects: addRealmObjects)
-        
-        let cache = FailedResourceViewsCache(realmDatabase: testsDiContainer.core.dataLayer.getSharedRealmDatabase())
-        
-        return cache
+    private func getResourceViewsService(apiResult: Result<RequestDataResponse, Error>, persistence: any Persistence<ResourceViewDataModel, ResourceViewDataModel>) -> ResourceViewsService {
+                
+        return ResourceViewsService(
+            api: MockResourceViewsApi(result: apiResult),
+            cache: FailedResourceViewsCache(persistence: persistence)
+        )
     }
 }

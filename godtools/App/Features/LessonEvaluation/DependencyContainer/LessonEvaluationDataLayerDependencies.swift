@@ -26,14 +26,14 @@ final class LessonEvaluationDataLayerDependencies {
             
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftLessonEvaluationMapping()
+                mapping: SwiftLessonEvaluationMapping()
             )
         }
         else {
             
             persistence = RealmRepositorySyncPersistence(
                 database: coreDataLayer.getSharedRealmDatabase(),
-                dataModelMapping: RealmLessonEvaluationMapping()
+                mapping: RealmLessonEvaluationMapping()
             )
         }
         

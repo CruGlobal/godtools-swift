@@ -28,10 +28,6 @@ final class LanguagesCache {
         return persistence as? SwiftRepositorySyncPersistence<LanguageDataModel, LanguageCodable, SwiftLanguage>
     }
     
-    private var realmDatabase: RealmDatabase? {
-        return getRealmPersistence()?.database
-    }
-    
     private func getRealmPersistence() -> RealmRepositorySyncPersistence<LanguageDataModel, LanguageCodable, RealmLanguage>? {
         return persistence as? RealmRepositorySyncPersistence<LanguageDataModel, LanguageCodable, RealmLanguage>
     }
@@ -129,7 +125,8 @@ extension LanguagesCache {
             )
             
             return try await swiftPersistence
-                .getDataModelsAsync(getOption: .allObjects, query: query)
+                .newActorRead()
+                .getDataModels(query: query)
         }
         else if let realmPersistence = getRealmPersistence() {
             
@@ -138,7 +135,8 @@ extension LanguagesCache {
             )
             
             return try await realmPersistence
-                .getDataModelsAsync(getOption: .allObjects, query: query)
+                .newActorRead()
+                .getDataModels(query: query)
         }
         
         return Array()

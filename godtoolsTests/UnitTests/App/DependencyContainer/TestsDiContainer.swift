@@ -19,39 +19,23 @@ class TestsDiContainer: AppDiContainer {
         super.init(appConfig: testsAppConfig)
     }
     
-    convenience init(realmFileName: String, addRealmObjects: [IdentifiableRealmObject] = Array()) throws {
+    convenience init(addRealmObjects: [IdentifiableRealmObject] = Array()) throws {
         
-        let fileUrl = URL(fileURLWithPath: RLMRealmPathForFile(realmFileName), isDirectory: false)
+        let databaseConfig = try RealmDatabaseConfig.createInMemoryConfig()
         
-        if FileManager.default.getFilePathExists(url: fileUrl) {
-            try FileManager.default.removeUrl(url: fileUrl)
+        let database = RealmDatabase(databaseConfig: databaseConfig)
+        
+        if addRealmObjects.count > 0 {
+            
+            let realm: Realm = try database.openRealm()
+            
+            try realm.write {
+                realm.add(addRealmObjects, update: .modified)
+            }
         }
         
-        let config = Realm.Configuration(
-            fileURL: fileUrl,
-            schemaVersion: 1,
-            migrationBlock: { (_, _) in
-                
-            }
-        )
-        
-        let realmDatabase = RealmDatabase(databaseConfig: RealmDatabaseConfig(config: config))
-                
-        let realm: Realm = try realmDatabase.openRealm()
-        
-        try realmDatabase.write.realm(
-            realm: realm,
-            writeClosure: { (realm: Realm) in
-                return WriteRealmObjects(
-                    deleteObjects: nil,
-                    addObjects: addRealmObjects
-                )
-            },
-            updatePolicy: .modified
-        )
-        
         let appConfig = TestsAppConfig(
-            realmDatabase: realmDatabase
+            realmDatabase: database
         )
         
         self.init(testsAppConfig: appConfig)

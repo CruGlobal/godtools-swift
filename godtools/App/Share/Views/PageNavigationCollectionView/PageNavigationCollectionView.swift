@@ -8,6 +8,7 @@
 
 import UIKit
 
+@MainActor
 @objc protocol PageNavigationCollectionViewDelegate: AnyObject {
     
     func pageNavigationNumberOfPages(pageNavigation: PageNavigationCollectionView) -> Int

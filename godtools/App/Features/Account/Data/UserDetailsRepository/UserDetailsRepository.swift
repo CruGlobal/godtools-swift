@@ -13,25 +13,31 @@ import RepositorySync
 
 final class UserDetailsRepository {
     
-    private let api: UserDetailsApi
+    private let api: UserDetailsApiInterface
     private let cache: UserDetailsCache
+    private let authTokenRepository: MobileContentAuthTokenRepository
     
-    private var cancellables: Set<AnyCancellable> = Set()
+    private var syncWithRemoteTask: Task<Void, Error>?
         
-    init(api: UserDetailsApi, cache: UserDetailsCache) {
+    init(api: UserDetailsApiInterface, cache: UserDetailsCache, authTokenRepository: MobileContentAuthTokenRepository) {
         
         self.api = api
         self.cache = cache
+        self.authTokenRepository = authTokenRepository
+    }
+    
+    deinit {
+        syncWithRemoteTask?.cancel()
     }
     
     @MainActor func getAuthUserDetailsChangedPublisher(requestPriority: RequestPriority) -> AnyPublisher<UserDetailsDataModel?, Error> {
         
-        makeSinkWithRemote(requestPriority: requestPriority)
+        syncWithRemote(requestPriority: requestPriority)
         
         return cache.persistence
             .observeCollectionChangesPublisher()
             .tryMap { _ in
-                let userDetails: UserDetailsDataModel? = try self.cache.getAuthUserDetails()
+                let userDetails: UserDetailsDataModel? = try self.getAuthUserDetails()
                 return userDetails
             }
             .eraseToAnyPublisher()
@@ -39,7 +45,7 @@ final class UserDetailsRepository {
     
     @MainActor func getUserDetailsChangedPublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<UserDetailsDataModel?, Error> {
         
-        makeSinkWithRemote(requestPriority: requestPriority)
+        syncWithRemote(requestPriority: requestPriority)
         
         return cache.persistence
             .observeCollectionChangesPublisher()
@@ -50,35 +56,30 @@ final class UserDetailsRepository {
             .eraseToAnyPublisher()
     }
     
-    func getCachedAuthUserDetails() throws -> UserDetailsDataModel? {
-        
-        return try cache.getAuthUserDetails()
-    }
-    
     func deleteAuthUserDetails(requestPriority: RequestPriority) async throws {
         
         try await api.deleteAuthUserDetails(requestPriority: requestPriority)
+    }
+    
+    func getAuthUserDetails() throws -> UserDetailsDataModel? {
+        
+        guard let userId = authTokenRepository.getUserId() else {
+            return nil
+        }
+        
+        return try cache.persistence
+            .getDataModel(id: userId)
     }
 }
 
 extension UserDetailsRepository {
     
-    private func makeSinkWithRemote(requestPriority: RequestPriority) {
+    private func syncWithRemote(requestPriority: RequestPriority) {
         
-        syncFromRemotePublisher(
-            requestPriority: requestPriority
-        )
-        .sink { _ in
-            
-        } receiveValue: { _ in
-            
-        }
-        .store(in: &cancellables)
-    }
-    
-    private func syncFromRemotePublisher(requestPriority: RequestPriority) -> AnyPublisher<UserDetailsDataModel, Error> {
-        return AnyPublisher() {
-            return try await self.syncFromRemote(requestPriority: requestPriority)
+        syncWithRemoteTask?.cancel()
+        
+        syncWithRemoteTask = Task {
+            _ = try await syncFromRemote(requestPriority: requestPriority)
         }
     }
     
@@ -86,7 +87,7 @@ extension UserDetailsRepository {
         
         let codable: MobileContentApiUsersMeCodable = try await api.fetchUserDetails(requestPriority: requestPriority)
         
-        _ = try await cache.persistence.writeObjectsAsync(
+        _ = try await cache.persistence.writeObjects(
             externalObjects: [codable],
             writeOption: nil,
             getOption: nil

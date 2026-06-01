@@ -9,18 +9,15 @@
 import Foundation
 @testable import godtools
 
-class MockMobileContentAuthTokenKeychainAccessor {
+final class MockMobileContentAuthTokenKeychainAccessor: MobileContentAuthTokenKeychainAccessorInterface {
     
     private var userId: String?
     private var authTokenCodable: MobileContentAuthTokenDecodable?
     private var appleRefreshToken: String?
     
-    func setUserId(_ userId: String?) {
+    init(userId: String?) {
         self.userId = userId
     }
-}
-
-extension MockMobileContentAuthTokenKeychainAccessor: MobileContentAuthTokenKeychainAccessorInterface {
     
     func saveMobileContentAuthToken(authTokenCodable: MobileContentAuthTokenDecodable) throws {
         self.authTokenCodable = authTokenCodable

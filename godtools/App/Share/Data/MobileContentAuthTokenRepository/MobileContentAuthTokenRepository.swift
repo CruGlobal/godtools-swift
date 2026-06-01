@@ -11,10 +11,10 @@ import Combine
 
 final class MobileContentAuthTokenRepository {
     
-    private let api: MobileContentAuthTokenApiInterface
-    private let cache: MobileContentAuthTokenCache
+    private let api: AuthTokenApiInterface
+    private let cache: AuthTokenCacheInterface
         
-    init(api: MobileContentAuthTokenApiInterface, cache: MobileContentAuthTokenCache) {
+    init(api: AuthTokenApiInterface, cache: AuthTokenCacheInterface) {
         
         self.api = api
         self.cache = cache
@@ -57,7 +57,7 @@ final class MobileContentAuthTokenRepository {
             return nil
         }
         
-        return MobileContentAuthTokenDataModel.createWithAuthToken(authToken: cachedAuthToken)
+        return cachedAuthToken.toModel()
     }
     
     func getCachedAuthToken() throws -> String? {
@@ -65,12 +65,12 @@ final class MobileContentAuthTokenRepository {
         return try getCachedAuthTokenModel()?.token
     }
     
-    func deleteCachedAuthToken() throws {
+    func deleteCachedAuthToken() async throws {
         
         guard let userId = getUserId() else {
             return
         }
         
-        try cache.deleteAuthToken(for: userId)
+        try await cache.deleteAuthToken(userId: userId)
     }
 }

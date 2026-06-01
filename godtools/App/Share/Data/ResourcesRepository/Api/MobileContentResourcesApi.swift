@@ -13,10 +13,10 @@ final class MobileContentResourcesApi: ResourcesApiInterface {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let urlSessionPriority: URLSessionPriority
-    private let requestSender: RequestSender
+    private let requestSender: RequestSenderInterface
     private let baseUrl: String
     
-    init(config: AppConfigInterface, urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
+    init(config: AppConfigInterface, urlSessionPriority: URLSessionPriority, requestSender: RequestSenderInterface) {
                     
         self.urlSessionPriority = urlSessionPriority
         self.requestSender = requestSender
@@ -25,10 +25,10 @@ final class MobileContentResourcesApi: ResourcesApiInterface {
     
     // MARK: - Resource Plus Latest Translations And Attachments
     
-    private func getResourcePlusLatestTranslationsAndAttachmentsRequest(urlSession: URLSession, id: String) -> URLRequest {
+    private func getResourcePlusLatestTranslationsAndAttachmentsRequest(urlSession: URLSession, id: String) throws -> URLRequest {
         
-        return requestBuilder.build(
-            parameters: RequestBuilderParameters(
+        return try requestBuilder.build(
+            parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseUrl + "/resources/\(id)?include=latest-translations,attachments",
                 method: .get,
@@ -43,7 +43,7 @@ final class MobileContentResourcesApi: ResourcesApiInterface {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
-        let urlRequest: URLRequest = getResourcePlusLatestTranslationsAndAttachmentsRequest(
+        let urlRequest: URLRequest = try getResourcePlusLatestTranslationsAndAttachmentsRequest(
             urlSession: urlSession,
             id: id
         )
@@ -60,10 +60,10 @@ final class MobileContentResourcesApi: ResourcesApiInterface {
         return resources
     }
     
-    private func getResourcePlusLatestTranslationsAndAttachmentsRequest(urlSession: URLSession, abbreviation: String) -> URLRequest {
+    private func getResourcePlusLatestTranslationsAndAttachmentsRequest(urlSession: URLSession, abbreviation: String) throws -> URLRequest {
                 
-        return requestBuilder.build(
-            parameters: RequestBuilderParameters(
+        return try requestBuilder.build(
+            parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseUrl + "/resources?filter[abbreviation]=\(abbreviation)&include=latest-translations,attachments",
                 method: .get,
@@ -78,7 +78,7 @@ final class MobileContentResourcesApi: ResourcesApiInterface {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
-        let urlRequest: URLRequest = getResourcePlusLatestTranslationsAndAttachmentsRequest(
+        let urlRequest: URLRequest = try getResourcePlusLatestTranslationsAndAttachmentsRequest(
             urlSession: urlSession,
             abbreviation: abbreviation
         )
@@ -97,10 +97,10 @@ final class MobileContentResourcesApi: ResourcesApiInterface {
     
     // MARK: - Resources Plus Latest Translations And Attachments
     
-    private func getResourcesPlusLatestTranslationsAndAttachmentsRequest(urlSession: URLSession) -> URLRequest {
+    private func getResourcesPlusLatestTranslationsAndAttachmentsRequest(urlSession: URLSession) throws -> URLRequest {
         
-        return requestBuilder.build(
-            parameters: RequestBuilderParameters(
+        return try requestBuilder.build(
+            parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseUrl + "/resources?filter[system]=GodTools&include=latest-translations,attachments",
                 method: .get,
@@ -115,7 +115,7 @@ final class MobileContentResourcesApi: ResourcesApiInterface {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
-        let urlRequest: URLRequest = getResourcesPlusLatestTranslationsAndAttachmentsRequest(urlSession: urlSession)
+        let urlRequest: URLRequest = try getResourcesPlusLatestTranslationsAndAttachmentsRequest(urlSession: urlSession)
         
         let response: RequestDataResponse = try await requestSender.sendDataTask(
             urlRequest: urlRequest,

@@ -9,7 +9,8 @@
 import UIKit
 import Combine
 
-@MainActor final class AppNavigationBar {
+@MainActor
+final class AppNavigationBar {
     
     private let navBarAppearance: AppNavigationBarAppearance?
     private let backButton: AppBackBarItem?

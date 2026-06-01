@@ -13,10 +13,10 @@ final class MobileContentTranslationsApi: TranslationsApiInterface {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let urlSessionPriority: URLSessionPriority
-    private let requestSender: RequestSender
+    private let requestSender: RequestSenderInterface
     private let baseUrl: String
     
-    init(config: AppConfigInterface, urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
+    init(config: AppConfigInterface, urlSessionPriority: URLSessionPriority, requestSender: RequestSenderInterface) {
                     
         self.urlSessionPriority = urlSessionPriority
         self.requestSender = requestSender
@@ -25,10 +25,10 @@ final class MobileContentTranslationsApi: TranslationsApiInterface {
     
     // MARK: - Files
     
-    private func getTranslationFileRequest(urlSession: URLSession, fileName: String) -> URLRequest {
+    private func getTranslationFileRequest(urlSession: URLSession, fileName: String) throws -> URLRequest {
         
-        return requestBuilder.build(
-            parameters: RequestBuilderParameters(
+        return try requestBuilder.build(
+            parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseUrl + "/translations/files/" + fileName,
                 method: .get,
@@ -43,7 +43,7 @@ final class MobileContentTranslationsApi: TranslationsApiInterface {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
-        let urlRequest: URLRequest = getTranslationFileRequest(urlSession: urlSession, fileName: fileName)
+        let urlRequest: URLRequest = try getTranslationFileRequest(urlSession: urlSession, fileName: fileName)
         
         return try await requestSender.sendDataTask(
             urlRequest: urlRequest,
@@ -53,10 +53,10 @@ final class MobileContentTranslationsApi: TranslationsApiInterface {
     
     // MARK: - Translation Zip File Data
     
-    private func getTranslationZipFileRequest(urlSession: URLSession, translationId: String) -> URLRequest {
+    private func getTranslationZipFileRequest(urlSession: URLSession, translationId: String) throws -> URLRequest {
         
-        return requestBuilder.build(
-            parameters: RequestBuilderParameters(
+        return try requestBuilder.build(
+            parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseUrl + "/translations/" + translationId,
                 method: .get,
@@ -71,7 +71,7 @@ final class MobileContentTranslationsApi: TranslationsApiInterface {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
-        let urlRequest: URLRequest = getTranslationZipFileRequest(urlSession: urlSession, translationId: translationId)
+        let urlRequest: URLRequest = try getTranslationZipFileRequest(urlSession: urlSession, translationId: translationId)
         
         return try await requestSender.sendDataTask(
             urlRequest: urlRequest,

@@ -10,7 +10,6 @@ import Testing
 @testable import godtools
 import RepositorySync
 
-@Suite(.serialized)
 struct GetLanguageSettingsStringsUseCaseTests {
     
     @Test(
@@ -22,9 +21,9 @@ struct GetLanguageSettingsStringsUseCaseTests {
     )
     func stringsAreTranslatedInAppLanguage() async throws {
         
-        let getLanguageSettingsStringsUseCase: GetLanguageSettingsStringsUseCase = try getLanguageSettingsStringsUseCase()
+        let useCase = try await getUseCase()
         
-        let strings = getLanguageSettingsStringsUseCase
+        let strings = useCase
             .execute(appLanguage: LanguageCodeDomainModel.spanish.rawValue)
                           
         #expect(strings.navTitle == "Ajustes de idioma")
@@ -59,9 +58,9 @@ struct GetLanguageSettingsStringsUseCaseTests {
     )
     func chooseAppLanguageButtonTitleIsTranslatedInMyAppLanguage(argument: TestArgumentChooseAppLanguageButtonTitle) async throws {
         
-        let getLanguageSettingsStringsUseCase: GetLanguageSettingsStringsUseCase = try getLanguageSettingsStringsUseCase()
+        let useCase = try await getUseCase()
         
-        let strings = getLanguageSettingsStringsUseCase
+        let strings = useCase
             .execute(appLanguage: argument.appLanguage.rawValue)
         
         #expect(strings.chooseAppLanguageButtonTitle == argument.expectedValue)
@@ -76,9 +75,9 @@ struct GetLanguageSettingsStringsUseCaseTests {
     )
     func chooseAppLanguageIsTranslatedInMyLanguageEnglish() async throws {
                 
-        let getLanguageSettingsStringsUseCase: GetLanguageSettingsStringsUseCase = try getLanguageSettingsStringsUseCase()
+        let useCase = try await getUseCase()
         
-        let strings = getLanguageSettingsStringsUseCase
+        let strings = useCase
             .execute(appLanguage: LanguageCodeDomainModel.english.rawValue)
 
         let expectedValue: String = "\(getAppLanguages().count) Languages available"
@@ -102,24 +101,21 @@ extension GetLanguageSettingsStringsUseCaseTests {
         return appLanguages
     }
     
-    private func getLanguageSettingsStringsUseCase() throws -> GetLanguageSettingsStringsUseCase {
+    private func getUseCase() async throws -> GetLanguageSettingsStringsUseCase {
         
-        let testsDiContainer = try TestsDiContainer(
-            realmFileName: String(describing: GetLanguageSettingsStringsUseCaseTests.self),
-            addRealmObjects: []
-        )
+        let testsDiContainer = try TestsDiContainer()
         
         let realmDatabase: RealmDatabase = testsDiContainer.core.dataLayer.getSharedRealmDatabase()
         
         let persistence = RealmRepositorySyncPersistence(
             database: realmDatabase,
-            dataModelMapping: RealmAppLanguageMapping()
+            mapping: RealmAppLanguageMapping()
         )
         
         let appLanguages: [AppLanguageCodable] = getAppLanguages()
         
-        let mockAppLanguagesSync = try MockAppLanguagesRepositorySync(
-            realmDatabase: realmDatabase,
+        let mockAppLanguagesSync = try await MockAppLanguagesRepositorySync(
+            persistence: testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesPersistence(),
             appLanguages: appLanguages
         )
         

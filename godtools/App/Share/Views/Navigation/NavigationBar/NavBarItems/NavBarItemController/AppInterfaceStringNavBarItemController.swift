@@ -9,6 +9,7 @@
 import UIKit
 import Combine
 
+@MainActor
 class AppInterfaceStringNavBarItemController: NavBarItemController {
         
     private let interfaceStringBarItem: AppInterfaceStringBarItem

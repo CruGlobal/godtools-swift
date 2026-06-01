@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol WebContentType {
+protocol WebContentType: Sendable {
     
     var navTitle: String { get }
     var url: URL? { get }

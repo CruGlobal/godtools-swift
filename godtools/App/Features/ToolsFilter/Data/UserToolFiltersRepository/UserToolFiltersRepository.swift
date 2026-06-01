@@ -79,7 +79,7 @@ final class UserToolFiltersRepository {
             createdAt: Date()
         )
         
-        _ = try await cache.categoryPersistence.writeObjectsAsync(
+        _ = try await cache.categoryPersistence.writeObjects(
             externalObjects: [categoryFilter],
             writeOption: nil,
             getOption: nil
@@ -102,18 +102,18 @@ final class UserToolFiltersRepository {
             createdAt: Date()
         )
         
-        _ = try await cache.languagePersistence.writeObjectsAsync(
+        _ = try await cache.languagePersistence.writeObjects(
             externalObjects: [languageFilter],
             writeOption: nil,
             getOption: nil
         )
     }
     
-    func deleteUserCategoryFilter() throws {
-        try cache.deleteToolCategoryFilter(id: Self.userToolCategoryFilterId)
+    func deleteUserCategoryFilter() async throws {
+        try await cache.deleteToolCategoryFilter(id: Self.userToolCategoryFilterId)
     }
     
-    func deleteUserLanguageFilter() throws {
-        try cache.deleteToolLanguageFilter(id: Self.userToolLanguageFilterId)
+    func deleteUserLanguageFilter() async throws {
+        try await cache.deleteToolLanguageFilter(id: Self.userToolLanguageFilterId)
     }
 }

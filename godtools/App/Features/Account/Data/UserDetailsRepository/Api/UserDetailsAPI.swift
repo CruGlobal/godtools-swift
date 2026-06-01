@@ -10,7 +10,7 @@ import Foundation
 import RequestOperation
 import RepositorySync
 
-final class UserDetailsApi {
+final class UserDetailsApi: UserDetailsApiInterface {
     
     private let authSession: MobileContentApiAuthSession
     private let requestBuilder: RequestBuilder = RequestBuilder()
@@ -28,7 +28,7 @@ final class UserDetailsApi {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
-        let urlRequest: URLRequest = getAuthUserDetailsRequest(urlSession: urlSession)
+        let urlRequest: URLRequest = try getAuthUserDetailsRequest(urlSession: urlSession)
                 
         let responseData: Data = try await authSession.sendAuthenticatedRequest(
             urlRequest: urlRequest,
@@ -43,14 +43,14 @@ final class UserDetailsApi {
         return codable.dataObject
     }
     
-    private func getAuthUserDetailsRequest(urlSession: URLSession) -> URLRequest {
+    private func getAuthUserDetailsRequest(urlSession: URLSession) throws -> URLRequest {
         
         let headers: [String: String] = [
             "Content-Type": "application/vnd.api+json"
         ]
         
-        return requestBuilder.build(
-            parameters: RequestBuilderParameters(
+        return try requestBuilder.build(
+            parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseURL + "/users/me",
                 method: .get,
@@ -65,7 +65,7 @@ final class UserDetailsApi {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
-        let urlRequest = getDeleteAuthorizedUserDetailsRequest(urlSession: urlSession)
+        let urlRequest: URLRequest = try getDeleteAuthorizedUserDetailsRequest(urlSession: urlSession)
         
         _ = try await authSession.sendAuthenticatedRequest(
             urlRequest: urlRequest,
@@ -73,14 +73,14 @@ final class UserDetailsApi {
         )
     }
     
-    private func getDeleteAuthorizedUserDetailsRequest(urlSession: URLSession) -> URLRequest {
+    private func getDeleteAuthorizedUserDetailsRequest(urlSession: URLSession) throws -> URLRequest {
         
         let headers: [String: String] = [
             "Content-Type": "application/vnd.api+json"
         ]
         
-        return requestBuilder.build(
-            parameters: RequestBuilderParameters(
+        return try requestBuilder.build(
+            parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseURL + "/users/me",
                 method: .delete,

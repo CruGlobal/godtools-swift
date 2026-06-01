@@ -14,7 +14,7 @@ final class GlobalAnalyticsRepository {
     
     static let sharedGlobalAnalyticsId: String = "1"
         
-    private let api: MobileContentGlobalAnalyticsApi
+    private let api: GlobalAnalyticsApiInterface
     private let cache: GlobalAnalyticsCache
     
     private var cancellables: Set<AnyCancellable> = Set()
@@ -62,7 +62,7 @@ final class GlobalAnalyticsRepository {
         
         let sharedGlobalAnalytics = globalAnalyticsCodable.copy(id: Self.sharedGlobalAnalyticsId)
         
-        _ = try await cache.persistence.writeObjectsAsync(
+        _ = try await cache.persistence.writeObjects(
             externalObjects: [sharedGlobalAnalytics],
             writeOption: nil,
             getOption: nil

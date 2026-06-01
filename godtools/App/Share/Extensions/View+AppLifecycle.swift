@@ -15,6 +15,7 @@ extension View {
     
     // TODO: - when we completely transition from UIKit to SwiftUI, reinvestigate using `ScenePhase` for background/foreground observation rather than listening for UIApplication notifications.
     
+    @MainActor
     func onAppBackgrounded(_ closure: @escaping () -> Void) -> some View {
         self.onReceive(
             NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification),
@@ -22,6 +23,7 @@ extension View {
         )
     }
     
+    @MainActor
     func onAppForegrounded(_ closure: @escaping () -> Void) -> some View {
         self.onReceive(
             NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification),

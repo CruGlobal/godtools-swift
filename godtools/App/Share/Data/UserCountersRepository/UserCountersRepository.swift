@@ -41,22 +41,13 @@ final class UserCountersRepository {
     
     func incrementCounterPublisher(id: String) -> AnyPublisher<LocalActivityCountDataModel, Error> {
         
-        do {
-            
-            let counter = try localActivityCounterCache.incrementCounter(id: id)
-                        
-            return Just(counter)
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
-        catch let error {
-            return Fail(error: error)
-                .eraseToAnyPublisher()
+        return AnyPublisher() {
+            try await self.localActivityCounterCache.incrementCounter(id: id)
         }
     }
     
-    func deleteCachedCounters() throws {
+    func deleteCounters() async throws {
                         
-        try cache.deleteCounters()
+        try await cache.deleteCounters()
     }
 }

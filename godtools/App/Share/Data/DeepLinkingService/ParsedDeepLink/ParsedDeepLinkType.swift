@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ParsedDeepLinkType: Equatable {
+enum ParsedDeepLinkType: Equatable, Sendable {
     
     case allToolsList
     case appLanguagesList

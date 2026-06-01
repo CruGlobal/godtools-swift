@@ -11,7 +11,7 @@ import SocialAuthentication
 import RepositorySync
 import SwiftData
 
-class UITestsAppConfig: AppConfigInterface {
+final class UITestsAppConfig: AppConfigInterface {
     
     init() {
         
@@ -69,8 +69,8 @@ class UITestsAppConfig: AppConfigInterface {
         return GodToolsAppConfig.getMobileContentCDNBaseUrl(environment: environment)
     }
     
-    func getRealmDatabase() -> RealmDatabase {
-        return UITestsRealmDatabase.getRealmDatabase()
+    func getRealmDatabaseConfig() throws -> RealmDatabaseConfig {
+        return try UITestsRealmDatabase.getRealmDatabaseConfig()
     }
     
     @available(iOS 17.4, *)

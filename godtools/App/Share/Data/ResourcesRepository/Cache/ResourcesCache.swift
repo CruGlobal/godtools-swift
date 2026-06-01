@@ -13,13 +13,17 @@ import RepositorySync
 
 final class ResourcesCache {
     
+    private let realmDatabase: RealmDatabase
+    private let realmDataWrite: RealmDataWrite
     private let trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
     
     let persistence: any Persistence<ResourceDataModel, ResourceCodable>
     
-    init(persistence: any Persistence<ResourceDataModel, ResourceCodable>, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository) {
+    init(persistence: any Persistence<ResourceDataModel, ResourceCodable>, realmDatabase: RealmDatabase, realmDataWrite: RealmDataWrite, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository) {
         
         self.persistence = persistence
+        self.realmDatabase = realmDatabase
+        self.realmDataWrite = realmDataWrite
         self.trackDownloadedTranslationsRepository = trackDownloadedTranslationsRepository
     }
 
@@ -31,10 +35,6 @@ final class ResourcesCache {
     @available(iOS 17.4, *)
     private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<ResourceDataModel, ResourceCodable, SwiftResource>? {
         return persistence as? SwiftRepositorySyncPersistence<ResourceDataModel, ResourceCodable, SwiftResource>
-    }
-    
-    private var realmDatabase: RealmDatabase? {
-        return getRealmPersistence()?.database
     }
     
     private func getRealmPersistence() -> RealmRepositorySyncPersistence<ResourceDataModel, ResourceCodable, RealmResource>? {
@@ -62,7 +62,8 @@ extension ResourcesCache {
         else if let realmPersistence = getRealmPersistence() {
             
             return try await RealmResourcesCacheSync(
-                realmDatabase: realmPersistence.database,
+                realmDatabase: realmDatabase,
+                realmDataWrite: realmDataWrite,
                 trackDownloadedTranslationsRepository: trackDownloadedTranslationsRepository
             )
             .syncResources(
@@ -223,14 +224,16 @@ extension ResourcesCache {
             let query = getLessonsSwiftQuery(filterByLanguageId: filterByLanguageId, sorted: sorted)
             
             return try await swiftPersistence
-                .getDataModelsAsync(getOption: .allObjects, query: query)
+                .newActorRead()
+                .getDataModels(query: query)
         }
         else if let realmPersistence = getRealmPersistence() {
             
             let query = getLessonsRealmQuery(filterByLanguageId: filterByLanguageId, sorted: sorted)
             
             return try await realmPersistence
-                .getDataModelsAsync(getOption: .allObjects, query: query)
+                .newActorRead()
+                .getDataModels(query: query)
         }
         
         return Array()
@@ -253,7 +256,8 @@ extension ResourcesCache {
             )
             
             return try await swiftPersistence
-                .getDataModelsAsync(getOption: .allObjects, query: query)
+                .newActorRead()
+                .getDataModels(query: query)
         }
         else if let realmPersistence = getRealmPersistence() {
                         
@@ -267,7 +271,8 @@ extension ResourcesCache {
             )
             
             return try await realmPersistence
-                .getDataModelsAsync(getOption: .allObjects, query: query)
+                .newActorRead()
+                .getDataModels(query: query)
         }
         
         return Array()
@@ -381,7 +386,8 @@ extension ResourcesCache {
             let query = SwiftDatabaseQuery.filter(filter: filter)
             
             return try await swiftPersistence
-                .getDataModelsAsync(getOption: .allObjects, query: query)
+                .newActorRead()
+                .getDataModels(query: query)
         }
         else if let realmPersistence = getRealmPersistence() {
             
@@ -392,7 +398,8 @@ extension ResourcesCache {
             let query = RealmDatabaseQuery(filter: filterPredicate, sortByKeyPath: nil)
             
             return try await realmPersistence
-                .getDataModelsAsync(getOption: .allObjects, query: query)
+                .newActorRead()
+                .getDataModels(query: query)
         }
         
         return Array()
@@ -408,7 +415,8 @@ extension ResourcesCache {
             )
             
             return try await swiftPersistence
-                .getDataModelsAsync(getOption: .allObjects, query: query)
+                .newActorRead()
+                .getDataModels(query: query)
         }
         else if let realmPersistence = getRealmPersistence() {
             
@@ -418,7 +426,8 @@ extension ResourcesCache {
             )
             
             return try await realmPersistence
-                .getDataModelsAsync(getOption: .allObjects, query: query)
+                .newActorRead()
+                .getDataModels(query: query)
         }
         
         return Array()
@@ -479,7 +488,7 @@ extension ResourcesCache {
     
     func getSpotlightTools(sortByDefaultOrder: Bool) throws -> [ResourceDataModel] {
         
-        guard let realmDatabase = realmDatabase else {
+        guard let realmDatabase = getRealmPersistence()?.database else {
             return []
         }
         
@@ -521,7 +530,7 @@ extension ResourcesCache {
     
     private func getAllToolsListResults(filterByCategory: String?, filterByLanguageId: String?, sortByDefaultOrder: Bool) throws -> Results<RealmResource>? {
         
-        guard let realmDatabase = realmDatabase else {
+        guard let realmDatabase = getRealmPersistence()?.database else {
             return nil
         }
         

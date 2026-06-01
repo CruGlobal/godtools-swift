@@ -12,19 +12,19 @@ import RequestOperation
 final class ResourceViewsService {
     
     private let api: ResourceViewsApiInterface
-    private let failedResourceViewsCache: FailedResourceViewsCache
+    private let cache: FailedResourceViewsCache
     
-    init(api: ResourceViewsApiInterface, failedResourceViewsCache: FailedResourceViewsCache) {
+    init(api: ResourceViewsApiInterface, cache: FailedResourceViewsCache) {
             
         self.api = api
-        self.failedResourceViewsCache = failedResourceViewsCache
+        self.cache = cache
     }
     
     func postNewResourceView(resourceId: String, requestPriority: RequestPriority) async throws {
         
         let id: String = resourceId
         
-        let resourceView = ResourceViewsDataModel(
+        let resourceView = ResourceViewDataModel(
             id: id,
             resourceId: id,
             quantity: 1
@@ -40,12 +40,12 @@ final class ResourceViewsService {
             
             if !response.urlResponse.isSuccessHttpStatusCode {
                 
-                failedResourceViewsCache.cacheFailedResourceViews(resourceViews: [resourceView])
+                try await cache.cacheFailedResourceViews(resourceViews: [resourceView])
             }
         }
         catch let error {
             
-            failedResourceViewsCache.cacheFailedResourceViews(resourceViews: [resourceView])
+            try await cache.cacheFailedResourceViews(resourceViews: [resourceView])
             
             throw error
         }
@@ -53,7 +53,7 @@ final class ResourceViewsService {
     
     func postFailedResourceViewsIfNeeded(requestPriority: RequestPriority) async throws {
                 
-        let failedResourceViews: [ResourceViewsDataModel] = try failedResourceViewsCache.getFailedResourceViews()
+        let failedResourceViews: [ResourceViewDataModel] = try await cache.persistence.getDataModels(getOption: .allObjects)
         
         guard !failedResourceViews.isEmpty else {
             return
@@ -66,7 +66,7 @@ final class ResourceViewsService {
             do {
                 
                 try await postAndRemoveFailedResourceViews(
-                    resourceViews: failedResourceView,
+                    resourceView: failedResourceView,
                     requestPriority: requestPriority
                 )
             }
@@ -80,16 +80,16 @@ final class ResourceViewsService {
         }
     }
     
-    private func postAndRemoveFailedResourceViews(resourceViews: ResourceViewsDataModel, requestPriority: RequestPriority) async throws {
+    private func postAndRemoveFailedResourceViews(resourceView: ResourceViewDataModel, requestPriority: RequestPriority) async throws {
         
         let response = try await api.postResourceView(
-            resourceId: resourceViews.resourceId,
-            quantity: resourceViews.quantity,
+            resourceId: resourceView.resourceId,
+            quantity: resourceView.quantity,
             requestPriority: requestPriority
         )
         
         if response.urlResponse.isSuccessHttpStatusCode {
-            failedResourceViewsCache.deleteFailedResourceViews(resourceViews: [resourceViews])
+            _ = try await cache.persistence.deleteObjectsByIds(ids: [resourceView.id], getOption: nil)
         }
     }
 }

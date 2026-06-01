@@ -10,6 +10,7 @@ import UIKit
 
 extension UIScrollView {
     
+    @MainActor
     func disableScrollEdgeEffect() {
         
         if #available(iOS 26, *) {

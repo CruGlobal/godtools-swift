@@ -309,8 +309,15 @@ extension MenuFlow {
     private func getShareGodToolsView() -> UIViewController {
         
         guard let strings = shareGodToolsStringsDomainModel else {
-            let viewModel = AlertMessageViewModel(title: "Internal Error", message: "Failed to fetch data for share godtools modal.", cancelTitle: nil, acceptTitle: "OK")
-            return AlertMessageView(viewModel: viewModel).controller
+                        
+            return AlertMessageView(
+                title: "Internal Error",
+                message: "Failed to fetch data for share godtools modal.",
+                acceptTitle: "OK",
+                cancelTitle: nil,
+                acceptTapped: nil,
+                cancelTapped: nil
+            ).controller
         }
         
         let viewModel = ShareGodToolsViewModel(
@@ -507,7 +514,7 @@ extension MenuFlow {
         presentAlertMessage(appLanguage: appLanguage, alertMessage: self.getAuthErrorAlertMessage(authError: authError))
     }
     
-    private func getAuthErrorAlertMessage(authError: AuthErrorDomainModel) -> AlertMessageType {
+    private func getAuthErrorAlertMessage(authError: AuthErrorDomainModel) -> AlertMessage {
         
         let localizationServices: LocalizationServicesInterface = appDiContainer.core.dataLayer.getLocalizationServices()
         let appLanguageLocaleId = appLanguage.localeId
@@ -752,14 +759,14 @@ extension MenuFlow {
     
     private func presentFirebaseDeviceTokenCopied(token: String) {
         
-        let viewModel: AlertMessageViewModelType = AlertMessageViewModel(
+        let view = AlertMessageView(
             title: "Device Token Copied To Clipboard",
             message: "Token String: \(token)",
+            acceptTitle: "OK",
             cancelTitle: nil,
-            acceptTitle: "OK"
+            acceptTapped: nil,
+            cancelTapped: nil
         )
-        
-        let view = AlertMessageView(viewModel: viewModel)
         
         navigationController.present(view.controller, animated: true)
     }
