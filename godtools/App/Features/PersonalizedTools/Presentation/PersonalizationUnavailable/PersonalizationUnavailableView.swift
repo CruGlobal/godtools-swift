@@ -12,8 +12,8 @@ struct PersonalizationUnavailableView: View {
 
     private static let backgroundColor = Color.getColorWithRGB(red: 245, green: 245, blue: 245, opacity: 1)
     
-    static let buttonHeight: CGFloat = 36
-    static let buttonWidthMultiplier: CGFloat = 0.5
+    static let buttonHeight: CGFloat = 38
+    static let buttonWidthMultiplier: CGFloat = 0.6
     static let buttonCornerRadius: CGFloat = 20
 
     private let buttonWidth: CGFloat

@@ -12,13 +12,23 @@ struct PersonalizedToolFooterView: View {
 
     private static let lightBlue = Color.getColorWithRGB(red: 223, green: 240, blue: 249, opacity: 1)
 
+    private let geometry: GeometryProxy
     private let title: String
     private let subtitle: String
     private let buttonTitle: String
     private let buttonAction: () -> Void
     private let onHeightChanged: (CGFloat) -> Void
 
-    init(title: String, subtitle: String, buttonTitle: String, onHeightChanged: @escaping (CGFloat) -> Void = { _ in }, buttonAction: @escaping () -> Void) {
+    init(
+        geometry: GeometryProxy,
+        title: String,
+        subtitle: String,
+        buttonTitle: String,
+        onHeightChanged: @escaping (CGFloat) -> Void = { _ in },
+        buttonAction: @escaping () -> Void
+    ) {
+       
+        self.geometry = geometry
         self.title = title
         self.subtitle = subtitle
         self.buttonTitle = buttonTitle
@@ -45,9 +55,9 @@ struct PersonalizedToolFooterView: View {
                 GTBlueButton(
                     title: buttonTitle,
                     font: FontLibrary.sfProTextSemibold.font(size: 16),
-                    width: 200,
-                    height: 40,
-                    cornerRadius: 22,
+                    width: geometry.size.width * PersonalizationUnavailableView.buttonWidthMultiplier,
+                    height: PersonalizationUnavailableView.buttonHeight,
+                    cornerRadius: PersonalizationUnavailableView.buttonCornerRadius,
                     action: buttonAction
                 )
 
