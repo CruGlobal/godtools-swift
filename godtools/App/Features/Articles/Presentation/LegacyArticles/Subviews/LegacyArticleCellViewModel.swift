@@ -1,5 +1,5 @@
 //
-//  ArticleCellViewModel.swift
+//  LegacyArticleCellViewModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 4/21/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ArticleCellViewModel {
+class LegacyArticleCellViewModel {
     
     let title: String?
     

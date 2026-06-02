@@ -1,5 +1,5 @@
 //
-//  ArticleCell.swift
+//  LegacyArticleCell.swift
 //  godtools
 //
 //  Created by Levi Eggert on 4/21/20.
@@ -8,12 +8,12 @@
 
 import UIKit
 
-class ArticleCell: UITableViewCell {
+class LegacyArticleCell: UITableViewCell {
     
-    static let nibName: String = "ArticleCell"
-    static let reuseIdentifier: String = "ArticleCellReuseIdentifier"
+    static let nibName: String = "LegacyArticleCell"
+    static let reuseIdentifier: String = "LegacyArticleCellReuseIdentifier"
     
-    private var viewModel: ArticleCellViewModel?
+    private var viewModel: LegacyArticleCellViewModel?
     
     @IBOutlet weak private var titleLabel: UILabel!
     
@@ -23,7 +23,7 @@ class ArticleCell: UITableViewCell {
         titleLabel.text = ""
     }
     
-    func configure(viewModel: ArticleCellViewModel) {
+    func configure(viewModel: LegacyArticleCellViewModel) {
         
         self.viewModel = viewModel
         
