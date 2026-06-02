@@ -20,10 +20,7 @@ struct LoadingArticleView: View {
     var body: some View {
         GeometryReader { geometry in
             FullScreenDownloadProgressView(
-                downloadMessage: viewModel.message,
-                hidesSpinner: false,
-                downloadProgress: nil,
-                downloadProgressString: nil
+                downloadMessage: viewModel.message
             )
         }
     }
