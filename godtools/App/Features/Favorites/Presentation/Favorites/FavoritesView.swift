@@ -95,7 +95,7 @@ struct FavoritesView_Preview: PreviewProvider {
         let appDiContainer = AppDiContainer.createUITestsDiContainer()
         
         let viewModel = FavoritesViewModel(
-            flowDelegate: MockFlowDelegate(),
+            flowDelegate: PreviewFlowDelegate(),
             resourcesRepository: appDiContainer.core.dataLayer.getResourcesRepository(),
             getFavoritesStringsUseCase: appDiContainer.feature.favorites.domainLayer.getFavoritesStringsUseCase(),
             getYourFavoritedToolsUseCase: appDiContainer.feature.favorites.domainLayer.getYourFavoritedToolsUseCase(),

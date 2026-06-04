@@ -84,7 +84,7 @@ struct AllYourFavoriteToolsView_Preview: PreviewProvider {
         let appDiContainer = AppDiContainer.createUITestsDiContainer()
         
         let viewModel = AllYourFavoriteToolsViewModel(
-            flowDelegate: MockFlowDelegate(),
+            flowDelegate: PreviewFlowDelegate(),
             getAllYourFavoritedToolsStringsUseCase: appDiContainer.feature.favorites.domainLayer.getAllYourFavoritedToolsStringsUseCase(),
             getYourFavoritedToolsUseCase: appDiContainer.feature.favorites.domainLayer.getYourFavoritedToolsUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),

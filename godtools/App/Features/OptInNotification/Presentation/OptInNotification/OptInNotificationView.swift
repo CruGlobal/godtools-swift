@@ -119,7 +119,7 @@ struct OptInNotificationView_Preview: PreviewProvider {
         let appDiContainer = AppDiContainer.createUITestsDiContainer()
 
         let viewModel = OptInNotificationViewModel(
-            flowDelegate: MockFlowDelegate(),
+            flowDelegate: PreviewFlowDelegate(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getOptInNotificationStringsUseCase: appDiContainer.feature.optInNotification.domainLayer.getOptInNotificationStringsUseCase(),
             notificationPromptType: .allow

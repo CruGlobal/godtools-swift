@@ -109,7 +109,7 @@ struct ToolDetailsView_Preview: PreviewProvider {
         let appDiContainer = AppDiContainer.createUITestsDiContainer()
                 
         let viewModel = ToolDetailsViewModel(
-            flowDelegate: MockFlowDelegate(),
+            flowDelegate: PreviewFlowDelegate(),
             toolId: "1",
             primaryLanguage: LanguageCodeDomainModel.english.rawValue,
             parallelLanguage: nil,

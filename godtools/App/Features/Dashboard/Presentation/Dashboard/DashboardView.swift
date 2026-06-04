@@ -129,7 +129,7 @@ import Combine
 struct DashboardView_Previews: PreviewProvider {
     
     private static let appDiContainer = AppDiContainer.createUITestsDiContainer()
-    private static let flowDelegate: FlowDelegate = MockFlowDelegate()
+    private static let flowDelegate: FlowDelegate = PreviewFlowDelegate()
     private static let dashboardDependencies: DashboardPresentationLayerDependencies = DashboardPresentationLayerDependencies(appDiContainer: Self.appDiContainer, flowDelegate: Self.flowDelegate)
         
     static func getDashboardViewModel() -> DashboardViewModel {

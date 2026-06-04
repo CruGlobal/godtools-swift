@@ -1,5 +1,5 @@
 //
-//  MockFlowDelegate.swift
+//  PreviewFlowDelegate.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 4/25/22.
@@ -8,6 +8,6 @@
 
 import Foundation
 
-class MockFlowDelegate: FlowDelegate {
+class PreviewFlowDelegate: FlowDelegate {
     func navigate(step: AppFlowStep) { }
 }
