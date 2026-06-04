@@ -182,11 +182,11 @@ enum FlowStep {
     case backTappedFromArticleCategories
     case articleCategoryTappedFromArticleCategories(resource: ResourceDataModel, language: LanguageDataModel, category: ArticleCategoryDomainModel, manifest: Manifest)
     case backTappedFromArticles
-    case articleTappedFromArticles(resource: ResourceDataModel, aemCacheObject: ArticleAemCacheObject)
+    case articleTappedFromArticles(resource: ResourceDataModel, articleId: String)
     case backTappedFromArticle
-    case sharedTappedFromArticle(articleAemData: ArticleAemData)
+    case sharedTappedFromArticle(articleId: String)
     case articleFlowCompleted(state: ArticleFlowCompletedState)
-    case debugTappedFromArticle(article: ArticleDomainModel)
+    case debugTappedFromArticle(articleUrl: ArticleUrlDomainModel)
     case closeTappedFromArticleDebug
     
     // article deep link

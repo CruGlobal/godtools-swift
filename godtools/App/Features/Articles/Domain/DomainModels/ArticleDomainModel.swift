@@ -8,13 +8,11 @@
 
 import Foundation
 
-struct ArticleDomainModel: Sendable {
+struct ArticleDomainModel: Sendable, Identifiable {
     
-    enum UrlType: Sendable {
-        case fileUrl
-        case url
-    }
-    
-    let url: URL?
-    let urlType: UrlType?
+    let id: String
+    let title: String
+    let httpsUrl: ArticleUrlDomainModel?
+    let archiveUrl: ArticleUrlDomainModel?
+    let isShareable: Bool
 }

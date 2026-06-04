@@ -27,10 +27,28 @@ final class ArticlesDomainLayerDependencies {
         )
     }
     
+    func getArticlesUseCase() -> GetArticlesUseCase {
+        return GetArticlesUseCase(
+            articlesRepsoitory: core.dataLayer.getArticleManifestAemRepository()
+        )
+    }
+    
+    func getArticleUseCase() -> GetArticleUseCase {
+        return GetArticleUseCase(
+            articleRepository: core.dataLayer.getArticleAemRepository()
+        )
+    }
+    
     func getPullToRefreshArticlesUseCase() -> PullToRefreshArticlesUseCase {
         
         return PullToRefreshArticlesUseCase(
             articleManifestAemRepository: core.dataLayer.getArticleManifestAemRepository()
+        )
+    }
+    
+    func getShareArticleUseCase() -> ShareArticleUseCase {
+        return ShareArticleUseCase(
+            articleRepository: core.dataLayer.getArticleAemRepository()
         )
     }
 }

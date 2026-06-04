@@ -10,32 +10,23 @@ import UIKit
 
 @MainActor
 final class ArticleDebugViewModel: ObservableObject {
-    
-    private let article: ArticleDomainModel
-    
+        
     private weak var flowDelegate: FlowDelegate?
     
-    @Published var url: String
-    @Published var urlType: String
+    @Published private(set) var url: String
+    @Published private(set) var urlType: String
     
-    init(flowDelegate: FlowDelegate, article: ArticleDomainModel) {
+    init(flowDelegate: FlowDelegate, articleUrl: ArticleUrlDomainModel) {
         
         self.flowDelegate = flowDelegate
-        self.article = article
         
-        url = article.url?.absoluteString ?? ""
+        url = articleUrl.url.absoluteString
         
-        if let articleUrlType = article.urlType {
-            
-            switch articleUrlType {
-            case .fileUrl:
-                urlType = "web archive file url"
-            case .url:
-                urlType = "http url"
-            }
-        }
-        else {
-            urlType = ""
+        switch articleUrl.urlType {
+        case .archive:
+            urlType = "web archive file url"
+        case .https:
+            urlType = "http url"
         }
     }
 }
