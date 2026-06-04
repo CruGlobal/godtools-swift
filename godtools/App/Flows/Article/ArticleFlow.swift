@@ -69,19 +69,20 @@ class ArticleFlow: Flow {
         case .backTappedFromArticles:
             navigationController.popViewController(animated: true)
                         
-        case .articleTappedFromArticles(let resource, let aemCacheObject):
+        case .articleTappedFromArticles(let resource, let articleId):
             
-            let view = getArticle(resource: resource, aemCacheObject: aemCacheObject)
+            let view = getArticle(resource: resource, articleId: articleId)
             
             navigationController.pushViewController(view, animated: true)
             
         case .backTappedFromArticle:
             navigationController.popViewController(animated: true)
             
-        case .sharedTappedFromArticle(let articleAemData):
+        case .sharedTappedFromArticle(let articleId):
             
             let viewModel = ShareArticleViewModel(
-                articleAemData: articleAemData,
+                articleId: articleId,
+                shareArticleUseCase: appDiContainer.feature.articles.domainLayer.getShareArticleUseCase(),
                 trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
                 trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase()
             )
@@ -90,9 +91,9 @@ class ArticleFlow: Flow {
             
             navigationController.present(view.controller, animated: true, completion: nil)
             
-        case .debugTappedFromArticle(let article):
+        case .debugTappedFromArticle(let articleUrl):
             
-            navigationController.present(getArticleDebugView(article: article), animated: true)
+            navigationController.present(getArticleDebugView(articleUrl: articleUrl), animated: true)
             
         case .closeTappedFromArticleDebug:
             navigationController.dismissPresented(animated: true, completion: nil)
@@ -150,10 +151,14 @@ extension ArticleFlow {
             category: category,
             manifest: manifest,
             downloadArticlesObservable: downloadArticlesObservable,
-            articleManifestAemRepository: appDiContainer.core.dataLayer.getArticleManifestAemRepository(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            getArticlesUseCase: appDiContainer.feature.articles.domainLayer.getArticlesUseCase(),
             localizationServices: appDiContainer.core.dataLayer.getLocalizationServices(),
             trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase()
+        )
+        
+        let view = ArticlesView(
+            viewModel: viewModel
         )
         
         let backButton = AppBackBarItem(
@@ -162,25 +167,25 @@ extension ArticleFlow {
             accessibilityIdentifier: nil
         )
         
-        let view = ArticlesView(
-            viewModel: viewModel,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: backButton,
-                leadingItems: [],
-                trailingItems: []
-            )
+        let navigationBar = AppNavigationBar(
+            appearance: nil,
+            backButton: backButton,
+            leadingItems: [],
+            trailingItems: []
         )
-                
-        return view
+        
+        let hostingView = AppHostingController<ArticlesView>(rootView: view, navigationBar: navigationBar)
+        
+        return hostingView
     }
     
-    private func getArticle(resource: ResourceDataModel, aemCacheObject: ArticleAemCacheObject) -> UIViewController {
+    private func getArticle(resource: ResourceDataModel, articleId: String) -> UIViewController {
         
         let viewModel = ArticleWebViewModel(
             flowDelegate: self,
             flowType: .tool(resource: resource),
-            aemCacheObject: aemCacheObject,
+            articleId: articleId,
+            getArticleUseCase: appDiContainer.feature.articles.domainLayer.getArticleUseCase(),
             incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase(),
             getAppUIDebuggingIsEnabledUseCase: appDiContainer.core.domainLayer.getAppUIDebuggingIsEnabledUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase()
@@ -221,11 +226,11 @@ extension ArticleFlow {
         return view
     }
     
-    private func getArticleDebugView(article: ArticleDomainModel) -> UIViewController {
+    private func getArticleDebugView(articleUrl: ArticleUrlDomainModel) -> UIViewController {
         
         let viewModel = ArticleDebugViewModel(
             flowDelegate: self,
-            article: article
+            articleUrl: articleUrl
         )
         
         let view = ArticleDebugView(viewModel: viewModel)

@@ -42,7 +42,7 @@ final class ArticleDeepLinkFlow: Flow {
                 
                 if let aemCacheObject = appDiContainer.core.dataLayer.getArticleAemRepository().getAemCacheObject(aemUri: aemUri) {
                     
-                    self?.navigateToArticleWebView(aemCacheObject: aemCacheObject, animated: true)
+                    self?.navigateToArticleWebView(articleId: aemCacheObject.aemUri, animated: true)
                 }
                 else if let loadingArticleView = self?.getLoadingArticleView(appLanguage: appLanguage) {
                     
@@ -61,7 +61,7 @@ final class ArticleDeepLinkFlow: Flow {
         switch step {
         
         case .didDownloadArticleFromLoadingArticle(let aemCacheObject):
-            navigateToArticleWebView(aemCacheObject: aemCacheObject, animated: false)
+            navigateToArticleWebView(articleId: aemCacheObject.aemUri, animated: false)
             navigationController.dismiss(animated: true, completion: nil)
             
         case .didFailToDownloadArticleFromLoadingArticle(let alertMessage):
@@ -91,9 +91,9 @@ final class ArticleDeepLinkFlow: Flow {
         }
     }
     
-    private func navigateToArticleWebView(aemCacheObject: ArticleAemCacheObject, animated: Bool) {
+    private func navigateToArticleWebView(articleId: String, animated: Bool) {
        
-        navigationController.pushViewController(getArticleWebView(aemCacheObject: aemCacheObject), animated: animated)
+        navigationController.pushViewController(getArticleWebView(articleId: articleId), animated: animated)
     }
 }
 
@@ -127,12 +127,13 @@ extension ArticleDeepLinkFlow {
         return hostingView
     }
     
-    private func getArticleWebView(aemCacheObject: ArticleAemCacheObject) -> UIViewController {
+    private func getArticleWebView(articleId: String) -> UIViewController {
         
         let viewModel = ArticleWebViewModel(
             flowDelegate: self,
             flowType: .deeplink,
-            aemCacheObject: aemCacheObject,
+            articleId: articleId,
+            getArticleUseCase: appDiContainer.feature.articles.domainLayer.getArticleUseCase(),
             incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase(),
             getAppUIDebuggingIsEnabledUseCase: appDiContainer.core.domainLayer.getAppUIDebuggingIsEnabledUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase()

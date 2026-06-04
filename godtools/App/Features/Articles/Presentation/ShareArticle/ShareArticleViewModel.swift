@@ -11,30 +11,21 @@ import Foundation
 @MainActor
 final class ShareArticleViewModel {
     
-    private let articleAemData: ArticleAemData
+    private let articleId: String
+    private let shareArticleUseCase: ShareArticleUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     
-    let shareMessage: String
-    
-    init(articleAemData: ArticleAemData, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    let shareArticle: ShareArticleDomainModel
         
-        self.articleAemData = articleAemData
+    init(articleId: String, shareArticleUseCase: ShareArticleUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+        
+        self.articleId = articleId
+        self.shareArticleUseCase = shareArticleUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
-        
-        // shareUrlString
-        var urlString: String = articleAemData.articleJcrContent?.canonical ?? ""
-        while urlString.last == "/" {
-            urlString.removeLast()
-        }
-        if urlString.isEmpty {
-            urlString = "https://everystudent.com"
-        }
-        
-        let shareUrlString: String = urlString.appending("?icid=gtshare")
-        
-        shareMessage = shareUrlString
+                
+        shareArticle = shareArticleUseCase.execute(articleId: articleId)
     }
     
     deinit {
@@ -42,7 +33,7 @@ final class ShareArticleViewModel {
     }
     
     private var analyticsScreenName: String {
-        return "Article : \(articleAemData.articleJcrContent?.title ?? "GodTools")"
+        return shareArticle.analyticsScreenName
     }
     
     private var analyticsSiteSection: String {
