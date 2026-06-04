@@ -9,7 +9,7 @@
 import Foundation
 
 @MainActor
-protocol ToolSettingsNavigationFlow: Flow {
+protocol ToolSettingsNavigationFlow: LegacyFlow {
     
     var toolSettingsFlow: ToolSettingsFlow? { get set }
 }

@@ -9,7 +9,7 @@
 import UIKit
 import Combine
 
-class DashboardFlow: Flow, ToolNavigationFlow, LocalizationSettingsNavigationFlow {
+class DashboardFlow: LegacyFlow, ToolNavigationFlow, LocalizationSettingsNavigationFlow {
         
     private let dashboardTabObserver: CurrentValueSubject<DashboardTabTypeDomainModel, Never>
     private let startingTab: DashboardTabTypeDomainModel = .favorites

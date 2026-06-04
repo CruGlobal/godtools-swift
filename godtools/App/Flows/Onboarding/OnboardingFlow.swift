@@ -10,7 +10,7 @@ import UIKit
 import SwiftUI
 import Combine
 
-final class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow, LocalizationSettingsNavigationFlow {
+final class OnboardingFlow: LegacyFlow, ChooseAppLanguageNavigationFlow, LocalizationSettingsNavigationFlow {
         
     @Published private var currentAppLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     

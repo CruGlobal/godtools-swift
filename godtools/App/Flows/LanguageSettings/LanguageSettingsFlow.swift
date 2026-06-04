@@ -10,7 +10,7 @@ import UIKit
 import SwiftUI
 import Combine
 
-class LanguageSettingsFlow: Flow, ChooseAppLanguageNavigationFlow {
+class LanguageSettingsFlow: LegacyFlow, ChooseAppLanguageNavigationFlow {
         
     private weak var flowDelegate: FlowDelegate?
     

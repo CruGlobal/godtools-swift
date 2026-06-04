@@ -9,7 +9,7 @@
 import Foundation
 
 @MainActor
-protocol LocalizationSettingsNavigationFlow: Flow {
+protocol LocalizationSettingsNavigationFlow: LegacyFlow {
     
     var localizationSettingsFlow: LocalizationSettingsFlow? { get set }
 }

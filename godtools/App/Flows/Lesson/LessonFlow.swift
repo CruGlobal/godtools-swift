@@ -10,7 +10,7 @@ import UIKit
 import GodToolsShared
 import Combine
 
-class LessonFlow: ToolNavigationFlow, Flow {
+class LessonFlow: ToolNavigationFlow, LegacyFlow {
     
     private let toolTranslations: ToolTranslationsDomainModel
     private let appLanguage: AppLanguageDomainModel

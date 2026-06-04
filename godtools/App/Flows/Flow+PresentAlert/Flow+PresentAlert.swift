@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Flow {
+extension LegacyFlow {
     
     func presentAlertMessage(appLanguage: AppLanguageDomainModel, alertMessage: AlertMessage) {
         

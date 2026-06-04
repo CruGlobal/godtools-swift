@@ -9,7 +9,7 @@
 import UIKit
 import Combine
 
-class DownloadToolTranslationsFlow: Flow {
+class DownloadToolTranslationsFlow: LegacyFlow {
         
     private let determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface
     private let getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase
@@ -19,12 +19,12 @@ class DownloadToolTranslationsFlow: Flow {
     private var downloadToolProgressView: DownloadToolProgressView?
     private var cancellables = Set<AnyCancellable>()
     
-    private weak var presentInFlow: Flow?
+    private weak var presentInFlow: LegacyFlow?
     
     let appDiContainer: AppDiContainer
     let navigationController: AppNavigationController
     
-    init(presentInFlow: Flow, appDiContainer: AppDiContainer, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface, didDownloadToolTranslations: @escaping ((_ result: Result<ToolTranslationsDomainModel, Error>) -> Void)) {
+    init(presentInFlow: LegacyFlow, appDiContainer: AppDiContainer, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface, didDownloadToolTranslations: @escaping ((_ result: Result<ToolTranslationsDomainModel, Error>) -> Void)) {
         
         self.presentInFlow = presentInFlow
         self.appDiContainer = appDiContainer

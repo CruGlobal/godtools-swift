@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import Combine
 
-final class LocalizationSettingsFlow: Flow {
+final class LocalizationSettingsFlow: LegacyFlow {
             
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     

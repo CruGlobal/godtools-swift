@@ -11,7 +11,7 @@ import MessageUI
 import SwiftUI
 import Combine
 
-class MenuFlow: Flow, LocalizationSettingsNavigationFlow {
+class MenuFlow: LegacyFlow, LocalizationSettingsNavigationFlow {
             
     private var tutorialFlow: TutorialFlow?
     private var languageSettingsFlow: LanguageSettingsFlow?

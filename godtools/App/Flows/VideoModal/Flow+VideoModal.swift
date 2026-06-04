@@ -9,7 +9,7 @@
 import UIKit
 import SwiftUI
 
-extension Flow {
+extension LegacyFlow {
     
     func presentVideoModal(viewModel: FullScreenVideoViewModel, screenAccessibility: AccessibilityStrings.Screen) {
                 

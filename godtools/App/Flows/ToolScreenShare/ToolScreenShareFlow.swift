@@ -10,7 +10,7 @@ import UIKit
 import SwiftUI
 import Combine
 
-class ToolScreenShareFlow: Flow {
+class ToolScreenShareFlow: LegacyFlow {
     
     typealias ToolScreenShareSettingsObserver = ToolSettingsObserver & RemoteShareable
     

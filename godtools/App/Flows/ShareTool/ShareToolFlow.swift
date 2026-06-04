@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import Combine
 
-class ShareToolFlow: Flow {
+class ShareToolFlow: LegacyFlow {
     
     private let toolId: String
     private let toolLanguageId: String

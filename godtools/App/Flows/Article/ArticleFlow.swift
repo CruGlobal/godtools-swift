@@ -11,7 +11,7 @@ import GodToolsShared
 import SwiftUI
 import Combine
 
-class ArticleFlow: Flow {
+class ArticleFlow: LegacyFlow {
     
     private let downloadArticlesObservable: DownloadManifestArticlesObservable
         

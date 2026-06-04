@@ -10,7 +10,7 @@ import UIKit
 import SwiftUI
 import Combine
 
-class TutorialFlow: Flow {
+class TutorialFlow: LegacyFlow {
         
     private var cancellables: Set<AnyCancellable> = Set()
     

@@ -1,5 +1,5 @@
 //
-//  Flow.swift
+//  LegacyFlow.swift
 //  godtools
 //
 //  Created by Levi Eggert on 1/29/20.
@@ -9,7 +9,7 @@
 import UIKit
 
 @MainActor
-protocol Flow: FlowDelegate {
+protocol LegacyFlow: FlowDelegate {
     
     var appDiContainer: AppDiContainer { get }
     var navigationController: AppNavigationController { get }

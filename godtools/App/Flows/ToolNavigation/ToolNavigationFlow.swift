@@ -10,7 +10,7 @@ import Foundation
 import GodToolsShared
 
 @MainActor
-protocol ToolNavigationFlow: Flow {
+protocol ToolNavigationFlow: LegacyFlow {
         
     var articleFlow: ArticleFlow? { get set }
     var chooseYourOwnAdventureFlow: ChooseYourOwnAdventureFlow? { get set }

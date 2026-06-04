@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension Flow {
+extension LegacyFlow {
     
     func navigateToURL(url: URL, screenName: String, siteSection: String, siteSubSection: String, appLanguage: String?, contentLanguage: String?, contentLanguageSecondary: String?) {
         

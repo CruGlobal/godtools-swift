@@ -10,7 +10,7 @@ import UIKit
 import SwiftUI
 import Combine
 
-class ToolSettingsFlow: Flow {
+class ToolSettingsFlow: LegacyFlow {
     
     private let toolSettingsObserver: ToolSettingsObserver
     private let toolSettingsDidCloseClosure: (() -> Void)?

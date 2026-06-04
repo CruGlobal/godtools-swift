@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import Combine
 
-class OptInNotificationFlow: Flow {
+class OptInNotificationFlow: LegacyFlow {
         
     private weak var flowDelegate: FlowDelegate?
     

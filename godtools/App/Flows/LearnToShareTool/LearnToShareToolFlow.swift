@@ -10,7 +10,7 @@ import UIKit
 import SwiftUI
 import Combine
 
-class LearnToShareToolFlow: Flow {
+class LearnToShareToolFlow: LegacyFlow {
     
     private var cancellables: Set<AnyCancellable> = Set()
     

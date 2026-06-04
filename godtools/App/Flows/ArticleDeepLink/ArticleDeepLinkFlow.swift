@@ -9,7 +9,7 @@
 import UIKit
 import Combine
 
-final class ArticleDeepLinkFlow: Flow {
+final class ArticleDeepLinkFlow: LegacyFlow {
     
     private let aemUri: String
     
