@@ -18,7 +18,12 @@ struct FullScreenDownloadProgressView: View {
     private let downloadProgress: Double?
     private let downloadProgressString: String?
     
-    init(downloadMessage: String, hidesSpinner: Bool, downloadProgress: Double?, downloadProgressString: String?) {
+    init(
+        downloadMessage: String = "",
+        hidesSpinner: Bool = false,
+        downloadProgress: Double? = nil,
+        downloadProgressString: String? = nil
+    ) {
     
         self.downloadMessage = downloadMessage
         self.hidesSpinner = hidesSpinner
@@ -34,11 +39,14 @@ struct FullScreenDownloadProgressView: View {
                 
                 Spacer()
                 
-                Text(downloadMessage)
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(ColorPalette.gtGrey.color)
-                    .font(FontLibrary.sfProTextRegular.font(size: 17))
-                    .padding([.leading, .trailing], 30)
+                if !downloadMessage.isEmpty {
+                    
+                    Text(downloadMessage)
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(ColorPalette.gtGrey.color)
+                        .font(FontLibrary.sfProTextRegular.font(size: 17))
+                        .padding([.leading, .trailing], 30)
+                }
                 
                 if !hidesSpinner {
                     
