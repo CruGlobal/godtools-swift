@@ -1,5 +1,5 @@
 //
-//  FlowStep.swift
+//  AppFlowStep.swift
 //  godtools
 //
 //  Created by Levi Eggert on 1/27/20.
@@ -11,7 +11,7 @@ import GodToolsShared
 import UIKit
 import Combine
 
-enum FlowStep {
+enum AppFlowStep {
     
     // app
     case appLaunched(state: AppLaunchState)

@@ -212,7 +212,7 @@ final class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
 extension ChooseYourOwnAdventureViewModel {
     
     @objc func homeTapped() {
-        flowDelegate?.navigate(step: FlowStep.backTappedFromChooseYourOwnAdventure)
+        flowDelegate?.navigate(step: AppFlowStep.backTappedFromChooseYourOwnAdventure)
     }
     
     @objc func backTapped() {

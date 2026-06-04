@@ -9,5 +9,5 @@
 import Foundation
 
 class MockFlowDelegate: FlowDelegate {
-    func navigate(step: FlowStep) { }
+    func navigate(step: AppFlowStep) { }
 }

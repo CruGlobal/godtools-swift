@@ -98,7 +98,7 @@ class LessonFlow: ToolNavigationFlow, LegacyFlow {
         return hasLessonProgress && !lessonProgressIsFirstPage && !lessonProgressIsLastPage
     }
     
-    func navigate(step: FlowStep) {
+    func navigate(step: AppFlowStep) {
         
         switch step {
         

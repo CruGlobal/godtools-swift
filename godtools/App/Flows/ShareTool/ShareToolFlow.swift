@@ -63,7 +63,7 @@ class ShareToolFlow: LegacyFlow {
         print("x deinit: \(type(of: self))")
     }
     
-    func navigate(step: FlowStep) {
+    func navigate(step: AppFlowStep) {
         
         switch step {
             

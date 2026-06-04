@@ -46,7 +46,7 @@ class DashboardFlow: LegacyFlow, ToolNavigationFlow, LocalizationSettingsNavigat
             .assign(to: &$appLanguage)
     }
     
-    func navigate(step: FlowStep) {
+    func navigate(step: AppFlowStep) {
              
         switch step {
                         

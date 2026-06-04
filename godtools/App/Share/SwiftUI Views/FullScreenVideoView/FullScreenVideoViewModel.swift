@@ -11,15 +11,15 @@ import Foundation
 @MainActor
 class FullScreenVideoViewModel: ObservableObject {
     
-    private let userDidCloseVideoStep: FlowStep
-    private let videoEndedStep: FlowStep
+    private let userDidCloseVideoStep: AppFlowStep
+    private let videoEndedStep: AppFlowStep
     
     private weak var flowDelegate: FlowDelegate?
     
     let videoId: String
     let videoPlayerParameters: [String: Any]?
     
-    init(flowDelegate: FlowDelegate, videoId: String, videoPlayerParameters: [String: Any]?, userDidCloseVideoStep: FlowStep, videoEndedStep: FlowStep) {
+    init(flowDelegate: FlowDelegate, videoId: String, videoPlayerParameters: [String: Any]?, userDidCloseVideoStep: AppFlowStep, videoEndedStep: AppFlowStep) {
         
         self.flowDelegate = flowDelegate
         self.userDidCloseVideoStep = userDidCloseVideoStep

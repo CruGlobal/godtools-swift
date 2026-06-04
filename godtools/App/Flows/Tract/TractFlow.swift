@@ -57,7 +57,7 @@ class TractFlow: ToolNavigationFlow, ToolSettingsNavigationFlow {
         print("x deinit: \(type(of: self))")
     }
 
-    func navigate(step: FlowStep) {
+    func navigate(step: AppFlowStep) {
         
         switch step {
                     

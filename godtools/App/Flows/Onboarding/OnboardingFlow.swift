@@ -61,7 +61,7 @@ final class OnboardingFlow: LegacyFlow, ChooseAppLanguageNavigationFlow, Localiz
         return getOnboardingTutorialView()
     }
     
-    func navigate(step: FlowStep) {
+    func navigate(step: AppFlowStep) {
         
         switch step {
             

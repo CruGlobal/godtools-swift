@@ -63,7 +63,7 @@ class ToolSettingsFlow: LegacyFlow {
         toolSettingsDidCloseClosure?()
     }
     
-    func navigate(step: FlowStep) {
+    func navigate(step: AppFlowStep) {
         
         switch step {
             

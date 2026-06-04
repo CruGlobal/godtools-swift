@@ -12,7 +12,7 @@ import Foundation
 final class WebContentViewModel {
     
     private let webContent: WebContentType
-    private let backTappedFromWebContentStep: FlowStep
+    private let backTappedFromWebContentStep: AppFlowStep
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     
     private weak var flowDelegate: FlowDelegate?
@@ -20,7 +20,7 @@ final class WebContentViewModel {
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
     let url: ObservableValue<URL?> = ObservableValue(value: nil)
     
-    init(flowDelegate: FlowDelegate, webContent: WebContentType, backTappedFromWebContentStep: FlowStep, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, webContent: WebContentType, backTappedFromWebContentStep: AppFlowStep, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.webContent = webContent

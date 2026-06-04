@@ -106,7 +106,7 @@ class ToolScreenShareFlow: LegacyFlow {
         }
     }
     
-    func navigate(step: FlowStep) {
+    func navigate(step: AppFlowStep) {
         
         switch step {
             

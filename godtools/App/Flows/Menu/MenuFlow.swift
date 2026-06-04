@@ -27,7 +27,7 @@ class MenuFlow: LegacyFlow, LocalizationSettingsNavigationFlow {
     
     var localizationSettingsFlow: LocalizationSettingsFlow?
         
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, initialNavigationStep: FlowStep? = nil) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, initialNavigationStep: AppFlowStep? = nil) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -81,7 +81,7 @@ class MenuFlow: LegacyFlow, LocalizationSettingsNavigationFlow {
         return navigationController.view
     }
     
-    func navigate(step: FlowStep) {
+    func navigate(step: AppFlowStep) {
         
         switch step {
             
@@ -688,7 +688,7 @@ extension MenuFlow {
 
 extension MenuFlow {
     
-    private func getWebContentView(webContent: WebContentType, screenAccessibility: AccessibilityStrings.Screen?, backTappedFromWebContentStep: FlowStep) -> UIViewController {
+    private func getWebContentView(webContent: WebContentType, screenAccessibility: AccessibilityStrings.Screen?, backTappedFromWebContentStep: AppFlowStep) -> UIViewController {
         
         let viewModel = WebContentViewModel(
             flowDelegate: self,
@@ -717,7 +717,7 @@ extension MenuFlow {
         return view
     }
     
-    private func pushWebContentView(webContent: WebContentType, screenAccessibility: AccessibilityStrings.Screen?, backTappedFromWebContentStep: FlowStep) {
+    private func pushWebContentView(webContent: WebContentType, screenAccessibility: AccessibilityStrings.Screen?, backTappedFromWebContentStep: AppFlowStep) {
 
         let view = getWebContentView(
             webContent: webContent,
