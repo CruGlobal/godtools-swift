@@ -14,6 +14,7 @@ final class CreatingToolScreenShareSessionViewModel: ObservableObject {
     
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
         
+    private let stepEmitter: FlowStepEmitter
     private let toolId: String
     private let createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
@@ -22,16 +23,14 @@ final class CreatingToolScreenShareSessionViewModel: ObservableObject {
     private let incrementUserCounterUseCase: IncrementUserCounterUseCase
     
     private var cancellables = Set<AnyCancellable>()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
     @Published private(set) var strings = CreatingToolScreenShareSessionStringsDomainModel.emptyValue
         
-    init(flowDelegate: FlowDelegate, toolId: String, createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getCreatingToolScreenShareSessionStringsUseCase: GetCreatingToolScreenShareSessionStringsUseCase, tractRemoteSharePublisher: TractRemoteSharePublisher, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
+    init(stepEmitter: FlowStepEmitter, toolId: String, createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getCreatingToolScreenShareSessionStringsUseCase: GetCreatingToolScreenShareSessionStringsUseCase, tractRemoteSharePublisher: TractRemoteSharePublisher, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.toolId = toolId
         self.createSessionTrigger = createSessionTrigger
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
@@ -94,8 +93,8 @@ final class CreatingToolScreenShareSessionViewModel: ObservableObject {
                 return
             }
             
-            weakSelf.flowDelegate?.navigate(
-                step: .didCreateSessionFromCreatingToolScreenShareSession(
+            weakSelf.stepEmitter.emit(
+                step: AppFlowStep.didCreateSessionFromCreatingToolScreenShareSession(
                     result: result,
                     createSessionTrigger: weakSelf.createSessionTrigger
                 )
@@ -112,7 +111,7 @@ extension CreatingToolScreenShareSessionViewModel {
         
         tractRemoteSharePublisher.endPublishingSession(disconnectSocket: true)
         
-        flowDelegate?.navigate(step: .closeTappedFromCreatingToolScreenShareSession)
+        stepEmitter.emit(step: AppFlowStep.closeTappedFromCreatingToolScreenShareSession)
     }
     
     func pageViewed() {

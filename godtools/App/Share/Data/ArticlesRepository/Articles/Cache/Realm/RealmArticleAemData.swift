@@ -30,14 +30,10 @@ class RealmArticleAemData: Object, IdentifiableRealmObject {
 
 extension RealmArticleAemData {
     
-    func mapFrom(model: ArticleAemData, ignorePrimaryKey: Bool) {
-        
-        if !ignorePrimaryKey {
-            aemUri = model.aemUri
-        }
+    func mapFrom(model: ArticleAemData) {
         
         id = model.id
-        
+        aemUri = model.aemUri
         if let articleJcrContentModel = model.articleJcrContent {
             articleJcrContent = RealmArticleJcrContent.createNewFrom(model: articleJcrContentModel)
         }
@@ -49,7 +45,7 @@ extension RealmArticleAemData {
     static func createNewFrom(model: ArticleAemData) -> RealmArticleAemData {
         
         let object = RealmArticleAemData()
-        object.mapFrom(model: model, ignorePrimaryKey: false)
+        object.mapFrom(model: model)
         return object
     }
     

@@ -10,138 +10,314 @@ import UIKit
 import SwiftUI
 import Combine
 
-class ToolSettingsFlow: Flow {
+class ToolSettingsFlow: GTFlow {
+    
+    enum CompletedState: Sendable {
+        case failedToCreateToolScreenShareSession
+        case userSharedQRCodeForToolScreenShareSession
+        case userClosedToolScreenShare
+        case userClosed
+    }
+    
+    typealias ToolScreenShareSettingsObserver = ToolSettingsObserver & RemoteShareable
     
     private let toolSettingsObserver: ToolSettingsObserver
     private let toolSettingsDidCloseClosure: (() -> Void)?
     
-    private var toolSettingsView: AppHostingController<ToolSettingsView>?
-    private var shareToolFlow: ShareToolFlow?
-    private var toolScreenShareFlow: ToolScreenShareFlow?
-    private var languagesListModal: UIViewController?
-    private var reviewShareShareableModal: UIViewController?
-    private var downloadToolTranslationsFlow: DownloadToolTranslationsFlow?
     private var cancellables: Set<AnyCancellable> = Set()
     
     @Published private var appLanguage = AppLanguageDomainModel.english
-    @Published private var toolScreenShareTutorialHasBeenViewedDomainModel: ToolScreenShareTutorialViewedDomainModel = ToolScreenShareTutorialViewedDomainModel(numberOfViews: 0)
-    
-    private weak var flowDelegate: FlowDelegate?
-    
-    let appDiContainer: AppDiContainer
-    let navigationController: AppNavigationController
-    
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, presentInNavigationController: AppNavigationController, toolSettingsObserver: ToolSettingsObserver, toolSettingsDidCloseClosure: (() -> Void)? = nil) {
+    @Published private var creatingToolScreenShareSessionTimedOutStringsDomainModel = CreatingToolScreenShareSessionTimedOutStringsDomainModel.emptyValue
+    @Published private var shareToolScreenShareSessionStringsDomainModel = ShareToolScreenShareSessionStringsDomainModel.emptyValue
+        
+    init(appDiContainer: AppDiContainer, toolSettingsObserver: ToolSettingsObserver, toolSettingsDidCloseClosure: (() -> Void)?) {
             
-        self.flowDelegate = flowDelegate
-        self.appDiContainer = appDiContainer
-        self.navigationController = presentInNavigationController
         self.toolSettingsObserver = toolSettingsObserver
         self.toolSettingsDidCloseClosure = toolSettingsDidCloseClosure
-        
-        let getToolScreenShareTutorialHasBeenViewedUseCase: GetToolScreenShareTutorialHasBeenViewedUseCase = appDiContainer.feature.toolScreenShare.domainLayer.getToolScreenShareTutorialHasBeenViewedUseCase()
                 
+        let stepEmitter = FlowStepEmitter()
+        
+        super.init(
+            appDiContainer: appDiContainer,
+            initialView: Self.getToolSettingsView(
+                appDiContainer: appDiContainer,
+                stepEmitter: stepEmitter,
+                toolSettingsObserver: toolSettingsObserver
+            ),
+            stepEmitter: stepEmitter,
+            onPresentType: .presentInitialView
+        )
+                                
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()
             .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
-        getToolScreenShareTutorialHasBeenViewedUseCase
-            .execute(toolId: toolSettingsObserver.toolId)
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+                
+                appDiContainer.feature.toolScreenShare.domainLayer
+                    .getCreatingToolScreenShareSessionTimedOutStringsUseCase()
+                    .execute(appLanguage: appLanguage)
+            }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$toolScreenShareTutorialHasBeenViewedDomainModel)
+            .sink { [weak self] (domainModel: CreatingToolScreenShareSessionTimedOutStringsDomainModel) in
+                self?.creatingToolScreenShareSessionTimedOutStringsDomainModel = domainModel
+            }
+            .store(in: &cancellables)
         
-        presentToolSettings()
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+                
+                appDiContainer.feature.toolScreenShare.domainLayer
+                    .getShareToolScreenShareSessionStringsUseCase()
+                    .execute(appLanguage: appLanguage)
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (strings: ShareToolScreenShareSessionStringsDomainModel) in
+                self?.shareToolScreenShareSessionStringsDomainModel = strings
+            }
+            .store(in: &cancellables)
     }
     
-    deinit {
-        print("x deinit: \(type(of: self))")
-    }
-    
-    func didClose() {
-        toolSettingsDidCloseClosure?()
-    }
-    
-    func navigate(step: FlowStep) {
+    override func navigate(step: FlowStep) {
         
-        switch step {
+        guard let appStep = step as? AppFlowStep else {
+            return
+        }
+
+        switch appStep {
             
         case .closeTappedFromToolSettings:
-            flowDelegate?.navigate(step: .toolSettingsFlowCompleted(state: .userClosedToolSettings))
+            completeFlow(state: .userClosed)
             
         case .shareLinkTappedFromToolSettings:
-            dismissToolSettingsIfPresented(animated: true) { [weak self] in
-                self?.presentShareTool()
-            }
+            
+            let toolAbbreviation: String = appDiContainer.core.dataLayer.getResourcesRepository().getResourceById(id: toolSettingsObserver.toolId)?.abbreviation ?? ""
+            
+            let shareToolFlow = ShareToolFlow(
+                appDiContainer: appDiContainer,
+                toolId: toolSettingsObserver.toolId,
+                toolLanguageId: toolSettingsObserver.languages.selectedLanguageId,
+                pageNumber: toolSettingsObserver.pageNumber,
+                appLanguage: appLanguage,
+                toolAnalyticsAbbreviation: toolAbbreviation
+            )
+            
+            dismissInitialView(animated: true, completion: { [weak self] in
+                
+                self?.presentFlow(
+                    flow: shareToolFlow
+                )
+            })
             
         case .shareToolFlowCompleted( _):
-            shareToolFlow = nil
-            presentToolSettings()
+            
+            dismissFlow(completion: { [weak self] in
+                
+                self?.presentInitialView(animated: true)
+            })
                     
         case .screenShareTappedFromToolSettings:
-            presentToolScreenShareFlow()
-        
-        case .toolScreenShareFlowCompleted(let state):
             
-            switch state {
-            case .failedToCreateSession:
-                break
-            case .userClosedShareModal:
-                completeFlow(state: .toolScreenShareFlowCompleted(state: state))
-            case .userSharedQRCode:
-                completeFlow(state: .toolScreenShareFlowCompleted(state: state))
+            guard let toolSettingsObserver = toolSettingsObserver as? ToolScreenShareSettingsObserver else {
+                return
             }
+            
+            toggleInitialView(
+                view: getToolScreenShareTutorialView(
+                    toolSettingsObserver: toolSettingsObserver
+                ),
+                animated: true
+            )
+            
+        case .closeTappedFromToolScreenShareTutorial:
+            dismissInitialView(animated: true, completion: { [weak self] in
+                self?.completeFlow(state: .userClosedToolScreenShare)
+            })
+            
+        case .generateQRCodeTappedFromToolScreenShareTutorial:
+           
+            guard let toolSettingsObserver = toolSettingsObserver as? ToolScreenShareSettingsObserver else {
+                return
+            }
+            
+            presentCreatingToolScreenShareSession(
+                toolSettingsObserver: toolSettingsObserver,
+                createSessionTrigger: .generateQRCodeTappedFromScreenShareTutorial
+            )
+            
+        case .shareLinkTappedFromToolScreenShareTutorial:
+            
+            guard let toolSettingsObserver = toolSettingsObserver as? ToolScreenShareSettingsObserver else {
+                return
+            }
+            
+            presentCreatingToolScreenShareSession(
+                toolSettingsObserver: toolSettingsObserver,
+                createSessionTrigger: .shareLinkTappedFromScreenShareTutorial
+            )
+            
+        case .closeTappedFromCreatingToolScreenShareSession:
+            
+            dismissInitialView(animated: true, completion: { [weak self] in
+                
+                self?.completeFlow(state: .userClosedToolScreenShare)
+            })
+            
+        case .shareQRCodeTappedFromToolScreenShareSession(let shareUrl):
+            
+            toggleInitialView(
+                view: getToolScreenShareQRCodeView(shareUrl: shareUrl),
+                animated: true
+            )
+            
+        case .dismissedShareToolScreenShareActivityViewController:
+            
+            dismissInitialView(animated: true, completion: { [weak self] in
+                
+                self?.completeFlow(state: .userClosedToolScreenShare)
+            })
+            
+        case .closeTappedFromShareToolScreenQRCode:
+
+            dismissInitialView(animated: true, completion: { [weak self] in
+                
+                self?.completeFlow(state: .userSharedQRCodeForToolScreenShareSession)
+            })
+
+        case .didCreateSessionFromCreatingToolScreenShareSession(let result, let createSessionTrigger):
+            
+            switch result {
+                
+            case .success(let channel):
+                
+                let tractRemoteShareURLBuilder: TractRemoteShareURLBuilder = appDiContainer.feature.toolScreenShare.dataLayer.getTractRemoteShareURLBuilder()
+                                
+                guard let remoteShareUrl = tractRemoteShareURLBuilder.buildRemoteShareURL(
+                    toolId: toolSettingsObserver.toolId,
+                    primaryLanguageId: toolSettingsObserver.languages.primaryLanguageId,
+                    parallelLanguageId: toolSettingsObserver.languages.parallelLanguageId,
+                    selectedLanguageId: toolSettingsObserver.languages.selectedLanguageId,
+                    page: toolSettingsObserver.pageNumber,
+                    subscriberChannelId: channel.id
+                ) else {
+
+                    let view = AlertMessageView(
+                        title: "Error",
+                        message: "Failed to create remote share url.",
+                        acceptTitle: "OK",
+                        cancelTitle: nil,
+                        acceptTapped: nil,
+                        cancelTapped: nil
+                    )
+                    
+                    presentView(view: view.controller, animated: true)
+                    
+                    return
+                }
+                                
+                switch createSessionTrigger {
+                    
+                case .generateQRCodeTappedFromScreenShareTutorial:
+                   
+                    toggleInitialView(
+                        view: getToolScreenShareQRCodeView(shareUrl: remoteShareUrl),
+                        animated: true
+                    )
+                    
+                case .shareLinkTappedFromScreenShareTutorial:
+                    
+                    toggleInitialView(
+                        view: getShareToolScreenShareSessionView(
+                            strings: shareToolScreenShareSessionStringsDomainModel,
+                            shareUrl: remoteShareUrl
+                        ),
+                        animated: true
+                    )
+                }
+                
+            case .failure(let error):
+                                
+                switch error {
+                
+                case .timedOut:
+                   
+                    let strings = creatingToolScreenShareSessionTimedOutStringsDomainModel
+
+                    presentView(
+                        view: getCreatingToolScreenShareSessionTimedOutView(strings: strings),
+                        animated: true
+                    )
+                }
+            }
+            
+        case .cancelTappedFromCreateToolScreenShareSessionTimeout:
+            completeFlow(state: .failedToCreateToolScreenShareSession)
+            
+        case .acceptTappedFromCreateToolScreenShareSessionTimeout:
+            completeFlow(state: .failedToCreateToolScreenShareSession)
         
         case .primaryLanguageTappedFromToolSettings:
-            presentToolLanguagesList(listType: .choosePrimaryLanguage, animated: true)
-            
+            presentView(
+                view: getToolSettingsToolLanguagesListView(listType: .choosePrimaryLanguage),
+                animated: true
+            )
+        
         case .parallelLanguageTappedFromToolSettings:
-            presentToolLanguagesList(listType: .chooseParallelLanguage, animated: true)
+            presentView(
+                view: getToolSettingsToolLanguagesListView(listType: .chooseParallelLanguage),
+                animated: true
+            )
                         
         case .closeTappedFromToolSettingsToolLanguagesList:
-            dismissToolLanguagesList(animated: true)
+            dismissView(animated: true)
+            
+        case .primaryLanguageTappedFromToolSettingsToolLanguagesList:
+            dismissView(animated: true)
+            
+        case .parallelLanguageTappedFromToolSettingsToolLanguagesList:
+            dismissView(animated: true)
+            
+        case .deleteParallelLanguageTappedFromToolSettingsToolLanguagesList:
+            dismissView(animated: true)
             
         case .shareableTappedFromToolSettings(let shareable):
-            presentReviewShareShareable(shareable: shareable, animated: true)
-            
+            presentView(
+                view: getReviewShareShareableView(toolSettingsObserver: toolSettingsObserver, shareable: shareable),
+                animated: true
+            )
+                        
         case .closeTappedFromReviewShareShareable:
-            dismissReviewShareShareable()
+            dismissView(animated: true)
                                     
         case .shareImageTappedFromReviewShareShareable(let imageToShare):
             
-            dismissReviewShareShareable(animated: true) { [weak self] in
-                
-                guard let weakSelf = self else {
-                    return
-                }
-                
-                let viewModel = ShareShareableViewModel(
-                    imageToShare: imageToShare,
-                    incrementUserCounterUseCase: weakSelf.appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase()
-                )
-                
-                let view = ShareShareableView(viewModel: viewModel)
-                            
-                weakSelf.navigationController.present(view, animated: true, completion: nil)
-            }
+            let viewModel = ShareShareableViewModel(
+                stepEmitter: stepEmitter,
+                imageToShare: imageToShare,
+                incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase()
+            )
             
-        case .primaryLanguageTappedFromToolSettingsToolLanguagesList:
-            dismissToolLanguagesList(animated: true)
+            let view = ShareShareableView(viewModel: viewModel)
             
-        case .parallelLanguageTappedFromToolSettingsToolLanguagesList:
-            dismissToolLanguagesList(animated: true)
+            presentView(view: view, animated: true)
             
-        case .deleteParallelLanguageTappedFromToolSettingsToolLanguagesList:
-            dismissToolLanguagesList(animated: true)
+        case .dismissedShareShareableActivityViewController:
+            dismissView(animated: true)
             
         default:
             break
         }
     }
     
-    private func completeFlow(state: ToolSettingsFlowCompletedState) {
-        flowDelegate?.navigate(step: .toolSettingsFlowCompleted(state: state))
+    private func completeFlow(state: ToolSettingsFlow.CompletedState) {
+        parent?.stepEmitter.emit(step: AppFlowStep.toolSettingsFlowCompleted(state: state))
     }
 }
 
@@ -149,46 +325,14 @@ class ToolSettingsFlow: Flow {
 
 extension ToolSettingsFlow {
     
-    private func presentToolSettings() {
-        
-        guard toolSettingsView == nil else {
-            return
-        }
-        
-        let toolSettingsView: AppHostingController<ToolSettingsView> = getToolSettingsView()
-        
-        self.toolSettingsView = toolSettingsView
-        
-        navigationController.present(
-            toolSettingsView,
-            animated: true
-        )
-    }
-    
-    private func dismissToolSettingsIfPresented(animated: Bool, completion: (() -> Void)?) {
-        
-        guard let toolSettingsView = self.toolSettingsView else {
-            completion?()
-            return
-        }
-        
-        toolSettingsView.rootView.setModalIsHidden(isHidden: true)
-        
-        if animated {
-            toolSettingsView.dismiss(animated: true, completion: completion)
-        }
-        else {
-            toolSettingsView.dismiss(animated: false)
-            completion?()
-        }
-        
-        self.toolSettingsView = nil
-    }
-    
-    private func getToolSettingsView() -> AppHostingController<ToolSettingsView> {
+    private static func getToolSettingsView(
+        appDiContainer: AppDiContainer,
+        stepEmitter: FlowStepEmitter,
+        toolSettingsObserver: ToolSettingsObserver
+    ) -> AppHostingController<ToolSettingsView> {
         
         let viewModel = ToolSettingsViewModel(
-            flowDelegate: self,
+            stepEmitter: stepEmitter,
             toolSettingsObserver: toolSettingsObserver,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getToolSettingsStringsUseCase: appDiContainer.feature.toolSettings.domainLayer.getToolSettingsStringsUseCase(),
@@ -213,51 +357,14 @@ extension ToolSettingsFlow {
     }
 }
 
-// MARK: - Share Tool Link
-
-extension ToolSettingsFlow {
-    
-    private func presentShareTool() {
-        
-        let toolAbbreviation: String = appDiContainer.core.dataLayer.getResourcesRepository().getResourceById(id: toolSettingsObserver.toolId)?.abbreviation ?? ""
-        
-        shareToolFlow = ShareToolFlow(
-            flowDelegate: self,
-            appDiContainer: appDiContainer,
-            navigationController: navigationController,
-            toolId: toolSettingsObserver.toolId,
-            toolLanguageId: toolSettingsObserver.languages.selectedLanguageId,
-            pageNumber: toolSettingsObserver.pageNumber,
-            appLanguage: appLanguage,
-            toolAnalyticsAbbreviation: toolAbbreviation
-        )
-    }
-}
-
 // MARK: - Tool Languages List
 
 extension ToolSettingsFlow {
     
-    private func presentToolLanguagesList(listType: ToolSettingsToolLanguagesListTypeDomainModel, animated: Bool) {
-        
-        navigationController.present(getToolSettingsToolLanguagesListView(listType: listType), animated: true)
-    }
-    
-    private func dismissToolLanguagesList(animated: Bool) {
-        
-        guard let languagesListModal = languagesListModal else {
-            return
-        }
-        
-        languagesListModal.dismiss(animated: animated)
-                
-        self.languagesListModal = nil
-    }
-    
     private func getToolSettingsToolLanguagesListView(listType: ToolSettingsToolLanguagesListTypeDomainModel) -> UIViewController {
         
         let viewModel = ToolSettingsToolLanguagesListViewModel(
-            flowDelegate: self,
+            stepEmitter: stepEmitter,
             listType: listType,
             toolId: toolSettingsObserver.toolId,
             toolSettingsObserver: toolSettingsObserver,
@@ -281,104 +388,7 @@ extension ToolSettingsFlow {
         )
 
         hostingView.view.backgroundColor = .white
-                
-        languagesListModal = hostingView
-        
+                        
         return hostingView
-    }
-}
-
-// MARK: - Tool Screen Share Flow
-
-extension ToolSettingsFlow {
-    
-    private func presentToolScreenShareFlow() {
-        
-        guard let toolSettingsObserver = toolSettingsObserver as? ToolScreenShareFlow.ToolScreenShareSettingsObserver else {
-            return
-        }
-        
-        dismissToolSettingsIfPresented(animated: true) { [weak self] in
-         
-            guard let weakSelf = self else {
-                return
-            }
-            
-            let toolScreenShareFlow = ToolScreenShareFlow(
-                flowDelegate: weakSelf,
-                appDiContainer: weakSelf.appDiContainer,
-                sharedNavigationController: weakSelf.navigationController,
-                toolSettingsObserver: toolSettingsObserver
-            )
-            
-            weakSelf.toolScreenShareFlow = toolScreenShareFlow
-        }
-    }
-    
-    private func dismissToolScreenShareFlow() {
-        
-        guard toolScreenShareFlow != nil else {
-            return
-        }
-        
-        navigationController.dismissPresented(animated: true, completion: nil)
-        
-        toolScreenShareFlow = nil
-    }
-}
-
-// MARK: - Review Share Shareable
-
-extension ToolSettingsFlow {
-    
-    private func presentReviewShareShareable(shareable: ShareableDomainModel, animated: Bool) {
-        
-        let reviewShareShareableView = getReviewShareShareableView(shareable: shareable)
-        
-        reviewShareShareableModal = reviewShareShareableView
-        
-        navigationController.present(reviewShareShareableView, animated: animated, completion: nil)
-    }
-    
-    private func getReviewShareShareableView(shareable: ShareableDomainModel) -> UIViewController {
-        
-        let viewModel = ReviewShareShareableViewModel(
-            flowDelegate: self,
-            toolId: toolSettingsObserver.toolId,
-            shareable: shareable,
-            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getReviewShareShareableStringsUseCase: appDiContainer.feature.shareables.domainLayer.getReviewShareShareableStringsUseCase(),
-            getShareableImageUseCase: appDiContainer.feature.shareables.domainLayer.getShareableImageUseCase(),
-            trackShareShareableTapUseCase: appDiContainer.feature.shareables.domainLayer.getTrackShareShareableTapUseCase()
-        )
-        
-        let view = ReviewShareShareableView(viewModel: viewModel)
-        
-        let hostingView = AppHostingController<ReviewShareShareableView>(
-            rootView: view,
-            navigationBar: nil
-        )
-        
-        hostingView.view.backgroundColor = .white
-        
-        return hostingView
-    }
-    
-    private func dismissReviewShareShareable(animated: Bool = true, completion: (() -> Void)? = nil) {
-        
-        guard let reviewShareShareableModal = reviewShareShareableModal else {
-            completion?()
-            return
-        }
-        
-        if animated {
-            reviewShareShareableModal.dismiss(animated: true, completion: completion)
-        }
-        else {
-            reviewShareShareableModal.dismiss(animated: false)
-            completion?()
-        }
-        
-        self.reviewShareShareableModal = nil
     }
 }

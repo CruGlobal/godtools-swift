@@ -19,5 +19,15 @@ class ShareArticleView {
         
         viewModel.pageViewed()
         viewModel.articleShared()
+        
+        controller.completionWithItemsHandler = { (
+            activityType: UIActivity.ActivityType?,
+            serviceCompleted: Bool,
+            returnedItems: [Any]?,
+            activityError: Error?
+        ) in
+            
+            viewModel.activityViewDismissed()
+        }
     }
 }

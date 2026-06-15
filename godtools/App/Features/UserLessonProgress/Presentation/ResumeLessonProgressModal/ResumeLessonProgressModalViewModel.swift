@@ -11,8 +11,8 @@ import Combine
 
 @MainActor
 final class ResumeLessonProgressModalViewModel: ObservableObject {
-    
-    private weak var flowDelegate: FlowDelegate?
+
+    private let stepEmitter: FlowStepEmitter
     private let getResumeLessonProgressStringsUseCase: GetResumeLessonProgressStringsUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     
@@ -22,9 +22,9 @@ final class ResumeLessonProgressModalViewModel: ObservableObject {
     
     @Published private(set) var strings = ResumeLessonProgressStringsDomainModel.emptyValue
     
-    init(flowDelegate: FlowDelegate, getResumeLessonProgressStringsUseCase: GetResumeLessonProgressStringsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase) {
+    init(stepEmitter: FlowStepEmitter, getResumeLessonProgressStringsUseCase: GetResumeLessonProgressStringsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.getResumeLessonProgressStringsUseCase = getResumeLessonProgressStringsUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         
@@ -52,10 +52,10 @@ final class ResumeLessonProgressModalViewModel: ObservableObject {
     // MARK: - Inputs
     
     func startOverButtonTapped() {
-        flowDelegate?.navigate(step: .startOverTappedFromResumeLessonModal)
+        stepEmitter.emit(step: AppFlowStep.startOverTappedFromResumeLessonModal)
     }
     
     func continueButtonTapped() {
-        flowDelegate?.navigate(step: .continueTappedFromResumeLessonModal)
+        stepEmitter.emit(step: AppFlowStep.continueTappedFromResumeLessonModal)
     }
 }

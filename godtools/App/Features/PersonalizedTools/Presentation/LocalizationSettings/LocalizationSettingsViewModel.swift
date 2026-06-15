@@ -12,6 +12,7 @@ import Combine
 @MainActor
 final class LocalizationSettingsViewModel: ObservableObject {
     
+    private let stepEmitter: FlowStepEmitter
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getCountryListUseCase: GetLocalizationSettingsCountryListUseCase
     private let getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase
@@ -20,8 +21,6 @@ final class LocalizationSettingsViewModel: ObservableObject {
     private let getSearchBarStringsUseCase: GetSearchBarStringsUseCase
 
     private var cancellables: Set<AnyCancellable> = Set()
-
-    private weak var flowDelegate: FlowDelegate?
 
     @Published private var appLanguage = AppLanguageDomainModel.english
     @Published private var countriesList: [LocalizationSettingsCountryListItem] = Array()
@@ -33,9 +32,9 @@ final class LocalizationSettingsViewModel: ObservableObject {
     
     @Published var searchText: String = ""
 
-    init(flowDelegate: FlowDelegate, showsPreferNotToSay: Bool, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getCountryListUseCase: GetLocalizationSettingsCountryListUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, searchCountriesUseCase: SearchCountriesInLocalizationSettingsCountriesListUseCase, getLocalizationSettingsStringsUseCase: GetLocalizationSettingsStringsUseCase, getSearchBarStringsUseCase: GetSearchBarStringsUseCase) {
+    init(stepEmitter: FlowStepEmitter, showsPreferNotToSay: Bool, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getCountryListUseCase: GetLocalizationSettingsCountryListUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, searchCountriesUseCase: SearchCountriesInLocalizationSettingsCountriesListUseCase, getLocalizationSettingsStringsUseCase: GetLocalizationSettingsStringsUseCase, getSearchBarStringsUseCase: GetSearchBarStringsUseCase) {
 
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getCountryListUseCase = getCountryListUseCase
         self.getLocalizationSettingsUseCase = getLocalizationSettingsUseCase
@@ -109,10 +108,10 @@ final class LocalizationSettingsViewModel: ObservableObject {
 extension LocalizationSettingsViewModel {
     
     @objc func backTapped() {
-        flowDelegate?.navigate(step: .backTappedFromLocalizationSettings)
+        stepEmitter.emit(step: AppFlowStep.backTappedFromLocalizationSettings)
     }
     
     func countryTapped(country: LocalizationSettingsCountryListItem) {
-        flowDelegate?.navigate(step: .countryTappedFromLocalizationSettings(country: country))
+        stepEmitter.emit(step: AppFlowStep.countryTappedFromLocalizationSettings(country: country))
     }
 }

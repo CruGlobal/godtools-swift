@@ -20,22 +20,21 @@ final class OptInNotificationViewModel: ObservableObject {
         case settings
     }
     
+    private let stepEmitter: FlowStepEmitter
     private let getOptInNotificationStringsUseCase: GetOptInNotificationStringsUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let notificationPromptType: NotificationPromptType
     
     private var cancellables: Set<AnyCancellable> = Set()
 
-    private weak var flowDelegate: FlowDelegate?
-
     @Published private var appLanguage = AppLanguageDomainModel.english
     
     @Published private(set) var strings = OptInNotificationStringsDomainModel.emptyValue
     @Published private(set) var notificationsActionTitle: String = ""
 
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getOptInNotificationStringsUseCase: GetOptInNotificationStringsUseCase, notificationPromptType: NotificationPromptType) {
+    init(stepEmitter: FlowStepEmitter, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getOptInNotificationStringsUseCase: GetOptInNotificationStringsUseCase, notificationPromptType: NotificationPromptType) {
 
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getOptInNotificationStringsUseCase = getOptInNotificationStringsUseCase
         self.notificationPromptType = notificationPromptType
@@ -78,18 +77,23 @@ final class OptInNotificationViewModel: ObservableObject {
 
 extension OptInNotificationViewModel {
 
+    func overlayTapped() {
+        
+        stepEmitter.emit(step: AppFlowStep.closeTappedFromOptInNotification)
+    }
+    
     func allowNotificationsTapped() {
         
         switch notificationPromptType {
         case .allow:
-            flowDelegate?.navigate(step: .allowNotificationsTappedFromOptInNotification)
+            stepEmitter.emit(step: AppFlowStep.allowNotificationsTappedFromOptInNotification)
         case .settings:
-            flowDelegate?.navigate(step: .settingsTappedFromOptInNotification)
+            stepEmitter.emit(step: AppFlowStep.settingsTappedFromOptInNotification)
         }
     }
 
     func maybeLaterTapped() {
         
-        flowDelegate?.navigate(step: .maybeLaterTappedFromOptInNotification)
+        stepEmitter.emit(step: AppFlowStep.maybeLaterTappedFromOptInNotification)
     }
 }

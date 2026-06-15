@@ -17,6 +17,7 @@ final class ToolDetailsViewModel: ObservableObject {
 
     private static var favoriteToolTasks: [ToolId: Task<Void, Error>] = Dictionary()
     
+    private let stepEmitter: FlowStepEmitter
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getToolDetailsStringsUseCase: GetToolDetailsStringsUseCase
     private let getToolDetailsUseCase: GetToolDetailsUseCase
@@ -33,9 +34,7 @@ final class ToolDetailsViewModel: ObservableObject {
     
     private var segmentTypes: [ToolDetailsSegmentType] = Array()
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     @Published private var toolId: String {
         willSet {
             showsLearnToShareToolButton = false
@@ -55,12 +54,12 @@ final class ToolDetailsViewModel: ObservableObject {
     @Published private(set) var selectedToolVersion: ToolVersionDomainModel?
     @Published private(set) var outlineContent: String = ""// TODO: Should this be set to something? ~Levi
     
-    init(flowDelegate: FlowDelegate, toolId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolDetailsStringsUseCase: GetToolDetailsStringsUseCase, getToolDetailsUseCase: GetToolDetailsUseCase, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, getToolDetailsLearnToShareToolIsAvailableUseCase: GetToolDetailsLearnToShareToolIsAvailableUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, getToolBannerUseCase: GetToolBannerUseCase, inMemoryDataCache: InMemoryDataCache, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(stepEmitter: FlowStepEmitter, toolId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolDetailsStringsUseCase: GetToolDetailsStringsUseCase, getToolDetailsUseCase: GetToolDetailsUseCase, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, getToolDetailsLearnToShareToolIsAvailableUseCase: GetToolDetailsLearnToShareToolIsAvailableUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, getToolBannerUseCase: GetToolBannerUseCase, inMemoryDataCache: InMemoryDataCache, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         let primaryLanguage: AppLanguageDomainModel = primaryLanguage
         let parallelLanguage: AppLanguageDomainModel? = parallelLanguage != primaryLanguage ? parallelLanguage : nil
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.toolId = toolId
         self.primaryLanguage = primaryLanguage
         self.parallelLanguage = parallelLanguage
@@ -255,7 +254,7 @@ extension ToolDetailsViewModel {
     
     @objc func backTapped() {
         
-        flowDelegate?.navigate(step: .backTappedFromToolDetails)
+        stepEmitter.emit(step: AppFlowStep.backTappedFromToolDetails)
     }
     
     func pageViewed() {
@@ -280,12 +279,12 @@ extension ToolDetailsViewModel {
             ]
         )
         
-        flowDelegate?.navigate(step: .openToolTappedFromToolDetails(toolId: toolId, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex))
+        stepEmitter.emit(step: AppFlowStep.openToolTappedFromToolDetails(toolId: toolId, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex))
     }
     
     func learnToShareToolTapped() {
         
-        flowDelegate?.navigate(step: .learnToShareToolTappedFromToolDetails(toolId: toolId, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex))
+        stepEmitter.emit(step: AppFlowStep.learnToShareToolTappedFromToolDetails(toolId: toolId, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex))
     }
     
     func toggleFavorited() {
@@ -307,8 +306,17 @@ extension ToolDetailsViewModel {
     }
     
     func urlTapped(url: URL) {
-           
-        flowDelegate?.navigate(step: .urlLinkTappedFromToolDetails(url: url, screenName: getAnalyticsScreenName(analyticsToolAbbreviation: analyticsToolAbbreviation), siteSection: getAnalyticsSiteSection(analyticsToolAbbreviation: analyticsToolAbbreviation), siteSubSection: analyticsSiteSubSection, contentLanguage: nil, contentLanguageSecondary: nil))
+        
+        let urlLinkTapped = URLLinkTappedParams(
+            url: url,
+            screenName: getAnalyticsScreenName(analyticsToolAbbreviation: analyticsToolAbbreviation),
+            siteSection: getAnalyticsSiteSection(analyticsToolAbbreviation: analyticsToolAbbreviation),
+            siteSubSection: analyticsSiteSubSection,
+            contentLanguage: nil,
+            contentLanguageSecondary: nil
+        )
+        
+        stepEmitter.emit(step: AppFlowStep.urlLinkTappedFromToolDetails(urlLinkTapped: urlLinkTapped))
     }
     
     func toolVersionTapped(toolVersion: ToolVersionDomainModel) {

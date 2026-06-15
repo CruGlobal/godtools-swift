@@ -12,6 +12,7 @@ import Combine
 @MainActor
 class ToolFilterLanguageSelectionViewModel: ObservableObject {
         
+    private let stepEmitter: FlowStepEmitter
     private let getToolFilterLanguagesStringsUseCase: GetToolFilterLanguagesStringsUseCase
     private let getToolFilterLanguagesUseCase: GetToolFilterLanguagesUseCase
     private let searchToolFilterLanguagesUseCase: SearchToolFilterLanguagesUseCase
@@ -22,9 +23,7 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
     private let getSearchBarStringsUseCase: GetSearchBarStringsUseCase
         
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-        
+            
     @Published private var appLanguage = AppLanguageDomainModel.english
     @Published private var allLanguages: [ToolFilterLanguageDomainModel] = [ToolFilterLanguageDomainModel]()
     
@@ -36,8 +35,9 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
     
     @Published var searchText: String = ""
     
-    init(getToolFilterLanguagesStringsUseCase: GetToolFilterLanguagesStringsUseCase, getToolFilterLanguagesUseCase: GetToolFilterLanguagesUseCase, searchToolFilterLanguagesUseCase: SearchToolFilterLanguagesUseCase, getUserToolFilterCategoryUseCase: GetUserToolFilterCategoryUseCase, getUserToolFilterLanguageUseCase: GetUserToolFilterLanguageUseCase, selectedToolFilterLanguageUseCase: SelectedToolFilterLanguageUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getSearchBarStringsUseCase: GetSearchBarStringsUseCase, flowDelegate: FlowDelegate) {
+    init(stepEmitter: FlowStepEmitter, getToolFilterLanguagesStringsUseCase: GetToolFilterLanguagesStringsUseCase, getToolFilterLanguagesUseCase: GetToolFilterLanguagesUseCase, searchToolFilterLanguagesUseCase: SearchToolFilterLanguagesUseCase, getUserToolFilterCategoryUseCase: GetUserToolFilterCategoryUseCase, getUserToolFilterLanguageUseCase: GetUserToolFilterLanguageUseCase, selectedToolFilterLanguageUseCase: SelectedToolFilterLanguageUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getSearchBarStringsUseCase: GetSearchBarStringsUseCase) {
         
+        self.stepEmitter = stepEmitter
         self.getToolFilterLanguagesStringsUseCase = getToolFilterLanguagesStringsUseCase
         self.getToolFilterLanguagesUseCase = getToolFilterLanguagesUseCase
         self.searchToolFilterLanguagesUseCase = searchToolFilterLanguagesUseCase
@@ -46,7 +46,6 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
         self.selectedToolFilterLanguageUseCase = selectedToolFilterLanguageUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getSearchBarStringsUseCase = getSearchBarStringsUseCase
-        self.flowDelegate = flowDelegate
         
         getCurrentAppLanguageUseCase
             .execute()
@@ -136,11 +135,11 @@ extension ToolFilterLanguageSelectionViewModel {
                 .execute(language: language)
         }
         
-        flowDelegate?.navigate(step: .languageTappedFromToolLanguageFilter)
+        stepEmitter.emit(step: AppFlowStep.languageTappedFromToolLanguageFilter)
     }
     
     @objc func backButtonTapped() {
         
-        flowDelegate?.navigate(step: .backTappedFromToolLanguageFilter)
+        stepEmitter.emit(step: AppFlowStep.backTappedFromToolLanguageFilter)
     }
 }

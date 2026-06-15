@@ -21,21 +21,20 @@ class DownloadableLanguageItemViewModel: ObservableObject {
     private static var resetIsMarkedForRemovalTimers: [LanguageId: SwiftUITimer] = Dictionary()
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     
+    private let stepEmitter: FlowStepEmitter
     private let downloadToolLanguageUseCase: DownloadToolLanguageUseCase
     private let removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     let downloadableLanguage: DownloadableLanguageListItemDomainModel
     let recycleState: DownloadableLanguageItemRecycleState
     
     @Published private(set) var iconState: LanguageDownloadIconState = .notDownloaded
     
-    init(flowDelegate: FlowDelegate, downloadableLanguage: DownloadableLanguageListItemDomainModel, downloadToolLanguageUseCase: DownloadToolLanguageUseCase, removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase) {
+    init(stepEmitter: FlowStepEmitter, downloadableLanguage: DownloadableLanguageListItemDomainModel, downloadToolLanguageUseCase: DownloadToolLanguageUseCase, removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.downloadableLanguage = downloadableLanguage
         self.downloadToolLanguageUseCase = downloadToolLanguageUseCase
         self.removeDownloadedToolLanguageUseCase = removeDownloadedToolLanguageUseCase
@@ -82,7 +81,7 @@ class DownloadableLanguageItemViewModel: ObservableObject {
             .$downloadError
             .sink(receiveValue: { [weak self] (downloadError: Error?) in
                 if let downloadError = downloadError {
-                    self?.flowDelegate?.navigate(step: .languageDownloadFailedFromDownloadedLanguages(error: downloadError))
+                    self?.stepEmitter.emit(step: AppFlowStep.languageDownloadFailedFromDownloadedLanguages(error: downloadError))
                 }
             })
             .store(in: &cancellables)
@@ -124,7 +123,7 @@ extension DownloadableLanguageItemViewModel {
 
 extension DownloadableLanguageItemViewModel {
     
-    private static func startLanguageDownload(downloadToolLanguageUseCase: DownloadToolLanguageUseCase, recycleState: DownloadableLanguageItemRecycleState, languageId: String, flowDelegate: FlowDelegate?) {
+    private static func startLanguageDownload(downloadToolLanguageUseCase: DownloadToolLanguageUseCase, recycleState: DownloadableLanguageItemRecycleState, languageId: String) {
                   
         let isDownloading: Bool = recycleState.downloadState.isDownloading
 
@@ -220,8 +219,7 @@ extension DownloadableLanguageItemViewModel {
             Self.startLanguageDownload(
                 downloadToolLanguageUseCase: downloadToolLanguageUseCase,
                 recycleState: recycleState,
-                languageId: languageId,
-                flowDelegate: flowDelegate
+                languageId: languageId
             )
         }
     }

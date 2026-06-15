@@ -10,58 +10,42 @@ import UIKit
 import GodToolsShared
 import Combine
 
-class LessonFlow: ToolNavigationFlow, Flow {
+final class LessonFlow: GTFlow {
+    
+    enum CompletedState: Sendable {
+        case userClosedLesson(lessonId: String, highestPageNumberViewed: Int)
+    }
     
     private let toolTranslations: ToolTranslationsDomainModel
     private let appLanguage: AppLanguageDomainModel
     private let trainingTipsEnabled: Bool
     private let initialPageSubIndex: Int?
+    private let initialPage: MobileContentRendererInitialPage?
+    private let toolOpenedFrom: ToolOpenedFrom
     
     private var cancellables: Set<AnyCancellable> = Set()
     private var lesson: ResourceDataModel {
         return toolTranslations.tool
     }
-    private var shareToolFlow: ShareToolFlow?
     
-    private weak var flowDelegate: FlowDelegate?
-    
-    let appDiContainer: AppDiContainer
-    let navigationController: AppNavigationController
-    
-    var articleFlow: ArticleFlow?
-    var chooseYourOwnAdventureFlow: ChooseYourOwnAdventureFlow?
-    var lessonFlow: LessonFlow?
-    var tractFlow: TractFlow?
-    var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
-    
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, toolOpenedFrom: ToolOpenedFrom) {
+    init(
+        appDiContainer: AppDiContainer,
+        appLanguage: AppLanguageDomainModel,
+        toolTranslations: ToolTranslationsDomainModel,
+        trainingTipsEnabled: Bool,
+        initialPage: MobileContentRendererInitialPage?,
+        initialPageSubIndex: Int?,
+        toolOpenedFrom: ToolOpenedFrom
+    ) {
         
-        self.flowDelegate = flowDelegate
-        self.appDiContainer = appDiContainer
-        self.navigationController = sharedNavigationController
         self.toolTranslations = toolTranslations
         self.appLanguage = appLanguage
         self.trainingTipsEnabled = trainingTipsEnabled
         self.initialPageSubIndex = initialPageSubIndex
-                
-        if let initialPage = initialPage {
-            
-            navigateToLesson(isNavigatingFromResumeLessonModal: false, initialPage: initialPage, initialPageSubIndex: initialPageSubIndex, animated: true)
-        }
-        else if shouldNavigateToResumeLesson(toolOpenedFrom: toolOpenedFrom) {
-            
-            let resumeLessonModal = getResumeLessonModal()
-            
-            navigationController.present(resumeLessonModal, animated: true)
-        }
-        else {
-            
-            navigateToLesson(isNavigatingFromResumeLessonModal: false, initialPage: initialPage, initialPageSubIndex: initialPageSubIndex, animated: true)
-        }
-    }
-    
-    deinit {
-        print("x deinit: \(type(of: self))")
+        self.initialPage = initialPage
+        self.toolOpenedFrom = toolOpenedFrom
+        
+        super.init(appDiContainer: appDiContainer)
     }
     
     private var userLessonProgress: UserLessonProgressDataModel? {
@@ -98,78 +82,103 @@ class LessonFlow: ToolNavigationFlow, Flow {
         return hasLessonProgress && !lessonProgressIsFirstPage && !lessonProgressIsLastPage
     }
     
-    func navigate(step: FlowStep) {
+    override func navigate(step: FlowStep) {
         
-        switch step {
+        guard let appStep = step as? AppFlowStep else {
+            return
+        }
+
+        switch appStep {
         
         case .deepLink( _):
             break
             
         case .closeLessonSwipeTutorial:
-            navigationController.dismissPresented(animated: true, completion: nil)
+            dismissView(animated: true)
             trackSwipeTutorialViewed()
             
         case .startOverTappedFromResumeLessonModal:
-            navigateToLesson(isNavigatingFromResumeLessonModal: true, initialPage: nil, initialPageSubIndex: initialPageSubIndex, animated: false)
-            navigationController.dismissPresented(animated: true, completion: nil)
+            
+            navigateToLesson(
+                isNavigatingFromResumeLessonModal: true,
+                initialPage: nil,
+                initialPageSubIndex: initialPageSubIndex,
+                animated: false
+            )
+            
+            dismissView(animated: true)
             
         case .continueTappedFromResumeLessonModal:
-            navigateToLesson(isNavigatingFromResumeLessonModal: true, initialPage: userLessonProgressPage, initialPageSubIndex: initialPageSubIndex, animated: false)
-            navigationController.dismissPresented(animated: true, completion: nil)
+            
+            navigateToLesson(
+                isNavigatingFromResumeLessonModal: true,
+                initialPage: userLessonProgressPage,
+                initialPageSubIndex: initialPageSubIndex,
+                animated: false
+            )
+            
+            dismissView(animated: true)
             
             
         case .shareLessonTappedFromLesson(let pageNumber, let languageId):
-             
-            shareToolFlow = ShareToolFlow(
-                flowDelegate: self,
-                appDiContainer: appDiContainer,
-                navigationController: navigationController,
-                toolId: lesson.id,
-                toolLanguageId: languageId,
-                pageNumber: pageNumber,
-                appLanguage: appLanguage,
-                toolAnalyticsAbbreviation: lesson.abbreviation
+            presentFlow(
+                flow: ShareToolFlow(
+                    appDiContainer: appDiContainer,
+                    toolId: lesson.id,
+                    toolLanguageId: languageId,
+                    pageNumber: pageNumber,
+                    appLanguage: appLanguage,
+                    toolAnalyticsAbbreviation: lesson.abbreviation
+                )
             )
             
         case .shareToolFlowCompleted( _):
-            shareToolFlow = nil
+            dismissFlow()
             
         case .closeTappedFromLesson(let lessonId, let highestPageNumberViewed):
-            closeTool(lessonId: lessonId, highestPageNumberViewed: highestPageNumberViewed)
+            completeFlow(state: .userClosedLesson(lessonId: lessonId, highestPageNumberViewed: highestPageNumberViewed))
                                                 
-        case .articleFlowCompleted( _):
-            
-            guard articleFlow != nil else {
-                return
-            }
-            
-            _ = navigationController.popViewController(animated: true)
-            
-            articleFlow = nil
-            
-        case .tractFlowCompleted(_):
-            
-            guard tractFlow != nil else {
-                return
-            }
-
-            _ = navigationController.popViewController(animated: true)
-            
-            tractFlow = nil
-            
-        case .lessonFlowCompleted(_):
-            
-            guard lessonFlow != nil else {
-                return
-            }
-            
-            _ = navigationController.popViewController(animated: true)
-            
-            lessonFlow = nil
-                    
+                        
+        case .toolNavigationFlowCompleted( _):
+            pushedFlow?.popFlow()
+            popFlow()
+               
         default:
             break
         }
+    }
+    
+    override func onPushed(animated: Bool) {
+        
+        if let initialPage = initialPage {
+            
+            navigateToLesson(
+                isNavigatingFromResumeLessonModal: false,
+                initialPage: initialPage,
+                initialPageSubIndex: initialPageSubIndex,
+                animated: true
+            )
+        }
+        else if shouldNavigateToResumeLesson(toolOpenedFrom: toolOpenedFrom) {
+            
+            presentView(
+                view: getResumeLessonModal(),
+                animated: true
+            )
+        }
+        else {
+            
+            navigateToLesson(
+                isNavigatingFromResumeLessonModal: false,
+                initialPage: initialPage,
+                initialPageSubIndex: initialPageSubIndex,
+                animated: true
+            )
+        }
+    }
+    
+    private func completeFlow(state: CompletedState) {
+        parent?.stepEmitter.emit(step: AppFlowStep.lessonFlowCompleted(state: state))
     }
     
     private func navigateToLesson(isNavigatingFromResumeLessonModal: Bool, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, animated: Bool) {
@@ -187,31 +196,22 @@ class LessonFlow: ToolNavigationFlow, Flow {
     
     private func showSwipeTutorialIfNeeded() {
         
-        appDiContainer.feature.lessonSwipeTutorial.domainlayer
+        let shouldShow: Bool = appDiContainer.feature.lessonSwipeTutorial.domainlayer
             .getShouldShowLessonSwipeTutorialUseCase()
             .execute()
-            .receive(on: DispatchQueue.main)
-            .first()
-            .sink { [weak self] shouldShowSwipeTutorial in
-                
-                if shouldShowSwipeTutorial {
-                    self?.showSwipeTutorial()
-                }
-            }
-            .store(in: &cancellables)
-    }
-    
-    private func showSwipeTutorial() {
         
-        let _ = Timer.scheduledTimer(withTimeInterval: 0.8, repeats: false) { timer in
-            let swipeTutorial = self.getLessonSwipeTutorial()
-            self.navigationController.present(swipeTutorial, animated: true)
-        }
-    }
-    
-    private func closeTool(lessonId: String, highestPageNumberViewed: Int) {
+        if shouldShow {
+            
+            Task {
                 
-        flowDelegate?.navigate(step: .lessonFlowCompleted(state: .userClosedLesson(lessonId: lessonId, highestPageNumberViewed: highestPageNumberViewed)))
+                try await Task.sleep(nanoseconds: 800)
+                
+                presentView(
+                    view: getLessonSwipeTutorial(),
+                    animated: true
+                )
+            }
+        }
     }
     
     private func trackSwipeTutorialViewed() {
@@ -242,10 +242,11 @@ extension LessonFlow {
         }
         
         let navigation: MobileContentRendererNavigation = appDiContainer.getMobileContentRendererNavigation(
-            parentFlow: self,
-            navigationDelegate: self,
             appLanguage: appLanguage
         )
+        
+        navigation.setDelegate(delegate: self)
+        navigation.setToolFlow(toolFlow: self)
         
         let renderer = appDiContainer.getMobileContentRenderer(
             type: .lesson,
@@ -255,7 +256,7 @@ extension LessonFlow {
         )
         
         let viewModel = LessonViewModel(
-            flowDelegate: self,
+            stepEmitter: stepEmitter,
             renderer: renderer,
             resource: renderer.resource,
             primaryLanguage: renderer.languages.primaryLanguage,
@@ -280,7 +281,7 @@ extension LessonFlow {
     private func getLessonSwipeTutorial() -> UIViewController {
         
         let viewModel = LessonSwipeTutorialViewModel(
-            flowDelegate: self,
+            stepEmitter: stepEmitter,
             getStringsUseCase: appDiContainer.feature.lessonSwipeTutorial.domainlayer.getLessonSwipeTutorialStringsUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase()
         )
@@ -302,7 +303,7 @@ extension LessonFlow {
     private func getResumeLessonModal() -> UIViewController {
         
         let viewModel = ResumeLessonProgressModalViewModel(
-            flowDelegate: self,
+            stepEmitter: stepEmitter,
             getResumeLessonProgressStringsUseCase: appDiContainer.feature.lessonProgress.domainLayer.getResumeLessonProgressStringsUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase()
         )
@@ -327,8 +328,7 @@ extension LessonFlow {
 extension LessonFlow: MobileContentRendererNavigationDelegate {
     
     func mobileContentRendererNavigationDismissRenderer(navigation: MobileContentRendererNavigation, event: DismissToolEvent) {
-        
-        closeTool(lessonId: event.resource.id, highestPageNumberViewed: event.highestPageNumberViewed)
+        completeFlow(state: .userClosedLesson(lessonId: event.resource.id, highestPageNumberViewed: event.highestPageNumberViewed))
     }
     
     func mobileContentRendererNavigationDeepLink(navigation: MobileContentRendererNavigation, deepLink: MobileContentRendererNavigationDeepLinkType) {
