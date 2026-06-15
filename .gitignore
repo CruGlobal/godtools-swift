@@ -91,3 +91,6 @@ fastlane_cleanup_script.sh
 
 ## Script Executables
 DownloadInitialResourcesScript
+
+## swiftlint
+Baseline.json

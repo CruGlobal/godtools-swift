@@ -101,7 +101,7 @@ struct GodToolsApp: App {
     var body: some Scene {
         WindowGroup {
             GeometryReader { geometry in
-                appFlow.rootView
+                appFlow.view
             }
             .ignoresSafeArea()
             .onOpenURL { (url: URL) in

@@ -13,6 +13,7 @@ import Combine
 @MainActor
 final class ToolSettingsViewModel: ObservableObject {
         
+    private let stepEmitter: FlowStepEmitter
     private let toolSettingsObserver: ToolSettingsObserver
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getToolSettingsStringsUseCase: GetToolSettingsStringsUseCase
@@ -21,9 +22,7 @@ final class ToolSettingsViewModel: ObservableObject {
     private let getShareableImageUseCase: GetShareableImageUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     @Published private var appLanguage = AppLanguageDomainModel.english
     
     @Published private(set) var strings = ToolSettingsStringsDomainModel.emptyValue
@@ -34,9 +33,9 @@ final class ToolSettingsViewModel: ObservableObject {
     @Published private(set) var parallelLanguageTitle: String = ""
     @Published private(set) var shareables: [ShareableDomainModel] = Array()
         
-    init(flowDelegate: FlowDelegate, toolSettingsObserver: ToolSettingsObserver, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolSettingsStringsUseCase: GetToolSettingsStringsUseCase, getToolSettingsUseCase: GetToolSettingsUseCase, getShareablesUseCase: GetShareablesUseCase, getShareableImageUseCase: GetShareableImageUseCase) {
+    init(stepEmitter: FlowStepEmitter, toolSettingsObserver: ToolSettingsObserver, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolSettingsStringsUseCase: GetToolSettingsStringsUseCase, getToolSettingsUseCase: GetToolSettingsUseCase, getShareablesUseCase: GetShareablesUseCase, getShareableImageUseCase: GetShareableImageUseCase) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.toolSettingsObserver = toolSettingsObserver
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getToolSettingsStringsUseCase = getToolSettingsStringsUseCase
@@ -172,17 +171,17 @@ extension ToolSettingsViewModel {
     }
     
     func closeTapped() {
-        flowDelegate?.navigate(step: .closeTappedFromToolSettings)
+        stepEmitter.emit(step: AppFlowStep.closeTappedFromToolSettings)
     }
     
     func shareLinkTapped() {
         
-        flowDelegate?.navigate(step: .shareLinkTappedFromToolSettings)
+        stepEmitter.emit(step: AppFlowStep.shareLinkTappedFromToolSettings)
     }
     
     func screenShareTapped() {
         
-        flowDelegate?.navigate(step: .screenShareTappedFromToolSettings)
+        stepEmitter.emit(step: AppFlowStep.screenShareTappedFromToolSettings)
     }
     
     func trainingTipsTapped() {
@@ -194,12 +193,12 @@ extension ToolSettingsViewModel {
     
     func primaryLanguageTapped() {
         
-        flowDelegate?.navigate(step: .primaryLanguageTappedFromToolSettings)
+        stepEmitter.emit(step: AppFlowStep.primaryLanguageTappedFromToolSettings)
     }
     
     func parallelLanguageTapped() {
         
-        flowDelegate?.navigate(step: .parallelLanguageTappedFromToolSettings)
+        stepEmitter.emit(step: AppFlowStep.parallelLanguageTappedFromToolSettings)
     }
     
     func swapLanguageTapped() {
@@ -221,6 +220,6 @@ extension ToolSettingsViewModel {
     
     func shareableTapped(shareable: ShareableDomainModel) {
         
-        flowDelegate?.navigate(step: .shareableTappedFromToolSettings(shareable: shareable))
+        stepEmitter.emit(step: AppFlowStep.shareableTappedFromToolSettings(shareable: shareable))
     }
 }

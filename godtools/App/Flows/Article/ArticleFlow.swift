@@ -9,23 +9,18 @@
 import UIKit
 import GodToolsShared
 import SwiftUI
-import Combine
 
-class ArticleFlow: Flow {
+final class ArticleFlow: GTFlow {
+    
+    enum CompletedState: Sendable {
+        case articleShared
+        case userClosed
+    }
     
     private let downloadArticlesObservable: DownloadManifestArticlesObservable
-        
-    private weak var flowDelegate: FlowDelegate?
-    
-    let appDiContainer: AppDiContainer
-    let navigationController: AppNavigationController
-    
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, toolTranslations: ToolTranslationsDomainModel) {
-        
-        self.flowDelegate = flowDelegate
-        self.appDiContainer = appDiContainer
-        self.navigationController = sharedNavigationController
-        
+                
+    init(appDiContainer: AppDiContainer, toolTranslations: ToolTranslationsDomainModel) {
+                
         let languageTranslationManifest: MobileContentRendererLanguageTranslationManifest = toolTranslations.languageTranslationManifests[0]
         
         downloadArticlesObservable = DownloadManifestArticlesObservable(
@@ -40,25 +35,32 @@ class ArticleFlow: Flow {
             forceFetchFromRemote: false
         )
         
-        sharedNavigationController.pushViewController(
-            getArticleCategories(
-                toolTranslations: toolTranslations,
-                languageTranslationManifest: languageTranslationManifest
-            ),
-            animated: true
+        let stepEmitter = FlowStepEmitter()
+        
+        let articleCategories = Self.getArticleCategories(
+            appDiContainer: appDiContainer,
+            stepEmitter: stepEmitter,
+            toolTranslations: toolTranslations,
+            languageTranslationManifest: languageTranslationManifest
+        )
+        
+        super.init(
+            appDiContainer: appDiContainer,
+            initialView: articleCategories,
+            stepEmitter: stepEmitter
         )
     }
     
-    deinit {
-        print("x deinit: \(type(of: self))")
-    }
-    
-    func navigate(step: FlowStep) {
+    override func navigate(step: FlowStep) {
         
-        switch step {
+        guard let appStep = step as? AppFlowStep else {
+            return
+        }
+
+        switch appStep {
         
         case .backTappedFromArticleCategories:
-            flowDelegate?.navigate(step: .articleFlowCompleted(state: .userClosedArticle))
+            completeFlow(state: .userClosed)
         
         case .articleCategoryTappedFromArticleCategories(let resource, let language, let category, let manifest):
             
@@ -69,46 +71,63 @@ class ArticleFlow: Flow {
         case .backTappedFromArticles:
             navigationController.popViewController(animated: true)
                         
-        case .articleTappedFromArticles(let resource, let aemCacheObject):
+        case .articleTappedFromArticles(let resource, let articleId):
             
-            let view = getArticle(resource: resource, aemCacheObject: aemCacheObject)
+            let view = getArticle(resource: resource, articleId: articleId)
             
             navigationController.pushViewController(view, animated: true)
             
         case .backTappedFromArticle:
             navigationController.popViewController(animated: true)
             
-        case .sharedTappedFromArticle(let articleAemData):
+        case .sharedTappedFromArticle(let articleId):
             
             let viewModel = ShareArticleViewModel(
-                articleAemData: articleAemData,
+                stepEmitter: stepEmitter,
+                articleId: articleId,
+                shareArticleUseCase: appDiContainer.feature.articles.domainLayer.getShareArticleUseCase(),
                 trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
                 trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase()
             )
             
             let view = ShareArticleView(viewModel: viewModel)
             
-            navigationController.present(view.controller, animated: true, completion: nil)
+            presentView(view: view.controller, animated: true)
             
-        case .debugTappedFromArticle(let article):
+        case .dismissedShareArticleActivityViewController:
+            completeFlow(state: .articleShared)
+                        
+        case .debugTappedFromArticle(let articleUrl):
             
-            navigationController.present(getArticleDebugView(article: article), animated: true)
+            presentView(
+                view: getArticleDebugView(articleUrl: articleUrl),
+                animated: true
+            )
             
         case .closeTappedFromArticleDebug:
-            navigationController.dismissPresented(animated: true, completion: nil)
+            dismissView(animated: true)
             
         default:
             break
         }
     }
+    
+    private func completeFlow(state: CompletedState) {
+        parent?.stepEmitter.emit(step: AppFlowStep.articleFlowCompleted(state: state))
+    }
 }
 
 extension ArticleFlow {
     
-    private func getArticleCategories(toolTranslations: ToolTranslationsDomainModel, languageTranslationManifest: MobileContentRendererLanguageTranslationManifest) -> UIViewController {
+    private static func getArticleCategories(
+        appDiContainer: AppDiContainer,
+        stepEmitter: FlowStepEmitter,
+        toolTranslations: ToolTranslationsDomainModel,
+        languageTranslationManifest: MobileContentRendererLanguageTranslationManifest
+    ) -> UIViewController {
         
         let viewModel = ArticleCategoriesViewModel(
-            flowDelegate: self,
+            stepEmitter: stepEmitter,
             resource: toolTranslations.tool,
             language: languageTranslationManifest.language,
             translation: languageTranslationManifest.translation,
@@ -144,16 +163,20 @@ extension ArticleFlow {
     private func getArticles(resource: ResourceDataModel, language: LanguageDataModel, category: ArticleCategoryDomainModel, manifest: Manifest) -> UIViewController {
         
         let viewModel = ArticlesViewModel(
-            flowDelegate: self,
+            stepEmitter: stepEmitter,
             resource: resource,
             language: language,
             category: category,
             manifest: manifest,
             downloadArticlesObservable: downloadArticlesObservable,
-            articleManifestAemRepository: appDiContainer.core.dataLayer.getArticleManifestAemRepository(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            getArticlesUseCase: appDiContainer.feature.articles.domainLayer.getArticlesUseCase(),
             localizationServices: appDiContainer.core.dataLayer.getLocalizationServices(),
             trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase()
+        )
+        
+        let view = ArticlesView(
+            viewModel: viewModel
         )
         
         let backButton = AppBackBarItem(
@@ -162,25 +185,25 @@ extension ArticleFlow {
             accessibilityIdentifier: nil
         )
         
-        let view = ArticlesView(
-            viewModel: viewModel,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: backButton,
-                leadingItems: [],
-                trailingItems: []
-            )
+        let navigationBar = AppNavigationBar(
+            appearance: nil,
+            backButton: backButton,
+            leadingItems: [],
+            trailingItems: []
         )
-                
-        return view
+        
+        let hostingView = AppHostingController<ArticlesView>(rootView: view, navigationBar: navigationBar)
+        
+        return hostingView
     }
     
-    private func getArticle(resource: ResourceDataModel, aemCacheObject: ArticleAemCacheObject) -> UIViewController {
+    private func getArticle(resource: ResourceDataModel, articleId: String) -> UIViewController {
         
         let viewModel = ArticleWebViewModel(
-            flowDelegate: self,
+            stepEmitter: stepEmitter,
             flowType: .tool(resource: resource),
-            aemCacheObject: aemCacheObject,
+            articleId: articleId,
+            getArticleUseCase: appDiContainer.feature.articles.domainLayer.getArticleUseCase(),
             incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase(),
             getAppUIDebuggingIsEnabledUseCase: appDiContainer.core.domainLayer.getAppUIDebuggingIsEnabledUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase()
@@ -221,11 +244,11 @@ extension ArticleFlow {
         return view
     }
     
-    private func getArticleDebugView(article: ArticleDomainModel) -> UIViewController {
+    private func getArticleDebugView(articleUrl: ArticleUrlDomainModel) -> UIViewController {
         
         let viewModel = ArticleDebugViewModel(
-            flowDelegate: self,
-            article: article
+            stepEmitter: stepEmitter,
+            articleUrl: articleUrl
         )
         
         let view = ArticleDebugView(viewModel: viewModel)

@@ -17,6 +17,7 @@ final class ToolsViewModel: ObservableObject {
     
     private static var favoriteToolTasks: [ToolId: Task<Void, Error>] = Dictionary()
     
+    private let stepEmitter: FlowStepEmitter
     private let pullToRefreshToolsUseCase: PullToRefreshToolsUseCase
     private let getToolsStringsUseCase: GetToolsStringsUseCase
     private let getAllToolsUseCase: GetAllToolsUseCase
@@ -37,8 +38,6 @@ final class ToolsViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = Set()
     private var pullToRefreshToolsTask: Task<Void, Error>?
     
-    private weak var flowDelegate: FlowDelegate?
-
     @Published private var appLanguage = AppLanguageDomainModel.english
     @Published private var toolFilterCategorySelection = ToolFilterCategoryDomainModel.emptyValue
     @Published private var toolFilterLanguageSelection = ToolFilterLanguageDomainModel.emptyValue
@@ -56,9 +55,9 @@ final class ToolsViewModel: ObservableObject {
 
     @Published var selectedToggle: PersonalizationToggleOptionValue = .personalized
 
-    init(flowDelegate: FlowDelegate, pullToRefreshToolsUseCase: PullToRefreshToolsUseCase, getToolsStringsUseCase: GetToolsStringsUseCase, getAllToolsUseCase: GetAllToolsUseCase, getPersonalizedToolsUseCase: GetPersonalizedToolsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, favoritingToolMessageCache: FavoritingToolMessageCache, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getUserToolFilterCategoryUseCase: GetUserToolFilterCategoryUseCase, getUserToolFilterLanguageUseCase: GetUserToolFilterLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getToolBannerUseCase: GetToolBannerUseCase, inMemoryDataCache: InMemoryDataCache) {
+    init(stepEmitter: FlowStepEmitter, pullToRefreshToolsUseCase: PullToRefreshToolsUseCase, getToolsStringsUseCase: GetToolsStringsUseCase, getAllToolsUseCase: GetAllToolsUseCase, getPersonalizedToolsUseCase: GetPersonalizedToolsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, favoritingToolMessageCache: FavoritingToolMessageCache, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getUserToolFilterCategoryUseCase: GetUserToolFilterCategoryUseCase, getUserToolFilterLanguageUseCase: GetUserToolFilterLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getToolBannerUseCase: GetToolBannerUseCase, inMemoryDataCache: InMemoryDataCache) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.pullToRefreshToolsUseCase = pullToRefreshToolsUseCase
         self.getToolsStringsUseCase = getToolsStringsUseCase
         self.getAllToolsUseCase = getAllToolsUseCase
@@ -374,12 +373,12 @@ extension ToolsViewModel {
     
     func toolCategoryFilterTapped() {
         
-        flowDelegate?.navigate(step: .toolCategoryFilterTappedFromTools)
+        stepEmitter.emit(step: AppFlowStep.toolCategoryFilterTappedFromTools)
     }
     
     func toolLanguageFilterTapped() {
         
-        flowDelegate?.navigate(step: .toolLanguageFilterTappedFromTools)
+        stepEmitter.emit(step: AppFlowStep.toolLanguageFilterTappedFromTools)
     }
     
     func spotlightToolFavoriteTapped(spotlightTool: SpotlightToolListItemDomainModel) {
@@ -391,7 +390,7 @@ extension ToolsViewModel {
         
         trackToolTappedAnalytics(tool: spotlightTool)
         
-        flowDelegate?.navigate(step: .spotlightToolTappedFromTools(spotlightTool: spotlightTool, toolFilterLanguage: toolFilterLanguageSelection))
+        stepEmitter.emit(step: AppFlowStep.spotlightToolTappedFromTools(spotlightTool: spotlightTool, toolFilterLanguage: toolFilterLanguageSelection))
     }
     
     func toolFavoriteTapped(tool: ToolListItemDomainModel) {
@@ -403,12 +402,12 @@ extension ToolsViewModel {
 
         trackToolTappedAnalytics(tool: tool)
 
-        flowDelegate?.navigate(step: .toolTappedFromTools(tool: tool, toolFilterLanguage: toolFilterLanguageSelection))
+        stepEmitter.emit(step: AppFlowStep.toolTappedFromTools(tool: tool, toolFilterLanguage: toolFilterLanguageSelection))
     }
 
     func localizationSettingsTapped() {
 
-        flowDelegate?.navigate(step: .localizationSettingsTappedFromTools)
+        stepEmitter.emit(step: AppFlowStep.localizationSettingsTappedFromTools)
     }
 
     func goToAllToolsTapped() {

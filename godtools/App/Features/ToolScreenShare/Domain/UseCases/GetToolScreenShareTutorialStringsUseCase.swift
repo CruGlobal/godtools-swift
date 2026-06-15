@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetToolScreenShareTutorialStringsUseCase {
     
@@ -18,7 +17,7 @@ final class GetToolScreenShareTutorialStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolScreenShareTutorialStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> ToolScreenShareTutorialStringsDomainModel {
         
         let localeId: String = appLanguage
         
@@ -28,7 +27,6 @@ final class GetToolScreenShareTutorialStringsUseCase {
             shareLinkActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: "share_link")
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

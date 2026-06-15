@@ -37,13 +37,10 @@ enum SwiftArticleAemDataV1 {
 @available(iOS 17.4, *)
 extension SwiftArticleAemData {
     
-    func mapFrom(model: ArticleAemData, ignorePrimaryKey: Bool) {
-        
-        if !ignorePrimaryKey {
-            aemUri = model.aemUri
-        }
+    func mapFrom(model: ArticleAemData) {
         
         id = model.id
+        aemUri = model.aemUri
         
         if let articleJcrContentModel = model.articleJcrContent {
             articleJcrContent = SwiftArticleJrcContent.createNewFrom(model: articleJcrContentModel)
@@ -56,7 +53,7 @@ extension SwiftArticleAemData {
     static func createNewFrom(model: ArticleAemData) -> SwiftArticleAemData {
         
         let object = SwiftArticleAemData()
-        object.mapFrom(model: model, ignorePrimaryKey: false)
+        object.mapFrom(model: model)
         return object
     }
     

@@ -12,9 +12,8 @@ import Foundation
 final class DashboardPresentationLayerDependencies {
     
     private let appDiContainer: AppDiContainer
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+    private let stepEmitter: FlowStepEmitter
+        
     lazy var lessonsViewModel: LessonsViewModel = {
         return getLessonsViewModel()
     }()
@@ -27,24 +26,16 @@ final class DashboardPresentationLayerDependencies {
         return getToolsViewModel()
     }()
     
-    init(appDiContainer: AppDiContainer, flowDelegate: FlowDelegate) {
+    init(appDiContainer: AppDiContainer, stepEmitter: FlowStepEmitter) {
         
         self.appDiContainer = appDiContainer
-        self.flowDelegate = flowDelegate
-    }
-    
-    private var unwrappedFlowDelegate: FlowDelegate {
-        guard let flowDelegate = self.flowDelegate else {
-            assertionFailure("FlowDelegate should not be nil.")
-            return self.flowDelegate!
-        }
-        return flowDelegate
+        self.stepEmitter = stepEmitter
     }
     
     private func getLessonsViewModel() -> LessonsViewModel {
         
         return LessonsViewModel(
-            flowDelegate: unwrappedFlowDelegate,
+            stepEmitter: stepEmitter,
             pullToRefreshLessonsUseCase: appDiContainer.feature.lessons.domainLayer.getPullToRefreshLessonsUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getLocalizationSettingsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getLocalizationSettingsUseCase(),
@@ -62,7 +53,7 @@ final class DashboardPresentationLayerDependencies {
     private func getFavoritesViewModel() -> FavoritesViewModel {
         
         return FavoritesViewModel(
-            flowDelegate: unwrappedFlowDelegate,
+            stepEmitter: stepEmitter,
             resourcesRepository: appDiContainer.core.dataLayer.getResourcesRepository(),
             getFavoritesStringsUseCase: appDiContainer.feature.favorites.domainLayer.getFavoritesStringsUseCase(),
             getYourFavoritedToolsUseCase: appDiContainer.feature.favorites.domainLayer.getYourFavoritedToolsUseCase(),
@@ -81,7 +72,7 @@ final class DashboardPresentationLayerDependencies {
     private func getToolsViewModel() -> ToolsViewModel {
 
         return ToolsViewModel(
-            flowDelegate: unwrappedFlowDelegate,
+            stepEmitter: stepEmitter,
             pullToRefreshToolsUseCase: appDiContainer.feature.tools.domainLayer.getPullToRefreshToolsUseCase(),
             getToolsStringsUseCase: appDiContainer.feature.tools.domainLayer.getToolsStringsUseCase(),
             getAllToolsUseCase: appDiContainer.feature.tools.domainLayer.getAllToolsUseCase(),

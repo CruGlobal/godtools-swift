@@ -145,7 +145,7 @@ struct AllToolsView_Preview: PreviewProvider {
         let appDiContainer = AppDiContainer.createUITestsDiContainer()
         
         let viewModel = ToolsViewModel(
-            flowDelegate: MockFlowDelegate(),
+            stepEmitter: PreviewFlowStepEmitter.emitter,
             pullToRefreshToolsUseCase: appDiContainer.feature.tools.domainLayer.getPullToRefreshToolsUseCase(),
             getToolsStringsUseCase: appDiContainer.feature.tools.domainLayer.getToolsStringsUseCase(),
             getAllToolsUseCase: appDiContainer.feature.tools.domainLayer.getAllToolsUseCase(),

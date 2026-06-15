@@ -14,6 +14,7 @@ final class OnboardingTutorialViewModel: ObservableObject {
     
     private static let continueButtonContinueAccessibility: AccessibilityStrings.Button = .continueForward
         
+    private let stepEmitter: FlowStepEmitter
     private let viewedOnboardingTutorialUseCase: ViewedOnboardingTutorialUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getOnboardingTutorialStringsUseCase: GetOnboardingTutorialStringsUseCase
@@ -24,9 +25,7 @@ final class OnboardingTutorialViewModel: ObservableObject {
     private let showsChooseAppLanguageButtonOnPages: [Int] = [0]
     
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     @Published private var appLanguage = AppLanguageDomainModel.english
     
     @Published private(set) var strings = OnboardingTutorialStringsDomainModel.emptyValue
@@ -38,9 +37,9 @@ final class OnboardingTutorialViewModel: ObservableObject {
     
     @Published var currentPage: Int = 0
     
-    init(flowDelegate: FlowDelegate, viewedOnboardingTutorialUseCase: ViewedOnboardingTutorialUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getOnboardingTutorialStringsUseCase: GetOnboardingTutorialStringsUseCase, trackTutorialVideoAnalytics: TutorialVideoAnalytics, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(stepEmitter: FlowStepEmitter, viewedOnboardingTutorialUseCase: ViewedOnboardingTutorialUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getOnboardingTutorialStringsUseCase: GetOnboardingTutorialStringsUseCase, trackTutorialVideoAnalytics: TutorialVideoAnalytics, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.viewedOnboardingTutorialUseCase = viewedOnboardingTutorialUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getOnboardingTutorialStringsUseCase = getOnboardingTutorialStringsUseCase
@@ -204,12 +203,12 @@ extension OnboardingTutorialViewModel {
     
     func chooseAppLanguageTapped() {
         
-        flowDelegate?.navigate(step: .chooseAppLanguageTappedFromOnboardingTutorial)
+        stepEmitter.emit(step: AppFlowStep.chooseAppLanguageTappedFromOnboardingTutorial)
     }
     
     @objc func skipTapped() {
         
-        flowDelegate?.navigate(step: .skipTappedFromOnboardingTutorial)
+        stepEmitter.emit(step: AppFlowStep.skipTappedFromOnboardingTutorial)
         
         let pageAnalytics: OnboardingTutorialPageAnalyticsProperties = getOnboardingTutorialPageAnalyticsProperties(page: pages[currentPage])
         
@@ -228,12 +227,12 @@ extension OnboardingTutorialViewModel {
     
     func continueTapped() {
         
-        flowDelegate?.navigate(step: .continueTappedFromTutorial)
+        stepEmitter.emit(step: AppFlowStep.continueTappedFromTutorial)
     }
     
     func watchReadyForEveryConversationVideoTapped() {
         
-        flowDelegate?.navigate(step: .videoButtonTappedFromOnboardingTutorial(youtubeVideoId: readyForEveryConversationYoutubeVideoId))
+        stepEmitter.emit(step: AppFlowStep.videoButtonTappedFromOnboardingTutorial(youtubeVideoId: readyForEveryConversationYoutubeVideoId))
         
         let pageAnalytics: OnboardingTutorialPageAnalyticsProperties = getOnboardingTutorialPageAnalyticsProperties(page: .readyForEveryConversation)
         

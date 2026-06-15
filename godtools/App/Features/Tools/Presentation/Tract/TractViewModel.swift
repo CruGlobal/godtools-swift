@@ -15,6 +15,7 @@ final class TractViewModel: MobileContentRendererViewModel {
         
     static let isLiveShareStreamingKey: String = "TractViewModel.isLiveShareStreamKey"
     
+    private let stepEmitter: FlowStepEmitter
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
     private let tractRemoteShareSubscriber: TractRemoteShareSubscriber
     private let languagesRepository: LanguagesRepository
@@ -25,9 +26,7 @@ final class TractViewModel: MobileContentRendererViewModel {
     
     private var cancellables: Set<AnyCancellable> = Set()
     private var remoteShareIsActive: Bool = false
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     let navBarAppearance: AppNavigationBarAppearance
     let languageFont: UIFont?
     let didSubscribeForRemoteSharePublishing: ObservableValue<Bool> = ObservableValue(value: false)
@@ -35,9 +34,9 @@ final class TractViewModel: MobileContentRendererViewModel {
     @Published private(set) var toolSettingsDidClose: Void?
     @Published private(set) var hidesRemoteShareIsActive: Bool = true
         
-    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, languagesRepository: LanguagesRepository, resourceViewsService: ResourceViewsService, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, liveShareStream: String?, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?, persistToolLanguageSettings: PersistToolLanguageSettingsInterface?) {
+    init(stepEmitter: FlowStepEmitter, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, languagesRepository: LanguagesRepository, resourceViewsService: ResourceViewsService, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, liveShareStream: String?, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?, persistToolLanguageSettings: PersistToolLanguageSettingsInterface?) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
         self.tractRemoteShareSubscriber = tractRemoteShareSubscriber
         self.languagesRepository = languagesRepository
@@ -244,12 +243,12 @@ extension TractViewModel {
         
         let isScreenSharing: Bool = remoteShareIsActive
         
-        flowDelegate?.navigate(step: .homeTappedFromTool(isScreenSharing: isScreenSharing))
+        stepEmitter.emit(step: AppFlowStep.homeTappedFromTool(isScreenSharing: isScreenSharing))
     }
     
     @objc func backTapped() {
         
-        flowDelegate?.navigate(step: .backTappedFromTool)
+        stepEmitter.emit(step: AppFlowStep.backTappedFromTool)
     }
     
     @objc func toolSettingsTapped() {
@@ -273,7 +272,7 @@ extension TractViewModel {
                 data: [ToolAnalyticsActionNames.shared.ACTION_SETTINGS: 1]
             )
         
-        flowDelegate?.navigate(step: .toolSettingsTappedFromTool(toolSettingsObserver: toolSettingsObserver, toolSettingsDidCloseClosure: toolSettingsDidCloseClosure))
+        stepEmitter.emit(step: AppFlowStep.toolSettingsTappedFromTool(toolSettingsObserver: toolSettingsObserver, toolSettingsDidCloseClosure: toolSettingsDidCloseClosure))
     }
     
     func languageTapped(index: Int, page: Int, pagePositions: TractPagePositions) {

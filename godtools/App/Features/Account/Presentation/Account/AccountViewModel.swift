@@ -16,6 +16,7 @@ final class AccountViewModel: ObservableObject {
     
     private static var didPullToRefreshCancellable: AnyCancellable?
     
+    private let stepEmitter: FlowStepEmitter
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase
     private let getUserActivityUseCase: GetUserActivityUseCase
@@ -26,9 +27,7 @@ final class AccountViewModel: ObservableObject {
     private let didPullToRefreshAccountUseCase: DidPullToRefreshAccountUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
     @Published private(set) var strings = AccountStringsDomainModel.emptyValue
@@ -40,9 +39,9 @@ final class AccountViewModel: ObservableObject {
     @Published private(set) var stats = [UserActivityStatDomainModel]()
     @Published private(set) var globalActivityIsEnabled: Bool = false
         
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase, getUserActivityUseCase: GetUserActivityUseCase, getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, getAccountStringsUseCase: GetAccountStringsUseCase, getGlobalActivityEnabledUseCase: GetGlobalActivityEnabledUseCase, didPullToRefreshAccountUseCase: DidPullToRefreshAccountUseCase) {
+    init(stepEmitter: FlowStepEmitter, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase, getUserActivityUseCase: GetUserActivityUseCase, getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, getAccountStringsUseCase: GetAccountStringsUseCase, getGlobalActivityEnabledUseCase: GetGlobalActivityEnabledUseCase, didPullToRefreshAccountUseCase: DidPullToRefreshAccountUseCase) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getUserAccountDetailsUseCase = getUserAccountDetailsUseCase
         self.getGlobalActivityThisWeekUseCase = getGlobalActivityThisWeekUseCase
@@ -149,7 +148,7 @@ final class AccountViewModel: ObservableObject {
 extension AccountViewModel {
     
     @objc func backTapped() {
-        flowDelegate?.navigate(step: .backTappedFromActivity)
+        stepEmitter.emit(step: AppFlowStep.backTappedFromActivity)
     }
     
     func pullToRefresh() {

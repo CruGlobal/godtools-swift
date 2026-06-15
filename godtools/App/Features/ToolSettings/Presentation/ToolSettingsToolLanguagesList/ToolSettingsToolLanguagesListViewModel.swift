@@ -12,6 +12,7 @@ import Combine
 @MainActor
 final class ToolSettingsToolLanguagesListViewModel: ObservableObject {
         
+    private let stepEmitter: FlowStepEmitter
     private let listType: ToolSettingsToolLanguagesListTypeDomainModel
     private let toolId: String
     private let toolSettingsObserver: ToolSettingsObserver
@@ -20,9 +21,7 @@ final class ToolSettingsToolLanguagesListViewModel: ObservableObject {
     private let getToolSettingsToolLanguagesListUseCase: GetToolSettingsToolLanguagesListUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     @Published private var appLanguage = AppLanguageDomainModel.english
     
     @Published private(set) var strings = ToolSettingsToolLanguagesListStringsDomainModel.emptyValue
@@ -30,9 +29,9 @@ final class ToolSettingsToolLanguagesListViewModel: ObservableObject {
     @Published private(set) var selectedLanguageId: String?
     @Published private(set) var showsDeleteLanguageButton: Bool = false
     
-    init(flowDelegate: FlowDelegate, listType: ToolSettingsToolLanguagesListTypeDomainModel, toolId: String, toolSettingsObserver: ToolSettingsObserver, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolSettingsToolLanguagesListStringsUseCase: GetToolSettingsToolLanguagesListStringsUseCase, getToolSettingsToolLanguagesListUseCase: GetToolSettingsToolLanguagesListUseCase) {
+    init(stepEmitter: FlowStepEmitter, listType: ToolSettingsToolLanguagesListTypeDomainModel, toolId: String, toolSettingsObserver: ToolSettingsObserver, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolSettingsToolLanguagesListStringsUseCase: GetToolSettingsToolLanguagesListStringsUseCase, getToolSettingsToolLanguagesListUseCase: GetToolSettingsToolLanguagesListUseCase) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.listType = listType
         self.toolId = toolId
         self.toolSettingsObserver = toolSettingsObserver
@@ -105,7 +104,7 @@ final class ToolSettingsToolLanguagesListViewModel: ObservableObject {
 extension ToolSettingsToolLanguagesListViewModel {
     
     func closeTapped() {
-        flowDelegate?.navigate(step: .closeTappedFromToolSettingsToolLanguagesList)
+        stepEmitter.emit(step: AppFlowStep.closeTappedFromToolSettingsToolLanguagesList)
     }
     
     func deleteLanguageTapped() {
@@ -126,7 +125,7 @@ extension ToolSettingsToolLanguagesListViewModel {
                 selectedLanguageId: parallelIsSelected ? currentLanguages.primaryLanguageId : currentLanguages.selectedLanguageId
             )
 
-            flowDelegate?.navigate(step: .deleteParallelLanguageTappedFromToolSettingsToolLanguagesList)
+            stepEmitter.emit(step: AppFlowStep.deleteParallelLanguageTappedFromToolSettingsToolLanguagesList)
         }
     }
     
@@ -147,7 +146,7 @@ extension ToolSettingsToolLanguagesListViewModel {
                 selectedLanguageId: primaryIsSelected ? languageId : currentLanguages.selectedLanguageId
             )
             
-            flowDelegate?.navigate(step: .primaryLanguageTappedFromToolSettingsToolLanguagesList)
+            stepEmitter.emit(step: AppFlowStep.primaryLanguageTappedFromToolSettingsToolLanguagesList)
             
         case .chooseParallelLanguage:
             
@@ -160,7 +159,7 @@ extension ToolSettingsToolLanguagesListViewModel {
                 selectedLanguageId: parallelIsSelected ? languageId : currentLanguages.selectedLanguageId
             )
                         
-            flowDelegate?.navigate(step: .parallelLanguageTappedFromToolSettingsToolLanguagesList)
+            stepEmitter.emit(step: AppFlowStep.parallelLanguageTappedFromToolSettingsToolLanguagesList)
         }
     }
 }

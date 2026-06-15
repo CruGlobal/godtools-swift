@@ -11,50 +11,53 @@ import MessageUI
 import SwiftUI
 import Combine
 
-final class AppFlow: NSObject, Flow {
+final class AppFlow: RootFlow {
         
     static let defaultNavBarColor: UIColor = .white
     static let defaultNavBarControlColor: UIColor = ColorPalette.gtBlue.uiColor
     static let defaultNavBarStatusBarStyle: UIStatusBarStyle = .darkContent
     
+    private let appDiContainer: AppDiContainer
+    private let rootController: AppRootController
     private let deepLinkingService: DeepLinkingService
     private let appMessaging: AppMessagingInterface
     private let appLaunchObserver: AppLaunchObserver = AppLaunchObserver()
     private let launchCountRepository: LaunchCountRepositoryInterface
     private let dashboardFlow: DashboardFlow
-    private let rootController: AppRootController = AppRootController(nibName: nil, bundle: nil)
     
-    private var onboardingFlow: OnboardingFlow?
-    private var languageSettingsFlow: LanguageSettingsFlow?
-    private var articleDeepLinkFlow: ArticleDeepLinkFlow?
     private var appLaunchedFromDeepLink: ParsedDeepLinkType?
-    private var optInNotificationFlow: OptInNotificationFlow?
     private var cancellableForShouldPromptForOptInNotification: AnyCancellable?
     private var cancellables: Set<AnyCancellable> = Set()
     
     @Published private var appLanguage = AppLanguageDomainModel.english
-        
-    let appDiContainer: AppDiContainer
-    let navigationController: AppNavigationController
-    let rootView: AppRootView
             
     init(appDiContainer: AppDiContainer, appDeepLinkingService: DeepLinkingService, deepLinkUrl: URL?) {
         
-        let navigationBarAppearance = AppNavigationBarAppearance(
-            backgroundColor: AppFlow.defaultNavBarColor,
-            controlColor: AppFlow.defaultNavBarControlColor,
-            titleFont: FontLibrary.systemUIFont(size: 17, weight: .semibold),
-            titleColor: AppFlow.defaultNavBarControlColor,
-            isTranslucent: false
+        print("x init rootFlow: \(type(of: self))")
+        
+        let appNavigationController = AppNavigationController(
+            navigationBarAppearance: AppNavigationBarAppearance(
+                backgroundColor: AppFlow.defaultNavBarColor,
+                controlColor: AppFlow.defaultNavBarControlColor,
+                titleFont: FontLibrary.systemUIFont(size: 17, weight: .semibold),
+                titleColor: AppFlow.defaultNavBarControlColor,
+                isTranslucent: false
+            ),
+            hidesNavigationBar: true
         )
         
+        let rootController = AppRootController()
+        
         self.appDiContainer = appDiContainer
-        self.navigationController = AppNavigationController(navigationBarAppearance: navigationBarAppearance, hidesNavigationBar: true)
-        self.rootView = AppRootView(appRootController: rootController)
+        self.rootController = rootController
         self.deepLinkingService = appDeepLinkingService
         self.appMessaging = appDiContainer.core.dataLayer.getAppMessaging()
         self.launchCountRepository = appDiContainer.core.dataLayer.getLaunchCountRepository()
-        self.dashboardFlow = DashboardFlow(appDiContainer: appDiContainer, sharedNavigationController: navigationController, rootController: rootController)
+        
+        dashboardFlow = DashboardFlow(
+            appDiContainer: appDiContainer,
+            rootController: rootController
+        )
         
         if let deepLinkUrl = deepLinkUrl {
             appLaunchedFromDeepLink = appDeepLinkingService.parseDeepLink(
@@ -62,18 +65,19 @@ final class AppFlow: NSObject, Flow {
             )
         }
         
-        super.init()
-        
-        navigationController.delegate = self
-        
         rootController.view.frame = UIScreen.main.bounds
         rootController.view.backgroundColor = .clear
+        rootController.addChildController(child: appNavigationController)
         
-        navigationController.view.backgroundColor = .white
-        navigationController.setNavigationBarHidden(true, animated: false)
+        super.init(
+            initialView: nil,
+            stepEmitter: FlowStepEmitter(),
+            rootView: .custom(view: rootController),
+            navigationController: appNavigationController
+        )
         
-        rootController.addChildController(child: navigationController)
-        
+        navigationController.delegate = self
+                
         deepLinkingService
             .parsedDeepLinkPublisher
             .receive(on: DispatchQueue.main)
@@ -87,7 +91,7 @@ final class AppFlow: NSObject, Flow {
                     weakSelf.appLaunchedFromDeepLink = deepLink
                 }
                 else {
-                    weakSelf.navigate(step: .deepLink(deepLinkType: deepLink))
+                    weakSelf.navigate(step: AppFlowStep.deepLink(deepLinkType: deepLink))
                 }
             }
             .store(in: &cancellables)
@@ -103,7 +107,7 @@ final class AppFlow: NSObject, Flow {
             .onAppLaunchPublisher()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (launchState: AppLaunchState) in
-                self?.navigate(step: .appLaunched(state: launchState))
+                self?.navigate(step: AppFlowStep.appLaunched(state: launchState))
             }
             .store(in: &cancellables)
     }
@@ -112,9 +116,13 @@ final class AppFlow: NSObject, Flow {
         print("x deinit: \(type(of: self))")
     }
     
-    func navigate(step: FlowStep) {
+    override func navigate(step: FlowStep) {
+        
+        guard let appStep = step as? AppFlowStep else {
+            return
+        }
 
-        switch step {
+        switch appStep {
             
         case .appLaunched(let launchState):
                         
@@ -138,6 +146,10 @@ final class AppFlow: NSObject, Flow {
                     let onboardingTutorialIsAvailable: Bool = appDiContainer.feature.onboarding.domainLayer.getOnboardingTutorialIsAvailableUseCase().execute()
                     let deferredDeepLink: ParsedDeepLinkType? = await appDiContainer.feature.deferredDeepLink.domainLayer.getDeferredDeepLinkUseCase().execute() // NOTE: I noticed the call to check for deferred deep link will take a second or 2. ~Levi
                                         
+                    if !onboardingTutorialIsAvailable {
+                        pushFlow(flow: dashboardFlow, animated: false)
+                    }
+                    
                     removeLaunchedFromBackgroundLoadingView(view: loadingView)
                     
                     let launchCount: Int = launchCountRepository.getLaunchCount()
@@ -147,24 +159,22 @@ final class AppFlow: NSObject, Flow {
                     
                     if let deepLink = deferredDeepLink {
                         
-                        navigate(step: .deepLink(deepLinkType: deepLink))
+                        navigate(step: AppFlowStep.deepLink(deepLinkType: deepLink))
                     }
                     else if let deepLink = appLaunchedFromDeepLink {
                         
                         appLaunchedFromDeepLink = nil
-                        navigate(step: .deepLink(deepLinkType: deepLink))
+                        navigate(step: AppFlowStep.deepLink(deepLinkType: deepLink))
                     }
                     else if shouldOpenPasteboardForDeferredDeepLink {
                         
-                        navigate(step: .showDeferredDeepLinkModal)
+                        navigate(step: AppFlowStep.showDeferredDeepLinkModal)
                     }
                     else if onboardingTutorialIsAvailable {
                         
-                        navigate(step: .showOnboardingTutorial(animated: true))
+                        navigateToOnboarding()
                     }
                     else {
-                        
-                        dashboardFlow.navigateToDashboard()
                         
                         promptForOptInNotificationIfNeeded()
                     }
@@ -199,41 +209,37 @@ final class AppFlow: NSObject, Flow {
             }
             
         case .deepLink(let deepLink):
-            navigateToDeepLink(deepLink: deepLink)
             
+            dashboardFlow.navigateToDashboard(
+                startingTab: deepLink.dashboardTab,
+                didCompleteDismissingPresentedView: { [weak self] in
+                    
+                    self?.navigateToDeepLink(deepLink: deepLink)
+                }
+            )
+ 
         case .showDeferredDeepLinkModal:
             
             let deferredDeepLinkModal = getDeferredDeepLinkModal()
-            navigationController.present(deferredDeepLinkModal, animated: true)
+            presentView(view: deferredDeepLinkModal, animated: true)
             
         case .handleDeepLinkFromDeferredDeepLinkModal(let deepLink):
-            
-            navigationController.dismissPresented(animated: false) { [weak self] in
-                self?.navigate(step: .deepLink(deepLinkType: deepLink))
-            }
-                        
+            dismissView(animated: false, completion: { [weak self] in
+                self?.navigate(step: AppFlowStep.deepLink(deepLinkType: deepLink))
+            })
+          
         case .closeTappedFromDeferredDeepLinkModal:
             dashboardFlow.navigateToDashboard()
-            navigationController.dismissPresented(animated: true, completion: nil)
+            dismissView(animated: true)
             
-        case .showOnboardingTutorial(let animated):
-            navigateToOnboarding(animated: animated)
+        case .onboardingFlowCompleted( _):
             
-        case .onboardingFlowCompleted(let onboardingFlowCompletedState):
+            pushFlow(flow: dashboardFlow, animated: false)
             
-            switch onboardingFlowCompletedState {
-            
-            case .completed:
-                dashboardFlow.navigateToDashboard()
-                
-            default:
-                dashboardFlow.navigateToDashboard()
-            }
-            
-            dismissOnboarding(animated: true)
+            dismissFlow()
                         
         case .languageSettingsFlowCompleted( _):
-            closeLanguageSettings()
+            popFlow()
             
         case .buttonWithUrlTappedFromAppMessage(let url):
                         
@@ -245,6 +251,40 @@ final class AppFlow: NSObject, Flow {
             
         case .optInNotificationFlowCompleted( _):
             dismissOptInNotificationFlow()
+            
+        case .loadingArticleFlowCompleted(let state):
+            
+            switch state {
+            
+            case .downloadSuccess(let aemUri):
+                pushFlow(
+                    flow: ArticleDeepLinkFlow(appDiContainer: appDiContainer, aemUri: aemUri)
+                )
+                
+                dismissFlow()
+            
+            case .downloadFailed(let alertMessage):
+                
+                let localizationServices: LocalizationServicesInterface = appDiContainer.core.dataLayer.getLocalizationServices()
+                let appLanguage: AppLanguageDomainModel = self.appLanguage
+                
+                dismissFlow(completion: { [weak self] in
+                    
+                    let view = AlertMessageView(
+                        title: alertMessage.title,
+                        message: alertMessage.message,
+                        acceptTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.ok.key),
+                        cancelTitle: nil,
+                        acceptTapped: nil,
+                        cancelTapped: nil
+                    )
+                    
+                    self?.presentView(view: view.controller, animated: true)
+                })
+            }
+            
+        case .articleDeepLinkFlowCompleted( _):
+            popFlow()
                         
         default:
             break
@@ -257,7 +297,7 @@ final class AppFlow: NSObject, Flow {
 extension AppFlow: UINavigationControllerDelegate {
     
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-        
+                
         let isDashboard: Bool = viewController is AppHostingController<DashboardView>
         let isLesson: Bool = viewController is LessonView
         let hidesNavigationBar: Bool = isDashboard || isLesson
@@ -363,92 +403,81 @@ extension AppFlow {
     }
 }
 
-// MARK: - Onboarding
-
-extension AppFlow {
-    
-    private func navigateToOnboarding(animated: Bool) {
-        
-        guard onboardingFlow == nil else {
-            return
-        }
-        
-        let onboardingFlow = OnboardingFlow(
-            flowDelegate: self,
-            appDiContainer: appDiContainer
-        )
-        
-        navigationController.present(onboardingFlow.navigationController, animated: animated, completion: nil)
-        
-        self.onboardingFlow = onboardingFlow
-    }
-    
-    private func dismissOnboarding(animated: Bool, completion: (() -> Void)? = nil) {
-        
-        guard onboardingFlow != nil else {
-            return
-        }
-        
-        navigationController.dismissPresented(animated: animated, completion: completion)
-        
-        onboardingFlow = nil
-    }
-}
-
 // MARK: - Deep Link
 
 extension AppFlow {
     
     private func navigateToDeepLink(deepLink: ParsedDeepLinkType) {
-        
+                
         switch deepLink {
         
         case .tool(let toolDeepLink):
-               
-            dashboardFlow.navigateToDashboard(startingTab: .favorites, animatePopToToolsMenu: false, animateDismissingPresentedView: false, didCompleteDismissingPresentedView: nil)
-                        
-            dashboardFlow.navigateToToolFromToolDeepLink(appLanguage: appLanguage, toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
+
+            dashboardFlow.navigateToToolFromDeepLink(
+                appLanguage: appLanguage,
+                toolDeepLink: toolDeepLink
+            )
             
         case .articleAemUri(let aemUri):
             
-            dashboardFlow.navigateToDashboard(startingTab: .favorites, animateDismissingPresentedView: false, didCompleteDismissingPresentedView: { [weak self] in
+            let aemCacheObject: ArticleAemCacheObject? = appDiContainer.core.dataLayer.getArticleAemRepository()
+                .getAemCacheObject(aemUri: aemUri)
+            
+            if let aemCacheObject = aemCacheObject {
                 
-                guard let weakSelf = self else {
-                    return
-                }
-                
-                let articleDeepLinkFlow = ArticleDeepLinkFlow(
-                    flowDelegate: weakSelf,
-                    appDiContainer: weakSelf.appDiContainer,
-                    sharedNavigationController: weakSelf.navigationController,
-                    aemUri: aemUri
+                pushFlow(
+                    flow: ArticleDeepLinkFlow(
+                        appDiContainer: appDiContainer,
+                        aemUri: aemCacheObject.aemUri
+                    )
                 )
+            }
+            else {
                 
-                weakSelf.articleDeepLinkFlow = articleDeepLinkFlow
-            })
+                presentFlow(
+                    flow: LoadingArticleFlow(
+                        appDiContainer: appDiContainer,
+                        appLanguage: appLanguage,
+                        aemUri: aemUri
+                    )
+                )
+            }
             
         case .languageSettings:
-            dashboardFlow.navigateToDashboard(startingTab: .favorites)
-            navigateToLanguageSettings(deepLink: nil)
+            pushFlow(
+                flow: LanguageSettingsFlow(
+                    appDiContainer: appDiContainer,
+                    deepLink: nil
+                )
+            )
             
         case .appLanguagesList:
-            dashboardFlow.navigateToDashboard(startingTab: .favorites)
-            navigateToLanguageSettings(deepLink: .appLanguagesList)
+            pushFlow(
+                flow: LanguageSettingsFlow(
+                    appDiContainer: appDiContainer,
+                    deepLink: .appLanguagesList
+                ),
+                animated: false
+            )
             
         case .lessonsList:
-            dashboardFlow.navigateToDashboard(startingTab: .lessons)
+            break
             
         case .favoritedToolsList:
-            dashboardFlow.navigateToDashboard(startingTab: .favorites)
+            break
             
         case .allToolsList:
-            dashboardFlow.navigateToDashboard(startingTab: .tools, animateDismissingPresentedView: false, didCompleteDismissingPresentedView: nil)
+            break
             
         case .dashboard:
-            dashboardFlow.navigateToDashboard(startingTab: .favorites)
+            break
             
         case .menu:
-            dashboardFlow.navigateToMenu(animated: true, initialNavigationStep: nil)
+            
+            dashboardFlow.navigateToMenu(
+                animated: true,
+                initialNavigationStep: nil
+            )
             
         case .onboarding(let appLanguage):
             
@@ -459,13 +488,14 @@ extension AppFlow {
                     .storeLanguage(appLanguageId: appLanguage)
             }
                         
-            navigateToOnboarding(animated: true)
+            navigateToOnboarding()
         }
     }
     
     private func getDeferredDeepLinkModal() -> UIViewController {
+        
         let viewModel = DeferredDeepLinkModalViewModel(
-            flowDelegate: self,
+            stepEmitter: stepEmitter,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getDeferredDeepLinkModalStringsUseCase: appDiContainer.feature.deferredDeepLink.domainLayer.getDeferredDeepLinkModalStringsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase(),
@@ -485,75 +515,78 @@ extension AppFlow {
     }
 }
 
-// MARK: - Language Settings
+// MARK: - Onboarding
 
 extension AppFlow {
     
-    private func navigateToLanguageSettings(deepLink: ParsedDeepLinkType?) {
+    private func navigateToOnboarding(animated: Bool = true) {
         
-        let languageSettingsFlow = LanguageSettingsFlow(
-            flowDelegate: self,
-            appDiContainer: appDiContainer,
-            sharedNavigationController: navigationController,
-            deepLink: deepLink
+        presentFlow(
+            flow: OnboardingFlow(appDiContainer: appDiContainer),
+            animated: animated
         )
-        
-        self.languageSettingsFlow = languageSettingsFlow
-    }
-    
-    private func closeLanguageSettings() {
-        
-        guard languageSettingsFlow != nil else {
-            return
-        }
-        
-        navigationController.popViewController(animated: true)
-        
-        self.languageSettingsFlow = nil
     }
 }
 
 // MARK: - Opt-In Notification
 
 extension AppFlow {
-
+    
     private func promptForOptInNotificationIfNeeded() {
         
         Task {
             
-            let shouldPrompt: Bool = try await appDiContainer.feature.optInNotification.domainLayer
-                .getShouldPromptForOptInNotificationUseCase()
-                .execute()
-            
-            if shouldPrompt {
-                presentOptInNotificationFlow()
+            guard !isPresentingFlow && presentedFlow == nil else {
+                return
             }
+            
+            let shouldPrompt: Bool = try await getShouldPromptForOptInNotification()
+            
+            guard shouldPrompt else {
+                return
+            }
+            
+            let notificationPromptType: OptInNotificationViewModel.NotificationPromptType = try await getNotificationPromptType()
+            
+            presentFlow(
+                flow: OptInNotificationFlow(
+                    appDiContainer: appDiContainer,
+                    notificationPromptType: notificationPromptType
+                )
+            )
         }
-    }
-    
-    private func presentOptInNotificationFlow() {
-        
-        guard optInNotificationFlow == nil else {
-            return
-        }
-        
-        let optInNotificationFlow = OptInNotificationFlow(
-            flowDelegate: self,
-            appDiContainer: appDiContainer,
-            presentOnNavigationController: navigationController
-        )
-        
-        self.optInNotificationFlow = optInNotificationFlow
     }
     
     private func dismissOptInNotificationFlow() {
         
-        guard optInNotificationFlow != nil else {
-            return
+        dismissFlow()
+    }
+    
+    private func getShouldPromptForOptInNotification() async throws -> Bool {
+        
+        return try await appDiContainer.feature.optInNotification.domainLayer
+            .getShouldPromptForOptInNotificationUseCase()
+            .execute()
+    }
+    
+    private func getNotificationPromptType() async throws -> OptInNotificationViewModel.NotificationPromptType {
+        
+        let status: PermissionStatusDomainModel = try await appDiContainer.feature
+            .optInNotification
+            .domainLayer
+            .getCheckNotificationStatusUseCase()
+            .execute()
+        
+        let notificationPromptType: OptInNotificationViewModel.NotificationPromptType
+        
+        switch status {
+        case .undetermined:
+            notificationPromptType = .allow
+        default:
+            notificationPromptType = .settings
         }
         
-        navigationController.dismissPresented(animated: true, completion: nil)
-        optInNotificationFlow = nil
+        return notificationPromptType
     }
 }
 
@@ -564,7 +597,7 @@ extension AppFlow: AppMessagingDelegate {
     func actionTappedWithUrl(url: URL, didOpenUrl: Bool) {
         
         if !didOpenUrl {
-            navigate(step: .buttonWithUrlTappedFromAppMessage(url: url))
+            navigate(step: AppFlowStep.buttonWithUrlTappedFromAppMessage(url: url))
         }
     }
 }

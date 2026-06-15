@@ -1,3 +1,17 @@
+"dashboard.personalizedToolToggle.personalizedTitle" = "Дуртай";
+"dashboard.personalizedToolToggle.allToolsTitle" = "Бүх ном";
+"dashboard.personalizedToolToggle.allLessonsTitle" = "Бүх хичээл";
+
+"dashboard.personalizedToolFooter.title" = "Орчуулагдсан номуудын жагсаалт";
+"dashboard.personalizedToolFooter.subtitle" = "Таны Дуртай хуудсанд харагдаж буй номууд таны Хэл болон Байршлын тохиргоонд үндэслэн сонгосон болно. Та энэхүү тохиргоогоо өөрчилж, шинэчлэх боломжтой.";
+"dashboard.personalizedToolFooter.buttonTitle" = "Хэлний тохиргоог өөрчлөх";
+
+"dashboard.personalizedLessonFooter.title" = "Орчуулагдсан хичээлүүдийн жагсаалт";
+"dashboard.personalizedLessonFooter.subtitle" = "Таны Дуртай хуудсанд харагдаж буй хичээлүүдийг таны Хэл болон Байршлын тохиргоонд үндэслэн сонгосон болно. Та энэхүү тохиргоогоо өөрчилж, шинэчлэх боломжтой.";
+
+"localizationSettings.preferNotToSay" = "Сонгохгүй";
+"localizationSettings.navBar.title" = "Улсаа сонгоно уу";
+"localizationSettings.localizationHeader.title" = "Байршлаа сонгоно уу";
 "menu_share" = "ХУВААЛЦ";
 "contact_us" = "Бидэнтэй холбоо барих";
 "privacy_policy" = "Нууцлалын бодлого";

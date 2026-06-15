@@ -15,46 +15,55 @@ final class ArticleWebViewModel: NSObject, ObservableObject {
     
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     
-    private let aemCacheObject: ArticleAemCacheObject
+    private let stepEmitter: FlowStepEmitter
+    private let articleId: String
     private let flowType: ArticleWebViewModelFlowType
+    private let getArticleUseCase: GetArticleUseCase
     private let incrementUserCounterUseCase: IncrementUserCounterUseCase
     private let getAppUIDebuggingIsEnabledUseCase: GetAppUIDebuggingIsEnabledUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let displayArticleAfterNumberOfSeconds: TimeInterval = 2
     
     private var loadingCurrentWebView: WKWebView?
+    private var loadingArticle: ArticleUrlDomainModel?
     private var displayArticleTimer: Timer?
-    
-    private weak var flowDelegate: FlowDelegate?
     private var cancellables = Set<AnyCancellable>()
-    
+        
+    let article: ArticleDomainModel
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
     let viewState: ObservableValue<ArticleWebViewState> = ObservableValue(value: .loadingArticle)
-    
-    @Published var hidesShareButton: Bool = false
-    @Published var hidesDebugButton: Bool = true
-    
-    init(flowDelegate: FlowDelegate, flowType: ArticleWebViewModelFlowType, aemCacheObject: ArticleAemCacheObject, incrementUserCounterUseCase: IncrementUserCounterUseCase, getAppUIDebuggingIsEnabledUseCase: GetAppUIDebuggingIsEnabledUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
         
-        self.flowDelegate = flowDelegate
+    @Published private(set) var hidesShareButton: Bool = false
+    @Published private(set) var hidesDebugButton: Bool = true
+    
+    init(
+        stepEmitter: FlowStepEmitter,
+        flowType: ArticleWebViewModelFlowType,
+        articleId: String,
+        getArticleUseCase: GetArticleUseCase,
+        incrementUserCounterUseCase: IncrementUserCounterUseCase,
+        getAppUIDebuggingIsEnabledUseCase: GetAppUIDebuggingIsEnabledUseCase,
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
+    ) {
+        
+        self.stepEmitter = stepEmitter
         self.flowType = flowType
-        self.aemCacheObject = aemCacheObject
+        self.articleId = articleId
+        self.getArticleUseCase = getArticleUseCase
         self.incrementUserCounterUseCase = incrementUserCounterUseCase
         self.getAppUIDebuggingIsEnabledUseCase = getAppUIDebuggingIsEnabledUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         
-        super.init()
+        article = getArticleUseCase
+            .execute(articleId: articleId)
         
-        navTitle.accept(value: aemCacheObject.aemData.articleJcrContent?.title ?? "")
-              
-        hidesShareButton = aemCacheObject.aemData.articleJcrContent?.canonical == nil
+        super.init()
                 
-        getAppUIDebuggingIsEnabledUseCase.getIsEnabledPublisher()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (isEnabled: Bool) in
-                self?.hidesDebugButton = !isEnabled
-            }
-            .store(in: &cancellables)
+        navTitle.accept(value: article.title)
+              
+        hidesShareButton = !article.isShareable
+        
+        hidesDebugButton = !getAppUIDebuggingIsEnabledUseCase.execute()
     }
     
     @MainActor deinit {
@@ -64,7 +73,7 @@ final class ArticleWebViewModel: NSObject, ObservableObject {
     }
     
     private var analyticsScreenName: String {
-        return "Article : \(aemCacheObject.aemData.articleJcrContent?.title ?? "")"
+        return "Article : \(article.title)"
     }
     
     private var analyticsSiteSection: String {
@@ -91,10 +100,10 @@ final class ArticleWebViewModel: NSObject, ObservableObject {
         stopLoadWebPage(webView: loadingCurrentWebView)
         self.loadingCurrentWebView = webView
         
-        let webUrl: URL? = URL(string: aemCacheObject.aemData.webUrl)
-        let webArchiveFileUrl: URL? = aemCacheObject.webArchiveFileUrl
-        
-        guard webUrl != nil || webArchiveFileUrl != nil else {
+        let httpsArticleUrl: ArticleUrlDomainModel? = article.httpsUrl
+        let archiveFileUrl: ArticleUrlDomainModel? = article.archiveUrl
+                
+        guard httpsArticleUrl != nil || archiveFileUrl != nil else {
             
             let errorTitle: String = "Internal Error"
             let errorMessage: String = "Failed to load article webview.  Missing valid webUrl and webFileUrl."
@@ -108,13 +117,17 @@ final class ArticleWebViewModel: NSObject, ObservableObject {
         startDispalyArticleTimer()
         webView.navigationDelegate = self
         
-        if let webUrl = webUrl, !shouldLoadFromFile {
+        if let url = httpsArticleUrl?.url, !shouldLoadFromFile {
+
+            loadingArticle = httpsArticleUrl
             
-            webView.load(URLRequest(url: webUrl))
+            webView.load(URLRequest(url: url))
         }
-        else if let webFileUrl = webArchiveFileUrl {
+        else if let url = archiveFileUrl?.url {
             
-            webView.loadFileURL(webFileUrl, allowingReadAccessTo: webFileUrl)
+            loadingArticle = archiveFileUrl
+            
+            webView.loadFileURL(url, allowingReadAccessTo: url)
         }
     }
     
@@ -163,7 +176,7 @@ extension ArticleWebViewModel {
     
     @objc func backTapped() {
         
-        flowDelegate?.navigate(step: .backTappedFromArticle)
+        stepEmitter.emit(step: AppFlowStep.backTappedFromArticle)
     }
 
     func pageViewed() {
@@ -179,7 +192,7 @@ extension ArticleWebViewModel {
         
         incrementUserCounterUseCase
             .execute(
-                interaction: .articleOpen(uri: aemCacheObject.aemUri)
+                interaction: .articleOpen(uri: articleId)
             )
             .receive(on: DispatchQueue.main)
             .sink { _ in
@@ -192,29 +205,15 @@ extension ArticleWebViewModel {
     
     @objc func debugTapped() {
         
-        let url: URL?
-        let urlType: ArticleDomainModel.UrlType?
-        
-        if let webUrl = URL(string: aemCacheObject.aemData.webUrl) {
-            url = webUrl
-            urlType = .url
-        }
-        else if let webArchiveFileUrl = aemCacheObject.webArchiveFileUrl {
-            url = webArchiveFileUrl
-            urlType = .fileUrl
-        }
-        else {
-            url = nil
-            urlType = nil
+        guard let articleUrl = loadingArticle else {
+            return
         }
         
-        let article = ArticleDomainModel(url: url, urlType: urlType)
-        
-        flowDelegate?.navigate(step: .debugTappedFromArticle(article: article))
+        stepEmitter.emit(step: AppFlowStep.debugTappedFromArticle(articleUrl: articleUrl))
     }
     
     @objc func sharedTapped() {
-        flowDelegate?.navigate(step: .sharedTappedFromArticle(articleAemData: aemCacheObject.aemData))
+        stepEmitter.emit(step: AppFlowStep.sharedTappedFromArticle(articleId: articleId))
     }
     
     func loadWebPage(webView: WKWebView) {

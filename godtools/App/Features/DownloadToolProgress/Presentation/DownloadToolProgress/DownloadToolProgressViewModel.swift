@@ -12,6 +12,7 @@ import Combine
 @MainActor
 final class DownloadToolProgressViewModel: ObservableObject {
     
+    private let stepEmitter: FlowStepEmitter
     private let toolId: String?
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getDownloadToolProgressStringsUseCase: GetDownloadToolProgressStringsUseCase
@@ -21,16 +22,14 @@ final class DownloadToolProgressViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = Set()
     private var didCompleteToolDownload: Bool = false
     private var didCompleteProgressTimerClosure: (() -> Void)?
-        
-    private weak var flowDelegate: FlowDelegate?
-    
+            
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
     @Published private(set) var strings = DownloadToolProgressStringsDomainModel.emptyValue
         
-    init(flowDelegate: FlowDelegate, toolId: String?, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getDownloadToolProgressStringsUseCase: GetDownloadToolProgressStringsUseCase) {
+    init(stepEmitter: FlowStepEmitter, toolId: String?, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getDownloadToolProgressStringsUseCase: GetDownloadToolProgressStringsUseCase) {
                 
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.toolId = toolId
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getDownloadToolProgressStringsUseCase = getDownloadToolProgressStringsUseCase
@@ -91,6 +90,6 @@ extension DownloadToolProgressViewModel {
         
         progressTimer.stop()
                 
-        flowDelegate?.navigate(step: .closeTappedFromDownloadToolProgress)
+        stepEmitter.emit(step: AppFlowStep.closeTappedFromDownloadTool)
     }
 }

@@ -16,6 +16,7 @@ final class ReviewShareShareableViewModel: ObservableObject {
     
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     
+    private let stepEmitter: FlowStepEmitter
     private let toolId: String
     private let shareable: ShareableDomainModel
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
@@ -25,18 +26,16 @@ final class ReviewShareShareableViewModel: ObservableObject {
    
     private var imageToShare: UIImage?
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     @Published private var appLanguage = AppLanguageDomainModel.english
     
     @Published private(set) var strings = ReviewShareShareableStringsDomainModel.emptyValue
     
     @Published var imagePreviewData: OptionalImageData?
     
-    init(flowDelegate: FlowDelegate, toolId: String, shareable: ShareableDomainModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getReviewShareShareableStringsUseCase: GetReviewShareShareableStringsUseCase, getShareableImageUseCase: GetShareableImageUseCase, trackShareShareableTapUseCase: TrackShareShareableTapUseCase) {
+    init(stepEmitter: FlowStepEmitter, toolId: String, shareable: ShareableDomainModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getReviewShareShareableStringsUseCase: GetReviewShareShareableStringsUseCase, getShareableImageUseCase: GetShareableImageUseCase, trackShareShareableTapUseCase: TrackShareShareableTapUseCase) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.toolId = toolId
         self.shareable = shareable
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
@@ -115,7 +114,7 @@ extension ReviewShareShareableViewModel {
     
     func closeTapped() {
         
-        flowDelegate?.navigate(step: .closeTappedFromReviewShareShareable)
+        stepEmitter.emit(step: AppFlowStep.closeTappedFromReviewShareShareable)
     }
     
     func shareImageTapped() {
@@ -124,7 +123,7 @@ extension ReviewShareShareableViewModel {
             return
         }
         
-        flowDelegate?.navigate(step: .shareImageTappedFromReviewShareShareable(shareImage: imageToShare))
+        stepEmitter.emit(step: AppFlowStep.shareImageTappedFromReviewShareShareable(shareImage: imageToShare))
         trackShareImageTappedAnalytics()
     }
 }

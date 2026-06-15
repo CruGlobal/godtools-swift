@@ -12,22 +12,21 @@ import Combine
 @MainActor
 final class DeleteAccountViewModel: ObservableObject {
    
+    private let stepEmitter: FlowStepEmitter
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getDeleteAccountStringsUseCase: GetDeleteAccountStringsUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     @Published private var appLanguage: AppLanguageDomainModel = ""
     
     @Published private(set) var strings = DeleteAccountStringsDomainModel.emptyValue
     
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getDeleteAccountStringsUseCase: GetDeleteAccountStringsUseCase) {
+    init(stepEmitter: FlowStepEmitter, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getDeleteAccountStringsUseCase: GetDeleteAccountStringsUseCase) {
         
+        self.stepEmitter = stepEmitter
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getDeleteAccountStringsUseCase = getDeleteAccountStringsUseCase
-        self.flowDelegate = flowDelegate
         
         getCurrentAppLanguageUseCase
             .execute()
@@ -57,16 +56,16 @@ extension DeleteAccountViewModel {
     
     @objc func closeTapped() {
         
-        flowDelegate?.navigate(step: .closeTappedFromDeleteAccount)
+        stepEmitter.emit(step: AppFlowStep.closeTappedFromDeleteAccount)
     }
     
     func deleteAccountTapped() {
         
-        flowDelegate?.navigate(step: .deleteAccountTappedFromDeleteAccount)
+        stepEmitter.emit(step: AppFlowStep.deleteAccountTappedFromDeleteAccount)
     }
     
     func cancelTapped() {
         
-        flowDelegate?.navigate(step: .cancelTappedFromDeleteAccount)
+        stepEmitter.emit(step: AppFlowStep.cancelTappedFromDeleteAccount)
     }
 }
