@@ -7,130 +7,55 @@
 //
 
 import UIKit
-import Combine
 
-final class ArticleDeepLinkFlow: LegacyFlow {
+final class ArticleDeepLinkFlow: GTFlow {
     
-    private let aemUri: String
-    
-    private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
-    let appDiContainer: AppDiContainer
-    let navigationController: AppNavigationController
-    
-    @Published private var appLanguage = AppLanguageDomainModel.english
-    
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, aemUri: String) {
-        
-        self.flowDelegate = flowDelegate
-        self.appDiContainer = appDiContainer
-        self.navigationController = sharedNavigationController
-        self.aemUri = aemUri
-        
-        appDiContainer.feature.appLanguage.domainLayer
-            .getCurrentAppLanguageUseCase()
-            .execute()
-            .flatMap(maxPublishers: .max(1)) {
-                return Just($0)
-            }
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
-                
-                self?.appLanguage = appLanguage
-                
-                if let aemCacheObject = appDiContainer.core.dataLayer.getArticleAemRepository().getAemCacheObject(aemUri: aemUri) {
-                    
-                    self?.navigateToArticleWebView(articleId: aemCacheObject.aemUri, animated: true)
-                }
-                else if let loadingArticleView = self?.getLoadingArticleView(appLanguage: appLanguage) {
-                    
-                    sharedNavigationController.present(loadingArticleView, animated: true, completion: nil)
-                }
-            }
-            .store(in: &cancellables)
+    enum CompletedState: Sendable {
+        case closed
     }
-    
-    deinit {
-        print("x deinit: \(type(of: self))")
+                        
+    init(appDiContainer: AppDiContainer, aemUri: String) {
+        
+        let stepEmitter = FlowStepEmitter()
+        
+        super.init(
+            appDiContainer: appDiContainer,
+            initialView: Self.getArticleWebView(
+                appDiContainer: appDiContainer,
+                stepEmitter: stepEmitter,
+                articleId: aemUri
+            ),
+            stepEmitter: stepEmitter
+        )
     }
-    
-    func navigate(step: AppFlowStep) {
+
+    override func navigate(step: FlowStep) {
         
-        switch step {
-        
-        case .didDownloadArticleFromLoadingArticle(let aemCacheObject):
-            navigateToArticleWebView(articleId: aemCacheObject.aemUri, animated: false)
-            navigationController.dismiss(animated: true, completion: nil)
-            
-        case .didFailToDownloadArticleFromLoadingArticle(let alertMessage):
-            
-            let localizationServices: LocalizationServicesInterface = appDiContainer.core.dataLayer.getLocalizationServices()
-            let appLanguage: AppLanguageDomainModel = self.appLanguage
-            
-            navigationController.dismiss(animated: true) { [weak self] in
-                
-                let view = AlertMessageView(
-                    title: alertMessage.title,
-                    message: alertMessage.message,
-                    acceptTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.ok.key),
-                    cancelTitle: nil,
-                    acceptTapped: nil,
-                    cancelTapped: nil
-                )
-                
-                self?.navigationController.present(view.controller, animated: true, completion: nil)
-            }
+        guard let appStep = step as? AppFlowStep else {
+            return
+        }
+
+        switch appStep {
             
         case .backTappedFromArticle:
-            navigationController.popViewController(animated: true)
+            completeFlow(state: .closed)
             
         default:
             break
         }
     }
     
-    private func navigateToArticleWebView(articleId: String, animated: Bool) {
-       
-        navigationController.pushViewController(getArticleWebView(articleId: articleId), animated: animated)
+    private func completeFlow(state: ArticleDeepLinkFlow.CompletedState) {
+        parent?.stepEmitter.emit(step: AppFlowStep.articleDeepLinkFlowCompleted(state: state))
     }
 }
 
 extension ArticleDeepLinkFlow {
     
-    private func getLoadingArticleView(appLanguage: AppLanguageDomainModel) -> UIViewController {
-
-        let viewModel = LoadingArticleViewModel(
-            flowDelegate: self,
-            aemUri: aemUri,
-            appLanguage: appLanguage,
-            articleAemRepository: appDiContainer.core.dataLayer.getArticleAemRepository(),
-            localizationServices: appDiContainer.core.dataLayer.getLocalizationServices()
-        )
-        
-        let view = LoadingArticleView(
-            viewModel: viewModel
-        )
-        
-        let navigationBar = AppNavigationBar(
-            appearance: nil,
-            backButton: nil,
-            leadingItems: [],
-            trailingItems: []
-        )
-        
-        let hostingView = AppHostingController<LoadingArticleView>(rootView: view, navigationBar: navigationBar)
-        
-        hostingView.modalPresentationStyle = .overCurrentContext
-        
-        return hostingView
-    }
-    
-    private func getArticleWebView(articleId: String) -> UIViewController {
+    private static func getArticleWebView(appDiContainer: AppDiContainer, stepEmitter: FlowStepEmitter, articleId: String) -> UIViewController {
         
         let viewModel = ArticleWebViewModel(
-            flowDelegate: self,
+            stepEmitter: stepEmitter,
             flowType: .deeplink,
             articleId: articleId,
             getArticleUseCase: appDiContainer.feature.articles.domainLayer.getArticleUseCase(),

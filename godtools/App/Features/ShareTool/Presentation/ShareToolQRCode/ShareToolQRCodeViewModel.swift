@@ -12,12 +12,11 @@ import Combine
 @MainActor
 final class ShareToolQRCodeViewModel: ObservableObject {
     
+    private let stepEmitter: FlowStepEmitter
     private let getShareToolQRCodeStringsUseCase: GetShareToolQRCodeStringsUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
     @Published private(set) var strings = ShareToolQRCodeStringsDomainModel.emptyValue
@@ -25,9 +24,9 @@ final class ShareToolQRCodeViewModel: ObservableObject {
     
     let shareUrl: String
     
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getShareToolQRCodeStringsUseCase: GetShareToolQRCodeStringsUseCase, shareUrl: String) {
+    init(stepEmitter: FlowStepEmitter, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getShareToolQRCodeStringsUseCase: GetShareToolQRCodeStringsUseCase, shareUrl: String) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.getShareToolQRCodeStringsUseCase = getShareToolQRCodeStringsUseCase
         self.shareUrl = shareUrl
         
@@ -57,6 +56,6 @@ final class ShareToolQRCodeViewModel: ObservableObject {
 extension ShareToolQRCodeViewModel {
     
     func closeTapped() {
-        flowDelegate?.navigate(step: .closedTappedFromShareToolQrCode)
+        stepEmitter.emit(step: AppFlowStep.closedTappedFromShareToolQrCode)
     }
 }

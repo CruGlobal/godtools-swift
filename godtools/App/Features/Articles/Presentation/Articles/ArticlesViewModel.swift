@@ -15,6 +15,7 @@ final class ArticlesViewModel: ObservableObject {
     
     typealias AemUri = String
     
+    private let stepEmitter: FlowStepEmitter
     private let resource: ResourceDataModel
     private let language: LanguageDataModel
     private let category: ArticleCategoryDomainModel
@@ -27,9 +28,7 @@ final class ArticlesViewModel: ObservableObject {
     
     private var getArticlesTask: Task<Void, Error>?
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     let navTitle: String
     
     @Published private var appLanguage = AppLanguageDomainModel.english
@@ -38,9 +37,9 @@ final class ArticlesViewModel: ObservableObject {
     @Published private(set) var articles: [ArticleListItemDomainModel] = Array()
     @Published private(set) var articlesError: ArticlesErrorDomainModel?
     
-    init(flowDelegate: FlowDelegate, resource: ResourceDataModel, language: LanguageDataModel, category: ArticleCategoryDomainModel, manifest: Manifest, downloadArticlesObservable: DownloadManifestArticlesObservable, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getArticlesUseCase: GetArticlesUseCase, localizationServices: LocalizationServicesInterface, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
+    init(stepEmitter: FlowStepEmitter, resource: ResourceDataModel, language: LanguageDataModel, category: ArticleCategoryDomainModel, manifest: Manifest, downloadArticlesObservable: DownloadManifestArticlesObservable, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getArticlesUseCase: GetArticlesUseCase, localizationServices: LocalizationServicesInterface, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.resource = resource
         self.language = language
         self.category = category
@@ -168,7 +167,7 @@ extension ArticlesViewModel {
     
     @objc func backTapped() {
         
-        flowDelegate?.navigate(step: .backTappedFromArticles)
+        stepEmitter.emit(step: AppFlowStep.backTappedFromArticles)
     }
     
     func pageViewed() {
@@ -185,7 +184,7 @@ extension ArticlesViewModel {
     
     func articleTapped(article: ArticleListItemDomainModel) {
           
-        flowDelegate?.navigate(step: .articleTappedFromArticles(resource: resource, articleId: article.id))
+        stepEmitter.emit(step: AppFlowStep.articleTappedFromArticles(resource: resource, articleId: article.id))
     }
     
     func downloadArticlesTapped() {

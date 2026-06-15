@@ -11,17 +11,16 @@ import Foundation
 @MainActor
 class FullScreenVideoViewModel: ObservableObject {
     
+    private let stepEmitter: FlowStepEmitter
     private let userDidCloseVideoStep: AppFlowStep
     private let videoEndedStep: AppFlowStep
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     let videoId: String
     let videoPlayerParameters: [String: Any]?
     
-    init(flowDelegate: FlowDelegate, videoId: String, videoPlayerParameters: [String: Any]?, userDidCloseVideoStep: AppFlowStep, videoEndedStep: AppFlowStep) {
+    init(stepEmitter: FlowStepEmitter, videoId: String, videoPlayerParameters: [String: Any]?, userDidCloseVideoStep: AppFlowStep, videoEndedStep: AppFlowStep) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.userDidCloseVideoStep = userDidCloseVideoStep
         self.videoEndedStep = videoEndedStep
         self.videoId = videoId
@@ -52,10 +51,10 @@ class FullScreenVideoViewModel: ObservableObject {
 extension FullScreenVideoViewModel {
     
     @objc func closeTapped() {
-        flowDelegate?.navigate(step: userDidCloseVideoStep)
+        stepEmitter.emit(step: userDidCloseVideoStep)
     }
     
     func videoEnded() {
-        flowDelegate?.navigate(step: videoEndedStep)
+        stepEmitter.emit(step: videoEndedStep)
     }
 }

@@ -10,75 +10,77 @@ import UIKit
 import SwiftUI
 import Combine
 
-final class OnboardingFlow: LegacyFlow, ChooseAppLanguageNavigationFlow, LocalizationSettingsNavigationFlow {
+final class OnboardingFlow: GTFlow {
+    
+    enum CompletedState: Sendable {
+        case completed
+    }
         
     @Published private var currentAppLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
     private var didPromptForAppLanguage: Bool = false
     private var cancellables: Set<AnyCancellable> = Set()
-
-    private weak var flowDelegate: FlowDelegate?
-
-    let appDiContainer: AppDiContainer
-    let navigationController: AppNavigationController
-
-    var chooseAppLanguageFlow: ChooseAppLanguageFlow?
-    var localizationSettingsFlow: LocalizationSettingsFlow?
     
-    deinit {
-        print("x deinit: \(type(of: self))")
-    }
-    
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer) {
-        print("init: \(type(of: self))")
+    init(appDiContainer: AppDiContainer) {
+                
+        let stepEmitter = FlowStepEmitter()
         
-        let navigationBarAppearance = AppNavigationBarAppearance(
-            backgroundColor: .clear,
-            controlColor: ColorPalette.gtBlue.uiColor,
-            titleFont: nil,
-            titleColor: nil,
-            isTranslucent: true
+        super.init(
+            appDiContainer: appDiContainer,
+            initialView: OnboardingFlow.getOnboardingTutorial(
+                appDiContainer: appDiContainer,
+                stepEmitter: stepEmitter
+            ),
+            stepEmitter: stepEmitter,
+            navigationController: AppNavigationController(
+                navigationBarAppearance: AppNavigationBarAppearance(
+                    backgroundColor: .clear,
+                    controlColor: ColorPalette.gtBlue.uiColor,
+                    titleFont: nil,
+                    titleColor: nil,
+                    isTranslucent: true
+                )
+            )
         )
         
-        self.flowDelegate = flowDelegate
-        self.appDiContainer = appDiContainer
-        self.navigationController = AppNavigationController(navigationBarAppearance: navigationBarAppearance)
-        
         navigationController.modalPresentationStyle = .fullScreen
-        
-        navigationController.setViewControllers([getInitialView()], animated: false)
-        
-        let getCurrentAppLanguageUseCase = appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase()
-        
-        getCurrentAppLanguageUseCase
+                        
+        appDiContainer.feature.appLanguage
+            .domainLayer
+            .getCurrentAppLanguageUseCase()
             .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$currentAppLanguage)
     }
     
-    func getInitialView() -> UIViewController {
+    override func navigate(step: FlowStep) {
         
-        return getOnboardingTutorialView()
-    }
-    
-    func navigate(step: AppFlowStep) {
+        guard let appStep = step as? AppFlowStep else {
+            return
+        }
         
-        switch step {
+        switch appStep {
             
         case .chooseAppLanguageTappedFromOnboardingTutorial:
-            navigateToChooseAppLanguageFlow()
+            pushFlow(
+                flow: ChooseAppLanguageFlow(appDiContainer: appDiContainer),
+                animated: true
+            )
             
         case .chooseAppLanguageFlowCompleted(let state):
             
             switch state {
             
             case .userClosedChooseAppLanguage:
-                navigateBackFromChooseAppLanguageFlow()
+                popFlow()
             
             case .userChoseAppLanguage( _):
-                navigateToLocalizationSettings(
-                    shouldStoreCountryWhenSelected: false,
-                    userShouldConfirmSelectedCountry: true
+                pushFlow(
+                    flow: LocalizationSettingsFlow(
+                        appDiContainer: appDiContainer,
+                        shouldStoreCountryWhenSelected: false,
+                        userShouldConfirmSelectedCountry: true
+                    )
                 )
             }
             
@@ -87,12 +89,14 @@ final class OnboardingFlow: LegacyFlow, ChooseAppLanguageNavigationFlow, Localiz
             switch state {
                 
             case .userTappedBackFromLocalizationSettings:
-                navigateBackFromLocalizationSettingsFlow()
+                popFlow()
                 
             case .userConfirmedLocalizationSetting( _):
+                
+                removeAllFlows()
+
                 if let tutorialVC = onboardingTutorialViewController {
                     navigationController.popToViewController(tutorialVC, animated: true)
-                    localizationSettingsFlow = nil
                 }
             }
             
@@ -106,7 +110,7 @@ final class OnboardingFlow: LegacyFlow, ChooseAppLanguageNavigationFlow, Localiz
             dismissVideoModal(animated: true, completion: nil)
             
         case .skipTappedFromOnboardingTutorial:
-            flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: nil))
+            completeFlow(state: .completed)
             
         case .continueTappedFromTutorial:
             
@@ -121,7 +125,7 @@ final class OnboardingFlow: LegacyFlow, ChooseAppLanguageNavigationFlow, Localiz
             
             if reachedEnd {
                 
-                navigate(step: .endTutorialFromOnboardingTutorial)
+                navigate(step: AppFlowStep.endTutorialFromOnboardingTutorial)
                 
                 if let page = page {
                     
@@ -146,7 +150,10 @@ final class OnboardingFlow: LegacyFlow, ChooseAppLanguageNavigationFlow, Localiz
                 
                 didPromptForAppLanguage = true
                 
-                navigateToChooseAppLanguageFlow()
+                pushFlow(
+                    flow: ChooseAppLanguageFlow(appDiContainer: appDiContainer),
+                    animated: true
+                )
             }
             else {
                 
@@ -154,7 +161,7 @@ final class OnboardingFlow: LegacyFlow, ChooseAppLanguageNavigationFlow, Localiz
             }
             
         case .endTutorialFromOnboardingTutorial:
-            flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: nil))
+            completeFlow(state: .completed)
         
         default:
             break
@@ -168,19 +175,21 @@ final class OnboardingFlow: LegacyFlow, ChooseAppLanguageNavigationFlow, Localiz
         ]
         
         let viewModel = FullScreenVideoViewModel(
-            flowDelegate: self,
+            stepEmitter: stepEmitter,
             videoId: youtubeVideoId,
             videoPlayerParameters: videoPlayerParameters,
-            userDidCloseVideoStep: .closeVideoPlayerTappedFromOnboardingTutorial,
-            videoEndedStep: .videoEndedOnOnboardingTutorial
+            userDidCloseVideoStep: AppFlowStep.closeVideoPlayerTappedFromOnboardingTutorial,
+            videoEndedStep: AppFlowStep.videoEndedOnOnboardingTutorial
         )
         
-        presentVideoModal(viewModel: viewModel, screenAccessibility: .watchOnboardingTutorialVideo)
+        presentVideoModal(
+            viewModel: viewModel,
+            screenAccessibility: .watchOnboardingTutorialVideo
+        )
     }
     
-    private func completeOnboardingFlow(onboardingFlowCompletedState: OnboardingFlowCompletedState?) {
-
-        flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: onboardingFlowCompletedState))
+    private func completeFlow(state: OnboardingFlow.CompletedState) {
+        parent?.stepEmitter.emit(step: AppFlowStep.onboardingFlowCompleted(state: state))
     }
 }
 
@@ -194,20 +203,23 @@ extension OnboardingFlow {
     }
 
     private var onboardingTutorialViewController: AppHostingController<OnboardingTutorialView>? {
-
+        
         for viewController in navigationController.viewControllers {
             if let hosting = viewController as? AppHostingController<OnboardingTutorialView> {
                 return hosting
             }
         }
-
+        
         return nil
     }
+}
+
+extension OnboardingFlow {
     
-    private func getOnboardingTutorialView() -> UIViewController {
+    private static func getOnboardingTutorial(appDiContainer: AppDiContainer, stepEmitter: FlowStepEmitter) -> UIViewController {
         
         let viewModel = OnboardingTutorialViewModel(
-            flowDelegate: self,
+            stepEmitter: stepEmitter,
             viewedOnboardingTutorialUseCase: appDiContainer.feature.onboarding.domainLayer.getViewedOnboardingTutorialUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getOnboardingTutorialStringsUseCase: appDiContainer.feature.onboarding.domainLayer.getOnboardingTutorialStringsUseCase(),
@@ -239,7 +251,7 @@ extension OnboardingFlow {
                 })
             )
         )
-                        
+        
         return hostingView
     }
 }

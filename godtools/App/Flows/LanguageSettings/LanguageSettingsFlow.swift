@@ -10,34 +10,38 @@ import UIKit
 import SwiftUI
 import Combine
 
-class LanguageSettingsFlow: LegacyFlow, ChooseAppLanguageNavigationFlow {
-        
-    private weak var flowDelegate: FlowDelegate?
+final class LanguageSettingsFlow: GTFlow {
     
-    @Published private var appLanguage: AppLanguageDomainModel = ""
-    
-    let appDiContainer: AppDiContainer
-    let navigationController: AppNavigationController
-    
-    var chooseAppLanguageFlow: ChooseAppLanguageFlow?
-    
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, deepLink: ParsedDeepLinkType?) {
-        
-        self.flowDelegate = flowDelegate
-        self.appDiContainer = appDiContainer
-        self.navigationController = sharedNavigationController
-        
-        let initialView: UIViewController = getLanguageSettingsView()
+    enum CompletedState {
+        case userClosed
+    }
             
+    private let deepLink: ParsedDeepLinkType?
+    
+    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+        
+    init(appDiContainer: AppDiContainer, deepLink: ParsedDeepLinkType?) {
+        
+        self.deepLink = deepLink
+        
+        let stepEmitter = FlowStepEmitter()
+        
+        super.init(
+            appDiContainer: appDiContainer,
+            initialView: Self.getLanguageSettings(
+                appDiContainer: appDiContainer,
+                stepEmitter: stepEmitter
+            ),
+            stepEmitter: stepEmitter
+        )
+        
         if deepLink == .appLanguagesList {
             
-            sharedNavigationController.pushViewController(initialView, animated: false)
-            
-            navigateToChooseAppLanguageFlow(animated: false)
-        }
-        else {
-            
-            sharedNavigationController.pushViewController(initialView, animated: true)
+            pushFlow(
+                flow: ChooseAppLanguageFlow(
+                    appDiContainer: appDiContainer
+                )
+            )
         }
         
         appDiContainer.feature.appLanguage.domainLayer
@@ -47,22 +51,25 @@ class LanguageSettingsFlow: LegacyFlow, ChooseAppLanguageNavigationFlow {
             .assign(to: &$appLanguage)
     }
     
-    deinit {
-        print("x deinit: \(type(of: self))")
-    }
-    
-    func navigate(step: AppFlowStep) {
+    override func navigate(step: FlowStep) {
         
-        switch step {
+        guard let appStep = step as? AppFlowStep else {
+            return
+        }
+
+        switch appStep {
             
         case .backTappedFromLanguageSettings:
-            flowDelegate?.navigate(step: .languageSettingsFlowCompleted(state: .userClosedLanguageSettings))
+            completeFlow(state: .userClosed)
             
         case .chooseAppLanguageTappedFromLanguageSettings:
-            navigateToChooseAppLanguageFlow()
+            pushFlow(
+                flow: ChooseAppLanguageFlow(appDiContainer: appDiContainer),
+                animated: true
+            )
             
         case .chooseAppLanguageFlowCompleted( _):
-            navigateBackFromChooseAppLanguageFlow()
+            popFlow()
         
         case .editDownloadedLanguagesTappedFromLanguageSettings:
             navigationController.pushViewController(getDownloadableLanguagesView(), animated: true)
@@ -77,14 +84,18 @@ class LanguageSettingsFlow: LegacyFlow, ChooseAppLanguageNavigationFlow {
             break
         }
     }
+    
+    private func completeFlow(state: CompletedState) {
+        parent?.stepEmitter.emit(step: AppFlowStep.languageSettingsFlowCompleted(state: state))
+    }
 }
 
 extension LanguageSettingsFlow {
     
-    func getLanguageSettingsView() -> UIViewController {
+    private static func getLanguageSettings(appDiContainer: AppDiContainer, stepEmitter: FlowStepEmitter) -> UIViewController {
         
         let viewModel = LanguageSettingsViewModel(
-            flowDelegate: self,
+            stepEmitter: stepEmitter,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getLanguageSettingsStringsUseCase: appDiContainer.feature.appLanguage.domainLayer.getLanguageSettingsStringsUseCase(),
             getDownloadedLanguagesListUseCase: appDiContainer.feature.appLanguage.domainLayer.getDownloadedLanguagesListUseCase(),
@@ -108,14 +119,14 @@ extension LanguageSettingsFlow {
                 trailingItems: []
             )
         )
-
+        
         return hostingView
     }
     
-    func getDownloadableLanguagesView() -> UIViewController {
+    private func getDownloadableLanguagesView() -> UIViewController {
         
         let viewModel = DownloadableLanguagesViewModel(
-            flowDelegate: self,
+            stepEmitter: stepEmitter,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getDownloadableLanguagesStringsUseCase: appDiContainer.feature.appLanguage.domainLayer.getDownloadableLanguagesStringsUseCase(),
             getDownloadableLanguagesListUseCase: appDiContainer.feature.appLanguage.domainLayer.getDownloadableLanguagesListUseCase(),

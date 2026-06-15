@@ -10,41 +10,46 @@ import Foundation
 import UIKit
 import Combine
 
-final class LocalizationSettingsFlow: LegacyFlow {
+final class LocalizationSettingsFlow: GTFlow {
+    
+    enum CompletedState: Sendable {
+        case userTappedBackFromLocalizationSettings
+        case userConfirmedLocalizationSetting(country: LocalizationSettingsCountryListItem)
+    }
             
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     
     private let shouldStoreCountryWhenSelected: Bool
     private let userShouldConfirmSelectedCountry: Bool
-    
-    private weak var flowDelegate: FlowDelegate?
-    
-    let appDiContainer: AppDiContainer
-    let navigationController: AppNavigationController
-    
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, showsPreferNotToSay: Bool, shouldStoreCountryWhenSelected: Bool, userShouldConfirmSelectedCountry: Bool, animated: Bool = true) {
         
-        self.flowDelegate = flowDelegate
-        self.appDiContainer = appDiContainer
-        self.navigationController = sharedNavigationController
+    init(appDiContainer: AppDiContainer, shouldStoreCountryWhenSelected: Bool, userShouldConfirmSelectedCountry: Bool, showsPreferNotToSay: Bool = true) {
+        
         self.shouldStoreCountryWhenSelected = shouldStoreCountryWhenSelected
         self.userShouldConfirmSelectedCountry = userShouldConfirmSelectedCountry
         
-        let localizationSettings = getLocalizationSettingsView(showsPreferNotToSay: showsPreferNotToSay)
+        let stepEmitter = FlowStepEmitter()
         
-        sharedNavigationController.pushViewController(localizationSettings, animated: animated)
+        super.init(
+            appDiContainer: appDiContainer,
+            initialView: LocalizationSettingsFlow.getLocalizationSettings(
+                appDiContainer: appDiContainer,
+                stepEmitter: stepEmitter,
+                showsPreferNotToSay: showsPreferNotToSay
+            ),
+            stepEmitter: stepEmitter
+        )
     }
     
-    deinit {
-        print("x deinit: \(type(of: self))")
-    }
-    
-    func navigate(step: AppFlowStep) {
+    override func navigate(step: FlowStep) {
         
-        switch step {
+        guard let appStep = step as? AppFlowStep else {
+            return
+        }
+
+        switch appStep {
             
         case .backTappedFromLocalizationSettings:
-            flowDelegate?.navigate(step: .localizationSettingsFlowCompleted(state: .userTappedBackFromLocalizationSettings))
+            completeFlow(state: .userTappedBackFromLocalizationSettings)
             
         case .countryTappedFromLocalizationSettings(let countryListItem):
             
@@ -53,27 +58,34 @@ final class LocalizationSettingsFlow: LegacyFlow {
             }
             
             if userShouldConfirmSelectedCountry {
-                let confirmationView = getLocalizationSettingsConfirmationView(selectedCountry: countryListItem)
-                navigationController.present(confirmationView, animated: true)
+               
+                presentView(
+                    view: getLocalizationSettingsConfirmationView(selectedCountry: countryListItem),
+                    animated: true
+                )
             }
             
         case .closeTappedFromLocalizationConfirmation:
-            navigationController.dismiss(animated: true)
+            dismissView(animated: true)
             
         case .cancelTappedFromLocalizationConfirmation:
-            navigationController.dismiss(animated: true)
+            dismissView(animated: true)
             
         case .confirmTappedFromLocalizationConfirmation(let countryListItem):
             
-            navigationController.dismiss(animated: true)
+            dismissView(animated: true)
             
             storeSelectedCountryListItem(countryListItem: countryListItem)
             
-            flowDelegate?.navigate(step: .localizationSettingsFlowCompleted(state: .userConfirmedLocalizationSetting(country: countryListItem)))
+            completeFlow(state: .userConfirmedLocalizationSetting(country: countryListItem))
             
         default:
             break
         }
+    }
+    
+    private func completeFlow(state: CompletedState) {
+        parent?.stepEmitter.emit(step: AppFlowStep.localizationSettingsFlowCompleted(state: state))
     }
     
     private func storeSelectedCountryListItem(countryListItem: LocalizationSettingsCountryListItem) {
@@ -95,10 +107,10 @@ final class LocalizationSettingsFlow: LegacyFlow {
 
 extension LocalizationSettingsFlow {
     
-    private func getLocalizationSettingsView(showsPreferNotToSay: Bool) -> UIViewController {
-
+    private static func getLocalizationSettings(appDiContainer: AppDiContainer, stepEmitter: FlowStepEmitter, showsPreferNotToSay: Bool) -> UIViewController {
+        
         let viewModel = LocalizationSettingsViewModel(
-            flowDelegate: self,
+            stepEmitter: stepEmitter,
             showsPreferNotToSay: showsPreferNotToSay,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getCountryListUseCase: appDiContainer.feature.personalizedTools.domainLayer.getLocalizationSettingsCountryListUseCase(),
@@ -128,11 +140,11 @@ extension LocalizationSettingsFlow {
         
         return hostingView
     }
-    
+
     private func getLocalizationSettingsConfirmationView(selectedCountry: LocalizationSettingsCountryListItem) -> UIViewController {
 
         let confirmationViewModel = LocalizationSettingsConfirmationViewModel(
-            flowDelegate: self,
+            stepEmitter: stepEmitter,
             selectedCountry: selectedCountry,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getLocalizationSettingsConfirmationStringsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getLocalizationSettingsConfirmationStringsUseCase()

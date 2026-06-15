@@ -9,7 +9,7 @@
 import UIKit
 import SwiftUI
 
-extension LegacyFlow {
+extension GTFlow {
     
     func presentVideoModal(viewModel: FullScreenVideoViewModel, screenAccessibility: AccessibilityStrings.Screen) {
                 
@@ -43,11 +43,11 @@ extension LegacyFlow {
                
         modal.view.backgroundColor = UIColor(videoBackgroundColor)
         
-        navigationController.present(modal, animated: true)
+        presentView(view: modal, animated: true)
     }
     
     func dismissVideoModal(animated: Bool, completion: (() -> Void)?) {
         
-        navigationController.dismissPresented(animated: animated, completion: completion)
+        dismissView(animated: animated, completion: completion)
     }
 }

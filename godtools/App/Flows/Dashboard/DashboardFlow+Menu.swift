@@ -12,14 +12,19 @@ extension DashboardFlow {
     
     func navigateToMenu(animated: Bool, initialNavigationStep: AppFlowStep? = nil) {
         
+        guard menuFlow == nil else {
+            return
+        }
+        
         let menuFlow: MenuFlow = MenuFlow(
-            flowDelegate: self,
             appDiContainer: appDiContainer,
             initialNavigationStep: initialNavigationStep
         )
         
-        self.menuFlow = menuFlow
+        setMenuFlow(menuFlow: menuFlow)
         
+        menuFlow.setParent(parent: self)
+                                        
         rootController.addChildController(child: menuFlow.navigationController)
         
         let screenWidth: CGFloat = UIScreen.main.bounds.size.width
@@ -60,13 +65,13 @@ extension DashboardFlow {
     }
     
     func closeMenu(animated: Bool) {
-           
+        
         guard let menuFlow = self.menuFlow else {
             return
         }
         
-        menuFlow.navigationController.dismiss(animated: animated, completion: nil)
-        
+        menuFlow.dismissView(animated: true)
+                
         let screenWidth: CGFloat = UIScreen.main.bounds.size.width
         let menuView: UIView = menuFlow.navigationController.view
         let appView: UIView = navigationController.view
@@ -100,7 +105,7 @@ extension DashboardFlow {
             }, completion: { [weak self] ( finished: Bool) in
                 
                 menuFlow.navigationController.removeAsChildController()
-                self?.menuFlow = nil
+                self?.removeMenuFlow()
             })
         }
         else {
@@ -108,7 +113,18 @@ extension DashboardFlow {
             appView.frame = CGRect(x: appViewEndingX, y: 0, width: appView.frame.size.width, height: appView.frame.size.height)
             
             menuFlow.navigationController.removeAsChildController()
-            self.menuFlow = nil
+            removeMenuFlow()
         }
+    }
+    
+    private func removeMenuFlow() {
+        
+        guard let menuFlow = self.menuFlow else {
+            return
+        }
+        
+        menuFlow.setParent(parent: nil)
+        
+        setMenuFlow(menuFlow: nil)
     }
 }

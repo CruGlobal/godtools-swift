@@ -15,6 +15,7 @@ final class AllYourFavoriteToolsViewModel: ObservableObject {
         
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     
+    private let stepEmitter: FlowStepEmitter
     private let getAllYourFavoritedToolsStringsUseCase: GetAllYourFavoritedToolsStringsUseCase
     private let getYourFavoritedToolsUseCase: GetYourFavoritedToolsUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
@@ -27,18 +28,16 @@ final class AllYourFavoriteToolsViewModel: ObservableObject {
     private let didConfirmToolRemovalSubject: PassthroughSubject<Void, Never> = PassthroughSubject()
     
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     @Published private var appLanguage = AppLanguageDomainModel.english
     
     @Published private(set) var strings = AllYourFavoritedToolsStringsDomainModel.emptyValue
     
     @Published var favoritedTools: [YourFavoritedToolDomainModel] = Array()
         
-    init(flowDelegate: FlowDelegate?, getAllYourFavoritedToolsStringsUseCase: GetAllYourFavoritedToolsStringsUseCase, getYourFavoritedToolsUseCase: GetYourFavoritedToolsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, reorderFavoritedToolUseCase: ReorderFavoritedToolUseCase, getToolBannerUseCase: GetToolBannerUseCase, inMemoryDataCache: InMemoryDataCache, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(stepEmitter: FlowStepEmitter, getAllYourFavoritedToolsStringsUseCase: GetAllYourFavoritedToolsStringsUseCase, getYourFavoritedToolsUseCase: GetYourFavoritedToolsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, reorderFavoritedToolUseCase: ReorderFavoritedToolUseCase, getToolBannerUseCase: GetToolBannerUseCase, inMemoryDataCache: InMemoryDataCache, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.getAllYourFavoritedToolsStringsUseCase = getAllYourFavoritedToolsStringsUseCase
         self.getYourFavoritedToolsUseCase = getYourFavoritedToolsUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
@@ -166,7 +165,7 @@ final class AllYourFavoriteToolsViewModel: ObservableObject {
     }
     
     private func closePage() {
-        flowDelegate?.navigate(step: .backTappedFromAllYourFavoriteTools)
+        stepEmitter.emit(step: AppFlowStep.backTappedFromAllYourFavoriteTools)
     }
 }
 
@@ -198,26 +197,26 @@ extension AllYourFavoriteToolsViewModel {
         
         trackFavoritedToolDetailsButtonAnalytics(tool: tool)
         
-        flowDelegate?.navigate(step: .toolDetailsTappedFromAllYourFavoriteTools(tool: tool))
+        stepEmitter.emit(step: AppFlowStep.toolDetailsTappedFromAllYourFavoriteTools(tool: tool))
     }
     
     func openToolTapped(tool: YourFavoritedToolDomainModel) {
         
         trackOpenFavoritedToolButtonAnalytics(tool: tool)
         
-        flowDelegate?.navigate(step: .openToolTappedFromAllYourFavoriteTools(tool: tool))
+        stepEmitter.emit(step: AppFlowStep.openToolTappedFromAllYourFavoriteTools(tool: tool))
     }
     
     func unfavoriteToolTapped(tool: YourFavoritedToolDomainModel) {
         
-        flowDelegate?.navigate(step: .unfavoriteToolTappedFromAllYourFavoritedTools(tool: tool, didConfirmToolRemovalSubject: didConfirmToolRemovalSubject))
+        stepEmitter.emit(step: AppFlowStep.unfavoriteToolTappedFromAllYourFavoritedTools(tool: tool, didConfirmToolRemovalSubject: didConfirmToolRemovalSubject))
     }
     
     func toolTapped(tool: YourFavoritedToolDomainModel) {
         
         trackOpenFavoritedToolButtonAnalytics(tool: tool)
         
-        flowDelegate?.navigate(step: .toolTappedFromAllYourFavoritedTools(tool: tool))
+        stepEmitter.emit(step: AppFlowStep.toolTappedFromAllYourFavoritedTools(tool: tool))
     }
     
     func toolMoved(fromOffsets source: IndexSet, toOffset destination: Int) {

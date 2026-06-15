@@ -196,47 +196,44 @@ extension ArticleAemCache {
                           
                 do {
                     
-                    try realm.write {
+                    var realmDataObjectsToStore: [RealmArticleAemData] = Array()
+                    
+                    for archivedObject in aemCacheArchivedObjects {
                         
-                        var realmDataObjectsToStore: [RealmArticleAemData] = Array()
+                        let aemData: ArticleAemData = archivedObject.aemData
+                        let existingRealmData: RealmArticleAemData? = realm.object(ofType: RealmArticleAemData.self, forPrimaryKey: aemData.aemUri)
                         
-                        for archivedObject in aemCacheArchivedObjects {
+                        let realmDataToStore: RealmArticleAemData = RealmArticleAemData()
+                        let webArchiveFilename: String
+                                                                        
+                        if let existingRealmData = existingRealmData {
                             
-                            let aemData: ArticleAemData = archivedObject.aemData
-                            let existingRealmData: RealmArticleAemData? = realm.object(ofType: RealmArticleAemData.self, forPrimaryKey: aemData.aemUri)
+                            webArchiveFilename = existingRealmData.webArchiveFilename
                             
-                            let realmDataToStore: RealmArticleAemData
-                            let webArchiveFilename: String
-                                                                            
-                            if let existingRealmData = existingRealmData {
-                                
-                                webArchiveFilename = existingRealmData.webArchiveFilename
-                                
-                                try self.removeWebArchivePlistData(
-                                    webArchiveFilename: webArchiveFilename
-                                )
-                                
-                                realmDataToStore = existingRealmData
-                                realmDataToStore.mapFrom(model: archivedObject.aemData, ignorePrimaryKey: true)
-                            }
-                            else {
-                                
-                                webArchiveFilename = UUID().uuidString
-                                
-                                realmDataToStore = RealmArticleAemData()
-                                realmDataToStore.mapFrom(model: archivedObject.aemData, ignorePrimaryKey: false)
-                                realmDataToStore.webArchiveFilename = webArchiveFilename
-                            }
-                            
-                            try self.storeWebArchivePlistData(
-                                webArchiveFilename: webArchiveFilename,
-                                webArchivePlistData: archivedObject.webArchivePlistData
+                            try self.removeWebArchivePlistData(
+                                webArchiveFilename: webArchiveFilename
                             )
+                        }
+                        else {
                             
-                            realmDataObjectsToStore.append(realmDataToStore)
+                            webArchiveFilename = UUID().uuidString
                         }
                         
-                        realm.add(realmDataObjectsToStore, update: .modified)
+                        realmDataToStore.mapFrom(model: archivedObject.aemData)
+                        realmDataToStore.webArchiveFilename = webArchiveFilename
+                        
+                        try self.storeWebArchivePlistData(
+                            webArchiveFilename: webArchiveFilename,
+                            webArchivePlistData: archivedObject.webArchivePlistData
+                        )
+                        
+                        realmDataObjectsToStore.append(realmDataToStore)
+                    }
+                    
+                    if !realmDataObjectsToStore.isEmpty {
+                        try realm.write {
+                            realm.add(realmDataObjectsToStore, update: .modified)
+                        }
                     }
                 }
                 catch let error {

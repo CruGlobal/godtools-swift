@@ -11,14 +11,14 @@ import UIKit
 @MainActor
 final class ArticleDebugViewModel: ObservableObject {
         
-    private weak var flowDelegate: FlowDelegate?
-    
+    private let stepEmitter: FlowStepEmitter
+        
     @Published private(set) var url: String
     @Published private(set) var urlType: String
     
-    init(flowDelegate: FlowDelegate, articleUrl: ArticleUrlDomainModel) {
+    init(stepEmitter: FlowStepEmitter, articleUrl: ArticleUrlDomainModel) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         
         url = articleUrl.url.absoluteString
         
@@ -36,7 +36,7 @@ final class ArticleDebugViewModel: ObservableObject {
 extension ArticleDebugViewModel {
     
     @objc func closeTapped() {
-        flowDelegate?.navigate(step: .closeTappedFromArticleDebug)
+        stepEmitter.emit(step: AppFlowStep.closeTappedFromArticleDebug)
     }
     
     func copyUrlTapped() {

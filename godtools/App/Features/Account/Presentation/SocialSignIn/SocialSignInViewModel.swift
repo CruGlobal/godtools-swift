@@ -13,6 +13,7 @@ import Combine
 @MainActor
 final class SocialSignInViewModel: ObservableObject {
     
+    private let stepEmitter: FlowStepEmitter
     private let presentAuthViewController: UIViewController
     private let authenticationType: SocialSignInAuthenticationType
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
@@ -22,9 +23,7 @@ final class SocialSignInViewModel: ObservableObject {
     
     private var authenticateUserTask: Task<Void, Error>?
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     @Published private var appLanguage: String = LanguageCodeDomainModel.english.value
     
     @Published var title: String = ""
@@ -33,9 +32,9 @@ final class SocialSignInViewModel: ObservableObject {
     @Published var signInWithFacebookButtonTitle: String = ""
     @Published var signInWithGoogleButtonTitle: String = ""
     
-    init(flowDelegate: FlowDelegate, presentAuthViewController: UIViewController, authenticationType: SocialSignInAuthenticationType, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getSocialCreateAccountStringsUseCase: GetSocialCreateAccountStringsUseCase, getSocialSignInStringsUseCase: GetSocialSignInStringsUseCase, authenticateUserUseCase: AuthenticateUserUseCase) {
+    init(stepEmitter: FlowStepEmitter, presentAuthViewController: UIViewController, authenticationType: SocialSignInAuthenticationType, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getSocialCreateAccountStringsUseCase: GetSocialCreateAccountStringsUseCase, getSocialSignInStringsUseCase: GetSocialSignInStringsUseCase, authenticateUserUseCase: AuthenticateUserUseCase) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.presentAuthViewController = presentAuthViewController
         self.authenticationType = authenticationType
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
@@ -120,10 +119,10 @@ final class SocialSignInViewModel: ObservableObject {
         switch authenticationType {
         
         case .createAccount:
-            flowDelegate?.navigate(step: .userCompletedSignInFromCreateAccount(error: error))
+            stepEmitter.emit(step: AppFlowStep.userCompletedSignInFromCreateAccount(error: error))
         
         case .login:
-            flowDelegate?.navigate(step: .userCompletedSignInFromLogin(error: error))
+            stepEmitter.emit(step: AppFlowStep.userCompletedSignInFromLogin(error: error))
         }
     }
 }
@@ -136,10 +135,10 @@ extension SocialSignInViewModel {
         
         switch authenticationType {
         case .createAccount:
-            flowDelegate?.navigate(step: .closeTappedFromCreateAccount)
+            stepEmitter.emit(step: AppFlowStep.closeTappedFromCreateAccount)
             
         case .login:
-            flowDelegate?.navigate(step: .closeTappedFromLogin)
+            stepEmitter.emit(step: AppFlowStep.closeTappedFromLogin)
         }
     }
     

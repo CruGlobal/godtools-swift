@@ -12,6 +12,7 @@ import Combine
 @MainActor
 final class TutorialViewModel: ObservableObject {
         
+    private let stepEmitter: FlowStepEmitter
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getTutorialStringsUseCase: GetTutorialStringsUseCase
     private let getTutorialUseCase: GetTutorialUseCase
@@ -21,9 +22,7 @@ final class TutorialViewModel: ObservableObject {
     
     private var trackedAnalyticsForYouTubeVideoIds: [String] = Array()
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     @Published private var strings: TutorialStringsDomainModel?
     
@@ -33,9 +32,9 @@ final class TutorialViewModel: ObservableObject {
     
     @Published var currentPage: Int = 0
         
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTutorialStringsUseCase: GetTutorialStringsUseCase, getTutorialUseCase: GetTutorialUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, tutorialVideoAnalytics: TutorialVideoAnalytics) {
+    init(stepEmitter: FlowStepEmitter, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTutorialStringsUseCase: GetTutorialStringsUseCase, getTutorialUseCase: GetTutorialUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, tutorialVideoAnalytics: TutorialVideoAnalytics) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getTutorialStringsUseCase = getTutorialStringsUseCase
         self.getTutorialUseCase = getTutorialUseCase
@@ -163,7 +162,7 @@ extension TutorialViewModel {
     }
     
     @objc func closeTapped() {
-        flowDelegate?.navigate(step: .closeTappedFromTutorial)
+        stepEmitter.emit(step: AppFlowStep.closeTappedFromTutorial)
     }
     
     func tutorialVideoPlayTapped(tutorialPageIndex: Int) {
@@ -195,7 +194,7 @@ extension TutorialViewModel {
         let isOnLastPage: Bool = getIsOnLastPage(tutorialPages: tutorialPages)
         
         if isOnLastPage {
-            flowDelegate?.navigate(step: .startUsingGodToolsTappedFromTutorial)
+            stepEmitter.emit(step: AppFlowStep.startUsingGodToolsTappedFromTutorial)
         }
         else {
             currentPage += 1

@@ -11,17 +11,16 @@ import Foundation
 @MainActor
 final class ShareToolScreenShareSessionViewModel {
     
+    private let stepEmitter: FlowStepEmitter
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let shareUrl: String
     
     let strings: ShareToolScreenShareSessionStringsDomainModel
     let shareMessage: String
-    
-    private weak var flowDelegate: FlowDelegate?
-    
-    init(flowDelegate: FlowDelegate?, strings: ShareToolScreenShareSessionStringsDomainModel, shareMessage: String, shareUrl: String, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+        
+    init(stepEmitter: FlowStepEmitter, strings: ShareToolScreenShareSessionStringsDomainModel, shareMessage: String, shareUrl: String, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
             
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.strings = strings
         self.shareMessage = shareMessage
         self.shareUrl = shareUrl
@@ -57,11 +56,11 @@ extension ShareToolScreenShareSessionViewModel {
     
     func qrCodeTapped() {
     
-        flowDelegate?.navigate(step: .shareQRCodeTappedFromToolScreenShareSession(shareUrl: shareUrl))
+        stepEmitter.emit(step: AppFlowStep.shareQRCodeTappedFromToolScreenShareSession(shareUrl: shareUrl))
     }
     
     func activityViewDismissed() {
         
-        flowDelegate?.navigate(step: .dismissedShareToolScreenShareActivityViewController)
+        stepEmitter.emit(step: AppFlowStep.dismissedShareToolScreenShareActivityViewController)
     }
 }

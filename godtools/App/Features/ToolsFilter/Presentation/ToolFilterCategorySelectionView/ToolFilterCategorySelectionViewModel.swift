@@ -12,6 +12,7 @@ import Combine
 @MainActor
 class ToolFilterCategorySelectionViewModel: ObservableObject {
         
+    private let stepEmitter: FlowStepEmitter
     private let getToolFilterCategoriesStringsUseCase: GetToolFilterCategoriesStringsUseCase
     private let getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase
     private let searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase
@@ -22,9 +23,7 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
     private let getSearchBarStringsUseCase: GetSearchBarStringsUseCase
         
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     @Published private var appLanguage = AppLanguageDomainModel.english
     @Published private var allCategories: [ToolFilterCategoryDomainModel] = Array()
     
@@ -36,8 +35,9 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
     
     @Published var searchText: String = ""
     
-    init(getToolFilterCategoriesStringsUseCase: GetToolFilterCategoriesStringsUseCase, getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase, searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase, getUserToolFilterCategoryUseCase: GetUserToolFilterCategoryUseCase, getUserToolFilterLanguageUseCase: GetUserToolFilterLanguageUseCase, selectedToolFilterCategoryUseCase: SelectedToolFilterCategoryUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getSearchBarStringsUseCase: GetSearchBarStringsUseCase, flowDelegate: FlowDelegate) {
+    init(stepEmitter: FlowStepEmitter, getToolFilterCategoriesStringsUseCase: GetToolFilterCategoriesStringsUseCase, getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase, searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase, getUserToolFilterCategoryUseCase: GetUserToolFilterCategoryUseCase, getUserToolFilterLanguageUseCase: GetUserToolFilterLanguageUseCase, selectedToolFilterCategoryUseCase: SelectedToolFilterCategoryUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getSearchBarStringsUseCase: GetSearchBarStringsUseCase) {
         
+        self.stepEmitter = stepEmitter
         self.getToolFilterCategoriesStringsUseCase = getToolFilterCategoriesStringsUseCase
         self.getToolFilterCategoriesUseCase = getToolFilterCategoriesUseCase
         self.searchToolFilterCategoriesUseCase = searchToolFilterCategoriesUseCase
@@ -46,7 +46,6 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
         self.selectedToolFilterCategoryUseCase = selectedToolFilterCategoryUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getSearchBarStringsUseCase = getSearchBarStringsUseCase
-        self.flowDelegate = flowDelegate
         
         getCurrentAppLanguageUseCase
             .execute()
@@ -138,11 +137,11 @@ extension ToolFilterCategorySelectionViewModel {
                 .execute(category: category)
         }
         
-        flowDelegate?.navigate(step: .categoryTappedFromToolCategoryFilter)
+        stepEmitter.emit(step: AppFlowStep.categoryTappedFromToolCategoryFilter)
     }
     
     @objc func backButtonTapped() {
         
-        flowDelegate?.navigate(step: .backTappedFromToolCategoryFilter)
+        stepEmitter.emit(step: AppFlowStep.backTappedFromToolCategoryFilter)
     }
 }

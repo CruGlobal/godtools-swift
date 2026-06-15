@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension LegacyFlow {
+extension GTFlow {
     
     func presentError(appLanguage: AppLanguageDomainModel, error: Error) {
         

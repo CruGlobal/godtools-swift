@@ -129,15 +129,15 @@ import Combine
 struct DashboardView_Previews: PreviewProvider {
     
     private static let appDiContainer = AppDiContainer.createUITestsDiContainer()
-    private static let flowDelegate: FlowDelegate = PreviewFlowDelegate()
-    private static let dashboardDependencies: DashboardPresentationLayerDependencies = DashboardPresentationLayerDependencies(appDiContainer: Self.appDiContainer, flowDelegate: Self.flowDelegate)
+    private static let stepEmitter: FlowStepEmitter = PreviewFlowStepEmitter.emitter
+    private static let dashboardDependencies: DashboardPresentationLayerDependencies = DashboardPresentationLayerDependencies(appDiContainer: Self.appDiContainer, stepEmitter: stepEmitter)
         
     static func getDashboardViewModel() -> DashboardViewModel {
                 
         let viewModel = DashboardViewModel(
+            stepEmitter: stepEmitter,
             startingTab: .favorites,
-            flowDelegate: Self.flowDelegate,
-            dashboardPresentationLayerDependencies: Self.dashboardDependencies,
+            dashboardPresentationLayerDependencies: dashboardDependencies,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getDashboardStringsUseCase: appDiContainer.feature.dashboard.domainLayer.getDashboardStringsUseCase(),
             dashboardTabObserver: CurrentValueSubject(.favorites)

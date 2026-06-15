@@ -10,92 +10,45 @@ import UIKit
 import GodToolsShared
 import Combine
 
-class ChooseYourOwnAdventureFlow: ToolNavigationFlow, ToolSettingsNavigationFlow {
+final class ChooseYourOwnAdventureFlow: GTFlow {
+    
+    enum CompletedState: Sendable {
+        case userClosedTool
+    }
         
     private let appLanguage: AppLanguageDomainModel
     
     private var cancellables: Set<AnyCancellable> = Set()
-    internal var toolSettingsFlow: ToolSettingsFlow?
-    
-    private weak var flowDelegate: FlowDelegate?
-    
-    let appDiContainer: AppDiContainer
-    let navigationController: AppNavigationController
-    
-    var articleFlow: ArticleFlow?
-    var chooseYourOwnAdventureFlow: ChooseYourOwnAdventureFlow?
-    var lessonFlow: LessonFlow?
-    var tractFlow: TractFlow?
-    var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
-    
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool) {
+                
+    init(
+        appDiContainer: AppDiContainer,
+        appLanguage: AppLanguageDomainModel,
+        toolTranslations: ToolTranslationsDomainModel,
+        initialPage: MobileContentRendererInitialPage?,
+        initialPageSubIndex: Int?,
+        selectedLanguageIndex: Int?,
+        trainingTipsEnabled: Bool
+    ) {
         
-        self.flowDelegate = flowDelegate
-        self.appDiContainer = appDiContainer
-        self.navigationController = sharedNavigationController
         self.appLanguage = appLanguage
         
-        sharedNavigationController.pushViewController(
-            getChooseYourOwnAdventureView(
-                toolTranslations: toolTranslations,
-                initialPage: initialPage,
-                initialPageSubIndex: initialPageSubIndex,
-                selectedLanguageIndex: selectedLanguageIndex,
-                trainingTipsEnabled: trainingTipsEnabled
-            ),
-            animated: true
-        )
-    }
-    
-    deinit {
-        print("x deinit: \(type(of: self))")
-    }
-    
-    func navigate(step: AppFlowStep) {
-        
-        switch step {
-        case .toolSettingsTappedFromChooseYourOwnAdventure(let toolSettingsObserver):
-            
-            openToolSettings(toolSettingsObserver: toolSettingsObserver, toolSettingsDidCloseClosure: nil)
-            
-        case .toolSettingsFlowCompleted( _):
-            
-            closeToolSettings()
-            
-        case .backTappedFromChooseYourOwnAdventure:
-            closeTool()
-            
-        default:
-            break
-        }
-    }
-    
-    private func closeTool() {
-        flowDelegate?.navigate(step: .chooseYourOwnAdventureFlowCompleted(state: .userClosedTool))
-    }
-}
-
-extension ChooseYourOwnAdventureFlow {
-    
-    private func getChooseYourOwnAdventureView(toolTranslations: ToolTranslationsDomainModel, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool) -> UIViewController {
-        
-        let navigation: MobileContentRendererNavigation = appDiContainer.getMobileContentRendererNavigation(
-            parentFlow: self,
-            navigationDelegate: self,
+        let rendererNavigation: MobileContentRendererNavigation = appDiContainer.getMobileContentRendererNavigation(
             appLanguage: appLanguage
         )
         
         let renderer: MobileContentRenderer = appDiContainer.getMobileContentRenderer(
             type: .chooseYourOwnAdventure,
-            navigation: navigation,
+            navigation: rendererNavigation,
             appLanguage: appLanguage,
             toolTranslations: toolTranslations
         )
         
         let navBarLayoutDirection: UISemanticContentAttribute = ApplicationLayout.shared.currentDirection.semanticContentAttribute
         
+        let stepEmitter = FlowStepEmitter()
+        
         let viewModel = ChooseYourOwnAdventureViewModel(
-            flowDelegate: self,
+            stepEmitter: stepEmitter,
             renderer: renderer,
             initialPage: initialPage,
             initialPageSubIndex: initialPageSubIndex,
@@ -108,8 +61,6 @@ extension ChooseYourOwnAdventureFlow {
             incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase(),
             selectedLanguageIndex: selectedLanguageIndex
         )
-        
-        navigationController.setSemanticContentAttribute(semanticContentAttribute: navBarLayoutDirection)
                 
         let homeButton = AppHomeBarItem(
             color: nil,
@@ -148,10 +99,16 @@ extension ChooseYourOwnAdventureFlow {
             title: nil
         )
         
-        var chooseYourOwnAdventureView: ChooseYourOwnAdventureView?
-        let view = ChooseYourOwnAdventureView(viewModel: viewModel, navigationBar: navigationBar)
+        let chooseYourOwnAdventureView = ChooseYourOwnAdventureView(viewModel: viewModel, navigationBar: navigationBar)
+                
+        super.init(
+            appDiContainer: appDiContainer,
+            initialView: chooseYourOwnAdventureView,
+            stepEmitter: stepEmitter
+        )
         
-        chooseYourOwnAdventureView = view
+        rendererNavigation.setDelegate(delegate: self)
+        rendererNavigation.setToolFlow(toolFlow: self)
         
         viewModel.$languageNames
             .receive(on: DispatchQueue.main)
@@ -174,10 +131,52 @@ extension ChooseYourOwnAdventureFlow {
                 (navigationBar.getTitleView() as? NavBarSelectorView)?.setSelectedIndex(index: index)
             }
             .store(in: &cancellables)
-        
-        return view
     }
     
+    override func navigate(step: FlowStep) {
+        
+        guard let appStep = step as? AppFlowStep else {
+            return
+        }
+
+        switch appStep {
+            
+        case .toolSettingsTappedFromChooseYourOwnAdventure(let toolSettingsObserver):
+            presentFlow(
+                flow: ToolSettingsFlow(
+                    appDiContainer: appDiContainer,
+                    toolSettingsObserver: toolSettingsObserver,
+                    toolSettingsDidCloseClosure: nil
+                )
+            )
+                        
+        case .toolSettingsFlowCompleted( _):
+            dismissFlow()
+            
+        case .backTappedFromChooseYourOwnAdventure:
+            completeFlow(state: .userClosedTool)
+            
+        case .toolNavigationFlowCompleted( _):
+            pushedFlow?.popFlow()
+            popFlow()
+            
+        default:
+            break
+        }
+    }
+    
+    override func onPushed(animated: Bool) {
+        
+        appNavigationController?.setSemanticContentAttribute(semanticContentAttribute: ApplicationLayout.shared.currentDirection.semanticContentAttribute)
+    }
+    
+    private func completeFlow(state: CompletedState) {
+        parent?.stepEmitter.emit(step: AppFlowStep.chooseYourOwnAdventureFlowCompleted(state: state))
+    }
+}
+
+extension ChooseYourOwnAdventureFlow {
+        
     private func getNewLanguageSelectorView(view: ChooseYourOwnAdventureView?, viewModel: ChooseYourOwnAdventureViewModel, navBarLayoutDirection: UISemanticContentAttribute) -> NavBarSelectorView {
         
         let barColor: UIColor = viewModel.navBarAppearance.backgroundColor
@@ -203,7 +202,7 @@ extension ChooseYourOwnAdventureFlow {
 extension ChooseYourOwnAdventureFlow: MobileContentRendererNavigationDelegate {
     
     func mobileContentRendererNavigationDismissRenderer(navigation: MobileContentRendererNavigation, event: DismissToolEvent) {
-        closeTool()
+        completeFlow(state: .userClosedTool)
     }
     
     func mobileContentRendererNavigationDeepLink(navigation: MobileContentRendererNavigation, deepLink: MobileContentRendererNavigationDeepLinkType) {

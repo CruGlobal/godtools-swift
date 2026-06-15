@@ -10,133 +10,35 @@ import UIKit
 import GodToolsShared
 import Combine
 
-class TractFlow: ToolNavigationFlow, ToolSettingsNavigationFlow {
+class TractFlow: GTFlow {
+    
+    enum CompletedState: Sendable {
+        case userClosedTract
+        case userClosedTractToLessonsList
+    }
         
     private let appLanguage: AppLanguageDomainModel
     
     private var cancellables: Set<AnyCancellable> = Set()
+                    
+    init(
+        appDiContainer: AppDiContainer,
+        appLanguage: AppLanguageDomainModel,
+        toolTranslations: ToolTranslationsDomainModel,
+        parentFlowIsDashboard: Bool,
+        liveShareStream: String?,
+        selectedLanguageIndex: Int?,
+        trainingTipsEnabled: Bool,
+        initialPage: MobileContentRendererInitialPage?,
+        initialPageSubIndex: Int?,
+        persistToolLanguageSettings: PersistToolLanguageSettingsInterface?
+    ) {
         
-    private weak var flowDelegate: FlowDelegate?
-    
-    let appDiContainer: AppDiContainer
-    let navigationController: AppNavigationController
-    
-    var articleFlow: ArticleFlow?
-    var chooseYourOwnAdventureFlow: ChooseYourOwnAdventureFlow?
-    var lessonFlow: LessonFlow?
-    var tractFlow: TractFlow?
-    var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
-    var toolSettingsFlow: ToolSettingsFlow?
-    
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController?, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, persistToolLanguageSettings: PersistToolLanguageSettingsInterface?) {
-        
-        self.flowDelegate = flowDelegate
-        self.appDiContainer = appDiContainer
-        self.navigationController = sharedNavigationController ?? AppNavigationController(navigationBarAppearance: nil)
         self.appLanguage = appLanguage
         
-        let toolView = getToolView(
-            toolTranslations: toolTranslations,
-            liveShareStream: liveShareStream,
-            selectedLanguageIndex: selectedLanguageIndex,
-            trainingTipsEnabled: trainingTipsEnabled,
-            initialPage: initialPage,
-            initialPageSubIndex: initialPageSubIndex,
-            persistToolLanguageSettings: persistToolLanguageSettings
-        )
-                        
-        if let sharedNavController = sharedNavigationController {
-            sharedNavController.pushViewController(toolView, animated: true)
-        }
-        else {
-            navigationController.setViewControllers([toolView], animated: false)
-        }
-    }
-    
-    deinit {
-        print("x deinit: \(type(of: self))")
-    }
-
-    func navigate(step: AppFlowStep) {
-        
-        switch step {
-                    
-        case .homeTappedFromTool(let isScreenSharing):
-            
-            if isScreenSharing {
-                
-                let localizationServices: LocalizationServicesInterface = appDiContainer.core.dataLayer.getLocalizationServices()
-                                
-                let view = AlertMessageView(
-                    title: "",
-                    message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "exit_tract_remote_share_session.message"),
-                    acceptTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "yes").uppercased(),
-                    cancelTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "no").uppercased(),
-                    acceptTapped: { [weak self] in
-                        
-                        self?.navigate(step: .acceptTappedFromExitToolRemoteShare)
-                    },
-                    cancelTapped: nil
-                )
-                
-                navigationController.present(view.controller, animated: true, completion: nil)
-            }
-            else {
-                closeTool()
-            }
-            
-        case .acceptTappedFromExitToolRemoteShare:
-            closeTool()
-            
-        case .backTappedFromTool:
-            closeTool()
-            
-        case .toolSettingsTappedFromTool(let toolSettingsObserver, let toolSettingsDidCloseClosure):
-                    
-            openToolSettings(toolSettingsObserver: toolSettingsObserver, toolSettingsDidCloseClosure: toolSettingsDidCloseClosure)
-            
-        case .toolSettingsFlowCompleted( _):
-            
-            closeToolSettings()
-                        
-        case .tractFlowCompleted( _):
-            
-            guard tractFlow != nil else {
-                return
-            }
-            
-            _ = navigationController.popViewController(animated: true)
-            
-            tractFlow = nil
-            
-        case .lessonFlowCompleted( _):
-            
-            guard lessonFlow != nil else {
-                return
-            }
-            
-            _ = navigationController.popViewController(animated: true)
-            
-            lessonFlow = nil
-            
-        default:
-            break
-        }
-    }
-    
-    private func closeTool() {
-        
-        flowDelegate?.navigate(step: .tractFlowCompleted(state: .userClosedTract))
-    }
-}
-
-extension TractFlow {
-    
-    private func getToolView(toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, persistToolLanguageSettings: PersistToolLanguageSettingsInterface?) -> UIViewController {
+        let stepEmitter = FlowStepEmitter()
         
         let navigation: MobileContentRendererNavigation = appDiContainer.getMobileContentRendererNavigation(
-            parentFlow: self,
-            navigationDelegate: self,
             appLanguage: appLanguage
         )
         
@@ -149,10 +51,8 @@ extension TractFlow {
         
         let navBarLayoutDirection: UISemanticContentAttribute = ApplicationLayout.shared.currentDirection.semanticContentAttribute
         
-        let parentFlowIsHomeFlow: Bool = flowDelegate is DashboardFlow
-        
         let viewModel = TractViewModel(
-            flowDelegate: self,
+            stepEmitter: stepEmitter,
             renderer: renderer,
             tractRemoteSharePublisher: appDiContainer.feature.toolScreenShare.dataLayer.getTractRemoteSharePublisher(),
             tractRemoteShareSubscriber: appDiContainer.feature.toolScreenShare.dataLayer.getTractRemoteShareSubscriber(),
@@ -168,16 +68,14 @@ extension TractFlow {
             initialPage: initialPage,
             initialPageSubIndex: initialPageSubIndex,
             trainingTipsEnabled: trainingTipsEnabled,
-            incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase(), 
+            incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase(),
             selectedLanguageIndex: selectedLanguageIndex,
             persistToolLanguageSettings: persistToolLanguageSettings
         )
-        
-        navigationController.setSemanticContentAttribute(semanticContentAttribute: navBarLayoutDirection)
-        
+                
         let backBarItem: NavBarItem
         
-        if parentFlowIsHomeFlow {
+        if parentFlowIsDashboard {
             backBarItem = AppHomeBarItem(color: nil, target: viewModel, action: #selector(viewModel.homeTapped), accessibilityIdentifier: nil)
         }
         else {
@@ -204,8 +102,6 @@ extension TractFlow {
             ),
             hidesBarItemPublisher: nil
         )
-        
-        var tractView: TractView?
               
         let navigationBar = AppNavigationBar(
             appearance: viewModel.navBarAppearance,
@@ -216,10 +112,17 @@ extension TractFlow {
             title: nil
         )
         
-        let view = TractView(viewModel: viewModel, navigationBar: navigationBar)
+        let tractView = TractView(viewModel: viewModel, navigationBar: navigationBar)
         
-        tractView = view
+        super.init(
+            appDiContainer: appDiContainer,
+            initialView: tractView,
+            stepEmitter: stepEmitter
+        )
         
+        navigation.setDelegate(delegate: self)
+        navigation.setToolFlow(toolFlow: self)
+                        
         viewModel.$languageNames
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (languageNames: [String]) in
@@ -246,9 +149,78 @@ extension TractFlow {
                 (navigationBar.getTitleView() as? NavBarSelectorView)?.setSelectedIndex(index: index)
             }
             .store(in: &cancellables)
-        
-        return view
     }
+    
+    override func navigate(step: FlowStep) {
+        
+        guard let appStep = step as? AppFlowStep else {
+            return
+        }
+
+        switch appStep {
+                    
+        case .homeTappedFromTool(let isScreenSharing):
+            
+            if isScreenSharing {
+                
+                let localizationServices: LocalizationServicesInterface = appDiContainer.core.dataLayer.getLocalizationServices()
+                                
+                let view = AlertMessageView(
+                    title: "",
+                    message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "exit_tract_remote_share_session.message"),
+                    acceptTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "yes").uppercased(),
+                    cancelTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "no").uppercased(),
+                    acceptTapped: { [weak self] in
+                        
+                        self?.navigate(step: AppFlowStep.acceptTappedFromExitToolRemoteShare)
+                    },
+                    cancelTapped: nil
+                )
+                
+                presentView(view: view.controller, animated: true)
+            }
+            else {
+                completeFlow(state: .userClosedTract)
+            }
+            
+        case .acceptTappedFromExitToolRemoteShare:
+            completeFlow(state: .userClosedTract)
+            
+        case .backTappedFromTool:
+            completeFlow(state: .userClosedTract)
+            
+        case .toolSettingsTappedFromTool(let toolSettingsObserver, let toolSettingsDidCloseClosure):
+            presentFlow(
+                flow: ToolSettingsFlow(
+                    appDiContainer: appDiContainer,
+                    toolSettingsObserver: toolSettingsObserver,
+                    toolSettingsDidCloseClosure: toolSettingsDidCloseClosure
+                )
+            )
+            
+        case .toolSettingsFlowCompleted( _):
+            dismissFlow()
+            
+        case .toolNavigationFlowCompleted( _):
+            pushedFlow?.popFlow()
+            popFlow()
+            
+        default:
+            break
+        }
+    }
+    
+    override func onPushed(animated: Bool) {
+        
+        appNavigationController?.setSemanticContentAttribute(semanticContentAttribute: ApplicationLayout.shared.currentDirection.semanticContentAttribute)
+    }
+    
+    private func completeFlow(state: TractFlow.CompletedState) {
+        parent?.stepEmitter.emit(step: AppFlowStep.tractFlowCompleted(state: state))
+    }
+}
+
+extension TractFlow {
     
     private func getNewLanguageSelectorView(view: TractView?, viewModel: TractViewModel, navBarLayoutDirection: UISemanticContentAttribute) -> NavBarSelectorView {
         
@@ -275,7 +247,7 @@ extension TractFlow {
 extension TractFlow: MobileContentRendererNavigationDelegate {
     
     func mobileContentRendererNavigationDismissRenderer(navigation: MobileContentRendererNavigation, event: DismissToolEvent) {
-        closeTool()
+        completeFlow(state: .userClosedTract)
     }
     
     func mobileContentRendererNavigationDeepLink(navigation: MobileContentRendererNavigation, deepLink: MobileContentRendererNavigationDeepLinkType) {
@@ -283,7 +255,7 @@ extension TractFlow: MobileContentRendererNavigationDelegate {
         switch deepLink {
         
         case .lessonsList:
-            flowDelegate?.navigate(step: .tractFlowCompleted(state: .userClosedTractToLessonsList))
+            completeFlow(state: .userClosedTractToLessonsList)
         }
     }
 }

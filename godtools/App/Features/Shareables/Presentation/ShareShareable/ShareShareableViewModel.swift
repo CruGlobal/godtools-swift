@@ -14,14 +14,16 @@ final class ShareShareableViewModel {
         
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     
+    private let stepEmitter: FlowStepEmitter
     private let incrementUserCounterUseCase: IncrementUserCounterUseCase
    
     let imageToShare: UIImage
     
     private var cancellables = Set<AnyCancellable>()
     
-    init(imageToShare: UIImage, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
+    init(stepEmitter: FlowStepEmitter, imageToShare: UIImage, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
         
+        self.stepEmitter = stepEmitter
         self.imageToShare = imageToShare
         self.incrementUserCounterUseCase = incrementUserCounterUseCase
     }
@@ -48,5 +50,10 @@ extension ShareShareableViewModel {
                 
             }
             .store(in: &Self.backgroundCancellables)
+    }
+    
+    func activityViewDismissed() {
+        
+        stepEmitter.emit(step: AppFlowStep.dismissedShareShareableActivityViewController)
     }
 }

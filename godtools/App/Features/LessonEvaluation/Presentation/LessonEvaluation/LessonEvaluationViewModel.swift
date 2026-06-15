@@ -14,6 +14,7 @@ final class LessonEvaluationViewModel: ObservableObject {
     
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
         
+    private let stepEmitter: FlowStepEmitter
     private let lessonId: String
     private let pageIndexReached: Int
     private let getLessonEvaluationStringsUseCase: GetLessonEvaluationStringsUseCase
@@ -22,9 +23,7 @@ final class LessonEvaluationViewModel: ObservableObject {
     private let cancelLessonEvaluationUseCase: CancelLessonEvaluationUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
-            
-    private weak var flowDelegate: FlowDelegate?
-            
+                        
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
     @Published private(set) var strings = LessonEvaluationStringsDomainModel.emptyValue
@@ -35,7 +34,7 @@ final class LessonEvaluationViewModel: ObservableObject {
     @Published var readyToShareFaithScaleIntValue: Int = 6
     
     init(
-        flowDelegate: FlowDelegate,
+        stepEmitter: FlowStepEmitter,
         lessonId: String, pageIndexReached: Int,
         getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
         getLessonEvaluationStringsUseCase: GetLessonEvaluationStringsUseCase,
@@ -44,7 +43,7 @@ final class LessonEvaluationViewModel: ObservableObject {
         cancelLessonEvaluationUseCase: CancelLessonEvaluationUseCase
     ) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.lessonId = lessonId
         self.pageIndexReached = pageIndexReached
         self.getLessonEvaluationStringsUseCase = getLessonEvaluationStringsUseCase
@@ -104,7 +103,7 @@ extension LessonEvaluationViewModel {
             })
             .store(in: &Self.backgroundCancellables)
         
-        flowDelegate?.navigate(step: .closeTappedFromLessonEvaluation)
+        stepEmitter.emit(step: AppFlowStep.closeTappedFromLessonEvaluation)
     }
     
     func yesTapped() {
@@ -147,6 +146,6 @@ extension LessonEvaluationViewModel {
             })
             .store(in: &Self.backgroundCancellables)
         
-        flowDelegate?.navigate(step: .sendFeedbackTappedFromLessonEvaluation)
+        stepEmitter.emit(step: AppFlowStep.sendFeedbackTappedFromLessonEvaluation)
     }
 }

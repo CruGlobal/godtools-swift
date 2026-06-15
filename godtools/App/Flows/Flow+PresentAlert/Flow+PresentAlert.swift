@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension LegacyFlow {
+extension GTFlow {
     
     func presentAlertMessage(appLanguage: AppLanguageDomainModel, alertMessage: AlertMessage) {
         
@@ -28,6 +28,6 @@ extension LegacyFlow {
             cancelTapped: nil
         )
         
-        navigationController.present(view.controller, animated: true, completion: nil)
+        presentView(view: view.controller, animated: true, completion: nil)
     }
 }

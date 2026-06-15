@@ -87,7 +87,7 @@ struct ReviewShareShareableViewPreview: PreviewProvider {
         let appDiContainer = AppDiContainer.createUITestsDiContainer()
                         
         return ReviewShareShareableViewModel(
-            flowDelegate: PreviewFlowDelegate(),
+            stepEmitter: PreviewFlowStepEmitter.emitter,
             toolId: "1",
             shareable: ShareableDomainModel(dataModelId: "", imageName: "", title: ""),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),

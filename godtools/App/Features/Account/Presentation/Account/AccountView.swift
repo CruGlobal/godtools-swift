@@ -49,7 +49,7 @@ struct AccountView_Preview: PreviewProvider {
         let appDiContainer = AppDiContainer.createUITestsDiContainer()
         
         return AccountViewModel(
-            flowDelegate: PreviewFlowDelegate(),
+            stepEmitter: PreviewFlowStepEmitter.emitter,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getUserAccountDetailsUseCase: appDiContainer.feature.account.domainLayer.getUserAccountDetailsUseCase(),
             getUserActivityUseCase: appDiContainer.feature.userActivity.domainLayer.getUserActivityUseCase(),

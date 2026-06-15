@@ -18,6 +18,16 @@ class ShareShareableView: UIActivityViewController {
         
         super.init(activityItems: [viewModel.imageToShare], applicationActivities: nil)
         
+        completionWithItemsHandler = { (
+            activityType: UIActivity.ActivityType?,
+            serviceCompleted: Bool,
+            returnedItems: [Any]?,
+            activityError: Error?
+        ) in
+            
+            viewModel.activityViewDismissed()
+        }
+        
         viewModel.pageViewed()
     }
 }

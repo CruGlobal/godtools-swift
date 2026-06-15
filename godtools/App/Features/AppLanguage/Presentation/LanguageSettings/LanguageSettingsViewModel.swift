@@ -12,24 +12,23 @@ import Combine
 @MainActor
 final class LanguageSettingsViewModel: ObservableObject {
     
+    private let stepEmitter: FlowStepEmitter
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getLanguageSettingsStringsUseCase: GetLanguageSettingsStringsUseCase
     private let getDownloadedLanguagesListUseCase: GetDownloadedLanguagesListUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     
     private var cancellables = Set<AnyCancellable>()
-        
-    private weak var flowDelegate: FlowDelegate?
-    
+            
     @Published private var appLanguage: AppLanguageDomainModel = ""
     
     @Published private(set) var strings = LanguageSettingsStringsDomainModel.emptyValue
     
     @Published var downloadedLanguages: [DownloadedLanguageListItemDomainModel] = []
     
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLanguageSettingsStringsUseCase: GetLanguageSettingsStringsUseCase, getDownloadedLanguagesListUseCase: GetDownloadedLanguagesListUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
+    init(stepEmitter: FlowStepEmitter, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLanguageSettingsStringsUseCase: GetLanguageSettingsStringsUseCase, getDownloadedLanguagesListUseCase: GetDownloadedLanguagesListUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getLanguageSettingsStringsUseCase = getLanguageSettingsStringsUseCase
         self.getDownloadedLanguagesListUseCase = getDownloadedLanguagesListUseCase
@@ -79,17 +78,17 @@ extension LanguageSettingsViewModel {
     
     @objc func backTapped() {
         
-        flowDelegate?.navigate(step: .backTappedFromLanguageSettings)
+        stepEmitter.emit(step: AppFlowStep.backTappedFromLanguageSettings)
     }
     
     func chooseAppLanguageTapped() {
         
-        flowDelegate?.navigate(step: .chooseAppLanguageTappedFromLanguageSettings)
+        stepEmitter.emit(step: AppFlowStep.chooseAppLanguageTappedFromLanguageSettings)
     }
     
     func editDownloadedLanguagesTapped() {
         
-        flowDelegate?.navigate(step: .editDownloadedLanguagesTappedFromLanguageSettings)
+        stepEmitter.emit(step: AppFlowStep.editDownloadedLanguagesTappedFromLanguageSettings)
     }
     
     func pageViewed() {

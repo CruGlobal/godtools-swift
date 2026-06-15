@@ -13,6 +13,7 @@ import SwiftUI
 @MainActor
 final class LessonsViewModel: ObservableObject {
         
+    private let stepEmitter: FlowStepEmitter
     private let pullToRefreshLessonsUseCase: PullToRefreshLessonsUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase
@@ -27,9 +28,7 @@ final class LessonsViewModel: ObservableObject {
     
     private var cancellables: Set<AnyCancellable> = Set()
     private var pullToRefreshLessonsTask: Task<Void, Error>?
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     @Published private var appLanguage = AppLanguageDomainModel.english
     @Published private var lessonFilterLanguageSelection: LessonFilterLanguageDomainModel?
     @Published private var localizationSettings: UserLocalizationSettingsDomainModel?
@@ -43,9 +42,9 @@ final class LessonsViewModel: ObservableObject {
 
     @Published var selectedToggle: PersonalizationToggleOptionValue = .personalized
 
-    init(flowDelegate: FlowDelegate, pullToRefreshLessonsUseCase: PullToRefreshLessonsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase, getLessonsStringsUseCase: GetLessonsStringsUseCase, getAllLessonsUseCase: GetAllLessonsUseCase, getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getToolBannerUseCase: GetToolBannerUseCase, inMemoryDataCache: InMemoryDataCache) {
+    init(stepEmitter: FlowStepEmitter, pullToRefreshLessonsUseCase: PullToRefreshLessonsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase, getLessonsStringsUseCase: GetLessonsStringsUseCase, getAllLessonsUseCase: GetAllLessonsUseCase, getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getToolBannerUseCase: GetToolBannerUseCase, inMemoryDataCache: InMemoryDataCache) {
 
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.pullToRefreshLessonsUseCase = pullToRefreshLessonsUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getLocalizationSettingsUseCase = getLocalizationSettingsUseCase
@@ -277,19 +276,19 @@ extension LessonsViewModel {
     }
     
     func lessonLanguageFilterTapped() {
-        flowDelegate?.navigate(step: .lessonLanguageFilterTappedFromLessons)
+        stepEmitter.emit(step: AppFlowStep.lessonLanguageFilterTappedFromLessons)
     }
     
     func lessonCardTapped(lessonListItem: LessonListItemDomainModel) {
 
-        flowDelegate?.navigate(step: .lessonTappedFromLessonsList(lessonListItem: lessonListItem, languageFilter: lessonFilterLanguageSelection))
+        stepEmitter.emit(step: AppFlowStep.lessonTappedFromLessonsList(lessonListItem: lessonListItem, languageFilter: lessonFilterLanguageSelection))
 
         trackLessonTappedAnalytics(lessonListItem: lessonListItem)
     }
 
     func localizationSettingsTapped() {
 
-        flowDelegate?.navigate(step: .localizationSettingsTappedFromLessons)
+        stepEmitter.emit(step: AppFlowStep.localizationSettingsTappedFromLessons)
     }
 
     func goToAllLessonsTapped() {

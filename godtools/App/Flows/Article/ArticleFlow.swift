@@ -9,23 +9,18 @@
 import UIKit
 import GodToolsShared
 import SwiftUI
-import Combine
 
-class ArticleFlow: LegacyFlow {
+final class ArticleFlow: GTFlow {
+    
+    enum CompletedState: Sendable {
+        case articleShared
+        case userClosed
+    }
     
     private let downloadArticlesObservable: DownloadManifestArticlesObservable
-        
-    private weak var flowDelegate: FlowDelegate?
-    
-    let appDiContainer: AppDiContainer
-    let navigationController: AppNavigationController
-    
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, toolTranslations: ToolTranslationsDomainModel) {
-        
-        self.flowDelegate = flowDelegate
-        self.appDiContainer = appDiContainer
-        self.navigationController = sharedNavigationController
-        
+                
+    init(appDiContainer: AppDiContainer, toolTranslations: ToolTranslationsDomainModel) {
+                
         let languageTranslationManifest: MobileContentRendererLanguageTranslationManifest = toolTranslations.languageTranslationManifests[0]
         
         downloadArticlesObservable = DownloadManifestArticlesObservable(
@@ -40,25 +35,32 @@ class ArticleFlow: LegacyFlow {
             forceFetchFromRemote: false
         )
         
-        sharedNavigationController.pushViewController(
-            getArticleCategories(
-                toolTranslations: toolTranslations,
-                languageTranslationManifest: languageTranslationManifest
-            ),
-            animated: true
+        let stepEmitter = FlowStepEmitter()
+        
+        let articleCategories = Self.getArticleCategories(
+            appDiContainer: appDiContainer,
+            stepEmitter: stepEmitter,
+            toolTranslations: toolTranslations,
+            languageTranslationManifest: languageTranslationManifest
+        )
+        
+        super.init(
+            appDiContainer: appDiContainer,
+            initialView: articleCategories,
+            stepEmitter: stepEmitter
         )
     }
     
-    deinit {
-        print("x deinit: \(type(of: self))")
-    }
-    
-    func navigate(step: AppFlowStep) {
+    override func navigate(step: FlowStep) {
         
-        switch step {
+        guard let appStep = step as? AppFlowStep else {
+            return
+        }
+
+        switch appStep {
         
         case .backTappedFromArticleCategories:
-            flowDelegate?.navigate(step: .articleFlowCompleted(state: .userClosedArticle))
+            completeFlow(state: .userClosed)
         
         case .articleCategoryTappedFromArticleCategories(let resource, let language, let category, let manifest):
             
@@ -81,6 +83,7 @@ class ArticleFlow: LegacyFlow {
         case .sharedTappedFromArticle(let articleId):
             
             let viewModel = ShareArticleViewModel(
+                stepEmitter: stepEmitter,
                 articleId: articleId,
                 shareArticleUseCase: appDiContainer.feature.articles.domainLayer.getShareArticleUseCase(),
                 trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
@@ -89,27 +92,42 @@ class ArticleFlow: LegacyFlow {
             
             let view = ShareArticleView(viewModel: viewModel)
             
-            navigationController.present(view.controller, animated: true, completion: nil)
+            presentView(view: view.controller, animated: true)
             
+        case .dismissedShareArticleActivityViewController:
+            completeFlow(state: .articleShared)
+                        
         case .debugTappedFromArticle(let articleUrl):
             
-            navigationController.present(getArticleDebugView(articleUrl: articleUrl), animated: true)
+            presentView(
+                view: getArticleDebugView(articleUrl: articleUrl),
+                animated: true
+            )
             
         case .closeTappedFromArticleDebug:
-            navigationController.dismissPresented(animated: true, completion: nil)
+            dismissView(animated: true)
             
         default:
             break
         }
     }
+    
+    private func completeFlow(state: CompletedState) {
+        parent?.stepEmitter.emit(step: AppFlowStep.articleFlowCompleted(state: state))
+    }
 }
 
 extension ArticleFlow {
     
-    private func getArticleCategories(toolTranslations: ToolTranslationsDomainModel, languageTranslationManifest: MobileContentRendererLanguageTranslationManifest) -> UIViewController {
+    private static func getArticleCategories(
+        appDiContainer: AppDiContainer,
+        stepEmitter: FlowStepEmitter,
+        toolTranslations: ToolTranslationsDomainModel,
+        languageTranslationManifest: MobileContentRendererLanguageTranslationManifest
+    ) -> UIViewController {
         
         let viewModel = ArticleCategoriesViewModel(
-            flowDelegate: self,
+            stepEmitter: stepEmitter,
             resource: toolTranslations.tool,
             language: languageTranslationManifest.language,
             translation: languageTranslationManifest.translation,
@@ -145,7 +163,7 @@ extension ArticleFlow {
     private func getArticles(resource: ResourceDataModel, language: LanguageDataModel, category: ArticleCategoryDomainModel, manifest: Manifest) -> UIViewController {
         
         let viewModel = ArticlesViewModel(
-            flowDelegate: self,
+            stepEmitter: stepEmitter,
             resource: resource,
             language: language,
             category: category,
@@ -182,7 +200,7 @@ extension ArticleFlow {
     private func getArticle(resource: ResourceDataModel, articleId: String) -> UIViewController {
         
         let viewModel = ArticleWebViewModel(
-            flowDelegate: self,
+            stepEmitter: stepEmitter,
             flowType: .tool(resource: resource),
             articleId: articleId,
             getArticleUseCase: appDiContainer.feature.articles.domainLayer.getArticleUseCase(),
@@ -229,7 +247,7 @@ extension ArticleFlow {
     private func getArticleDebugView(articleUrl: ArticleUrlDomainModel) -> UIViewController {
         
         let viewModel = ArticleDebugViewModel(
-            flowDelegate: self,
+            stepEmitter: stepEmitter,
             articleUrl: articleUrl
         )
         

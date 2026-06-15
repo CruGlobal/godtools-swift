@@ -12,6 +12,7 @@ import Combine
 @MainActor
 final class DownloadableLanguagesViewModel: ObservableObject {
     
+    private let stepEmitter: FlowStepEmitter
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getDownloadableLanguagesStringsUseCase: GetDownloadableLanguagesStringsUseCase
     private let getDownloadableLanguagesListUseCase: GetDownloadableLanguagesListUseCase
@@ -21,9 +22,7 @@ final class DownloadableLanguagesViewModel: ObservableObject {
     private let removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase
         
     private var cancellables = Set<AnyCancellable>()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     @Published private var appLanguage = AppLanguageDomainModel.english
     @Published private var allDownloadableLanguages: [DownloadableLanguageListItemDomainModel] = Array()
     
@@ -33,9 +32,9 @@ final class DownloadableLanguagesViewModel: ObservableObject {
     
     @Published var searchText: String = ""
     
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getDownloadableLanguagesStringsUseCase: GetDownloadableLanguagesStringsUseCase, getDownloadableLanguagesListUseCase: GetDownloadableLanguagesListUseCase, getSearchBarStringsUseCase: GetSearchBarStringsUseCase, searchLanguageInDownloadableLanguagesUseCase: SearchLanguageInDownloadableLanguagesUseCase, downloadToolLanguageUseCase: DownloadToolLanguageUseCase, removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase) {
+    init(stepEmitter: FlowStepEmitter, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getDownloadableLanguagesStringsUseCase: GetDownloadableLanguagesStringsUseCase, getDownloadableLanguagesListUseCase: GetDownloadableLanguagesListUseCase, getSearchBarStringsUseCase: GetSearchBarStringsUseCase, searchLanguageInDownloadableLanguagesUseCase: SearchLanguageInDownloadableLanguagesUseCase, downloadToolLanguageUseCase: DownloadToolLanguageUseCase, removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getDownloadableLanguagesStringsUseCase = getDownloadableLanguagesStringsUseCase
         self.getDownloadableLanguagesListUseCase = getDownloadableLanguagesListUseCase
@@ -105,7 +104,7 @@ final class DownloadableLanguagesViewModel: ObservableObject {
     func getDownloadableLanguageItemViewModel(downloadableLanguage: DownloadableLanguageListItemDomainModel) -> DownloadableLanguageItemViewModel {
         
         return DownloadableLanguageItemViewModel(
-            flowDelegate: flowDelegate!,
+            stepEmitter: stepEmitter,
             downloadableLanguage: downloadableLanguage,
             downloadToolLanguageUseCase: downloadToolLanguageUseCase,
             removeDownloadedToolLanguageUseCase: removeDownloadedToolLanguageUseCase
@@ -119,6 +118,6 @@ extension DownloadableLanguagesViewModel {
     
     @objc func backTapped() {
         
-        flowDelegate?.navigate(step: .backTappedFromDownloadedLanguages)
+        stepEmitter.emit(step: AppFlowStep.backTappedFromDownloadedLanguages)
     }
 }

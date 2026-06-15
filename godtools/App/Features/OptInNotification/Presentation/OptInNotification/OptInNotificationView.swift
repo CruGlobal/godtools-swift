@@ -15,16 +15,14 @@ struct OptInNotificationView: View {
     private let buttonFontSize: CGFloat = 17
     private let buttonHeight: CGFloat = 50
     private let buttonHorizontalPadding: CGFloat = 20
-    private let overlayTappedClosure: (() -> Void)?
     
     @ObservedObject private var viewModel: OptInNotificationViewModel
     
     @State private var modalIsHidden: Bool = true
 
-    init(viewModel: OptInNotificationViewModel, overlayTappedClosure: (() -> Void)? = nil) {
+    init(viewModel: OptInNotificationViewModel) {
        
         self.viewModel = viewModel
-        self.overlayTappedClosure = overlayTappedClosure
     }
 
     var body: some View {
@@ -104,7 +102,7 @@ struct OptInNotificationView: View {
             
         }, isHidden: $modalIsHidden, overlayTappedClosure: {
             
-            overlayTappedClosure?()
+            viewModel.overlayTapped()
             
         }, backgroundHorizontalPadding: modalHorizontalPadding, strokeColor: ColorPalette.gtBlue.color, strokeLineWidth: 8)
     }
@@ -119,7 +117,7 @@ struct OptInNotificationView_Preview: PreviewProvider {
         let appDiContainer = AppDiContainer.createUITestsDiContainer()
 
         let viewModel = OptInNotificationViewModel(
-            flowDelegate: PreviewFlowDelegate(),
+            stepEmitter: PreviewFlowStepEmitter.emitter,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getOptInNotificationStringsUseCase: appDiContainer.feature.optInNotification.domainLayer.getOptInNotificationStringsUseCase(),
             notificationPromptType: .allow

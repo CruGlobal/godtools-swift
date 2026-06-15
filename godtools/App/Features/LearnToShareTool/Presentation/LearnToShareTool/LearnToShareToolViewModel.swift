@@ -12,6 +12,7 @@ import Combine
 @MainActor
 final class LearnToShareToolViewModel: ObservableObject {
     
+    private let stepEmitter: FlowStepEmitter
     private let toolId: String
     private let toolPrimaryLanguage: AppLanguageDomainModel
     private let toolParallelLanguage: AppLanguageDomainModel?
@@ -21,9 +22,7 @@ final class LearnToShareToolViewModel: ObservableObject {
     private let getLearnToShareToolTutorialUseCase: GetLearnToShareToolTutorialUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     @Published private var appLanguage = AppLanguageDomainModel.english
 
     @Published private(set) var strings = LearnToShareToolStringsDomainModel.emptyValue
@@ -34,9 +33,9 @@ final class LearnToShareToolViewModel: ObservableObject {
     
     @Published var currentPage: Int = 0
     
-    init(flowDelegate: FlowDelegate, toolId: String, toolPrimaryLanguage: AppLanguageDomainModel, toolParallelLanguage: AppLanguageDomainModel?, toolSelectedLanguageIndex: Int?, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLearnToShareToolStringsUseCase: GetLearnToShareToolStringsUseCase, getLearnToShareToolTutorialUseCase: GetLearnToShareToolTutorialUseCase) {
+    init(stepEmitter: FlowStepEmitter, toolId: String, toolPrimaryLanguage: AppLanguageDomainModel, toolParallelLanguage: AppLanguageDomainModel?, toolSelectedLanguageIndex: Int?, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLearnToShareToolStringsUseCase: GetLearnToShareToolStringsUseCase, getLearnToShareToolTutorialUseCase: GetLearnToShareToolTutorialUseCase) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.toolId = toolId
         self.toolPrimaryLanguage = toolPrimaryLanguage
         self.toolParallelLanguage = toolParallelLanguage
@@ -144,13 +143,13 @@ extension LearnToShareToolViewModel {
     }
     
     @objc func closeTapped() {
-        flowDelegate?.navigate(step: .closeTappedFromLearnToShareTool(toolId: toolId, primaryLanguage: toolPrimaryLanguage, parallelLanguage: toolParallelLanguage, selectedLanguageIndex: toolSelectedLanguageIndex))
+        stepEmitter.emit(step: AppFlowStep.closeTappedFromLearnToShareTool(toolId: toolId, primaryLanguage: toolPrimaryLanguage, parallelLanguage: toolParallelLanguage, selectedLanguageIndex: toolSelectedLanguageIndex))
     }
     
     func continueTapped() {
         
         if isOnLastPage {
-            flowDelegate?.navigate(step: .startTrainingTappedFromLearnToShareTool(toolId: toolId, primaryLanguage: toolPrimaryLanguage, parallelLanguage: toolParallelLanguage, selectedLanguageIndex: toolSelectedLanguageIndex))
+            stepEmitter.emit(step: AppFlowStep.startTrainingTappedFromLearnToShareTool(toolId: toolId, primaryLanguage: toolPrimaryLanguage, parallelLanguage: toolParallelLanguage, selectedLanguageIndex: toolSelectedLanguageIndex))
         }
         else {
             currentPage += 1
