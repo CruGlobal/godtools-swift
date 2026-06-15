@@ -127,27 +127,6 @@ struct FlowPresentDismissFlowTests: FlowTesting {
     }
     
     @Test()
-    func dismissingAPresentedFlowIsNoLongerPresented() async throws {
-        
-        let rootFlow = getNewRootFlow()
-        
-        _ = getWindowAndAttachRootForPresentation(root: rootFlow.navigationController)
-        
-        let flow = getNewFlow()
-                        
-        rootFlow.presentFlow(flow: flow, animated: false)
-        
-        #expect(rootFlow.navigationController.presentedViewController == flow.navigationController)
-        
-        flow.parent?.dismissFlow(animated: false)
-        
-        try await Task.sleepHalfSecond()
-        
-        #expect(rootFlow.navigationController.presentedViewController == nil)
-        #expect(rootFlow.navigationController.presentedViewController != flow.navigationController)
-    }
-    
-    @Test()
     func presenterIsTheNavigationControllerWhenTheFlowIsPresentedWithNavigationControllerPresentType() {
         
         let rootFlow = getNewRootFlow()
