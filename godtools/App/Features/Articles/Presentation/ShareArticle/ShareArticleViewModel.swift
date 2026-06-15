@@ -11,6 +11,7 @@ import Foundation
 @MainActor
 final class ShareArticleViewModel {
     
+    private let stepEmitter: FlowStepEmitter
     private let articleId: String
     private let shareArticleUseCase: ShareArticleUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
@@ -18,8 +19,9 @@ final class ShareArticleViewModel {
     
     let shareArticle: ShareArticleDomainModel
         
-    init(articleId: String, shareArticleUseCase: ShareArticleUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(stepEmitter: FlowStepEmitter, articleId: String, shareArticleUseCase: ShareArticleUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
+        self.stepEmitter = stepEmitter
         self.articleId = articleId
         self.shareArticleUseCase = shareArticleUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
@@ -69,5 +71,10 @@ final class ShareArticleViewModel {
             url: nil,
             data: [AnalyticsConstants.Keys.shareAction: 1]
         )
+    }
+    
+    func activityViewDismissed() {
+        
+        stepEmitter.emit(step: AppFlowStep.dismissedShareArticleActivityViewController)
     }
 }

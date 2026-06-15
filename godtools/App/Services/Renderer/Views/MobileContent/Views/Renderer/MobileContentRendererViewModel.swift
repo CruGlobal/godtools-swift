@@ -218,7 +218,7 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
     }
     
     func setRendererPrimaryLanguage(primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageId: String?) {
-        
+                
         let appLanguage: AppLanguageDomainModel = self.appLanguage
         let currentRenderer: MobileContentRenderer = renderer.value
         
@@ -230,26 +230,28 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
         
         let newSelectedLanguageIndex: Int? = newLanguageIds.firstIndex(where: {$0 == selectedLanguageId})
         
-        let didDownloadToolTranslationsClosure = { [weak self] (result: Result<ToolTranslationsDomainModel, Error>) in
+        let downloadToolFlowCompleted = { [weak self] (state: DownloadToolFlow.CompletedState) in
                    
-            switch result {
+            switch state {
             
-            case .success(let toolTranslations):
+            case .downloadSuccess(let toolTranslations):
                 
                 let newRenderer: MobileContentRenderer = currentRenderer.copy(toolTranslations: toolTranslations)
                 
                 self?.setRenderer(renderer: newRenderer, pageRendererIndex: newSelectedLanguageIndex, navigationEvent: nil)
-                
-            case .failure(let error):
-                
+            
+            case .downloadFailed(let error):
                 currentRenderer.navigation.presentError(error: error, appLanguage: appLanguage)
+            
+            case .userClosed:
+                break
             }
         }
         
         currentRenderer.navigation.downloadToolLanguages(
             toolId: currentRenderer.resource.id,
             languageIds: newLanguageIds,
-            completion: didDownloadToolTranslationsClosure
+            completion: downloadToolFlowCompleted
         )
     }
     

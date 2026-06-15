@@ -12,25 +12,24 @@ import Combine
 @MainActor
 final class DeleteAccountProgressViewModel: ObservableObject {
         
+    private let stepEmitter: FlowStepEmitter
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getDeleteAccountProgressStringsUseCase: GetDeleteAccountProgressStringsUseCase
     private let deleteAccountUseCase: DeleteAccountUseCase
     private let minimumSecondsToDisplayDeleteAccountProgress: TimeInterval = 2
     
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     @Published private var appLanguage: AppLanguageDomainModel = ""
     
     @Published private(set) var strings = DeleteAccountProgressStringsDomainModel.emptyValue
     
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getDeleteAccountProgressStringsUseCase: GetDeleteAccountProgressStringsUseCase, deleteAccountUseCase: DeleteAccountUseCase) {
+    init(stepEmitter: FlowStepEmitter, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getDeleteAccountProgressStringsUseCase: GetDeleteAccountProgressStringsUseCase, deleteAccountUseCase: DeleteAccountUseCase) {
         
+        self.stepEmitter = stepEmitter
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getDeleteAccountProgressStringsUseCase = getDeleteAccountProgressStringsUseCase
         self.deleteAccountUseCase = deleteAccountUseCase
-        self.flowDelegate = flowDelegate
         
         getCurrentAppLanguageUseCase
             .execute()
@@ -96,10 +95,10 @@ final class DeleteAccountProgressViewModel: ObservableObject {
     private func didFinishAccountDeletion(error: Error?) {
                 
         if let deleteAccountError = error {
-            flowDelegate?.navigate(step: .didFinishAccountDeletionWithErrorFromDeleteAccountProgress(error: deleteAccountError))
+            stepEmitter.emit(step: AppFlowStep.didFinishAccountDeletionWithErrorFromDeleteAccountProgress(error: deleteAccountError))
         }
         else {
-            flowDelegate?.navigate(step: .didFinishAccountDeletionWithSuccessFromDeleteAccountProgress)
+            stepEmitter.emit(step: AppFlowStep.didFinishAccountDeletionWithSuccessFromDeleteAccountProgress)
         }
     }
 }

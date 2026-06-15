@@ -12,6 +12,7 @@ import Combine
 @MainActor
 final class AppLanguagesViewModel: ObservableObject {
     
+    private let stepEmitter: FlowStepEmitter
     private let getAppLanguagesStringsUseCase: GetAppLanguagesStringsUseCase
     private let searchAppLanguageInAppLanguagesListUseCase: SearchAppLanguageInAppLanguagesListUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
@@ -20,9 +21,7 @@ final class AppLanguagesViewModel: ObservableObject {
     
     private var getAppLanguagesTask: Task<Void, Error>?
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     @Published private var appLanguage = AppLanguageDomainModel.english
     @Published private var appLanguagesList: [AppLanguageListItemDomainModel] = Array()
     
@@ -32,9 +31,9 @@ final class AppLanguagesViewModel: ObservableObject {
     @Published var searchText: String = ""
     @Published var appLanguageSearchResults: [AppLanguageListItemDomainModel] = Array()
     
-    init(flowDelegate: FlowDelegate, getAppLanguagesStringsUseCase: GetAppLanguagesStringsUseCase, searchAppLanguageInAppLanguagesListUseCase: SearchAppLanguageInAppLanguagesListUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getAppLanguagesListUseCase: GetAppLanguagesListUseCase, getSearchBarStringsUseCase: GetSearchBarStringsUseCase) {
+    init(stepEmitter: FlowStepEmitter, getAppLanguagesStringsUseCase: GetAppLanguagesStringsUseCase, searchAppLanguageInAppLanguagesListUseCase: SearchAppLanguageInAppLanguagesListUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getAppLanguagesListUseCase: GetAppLanguagesListUseCase, getSearchBarStringsUseCase: GetSearchBarStringsUseCase) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.getAppLanguagesStringsUseCase = getAppLanguagesStringsUseCase
         self.searchAppLanguageInAppLanguagesListUseCase = searchAppLanguageInAppLanguagesListUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
@@ -95,11 +94,11 @@ extension AppLanguagesViewModel {
     
     @objc func backTapped() {
         
-        flowDelegate?.navigate(step: .backTappedFromAppLanguages)
+        stepEmitter.emit(step: AppFlowStep.backTappedFromAppLanguages)
     }
     
     func appLanguageTapped(appLanguage: AppLanguageListItemDomainModel) {
         
-        flowDelegate?.navigate(step: .appLanguageTappedFromAppLanguages(appLanguage: appLanguage))
+        stepEmitter.emit(step: AppFlowStep.appLanguageTappedFromAppLanguages(appLanguage: appLanguage))
     }
 }

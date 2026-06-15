@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetToolScreenShareTutorialHasBeenViewedUseCase {
     
@@ -18,15 +17,12 @@ final class GetToolScreenShareTutorialHasBeenViewedUseCase {
         self.tutorialViewsRepository = tutorialViewsRepository
     }
     
-    func execute(toolId: String) -> AnyPublisher<ToolScreenShareTutorialViewedDomainModel, Never> {
+    func execute(toolId: String) -> ToolScreenShareTutorialViewedDomainModel {
         
         let toolScreenShare: ToolScreenShareTutorialViewDataModel? = tutorialViewsRepository.getToolScreenShareTutorialView(id: toolId)
         
         let numberOfViews: Int = toolScreenShare?.numberOfViews ?? 0
         
-        let domainModel = ToolScreenShareTutorialViewedDomainModel(numberOfViews: numberOfViews)
-        
-        return Just(domainModel)
-            .eraseToAnyPublisher()
+        return ToolScreenShareTutorialViewedDomainModel(numberOfViews: numberOfViews)
     }
 }

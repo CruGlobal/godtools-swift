@@ -12,18 +12,18 @@ import Combine
 @MainActor
 final class CreatingToolScreenShareSessionTimedOutViewModel {
         
+    private let stepEmitter: FlowStepEmitter
+    
     private var cancellables = Set<AnyCancellable>()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     let title: String
     let message: String
     let cancelTitle: String? = nil
     let acceptTitle: String
     
-    init(flowDelegate: FlowDelegate, strings: CreatingToolScreenShareSessionTimedOutStringsDomainModel) {
+    init(stepEmitter: FlowStepEmitter, strings: CreatingToolScreenShareSessionTimedOutStringsDomainModel) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
                 
         title = strings.title
         message = strings.message
@@ -40,10 +40,10 @@ final class CreatingToolScreenShareSessionTimedOutViewModel {
 extension CreatingToolScreenShareSessionTimedOutViewModel {
     
     func cancelTapped() {
-        flowDelegate?.navigate(step: .cancelTappedFromCreateToolScreenShareSessionTimeout)
+        stepEmitter.emit(step: AppFlowStep.cancelTappedFromCreateToolScreenShareSessionTimeout)
     }
     
     func acceptTapped() {
-        flowDelegate?.navigate(step: .acceptTappedFromCreateToolScreenShareSessionTimeout)
+        stepEmitter.emit(step: AppFlowStep.acceptTappedFromCreateToolScreenShareSessionTimeout)
     }
 }

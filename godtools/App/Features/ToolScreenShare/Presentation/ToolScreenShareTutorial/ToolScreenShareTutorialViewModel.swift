@@ -14,6 +14,7 @@ final class ToolScreenShareTutorialViewModel: ObservableObject {
     
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
         
+    private let stepEmitter: FlowStepEmitter
     private let toolId: String
     private let showTutorialPages: ShowToolScreenShareTutorialPages
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
@@ -23,9 +24,7 @@ final class ToolScreenShareTutorialViewModel: ObservableObject {
     
     private var cancellables: Set<AnyCancellable> = Set()
     private var didMarkTutorialAsViewed: Bool = false
-        
-    private weak var flowDelegate: FlowDelegate?
-    
+            
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
     @Published private(set) var strings = ToolScreenShareTutorialStringsDomainModel.emptyValue
@@ -36,9 +35,9 @@ final class ToolScreenShareTutorialViewModel: ObservableObject {
     
     @Published var currentPage: Int = 0
     
-    init(flowDelegate: FlowDelegate, toolId: String, showTutorialPages: ShowToolScreenShareTutorialPages, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolScreenShareTutorialStringsUseCase: GetToolScreenShareTutorialStringsUseCase, getToolScreenShareTutorialUseCase: GetToolScreenShareTutorialUseCase, didViewToolScreenShareTutorialUseCase: DidViewToolScreenShareTutorialUseCase) {
+    init(stepEmitter: FlowStepEmitter, toolId: String, showTutorialPages: ShowToolScreenShareTutorialPages, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolScreenShareTutorialStringsUseCase: GetToolScreenShareTutorialStringsUseCase, getToolScreenShareTutorialUseCase: GetToolScreenShareTutorialUseCase, didViewToolScreenShareTutorialUseCase: DidViewToolScreenShareTutorialUseCase) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.toolId = toolId
         self.showTutorialPages = showTutorialPages
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
@@ -57,7 +56,6 @@ final class ToolScreenShareTutorialViewModel: ObservableObject {
                 getToolScreenShareTutorialStringsUseCase
                     .execute(appLanguage: appLanguage)
             }
-            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (strings: ToolScreenShareTutorialStringsDomainModel) in
                 
@@ -157,7 +155,7 @@ final class ToolScreenShareTutorialViewModel: ObservableObject {
 extension ToolScreenShareTutorialViewModel {
     
     @objc func closeTapped() {
-        flowDelegate?.navigate(step: .closeTappedFromToolScreenShareTutorial)
+        stepEmitter.emit(step: AppFlowStep.closeTappedFromToolScreenShareTutorial)
     }
     
     @objc func skipTapped() {
@@ -175,11 +173,11 @@ extension ToolScreenShareTutorialViewModel {
     }
     
     func generateQRCodeTapped() {
-        flowDelegate?.navigate(step: .generateQRCodeTappedFromToolScreenShareTutorial)
+        stepEmitter.emit(step: AppFlowStep.generateQRCodeTappedFromToolScreenShareTutorial)
     }
     
     func shareLinkTapped() {
-        flowDelegate?.navigate(step: .shareLinkTappedFromToolScreenShareTutorial)
+        stepEmitter.emit(step: AppFlowStep.shareLinkTappedFromToolScreenShareTutorial)
     }
     
     private func nextPageTapped() {

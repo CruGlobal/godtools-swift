@@ -15,6 +15,7 @@ final class ArticleWebViewModel: NSObject, ObservableObject {
     
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     
+    private let stepEmitter: FlowStepEmitter
     private let articleId: String
     private let flowType: ArticleWebViewModelFlowType
     private let getArticleUseCase: GetArticleUseCase
@@ -27,9 +28,7 @@ final class ArticleWebViewModel: NSObject, ObservableObject {
     private var loadingArticle: ArticleUrlDomainModel?
     private var displayArticleTimer: Timer?
     private var cancellables = Set<AnyCancellable>()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     let article: ArticleDomainModel
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
     let viewState: ObservableValue<ArticleWebViewState> = ObservableValue(value: .loadingArticle)
@@ -37,9 +36,17 @@ final class ArticleWebViewModel: NSObject, ObservableObject {
     @Published private(set) var hidesShareButton: Bool = false
     @Published private(set) var hidesDebugButton: Bool = true
     
-    init(flowDelegate: FlowDelegate, flowType: ArticleWebViewModelFlowType, articleId: String, getArticleUseCase: GetArticleUseCase, incrementUserCounterUseCase: IncrementUserCounterUseCase, getAppUIDebuggingIsEnabledUseCase: GetAppUIDebuggingIsEnabledUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        flowType: ArticleWebViewModelFlowType,
+        articleId: String,
+        getArticleUseCase: GetArticleUseCase,
+        incrementUserCounterUseCase: IncrementUserCounterUseCase,
+        getAppUIDebuggingIsEnabledUseCase: GetAppUIDebuggingIsEnabledUseCase,
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
+    ) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.flowType = flowType
         self.articleId = articleId
         self.getArticleUseCase = getArticleUseCase
@@ -169,7 +176,7 @@ extension ArticleWebViewModel {
     
     @objc func backTapped() {
         
-        flowDelegate?.navigate(step: .backTappedFromArticle)
+        stepEmitter.emit(step: AppFlowStep.backTappedFromArticle)
     }
 
     func pageViewed() {
@@ -202,11 +209,11 @@ extension ArticleWebViewModel {
             return
         }
         
-        flowDelegate?.navigate(step: .debugTappedFromArticle(articleUrl: articleUrl))
+        stepEmitter.emit(step: AppFlowStep.debugTappedFromArticle(articleUrl: articleUrl))
     }
     
     @objc func sharedTapped() {
-        flowDelegate?.navigate(step: .sharedTappedFromArticle(articleId: articleId))
+        stepEmitter.emit(step: AppFlowStep.sharedTappedFromArticle(articleId: articleId))
     }
     
     func loadWebPage(webView: WKWebView) {

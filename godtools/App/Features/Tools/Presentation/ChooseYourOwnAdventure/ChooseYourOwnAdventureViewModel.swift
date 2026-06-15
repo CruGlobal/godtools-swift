@@ -13,19 +13,19 @@ import Combine
 @MainActor
 final class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
                 
+    private let stepEmitter: FlowStepEmitter
+    
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     let navBarAppearance: AppNavigationBarAppearance
     let languageFont: UIFont?
     
     @Published var hidesHomeButton: Bool = false
     @Published var hidesBackButton: Bool = true
         
-    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
+    init(stepEmitter: FlowStepEmitter, renderer: MobileContentRenderer, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
                         
         let primaryManifest: Manifest = renderer.pageRenderers[0].manifest
                      
@@ -212,7 +212,7 @@ final class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
 extension ChooseYourOwnAdventureViewModel {
     
     @objc func homeTapped() {
-        flowDelegate?.navigate(step: FlowStep.backTappedFromChooseYourOwnAdventure)
+        stepEmitter.emit(step: AppFlowStep.backTappedFromChooseYourOwnAdventure)
     }
     
     @objc func backTapped() {
@@ -224,7 +224,7 @@ extension ChooseYourOwnAdventureViewModel {
         
         let toolSettingsObserver = setUpToolSettingsObserver()
         
-        flowDelegate?.navigate(step: .toolSettingsTappedFromChooseYourOwnAdventure(toolSettingsObserver: toolSettingsObserver))
+        stepEmitter.emit(step: AppFlowStep.toolSettingsTappedFromChooseYourOwnAdventure(toolSettingsObserver: toolSettingsObserver))
     }
     
     func languageTapped(index: Int) {

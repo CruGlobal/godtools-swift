@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Flow {
+extension GTFlow {
     
     func presentError(appLanguage: AppLanguageDomainModel, error: Error) {
         

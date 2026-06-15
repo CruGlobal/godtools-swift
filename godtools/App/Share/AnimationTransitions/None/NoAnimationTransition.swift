@@ -26,7 +26,6 @@ class NoAnimationTransition: FadeAnimationTransition {
             fade = .fadeOut
         }
         
-        
         super.init(fade: fade, duration: duration, fadeOutAlpha: 0.99, fadeInAlpha: 1)
     }
 }

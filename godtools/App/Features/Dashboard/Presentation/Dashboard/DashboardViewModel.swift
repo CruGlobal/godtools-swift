@@ -13,15 +13,14 @@ import SwiftUI
 @MainActor
 final class DashboardViewModel: ObservableObject {
     
+    private let stepEmitter: FlowStepEmitter
     private let dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getDashboardStringsUseCase: GetDashboardStringsUseCase
         
     private var cancellables: Set<AnyCancellable> = Set()
     private var initialTabSet: Bool = false
-    
-    private weak var flowDelegate: FlowDelegate?
-        
+            
     @Published private var appLanguage = AppLanguageDomainModel.english
     
     @Published var tabs: [DashboardTabTypeDomainModel] = [.lessons, .favorites, .tools]
@@ -30,9 +29,16 @@ final class DashboardViewModel: ObservableObject {
     @Published var toolsButtonTitle: String = ""
     @Published var currentTab: Int = 0
         
-    init(startingTab: DashboardTabTypeDomainModel, flowDelegate: FlowDelegate, dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getDashboardStringsUseCase: GetDashboardStringsUseCase, dashboardTabObserver: CurrentValueSubject<DashboardTabTypeDomainModel, Never>) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        startingTab: DashboardTabTypeDomainModel,
+        dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getDashboardStringsUseCase: GetDashboardStringsUseCase,
+        dashboardTabObserver: CurrentValueSubject<DashboardTabTypeDomainModel, Never>
+    ) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.dashboardPresentationLayerDependencies = dashboardPresentationLayerDependencies
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getDashboardStringsUseCase = getDashboardStringsUseCase
@@ -111,7 +117,7 @@ final class DashboardViewModel: ObservableObject {
 extension DashboardViewModel {
     
     @objc func menuTapped() {
-        flowDelegate?.navigate(step: .menuTappedFromTools)
+        stepEmitter.emit(step: AppFlowStep.menuTappedFromTools)
     }
             
     func getLessonsViewModel() -> LessonsViewModel {

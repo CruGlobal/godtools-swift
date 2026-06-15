@@ -6,69 +6,70 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
+import Foundation
 import UIKit
 import SwiftUI
-import Combine
 
-class TutorialFlow: Flow {
-        
-    private var cancellables: Set<AnyCancellable> = Set()
+class TutorialFlow: GTFlow {
     
-    private weak var flowDelegate: FlowDelegate?
-    
-    let appDiContainer: AppDiContainer
-    let navigationController: AppNavigationController
-    
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController?) {
+    enum CompletedState: Sendable {
+        case closed
+    }
+                
+    init(appDiContainer: AppDiContainer) {
         print("init: \(type(of: self))")
         
-        let navigationBarAppearance = AppNavigationBarAppearance(
-            backgroundColor: .white,
-            controlColor: ColorPalette.gtBlue.uiColor,
-            titleFont: nil,
-            titleColor: nil,
-            isTranslucent: false
-        )
+        let stepEmitter = FlowStepEmitter()
         
-        self.flowDelegate = flowDelegate
-        self.appDiContainer = appDiContainer
-        self.navigationController = sharedNavigationController ?? AppNavigationController(navigationBarAppearance: navigationBarAppearance)
-             
+        super.init(
+            appDiContainer: appDiContainer,
+            initialView: Self.getTutorialView(appDiContainer: appDiContainer, stepEmitter: stepEmitter),
+            stepEmitter: stepEmitter,
+            navigationController: AppNavigationController(
+                navigationBarAppearance: AppNavigationBarAppearance(
+                    backgroundColor: .white,
+                    controlColor: ColorPalette.gtBlue.uiColor,
+                    titleFont: nil,
+                    titleColor: nil,
+                    isTranslucent: false
+                )
+            )
+        )
+                     
         navigationController.modalPresentationStyle = .fullScreen
         navigationController.setNavigationBarHidden(false, animated: false)
-               
-        navigationController.setViewControllers(
-            [getTutorialView()],
-            animated: sharedNavigationController != nil
-        )
     }
-    
-    deinit {
-        print("x deinit: \(type(of: self))")
-    }
-    
-    func navigate(step: FlowStep) {
+
+    override func navigate(step: FlowStep) {
         
-        switch step {
+        guard let appStep = step as? AppFlowStep else {
+            return
+        }
+
+        switch appStep {
                        
         case .closeTappedFromTutorial:
-            flowDelegate?.navigate(step: .tutorialFlowCompleted(state: .closed))
+            completeFlow(state: .closed)
             
         case .startUsingGodToolsTappedFromTutorial:
-            flowDelegate?.navigate(step: .tutorialFlowCompleted(state: .closed))
+            completeFlow(state: .closed)
             
         default:
             break
         }
     }
+    
+    private func completeFlow(state: CompletedState) {
+        parent?.stepEmitter.emit(step: AppFlowStep.tutorialFlowCompleted(state: state))
+    }
 }
 
 extension TutorialFlow {
     
-    private func getTutorialView() -> UIViewController {
+    private static func getTutorialView(appDiContainer: AppDiContainer, stepEmitter: FlowStepEmitter) -> UIViewController {
         
         let viewModel = TutorialViewModel(
-            flowDelegate: self,
+            stepEmitter: stepEmitter,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getTutorialStringsUseCase: appDiContainer.feature.tutorial.domainLayer.getTutorialStringsUseCase(),
             getTutorialUseCase: appDiContainer.feature.tutorial.domainLayer.getTutorialUseCase(),
