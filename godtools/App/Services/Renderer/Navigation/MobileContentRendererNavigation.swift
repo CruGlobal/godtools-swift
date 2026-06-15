@@ -82,14 +82,18 @@ protocol MobileContentRendererNavigationDelegate: AnyObject {
         }
         else {
             
-            toolFlow?.navigateToURL(
+            let linkTapped = URLLinkTappedParams(
                 url: url,
                 screenName: analyticsScreenName,
                 siteSection: analyticsSiteSection,
                 siteSubSection: analyticsSiteSubSection,
-                appLanguage: appLanguage,
                 contentLanguage: languages.primaryLanguage.localeId,
                 contentLanguageSecondary: languages.parallelLanguage?.localeId
+            )
+            
+            toolFlow?.navigateToURL(
+                linkTapped: linkTapped,
+                appLanguage: appLanguage
             )
         }
     }

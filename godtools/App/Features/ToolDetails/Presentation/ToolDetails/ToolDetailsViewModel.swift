@@ -306,8 +306,17 @@ extension ToolDetailsViewModel {
     }
     
     func urlTapped(url: URL) {
-           
-        stepEmitter.emit(step: AppFlowStep.urlLinkTappedFromToolDetails(url: url, screenName: getAnalyticsScreenName(analyticsToolAbbreviation: analyticsToolAbbreviation), siteSection: getAnalyticsSiteSection(analyticsToolAbbreviation: analyticsToolAbbreviation), siteSubSection: analyticsSiteSubSection, contentLanguage: nil, contentLanguageSecondary: nil))
+        
+        let urlLinkTapped = URLLinkTappedParams(
+            url: url,
+            screenName: getAnalyticsScreenName(analyticsToolAbbreviation: analyticsToolAbbreviation),
+            siteSection: getAnalyticsSiteSection(analyticsToolAbbreviation: analyticsToolAbbreviation),
+            siteSubSection: analyticsSiteSubSection,
+            contentLanguage: nil,
+            contentLanguageSecondary: nil
+        )
+        
+        stepEmitter.emit(step: AppFlowStep.urlLinkTappedFromToolDetails(urlLinkTapped: urlLinkTapped))
     }
     
     func toolVersionTapped(toolVersion: ToolVersionDomainModel) {

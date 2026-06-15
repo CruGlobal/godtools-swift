@@ -292,8 +292,8 @@ final class DashboardFlow: GTFlow {
         case .backTappedFromToolDetails:
             navigationController.popViewController(animated: true)
             
-        case .urlLinkTappedFromToolDetails(let url, let screenName, let siteSection, let siteSubSection, let contentLanguage, let contentLanguageSecondary):
-            navigateToURL(url: url, screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, appLanguage: appLanguage, contentLanguage: contentLanguage, contentLanguageSecondary: contentLanguageSecondary)
+        case .urlLinkTappedFromToolDetails(let urlLinkTapped):
+            navigateToURL(linkTapped: urlLinkTapped, appLanguage: appLanguage)
             
         case .learnToShareToolTappedFromToolDetails(let toolId, let primaryLanguage, let parallelLanguage, let selectedLanguageIndex):
             navigateToLearnToShareTool(

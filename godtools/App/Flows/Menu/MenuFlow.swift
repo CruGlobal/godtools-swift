@@ -211,7 +211,16 @@ final class MenuFlow: GTFlow {
                 return
             }
             
-            navigateToURL(url: writeReviewURL, screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, appLanguage: appLanguage, contentLanguage: contentLanguage, contentLanguageSecondary: contentLanguageSecondary)
+            let linkTapped = URLLinkTappedParams(
+                url: writeReviewURL,
+                screenName: screenName,
+                siteSection: siteSection,
+                siteSubSection: siteSubSection,
+                contentLanguage: contentLanguage,
+                contentLanguageSecondary: contentLanguageSecondary
+            )
+            
+            navigateToURL(linkTapped: linkTapped, appLanguage: appLanguage)
             
         case .shareAStoryWithUsTappedFromMenu:
             let shareStoryWebContent = ShareAStoryWithUsWebContent(localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())

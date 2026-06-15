@@ -85,7 +85,7 @@ enum AppFlowStep: FlowStep {
     case backTappedFromToolDetails
     case openToolTappedFromToolDetails(toolId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?)
     case learnToShareToolTappedFromToolDetails(toolId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?)
-    case urlLinkTappedFromToolDetails(url: URL, screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String?, contentLanguageSecondary: String?)
+    case urlLinkTappedFromToolDetails(urlLinkTapped: URLLinkTappedParams)
     
     // learnToShareTool
     case closeTappedFromLearnToShareTool(toolId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?)
