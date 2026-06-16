@@ -38,7 +38,7 @@ open class Flow: NSObject {
     private var toggableInitialViewForPresentedFlows: UIViewController?
     
     public private(set) var navigationController: UINavigationController
-    public private(set) var pushedFlow: Flow?
+    public private(set) var pushedFlows: [Flow] = Array()
     public private(set) var presentedFlow: Flow?
     
     public private(set) weak var parent: Flow?
@@ -122,16 +122,9 @@ open class Flow: NSObject {
     }
     
     private func recurseAndRemoveAllFlows(flow: Flow) {
-        
-        var topMostPushedFlow: Flow? = flow.getTopMostPushedFlow()
-        
-        while topMostPushedFlow != nil && topMostPushedFlow != flow {
             
-            if let flow = topMostPushedFlow {
-                recurseAndRemoveAllFlows(flow: flow)
-            }
-            
-            topMostPushedFlow = topMostPushedFlow?.parent
+        for pushedFlow in flow.pushedFlows {
+            recurseAndRemoveAllFlows(flow: pushedFlow)
         }
         
         var topMostPresentedFlow: Flow? = flow.getTopMostPresentedFlow()
@@ -145,7 +138,7 @@ open class Flow: NSObject {
             topMostPresentedFlow = topMostPresentedFlow?.parent
         }
         
-        flow.pushedFlow = nil
+        flow.removeAllPushedFlows()
         flow.presentedFlow = nil
     }
     
@@ -163,7 +156,7 @@ open class Flow: NSObject {
         let flowIsEqualToSelf: Bool = flow == self
         let flowIsRoot: Bool = flow is RootFlow
         let flowHasParent: Bool = flow.parent != nil
-        let flowIsPushed: Bool = flow == pushedFlow
+        let flowIsPushed: Bool = pushedFlows.contains(flow)
         let flowIsPresented: Bool = flow == presentedFlow
         
         guard !flowIsEqualToSelf && !flowIsRoot && !flowHasParent && !flowIsPushed && !flowIsPresented else {
@@ -175,6 +168,10 @@ open class Flow: NSObject {
     
     // MARK: - Push / Pop Flow
     
+    public var numberOfPushedFlows: Int {
+        return pushedFlows.count
+    }
+    
     public func setNavigationController(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
@@ -183,34 +180,16 @@ open class Flow: NSObject {
         navigationController = originalNavigationController
     }
     
-    public func getTopMostPushedFlow() -> Flow? {
-        
-        var topFlow: Flow? = pushedFlow
-        var nextPushedFlow: Flow? = topFlow?.pushedFlow
-        
-        while nextPushedFlow != nil {
-            topFlow = nextPushedFlow
-            nextPushedFlow = nextPushedFlow?.pushedFlow
-        }
-        
-        return topFlow
-    }
-    
     public func pushFlow(flow: Flow, animated: Bool = true) {
         
-        guard pushedFlow == nil else {
-            printWarning(message: "Cannot push flow: \(flow) because a flow \(String(describing: pushedFlow)) is already pushed")
-            return
-        }
-        
         guard canAddFlow(flow: flow) else {
-            printWarning(message: "Cannot push flow \(flow). Failed to push flow.")
+            printWarning(message: "Cannot push flow: \(flow)")
             return
         }
-        
-        pushedFlow = flow
         
         flow.setParent(parent: self)
+                
+        pushedFlows.append(flow)
         
         flow.setNavigationController(navigationController: navigationController)
         
@@ -223,9 +202,15 @@ open class Flow: NSObject {
     
     public func popFlow(animated: Bool = true, popToViewController: UIViewController? = nil) {
         
-        guard let topFlow = pushedFlow else {
+        guard let topFlow = pushedFlows.last else {
             return
         }
+        
+        guard let index = pushedFlows.firstIndex(of: topFlow) else {
+            return
+        }
+        
+        pushedFlows.remove(at: index)
         
         if let viewController = popToViewController {
             
@@ -246,8 +231,26 @@ open class Flow: NSObject {
         topFlow.resetNavigationController()
         
         topFlow.parent = nil
+    }
+    
+    private func removeAllPushedFlows() {
         
-        pushedFlow = nil
+        guard !pushedFlows.isEmpty else {
+            return
+        }
+        
+        let count: Int = pushedFlows.count
+        
+        for index in stride(from: count - 1, through: 0, by: -1) {
+            
+            let flow: Flow = pushedFlows[index]
+            
+            pushedFlows.remove(at: index)
+            
+            flow.parent = nil
+            
+            flow.resetNavigationController()
+        }
     }
     
     // MARK: - Present / Dismiss Flow
@@ -319,7 +322,7 @@ open class Flow: NSObject {
     public func presentFlow(flow: Flow, animated: Bool = true) {
         
         guard presentedFlow == nil else {
-            printWarning(message: "Cannot present flow: \(flow) because a flow \(String(describing: pushedFlow)) is already presented")
+            printWarning(message: "Cannot present flow: \(flow) because a flow \(String(describing: presentedFlow)) is already presented")
             return
         }
         
