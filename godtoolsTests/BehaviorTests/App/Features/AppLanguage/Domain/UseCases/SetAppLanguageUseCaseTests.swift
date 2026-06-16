@@ -71,8 +71,15 @@ struct SetAppLanguageUseCaseTests {
                 .sink { (userLessonFilters: UserLessonFiltersDomainModel) in
                     
                     triggerCount += 1
-                                    
-                    if triggerCount == 2 {
+                    
+                    if triggerCount == 1 {
+                        
+                        Task {
+                            try await setAppLanguageUseCase
+                                .execute(appLanguage: LanguageCodeDomainModel.spanish.rawValue)
+                        }
+                    }
+                    else if triggerCount == 2 {
                         
                         lessonLanguageFilterRef = userLessonFilters.languageFilter
                         
@@ -81,12 +88,7 @@ struct SetAppLanguageUseCaseTests {
                         continuation.resume(returning: ())
                     }
                 }
-                .store(in: &cancellables)
-            
-            Task {
-                try await setAppLanguageUseCase
-                    .execute(appLanguage: LanguageCodeDomainModel.spanish.rawValue)
-            }
+                .store(in: &cancellables)            
         }
         
         #expect(spanishLanguage != nil)
