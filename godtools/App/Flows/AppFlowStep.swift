@@ -43,8 +43,8 @@ enum AppFlowStep: FlowStep {
 
     // lesson
     case closeLessonSwipeTutorial
-    case startOverTappedFromResumeLessonModal
-    case continueTappedFromResumeLessonModal
+    case startOverTappedFromResumeLessonModal(toolTranslations: ToolTranslationsDomainModel)
+    case continueTappedFromResumeLessonModal(toolTranslations: ToolTranslationsDomainModel)
     case shareLessonTappedFromLesson(pageNumber: Int, languageId: String)
     case closeTappedFromLesson(lessonId: String, highestPageNumberViewed: Int)
     case lessonFlowCompleted(state: LessonFlow.CompletedState)
@@ -93,7 +93,7 @@ enum AppFlowStep: FlowStep {
             
     // tool
     case homeTappedFromTool(isScreenSharing: Bool)
-    case backTappedFromTool
+    case backTappedFromTool(isScreenSharing: Bool)
     case toolSettingsTappedFromTool(toolSettingsObserver: ToolSettingsObserver, toolSettingsDidCloseClosure: (() -> Void)?)
     case tractFlowCompleted(state: TractFlow.CompletedState)
     case acceptTappedFromExitToolRemoteShare

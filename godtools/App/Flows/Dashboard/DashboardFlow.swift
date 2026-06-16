@@ -453,15 +453,15 @@ extension DashboardFlow {
         }
                 
         closeMenu(animated: false)
+        
+        removeAllFlows()
                 
         navigationController.popToRootViewController(animated: animatePopToDashboard)
                 
-                navigationController.dismissPresented(
-                    animated: animateDismissingPresentedView,
-                    completion: didCompleteDismissingPresentedView
-                )
-        
-        removeAllFlows()
+        navigationController.dismissPresented(
+            animated: animateDismissingPresentedView,
+            completion: didCompleteDismissingPresentedView
+        )
     }
 }
 

@@ -150,7 +150,7 @@ final class ToolNavigationFlow: GTFlow {
             switch state {
                 
             case .downloadSuccess(toolTranslations: let toolTranslations):
-                navigateToTool(toolNavigation: toolNavigation, toolTranslations: toolTranslations)
+                navigateToTool(toolNavigation: toolNavigation, toolTranslations: toolTranslations, isNavigatingFromResumeLessonModal: false)
             
             case .downloadFailed(let error):
                 completeFlow(state: .downloadFailed(error: error))
@@ -172,6 +172,28 @@ final class ToolNavigationFlow: GTFlow {
             
         case .chooseYourOwnAdventureFlowCompleted(let state):
             completeFlow(state: .chooseYourOwnAdventureFlowCompleted(state: state))
+            
+        case .startOverTappedFromResumeLessonModal(let toolTranslations):
+            
+            navigateToTool(
+                toolNavigation: toolNavigation.copy(initialPage: nil),
+                toolTranslations: toolTranslations,
+                isNavigatingFromResumeLessonModal: true
+            )
+
+            dismissView(animated: true)
+            
+        case .continueTappedFromResumeLessonModal(let toolTranslations):
+                        
+            navigateToTool(
+                toolNavigation: toolNavigation.copy(
+                    initialPage: getUserLessonProgressPage(lessonId: toolTranslations.tool.id)
+                ),
+                toolTranslations: toolTranslations,
+                isNavigatingFromResumeLessonModal: true
+            )
+            
+            dismissView(animated: true)
 
         default:
             break
@@ -187,7 +209,7 @@ final class ToolNavigationFlow: GTFlow {
 
 extension ToolNavigationFlow {
     
-    private func navigateToTool(toolNavigation: ToolNavigation, toolTranslations: ToolTranslationsDomainModel) {
+    private func navigateToTool(toolNavigation: ToolNavigation, toolTranslations: ToolTranslationsDomainModel, isNavigatingFromResumeLessonModal: Bool) {
         
         guard toolTranslations.languageTranslationManifests.count > 0 else {
             
@@ -228,17 +250,32 @@ extension ToolNavigationFlow {
             
         case .lesson:
             
-            pushFlow(
-                flow: LessonFlow(
-                    appDiContainer: appDiContainer,
-                    appLanguage: toolNavigation.appLanguage,
-                    toolTranslations: toolTranslations,
-                    trainingTipsEnabled: toolNavigation.trainingTipsEnabled,
-                    initialPage: toolNavigation.initialPage,
-                    initialPageSubIndex: toolNavigation.initialPageSubIndex,
-                    toolOpenedFrom: toolNavigation.toolOpenedFrom
+            let shouldOpenResumeLessonModal: Bool = getShouldNavigateToResumeLesson(
+                toolTranslations: toolTranslations,
+                toolOpenedFrom: toolNavigation.toolOpenedFrom
+            ) && !isNavigatingFromResumeLessonModal
+            
+            if shouldOpenResumeLessonModal {
+                
+                presentView(
+                    view: getResumeLessonModal(toolTranslations: toolTranslations),
+                    animated: true
                 )
-            )
+            }
+            else {
+                
+                pushFlow(
+                    flow: LessonFlow(
+                        appDiContainer: appDiContainer,
+                        appLanguage: toolNavigation.appLanguage,
+                        toolTranslations: toolTranslations,
+                        trainingTipsEnabled: toolNavigation.trainingTipsEnabled,
+                        initialPage: toolNavigation.initialPage,
+                        initialPageSubIndex: toolNavigation.initialPageSubIndex,
+                        isNavigatingFromResumeLessonModal: isNavigatingFromResumeLessonModal
+                    )
+                )
+            }
             
         case .tract:
             

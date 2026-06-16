@@ -157,8 +157,7 @@ final class ChooseYourOwnAdventureFlow: GTFlow {
             completeFlow(state: .userClosedTool)
             
         case .toolNavigationFlowCompleted( _):
-            pushedFlow?.popFlow()
-            popFlow()
+            popFlow(animated: true, popToViewController: initialView)
             
         default:
             break

@@ -18,4 +18,18 @@ struct ToolNavigation {
     let initialPageSubIndex: Int?
     let toolOpenedFrom: ToolOpenedFrom
     let persistToolLanguageSettings: PersistToolLanguageSettingsInterface?
+    
+    func copy(initialPage: MobileContentRendererInitialPage? = nil) -> ToolNavigation {
+        
+        return ToolNavigation(
+            appLanguage: appLanguage,
+            liveShareStream: liveShareStream,
+            selectedLanguageIndex: selectedLanguageIndex,
+            trainingTipsEnabled: trainingTipsEnabled,
+            initialPage: initialPage ?? self.initialPage,
+            initialPageSubIndex: initialPageSubIndex,
+            toolOpenedFrom: toolOpenedFrom,
+            persistToolLanguageSettings: persistToolLanguageSettings
+        )
+    }
 }

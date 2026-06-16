@@ -19,8 +19,6 @@ struct FlowTests: FlowTesting {
         
         let rootFlow = getNewRootFlow()
         
-        _ = getWindowAndAttachRootForPresentation(root: rootFlow.navigationController)
-        
         let flowA = getNewFlow()
         
         let flowB = getNewFlow()
@@ -28,21 +26,23 @@ struct FlowTests: FlowTesting {
         let flowC = getNewFlow()
         
         let flowD = getNewFlow()
-                
+        
+        _ = getWindowAndAttachRootForPresentation(root: rootFlow.navigationController)
+        
         rootFlow.pushFlow(flow: flowA, animated: false)
         flowA.pushFlow(flow: flowB, animated: false)
         flowB.presentFlow(flow: flowC, animated: false)
         flowC.presentFlow(flow: flowD, animated: false)
         
-        #expect(rootFlow.pushedFlow != nil)
-        #expect(flowA.pushedFlow != nil)
-        #expect(flowB.presentedFlow != nil)
-        #expect(flowC.presentedFlow != nil)
+        #expect(rootFlow.numberOfPushedFlows == 1)
+        #expect(flowA.numberOfPushedFlows == 1)
+        #expect(flowB.presentedFlow == flowC)
+        #expect(flowC.presentedFlow == flowD)
         
         rootFlow.removeAllFlows()
         
-        #expect(rootFlow.pushedFlow == nil)
-        #expect(flowA.pushedFlow == nil)
+        #expect(rootFlow.numberOfPushedFlows == 0)
+        #expect(flowA.numberOfPushedFlows == 0)
         #expect(flowB.presentedFlow == nil)
         #expect(flowC.presentedFlow == nil)
     }
