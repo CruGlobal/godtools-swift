@@ -104,6 +104,7 @@ struct LessonsView: View {
                         if viewModel.selectedToggle == .personalized && viewModel.personalizedLessons.unavailableStrings == nil {
                             
                             PersonalizedToolFooterView(
+                                geometry: geometry,
                                 title: viewModel.strings.personalizedLessonExplanationTitle,
                                 subtitle: viewModel.strings.personalizedLessonExplanationSubtitle,
                                 buttonTitle: viewModel.strings.changeSettings,

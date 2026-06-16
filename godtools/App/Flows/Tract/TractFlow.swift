@@ -160,34 +160,13 @@ class TractFlow: GTFlow {
         switch appStep {
                     
         case .homeTappedFromTool(let isScreenSharing):
-            
-            if isScreenSharing {
-                
-                let localizationServices: LocalizationServicesInterface = appDiContainer.core.dataLayer.getLocalizationServices()
-                                
-                let view = AlertMessageView(
-                    title: "",
-                    message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "exit_tract_remote_share_session.message"),
-                    acceptTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "yes").uppercased(),
-                    cancelTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "no").uppercased(),
-                    acceptTapped: { [weak self] in
-                        
-                        self?.navigate(step: AppFlowStep.acceptTappedFromExitToolRemoteShare)
-                    },
-                    cancelTapped: nil
-                )
-                
-                presentView(view: view.controller, animated: true)
-            }
-            else {
-                completeFlow(state: .userClosedTract)
-            }
+            backTappedFromTool(isScreenSharing: isScreenSharing)
             
         case .acceptTappedFromExitToolRemoteShare:
             completeFlow(state: .userClosedTract)
             
-        case .backTappedFromTool:
-            completeFlow(state: .userClosedTract)
+        case .backTappedFromTool(let isScreenSharing):
+            backTappedFromTool(isScreenSharing: isScreenSharing)
             
         case .toolSettingsTappedFromTool(let toolSettingsObserver, let toolSettingsDidCloseClosure):
             presentFlow(
@@ -202,8 +181,7 @@ class TractFlow: GTFlow {
             dismissFlow()
             
         case .toolNavigationFlowCompleted( _):
-            pushedFlow?.popFlow()
-            popFlow()
+            popFlow(animated: true, popToViewController: initialView)
             
         default:
             break
@@ -217,6 +195,31 @@ class TractFlow: GTFlow {
     
     private func completeFlow(state: TractFlow.CompletedState) {
         parent?.stepEmitter.emit(step: AppFlowStep.tractFlowCompleted(state: state))
+    }
+    
+    private func backTappedFromTool(isScreenSharing: Bool) {
+        
+        if isScreenSharing {
+            
+            let localizationServices: LocalizationServicesInterface = appDiContainer.core.dataLayer.getLocalizationServices()
+                            
+            let view = AlertMessageView(
+                title: "",
+                message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "exit_tract_remote_share_session.message"),
+                acceptTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "yes").uppercased(),
+                cancelTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "no").uppercased(),
+                acceptTapped: { [weak self] in
+                    
+                    self?.navigate(step: AppFlowStep.acceptTappedFromExitToolRemoteShare)
+                },
+                cancelTapped: nil
+            )
+            
+            presentView(view: view.controller, animated: true)
+        }
+        else {
+            completeFlow(state: .userClosedTract)
+        }
     }
 }
 

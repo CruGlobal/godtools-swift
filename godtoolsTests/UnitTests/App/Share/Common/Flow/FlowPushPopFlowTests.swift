@@ -187,7 +187,7 @@ struct FlowPushPopFlowTests: FlowTesting {
         
         flow.pushFlow(flow: rootFlow, animated: false)
         
-        #expect(flow.pushedFlow == nil)
+        #expect(flow.pushedFlows.isEmpty == true)
     }
     
     @Test()
@@ -197,23 +197,7 @@ struct FlowPushPopFlowTests: FlowTesting {
         
         flow.pushFlow(flow: flow, animated: false)
         
-        #expect(flow.pushedFlow == nil)
-    }
-    
-    @Test()
-    func cannotPushAFlowWhenAFlowIsAlreadyPushed() {
-        
-        let flowA = getNewFlow()
-        let flowB = getNewFlow()
-        let flowC = getNewFlow()
-        
-        flowA.pushFlow(flow: flowB, animated: false)
-        
-        #expect(flowA.pushedFlow == flowB)
-        
-        flowA.pushFlow(flow: flowC, animated: false)
-        
-        #expect(flowA.pushedFlow == flowB)
+        #expect(flow.pushedFlows.isEmpty == true)
     }
     
     @Test()
@@ -225,17 +209,17 @@ struct FlowPushPopFlowTests: FlowTesting {
         
         flowA.pushFlow(flow: flowB, animated: false)
         
-        #expect(flowA.pushedFlow == flowB)
+        #expect(flowA.pushedFlows.contains(flowB))
         
         flowC.pushFlow(flow: flowB, animated: false)
         
-        #expect(flowC.pushedFlow == nil)
+        #expect(flowC.pushedFlows.isEmpty)
         
         flowA.popFlow(animated: false)
         
         flowC.pushFlow(flow: flowB, animated: false)
         
-        #expect(flowC.pushedFlow == flowB)
+        #expect(flowC.pushedFlows.contains(flowB))
     }
     
     @Test()
@@ -251,7 +235,7 @@ struct FlowPushPopFlowTests: FlowTesting {
         
         flowC.pushFlow(flow: flowB, animated: false)
            
-        #expect(flowC.pushedFlow == nil)
+        #expect(flowC.pushedFlows.isEmpty == true)
     }
     
     @Test()
@@ -265,7 +249,7 @@ struct FlowPushPopFlowTests: FlowTesting {
         
         rootFlow.pushFlow(flow: flow, animated: false)
         
-        #expect(rootFlow.pushedFlow == flow)
+        #expect(rootFlow.pushedFlows.contains(flow))
     }
     
     @Test()
@@ -277,7 +261,7 @@ struct FlowPushPopFlowTests: FlowTesting {
         
         flowA.pushFlow(flow: flowB, animated: false)
         
-        #expect(flowA.pushedFlow == flowB)
+        #expect(flowA.pushedFlows.contains(flowB))
     }
     
     @Test()
@@ -327,7 +311,7 @@ struct FlowPushPopFlowTests: FlowTesting {
                 
         flowA.popFlow(animated: false)
         
-        #expect(flowA.pushedFlow == nil)
+        #expect(flowA.pushedFlows.isEmpty == true)
     }
     
     @Test()
@@ -339,13 +323,13 @@ struct FlowPushPopFlowTests: FlowTesting {
         
         flowA.pushFlow(flow: flowB, animated: false)
                 
-        #expect(flowA.pushedFlow == flowB)
+        #expect(flowA.pushedFlows.contains(flowB))
         
         #expect(flowB.parent == flowA)
         
         flowA.popFlow(animated: false)
         
-        #expect(flowA.pushedFlow == nil)
+        #expect(flowA.pushedFlows.isEmpty == true)
         
         #expect(flowB.parent == nil)
     }
