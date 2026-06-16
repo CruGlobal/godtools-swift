@@ -99,6 +99,10 @@ final class TractViewModel: MobileContentRendererViewModel {
         tractRemoteShareSubscriber.unsubscribe(disconnectSocket: true)
     }
     
+    private var isScreenSharing: Bool {
+        return remoteShareIsActive
+    }
+    
     private var isLiveStreaming: Bool {
         
         let liveShareStreamChannelIdIsEmpty: Bool = (liveShareStream?.isEmpty) ?? true
@@ -240,15 +244,13 @@ final class TractViewModel: MobileContentRendererViewModel {
 extension TractViewModel {
     
     @objc func homeTapped() {
-        
-        let isScreenSharing: Bool = remoteShareIsActive
-        
+                
         stepEmitter.emit(step: AppFlowStep.homeTappedFromTool(isScreenSharing: isScreenSharing))
     }
     
     @objc func backTapped() {
-        
-        stepEmitter.emit(step: AppFlowStep.backTappedFromTool)
+                
+        stepEmitter.emit(step: AppFlowStep.backTappedFromTool(isScreenSharing: isScreenSharing))
     }
     
     @objc func toolSettingsTapped() {

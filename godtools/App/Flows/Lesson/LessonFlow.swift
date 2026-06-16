@@ -140,8 +140,7 @@ final class LessonFlow: GTFlow {
                                                 
                         
         case .toolNavigationFlowCompleted( _):
-            pushedFlow?.popFlow()
-            popFlow()
+            popFlow(animated: true, popToViewController: initialView)
                
         default:
             break
