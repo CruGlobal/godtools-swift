@@ -43,8 +43,8 @@ enum AppFlowStep: FlowStep {
 
     // lesson
     case closeLessonSwipeTutorial
-    case startOverTappedFromResumeLessonModal
-    case continueTappedFromResumeLessonModal
+    case startOverTappedFromResumeLessonModal(toolTranslations: ToolTranslationsDomainModel)
+    case continueTappedFromResumeLessonModal(toolTranslations: ToolTranslationsDomainModel)
     case shareLessonTappedFromLesson(pageNumber: Int, languageId: String)
     case closeTappedFromLesson(lessonId: String, highestPageNumberViewed: Int)
     case lessonFlowCompleted(state: LessonFlow.CompletedState)
