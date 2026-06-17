@@ -10,8 +10,10 @@ import Foundation
 
 struct CompletedTrainingTipDataModel: Sendable {
     
-    let id: String
-    let trainingTipId: String
-    let languageId: String
-    let resourceId: String
+    let id: TrainingTipId
+    
+    init(id: TrainingTipId) {
+        
+        self.id = id
+    }
 }

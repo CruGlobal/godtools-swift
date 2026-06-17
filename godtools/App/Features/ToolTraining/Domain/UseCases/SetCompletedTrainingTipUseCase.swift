@@ -20,10 +20,12 @@ final class SetCompletedTrainingTipUseCase {
     
     func execute(tip: TrainingTipDomainModel) async throws {
         
-        try await repository.storeCompletedTrainingTip(
-            id: tip.trainingTipId,
-            resourceId: tip.resourceId,
-            languageId: tip.languageId
+        let id = TrainingTipId(
+            trainingTipId: tip.trainingTipId,
+            languageId: tip.languageId,
+            resourceId: tip.resourceId
         )
+        
+        try await repository.storeCompletedTrainingTip(id: id)
     }
 }
