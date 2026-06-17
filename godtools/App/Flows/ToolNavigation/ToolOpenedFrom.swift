@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ToolOpenedFrom {
+enum ToolOpenedFrom: Sendable {
     case dashboardLessons
     case dashboardFavoritesFeaturedLesson
     case dashboardFavoritesFavoritedTool

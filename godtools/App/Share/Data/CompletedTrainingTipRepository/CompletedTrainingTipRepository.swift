@@ -17,10 +17,10 @@ final class CompletedTrainingTipRepository {
         self.cache = cache
     }
     
-    func getCompletedTrainingTip(id: String) -> CompletedTrainingTipDataModel? {
+    func getCompletedTrainingTip(id: TrainingTipId) -> CompletedTrainingTipDataModel? {
         
         do {
-            return try cache.persistence.getDataModel(id: id)
+            return try cache.persistence.getDataModel(id: id.value)
         }
         catch _ {
             return nil
@@ -37,13 +37,10 @@ final class CompletedTrainingTipRepository {
         }
     }
     
-    func storeCompletedTrainingTip(id: String, resourceId: String, languageId: String) async throws {
+    func storeCompletedTrainingTip(id: TrainingTipId) async throws {
         
         let trainingTipDataModel = CompletedTrainingTipDataModel(
-            id: id,
-            trainingTipId: id,
-            languageId: resourceId,
-            resourceId: languageId
+            id: id
         )
         
         _ = try await cache.persistence.writeObjects(

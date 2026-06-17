@@ -27,13 +27,23 @@ final class StoreUserLessonProgressUseCase {
         
         let isFirstPage: Bool = pageNumber == startingPageNumber
         
-        guard !isFirstPage && numberOfPages > 0 else {
+        guard numberOfPages > 0 else {
             return UserLessonProgressDomainModel(lessonId: lessonId, lastViewedPageId: viewedPageId, progress: 0)
         }
         
         let reachedCompletion: Bool = pageNumber >= numberOfPages
         
-        let progress: Double = reachedCompletion ? 1 : Double(pageNumber) / Double(numberOfPages + excludedPageCount)
+        let progress: Double
+        
+        if isFirstPage {
+            progress = 0
+        }
+        else if reachedCompletion {
+            progress = 1
+        }
+        else {
+            progress = Double(pageNumber) / Double(numberOfPages + excludedPageCount)
+        }
         
         _ = try await lessonProgressRepository
             .storeLessonProgress(

@@ -12,7 +12,7 @@ import Combine
 final class LessonFlow: GTFlow {
     
     enum CompletedState: Sendable {
-        case userClosedLesson(lessonId: String, highestPageNumberViewed: Int)
+        case userClosedLesson(lessonId: String, highestPageNumberViewed: Int, toolOpenedFrom: ToolOpenedFrom)
     }
     
     private let toolTranslations: ToolTranslationsDomainModel
@@ -20,6 +20,7 @@ final class LessonFlow: GTFlow {
     private let trainingTipsEnabled: Bool
     private let initialPageSubIndex: Int?
     private let initialPage: MobileContentRendererInitialPage?
+    private let toolOpenedFrom: ToolOpenedFrom
     
     private var cancellables: Set<AnyCancellable> = Set()
     private var lesson: ResourceDataModel {
@@ -33,6 +34,7 @@ final class LessonFlow: GTFlow {
         trainingTipsEnabled: Bool,
         initialPage: MobileContentRendererInitialPage?,
         initialPageSubIndex: Int?,
+        toolOpenedFrom: ToolOpenedFrom,
         isNavigatingFromResumeLessonModal: Bool
     ) {
         
@@ -41,6 +43,7 @@ final class LessonFlow: GTFlow {
         self.trainingTipsEnabled = trainingTipsEnabled
         self.initialPageSubIndex = initialPageSubIndex
         self.initialPage = initialPage
+        self.toolOpenedFrom = toolOpenedFrom
         
         let stepEmitter = FlowStepEmitter()
         
@@ -127,7 +130,13 @@ final class LessonFlow: GTFlow {
             dismissFlow()
             
         case .closeTappedFromLesson(let lessonId, let highestPageNumberViewed):
-            completeFlow(state: .userClosedLesson(lessonId: lessonId, highestPageNumberViewed: highestPageNumberViewed))
+            completeFlow(
+                state: .userClosedLesson(
+                    lessonId: lessonId,
+                    highestPageNumberViewed: highestPageNumberViewed,
+                    toolOpenedFrom: toolOpenedFrom
+                )
+            )
                                                 
                         
         case .toolNavigationFlowCompleted( _):
@@ -206,7 +215,13 @@ extension LessonFlow {
 extension LessonFlow: MobileContentRendererNavigationDelegate {
     
     func mobileContentRendererNavigationDismissRenderer(navigation: MobileContentRendererNavigation, event: DismissToolEvent) {
-        completeFlow(state: .userClosedLesson(lessonId: event.resource.id, highestPageNumberViewed: event.highestPageNumberViewed))
+        completeFlow(
+            state: .userClosedLesson(
+                lessonId: event.resource.id,
+                highestPageNumberViewed: event.highestPageNumberViewed,
+                toolOpenedFrom: toolOpenedFrom
+            )
+        )
     }
     
     func mobileContentRendererNavigationDeepLink(navigation: MobileContentRendererNavigation, deepLink: MobileContentRendererNavigationDeepLinkType) {

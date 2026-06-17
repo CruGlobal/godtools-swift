@@ -26,10 +26,10 @@ extension RealmCompletedTrainingTip {
     
     func mapFrom(model: CompletedTrainingTipDataModel) {
         
-        id = model.id
-        trainingTipId = model.trainingTipId
-        resourceId = model.resourceId
-        languageId = model.languageId
+        id = model.id.value
+        trainingTipId = model.id.trainingTipId
+        resourceId = model.id.resourceId
+        languageId = model.id.languageId
     }
     
     static func createNewFrom(model: CompletedTrainingTipDataModel) -> RealmCompletedTrainingTip {
@@ -40,10 +40,11 @@ extension RealmCompletedTrainingTip {
    
     func toModel() -> CompletedTrainingTipDataModel {
         return CompletedTrainingTipDataModel(
-            id: id,
-            trainingTipId: trainingTipId,
-            languageId: languageId,
-            resourceId: resourceId
+            id: TrainingTipId(
+                trainingTipId: trainingTipId,
+                languageId: languageId,
+                resourceId: resourceId
+            )
         )
     }
 }
