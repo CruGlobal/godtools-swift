@@ -20,7 +20,13 @@ final class GetTrainingTipCompletedUseCase {
     
     func execute(tip: TrainingTipDomainModel) -> Bool {
         
-        if repository.getCompletedTrainingTip(id: tip.id) != nil {
+        let id = TrainingTipId(
+            trainingTipId: tip.trainingTipId,
+            languageId: tip.languageId,
+            resourceId: tip.resourceId
+        )
+        
+        if repository.getCompletedTrainingTip(id: id) != nil {
             
             return true
             
