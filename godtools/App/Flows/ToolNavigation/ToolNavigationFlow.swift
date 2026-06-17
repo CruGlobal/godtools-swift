@@ -272,6 +272,7 @@ extension ToolNavigationFlow {
                         trainingTipsEnabled: toolNavigation.trainingTipsEnabled,
                         initialPage: toolNavigation.initialPage,
                         initialPageSubIndex: toolNavigation.initialPageSubIndex,
+                        toolOpenedFrom: toolNavigation.toolOpenedFrom,
                         isNavigatingFromResumeLessonModal: isNavigatingFromResumeLessonModal
                     )
                 )

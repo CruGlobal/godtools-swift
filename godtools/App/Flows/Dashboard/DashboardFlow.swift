@@ -100,7 +100,12 @@ final class DashboardFlow: GTFlow {
             navigationController.popViewController(animated: true)
             
         case .featuredLessonTappedFromFavorites(let featuredLesson):
-            navigateToToolInAppLanguage(toolDataModelId: featuredLesson.dataModelId, trainingTipsEnabled: false, toolOpenedFrom: .dashboardFavoritesFeaturedLesson, persistToolLanguageSettings: nil)
+            navigateToToolInAppLanguage(
+                toolDataModelId: featuredLesson.dataModelId,
+                trainingTipsEnabled: false,
+                toolOpenedFrom: .dashboardFavoritesFeaturedLesson,
+                persistToolLanguageSettings: nil
+            )
             
         case .viewAllFavoriteToolsTappedFromFavorites:
             navigationController.pushViewController(getAllFavoriteTools(), animated: true)
@@ -349,12 +354,14 @@ final class DashboardFlow: GTFlow {
                 
             case .lessonFlowCompleted(let state):
                 
-                dashboardView?.rootView.navigateToTab(tab: .lessons)
-                                
                 switch state {
                 
-                case .userClosedLesson(let lessonId, let highestPageNumberViewed):
+                case .userClosedLesson(let lessonId, let highestPageNumberViewed, let toolOpenedFrom):
                     
+                    if toolOpenedFrom == .dashboardLessons {
+                        dashboardView?.rootView.navigateToTab(tab: .lessons)
+                    }
+                                       
                     let getLessonEvaluatedUseCase: GetLessonEvaluatedUseCase = appDiContainer.feature.lessonEvaluation.domainLayer.getLessonEvaluatedUseCase()
                     
                     getLessonEvaluatedUseCase
