@@ -1,5 +1,5 @@
 //
-//  PersonalizedToolFooterView.swift
+//  PersonalizedChangeLocalizationView.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 1/12/26.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct PersonalizedToolFooterView: View {
+struct PersonalizedChangeLocalizationView: View {
 
     private static let lightBlue = Color.getColorWithRGB(red: 223, green: 240, blue: 249, opacity: 1)
 
@@ -49,27 +49,22 @@ struct PersonalizedToolFooterView: View {
                 .foregroundColor(.black)
                 .padding(.top, 5)
 
-            HStack {
-                Spacer()
-
-                GTButton(
-                    style: .blue,
-                    title: buttonTitle,
-                    font: PersonalizationUnavailableView.buttonFont,
-                    width: geometry.size.width * PersonalizationUnavailableView.buttonWidthMultiplier,
-                    height: PersonalizationUnavailableView.buttonHeight,
-                    cornerRadius: PersonalizationUnavailableView.buttonCornerRadius,
-                    tapped: buttonAction
-                )
-
-                Spacer()
-            }
+            GTButton(
+                style: .blue,
+                title: buttonTitle,
+                font: PersonalizationUnavailableView.buttonFont,
+                titleHorizontalPadding: 24,
+                titleVerticalPadding: 11,
+                cornerRadius: PersonalizationUnavailableView.buttonCornerRadius,
+                tapped: buttonAction
+            )
             .padding(.top, 20)
+            .padding(.horizontal, 30)
         }
         .frame(maxWidth: .infinity)
         .padding(.horizontal, 30)
         .padding(.vertical, 27)
-        .background(PersonalizedToolFooterView.lightBlue)
+        .background(Self.lightBlue)
         .background(
             GeometryReader { geometry in
                 Color.clear.onAppear {

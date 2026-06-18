@@ -108,7 +108,7 @@ struct ToolsView: View {
                         
                         if viewModel.selectedToggle == .personalized && viewModel.personalizedTools.unavailableStrings == nil {
                             
-                            PersonalizedToolFooterView(
+                            PersonalizedChangeLocalizationView(
                                 geometry: geometry,
                                 title: viewModel.strings.personalizedToolExplanationTitle,
                                 subtitle: viewModel.strings.personalizedToolExplanationSubtitle,
