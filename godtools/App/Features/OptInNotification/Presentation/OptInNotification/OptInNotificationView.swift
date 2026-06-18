@@ -69,12 +69,13 @@ struct OptInNotificationView: View {
                 
                 let buttonWidth: CGFloat = geometry.size.width - (modalHorizontalPadding * 2) - (buttonHorizontalPadding * 2)
                 
-                GTBlueButton(
+                GTButton(
+                    style: .blue,
                     title: viewModel.notificationsActionTitle,
                     fontSize: buttonFontSize,
                     width: buttonWidth,
                     height: buttonHeight,
-                    action: {
+                    tapped: {
                         
                         modalIsHidden = true
                         
@@ -83,12 +84,13 @@ struct OptInNotificationView: View {
                 )
                 .padding(.top, 18)
                 
-                GTWhiteButton(
+                GTButton(
+                    style: .white,
                     title: viewModel.strings.maybeLaterActionTitle,
                     fontSize: buttonFontSize,
                     width: buttonWidth,
                     height: buttonHeight,
-                    action: {
+                    tapped: {
                         
                         modalIsHidden = true
 

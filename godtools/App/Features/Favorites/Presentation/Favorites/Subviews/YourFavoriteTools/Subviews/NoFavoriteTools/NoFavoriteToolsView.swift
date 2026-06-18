@@ -35,10 +35,16 @@ struct NoFavoriteToolsView: View {
                     .multilineTextAlignment(.center)
                     .lineSpacing(4)
                 
-                GTBlueButton(title: viewModel.strings.noFavoritedToolsActionTitle, fontSize: 12, width: 118, height: 30) {
-                    
-                    viewModel.goToToolsTapped()
-                }
+                GTButton(
+                    style: .blue,
+                    title: viewModel.strings.noFavoritedToolsActionTitle,
+                    fontSize: 12,
+                    width: 118,
+                    height: 30,
+                    tapped: {
+                        viewModel.goToToolsTapped()
+                    }
+                )
                 .padding(.top, 10)
             }
             .padding([.top, .bottom], 56)

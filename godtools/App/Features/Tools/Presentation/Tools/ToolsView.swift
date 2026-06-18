@@ -63,7 +63,7 @@ struct ToolsView: View {
 
                         ToolsFilterSectionView(viewModel: viewModel, contentHorizontalInsets: contentHorizontalInsets, width: geometry.size.width)
                             .padding([.bottom], 18)
-                        
+
                         if viewModel.selectedToggle == .personalized, let personalizedToolsUnavailable = viewModel.personalizedTools.unavailableStrings {
 
                             PersonalizationUnavailableView(
@@ -91,7 +91,6 @@ struct ToolsView: View {
                                         geometry: geometry,
                                         layout: .landscape,
                                         showsCategory: true,
-                                        navButtonTitleHorizontalPadding: nil,
                                         favoriteTappedClosure: {
 
                                             viewModel.toolFavoriteTapped(tool: tool)

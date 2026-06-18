@@ -49,10 +49,17 @@ struct LessonSwipeTutorialView: View {
                         .looping()
                         .frame(width: lottieWidth, height: lottieHeightRatio * lottieWidth)
                     
-                    GTBlueButton(title: viewModel.strings.closeButtonText, fontSize: 16, width: buttonWidth, height: 47, cornerRadius: 30) {
-                        
-                        viewModel.dismissTutorial()
-                    }
+                    GTButton(
+                        style: .blue,
+                        title: viewModel.strings.closeButtonText,
+                        fontSize: 16,
+                        width: buttonWidth,
+                        height: 47,
+                        cornerRadius: 30,
+                        tapped: {
+                            viewModel.dismissTutorial()
+                        }
+                    )
                     
                     Spacer()
                 }

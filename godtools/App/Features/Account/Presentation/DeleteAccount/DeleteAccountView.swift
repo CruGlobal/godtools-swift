@@ -55,15 +55,29 @@ struct DeleteAccountView: View {
                     
                     let buttonWidth: CGFloat = geometry.size.width - contentInsets.leading - contentInsets.trailing
                     
-                    GTWhiteButton(title: viewModel.strings.confirmActionTitle, font: buttonFont, width: buttonWidth, height: buttonHeight, cornerRadius: buttonCornerRadius) {
-                        
-                        viewModel.deleteAccountTapped()
-                    }
+                    GTButton(
+                        style: .white,
+                        title: viewModel.strings.confirmActionTitle,
+                        font: buttonFont,
+                        width: buttonWidth,
+                        height: buttonHeight,
+                        cornerRadius: buttonCornerRadius,
+                        tapped: {
+                            viewModel.deleteAccountTapped()
+                        }
+                    )
                     
-                    GTBlueButton(title: viewModel.strings.cancelActionTitle, font: buttonFont, width: buttonWidth, height: buttonHeight, cornerRadius: buttonCornerRadius) {
-                        
-                        viewModel.cancelTapped()
-                    }
+                    GTButton(
+                        style: .blue,
+                        title: viewModel.strings.cancelActionTitle,
+                        font: buttonFont,
+                        width: buttonWidth,
+                        height: buttonHeight,
+                        cornerRadius: buttonCornerRadius,
+                        tapped: {
+                            viewModel.cancelTapped()
+                        }
+                    )
                 }
                 .padding(EdgeInsets(top: 35, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))
                 

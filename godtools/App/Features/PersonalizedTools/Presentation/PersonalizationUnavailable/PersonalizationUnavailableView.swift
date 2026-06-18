@@ -63,24 +63,26 @@ struct PersonalizationUnavailableView: View {
                     .padding(.top, 10)
                     .padding(.horizontal, 30)
 
-                GTWhiteButton(
+                GTButton(
+                    style: .white,
                     title: changeSettingsButtonTitle,
+                    color: .clear,
                     font: Self.buttonFont,
                     width: buttonWidth,
                     height: Self.buttonHeight,
                     cornerRadius: Self.buttonCornerRadius,
-                    backgroundColor: .clear,
-                    action: changeSettingsAction
+                    tapped: changeSettingsAction
                 )
                 .padding(.top, 20)
 
-                GTBlueButton(
+                GTButton(
+                    style: .blue,
                     title: goToAllLessonsButtonTitle,
                     font: Self.buttonFont,
                     width: buttonWidth,
                     height: Self.buttonHeight,
                     cornerRadius: Self.buttonCornerRadius,
-                    action: goToAllLessonsAction
+                    tapped: goToAllLessonsAction
                 )
                 .padding(.top, 10)
 

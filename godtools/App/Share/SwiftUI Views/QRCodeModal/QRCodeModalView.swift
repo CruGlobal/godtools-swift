@@ -50,11 +50,17 @@ struct QRCodeModalView: View {
                     .padding(.bottom, 25)
                     .padding(.horizontal, 70)
                                 
-                GTBlueButton(title: closeButtonTitle, font: FontLibrary.sfProDisplayRegular.font(size: 16), width: 150, height: 48) {
-                    
-                    modalIsHidden = true
-                    closeTapped?()
-                }
+                GTButton(
+                    style: .blue,
+                    title: closeButtonTitle,
+                    font: FontLibrary.sfProDisplayRegular.font(size: 16),
+                    width: 150,
+                    height: 48,
+                    tapped: {
+                        modalIsHidden = true
+                        closeTapped?()
+                    }
+                )
                 .padding(.bottom, 125)
             }
             

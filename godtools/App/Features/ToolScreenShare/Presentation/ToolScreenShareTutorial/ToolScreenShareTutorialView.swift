@@ -72,58 +72,54 @@ struct ToolScreenShareTutorialView: View {
                     let buttonFont: Font = FontLibrary.sfProTextRegular.font(size: buttonFontSize)
                     let numberOfButtons: CGFloat = CGFloat(viewModel.shareOptions.count)
                     let buttonWidth: CGFloat = isSingleButton ? singleButtonWidth : floor(geometry.size.width / numberOfButtons) - buttonHorizontalPadding
-                    let titlePadding: CGFloat = 4
                     
                     HStack(alignment: .center, spacing: 12) {
                         
                         if viewModel.shareOptions.contains(.qrCode) {
                             
-                            GTWhiteButton(
+                            GTButton(
+                                style: .white,
                                 title: viewModel.strings.generateQRCodeActionTitle,
                                 font: buttonFont,
                                 width: buttonWidth,
                                 height: Self.continueButtonHeight,
-                                titleHorizontalPadding: titlePadding,
-                                titleVerticalPadding: titlePadding,
-                                accessibility: .generateQRCode
-                            ) {
-                                
-                                viewModel.generateQRCodeTapped()
-                            }
+                                accessibility: .generateQRCode,
+                                tapped: {
+                                    viewModel.generateQRCodeTapped()
+                                }
+                            )
                         }
                         
                         if viewModel.shareOptions.contains(.shareLink) {
                             
-                            GTBlueButton(
+                            GTButton(
+                                style: .blue,
                                 title: viewModel.strings.shareLinkActionTitle,
                                 font: buttonFont,
                                 width: buttonWidth,
                                 height: Self.continueButtonHeight,
-                                titleHorizontalPadding: titlePadding,
-                                titleVerticalPadding: titlePadding,
-                                accessibility: .shareLink
-                            ) {
-                                
-                                viewModel.shareLinkTapped()
-                            }
+                                accessibility: .shareLink,
+                                tapped: {
+                                    viewModel.shareLinkTapped()
+                                }
+                            )
                         }
                     }
                 }
                 
                 if !viewModel.hidesContinueButton {
                     
-                    GTBlueButton(
+                    GTButton(
+                        style: .blue,
                         title: viewModel.strings.nextTutorialPageActionTitle,
                         font: FontLibrary.sfProTextRegular.font(size: 18),
                         width: singleButtonWidth,
                         height: Self.continueButtonHeight,
-                        titleHorizontalPadding: nil,
-                        titleVerticalPadding: nil,
-                        accessibility: .continueForward
-                    ) {
-                        
-                        viewModel.continueTapped()
-                    }
+                        accessibility: .continueForward,
+                        tapped: {
+                            viewModel.continueTapped()
+                        }
+                    )
                 }
                 
                 if viewModel.tutorialPages.count > 1 {

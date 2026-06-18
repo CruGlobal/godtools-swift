@@ -9,9 +9,7 @@
 import SwiftUI
 
 struct YourFavoriteToolsView: View {
-       
-    static let toolCardNavButtonTitleHorizontalPadding: CGFloat = 5
-    
+           
     private let geometry: GeometryProxy
     private let contentHorizontalInsets: CGFloat
     private let toolCardSpacing: CGFloat
@@ -49,7 +47,6 @@ struct YourFavoriteToolsView: View {
                                 geometry: geometry,
                                 layout: .thumbnail,
                                 showsCategory: true,
-                                navButtonTitleHorizontalPadding: Self.toolCardNavButtonTitleHorizontalPadding,
                                 favoriteTappedClosure: {
                                     
                                     viewModel.unfavoriteToolTapped(tool: tool)

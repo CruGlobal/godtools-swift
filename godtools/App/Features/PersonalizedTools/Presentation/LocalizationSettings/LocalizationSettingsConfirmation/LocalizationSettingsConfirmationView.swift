@@ -66,24 +66,27 @@ struct LocalizationSettingsConfirmationView: View {
 
                         HStack(spacing: buttonSpacing) {
 
-                            GTWhiteButton(
+                            let buttonFontSize: CGFloat = 15
+                            let buttonHeight: CGFloat = 50
+                            
+                            GTButton(
+                                style: .white,
                                 title: viewModel.strings.cancelButton,
-                                fontSize: 15,
+                                fontSize: buttonFontSize,
                                 width: buttonWidth,
-                                height: 50,
-                                titleHorizontalPadding: 8,
-                                action: {
+                                height: buttonHeight,
+                                tapped: {
                                     viewModel.cancelTapped()
                                 }
                             )
 
-                            GTBlueButton(
+                            GTButton(
+                                style: .blue,
                                 title: viewModel.strings.confirmButton,
-                                fontSize: 15,
+                                fontSize: buttonFontSize,
                                 width: buttonWidth,
-                                height: 50,
-                                titleHorizontalPadding: 8,
-                                action: {
+                                height: buttonHeight,
+                                tapped: {
                                     viewModel.confirmTapped()
                                 }
                             )

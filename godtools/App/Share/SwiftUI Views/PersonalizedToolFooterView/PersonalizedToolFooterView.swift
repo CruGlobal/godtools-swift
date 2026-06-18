@@ -52,13 +52,14 @@ struct PersonalizedToolFooterView: View {
             HStack {
                 Spacer()
 
-                GTBlueButton(
+                GTButton(
+                    style: .blue,
                     title: buttonTitle,
                     font: PersonalizationUnavailableView.buttonFont,
                     width: geometry.size.width * PersonalizationUnavailableView.buttonWidthMultiplier,
                     height: PersonalizationUnavailableView.buttonHeight,
                     cornerRadius: PersonalizationUnavailableView.buttonCornerRadius,
-                    action: buttonAction
+                    tapped: buttonAction
                 )
 
                 Spacer()
