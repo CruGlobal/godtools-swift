@@ -12,7 +12,7 @@ jobs:
     runs-on: macos-26
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Bundle Install
         uses: ./.github/actions/bundle-install
