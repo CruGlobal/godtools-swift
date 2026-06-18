@@ -110,13 +110,14 @@ struct LessonEvaluationView: View {
                             .frame(width: geometry.size.width, height: ScaleValueSliderView.scrubberSize)
                     }
                     
-                    GTBlueButton(
+                    GTButton(
+                        style: .blue,
                         title: viewModel.strings.sendFeedbackActionTitle,
                         fontSize: 18,
                         width: 248,
                         height: 50,
                         cornerRadius: 24,
-                        action: {
+                        tapped: {
                             viewModel.sendFeedbackTapped()
                         }
                     )

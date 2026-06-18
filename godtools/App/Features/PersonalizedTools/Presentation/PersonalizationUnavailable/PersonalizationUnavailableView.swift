@@ -13,7 +13,7 @@ struct PersonalizationUnavailableView: View {
     private static let backgroundColor = Color.getColorWithRGB(red: 245, green: 245, blue: 245, opacity: 1)
     
     static let buttonHeight: CGFloat = 38
-    static let buttonWidthMultiplier: CGFloat = 0.6
+    static let buttonWidthMultiplier: CGFloat = 0.8
     static let buttonCornerRadius: CGFloat = 20
     static let buttonFont: Font = FontLibrary.sfProTextSemibold.font(size: 14)
 
@@ -63,24 +63,26 @@ struct PersonalizationUnavailableView: View {
                     .padding(.top, 10)
                     .padding(.horizontal, 30)
 
-                GTWhiteButton(
+                GTButton(
+                    style: .white,
                     title: changeSettingsButtonTitle,
+                    color: .clear,
                     font: Self.buttonFont,
                     width: buttonWidth,
                     height: Self.buttonHeight,
                     cornerRadius: Self.buttonCornerRadius,
-                    backgroundColor: .clear,
-                    action: changeSettingsAction
+                    tapped: changeSettingsAction
                 )
                 .padding(.top, 20)
 
-                GTBlueButton(
+                GTButton(
+                    style: .blue,
                     title: goToAllLessonsButtonTitle,
                     font: Self.buttonFont,
                     width: buttonWidth,
                     height: Self.buttonHeight,
                     cornerRadius: Self.buttonCornerRadius,
-                    action: goToAllLessonsAction
+                    tapped: goToAllLessonsAction
                 )
                 .padding(.top, 10)
 

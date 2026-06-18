@@ -63,10 +63,16 @@ struct TutorialView: View {
                     .animation(.easeOut, value: viewModel.currentPage)
                 }
                 
-                GTBlueButton(title: viewModel.continueTitle, font: FontLibrary.sfProTextRegular.font(size: 18), width: Self.getContinueButtonWidth(geometry: geometry), height: Self.getContinueButtonHeight()) {
-                    
-                    viewModel.continueTapped()
-                }
+                GTButton(
+                    style: .blue,
+                    title: viewModel.continueTitle,
+                    font: FontLibrary.sfProTextRegular.font(size: 18),
+                    width: Self.getContinueButtonWidth(geometry: geometry),
+                    height: Self.getContinueButtonHeight(),
+                    tapped: {
+                        viewModel.continueTapped()
+                    }
+                )
                 
                 if viewModel.tutorialPages.count > 0 {
                     
