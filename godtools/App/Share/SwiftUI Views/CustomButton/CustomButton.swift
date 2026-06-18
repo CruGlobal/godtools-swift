@@ -42,18 +42,7 @@ struct CustomButton<HighlightContent: View, NonHighlightContent: View>: View {
                 
                 ZStack(alignment: .center) {
                     
-                    if let width = attributes.width, let height = attributes.height {
-                        getBoundsAreaRect()
-                            .frame(width: width, height: height)
-                    }
-                    else if let width = attributes.width {
-                        getBoundsAreaRect()
-                            .frame(width: width)
-                    }
-                    else if let height = attributes.height {
-                        getBoundsAreaRect()
-                            .frame(height: height)
-                    }
+                    getBoundsArea()
                     
                     highlightContent()
                 }
@@ -70,8 +59,23 @@ struct CustomButton<HighlightContent: View, NonHighlightContent: View>: View {
         }
     }
     
+    @ViewBuilder private func getBoundsArea() -> some View {
+        
+        if let width = attributes.width, let height = attributes.height {
+            getBoundsAreaRect()
+                .frame(width: width, height: height)
+        }
+        else if let width = attributes.width {
+            getBoundsAreaRect()
+                .frame(width: width)
+        }
+        else if let height = attributes.height {
+            getBoundsAreaRect()
+                .frame(height: height)
+        }
+    }
+    
     @ViewBuilder private func getBoundsAreaRect() -> some View {
-        Rectangle()
-            .fill(.clear)
+        ZStack {}
     }
 }
