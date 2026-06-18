@@ -79,7 +79,8 @@ struct DashboardView: View {
                 NavMenuButtonGradientView(
                     menuButtonLeading: menuButtonLeading,
                     menuButtonSize: NavMenuButton.size,
-                    navHeight: DashboardView.navHeight
+                    navHeight: DashboardView.navHeight,
+                    layoutDirection: ApplicationLayout.shared.layoutDirection
                 )
                 
                 let navButtonTopPadding: CGFloat = (Self.navHeight / 2) - (NavMenuButton.size / 2)
