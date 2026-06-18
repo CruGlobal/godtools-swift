@@ -13,7 +13,7 @@ struct PersonalizationUnavailableView: View {
     private static let backgroundColor = Color.getColorWithRGB(red: 245, green: 245, blue: 245, opacity: 1)
     
     static let buttonHeight: CGFloat = 38
-    static let buttonWidthMultiplier: CGFloat = 0.6
+    static let buttonWidthMultiplier: CGFloat = 0.8
     static let buttonCornerRadius: CGFloat = 20
     static let buttonFont: Font = FontLibrary.sfProTextSemibold.font(size: 14)
 
