@@ -107,11 +107,6 @@ final class ToolLanguageDownloader {
                 DownloadToolData(toolId: $0.id, languages: [languageModel.code])
             })
             
-            if try getToolLanguageDownload(languageId: languageId) == nil {
-                
-                _ = try await cache.persistence.writeObjects(externalObjects: [downloadDataModel])
-            }
-            
             try await toolDownloader.downloadToolsWithProgressClosure(tools: downloadTools, requestPriority: .low, onProgress: { (progress: Double) in
                 
                 Task {
