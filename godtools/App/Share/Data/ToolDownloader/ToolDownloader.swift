@@ -17,7 +17,13 @@ final class ToolDownloader {
     private let articleManifestAemRepository: ArticleManifestAemRepository
     private let getToolDataToDownload: ToolDownloaderGetDataToDownload
     
-    init(languagesRepository: LanguagesRepository, translationsRepository: TranslationsRepository, attachmentsRepository: AttachmentsRepository, articleManifestAemRepository: ArticleManifestAemRepository, getToolDataToDownload: ToolDownloaderGetDataToDownload) {
+    init(
+        languagesRepository: LanguagesRepository,
+        translationsRepository: TranslationsRepository,
+        attachmentsRepository: AttachmentsRepository,
+        articleManifestAemRepository: ArticleManifestAemRepository,
+        getToolDataToDownload: ToolDownloaderGetDataToDownload
+    ) {
         
         self.languagesRepository = languagesRepository
         self.translationsRepository = translationsRepository
