@@ -13,12 +13,14 @@ struct NavMenuButtonGradientView: View {
     private let menuButtonLeading: CGFloat
     private let menuButtonSize: CGFloat
     private let navHeight: CGFloat
+    private let layoutDirection: LayoutDirection
     
-    init(menuButtonLeading: CGFloat, menuButtonSize: CGFloat, navHeight: CGFloat) {
+    init(menuButtonLeading: CGFloat, menuButtonSize: CGFloat, navHeight: CGFloat, layoutDirection: LayoutDirection) {
      
         self.menuButtonLeading = menuButtonLeading
         self.menuButtonSize = menuButtonSize
         self.navHeight = navHeight
+        self.layoutDirection = layoutDirection
     }
     
     var body: some View {
@@ -35,9 +37,22 @@ struct NavMenuButtonGradientView: View {
                     .fill(Color.clear)
                     .frame(width: 14, height: navHeight)
                     .background(
-                        LinearGradient(gradient: Gradient(colors: [.white, .white.opacity(0.5), .white.opacity(0)]), startPoint: .leading, endPoint: .trailing)
+                        getLinearGradient(layoutDirection: layoutDirection)
                     )
             }
         }
+    }
+    
+    @ViewBuilder private func getLinearGradient(layoutDirection: LayoutDirection) -> some View {
+                
+        let colors: [Color] = [.white, .white.opacity(0.5), .white.opacity(0)]
+        
+        let gradientColors: [Color] = layoutDirection == .leftToRight ? colors : colors.reversed()
+
+        LinearGradient(
+            gradient: Gradient(colors: gradientColors),
+            startPoint: .leading,
+            endPoint: .trailing
+        )
     }
 }

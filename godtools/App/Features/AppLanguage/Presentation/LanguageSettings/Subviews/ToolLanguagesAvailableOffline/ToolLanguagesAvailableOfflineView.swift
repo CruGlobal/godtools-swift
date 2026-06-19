@@ -66,13 +66,14 @@ struct ToolLanguagesAvailableOfflineView: View {
                 
                 FixedVerticalSpacer(height: 25)
                 
-                GTBlueButton(
+                GTButton(
+                    style: .blue,
                     title: viewModel.strings.editDownloadedLanguagesButtonTitle,
                     font: FontLibrary.sfProTextRegular.font(size: 14),
                     width: geometry.size.width - (contentHorizontalInsets * 2),
                     height: 50,
                     accessibility: .editDownloadedLanguages,
-                    action: {
+                    tapped: {
                         
                         viewModel.editDownloadedLanguagesTapped()
                     }
