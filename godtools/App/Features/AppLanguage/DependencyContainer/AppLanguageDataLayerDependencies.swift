@@ -67,6 +67,15 @@ final class AppLanguageDataLayerDependencies {
         )
     }
     
+    private func getDownloadedLanguagesCache() -> DownloadedLanguagesCache {
+        return DownloadedLanguagesCache(
+            realmPersistence: RealmRepositorySyncPersistence(
+                database: coreDataLayer.getSharedRealmDatabase(),
+                mapping: RealmDownloadedLanguageMapping()
+            )
+        )
+    }
+    
     func getToolLanguageDownloader() -> ToolLanguageDownloader {
         
         let persistence: any Persistence<ToolLanguageDownloadDataModel, ToolLanguageDownloadDataModel>
@@ -94,7 +103,8 @@ final class AppLanguageDataLayerDependencies {
             cache: cache,
             resourcesRepository: coreDataLayer.getResourcesRepository(),
             languagesRepository: coreDataLayer.getLanguagesRepository(),
-            toolDownloader: coreDataLayer.getToolDownloader()
+            toolDownloader: coreDataLayer.getToolDownloader(),
+            downloadedLanguagesCache: getDownloadedLanguagesCache()
         )
     }
     

@@ -13,25 +13,11 @@ import RepositorySync
 
 final class DownloadedLanguagesCache {
     
-    let persistence: any Persistence<DownloadedLanguageDataModel, DownloadedLanguageDataModel>
+    let realmPersistence: RealmRepositorySyncPersistence<DownloadedLanguageDataModel, DownloadedLanguageDataModel, RealmDownloadedLanguage>
     
-    init(persistence: any Persistence<DownloadedLanguageDataModel, DownloadedLanguageDataModel>) {
+    init(realmPersistence: RealmRepositorySyncPersistence<DownloadedLanguageDataModel, DownloadedLanguageDataModel, RealmDownloadedLanguage>) {
                 
-        self.persistence = persistence
-    }
-    
-    @available(iOS 17.4, *)
-    private var swiftDatabase: SwiftDatabase? {
-        return getSwiftPersistence()?.database
-    }
-    
-    @available(iOS 17.4, *)
-    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<DownloadedLanguageDataModel, DownloadedLanguageDataModel, SwiftDownloadedLanguage>? {
-        return persistence as? SwiftRepositorySyncPersistence<DownloadedLanguageDataModel, DownloadedLanguageDataModel, SwiftDownloadedLanguage>
-    }
-    
-    private func getRealmPersistence() -> RealmRepositorySyncPersistence<DownloadedLanguageDataModel, DownloadedLanguageDataModel, RealmDownloadedLanguage>? {
-        return persistence as? RealmRepositorySyncPersistence<DownloadedLanguageDataModel, DownloadedLanguageDataModel, RealmDownloadedLanguage>
+        self.realmPersistence = realmPersistence
     }
 }
 
@@ -39,52 +25,22 @@ final class DownloadedLanguagesCache {
 
 extension DownloadedLanguagesCache {
     
-    @available(iOS 17.4, *)
-    private func getDownloadCompletePredicate(downloadComplete: Bool) -> Predicate<SwiftDownloadedLanguage> {
-     
-        let filter = #Predicate<SwiftDownloadedLanguage> { object in
-            object.downloadComplete == downloadComplete
-        }
+    private func getDownloadCompleteNSPredicate() -> NSPredicate {
         
-        return filter
-    }
-    
-    private func getDownloadCompleteNSPredicate(downloadComplete: Bool) -> NSPredicate {
-        
-        return NSPredicate(format: "\(#keyPath(RealmDownloadedLanguage.downloadComplete)) == %@", NSNumber(value: downloadComplete))
+        return NSPredicate(format: "\(#keyPath(RealmDownloadedLanguage.downloadComplete)) == %@", NSNumber(value: true))
     }
 }
 
 extension DownloadedLanguagesCache {
     
-    func getDownloadedLanguagesByDownloadComplete(downloadComplete: Bool) async throws -> [DownloadedLanguageDataModel] {
+    func getCompletedDownloads() async throws -> [DownloadedLanguageDataModel] {
         
-        if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
-            
-            let query = SwiftDatabaseQuery<SwiftDownloadedLanguage>.filter(
-                filter: getDownloadCompletePredicate(downloadComplete: downloadComplete)
-            )
-            
-            return try await swiftPersistence
-                .newActorRead()
-                .getDataModels(query: query)
-        }
-        else if let realmPersistence = getRealmPersistence() {
-            
-            let query = RealmDatabaseQuery.filter(
-                filter: getDownloadCompleteNSPredicate(downloadComplete: downloadComplete)
-            )
-            
-            return try await realmPersistence
-                .newActorRead()
-                .getDataModels(query: query)
-        }
+        let query = RealmDatabaseQuery.filter(
+            filter: getDownloadCompleteNSPredicate()
+        )
         
-        return Array()
-    }
-    
-    func deleteDownloadedLanguage(languageId: String) async throws {
-            
-        _ = try await persistence.deleteObjectsByIds(ids: [languageId], getOption: nil)
+        return try await realmPersistence
+            .newActorRead()
+            .getDataModels(query: query)
     }
 }

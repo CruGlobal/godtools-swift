@@ -15,18 +15,21 @@ final class ToolLanguageDownloader {
     private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository
     private let toolDownloader: ToolDownloader
+    private let downloadedLanguagesCache: DownloadedLanguagesCache
     
     init(
         cache: ToolLanguageDownloadCache,
         resourcesRepository: ResourcesRepository,
         languagesRepository: LanguagesRepository,
-        toolDownloader: ToolDownloader
+        toolDownloader: ToolDownloader,
+        downloadedLanguagesCache: DownloadedLanguagesCache
     ) {
      
         self.cache = cache
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository
         self.toolDownloader = toolDownloader
+        self.downloadedLanguagesCache = downloadedLanguagesCache
     }
     
     @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Error> {
@@ -164,6 +167,8 @@ final class ToolLanguageDownloader {
     
     func syncDownloadedLanguages() async throws {
         
+        _ = try await migrateDownloadedLanguagesIfNeeded()
+        
         _ = try await markAllDownloadsAsCompleted()
         
         let downloads: [ToolLanguageDownloadDataModel] = try await cache.getDownloads(state: .all)
@@ -172,5 +177,36 @@ final class ToolLanguageDownloader {
             
             try await self.downloadToolLanguage(languageId: download.languageId)
         }
+    }
+    
+    private func migrateDownloadedLanguagesIfNeeded() async throws {
+        
+        let completedDownloads = try await downloadedLanguagesCache.getCompletedDownloads()
+        
+        guard completedDownloads.count > 0 else {
+            return
+        }
+        
+        var toolLanguagesToUpdate: [ToolLanguageDownloadDataModel] = Array()
+        
+        for completedDownload in completedDownloads {
+            
+            toolLanguagesToUpdate.append(
+                ToolLanguageDownloadDataModel(
+                    id: completedDownload.id,
+                    languageId: completedDownload.languageId,
+                    downloadErrorDescription: nil,
+                    downloadErrorHttpStatusCode: nil,
+                    downloadProgress: 1,
+                    downloadStartedAt: completedDownload.createdAt
+                )
+            )
+        }
+        
+        _ = try await cache.persistence.writeObjects(externalObjects: toolLanguagesToUpdate)
+        
+        let ids: [String] = completedDownloads.map { $0.id }
+        
+        _ = try await downloadedLanguagesCache.realmPersistence.deleteObjectsByIds(ids: Set(ids), getOption: nil)
     }
 }
