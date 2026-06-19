@@ -15,24 +15,53 @@ final class ToolLanguageDownloader {
     private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository
     private let toolDownloader: ToolDownloader
-    private let downloadedLanguagesRepository: DownloadedLanguagesRepository
     
-    init(cache: ToolLanguageDownloadCache, resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, toolDownloader: ToolDownloader, downloadedLanguagesRepository: DownloadedLanguagesRepository) {
+    init(
+        cache: ToolLanguageDownloadCache,
+        resourcesRepository: ResourcesRepository,
+        languagesRepository: LanguagesRepository,
+        toolDownloader: ToolDownloader
+    ) {
      
         self.cache = cache
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository
         self.toolDownloader = toolDownloader
-        self.downloadedLanguagesRepository = downloadedLanguagesRepository
     }
     
-    @MainActor func observeCollectionChanges() -> AnyPublisher<Void, Error> {
+    @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Error> {
         return cache.persistence
             .observeCollectionChangesPublisher()
     }
     
+    private func markAllDownloadsAsCompleted() async throws {
+        
+        let incompleteDownloads: [ToolLanguageDownloadDataModel] = try await cache.getDownloads(state: .incomplete)
+        
+        var downloadsToUpdate: [ToolLanguageDownloadDataModel] = Array()
+        
+        for download in incompleteDownloads {
+            
+            downloadsToUpdate.append(
+                download.copy(downloadProgress: 1)
+            )
+        }
+        
+        try await cache.persistence.writeObjects(externalObjects: downloadsToUpdate)
+    }
+    
     func getToolLanguageDownload(languageId: String) throws -> ToolLanguageDownloadDataModel? {
         return try cache.persistence.getDataModel(id: languageId)
+    }
+    
+    func deleteToolLanguageDownload(languageId: String) async throws {
+        
+        _ = try await cache.persistence.deleteObjectsByIds(ids: [languageId], getOption: nil)
+    }
+    
+    func getDownloads(state: ToolLanguageDownloadCache.DownloadState) async throws -> [ToolLanguageDownloadDataModel] {
+        
+        return try await cache.getDownloads(state: state)
     }
     
     func downloadToolLanguage(languageId: String) async throws {
@@ -75,13 +104,9 @@ final class ToolLanguageDownloader {
                 DownloadToolData(toolId: $0.id, languages: [languageModel.code])
             })
             
-            if try downloadedLanguagesRepository.getDownloadedLanguage(languageId: languageId) == nil {
+            if try getToolLanguageDownload(languageId: languageId) == nil {
                 
-                _ = try await downloadedLanguagesRepository
-                    .storeDownloadedLanguage(
-                        languageId: languageId,
-                        downloadComplete: false
-                    )
+                _ = try await cache.persistence.writeObjects(externalObjects: [downloadDataModel])
             }
             
             try await toolDownloader.downloadToolsWithProgressClosure(tools: downloadTools, requestPriority: .low, onProgress: { (progress: Double) in
@@ -116,13 +141,6 @@ final class ToolLanguageDownloader {
                             writeOption: nil,
                             getOption: nil
                         )
-                    
-                    
-                    _ = try await downloadedLanguagesRepository
-                        .storeDownloadedLanguage(
-                            languageId: languageId,
-                            downloadComplete: true
-                        )
                 }
             })
         }
@@ -139,10 +157,6 @@ final class ToolLanguageDownloader {
                     writeOption: nil,
                     getOption: nil
                 )
-                        
-            try await downloadedLanguagesRepository.deleteDownloadedLanguage(
-                languageId: languageId
-            )
             
             throw error
         }
@@ -150,15 +164,13 @@ final class ToolLanguageDownloader {
     
     func syncDownloadedLanguages() async throws {
         
-        _ = try await downloadedLanguagesRepository.markAllDownloadsAsCompleted()
+        _ = try await markAllDownloadsAsCompleted()
         
-        let downloadedLanguages: [DownloadedLanguageDataModel] = try await downloadedLanguagesRepository.getDownloadedLanguagesByDownloadComplete(
-            downloadComplete: true
-        )
+        let downloads: [ToolLanguageDownloadDataModel] = try await cache.getDownloads(state: .all)
         
-        for language in downloadedLanguages {
+        for download in downloads {
             
-            _ = try await downloadToolLanguage(languageId: language.languageId)
+            try await self.downloadToolLanguage(languageId: download.languageId)
         }
     }
 }

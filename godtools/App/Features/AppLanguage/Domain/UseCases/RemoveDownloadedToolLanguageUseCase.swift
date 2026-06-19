@@ -10,17 +10,17 @@ import Foundation
 
 final class RemoveDownloadedToolLanguageUseCase {
     
-    private let downloadedLanguagesRepository: DownloadedLanguagesRepository
+    private let toolLanguageDownloader: ToolLanguageDownloader
     
-    init(downloadedLanguagesRepository: DownloadedLanguagesRepository) {
+    init(toolLanguageDownloader: ToolLanguageDownloader) {
         
-        self.downloadedLanguagesRepository = downloadedLanguagesRepository
+        self.toolLanguageDownloader = toolLanguageDownloader
     }
     
     func execute(languageId: String) async throws {
         
-        try await downloadedLanguagesRepository
-            .deleteDownloadedLanguage(
+        try await toolLanguageDownloader
+            .deleteToolLanguageDownload(
                 languageId: languageId
             )
     }

@@ -26,7 +26,7 @@ final class DownloadToolLanguageUseCase {
         }
         
         return toolLanguageDownloader
-            .observeCollectionChanges()
+            .observeCollectionChangesPublisher()
             .tryMap { _ in
                 
                 let toolLanguageDownload: ToolLanguageDownloadDataModel? = try self.toolLanguageDownloader.getToolLanguageDownload(

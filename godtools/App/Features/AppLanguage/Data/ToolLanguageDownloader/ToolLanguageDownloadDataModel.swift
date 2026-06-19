@@ -21,6 +21,10 @@ struct ToolLanguageDownloadDataModel: Sendable {
         return Date().timeIntervalSince(downloadStartedAt)
     }
     
+    var downloadComplete: Bool {
+        return downloadProgress >= 1
+    }
+    
     func copy(downloadProgress: Double? = nil, downloadErrorDescription: String? = nil, downloadErrorHttpStatusCode: Int? = nil) -> ToolLanguageDownloadDataModel {
         
         return ToolLanguageDownloadDataModel(

@@ -12,17 +12,24 @@ import Combine
 final class GetDownloadableLanguagesListUseCase {
     
     private let languagesRepository: LanguagesRepository
-    private let downloadedLanguagesRepository: DownloadedLanguagesRepository
+    private let toolLanguageDownloader: ToolLanguageDownloader
     private let getTranslatedLanguageName: GetTranslatedLanguageName
     private let resourcesRepository: ResourcesRepository
     private let localizationServices: LocalizationServicesInterface
     private let stringWithLocaleCount: StringWithLocaleCountInterface
     private let sortDate: Date = Date()
     
-    init(languagesRepository: LanguagesRepository, downloadedLanguagesRepository: DownloadedLanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName, resourcesRepository: ResourcesRepository, localizationServices: LocalizationServicesInterface, stringWithLocaleCount: StringWithLocaleCountInterface) {
+    init(
+        languagesRepository: LanguagesRepository,
+        toolLanguageDownloader: ToolLanguageDownloader,
+        getTranslatedLanguageName: GetTranslatedLanguageName,
+        resourcesRepository: ResourcesRepository,
+        localizationServices: LocalizationServicesInterface,
+        stringWithLocaleCount: StringWithLocaleCountInterface
+    ) {
         
         self.languagesRepository = languagesRepository
-        self.downloadedLanguagesRepository = downloadedLanguagesRepository
+        self.toolLanguageDownloader = toolLanguageDownloader
         self.getTranslatedLanguageName = getTranslatedLanguageName
         self.resourcesRepository = resourcesRepository
         self.localizationServices = localizationServices
@@ -34,7 +41,7 @@ final class GetDownloadableLanguagesListUseCase {
         return Publishers.CombineLatest(
             languagesRepository
                 .observeCollectionChangesPublisher(),
-            downloadedLanguagesRepository
+            toolLanguageDownloader
                 .observeCollectionChangesPublisher()
         )
         .flatMap { (languagesChanged: Void, downloadedLanguagesChanged: Void) -> AnyPublisher<[DownloadableLanguageListItemDomainModel], Error> in
@@ -113,17 +120,14 @@ extension GetDownloadableLanguagesListUseCase {
     
     private func getDownloadStatus(for languageId: String) throws -> LanguageDownloadStatusDomainModel {
         
-        guard let downloadedLanguage = try downloadedLanguagesRepository.getDownloadedLanguage(languageId: languageId) else {
-            
+        guard let downloadedLanguage = try toolLanguageDownloader.getToolLanguageDownload(languageId: languageId) else {
             return .notDownloaded
         }
         
         if downloadedLanguage.downloadComplete {
-            
-            return .downloaded(date: downloadedLanguage.createdAt)
+            return .downloaded(date: downloadedLanguage.downloadStartedAt)
             
         } else {
-            
             return .notDownloaded
         }
     }
