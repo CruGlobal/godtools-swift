@@ -48,7 +48,7 @@ final class AppLanguageDomainLayerDependencies {
     func getDownloadableLanguagesListUseCase() -> GetDownloadableLanguagesListUseCase {
         return GetDownloadableLanguagesListUseCase(
             languagesRepository: core.dataLayer.getLanguagesRepository(),
-            toolLanguageDownloader: dataLayer.getToolLanguageDownloader(),
+            downloadedLanguagesRepository: dataLayer.getDownloadedLanguagesRepository(),
             getTranslatedLanguageName: core.domainLayer.supporting.getTranslatedLanguageName(),
             resourcesRepository: core.dataLayer.getResourcesRepository(),
             localizationServices: core.dataLayer.getLocalizationServices(),
@@ -65,7 +65,7 @@ final class AppLanguageDomainLayerDependencies {
     func getDownloadedLanguagesListUseCase() -> GetDownloadedLanguagesListUseCase {
         return GetDownloadedLanguagesListUseCase(
             languagesRepository: core.dataLayer.getLanguagesRepository(),
-            toolLanguageDownloader: dataLayer.getToolLanguageDownloader(),
+            downloadedLanguagesRepository: dataLayer.getDownloadedLanguagesRepository(),
             getTranslatedLanguageName: core.domainLayer.supporting.getTranslatedLanguageName()
         )
     }
@@ -92,7 +92,7 @@ final class AppLanguageDomainLayerDependencies {
     
     func getRemoveDownloadedToolLanguageUseCase() -> RemoveDownloadedToolLanguageUseCase {
         return RemoveDownloadedToolLanguageUseCase(
-            toolLanguageDownloader: dataLayer.getToolLanguageDownloader()
+            downloadedLanguagesRepository: dataLayer.getDownloadedLanguagesRepository()
         )
     }
     

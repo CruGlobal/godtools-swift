@@ -12,17 +12,13 @@ import Combine
 final class GetDownloadedLanguagesListUseCase {
     
     private let languagesRepository: LanguagesRepository
-    private let toolLanguageDownloader: ToolLanguageDownloader
+    private let downloadedLanguagesRepository: DownloadedLanguagesRepository
     private let getTranslatedLanguageName: GetTranslatedLanguageName
     
-    init(
-        languagesRepository: LanguagesRepository,
-        toolLanguageDownloader: ToolLanguageDownloader,
-        getTranslatedLanguageName: GetTranslatedLanguageName
-    ) {
+    init(languagesRepository: LanguagesRepository, downloadedLanguagesRepository: DownloadedLanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName) {
         
         self.languagesRepository = languagesRepository
-        self.toolLanguageDownloader = toolLanguageDownloader
+        self.downloadedLanguagesRepository = downloadedLanguagesRepository
         self.getTranslatedLanguageName = getTranslatedLanguageName
     }
     
@@ -31,7 +27,7 @@ final class GetDownloadedLanguagesListUseCase {
         return Publishers.CombineLatest(
             languagesRepository
                 .observeCollectionChangesPublisher(),
-            toolLanguageDownloader
+            downloadedLanguagesRepository
                 .observeCollectionChangesPublisher()
         )
         .flatMap { (languagesChanged: Void, downloadLanguagesChanged: Void) -> AnyPublisher<[DownloadedLanguageListItemDomainModel], Error> in
@@ -45,7 +41,9 @@ final class GetDownloadedLanguagesListUseCase {
     
     func asyncExecute(appLanguage: AppLanguageDomainModel) async throws -> [DownloadedLanguageListItemDomainModel] {
                 
-        let downloadedLanguageDataModels: [ToolLanguageDownloadDataModel] = try await toolLanguageDownloader.getDownloads(state: .complete)
+        let downloadedLanguageDataModels: [DownloadedLanguageDataModel] = try await downloadedLanguagesRepository.getDownloadedLanguagesByDownloadComplete(
+            downloadComplete: true
+        )
         
         let downloadedLanguageIds: [String] = downloadedLanguageDataModels.map { $0.languageId }
         
@@ -75,4 +73,3 @@ final class GetDownloadedLanguagesListUseCase {
         return languagesList
     }
 }
-

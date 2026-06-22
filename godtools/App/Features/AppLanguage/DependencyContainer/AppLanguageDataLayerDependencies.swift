@@ -67,11 +67,28 @@ final class AppLanguageDataLayerDependencies {
         )
     }
     
-    private func getDownloadedLanguagesCache() -> DownloadedLanguagesCache {
-        return DownloadedLanguagesCache(
-            realmPersistence: RealmRepositorySyncPersistence(
+    func getDownloadedLanguagesRepository() -> DownloadedLanguagesRepository {
+            
+        let persistence: any Persistence<DownloadedLanguageDataModel, DownloadedLanguageDataModel>
+        
+        if #available(iOS 17.4, *), let database = coreDataLayer.getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                mapping: SwiftDownloadedLanguageMapping()
+            )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
                 database: coreDataLayer.getSharedRealmDatabase(),
                 mapping: RealmDownloadedLanguageMapping()
+            )
+        }
+        
+        return DownloadedLanguagesRepository(
+            cache: DownloadedLanguagesCache(
+                persistence: persistence
             )
         )
     }
@@ -104,7 +121,7 @@ final class AppLanguageDataLayerDependencies {
             resourcesRepository: coreDataLayer.getResourcesRepository(),
             languagesRepository: coreDataLayer.getLanguagesRepository(),
             toolDownloader: coreDataLayer.getToolDownloader(),
-            downloadedLanguagesCache: getDownloadedLanguagesCache()
+            downloadedLanguagesRepository: getDownloadedLanguagesRepository()
         )
     }
     
