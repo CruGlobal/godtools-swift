@@ -96,31 +96,7 @@ extension ToolDownloader {
     
     func downloadTools(tools: [DownloadToolData], requestPriority: RequestPriority) async -> [ToolDownloadDataModel] {
                      
-        var initialToolDownloads: [ToolDownloadDataModel] = Array()
-        
-        for tool in tools {
-            
-            initialToolDownloads.append(
-                ToolDownloadDataModel(
-                    toolId: tool.toolId,
-                    languages: tool.languages,
-                    downloadStarted: Date(),
-                    progress: 0,
-                    downloadErrorDescription: nil,
-                    downloadErrorHttpStatusCode: nil
-                )
-            )
-        }
-        
-        do {
-            
-            try await cache.persistence.writeObjects(
-                externalObjects: initialToolDownloads
-            )
-        }
-        catch _ {
-            
-        }
+        await setInitialProgressToZeroForTools(tools: tools)
         
         var toolDownloads: [ToolDownloadDataModel] = Array()
         
@@ -268,6 +244,35 @@ extension ToolDownloader {
         }
         
         return toolDownload
+    }
+    
+    private func setInitialProgressToZeroForTools(tools: [DownloadToolData]) async {
+        
+        var initialToolDownloads: [ToolDownloadDataModel] = Array()
+        
+        for tool in tools {
+            
+            initialToolDownloads.append(
+                ToolDownloadDataModel(
+                    toolId: tool.toolId,
+                    languages: tool.languages,
+                    downloadStarted: Date(),
+                    progress: 0,
+                    downloadErrorDescription: nil,
+                    downloadErrorHttpStatusCode: nil
+                )
+            )
+        }
+        
+        do {
+            
+            try await cache.persistence.writeObjects(
+                externalObjects: initialToolDownloads
+            )
+        }
+        catch _ {
+            
+        }
     }
     
     private func incrementDownloadCountAndReportProgress(toolDownload: inout ToolDownloadDataModel, downloadCount: inout Int, totalNumberOfDownloads: Int, error: Error?) async {

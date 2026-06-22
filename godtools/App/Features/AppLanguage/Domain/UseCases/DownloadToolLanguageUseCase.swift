@@ -19,22 +19,9 @@ final class DownloadToolLanguageUseCase {
     }
     
     @MainActor func execute(languageId: String) -> AnyPublisher<Double, Error> {
-        
-        Task {
-            try await toolLanguageDownloader
-                .downloadToolLanguage(languageId: languageId)
-        }
-        
+    
         return toolLanguageDownloader
-            .observeCollectionChangesPublisher()
-            .tryMap { _ in
-                
-                let toolLanguageDownload: ToolLanguageDownloadDataModel? = try self.toolLanguageDownloader.getToolLanguageDownload(
-                    languageId: languageId
-                )
-                
-                return toolLanguageDownload?.downloadProgress ?? 0
-            }
+            .downloadToolLanguagePublisher(languageId: languageId)
             .eraseToAnyPublisher()
     }
 }

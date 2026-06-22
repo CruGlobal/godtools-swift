@@ -56,7 +56,6 @@ final class RealmProductionConfig {
             RealmResourceView.self,
             RealmSHA256File.self,
             RealmToolDownload.self,
-            RealmToolLanguageDownload.self,
             RealmToolScreenShareTutorialView.self,
             RealmTranslation.self,
             RealmUserAppLanguage.self,

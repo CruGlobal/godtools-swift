@@ -84,7 +84,13 @@ class DownloadableLanguageItemViewModel: ObservableObject {
                 return .notDownloaded
             }
         }
-        .assign(to: &$iconState)
+        .sink { [weak self] (iconState: LanguageDownloadIcon.State) in
+            
+            print("\n SET ICON STATE: \(iconState)")
+            
+            self?.iconState = iconState
+        }
+        .store(in: &cancellables)
         
         // TODO: Would be nice to handle errors per item. ~Levi
         $downloadError
@@ -128,9 +134,7 @@ extension DownloadableLanguageItemViewModel {
     }
     
     private func setDownloadState(state: DownloadableLanguageDownloadState) {
-        
-        print("\n ViewModel set download state: \(state)")
-        
+                
         downloadState = state
         
         Self.downloadState[languageId] = state
