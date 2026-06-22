@@ -16,9 +16,10 @@ class DownloadableLanguageItemViewModel: ObservableObject {
     
     private static let endMarkedForRemovalAfterSeconds: TimeInterval = 3
     
-    private static var inMemoryStateForRecycle: [LanguageId: DownloadableLanguageItemRecycleState] = Dictionary()
-    private static var languageDownloads: [LanguageId: AnimateDownloadProgress] = Dictionary()
+    private static var languageDownloadCancellables: [LanguageId: AnyCancellable] = Dictionary()
     private static var resetIsMarkedForRemovalTimers: [LanguageId: SwiftUITimer] = Dictionary()
+    private static var downloadState: [LanguageId: DownloadableLanguageDownloadState] = Dictionary()
+    private static var isMarkedForRemoval: [LanguageId: Bool] = Dictionary()
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     
     private let stepEmitter: FlowStepEmitter
@@ -28,11 +29,18 @@ class DownloadableLanguageItemViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = Set()
         
     let downloadableLanguage: DownloadableLanguageListItemDomainModel
-    let recycleState: DownloadableLanguageItemRecycleState
     
-    @Published private(set) var iconState: LanguageDownloadIconState = .notDownloaded
+    @Published private(set) var downloadState: DownloadableLanguageDownloadState
+    @Published private(set) var isMarkedForRemoval: Bool
+    @Published private(set) var iconState: LanguageDownloadIcon.State = .notDownloaded
+    @Published private(set) var downloadError: Error?
     
-    init(stepEmitter: FlowStepEmitter, downloadableLanguage: DownloadableLanguageListItemDomainModel, downloadToolLanguageUseCase: DownloadToolLanguageUseCase, removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        downloadableLanguage: DownloadableLanguageListItemDomainModel,
+        downloadToolLanguageUseCase: DownloadToolLanguageUseCase,
+        removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase
+    ) {
         
         self.stepEmitter = stepEmitter
         self.downloadableLanguage = downloadableLanguage
@@ -41,44 +49,45 @@ class DownloadableLanguageItemViewModel: ObservableObject {
         
         let languageId: String = downloadableLanguage.languageId
         
-        if let existingRecycleState = Self.inMemoryStateForRecycle[languageId] {
-            recycleState = existingRecycleState
+        if let downloadState = Self.downloadState[languageId] {
+
+            self.downloadState = downloadState
         }
         else {
-            recycleState = DownloadableLanguageItemRecycleState(downloadableLanguage: downloadableLanguage)
-            Self.inMemoryStateForRecycle[languageId] = recycleState
+            
+            switch downloadableLanguage.downloadStatus {
+            case .notDownloaded:
+                downloadState = .notDownloaded
+            case .downloaded( _):
+                downloadState = .downloaded
+            }
         }
-             
+        
+        isMarkedForRemoval = Self.isMarkedForRemoval[languageId] ?? false
+        
         Publishers.CombineLatest(
-            recycleState.$downloadState,
-            recycleState.$isMarkedForRemoval
+            $downloadState,
+            $isMarkedForRemoval
         )
-        .flatMap { (downloadState: DownloadableLanguageDownloadState, isMarkedForRemoval: Bool) -> AnyPublisher<LanguageDownloadIconState, Never>  in
-            
-            let iconState: LanguageDownloadIconState
-            
-            if isMarkedForRemoval {
-                iconState = .remove
-            }
-            else {
-                
-                switch downloadState {
-                case .downloaded:
-                    iconState = .downloaded
-                case .downloading(let progress):
-                    iconState = .downloading(progress: progress)
-                case .notDownloaded:
-                    iconState = .notDownloaded
-                }
+        .map { (downloadState: DownloadableLanguageDownloadState, isMarkedForRemoval: Bool) in
+                        
+            guard !isMarkedForRemoval else {
+                return .remove
             }
             
-            return Just(iconState)
-                .eraseToAnyPublisher()
+            switch downloadState {
+            case .downloaded:
+                return .downloaded
+            case .downloading(let progress):
+                return .downloading(progress: progress)
+            case .notDownloaded:
+                return .notDownloaded
+            }
         }
         .assign(to: &$iconState)
         
-        recycleState
-            .$downloadError
+        // TODO: Would be nice to handle errors per item. ~Levi
+        $downloadError
             .sink(receiveValue: { [weak self] (downloadError: Error?) in
                 if let downloadError = downloadError {
                     self?.stepEmitter.emit(step: AppFlowStep.languageDownloadFailedFromDownloadedLanguages(error: downloadError))
@@ -94,14 +103,6 @@ class DownloadableLanguageItemViewModel: ObservableObject {
     private var languageId: String {
         return downloadableLanguage.languageId
     }
-    
-    static func removeInMemoryRecycleState() {
-        Self.inMemoryStateForRecycle.removeAll()
-    }
-    
-    static func removeMarkedForRemovalTimers() {
-        Self.resetIsMarkedForRemovalTimers.removeAll()
-    }
 }
 
 // MARK: - Remove Downloaded Language
@@ -110,11 +111,10 @@ extension DownloadableLanguageItemViewModel {
     
     private func removeDownloadedLanguage() {
         
-        recycleState.downloadState = .notDownloaded
+        setDownloadState(state: .notDownloaded)
         
         Task {
-            try await removeDownloadedToolLanguageUseCase
-                .execute(languageId: languageId)
+            try await removeDownloadedToolLanguageUseCase.execute(languageId: languageId)
         }
     }
 }
@@ -123,40 +123,70 @@ extension DownloadableLanguageItemViewModel {
 
 extension DownloadableLanguageItemViewModel {
     
-    private static func startLanguageDownload(downloadToolLanguageUseCase: DownloadToolLanguageUseCase, recycleState: DownloadableLanguageItemRecycleState, languageId: String) {
-                  
-        let isDownloading: Bool = recycleState.downloadState.isDownloading
-
-        guard !isDownloading else {
+    private var isDownloading: Bool {
+        return downloadState.isDownloading || Self.languageDownloadCancellables[languageId] != nil
+    }
+    
+    private func setDownloadState(state: DownloadableLanguageDownloadState) {
+        
+        print("\n ViewModel set download state: \(state)")
+        
+        downloadState = state
+        
+        Self.downloadState[languageId] = state
+        
+        if state == .downloaded {
+            Self.languageDownloadCancellables[languageId] = nil
+        }
+    }
+    
+    private func cancelLanguageDownload() {
+        
+        Self.languageDownloadCancellables[languageId]?.cancel()
+        Self.languageDownloadCancellables[languageId] = nil
+        
+        setDownloadState(state: .notDownloaded)
+    }
+    
+    private func startLanguageDownload() {
+        
+        guard !downloadState.isDownloading else {
             return
         }
         
-        let languageDownloadWithAnimateDownloadProgress = AnimateDownloadProgress()
-        
-        recycleState.downloadState = .downloading(progress: 0)
-        Self.languageDownloads[languageId] = languageDownloadWithAnimateDownloadProgress
-        
-        languageDownloadWithAnimateDownloadProgress
-            .start(downloadProgressPublisher: downloadToolLanguageUseCase.execute(languageId: languageId))
-            .receive(on: DispatchQueue.main)
-            .sink { completion in
+        setDownloadState(state: .downloading(progress: 0))
                 
-                Self.languageDownloads[languageId] = nil
+        let languageId: String = self.languageId
+                
+        Self.languageDownloadCancellables[languageId] = downloadToolLanguageUseCase
+            .execute(languageId: languageId)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] completion in
                 
                 switch completion {
                 case .finished:
-                    recycleState.downloadState = .downloaded
+                    self?.setDownloadState(state: .downloaded)
                 case .failure(let error):
-                    recycleState.downloadError = error
-                    recycleState.downloadError = nil
-                    recycleState.downloadState = .notDownloaded
+                    // TODO: Handle errors? ~Levi
+                    //self?.downloadError = error
+                    //self?.setDownloadState(state: .notDownloaded)
+                    self?.setDownloadState(state: .downloaded)
                 }
                 
-            } receiveValue: { (progress: Double) in
+                Self.languageDownloadCancellables[languageId] = nil
                 
-                recycleState.downloadState = .downloading(progress: progress)
+            } receiveValue: { [weak self] (progress: Double) in
+                
+                let state: DownloadableLanguageDownloadState
+                
+                if progress < 1 {
+                    state = .downloading(progress: progress)
+                } else {
+                    state = .downloaded
+                }
+                
+                self?.setDownloadState(state: state)
             }
-            .store(in: &backgroundCancellables)
     }
 }
 
@@ -164,27 +194,34 @@ extension DownloadableLanguageItemViewModel {
 
 extension DownloadableLanguageItemViewModel {
     
-    private static func startResetIsMarkedForRemovalTimer(recycleState: DownloadableLanguageItemRecycleState, languageId: String) {
+    private func setIsMarkedForRemoval(isMarkedForRemoval: Bool) {
         
+        self.isMarkedForRemoval = isMarkedForRemoval
+        
+        Self.isMarkedForRemoval[languageId] = isMarkedForRemoval
+    }
+    
+    private func startResetIsMarkedForRemovalTimer(completion: (() -> Void)?) {
+                
         let timer = SwiftUITimer(
             intervalSeconds: Self.endMarkedForRemovalAfterSeconds,
             repeats: false
         )
         
         Self.resetIsMarkedForRemovalTimers[languageId] = timer
-        recycleState.isMarkedForRemoval = true
         
         timer.startPublisher()
             .receive(on: DispatchQueue.main)
-            .sink { _ in
+            .sink { [weak self] _ in
                 
-                Self.stopResetIsMarkedForRemovalTimer(languageId: languageId)
-                recycleState.isMarkedForRemoval = false
+                self?.stopResetIsMarkedForRemovalTimer()
+                
+                completion?()
             }
             .store(in: &Self.backgroundCancellables)
     }
     
-    private static func stopResetIsMarkedForRemovalTimer(languageId: String) {
+    private func stopResetIsMarkedForRemovalTimer() {
         Self.resetIsMarkedForRemovalTimers[languageId]?.stop()
         Self.resetIsMarkedForRemovalTimers[languageId] = nil
     }
@@ -196,31 +233,29 @@ extension DownloadableLanguageItemViewModel {
     
     func languageTapped() {
         
-        switch recycleState.downloadState {
+        switch downloadState {
             
         case .downloaded:
             
-            if recycleState.isMarkedForRemoval {
+            if isMarkedForRemoval {
                 
-                recycleState.isMarkedForRemoval = false
-                Self.stopResetIsMarkedForRemovalTimer(languageId: languageId)
+                setIsMarkedForRemoval(isMarkedForRemoval: false)
+                stopResetIsMarkedForRemovalTimer()
                 removeDownloadedLanguage()
             }
             else {
                 
-                recycleState.isMarkedForRemoval = true
-                Self.startResetIsMarkedForRemovalTimer(recycleState: recycleState, languageId: languageId)
+                setIsMarkedForRemoval(isMarkedForRemoval: true)
+                startResetIsMarkedForRemovalTimer(completion: { [weak self] in
+                    self?.setIsMarkedForRemoval(isMarkedForRemoval: false)
+                })
             }
             
         case .downloading( _):
             break
             
         case .notDownloaded:
-            Self.startLanguageDownload(
-                downloadToolLanguageUseCase: downloadToolLanguageUseCase,
-                recycleState: recycleState,
-                languageId: languageId
-            )
+            startLanguageDownload()
         }
     }
 }

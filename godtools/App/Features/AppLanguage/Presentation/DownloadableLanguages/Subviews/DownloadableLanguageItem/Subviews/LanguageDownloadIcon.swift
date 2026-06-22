@@ -10,11 +10,18 @@ import SwiftUI
 
 struct LanguageDownloadIcon: View {
     
+    enum State {
+        case notDownloaded
+        case downloading(progress: Double)
+        case downloaded
+        case remove
+    }
+    
     private static let lightGrey = Color.getColorWithRGB(red: 151, green: 151, blue: 151, opacity: 1)
     
-    private let state: LanguageDownloadIconState
+    private let state: State
     
-    init(state: LanguageDownloadIconState) {
+    init(state: LanguageDownloadIcon.State) {
         self.state = state
     }
 
