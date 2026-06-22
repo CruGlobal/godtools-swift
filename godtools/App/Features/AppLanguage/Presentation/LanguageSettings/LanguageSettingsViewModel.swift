@@ -26,7 +26,13 @@ final class LanguageSettingsViewModel: ObservableObject {
     
     @Published var downloadedLanguages: [DownloadedLanguageListItemDomainModel] = []
     
-    init(stepEmitter: FlowStepEmitter, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLanguageSettingsStringsUseCase: GetLanguageSettingsStringsUseCase, getDownloadedLanguagesListUseCase: GetDownloadedLanguagesListUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getLanguageSettingsStringsUseCase: GetLanguageSettingsStringsUseCase,
+        getDownloadedLanguagesListUseCase: GetDownloadedLanguagesListUseCase,
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
+    ) {
         
         self.stepEmitter = stepEmitter
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
