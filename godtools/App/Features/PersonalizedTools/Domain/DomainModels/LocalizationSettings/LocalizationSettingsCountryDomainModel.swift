@@ -14,7 +14,11 @@ struct LocalizationSettingsCountryDomainModel: Sendable {
     let countryNameTranslatedInOwnLanguage: String
     let countryNameTranslatedInCurrentAppLanguage: String
 
-    init(isoRegionCode: String, countryNameTranslatedInOwnLanguage: String = "", countryNameTranslatedInCurrentAppLanguage: String = "") {
+    init(
+        isoRegionCode: String,
+        countryNameTranslatedInOwnLanguage: String = "",
+        countryNameTranslatedInCurrentAppLanguage: String = ""
+    ) {
         self.isoRegionCode = isoRegionCode
         self.countryNameTranslatedInOwnLanguage = countryNameTranslatedInOwnLanguage
         self.countryNameTranslatedInCurrentAppLanguage = countryNameTranslatedInCurrentAppLanguage

@@ -26,7 +26,11 @@ class LessonCardViewModel: ObservableObject {
     @Published private(set) var attachmentsDownloadProgressValue: Double = 0
     @Published private(set) var translationDownloadProgressValue: Double = 0
     
-    init(lessonListItem: LessonListItemDomainModelInterface, getToolBannerUseCase: GetToolBannerUseCase, inMemoryDataCache: InMemoryDataCache) {
+    init(
+        lessonListItem: LessonListItemDomainModelInterface,
+        getToolBannerUseCase: GetToolBannerUseCase,
+        inMemoryDataCache: InMemoryDataCache
+    ) {
         
         self.lessonListItem = lessonListItem
         self.title = lessonListItem.name

@@ -15,7 +15,12 @@ struct OnboardingTutorialPrimaryButton: View {
     private let accessibility: AccessibilityStrings.Button?
     private let action: (() -> Void)
     
-    init(geometry: GeometryProxy, title: String, accessibility: AccessibilityStrings.Button?, action: @escaping (() -> Void)) {
+    init(
+        geometry: GeometryProxy,
+        title: String,
+        accessibility: AccessibilityStrings.Button?,
+        action: @escaping (() -> Void)
+    ) {
         
         self.geometry = geometry
         self.title = title

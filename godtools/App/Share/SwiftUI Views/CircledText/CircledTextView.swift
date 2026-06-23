@@ -16,7 +16,13 @@ struct CircledTextView: View {
     private let size: CGSize
     private let text: String
     
-    init(backgroundColor: Color = .white, tintColor: Color, lineWidth: CGFloat = 1, size: CGSize = CGSize(width: 50, height: 50), text: String) {
+    init(
+        backgroundColor: Color = .white,
+        tintColor: Color,
+        lineWidth: CGFloat = 1,
+        size: CGSize = CGSize(width: 50, height: 50),
+        text: String
+    ) {
         
         self.backgroundColor = backgroundColor
         self.tintColor = tintColor

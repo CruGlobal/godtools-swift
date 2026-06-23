@@ -13,7 +13,10 @@ final class GetOnboardingTutorialIsAvailable {
     private let launchCountRepository: LaunchCountRepositoryInterface
     private let onboardingTutorialViewedRepository: OnboardingTutorialViewedRepository
     
-    init(launchCountRepository: LaunchCountRepositoryInterface, onboardingTutorialViewedRepository: OnboardingTutorialViewedRepository) {
+    init(
+        launchCountRepository: LaunchCountRepositoryInterface,
+        onboardingTutorialViewedRepository: OnboardingTutorialViewedRepository
+    ) {
         
         self.launchCountRepository = launchCountRepository
         self.onboardingTutorialViewedRepository = onboardingTutorialViewedRepository

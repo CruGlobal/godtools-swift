@@ -14,7 +14,11 @@ final class GetDownloadToolProgressStringsUseCase {
     private let localizationServices: LocalizationServicesInterface
     private let favoritedResourcesRepository: FavoritedResourcesRepository
     
-    init(resourcesRepository: ResourcesRepository, localizationServices: LocalizationServicesInterface, favoritedResourcesRepository: FavoritedResourcesRepository) {
+    init(
+        resourcesRepository: ResourcesRepository,
+        localizationServices: LocalizationServicesInterface,
+        favoritedResourcesRepository: FavoritedResourcesRepository
+    ) {
         
         self.resourcesRepository = resourcesRepository
         self.localizationServices = localizationServices

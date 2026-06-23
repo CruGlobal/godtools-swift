@@ -13,7 +13,11 @@ class MobileContentHeadingViewModel: MobileContentViewModel {
     
     private let headingModel: Text
     
-    init(headingModel: Text, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
+    init(
+        headingModel: Text,
+        renderedPageContext: MobileContentRenderedPageContext,
+        mobileContentAnalytics: MobileContentRendererAnalytics
+    ) {
         
         self.headingModel = headingModel
         

@@ -20,7 +20,11 @@ class MobileContentRendererAnalyticsEvent: NSObject {
     
     let analyticsEvent: AnalyticsEvent
         
-    init(analyticsEvent: AnalyticsEvent, mobileContentAnalytics: MobileContentRendererAnalytics, renderedPageContext: MobileContentRenderedPageContext) {
+    init(
+        analyticsEvent: AnalyticsEvent,
+        mobileContentAnalytics: MobileContentRendererAnalytics,
+        renderedPageContext: MobileContentRenderedPageContext
+    ) {
         
         self.analyticsEvent = analyticsEvent
         self.mobileContentAnalytics = mobileContentAnalytics

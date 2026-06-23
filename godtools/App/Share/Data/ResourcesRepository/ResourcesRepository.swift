@@ -24,7 +24,15 @@ final class ResourcesRepository {
     private let syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface
     private let userDefaultsCache: UserDefaultsCacheInterface
     
-    init(api: ResourcesApiInterface, jsonFileCache: ResourcesJsonFileCache, cache: ResourcesCache, attachmentsRepository: AttachmentsRepository, languagesRepository: LanguagesRepository, syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface, userDefaultsCache: UserDefaultsCacheInterface) {
+    init(
+        api: ResourcesApiInterface,
+        jsonFileCache: ResourcesJsonFileCache,
+        cache: ResourcesCache,
+        attachmentsRepository: AttachmentsRepository,
+        languagesRepository: LanguagesRepository,
+        syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface,
+        userDefaultsCache: UserDefaultsCacheInterface
+    ) {
         
         self.api = api
         self.jsonFileCache = jsonFileCache

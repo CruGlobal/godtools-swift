@@ -35,7 +35,15 @@ final class ToolScreenShareTutorialViewModel: ObservableObject {
     
     @Published var currentPage: Int = 0
     
-    init(stepEmitter: FlowStepEmitter, toolId: String, showTutorialPages: ShowToolScreenShareTutorialPages, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolScreenShareTutorialStringsUseCase: GetToolScreenShareTutorialStringsUseCase, getToolScreenShareTutorialUseCase: GetToolScreenShareTutorialUseCase, didViewToolScreenShareTutorialUseCase: DidViewToolScreenShareTutorialUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        toolId: String,
+        showTutorialPages: ShowToolScreenShareTutorialPages,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getToolScreenShareTutorialStringsUseCase: GetToolScreenShareTutorialStringsUseCase,
+        getToolScreenShareTutorialUseCase: GetToolScreenShareTutorialUseCase,
+        didViewToolScreenShareTutorialUseCase: DidViewToolScreenShareTutorialUseCase
+    ) {
         
         self.stepEmitter = stepEmitter
         self.toolId = toolId

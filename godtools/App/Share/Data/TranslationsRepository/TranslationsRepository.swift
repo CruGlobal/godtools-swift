@@ -21,7 +21,15 @@ final class TranslationsRepository {
     private let trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
     private let remoteConfigRepository: RemoteConfigRepository
     
-    init(api: TranslationsApiInterface, cdn: TranslationsCdnInterface, cache: TranslationsCache, infoPlist: InfoPlist, resourcesFileCache: ResourcesSHA256FileCache, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository, remoteConfigRepository: RemoteConfigRepository) {
+    init(
+        api: TranslationsApiInterface,
+        cdn: TranslationsCdnInterface,
+        cache: TranslationsCache,
+        infoPlist: InfoPlist,
+        resourcesFileCache: ResourcesSHA256FileCache,
+        trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository,
+        remoteConfigRepository: RemoteConfigRepository
+    ) {
         
         self.api = api
         self.cdn = cdn

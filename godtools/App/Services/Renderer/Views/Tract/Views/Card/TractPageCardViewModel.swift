@@ -24,7 +24,15 @@ class TractPageCardViewModel: MobileContentViewModel {
     let hidesNextButton: Bool
     let isHiddenCard: Bool
     
-    init(cardModel: TractPage.Card, renderedPageContext: MobileContentRenderedPageContext, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, mobileContentAnalytics: MobileContentRendererAnalytics, localizationServices: LocalizationServicesInterface, numberOfVisbleCards: Int, trainingTipsEnabled: Bool) {
+    init(
+        cardModel: TractPage.Card,
+        renderedPageContext: MobileContentRenderedPageContext,
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
+        mobileContentAnalytics: MobileContentRendererAnalytics,
+        localizationServices: LocalizationServicesInterface,
+        numberOfVisbleCards: Int,
+        trainingTipsEnabled: Bool
+    ) {
                         
         self.cardModel = cardModel
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase

@@ -54,7 +54,23 @@ final class ToolDetailsViewModel: ObservableObject {
     @Published private(set) var selectedToolVersion: ToolVersionDomainModel?
     @Published private(set) var outlineContent: String = ""// TODO: Should this be set to something? ~Levi
     
-    init(stepEmitter: FlowStepEmitter, toolId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolDetailsStringsUseCase: GetToolDetailsStringsUseCase, getToolDetailsUseCase: GetToolDetailsUseCase, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, getToolDetailsLearnToShareToolIsAvailableUseCase: GetToolDetailsLearnToShareToolIsAvailableUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, getToolBannerUseCase: GetToolBannerUseCase, inMemoryDataCache: InMemoryDataCache, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        toolId: String,
+        primaryLanguage: AppLanguageDomainModel,
+        parallelLanguage: AppLanguageDomainModel?,
+        selectedLanguageIndex: Int?,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getToolDetailsStringsUseCase: GetToolDetailsStringsUseCase,
+        getToolDetailsUseCase: GetToolDetailsUseCase,
+        getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase,
+        getToolDetailsLearnToShareToolIsAvailableUseCase: GetToolDetailsLearnToShareToolIsAvailableUseCase,
+        toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase,
+        getToolBannerUseCase: GetToolBannerUseCase,
+        inMemoryDataCache: InMemoryDataCache,
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
+        trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
+    ) {
         
         let primaryLanguage: AppLanguageDomainModel = primaryLanguage
         let parallelLanguage: AppLanguageDomainModel? = parallelLanguage != primaryLanguage ? parallelLanguage : nil

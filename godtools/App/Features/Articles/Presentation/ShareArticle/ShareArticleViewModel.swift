@@ -19,7 +19,13 @@ final class ShareArticleViewModel {
     
     let shareArticle: ShareArticleDomainModel
         
-    init(stepEmitter: FlowStepEmitter, articleId: String, shareArticleUseCase: ShareArticleUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        articleId: String,
+        shareArticleUseCase: ShareArticleUseCase,
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
+        trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
+    ) {
         
         self.stepEmitter = stepEmitter
         self.articleId = articleId

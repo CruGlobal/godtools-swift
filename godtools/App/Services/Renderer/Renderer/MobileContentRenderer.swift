@@ -22,7 +22,13 @@ class MobileContentRenderer {
     let languages: MobileContentRendererLanguages
     let pageRenderers: [MobileContentPageRenderer]
     
-    init(navigation: MobileContentRendererNavigation, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, pageViewFactories: MobileContentRendererPageViewFactories, manifestResourcesCache: MobileContentRendererManifestResourcesCache) {
+    init(
+        navigation: MobileContentRendererNavigation,
+        appLanguage: AppLanguageDomainModel,
+        toolTranslations: ToolTranslationsDomainModel,
+        pageViewFactories: MobileContentRendererPageViewFactories,
+        manifestResourcesCache: MobileContentRendererManifestResourcesCache
+    ) {
         
         let sharedState: State = State()
         let resource: ResourceDataModel = toolTranslations.tool

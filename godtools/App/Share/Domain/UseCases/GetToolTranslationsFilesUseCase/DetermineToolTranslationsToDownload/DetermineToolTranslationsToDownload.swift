@@ -16,7 +16,12 @@ final class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDown
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
         
-    init(resourceId: String, languageIds: [String], resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository) {
+    init(
+        resourceId: String,
+        languageIds: [String],
+        resourcesRepository: ResourcesRepository,
+        translationsRepository: TranslationsRepository
+    ) {
         
         self.resourceId = resourceId
         self.languageIds = languageIds

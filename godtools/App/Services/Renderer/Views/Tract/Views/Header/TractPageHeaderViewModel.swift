@@ -15,7 +15,11 @@ class TractPageHeaderViewModel: MobileContentViewModel {
     
     private var mobileContentPageViewFactory: MobileContentPageViewFactory?
             
-    init(headerModel: Header, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
+    init(
+        headerModel: Header,
+        renderedPageContext: MobileContentRenderedPageContext,
+        mobileContentAnalytics: MobileContentRendererAnalytics
+    ) {
         
         self.headerModel = headerModel
         

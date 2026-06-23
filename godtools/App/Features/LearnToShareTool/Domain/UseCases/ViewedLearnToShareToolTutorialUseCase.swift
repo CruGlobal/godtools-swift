@@ -13,7 +13,10 @@ final class ViewedLearnToShareToolTutorialUseCase {
     private let toolTrainingTipsOnboardingViewsRepository: ToolTrainingTipsOnboardingViewsRepository
     private let getTranslatedToolName: GetTranslatedToolName
     
-    init(toolTrainingTipsOnboardingViewsRepository: ToolTrainingTipsOnboardingViewsRepository, getTranslatedToolName: GetTranslatedToolName) {
+    init(
+        toolTrainingTipsOnboardingViewsRepository: ToolTrainingTipsOnboardingViewsRepository,
+        getTranslatedToolName: GetTranslatedToolName
+    ) {
         
         self.toolTrainingTipsOnboardingViewsRepository = toolTrainingTipsOnboardingViewsRepository
         self.getTranslatedToolName = getTranslatedToolName

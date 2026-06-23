@@ -35,7 +35,17 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
     
     @Published var searchText: String = ""
     
-    init(stepEmitter: FlowStepEmitter, getToolFilterLanguagesStringsUseCase: GetToolFilterLanguagesStringsUseCase, getToolFilterLanguagesUseCase: GetToolFilterLanguagesUseCase, searchToolFilterLanguagesUseCase: SearchToolFilterLanguagesUseCase, getUserToolFilterCategoryUseCase: GetUserToolFilterCategoryUseCase, getUserToolFilterLanguageUseCase: GetUserToolFilterLanguageUseCase, selectedToolFilterLanguageUseCase: SelectedToolFilterLanguageUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getSearchBarStringsUseCase: GetSearchBarStringsUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        getToolFilterLanguagesStringsUseCase: GetToolFilterLanguagesStringsUseCase,
+        getToolFilterLanguagesUseCase: GetToolFilterLanguagesUseCase,
+        searchToolFilterLanguagesUseCase: SearchToolFilterLanguagesUseCase,
+        getUserToolFilterCategoryUseCase: GetUserToolFilterCategoryUseCase,
+        getUserToolFilterLanguageUseCase: GetUserToolFilterLanguageUseCase,
+        selectedToolFilterLanguageUseCase: SelectedToolFilterLanguageUseCase,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getSearchBarStringsUseCase: GetSearchBarStringsUseCase
+    ) {
         
         self.stepEmitter = stepEmitter
         self.getToolFilterLanguagesStringsUseCase = getToolFilterLanguagesStringsUseCase

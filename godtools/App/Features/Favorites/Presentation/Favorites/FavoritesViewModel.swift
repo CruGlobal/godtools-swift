@@ -37,7 +37,21 @@ final class FavoritesViewModel: ObservableObject {
     @Published private(set) var featuredLessons: [FeaturedLessonDomainModel] = Array()
     @Published private(set) var yourFavoritedTools: [YourFavoritedToolDomainModel] = Array()
     
-    init(stepEmitter: FlowStepEmitter, resourcesRepository: ResourcesRepository, getFavoritesStringsUseCase: GetFavoritesStringsUseCase, getYourFavoritedToolsUseCase: GetYourFavoritedToolsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getToolBannerUseCase: GetToolBannerUseCase, inMemoryDataCache: InMemoryDataCache, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        resourcesRepository: ResourcesRepository,
+        getFavoritesStringsUseCase: GetFavoritesStringsUseCase,
+        getYourFavoritedToolsUseCase: GetYourFavoritedToolsUseCase,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase,
+        getToolBannerUseCase: GetToolBannerUseCase,
+        inMemoryDataCache: InMemoryDataCache,
+        disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase,
+        getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase,
+        getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase,
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
+        trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
+    ) {
         
         self.stepEmitter = stepEmitter
         self.getFavoritesStringsUseCase = getFavoritesStringsUseCase

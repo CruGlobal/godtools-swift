@@ -17,7 +17,11 @@ class MobileContentBackgroundImageViewModel {
         
     let backgroundImage: UIImage?
     
-    init(backgroundImageModel: BackgroundImageModel, manifestResourcesCache: MobileContentRendererManifestResourcesCache, languageDirection: LanguageDirectionDomainModel) {
+    init(
+        backgroundImageModel: BackgroundImageModel,
+        manifestResourcesCache: MobileContentRendererManifestResourcesCache,
+        languageDirection: LanguageDirectionDomainModel
+    ) {
         
         self.backgroundImageModel = backgroundImageModel
         self.manifestResourcesCache = manifestResourcesCache

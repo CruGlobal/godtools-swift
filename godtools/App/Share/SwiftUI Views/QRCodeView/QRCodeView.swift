@@ -14,7 +14,10 @@ struct QRCodeView<Content: View>: View {
     private let data: Data
     private let fallbackView: Content
     
-    init(data: Data, @ViewBuilder fallbackView: () -> Content = { Image(systemName: "xmark.circle").resizable().scaledToFit() }) {
+    init(
+        data: Data,
+        @ViewBuilder fallbackView: () -> Content = { Image(systemName: "xmark.circle").resizable().scaledToFit() }
+    ) {
         
         self.data = data
         self.fallbackView = fallbackView()

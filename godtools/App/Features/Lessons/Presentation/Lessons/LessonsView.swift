@@ -15,7 +15,11 @@ struct LessonsView: View {
 
     @ObservedObject private var viewModel: LessonsViewModel
 
-    init(viewModel: LessonsViewModel, contentHorizontalInsets: CGFloat = DashboardView.contentHorizontalInsets, lessonCardSpacing: CGFloat = DashboardView.toolCardVerticalSpacing) {
+    init(
+        viewModel: LessonsViewModel,
+        contentHorizontalInsets: CGFloat = DashboardView.contentHorizontalInsets,
+        lessonCardSpacing: CGFloat = DashboardView.toolCardVerticalSpacing
+    ) {
         
         self.viewModel = viewModel
         self.contentHorizontalInsets = contentHorizontalInsets

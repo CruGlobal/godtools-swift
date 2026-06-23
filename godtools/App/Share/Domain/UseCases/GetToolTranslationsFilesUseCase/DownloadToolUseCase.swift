@@ -25,7 +25,11 @@ final class DownloadToolUseCase {
     private var getToolTranslationsCancellable: AnyCancellable?
     private var didInitiateDownloadStarted: Bool = false
         
-    init(resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, languagesRepository: LanguagesRepository) {
+    init(
+        resourcesRepository: ResourcesRepository,
+        translationsRepository: TranslationsRepository,
+        languagesRepository: LanguagesRepository
+    ) {
 
         self.resourcesRepository = resourcesRepository
         self.translationsRepository = translationsRepository

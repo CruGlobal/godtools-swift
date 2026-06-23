@@ -11,7 +11,11 @@ import GodToolsShared
 
 final class ParseTranslationManifestForRenderer: TranslationManifestParser {
          
-    init(infoPlist: InfoPlist, resourcesFileCache: ResourcesSHA256FileCache, remoteConfigRepository: RemoteConfigRepository) {
+    init(
+        infoPlist: InfoPlist,
+        resourcesFileCache: ResourcesSHA256FileCache,
+        remoteConfigRepository: RemoteConfigRepository
+    ) {
             
         let appVersion: String? = infoPlist.appVersion
         

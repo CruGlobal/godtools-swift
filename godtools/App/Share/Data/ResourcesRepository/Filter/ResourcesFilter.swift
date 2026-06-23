@@ -17,7 +17,14 @@ struct ResourcesFilter {
     let isHidden: Bool?
     let variants: ResourcesFilterVariant?
     
-    init(category: String? = nil, languageModelId: String? = nil, languageModelCode: BCP47LanguageIdentifier? = nil, resourceTypes: [ResourceType]? = nil, isHidden: Bool? = false, variants: ResourcesFilterVariant? = nil) {
+    init(
+        category: String? = nil,
+        languageModelId: String? = nil,
+        languageModelCode: BCP47LanguageIdentifier? = nil,
+        resourceTypes: [ResourceType]? = nil,
+        isHidden: Bool? = false,
+        variants: ResourcesFilterVariant? = nil
+    ) {
         
         self.category = category
         self.languageModelId = languageModelId

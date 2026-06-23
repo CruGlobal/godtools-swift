@@ -20,7 +20,11 @@ final class RealmResourcesCacheSync {
     private let realmDataWrite: RealmDataWrite
     private let trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
     
-    init(realmDatabase: RealmDatabase, realmDataWrite: RealmDataWrite, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository) {
+    init(
+        realmDatabase: RealmDatabase,
+        realmDataWrite: RealmDataWrite,
+        trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
+    ) {
         
         self.realmDatabase = realmDatabase
         self.realmDataWrite = realmDataWrite

@@ -31,7 +31,13 @@ class NavBarItemController {
     let itemBarPosition: BarButtonItemBarPosition
     let itemIndex: Int
     
-    init(delegate: NavBarItemControllerDelegate, navBarAppearance: AppNavigationBarAppearance?, navBarItem: NavBarItem, itemBarPosition: BarButtonItemBarPosition, itemIndex: Int) {
+    init(
+        delegate: NavBarItemControllerDelegate,
+        navBarAppearance: AppNavigationBarAppearance?,
+        navBarItem: NavBarItem,
+        itemBarPosition: BarButtonItemBarPosition,
+        itemIndex: Int
+    ) {
         
         self.delegate = delegate
         self.navBarAppearance = navBarAppearance

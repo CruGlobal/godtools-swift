@@ -18,7 +18,11 @@ class MobileContentTextViewModel: MobileContentViewModel {
         
     let textColor: UIColor
     
-    init(textModel: Text, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
+    init(
+        textModel: Text,
+        renderedPageContext: MobileContentRenderedPageContext,
+        mobileContentAnalytics: MobileContentRendererAnalytics
+    ) {
         
         self.textModel = textModel
         

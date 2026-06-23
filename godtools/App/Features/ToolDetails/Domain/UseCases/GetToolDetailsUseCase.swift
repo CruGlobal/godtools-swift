@@ -17,7 +17,14 @@ final class GetToolDetailsUseCase {
     private let getTranslatedLanguageName: GetTranslatedLanguageName
     private let favoritedResourcesRepository: FavoritedResourcesRepository
     
-    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, translationsRepository: TranslationsRepository, localizationServices: LocalizationServicesInterface, getTranslatedLanguageName: GetTranslatedLanguageName, favoritedResourcesRepository: FavoritedResourcesRepository) {
+    init(
+        resourcesRepository: ResourcesRepository,
+        languagesRepository: LanguagesRepository,
+        translationsRepository: TranslationsRepository,
+        localizationServices: LocalizationServicesInterface,
+        getTranslatedLanguageName: GetTranslatedLanguageName,
+        favoritedResourcesRepository: FavoritedResourcesRepository
+    ) {
         
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository

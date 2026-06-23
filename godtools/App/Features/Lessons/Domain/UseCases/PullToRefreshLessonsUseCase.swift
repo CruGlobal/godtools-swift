@@ -16,7 +16,11 @@ final class PullToRefreshLessonsUseCase {
     private let personalizedToolsRepository: PersonalizedToolsRepository
     private let getLanguageElseAppLanguage: GetLanguageElseAppLanguage
 
-    init(resourcesRepository: ResourcesRepository, personalizedToolsRepository: PersonalizedToolsRepository, getLanguageElseAppLanguage: GetLanguageElseAppLanguage) {
+    init(
+        resourcesRepository: ResourcesRepository,
+        personalizedToolsRepository: PersonalizedToolsRepository,
+        getLanguageElseAppLanguage: GetLanguageElseAppLanguage
+    ) {
 
         self.resourcesRepository = resourcesRepository
         self.personalizedToolsRepository = personalizedToolsRepository

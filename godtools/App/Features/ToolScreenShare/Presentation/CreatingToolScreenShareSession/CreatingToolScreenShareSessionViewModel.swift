@@ -28,7 +28,15 @@ final class CreatingToolScreenShareSessionViewModel: ObservableObject {
     
     @Published private(set) var strings = CreatingToolScreenShareSessionStringsDomainModel.emptyValue
         
-    init(stepEmitter: FlowStepEmitter, toolId: String, createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getCreatingToolScreenShareSessionStringsUseCase: GetCreatingToolScreenShareSessionStringsUseCase, tractRemoteSharePublisher: TractRemoteSharePublisher, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        toolId: String,
+        createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getCreatingToolScreenShareSessionStringsUseCase: GetCreatingToolScreenShareSessionStringsUseCase,
+        tractRemoteSharePublisher: TractRemoteSharePublisher,
+        incrementUserCounterUseCase: IncrementUserCounterUseCase
+    ) {
         
         self.stepEmitter = stepEmitter
         self.toolId = toolId

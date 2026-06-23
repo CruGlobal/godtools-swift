@@ -33,7 +33,13 @@ final class TractPageCardBounceAnimation {
     private weak var layoutView: UIView?
     private weak var delegate: TractPageCardBounceAnimationDelegate?
     
-    init(card: TractPageCardView, cardTopConstraint: NSLayoutConstraint, cardStartingTopConstant: CGFloat, layoutView: UIView, delegate: TractPageCardBounceAnimationDelegate) {
+    init(
+        card: TractPageCardView,
+        cardTopConstraint: NSLayoutConstraint,
+        cardStartingTopConstant: CGFloat,
+        layoutView: UIView,
+        delegate: TractPageCardBounceAnimationDelegate
+    ) {
         
         self.card = card
         self.cardTopConstraint = cardTopConstraint

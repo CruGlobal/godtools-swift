@@ -19,7 +19,12 @@ final class ResourcesCache {
     
     let persistence: any Persistence<ResourceDataModel, ResourceCodable>
     
-    init(persistence: any Persistence<ResourceDataModel, ResourceCodable>, realmDatabase: RealmDatabase, realmDataWrite: RealmDataWrite, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository) {
+    init(
+        persistence: any Persistence<ResourceDataModel, ResourceCodable>,
+        realmDatabase: RealmDatabase,
+        realmDataWrite: RealmDataWrite,
+        trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
+    ) {
         
         self.persistence = persistence
         self.realmDatabase = realmDatabase

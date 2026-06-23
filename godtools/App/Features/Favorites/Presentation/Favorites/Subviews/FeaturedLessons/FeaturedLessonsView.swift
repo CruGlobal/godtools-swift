@@ -17,7 +17,13 @@ struct FeaturedLessonsView: View {
     
     @ObservedObject private var viewModel: FavoritesViewModel
     
-    init(viewModel: FavoritesViewModel, geometry: GeometryProxy, contentHorizontalInsets: CGFloat, lessonCardSpacing: CGFloat = DashboardView.toolCardVerticalSpacing, lessonTappedClosure: ((_ featuredLesson: FeaturedLessonDomainModel) -> Void)?) {
+    init(
+        viewModel: FavoritesViewModel,
+        geometry: GeometryProxy,
+        contentHorizontalInsets: CGFloat,
+        lessonCardSpacing: CGFloat = DashboardView.toolCardVerticalSpacing,
+        lessonTappedClosure: ((_ featuredLesson: FeaturedLessonDomainModel) -> Void)?
+    ) {
         
         self.viewModel = viewModel
         self.geometry = geometry

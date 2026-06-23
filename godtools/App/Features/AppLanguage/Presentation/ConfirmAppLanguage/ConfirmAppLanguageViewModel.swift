@@ -23,7 +23,12 @@ final class ConfirmAppLanguageViewModel: ObservableObject {
     
     @Published private(set) var strings = ConfirmAppLanguageStringsDomainModel.emptyValue
     
-    init(stepEmitter: FlowStepEmitter, selectedLanguage: AppLanguageListItemDomainModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getConfirmAppLanguageStringsUseCase: GetConfirmAppLanguageStringsUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        selectedLanguage: AppLanguageListItemDomainModel,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getConfirmAppLanguageStringsUseCase: GetConfirmAppLanguageStringsUseCase
+    ) {
         
         self.stepEmitter = stepEmitter
         self.selectedLanguage = selectedLanguage

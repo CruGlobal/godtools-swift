@@ -16,7 +16,11 @@ final class AttachmentsCache {
     
     let persistence: any Persistence<AttachmentDataModel, AttachmentCodable>
     
-    init(persistence: any Persistence<AttachmentDataModel, AttachmentCodable>, resourcesFileCache: ResourcesSHA256FileCache, bundle: AttachmentsBundleCache) {
+    init(
+        persistence: any Persistence<AttachmentDataModel, AttachmentCodable>,
+        resourcesFileCache: ResourcesSHA256FileCache,
+        bundle: AttachmentsBundleCache
+    ) {
         
         self.persistence = persistence
         self.resourcesFileCache = resourcesFileCache

@@ -18,7 +18,12 @@ struct OnboardingTutorialReadyForEveryConversationView: View {
     let geometry: GeometryProxy
     let watchVideoTappedClosure: (() -> Void)
     
-    init(viewModel: OnboardingTutorialReadyForEveryConversationViewModel, geometry: GeometryProxy, screenAccessibilityId: String, watchVideoTappedClosure: @escaping (() -> Void)) {
+    init(
+        viewModel: OnboardingTutorialReadyForEveryConversationViewModel,
+        geometry: GeometryProxy,
+        screenAccessibilityId: String,
+        watchVideoTappedClosure: @escaping (() -> Void)
+    ) {
         
         self.viewModel = viewModel
         self.geometry = geometry

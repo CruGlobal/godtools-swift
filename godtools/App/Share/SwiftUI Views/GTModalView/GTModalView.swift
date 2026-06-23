@@ -27,7 +27,14 @@ struct GTModalView<Content: View>: View {
     
     @Binding private var isHidden: Bool
     
-    init(@ViewBuilder content: @escaping (_ geometry: GeometryProxy) -> Content, isHidden: Binding<Bool>, overlayTappedClosure: (() -> Void)?, backgroundHorizontalPadding: CGFloat = 10, strokeColor: Color = Color.clear, strokeLineWidth: CGFloat = 0) {
+    init(
+        @ViewBuilder content: @escaping (_ geometry: GeometryProxy) -> Content,
+        isHidden: Binding<Bool>,
+        overlayTappedClosure: (() -> Void)?,
+        backgroundHorizontalPadding: CGFloat = 10,
+        strokeColor: Color = Color.clear,
+        strokeLineWidth: CGFloat = 0
+    ) {
         
         self.content = content
         self._isHidden = isHidden

@@ -22,7 +22,12 @@ final class LocalizationSettingsConfirmationViewModel: ObservableObject {
     @Published private(set) var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private(set) var strings = LocalizationSettingsConfirmationStringsDomainModel.emptyValue
 
-    init(stepEmitter: FlowStepEmitter, selectedCountry: LocalizationSettingsCountryListItem, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLocalizationSettingsConfirmationStringsUseCase: GetLocalizationSettingsConfirmationStringsUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        selectedCountry: LocalizationSettingsCountryListItem,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getLocalizationSettingsConfirmationStringsUseCase: GetLocalizationSettingsConfirmationStringsUseCase
+    ) {
 
         self.stepEmitter = stepEmitter
         self.selectedCountry = selectedCountry

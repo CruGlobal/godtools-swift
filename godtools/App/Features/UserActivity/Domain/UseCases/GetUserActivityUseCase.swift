@@ -17,7 +17,12 @@ final class GetUserActivityUseCase {
     private let userCounterRepository: UserCountersRepository
     private let completedTrainingTipRepository: CompletedTrainingTipRepository
     
-    init(getUserActivityBadge: GetUserActivityBadge, getUserActivityStats: GetUserActivityStats, userCounterRepository: UserCountersRepository, completedTrainingTipRepository: CompletedTrainingTipRepository) {
+    init(
+        getUserActivityBadge: GetUserActivityBadge,
+        getUserActivityStats: GetUserActivityStats,
+        userCounterRepository: UserCountersRepository,
+        completedTrainingTipRepository: CompletedTrainingTipRepository
+    ) {
         
         self.getUserActivityBadge = getUserActivityBadge
         self.getUserActivityStats = getUserActivityStats

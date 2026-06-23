@@ -17,7 +17,13 @@ final class GetYourFavoritedToolsUseCase {
     private let getTranslatedToolCategory: GetTranslatedToolCategory
     private let getToolListItemStrings: GetToolListItemStrings
     
-    init(favoritedResourcesRepository: FavoritedResourcesRepository, resourcesRepository: ResourcesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolCategory: GetTranslatedToolCategory, getToolListItemStrings: GetToolListItemStrings) {
+    init(
+        favoritedResourcesRepository: FavoritedResourcesRepository,
+        resourcesRepository: ResourcesRepository,
+        getTranslatedToolName: GetTranslatedToolName,
+        getTranslatedToolCategory: GetTranslatedToolCategory,
+        getToolListItemStrings: GetToolListItemStrings
+    ) {
         
         self.favoritedResourcesRepository = favoritedResourcesRepository
         self.resourcesRepository = resourcesRepository

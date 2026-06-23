@@ -19,7 +19,12 @@ final class WebContentViewModel {
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
     let url: ObservableValue<URL?> = ObservableValue(value: nil)
     
-    init(stepEmitter: FlowStepEmitter, webContent: WebContentType, backTappedFromWebContentStep: AppFlowStep, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        webContent: WebContentType,
+        backTappedFromWebContentStep: AppFlowStep,
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
+    ) {
         
         self.stepEmitter = stepEmitter
         self.webContent = webContent

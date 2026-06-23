@@ -18,7 +18,11 @@ class MobileContentViewModel: NSObject {
     let baseModels: [BaseModel]
     let renderedPageContext: MobileContentRenderedPageContext
     
-    init(baseModel: BaseModel?, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
+    init(
+        baseModel: BaseModel?,
+        renderedPageContext: MobileContentRenderedPageContext,
+        mobileContentAnalytics: MobileContentRendererAnalytics
+    ) {
         
         self.baseModel = baseModel
         
@@ -35,7 +39,11 @@ class MobileContentViewModel: NSObject {
         super.init()
     }
     
-    init(baseModels: [BaseModel], renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
+    init(
+        baseModels: [BaseModel],
+        renderedPageContext: MobileContentRenderedPageContext,
+        mobileContentAnalytics: MobileContentRendererAnalytics
+    ) {
         
         self.baseModel = baseModels.first
         self.baseModels = baseModels

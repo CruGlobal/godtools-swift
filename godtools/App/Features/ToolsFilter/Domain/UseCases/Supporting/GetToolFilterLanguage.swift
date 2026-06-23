@@ -17,7 +17,13 @@ final class GetToolFilterLanguage {
     private let localizationServices: LocalizationServicesInterface
     private let stringWithLocaleCount: StringWithLocaleCountInterface
     
-    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName, localizationServices: LocalizationServicesInterface, stringWithLocaleCount: StringWithLocaleCountInterface) {
+    init(
+        resourcesRepository: ResourcesRepository,
+        languagesRepository: LanguagesRepository,
+        getTranslatedLanguageName: GetTranslatedLanguageName,
+        localizationServices: LocalizationServicesInterface,
+        stringWithLocaleCount: StringWithLocaleCountInterface
+    ) {
         
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository

@@ -22,7 +22,12 @@ final class PersonalizedToolsRepository {
 
     private var syncPersonalizedToolsTask: Task<Void, Error>?
     
-    init(api: PersonalizedToolsApiInterface, cache: PersonalizedToolsCache, syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface, resourcesRepository: ResourcesRepository) {
+    init(
+        api: PersonalizedToolsApiInterface,
+        cache: PersonalizedToolsCache,
+        syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface,
+        resourcesRepository: ResourcesRepository
+    ) {
 
         self.api = api
         self.cache = cache

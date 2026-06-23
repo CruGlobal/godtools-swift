@@ -15,7 +15,12 @@ struct OptionalImage: View {
     private let contentMode: ContentMode
     private let placeholderColor: Color
     
-    init(imageData: OptionalImageData?, imageSize: OptionalImageSize, contentMode: ContentMode, placeholderColor: Color) {
+    init(
+        imageData: OptionalImageData?,
+        imageSize: OptionalImageSize,
+        contentMode: ContentMode,
+        placeholderColor: Color
+    ) {
         
         self.imageData = imageData
         self.imageSize = imageSize

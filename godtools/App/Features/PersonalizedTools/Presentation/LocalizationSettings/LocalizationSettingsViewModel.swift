@@ -32,7 +32,16 @@ final class LocalizationSettingsViewModel: ObservableObject {
     
     @Published var searchText: String = ""
 
-    init(stepEmitter: FlowStepEmitter, showsPreferNotToSay: Bool, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getCountryListUseCase: GetLocalizationSettingsCountryListUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, searchCountriesUseCase: SearchCountriesInLocalizationSettingsCountriesListUseCase, getLocalizationSettingsStringsUseCase: GetLocalizationSettingsStringsUseCase, getSearchBarStringsUseCase: GetSearchBarStringsUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        showsPreferNotToSay: Bool,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getCountryListUseCase: GetLocalizationSettingsCountryListUseCase,
+        getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase,
+        searchCountriesUseCase: SearchCountriesInLocalizationSettingsCountriesListUseCase,
+        getLocalizationSettingsStringsUseCase: GetLocalizationSettingsStringsUseCase,
+        getSearchBarStringsUseCase: GetSearchBarStringsUseCase
+    ) {
 
         self.stepEmitter = stepEmitter
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase

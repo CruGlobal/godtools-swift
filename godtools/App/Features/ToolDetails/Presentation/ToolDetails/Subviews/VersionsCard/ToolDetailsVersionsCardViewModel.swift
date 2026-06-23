@@ -29,7 +29,12 @@ class ToolDetailsVersionsCardViewModel: ObservableObject {
     
     @Published private(set) var banner: OptionalImageData?
     
-    init(toolVersion: ToolVersionDomainModel, getToolBannerUseCase: GetToolBannerUseCase, inMemoryDataCache: InMemoryDataCache, isSelected: Bool) {
+    init(
+        toolVersion: ToolVersionDomainModel,
+        getToolBannerUseCase: GetToolBannerUseCase,
+        inMemoryDataCache: InMemoryDataCache,
+        isSelected: Bool
+    ) {
         
         self.toolVersion = toolVersion
         self.isSelected = isSelected

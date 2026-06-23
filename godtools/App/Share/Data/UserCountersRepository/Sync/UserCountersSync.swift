@@ -19,7 +19,12 @@ final class UserCountersSync {
     
     private(set) var isSyncing: Bool = false
     
-    init(api: UserCountersApiInterface, cache: UserCountersCache, localActivityCounterCache: LocalActivityCounterCache, syncInvalidator: SyncInvalidator) {
+    init(
+        api: UserCountersApiInterface,
+        cache: UserCountersCache,
+        localActivityCounterCache: LocalActivityCounterCache,
+        syncInvalidator: SyncInvalidator
+    ) {
         
         self.api = api
         self.cache = cache

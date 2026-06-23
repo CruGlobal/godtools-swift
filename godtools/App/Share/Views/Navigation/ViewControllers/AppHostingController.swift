@@ -16,7 +16,12 @@ class AppHostingController<Content: View>: UIHostingController<Content>, UIViewC
     private let animateInAnimatedTransitioning: UIViewControllerAnimatedTransitioning?
     private let animateOutAnimatedTransitioning: UIViewControllerAnimatedTransitioning?
     
-    init(rootView: Content, navigationBar: AppNavigationBar?, animateInAnimatedTransitioning: UIViewControllerAnimatedTransitioning? = nil, animateOutAnimatedTransitioning: UIViewControllerAnimatedTransitioning? = nil) {
+    init(
+        rootView: Content,
+        navigationBar: AppNavigationBar?,
+        animateInAnimatedTransitioning: UIViewControllerAnimatedTransitioning? = nil,
+        animateOutAnimatedTransitioning: UIViewControllerAnimatedTransitioning? = nil
+    ) {
         
         self.navigationBar = navigationBar
         self.animateInAnimatedTransitioning = animateInAnimatedTransitioning

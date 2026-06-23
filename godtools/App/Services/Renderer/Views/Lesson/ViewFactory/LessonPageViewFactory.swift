@@ -14,7 +14,10 @@ class LessonPageViewFactory: MobileContentPageViewFactoryType {
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let mobileContentAnalytics: MobileContentRendererAnalytics
         
-    init(trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, mobileContentAnalytics: MobileContentRendererAnalytics) {
+    init(
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
+        mobileContentAnalytics: MobileContentRendererAnalytics
+    ) {
     
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.mobileContentAnalytics = mobileContentAnalytics

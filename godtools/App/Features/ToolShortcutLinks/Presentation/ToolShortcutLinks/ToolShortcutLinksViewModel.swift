@@ -30,7 +30,10 @@ final class ToolShortcutLinksViewModel: ObservableObject {
     
     @Published private(set) var shortcutLinks: [UIApplicationShortcutItem] = Array()
     
-    init(getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolShortcutLinksUseCase: GetToolShortcutLinksUseCase) {
+    init(
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getToolShortcutLinksUseCase: GetToolShortcutLinksUseCase
+    ) {
         
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getToolShortcutLinksUseCase = getToolShortcutLinksUseCase

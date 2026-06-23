@@ -14,7 +14,11 @@ struct MenuSectionView<Content: View>: View {
     let overrideHidesSeparator: Bool
     let menuItemsViewBuilder: () -> Content
     
-    init(sectionTitle: String, overrideHidesSeparator: Bool = false, @ViewBuilder menuItemsViewBuilder: @escaping () -> Content) {
+    init(
+        sectionTitle: String,
+        overrideHidesSeparator: Bool = false,
+        @ViewBuilder menuItemsViewBuilder: @escaping () -> Content
+    ) {
         
         self.sectionTitle = sectionTitle
         self.overrideHidesSeparator = overrideHidesSeparator

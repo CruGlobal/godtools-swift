@@ -24,7 +24,12 @@ final class ConfirmRemoveToolFromFavoritesAlertViewModel {
     let cancelTitle: String?
     let acceptTitle: String
     
-    init(toolId: String, strings: ConfirmRemoveToolFromFavoritesStringsDomainModel, removeFavoritedToolUseCase: RemoveFavoritedToolUseCase, didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?) {
+    init(
+        toolId: String,
+        strings: ConfirmRemoveToolFromFavoritesStringsDomainModel,
+        removeFavoritedToolUseCase: RemoveFavoritedToolUseCase,
+        didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?
+    ) {
         
         self.toolId = toolId
         self.strings = strings

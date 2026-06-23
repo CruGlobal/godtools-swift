@@ -18,7 +18,11 @@ class MobileContentAnimationViewModel: MobileContentViewModel {
     
     @Published private(set) var playbackState: MobileContentAnimationPlaybackState
     
-    init(animationModel: Animation, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
+    init(
+        animationModel: Animation,
+        renderedPageContext: MobileContentRenderedPageContext,
+        mobileContentAnalytics: MobileContentRendererAnalytics
+    ) {
         
         self.animationModel = animationModel
         self.mobileContentAnalytics = mobileContentAnalytics

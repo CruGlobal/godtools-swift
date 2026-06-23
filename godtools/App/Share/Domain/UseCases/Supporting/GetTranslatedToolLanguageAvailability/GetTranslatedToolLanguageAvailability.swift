@@ -18,7 +18,12 @@ final class GetTranslatedToolLanguageAvailability {
     private let languagesRepository: LanguagesRepository
     private let getTranslatedLanguageName: GetTranslatedLanguageName
     
-    init(localizationServices: LocalizationServicesInterface, resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName) {
+    init(
+        localizationServices: LocalizationServicesInterface,
+        resourcesRepository: ResourcesRepository,
+        languagesRepository: LanguagesRepository,
+        getTranslatedLanguageName: GetTranslatedLanguageName
+    ) {
         
         self.localizationServices = localizationServices
         self.resourcesRepository = resourcesRepository

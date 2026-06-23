@@ -23,7 +23,20 @@ final class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
     @Published var hidesHomeButton: Bool = false
     @Published var hidesBackButton: Bool = true
         
-    init(stepEmitter: FlowStepEmitter, renderer: MobileContentRenderer, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        renderer: MobileContentRenderer,
+        initialPage: MobileContentRendererInitialPage?,
+        initialPageSubIndex: Int?,
+        resourcesRepository: ResourcesRepository,
+        translationsRepository: TranslationsRepository,
+        mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getTranslatedLanguageName: GetTranslatedLanguageName,
+        trainingTipsEnabled: Bool,
+        incrementUserCounterUseCase: IncrementUserCounterUseCase,
+        selectedLanguageIndex: Int?
+    ) {
         
         self.stepEmitter = stepEmitter
                         

@@ -14,7 +14,12 @@ class MobileContentErrorViewModel {
     let message: String
     let acceptTitle: String
     
-    init(appLanguage: AppLanguageDomainModel, title: String, message: String, localizationServices: LocalizationServicesInterface) {
+    init(
+        appLanguage: AppLanguageDomainModel,
+        title: String,
+        message: String,
+        localizationServices: LocalizationServicesInterface
+    ) {
         
         self.title = title
         self.message = message

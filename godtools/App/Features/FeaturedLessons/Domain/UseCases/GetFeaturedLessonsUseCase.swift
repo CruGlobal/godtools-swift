@@ -18,7 +18,14 @@ final class GetFeaturedLessonsUseCase {
     private let lessonProgressRepository: UserLessonProgressRepository
     private let getLessonListItemProgress: GetLessonListItemProgress
     
-    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability, lessonProgressRepository: UserLessonProgressRepository, getLessonListItemProgress: GetLessonListItemProgress) {
+    init(
+        resourcesRepository: ResourcesRepository,
+        languagesRepository: LanguagesRepository,
+        getTranslatedToolName: GetTranslatedToolName,
+        getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability,
+        lessonProgressRepository: UserLessonProgressRepository,
+        getLessonListItemProgress: GetLessonListItemProgress
+    ) {
         
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository

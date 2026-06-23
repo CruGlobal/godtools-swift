@@ -15,7 +15,11 @@ final class GetToolFilterLanguagesUseCase {
     private let languagesRepository: LanguagesRepository
     private let getToolFilterLanguage: GetToolFilterLanguage
     
-    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, getToolFilterLanguage: GetToolFilterLanguage) {
+    init(
+        resourcesRepository: ResourcesRepository,
+        languagesRepository: LanguagesRepository,
+        getToolFilterLanguage: GetToolFilterLanguage
+    ) {
         
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository

@@ -19,7 +19,12 @@ struct ToolFilterButtonView: View {
     private let accessibility: AccessibilityStrings.Button
     private let tappedClosure: (() -> Void)?
         
-    init(title: String, width: CGFloat? = nil, accessibility: AccessibilityStrings.Button, tappedClosure: (() -> Void)?) {
+    init(
+        title: String,
+        width: CGFloat? = nil,
+        accessibility: AccessibilityStrings.Button,
+        tappedClosure: (() -> Void)?
+    ) {
         
         self.buttonTitle = title
         self.width = width

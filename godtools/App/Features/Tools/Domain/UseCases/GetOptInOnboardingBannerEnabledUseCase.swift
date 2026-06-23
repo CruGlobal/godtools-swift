@@ -14,7 +14,10 @@ final class GetOptInOnboardingBannerEnabledUseCase {
     private let getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase
     private let optInOnboardingBannerEnabledRepository: OptInOnboardingBannerEnabledRepository
     
-    init(getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase, optInOnboardingBannerEnabledRepository: OptInOnboardingBannerEnabledRepository) {
+    init(
+        getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase,
+        optInOnboardingBannerEnabledRepository: OptInOnboardingBannerEnabledRepository
+    ) {
         
         self.getTutorialIsAvailableUseCase = getTutorialIsAvailableUseCase
         self.optInOnboardingBannerEnabledRepository = optInOnboardingBannerEnabledRepository

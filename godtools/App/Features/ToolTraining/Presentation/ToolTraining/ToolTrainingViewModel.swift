@@ -35,7 +35,17 @@ final class ToolTrainingViewModel: NSObject {
     let continueButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     let numberOfTipPages: ObservableValue<Int> = ObservableValue(value: 0)
     
-    init(pageRenderer: MobileContentPageRenderer, renderedPageContext: MobileContentRenderedPageContext, trainingTipId: String, tipModel: Tip, setCompletedTrainingTipUseCase: SetCompletedTrainingTipUseCase, getTrainingTipCompletedUseCase: GetTrainingTipCompletedUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, localizationServices: LocalizationServicesInterface, closeTappedClosure: @escaping (() -> Void)) {
+    init(
+        pageRenderer: MobileContentPageRenderer,
+        renderedPageContext: MobileContentRenderedPageContext,
+        trainingTipId: String,
+        tipModel: Tip,
+        setCompletedTrainingTipUseCase: SetCompletedTrainingTipUseCase,
+        getTrainingTipCompletedUseCase: GetTrainingTipCompletedUseCase,
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
+        localizationServices: LocalizationServicesInterface,
+        closeTappedClosure: @escaping (() -> Void)
+    ) {
         
         self.renderedPageContext = renderedPageContext
         self.pageRenderer = pageRenderer

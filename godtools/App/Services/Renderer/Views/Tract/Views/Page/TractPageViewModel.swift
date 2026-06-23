@@ -17,7 +17,12 @@ class TractPageViewModel: MobileContentPageViewModel {
     
     let hidesCallToAction: Bool
     
-    init(pageModel: TractPage, renderedPageContext: MobileContentRenderedPageContext, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, mobileContentAnalytics: MobileContentRendererAnalytics) {
+    init(
+        pageModel: TractPage,
+        renderedPageContext: MobileContentRenderedPageContext,
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
+        mobileContentAnalytics: MobileContentRendererAnalytics
+    ) {
                 
         self.pageModel = pageModel
         self.hidesCallToAction = pageModel.isLastPage

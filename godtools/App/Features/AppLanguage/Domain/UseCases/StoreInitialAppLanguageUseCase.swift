@@ -15,7 +15,11 @@ final class StoreInitialAppLanguageUseCase {
     private let userAppLanguageRepository: UserAppLanguageRepository
     private let appLanguagesRepository: AppLanguagesRepository
     
-    init(deviceSystemLanguage: DeviceSystemLanguageInterface, userAppLanguageRepository: UserAppLanguageRepository, appLanguagesRepository: AppLanguagesRepository) {
+    init(
+        deviceSystemLanguage: DeviceSystemLanguageInterface,
+        userAppLanguageRepository: UserAppLanguageRepository,
+        appLanguagesRepository: AppLanguagesRepository
+    ) {
         
         self.deviceSystemLanguage = deviceSystemLanguage
         self.userAppLanguageRepository = userAppLanguageRepository

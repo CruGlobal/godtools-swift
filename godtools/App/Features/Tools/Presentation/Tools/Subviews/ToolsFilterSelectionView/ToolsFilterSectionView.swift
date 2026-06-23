@@ -15,7 +15,11 @@ struct ToolsFilterSectionView: View {
     
     @ObservedObject private var viewModel: ToolsViewModel
     
-    init(viewModel: ToolsViewModel, contentHorizontalInsets: CGFloat = DashboardView.contentHorizontalInsets, width: CGFloat) {
+    init(
+        viewModel: ToolsViewModel,
+        contentHorizontalInsets: CGFloat = DashboardView.contentHorizontalInsets,
+        width: CGFloat
+    ) {
         
         self.viewModel = viewModel
         self.contentHorizontalInsets = contentHorizontalInsets

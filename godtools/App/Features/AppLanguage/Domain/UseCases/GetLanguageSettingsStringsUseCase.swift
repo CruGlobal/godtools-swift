@@ -14,7 +14,11 @@ final class GetLanguageSettingsStringsUseCase {
     private let getTranslatedLanguageName: GetTranslatedLanguageName
     private let appLanguagesRepository: AppLanguagesRepository
     
-    init(localizationServices: LocalizationServicesInterface, getTranslatedLanguageName: GetTranslatedLanguageName, appLanguagesRepository: AppLanguagesRepository) {
+    init(
+        localizationServices: LocalizationServicesInterface,
+        getTranslatedLanguageName: GetTranslatedLanguageName,
+        appLanguagesRepository: AppLanguagesRepository
+    ) {
         
         self.localizationServices = localizationServices
         self.getTranslatedLanguageName = getTranslatedLanguageName

@@ -24,7 +24,18 @@ class NavBarSelectorView: UIView {
     private var selectedIndex: Int = 0
     private var selectorTappedClosure: ((_ index: Int) -> Void)
             
-    init(selectorButtonTitles: [String], layoutDirection: UISemanticContentAttribute, selectedIndex: Int = 0, borderColor: UIColor = .white, selectedColor: UIColor = .darkGray, deselectedColor: UIColor = .lightGray, selectedTitleColor: UIColor? = nil, deselectedTitleColor: UIColor? = nil, titleFont: UIFont? = nil, selectorTappedClosure: @escaping ((_ index: Int) -> Void)) {
+    init(
+        selectorButtonTitles: [String],
+        layoutDirection: UISemanticContentAttribute,
+        selectedIndex: Int = 0,
+        borderColor: UIColor = .white,
+        selectedColor: UIColor = .darkGray,
+        deselectedColor: UIColor = .lightGray,
+        selectedTitleColor: UIColor? = nil,
+        deselectedTitleColor: UIColor? = nil,
+        titleFont: UIFont? = nil,
+        selectorTappedClosure: @escaping ((_ index: Int) -> Void)
+    ) {
                 
         self.selectorButtonTitles = selectorButtonTitles
         self.layoutDirection = layoutDirection

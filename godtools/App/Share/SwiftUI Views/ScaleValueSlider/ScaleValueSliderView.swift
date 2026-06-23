@@ -30,7 +30,14 @@ struct ScaleValueSliderView: View {
     
     @State private var progress: CGFloat
     
-    init(viewWidth: CGFloat, tintColor: Color, minScale: ScaleValue = ScaleValueSliderView.defaultMinScale, maxScale: ScaleValue = ScaleValueSliderView.defaultMaxScale, scaleIntValue: Binding<Int>, scaleDisplayValue: String) {
+    init(
+        viewWidth: CGFloat,
+        tintColor: Color,
+        minScale: ScaleValue = ScaleValueSliderView.defaultMinScale,
+        maxScale: ScaleValue = ScaleValueSliderView.defaultMaxScale,
+        scaleIntValue: Binding<Int>,
+        scaleDisplayValue: String
+    ) {
                 
         self.viewWidth = viewWidth
         self.tintColor = tintColor

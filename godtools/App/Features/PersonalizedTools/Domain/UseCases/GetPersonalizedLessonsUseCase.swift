@@ -18,7 +18,14 @@ final class GetPersonalizedLessonsUseCase {
     private let getLessonsListItems: GetLessonsListItems
     private let localizationServices: LocalizationServicesInterface
 
-    init(resourcesRepository: ResourcesRepository, personalizedToolsRepository: PersonalizedToolsRepository, getLanguageElseAppLanguage: GetLanguageElseAppLanguage, lessonProgressRepository: UserLessonProgressRepository, getLessonsListItems: GetLessonsListItems, localizationServices: LocalizationServicesInterface) {
+    init(
+        resourcesRepository: ResourcesRepository,
+        personalizedToolsRepository: PersonalizedToolsRepository,
+        getLanguageElseAppLanguage: GetLanguageElseAppLanguage,
+        lessonProgressRepository: UserLessonProgressRepository,
+        getLessonsListItems: GetLessonsListItems,
+        localizationServices: LocalizationServicesInterface
+    ) {
 
         self.resourcesRepository = resourcesRepository
         self.personalizedToolsRepository = personalizedToolsRepository

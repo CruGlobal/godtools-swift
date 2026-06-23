@@ -16,7 +16,11 @@ final class GetToolShortcutLinksUseCase {
     private let translationsRepository: TranslationsRepository
     private let maxNumberOfToolShortcutLinks: Int = 4
     
-    init(favoritedResourcesRepository: FavoritedResourcesRepository, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository) {
+    init(
+        favoritedResourcesRepository: FavoritedResourcesRepository,
+        resourcesRepository: ResourcesRepository,
+        translationsRepository: TranslationsRepository
+    ) {
         
         self.favoritedResourcesRepository = favoritedResourcesRepository
         self.resourcesRepository = resourcesRepository

@@ -19,7 +19,15 @@ final class GetSpotlightToolsUseCase {
     private let getToolListItemStrings: GetToolListItemStrings
     private let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability
     
-    init(resourcesRepository: ResourcesRepository, favoritedResourcesRepository: FavoritedResourcesRepository, languagesRepository: LanguagesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolCategory: GetTranslatedToolCategory, getToolListItemStrings: GetToolListItemStrings, getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability) {
+    init(
+        resourcesRepository: ResourcesRepository,
+        favoritedResourcesRepository: FavoritedResourcesRepository,
+        languagesRepository: LanguagesRepository,
+        getTranslatedToolName: GetTranslatedToolName,
+        getTranslatedToolCategory: GetTranslatedToolCategory,
+        getToolListItemStrings: GetToolListItemStrings,
+        getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability
+    ) {
         
         self.resourcesRepository = resourcesRepository
         self.favoritedResourcesRepository = favoritedResourcesRepository
