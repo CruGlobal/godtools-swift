@@ -21,10 +21,10 @@ struct MenuItemView: View {
     
     init(
         imageAssetName: String?,
-        shouldReplaceNullAssetWithEmptySpace: Bool = false,
         title: String,
         accessibility: AccessibilityStrings.Button?,
-        tappedClosure: (() -> Void)?
+        shouldReplaceNullAssetWithEmptySpace: Bool = false,
+        tappedClosure: (() -> Void)? = nil
     ) {
         
         self.imageAssetName = imageAssetName

@@ -22,7 +22,7 @@ struct FeaturedLessonsView: View {
         geometry: GeometryProxy,
         contentHorizontalInsets: CGFloat,
         lessonCardSpacing: CGFloat = DashboardView.toolCardVerticalSpacing,
-        lessonTappedClosure: ((_ featuredLesson: FeaturedLessonDomainModel) -> Void)?
+        lessonTappedClosure: ((_ featuredLesson: FeaturedLessonDomainModel) -> Void)? = nil
     ) {
         
         self.viewModel = viewModel
@@ -71,8 +71,7 @@ struct FeaturedLessonView_Preview: PreviewProvider {
             FeaturedLessonsView(
                 viewModel: FavoritesView_Preview.getFavoritesViewModel(),
                 geometry: geometry,
-                contentHorizontalInsets: 20,
-                lessonTappedClosure: nil
+                contentHorizontalInsets: 20
             )
         }
     }

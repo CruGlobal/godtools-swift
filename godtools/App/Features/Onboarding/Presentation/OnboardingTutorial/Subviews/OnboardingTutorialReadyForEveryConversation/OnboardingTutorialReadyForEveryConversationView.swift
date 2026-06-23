@@ -16,13 +16,13 @@ struct OnboardingTutorialReadyForEveryConversationView: View {
     @ObservedObject private var viewModel: OnboardingTutorialReadyForEveryConversationViewModel
     
     let geometry: GeometryProxy
-    let watchVideoTappedClosure: (() -> Void)
+    let watchVideoTappedClosure: (() -> Void)?
     
     init(
         viewModel: OnboardingTutorialReadyForEveryConversationViewModel,
         geometry: GeometryProxy,
         screenAccessibilityId: String,
-        watchVideoTappedClosure: @escaping (() -> Void)
+        watchVideoTappedClosure: (() -> Void)?
     ) {
         
         self.viewModel = viewModel
@@ -55,7 +55,7 @@ struct OnboardingTutorialReadyForEveryConversationView: View {
                 .padding(EdgeInsets(top: 40, leading: 30, bottom: 30, trailing: 30))
                         
             Button(action: {
-                watchVideoTappedClosure()
+                watchVideoTappedClosure?()
             }) {
                 
                 HStack(alignment: .center, spacing: 8) {

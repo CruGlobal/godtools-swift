@@ -61,7 +61,10 @@ struct LessonsView: View {
 
                             FixedHorizontalSpacer(width: 30)
 
-                            ToolFilterButtonView(title: viewModel.languageFilterButtonTitle, accessibility: .lessonsLanguageFilter) {
+                            ToolFilterButtonView(
+                                title: viewModel.languageFilterButtonTitle,
+                                accessibility: .lessonsLanguageFilter
+                            ) {
                                 viewModel.lessonLanguageFilterTapped()
                             }
                         }

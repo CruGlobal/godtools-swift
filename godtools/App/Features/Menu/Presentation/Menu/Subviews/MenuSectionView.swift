@@ -16,8 +16,8 @@ struct MenuSectionView<Content: View>: View {
     
     init(
         sectionTitle: String,
-        overrideHidesSeparator: Bool = false,
-        @ViewBuilder menuItemsViewBuilder: @escaping () -> Content
+        @ViewBuilder menuItemsViewBuilder: @escaping () -> Content,
+        overrideHidesSeparator: Bool = false
     ) {
         
         self.sectionTitle = sectionTitle

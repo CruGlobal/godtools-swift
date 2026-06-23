@@ -12,23 +12,23 @@ struct CircledTextView: View {
     
     private let backgroundColor: Color
     private let tintColor: Color
+    private let text: String
     private let lineWidth: CGFloat
     private let size: CGSize
-    private let text: String
     
     init(
-        backgroundColor: Color = .white,
+        backgroundColor: Color,
         tintColor: Color,
+        text: String,
         lineWidth: CGFloat = 1,
-        size: CGSize = CGSize(width: 50, height: 50),
-        text: String
+        size: CGSize = CGSize(width: 50, height: 50)
     ) {
         
         self.backgroundColor = backgroundColor
         self.tintColor = tintColor
+        self.text = text
         self.lineWidth = lineWidth
         self.size = size
-        self.text = text
     }
     
     var body: some View {
@@ -53,6 +53,10 @@ struct CircledTextView_Preview: PreviewProvider {
            
     static var previews: some View {
         
-        CircledTextView(tintColor: .red, text: "4")
+        CircledTextView(
+            backgroundColor: .white,
+            tintColor: .red,
+            text: "4"
+        )
     }
 }
