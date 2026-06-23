@@ -12,33 +12,39 @@ struct PersonalizationUnavailableView: View {
 
     private static let backgroundColor = Color.getColorWithRGB(red: 245, green: 245, blue: 245, opacity: 1)
     
-    static let buttonHeight: CGFloat = 38
-    static let buttonWidthMultiplier: CGFloat = 0.8
+    static let buttonTitleHorizontalPadding: CGFloat = 24
+    static let buttonTitleVerticalPadding: CGFloat = 11
     static let buttonCornerRadius: CGFloat = 20
     static let buttonFont: Font = FontLibrary.sfProTextSemibold.font(size: 14)
 
-    private let buttonWidth: CGFloat
+    private let geometry: GeometryProxy
+    private let heightMultiplier: CGFloat
     private let title: String
     private let message: String
     private let changeSettingsButtonTitle: String
-    private let goToAllLessonsButtonTitle: String
-    private let geometry: GeometryProxy
-    private let heightMultiplier: CGFloat
-    private let changeSettingsAction: () -> Void
-    private let goToAllLessonsAction: () -> Void
+    private let goToAllToolsButtonTitle: String
+    private let changeLocalizationSettingsTapped: (() -> Void)?
+    private let goToAllToolsTapped: (() -> Void)?
 
-    init(title: String, message: String, changeSettingsButtonTitle: String, goToAllLessonsButtonTitle: String, geometry: GeometryProxy, heightMultiplier: CGFloat = 0.7, changeSettingsAction: @escaping () -> Void, goToAllLessonsAction: @escaping () -> Void) {
-        
-        buttonWidth = geometry.size.width * PersonalizationUnavailableView.buttonWidthMultiplier
-        
+    init(
+        geometry: GeometryProxy,
+        heightMultiplier: CGFloat?,
+        title: String,
+        message: String,
+        changeSettingsButtonTitle: String,
+        goToAllToolsButtonTitle: String,
+        changeLocalizationSettingsTapped: (() -> Void)?,
+        goToAllToolsTapped: (() -> Void)?
+    ) {
+                
+        self.geometry = geometry
+        self.heightMultiplier = heightMultiplier ?? 0.7
         self.title = title
         self.message = message
         self.changeSettingsButtonTitle = changeSettingsButtonTitle
-        self.goToAllLessonsButtonTitle = goToAllLessonsButtonTitle
-        self.geometry = geometry
-        self.heightMultiplier = heightMultiplier
-        self.changeSettingsAction = changeSettingsAction
-        self.goToAllLessonsAction = goToAllLessonsAction
+        self.goToAllToolsButtonTitle = goToAllToolsButtonTitle
+        self.changeLocalizationSettingsTapped = changeLocalizationSettingsTapped
+        self.goToAllToolsTapped = goToAllToolsTapped
     }
 
     var body: some View {
@@ -62,29 +68,31 @@ struct PersonalizationUnavailableView: View {
                     .lineSpacing(4)
                     .padding(.top, 10)
                     .padding(.horizontal, 30)
+                
+                VStack(alignment: .center, spacing: 10) {
+                    
+                    GTButton(
+                        style: .white,
+                        title: changeSettingsButtonTitle,
+                        color: .clear,
+                        font: Self.buttonFont,
+                        titleHorizontalPadding: Self.buttonTitleHorizontalPadding,
+                        titleVerticalPadding: Self.buttonTitleVerticalPadding,
+                        cornerRadius: Self.buttonCornerRadius,
+                        tapped: changeLocalizationSettingsTapped
+                    )
 
-                GTButton(
-                    style: .white,
-                    title: changeSettingsButtonTitle,
-                    color: .clear,
-                    font: Self.buttonFont,
-                    width: buttonWidth,
-                    height: Self.buttonHeight,
-                    cornerRadius: Self.buttonCornerRadius,
-                    tapped: changeSettingsAction
-                )
+                    GTButton(
+                        style: .blue,
+                        title: goToAllToolsButtonTitle,
+                        font: Self.buttonFont,
+                        titleHorizontalPadding: Self.buttonTitleHorizontalPadding,
+                        titleVerticalPadding: Self.buttonTitleVerticalPadding,
+                        cornerRadius: Self.buttonCornerRadius,
+                        tapped: goToAllToolsTapped
+                    )
+                }
                 .padding(.top, 20)
-
-                GTButton(
-                    style: .blue,
-                    title: goToAllLessonsButtonTitle,
-                    font: Self.buttonFont,
-                    width: buttonWidth,
-                    height: Self.buttonHeight,
-                    cornerRadius: Self.buttonCornerRadius,
-                    tapped: goToAllLessonsAction
-                )
-                .padding(.top, 10)
 
                 Spacer()
             }

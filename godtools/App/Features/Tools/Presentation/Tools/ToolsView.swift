@@ -67,16 +67,16 @@ struct ToolsView: View {
                         if viewModel.selectedToggle == .personalized, let personalizedToolsUnavailable = viewModel.personalizedTools.unavailableStrings {
 
                             PersonalizationUnavailableView(
-                                title: personalizedToolsUnavailable.title,
-                                message: personalizedToolsUnavailable.message,
-                                changeSettingsButtonTitle: viewModel.strings.changePersonalizedToolSettingsActionLabel,
-                                goToAllLessonsButtonTitle: viewModel.strings.viewAllTools,
                                 geometry: geometry,
                                 heightMultiplier: 0.45,
-                                changeSettingsAction: {
-                                    viewModel.localizationSettingsTapped()
+                                title: personalizedToolsUnavailable.title,
+                                message: personalizedToolsUnavailable.message,
+                                changeSettingsButtonTitle: viewModel.strings.changePersonalizedToolSettingsAction,
+                                goToAllToolsButtonTitle: viewModel.strings.viewAllToolsAction,
+                                changeLocalizationSettingsTapped: {
+                                    viewModel.changeLocalizationSettingsTapped()
                                 },
-                                goToAllLessonsAction: {
+                                goToAllToolsTapped: {
                                     viewModel.goToAllToolsTapped()
                                 }
                             )
@@ -112,9 +112,9 @@ struct ToolsView: View {
                                 geometry: geometry,
                                 title: viewModel.strings.personalizedToolExplanationTitle,
                                 subtitle: viewModel.strings.personalizedToolExplanationSubtitle,
-                                buttonTitle: viewModel.strings.changePersonalizedToolSettingsActionLabel,
-                                buttonAction: {
-                                    viewModel.localizationSettingsTapped()
+                                changeLocalizationSettingsAction: viewModel.strings.changePersonalizedToolSettingsAction,
+                                changeLocalizationSettingsTapped: {
+                                    viewModel.changeLocalizationSettingsTapped()
                                 }
                             )
                             .padding(.top, toolCardSpacing)

@@ -18,10 +18,10 @@ struct ToolsStringsDomainModel: Sendable {
     let allToolsToggleTitle: String
     let personalizedToolExplanationTitle: String
     let personalizedToolExplanationSubtitle: String
-    let changePersonalizedToolSettingsActionLabel: String
-    let viewAllTools: String
+    let changePersonalizedToolSettingsAction: String
+    let viewAllToolsAction: String
 
     static var emptyValue: ToolsStringsDomainModel {
-        ToolsStringsDomainModel(favoritingToolBannerMessage: "", toolSpotlightTitle: "", toolSpotlightSubtitle: "", filterTitle: "", personalizedToolToggleTitle: "", allToolsToggleTitle: "", personalizedToolExplanationTitle: "", personalizedToolExplanationSubtitle: "", changePersonalizedToolSettingsActionLabel: "", viewAllTools: "")
+        ToolsStringsDomainModel(favoritingToolBannerMessage: "", toolSpotlightTitle: "", toolSpotlightSubtitle: "", filterTitle: "", personalizedToolToggleTitle: "", allToolsToggleTitle: "", personalizedToolExplanationTitle: "", personalizedToolExplanationSubtitle: "", changePersonalizedToolSettingsAction: "", viewAllToolsAction: "")
     }
 }

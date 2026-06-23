@@ -286,9 +286,9 @@ extension LessonsViewModel {
         trackLessonTappedAnalytics(lessonListItem: lessonListItem)
     }
 
-    func localizationSettingsTapped() {
+    func changeLocalizationSettingsTapped() {
 
-        stepEmitter.emit(step: AppFlowStep.localizationSettingsTappedFromLessons)
+        stepEmitter.emit(step: AppFlowStep.changeLocalizationSettingsTappedFromLessons)
     }
 
     func goToAllLessonsTapped() {

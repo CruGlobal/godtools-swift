@@ -65,22 +65,21 @@ struct LessonsView: View {
                         .padding(.horizontal, contentHorizontalInsets)
                         
                         if viewModel.selectedToggle == .personalized, let personalizedLessonsUnavailable = viewModel.personalizedLessons.unavailableStrings {
-
+                            
                             PersonalizationUnavailableView(
-                                title: personalizedLessonsUnavailable.title,
-                                message: personalizedLessonsUnavailable.message,
-                                changeSettingsButtonTitle: viewModel.strings.changeSettings,
-                                goToAllLessonsButtonTitle: viewModel.strings.viewAllLessons,
                                 geometry: geometry,
                                 heightMultiplier: 0.7,
-                                changeSettingsAction: {
-                                    viewModel.localizationSettingsTapped()
+                                title: personalizedLessonsUnavailable.title,
+                                message: personalizedLessonsUnavailable.message,
+                                changeSettingsButtonTitle: viewModel.strings.changeLocalizationSettingsAction,
+                                goToAllToolsButtonTitle: viewModel.strings.viewAllLessonsAction,
+                                changeLocalizationSettingsTapped: {
+                                    viewModel.changeLocalizationSettingsTapped()
                                 },
-                                goToAllLessonsAction: {
+                                goToAllToolsTapped: {
                                     viewModel.goToAllLessonsTapped()
                                 }
                             )
-
                         }
                         else if !viewModel.lessonsList.isEmpty {
                             
@@ -107,9 +106,9 @@ struct LessonsView: View {
                                 geometry: geometry,
                                 title: viewModel.strings.personalizedLessonExplanationTitle,
                                 subtitle: viewModel.strings.personalizedLessonExplanationSubtitle,
-                                buttonTitle: viewModel.strings.changeSettings,
-                                buttonAction: {
-                                    viewModel.localizationSettingsTapped()
+                                changeLocalizationSettingsAction: viewModel.strings.changeLocalizationSettingsAction,
+                                changeLocalizationSettingsTapped: {
+                                    viewModel.changeLocalizationSettingsTapped()
                                 }
                             )
                             .padding(.top, lessonCardSpacing * 2)

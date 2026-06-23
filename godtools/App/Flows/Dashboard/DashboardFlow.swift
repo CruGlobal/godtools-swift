@@ -84,7 +84,7 @@ final class DashboardFlow: GTFlow {
         case .backTappedFromLessonLanguageFilter:
             navigationController.popViewController(animated: true)
 
-        case .localizationSettingsTappedFromLessons:
+        case .changeLocalizationSettingsTappedFromLessons:
             pushFlow(
                 flow: LocalizationSettingsFlow(
                     appDiContainer: appDiContainer,
@@ -271,7 +271,7 @@ final class DashboardFlow: GTFlow {
             
             navigationController.pushViewController(toolDetails, animated: true)
 
-        case .localizationSettingsTappedFromTools:
+        case .changeLocalizationSettingsTappedFromTools:
             pushFlow(
                 flow: LocalizationSettingsFlow(
                     appDiContainer: appDiContainer,
