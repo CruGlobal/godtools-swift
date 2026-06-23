@@ -11,29 +11,29 @@ import SwiftUI
 struct PersonalizedChangeLocalizationView: View {
 
     private static let lightBlue = Color.getColorWithRGB(red: 223, green: 240, blue: 249, opacity: 1)
-
+    
     private let geometry: GeometryProxy
     private let title: String
     private let subtitle: String
-    private let buttonTitle: String
-    private let buttonAction: () -> Void
-    private let onHeightChanged: (CGFloat) -> Void
+    private let changeLocalizationSettingsAction: String
+    private let changeLocalizationSettingsTapped: (() -> Void)?
+    private let onHeightChanged: ((CGFloat) -> Void)?
 
     init(
         geometry: GeometryProxy,
         title: String,
         subtitle: String,
-        buttonTitle: String,
-        onHeightChanged: @escaping (CGFloat) -> Void = { _ in },
-        buttonAction: @escaping () -> Void
+        changeLocalizationSettingsAction: String,
+        changeLocalizationSettingsTapped: (() -> Void)?,
+        onHeightChanged: ((CGFloat) -> Void)? = nil
     ) {
        
         self.geometry = geometry
         self.title = title
         self.subtitle = subtitle
-        self.buttonTitle = buttonTitle
+        self.changeLocalizationSettingsAction = changeLocalizationSettingsAction
+        self.changeLocalizationSettingsTapped = changeLocalizationSettingsTapped
         self.onHeightChanged = onHeightChanged
-        self.buttonAction = buttonAction
     }
     
     var body: some View {
@@ -51,12 +51,12 @@ struct PersonalizedChangeLocalizationView: View {
 
             GTButton(
                 style: .blue,
-                title: buttonTitle,
+                title: changeLocalizationSettingsAction,
                 font: PersonalizationUnavailableView.buttonFont,
-                titleHorizontalPadding: 24,
-                titleVerticalPadding: 11,
+                titleHorizontalPadding: PersonalizationUnavailableView.buttonTitleHorizontalPadding,
+                titleVerticalPadding: PersonalizationUnavailableView.buttonTitleVerticalPadding,
                 cornerRadius: PersonalizationUnavailableView.buttonCornerRadius,
-                tapped: buttonAction
+                tapped: changeLocalizationSettingsTapped
             )
             .padding(.top, 20)
             .padding(.horizontal, 30)
@@ -68,10 +68,10 @@ struct PersonalizedChangeLocalizationView: View {
         .background(
             GeometryReader { geometry in
                 Color.clear.onAppear {
-                    onHeightChanged(geometry.size.height)
+                    onHeightChanged?(geometry.size.height)
                 }
                 .onChange(of: geometry.size.height) { newHeight in
-                    onHeightChanged(newHeight)
+                    onHeightChanged?(newHeight)
                 }
             }
         )

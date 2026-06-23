@@ -26,6 +26,7 @@ struct GTButton: View {
     private let cornerRadius: CGFloat
     private let accessibility: AccessibilityStrings.Button?
     private let tappedClosure: (() -> Void)?
+    private let onTextWidthChanged: ((_ width: CGFloat) -> Void)?
     
     private var titleColor: Color {
         switch style {
@@ -48,7 +49,8 @@ struct GTButton: View {
         titleVerticalPadding: CGFloat? = nil,
         cornerRadius: CGFloat = 6,
         accessibility: AccessibilityStrings.Button? = nil,
-        tapped: (() -> Void)? = nil
+        tapped: (() -> Void)? = nil,
+        onTextWidthChanged: ((_ width: CGFloat) -> Void)? = nil
     ) {
         
         self.style = style
@@ -61,6 +63,7 @@ struct GTButton: View {
         self.cornerRadius = cornerRadius
         self.accessibility = accessibility
         self.tappedClosure = tapped
+        self.onTextWidthChanged = onTextWidthChanged
         
         if let font = font {
             self.font = font
@@ -100,6 +103,10 @@ struct GTButton: View {
             .foregroundColor(titleColor)
             .optionalHorizontalPoadding(titleHorizontalPadding)
             .optionalVerticalPoadding(titleVerticalPadding)
+            .background(ViewGeometry())
+            .onPreferenceChange(ViewSizePreferenceKey.self) { size in
+                onTextWidthChanged?(size.width)
+            }
     }
     
     private func getAttributes(style: Style) -> CustomButtonAttributes {

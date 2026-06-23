@@ -30,8 +30,8 @@ final class GetLessonsStringsUseCase {
             allLessonsToggleTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "dashboard.personalizedToolToggle.allLessonsTitle"),
             personalizedLessonExplanationTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "dashboard.personalizedLessonFooter.title"),
             personalizedLessonExplanationSubtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "dashboard.personalizedLessonFooter.subtitle"),
-            changeSettings: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "dashboard.personalizedToolFooter.buttonTitle"),
-            viewAllLessons: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.personalizationUnavailable.viewAllLessons")
+            changeLocalizationSettingsAction: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "dashboard.personalizedToolFooter.buttonTitle"),
+            viewAllLessonsAction: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.personalizationUnavailable.viewAllLessons")
         )
         
         return Just(strings)

@@ -405,9 +405,9 @@ extension ToolsViewModel {
         stepEmitter.emit(step: AppFlowStep.toolTappedFromTools(tool: tool, toolFilterLanguage: toolFilterLanguageSelection))
     }
 
-    func localizationSettingsTapped() {
+    func changeLocalizationSettingsTapped() {
 
-        stepEmitter.emit(step: AppFlowStep.localizationSettingsTappedFromTools)
+        stepEmitter.emit(step: AppFlowStep.changeLocalizationSettingsTappedFromTools)
     }
 
     func goToAllToolsTapped() {
