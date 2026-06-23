@@ -277,7 +277,7 @@ extension ToolDownloader {
     
     private func incrementDownloadCountAndReportProgress(toolDownload: inout ToolDownloadDataModel, downloadCount: inout Int, totalNumberOfDownloads: Int, error: Error?) async {
         
-        downloadCount = downloadCount + 1
+        downloadCount += 1
         
         let progress: Double = getProgress(
             downloadCount: downloadCount,
