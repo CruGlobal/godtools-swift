@@ -19,7 +19,13 @@ final class LoadingArticleViewModel: ObservableObject {
         
     let message: String
     
-    init(stepEmitter: FlowStepEmitter, aemUri: String, appLanguage: AppLanguageDomainModel, articleAemRepository: ArticleAemRepository, localizationServices: LocalizationServicesInterface) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        aemUri: String,
+        appLanguage: AppLanguageDomainModel,
+        articleAemRepository: ArticleAemRepository,
+        localizationServices: LocalizationServicesInterface
+    ) {
         
         self.stepEmitter = stepEmitter
         self.articleAemRepository = articleAemRepository

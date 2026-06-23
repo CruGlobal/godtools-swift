@@ -18,7 +18,11 @@ final class MobileContentApiAuthSession: MobileContentApiAuthSessionInterface {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     
-    init(requestSender: RequestSenderInterface, mobileContentAuthTokenRepository: MobileContentAuthTokenRepository, userAuthentication: UserAuthentication) {
+    init(
+        requestSender: RequestSenderInterface,
+        mobileContentAuthTokenRepository: MobileContentAuthTokenRepository,
+        userAuthentication: UserAuthentication
+    ) {
      
         self.requestSender = requestSender
         self.mobileContentAuthTokenRepository = mobileContentAuthTokenRepository

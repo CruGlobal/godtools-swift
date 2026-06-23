@@ -32,7 +32,18 @@ final class ArticleCategoriesViewModel: ObservableObject {
         
     @Published private(set) var categories: [ArticleCategoryDomainModel] = Array()
     
-    init(stepEmitter: FlowStepEmitter, resource: ResourceDataModel, language: LanguageDataModel, translation: TranslationDataModel, manifest: Manifest, getArticleCategoriesUseCase: GetArticleCategoriesUseCase, pullToRefreshArticlesUseCase: PullToRefreshArticlesUseCase, incrementUserCounterUseCase: IncrementUserCounterUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        resource: ResourceDataModel,
+        language: LanguageDataModel,
+        translation: TranslationDataModel,
+        manifest: Manifest,
+        getArticleCategoriesUseCase: GetArticleCategoriesUseCase,
+        pullToRefreshArticlesUseCase: PullToRefreshArticlesUseCase,
+        incrementUserCounterUseCase: IncrementUserCounterUseCase,
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
+        trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
+    ) {
         
         self.stepEmitter = stepEmitter
         self.resource = resource

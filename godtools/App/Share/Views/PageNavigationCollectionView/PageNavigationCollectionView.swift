@@ -50,7 +50,11 @@ class PageNavigationCollectionView: UIView, NibBased {
     
     private weak var delegate: PageNavigationCollectionViewDelegate?
     
-    init(layoutType: PageNavigationCollectionViewLayoutType = .fullScreen, initialPageIndex: Int?, loggingEnabled: Bool = false) {
+    init(
+        layoutType: PageNavigationCollectionViewLayoutType = .fullScreen,
+        initialPageIndex: Int?,
+        loggingEnabled: Bool = false
+    ) {
         
         self.layoutType = layoutType
         self.initialPageIndex = initialPageIndex

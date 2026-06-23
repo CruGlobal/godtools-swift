@@ -14,7 +14,11 @@ final class ToolDownloaderGetDataToDownload {
     private let attachmentsRepository: AttachmentsRepository
     private let translationsRepository: TranslationsRepository
     
-    init(resourcesRepository: ResourcesRepository, attachmentsRepository: AttachmentsRepository, translationsRepository: TranslationsRepository) {
+    init(
+        resourcesRepository: ResourcesRepository,
+        attachmentsRepository: AttachmentsRepository,
+        translationsRepository: TranslationsRepository
+    ) {
         
         self.resourcesRepository = resourcesRepository
         self.attachmentsRepository = attachmentsRepository

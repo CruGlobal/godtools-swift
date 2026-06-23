@@ -14,7 +14,11 @@ final class SetAppLanguageUseCase {
     private let userLessonFiltersRepository: UserLessonFiltersRepository
     private let languagesRepository: LanguagesRepository
     
-    init(userAppLanguageRepository: UserAppLanguageRepository, userLessonFiltersRepository: UserLessonFiltersRepository, languagesRepository: LanguagesRepository) {
+    init(
+        userAppLanguageRepository: UserAppLanguageRepository,
+        userLessonFiltersRepository: UserLessonFiltersRepository,
+        languagesRepository: LanguagesRepository
+    ) {
         
         self.userAppLanguageRepository = userAppLanguageRepository
         self.userLessonFiltersRepository = userLessonFiltersRepository

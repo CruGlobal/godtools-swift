@@ -15,7 +15,11 @@ struct AllYourFavoriteToolsView: View {
     
     @ObservedObject private var viewModel: AllYourFavoriteToolsViewModel
         
-    init(viewModel: AllYourFavoriteToolsViewModel, contentHorizontalInsets: CGFloat = DashboardView.contentHorizontalInsets, toolCardSpacing: CGFloat = DashboardView.toolCardVerticalSpacing) {
+    init(
+        viewModel: AllYourFavoriteToolsViewModel,
+        contentHorizontalInsets: CGFloat = DashboardView.contentHorizontalInsets,
+        toolCardSpacing: CGFloat = DashboardView.toolCardVerticalSpacing
+    ) {
         
         self.viewModel = viewModel
         self.contentHorizontalInsets = contentHorizontalInsets

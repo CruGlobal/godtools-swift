@@ -70,7 +70,16 @@ struct TractRemoteShareNavigationEvent: Codable, Sendable {
         }
     }
     
-    init(card: Int?, channel: String, channelId: String, locale: String?, page: Int?, parallelLocale: String?, primaryLocale: String?, tool: String?) {
+    init(
+        card: Int?,
+        channel: String,
+        channelId: String,
+        locale: String?,
+        page: Int?,
+        parallelLocale: String?,
+        primaryLocale: String?,
+        tool: String?
+    ) {
         
         let attributes = TractRemoteShareNavigationEvent.Attributes(
             card: card,

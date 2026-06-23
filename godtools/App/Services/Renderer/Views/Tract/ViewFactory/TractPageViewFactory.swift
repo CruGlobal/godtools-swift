@@ -17,7 +17,13 @@ class TractPageViewFactory: MobileContentPageViewFactoryType {
     private let cardJumpService: CardJumpService
     private let followUpService: FollowUpsService
         
-    init(trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, mobileContentAnalytics: MobileContentRendererAnalytics, localizationServices: LocalizationServicesInterface, cardJumpService: CardJumpService, followUpService: FollowUpsService) {
+    init(
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
+        mobileContentAnalytics: MobileContentRendererAnalytics,
+        localizationServices: LocalizationServicesInterface,
+        cardJumpService: CardJumpService,
+        followUpService: FollowUpsService
+    ) {
         
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.mobileContentAnalytics = mobileContentAnalytics

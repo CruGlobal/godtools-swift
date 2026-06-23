@@ -15,7 +15,11 @@ class MobileContentCardCollectionPageCardViewModel: MobileContentViewModel {
     
     let pageNumber: String
     
-    init(card: CardCollectionPage.Card, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
+    init(
+        card: CardCollectionPage.Card,
+        renderedPageContext: MobileContentRenderedPageContext,
+        mobileContentAnalytics: MobileContentRendererAnalytics
+    ) {
                 
         self.cardModel = card
         pageNumber = "\(card.position + 1)/\(card.page.cards.count)"

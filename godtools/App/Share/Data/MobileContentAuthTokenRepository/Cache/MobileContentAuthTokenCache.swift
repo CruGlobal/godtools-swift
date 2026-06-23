@@ -22,7 +22,10 @@ final class MobileContentAuthTokenCache: AuthTokenCacheInterface {
     private let keychainAccessor: MobileContentAuthTokenKeychainAccessorInterface
     private let persistence: any Persistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenDecodable>
     
-    init(mobileContentAuthTokenKeychainAccessor: MobileContentAuthTokenKeychainAccessorInterface, persistence: any Persistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenDecodable>) {
+    init(
+        mobileContentAuthTokenKeychainAccessor: MobileContentAuthTokenKeychainAccessorInterface,
+        persistence: any Persistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenDecodable>
+    ) {
         
         self.keychainAccessor = mobileContentAuthTokenKeychainAccessor
         self.persistence = persistence

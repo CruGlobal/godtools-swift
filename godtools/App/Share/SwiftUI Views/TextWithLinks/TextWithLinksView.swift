@@ -17,7 +17,14 @@ struct TextWithLinksView: View {
     private let textAlignment: TextAlignment
     private let handleUrlClosure: ((_ url: URL) -> Void)?
     
-    init(stringContainingUrls: String, textColor: Color, font: Font, lineSpacing: CGFloat? = nil, textAlignment: TextAlignment? = nil, handleUrlClosure: ((_ url: URL) -> Void)? = nil) {
+    init(
+        stringContainingUrls: String,
+        textColor: Color,
+        font: Font,
+        lineSpacing: CGFloat? = nil,
+        textAlignment: TextAlignment? = nil,
+        handleUrlClosure: ((_ url: URL) -> Void)? = nil
+    ) {
         
         let options = AttributedString.MarkdownParsingOptions(
             allowsExtendedAttributes: false,

@@ -15,7 +15,11 @@ final class AuthenticateUserUseCase {
     private let emailSignUpService: EmailSignUpService
     private let firebaseAnalytics: FirebaseAnalyticsInterface
     
-    init(userAuthentication: UserAuthentication, emailSignUpService: EmailSignUpService, firebaseAnalytics: FirebaseAnalyticsInterface) {
+    init(
+        userAuthentication: UserAuthentication,
+        emailSignUpService: EmailSignUpService,
+        firebaseAnalytics: FirebaseAnalyticsInterface
+    ) {
         
         self.userAuthentication = userAuthentication
         self.emailSignUpService = emailSignUpService

@@ -15,7 +15,11 @@ final class GetDownloadedLanguagesListUseCase {
     private let downloadedLanguagesRepository: DownloadedLanguagesRepository
     private let getTranslatedLanguageName: GetTranslatedLanguageName
     
-    init(languagesRepository: LanguagesRepository, downloadedLanguagesRepository: DownloadedLanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName) {
+    init(
+        languagesRepository: LanguagesRepository,
+        downloadedLanguagesRepository: DownloadedLanguagesRepository,
+        getTranslatedLanguageName: GetTranslatedLanguageName
+    ) {
         
         self.languagesRepository = languagesRepository
         self.downloadedLanguagesRepository = downloadedLanguagesRepository

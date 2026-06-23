@@ -18,7 +18,13 @@ final class ShareToolScreenShareSessionViewModel {
     let strings: ShareToolScreenShareSessionStringsDomainModel
     let shareMessage: String
         
-    init(stepEmitter: FlowStepEmitter, strings: ShareToolScreenShareSessionStringsDomainModel, shareMessage: String, shareUrl: String, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        strings: ShareToolScreenShareSessionStringsDomainModel,
+        shareMessage: String,
+        shareUrl: String,
+        trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
+    ) {
             
         self.stepEmitter = stepEmitter
         self.strings = strings

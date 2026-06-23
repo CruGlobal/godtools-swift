@@ -33,7 +33,14 @@ struct ToolFilterLanguageDomainModel: Sendable, Identifiable {
         }
     }
     
-    private init(id: String, languageName: String?, languageNameTranslatedInAppLanguage: String, toolsAvailable: String, numberOfToolsAvailable: Int, languageType: LanguageType) {
+    private init(
+        id: String,
+        languageName: String?,
+        languageNameTranslatedInAppLanguage: String,
+        toolsAvailable: String,
+        numberOfToolsAvailable: Int,
+        languageType: LanguageType
+    ) {
         self.id = id
         self.languageName = languageName
         self.languageNameTranslatedInAppLanguage = languageNameTranslatedInAppLanguage

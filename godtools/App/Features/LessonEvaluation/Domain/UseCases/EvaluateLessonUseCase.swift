@@ -15,7 +15,11 @@ final class EvaluateLessonUseCase {
     private let lessonEvaluationRepository: LessonEvaluationRepository
     private let lessonFeedbackAnalytics: LessonFeedbackAnalytics
     
-    init(resourcesRepository: ResourcesRepository, lessonEvaluationRepository: LessonEvaluationRepository, lessonFeedbackAnalytics: LessonFeedbackAnalytics) {
+    init(
+        resourcesRepository: ResourcesRepository,
+        lessonEvaluationRepository: LessonEvaluationRepository,
+        lessonFeedbackAnalytics: LessonFeedbackAnalytics
+    ) {
         
         self.resourcesRepository = resourcesRepository
         self.lessonEvaluationRepository = lessonEvaluationRepository

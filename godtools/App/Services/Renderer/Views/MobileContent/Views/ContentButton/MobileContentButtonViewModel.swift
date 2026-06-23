@@ -28,7 +28,11 @@ class MobileContentButtonViewModel: MobileContentViewModel {
     let visibilityState: ObservableValue<MobileContentViewVisibilityState> = ObservableValue(value: .visible)
     let icon: MobileContentButtonIcon?
     
-    init(buttonModel: Button, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
+    init(
+        buttonModel: Button,
+        renderedPageContext: MobileContentRenderedPageContext,
+        mobileContentAnalytics: MobileContentRendererAnalytics
+    ) {
         
         self.buttonModel = buttonModel
         self.mobileContentAnalytics = mobileContentAnalytics

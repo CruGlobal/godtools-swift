@@ -18,7 +18,11 @@ struct DashboardTabBarItemView: View {
     
     @Binding private var currentTab: Int
     
-    init(viewModel: DashboardTabBarItemViewModel, currentTab: Binding<Int>, buttonAccessibility: AccessibilityStrings.Button) {
+    init(
+        viewModel: DashboardTabBarItemViewModel,
+        currentTab: Binding<Int>,
+        buttonAccessibility: AccessibilityStrings.Button
+    ) {
         
         self.viewModel = viewModel
         self._currentTab = currentTab

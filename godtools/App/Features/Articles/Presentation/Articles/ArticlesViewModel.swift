@@ -37,7 +37,18 @@ final class ArticlesViewModel: ObservableObject {
     @Published private(set) var articles: [ArticleListItemDomainModel] = Array()
     @Published private(set) var articlesError: ArticlesErrorDomainModel?
     
-    init(stepEmitter: FlowStepEmitter, resource: ResourceDataModel, language: LanguageDataModel, category: ArticleCategoryDomainModel, manifest: Manifest, downloadArticlesObservable: DownloadManifestArticlesObservable, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getArticlesUseCase: GetArticlesUseCase, localizationServices: LocalizationServicesInterface, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        resource: ResourceDataModel,
+        language: LanguageDataModel,
+        category: ArticleCategoryDomainModel,
+        manifest: Manifest,
+        downloadArticlesObservable: DownloadManifestArticlesObservable,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getArticlesUseCase: GetArticlesUseCase,
+        localizationServices: LocalizationServicesInterface,
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
+    ) {
         
         self.stepEmitter = stepEmitter
         self.resource = resource

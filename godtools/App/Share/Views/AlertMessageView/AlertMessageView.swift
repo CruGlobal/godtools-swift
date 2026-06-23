@@ -13,7 +13,14 @@ class AlertMessageView {
     
     let controller: UIAlertController
     
-    init(title: String, message: String, acceptTitle: String, cancelTitle: String?, acceptTapped: (() -> Void)?, cancelTapped: (() -> Void)?) {
+    init(
+        title: String,
+        message: String,
+        acceptTitle: String,
+        cancelTitle: String?,
+        acceptTapped: (() -> Void)?,
+        cancelTapped: (() -> Void)?
+    ) {
                         
         controller = UIAlertController(
             title: title,

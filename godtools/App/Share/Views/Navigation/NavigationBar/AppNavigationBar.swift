@@ -30,7 +30,15 @@ final class AppNavigationBar {
         
     private weak var viewController: UIViewController?
     
-    init(appearance: AppNavigationBarAppearance?, backButton: AppBackBarItem?, leadingItems: [NavBarItem], trailingItems: [NavBarItem], titleView: UIView? = nil, title: String? = nil, layoutDirectionPublisher: AnyPublisher<UISemanticContentAttribute, Never>? = nil) {
+    init(
+        appearance: AppNavigationBarAppearance?,
+        backButton: AppBackBarItem?,
+        leadingItems: [NavBarItem],
+        trailingItems: [NavBarItem],
+        titleView: UIView? = nil,
+        title: String? = nil,
+        layoutDirectionPublisher: AnyPublisher<UISemanticContentAttribute, Never>? = nil
+    ) {
         
         self.navBarAppearance = appearance
         self.backButton = backButton

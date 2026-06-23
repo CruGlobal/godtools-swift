@@ -15,7 +15,11 @@ final class GetToolSettingsUseCase {
     private let languagesRepository: LanguagesRepository
     private let getTranslatedLanguageName: GetTranslatedLanguageName
     
-    init(translationsRepository: TranslationsRepository, languagesRepository: LanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName) {
+    init(
+        translationsRepository: TranslationsRepository,
+        languagesRepository: LanguagesRepository,
+        getTranslatedLanguageName: GetTranslatedLanguageName
+    ) {
         
         self.translationsRepository = translationsRepository
         self.languagesRepository = languagesRepository

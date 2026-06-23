@@ -22,7 +22,11 @@ final class DeleteAccountViewModel: ObservableObject {
     
     @Published private(set) var strings = DeleteAccountStringsDomainModel.emptyValue
     
-    init(stepEmitter: FlowStepEmitter, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getDeleteAccountStringsUseCase: GetDeleteAccountStringsUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getDeleteAccountStringsUseCase: GetDeleteAccountStringsUseCase
+    ) {
         
         self.stepEmitter = stepEmitter
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase

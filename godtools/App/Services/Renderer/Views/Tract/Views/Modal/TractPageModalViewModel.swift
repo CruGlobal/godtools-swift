@@ -13,7 +13,11 @@ class TractPageModalViewModel: MobileContentViewModel {
     
     private let modalModel: Modal
             
-    init(modalModel: Modal, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
+    init(
+        modalModel: Modal,
+        renderedPageContext: MobileContentRenderedPageContext,
+        mobileContentAnalytics: MobileContentRendererAnalytics
+    ) {
         
         self.modalModel = modalModel
         

@@ -25,7 +25,15 @@ struct VideoViewRepresentable: UIViewRepresentable {
     
     @Binding var playerState: VideoViewPlayerState
     
-    init(playerState: Binding<VideoViewPlayerState>, frameSize: CGSize, videoId: String, videoPlayerParameters: [String: Any]?, configuration: VideoViewConfiguration?, videoPlayingClosure: (() -> Void)?, videoEndedClosure: (() -> Void)?) {
+    init(
+        playerState: Binding<VideoViewPlayerState>,
+        frameSize: CGSize,
+        videoId: String,
+        videoPlayerParameters: [String: Any]?,
+        configuration: VideoViewConfiguration?,
+        videoPlayingClosure: (() -> Void)?,
+        videoEndedClosure: (() -> Void)?
+    ) {
         
         let bounds: CGRect = CGRect(x: 0, y: 0, width: frameSize.width, height: frameSize.height)
         

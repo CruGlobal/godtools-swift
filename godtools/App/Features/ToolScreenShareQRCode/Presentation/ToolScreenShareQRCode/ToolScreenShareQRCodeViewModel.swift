@@ -24,7 +24,12 @@ final class ToolScreenShareQRCodeViewModel: ObservableObject {
     
     @Published private(set) var strings = ToolScreenShareQRCodeStringsDomainModel.emptyValue
     
-    init(stepEmitter: FlowStepEmitter, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolScreenShareQRCodeStringsUseCase: GetToolScreenShareQRCodeStringsUseCase, shareUrl: String) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getToolScreenShareQRCodeStringsUseCase: GetToolScreenShareQRCodeStringsUseCase,
+        shareUrl: String
+    ) {
         
         self.stepEmitter = stepEmitter
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase

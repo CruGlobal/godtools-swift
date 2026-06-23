@@ -29,7 +29,15 @@ final class ToolSettingsToolLanguagesListViewModel: ObservableObject {
     @Published private(set) var selectedLanguageId: String?
     @Published private(set) var showsDeleteLanguageButton: Bool = false
     
-    init(stepEmitter: FlowStepEmitter, listType: ToolSettingsToolLanguagesListTypeDomainModel, toolId: String, toolSettingsObserver: ToolSettingsObserver, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolSettingsToolLanguagesListStringsUseCase: GetToolSettingsToolLanguagesListStringsUseCase, getToolSettingsToolLanguagesListUseCase: GetToolSettingsToolLanguagesListUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        listType: ToolSettingsToolLanguagesListTypeDomainModel,
+        toolId: String,
+        toolSettingsObserver: ToolSettingsObserver,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getToolSettingsToolLanguagesListStringsUseCase: GetToolSettingsToolLanguagesListStringsUseCase,
+        getToolSettingsToolLanguagesListUseCase: GetToolSettingsToolLanguagesListUseCase
+    ) {
         
         self.stepEmitter = stepEmitter
         self.listType = listType

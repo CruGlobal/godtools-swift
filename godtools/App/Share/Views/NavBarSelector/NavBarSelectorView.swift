@@ -22,9 +22,20 @@ class NavBarSelectorView: UIView {
     private var deselectedTitleColor: UIColor?
     private var selectorButtons: [UIButton] = Array()
     private var selectedIndex: Int = 0
-    private var selectorTappedClosure: ((_ index: Int) -> Void)
+    private var selectorTappedClosure: ((_ index: Int) -> Void)?
             
-    init(selectorButtonTitles: [String], layoutDirection: UISemanticContentAttribute, selectedIndex: Int = 0, borderColor: UIColor = .white, selectedColor: UIColor = .darkGray, deselectedColor: UIColor = .lightGray, selectedTitleColor: UIColor? = nil, deselectedTitleColor: UIColor? = nil, titleFont: UIFont? = nil, selectorTappedClosure: @escaping ((_ index: Int) -> Void)) {
+    init(
+        selectorButtonTitles: [String],
+        layoutDirection: UISemanticContentAttribute,
+        selectedIndex: Int = 0,
+        borderColor: UIColor = .white,
+        selectedColor: UIColor = .darkGray,
+        deselectedColor: UIColor = .lightGray,
+        selectedTitleColor: UIColor? = nil,
+        deselectedTitleColor: UIColor? = nil,
+        titleFont: UIFont? = nil,
+        selectorTappedClosure: ((_ index: Int) -> Void)? = nil
+    ) {
                 
         self.selectorButtonTitles = selectorButtonTitles
         self.layoutDirection = layoutDirection
@@ -215,6 +226,6 @@ class NavBarSelectorView: UIView {
         
         let indexForLayoutDirection = getIndexForLayoutDirection(index: tappedButtonIndex, layoutDirection: layoutDirection)
                 
-        selectorTappedClosure(indexForLayoutDirection)
+        selectorTappedClosure?(indexForLayoutDirection)
     }
 }

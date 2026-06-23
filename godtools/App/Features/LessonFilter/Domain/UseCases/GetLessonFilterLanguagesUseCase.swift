@@ -15,7 +15,11 @@ final class GetLessonFilterLanguagesUseCase {
     private let languagesRepository: LanguagesRepository
     private let getLessonFilterLangauge: GetLessonFilterLanguage
     
-    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, getLessonFilterLangauge: GetLessonFilterLanguage) {
+    init(
+        resourcesRepository: ResourcesRepository,
+        languagesRepository: LanguagesRepository,
+        getLessonFilterLangauge: GetLessonFilterLanguage
+    ) {
         
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository

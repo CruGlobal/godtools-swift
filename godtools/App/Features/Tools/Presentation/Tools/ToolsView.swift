@@ -61,8 +61,12 @@ struct ToolsView: View {
                             .padding([.bottom], 11)
                             .padding([.leading, .trailing], contentHorizontalInsets)
 
-                        ToolsFilterSectionView(viewModel: viewModel, contentHorizontalInsets: contentHorizontalInsets, width: geometry.size.width)
-                            .padding([.bottom], 18)
+                        ToolsFilterSectionView(
+                            viewModel: viewModel,
+                            width: geometry.size.width,
+                            contentHorizontalInsets: contentHorizontalInsets
+                        )
+                        .padding([.bottom], 18)
 
                         if viewModel.selectedToggle == .personalized, let personalizedToolsUnavailable = viewModel.personalizedTools.unavailableStrings {
 

@@ -19,7 +19,23 @@ final class LessonViewModel: MobileContentRendererViewModel {
     
     let progress: ObservableValue<AnimatableValue<CGFloat>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
         
-    init(stepEmitter: FlowStepEmitter, renderer: MobileContentRenderer, resource: ResourceDataModel, primaryLanguage: LanguageDataModel, initialPage: MobileContentRendererInitialPage?, initialPageConfig: MobileContentRendererInitialPageConfig?, initialPageSubIndex: Int?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, storeLessonProgressUseCase: StoreUserLessonProgressUseCase, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        renderer: MobileContentRenderer,
+        resource: ResourceDataModel,
+        primaryLanguage: LanguageDataModel,
+        initialPage: MobileContentRendererInitialPage?,
+        initialPageConfig: MobileContentRendererInitialPageConfig?,
+        initialPageSubIndex: Int?,
+        resourcesRepository: ResourcesRepository,
+        translationsRepository: TranslationsRepository,
+        mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getTranslatedLanguageName: GetTranslatedLanguageName,
+        storeLessonProgressUseCase: StoreUserLessonProgressUseCase,
+        trainingTipsEnabled: Bool,
+        incrementUserCounterUseCase: IncrementUserCounterUseCase
+    ) {
                 
         self.stepEmitter = stepEmitter
         self.storeLessonProgressUseCase = storeLessonProgressUseCase

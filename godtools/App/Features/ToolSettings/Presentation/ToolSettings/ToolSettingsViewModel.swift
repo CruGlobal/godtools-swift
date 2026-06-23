@@ -33,7 +33,15 @@ final class ToolSettingsViewModel: ObservableObject {
     @Published private(set) var parallelLanguageTitle: String = ""
     @Published private(set) var shareables: [ShareableDomainModel] = Array()
         
-    init(stepEmitter: FlowStepEmitter, toolSettingsObserver: ToolSettingsObserver, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolSettingsStringsUseCase: GetToolSettingsStringsUseCase, getToolSettingsUseCase: GetToolSettingsUseCase, getShareablesUseCase: GetShareablesUseCase, getShareableImageUseCase: GetShareableImageUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        toolSettingsObserver: ToolSettingsObserver,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getToolSettingsStringsUseCase: GetToolSettingsStringsUseCase,
+        getToolSettingsUseCase: GetToolSettingsUseCase,
+        getShareablesUseCase: GetShareablesUseCase,
+        getShareableImageUseCase: GetShareableImageUseCase
+    ) {
         
         self.stepEmitter = stepEmitter
         self.toolSettingsObserver = toolSettingsObserver

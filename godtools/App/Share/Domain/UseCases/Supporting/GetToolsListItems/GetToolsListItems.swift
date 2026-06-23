@@ -17,7 +17,14 @@ final class GetToolsListItems {
     private let getToolListItemStrings: GetToolListItemStrings
     private let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability
     
-    init(favoritedResourcesRepository: FavoritedResourcesRepository, languagesRepository: LanguagesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolCategory: GetTranslatedToolCategory, getToolListItemStrings: GetToolListItemStrings, getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability) {
+    init(
+        favoritedResourcesRepository: FavoritedResourcesRepository,
+        languagesRepository: LanguagesRepository,
+        getTranslatedToolName: GetTranslatedToolName,
+        getTranslatedToolCategory: GetTranslatedToolCategory,
+        getToolListItemStrings: GetToolListItemStrings,
+        getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability
+    ) {
         
         self.favoritedResourcesRepository = favoritedResourcesRepository
         self.languagesRepository = languagesRepository

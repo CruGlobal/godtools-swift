@@ -32,7 +32,19 @@ final class MenuViewModel: ObservableObject {
     @Published private(set) var accountSectionVisibility: MenuAccountSectionVisibility = .hidden
     @Published private(set) var showsTutorialOption: Bool = false
     
-    init(stepEmitter: FlowStepEmitter, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getMenuStringsUseCase: GetMenuStringsUseCase, getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAccountCreationIsSupportedUseCase: GetAccountCreationIsSupportedUseCase, getUserIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase, logOutUserUseCase: LogOutUserUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, appConfig: AppConfigInterface) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getMenuStringsUseCase: GetMenuStringsUseCase,
+        getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase,
+        disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase,
+        getAccountCreationIsSupportedUseCase: GetAccountCreationIsSupportedUseCase,
+        getUserIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase,
+        logOutUserUseCase: LogOutUserUseCase,
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
+        trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase,
+        appConfig: AppConfigInterface
+    ) {
         
         self.stepEmitter = stepEmitter
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase

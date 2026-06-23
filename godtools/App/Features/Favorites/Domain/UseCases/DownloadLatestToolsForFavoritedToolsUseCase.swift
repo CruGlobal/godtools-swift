@@ -15,7 +15,11 @@ final class DownloadLatestToolsForFavoritedToolsUseCase {
     private let resourcesRepository: ResourcesRepository
     private let toolDownloader: ToolDownloader
     
-    init(favoritedResourcesRepository: FavoritedResourcesRepository, resourcesRepository: ResourcesRepository, toolDownloader: ToolDownloader) {
+    init(
+        favoritedResourcesRepository: FavoritedResourcesRepository,
+        resourcesRepository: ResourcesRepository,
+        toolDownloader: ToolDownloader
+    ) {
         
         self.favoritedResourcesRepository = favoritedResourcesRepository
         self.resourcesRepository = resourcesRepository

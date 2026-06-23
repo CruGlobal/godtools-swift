@@ -32,7 +32,15 @@ final class SocialSignInViewModel: ObservableObject {
     @Published var signInWithFacebookButtonTitle: String = ""
     @Published var signInWithGoogleButtonTitle: String = ""
     
-    init(stepEmitter: FlowStepEmitter, presentAuthViewController: UIViewController, authenticationType: SocialSignInAuthenticationType, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getSocialCreateAccountStringsUseCase: GetSocialCreateAccountStringsUseCase, getSocialSignInStringsUseCase: GetSocialSignInStringsUseCase, authenticateUserUseCase: AuthenticateUserUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        presentAuthViewController: UIViewController,
+        authenticationType: SocialSignInAuthenticationType,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getSocialCreateAccountStringsUseCase: GetSocialCreateAccountStringsUseCase,
+        getSocialSignInStringsUseCase: GetSocialSignInStringsUseCase,
+        authenticateUserUseCase: AuthenticateUserUseCase
+    ) {
         
         self.stepEmitter = stepEmitter
         self.presentAuthViewController = presentAuthViewController

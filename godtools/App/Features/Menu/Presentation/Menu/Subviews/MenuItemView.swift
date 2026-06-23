@@ -19,7 +19,13 @@ struct MenuItemView: View {
     let title: String
     let tappedClosure: (() -> Void)?
     
-    init(imageAssetName: String?, shouldReplaceNullAssetWithEmptySpace: Bool = false, title: String, accessibility: AccessibilityStrings.Button?, tappedClosure: (() -> Void)?) {
+    init(
+        imageAssetName: String?,
+        title: String,
+        accessibility: AccessibilityStrings.Button?,
+        shouldReplaceNullAssetWithEmptySpace: Bool = false,
+        tappedClosure: (() -> Void)? = nil
+    ) {
         
         self.imageAssetName = imageAssetName
         self.shouldReplaceNullAssetWithEmptySpace = shouldReplaceNullAssetWithEmptySpace

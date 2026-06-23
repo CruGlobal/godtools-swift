@@ -18,7 +18,11 @@ final class WebContentView: AppViewController {
     
     @IBOutlet weak private var loadingView: UIActivityIndicatorView!
         
-    init(viewModel: WebContentViewModel, navigationBar: AppNavigationBar?, screenAccessibility: AccessibilityStrings.Screen?) {
+    init(
+        viewModel: WebContentViewModel,
+        navigationBar: AppNavigationBar?,
+        screenAccessibility: AccessibilityStrings.Screen?
+    ) {
         
         self.viewModel = viewModel
         self.screenAccessibility = screenAccessibility

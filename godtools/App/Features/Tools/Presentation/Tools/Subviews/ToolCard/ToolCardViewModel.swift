@@ -29,7 +29,13 @@ class ToolCardViewModel: ObservableObject {
     @Published private(set) var detailsButtonTitle: String = ""
     @Published private(set) var openButtonTitle: String = ""
             
-    init(tool: ToolListItemDomainModelInterface, accessibility: AccessibilityStrings.Button, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getToolBannerUseCase: GetToolBannerUseCase, inMemoryDataCache: InMemoryDataCache) {
+    init(
+        tool: ToolListItemDomainModelInterface,
+        accessibility: AccessibilityStrings.Button,
+        getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase,
+        getToolBannerUseCase: GetToolBannerUseCase,
+        inMemoryDataCache: InMemoryDataCache
+    ) {
         
         self.tool = tool
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase

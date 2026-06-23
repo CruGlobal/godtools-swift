@@ -23,7 +23,12 @@ final class ResumeLessonProgressModalViewModel: ObservableObject {
     
     @Published private(set) var strings = ResumeLessonProgressStringsDomainModel.emptyValue
     
-    init(stepEmitter: FlowStepEmitter, toolTranslations: ToolTranslationsDomainModel, getResumeLessonProgressStringsUseCase: GetResumeLessonProgressStringsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        toolTranslations: ToolTranslationsDomainModel,
+        getResumeLessonProgressStringsUseCase: GetResumeLessonProgressStringsUseCase,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    ) {
         
         self.stepEmitter = stepEmitter
         self.toolTranslations = toolTranslations

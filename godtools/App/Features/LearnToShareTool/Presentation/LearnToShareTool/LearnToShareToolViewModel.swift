@@ -33,7 +33,16 @@ final class LearnToShareToolViewModel: ObservableObject {
     
     @Published var currentPage: Int = 0
     
-    init(stepEmitter: FlowStepEmitter, toolId: String, toolPrimaryLanguage: AppLanguageDomainModel, toolParallelLanguage: AppLanguageDomainModel?, toolSelectedLanguageIndex: Int?, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLearnToShareToolStringsUseCase: GetLearnToShareToolStringsUseCase, getLearnToShareToolTutorialUseCase: GetLearnToShareToolTutorialUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        toolId: String,
+        toolPrimaryLanguage: AppLanguageDomainModel,
+        toolParallelLanguage: AppLanguageDomainModel?,
+        toolSelectedLanguageIndex: Int?,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getLearnToShareToolStringsUseCase: GetLearnToShareToolStringsUseCase,
+        getLearnToShareToolTutorialUseCase: GetLearnToShareToolTutorialUseCase
+    ) {
         
         self.stepEmitter = stepEmitter
         self.toolId = toolId

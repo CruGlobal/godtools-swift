@@ -18,7 +18,14 @@ struct CustomButtonAttributes {
     let borderColor: Color
     let borderWidth: CGFloat
     
-    init(width: CGFloat? = nil, height: CGFloat? = nil, color: Color = Color.clear, cornerRadius: CGFloat = 0, borderColor: Color = Color.clear, borderWidth: CGFloat = 0) {
+    init(
+        width: CGFloat? = nil,
+        height: CGFloat? = nil,
+        color: Color = Color.clear,
+        cornerRadius: CGFloat = 0,
+        borderColor: Color = Color.clear,
+        borderWidth: CGFloat = 0
+    ) {
         
         self.width = width
         self.height = height

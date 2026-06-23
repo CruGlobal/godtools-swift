@@ -42,7 +42,20 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
     let rendererWillChangeSignal: Signal = Signal()
     let incrementUserCounterUseCase: IncrementUserCounterUseCase
     
-    init(renderer: MobileContentRenderer, initialPage: MobileContentRendererInitialPage?, initialPageConfig: MobileContentRendererInitialPageConfig?, initialPageSubIndex: Int?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
+    init(
+        renderer: MobileContentRenderer,
+        initialPage: MobileContentRendererInitialPage?,
+        initialPageConfig: MobileContentRendererInitialPageConfig?,
+        initialPageSubIndex: Int?,
+        resourcesRepository: ResourcesRepository,
+        translationsRepository: TranslationsRepository,
+        mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getTranslatedLanguageName: GetTranslatedLanguageName,
+        trainingTipsEnabled: Bool,
+        incrementUserCounterUseCase: IncrementUserCounterUseCase,
+        selectedLanguageIndex: Int?
+    ) {
         
         self.renderer = CurrentValueSubject(renderer)
         self.currentPageRenderer = CurrentValueSubject(renderer.pageRenderers[0])

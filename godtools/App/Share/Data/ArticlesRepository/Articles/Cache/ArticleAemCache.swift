@@ -21,7 +21,12 @@ final class ArticleAemCache {
     private let realmDatabase: RealmDatabase
     private let realmDataWrite: RealmDataWrite
     
-    init(persistence: any Persistence<ArticleAemData, ArticleAemData>, articleWebArchiver: ArticleWebArchiverInterface, realmDatabase: RealmDatabase, realmDataWrite: RealmDataWrite) {
+    init(
+        persistence: any Persistence<ArticleAemData, ArticleAemData>,
+        articleWebArchiver: ArticleWebArchiverInterface,
+        realmDatabase: RealmDatabase,
+        realmDataWrite: RealmDataWrite
+    ) {
         
         self.persistence = persistence
         self.articleWebArchiver = articleWebArchiver

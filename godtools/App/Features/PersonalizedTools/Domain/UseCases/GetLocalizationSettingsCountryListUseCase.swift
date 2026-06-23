@@ -14,7 +14,10 @@ final class GetLocalizationSettingsCountryListUseCase {
     private let countriesRepository: LocalizationSettingsCountriesRepositoryInterface
     private let localizationServices: LocalizationServicesInterface
 
-    init(countriesRepository: LocalizationSettingsCountriesRepositoryInterface, localizationServices: LocalizationServicesInterface) {
+    init(
+        countriesRepository: LocalizationSettingsCountriesRepositoryInterface,
+        localizationServices: LocalizationServicesInterface
+    ) {
         self.countriesRepository = countriesRepository
         self.localizationServices = localizationServices
     }

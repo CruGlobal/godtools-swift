@@ -24,7 +24,12 @@ final class ShareToolQRCodeViewModel: ObservableObject {
     
     let shareUrl: String
     
-    init(stepEmitter: FlowStepEmitter, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getShareToolQRCodeStringsUseCase: GetShareToolQRCodeStringsUseCase, shareUrl: String) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getShareToolQRCodeStringsUseCase: GetShareToolQRCodeStringsUseCase,
+        shareUrl: String
+    ) {
         
         self.stepEmitter = stepEmitter
         self.getShareToolQRCodeStringsUseCase = getShareToolQRCodeStringsUseCase

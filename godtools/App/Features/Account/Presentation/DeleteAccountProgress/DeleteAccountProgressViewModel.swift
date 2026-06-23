@@ -24,7 +24,12 @@ final class DeleteAccountProgressViewModel: ObservableObject {
     
     @Published private(set) var strings = DeleteAccountProgressStringsDomainModel.emptyValue
     
-    init(stepEmitter: FlowStepEmitter, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getDeleteAccountProgressStringsUseCase: GetDeleteAccountProgressStringsUseCase, deleteAccountUseCase: DeleteAccountUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getDeleteAccountProgressStringsUseCase: GetDeleteAccountProgressStringsUseCase,
+        deleteAccountUseCase: DeleteAccountUseCase
+    ) {
         
         self.stepEmitter = stepEmitter
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase

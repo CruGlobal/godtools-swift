@@ -34,7 +34,27 @@ final class TractViewModel: MobileContentRendererViewModel {
     @Published private(set) var toolSettingsDidClose: Void?
     @Published private(set) var hidesRemoteShareIsActive: Bool = true
         
-    init(stepEmitter: FlowStepEmitter, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, languagesRepository: LanguagesRepository, resourceViewsService: ResourceViewsService, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, liveShareStream: String?, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?, persistToolLanguageSettings: PersistToolLanguageSettingsInterface?) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        renderer: MobileContentRenderer,
+        tractRemoteSharePublisher: TractRemoteSharePublisher,
+        tractRemoteShareSubscriber: TractRemoteShareSubscriber,
+        languagesRepository: LanguagesRepository,
+        resourceViewsService: ResourceViewsService,
+        trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase,
+        resourcesRepository: ResourcesRepository,
+        translationsRepository: TranslationsRepository,
+        mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getTranslatedLanguageName: GetTranslatedLanguageName,
+        liveShareStream: String?,
+        initialPage: MobileContentRendererInitialPage?,
+        initialPageSubIndex: Int?,
+        trainingTipsEnabled: Bool,
+        incrementUserCounterUseCase: IncrementUserCounterUseCase,
+        selectedLanguageIndex: Int?,
+        persistToolLanguageSettings: PersistToolLanguageSettingsInterface?
+    ) {
         
         self.stepEmitter = stepEmitter
         self.tractRemoteSharePublisher = tractRemoteSharePublisher

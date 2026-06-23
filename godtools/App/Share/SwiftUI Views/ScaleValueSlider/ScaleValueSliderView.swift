@@ -22,15 +22,22 @@ struct ScaleValueSliderView: View {
     private let scrubberBarWidth: CGFloat
     private let tintColor: Color
     private let lineWidth: CGFloat = 1
+    private let scaleDisplayValue: String
     private let minScale: ScaleValue
     private let maxScale: ScaleValue
-    private let scaleDisplayValue: String
         
     @Binding private var scaleIntValue: Int
     
     @State private var progress: CGFloat
     
-    init(viewWidth: CGFloat, tintColor: Color, minScale: ScaleValue = ScaleValueSliderView.defaultMinScale, maxScale: ScaleValue = ScaleValueSliderView.defaultMaxScale, scaleIntValue: Binding<Int>, scaleDisplayValue: String) {
+    init(
+        viewWidth: CGFloat,
+        tintColor: Color,
+        scaleIntValue: Binding<Int>,
+        scaleDisplayValue: String,
+        minScale: ScaleValue = ScaleValueSliderView.defaultMinScale,
+        maxScale: ScaleValue = ScaleValueSliderView.defaultMaxScale,
+    ) {
                 
         self.viewWidth = viewWidth
         self.tintColor = tintColor
@@ -45,9 +52,9 @@ struct ScaleValueSliderView: View {
             assertionFailure("minScaleValue \(minScale.integerValue) must be less than maxScaleValue \(maxScale.integerValue).")
         }
                 
+        self.scaleDisplayValue = scaleDisplayValue
         self.minScale = minScale
         self.maxScale = maxScale
-        self.scaleDisplayValue = scaleDisplayValue
         
         self._scaleIntValue = scaleIntValue
         
@@ -96,9 +103,9 @@ struct ScaleValueSliderView: View {
             CircledTextView(
                 backgroundColor: .white,
                 tintColor: tintColor,
+                text: scaleDisplayValue,
                 lineWidth: lineWidth,
-                size: CGSize(width: ScaleValueSliderView.scrubberSize, height: ScaleValueSliderView.scrubberSize),
-                text: scaleDisplayValue
+                size: CGSize(width: ScaleValueSliderView.scrubberSize, height: ScaleValueSliderView.scrubberSize)
             )
             .allowsHitTesting(false)
             .padding([.leading], scrubberBarLeading + (progress * scrubberBarWidth) - (ScaleValueSliderView.scrubberSize / 2))
