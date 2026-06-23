@@ -25,6 +25,10 @@ struct PersonalizationUnavailableView: View {
     private let goToAllToolsButtonTitle: String
     private let changeLocalizationSettingsTapped: (() -> Void)?
     private let goToAllToolsTapped: (() -> Void)?
+    
+    @State private var changeLocalizationSettingsButtonWidth: CGFloat?
+    @State private var goToAllToolsButtonWidth: CGFloat?
+    @State private var maxButtonWidth: CGFloat?
 
     init(
         geometry: GeometryProxy,
@@ -76,20 +80,30 @@ struct PersonalizationUnavailableView: View {
                         title: changeSettingsButtonTitle,
                         color: .clear,
                         font: Self.buttonFont,
+                        width: maxButtonWidth,
                         titleHorizontalPadding: Self.buttonTitleHorizontalPadding,
                         titleVerticalPadding: Self.buttonTitleVerticalPadding,
                         cornerRadius: Self.buttonCornerRadius,
-                        tapped: changeLocalizationSettingsTapped
+                        tapped: changeLocalizationSettingsTapped,
+                        onTextWidthChanged: { (width: CGFloat) in
+                            changeLocalizationSettingsButtonWidth = width
+                            updateMaxButtonWidth()
+                        }
                     )
 
                     GTButton(
                         style: .blue,
                         title: goToAllToolsButtonTitle,
                         font: Self.buttonFont,
+                        width: maxButtonWidth,
                         titleHorizontalPadding: Self.buttonTitleHorizontalPadding,
                         titleVerticalPadding: Self.buttonTitleVerticalPadding,
                         cornerRadius: Self.buttonCornerRadius,
-                        tapped: goToAllToolsTapped
+                        tapped: goToAllToolsTapped,
+                        onTextWidthChanged: { (width: CGFloat) in
+                            goToAllToolsButtonWidth = width
+                            updateMaxButtonWidth()
+                        }
                     )
                 }
                 .padding(.top, 20)
@@ -99,5 +113,24 @@ struct PersonalizationUnavailableView: View {
         }
         .frame(height: (geometry.size.height * heightMultiplier) - 15)
         .padding(.horizontal, DashboardView.contentHorizontalInsets)
+    }
+    
+    private func updateMaxButtonWidth() {
+        
+        guard let changeLocalizationSettingsButtonWidth = self.changeLocalizationSettingsButtonWidth,
+              let goToAllToolsButtonWidth = self.goToAllToolsButtonWidth,
+              changeLocalizationSettingsButtonWidth > 0 && goToAllToolsButtonWidth > 0 else {
+                        
+            maxButtonWidth = nil
+            
+            return
+        }
+        
+        if changeLocalizationSettingsButtonWidth > goToAllToolsButtonWidth {
+            maxButtonWidth = changeLocalizationSettingsButtonWidth
+        }
+        else {
+            maxButtonWidth = goToAllToolsButtonWidth
+        }
     }
 }
