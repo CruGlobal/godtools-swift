@@ -22,10 +22,23 @@ struct LanguageDownloadIcon: View {
         
         ZStack {
             
-            Circle()
-                .stroke(lineWidth: 1.3)
-            
-            innerIcon()
+            if state.isDownloading && state.downloadProgress == 0 {
+                
+                HStack(alignment: .center, spacing: 0) {
+                    Spacer()
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle())
+                        .tint(ColorPalette.gtBlue.color)
+                    Spacer()
+                }
+            }
+            else {
+                
+                Circle()
+                    .stroke(lineWidth: 1.3)
+                
+                innerIcon()
+            }
         }
         .frame(width: 21, height: 21)
         .foregroundColor(iconColor())

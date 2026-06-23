@@ -30,6 +30,9 @@ class AppDiContainer {
         )
         
         // feature
+        let articlesDataLayer = ArticlesDataLayerDependencies(coreDataLayer: dataLayer)
+        let articlesDomainLayer = ArticlesDomainLayerDependencies(core: core, dataLayer: articlesDataLayer)
+        
         let onboardingDataLayer = OnboardingDataLayerDependencies(coreDataLayer: dataLayer)
         let onboardingDomainLayer = OnboardingDomainLayerDependencies(core: core, dataLayer: onboardingDataLayer)
         
@@ -41,7 +44,7 @@ class AppDiContainer {
         let feature = AppFeatureDiContainer(
             account: AccountDiContainer(core: core),
             appLanguage: AppLanguageDiContainer(core: core),
-            articles: ArticlesDiContainer(core: core),
+            articles: ArticlesDiContainer(dataLayer: articlesDataLayer, domainLayer: articlesDomainLayer),
             dashboard: DashboardDiContainer(core: core),
             deferredDeepLink: DeferredDeepLinkDiContainer(core: core),
             downloadToolProgress: DownloadToolProgressDiContainer(core: core),

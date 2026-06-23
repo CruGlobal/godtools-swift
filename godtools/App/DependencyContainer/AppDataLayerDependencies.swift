@@ -597,7 +597,30 @@ final class AppDataLayerDependencies {
     }
     
     func getToolDownloader() -> ToolDownloader {
+        
+        let persistence: any Persistence<ToolDownloadDataModel, ToolDownloadDataModel>
+        
+        if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                mapping: SwiftToolDownloadMapping()
+            )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                database: getSharedRealmDatabase(),
+                mapping: RealmToolDownloadMapping()
+            )
+        }
+        
+        let cache = ToolDownloaderCache(
+            persistence: persistence
+        )
+        
         return ToolDownloader(
+            cache: cache,
             languagesRepository: getLanguagesRepository(),
             translationsRepository: getTranslationsRepository(),
             attachmentsRepository: getAttachmentsRepository(),

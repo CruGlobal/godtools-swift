@@ -51,10 +51,9 @@ extension SwiftDownloadedLanguage {
     
     func toModel() -> DownloadedLanguageDataModel {
         return DownloadedLanguageDataModel(
-            id: id,
-            createdAt: createdAt,
             languageId: languageId,
-            downloadComplete: downloadComplete
+            downloadComplete: downloadComplete,
+            createdAt: createdAt
         )
     }
 }

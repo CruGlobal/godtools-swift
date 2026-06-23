@@ -73,4 +73,3 @@ final class GetDownloadedLanguagesListUseCase {
         return languagesList
     }
 }
-
