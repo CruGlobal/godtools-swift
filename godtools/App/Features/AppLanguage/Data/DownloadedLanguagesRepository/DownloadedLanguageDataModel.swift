@@ -11,17 +11,24 @@ import Foundation
 struct DownloadedLanguageDataModel: Sendable {
     
     let id: String
-    let createdAt: Date
     let languageId: String
     let downloadComplete: Bool
+    let createdAt: Date
     
-    func copy(downloadComplete: Bool? = nil) -> DownloadedLanguageDataModel {
+    init(languageId: String, downloadComplete: Bool, createdAt: Date) {
+        
+        self.id = languageId
+        self.languageId = languageId
+        self.downloadComplete = downloadComplete
+        self.createdAt = createdAt
+    }
+    
+    func copy(downloadComplete: Bool? = nil, createdAt: Date? = nil) -> DownloadedLanguageDataModel {
         
         return DownloadedLanguageDataModel(
-            id: id,
-            createdAt: createdAt,
             languageId: languageId,
-            downloadComplete: downloadComplete ?? self.downloadComplete
+            downloadComplete: downloadComplete ?? self.downloadComplete,
+            createdAt: createdAt ?? self.createdAt,
         )
     }
 }

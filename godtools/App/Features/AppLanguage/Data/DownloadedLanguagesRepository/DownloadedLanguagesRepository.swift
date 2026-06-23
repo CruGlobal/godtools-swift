@@ -41,19 +41,24 @@ final class DownloadedLanguagesRepository {
     }
     
     func storeDownloadedLanguage(languageId: String, downloadComplete: Bool) async throws -> DownloadedLanguageDataModel {
+                
+        let downloadedLanguage: DownloadedLanguageDataModel
         
-        let downloadedLanguage = DownloadedLanguageDataModel(
-            id: languageId,
-            createdAt: Date(),
-            languageId: languageId,
-            downloadComplete: downloadComplete
-        )
+        if let existing = try getDownloadedLanguage(languageId: languageId) {
+            downloadedLanguage = existing.copy(downloadComplete: downloadComplete)
+        }
+        else {
+            downloadedLanguage = DownloadedLanguageDataModel(languageId: languageId, downloadComplete: downloadComplete, createdAt: Date())
+        }
         
-        _ = try await cache.persistence.writeObjects(
-            externalObjects: [downloadedLanguage],
-            writeOption: nil,
-            getOption: nil
-        )
+        _ = try await cache.persistence.writeObjects(externalObjects: [downloadedLanguage])
+        
+        return downloadedLanguage
+    }
+    
+    func storeDownloadedLanguage(downloadedLanguage: DownloadedLanguageDataModel) async throws -> DownloadedLanguageDataModel {
+        
+        _ = try await cache.persistence.writeObjects(externalObjects: [downloadedLanguage])
         
         return downloadedLanguage
     }
@@ -67,14 +72,27 @@ final class DownloadedLanguagesRepository {
         
         let incompleteDownloads: [DownloadedLanguageDataModel] = try await cache.getDownloadedLanguagesByDownloadComplete(downloadComplete: false)
         
-        let incompleteToCompletedDownloads = incompleteDownloads.map {
-            $0.copy(downloadComplete: true)
+        guard incompleteDownloads.count > 0 else {
+            return
         }
         
-        _ = try await cache.persistence.writeObjects(
-            externalObjects: incompleteToCompletedDownloads,
-            writeOption: nil,
-            getOption: nil
-        )
+        let fiveMinutes: Double = 5 * 60
+        
+        var downloadsToUpdate: [DownloadedLanguageDataModel] = Array()
+        
+        for download in incompleteDownloads {
+            
+            let secondsSinceDownloadStarted: Double = Date().timeIntervalSince(download.createdAt)
+            
+            guard secondsSinceDownloadStarted >= fiveMinutes else {
+                continue
+            }
+            
+            downloadsToUpdate.append(
+                download.copy(downloadComplete: true)
+            )
+        }
+        
+        try await cache.persistence.writeObjects(externalObjects: downloadsToUpdate)
     }
 }

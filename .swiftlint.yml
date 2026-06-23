@@ -113,8 +113,8 @@ force_try:
 line_length: 1200
 # they can set both implicitly with an array
 type_body_length:
-  - 500 # warning
-  - 600 # error
+  - 600 # warning
+  - 1000 # error
 # or they can set both explicitly
 file_length:
   warning: 1500

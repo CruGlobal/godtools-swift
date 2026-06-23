@@ -39,7 +39,7 @@ enum AppFlowStep: FlowStep {
     case lessonTappedFromLessonsList(lessonListItem: LessonListItemDomainModel, languageFilter: LessonFilterLanguageDomainModel?)
     case languageTappedFromLessonLanguageFilter
     case backTappedFromLessonLanguageFilter
-    case localizationSettingsTappedFromLessons
+    case changeLocalizationSettingsTappedFromLessons
 
     // lesson
     case closeLessonSwipeTutorial
@@ -79,7 +79,7 @@ enum AppFlowStep: FlowStep {
     case backTappedFromToolLanguageFilter
     case spotlightToolTappedFromTools(spotlightTool: SpotlightToolListItemDomainModel, toolFilterLanguage: ToolFilterLanguageDomainModel?)
     case toolTappedFromTools(tool: ToolListItemDomainModel, toolFilterLanguage: ToolFilterLanguageDomainModel?)
-    case localizationSettingsTappedFromTools
+    case changeLocalizationSettingsTappedFromTools
     
     // toolDetails
     case backTappedFromToolDetails

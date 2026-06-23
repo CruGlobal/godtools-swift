@@ -14,9 +14,9 @@ final class ArticlesDiContainer {
     
     let domainLayer: ArticlesDomainLayerDependencies
     
-    init(core: AppCoreDiContainer) {
+    init(dataLayer: ArticlesDataLayerDependencies, domainLayer: ArticlesDomainLayerDependencies) {
         
-        self.dataLayer = ArticlesDataLayerDependencies(coreDataLayer: core.dataLayer)
-        self.domainLayer = ArticlesDomainLayerDependencies(core: core, dataLayer: dataLayer)
+        self.dataLayer = dataLayer
+        self.domainLayer = domainLayer
     }
 }

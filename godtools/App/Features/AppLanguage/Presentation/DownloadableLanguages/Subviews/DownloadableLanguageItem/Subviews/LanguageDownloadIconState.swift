@@ -9,8 +9,27 @@
 import Foundation
 
 enum LanguageDownloadIconState {
+    
     case notDownloaded
     case downloading(progress: Double)
     case downloaded
     case remove
+    
+    var isDownloading: Bool {
+        switch self {
+        case .downloading(progress: let progress):
+            return true
+        default:
+            return false
+        }
+    }
+    
+    var downloadProgress: Double {
+        switch self {
+        case .downloading(let progress):
+            return progress
+        default:
+            return 0
+        }
+    }
 }
