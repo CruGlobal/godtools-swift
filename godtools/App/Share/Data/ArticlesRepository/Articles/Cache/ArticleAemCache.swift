@@ -93,7 +93,7 @@ extension ArticleAemCache {
         )
     }
     
-    func storeAemDataObjects(aemDataObjects: [ArticleAemData], requestPriority: RequestPriority) async throws -> ArticleWebArchiverResult {
+    func storeAemDataObjects(aemDataObjects: [ArticleAemData], requestPriority: RequestPriority) async throws -> ArticleWebArchiverArchive {
      
         let realm: Realm = try realmDatabase.openRealm()
         
@@ -102,20 +102,20 @@ extension ArticleAemCache {
             realm: realm
         )
         
-        let webArchiverResults: ArticleWebArchiverResult = await articleWebArchiver.archive(
+        let webArchive: ArticleWebArchiverArchive = await articleWebArchiver.archive(
             webArchiveUrls: aemDataObjectsThatNeedDownloading.webArchiveUrls,
             requestPriority: requestPriority
         )
         
         var aemCacheArchivedObjects: [ArticleAemCacheArchivedObject] = Array()
         
-        for webArchiveResult in webArchiverResults.archives {
+        for archive in webArchive.archives {
             
-            if let aemData = aemDataObjectsThatNeedDownloading.aemDataDictionary[webArchiveResult.webArchiveUrl.uuid] {
+            if let aemData = aemDataObjectsThatNeedDownloading.aemDataDictionary[archive.webArchiveUrl.uuid] {
                 
                 let archivedObject = ArticleAemCacheArchivedObject(
                     aemData: aemData,
-                    webArchivePlistData: webArchiveResult.webArchivePlistData
+                    webArchivePlistData: archive.webArchivePlistData
                 )
                 
                 aemCacheArchivedObjects.append(archivedObject)
@@ -124,7 +124,7 @@ extension ArticleAemCache {
         
         try await storeAemCacheArchivedObjects(aemCacheArchivedObjects: aemCacheArchivedObjects)
         
-        return webArchiverResults
+        return webArchive
     }
     
     private func filterAemDataObjectsThatNeedDownloaded(aemDataObjects: [ArticleAemData], realm: Realm) throws -> ArticleAemDataObjectsThatNeedDownloading {
