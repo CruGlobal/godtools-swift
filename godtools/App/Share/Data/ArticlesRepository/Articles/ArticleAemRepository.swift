@@ -54,12 +54,12 @@ open class ArticleAemRepository: NSObject {
             requestPriority: requestPriority
         )
         
-        let webArchiverResults = try await cache.storeAemDataObjects(
+        let webArchive = try await cache.storeAemDataObjects(
             aemDataObjects: download.aemDataObjects,
             requestPriority: requestPriority
         )
         
-        return download.copyByAppendingErrors(errors: webArchiverResults.errors)
+        return download.copyByAppendingErrors(errors: webArchive.errors)
     }
     
     private func filterAemUrisByLastUpdate(aemUris: [String]) -> [String] {

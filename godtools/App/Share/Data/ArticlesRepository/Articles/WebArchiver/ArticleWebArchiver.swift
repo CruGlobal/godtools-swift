@@ -23,38 +23,41 @@ final class ArticleWebArchiver: ArticleWebArchiverInterface {
         self.requestSender = requestSender
     }
     
-    func archive(webArchiveUrls: [WebArchiveUrl], requestPriority: RequestPriority) async -> ArticleWebArchiverResult {
+    func archive(webArchiveUrls: [WebArchiveUrl], requestPriority: RequestPriority) async -> ArticleWebArchiverArchive {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
-        
+                
         var archives: [ArticleWebArchiveData] = Array()
         var errors: [Error] = Array()
         
-        do {
+        await withTaskGroup(of: ArticleWebArchiverResult.self) { group in
             
-            try await withThrowingTaskGroup(of: ArticleWebArchiveData.self) { group in
-                
-                for webArchiveUrl in webArchiveUrls {
-                    group.addTask {
+            for webArchiveUrl in webArchiveUrls {
+                group.addTask {
+                    do {
                         let webArchiveData: ArticleWebArchiveData = try await self.archiveUrl(
                             webArchiveUrl: webArchiveUrl,
                             urlSession: urlSession
                         )
-                        return webArchiveData
+                        return ArticleWebArchiverResult(archive: webArchiveData, error: nil)
+                    }
+                    catch let error {
+                        return ArticleWebArchiverResult(archive: nil, error: error)
                     }
                 }
-                
-                for try await webArchiveData in group {
-                    archives.append(webArchiveData)
+            }
+            
+            for await webArchiveData in group {
+                if let archive = webArchiveData.archive {
+                    archives.append(archive)
+                }
+                if let error = webArchiveData.error {
+                    errors.append(error)
                 }
             }
         }
-        catch let error {
-            
-            errors.append(error)
-        }
         
-        return ArticleWebArchiverResult(archives: archives, errors: errors)
+        return ArticleWebArchiverArchive(archives: archives, errors: errors)
     }
         
     private func archiveUrl(webArchiveUrl: WebArchiveUrl, urlSession: URLSession) async throws -> ArticleWebArchiveData {
@@ -65,14 +68,14 @@ final class ArticleWebArchiver: ArticleWebArchiverInterface {
             urlSession: urlSession
         )
         
-        let resources: [WebArchiveResource] = try await requestHtmlDocumentResources(
+        let htmlDocumentResources: HTMLDocumentResources = await requestHtmlDocumentResources(
             resourceUrls: htmlDocumentData.resourceUrls,
             urlSession: urlSession
         )
         
         let webArchive = WebArchive(
             mainResource: htmlDocumentData.mainResource,
-            webSubresources: resources
+            webSubresources: htmlDocumentResources.resources
         )
         
         let plistEncoder = PropertyListEncoder()
@@ -128,9 +131,12 @@ final class ArticleWebArchiver: ArticleWebArchiverInterface {
         throw NSError.errorWithDomain(domain: errorDomain, code: -1, description: "Failed to archive url there wasn't sufficent html to parse.")
     }
     
-    private func requestHtmlDocumentResources(resourceUrls: [String], urlSession: URLSession) async throws -> [WebArchiveResource] {
+    private func requestHtmlDocumentResources(resourceUrls: [String], urlSession: URLSession) async -> HTMLDocumentResources {
         
-        try await withThrowingTaskGroup(of: WebArchiveResource.self) { group in
+        var resources: [WebArchiveResource] = Array()
+        var errors: [Error] = Array()
+        
+        await withTaskGroup(of: HTMLDocumentResources.Result.self) { group in
             
             for urlString in resourceUrls {
                 
@@ -139,19 +145,31 @@ final class ArticleWebArchiver: ArticleWebArchiverInterface {
                 }
                 
                 group.addTask {
-                    let archiveResource = try await self.requestHtmlDocumentResource(url: url, urlSession: urlSession)
-                    return archiveResource
+                    do {
+                        let archiveResource = try await self.requestHtmlDocumentResource(
+                            url: url,
+                            urlSession: urlSession
+                        )
+                        return HTMLDocumentResources.Result(resource: archiveResource, error: nil)
+                    }
+                    catch let error {
+                        return HTMLDocumentResources.Result(resource: nil, error: error)
+                    }
                 }
             }
             
-            var downloadedResources: [WebArchiveResource] = Array()
-            
-            for try await archiveResource in group {
-                downloadedResources.append(archiveResource)
+            for await result in group {
+                
+                if let resource = result.resource {
+                    resources.append(resource)
+                }
+                if let error = result.error {
+                    errors.append(error)
+                }
             }
-            
-            return downloadedResources
         }
+        
+        return HTMLDocumentResources(resources: resources, errors: errors)
     }
     
     private func requestHtmlDocumentResource(url: URL, urlSession: URLSession) async throws -> WebArchiveResource {
