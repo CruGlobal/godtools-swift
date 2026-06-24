@@ -12,7 +12,13 @@ class TractToolSettingsObserver: ToolSettingsObserver, RemoteShareable, LinkShar
     
     let tractRemoteSharePublisher: TractRemoteSharePublisher
     
-    init(toolId: String, languages: ToolSettingsLanguages, pageNumber: Int, trainingTipsEnabled: Bool, tractRemoteSharePublisher: TractRemoteSharePublisher) {
+    init(
+        toolId: String,
+        languages: ToolSettingsLanguages,
+        pageNumber: Int,
+        trainingTipsEnabled: Bool,
+        tractRemoteSharePublisher: TractRemoteSharePublisher
+    ) {
         
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
         

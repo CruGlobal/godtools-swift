@@ -16,7 +16,11 @@ final class AppLanguagesRepositorySync: AppLanguagesRepositorySyncInterface {
     private let persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>
     private let syncInvalidator: SyncInvalidator
     
-    init(api: AppLanguagesApi, persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>, syncInvalidator: SyncInvalidator) {
+    init(
+        api: AppLanguagesApi,
+        persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>,
+        syncInvalidator: SyncInvalidator
+    ) {
         
         self.api = api
         self.persistence = persistence

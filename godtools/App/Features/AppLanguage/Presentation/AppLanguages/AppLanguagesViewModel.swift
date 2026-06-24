@@ -31,7 +31,14 @@ final class AppLanguagesViewModel: ObservableObject {
     @Published var searchText: String = ""
     @Published var appLanguageSearchResults: [AppLanguageListItemDomainModel] = Array()
     
-    init(stepEmitter: FlowStepEmitter, getAppLanguagesStringsUseCase: GetAppLanguagesStringsUseCase, searchAppLanguageInAppLanguagesListUseCase: SearchAppLanguageInAppLanguagesListUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getAppLanguagesListUseCase: GetAppLanguagesListUseCase, getSearchBarStringsUseCase: GetSearchBarStringsUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        getAppLanguagesStringsUseCase: GetAppLanguagesStringsUseCase,
+        searchAppLanguageInAppLanguagesListUseCase: SearchAppLanguageInAppLanguagesListUseCase,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getAppLanguagesListUseCase: GetAppLanguagesListUseCase,
+        getSearchBarStringsUseCase: GetSearchBarStringsUseCase
+    ) {
         
         self.stepEmitter = stepEmitter
         self.getAppLanguagesStringsUseCase = getAppLanguagesStringsUseCase

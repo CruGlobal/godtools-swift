@@ -14,7 +14,11 @@ final class OptInNotificationDomainLayerDependencies {
     private let dataLayer: OptInNotificationDataLayerDependencies
     private let getOnboardingTutorialIsAvailable: GetOnboardingTutorialIsAvailable
 
-    init(core: AppCoreDiContainer, dataLayer: OptInNotificationDataLayerDependencies, getOnboardingTutorialIsAvailable: GetOnboardingTutorialIsAvailable) {
+    init(
+        core: AppCoreDiContainer,
+        dataLayer: OptInNotificationDataLayerDependencies,
+        getOnboardingTutorialIsAvailable: GetOnboardingTutorialIsAvailable
+    ) {
 
         self.core = core
         self.dataLayer = dataLayer

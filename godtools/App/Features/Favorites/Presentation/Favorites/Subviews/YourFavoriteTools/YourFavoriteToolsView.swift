@@ -16,7 +16,12 @@ struct YourFavoriteToolsView: View {
     
     @ObservedObject private var viewModel: FavoritesViewModel
             
-    init(viewModel: FavoritesViewModel, geometry: GeometryProxy, contentHorizontalInsets: CGFloat, toolCardSpacing: CGFloat = DashboardView.toolCardVerticalSpacing) {
+    init(
+        viewModel: FavoritesViewModel,
+        geometry: GeometryProxy,
+        contentHorizontalInsets: CGFloat,
+        toolCardSpacing: CGFloat = DashboardView.toolCardVerticalSpacing
+    ) {
         
         self.viewModel = viewModel
         self.geometry = geometry

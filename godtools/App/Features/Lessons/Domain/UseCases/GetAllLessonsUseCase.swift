@@ -15,7 +15,11 @@ final class GetAllLessonsUseCase {
     private let lessonProgressRepository: UserLessonProgressRepository
     private let getLessonsListItems: GetLessonsListItems
 
-    init(resourcesRepository: ResourcesRepository, lessonProgressRepository: UserLessonProgressRepository, getLessonsListItems: GetLessonsListItems) {
+    init(
+        resourcesRepository: ResourcesRepository,
+        lessonProgressRepository: UserLessonProgressRepository,
+        getLessonsListItems: GetLessonsListItems
+    ) {
         
         self.resourcesRepository = resourcesRepository
         self.lessonProgressRepository = lessonProgressRepository

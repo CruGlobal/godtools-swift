@@ -22,7 +22,12 @@ class FadeAnimationTransition: NSObject, UIViewControllerAnimatedTransitioning {
     private let fadeOutAlpha: CGFloat
     private let fadeInAlpha: CGFloat
     
-    init(fade: FadeAnimationTransition.Fade, duration: TimeInterval = FadeAnimationTransition.defaultDuration, fadeOutAlpha: CGFloat = 0, fadeInAlpha: CGFloat = 1) {
+    init(
+        fade: FadeAnimationTransition.Fade,
+        duration: TimeInterval = FadeAnimationTransition.defaultDuration,
+        fadeOutAlpha: CGFloat = 0,
+        fadeInAlpha: CGFloat = 1
+    ) {
         
         self.fade = fade
         self.duration = duration

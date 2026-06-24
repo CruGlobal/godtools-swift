@@ -12,7 +12,13 @@ import Combine
 @MainActor
 class AppShareBarItem: NavBarItem {
     
-    init(color: UIColor?, target: AnyObject, action: Selector, accessibilityIdentifier: String?, hidesBarItemPublisher: AnyPublisher<Bool, Never>? = nil) {
+    init(
+        color: UIColor?,
+        target: AnyObject,
+        action: Selector,
+        accessibilityIdentifier: String?,
+        hidesBarItemPublisher: AnyPublisher<Bool, Never>? = nil
+    ) {
         
         super.init(
             controllerType: .base,

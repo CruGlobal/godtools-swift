@@ -19,7 +19,14 @@ final class GetDownloadableLanguagesListUseCase {
     private let stringWithLocaleCount: StringWithLocaleCountInterface
     private let sortDate: Date = Date()
     
-    init(languagesRepository: LanguagesRepository, downloadedLanguagesRepository: DownloadedLanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName, resourcesRepository: ResourcesRepository, localizationServices: LocalizationServicesInterface, stringWithLocaleCount: StringWithLocaleCountInterface) {
+    init(
+        languagesRepository: LanguagesRepository,
+        downloadedLanguagesRepository: DownloadedLanguagesRepository,
+        getTranslatedLanguageName: GetTranslatedLanguageName,
+        resourcesRepository: ResourcesRepository,
+        localizationServices: LocalizationServicesInterface,
+        stringWithLocaleCount: StringWithLocaleCountInterface
+    ) {
         
         self.languagesRepository = languagesRepository
         self.downloadedLanguagesRepository = downloadedLanguagesRepository

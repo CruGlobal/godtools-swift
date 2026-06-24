@@ -24,7 +24,13 @@ final class DeferredDeepLinkModalViewModel: ObservableObject {
     
     @Published private(set) var strings = DeferredDeepLinkModalStringsDomainModel.emptyValue
     
-    init(stepEmitter: FlowStepEmitter, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getDeferredDeepLinkModalStringsUseCase: GetDeferredDeepLinkModalStringsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, deepLinkingService: DeepLinkingService) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getDeferredDeepLinkModalStringsUseCase: GetDeferredDeepLinkModalStringsUseCase,
+        trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase,
+        deepLinkingService: DeepLinkingService
+    ) {
         
         self.stepEmitter = stepEmitter
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase

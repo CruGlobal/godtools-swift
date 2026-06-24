@@ -22,7 +22,11 @@ final class LessonSwipeTutorialViewModel: ObservableObject {
     
     @Published private(set) var strings: LessonSwipeTutorialStringsDomainModel = LessonSwipeTutorialStringsDomainModel.emptyValue
 
-    init(stepEmitter: FlowStepEmitter, getStringsUseCase: GetLessonSwipeTutorialStringsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        getStringsUseCase: GetLessonSwipeTutorialStringsUseCase,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    ) {
         self.stepEmitter = stepEmitter
         self.getStringsUseCase = getStringsUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase

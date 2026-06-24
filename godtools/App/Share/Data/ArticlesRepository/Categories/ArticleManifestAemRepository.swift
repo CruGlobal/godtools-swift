@@ -15,7 +15,12 @@ final class ArticleManifestAemRepository: ArticleAemRepository {
     private let categoryArticlesCache: CategoryArticlesCache
     private let syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface
         
-    init(downloader: ArticleAemDownloader, cache: ArticleAemCache, categoryArticlesCache: CategoryArticlesCache, syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface) {
+    init(
+        downloader: ArticleAemDownloader,
+        cache: ArticleAemCache,
+        categoryArticlesCache: CategoryArticlesCache,
+        syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface
+    ) {
         
         self.categoryArticlesCache = categoryArticlesCache
         self.syncInvalidatorPersistence = syncInvalidatorPersistence

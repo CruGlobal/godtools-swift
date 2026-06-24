@@ -42,7 +42,20 @@ final class LessonsViewModel: ObservableObject {
 
     @Published var selectedToggle: PersonalizationToggleOptionValue = .personalized
 
-    init(stepEmitter: FlowStepEmitter, pullToRefreshLessonsUseCase: PullToRefreshLessonsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase, getLessonsStringsUseCase: GetLessonsStringsUseCase, getAllLessonsUseCase: GetAllLessonsUseCase, getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getToolBannerUseCase: GetToolBannerUseCase, inMemoryDataCache: InMemoryDataCache) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        pullToRefreshLessonsUseCase: PullToRefreshLessonsUseCase,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase,
+        getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase,
+        getLessonsStringsUseCase: GetLessonsStringsUseCase,
+        getAllLessonsUseCase: GetAllLessonsUseCase,
+        getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase,
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
+        trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase,
+        getToolBannerUseCase: GetToolBannerUseCase,
+        inMemoryDataCache: InMemoryDataCache
+    ) {
 
         self.stepEmitter = stepEmitter
         self.pullToRefreshLessonsUseCase = pullToRefreshLessonsUseCase

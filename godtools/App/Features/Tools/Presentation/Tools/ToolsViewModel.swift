@@ -55,7 +55,25 @@ final class ToolsViewModel: ObservableObject {
 
     @Published var selectedToggle: PersonalizationToggleOptionValue = .personalized
 
-    init(stepEmitter: FlowStepEmitter, pullToRefreshToolsUseCase: PullToRefreshToolsUseCase, getToolsStringsUseCase: GetToolsStringsUseCase, getAllToolsUseCase: GetAllToolsUseCase, getPersonalizedToolsUseCase: GetPersonalizedToolsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, favoritingToolMessageCache: FavoritingToolMessageCache, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getUserToolFilterCategoryUseCase: GetUserToolFilterCategoryUseCase, getUserToolFilterLanguageUseCase: GetUserToolFilterLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getToolBannerUseCase: GetToolBannerUseCase, inMemoryDataCache: InMemoryDataCache) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        pullToRefreshToolsUseCase: PullToRefreshToolsUseCase,
+        getToolsStringsUseCase: GetToolsStringsUseCase,
+        getAllToolsUseCase: GetAllToolsUseCase,
+        getPersonalizedToolsUseCase: GetPersonalizedToolsUseCase,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase,
+        favoritingToolMessageCache: FavoritingToolMessageCache,
+        getSpotlightToolsUseCase: GetSpotlightToolsUseCase,
+        getUserToolFilterCategoryUseCase: GetUserToolFilterCategoryUseCase,
+        getUserToolFilterLanguageUseCase: GetUserToolFilterLanguageUseCase,
+        getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase,
+        toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase,
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
+        trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase,
+        getToolBannerUseCase: GetToolBannerUseCase,
+        inMemoryDataCache: InMemoryDataCache
+    ) {
         
         self.stepEmitter = stepEmitter
         self.pullToRefreshToolsUseCase = pullToRefreshToolsUseCase

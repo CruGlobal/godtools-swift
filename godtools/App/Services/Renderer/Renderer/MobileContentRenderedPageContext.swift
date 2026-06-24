@@ -33,7 +33,27 @@ class MobileContentRenderedPageContext {
     
     private weak var weakWindow: UIViewController?
     
-    init(pageModel: Page, page: Int, isLastPage: Bool, parentPageParams: MobileContentParentPageParams?, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, resourcesCache: MobileContentRendererManifestResourcesCache, resource: ResourceDataModel, appLanguage: AppLanguageDomainModel, language: LanguageDataModel, translation: TranslationDataModel, viewRenderer: MobileContentViewRenderer, navigation: MobileContentRendererNavigation, rendererLanguages: MobileContentRendererLanguages, rendererState: State, trainingTipsEnabled: Bool, pageViewDataCache: MobileContentPageViewDataCache, userInfo: [String: Any]?) {
+    init(
+        pageModel: Page,
+        page: Int,
+        isLastPage: Bool,
+        parentPageParams: MobileContentParentPageParams?,
+        window: UIViewController,
+        safeArea: UIEdgeInsets,
+        manifest: Manifest,
+        resourcesCache: MobileContentRendererManifestResourcesCache,
+        resource: ResourceDataModel,
+        appLanguage: AppLanguageDomainModel,
+        language: LanguageDataModel,
+        translation: TranslationDataModel,
+        viewRenderer: MobileContentViewRenderer,
+        navigation: MobileContentRendererNavigation,
+        rendererLanguages: MobileContentRendererLanguages,
+        rendererState: State,
+        trainingTipsEnabled: Bool,
+        pageViewDataCache: MobileContentPageViewDataCache,
+        userInfo: [String: Any]?
+    ) {
         
         self.pageModel = pageModel
         self.page = page

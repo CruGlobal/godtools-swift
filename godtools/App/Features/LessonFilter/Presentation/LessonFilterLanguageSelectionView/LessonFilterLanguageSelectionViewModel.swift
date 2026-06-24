@@ -35,7 +35,16 @@ final class LessonFilterLanguageSelectionViewModel: ObservableObject {
     @Published var languageSearchResults: [LessonFilterLanguageDomainModel] = Array()
     @Published var selectedLanguage: LessonFilterLanguageDomainModel?
     
-    init(stepEmitter: FlowStepEmitter, getLessonFilterLanguagesStringsUseCase: GetLessonFilterLanguagesStringsUseCase, getLessonFilterLanguagesUseCase: GetLessonFilterLanguagesUseCase, getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase, storeUserLessonFiltersUseCase: StoreUserLessonFiltersUseCase, getSearchBarStringsUseCase: GetSearchBarStringsUseCase, searchLessonFilterLanguagesUseCase: SearchLessonFilterLanguagesUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        getLessonFilterLanguagesStringsUseCase: GetLessonFilterLanguagesStringsUseCase,
+        getLessonFilterLanguagesUseCase: GetLessonFilterLanguagesUseCase,
+        getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase,
+        storeUserLessonFiltersUseCase: StoreUserLessonFiltersUseCase,
+        getSearchBarStringsUseCase: GetSearchBarStringsUseCase,
+        searchLessonFilterLanguagesUseCase: SearchLessonFilterLanguagesUseCase,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    ) {
         
         self.stepEmitter = stepEmitter
         self.getLessonFilterLanguagesStringsUseCase = getLessonFilterLanguagesStringsUseCase

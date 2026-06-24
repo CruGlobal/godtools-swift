@@ -13,7 +13,13 @@ class MobileContentContentPageViewModel: MobileContentPageViewModel {
     
     let contentPage: Page
     
-    init(contentPage: Page, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, hidesBackgroundImage: Bool = false) {
+    init(
+        contentPage: Page,
+        renderedPageContext: MobileContentRenderedPageContext,
+        mobileContentAnalytics: MobileContentRendererAnalytics,
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
+        hidesBackgroundImage: Bool = false
+    ) {
         
         self.contentPage = contentPage
         

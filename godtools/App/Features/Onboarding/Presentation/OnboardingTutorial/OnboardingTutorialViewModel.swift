@@ -37,7 +37,15 @@ final class OnboardingTutorialViewModel: ObservableObject {
     
     @Published var currentPage: Int = 0
     
-    init(stepEmitter: FlowStepEmitter, viewedOnboardingTutorialUseCase: ViewedOnboardingTutorialUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getOnboardingTutorialStringsUseCase: GetOnboardingTutorialStringsUseCase, trackTutorialVideoAnalytics: TutorialVideoAnalytics, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        viewedOnboardingTutorialUseCase: ViewedOnboardingTutorialUseCase,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getOnboardingTutorialStringsUseCase: GetOnboardingTutorialStringsUseCase,
+        trackTutorialVideoAnalytics: TutorialVideoAnalytics,
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
+        trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
+    ) {
         
         self.stepEmitter = stepEmitter
         self.viewedOnboardingTutorialUseCase = viewedOnboardingTutorialUseCase

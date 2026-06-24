@@ -16,7 +16,13 @@ final class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslat
     private let translationsRepository: TranslationsRepository
     private let userAppLanguageRepository: UserAppLanguageRepository
         
-    init(toolDeepLink: ToolDeepLink, resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, translationsRepository: TranslationsRepository, userAppLanguageRepository: UserAppLanguageRepository) {
+    init(
+        toolDeepLink: ToolDeepLink,
+        resourcesRepository: ResourcesRepository,
+        languagesRepository: LanguagesRepository,
+        translationsRepository: TranslationsRepository,
+        userAppLanguageRepository: UserAppLanguageRepository
+    ) {
         
         self.toolDeepLink = toolDeepLink
         self.resourcesRepository = resourcesRepository

@@ -22,7 +22,12 @@ final class DownloadManifestArticlesObservable: ObservableObject {
     @Published private(set) var downloadResult: Result<Void, Error>?
     @Published private(set) var isDownloading: Bool = false
     
-    init(translation: TranslationDataModel, language: LanguageDataModel, manifest: Manifest, articleManifestAemRepository: ArticleManifestAemRepository) {
+    init(
+        translation: TranslationDataModel,
+        language: LanguageDataModel,
+        manifest: Manifest,
+        articleManifestAemRepository: ArticleManifestAemRepository
+    ) {
         
         self.translation = translation
         self.language = language

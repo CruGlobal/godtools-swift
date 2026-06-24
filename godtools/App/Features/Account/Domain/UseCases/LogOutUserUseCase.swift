@@ -15,7 +15,11 @@ final class LogOutUserUseCase {
     private let firebaseAnalytics: FirebaseAnalyticsInterface
     private let userCountersRepository: UserCountersRepository
     
-    init(userAuthentication: UserAuthentication, firebaseAnalytics: FirebaseAnalyticsInterface, userCountersRepository: UserCountersRepository) {
+    init(
+        userAuthentication: UserAuthentication,
+        firebaseAnalytics: FirebaseAnalyticsInterface,
+        userCountersRepository: UserCountersRepository
+    ) {
         
         self.userAuthentication = userAuthentication
         self.firebaseAnalytics = firebaseAnalytics

@@ -14,7 +14,11 @@ final class GetToolFilterCategory {
     private let localizationServices: LocalizationServicesInterface
     private let stringWithLocaleCount: StringWithLocaleCountInterface
 
-    init(resourcesRepository: ResourcesRepository, localizationServices: LocalizationServicesInterface, stringWithLocaleCount: StringWithLocaleCountInterface) {
+    init(
+        resourcesRepository: ResourcesRepository,
+        localizationServices: LocalizationServicesInterface,
+        stringWithLocaleCount: StringWithLocaleCountInterface
+    ) {
         
         self.resourcesRepository = resourcesRepository
         self.localizationServices = localizationServices

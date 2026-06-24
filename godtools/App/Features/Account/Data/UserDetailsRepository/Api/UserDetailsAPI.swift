@@ -17,7 +17,11 @@ final class UserDetailsApi: UserDetailsApiInterface {
     private let urlSessionPriority: URLSessionPriority
     private let baseURL: String
     
-    init(config: AppConfigInterface, urlSessionPriority: URLSessionPriority, mobileContentApiAuthSession: MobileContentApiAuthSession) {
+    init(
+        config: AppConfigInterface,
+        urlSessionPriority: URLSessionPriority,
+        mobileContentApiAuthSession: MobileContentApiAuthSession
+    ) {
         
         self.urlSessionPriority = urlSessionPriority
         self.authSession = mobileContentApiAuthSession

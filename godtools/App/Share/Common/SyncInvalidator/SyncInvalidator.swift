@@ -14,7 +14,11 @@ public final class SyncInvalidator: SyncInvalidatorInterface {
     private let timeInterval: SyncInvalidatorTimeInterval
     private let persistence: SyncInvalidatorPersistenceInterface
     
-    public init(id: String, timeInterval: SyncInvalidatorTimeInterval, persistence: SyncInvalidatorPersistenceInterface) {
+    public init(
+        id: String,
+        timeInterval: SyncInvalidatorTimeInterval,
+        persistence: SyncInvalidatorPersistenceInterface
+    ) {
         
         self.id = id
         self.timeInterval = timeInterval

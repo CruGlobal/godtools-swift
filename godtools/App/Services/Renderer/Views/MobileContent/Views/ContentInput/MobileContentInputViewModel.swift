@@ -18,7 +18,11 @@ class MobileContentInputViewModel: MobileContentViewModel {
     let inputLabel: String?
     let placeholder: String?
     
-    init(inputModel: Input, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
+    init(
+        inputModel: Input,
+        renderedPageContext: MobileContentRenderedPageContext,
+        mobileContentAnalytics: MobileContentRendererAnalytics
+    ) {
         
         self.inputModel = inputModel
         

@@ -32,7 +32,16 @@ final class DownloadableLanguagesViewModel: ObservableObject {
     
     @Published var searchText: String = ""
     
-    init(stepEmitter: FlowStepEmitter, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getDownloadableLanguagesStringsUseCase: GetDownloadableLanguagesStringsUseCase, getDownloadableLanguagesListUseCase: GetDownloadableLanguagesListUseCase, getSearchBarStringsUseCase: GetSearchBarStringsUseCase, searchLanguageInDownloadableLanguagesUseCase: SearchLanguageInDownloadableLanguagesUseCase, downloadToolLanguageUseCase: DownloadToolLanguageUseCase, removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getDownloadableLanguagesStringsUseCase: GetDownloadableLanguagesStringsUseCase,
+        getDownloadableLanguagesListUseCase: GetDownloadableLanguagesListUseCase,
+        getSearchBarStringsUseCase: GetSearchBarStringsUseCase,
+        searchLanguageInDownloadableLanguagesUseCase: SearchLanguageInDownloadableLanguagesUseCase,
+        downloadToolLanguageUseCase: DownloadToolLanguageUseCase,
+        removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase
+    ) {
         
         self.stepEmitter = stepEmitter
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase

@@ -16,7 +16,11 @@ final class UserAuthentication {
     private let lastAuthenticatedProviderCache: LastAuthenticatedProviderCache
     private let mobileContentAuthTokenRepository: MobileContentAuthTokenRepository
     
-    init(authenticationProviders: [AuthenticationProviderType: AuthenticationProviderInterface], lastAuthenticatedProviderCache: LastAuthenticatedProviderCache, mobileContentAuthTokenRepository: MobileContentAuthTokenRepository) {
+    init(
+        authenticationProviders: [AuthenticationProviderType: AuthenticationProviderInterface],
+        lastAuthenticatedProviderCache: LastAuthenticatedProviderCache,
+        mobileContentAuthTokenRepository: MobileContentAuthTokenRepository
+    ) {
                 
         self.authenticationProviders = authenticationProviders
         self.lastAuthenticatedProviderCache = lastAuthenticatedProviderCache

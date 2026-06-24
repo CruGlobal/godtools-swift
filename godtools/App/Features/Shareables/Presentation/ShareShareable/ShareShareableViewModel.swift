@@ -21,7 +21,11 @@ final class ShareShareableViewModel {
     
     private var cancellables = Set<AnyCancellable>()
     
-    init(stepEmitter: FlowStepEmitter, imageToShare: UIImage, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        imageToShare: UIImage,
+        incrementUserCounterUseCase: IncrementUserCounterUseCase
+    ) {
         
         self.stepEmitter = stepEmitter
         self.imageToShare = imageToShare

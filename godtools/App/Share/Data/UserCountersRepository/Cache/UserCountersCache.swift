@@ -17,7 +17,10 @@ final class UserCountersCache {
     
     let persistence: any Persistence<UserCounterDataModel, UserCounterCodable>
     
-    init(localActivityCounterCache: LocalActivityCounterCache, persistence: any Persistence<UserCounterDataModel, UserCounterCodable>) {
+    init(
+        localActivityCounterCache: LocalActivityCounterCache,
+        persistence: any Persistence<UserCounterDataModel, UserCounterCodable>
+    ) {
 
         self.localActivityCounterCache = localActivityCounterCache
         self.persistence = persistence

@@ -17,7 +17,11 @@ class MobileContentFlowItemViewModel: MobileContentViewModel {
     
     let visibilityState: ObservableValue<MobileContentViewVisibilityState>
     
-    init(flowItem: GodToolsShared.Flow.Item, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
+    init(
+        flowItem: GodToolsShared.Flow.Item,
+        renderedPageContext: MobileContentRenderedPageContext,
+        mobileContentAnalytics: MobileContentRendererAnalytics
+    ) {
         
         self.flowItem = flowItem
         

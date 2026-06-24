@@ -15,7 +15,11 @@ struct LessonsView: View {
 
     @ObservedObject private var viewModel: LessonsViewModel
 
-    init(viewModel: LessonsViewModel, contentHorizontalInsets: CGFloat = DashboardView.contentHorizontalInsets, lessonCardSpacing: CGFloat = DashboardView.toolCardVerticalSpacing) {
+    init(
+        viewModel: LessonsViewModel,
+        contentHorizontalInsets: CGFloat = DashboardView.contentHorizontalInsets,
+        lessonCardSpacing: CGFloat = DashboardView.toolCardVerticalSpacing
+    ) {
         
         self.viewModel = viewModel
         self.contentHorizontalInsets = contentHorizontalInsets
@@ -57,7 +61,10 @@ struct LessonsView: View {
 
                             FixedHorizontalSpacer(width: 30)
 
-                            ToolFilterButtonView(title: viewModel.languageFilterButtonTitle, accessibility: .lessonsLanguageFilter) {
+                            ToolFilterButtonView(
+                                title: viewModel.languageFilterButtonTitle,
+                                accessibility: .lessonsLanguageFilter
+                            ) {
                                 viewModel.lessonLanguageFilterTapped()
                             }
                         }

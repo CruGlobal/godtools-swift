@@ -27,7 +27,12 @@ final class DownloadToolProgressViewModel: ObservableObject {
     
     @Published private(set) var strings = DownloadToolProgressStringsDomainModel.emptyValue
         
-    init(stepEmitter: FlowStepEmitter, toolId: String?, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getDownloadToolProgressStringsUseCase: GetDownloadToolProgressStringsUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        toolId: String?,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getDownloadToolProgressStringsUseCase: GetDownloadToolProgressStringsUseCase
+    ) {
                 
         self.stepEmitter = stepEmitter
         self.toolId = toolId

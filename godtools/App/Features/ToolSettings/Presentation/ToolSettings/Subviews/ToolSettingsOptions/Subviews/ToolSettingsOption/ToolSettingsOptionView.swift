@@ -17,7 +17,14 @@ struct ToolSettingsOptionView: View {
     private let accessibility: AccessibilityStrings.Button?
     private let tappedClosure: (() -> Void)?
         
-    init(viewBackground: ToolSettingsOptionViewBackground, title: String, titleColorStyle: ToolSettingsOptionViewTitleColorStyle, iconImage: Image, accessibility: AccessibilityStrings.Button?, tappedClosure: (() -> Void)?) {
+    init(
+        viewBackground: ToolSettingsOptionViewBackground,
+        title: String,
+        titleColorStyle: ToolSettingsOptionViewTitleColorStyle,
+        iconImage: Image,
+        accessibility: AccessibilityStrings.Button?,
+        tappedClosure: (() -> Void)?
+    ) {
         
         self.viewBackground = viewBackground
         self.title = title

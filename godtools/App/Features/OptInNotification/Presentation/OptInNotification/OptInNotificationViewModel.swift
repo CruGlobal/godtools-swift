@@ -32,7 +32,12 @@ final class OptInNotificationViewModel: ObservableObject {
     @Published private(set) var strings = OptInNotificationStringsDomainModel.emptyValue
     @Published private(set) var notificationsActionTitle: String = ""
 
-    init(stepEmitter: FlowStepEmitter, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getOptInNotificationStringsUseCase: GetOptInNotificationStringsUseCase, notificationPromptType: NotificationPromptType) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getOptInNotificationStringsUseCase: GetOptInNotificationStringsUseCase,
+        notificationPromptType: NotificationPromptType
+    ) {
 
         self.stepEmitter = stepEmitter
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase

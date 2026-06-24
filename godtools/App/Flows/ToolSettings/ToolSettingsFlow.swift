@@ -30,7 +30,11 @@ class ToolSettingsFlow: GTFlow {
     @Published private var creatingToolScreenShareSessionTimedOutStringsDomainModel = CreatingToolScreenShareSessionTimedOutStringsDomainModel.emptyValue
     @Published private var shareToolScreenShareSessionStringsDomainModel = ShareToolScreenShareSessionStringsDomainModel.emptyValue
         
-    init(appDiContainer: AppDiContainer, toolSettingsObserver: ToolSettingsObserver, toolSettingsDidCloseClosure: (() -> Void)?) {
+    init(
+        appDiContainer: AppDiContainer,
+        toolSettingsObserver: ToolSettingsObserver,
+        toolSettingsDidCloseClosure: (() -> Void)?
+    ) {
             
         self.toolSettingsObserver = toolSettingsObserver
         self.toolSettingsDidCloseClosure = toolSettingsDidCloseClosure

@@ -16,7 +16,11 @@ final class GetUserActivityStats {
     private let getTranslatedNumberCount: GetTranslatedNumberCount
     private let stringWithLocaleCount: StringWithLocaleCountInterface
     
-    init(localizationServices: LocalizationServicesInterface, getTranslatedNumberCount: GetTranslatedNumberCount, stringWithLocaleCount: StringWithLocaleCountInterface) {
+    init(
+        localizationServices: LocalizationServicesInterface,
+        getTranslatedNumberCount: GetTranslatedNumberCount,
+        stringWithLocaleCount: StringWithLocaleCountInterface
+    ) {
         
         self.localizationServices = localizationServices
         self.getTranslatedNumberCount = getTranslatedNumberCount

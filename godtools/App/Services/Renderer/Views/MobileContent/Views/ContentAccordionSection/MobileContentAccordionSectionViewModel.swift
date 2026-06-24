@@ -15,7 +15,11 @@ class MobileContentAccordionSectionViewModel: MobileContentViewModel {
     private let mobileContentAnalytics: MobileContentRendererAnalytics
     private let visibleAnalyticsEventsObjects: [MobileContentRendererAnalyticsEvent]
     
-    init(sectionModel: Accordion.Section, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
+    init(
+        sectionModel: Accordion.Section,
+        renderedPageContext: MobileContentRenderedPageContext,
+        mobileContentAnalytics: MobileContentRendererAnalytics
+    ) {
         
         self.sectionModel = sectionModel
         self.mobileContentAnalytics = mobileContentAnalytics

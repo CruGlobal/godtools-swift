@@ -33,7 +33,15 @@ final class ReviewShareShareableViewModel: ObservableObject {
     
     @Published var imagePreviewData: OptionalImageData?
     
-    init(stepEmitter: FlowStepEmitter, toolId: String, shareable: ShareableDomainModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getReviewShareShareableStringsUseCase: GetReviewShareShareableStringsUseCase, getShareableImageUseCase: GetShareableImageUseCase, trackShareShareableTapUseCase: TrackShareShareableTapUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        toolId: String,
+        shareable: ShareableDomainModel,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getReviewShareShareableStringsUseCase: GetReviewShareShareableStringsUseCase,
+        getShareableImageUseCase: GetShareableImageUseCase,
+        trackShareShareableTapUseCase: TrackShareShareableTapUseCase
+    ) {
         
         self.stepEmitter = stepEmitter
         self.toolId = toolId

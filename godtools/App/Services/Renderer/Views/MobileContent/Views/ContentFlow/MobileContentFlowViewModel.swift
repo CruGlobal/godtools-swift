@@ -13,7 +13,11 @@ class MobileContentFlowViewModel: MobileContentViewModel {
     
     private let contentFlow: GodToolsShared.Flow
     
-    init(contentFlow: GodToolsShared.Flow, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
+    init(
+        contentFlow: GodToolsShared.Flow,
+        renderedPageContext: MobileContentRenderedPageContext,
+        mobileContentAnalytics: MobileContentRendererAnalytics
+    ) {
         
         self.contentFlow = contentFlow
         

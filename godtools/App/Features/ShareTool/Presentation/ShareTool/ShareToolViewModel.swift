@@ -26,7 +26,16 @@ final class ShareToolViewModel {
     
     private var cancellables = Set<AnyCancellable>()
         
-    init(stepEmitter: FlowStepEmitter, strings: ShareToolStringsDomainModel, toolId: String, toolAnalyticsAbbreviation: String, pageNumber: Int, incrementUserCounterUseCase: IncrementUserCounterUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        strings: ShareToolStringsDomainModel,
+        toolId: String,
+        toolAnalyticsAbbreviation: String,
+        pageNumber: Int,
+        incrementUserCounterUseCase: IncrementUserCounterUseCase,
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
+        trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
+    ) {
              
         self.stepEmitter = stepEmitter
         self.strings = strings

@@ -14,7 +14,10 @@ class VideoViewCoordinator: NSObject {
     private let videoPlayerDidBecomeReady: ((_ playerView: YTPlayerView) -> Void)?
     private let videoStateChanged: ((_ playerView: YTPlayerView, _ playerState: YTPlayerState) -> Void)?
         
-    init(videoPlayerDidBecomeReady: ((_ playerView: YTPlayerView) -> Void)?, videoStateChanged: ((_ playerView: YTPlayerView, _ playerState: YTPlayerState) -> Void)?) {
+    init(
+        videoPlayerDidBecomeReady: ((_ playerView: YTPlayerView) -> Void)?,
+        videoStateChanged: ((_ playerView: YTPlayerView, _ playerState: YTPlayerState) -> Void)?
+    ) {
         
         self.videoPlayerDidBecomeReady = videoPlayerDidBecomeReady
         self.videoStateChanged = videoStateChanged

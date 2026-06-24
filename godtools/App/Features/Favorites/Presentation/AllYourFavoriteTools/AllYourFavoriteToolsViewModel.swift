@@ -35,7 +35,18 @@ final class AllYourFavoriteToolsViewModel: ObservableObject {
     
     @Published var favoritedTools: [YourFavoritedToolDomainModel] = Array()
         
-    init(stepEmitter: FlowStepEmitter, getAllYourFavoritedToolsStringsUseCase: GetAllYourFavoritedToolsStringsUseCase, getYourFavoritedToolsUseCase: GetYourFavoritedToolsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, reorderFavoritedToolUseCase: ReorderFavoritedToolUseCase, getToolBannerUseCase: GetToolBannerUseCase, inMemoryDataCache: InMemoryDataCache, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        getAllYourFavoritedToolsStringsUseCase: GetAllYourFavoritedToolsStringsUseCase,
+        getYourFavoritedToolsUseCase: GetYourFavoritedToolsUseCase,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase,
+        reorderFavoritedToolUseCase: ReorderFavoritedToolUseCase,
+        getToolBannerUseCase: GetToolBannerUseCase,
+        inMemoryDataCache: InMemoryDataCache,
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
+        trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
+    ) {
         
         self.stepEmitter = stepEmitter
         self.getAllYourFavoritedToolsStringsUseCase = getAllYourFavoritedToolsStringsUseCase

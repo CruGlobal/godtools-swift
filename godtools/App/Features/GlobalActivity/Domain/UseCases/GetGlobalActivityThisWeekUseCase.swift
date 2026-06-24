@@ -15,7 +15,11 @@ final class GetGlobalActivityThisWeekUseCase {
     private let localizationServices: LocalizationServicesInterface
     private let getTranslatedNumberCount: GetTranslatedNumberCount
     
-    init(globalAnalyticsRepository: GlobalAnalyticsRepository, localizationServices: LocalizationServicesInterface, getTranslatedNumberCount: GetTranslatedNumberCount) {
+    init(
+        globalAnalyticsRepository: GlobalAnalyticsRepository,
+        localizationServices: LocalizationServicesInterface,
+        getTranslatedNumberCount: GetTranslatedNumberCount
+    ) {
         
         self.globalAnalyticsRepository = globalAnalyticsRepository
         self.localizationServices = localizationServices

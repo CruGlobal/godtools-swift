@@ -14,7 +14,11 @@ final class GetDeferredDeepLinkUseCase {
     private let dynalinkDeferredDeepLink: DynalinkDeferredDeepLink
     private let launchCountRepository: LaunchCountRepositoryInterface
     
-    init(deepLinkService: DeepLinkingService, dynalinkDeferredDeepLink: DynalinkDeferredDeepLink, launchCountRepository: LaunchCountRepositoryInterface) {
+    init(
+        deepLinkService: DeepLinkingService,
+        dynalinkDeferredDeepLink: DynalinkDeferredDeepLink,
+        launchCountRepository: LaunchCountRepositoryInterface
+    ) {
         
         self.deepLinkService = deepLinkService
         self.dynalinkDeferredDeepLink = dynalinkDeferredDeepLink

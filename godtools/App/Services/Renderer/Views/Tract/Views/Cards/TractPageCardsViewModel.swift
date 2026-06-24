@@ -20,7 +20,12 @@ class TractPageCardsViewModel: MobileContentViewModel, ObservableObject {
         
     @Published private(set) var showsCardJump: Bool = false
     
-    init(cards: [TractPage.Card], renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, cardJumpService: CardJumpService) {
+    init(
+        cards: [TractPage.Card],
+        renderedPageContext: MobileContentRenderedPageContext,
+        mobileContentAnalytics: MobileContentRendererAnalytics,
+        cardJumpService: CardJumpService
+    ) {
                 
         self.cards = cards
         self.cardJumpService = cardJumpService

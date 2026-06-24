@@ -14,7 +14,11 @@ final class ShouldPromptForOptInNotificationUseCase {
     private let optInNotificationRepository: OptInNotificationRepositoryInterface
     private let getNotificationStatus: GetNotificationStatus
     
-    init(getOnboardingTutorialIsAvailable: GetOnboardingTutorialIsAvailable, optInNotificationRepository: OptInNotificationRepositoryInterface, getNotificationStatus: GetNotificationStatus) {
+    init(
+        getOnboardingTutorialIsAvailable: GetOnboardingTutorialIsAvailable,
+        optInNotificationRepository: OptInNotificationRepositoryInterface,
+        getNotificationStatus: GetNotificationStatus
+    ) {
         
         self.getOnboardingTutorialIsAvailable = getOnboardingTutorialIsAvailable
         self.optInNotificationRepository = optInNotificationRepository

@@ -25,7 +25,13 @@ class ModalNavigationController: AppNavigationController {
         )
     }
     
-    init(rootView: UIViewController, navBarColor: UIColor, navBarIsTranslucent: Bool, controlColor: UIColor, statusBarStyle: UIStatusBarStyle) {
+    init(
+        rootView: UIViewController,
+        navBarColor: UIColor,
+        navBarIsTranslucent: Bool,
+        controlColor: UIColor,
+        statusBarStyle: UIStatusBarStyle
+    ) {
         
         self.rootView = rootView
         self.statusBarStyle = statusBarStyle

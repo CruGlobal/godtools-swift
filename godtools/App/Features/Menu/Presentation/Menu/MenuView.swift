@@ -159,11 +159,11 @@ struct MenuView: View {
                     
                     MenuSectionView(
                         sectionTitle: viewModel.strings.versionTitle,
-                        overrideHidesSeparator: true,
                         menuItemsViewBuilder: {
                             
                             MenuItemView(imageAssetName: nil, title: viewModel.strings.version, accessibility: nil, tappedClosure: nil)
-                        }
+                        },
+                        overrideHidesSeparator: true
                     )
                     
                     if !viewModel.hidesDebugSection {

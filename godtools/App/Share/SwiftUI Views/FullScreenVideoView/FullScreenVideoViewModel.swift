@@ -18,7 +18,13 @@ class FullScreenVideoViewModel: ObservableObject {
     let videoId: String
     let videoPlayerParameters: [String: Any]?
     
-    init(stepEmitter: FlowStepEmitter, videoId: String, videoPlayerParameters: [String: Any]?, userDidCloseVideoStep: AppFlowStep, videoEndedStep: AppFlowStep) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        videoId: String,
+        videoPlayerParameters: [String: Any]?,
+        userDidCloseVideoStep: AppFlowStep,
+        videoEndedStep: AppFlowStep
+    ) {
         
         self.stepEmitter = stepEmitter
         self.userDidCloseVideoStep = userDidCloseVideoStep

@@ -96,10 +96,10 @@ struct LessonEvaluationView: View {
                         ScaleValueSliderView(
                             viewWidth: geometry.size.width - viewInsets.leading - viewInsets.trailing,
                             tintColor: ColorPalette.gtBlue.color,
-                            minScale: ScaleValue(lessonEvaluationScale: readyToShareFaithScale.minScale),
-                            maxScale: ScaleValue(lessonEvaluationScale: readyToShareFaithScale.maxScale),
                             scaleIntValue: $viewModel.readyToShareFaithScaleIntValue,
-                            scaleDisplayValue: readyToShareFaithScale.scale.valueTranslatedInAppLanguage
+                            scaleDisplayValue: readyToShareFaithScale.scale.valueTranslatedInAppLanguage,
+                            minScale: ScaleValue(lessonEvaluationScale: readyToShareFaithScale.minScale),
+                            maxScale: ScaleValue(lessonEvaluationScale: readyToShareFaithScale.maxScale)
                         )
                         .padding([.top], 14)
                     }

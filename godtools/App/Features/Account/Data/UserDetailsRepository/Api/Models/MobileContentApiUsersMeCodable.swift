@@ -33,7 +33,15 @@ struct MobileContentApiUsersMeCodable: Codable, Sendable {
         case ssoGuid = "sso-guid"
     }
     
-    init(id: String, createdAt: Date?, familyName: String?, givenName: String?, name: String?, ssoGuid: String?, type: String) {
+    init(
+        id: String,
+        createdAt: Date?,
+        familyName: String?,
+        givenName: String?,
+        name: String?,
+        ssoGuid: String?,
+        type: String
+    ) {
         
         self.id = id
         self.createdAt = createdAt

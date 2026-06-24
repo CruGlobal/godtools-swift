@@ -22,7 +22,12 @@ final class LocalizationSettingsFlow: GTFlow {
     private let shouldStoreCountryWhenSelected: Bool
     private let userShouldConfirmSelectedCountry: Bool
         
-    init(appDiContainer: AppDiContainer, shouldStoreCountryWhenSelected: Bool, userShouldConfirmSelectedCountry: Bool, showsPreferNotToSay: Bool = true) {
+    init(
+        appDiContainer: AppDiContainer,
+        shouldStoreCountryWhenSelected: Bool,
+        userShouldConfirmSelectedCountry: Bool,
+        showsPreferNotToSay: Bool = true
+    ) {
         
         self.shouldStoreCountryWhenSelected = shouldStoreCountryWhenSelected
         self.userShouldConfirmSelectedCountry = userShouldConfirmSelectedCountry

@@ -18,7 +18,13 @@ class TractPageFormViewModel: MobileContentFormViewModel {
     let didSendFollowUpSignal: SignalValue<[EventId]> = SignalValue()
     let error: ObservableValue<MobileContentErrorViewModel?> = ObservableValue(value: nil)
     
-    init(formModel: Form, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, followUpService: FollowUpsService, localizationServices: LocalizationServicesInterface) {
+    init(
+        formModel: Form,
+        renderedPageContext: MobileContentRenderedPageContext,
+        mobileContentAnalytics: MobileContentRendererAnalytics,
+        followUpService: FollowUpsService,
+        localizationServices: LocalizationServicesInterface
+    ) {
         
         self.followUpService = followUpService
         self.localizationServices = localizationServices

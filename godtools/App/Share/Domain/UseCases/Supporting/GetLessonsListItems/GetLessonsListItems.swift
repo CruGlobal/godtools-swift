@@ -15,7 +15,12 @@ final class GetLessonsListItems {
     private let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability
     private let getLessonListItemProgress: GetLessonListItemProgress
 
-    init(languagesRepository: LanguagesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability, getLessonListItemProgress: GetLessonListItemProgress) {
+    init(
+        languagesRepository: LanguagesRepository,
+        getTranslatedToolName: GetTranslatedToolName,
+        getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability,
+        getLessonListItemProgress: GetLessonListItemProgress
+    ) {
         
         self.languagesRepository = languagesRepository
         self.getTranslatedToolName = getTranslatedToolName

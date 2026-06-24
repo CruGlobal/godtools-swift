@@ -21,7 +21,12 @@ final class ArticleAemCache {
     private let realmDatabase: RealmDatabase
     private let realmDataWrite: RealmDataWrite
     
-    init(persistence: any Persistence<ArticleAemData, ArticleAemData>, articleWebArchiver: ArticleWebArchiverInterface, realmDatabase: RealmDatabase, realmDataWrite: RealmDataWrite) {
+    init(
+        persistence: any Persistence<ArticleAemData, ArticleAemData>,
+        articleWebArchiver: ArticleWebArchiverInterface,
+        realmDatabase: RealmDatabase,
+        realmDataWrite: RealmDataWrite
+    ) {
         
         self.persistence = persistence
         self.articleWebArchiver = articleWebArchiver
@@ -88,7 +93,7 @@ extension ArticleAemCache {
         )
     }
     
-    func storeAemDataObjects(aemDataObjects: [ArticleAemData], requestPriority: RequestPriority) async throws -> ArticleWebArchiverResult {
+    func storeAemDataObjects(aemDataObjects: [ArticleAemData], requestPriority: RequestPriority) async throws -> ArticleWebArchiverArchive {
      
         let realm: Realm = try realmDatabase.openRealm()
         
@@ -97,20 +102,20 @@ extension ArticleAemCache {
             realm: realm
         )
         
-        let webArchiverResults: ArticleWebArchiverResult = await articleWebArchiver.archive(
+        let webArchive: ArticleWebArchiverArchive = await articleWebArchiver.archive(
             webArchiveUrls: aemDataObjectsThatNeedDownloading.webArchiveUrls,
             requestPriority: requestPriority
         )
         
         var aemCacheArchivedObjects: [ArticleAemCacheArchivedObject] = Array()
         
-        for webArchiveResult in webArchiverResults.archives {
+        for archive in webArchive.archives {
             
-            if let aemData = aemDataObjectsThatNeedDownloading.aemDataDictionary[webArchiveResult.webArchiveUrl.uuid] {
+            if let aemData = aemDataObjectsThatNeedDownloading.aemDataDictionary[archive.webArchiveUrl.uuid] {
                 
                 let archivedObject = ArticleAemCacheArchivedObject(
                     aemData: aemData,
-                    webArchivePlistData: webArchiveResult.webArchivePlistData
+                    webArchivePlistData: archive.webArchivePlistData
                 )
                 
                 aemCacheArchivedObjects.append(archivedObject)
@@ -119,7 +124,7 @@ extension ArticleAemCache {
         
         try await storeAemCacheArchivedObjects(aemCacheArchivedObjects: aemCacheArchivedObjects)
         
-        return webArchiverResults
+        return webArchive
     }
     
     private func filterAemDataObjectsThatNeedDownloaded(aemDataObjects: [ArticleAemData], realm: Realm) throws -> ArticleAemDataObjectsThatNeedDownloading {

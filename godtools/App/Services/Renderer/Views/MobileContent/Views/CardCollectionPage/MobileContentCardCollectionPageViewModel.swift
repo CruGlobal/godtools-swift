@@ -16,7 +16,12 @@ class MobileContentCardCollectionPageViewModel: MobileContentPageViewModel {
     
     let numberOfCards: Int
         
-    init(cardCollectionPage: CardCollectionPage, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
+    init(
+        cardCollectionPage: CardCollectionPage,
+        renderedPageContext: MobileContentRenderedPageContext,
+        mobileContentAnalytics: MobileContentRendererAnalytics,
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
+    ) {
         
         self.cardCollectionPage = cardCollectionPage
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase

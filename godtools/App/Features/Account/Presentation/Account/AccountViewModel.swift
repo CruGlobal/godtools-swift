@@ -39,7 +39,17 @@ final class AccountViewModel: ObservableObject {
     @Published private(set) var stats = [UserActivityStatDomainModel]()
     @Published private(set) var globalActivityIsEnabled: Bool = false
         
-    init(stepEmitter: FlowStepEmitter, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase, getUserActivityUseCase: GetUserActivityUseCase, getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, getAccountStringsUseCase: GetAccountStringsUseCase, getGlobalActivityEnabledUseCase: GetGlobalActivityEnabledUseCase, didPullToRefreshAccountUseCase: DidPullToRefreshAccountUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase,
+        getUserActivityUseCase: GetUserActivityUseCase,
+        getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase,
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
+        getAccountStringsUseCase: GetAccountStringsUseCase,
+        getGlobalActivityEnabledUseCase: GetGlobalActivityEnabledUseCase,
+        didPullToRefreshAccountUseCase: DidPullToRefreshAccountUseCase
+    ) {
         
         self.stepEmitter = stepEmitter
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase

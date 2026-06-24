@@ -17,7 +17,12 @@ class MobileContentPageCollectionViewModel: MobileContentPageViewModel {
     
     let pagesViewModel: MobileContentPageCollectionPagesViewModel
     
-    init(pageCollectionPage: PageCollectionPage, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
+    init(
+        pageCollectionPage: PageCollectionPage,
+        renderedPageContext: MobileContentRenderedPageContext,
+        mobileContentAnalytics: MobileContentRendererAnalytics,
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
+    ) {
         
         self.pagesViewModel = MobileContentPageCollectionPagesViewModel(pageCollectionPage: pageCollectionPage, renderedPageContext: renderedPageContext)
         self.pageCollectionPage = pageCollectionPage
