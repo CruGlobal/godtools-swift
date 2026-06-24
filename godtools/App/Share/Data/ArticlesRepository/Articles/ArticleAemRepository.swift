@@ -43,7 +43,7 @@ open class ArticleAemRepository: NSObject {
         switch downloadCachePolicy {
             
         case .fetchFromCacheUpToNextHour:
-            aemUrisNeedingUpdate = try filterAemUrisByLastUpdate(aemUris: aemUris)
+            aemUrisNeedingUpdate = filterAemUrisByLastUpdate(aemUris: aemUris)
         case .ignoreCache:
             aemUrisNeedingUpdate = aemUris
         }
@@ -62,7 +62,7 @@ open class ArticleAemRepository: NSObject {
         return download.copyByAppendingErrors(errors: webArchiverResults.errors)
     }
     
-    private func filterAemUrisByLastUpdate(aemUris: [String]) throws -> [String] {
+    private func filterAemUrisByLastUpdate(aemUris: [String]) -> [String] {
         
         var aemUrisNeedingUpdate: [String] = Array()
         
@@ -72,14 +72,20 @@ open class ArticleAemRepository: NSObject {
             
             let shouldUpdateAemUri: Bool
             
-            if let aemCacheObject = try cache.getAemCacheObject(aemUri: aemUri) {
+            do {
                 
-                let lastUpdatedAt: Date = aemCacheObject.aemData.updatedAt
-                let secondsSinceLastUpdate: Double = Date().timeIntervalSince(lastUpdatedAt)
-                
-                shouldUpdateAemUri = secondsSinceLastUpdate >= secondsInDay
+                if let aemCacheObject = try cache.getAemCacheObject(aemUri: aemUri) {
+                    
+                    let lastUpdatedAt: Date = aemCacheObject.aemData.updatedAt
+                    let secondsSinceLastUpdate: Double = Date().timeIntervalSince(lastUpdatedAt)
+                    
+                    shouldUpdateAemUri = secondsSinceLastUpdate >= secondsInDay
+                }
+                else {
+                    shouldUpdateAemUri = true
+                }
             }
-            else {
+            catch _ {
                 shouldUpdateAemUri = true
             }
             
