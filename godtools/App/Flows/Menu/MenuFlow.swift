@@ -94,7 +94,7 @@ final class MenuFlow: GTFlow {
                 flow: LocalizationSettingsFlow(
                     appDiContainer: appDiContainer,
                     shouldStoreCountryWhenSelected: true,
-                    userShouldConfirmSelectedCountry: false
+                    userShouldConfirmSelectedCountry: true
                 )
             )
 
