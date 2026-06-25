@@ -22,7 +22,7 @@ final class GetDownloadableLanguagesStringsUseCase {
         let localeId: String = appLanguage
         
         let strings = DownloadableLanguagesStringsDomainModel(
-            navTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: AppLanguageStringKeys.DownloadableLanguages.navTitle.rawValue)
+            navTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsDownloadableLanguagesTitle.key)
         )
         
         return strings
