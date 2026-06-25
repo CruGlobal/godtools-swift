@@ -35,9 +35,9 @@ struct LocalizationSettingsConfirmationView: View {
                 }
             )
             
-            let cardWidthForScreen: CGFloat = geometry.size.width - (cardHorizontalPadding * 2)
-            let cardDefaultMinWidth: CGFloat = 400
-            let cardWidth: CGFloat = min(cardWidthForScreen, cardDefaultMinWidth)
+            let screenWidth: CGFloat = geometry.size.width
+            let maxScreenWidth: CGFloat = 450
+            let cardWidth: CGFloat = min(screenWidth, maxScreenWidth) - (cardHorizontalPadding * 2)
             let buttonWidth: CGFloat = cardWidth - buttonSpacing - (contentHorizontalPadding * 2)
             
             ZStack(alignment: .topLeading) {
