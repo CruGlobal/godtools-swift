@@ -52,6 +52,8 @@ enum LocalizableStringKeys: String {
     case languageSettingsToolLanguagesAvailableOfflineTitle = "languageSettings.toolLanguagesAvailableOffline.title"
     case languageSettingsToolLanguagesAvailableOfflineMessage = "languageSettings.toolLanguagesAvailableOffline.message"
     case languageSettingsToolLanguagesAvailableOfflineEditDownloadedLanguagesButtonTitle = "languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title"
+    case lessonsFilterLanguageNavTitle = "lessons.filter.navBar.language"
+    case lessonsFilterLessonsAvailable = "lessons.filter.lessonsAvailable"
     case login = "login"
     case logout = "logout"
     case menuAbout = "menu_about"
