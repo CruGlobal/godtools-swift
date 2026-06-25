@@ -7,7 +7,7 @@
 //
 import Foundation
 
-final class InfoPlist {
+final class InfoPlist: InfoPlistInterface {
 
     let info: [String: Any]
 

@@ -11,9 +11,9 @@ import Foundation
 final class GetMenuStringsUseCase {
     
     private let localizationServices: LocalizationServicesInterface
-    private let infoPlist: InfoPlist
+    private let infoPlist: InfoPlistInterface
     
-    init(localizationServices: LocalizationServicesInterface, infoPlist: InfoPlist) {
+    init(localizationServices: LocalizationServicesInterface, infoPlist: InfoPlistInterface) {
         
         self.localizationServices = localizationServices
         self.infoPlist = infoPlist
