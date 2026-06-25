@@ -21,7 +21,7 @@ final class GetToolFilterLanguagesStringsUseCase {
         let localeId: String = appLanguage.localeId
         
         let strings = ToolFilterLanguagesStringsDomainModel(
-            navTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: ToolStringKeys.ToolFilter.languageFilterNavTitle.rawValue)
+            navTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.allToolsFilterNavBarLanguage.key)
         )
         
         return strings

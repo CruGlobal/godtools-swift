@@ -277,7 +277,7 @@ extension GetLessonFilterLanguagesUseCaseTests {
     private func getLocalizationServices() -> MockLocalizationServices {
         
         let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
-            LanguageCodeDomainModel.english.rawValue: [LessonFilterStringKeys.lessonsAvailableText.rawValue: englishLessonsAvailableText]
+            LanguageCodeDomainModel.english.rawValue: [LocalizableStringKeys.lessonsFilterLessonsAvailable.key: englishLessonsAvailableText]
         ]
         
         return MockLocalizationServices.createLanguageNamesLocalizationServices(

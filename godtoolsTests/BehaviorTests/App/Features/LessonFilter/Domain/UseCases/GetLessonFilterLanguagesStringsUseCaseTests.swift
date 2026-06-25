@@ -20,7 +20,7 @@ struct GetLessonFilterLanguagesStringsUseCaseTests {
     )
     func lessonFilterStringsAreTranslatedWhenAppLanguageChanges() async {
                 
-        let navTitleKey: String = LessonFilterStringKeys.navTitle.rawValue
+        let navTitleKey: String = LocalizableStringKeys.lessonsFilterNavBarLanguage.key
         
         let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
             LanguageCodeDomainModel.english.value: [

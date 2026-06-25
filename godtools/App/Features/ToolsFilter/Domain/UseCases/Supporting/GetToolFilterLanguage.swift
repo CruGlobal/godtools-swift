@@ -71,7 +71,7 @@ extension GetToolFilterLanguage {
         
         let languageNameTranslatedInAppLanguage: String = localizationServices.stringForLocaleElseSystemElseEnglish(
             localeIdentifier: translatedInAppLanguage.localeId,
-            key: ToolStringKeys.ToolFilter.anyLanguageFilterText.rawValue
+            key: LocalizableStringKeys.allToolsFilterAnyLanguage.key
         )
         
         let toolsAvailableCount: Int = getToolsAvailableCount(languageId: nil, filteredByCategoryId: filteredByCategoryId)
@@ -93,7 +93,7 @@ extension GetToolFilterLanguage {
         
         let formatString = localizationServices.stringForLocaleElseSystemElseEnglish(
             localeIdentifier: translatedInAppLanguage.localeId,
-            key: ToolStringKeys.ToolFilter.toolsAvailableText.rawValue
+            key: LocalizableStringKeys.toolsFilterToolsAvailable.key
         )
         
         let localizedString: String = stringWithLocaleCount.getString(format: formatString, locale: Locale(identifier: translatedInAppLanguage), count: toolsAvailableCount)

@@ -21,7 +21,7 @@ final class GetLessonFilterLanguagesStringsUseCase {
         let localeId = appLanguage.localeId
         
         let strings = LessonFilterLanguagesStringsDomainModel(
-            navTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LessonFilterStringKeys.navTitle.rawValue)
+            navTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsFilterNavBarLanguage.key)
         )
         
         return strings

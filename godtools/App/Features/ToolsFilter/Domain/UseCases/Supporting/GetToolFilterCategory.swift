@@ -64,7 +64,7 @@ extension GetToolFilterCategory {
         
         let title: String = localizationServices.stringForLocaleElseSystemElseEnglish(
             localeIdentifier: translatedInAppLanguage.localeId,
-            key: ToolStringKeys.ToolFilter.anyCategoryFilterText.rawValue
+            key: LocalizableStringKeys.allToolsFilterAnyCategory.key
         )
     
         let toolsAvailableCount: Int = getToolsAvailableCount(categoryId: nil, filteredByLanguageId: filteredByLanguageId)
@@ -97,7 +97,7 @@ extension GetToolFilterCategory {
         
         let formatString = localizationServices.stringForLocaleElseSystemElseEnglish(
             localeIdentifier: translatedInAppLanguage.localeId,
-            key: ToolStringKeys.ToolFilter.toolsAvailableText.rawValue
+            key: LocalizableStringKeys.toolsFilterToolsAvailable.key
         )
         
         return stringWithLocaleCount.getString(
