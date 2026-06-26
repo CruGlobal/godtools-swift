@@ -23,9 +23,10 @@ final class AppLaunchObserver {
     
     func onAppLaunchPublisher() -> AnyPublisher<AppLaunchState, Never> {
         
-        return Publishers.Merge3(
+        return Publishers.Merge4(
             NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification),
             NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification),
+            NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification),
             NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)
         )
         .map { (notification: Notification) in
@@ -43,6 +44,10 @@ final class AppLaunchObserver {
                 launchState = .inBackground
                 
                 self.appIsInBackground = true
+            }
+            else if notification.name == UIApplication.willEnterForegroundNotification {
+                
+                launchState = .willEnterForground
             }
             else if notification.name == UIApplication.didBecomeActiveNotification {
                                 

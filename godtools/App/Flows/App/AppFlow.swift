@@ -25,6 +25,7 @@ final class AppFlow: RootFlow {
     private let launchCountRepository: LaunchCountRepositoryInterface
     private let dashboardFlow: DashboardFlow
     
+    private var loadingView: UIView?
     private var appLaunchedFromDeepLink: ParsedDeepLinkType?
     private var cancellableForShouldPromptForOptInNotification: AnyCancellable?
     private var cancellables: Set<AnyCancellable> = Set()
@@ -125,7 +126,7 @@ final class AppFlow: RootFlow {
         switch appStep {
             
         case .appLaunched(let launchState):
-                        
+                                    
             if launchState.isLaunching {
                 
                 AppBackgroundState.shared.start(appDiContainer: appDiContainer)
@@ -135,9 +136,10 @@ final class AppFlow: RootFlow {
             
             switch launchState {
            
-            case .fromTerminatedState:
+            case .willEnterForground:
+                attachLoadingView()
                 
-                let loadingView: UIView = attachLaunchedFromBackgroundLoadingView()
+            case .fromTerminatedState:
                 
                 countAppSessionLaunch()
                 
@@ -149,8 +151,6 @@ final class AppFlow: RootFlow {
                     if !onboardingTutorialIsAvailable {
                         pushFlow(flow: dashboardFlow, animated: false)
                     }
-                    
-                    removeLaunchedFromBackgroundLoadingView(view: loadingView)
                     
                     let launchCount: Int = launchCountRepository.getLaunchCount()
                     let hasPossibleDeferredDeepLinkInPasteboardForDynalink: Bool = UIPasteboard.general.hasURLs
@@ -180,6 +180,8 @@ final class AppFlow: RootFlow {
                     }
                     
                     loadInitialData()
+                    
+                    removeLoadingView(animated: true, delay: 1.5)
                 }
                 
             case .fromBackgroundState(let secondsInBackground):
@@ -187,19 +189,18 @@ final class AppFlow: RootFlow {
                 let elapsedTimeInMinutes: TimeInterval = secondsInBackground / 60
                 
                 guard elapsedTimeInMinutes >= 120 else {
+                    removeLoadingView(animated: false, delay: 0)
                     return
                 }
                 
                 loadInitialData()
                 countAppSessionLaunch()
                 
-                let loadingView: UIView = attachLaunchedFromBackgroundLoadingView()
-                
                 dashboardFlow.navigateToDashboard()
                 
                 promptForOptInNotificationIfNeeded()
                 
-                removeLaunchedFromBackgroundLoadingView(view: loadingView)
+                removeLoadingView(animated: true, delay: 1.5)
                 
             case .inBackground:
                 break
@@ -380,7 +381,11 @@ extension AppFlow {
             .store(in: &cancellables)
     }
     
-    private func attachLaunchedFromBackgroundLoadingView() -> UIView {
+    private func attachLoadingView() {
+        
+        guard loadingView == nil else {
+            return
+        }
         
         let loadingView: UIView = UIView(frame: UIScreen.main.bounds)
         let loadingImage: UIImageView = UIImageView(frame: UIScreen.main.bounds)
@@ -390,16 +395,28 @@ extension AppFlow {
         loadingView.backgroundColor = .white
         GodToolsSceneDelegate.getWindow()?.addSubview(loadingView)
         
-        return loadingView
+        self.loadingView = loadingView
     }
     
-    private func removeLaunchedFromBackgroundLoadingView(view: UIView) {
+    private func removeLoadingView(animated: Bool, delay: TimeInterval) {
         
-        UIView.animate(withDuration: 0.4, delay: 1.5, options: .curveEaseOut, animations: {
-            view.alpha = 0
-        }, completion: {(finished: Bool) in
-            view.removeFromSuperview()
-        })
+        guard let loadingView = self.loadingView else {
+            return
+        }
+        
+        if animated {
+            
+            UIView.animate(withDuration: 0.4, delay: delay, options: .curveEaseOut, animations: {
+                loadingView.alpha = 0
+            }, completion: { [weak self] (finished: Bool) in
+                loadingView.removeFromSuperview()
+                self?.loadingView = nil
+            })
+        }
+        else {
+            loadingView.removeFromSuperview()
+            self.loadingView = nil
+        }
     }
 }
 
