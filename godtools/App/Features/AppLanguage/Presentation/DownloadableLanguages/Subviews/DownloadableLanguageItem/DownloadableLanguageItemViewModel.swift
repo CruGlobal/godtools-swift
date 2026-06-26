@@ -71,6 +71,8 @@ class DownloadableLanguageItemViewModel: ObservableObject {
                 return .downloading(progress: progress)
             case .notDownloaded:
                 return .notDownloaded
+            case .failed( _):
+                return .notDownloaded
             }
         }
         .sink { [weak self] (iconState: LanguageDownloadIconState) in
@@ -78,16 +80,6 @@ class DownloadableLanguageItemViewModel: ObservableObject {
             self?.iconState = iconState
         }
         .store(in: &cancellables)
-        
-        // TODO: Would be nice to handle errors per item. ~Levi
-        recycleState
-            .$downloadError
-            .sink(receiveValue: { [weak self] (downloadError: Error?) in
-                if let downloadError = downloadError {
-                    self?.stepEmitter.emit(step: AppFlowStep.languageDownloadFailedFromDownloadedLanguages(error: downloadError))
-                }
-            })
-            .store(in: &cancellables)
     }
     
     deinit {
@@ -125,6 +117,14 @@ extension DownloadableLanguageItemViewModel {
 
 extension DownloadableLanguageItemViewModel {
     
+    private func startDownload() {
+        Self.startLanguageDownload(
+            downloadToolLanguageUseCase: downloadToolLanguageUseCase,
+            recycleState: recycleState,
+            languageId: languageId
+        )
+    }
+    
     private static func startLanguageDownload(downloadToolLanguageUseCase: DownloadToolLanguageUseCase, recycleState: DownloadableLanguageItemRecycleState, languageId: String) {
                   
         let isDownloading: Bool = recycleState.downloadState.isDownloading
@@ -146,9 +146,7 @@ extension DownloadableLanguageItemViewModel {
                 case .finished:
                     recycleState.downloadState = .downloaded
                 case .failure(let error):
-                    recycleState.downloadError = error
-                    recycleState.downloadError = nil
-                    recycleState.downloadState = .notDownloaded
+                    recycleState.downloadState = .failed(errorReason: error.localizedDescription)
                 }
                 
             } receiveValue: { (progress: Double) in
@@ -219,11 +217,14 @@ extension DownloadableLanguageItemViewModel {
             break
             
         case .notDownloaded:
-            Self.startLanguageDownload(
-                downloadToolLanguageUseCase: downloadToolLanguageUseCase,
-                recycleState: recycleState,
-                languageId: languageId
-            )
+            startDownload()
+            
+        case .failed( _):
+            retryDownloadTapped()
         }
+    }
+    
+    func retryDownloadTapped() {
+        startDownload()
     }
 }

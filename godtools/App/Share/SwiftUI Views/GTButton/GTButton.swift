@@ -13,6 +13,7 @@ struct GTButton: View {
     enum Style {
         case blue
         case white
+        case error
     }
     
     private let style: Style
@@ -34,6 +35,8 @@ struct GTButton: View {
             return .white
         case .white:
             return ColorPalette.gtBlue.color
+        case .error:
+            return .white
         }
     }
     
@@ -125,6 +128,10 @@ struct GTButton: View {
             buttonColor = .white
             borderColor = ColorPalette.gtBlue.color
             borderWidth = 1
+        case .error:
+            buttonColor = ColorPalette.gtError.color
+            borderColor = .clear
+            borderWidth = 0
         }
         
         return CustomButtonAttributes(

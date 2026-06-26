@@ -45,9 +45,20 @@ struct DownloadableLanguageItemView: View {
                 
                 Spacer()
                 
-                LanguageDownloadIcon(
-                    state: viewModel.iconState
-                )
+                if let errorReason = viewModel.recycleState.downloadState.errorReason, !errorReason.isEmpty {
+                    LanguageDownloadErrorView(
+                        errorLabel: errorReason,
+                        actionTitle: "Retry",
+                        tappedClosure: {
+                            viewModel.retryDownloadTapped()
+                        }
+                    )
+                }
+                else {
+                    LanguageDownloadIcon(
+                        state: viewModel.iconState
+                    )
+                }
             }
             .padding([.top], 10)
             

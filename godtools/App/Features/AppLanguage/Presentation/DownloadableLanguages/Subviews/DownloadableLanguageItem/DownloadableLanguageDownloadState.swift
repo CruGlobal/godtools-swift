@@ -12,6 +12,7 @@ enum DownloadableLanguageDownloadState {
     case downloaded
     case downloading(progress: Double)
     case notDownloaded
+    case failed(errorReason: String)
     
     var isDownloading: Bool {
         switch self {
@@ -21,8 +22,26 @@ enum DownloadableLanguageDownloadState {
             return false
         }
     }
+    
+    var failed: Bool {
+        switch self {
+        case .failed( _):
+            return true
+        default:
+            return false
+        }
+    }
+    
+    var errorReason: String? {
+        switch self {
+        case .failed(let errorReason):
+            return errorReason
+        default:
+            return nil
+        }
+    }
 }
 
 extension DownloadableLanguageDownloadState: Equatable {
-    
+
 }
