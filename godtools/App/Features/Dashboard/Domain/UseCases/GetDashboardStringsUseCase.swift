@@ -23,9 +23,9 @@ final class GetDashboardStringsUseCase {
         let localeId: String = translateInLanguage
         
         let strings = DashboardStringsDomainModel(
-            lessonsActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "tool_menu_item.lessons"),
-            favoritesActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "my_tools"),
-            toolsActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "tool_menu_item.tools")
+            lessonsActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolMenuItemLessons.key),
+            favoritesActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.myTools.key),
+            toolsActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolMenuItemTools.key)
         )
         
         return Just(strings)

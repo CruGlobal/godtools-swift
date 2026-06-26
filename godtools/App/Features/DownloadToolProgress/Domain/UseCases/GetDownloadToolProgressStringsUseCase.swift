@@ -51,10 +51,10 @@ final class GetDownloadToolProgressStringsUseCase {
         let downloadMessage: String
         
         if toolCanBeFavorited && !toolIsFavorited {
-            downloadMessage = localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "loading_unfavorited_tool")
+            downloadMessage = localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.loadingUnfavoritedTool.key)
         }
         else {
-            downloadMessage = localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "loading_favorited_tool")
+            downloadMessage = localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.loadingFavoritedTool.key)
         }
         
         let strings = DownloadToolProgressStringsDomainModel(
