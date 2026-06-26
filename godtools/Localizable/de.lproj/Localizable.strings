@@ -1,3 +1,13 @@
+"dashboard.personalizedToolToggle.personalizedTitle" = "Personalisierung Personalisierung";
+"dashboard.personalizedToolToggle.allLessonsTitle" = "Alle Lektionen Alle Lektionen";
+
+"dashboard.personalizedToolFooter.title" = "Lokalisierte Werkzeugliste anzeigen Lokalisierte Werkzeugliste anzeigen";
+"dashboard.personalizedToolFooter.buttonTitle" = "Lokalisierungseinstellungen ändern Lokalisierungseinstellungen ändern";
+
+"dashboard.personalizedLessonFooter.title" = "Lokalisierte Lektionsliste anzeigen Lokalisierte Lektionsliste anzeigen";
+"localizationSettings.confirmation.cancelButton" = "Lokalisierung bearbeiten Lokalisierung bearbeiten";
+"localizationSettings.confirmation.confirmButton" = "Weitermachen Weitermachen";
+
 "deferredDeepLinkModal.title" = "Es sieht so aus, als hätten Sie auf einen Link für GodTools geklickt";
 "deferredDeepLinkModal.message" = "Tippen Sie auf die Schaltfläche unten, damit wir Sie zum gewünschten Inhalt weiterleiten können.";
 
@@ -95,6 +105,10 @@
 "tool_menu_item.tools" = "Tools";
 "lessons.pageTitle" = "Für dich gemachte Lektionen";
 "lessons.pageSubtitle" = "Praktische Ideen zum Aufbau von Beziehungen und zum Beginn bedeutungsvoller Unterhaltungen.";
+"lessons.personalizationUnavailable.title" = "Personalisierung nicht verfügbar Personalisierung nicht verfügbar";
+"lessons.personalizationUnavailable.viewAllLessons" = "Zu allen Lektionen Zu allen Lektionen";
+"tools.personalizationUnavailable.title" = "Personalisierung nicht verfügbar Personalisierung nicht verfügbar";
+"tools.personalizationUnavailable.viewAllTools" = "Alle Werkzeuge anzeigen Alle Werkzeuge anzeigen";
 "toolSettings.languagesAvailable.title" = "Verfügbare sprachen";
 "toolDetails.versions.message" = "Wähle unten eine andere Version dieses Tools. Jede Version hat ihren eigenen Stil und Inhalt, so dass du diejenige finden kannst, die am besten zu deiner Unterhaltung passt. Du kannst mehrere Versionen des gleichen Tools favorisieren.";
 "favorites.noTools.title" = "Keine anzuzeigenden Lieblings-Tools";
