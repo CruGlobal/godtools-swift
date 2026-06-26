@@ -12,25 +12,16 @@ struct DownloadableLanguageItemView: View {
     
     private static let lightGrey = Color.getColorWithRGB(red: 151, green: 151, blue: 151, opacity: 1)
     
-    private let tappedClosure: (() -> Void)?
-    
     @ObservedObject private var viewModel: DownloadableLanguageItemViewModel
 
-    init(viewModel: DownloadableLanguageItemViewModel, tappedClosure: (() -> Void)? = nil) {
+    init(viewModel: DownloadableLanguageItemViewModel) {
         
         self.viewModel = viewModel
-        self.tappedClosure = tappedClosure
     }
     
     var body: some View {
         
-        ZStack {
-            
-            Button(action: viewModel.languageTapped) {
-                Rectangle()
-                    .fill(Color.white)
-            }
-            .buttonStyle(.plain)
+        VStack(alignment: .leading, spacing: 0) {
             
             HStack(alignment: .center, spacing: 0) {
                 
@@ -58,9 +49,18 @@ struct DownloadableLanguageItemView: View {
                     state: viewModel.iconState
                 )
             }
+            .padding([.top], 10)
+            
+            SeparatorView()
+                .padding([.top], 14)
         }
+        .padding([.horizontal], 20)
         .animation(.default, value: viewModel.recycleState.downloadState)
         .animation(.default, value: viewModel.recycleState.isMarkedForRemoval)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            viewModel.languageTapped()
+        }
     }
 }
 
@@ -86,8 +86,7 @@ struct DownloadableLanguageItemView_Preview: PreviewProvider {
         )
         
         DownloadableLanguageItemView(
-            viewModel: viewModel,
-            tappedClosure: nil
+            viewModel: viewModel
         )
     }
 }
