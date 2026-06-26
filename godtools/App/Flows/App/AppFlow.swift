@@ -12,6 +12,8 @@ import SwiftUI
 import Combine
 
 final class AppFlow: RootFlow {
+    
+    private static let attachesLaunchScreenToRoot: Bool = true
         
     static let defaultNavBarColor: UIColor = .white
     static let defaultNavBarControlColor: UIColor = ColorPalette.gtBlue.uiColor
@@ -65,10 +67,15 @@ final class AppFlow: RootFlow {
                 incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: deepLinkUrl))
             )
         }
+        
+        if Self.attachesLaunchScreenToRoot {
+            rootController.view.addSubview(Self.getNewLaunchScreenImageView())
+        }
                 
         rootController.view.frame = UIScreen.main.bounds
         rootController.view.backgroundColor = .clear
         rootController.addChildController(child: appNavigationController)
+        appNavigationController.view.backgroundColor = Self.attachesLaunchScreenToRoot ? .clear : .white
         
         super.init(
             initialView: nil,
@@ -381,7 +388,7 @@ extension AppFlow {
             .store(in: &cancellables)
     }
     
-    private func getNewLaunchScreenImageView() -> UIImageView {
+    private static func getNewLaunchScreenImageView() -> UIImageView {
         
         let imageView: UIImageView = UIImageView(frame: UIScreen.main.bounds)
         imageView.contentMode = .scaleAspectFill
@@ -396,7 +403,7 @@ extension AppFlow {
             return
         }
         
-        let launchScreenImageView: UIImageView = getNewLaunchScreenImageView()
+        let launchScreenImageView: UIImageView = Self.getNewLaunchScreenImageView()
         
         GodToolsSceneDelegate.getWindow()?.addSubview(launchScreenImageView)
         
