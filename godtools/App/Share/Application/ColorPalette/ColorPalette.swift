@@ -12,6 +12,7 @@ import SwiftUI
 enum ColorPalette: String {
     
     case gtBlue = "gtBlue"
+    case gtError = "gtError"
     case gtGrey = "gtGrey"
     case gtLightGrey = "gtLightGrey"
     case gtLightestGrey = "gtLightestGrey"

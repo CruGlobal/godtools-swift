@@ -301,7 +301,10 @@ extension ToolDownloader {
         return progress
     }
     
-    private func reportProgressNonThrowing(toolDownload: inout ToolDownloadDataModel, progress: Double, error: Error?) async {
+    private func reportProgressNonThrowing(
+        toolDownload: inout ToolDownloadDataModel,
+        progress: Double, error: Error?
+    ) async {
                 
         toolDownload = toolDownload.copy(
             progress: progress,
