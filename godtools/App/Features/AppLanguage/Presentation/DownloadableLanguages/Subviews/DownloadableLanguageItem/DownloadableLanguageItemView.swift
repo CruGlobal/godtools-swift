@@ -52,7 +52,7 @@ struct DownloadableLanguageItemView: View {
             .padding([.top], 10)
             
             SeparatorView()
-                .padding([.top], 14)
+                .padding([.top], 16)
         }
         .padding([.horizontal], 20)
         .animation(.default, value: viewModel.recycleState.downloadState)
