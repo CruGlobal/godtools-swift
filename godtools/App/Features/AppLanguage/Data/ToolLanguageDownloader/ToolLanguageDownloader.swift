@@ -114,7 +114,7 @@ final class ToolLanguageDownloader {
             )
         }
         
-        let downloadedTools: [ToolDownloadDataModel] = await toolDownloader.downloadTools(tools: tools, requestPriority: .low)
+        let downloadedTools: [ToolDownloadDataModel] = try await toolDownloader.downloadTools(tools: tools, requestPriority: .low)
         
         _ = try await downloadedLanguagesRepository.storeDownloadedLanguage(
             languageId: languageId,
