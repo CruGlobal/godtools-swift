@@ -384,7 +384,7 @@ extension AppFlow {
         
         let loadingView: UIView = UIView(frame: UIScreen.main.bounds)
         let loadingImage: UIImageView = UIImageView(frame: UIScreen.main.bounds)
-        loadingImage.contentMode = .scaleAspectFit
+        loadingImage.contentMode = .scaleAspectFill
         loadingView.addSubview(loadingImage)
         loadingImage.image = ImageCatalog.launchImage.uiImage
         loadingView.backgroundColor = .white
