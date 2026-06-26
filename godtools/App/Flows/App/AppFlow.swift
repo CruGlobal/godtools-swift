@@ -25,7 +25,7 @@ final class AppFlow: RootFlow {
     private let launchCountRepository: LaunchCountRepositoryInterface
     private let dashboardFlow: DashboardFlow
     
-    private var loadingView: UIView?
+    private var launchScreenImageView: UIView?
     private var appLaunchedFromDeepLink: ParsedDeepLinkType?
     private var cancellableForShouldPromptForOptInNotification: AnyCancellable?
     private var cancellables: Set<AnyCancellable> = Set()
@@ -65,7 +65,7 @@ final class AppFlow: RootFlow {
                 incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: deepLinkUrl))
             )
         }
-        
+                
         rootController.view.frame = UIScreen.main.bounds
         rootController.view.backgroundColor = .clear
         rootController.addChildController(child: appNavigationController)
@@ -137,7 +137,7 @@ final class AppFlow: RootFlow {
             switch launchState {
            
             case .willEnterForground:
-                attachLoadingView()
+                attachLaunchScreenImageView()
                 
             case .fromTerminatedState:
                 
@@ -181,7 +181,7 @@ final class AppFlow: RootFlow {
                     
                     loadInitialData()
                     
-                    removeLoadingView(animated: true, delay: 1.5)
+                    removeLaunchScreenImageView(animated: true, delay: 1.5)
                 }
                 
             case .fromBackgroundState(let secondsInBackground):
@@ -189,7 +189,7 @@ final class AppFlow: RootFlow {
                 let elapsedTimeInMinutes: TimeInterval = secondsInBackground / 60
                 
                 guard elapsedTimeInMinutes >= 120 else {
-                    removeLoadingView(animated: false, delay: 0)
+                    removeLaunchScreenImageView(animated: false, delay: 0)
                     return
                 }
                 
@@ -200,7 +200,7 @@ final class AppFlow: RootFlow {
                 
                 promptForOptInNotificationIfNeeded()
                 
-                removeLoadingView(animated: true, delay: 1.5)
+                removeLaunchScreenImageView(animated: true, delay: 1.5)
                 
             case .inBackground:
                 break
@@ -381,41 +381,46 @@ extension AppFlow {
             .store(in: &cancellables)
     }
     
-    private func attachLoadingView() {
+    private func getNewLaunchScreenImageView() -> UIImageView {
         
-        guard loadingView == nil else {
+        let imageView: UIImageView = UIImageView(frame: UIScreen.main.bounds)
+        imageView.contentMode = .scaleAspectFill
+        imageView.image = ImageCatalog.launchImage.uiImage
+        
+        return imageView
+    }
+    
+    private func attachLaunchScreenImageView() {
+        
+        guard launchScreenImageView == nil else {
             return
         }
         
-        let loadingView: UIView = UIView(frame: UIScreen.main.bounds)
-        let loadingImage: UIImageView = UIImageView(frame: UIScreen.main.bounds)
-        loadingImage.contentMode = .scaleAspectFill
-        loadingView.addSubview(loadingImage)
-        loadingImage.image = ImageCatalog.launchImage.uiImage
-        loadingView.backgroundColor = .white
-        GodToolsSceneDelegate.getWindow()?.addSubview(loadingView)
+        let launchScreenImageView: UIImageView = getNewLaunchScreenImageView()
         
-        self.loadingView = loadingView
+        GodToolsSceneDelegate.getWindow()?.addSubview(launchScreenImageView)
+        
+        self.launchScreenImageView = launchScreenImageView
     }
     
-    private func removeLoadingView(animated: Bool, delay: TimeInterval) {
+    private func removeLaunchScreenImageView(animated: Bool, delay: TimeInterval) {
         
-        guard let loadingView = self.loadingView else {
+        guard let launchScreenImageView = self.launchScreenImageView else {
             return
         }
         
         if animated {
             
             UIView.animate(withDuration: 0.4, delay: delay, options: .curveEaseOut, animations: {
-                loadingView.alpha = 0
+                launchScreenImageView.alpha = 0
             }, completion: { [weak self] (finished: Bool) in
-                loadingView.removeFromSuperview()
-                self?.loadingView = nil
+                launchScreenImageView.removeFromSuperview()
+                self?.launchScreenImageView = nil
             })
         }
         else {
-            loadingView.removeFromSuperview()
-            self.loadingView = nil
+            launchScreenImageView.removeFromSuperview()
+            self.launchScreenImageView = nil
         }
     }
 }
