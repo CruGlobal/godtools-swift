@@ -61,27 +61,18 @@ final class AllYourFavoriteToolsViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .execute()
-            .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                
-                getAllYourFavoritedToolsStringsUseCase
-                    .execute(appLanguage: appLanguage)
-            }
-            .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] (strings: AllYourFavoritedToolsStringsDomainModel) in
-                
-                self?.strings = strings
+            .sink(receiveValue: { [weak self] (appLanguage: AppLanguageDomainModel) in
+
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
             })
             .store(in: &cancellables)
-        
+
         $appLanguage
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
-                
+
                 getYourFavoritedToolsUseCase
                     .execute(
                         appLanguage: appLanguage,
@@ -114,7 +105,13 @@ final class AllYourFavoriteToolsViewModel: ObservableObject {
     deinit {
         print("x deinit: \(type(of: self))")
     }
-    
+
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+
+        strings = getAllYourFavoritedToolsStringsUseCase
+            .execute(appLanguage: appLanguage)
+    }
+
     private var analyticsScreenName: String {
         return "All Favorites"
     }

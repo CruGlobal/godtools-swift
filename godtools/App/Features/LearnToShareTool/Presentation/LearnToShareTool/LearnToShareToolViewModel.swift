@@ -55,27 +55,18 @@ final class LearnToShareToolViewModel: ObservableObject {
               
         getCurrentAppLanguageUseCase
             .execute()
-            .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                
-                getLearnToShareToolStringsUseCase
-                    .execute(appLanguage: appLanguage)
-            }
-            .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: LearnToShareToolStringsDomainModel) in
-                
-                self?.strings = strings
-            }
+            .sink(receiveValue: { [weak self] (appLanguage: AppLanguageDomainModel) in
+
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
+            })
             .store(in: &cancellables)
-        
+
         $appLanguage
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
-                
+
                 getLearnToShareToolTutorialUseCase
                     .execute(appLanguage: appLanguage)
             }
@@ -115,6 +106,12 @@ final class LearnToShareToolViewModel: ObservableObject {
     
     deinit {
         print("x deinit: \(type(of: self))")
+    }
+
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+
+        strings = getLearnToShareToolStringsUseCase
+            .execute(appLanguage: appLanguage)
     }
 
     private var isOnFirstPage: Bool {

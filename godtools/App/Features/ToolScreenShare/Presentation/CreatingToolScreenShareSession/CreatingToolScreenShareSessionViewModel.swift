@@ -49,23 +49,13 @@ final class CreatingToolScreenShareSessionViewModel: ObservableObject {
         getCurrentAppLanguageUseCase
             .execute()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                
-                getCreatingToolScreenShareSessionStringsUseCase
-                    .execute(appLanguage: appLanguage)
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: CreatingToolScreenShareSessionStringsDomainModel) in
-                                
-                self?.strings = strings
-            }
+            .sink(receiveValue: { [weak self] (appLanguage: AppLanguageDomainModel) in
+
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
+            })
             .store(in: &cancellables)
-        
+
         tractRemoteSharePublisher
             .didCreateChannelPublisher
             .receive(on: DispatchQueue.main)
@@ -92,7 +82,13 @@ final class CreatingToolScreenShareSessionViewModel: ObservableObject {
     deinit {
         print("x deinit: \(type(of: self))")
     }
-    
+
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+
+        strings = getCreatingToolScreenShareSessionStringsUseCase
+            .execute(appLanguage: appLanguage)
+    }
+
     private func didCreateNewSubscriberChannelForPublish(result: Result<WebSocketChannel, TractRemoteSharePublisherError>) {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in

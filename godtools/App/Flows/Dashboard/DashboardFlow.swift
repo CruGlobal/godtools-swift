@@ -977,13 +977,13 @@ extension DashboardFlow {
     
     private func getConfirmRemoveToolFromFavoritesAlertView(
         toolId: String,
-        strings: ConfirmRemoveToolFromFavoritesStringsDomainModel,
         didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?
     ) -> UIViewController {
         
         let viewModel = ConfirmRemoveToolFromFavoritesAlertViewModel(
             toolId: toolId,
-            strings: strings,
+            appLanguage: appLanguage,
+            getConfirmRemoveToolFromFavoritesStringsUseCase: appDiContainer.feature.favorites.domainLayer.getConfirmRemoveToolFromFavoritesStringsUseCase(),
             removeFavoritedToolUseCase: appDiContainer.feature.favorites.domainLayer.getRemoveFavoritedToolUseCase(),
             didConfirmToolRemovalSubject: didConfirmToolRemovalSubject
         )
@@ -995,27 +995,11 @@ extension DashboardFlow {
     
     private func presentConfirmRemoveToolFromFavoritesAlertView(toolId: String, didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?, animated: Bool) {
         
-        appDiContainer.feature.favorites.domainLayer
-            .getConfirmRemoveToolFromFavoritesStringsUseCase()
-            .execute(
-                toolId: toolId,
-                appLanguage: appLanguage
-            )
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: ConfirmRemoveToolFromFavoritesStringsDomainModel) in
-                
-                guard let weakSelf = self else {
-                    return
-                }
-                
-                let view = weakSelf.getConfirmRemoveToolFromFavoritesAlertView(
-                    toolId: toolId,
-                    strings: strings,
-                    didConfirmToolRemovalSubject: didConfirmToolRemovalSubject
-                )
-                
-                weakSelf.presentView(view: view, animated: animated)
-            }
-            .store(in: &cancellables)
+        let view = getConfirmRemoveToolFromFavoritesAlertView(
+            toolId: toolId,
+            didConfirmToolRemovalSubject: didConfirmToolRemovalSubject
+        )
+        
+        presentView(view: view, animated: animated)
     }
 }
