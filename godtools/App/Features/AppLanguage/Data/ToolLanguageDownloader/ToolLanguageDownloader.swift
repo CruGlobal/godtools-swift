@@ -76,6 +76,11 @@ final class ToolLanguageDownloader {
                     
                     let downloadProgress: Double = toolsDownloadProgress.getAverage()
                     
+                    if let downloadError = downloadError {
+                        return Fail(error: NSError.errorWithDescription(description: downloadError))
+                            .eraseToAnyPublisher()
+                    }
+                    
                     return Just(downloadProgress)
                         .setFailureType(to: Error.self)
                         .eraseToAnyPublisher()
