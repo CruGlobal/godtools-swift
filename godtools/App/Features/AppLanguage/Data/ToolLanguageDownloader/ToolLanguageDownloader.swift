@@ -109,12 +109,18 @@ final class ToolLanguageDownloader {
             )
         }
         
-        _ = await toolDownloader.downloadTools(tools: tools, requestPriority: .low)
+        let downloadedTools: [ToolDownloadDataModel] = await toolDownloader.downloadTools(tools: tools, requestPriority: .low)
         
         _ = try await downloadedLanguagesRepository.storeDownloadedLanguage(
             languageId: languageId,
             downloadComplete: true
         )
+        
+        let errorDescription: String? = downloadedTools.first(where: { $0.downloadErrorDescription != nil })?.downloadErrorDescription
+        
+        if let errorDescription = errorDescription, !errorDescription.isEmpty {
+            throw NSError.errorWithDescription(description: errorDescription)
+        }
     }
     
     func syncDownloadedLanguages() async throws {
