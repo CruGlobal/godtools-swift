@@ -15,10 +15,11 @@ final class MenuFlow: GTFlow {
             
     private var cancellables: Set<AnyCancellable> = Set()
     
-    @Published private var appLanguage = AppLanguageDomainModel.english
-    @Published private var shareGodToolsStringsDomainModel: ShareGodToolsStringsDomainModel?
+    @Published private var appLanguage: AppLanguageDomainModel
                 
-    init(appDiContainer: AppDiContainer, initialNavigationStep: AppFlowStep? = nil) {
+    init(appDiContainer: AppDiContainer, appLanguage: AppLanguageDomainModel, initialNavigationStep: AppFlowStep? = nil) {
+        
+        self.appLanguage = appLanguage
         
         let stepEmitter = FlowStepEmitter()
         
@@ -38,28 +39,13 @@ final class MenuFlow: GTFlow {
         )
         
         navigationController.setNavigationBarHidden(false, animated: false)
-        navigationController.setViewControllers([getMenuView()], animated: false)
+        navigationController.setViewControllers([getMenuView(appLanguage: appLanguage)], animated: false)
                                 
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()
             .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                
-                appDiContainer.feature.shareGodTools.domainLayer
-                    .getShareGodToolsStringsUseCase()
-                    .execute(appLanguage: appLanguage)
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: ShareGodToolsStringsDomainModel) in
-                self?.shareGodToolsStringsDomainModel = strings
-            }
-            .store(in: &cancellables)
         
         if let initialNavigationStep = initialNavigationStep {
             navigate(step: initialNavigationStep)
@@ -343,22 +329,11 @@ final class MenuFlow: GTFlow {
 extension MenuFlow {
     
     private func getShareGodToolsView() -> UIViewController {
-        
-        guard let strings = shareGodToolsStringsDomainModel else {
-            
-            return AlertMessageView(
-                title: "Internal Error",
-                message: "Failed to fetch data for share godtools modal.",
-                acceptTitle: "OK",
-                cancelTitle: nil,
-                acceptTapped: nil,
-                cancelTapped: nil
-            ).controller
-        }
-        
+
         let viewModel = ShareGodToolsViewModel(
             stepEmitter: stepEmitter,
-            strings: strings
+            appLanguage: appLanguage,
+            getShareGodToolsStringsUseCase: appDiContainer.feature.shareGodTools.domainLayer.getShareGodToolsStringsUseCase()
         )
         
         let view = ShareGodToolsView(viewModel: viewModel)
@@ -371,10 +346,11 @@ extension MenuFlow {
 
 extension MenuFlow {
     
-    private func getMenuView() -> UIViewController {
+    private func getMenuView(appLanguage: AppLanguageDomainModel) -> UIViewController {
             
         let viewModel = MenuViewModel(
             stepEmitter: stepEmitter,
+            appLanguage: appLanguage,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getMenuStringsUseCase: appDiContainer.feature.menu.domainLayer.getMenuStringsUseCase(),
             getTutorialIsAvailableUseCase: appDiContainer.feature.tutorial.domainLayer.getTutorialIsAvailableUseCase(),

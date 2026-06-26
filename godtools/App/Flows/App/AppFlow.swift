@@ -504,6 +504,7 @@ extension AppFlow {
         case .menu:
             
             dashboardFlow.navigateToMenu(
+                appLanguage: appLanguage,
                 animated: true,
                 initialNavigationStep: nil
             )

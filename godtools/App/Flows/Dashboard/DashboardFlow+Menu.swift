@@ -10,7 +10,7 @@ import UIKit
 
 extension DashboardFlow {
     
-    func navigateToMenu(animated: Bool, initialNavigationStep: AppFlowStep? = nil) {
+    func navigateToMenu(appLanguage: AppLanguageDomainModel, animated: Bool, initialNavigationStep: AppFlowStep? = nil) {
         
         guard menuFlow == nil else {
             return
@@ -18,6 +18,7 @@ extension DashboardFlow {
         
         let menuFlow: MenuFlow = MenuFlow(
             appDiContainer: appDiContainer,
+            appLanguage: appLanguage,
             initialNavigationStep: initialNavigationStep
         )
         
