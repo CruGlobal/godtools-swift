@@ -23,7 +23,7 @@ final class GetLocalizationSettingsConfirmationStringsUseCase {
 
         switch selectedCountry {
         case .country(let country):
-            let titleTemplate = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "localizationSettings.confirmation.title")
+            let titleTemplate = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.localizationSettingsConfirmationTitle.key)
             let countryName = country.countryNameTranslatedInCurrentAppLanguage
             let titleFullText = String(format: titleTemplate, countryName)
             titleHighlightModel = ConfirmAppLanguageHighlightStringDomainModel(
@@ -32,7 +32,7 @@ final class GetLocalizationSettingsConfirmationStringsUseCase {
             )
 
         case .preferNotToSay:
-            let titleFullText = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "localizationSettings.confirmation.titleNoCountry")
+            let titleFullText = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.localizationSettingsConfirmationTitleNoCountry.key)
             titleHighlightModel = ConfirmAppLanguageHighlightStringDomainModel(
                 fullText: titleFullText,
                 highlightText: ""
@@ -41,10 +41,10 @@ final class GetLocalizationSettingsConfirmationStringsUseCase {
 
         let strings = LocalizationSettingsConfirmationStringsDomainModel(
             titleHighlightModel: titleHighlightModel,
-            description: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "localizationSettings.confirmation.description"),
-            detail: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "localizationSettings.confirmation.detail"),
-            cancelButton: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "localizationSettings.confirmation.cancelButton"),
-            confirmButton: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "localizationSettings.confirmation.confirmButton")
+            description: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.localizationSettingsConfirmationDescription.key),
+            detail: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.localizationSettingsConfirmationDetail.key),
+            cancelButton: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.localizationSettingsConfirmationCancelButton.key),
+            confirmButton: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.localizationSettingsConfirmationConfirmButton.key)
         )
 
         return Just(strings)

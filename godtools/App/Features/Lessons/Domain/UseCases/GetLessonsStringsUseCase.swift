@@ -23,15 +23,15 @@ final class GetLessonsStringsUseCase {
         let localeId: String = translateInLanguage
         
         let strings = LessonsStringsDomainModel(
-            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.pageTitle"),
-            subtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.pageSubtitle"),
-            languageFilterTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.languageFilter.title"),
-            personalizedToolToggleTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "dashboard.personalizedToolToggle.personalizedTitle"),
-            allLessonsToggleTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "dashboard.personalizedToolToggle.allLessonsTitle"),
-            personalizedLessonExplanationTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "dashboard.personalizedLessonFooter.title"),
-            personalizedLessonExplanationSubtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "dashboard.personalizedLessonFooter.subtitle"),
-            changeLocalizationSettingsAction: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "dashboard.personalizedToolFooter.buttonTitle"),
-            viewAllLessonsAction: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.personalizationUnavailable.viewAllLessons")
+            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsPageTitle.key),
+            subtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsPageSubtitle.key),
+            languageFilterTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsLanguageFilterTitle.key),
+            personalizedToolToggleTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.dashboardPersonalizedToolTogglePersonalizedTitle.key),
+            allLessonsToggleTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.dashboardPersonalizedToolToggleAllLessonsTitle.key),
+            personalizedLessonExplanationTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.dashboardPersonalizedLessonFooterTitle.key),
+            personalizedLessonExplanationSubtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.dashboardPersonalizedLessonFooterSubtitle.key),
+            changeLocalizationSettingsAction: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.dashboardPersonalizedToolFooterButtonTitle.key),
+            viewAllLessonsAction: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsPersonalizationUnavailableViewAllLessons.key)
         )
         
         return Just(strings)

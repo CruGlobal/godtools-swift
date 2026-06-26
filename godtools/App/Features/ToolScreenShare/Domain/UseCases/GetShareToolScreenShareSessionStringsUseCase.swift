@@ -22,8 +22,8 @@ final class GetShareToolScreenShareSessionStringsUseCase {
         
         let localeId: String = appLanguage
         
-        let shareMessage: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "share_tool_remote_link_message")
-        let qrCodeActionTitle: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "toolScreenShare.qrCode.title")
+        let shareMessage: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.shareToolRemoteLinkMessage.key)
+        let qrCodeActionTitle: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolScreenShareQrCodeTitle.key)
         
         let strings = ShareToolScreenShareSessionStringsDomainModel(
             shareMessage: shareMessage,

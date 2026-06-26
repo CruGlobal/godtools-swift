@@ -23,7 +23,7 @@ final class GetCreatingToolScreenShareSessionStringsUseCase {
         let localeId: String = appLanguage
         
         let strings = CreatingToolScreenShareSessionStringsDomainModel(
-            creatingSessionMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "load_tool_remote_session.message")
+            creatingSessionMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.loadToolRemoteSessionMessage.key)
         )
         
         return Just(strings)

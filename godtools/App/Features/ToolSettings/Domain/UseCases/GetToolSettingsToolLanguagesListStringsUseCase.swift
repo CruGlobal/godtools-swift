@@ -23,7 +23,7 @@ final class GetToolSettingsToolLanguagesListStringsUseCase {
         let localeId: String = appLanguage
         
         let strings = ToolSettingsToolLanguagesListStringsDomainModel(
-            deleteParallelLanguageActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "toolSettings.languagesList.deleteLanguage.title")
+            deleteParallelLanguageActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsLanguagesListDeleteLanguageTitle.key)
         )
         
         return Just(strings)

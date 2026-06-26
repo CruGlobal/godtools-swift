@@ -22,8 +22,8 @@ final class GetLessonSwipeTutorialStringsUseCase {
         let localeId: String = translateInLanguage.localeId
         
         let strings = LessonSwipeTutorialStringsDomainModel(
-            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.swipeTutorial.title"),
-            closeButtonText: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.swipeTutorial.buttonText")
+            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsSwipeTutorialTitle.key),
+            closeButtonText: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsSwipeTutorialButtonText.key)
         )
         
         return Just(strings)

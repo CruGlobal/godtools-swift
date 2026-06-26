@@ -23,7 +23,7 @@ final class GetReviewShareShareableStringsUseCase {
         let localeId: String = appLanguage
         
         let strings = ReviewShareShareableStringsDomainModel(
-            shareActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "toolSettings.shareImagePreview.shareImageButton.title")
+            shareActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsShareImagePreviewShareImageButtonTitle.key)
         )
         
         return Just(strings)

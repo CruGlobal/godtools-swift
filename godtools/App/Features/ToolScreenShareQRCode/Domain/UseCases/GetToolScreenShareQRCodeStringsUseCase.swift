@@ -21,8 +21,8 @@ final class GetToolScreenShareQRCodeStringsUseCase {
         let localeId: String = appLanguage
         
         let strings = ToolScreenShareQRCodeStringsDomainModel(
-            qrCodeDescription: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: "toolScreenShare.qrCode.description"),
-            closeButtonTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: "toolScreenShare.qrCode.closeButtonTitle")
+            qrCodeDescription: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolScreenShareQrCodeDescription.key),
+            closeButtonTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolScreenShareQrCodeCloseButtonTitle.key)
         )
         
         return strings

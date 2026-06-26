@@ -22,10 +22,10 @@ final class GetResumeLessonProgressStringsUseCase {
         let localeId: String = appLanguage.localeId
         
         let strings = ResumeLessonProgressStringsDomainModel(
-            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.resumeLessonModal.title"),
-            subtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.resumeLessonModal.subtitle"),
-            startOverButtonText: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.resumeLessonModal.startOverButton"),
-            continueButtonText: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.resumeLessonModal.continueButton")
+            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsResumeLessonModalTitle.key),
+            subtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsResumeLessonModalSubtitle.key),
+            startOverButtonText: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsResumeLessonModalStartOverButton.key),
+            continueButtonText: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsResumeLessonModalContinueButton.key)
         )
         
         return Just(strings)

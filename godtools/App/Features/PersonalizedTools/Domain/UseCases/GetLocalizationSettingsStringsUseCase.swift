@@ -19,9 +19,9 @@ final class GetLocalizationSettingsStringsUseCase {
     func execute(appLanguage: AppLanguageDomainModel) -> LocalizationSettingsStringsDomainModel {
 
         let strings = LocalizationSettingsStringsDomainModel(
-            navTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "localizationSettings.navBar.title"),
-            localizationHeaderTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "localizationSettings.localizationHeader.title"),
-            localizationHeaderDescription: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "localizationSettings.localizationHeader.description")
+            navTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.localizationSettingsNavBarTitle.key),
+            localizationHeaderTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.localizationSettingsLocalizationHeaderTitle.key),
+            localizationHeaderDescription: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.localizationSettingsLocalizationHeaderDescription.key)
         )
 
         return strings

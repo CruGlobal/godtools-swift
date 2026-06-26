@@ -22,7 +22,7 @@ final class GetSearchBarStringsUseCase {
         let localeId: String = appLanguage
         
         let strings = SearchBarStringsDomainModel(
-            cancel: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "cancel")
+            cancel: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.cancel.key)
         )
         
         return strings

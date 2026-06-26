@@ -23,8 +23,8 @@ final class GetShareToolQRCodeStringsUseCase {
         let localeId: String = appLanguage
         
         let strings = ShareToolQRCodeStringsDomainModel(
-            message: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: "shareToolQrCode.message"),
-            closeActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: "toolScreenShare.qrCode.closeButtonTitle")
+            message: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.shareToolQrCodeMessage.key),
+            closeActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolScreenShareQrCodeCloseButtonTitle.key)
         )
         
         return Just(strings)
