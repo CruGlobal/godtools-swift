@@ -20,7 +20,7 @@ final class GetDeleteAccountProgressStringsUseCase {
     func execute(appLanguage: AppLanguageDomainModel) -> DeleteAccountProgressStringsDomainModel {
         
         let strings = DeleteAccountProgressStringsDomainModel(
-            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "deleteAccountProgress.title")
+            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.deleteAccountProgressTitle.key)
         )
         
         return strings

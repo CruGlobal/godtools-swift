@@ -12,7 +12,7 @@ import GodToolsShared
 final class ParseTranslationManifestForRenderer: TranslationManifestParser {
          
     init(
-        infoPlist: InfoPlist,
+        infoPlist: InfoPlistInterface,
         resourcesFileCache: ResourcesSHA256FileCache,
         remoteConfigRepository: RemoteConfigRepository
     ) {

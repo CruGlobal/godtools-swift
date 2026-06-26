@@ -24,6 +24,7 @@ final class GetUserToolFilterLanguageUseCase {
         
         return userToolFiltersRepository
             .getUserToolLanguageFilterChangedPublisher()
+            .receive(on: DispatchQueue.global())
             .map {
                 
                 let languageId: String? = self.userToolFiltersRepository.getUserToolLanguageFilter()?.languageId

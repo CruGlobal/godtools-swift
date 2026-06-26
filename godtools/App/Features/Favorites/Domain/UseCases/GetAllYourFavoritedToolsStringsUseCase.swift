@@ -21,7 +21,7 @@ final class GetAllYourFavoritedToolsStringsUseCase {
     func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<AllYourFavoritedToolsStringsDomainModel, Never> {
         
         let strings = AllYourFavoritedToolsStringsDomainModel(
-            sectionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "favorites.favoriteTools.title")
+            sectionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.favoritesFavoriteToolsTitle.key)
         )
 
         return Just(strings)

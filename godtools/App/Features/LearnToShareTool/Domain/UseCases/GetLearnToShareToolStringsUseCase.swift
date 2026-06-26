@@ -23,8 +23,8 @@ final class GetLearnToShareToolStringsUseCase {
         let localeId: String = appLanguage
         
         let strings = LearnToShareToolStringsDomainModel(
-            nextTutorialItemActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "tutorial.continueButton.title.continue"),
-            startTrainingActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "start_training")
+            nextTutorialItemActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.tutorialContinueButtonTitleContinue.key),
+            startTrainingActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.startTraining.key)
         )
         
         return Just(strings)

@@ -20,10 +20,10 @@ final class GetDeleteAccountStringsUseCase {
     func execute(appLanguage: AppLanguageDomainModel) -> DeleteAccountStringsDomainModel {
         
         let strings = DeleteAccountStringsDomainModel(
-            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: MenuStringKeys.DeleteAccount.title.rawValue),
-            subtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: MenuStringKeys.DeleteAccount.subtitle.rawValue),
-            confirmActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: MenuStringKeys.DeleteAccount.confirmButtonTitle.rawValue),
-            cancelActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: MenuStringKeys.DeleteAccount.cancelButtonTitle.rawValue)
+            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.deleteAccountTitle.key),
+            subtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.deleteAccountSubtitle.key),
+            confirmActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.deleteAccountConfirmButtonTitle.key),
+            cancelActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.deleteAccountCancelButtonTitle.key)
         )
         
         return strings

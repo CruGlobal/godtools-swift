@@ -34,6 +34,7 @@ final class MenuViewModel: ObservableObject {
     
     init(
         stepEmitter: FlowStepEmitter,
+        appLanguage: AppLanguageDomainModel,
         getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
         getMenuStringsUseCase: GetMenuStringsUseCase,
         getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase,
@@ -57,6 +58,8 @@ final class MenuViewModel: ObservableObject {
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.hidesDebugSection = !appConfig.isDebug
+        
+        didSetAppLanguage(appLanguage: appLanguage)
         
         getCurrentAppLanguageUseCase
             .execute()

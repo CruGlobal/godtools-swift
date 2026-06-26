@@ -351,7 +351,7 @@ final class AppDataLayerDependencies {
         )
     }
     
-    func getInfoPlist() -> InfoPlist {
+    func getInfoPlist() -> InfoPlistInterface {
         return InfoPlist()
     }
     

@@ -71,7 +71,7 @@ final class GetLessonFilterLanguage {
         
         let formatString = localizationServices.stringForLocaleElseSystemElseEnglish(
             localeIdentifier: translatedInAppLanguage.localeId,
-            key: LessonFilterStringKeys.lessonsAvailableText.rawValue
+            key: LocalizableStringKeys.lessonsFilterLessonsAvailable.key
         )
         
         return stringWithLocaleCount.getString(format: formatString, locale: Locale(identifier: translatedInAppLanguage), count: lessonsAvailableCount)

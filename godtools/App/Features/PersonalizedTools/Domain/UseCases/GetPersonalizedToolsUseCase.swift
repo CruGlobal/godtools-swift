@@ -59,6 +59,7 @@ final class GetPersonalizedToolsUseCase {
             resourcesRepository
                 .observeCollectionChangesPublisher()
         )
+        .receive(on: DispatchQueue.global())
         .flatMap { (personalizedToolsChanged, resourcesChanged) -> AnyPublisher<[ResourceDataModel], Error> in
             
             return AnyPublisher() {

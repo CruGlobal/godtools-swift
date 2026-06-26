@@ -44,6 +44,7 @@ final class GetDownloadableLanguagesListUseCase {
             downloadedLanguagesRepository
                 .observeCollectionChangesPublisher()
         )
+        .receive(on: DispatchQueue.global())
         .flatMap { (languagesChanged: Void, downloadedLanguagesChanged: Void) -> AnyPublisher<[DownloadableLanguageListItemDomainModel], Error> in
             
             return AnyPublisher() {
@@ -112,7 +113,7 @@ extension GetDownloadableLanguagesListUseCase {
         
         let formatString = localizationServices.stringForLocaleElseSystemElseEnglish(
             localeIdentifier: localeId,
-            key: ToolStringKeys.ToolFilter.toolsAvailableText.rawValue
+            key: LocalizableStringKeys.toolsFilterToolsAvailable.key
         )
         
         return stringWithLocaleCount.getString(format: formatString, locale: Locale(identifier: localeId), count: numberOfTools)

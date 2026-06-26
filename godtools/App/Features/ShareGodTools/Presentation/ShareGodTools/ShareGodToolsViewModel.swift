@@ -16,10 +16,11 @@ final class ShareGodToolsViewModel: ObservableObject {
     
     @Published var shareMessage: String = ""
     
-    init(stepEmitter: FlowStepEmitter, strings: ShareGodToolsStringsDomainModel) {
+    init(stepEmitter: FlowStepEmitter, appLanguage: AppLanguageDomainModel, getShareGodToolsStringsUseCase: GetShareGodToolsStringsUseCase) {
         
         self.stepEmitter = stepEmitter
-        self.strings = strings
+        self.strings = getShareGodToolsStringsUseCase
+            .execute(appLanguage: appLanguage)
         
         shareMessage = strings.shareMessage
     }

@@ -12,27 +12,18 @@ struct DownloadableLanguageItemView: View {
     
     private static let lightGrey = Color.getColorWithRGB(red: 151, green: 151, blue: 151, opacity: 1)
     
-    private let tappedClosure: (() -> Void)?
-    
     @ObservedObject private var viewModel: DownloadableLanguageItemViewModel
 
-    init(viewModel: DownloadableLanguageItemViewModel, tappedClosure: (() -> Void)? = nil) {
+    init(viewModel: DownloadableLanguageItemViewModel) {
         
         self.viewModel = viewModel
-        self.tappedClosure = tappedClosure
     }
     
     var body: some View {
         
-        ZStack {
+        VStack(alignment: .leading, spacing: 0) {
             
-            Button(action: viewModel.languageTapped) {
-                Rectangle()
-                    .fill(Color.white)
-            }
-            .buttonStyle(.plain)
-            
-            HStack {
+            HStack(alignment: .center, spacing: 0) {
                 
                 VStack(alignment: .leading, spacing: 10) {
                     
@@ -54,12 +45,59 @@ struct DownloadableLanguageItemView: View {
                 
                 Spacer()
                 
-                LanguageDownloadIcon(
-                    state: viewModel.iconState
-                )
+                if let errorReason = viewModel.recycleState.downloadState.errorReason, !errorReason.isEmpty {
+                    LanguageDownloadErrorView(
+                        errorLabel: errorReason,
+                        actionTitle: "Retry",
+                        tappedClosure: {
+                            viewModel.retryDownloadTapped()
+                        }
+                    )
+                }
+                else {
+                    LanguageDownloadIcon(
+                        state: viewModel.iconState
+                    )
+                }
             }
+            .padding([.top], 10)
+            
+            SeparatorView()
+                .padding([.top], 16)
         }
+        .padding([.horizontal], 20)
         .animation(.default, value: viewModel.recycleState.downloadState)
         .animation(.default, value: viewModel.recycleState.isMarkedForRemoval)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            viewModel.languageTapped()
+        }
+    }
+}
+
+// MARK: - Preview
+
+struct DownloadableLanguageItemView_Preview: PreviewProvider {
+    
+    static var previews: some View {
+        
+        let appDiContainer = AppDiContainer.createUITestsDiContainer()
+        
+        let viewModel = DownloadableLanguageItemViewModel(
+            stepEmitter: PreviewFlowStepEmitter.emitter,
+            downloadableLanguage: DownloadableLanguageListItemDomainModel(
+                languageId: "0",
+                languageNameInOwnLanguage: "English",
+                languageNameInAppLanguage: "English",
+                toolsAvailableText: "",
+                downloadStatus: .notDownloaded
+            ),
+            downloadToolLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getDownloadToolLanguageUseCase(),
+            removeDownloadedToolLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getRemoveDownloadedToolLanguageUseCase()
+        )
+        
+        DownloadableLanguageItemView(
+            viewModel: viewModel
+        )
     }
 }

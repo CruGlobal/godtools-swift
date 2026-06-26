@@ -16,7 +16,7 @@ final class TranslationsRepository {
     private let api: TranslationsApiInterface
     private let cdn: TranslationsCdnInterface
     private let cache: TranslationsCache
-    private let infoPlist: InfoPlist
+    private let infoPlist: InfoPlistInterface
     private let resourcesFileCache: ResourcesSHA256FileCache
     private let trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
     private let remoteConfigRepository: RemoteConfigRepository
@@ -25,7 +25,7 @@ final class TranslationsRepository {
         api: TranslationsApiInterface,
         cdn: TranslationsCdnInterface,
         cache: TranslationsCache,
-        infoPlist: InfoPlist,
+        infoPlist: InfoPlistInterface,
         resourcesFileCache: ResourcesSHA256FileCache,
         trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository,
         remoteConfigRepository: RemoteConfigRepository

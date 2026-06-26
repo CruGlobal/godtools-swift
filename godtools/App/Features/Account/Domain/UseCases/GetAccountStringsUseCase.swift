@@ -21,11 +21,11 @@ final class GetAccountStringsUseCase {
         let localeId: String = appLanguage.localeId
         
         let strings = AccountStringsDomainModel(
-            navTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.Account.navTitle.rawValue),
-            activityButtonTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.Account.activityButtonTitle.rawValue),
-            myActivitySectionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.Account.activitySectionTitle.rawValue),
-            badgesSectionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.Account.badgesSectionTitle.rawValue),
-            globalActivityButtonTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.Account.globalActivityButtonTitle.rawValue),
+            navTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.accountNavTitle.key),
+            activityButtonTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.accountActivityTitle.key),
+            myActivitySectionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.accountActivitySectionTitle.key),
+            badgesSectionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.accountBadgesSectionTitle.key),
+            globalActivityButtonTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.accountGlobalActivityTitle.key),
             globalAnalyticsTitle: getGlobalAnalyticsTitle(localeId: localeId)
         )
         
@@ -34,7 +34,7 @@ final class GetAccountStringsUseCase {
     
     private func getGlobalAnalyticsTitle(localeId: BCP47LanguageIdentifier) -> String {
     
-        let localizedGlobalActivityTitle = localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.Account.globalAnalyticsTitle.rawValue)
+        let localizedGlobalActivityTitle = localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.accountActivityGlobalAnalyticsHeaderTitle.key)
         
         var calendar: Calendar = Calendar.current
         calendar.locale = Locale(identifier: localeId)

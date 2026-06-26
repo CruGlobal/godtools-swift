@@ -12,6 +12,8 @@ import SwiftUI
 import Combine
 
 final class AppFlow: RootFlow {
+    
+    private static let attachesLaunchScreenToRoot: Bool = true
         
     static let defaultNavBarColor: UIColor = .white
     static let defaultNavBarControlColor: UIColor = ColorPalette.gtBlue.uiColor
@@ -25,6 +27,7 @@ final class AppFlow: RootFlow {
     private let launchCountRepository: LaunchCountRepositoryInterface
     private let dashboardFlow: DashboardFlow
     
+    private var launchScreenImageView: UIView?
     private var appLaunchedFromDeepLink: ParsedDeepLinkType?
     private var cancellableForShouldPromptForOptInNotification: AnyCancellable?
     private var cancellables: Set<AnyCancellable> = Set()
@@ -65,9 +68,14 @@ final class AppFlow: RootFlow {
             )
         }
         
+        if Self.attachesLaunchScreenToRoot {
+            rootController.view.addSubview(Self.getNewLaunchScreenImageView())
+        }
+                
         rootController.view.frame = UIScreen.main.bounds
         rootController.view.backgroundColor = .clear
         rootController.addChildController(child: appNavigationController)
+        appNavigationController.view.backgroundColor = Self.attachesLaunchScreenToRoot ? .clear : .white
         
         super.init(
             initialView: nil,
@@ -125,7 +133,7 @@ final class AppFlow: RootFlow {
         switch appStep {
             
         case .appLaunched(let launchState):
-                        
+                                    
             if launchState.isLaunching {
                 
                 AppBackgroundState.shared.start(appDiContainer: appDiContainer)
@@ -135,9 +143,10 @@ final class AppFlow: RootFlow {
             
             switch launchState {
            
-            case .fromTerminatedState:
+            case .willEnterForground:
+                attachLaunchScreenImageView()
                 
-                let loadingView: UIView = attachLaunchedFromBackgroundLoadingView()
+            case .fromTerminatedState:
                 
                 countAppSessionLaunch()
                 
@@ -149,8 +158,6 @@ final class AppFlow: RootFlow {
                     if !onboardingTutorialIsAvailable {
                         pushFlow(flow: dashboardFlow, animated: false)
                     }
-                    
-                    removeLaunchedFromBackgroundLoadingView(view: loadingView)
                     
                     let launchCount: Int = launchCountRepository.getLaunchCount()
                     let hasPossibleDeferredDeepLinkInPasteboardForDynalink: Bool = UIPasteboard.general.hasURLs
@@ -180,6 +187,8 @@ final class AppFlow: RootFlow {
                     }
                     
                     loadInitialData()
+                    
+                    removeLaunchScreenImageView(animated: true, delay: 1.5)
                 }
                 
             case .fromBackgroundState(let secondsInBackground):
@@ -187,19 +196,18 @@ final class AppFlow: RootFlow {
                 let elapsedTimeInMinutes: TimeInterval = secondsInBackground / 60
                 
                 guard elapsedTimeInMinutes >= 120 else {
+                    removeLaunchScreenImageView(animated: false, delay: 0)
                     return
                 }
                 
                 loadInitialData()
                 countAppSessionLaunch()
                 
-                let loadingView: UIView = attachLaunchedFromBackgroundLoadingView()
-                
                 dashboardFlow.navigateToDashboard()
                 
                 promptForOptInNotificationIfNeeded()
                 
-                removeLaunchedFromBackgroundLoadingView(view: loadingView)
+                removeLaunchScreenImageView(animated: true, delay: 1.5)
                 
             case .inBackground:
                 break
@@ -380,26 +388,47 @@ extension AppFlow {
             .store(in: &cancellables)
     }
     
-    private func attachLaunchedFromBackgroundLoadingView() -> UIView {
+    private static func getNewLaunchScreenImageView() -> UIImageView {
         
-        let loadingView: UIView = UIView(frame: UIScreen.main.bounds)
-        let loadingImage: UIImageView = UIImageView(frame: UIScreen.main.bounds)
-        loadingImage.contentMode = .scaleAspectFit
-        loadingView.addSubview(loadingImage)
-        loadingImage.image = ImageCatalog.launchImage.uiImage
-        loadingView.backgroundColor = .white
-        GodToolsSceneDelegate.getWindow()?.addSubview(loadingView)
+        let imageView: UIImageView = UIImageView(frame: UIScreen.main.bounds)
+        imageView.contentMode = .scaleAspectFill
+        imageView.image = ImageCatalog.launchImage.uiImage
         
-        return loadingView
+        return imageView
     }
     
-    private func removeLaunchedFromBackgroundLoadingView(view: UIView) {
+    private func attachLaunchScreenImageView() {
         
-        UIView.animate(withDuration: 0.4, delay: 1.5, options: .curveEaseOut, animations: {
-            view.alpha = 0
-        }, completion: {(finished: Bool) in
-            view.removeFromSuperview()
-        })
+        guard launchScreenImageView == nil else {
+            return
+        }
+        
+        let launchScreenImageView: UIImageView = Self.getNewLaunchScreenImageView()
+        
+        GodToolsSceneDelegate.getWindow()?.addSubview(launchScreenImageView)
+        
+        self.launchScreenImageView = launchScreenImageView
+    }
+    
+    private func removeLaunchScreenImageView(animated: Bool, delay: TimeInterval) {
+        
+        guard let launchScreenImageView = self.launchScreenImageView else {
+            return
+        }
+        
+        if animated {
+            
+            UIView.animate(withDuration: 0.4, delay: delay, options: .curveEaseOut, animations: {
+                launchScreenImageView.alpha = 0
+            }, completion: { [weak self] (finished: Bool) in
+                launchScreenImageView.removeFromSuperview()
+                self?.launchScreenImageView = nil
+            })
+        }
+        else {
+            launchScreenImageView.removeFromSuperview()
+            self.launchScreenImageView = nil
+        }
     }
 }
 
@@ -475,6 +504,7 @@ extension AppFlow {
         case .menu:
             
             dashboardFlow.navigateToMenu(
+                appLanguage: appLanguage,
                 animated: true,
                 initialNavigationStep: nil
             )

@@ -77,9 +77,6 @@ final class LanguageSettingsFlow: GTFlow {
         case .backTappedFromDownloadedLanguages:
             navigationController.popViewController(animated: true)
             
-        case .languageDownloadFailedFromDownloadedLanguages(let error):
-            presentError(appLanguage: appLanguage, error: error)
-            
         default:
             break
         }

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetShareGodToolsStringsUseCase {
     
@@ -18,13 +17,12 @@ final class GetShareGodToolsStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ShareGodToolsStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> ShareGodToolsStringsDomainModel {
                 
         let strings = ShareGodToolsStringsDomainModel(
             shareMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "share_god_tools_share_sheet_text")
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

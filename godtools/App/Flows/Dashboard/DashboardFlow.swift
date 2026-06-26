@@ -70,7 +70,7 @@ final class DashboardFlow: GTFlow {
         switch appStep {
                         
         case .menuTappedFromTools:
-            navigateToMenu(animated: true)
+            navigateToMenu(appLanguage: appLanguage, animated: true)
             
         case .doneTappedFromMenu:
             closeMenu(animated: true)

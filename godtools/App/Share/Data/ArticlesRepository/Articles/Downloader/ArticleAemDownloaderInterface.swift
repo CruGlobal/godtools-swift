@@ -11,5 +11,5 @@ import RequestOperation
 
 protocol ArticleAemDownloaderInterface: Sendable {
     
-    func download(aemUris: [String], downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority) async -> ArticleAemDownload
+    func download(aemUris: [String], downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority) async throws -> ArticleAemDownload
 }

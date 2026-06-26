@@ -27,6 +27,7 @@ final class GetUserAccountDetailsUseCase {
             .getAuthUserDetailsChangedPublisher(
                 requestPriority: .high
             )
+            .receive(on: DispatchQueue.global())
             .tryMap { (changedUserDetails: UserDetailsDataModel?) in
                 
                 let cachedAuthUserDetails: UserDetailsDataModel? = try self.userDetailsRepository.getAuthUserDetails()
@@ -84,7 +85,7 @@ extension GetUserAccountDetailsUseCase {
         
         let formattedCreatedAtDateString: String = dateFormatter.string(from: createdAtDate)
         
-        let localizedJoinedOn: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: translatedInAppLanguage.localeId, key: "account.joinedOn")
+        let localizedJoinedOn: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: translatedInAppLanguage.localeId, key: LocalizableStringKeys.accountJoinedOn.key)
         
         let joinedOnString: String = String.localizedStringWithFormat(localizedJoinedOn, formattedCreatedAtDateString)
         

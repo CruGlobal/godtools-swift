@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetAppLanguagesStringsUseCase {
     
@@ -21,7 +20,7 @@ final class GetAppLanguagesStringsUseCase {
     func execute(appLanguage: AppLanguageDomainModel) -> AppLanguagesStringsDomainModel {
                 
         let strings = AppLanguagesStringsDomainModel(
-            navTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: AppLanguageStringKeys.AppLanguages.navTitle.rawValue)
+            navTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.languageSettingsAppLanguageTitle.key)
         )
         
         return strings
