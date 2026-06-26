@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetLessonSwipeTutorialStringsUseCase {
     
@@ -17,7 +16,7 @@ final class GetLessonSwipeTutorialStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<LessonSwipeTutorialStringsDomainModel, Never> {
+    func execute(translateInLanguage: AppLanguageDomainModel) -> LessonSwipeTutorialStringsDomainModel {
         
         let localeId: String = translateInLanguage.localeId
         
@@ -26,7 +25,6 @@ final class GetLessonSwipeTutorialStringsUseCase {
             closeButtonText: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsSwipeTutorialButtonText.key)
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

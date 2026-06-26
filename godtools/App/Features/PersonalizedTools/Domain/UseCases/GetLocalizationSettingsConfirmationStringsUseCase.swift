@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetLocalizationSettingsConfirmationStringsUseCase {
 
@@ -17,7 +16,7 @@ final class GetLocalizationSettingsConfirmationStringsUseCase {
         self.localizationServices = localizationServices
     }
 
-    func execute(appLanguage: AppLanguageDomainModel, selectedCountry: LocalizationSettingsCountryListItem) -> AnyPublisher<LocalizationSettingsConfirmationStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel, selectedCountry: LocalizationSettingsCountryListItem) -> LocalizationSettingsConfirmationStringsDomainModel {
 
         let titleHighlightModel: ConfirmAppLanguageHighlightStringDomainModel
 
@@ -47,7 +46,6 @@ final class GetLocalizationSettingsConfirmationStringsUseCase {
             confirmButton: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.localizationSettingsConfirmationConfirmButton.key)
         )
 
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetShareToolScreenShareSessionStringsUseCase {
     
@@ -18,7 +17,7 @@ final class GetShareToolScreenShareSessionStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ShareToolScreenShareSessionStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> ShareToolScreenShareSessionStringsDomainModel {
         
         let localeId: String = appLanguage
         
@@ -30,7 +29,6 @@ final class GetShareToolScreenShareSessionStringsUseCase {
             qrCodeActionTitle: qrCodeActionTitle
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetSocialCreateAccountStringsUseCase {
     
@@ -18,7 +17,7 @@ final class GetSocialCreateAccountStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<SocialCreateAccountStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> SocialCreateAccountStringsDomainModel {
         
         let localeId: String = appLanguage
         
@@ -30,7 +29,6 @@ final class GetSocialCreateAccountStringsUseCase {
             createWithGoogleActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.signInGoogle.key)
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

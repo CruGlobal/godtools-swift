@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetReviewShareShareableStringsUseCase {
     
@@ -18,7 +17,7 @@ final class GetReviewShareShareableStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ReviewShareShareableStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> ReviewShareShareableStringsDomainModel {
         
         let localeId: String = appLanguage
         
@@ -26,7 +25,6 @@ final class GetReviewShareShareableStringsUseCase {
             shareActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsShareImagePreviewShareImageButtonTitle.key)
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

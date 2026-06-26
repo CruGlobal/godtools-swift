@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetToolSettingsStringsUseCase {
     
@@ -18,7 +17,7 @@ final class GetToolSettingsStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolSettingsStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> ToolSettingsStringsDomainModel {
         
         let localeId: String = appLanguage
         
@@ -34,7 +33,6 @@ final class GetToolSettingsStringsUseCase {
             shareablesTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsShareablesTitle.key)
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

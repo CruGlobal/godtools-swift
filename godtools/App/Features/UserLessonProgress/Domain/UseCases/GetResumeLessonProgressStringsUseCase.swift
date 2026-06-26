@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetResumeLessonProgressStringsUseCase {
     
@@ -17,7 +16,7 @@ final class GetResumeLessonProgressStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ResumeLessonProgressStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> ResumeLessonProgressStringsDomainModel {
         
         let localeId: String = appLanguage.localeId
         
@@ -28,7 +27,6 @@ final class GetResumeLessonProgressStringsUseCase {
             continueButtonText: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsResumeLessonModalContinueButton.key)
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

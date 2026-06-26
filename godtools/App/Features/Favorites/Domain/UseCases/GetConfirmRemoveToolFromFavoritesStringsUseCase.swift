@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetConfirmRemoveToolFromFavoritesStringsUseCase {
     
@@ -20,7 +19,7 @@ final class GetConfirmRemoveToolFromFavoritesStringsUseCase {
         self.getTranslatedToolName = getTranslatedToolName
     }
     
-    func execute(toolId: String, appLanguage: AppLanguageDomainModel) -> AnyPublisher<ConfirmRemoveToolFromFavoritesStringsDomainModel, Never> {
+    func execute(toolId: String, appLanguage: AppLanguageDomainModel) -> ConfirmRemoveToolFromFavoritesStringsDomainModel {
         
         let strings = ConfirmRemoveToolFromFavoritesStringsDomainModel(
             title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.removeFromFavoritesTitle.key),
@@ -29,7 +28,6 @@ final class GetConfirmRemoveToolFromFavoritesStringsUseCase {
             cancelRemoveActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.no.key)
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

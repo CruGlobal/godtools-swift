@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetLessonsStringsUseCase {
 
@@ -18,7 +17,7 @@ final class GetLessonsStringsUseCase {
         self.localizationServices = localizationServices
     }
 
-    func execute(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<LessonsStringsDomainModel, Never> {
+    func execute(translateInLanguage: AppLanguageDomainModel) -> LessonsStringsDomainModel {
 
         let localeId: String = translateInLanguage
         
@@ -34,7 +33,6 @@ final class GetLessonsStringsUseCase {
             viewAllLessonsAction: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsPersonalizationUnavailableViewAllLessons.key)
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }
