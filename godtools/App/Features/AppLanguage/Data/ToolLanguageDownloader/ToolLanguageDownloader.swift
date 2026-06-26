@@ -54,8 +54,8 @@ final class ToolLanguageDownloader {
             let downloadTools: [DownloadToolData] = try getToolsToDownloadForLanguage(languageId: languageId)
             
             guard !downloadTools.isEmpty else {
-                return Just(1)
-                    .setFailureType(to: Error.self)
+                let error: Error = NSError.errorWithDescription(description: "Download tool language failed.  Not tools to download for language id: \(languageId)")
+                return Fail(error: error)
                     .eraseToAnyPublisher()
             }
             
@@ -111,7 +111,10 @@ final class ToolLanguageDownloader {
         
         _ = await toolDownloader.downloadTools(tools: tools, requestPriority: .low)
         
-        _ = try await downloadedLanguagesRepository.storeDownloadedLanguage(languageId: languageId, downloadComplete: true)
+        _ = try await downloadedLanguagesRepository.storeDownloadedLanguage(
+            languageId: languageId,
+            downloadComplete: true
+        )
     }
     
     func syncDownloadedLanguages() async throws {
