@@ -32,7 +32,7 @@ struct DownloadableLanguageItemView: View {
             }
             .buttonStyle(.plain)
             
-            HStack {
+            HStack(alignment: .center, spacing: 0) {
                 
                 VStack(alignment: .leading, spacing: 10) {
                     
@@ -61,5 +61,33 @@ struct DownloadableLanguageItemView: View {
         }
         .animation(.default, value: viewModel.recycleState.downloadState)
         .animation(.default, value: viewModel.recycleState.isMarkedForRemoval)
+    }
+}
+
+// MARK: - Preview
+
+struct DownloadableLanguageItemView_Preview: PreviewProvider {
+    
+    static var previews: some View {
+        
+        let appDiContainer = AppDiContainer.createUITestsDiContainer()
+        
+        let viewModel = DownloadableLanguageItemViewModel(
+            stepEmitter: PreviewFlowStepEmitter.emitter,
+            downloadableLanguage: DownloadableLanguageListItemDomainModel(
+                languageId: "0",
+                languageNameInOwnLanguage: "English",
+                languageNameInAppLanguage: "English",
+                toolsAvailableText: "",
+                downloadStatus: .notDownloaded
+            ),
+            downloadToolLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getDownloadToolLanguageUseCase(),
+            removeDownloadedToolLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getRemoveDownloadedToolLanguageUseCase()
+        )
+        
+        DownloadableLanguageItemView(
+            viewModel: viewModel,
+            tappedClosure: nil
+        )
     }
 }
