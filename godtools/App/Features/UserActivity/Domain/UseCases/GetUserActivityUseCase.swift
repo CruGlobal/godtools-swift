@@ -34,6 +34,7 @@ final class GetUserActivityUseCase {
         
         return userCounterRepository
             .observeCollectionChangesPublisher()
+            .receive(on: DispatchQueue.global())
             .flatMap { (countersChanged: Void) in
                 
                 return self

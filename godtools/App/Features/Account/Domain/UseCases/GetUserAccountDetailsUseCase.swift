@@ -27,6 +27,7 @@ final class GetUserAccountDetailsUseCase {
             .getAuthUserDetailsChangedPublisher(
                 requestPriority: .high
             )
+            .receive(on: DispatchQueue.global())
             .tryMap { (changedUserDetails: UserDetailsDataModel?) in
                 
                 let cachedAuthUserDetails: UserDetailsDataModel? = try self.userDetailsRepository.getAuthUserDetails()

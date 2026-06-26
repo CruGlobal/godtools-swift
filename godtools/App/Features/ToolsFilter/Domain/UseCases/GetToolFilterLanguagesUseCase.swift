@@ -30,6 +30,7 @@ final class GetToolFilterLanguagesUseCase {
         
         return resourcesRepository
             .observeCollectionChangesPublisher()
+            .receive(on: DispatchQueue.global())
             .flatMap { _ in
                 
                 return AnyPublisher() {

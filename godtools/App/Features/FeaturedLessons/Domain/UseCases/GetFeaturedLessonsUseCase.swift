@@ -43,6 +43,7 @@ final class GetFeaturedLessonsUseCase {
             lessonProgressRepository
                 .getLessonProgressChangedPublisher()
         )
+        .receive(on: DispatchQueue.global())
         .flatMap({ (resourcesChanged: Void, lessonProgressDidChange: Void) -> AnyPublisher<[FeaturedLessonDomainModel], Error> in
             
             return AnyPublisher() {

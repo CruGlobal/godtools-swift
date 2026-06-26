@@ -25,7 +25,7 @@ final class InMemoryDataCache {
         cache.setObject(data as NSData, forKey: id as NSString)
     }
     
-    func getData(id: String) -> Data? {
+    func getData(id: String) async -> Data? {
         
         guard let nsData = cache.object(forKey: NSString(string: id)) else {
             return nil

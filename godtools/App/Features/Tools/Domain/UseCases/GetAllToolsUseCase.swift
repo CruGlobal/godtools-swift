@@ -24,6 +24,7 @@ final class GetAllToolsUseCase {
         
         return resourcesRepository
             .observeCollectionChangesPublisher()
+            .receive(on: DispatchQueue.global())
             .prepend(Void())
             .map { _ in
             

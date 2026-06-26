@@ -90,26 +90,26 @@ extension ToolDownloader {
     func downloadToolsPublisher(tools: [DownloadToolData], requestPriority: RequestPriority) -> AnyPublisher<[ToolDownloadDataModel], Error> {
         
         return AnyPublisher() {
-            await self.downloadTools(tools: tools, requestPriority: requestPriority)
+            try await self.downloadTools(tools: tools, requestPriority: requestPriority)
         }
     }
     
-    func downloadTools(tools: [DownloadToolData], requestPriority: RequestPriority) async -> [ToolDownloadDataModel] {
+    func downloadTools(tools: [DownloadToolData], requestPriority: RequestPriority) async throws -> [ToolDownloadDataModel] {
                      
         await setInitialProgressToZeroForTools(tools: tools)
         
         var toolDownloads: [ToolDownloadDataModel] = Array()
         
-        await withTaskGroup(of: ToolDownloadDataModel.self) { group in
+        try await withThrowingTaskGroup(of: ToolDownloadDataModel.self) { group in
             
             for tool in tools {
                 
                 group.addTask {
-                    return await self.downloadTool(tool: tool, requestPriority: requestPriority)
+                    return try await self.downloadTool(tool: tool, requestPriority: requestPriority)
                 }
             }
             
-            for await toolDownload in group {
+            for try await toolDownload in group {
                 toolDownloads.append(toolDownload)
             }
         }
@@ -117,7 +117,7 @@ extension ToolDownloader {
         return toolDownloads
     }
     
-    private func downloadTool(tool: DownloadToolData, requestPriority: RequestPriority) async -> ToolDownloadDataModel {
+    private func downloadTool(tool: DownloadToolData, requestPriority: RequestPriority) async throws -> ToolDownloadDataModel {
                 
         let downloadData: ToolDownloaderDataToDownload = getToolDataToDownload.getData(tools: [tool])
         
@@ -241,6 +241,10 @@ extension ToolDownloader {
                 totalNumberOfDownloads: totalNumberOfDownloads,
                 error: error
             )
+            
+            if error.isUrlErrorNotConnectedToInternetCode || error.isUrlErrorCancelledCode {
+                throw error
+            }
         }
         
         return toolDownload

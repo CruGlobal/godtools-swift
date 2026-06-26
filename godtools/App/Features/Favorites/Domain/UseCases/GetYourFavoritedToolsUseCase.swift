@@ -42,6 +42,7 @@ final class GetYourFavoritedToolsUseCase {
             favoritedResourcesRepository
                 .observeCollectionChangesPublisher()
         )
+        .receive(on: DispatchQueue.global())
         .flatMap { (resourcesChanged: Void, favoritedResourcesChanged: Void) -> AnyPublisher<[YourFavoritedToolDomainModel], Error> in
             
             return AnyPublisher() {

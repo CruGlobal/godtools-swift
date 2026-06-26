@@ -34,6 +34,7 @@ final class GetAllLessonsUseCase {
             lessonProgressRepository
                 .getLessonProgressChangedPublisher()
         )
+        .receive(on: DispatchQueue.global())
         .flatMap({ (resourcesDidChange: Void, lessonProgressDidChange: Void) -> AnyPublisher<[LessonListItemDomainModel], Error> in
 
             return AnyPublisher() {

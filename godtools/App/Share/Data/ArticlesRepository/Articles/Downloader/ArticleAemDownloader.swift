@@ -21,9 +21,9 @@ final class ArticleAemDownloader: ArticleAemDownloaderInterface {
         self.requestSender = requestSender
     }
     
-    func download(aemUris: [String], downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority) async -> ArticleAemDownload {
+    func download(aemUris: [String], downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority) async throws -> ArticleAemDownload {
         
-        let results: [DownloadArticleAemResult] = await downloadAemUris(
+        let results: [DownloadArticleAemResult] = try await downloadAemUris(
             aemUris: aemUris,
             downloadCachePolicy: downloadCachePolicy,
             requestPriority: requestPriority
@@ -49,9 +49,9 @@ final class ArticleAemDownloader: ArticleAemDownloaderInterface {
         )
     }
     
-    private func downloadAemUris(aemUris: [String], downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority) async -> [DownloadArticleAemResult] {
+    private func downloadAemUris(aemUris: [String], downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority) async throws -> [DownloadArticleAemResult] {
         
-        await withTaskGroup(of: DownloadArticleAemResult.self) { group in
+        try await withThrowingTaskGroup(of: DownloadArticleAemResult.self) { group in
             
             for aemUri in aemUris {
                 group.addTask {
@@ -64,6 +64,11 @@ final class ArticleAemDownloader: ArticleAemDownloaderInterface {
                         return DownloadArticleAemResult(data: aemData, error: nil)
                     }
                     catch let error {
+                        
+                        if error.isUrlErrorNotConnectedToInternetCode || error.isUrlErrorCancelledCode {
+                            throw error
+                        }
+                        
                         return DownloadArticleAemResult(data: nil, error: error)
                     }
                 }
@@ -71,7 +76,7 @@ final class ArticleAemDownloader: ArticleAemDownloaderInterface {
             
             var results: [DownloadArticleAemResult] = Array()
             
-            for await result in group {
+            for try await result in group {
                 results.append(result)
             }
             

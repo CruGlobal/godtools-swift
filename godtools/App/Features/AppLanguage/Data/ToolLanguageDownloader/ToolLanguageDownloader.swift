@@ -76,6 +76,11 @@ final class ToolLanguageDownloader {
                     
                     let downloadProgress: Double = toolsDownloadProgress.getAverage()
                     
+                    if let downloadError = downloadError {
+                        return Fail(error: NSError.errorWithDescription(description: downloadError))
+                            .eraseToAnyPublisher()
+                    }
+                    
                     return Just(downloadProgress)
                         .setFailureType(to: Error.self)
                         .eraseToAnyPublisher()
@@ -109,7 +114,7 @@ final class ToolLanguageDownloader {
             )
         }
         
-        let downloadedTools: [ToolDownloadDataModel] = await toolDownloader.downloadTools(tools: tools, requestPriority: .low)
+        let downloadedTools: [ToolDownloadDataModel] = try await toolDownloader.downloadTools(tools: tools, requestPriority: .low)
         
         _ = try await downloadedLanguagesRepository.storeDownloadedLanguage(
             languageId: languageId,

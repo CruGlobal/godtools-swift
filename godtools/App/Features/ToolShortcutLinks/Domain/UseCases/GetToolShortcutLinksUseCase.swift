@@ -31,6 +31,7 @@ final class GetToolShortcutLinksUseCase {
         
         return favoritedResourcesRepository
             .observeCollectionChangesPublisher()
+            .receive(on: DispatchQueue.global())
             .flatMap { (favoritesChanged: Void) -> AnyPublisher<[ToolShortcutLinkDomainModel], Error> in
                 
                 return AnyPublisher() {

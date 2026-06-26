@@ -64,13 +64,13 @@ class ToolCardViewModel: ObservableObject {
         
         let attachmentId: String = tool.bannerImageId
         
-        if let imageData = inMemoryDataCache.getData(id: attachmentId), let image = imageData.toImage() {
+        getBannerImageTask = Task {
             
-            banner = getBanner(image: image, attachmentId: attachmentId)
-        }
-        else {
-            
-            getBannerImageTask = Task {
+            if let imageData = await inMemoryDataCache.getData(id: attachmentId), let image = imageData.toImage() {
+                
+                banner = getBanner(image: image, attachmentId: attachmentId)
+            }
+            else {
                 
                 let imageData = try await getToolBannerUseCase
                     .execute(

@@ -30,6 +30,7 @@ final class GetLessonFilterLanguagesUseCase {
             
         return resourcesRepository
             .observeCollectionChangesPublisher()
+            .receive(on: DispatchQueue.global())
             .flatMap { (resourcesChanged: Void) -> AnyPublisher<[LessonFilterLanguageDomainModel], Error> in
                 
                 return AnyPublisher() {

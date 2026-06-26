@@ -54,6 +54,6 @@ final class DownloadLatestToolsForFavoritedToolsUseCase {
             )
         })
         
-        _ = await toolDownloader.downloadTools(tools: tools, requestPriority: .medium)
+        _ = try await toolDownloader.downloadTools(tools: tools, requestPriority: .medium)
     }
 }
