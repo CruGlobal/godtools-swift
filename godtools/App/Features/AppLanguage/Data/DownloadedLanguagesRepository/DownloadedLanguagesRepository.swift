@@ -79,9 +79,7 @@ final class DownloadedLanguagesRepository {
         var downloadsToUpdate: [DownloadedLanguageDataModel] = Array()
         
         for download in incompleteDownloads {
-            
-            let secondsSinceDownloadStarted: Double = Date().timeIntervalSince(download.createdAt)
-            
+                        
             downloadsToUpdate.append(
                 download.copy(downloadComplete: true)
             )
