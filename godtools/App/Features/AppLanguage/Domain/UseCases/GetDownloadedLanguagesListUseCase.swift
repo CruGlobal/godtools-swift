@@ -34,6 +34,7 @@ final class GetDownloadedLanguagesListUseCase {
             downloadedLanguagesRepository
                 .observeCollectionChangesPublisher()
         )
+        .receive(on: DispatchQueue.global())
         .flatMap { (languagesChanged: Void, downloadLanguagesChanged: Void) -> AnyPublisher<[DownloadedLanguageListItemDomainModel], Error> in
             
             return AnyPublisher() {

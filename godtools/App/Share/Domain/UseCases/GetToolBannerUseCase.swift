@@ -19,7 +19,7 @@ final class GetToolBannerUseCase {
         self.attachmentsRepository = attachmentsRepository
     }
     
-    @MainActor func execute(attachmentId: String) async throws -> Data? {
+    func execute(attachmentId: String) async throws -> Data? {
         
         if let cachedImageData = attachmentsRepository.getAttachment(id: attachmentId)?.getImageData() {
             return cachedImageData

@@ -24,6 +24,7 @@ final class GetUserToolFilterCategoryUseCase {
         
         return userToolFiltersRepository
             .getUserToolCategoryFilterChangedPublisher()
+            .receive(on: DispatchQueue.global())
             .map {
                 
                 let categoryId: String? = self.userToolFiltersRepository.getUserToolCategoryFilter()?.categoryId

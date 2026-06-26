@@ -69,6 +69,7 @@ final class GetPersonalizedLessonsUseCase {
             lessonProgressRepository
                 .getLessonProgressChangedPublisher()
         )
+        .receive(on: DispatchQueue.global())
         .flatMap({ (personalizedLessonsChanged, resourcesChanged, lessonProgressChanged) -> AnyPublisher<[ResourceDataModel], Error> in
 
             return AnyPublisher() {

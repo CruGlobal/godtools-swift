@@ -46,6 +46,7 @@ final class GetSpotlightToolsUseCase {
         
         return resourcesRepository
             .observeCollectionChangesPublisher()
+            .receive(on: DispatchQueue.global())
             .flatMap({ (resourcesChanged: Void) -> AnyPublisher<[SpotlightToolListItemDomainModel], Never> in
             
                 let spotlightToolResources: [ResourceDataModel] = self.resourcesRepository.getSpotlightTools(sortByDefaultOrder: true)

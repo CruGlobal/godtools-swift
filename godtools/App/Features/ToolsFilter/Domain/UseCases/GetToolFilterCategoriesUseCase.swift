@@ -24,6 +24,7 @@ final class GetToolFilterCategoriesUseCase {
         
         return resourcesRepository
             .observeCollectionChangesPublisher()
+            .receive(on: DispatchQueue.global())
             .flatMap { _ in
                 
                 let categoryIds = self.resourcesRepository
