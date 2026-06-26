@@ -75,18 +75,12 @@ final class DownloadedLanguagesRepository {
         guard incompleteDownloads.count > 0 else {
             return
         }
-        
-        let fiveMinutes: Double = 5 * 60
-        
+                
         var downloadsToUpdate: [DownloadedLanguageDataModel] = Array()
         
         for download in incompleteDownloads {
             
             let secondsSinceDownloadStarted: Double = Date().timeIntervalSince(download.createdAt)
-            
-            guard secondsSinceDownloadStarted >= fiveMinutes else {
-                continue
-            }
             
             downloadsToUpdate.append(
                 download.copy(downloadComplete: true)
