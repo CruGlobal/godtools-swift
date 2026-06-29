@@ -14,6 +14,7 @@ import Combine
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
         
     private let lessonId: String
+    private let lessonLanguage: AppLanguageDomainModel
     private let pageIndexReached: Int
     private let evaluateLessonUseCase: EvaluateLessonUseCase
     private let cancelLessonEvaluationUseCase: CancelLessonEvaluationUseCase
@@ -33,7 +34,9 @@ import Combine
     
     init(
         flowDelegate: FlowDelegate,
-        lessonId: String, pageIndexReached: Int,
+        lessonId: String,
+        lessonLanguage: AppLanguageDomainModel,
+        pageIndexReached: Int,
         getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
         getLessonEvaluationStringsUseCase: GetLessonEvaluationStringsUseCase,
         didChangeScaleForSpiritualConversationReadinessUseCase: DidChangeScaleForSpiritualConversationReadinessUseCase,
@@ -43,6 +46,7 @@ import Combine
         
         self.flowDelegate = flowDelegate
         self.lessonId = lessonId
+        self.lessonLanguage = lessonLanguage
         self.pageIndexReached = pageIndexReached
         self.evaluateLessonUseCase = evaluateLessonUseCase
         self.cancelLessonEvaluationUseCase = cancelLessonEvaluationUseCase
@@ -135,7 +139,7 @@ extension LessonEvaluationViewModel {
         )
         
         evaluateLessonUseCase
-            .execute(lessonId: lessonId, feedback: feedback)
+            .execute(lessonId: lessonId, feedback: feedback, lessonLanguage: lessonLanguage)
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { _ in
                 

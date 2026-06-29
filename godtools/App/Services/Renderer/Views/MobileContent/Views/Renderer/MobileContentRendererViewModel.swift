@@ -104,6 +104,10 @@ import Combine
         return languages[selectedLanguageIndex]
     }
     
+    func getSelectedLanguageCode() -> String {
+        return getSelectedLanguage()?.code ?? ""
+    }
+    
     override func viewDidFinishLayout(window: UIViewController, safeArea: UIEdgeInsets) {
         
         super.viewDidFinishLayout(window: window, safeArea: safeArea)
@@ -117,6 +121,7 @@ import Combine
         
         let event = DismissToolEvent(
             resource: resource,
+            language: getSelectedLanguageCode(),
             highestPageNumberViewed: highestPageNumberViewed
         )
         

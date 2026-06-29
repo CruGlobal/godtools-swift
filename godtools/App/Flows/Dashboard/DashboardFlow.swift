@@ -274,7 +274,7 @@ class DashboardFlow: Flow, ToolNavigationFlow {
             
             switch state {
             
-            case .userClosedLesson(let lessonId, let highestPageNumberViewed):
+            case .userClosedLesson(let lessonId, let lessonLanguage, let highestPageNumberViewed):
                 
                 let getLessonEvaluatedUseCase: GetLessonEvaluatedUseCase = appDiContainer.feature.lessonEvaluation.domainLayer.getLessonEvaluatedUseCase()
                 
@@ -284,7 +284,11 @@ class DashboardFlow: Flow, ToolNavigationFlow {
                     .sink { [weak self] (lessonEvaluated: Bool) in
                         
                         if highestPageNumberViewed > 2 && !lessonEvaluated {
-                            self?.presentLessonEvaluation(lessonId: lessonId, pageIndexReached: highestPageNumberViewed)
+                            self?.presentLessonEvaluation(
+                                lessonId: lessonId,
+                                lessonLanguage: lessonLanguage,
+                                pageIndexReached: highestPageNumberViewed
+                            )
                         }
                     }
                     .store(in: &cancellables)
@@ -469,11 +473,12 @@ extension DashboardFlow {
 
 extension DashboardFlow {
     
-    private func presentLessonEvaluation(lessonId: String, pageIndexReached: Int) {
+    private func presentLessonEvaluation(lessonId: String, lessonLanguage: AppLanguageDomainModel, pageIndexReached: Int) {
         
         let viewModel = LessonEvaluationViewModel(
             flowDelegate: self,
             lessonId: lessonId,
+            lessonLanguage: lessonLanguage,
             pageIndexReached: pageIndexReached,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getLessonEvaluationStringsUseCase: appDiContainer.feature.lessonEvaluation.domainLayer.getLessonEvaluationStringsUseCase(),

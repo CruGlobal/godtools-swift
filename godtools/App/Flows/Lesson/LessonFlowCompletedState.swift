@@ -10,5 +10,5 @@ import Foundation
 
 enum LessonFlowCompletedState {
     
-    case userClosedLesson(lessonId: String, highestPageNumberViewed: Int)
+    case userClosedLesson(lessonId: String, lessonLanguage: AppLanguageDomainModel, highestPageNumberViewed: Int)
 }

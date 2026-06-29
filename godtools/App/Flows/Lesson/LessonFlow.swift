@@ -134,8 +134,8 @@ class LessonFlow: ToolNavigationFlow, Flow {
         case .shareToolFlowCompleted( _):
             shareToolFlow = nil
             
-        case .closeTappedFromLesson(let lessonId, let highestPageNumberViewed):
-            closeTool(lessonId: lessonId, highestPageNumberViewed: highestPageNumberViewed)
+        case .closeTappedFromLesson(let lessonId, let lessonLanguage, let highestPageNumberViewed):
+            closeTool(lessonId: lessonId, lessonLanguage: lessonLanguage, highestPageNumberViewed: highestPageNumberViewed)
                                                 
         case .articleFlowCompleted( _):
             
@@ -209,9 +209,17 @@ class LessonFlow: ToolNavigationFlow, Flow {
         }
     }
     
-    private func closeTool(lessonId: String, highestPageNumberViewed: Int) {
+    private func closeTool(lessonId: String, lessonLanguage: AppLanguageDomainModel, highestPageNumberViewed: Int) {
                 
-        flowDelegate?.navigate(step: .lessonFlowCompleted(state: .userClosedLesson(lessonId: lessonId, highestPageNumberViewed: highestPageNumberViewed)))
+        flowDelegate?.navigate(
+            step: .lessonFlowCompleted(
+                state: .userClosedLesson(
+                    lessonId: lessonId,
+                    lessonLanguage: lessonLanguage,
+                    highestPageNumberViewed: highestPageNumberViewed
+                )
+            )
+        )
     }
     
     private func trackSwipeTutorialViewed() {
@@ -328,7 +336,7 @@ extension LessonFlow: MobileContentRendererNavigationDelegate {
     
     func mobileContentRendererNavigationDismissRenderer(navigation: MobileContentRendererNavigation, event: DismissToolEvent) {
         
-        closeTool(lessonId: event.resource.id, highestPageNumberViewed: event.highestPageNumberViewed)
+        closeTool(lessonId: event.resource.id, lessonLanguage: event.language, highestPageNumberViewed: event.highestPageNumberViewed)
     }
     
     func mobileContentRendererNavigationDeepLink(navigation: MobileContentRendererNavigation, deepLink: MobileContentRendererNavigationDeepLinkType) {

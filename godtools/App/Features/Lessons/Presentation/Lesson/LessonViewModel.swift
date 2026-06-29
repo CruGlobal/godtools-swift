@@ -96,6 +96,12 @@ extension LessonViewModel {
     
     func closeTapped() {
                 
-        flowDelegate?.navigate(step: .closeTappedFromLesson(lessonId: resource.id, highestPageNumberViewed: highestPageNumberViewed))
+        flowDelegate?.navigate(
+            step: .closeTappedFromLesson(
+                lessonId: resource.id,
+                lessonLanguage: getSelectedLanguageCode(),
+                highestPageNumberViewed: highestPageNumberViewed
+            )
+        )
     }
 }
