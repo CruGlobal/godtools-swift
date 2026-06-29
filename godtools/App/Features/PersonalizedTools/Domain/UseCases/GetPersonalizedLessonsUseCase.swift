@@ -103,8 +103,8 @@ final class GetPersonalizedLessonsUseCase {
     private func getLessonsUnavailable(appLanguage: AppLanguageDomainModel) -> PersonalizedLessonsUnavailableDomainModel {
 
         return PersonalizedLessonsUnavailableDomainModel(
-            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "lessons.personalizationUnavailable.title"),
-            message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "lessons.personalizationUnavailable.message")
+            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.lessonsPersonalizationUnavailableTitle.key),
+            message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.lessonsPersonalizationUnavailableMessage.key)
         )
     }
 }

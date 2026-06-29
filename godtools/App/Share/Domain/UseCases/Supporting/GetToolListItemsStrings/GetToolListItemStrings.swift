@@ -20,8 +20,8 @@ final class GetToolListItemStrings {
     func getStrings(appLanguage: AppLanguageDomainModel) -> ToolListItemStringsDomainModel {
         
         let strings = ToolListItemStringsDomainModel(
-            openToolActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "open"),
-            openToolDetailsActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "favorites.favoriteLessons.details")
+            openToolActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.open.key),
+            openToolDetailsActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.favoritesFavoriteLessonsDetails.key)
         )
         
         return strings

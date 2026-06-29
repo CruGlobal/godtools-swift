@@ -17,6 +17,6 @@ struct PrivacyPolicyWebContent: WebContentType {
     
     init(localizationServices: LocalizationServicesInterface) {
         
-        navTitle = localizationServices.stringForSystemElseEnglish(key: "privacy_policy")
+        navTitle = localizationServices.stringForSystemElseEnglish(key: LocalizableStringKeys.privacyPolicy.key)
     }
 }

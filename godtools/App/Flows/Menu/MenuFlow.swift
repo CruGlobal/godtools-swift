@@ -479,10 +479,10 @@ extension MenuFlow {
         
         switch authError {
         case .accountAlreadyExists:
-            message = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageLocaleId, key: "authError.userAccountAlreadyExists.message")
+            message = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageLocaleId, key: LocalizableStringKeys.authErrorUserAccountAlreadyExistsMessage.key)
             
         case .accountNotFound:
-            message = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageLocaleId, key: "authError.userAccountNotFound.message")
+            message = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageLocaleId, key: LocalizableStringKeys.authErrorUserAccountNotFoundMessage.key)
             
         case .other(let error):
             message = error.localizedDescription
