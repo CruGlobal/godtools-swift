@@ -58,13 +58,13 @@ struct GetAccountStringsUseCaseTests {
     )
     func globalAnalyticsTitleIsPrefixedWithTheCurrentYear(argument: TestArgument) async {
 
-        let useCase = getUseCase()
+        let dateService: DateServiceInterface = MockDateService()
+        
+        let useCase = getUseCase(dateService: dateService)
 
         let strings: AccountStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
 
-        var calendar: Calendar = Calendar.current
-        calendar.locale = Locale(identifier: argument.appLanguage)
-        let year: Int = calendar.dateComponents([.year], from: Date()).year ?? 0
+        let year: Int = dateService.getCurrentYear(options: CalendarOptions.defaultOptions) ?? 0
 
         let expectedTitle: String = "\(year) \(argument.appLanguage):\(LocalizableStringKeys.accountActivityGlobalAnalyticsHeaderTitle.key)"
 
@@ -74,12 +74,13 @@ struct GetAccountStringsUseCaseTests {
 
 extension GetAccountStringsUseCaseTests {
 
-    private func getUseCase() -> GetAccountStringsUseCase {
+    private func getUseCase(dateService: DateServiceInterface = MockDateService()) -> GetAccountStringsUseCase {
 
         return GetAccountStringsUseCase(
             localizationServices: MockLocalizationServices(
                 localizableStrings: MockLocalizationServices.getStrings(stringKeys: Self.stringKeys, languages: [.english, .spanish])
-            )
+            ),
+            dateService: dateService
         )
     }
 }
