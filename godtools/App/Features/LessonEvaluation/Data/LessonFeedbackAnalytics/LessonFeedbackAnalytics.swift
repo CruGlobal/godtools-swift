@@ -24,7 +24,11 @@ class LessonFeedbackAnalytics {
         self.firebaseAnalytics = firebaseAnalytics
     }
     
-    func trackLessonFeedback(lesson: ResourceDataModel, feedback: TrackLessonFeedbackDomainModel) {
+    func trackLessonFeedback(
+        lesson: ResourceDataModel,
+        feedback: TrackLessonFeedbackDomainModel,
+        contentLanguage: AppLanguageDomainModel
+    ) {
             
         var data: [String: String] = Dictionary()
         
@@ -50,7 +54,7 @@ class LessonFeedbackAnalytics {
             siteSection: lesson.abbreviation,
             siteSubSection: "",
             appLanguage: nil,
-            contentLanguage: nil,
+            contentLanguage: contentLanguage,
             secondaryContentLanguage: nil,
             actionName: LessonFeedbackAnalytics.trackLessonFeedbackActionName,
             data: data
