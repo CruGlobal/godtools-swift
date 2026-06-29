@@ -55,7 +55,7 @@ final class GetToolDetailsUseCase {
         }
         
         let numberOfViewsString: String = String(
-            format: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "total_views").capitalized,
+            format: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.totalViews.key).capitalized,
             locale: Locale(identifier: appLanguage),
             toolDataModel.totalViews
         )
@@ -81,7 +81,7 @@ final class GetToolDetailsUseCase {
             name: translation.translatedName,
             numberOfViews: numberOfViewsString,
             versions: toolVersions,
-            versionsDescription: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "toolDetails.versions.message")
+            versionsDescription: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.toolDetailsVersionsMessage.key)
         )
         
         return toolDetails

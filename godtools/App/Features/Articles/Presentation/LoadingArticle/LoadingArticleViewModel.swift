@@ -30,7 +30,7 @@ final class LoadingArticleViewModel: ObservableObject {
         self.stepEmitter = stepEmitter
         self.articleAemRepository = articleAemRepository
         self.appLanguage = appLanguage
-        self.message = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "Download in progress")
+        self.message = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.downloadInProgress.key)
         
         downloadArticleTask = Task { [weak self] in
             

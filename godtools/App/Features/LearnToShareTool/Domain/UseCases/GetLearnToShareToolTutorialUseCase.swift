@@ -26,20 +26,20 @@ final class GetLearnToShareToolTutorialUseCase {
             LearnToShareToolItemDomainModel(
                 imageName: nil,
                 animationName: "learn_to_share_tool_with_anyone",
-                title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "learn_to_share_tool.learn_to_share.title"),
-                message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "learn_to_share_tool.learn_to_share.message")
+                title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.learnToShareToolLearnToShareTitle.key),
+                message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.learnToShareToolLearnToShareMessage.key)
             ),
             LearnToShareToolItemDomainModel(
                 imageName: nil,
                 animationName: "training_tip_callout",
-                title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "learn_to_share_tool.tips_light_the_way.title"),
-                message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "learn_to_share_tool.tips_light_the_way.message")
+                title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.learnToShareToolTipsLightTheWayTitle.key),
+                message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.learnToShareToolTipsLightTheWayMessage.key)
             ),
             LearnToShareToolItemDomainModel(
                 imageName: nil,
                 animationName: "training_tip_tips",
-                title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "learn_to_share_tool.light_up_the_tips.title"),
-                message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "learn_to_share_tool.light_up_the_tips.message")
+                title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.learnToShareToolLightUpTheTipsTitle.key),
+                message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.learnToShareToolLightUpTheTipsMessage.key)
             )
         ]
         
