@@ -30,8 +30,6 @@ enum LocalizableStringKeys: String {
     case accountDeletedAlertTitle = "accountDeletedAlert.title"
     case accountDeletedAlertMessage = "accountDeletedAlert.message"
     case addToFavorites = "add_to_favorites"
-    case alertMailAppUnavailableTitle = "alert.mailAppUnavailable.title"
-    case alertMailAppUnavailableMessage = "alert.mailAppUnavailable.message"
     case articlesRetryDownloadButtonTitle = "articles.downloadArticlesButton.title.retryDownload"
     case authErrorUserAccountAlreadyExistsMessage = "authError.userAccountAlreadyExists.message"
     case authErrorUserAccountNotFoundMessage = "authError.userAccountNotFound.message"
