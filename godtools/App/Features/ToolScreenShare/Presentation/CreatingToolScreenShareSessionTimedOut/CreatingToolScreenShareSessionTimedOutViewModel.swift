@@ -13,6 +13,7 @@ import Combine
 final class CreatingToolScreenShareSessionTimedOutViewModel {
         
     private let stepEmitter: FlowStepEmitter
+    private let appLanguage: AppLanguageDomainModel
     
     private var cancellables = Set<AnyCancellable>()
         
@@ -21,9 +22,17 @@ final class CreatingToolScreenShareSessionTimedOutViewModel {
     let cancelTitle: String? = nil
     let acceptTitle: String
     
-    init(stepEmitter: FlowStepEmitter, strings: CreatingToolScreenShareSessionTimedOutStringsDomainModel) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        appLanguage: AppLanguageDomainModel,
+        getCreatingToolScreenShareSessionTimedOutStringsUseCase: GetCreatingToolScreenShareSessionTimedOutStringsUseCase
+    ) {
         
         self.stepEmitter = stepEmitter
+        self.appLanguage = appLanguage
+        
+        let strings = getCreatingToolScreenShareSessionTimedOutStringsUseCase
+            .execute(appLanguage: appLanguage)
                 
         title = strings.title
         message = strings.message

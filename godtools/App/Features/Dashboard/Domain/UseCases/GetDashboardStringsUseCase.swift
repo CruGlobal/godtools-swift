@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetDashboardStringsUseCase {
     
@@ -18,7 +17,7 @@ final class GetDashboardStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<DashboardStringsDomainModel, Never> {
+    func execute(translateInLanguage: AppLanguageDomainModel) -> DashboardStringsDomainModel {
         
         let localeId: String = translateInLanguage
         
@@ -28,7 +27,6 @@ final class GetDashboardStringsUseCase {
             toolsActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolMenuItemTools.key)
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

@@ -12,6 +12,7 @@ import Foundation
 final class ShareToolScreenShareSessionViewModel {
     
     private let stepEmitter: FlowStepEmitter
+    private let appLanguage: AppLanguageDomainModel
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let shareUrl: String
     
@@ -20,18 +21,21 @@ final class ShareToolScreenShareSessionViewModel {
         
     init(
         stepEmitter: FlowStepEmitter,
-        strings: ShareToolScreenShareSessionStringsDomainModel,
-        shareMessage: String,
+        appLanguage: AppLanguageDomainModel,
         shareUrl: String,
+        getShareToolScreenShareSessionStringsUseCase: GetShareToolScreenShareSessionStringsUseCase,
         trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     ) {
             
         self.stepEmitter = stepEmitter
-        self.strings = strings
-        self.shareMessage = shareMessage
+        self.appLanguage = appLanguage
         self.shareUrl = shareUrl
-        
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
+        
+        strings = getShareToolScreenShareSessionStringsUseCase
+            .execute(appLanguage: appLanguage)
+        
+        self.shareMessage = String.localizedStringWithFormat(strings.shareMessage, shareUrl)
     }
     
     deinit {

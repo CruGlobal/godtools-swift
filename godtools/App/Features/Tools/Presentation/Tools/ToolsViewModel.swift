@@ -44,7 +44,7 @@ final class ToolsViewModel: ObservableObject {
     @Published private var localizationSettings: UserLocalizationSettingsDomainModel?
     @Published private var allToolsList: [ToolListItemDomainModel] = Array()
     
-    @Published private(set) var toggleOptions: [PersonalizationToggleOption] = ToolsViewModel.getToggleOptions(strings: ToolsStringsDomainModel.emptyValue)
+    @Published private(set) var toggleOptions: [PersonalizationToggleOption] = ToolsViewModel.getPersonalizedToggleOptions(strings: ToolsStringsDomainModel.emptyValue)
     @Published private(set) var strings: ToolsStringsDomainModel = .emptyValue
     @Published private(set) var showsFavoritingToolBanner: Bool = false
     @Published private(set) var spotlightTools: [SpotlightToolListItemDomainModel] = Array()
@@ -97,8 +97,14 @@ final class ToolsViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .execute()
-            .assign(to: &$appLanguage)
-        
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] (appLanguage: AppLanguageDomainModel) in
+
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
+            })
+            .store(in: &cancellables)
+
         getLocalizationSettingsUseCase
             .execute()
             .receive(on: DispatchQueue.main)
@@ -180,21 +186,6 @@ final class ToolsViewModel: ObservableObject {
         }
         .store(in: &cancellables)
         
-        $appLanguage.dropFirst()
-            .map { appLanguage in
-                return getToolsStringsUseCase
-                    .execute(translateInLanguage: appLanguage)
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: ToolsStringsDomainModel) in
-                
-                self?.strings = strings
-                
-                self?.toggleOptions = Self.getToggleOptions(strings: strings)
-            }
-            .store(in: &cancellables)
-        
         Publishers.CombineLatest3(
             $appLanguage.dropFirst(),
             $toolFilterCategorySelection.dropFirst(),
@@ -254,6 +245,16 @@ final class ToolsViewModel: ObservableObject {
     deinit {
         print("x deinit: \(type(of: self))")
         pullToRefreshToolsTask?.cancel()
+    }
+
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+
+        let strings = getToolsStringsUseCase
+            .execute(translateInLanguage: appLanguage)
+
+        self.strings = strings
+
+        toggleOptions = Self.getPersonalizedToggleOptions(strings: strings)
     }
     
     private var analyticsScreenName: String {
@@ -330,7 +331,7 @@ final class ToolsViewModel: ObservableObject {
         }
     }
     
-    private static func getToggleOptions(strings: ToolsStringsDomainModel) -> [PersonalizationToggleOption] {
+    private static func getPersonalizedToggleOptions(strings: ToolsStringsDomainModel) -> [PersonalizationToggleOption] {
         
         return [
             PersonalizationToggleOption(title: strings.personalizedToolToggleTitle, selection: .personalized, buttonAccessibility: .personalizedTools),

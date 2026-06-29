@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetLearnToShareToolStringsUseCase {
     
@@ -18,7 +17,7 @@ final class GetLearnToShareToolStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<LearnToShareToolStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> LearnToShareToolStringsDomainModel {
         
         let localeId: String = appLanguage
         
@@ -27,7 +26,6 @@ final class GetLearnToShareToolStringsUseCase {
             startTrainingActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.startTraining.key)
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

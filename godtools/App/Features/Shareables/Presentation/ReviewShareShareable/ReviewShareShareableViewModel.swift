@@ -52,29 +52,15 @@ final class ReviewShareShareableViewModel: ObservableObject {
         self.trackShareShareableTapUseCase = trackShareShareableTapUseCase
         
         getCurrentAppLanguageUseCase
-        .execute()
-        .receive(on: DispatchQueue.main)
-        .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                
-                getReviewShareShareableStringsUseCase
-                    .execute(
-                        appLanguage: appLanguage
-                    )
-            }
-            .switchToLatest()
+            .execute()
             .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { _ in
-                
-            }, receiveValue: { [weak self] (strings: ReviewShareShareableStringsDomainModel) in
-                
-                self?.strings = strings
+            .sink(receiveValue: { [weak self] (appLanguage: AppLanguageDomainModel) in
+
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
             })
             .store(in: &cancellables)
-        
+
         getShareableImageUseCase
             .execute(shareable: shareable)
             .receive(on: DispatchQueue.main)
@@ -98,7 +84,15 @@ final class ReviewShareShareableViewModel: ObservableObject {
     deinit {
         print("x deinit: \(type(of: self))")
     }
-    
+
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+
+        strings = getReviewShareShareableStringsUseCase
+            .execute(
+                appLanguage: appLanguage
+            )
+    }
+
     private func trackShareImageTappedAnalytics() {
         
         trackShareShareableTapUseCase

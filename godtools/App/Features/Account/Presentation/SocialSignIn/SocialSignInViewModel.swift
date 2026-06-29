@@ -52,55 +52,46 @@ final class SocialSignInViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .execute()
-            .assign(to: &$appLanguage)
-        
-        switch authenticationType {
-        case .createAccount:
-            
-            $appLanguage
-                .dropFirst()
-                .map { (appLanguage: AppLanguageDomainModel) in
-                    return getSocialCreateAccountStringsUseCase
-                        .execute(appLanguage: appLanguage)
-                }
-                .switchToLatest()
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] (strings: SocialCreateAccountStringsDomainModel) in
-                    
-                    self?.title = strings.title
-                    self?.subtitle = strings.subtitle
-                    self?.signInWithAppleButtonTitle = strings.createWithAppleActionTitle
-                    self?.signInWithFacebookButtonTitle = strings.createWithFacebookActionTitle
-                    self?.signInWithGoogleButtonTitle = strings.createWithGoogleActionTitle
-                }
-                .store(in: &cancellables)
-        
-        case .login:
-            
-            $appLanguage
-                .dropFirst()
-                .map { (appLanguage: AppLanguageDomainModel) in
-                    return getSocialSignInStringsUseCase
-                        .execute(appLanguage: appLanguage)
-                }
-                .switchToLatest()
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] (strings: SocialSignInStringsDomainModel) in
-                    
-                    self?.title = strings.title
-                    self?.subtitle = strings.subtitle
-                    self?.signInWithAppleButtonTitle = strings.signInWithAppleActionTitle
-                    self?.signInWithFacebookButtonTitle = strings.signInWithFacebookActionTitle
-                    self?.signInWithGoogleButtonTitle = strings.signInWithGoogleActionTitle
-                }
-                .store(in: &cancellables)
-        }
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] (appLanguage: AppLanguageDomainModel) in
+
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
+            })
+            .store(in: &cancellables)
     }
-    
+
     deinit {
         print("x deinit: \(type(of: self))")
     }
-    
+
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+
+        switch authenticationType {
+        case .createAccount:
+
+            let strings = getSocialCreateAccountStringsUseCase
+                .execute(appLanguage: appLanguage)
+
+            title = strings.title
+            subtitle = strings.subtitle
+            signInWithAppleButtonTitle = strings.createWithAppleActionTitle
+            signInWithFacebookButtonTitle = strings.createWithFacebookActionTitle
+            signInWithGoogleButtonTitle = strings.createWithGoogleActionTitle
+
+        case .login:
+
+            let strings = getSocialSignInStringsUseCase
+                .execute(appLanguage: appLanguage)
+
+            title = strings.title
+            subtitle = strings.subtitle
+            signInWithAppleButtonTitle = strings.signInWithAppleActionTitle
+            signInWithFacebookButtonTitle = strings.signInWithFacebookActionTitle
+            signInWithGoogleButtonTitle = strings.signInWithGoogleActionTitle
+        }
+    }
+
     private func authenticateUser(authPlatform: AuthenticateUserAuthPlatformDomainModel) {
                 
         authenticateUserTask = Task {

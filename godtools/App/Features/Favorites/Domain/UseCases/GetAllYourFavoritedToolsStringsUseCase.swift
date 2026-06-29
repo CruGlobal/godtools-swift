@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetAllYourFavoritedToolsStringsUseCase {
     
@@ -18,13 +17,12 @@ final class GetAllYourFavoritedToolsStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<AllYourFavoritedToolsStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> AllYourFavoritedToolsStringsDomainModel {
         
         let strings = AllYourFavoritedToolsStringsDomainModel(
             sectionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.favoritesFavoriteToolsTitle.key)
         )
 
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

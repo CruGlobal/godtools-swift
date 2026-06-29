@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetShareToolStringsUseCase {
     
@@ -22,7 +21,7 @@ final class GetShareToolStringsUseCase {
     
     func execute(toolId: String, toolLanguageId: String, pageNumber: Int, appLanguage: AppLanguageDomainModel) -> ShareToolStringsDomainModel {
         
-        let qrCodeActionTitle: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "toolScreenShare.qrCode.title")
+        let qrCodeActionTitle: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.toolScreenShareQrCodeTitle.key)
         
         let shareMessage = getShareMessage(
             toolId: toolId,
@@ -43,7 +42,7 @@ final class GetShareToolStringsUseCase {
         
         let toolUrl: String? = getShareToolUrl.getUrl(toolId: toolId, toolLanguageId: toolLanguageId, pageNumber: pageNumber)
         
-        let localizedShareToolMessage: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "tract_share_message")
+        let localizedShareToolMessage: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.tractShareMessage.key)
         
         guard let toolUrl = toolUrl else {
             

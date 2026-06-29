@@ -51,22 +51,14 @@ final class ToolSettingsToolLanguagesListViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .execute()
-            .assign(to: &$appLanguage)
-        
-        $appLanguage.dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                
-                getToolSettingsToolLanguagesListStringsUseCase
-                    .execute(appLanguage: appLanguage)
-            }
-            .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: ToolSettingsToolLanguagesListStringsDomainModel) in
-                
-                self?.strings = strings
-            }
+            .sink(receiveValue: { [weak self] (appLanguage: AppLanguageDomainModel) in
+
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
+            })
             .store(in: &cancellables)
-        
+
         Publishers.CombineLatest(
             $appLanguage.dropFirst(),
             toolSettingsObserver.$languages
@@ -104,6 +96,12 @@ final class ToolSettingsToolLanguagesListViewModel: ObservableObject {
     
     deinit {
         print("x deinit: \(type(of: self))")
+    }
+
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+
+        strings = getToolSettingsToolLanguagesListStringsUseCase
+            .execute(appLanguage: appLanguage)
     }
 }
 

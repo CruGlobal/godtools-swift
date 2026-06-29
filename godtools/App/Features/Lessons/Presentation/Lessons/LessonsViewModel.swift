@@ -72,29 +72,19 @@ final class LessonsViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .execute()
-            .assign(to: &$appLanguage)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] (appLanguage: AppLanguageDomainModel) in
+
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
+            })
+            .store(in: &cancellables)
 
         getLocalizationSettingsUseCase
             .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$localizationSettings)
 
-        $appLanguage
-            .dropFirst()
-            .map { appLanguage in
-                getLessonsStringsUseCase
-                    .execute(translateInLanguage: appLanguage)
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: LessonsStringsDomainModel) in
-
-                self?.strings = strings
-                
-                self?.toggleOptions = Self.getToggleOptions(strings: strings)
-            }
-            .store(in: &cancellables)
-        
         Publishers.CombineLatest3(
             $appLanguage.dropFirst(),
             $localizationSettings,
@@ -191,7 +181,17 @@ final class LessonsViewModel: ObservableObject {
         print("x deinit: \(type(of: self))")
         pullToRefreshLessonsTask?.cancel()
     }
-    
+
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+
+        let strings = getLessonsStringsUseCase
+            .execute(translateInLanguage: appLanguage)
+
+        self.strings = strings
+
+        toggleOptions = Self.getPersonalizedToggleOptions(strings: strings)
+    }
+
     // MARK: - Analytics
     
     private var analyticsScreenName: String {
@@ -248,7 +248,7 @@ final class LessonsViewModel: ObservableObject {
         )
     }
     
-    private static func getToggleOptions(strings: LessonsStringsDomainModel) -> [PersonalizationToggleOption] {
+    private static func getPersonalizedToggleOptions(strings: LessonsStringsDomainModel) -> [PersonalizationToggleOption] {
         
         return [
             PersonalizationToggleOption(title: strings.personalizedToolToggleTitle, selection: .personalized, buttonAccessibility: .personalizedLessons),

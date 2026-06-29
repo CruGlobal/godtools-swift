@@ -10,42 +10,40 @@ import Testing
 @testable import godtools
 
 struct GetSearchBarStringsUseCaseTests {
-    
-    private let cancelButtonKey: String = "cancel"
-    private let cancelButtonTextEnglish: String = "Cancel"
-    private let cancelButtonTextSpanish: String = "Cancelar"
-    
+
+    struct TestArgument {
+        let appLanguage: AppLanguageDomainModel
+    }
+
     @Test(
         """
         Given: User is viewing a search bar.
-        When: The app language is set to Spanish
-        Then: The search bar interface strings should be translated in Spanish
-        """
+        When: The search bar strings are requested for an app language.
+        Then: Each string is localized for the requested app language.
+        """,
+        arguments: [
+            TestArgument(appLanguage: LanguageCodeDomainModel.english.value),
+            TestArgument(appLanguage: LanguageCodeDomainModel.spanish.value)
+        ]
     )
-    func searchBarStringsTranslated() async {
-                
-        let getSearchBarStrings = GetSearchBarStringsUseCase(localizationServices: getLocalizationServices())
-        
-        let strings = getSearchBarStrings
-            .execute(appLanguage: LanguageCodeDomainModel.spanish.rawValue)
-        
-        #expect(strings.cancel == cancelButtonTextSpanish)
+    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) async {
+
+        let useCase = getUseCase()
+
+        let strings: SearchBarStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
+
+        #expect(strings.cancel == "\(argument.appLanguage):\(LocalizableStringKeys.cancel.key)")
     }
 }
 
 extension GetSearchBarStringsUseCaseTests {
-    
-    private func getLocalizationServices() -> MockLocalizationServices {
-                
-        let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
-            LanguageCodeDomainModel.english.value: [
-                cancelButtonKey: cancelButtonTextEnglish
-            ],
-            LanguageCodeDomainModel.spanish.value: [
-                cancelButtonKey: cancelButtonTextSpanish
-            ]
-        ]
-        
-        return MockLocalizationServices(localizableStrings: localizableStrings)
+
+    private func getUseCase() -> GetSearchBarStringsUseCase {
+
+        let stringKeys: [LocalizableStringKeys] = [.cancel]
+
+        return GetSearchBarStringsUseCase(
+            localizationServices: MockLocalizationServices(localizableStrings: MockLocalizationServices.getStrings(stringKeys: stringKeys, languages: [.english, .spanish]))
+        )
     }
 }

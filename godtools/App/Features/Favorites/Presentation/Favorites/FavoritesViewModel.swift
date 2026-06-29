@@ -69,27 +69,18 @@ final class FavoritesViewModel: ObservableObject {
                  
         getCurrentAppLanguageUseCase
             .execute()
-            .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                
-                getFavoritesStringsUseCase
-                    .execute(appLanguage: appLanguage)
-            }
-            .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] (strings: FavoritesStringsDomainModel) in
-                
-                self?.strings = strings
+            .sink(receiveValue: { [weak self] (appLanguage: AppLanguageDomainModel) in
+
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
             })
             .store(in: &cancellables)
-        
+
         $appLanguage
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
-                
+
                 getFeaturedLessonsUseCase
                     .execute(
                         appLanguage: appLanguage
@@ -145,7 +136,13 @@ final class FavoritesViewModel: ObservableObject {
         
         pullToRefreshTask?.cancel()
     }
-    
+
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+
+        strings = getFavoritesStringsUseCase
+            .execute(appLanguage: appLanguage)
+    }
+
     private var analyticsScreenName: String {
         return "Favorites"
     }

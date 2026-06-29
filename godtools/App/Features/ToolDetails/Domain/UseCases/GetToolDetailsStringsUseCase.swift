@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetToolDetailsStringsUseCase {
     
@@ -18,24 +17,23 @@ final class GetToolDetailsStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: String) -> AnyPublisher<ToolDetailsStringsDomainModel, Never> {
+    func execute(appLanguage: String) -> ToolDetailsStringsDomainModel {
                         
         let localeId: String = appLanguage
         
         let strings = ToolDetailsStringsDomainModel(
-            aboutActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "toolDetails.about.title"),
-            addToFavoritesActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "add_to_favorites"),
-            bibleReferencesTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "toolDetails.bibleReferences.title"),
-            conversationStartersTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "toolDetails.conversationStarters.title"),
-            languagesAvailableTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "toolSettings.languagesAvailable.title"),
-            learnToShareThisToolActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "toolDetails.learnToShareToolButton.title"),
-            openToolActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "toolinfo_opentool"),
-            outlineTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "toolDetails.outline.title"),
-            removeFromFavoritesActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "remove_from_favorites"),
-            versionsActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "toolDetails.versions.title")
+            aboutActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolDetailsAboutTitle.key),
+            addToFavoritesActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.addToFavorites.key),
+            bibleReferencesTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolDetailsBibleReferencesTitle.key),
+            conversationStartersTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolDetailsConversationStartersTitle.key),
+            languagesAvailableTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsLanguagesAvailableTitle.key),
+            learnToShareThisToolActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolDetailsLearnToShareToolButtonTitle.key),
+            openToolActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolinfoOpentool.key),
+            outlineTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolDetailsOutlineTitle.key),
+            removeFromFavoritesActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.removeFromFavorites.key),
+            versionsActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolDetailsVersionsTitle.key)
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

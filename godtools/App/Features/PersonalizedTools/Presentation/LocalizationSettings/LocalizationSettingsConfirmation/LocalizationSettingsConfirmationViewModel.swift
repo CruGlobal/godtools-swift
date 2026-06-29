@@ -36,26 +36,26 @@ final class LocalizationSettingsConfirmationViewModel: ObservableObject {
 
         getCurrentAppLanguageUseCase
             .execute()
-            .assign(to: &$appLanguage)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] (appLanguage: AppLanguageDomainModel) in
 
-        $appLanguage
-            .dropFirst()
-            .receive(on: DispatchQueue.main)
-            .map { appLanguage in
-                
-                return getLocalizationSettingsConfirmationStringsUseCase
-                    .execute(
-                        appLanguage: appLanguage,
-                        selectedCountry: selectedCountry
-                    )
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$strings)
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
+            })
+            .store(in: &cancellables)
     }
 
     deinit {
         print("x deinit: \(type(of: self))")
+    }
+
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+
+        strings = getLocalizationSettingsConfirmationStringsUseCase
+            .execute(
+                appLanguage: appLanguage,
+                selectedCountry: selectedCountry
+            )
     }
 }
 

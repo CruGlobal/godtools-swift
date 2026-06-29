@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetConfirmRemoveToolFromFavoritesStringsUseCase {
     
@@ -20,16 +19,15 @@ final class GetConfirmRemoveToolFromFavoritesStringsUseCase {
         self.getTranslatedToolName = getTranslatedToolName
     }
     
-    func execute(toolId: String, appLanguage: AppLanguageDomainModel) -> AnyPublisher<ConfirmRemoveToolFromFavoritesStringsDomainModel, Never> {
+    func execute(toolId: String, appLanguage: AppLanguageDomainModel) -> ConfirmRemoveToolFromFavoritesStringsDomainModel {
         
         let strings = ConfirmRemoveToolFromFavoritesStringsDomainModel(
-            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "remove_from_favorites_title"),
-            message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "remove_from_favorites_message").replacingOccurrences(of: "%@", with: getTranslatedToolName.getToolName(toolId: toolId, translateInLanguage: appLanguage)),
-            confirmRemoveActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "yes"),
-            cancelRemoveActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "no")
+            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.removeFromFavoritesTitle.key),
+            message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.removeFromFavoritesMessage.key).replacingOccurrences(of: "%@", with: getTranslatedToolName.getToolName(toolId: toolId, translateInLanguage: appLanguage)),
+            confirmRemoveActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.yes.key),
+            cancelRemoveActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.no.key)
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }
