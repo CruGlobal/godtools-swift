@@ -10,34 +10,40 @@ import Testing
 @testable import godtools
 
 struct GetLessonFilterLanguagesStringsUseCaseTests {
-    
+
+    struct TestArgument {
+        let appLanguage: AppLanguageDomainModel
+    }
+
     @Test(
         """
         Given: User is viewing the lesson filter languages.
-        When: The app language is set to Spanish.
-        Then: The interface strings should be translated in Spanish.
-        """
-    )
-    func lessonFilterStringsAreTranslatedWhenAppLanguageChanges() async {
-                
-        let navTitleKey: String = LocalizableStringKeys.lessonsFilterLanguageNavTitle.key
-        
-        let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
-            LanguageCodeDomainModel.english.value: [
-                navTitleKey: "Lesson language"
-            ],
-            LanguageCodeDomainModel.spanish.value: [
-                navTitleKey: "Idioma de la lección"
-            ]
+        When: The lesson filter languages strings are requested for an app language.
+        Then: Each string is localized for the requested app language.
+        """,
+        arguments: [
+            TestArgument(appLanguage: LanguageCodeDomainModel.english.value),
+            TestArgument(appLanguage: LanguageCodeDomainModel.spanish.value)
         ]
-        
-        let getLessonFilterLanguagesStringsUseCase = GetLessonFilterLanguagesStringsUseCase(
-            localizationServices: MockLocalizationServices(localizableStrings: localizableStrings)
+    )
+    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) async {
+
+        let useCase = getUseCase()
+
+        let strings: LessonFilterLanguagesStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
+
+        #expect(strings.navTitle == "\(argument.appLanguage):\(LocalizableStringKeys.lessonsFilterLanguageNavTitle.key)")
+    }
+}
+
+extension GetLessonFilterLanguagesStringsUseCaseTests {
+
+    private func getUseCase() -> GetLessonFilterLanguagesStringsUseCase {
+
+        let stringKeys: [LocalizableStringKeys] = [.lessonsFilterLanguageNavTitle]
+
+        return GetLessonFilterLanguagesStringsUseCase(
+            localizationServices: MockLocalizationServices(localizableStrings: MockLocalizationServices.getStrings(stringKeys: stringKeys, languages: [.english, .spanish]))
         )
-        
-        let strings = getLessonFilterLanguagesStringsUseCase
-            .execute(appLanguage: LanguageCodeDomainModel.spanish.rawValue)
-        
-        #expect(strings.navTitle == "Idioma de la lección")
     }
 }

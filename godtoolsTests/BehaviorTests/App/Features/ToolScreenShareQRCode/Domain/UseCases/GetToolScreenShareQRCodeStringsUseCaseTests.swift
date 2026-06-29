@@ -10,49 +10,41 @@ import Testing
 @testable import godtools
 
 struct GetToolScreenShareQRCodeStringsUseCaseTests {
-   
-    private let qrCodeDescriptionKey = "toolScreenShare.qrCode.description"
-    private let closeButtonTitleKey = "toolScreenShare.qrCode.closeButtonTitle"
-    
-    @Test("""
-        Given: User is viewing tool screen share qr code.
-        When: The app language is set to spanish.
-        Then: The interface strings should be translated in the app language.
-        """
-    )
-    func stringsAreTranslatedInAppLanguage() async {
-                
-        let getToolScreenShareQRCodeStringsUseCase = getToolScreenShareQRCodeStringsUseCase()
-        
-        let strings = getToolScreenShareQRCodeStringsUseCase
-            .execute(appLanguage: LanguageCodeDomainModel.spanish.value)
 
-        #expect(strings.qrCodeDescription == "Escanea este código QR para unirte a mí")
-        #expect(strings.closeButtonTitle == "Cerrar")
+    struct TestArgument {
+        let appLanguage: AppLanguageDomainModel
+    }
+
+    @Test(
+        """
+        Given: User is viewing tool screen share qr code.
+        When: The tool screen share qr code strings are requested for an app language.
+        Then: Each string is localized for the requested app language.
+        """,
+        arguments: [
+            TestArgument(appLanguage: LanguageCodeDomainModel.english.value),
+            TestArgument(appLanguage: LanguageCodeDomainModel.spanish.value)
+        ]
+    )
+    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) async {
+
+        let useCase = getUseCase()
+
+        let strings: ToolScreenShareQRCodeStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
+
+        #expect(strings.qrCodeDescription == "\(argument.appLanguage):\(LocalizableStringKeys.toolScreenShareQrCodeDescription.key)")
+        #expect(strings.closeButtonTitle == "\(argument.appLanguage):\(LocalizableStringKeys.toolScreenShareQrCodeCloseButtonTitle.key)")
     }
 }
 
 extension GetToolScreenShareQRCodeStringsUseCaseTests {
-    
-    private func getToolScreenShareQRCodeStringsUseCase() -> GetToolScreenShareQRCodeStringsUseCase {
+
+    private func getUseCase() -> GetToolScreenShareQRCodeStringsUseCase {
+
+        let stringKeys: [LocalizableStringKeys] = [.toolScreenShareQrCodeDescription, .toolScreenShareQrCodeCloseButtonTitle]
+
         return GetToolScreenShareQRCodeStringsUseCase(
-            localizationServices: getLocalizationServices()
+            localizationServices: MockLocalizationServices(localizableStrings: MockLocalizationServices.getStrings(stringKeys: stringKeys, languages: [.english, .spanish]))
         )
-    }
-    
-    private func getLocalizationServices() -> MockLocalizationServices {
-        
-        let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
-            LanguageCodeDomainModel.english.value: [
-                qrCodeDescriptionKey: "Scan this QR code to join along with me",
-                closeButtonTitleKey: "Close"
-            ],
-            LanguageCodeDomainModel.spanish.value: [
-                qrCodeDescriptionKey: "Escanea este código QR para unirte a mí",
-                closeButtonTitleKey: "Cerrar"
-            ]
-        ]
-        
-        return MockLocalizationServices(localizableStrings: localizableStrings)
     }
 }
