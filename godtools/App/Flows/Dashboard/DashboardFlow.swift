@@ -14,9 +14,7 @@ final class DashboardFlow: GTFlow {
     static let startingTab: DashboardTabTypeDomainModel = .favorites
     
     private let dashboardTabObserver: CurrentValueSubject<DashboardTabTypeDomainModel, Never>
-    
-    private var cancellables: Set<AnyCancellable> = Set()
-    
+        
     private(set) var menuFlow: MenuFlow?
     
     let rootController: AppRootController
