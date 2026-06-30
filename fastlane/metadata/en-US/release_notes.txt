@@ -1,3 +1,1 @@
-- Fixes a crash when signing in with Apple Sign In.
-- Fixes a crash affecting iOS 16 devices.
 - Includes bug fixes & UI improvements to keep your experience smooth and stable.
