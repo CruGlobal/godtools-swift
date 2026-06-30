@@ -356,24 +356,24 @@ final class DashboardFlow: GTFlow {
                 
                 switch state {
                 
-                case .userClosedLesson(let lessonId, let highestPageNumberViewed, let toolOpenedFrom):
+                case .userClosedLesson(let lessonId, let lessonLanguage, let highestPageNumberViewed, let toolOpenedFrom):
                     
                     if toolOpenedFrom == .dashboardLessons {
                         dashboardView?.rootView.navigateToTab(tab: .lessons)
                     }
                                        
-                    let getLessonEvaluatedUseCase: GetLessonEvaluatedUseCase = appDiContainer.feature.lessonEvaluation.domainLayer.getLessonEvaluatedUseCase()
-                    
-                    getLessonEvaluatedUseCase
+                    let lessonReachedEvaluation: Bool = highestPageNumberViewed > 2
+                    let lessonAlreadyEvaluated: Bool = appDiContainer.feature.lessonEvaluation.domainLayer.getLessonEvaluatedUseCase()
                         .execute(lessonId: lessonId)
-                        .receive(on: DispatchQueue.main)
-                        .sink { [weak self] (lessonEvaluated: Bool) in
-                            
-                            if highestPageNumberViewed > 2 && !lessonEvaluated {
-                                self?.presentLessonEvaluation(lessonId: lessonId, pageIndexReached: highestPageNumberViewed)
-                            }
-                        }
-                        .store(in: &cancellables)
+                    
+                    if lessonReachedEvaluation && !lessonAlreadyEvaluated {
+                        
+                        presentLessonEvaluation(
+                            lessonId: lessonId,
+                            lessonLanguage: lessonLanguage,
+                            pageIndexReached: highestPageNumberViewed
+                        )
+                    }
                 }
                 
             case .chooseYourOwnAdventureFlowCompleted( _):
@@ -515,11 +515,12 @@ extension DashboardFlow {
 
 extension DashboardFlow {
     
-    private func presentLessonEvaluation(lessonId: String, pageIndexReached: Int) {
+    private func presentLessonEvaluation(lessonId: String, lessonLanguage: AppLanguageDomainModel, pageIndexReached: Int) {
         
         presentView(
             view: getLessonEvaluationView(
                 lessonId: lessonId,
+                lessonLanguage: lessonLanguage,
                 pageIndexReached: pageIndexReached
             ),
             animated: true
@@ -531,11 +532,12 @@ extension DashboardFlow {
         dismissView(animated: true)
     }
     
-    private func getLessonEvaluationView(lessonId: String, pageIndexReached: Int) -> UIViewController {
+    private func getLessonEvaluationView(lessonId: String, lessonLanguage: AppLanguageDomainModel, pageIndexReached: Int) -> UIViewController {
         
         let viewModel = LessonEvaluationViewModel(
             stepEmitter: stepEmitter,
             lessonId: lessonId,
+            lessonLanguage: lessonLanguage,
             pageIndexReached: pageIndexReached,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getLessonEvaluationStringsUseCase: appDiContainer.feature.lessonEvaluation.domainLayer.getLessonEvaluationStringsUseCase(),

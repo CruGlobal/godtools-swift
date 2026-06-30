@@ -16,6 +16,7 @@ final class LessonEvaluationViewModel: ObservableObject {
         
     private let stepEmitter: FlowStepEmitter
     private let lessonId: String
+    private let lessonLanguage: AppLanguageDomainModel
     private let pageIndexReached: Int
     private let getLessonEvaluationStringsUseCase: GetLessonEvaluationStringsUseCase
     private let didChangeScaleForSpiritualConversationReadinessUseCase: DidChangeScaleForSpiritualConversationReadinessUseCase
@@ -35,7 +36,9 @@ final class LessonEvaluationViewModel: ObservableObject {
     
     init(
         stepEmitter: FlowStepEmitter,
-        lessonId: String, pageIndexReached: Int,
+        lessonId: String,
+        lessonLanguage: AppLanguageDomainModel,
+        pageIndexReached: Int,
         getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
         getLessonEvaluationStringsUseCase: GetLessonEvaluationStringsUseCase,
         didChangeScaleForSpiritualConversationReadinessUseCase: DidChangeScaleForSpiritualConversationReadinessUseCase,
@@ -45,6 +48,7 @@ final class LessonEvaluationViewModel: ObservableObject {
         
         self.stepEmitter = stepEmitter
         self.lessonId = lessonId
+        self.lessonLanguage = lessonLanguage
         self.pageIndexReached = pageIndexReached
         self.getLessonEvaluationStringsUseCase = getLessonEvaluationStringsUseCase
         self.didChangeScaleForSpiritualConversationReadinessUseCase = didChangeScaleForSpiritualConversationReadinessUseCase
@@ -139,7 +143,7 @@ extension LessonEvaluationViewModel {
         )
         
         evaluateLessonUseCase
-            .execute(lessonId: lessonId, feedback: feedback)
+            .execute(lessonId: lessonId, feedback: feedback, lessonLanguage: lessonLanguage)
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { _ in
                 
