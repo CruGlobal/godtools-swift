@@ -12,7 +12,7 @@ import Combine
 final class LessonFlow: GTFlow {
     
     enum CompletedState: Sendable {
-        case userClosedLesson(lessonId: String, highestPageNumberViewed: Int, toolOpenedFrom: ToolOpenedFrom)
+        case userClosedLesson(lessonId: String, lessonLanguage: AppLanguageDomainModel, highestPageNumberViewed: Int, toolOpenedFrom: ToolOpenedFrom)
     }
     
     private let toolTranslations: ToolTranslationsDomainModel
@@ -129,10 +129,11 @@ final class LessonFlow: GTFlow {
         case .shareToolFlowCompleted( _):
             dismissFlow()
             
-        case .closeTappedFromLesson(let lessonId, let highestPageNumberViewed):
+        case .closeTappedFromLesson(let lessonId, let lessonLanguage, let highestPageNumberViewed):
             completeFlow(
                 state: .userClosedLesson(
                     lessonId: lessonId,
+                    lessonLanguage: lessonLanguage,
                     highestPageNumberViewed: highestPageNumberViewed,
                     toolOpenedFrom: toolOpenedFrom
                 )
@@ -218,6 +219,7 @@ extension LessonFlow: MobileContentRendererNavigationDelegate {
         completeFlow(
             state: .userClosedLesson(
                 lessonId: event.resource.id,
+                lessonLanguage: event.language,
                 highestPageNumberViewed: event.highestPageNumberViewed,
                 toolOpenedFrom: toolOpenedFrom
             )

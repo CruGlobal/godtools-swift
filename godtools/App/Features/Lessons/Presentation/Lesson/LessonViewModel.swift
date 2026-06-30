@@ -110,6 +110,12 @@ extension LessonViewModel {
     
     func closeTapped() {
                 
-        stepEmitter.emit(step: AppFlowStep.closeTappedFromLesson(lessonId: resource.id, highestPageNumberViewed: highestPageNumberViewed))
+        stepEmitter.emit(
+            step: AppFlowStep.closeTappedFromLesson(
+                lessonId: resource.id,
+                lessonLanguage: getSelectedLanguageCode(),
+                highestPageNumberViewed: highestPageNumberViewed
+            )
+        )
     }
 }

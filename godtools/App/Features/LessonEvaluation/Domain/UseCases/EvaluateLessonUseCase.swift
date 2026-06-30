@@ -26,7 +26,11 @@ final class EvaluateLessonUseCase {
         self.lessonFeedbackAnalytics = lessonFeedbackAnalytics
     }
     
-    func execute(lessonId: String, feedback: TrackLessonFeedbackDomainModel) -> AnyPublisher<Void, Never> {
+    func execute(
+        lessonId: String,
+        feedback: TrackLessonFeedbackDomainModel,
+        lessonLanguage: AppLanguageDomainModel
+    ) -> AnyPublisher<Void, Never> {
         
         let lessonResource: ResourceDataModel? = resourcesRepository.getResourceById(id: lessonId)
         
@@ -44,7 +48,8 @@ final class EvaluateLessonUseCase {
 
         lessonFeedbackAnalytics.trackLessonFeedback(
             lesson: lessonResource,
-            feedback: feedback
+            feedback: feedback,
+            contentLanguage: lessonLanguage
         )
         
         return Just(Void())
