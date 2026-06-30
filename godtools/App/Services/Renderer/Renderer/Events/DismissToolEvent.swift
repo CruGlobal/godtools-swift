@@ -8,14 +8,9 @@
 
 import Foundation
 
-class DismissToolEvent {
+struct DismissToolEvent: Sendable {
     
     let resource: ResourceDataModel
+    let language: AppLanguageDomainModel
     let highestPageNumberViewed: Int
-    
-    init(resource: ResourceDataModel, highestPageNumberViewed: Int) {
-        
-        self.resource = resource
-        self.highestPageNumberViewed = highestPageNumberViewed
-    }
 }
