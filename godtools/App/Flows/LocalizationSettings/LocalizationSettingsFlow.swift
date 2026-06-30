@@ -25,7 +25,7 @@ final class LocalizationSettingsFlow: GTFlow {
     init(
         appDiContainer: AppDiContainer,
         shouldStoreCountryWhenSelected: Bool,
-        userShouldConfirmSelectedCountry: Bool,
+        userShouldConfirmSelectedCountry: Bool = true,
         showsPreferNotToSay: Bool = true
     ) {
         

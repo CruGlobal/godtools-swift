@@ -86,8 +86,7 @@ final class DashboardFlow: GTFlow {
             pushFlow(
                 flow: LocalizationSettingsFlow(
                     appDiContainer: appDiContainer,
-                    shouldStoreCountryWhenSelected: true,
-                    userShouldConfirmSelectedCountry: false
+                    shouldStoreCountryWhenSelected: true
                 )
             )
             
@@ -273,8 +272,7 @@ final class DashboardFlow: GTFlow {
             pushFlow(
                 flow: LocalizationSettingsFlow(
                     appDiContainer: appDiContainer,
-                    shouldStoreCountryWhenSelected: true,
-                    userShouldConfirmSelectedCountry: false
+                    shouldStoreCountryWhenSelected: true
                 )
             )
             

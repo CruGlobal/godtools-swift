@@ -79,8 +79,7 @@ final class MenuFlow: GTFlow {
             pushFlow(
                 flow: LocalizationSettingsFlow(
                     appDiContainer: appDiContainer,
-                    shouldStoreCountryWhenSelected: true,
-                    userShouldConfirmSelectedCountry: true
+                    shouldStoreCountryWhenSelected: true
                 )
             )
 
