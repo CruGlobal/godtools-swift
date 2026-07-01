@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetToolSettingsToolLanguagesListStringsUseCase {
     
@@ -18,15 +17,14 @@ final class GetToolSettingsToolLanguagesListStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolSettingsToolLanguagesListStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> ToolSettingsToolLanguagesListStringsDomainModel {
         
         let localeId: String = appLanguage
         
         let strings = ToolSettingsToolLanguagesListStringsDomainModel(
-            deleteParallelLanguageActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "toolSettings.languagesList.deleteLanguage.title")
+            deleteParallelLanguageActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsLanguagesListDeleteLanguageTitle.key)
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

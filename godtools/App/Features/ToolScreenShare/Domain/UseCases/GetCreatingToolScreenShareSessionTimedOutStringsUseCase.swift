@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetCreatingToolScreenShareSessionTimedOutStringsUseCase {
     
@@ -18,17 +17,16 @@ final class GetCreatingToolScreenShareSessionTimedOutStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<CreatingToolScreenShareSessionTimedOutStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> CreatingToolScreenShareSessionTimedOutStringsDomainModel {
         
         let localeId: String = appLanguage
                 
         let strings = CreatingToolScreenShareSessionTimedOutStringsDomainModel(
             title: "Timed Out",
             message: "Timed out creating the session for tool screen share.",
-            acceptActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "OK"))
+            acceptActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.ok.key))
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

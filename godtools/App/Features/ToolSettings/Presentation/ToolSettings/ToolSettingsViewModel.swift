@@ -53,22 +53,14 @@ final class ToolSettingsViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .execute()
-            .assign(to: &$appLanguage)
-        
-        $appLanguage.dropFirst()
-        .map { (appLanguage: AppLanguageDomainModel) in
-            
-            getToolSettingsStringsUseCase
-                .execute(appLanguage: appLanguage)
-        }
-        .switchToLatest()
-        .receive(on: DispatchQueue.main)
-        .sink { [weak self] (strings: ToolSettingsStringsDomainModel) in
-            
-            self?.strings = strings
-        }
-        .store(in: &cancellables)
-        
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] (appLanguage: AppLanguageDomainModel) in
+
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
+            })
+            .store(in: &cancellables)
+
         Publishers.CombineLatest3(
             $appLanguage.dropFirst(),
             toolSettingsObserver.$languages,
@@ -145,7 +137,13 @@ final class ToolSettingsViewModel: ObservableObject {
     deinit {
         print("x deinit: \(type(of: self))")
     }
-    
+
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+
+        strings = getToolSettingsStringsUseCase
+            .execute(appLanguage: appLanguage)
+    }
+
     private static func getAvailableToolOptions(domainModel: ToolSettingsDomainModel, toolSettingsObserver: ToolSettingsObserver) -> [ToolSettingsOption] {
         
         var toolOptions: [ToolSettingsOption] = Array()

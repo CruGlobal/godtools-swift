@@ -25,7 +25,8 @@ final class AccountDomainLayerDependencies {
     
     func getAccountStringsUseCase() -> GetAccountStringsUseCase {
         return GetAccountStringsUseCase(
-            localizationServices: core.dataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices(),
+            dateService: core.dataLayer.getDateService()
         )
     }
     

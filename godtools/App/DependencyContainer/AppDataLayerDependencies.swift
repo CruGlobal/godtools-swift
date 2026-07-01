@@ -227,6 +227,10 @@ final class AppDataLayerDependencies {
         )
     }
     
+    func getDateService() -> DateServiceInterface {
+        return DateService()
+    }
+    
     func getDeepLinkingService() -> DeepLinkingService {
         return DeepLinkingService(
             manifest: GodToolsDeepLinkingManifest()

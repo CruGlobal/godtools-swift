@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetSocialSignInStringsUseCase {
     
@@ -18,7 +17,7 @@ final class GetSocialSignInStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<SocialSignInStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> SocialSignInStringsDomainModel {
         
         let localeId: String = appLanguage
         
@@ -30,7 +29,6 @@ final class GetSocialSignInStringsUseCase {
             signInWithGoogleActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.signInGoogle.key)
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

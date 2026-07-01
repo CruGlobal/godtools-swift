@@ -94,8 +94,8 @@ final class GetPersonalizedToolsUseCase {
     private func getToolsUnavailable(appLanguage: AppLanguageDomainModel) -> PersonalizedToolsUnavailableDomainModel {
 
         return PersonalizedToolsUnavailableDomainModel(
-            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "tools.personalizationUnavailable.title"),
-            message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "tools.personalizationUnavailable.message")
+            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.toolsPersonalizationUnavailableTitle.key),
+            message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.toolsPersonalizationUnavailableMessage.key)
         )
     }
 }

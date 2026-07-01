@@ -37,25 +37,23 @@ final class ResumeLessonProgressModalViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .execute()
-            .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { appLanguage in
-                getResumeLessonProgressStringsUseCase
-                    .execute(
-                        appLanguage: appLanguage
-                    )
-            }
-            .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: ResumeLessonProgressStringsDomainModel) in
-                
-                self?.strings = strings
-            }
+            .sink(receiveValue: { [weak self] (appLanguage: AppLanguageDomainModel) in
+
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
+            })
             .store(in: &cancellables)
     }
-    
+
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+
+        strings = getResumeLessonProgressStringsUseCase
+            .execute(
+                appLanguage: appLanguage
+            )
+    }
+
     // MARK: - Inputs
     
     func startOverButtonTapped() {

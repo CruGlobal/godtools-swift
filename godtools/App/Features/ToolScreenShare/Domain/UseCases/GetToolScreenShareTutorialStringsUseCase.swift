@@ -22,9 +22,9 @@ final class GetToolScreenShareTutorialStringsUseCase {
         let localeId: String = appLanguage
         
         let strings = ToolScreenShareTutorialStringsDomainModel(
-            generateQRCodeActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: "screenShareTutorial.generateQRCodeButton.title"),
-            nextTutorialPageActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: "tutorial.continueButton.title.continue"),
-            shareLinkActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: "share_link")
+            generateQRCodeActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.screenShareTutorialGenerateQRCodeButtonTitle.key),
+            nextTutorialPageActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.tutorialContinueButtonTitleContinue.key),
+            shareLinkActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.shareLink.key)
         )
         
         return strings

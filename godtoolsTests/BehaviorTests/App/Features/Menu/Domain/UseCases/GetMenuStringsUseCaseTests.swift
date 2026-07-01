@@ -23,9 +23,7 @@ struct GetMenuStringsUseCaseTests {
     )
     func menuStringsAreLocalizedForTheRequestedAppLanguage() async {
 
-        let useCase = getUseCase(
-            localizableStrings: getLocalizableStrings()
-        )
+        let useCase = getUseCase()
 
         let menuStrings: MenuStringsDomainModel = useCase.execute(appLanguage: englishAppLanguage)
 
@@ -64,9 +62,7 @@ struct GetMenuStringsUseCaseTests {
     )
     func menuStringsAreLocalizedForANonEnglishAppLanguage() async {
 
-        let useCase = getUseCase(
-            localizableStrings: getLocalizableStrings()
-        )
+        let useCase = getUseCase()
 
         let menuStrings: MenuStringsDomainModel = useCase.execute(appLanguage: spanishAppLanguage)
 
@@ -99,7 +95,6 @@ struct GetMenuStringsUseCaseTests {
     func versionStringIsFormattedFromInfoPlistVersions(argument: VersionStringArgument) async {
 
         let useCase = getUseCase(
-            localizableStrings: getLocalizableStrings(),
             appVersion: argument.appVersion,
             bundleVersion: argument.bundleVersion
         )
@@ -112,38 +107,20 @@ struct GetMenuStringsUseCaseTests {
 
 extension GetMenuStringsUseCaseTests {
 
-    private func getUseCase(localizableStrings: [String: [String: String]], appVersion: String? = nil, bundleVersion: String? = nil) -> GetMenuStringsUseCase {
+    private func getUseCase(appVersion: String? = nil, bundleVersion: String? = nil) -> GetMenuStringsUseCase {
 
-        return GetMenuStringsUseCase(
-            localizationServices: MockLocalizationServices(localizableStrings: localizableStrings),
-            infoPlist: MockInfoPlist(appVersion: appVersion, bundleVersion: bundleVersion)
-        )
-    }
-
-    private func getLocalizableStrings() -> [String: [String: String]] {
-
-        let menuStringKeys: [LocalizableStringKeys] = [
+        let stringKeys: [LocalizableStringKeys] = [
             .settings, .menuGetStarted, .menuTutorial, .languageSettingsNavTitle, .menuLocalizationSettings,
             .menuAccount, .login, .createAccount, .accountActivityTitle, .logout, .menuDeleteAccount,
             .menuSupport, .menuSendFeedback, .menuReportABug, .menuAskAQuestion, .menuShare, .menuLeaveAReview,
             .shareAStoryWithUs, .shareGodTools, .menuAbout, .termsOfUse, .privacyPolicy, .copyrightInfo, .menuVersion
         ]
 
-        let localeIds: [String] = ["en", "es"]
-
-        var localizableStrings: [String: [String: String]] = [:]
-
-        for localeId in localeIds {
-
-            var stringsForLocale: [String: String] = [:]
-
-            for stringKey in menuStringKeys {
-                stringsForLocale[stringKey.key] = "\(localeId):\(stringKey.key)"
-            }
-
-            localizableStrings[localeId] = stringsForLocale
-        }
-
-        return localizableStrings
+        return GetMenuStringsUseCase(
+            localizationServices: MockLocalizationServices(
+                localizableStrings: MockLocalizationServices.getStrings(stringKeys: stringKeys, languages: [.english, .spanish])
+            ),
+            infoPlist: MockInfoPlist(appVersion: appVersion, bundleVersion: bundleVersion)
+        )
     }
 }

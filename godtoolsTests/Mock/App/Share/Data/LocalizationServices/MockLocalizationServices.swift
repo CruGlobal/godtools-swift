@@ -11,6 +11,9 @@ import Foundation
 
 class MockLocalizationServices: LocalizationServicesInterface {
     
+    static let english = LanguageCodeDomainModel.english
+    static let spanish = LanguageCodeDomainModel.spanish
+    
     typealias LocaleId = StringKey
     typealias StringKey = String
     
@@ -64,25 +67,60 @@ class MockLocalizationServices: LocalizationServicesInterface {
         
         var mutableLocalizedLanguageNames: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = getLocalizedLanguageNames()
 
-        if let addAdditionalLocalizableStrings = addAdditionalLocalizableStrings, !addAdditionalLocalizableStrings.isEmpty {
+        if let addAdditionalLocalizableStrings = addAdditionalLocalizableStrings {
             
-            for (localeId, localeIdStrings) in addAdditionalLocalizableStrings {
-                
-                var mutableLocaleIdStrings: [StringKey: StringKey] = localeIdStrings
-                
-                for (key, value) in mutableLocaleIdStrings {
-                    if mutableLocaleIdStrings[key] == nil {
-                        mutableLocaleIdStrings[key] = value
-                    }
-                }
-                
-                mutableLocalizedLanguageNames[localeId] = mutableLocaleIdStrings
-            }
+            Self.mergeLocalizableStrings(
+                localizableStrings: addAdditionalLocalizableStrings,
+                intoStrings: &mutableLocalizedLanguageNames
+            )
         }
         
         return MockLocalizationServices(
             localizableStrings: mutableLocalizedLanguageNames
         )
+    }
+    
+    static func getStrings(
+        stringKeys: [LocalizableStringKeys],
+        languages: [LanguageCodeDomainModel]
+    ) -> [LocaleId: [StringKey: String]] {
+
+        var localizableStrings: [LocaleId: [StringKey: String]] = Dictionary()
+        
+        for language in languages {
+            
+            var stringsForLanguage: [String: String] = Dictionary()
+            
+            for stringKey in stringKeys {
+                stringsForLanguage[stringKey.key] = "\(language.rawValue):\(stringKey.key)"
+            }
+
+            localizableStrings[language.rawValue] = stringsForLanguage
+        }
+        
+        return localizableStrings
+    }
+    
+    static func mergeLocalizableStrings(localizableStrings: [LocaleId: [StringKey: String]], intoStrings: inout [LocaleId: [StringKey: String]]) {
+        
+        guard !localizableStrings.isEmpty else {
+            return
+        }
+        
+        for (localeId, strings) in localizableStrings {
+            
+            guard !strings.isEmpty else {
+                continue
+            }
+            
+            var newStringsDictionary: [StringKey: StringKey] = intoStrings[localeId] ?? Dictionary()
+            
+            for (key, value) in strings {
+                newStringsDictionary[key] = value
+            }
+            
+            intoStrings[localeId] = newStringsDictionary
+        }
     }
     
     private func stringForLocale(localeIdentifier: String?, key: String) -> String? {

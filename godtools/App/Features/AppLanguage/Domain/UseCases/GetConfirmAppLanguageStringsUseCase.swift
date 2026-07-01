@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetConfirmAppLanguageStringsUseCase {
     
@@ -20,7 +19,7 @@ final class GetConfirmAppLanguageStringsUseCase {
         self.getTranslatedLanguageName = getTranslatedLanguageName
     }
     
-    func execute(appLanguage: AppLanguageDomainModel, selectedLanguage: AppLanguageDomainModel) -> AnyPublisher<ConfirmAppLanguageStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel, selectedLanguage: AppLanguageDomainModel) -> ConfirmAppLanguageStringsDomainModel {
         
         let appLanguageLocaleId: String = appLanguage
         
@@ -31,8 +30,7 @@ final class GetConfirmAppLanguageStringsUseCase {
             nevermindButtonText: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageLocaleId, key: LocalizableStringKeys.languageSettingsConfirmAppLanguageNevermindButtonTitle.key)
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
     
     private func getHighlightMessageStringDomainModel(selectedLanguage: AppLanguageDomainModel, localeId: String) -> ConfirmAppLanguageHighlightStringDomainModel {

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetFavoritesStringsUseCase {
     
@@ -18,7 +17,7 @@ final class GetFavoritesStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<FavoritesStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> FavoritesStringsDomainModel {
         
         let strings = FavoritesStringsDomainModel(
             tutorialMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.openTutorialShowTutorialLabelText.key),
@@ -32,7 +31,6 @@ final class GetFavoritesStringsUseCase {
             noFavoritedToolsActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.favoritesNoToolsButton.key)
         )
 
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

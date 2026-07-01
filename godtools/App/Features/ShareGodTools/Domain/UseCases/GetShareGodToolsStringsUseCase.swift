@@ -20,7 +20,7 @@ final class GetShareGodToolsStringsUseCase {
     func execute(appLanguage: AppLanguageDomainModel) -> ShareGodToolsStringsDomainModel {
                 
         let strings = ShareGodToolsStringsDomainModel(
-            shareMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "share_god_tools_share_sheet_text")
+            shareMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.shareGodToolsShareSheetText.key)
         )
         
         return strings

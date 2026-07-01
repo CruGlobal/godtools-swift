@@ -17,6 +17,6 @@ struct AskAQuestionWebContent: WebContentType {
     
     init(localizationServices: LocalizationServicesInterface) {
         
-        navTitle = localizationServices.stringForSystemElseEnglish(key: "menu.askAQuestion")
+        navTitle = localizationServices.stringForSystemElseEnglish(key: LocalizableStringKeys.menuAskAQuestion.key)
     }
 }

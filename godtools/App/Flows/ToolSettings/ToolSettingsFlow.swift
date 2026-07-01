@@ -27,8 +27,6 @@ class ToolSettingsFlow: GTFlow {
     private var cancellables: Set<AnyCancellable> = Set()
     
     @Published private var appLanguage = AppLanguageDomainModel.english
-    @Published private var creatingToolScreenShareSessionTimedOutStringsDomainModel = CreatingToolScreenShareSessionTimedOutStringsDomainModel.emptyValue
-    @Published private var shareToolScreenShareSessionStringsDomainModel = ShareToolScreenShareSessionStringsDomainModel.emptyValue
         
     init(
         appDiContainer: AppDiContainer,
@@ -57,36 +55,6 @@ class ToolSettingsFlow: GTFlow {
             .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                
-                appDiContainer.feature.toolScreenShare.domainLayer
-                    .getCreatingToolScreenShareSessionTimedOutStringsUseCase()
-                    .execute(appLanguage: appLanguage)
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (domainModel: CreatingToolScreenShareSessionTimedOutStringsDomainModel) in
-                self?.creatingToolScreenShareSessionTimedOutStringsDomainModel = domainModel
-            }
-            .store(in: &cancellables)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                
-                appDiContainer.feature.toolScreenShare.domainLayer
-                    .getShareToolScreenShareSessionStringsUseCase()
-                    .execute(appLanguage: appLanguage)
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: ShareToolScreenShareSessionStringsDomainModel) in
-                self?.shareToolScreenShareSessionStringsDomainModel = strings
-            }
-            .store(in: &cancellables)
     }
     
     override func navigate(step: FlowStep) {
@@ -239,7 +207,7 @@ class ToolSettingsFlow: GTFlow {
                     
                     toggleInitialView(
                         view: getShareToolScreenShareSessionView(
-                            strings: shareToolScreenShareSessionStringsDomainModel,
+                            appLanguage: appLanguage,
                             shareUrl: remoteShareUrl
                         ),
                         animated: true
@@ -252,10 +220,8 @@ class ToolSettingsFlow: GTFlow {
                 
                 case .timedOut:
                    
-                    let strings = creatingToolScreenShareSessionTimedOutStringsDomainModel
-
                     presentView(
-                        view: getCreatingToolScreenShareSessionTimedOutView(strings: strings),
+                        view: getCreatingToolScreenShareSessionTimedOutView(appLanguage: appLanguage),
                         animated: true
                     )
                 }

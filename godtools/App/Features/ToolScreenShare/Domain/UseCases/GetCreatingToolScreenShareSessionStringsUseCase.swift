@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetCreatingToolScreenShareSessionStringsUseCase {
     
@@ -18,15 +17,14 @@ final class GetCreatingToolScreenShareSessionStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<CreatingToolScreenShareSessionStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> CreatingToolScreenShareSessionStringsDomainModel {
         
         let localeId: String = appLanguage
         
         let strings = CreatingToolScreenShareSessionStringsDomainModel(
-            creatingSessionMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "load_tool_remote_session.message")
+            creatingSessionMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.loadToolRemoteSessionMessage.key)
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

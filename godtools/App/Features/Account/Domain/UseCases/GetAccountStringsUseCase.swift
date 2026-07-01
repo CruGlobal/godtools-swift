@@ -11,9 +11,11 @@ import Foundation
 final class GetAccountStringsUseCase {
     
     private let localizationServices: LocalizationServicesInterface
+    private let dateService: DateServiceInterface
     
-    init(localizationServices: LocalizationServicesInterface) {
+    init(localizationServices: LocalizationServicesInterface, dateService: DateServiceInterface) {
         self.localizationServices = localizationServices
+        self.dateService = dateService
     }
     
     func execute(appLanguage: AppLanguageDomainModel) -> AccountStringsDomainModel {
@@ -34,15 +36,14 @@ final class GetAccountStringsUseCase {
     
     private func getGlobalAnalyticsTitle(localeId: BCP47LanguageIdentifier) -> String {
     
-        let localizedGlobalActivityTitle = localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.accountActivityGlobalAnalyticsHeaderTitle.key)
-        
-        var calendar: Calendar = Calendar.current
-        calendar.locale = Locale(identifier: localeId)
-        
-        let todaysDate: Date = Date()
-        let todaysYearComponents: DateComponents = calendar.dateComponents([.year], from: todaysDate)
+        let localizedGlobalActivityTitle = localizationServices.stringForLocaleElseEnglish(
+            localeIdentifier: localeId,
+            key: LocalizableStringKeys.accountActivityGlobalAnalyticsHeaderTitle.key
+        )
                 
-        if let year = todaysYearComponents.year {
+        let currentYear: Int? = dateService.getCurrentYear(options: CalendarOptions(localeId: localeId))
+                
+        if let year = currentYear {
             return "\(year) \(localizedGlobalActivityTitle)"
         }
         else {

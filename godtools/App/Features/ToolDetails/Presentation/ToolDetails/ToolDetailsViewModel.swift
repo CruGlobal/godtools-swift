@@ -93,8 +93,14 @@ final class ToolDetailsViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .execute()
-            .assign(to: &$appLanguage)
-        
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] (appLanguage: AppLanguageDomainModel) in
+
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
+            })
+            .store(in: &cancellables)
+
         Publishers.CombineLatest(
             $didViewPage,
             $analyticsToolAbbreviation.dropFirst()
@@ -125,21 +131,6 @@ final class ToolDetailsViewModel: ObservableObject {
             
         }
         .store(in: &cancellables)
-        
-        $appLanguage.dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                getToolDetailsStringsUseCase
-                    .execute(appLanguage: appLanguage)
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { _ in
-                
-            }, receiveValue: { [weak self] (strings: ToolDetailsStringsDomainModel) in
-                
-                self?.strings = strings
-            })
-            .store(in: &cancellables)
         
         Publishers.CombineLatest3(
             $toolId,
@@ -232,7 +223,13 @@ final class ToolDetailsViewModel: ObservableObject {
     deinit {
         print("x deinit: \(type(of: self))")
     }
-    
+
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+
+        strings = getToolDetailsStringsUseCase
+            .execute(appLanguage: appLanguage)
+    }
+
     private func getAnalyticsScreenName(analyticsToolAbbreviation: String) -> String {
         return analyticsToolAbbreviation + "-tool-info"
     }

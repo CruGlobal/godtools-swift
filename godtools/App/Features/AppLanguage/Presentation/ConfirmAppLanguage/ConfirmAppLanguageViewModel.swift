@@ -38,26 +38,23 @@ final class ConfirmAppLanguageViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .execute()
-            .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                
-                getConfirmAppLanguageStringsUseCase
-                    .execute(appLanguage: appLanguage, selectedLanguage: selectedLanguage.language)
-            }
-            .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: ConfirmAppLanguageStringsDomainModel) in
-                
-                self?.strings = strings
-            }
+            .sink(receiveValue: { [weak self] (appLanguage: AppLanguageDomainModel) in
+
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
+            })
             .store(in: &cancellables)
     }
-    
+
     deinit {
         print("x deinit: \(type(of: self))")
+    }
+
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+
+        strings = getConfirmAppLanguageStringsUseCase
+            .execute(appLanguage: appLanguage, selectedLanguage: selectedLanguage.language)
     }
 }
 

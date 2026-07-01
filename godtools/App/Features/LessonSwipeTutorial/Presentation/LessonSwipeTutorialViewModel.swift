@@ -33,21 +33,19 @@ final class LessonSwipeTutorialViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .execute()
-            .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { appLanguage in
-                getStringsUseCase
-                    .execute(translateInLanguage: appLanguage)
-            }
-            .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: LessonSwipeTutorialStringsDomainModel) in
-                
-                self?.strings = strings
-            }
+            .sink(receiveValue: { [weak self] (appLanguage: AppLanguageDomainModel) in
+
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
+            })
             .store(in: &cancellables)
+    }
+
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+
+        strings = getStringsUseCase
+            .execute(translateInLanguage: appLanguage)
     }
 }
 

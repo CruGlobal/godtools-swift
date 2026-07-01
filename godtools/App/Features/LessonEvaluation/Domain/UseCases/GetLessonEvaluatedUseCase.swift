@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetLessonEvaluatedUseCase {
     
@@ -18,16 +17,14 @@ final class GetLessonEvaluatedUseCase {
         self.lessonEvaluationRepository = lessonEvaluationRepository
     }
     
-    func execute(lessonId: String) -> AnyPublisher<Bool, Never> {
+    func execute(lessonId: String) -> Bool {
         
         guard let lessonEvaluation = lessonEvaluationRepository.getLessonEvaluation(lessonId: lessonId) else {
-            return Just(false)
-                .eraseToAnyPublisher()
+            return false
         }
         
         let lessonEvaluated: Bool = lessonEvaluation.lessonEvaluated || lessonEvaluation.numberOfEvaluationAttempts > 0
         
-        return Just(lessonEvaluated)
-            .eraseToAnyPublisher()
+        return lessonEvaluated
     }
 }

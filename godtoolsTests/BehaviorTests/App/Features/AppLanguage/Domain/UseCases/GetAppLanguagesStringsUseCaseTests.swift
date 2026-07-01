@@ -10,57 +10,40 @@ import Testing
 @testable import godtools
 
 struct GetAppLanguagesStringsUseCaseTests {
-    
+
     struct TestArgument {
         let appLanguage: AppLanguageDomainModel
-        let expectedNavTitle: String
     }
-    
+
     @Test(
         """
         Given: User is viewing the app languages.
-        When: The app language is set.
-        Then: The interface strings should be translated in the app language.
+        When: The app languages strings are requested for an app language.
+        Then: Each string is localized for the requested app language.
         """,
         arguments: [
-            TestArgument(
-                appLanguage: LanguageCodeDomainModel.english.rawValue,
-                expectedNavTitle: "App Language"
-            ),
-            TestArgument(
-                appLanguage: LanguageCodeDomainModel.spanish.rawValue,
-                expectedNavTitle: "Idioma de la aplicación"
-            )
+            TestArgument(appLanguage: LanguageCodeDomainModel.english.value),
+            TestArgument(appLanguage: LanguageCodeDomainModel.spanish.value)
         ]
     )
-    func stringsTranslateInAppLanguage(argument: TestArgument) async {
-        
-        let getAppLanguagesStringsUseCase = getAppLanguagesStringsUseCase()
-        
-        let strings = getAppLanguagesStringsUseCase
-            .execute(appLanguage: argument.appLanguage)
-        
-        #expect(strings.navTitle == argument.expectedNavTitle)
+    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) async {
+
+        let useCase = getUseCase()
+
+        let strings: AppLanguagesStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
+
+        #expect(strings.navTitle == "\(argument.appLanguage):\(LocalizableStringKeys.languageSettingsAppLanguageTitle.key)")
     }
 }
 
 extension GetAppLanguagesStringsUseCaseTests {
-    
-    private func getAppLanguagesStringsUseCase() -> GetAppLanguagesStringsUseCase {
-        
-        let navTitleKey: String = "languageSettings.appLanguage.title"
-        
-        let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
-            LanguageCodeDomainModel.english.value: [
-                navTitleKey: "App Language"
-            ],
-            LanguageCodeDomainModel.spanish.value: [
-                navTitleKey: "Idioma de la aplicación"
-            ]
-        ]
-        
+
+    private func getUseCase() -> GetAppLanguagesStringsUseCase {
+
+        let stringKeys: [LocalizableStringKeys] = [.languageSettingsAppLanguageTitle]
+
         return GetAppLanguagesStringsUseCase(
-            localizationServices: MockLocalizationServices(localizableStrings: localizableStrings)
+            localizationServices: MockLocalizationServices(localizableStrings: MockLocalizationServices.getStrings(stringKeys: stringKeys, languages: [.english, .spanish]))
         )
     }
 }

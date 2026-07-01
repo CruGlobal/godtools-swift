@@ -40,14 +40,14 @@ final class GetLessonListItemProgress {
         
         if try userCountersRepository.getCachedCounter(id: lessonCompletionUserCounterId) != nil || lessonProgressIsComplete {
             
-            let completeString = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage.localeId, key: "lessons.lessonCompleted")
+            let completeString = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage.localeId, key: LocalizableStringKeys.lessonsLessonCompleted.key)
             return .complete(completeString: completeString)
         }
         else if let lessonProgress = lessonProgress {
             
             let progress: Double = lessonProgress.progress
             
-            let formatString = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage.localeId, key: "lessons.completionProgress")
+            let formatString = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage.localeId, key: LocalizableStringKeys.lessonsCompletionProgress.key)
             let percentageString = getTranslatedPercentage.getTranslatedPercentage(percentValue: progress, translateInLanguage: appLanguage)
             
             let progressString = String(
