@@ -70,7 +70,7 @@ final class ToolSettingsViewModel: ObservableObject {
             
             Publishers.CombineLatest(
                 AnyPublisher() {
-                    try await getToolSettingsUseCase
+                    await getToolSettingsUseCase
                         .execute(
                             appLanguage: appLanguage,
                             toolId: toolSettingsObserver.toolId,
@@ -81,14 +81,11 @@ final class ToolSettingsViewModel: ObservableObject {
                 }
                 ,
                 Just(strings)
-                    .setFailureType(to: Error.self)
             )
         }
         .switchToLatest()
         .receive(on: DispatchQueue.main)
-        .sink(receiveCompletion: { _ in
-            
-        }, receiveValue: { [weak self] (toolSettings: ToolSettingsDomainModel, strings: ToolSettingsStringsDomainModel) in
+        .sink { [weak self] (toolSettings: ToolSettingsDomainModel, strings: ToolSettingsStringsDomainModel) in
             
             self?.toolOptions = Self.getAvailableToolOptions(
                 domainModel: toolSettings,
@@ -97,7 +94,7 @@ final class ToolSettingsViewModel: ObservableObject {
             
             self?.primaryLanguageTitle = toolSettings.primaryLanguage?.languageName ?? ""
             self?.parallelLanguageTitle = toolSettings.parallelLanguage?.languageName ?? strings.chooseParallelLanguageActionTitle
-        })
+        }
         .store(in: &cancellables)
 
         Publishers.CombineLatest(

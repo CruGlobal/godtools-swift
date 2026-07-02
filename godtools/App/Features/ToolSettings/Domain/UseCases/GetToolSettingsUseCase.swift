@@ -25,11 +25,17 @@ final class GetToolSettingsUseCase {
         self.getTranslatedLanguageName = getTranslatedLanguageName
     }
     
-    func execute(appLanguage: AppLanguageDomainModel, toolId: String, toolLanguageId: String, toolPrimaryLanguageId: String, toolParallelLanguageId: String?) async throws -> ToolSettingsDomainModel {
+    func execute(
+        appLanguage: AppLanguageDomainModel,
+        toolId: String,
+        toolLanguageId: String,
+        toolPrimaryLanguageId: String,
+        toolParallelLanguageId: String?
+    ) async -> ToolSettingsDomainModel {
 
-        let hasTips: Bool = try await getHasTips(toolId: toolId, toolLanguageId: toolLanguageId)
-        let primaryLanguage: ToolSettingsToolLanguageDomainModel? = try getLanguage(languageId: toolPrimaryLanguageId, translateInLanguage: appLanguage)
-        let parallelLanguage: ToolSettingsToolLanguageDomainModel? = try getLanguage(languageId: toolParallelLanguageId, translateInLanguage: appLanguage)
+        let hasTips: Bool = await getHasTips(toolId: toolId, toolLanguageId: toolLanguageId)
+        let primaryLanguage: ToolSettingsToolLanguageDomainModel? = getLanguage(languageId: toolPrimaryLanguageId, translateInLanguage: appLanguage)
+        let parallelLanguage: ToolSettingsToolLanguageDomainModel? = getLanguage(languageId: toolParallelLanguageId, translateInLanguage: appLanguage)
         
         return ToolSettingsDomainModel(
             hasTips: hasTips,
@@ -38,22 +44,27 @@ final class GetToolSettingsUseCase {
         )
     }
     
-    private func getHasTips(toolId: String, toolLanguageId: String) async throws -> Bool {
-        
+    private func getHasTips(toolId: String, toolLanguageId: String) async -> Bool {
+
         guard let translation = translationsRepository.getLatestTranslation(resourceId: toolId, languageId: toolLanguageId) else {
             return false
         }
-        
-        return try await translationsRepository.getTranslationManifestFromCache(
-            translation: translation,
-            manifestParserType: .manifestOnly,
-            includeRelatedFiles: false
-        )
-        .manifest
-        .hasTips
+
+        do {
+            return try await translationsRepository.getTranslationManifestFromCache(
+                translation: translation,
+                manifestParserType: .manifestOnly,
+                includeRelatedFiles: false
+            )
+            .manifest
+            .hasTips
+        }
+        catch {
+            return false
+        }
     }
     
-    private func getLanguage(languageId: String?, translateInLanguage: AppLanguageDomainModel) throws -> ToolSettingsToolLanguageDomainModel? {
+    private func getLanguage(languageId: String?, translateInLanguage: AppLanguageDomainModel) -> ToolSettingsToolLanguageDomainModel? {
         
         guard let languageId = languageId, let language = languagesRepository.getLanguageById(id: languageId) else {
             return nil
