@@ -34,12 +34,12 @@ open class Flow: NSObject {
     private let onPresentType: OnPresentType
     
     private var cancellables: Set<AnyCancellable> = Set()
-    private var presentedView: UIViewController?
     private var toggableInitialViewForPresentedFlows: UIViewController?
     
     public private(set) var navigationController: UINavigationController
     public private(set) var pushedFlows: [Flow] = Array()
     public private(set) var presentedFlow: Flow?
+    private(set) var presentedView: UIViewController?
     
     public private(set) weak var parent: Flow?
     
@@ -212,7 +212,7 @@ open class Flow: NSObject {
         
         pushedFlows.remove(at: index)
         
-        if let viewController = popToViewController {
+        if let viewController = popToViewController, navigationController.viewControllers.contains(viewController) {
             
             navigationController.popToViewController(
                 viewController,

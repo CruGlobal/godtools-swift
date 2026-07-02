@@ -335,9 +335,15 @@ final class DashboardFlow: GTFlow {
                 popFlow()
                 
             case .articleFlowCompleted( _):
-                break
+                popFlow(
+                    popToViewController: dashboardView
+                )
             
             case .tractFlowCompleted(let tractCompletedState):
+                
+                popFlow(
+                    popToViewController: dashboardView
+                )
                 
                 switch tractCompletedState {
                 
@@ -349,6 +355,10 @@ final class DashboardFlow: GTFlow {
                 }
                 
             case .lessonFlowCompleted(let state):
+                
+                popFlow(
+                    popToViewController: dashboardView
+                )
                 
                 switch state {
                 
@@ -373,12 +383,10 @@ final class DashboardFlow: GTFlow {
                 }
                 
             case .chooseYourOwnAdventureFlowCompleted( _):
-                break
+                popFlow(
+                    popToViewController: dashboardView
+                )
             }
-            
-            popFlow(
-                popToViewController: dashboardView
-            )
             
         default:
             break
