@@ -99,13 +99,10 @@ extension LessonEvaluationViewModel {
     
     func closeTapped() {
         
-        cancelLessonEvaluationUseCase
-            .execute(lessonId: lessonId)
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { _ in
-                
-            })
-            .store(in: &Self.backgroundCancellables)
+        Task {
+            try await cancelLessonEvaluationUseCase
+                .execute(lessonId: lessonId)
+        }
         
         stepEmitter.emit(step: AppFlowStep.closeTappedFromLessonEvaluation)
     }
