@@ -190,9 +190,11 @@ final class ToolDetailsViewModel: ObservableObject {
         
         $toolId
             .map { (toolId: String) in
-                
-                getToolDetailsMediaUseCase
-                    .execute(toolId: toolId)
+
+                AnyPublisher() {
+                    try await getToolDetailsMediaUseCase
+                        .execute(toolId: toolId)
+                }
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
