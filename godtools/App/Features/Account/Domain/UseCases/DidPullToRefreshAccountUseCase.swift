@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class DidPullToRefreshAccountUseCase {
     
@@ -18,14 +17,8 @@ final class DidPullToRefreshAccountUseCase {
         self.userCountersSync = userCountersSync
     }
     
-    func execute() -> AnyPublisher<Void, Error> {
+    func execute() async throws {
         
-        Task {
-            try await userCountersSync.sync(requestPriority: .high, forceSync: true)
-        }
-        
-        return Just(Void())
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
+        try await userCountersSync.sync(requestPriority: .high, forceSync: true)
     }
 }
