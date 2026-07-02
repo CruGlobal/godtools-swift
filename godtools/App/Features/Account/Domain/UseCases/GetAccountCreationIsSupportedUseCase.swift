@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetAccountCreationIsSupportedUseCase {
     
@@ -21,7 +20,7 @@ final class GetAccountCreationIsSupportedUseCase {
         ]
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<AccountCreationIsSupportedDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) async -> AccountCreationIsSupportedDomainModel {
 
         let isSupported: Bool = supportedLanguageCodes.contains(appLanguage.languageCode)
                         
@@ -29,7 +28,6 @@ final class GetAccountCreationIsSupportedUseCase {
             isSupported: isSupported
         )
         
-        return Just(domainModel)
-            .eraseToAnyPublisher()
+        return domainModel
     }
 }

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class SearchCountriesInLocalizationSettingsCountriesListUseCase {
 
@@ -17,11 +16,11 @@ final class SearchCountriesInLocalizationSettingsCountriesListUseCase {
         self.stringSearcher = stringSearcher
     }
 
-    func execute(searchText: String, in countriesList: [LocalizationSettingsCountryListItem]) -> AnyPublisher<[LocalizationSettingsCountryListItem], Never> {
+    func execute(
+        searchText: String,
+        countriesList: [LocalizationSettingsCountryListItem]
+    ) async -> [LocalizationSettingsCountryListItem] {
 
-        let searchResults = stringSearcher.search(for: searchText, in: countriesList)
-
-        return Just(searchResults)
-            .eraseToAnyPublisher()
+        return stringSearcher.search(for: searchText, in: countriesList)
     }
 }

@@ -8,7 +8,6 @@
 
 import Testing
 @testable import godtools
-import Combine
 
 struct SearchAppLanguageInAppLanguagesListUseCaseTests {
     
@@ -24,31 +23,10 @@ struct SearchAppLanguageInAppLanguagesListUseCaseTests {
         let searchAppLanguageList: SearchAppLanguageInAppLanguagesListUseCase = getSearchAppLanguageInAppLanguagesListUseCase()
         let appLanguagesList: [AppLanguageListItemDomainModel] = getAppLanguagesList()
                 
-        var resultRef: [AppLanguageListItemDomainModel] = Array()
+        let searchResult: [AppLanguageListItemDomainModel] = await searchAppLanguageList
+            .execute(searchText: "e", appLanguagesList: appLanguagesList)
         
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            searchAppLanguageList
-                .execute(searchText: "e", appLanguagesList: appLanguagesList)
-                .sink { (result: [AppLanguageListItemDomainModel]) in
-                                    
-                    resultRef = result
-                    
-                    // When finished be sure to call:
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                }
-                .store(in: &cancellables)
-        }
-        
-        let searchedLanguages: [String] = resultRef.map({$0.language})
+        let searchedLanguages: [String] = searchResult.map({$0.language})
         let expectedLanguages: [String] = ["zh-Hans", "zh-Hant", "en", "fr", "id", "lv", "pt", "es", "vi"]
         
         
@@ -67,31 +45,10 @@ struct SearchAppLanguageInAppLanguagesListUseCaseTests {
         let searchAppLanguageList: SearchAppLanguageInAppLanguagesListUseCase = getSearchAppLanguageInAppLanguagesListUseCase()
         let appLanguagesList: [AppLanguageListItemDomainModel] = getAppLanguagesList()
                 
-        var resultRef: [AppLanguageListItemDomainModel] = Array()
+        let searchResult: [AppLanguageListItemDomainModel] = await searchAppLanguageList
+            .execute(searchText: "Ind", appLanguagesList: appLanguagesList)
         
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            searchAppLanguageList
-                .execute(searchText: "Ind", appLanguagesList: appLanguagesList)
-                .sink { (result: [AppLanguageListItemDomainModel]) in
-                                    
-                    resultRef = result
-                    
-                    // When finished be sure to call:
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                }
-                .store(in: &cancellables)
-        }
-        
-        let searchedLanguages: [String] = resultRef.map({$0.language})
+        let searchedLanguages: [String] = searchResult.map({$0.language})
         let expectedLanguages: [String] = ["hi", "id"]
         
         #expect(searchedLanguages.elementsEqual(expectedLanguages))

@@ -11,9 +11,7 @@ import Combine
 
 @MainActor
 final class ToolScreenShareTutorialViewModel: ObservableObject {
-    
-    private static var backgroundCancellables: Set<AnyCancellable> = Set()
-        
+            
     private let stepEmitter: FlowStepEmitter
     private let toolId: String
     private let showTutorialPages: ShowToolScreenShareTutorialPages
@@ -74,9 +72,10 @@ final class ToolScreenShareTutorialViewModel: ObservableObject {
         $appLanguage
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
-                
-                getToolScreenShareTutorialUseCase
-                    .execute(appLanguage: appLanguage)
+                return AnyPublisher() {
+                    await getToolScreenShareTutorialUseCase
+                        .execute(appLanguage: appLanguage)
+                }
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
@@ -148,13 +147,10 @@ final class ToolScreenShareTutorialViewModel: ObservableObject {
         
         didMarkTutorialAsViewed = true
         
-        didViewToolScreenShareTutorialUseCase
-            .execute(toolId: toolId)
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                
-            }
-            .store(in: &Self.backgroundCancellables)
+        Task {
+            try await didViewToolScreenShareTutorialUseCase
+                .execute(toolId: toolId)
+        }
     }
 }
 
