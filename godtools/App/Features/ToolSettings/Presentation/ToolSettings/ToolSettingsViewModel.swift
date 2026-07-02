@@ -69,14 +69,16 @@ final class ToolSettingsViewModel: ObservableObject {
         .map { (appLanguage: AppLanguageDomainModel, languages: ToolSettingsLanguages, strings: ToolSettingsStringsDomainModel) in
             
             Publishers.CombineLatest(
-                getToolSettingsUseCase
-                    .execute(
-                        appLanguage: appLanguage,
-                        toolId: toolSettingsObserver.toolId,
-                        toolLanguageId: languages.selectedLanguageId,
-                        toolPrimaryLanguageId: languages.primaryLanguageId,
-                        toolParallelLanguageId: languages.parallelLanguageId
-                    )
+                AnyPublisher() {
+                    try await getToolSettingsUseCase
+                        .execute(
+                            appLanguage: appLanguage,
+                            toolId: toolSettingsObserver.toolId,
+                            toolLanguageId: languages.selectedLanguageId,
+                            toolPrimaryLanguageId: languages.primaryLanguageId,
+                            toolParallelLanguageId: languages.parallelLanguageId
+                        )
+                }
                 ,
                 Just(strings)
                     .setFailureType(to: Error.self)

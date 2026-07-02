@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetToolSettingsUseCase {
     
@@ -26,21 +25,8 @@ final class GetToolSettingsUseCase {
         self.getTranslatedLanguageName = getTranslatedLanguageName
     }
     
-    func execute(appLanguage: AppLanguageDomainModel, toolId: String, toolLanguageId: String, toolPrimaryLanguageId: String, toolParallelLanguageId: String?) -> AnyPublisher<ToolSettingsDomainModel, Error> {
-        
-        return AnyPublisher() {
-            return try await self.asyncExecute(
-                appLanguage: appLanguage,
-                toolId: toolId,
-                toolLanguageId: toolLanguageId,
-                toolPrimaryLanguageId: toolPrimaryLanguageId,
-                toolParallelLanguageId: toolParallelLanguageId
-            )
-        }
-    }
-    
-    func asyncExecute(appLanguage: AppLanguageDomainModel, toolId: String, toolLanguageId: String, toolPrimaryLanguageId: String, toolParallelLanguageId: String?) async throws -> ToolSettingsDomainModel {
-        
+    func execute(appLanguage: AppLanguageDomainModel, toolId: String, toolLanguageId: String, toolPrimaryLanguageId: String, toolParallelLanguageId: String?) async throws -> ToolSettingsDomainModel {
+
         let hasTips: Bool = try await getHasTips(toolId: toolId, toolLanguageId: toolLanguageId)
         let primaryLanguage: ToolSettingsToolLanguageDomainModel? = try getLanguage(languageId: toolPrimaryLanguageId, translateInLanguage: appLanguage)
         let parallelLanguage: ToolSettingsToolLanguageDomainModel? = try getLanguage(languageId: toolParallelLanguageId, translateInLanguage: appLanguage)
