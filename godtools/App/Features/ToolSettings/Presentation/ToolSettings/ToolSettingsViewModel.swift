@@ -116,12 +116,14 @@ final class ToolSettingsViewModel: ObservableObject {
         
         toolSettingsObserver.$languages
             .map { (languages: ToolSettingsLanguages) in
-                
-                getShareablesUseCase
-                    .execute(
-                        toolId: toolSettingsObserver.toolId,
-                        toolLanguageId: languages.selectedLanguageId
-                    )
+
+                AnyPublisher() {
+                    try await getShareablesUseCase
+                        .execute(
+                            toolId: toolSettingsObserver.toolId,
+                            toolLanguageId: languages.selectedLanguageId
+                        )
+                }
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
