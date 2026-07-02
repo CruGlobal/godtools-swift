@@ -8,12 +8,14 @@
 
 import UIKit
 
+@MainActor
 protocol TractPageCardBounceAnimationDelegate: AnyObject {
     
     func tractPageCardBounceAnimationDidFinish(cardBounceAnimation: TractPageCardBounceAnimation, forceStopped: Bool)
 }
 
-class TractPageCardBounceAnimation {
+@MainActor
+final class TractPageCardBounceAnimation {
     
     private let animationOptions: UIView.AnimationOptions = [.curveEaseOut, .allowUserInteraction]
     private let bounceDuration: Double = 0.15
@@ -31,7 +33,13 @@ class TractPageCardBounceAnimation {
     private weak var layoutView: UIView?
     private weak var delegate: TractPageCardBounceAnimationDelegate?
     
-    init(card: TractPageCardView, cardTopConstraint: NSLayoutConstraint, cardStartingTopConstant: CGFloat, layoutView: UIView, delegate: TractPageCardBounceAnimationDelegate) {
+    init(
+        card: TractPageCardView,
+        cardTopConstraint: NSLayoutConstraint,
+        cardStartingTopConstant: CGFloat,
+        layoutView: UIView,
+        delegate: TractPageCardBounceAnimationDelegate
+    ) {
         
         self.card = card
         self.cardTopConstraint = cardTopConstraint

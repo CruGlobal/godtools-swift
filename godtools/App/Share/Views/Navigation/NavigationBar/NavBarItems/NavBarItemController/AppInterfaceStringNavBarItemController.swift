@@ -9,6 +9,7 @@
 import UIKit
 import Combine
 
+@MainActor
 class AppInterfaceStringNavBarItemController: NavBarItemController {
         
     private let interfaceStringBarItem: AppInterfaceStringBarItem
@@ -18,7 +19,15 @@ class AppInterfaceStringNavBarItemController: NavBarItemController {
     private var currentInterfaceString: String?
     private var cancellables: Set<AnyCancellable> = Set()
     
-    init(delegate: NavBarItemControllerDelegate, navBarAppearance: AppNavigationBarAppearance?, navBarItem: AppInterfaceStringBarItem, itemBarPosition: BarButtonItemBarPosition, itemIndex: Int, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, localizationServices: LocalizationServicesInterface) {
+    init(
+        delegate: NavBarItemControllerDelegate,
+        navBarAppearance: AppNavigationBarAppearance?,
+        navBarItem: AppInterfaceStringBarItem,
+        itemBarPosition: BarButtonItemBarPosition,
+        itemIndex: Int,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        localizationServices: LocalizationServicesInterface
+    ) {
                
         self.interfaceStringBarItem = navBarItem
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase

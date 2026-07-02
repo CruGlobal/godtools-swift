@@ -17,6 +17,6 @@ struct SendFeedbackWebContent: WebContentType {
     
     init(localizationServices: LocalizationServicesInterface) {
         
-        navTitle = localizationServices.stringForSystemElseEnglish(key: "menu.sendFeedback")
+        navTitle = localizationServices.stringForSystemElseEnglish(key: LocalizableStringKeys.menuSendFeedback.key)
     }
 }

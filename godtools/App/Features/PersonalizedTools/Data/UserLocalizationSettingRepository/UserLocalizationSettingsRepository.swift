@@ -10,38 +10,47 @@ import Foundation
 import Combine
 import RepositorySync
 
-class UserLocalizationSettingsRepository: RepositorySync<UserLocalizationSettingsDataModel, NoExternalDataFetch<UserLocalizationSettingsDataModel>> {
+final class UserLocalizationSettingsRepository {
 
-    static let sharedUserId: String = "user"
+    private static let sharedUserId: String = "user"
     
     private let cache: UserLocalizationSettingsCache
 
-    init(persistence: any Persistence<UserLocalizationSettingsDataModel, UserLocalizationSettingsDataModel>, cache: UserLocalizationSettingsCache) {
+    init(cache: UserLocalizationSettingsCache) {
         
         self.cache = cache
-        
-        super.init(
-            externalDataFetch: NoExternalDataFetch<UserLocalizationSettingsDataModel>(),
-            persistence: persistence
-        )
     }
-
-    func setCountryPublisher(isoRegionCode: String) -> AnyPublisher<UserLocalizationSettingsDataModel, Error> {
-
-        let dataModel = UserLocalizationSettingsDataModel(
-            id: Self.sharedUserId,
-            selectedCountryIsoRegionCode: isoRegionCode
-        )
+    
+    @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Never> {
         
-        return cache.storeUserLocalizationSetting(dataModel: dataModel)
-            .map { _ in
-                return dataModel
+        return cache
+            .persistence
+            .observeCollectionChangesPublisher()
+            .catch { _ in
+                return Just(Void())
+                    .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
     }
 
-    func getUserLocalizationSettingPublisher() -> AnyPublisher<UserLocalizationSettingsDataModel?, Error> {
+    func storeUserCountry(isoRegionCode: String) async throws {
+
+        let dataModel = UserLocalizationSettingsDataModel(
+            id: Self.sharedUserId,
+            createdAt: Date(),
+            selectedCountryIsoRegionCode: isoRegionCode
+        )
         
-        return cache.getUserLocalizationSettingPublisher(id: Self.sharedUserId)
+        try await cache.storeUserLocalizationSetting(dataModel: dataModel)
+    }
+
+    func getUserLocalizationSetting() -> UserLocalizationSettingsDataModel? {
+        
+        do {
+            return try cache.persistence.getDataModel(id: Self.sharedUserId)
+        }
+        catch _ {
+            return nil
+        }
     }
 }

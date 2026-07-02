@@ -15,7 +15,12 @@ final class GetLessonsListItems {
     private let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability
     private let getLessonListItemProgress: GetLessonListItemProgress
 
-    init(languagesRepository: LanguagesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability, getLessonListItemProgress: GetLessonListItemProgress) {
+    init(
+        languagesRepository: LanguagesRepository,
+        getTranslatedToolName: GetTranslatedToolName,
+        getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability,
+        getLessonListItemProgress: GetLessonListItemProgress
+    ) {
         
         self.languagesRepository = languagesRepository
         self.getTranslatedToolName = getTranslatedToolName
@@ -29,7 +34,7 @@ final class GetLessonsListItems {
 
             let filterLanguageModel: LanguageDataModel?
             if let filterLanguageId = filterLessonsByLanguage?.languageId {
-                filterLanguageModel = languagesRepository.persistence.getDataModelNonThrowing(id: filterLanguageId)
+                filterLanguageModel = languagesRepository.getLanguageById(id: filterLanguageId)
             } else {
                 filterLanguageModel = nil
             }
@@ -71,7 +76,7 @@ final class GetLessonsListItems {
     
     private func getToolLanguageAvailability(appLanguage: AppLanguageDomainModel, filterLanguageModel: LanguageDataModel?, resource: ResourceDataModel) -> ToolLanguageAvailabilityDomainModel {
 
-        if let appLanguageModel = languagesRepository.cache.getCachedLanguage(code: appLanguage) {
+        if let appLanguageModel = languagesRepository.getLanguageByCode(code: appLanguage) {
             
             let language: LanguageDataModel
             

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ArticleAemCacheArchivedObject {
+struct ArticleAemCacheArchivedObject: Sendable {
     
     let aemData: ArticleAemData
     let webArchivePlistData: Data

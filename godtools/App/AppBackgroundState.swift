@@ -10,7 +10,8 @@ import Foundation
 import Combine
 import RequestOperation
 
-@MainActor class AppBackgroundState {
+@MainActor
+class AppBackgroundState {
     
     static let shared: AppBackgroundState = AppBackgroundState()
         
@@ -49,18 +50,18 @@ import RequestOperation
             .store(in: &cancellables)
         
         syncLatestToolsForFavoritedTools(
-            downloadLatestToolsForFavoritedToolsUseCase: appDiContainer.domainLayer.getDownloadLatestToolsForFavoritedToolsUseCase()
+            downloadLatestToolsForFavoritedToolsUseCase: appDiContainer.feature.favorites.domainLayer.getDownloadLatestToolsForFavoritedToolsUseCase()
         )
                 
         syncInitialFavoritedTools(
-            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
-            launchCountRepository: appDiContainer.dataLayer.getLaunchCountRepository(),
-            storeInitialFavoritedToolsUseCase: appDiContainer.domainLayer.getStoreInitialFavoritedToolsUseCase()
+            resourcesRepository: appDiContainer.core.dataLayer.getResourcesRepository(),
+            launchCountRepository: appDiContainer.core.dataLayer.getLaunchCountRepository(),
+            storeInitialFavoritedToolsUseCase: appDiContainer.feature.favorites.domainLayer.getStoreInitialFavoritedToolsUseCase()
         )
         
         syncUserCounters(
             userIsAuthenticatedUseCase: appDiContainer.feature.account.domainLayer.getUserIsAuthenticatedUseCase(),
-            userCountersRepository: appDiContainer.dataLayer.getUserCountersRepository()
+            userCountersSync: appDiContainer.core.dataLayer.getSharedUserCountersSync()
         )
     }
     
@@ -86,7 +87,7 @@ import RequestOperation
     private func syncInitialFavoritedTools(resourcesRepository: ResourcesRepository, launchCountRepository: LaunchCountRepositoryInterface, storeInitialFavoritedToolsUseCase: StoreInitialFavoritedToolsUseCase) {
         
         Publishers.CombineLatest(
-            resourcesRepository.persistence.observeCollectionChangesPublisher().prepend(Void()),
+            resourcesRepository.observeCollectionChangesPublisher().prepend(Void()),
             launchCountRepository.getLaunchCountChangedPublisher()
                 .setFailureType(to: Error.self)
         )
@@ -98,9 +99,10 @@ import RequestOperation
                     .eraseToAnyPublisher()
             }
             
-            return storeInitialFavoritedToolsUseCase
-                .execute()
-                .eraseToAnyPublisher()
+            return AnyPublisher() {
+                try await storeInitialFavoritedToolsUseCase
+                    .execute()
+            }
         }
         .receive(on: DispatchQueue.main)
         .sink(receiveCompletion: { _ in
@@ -111,7 +113,7 @@ import RequestOperation
         .store(in: &cancellables)
     }
     
-    private func syncUserCounters(userIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase, userCountersRepository: UserCountersRepository) {
+    private func syncUserCounters(userIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase, userCountersSync: UserCountersSync) {
                        
         userIsAuthenticatedUseCase
             .execute()
@@ -119,8 +121,8 @@ import RequestOperation
                             
                 if isAuthenticatedDomainModel.isAuthenticated {
                     
-                    return userCountersRepository
-                        .getCountersPublisher(
+                    return userCountersSync
+                        .syncPublisher(
                             requestPriority: .high
                         )
                         .map { _ in

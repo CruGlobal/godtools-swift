@@ -12,14 +12,14 @@ import RepositorySync
 final class RealmUserDetailsMapping: Mapping {
     
     func toDataModel(externalObject: MobileContentApiUsersMeCodable) -> UserDetailsDataModel? {
-        return UserDetailsDataModel(interface: externalObject)
+        return externalObject.toModel()
     }
     
     func toDataModel(persistObject: RealmUserDetails) -> UserDetailsDataModel? {
-        return UserDetailsDataModel(interface: persistObject)
+        return persistObject.toModel()
     }
     
     func toPersistObject(externalObject: MobileContentApiUsersMeCodable) -> RealmUserDetails? {
-        return RealmUserDetails.createNewFrom(interface: externalObject)
+        return RealmUserDetails.createNewFrom(model: externalObject.toModel())
     }
 }

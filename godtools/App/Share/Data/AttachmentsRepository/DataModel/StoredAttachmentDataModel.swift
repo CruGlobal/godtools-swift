@@ -8,7 +8,7 @@
 
 import Foundation
 
-class StoredAttachmentDataModel {
+struct StoredAttachmentDataModel: Sendable {
     
     let data: Data
     let diskFileUrl: URL?

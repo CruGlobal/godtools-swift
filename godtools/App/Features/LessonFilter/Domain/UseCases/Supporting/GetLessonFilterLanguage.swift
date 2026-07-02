@@ -16,7 +16,13 @@ final class GetLessonFilterLanguage {
     private let localizationServices: LocalizationServicesInterface
     private let stringWithLocaleCount: StringWithLocaleCountInterface
     
-    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName, localizationServices: LocalizationServicesInterface, stringWithLocaleCount: StringWithLocaleCountInterface) {
+    init(
+        resourcesRepository: ResourcesRepository,
+        languagesRepository: LanguagesRepository,
+        getTranslatedLanguageName: GetTranslatedLanguageName,
+        localizationServices: LocalizationServicesInterface,
+        stringWithLocaleCount: StringWithLocaleCountInterface
+    ) {
         
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository
@@ -27,7 +33,7 @@ final class GetLessonFilterLanguage {
     
     func getLessonLanguageFilterFromLanguageCode(languageCode: String, translatedInAppLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel? {
         
-        guard let language = languagesRepository.cache.getCachedLanguage(code: languageCode) else {
+        guard let language = languagesRepository.getLanguageByCode(code: languageCode) else {
             return nil
         }
         
@@ -36,7 +42,7 @@ final class GetLessonFilterLanguage {
     
     func getLessonLanguageFilterFromLanguageId(languageId: String, translatedInAppLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel? {
         
-        guard let language = languagesRepository.persistence.getDataModelNonThrowing(id: languageId) else {
+        guard let language = languagesRepository.getLanguageById(id: languageId) else {
             return nil
         }
         
@@ -45,7 +51,7 @@ final class GetLessonFilterLanguage {
     
     func mapLanguageToLessonFilterLanguageDomainModel(language: LanguageDataModel, translatedInAppLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel {
         
-        let lessonsAvailableCount: Int = resourcesRepository.cache.getLessonsCount(filterByLanguageId: language.id)
+        let lessonsAvailableCount: Int = resourcesRepository.getLessonsCount(filterByLanguageId: language.id)
 
         let languageNameTranslatedInLanguage = getTranslatedLanguageName.getLanguageName(language: language.code, translatedInLanguage: language.code)
         let languageNameTranslatedInAppLanguage = getTranslatedLanguageName.getLanguageName(language: language.code, translatedInLanguage: translatedInAppLanguage)
@@ -65,7 +71,7 @@ final class GetLessonFilterLanguage {
         
         let formatString = localizationServices.stringForLocaleElseSystemElseEnglish(
             localeIdentifier: translatedInAppLanguage.localeId,
-            key: LessonFilterStringKeys.lessonsAvailableText.rawValue
+            key: LocalizableStringKeys.lessonsFilterLessonsAvailable.key
         )
         
         return stringWithLocaleCount.getString(format: formatString, locale: Locale(identifier: translatedInAppLanguage), count: lessonsAvailableCount)

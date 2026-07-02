@@ -7,175 +7,337 @@
 //
 
 import Foundation
-import Combine
-import GodToolsShared
 import RequestOperation
+import Combine
 
-class ToolDownloader {
+final class ToolDownloader {
     
-    private let resourcesRepository: ResourcesRepository
+    private let cache: ToolDownloaderCache
     private let languagesRepository: LanguagesRepository
     private let translationsRepository: TranslationsRepository
     private let attachmentsRepository: AttachmentsRepository
     private let articleManifestAemRepository: ArticleManifestAemRepository
+    private let getToolDataToDownload: ToolDownloaderGetDataToDownload
     
-    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, translationsRepository: TranslationsRepository, attachmentsRepository: AttachmentsRepository, articleManifestAemRepository: ArticleManifestAemRepository) {
+    init(
+        cache: ToolDownloaderCache,
+        languagesRepository: LanguagesRepository,
+        translationsRepository: TranslationsRepository,
+        attachmentsRepository: AttachmentsRepository,
+        articleManifestAemRepository: ArticleManifestAemRepository,
+        getToolDataToDownload: ToolDownloaderGetDataToDownload
+    ) {
         
-        self.resourcesRepository = resourcesRepository
+        self.cache = cache
         self.languagesRepository = languagesRepository
         self.translationsRepository = translationsRepository
         self.attachmentsRepository = attachmentsRepository
         self.articleManifestAemRepository = articleManifestAemRepository
+        self.getToolDataToDownload = getToolDataToDownload
     }
     
-    func downloadToolsPublisher(tools: [DownloadToolDataModel], requestPriority: RequestPriority) -> AnyPublisher<ToolDownloaderDataModel, Error> {
+    @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Error> {
+        return cache
+            .persistence
+            .observeCollectionChangesPublisher()
+    }
+    
+    @MainActor func observeToolChangesPublisher(toolId: ToolDownloadDataModelId) -> AnyPublisher<ToolDownloadDataModel?, Error> {
+        
+        let cache: ToolDownloaderCache = self.cache
+        
+        return cache
+            .persistence
+            .observeCollectionChangesPublisher()
+            .tryMap {
+                return try cache.persistence.getDataModel(id: toolId.value)
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    @MainActor func observeToolsChangesPublisher(toolIds: [ToolDownloadDataModelId]) -> AnyPublisher<[ToolDownloadDataModel], Error> {
+        
+        let cache: ToolDownloaderCache = self.cache
+        
+        return cache
+            .persistence
+            .observeCollectionChangesPublisher()
+            .flatMap {
+                return AnyPublisher() {
+                    let toolIdsArray: [String] = toolIds.map { $0.value }
+                    let toolIdsSet = Set(toolIdsArray)
+                    
+                    return try await cache.persistence.getDataModels(getOption: .objectsByIds(ids: toolIdsSet))
+                }
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    func getToolDownload(id: ToolDownloadDataModelId) -> ToolDownloadDataModel? {
+        do {
+            return try cache.persistence.getDataModel(id: id.value)
+        }
+        catch _ {
+            return nil
+        }
+    }
+}
+
+// MARK: - Download Tools
+
+extension ToolDownloader {
+    
+    func downloadToolsPublisher(tools: [DownloadToolData], requestPriority: RequestPriority) -> AnyPublisher<[ToolDownloadDataModel], Error> {
+        
+        return AnyPublisher() {
+            try await self.downloadTools(tools: tools, requestPriority: requestPriority)
+        }
+    }
+    
+    func downloadTools(tools: [DownloadToolData], requestPriority: RequestPriority) async throws -> [ToolDownloadDataModel] {
+                     
+        await setInitialProgressToZeroForTools(tools: tools)
+        
+        var toolDownloads: [ToolDownloadDataModel] = Array()
+        
+        try await withThrowingTaskGroup(of: ToolDownloadDataModel.self) { group in
             
-        var nonArticleTranslations: [TranslationDataModel] = Array()
-        var articleTranslations: [TranslationDataModel] = Array()
-        var allTranslations: [TranslationDataModel] = Array()
-        var attachments: [AttachmentDataModel] = Array()
+            for tool in tools {
+                
+                group.addTask {
+                    return try await self.downloadTool(tool: tool, requestPriority: requestPriority)
+                }
+            }
+            
+            for try await toolDownload in group {
+                toolDownloads.append(toolDownload)
+            }
+        }
+        
+        return toolDownloads
+    }
+    
+    private func downloadTool(tool: DownloadToolData, requestPriority: RequestPriority) async throws -> ToolDownloadDataModel {
+                
+        let downloadData: ToolDownloaderDataToDownload = getToolDataToDownload.getData(tools: [tool])
+        
+        let totalNumberOfDownloads: Int = downloadData.nonArticleTranslations.count + downloadData.attachments.count + downloadData.articleTranslations.count
+        
+        var downloadCount: Int = 0
+                
+        var toolDownload = ToolDownloadDataModel(
+            toolId: tool.toolId,
+            languages: tool.languages,
+            downloadStarted: Date(),
+            progress: 0,
+            downloadErrorDescription: nil,
+            downloadErrorHttpStatusCode: nil
+        )
+        
+        await reportProgressNonThrowing(toolDownload: &toolDownload, progress: 0, error: nil)
+        
+        do {
+            
+            // download non article translations
+            try await withThrowingTaskGroup(of: Void.self) { group in
+                
+                for translation in downloadData.nonArticleTranslations {
+                    
+                    group.addTask {
+                        
+                        _ = try await self.translationsRepository.downloadAndCacheTranslationFiles(
+                            translation: translation,
+                            requestPriority: requestPriority
+                        )
+                    }
+                }
+                
+                for try await _ in group {
+                    await incrementDownloadCountAndReportProgress(
+                        toolDownload: &toolDownload,
+                        downloadCount: &downloadCount,
+                        totalNumberOfDownloads: totalNumberOfDownloads,
+                        error: nil
+                    )
+                }
+            }
+            
+            // download attachments
+            try await withThrowingTaskGroup(of: Void.self) { group in
+                
+                for attachment in downloadData.attachments {
+                    
+                    group.addTask {
+                        
+                        _ = try await self.attachmentsRepository.downloadAndCacheAttachmentDataIfNeeded(
+                            attachment: attachment,
+                            requestPriority: requestPriority
+                        )
+                    }
+                }
+                
+                for try await _ in group {
+                    await incrementDownloadCountAndReportProgress(
+                        toolDownload: &toolDownload,
+                        downloadCount: &downloadCount,
+                        totalNumberOfDownloads: totalNumberOfDownloads,
+                        error: nil
+                    )
+                }
+            }
+            
+            // download article translations (translations and manifests)
+            try await withThrowingTaskGroup(of: Void.self) { group in
+                
+                for translation in downloadData.articleTranslations {
+                    
+                    guard let languageCode = translation.languageDataModel?.code else {
+                        
+                        await incrementDownloadCountAndReportProgress(
+                            toolDownload: &toolDownload,
+                            downloadCount: &downloadCount,
+                            totalNumberOfDownloads: totalNumberOfDownloads,
+                            error: nil
+                        )
+                        
+                        continue
+                    }
+                    
+                    group.addTask {
+
+                        let translationManifestDataModel = try await self.translationsRepository.getTranslationManifestFromCacheElseRemote(
+                            translation: translation,
+                            manifestParserType: .manifestOnly,
+                            requestPriority: requestPriority,
+                            includeRelatedFiles: true,
+                            shouldFallbackToLatestDownloadedTranslationIfRemoteFails: false
+                        )
+
+                        _ = try await self.articleManifestAemRepository.downloadAndCacheManifestAemUris(
+                            manifest: translationManifestDataModel.manifest,
+                            translationId: translation.id,
+                            languageCode: languageCode,
+                            downloadCachePolicy: .ignoreCache,
+                            requestPriority: requestPriority
+                        )
+                    }
+                }
+                
+                for try await _ in group {
+                    await incrementDownloadCountAndReportProgress(
+                        toolDownload: &toolDownload,
+                        downloadCount: &downloadCount,
+                        totalNumberOfDownloads: totalNumberOfDownloads,
+                        error: nil
+                    )
+                }
+            }
+        }
+        catch let error {
+            
+            await incrementDownloadCountAndReportProgress(
+                toolDownload: &toolDownload,
+                downloadCount: &downloadCount,
+                totalNumberOfDownloads: totalNumberOfDownloads,
+                error: error
+            )
+            
+            if error.isUrlErrorNotConnectedToInternetCode || error.isUrlErrorCancelledCode {
+                throw error
+            }
+        }
+        
+        return toolDownload
+    }
+    
+    private func setInitialProgressToZeroForTools(tools: [DownloadToolData]) async {
+        
+        var initialToolDownloads: [ToolDownloadDataModel] = Array()
         
         for tool in tools {
             
-            let isArticle: Bool
-            
-            if let resource = resourcesRepository.persistence.getDataModelNonThrowing(id: tool.toolId) {
-                
-                isArticle = resource.resourceTypeEnum == .article
-                
-                do {
-                    
-                    if let resourceBanner = try attachmentsRepository.cache.getAttachment(id: resource.attrBanner) {
-                        attachments.append(resourceBanner)
-                    }
-                    
-                    if let resourceBannerAbout = try attachmentsRepository.cache.getAttachment(id: resource.attrBannerAbout) {
-                        attachments.append(resourceBannerAbout)
-                    }
-                    
-                    if let resourceAboutBannerAnimation = try attachmentsRepository.cache.getAttachment(id: resource.attrAboutBannerAnimation) {
-                        attachments.append(resourceAboutBannerAnimation)
-                    }
-                }
-                catch let error {
-                    assertionFailure("Failed to get attachment with error: \(error)")
-                }
-            }
-            else {
-                
-                isArticle = false
-            }
-            
-            for language in tool.languages {
-                
-                guard let translation = translationsRepository.cache.getLatestTranslation(resourceId: tool.toolId, languageCode: language) else {
-                    continue
-                }
-                
-                allTranslations.append(translation)
-                
-                if !isArticle {
-                    nonArticleTranslations.append(translation)
-                }
-                else {
-                    articleTranslations.append(translation)
-                }
-            }
-        }
-        
-        let nonArticleTranslationDownloads: [AnyPublisher<Void, Error>] = getDownloadToolTranslationsPublishers(translations: nonArticleTranslations, requestPriority: requestPriority)
-        let attachmentsDownloads: [AnyPublisher<Void, Error>] = getDownloadAttachmentsPublishers(attachments: attachments, requestPriority: requestPriority)
-        let articleTranslationDownloads: [AnyPublisher<Void, Error>] = getDownloadArticlesPublishers(translations: articleTranslations, requestPriority: requestPriority)
-        
-        let allRequests: [AnyPublisher<Void, Error>] = nonArticleTranslationDownloads + attachmentsDownloads + articleTranslationDownloads
-        
-        var downloadCount: Int = 0
-        
-        return Publishers.MergeMany(allRequests)
-            .map { (void: Void) in
-                
-                downloadCount += 1
-                
-                let numberOfRequests: Int = allRequests.count
-                let progress: Double
-                
-                if downloadCount >= numberOfRequests {
-                    progress = 1
-                }
-                else {
-                    progress = Double(downloadCount) / Double(numberOfRequests)
-                }
-                                     
-                return ToolDownloaderDataModel(
-                    attachments: attachments,
-                    progress: progress,
-                    translations: allTranslations
+            initialToolDownloads.append(
+                ToolDownloadDataModel(
+                    toolId: tool.toolId,
+                    languages: tool.languages,
+                    downloadStarted: Date(),
+                    progress: 0,
+                    downloadErrorDescription: nil,
+                    downloadErrorHttpStatusCode: nil
                 )
-            }
-            .eraseToAnyPublisher()
-    }
-    
-    private func getDownloadToolTranslationsPublishers(translations: [TranslationDataModel], requestPriority: RequestPriority) -> [AnyPublisher<Void, Error>] {
-            
-        let downloadTranslationsRequests: [AnyPublisher<Void, Error>] = translations.map { (translation: TranslationDataModel) in
-            self.translationsRepository.downloadAndCacheTranslationFiles(translation: translation, requestPriority: requestPriority)
-                .map { _ in
-                    return Void()
-                }
-                .eraseToAnyPublisher()
-        }
-         
-        return downloadTranslationsRequests
-    }
-    
-    private func getDownloadAttachmentsPublishers(attachments: [AttachmentDataModel], requestPriority: RequestPriority) -> [AnyPublisher<Void, Error>] {
-        
-        let downloadAttachmentsRequests: [AnyPublisher<Void, Error>] = attachments
-            .map { (attachment: AttachmentDataModel) in
-                
-                self.attachmentsRepository
-                    .downloadAndCacheAttachmentDataIfNeededPublisher(attachment: attachment, requestPriority: requestPriority)
-                    .map { _ in
-                        return Void()
-                    }
-                    .eraseToAnyPublisher()
-            }
-        
-        return downloadAttachmentsRequests
-    }
-    
-    private func getDownloadArticlesPublishers(translations: [TranslationDataModel], requestPriority: RequestPriority) -> [AnyPublisher<Void, Error>] {
-        
-        let downloadArticlesRequests: [AnyPublisher<Void, Error>] = translations.compactMap { (translation: TranslationDataModel) in
-            
-            guard let languageCode = translation.languageDataModel?.code else {
-                return nil
-            }
-            
-            return self.translationsRepository.getTranslationManifestFromCacheElseRemote(
-                translation: translation,
-                manifestParserType: .manifestOnly,
-                requestPriority: requestPriority,
-                includeRelatedFiles: true,
-                shouldFallbackToLatestDownloadedTranslationIfRemoteFails: false
             )
-            .flatMap { (translationManifestDataModel: TranslationManifestFileDataModel) in
-                
-                return self.articleManifestAemRepository.downloadAndCacheManifestAemUrisPublisher(
-                    manifest: translationManifestDataModel.manifest,
-                    translationId: translation.id,
-                    languageCode: languageCode,
-                    downloadCachePolicy: .ignoreCache,
-                    requestPriority: requestPriority
-                )
-                .map { (result: ArticleAemRepositoryResult) in
-                    Void()
-                }
-                .eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
         }
         
-        return downloadArticlesRequests
+        do {
+            
+            try await cache.persistence.writeObjects(
+                externalObjects: initialToolDownloads
+            )
+        }
+        catch _ {
+            
+        }
+    }
+    
+    private func incrementDownloadCountAndReportProgress(toolDownload: inout ToolDownloadDataModel, downloadCount: inout Int, totalNumberOfDownloads: Int, error: Error?) async {
+        
+        downloadCount += 1
+        
+        let progress: Double = getProgress(
+            downloadCount: downloadCount,
+            totalNumberOfDownloads: totalNumberOfDownloads
+        )
+        
+        await reportProgressNonThrowing(toolDownload: &toolDownload, progress: progress, error: error)
+    }
+    
+    private func getProgress(downloadCount: Int, totalNumberOfDownloads: Int) -> Double {
+        
+        let progress: Double
+        
+        if downloadCount >= totalNumberOfDownloads {
+            progress = 1
+        }
+        else {
+            progress = Double(downloadCount) / Double(totalNumberOfDownloads)
+        }
+        
+        return progress
+    }
+    
+    private func reportProgressNonThrowing(
+        toolDownload: inout ToolDownloadDataModel,
+        progress: Double, error: Error?
+    ) async {
+                
+        toolDownload = toolDownload.copy(
+            progress: progress,
+            downloadErrorDescription: error?.localizedDescription,
+            downloadErrorHttpStatusCode: nil
+        )
+                
+        do {
+            
+            try await cache.persistence.writeObjects(
+                externalObjects: [toolDownload]
+            )
+        }
+        catch _ {
+            
+        }
+    }
+}
+
+extension ToolDownloader {
+    
+    func getDownloadProgressForTools(toolIds: Set<String>) async throws -> Double {
+        
+        let toolDownloads: [ToolDownloadDataModel] = try await cache.persistence.getDataModels(
+            getOption: .objectsByIds(ids: toolIds)
+        )
+        
+        let toolProgress: [Double] = toolDownloads.map { $0.progress }
+        
+        return toolProgress.getAverage()
     }
 }

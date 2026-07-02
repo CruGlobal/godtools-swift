@@ -9,51 +9,51 @@
 import Foundation
 import Combine
 
-@MainActor class ToolScreenShareQRCodeViewModel: ObservableObject {
+@MainActor
+final class ToolScreenShareQRCodeViewModel: ObservableObject {
     
+    private let stepEmitter: FlowStepEmitter
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
-    private let viewToolScreenShareQRCodeUseCase: ViewToolScreenShareQRCodeUseCase
+    private let getToolScreenShareQRCodeStringsUseCase: GetToolScreenShareQRCodeStringsUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     let shareUrl: String
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
-    @Published private(set) var strings = ToolScreenShareQRCodeInterfaceStringsDomainModel.emptyValue
+    @Published private(set) var strings = ToolScreenShareQRCodeStringsDomainModel.emptyValue
     
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolScreenShareQRCodeUseCase: ViewToolScreenShareQRCodeUseCase, shareUrl: String) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getToolScreenShareQRCodeStringsUseCase: GetToolScreenShareQRCodeStringsUseCase,
+        shareUrl: String
+    ) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
-        self.viewToolScreenShareQRCodeUseCase = viewToolScreenShareQRCodeUseCase
+        self.getToolScreenShareQRCodeStringsUseCase = getToolScreenShareQRCodeStringsUseCase
         self.shareUrl = shareUrl
         
         getCurrentAppLanguageUseCase
             .execute()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-            
-                viewToolScreenShareQRCodeUseCase
-                    .viewQRCodePublisher(appLanguage: appLanguage)
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] qrCodeDomainModel in
-                
-                self?.strings = qrCodeDomainModel.interfaceStrings
+            .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
+                self?.appLanguage = appLanguage
+                self?.didSetApplanguage(appLanguage: appLanguage)
             }
             .store(in: &cancellables)
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+    }
+    
+    private func didSetApplanguage(appLanguage: AppLanguageDomainModel) {
+        
+        strings = getToolScreenShareQRCodeStringsUseCase
+            .execute(appLanguage: appLanguage)
     }
 }
 
@@ -62,6 +62,6 @@ import Combine
 extension ToolScreenShareQRCodeViewModel {
     
     func closeTapped() {
-        flowDelegate?.navigate(step: .closeTappedFromShareToolScreenQRCode)
+        stepEmitter.emit(step: AppFlowStep.closeTappedFromShareToolScreenQRCode)
     }
 }

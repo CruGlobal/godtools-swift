@@ -3,11 +3,11 @@
 "dashboard.personalizedToolToggle.allLessonsTitle" = "All Lessons";
 
 "dashboard.personalizedToolFooter.title" = "Displaying localized Tools list";
-"dashboard.personalizedToolFooter.subtitle" = "The tools shown in your Personalized Tools page are selected based on your App Language and Localization setting. You can alter this by editing your setting.";
-"dashboard.personalizedToolFooter.buttonTitle" = "Change settings";
+"dashboard.personalizedToolFooter.subtitle" = "The tools shown in your Personalized Tools page are selected based on your Language and Localization setting. You can alter this by editing your setting.";
+"dashboard.personalizedToolFooter.buttonTitle" = "Change localization settings";
 
 "dashboard.personalizedLessonFooter.title" = "Displaying localized Lessons list";
-"dashboard.personalizedLessonFooter.subtitle" = "The lessons shown in your Personalized Lessons page are selected based on your App Language and Localization setting. You can alter this by editing your setting.";
+"dashboard.personalizedLessonFooter.subtitle" = "The lessons shown in your Personalized Lessons page are selected based on your Language and Localization setting. You can alter this by editing your setting.";
 
 "localizationSettings.preferNotToSay" = "I'd prefer not to say";
 "localizationSettings.navBar.title" = "Select a country";

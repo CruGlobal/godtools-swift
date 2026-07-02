@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetToolsStringsUseCase {
     
@@ -18,22 +17,21 @@ final class GetToolsStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolsStringsDomainModel, Never> {
+    func execute(translateInLanguage: AppLanguageDomainModel) -> ToolsStringsDomainModel {
         
-        let interfaceStrings = ToolsStringsDomainModel(
-            favoritingToolBannerMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "tool_offline_favorite_message"),
-            toolSpotlightTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: ToolStringKeys.Spotlight.title.rawValue),
-            toolSpotlightSubtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: ToolStringKeys.Spotlight.subtitle.rawValue),
-            filterTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: ToolStringKeys.ToolFilter.filterSectionTitle.rawValue),
-            personalizedToolToggleTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "dashboard.personalizedToolToggle.personalizedTitle"),
-            allToolsToggleTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "dashboard.personalizedToolToggle.allToolsTitle"),
-            personalizedToolExplanationTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "dashboard.personalizedToolFooter.title"),
-            personalizedToolExplanationSubtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "dashboard.personalizedToolFooter.subtitle"),
-            changePersonalizedToolSettingsActionLabel: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "dashboard.personalizedToolFooter.buttonTitle"),
-            viewAllTools: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "tools.personalizationUnavailable.viewAllTools")
+        let strings = ToolsStringsDomainModel(
+            favoritingToolBannerMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: LocalizableStringKeys.toolOfflineFavoriteMessage.key),
+            toolSpotlightTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: LocalizableStringKeys.toolsSpotlightTitle.key),
+            toolSpotlightSubtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: LocalizableStringKeys.toolsSpotlightSubtitle.key),
+            filterTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: LocalizableStringKeys.toolsFilterSectionTitle.key),
+            personalizedToolToggleTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: LocalizableStringKeys.dashboardPersonalizedToolTogglePersonalizedTitle.key),
+            allToolsToggleTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: LocalizableStringKeys.dashboardPersonalizedToolToggleAllToolsTitle.key),
+            personalizedToolExplanationTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: LocalizableStringKeys.dashboardPersonalizedToolFooterTitle.key),
+            personalizedToolExplanationSubtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: LocalizableStringKeys.dashboardPersonalizedToolFooterSubtitle.key),
+            changePersonalizedToolSettingsAction: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: LocalizableStringKeys.dashboardPersonalizedToolFooterButtonTitle.key),
+            viewAllToolsAction: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: LocalizableStringKeys.toolsPersonalizationUnavailableViewAllTools.key)
         )
         
-        return Just(interfaceStrings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

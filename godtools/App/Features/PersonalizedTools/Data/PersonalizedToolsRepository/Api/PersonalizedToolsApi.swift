@@ -8,48 +8,42 @@
 
 import Foundation
 import RequestOperation
-import Combine
 
-final class PersonalizedToolsApi {
-    
-    typealias TwoLetterCountryCode = String
-    typealias TwoLetterLanguageCode = String
+final class PersonalizedToolsApi: PersonalizedToolsApiInterface {
     
     enum QueryName: String {
         case country = "country"
         case language = "lang"
         case resourceType = "resource_type"
     }
-    
-    private static let fieldsQueryItem = URLQueryItem(name: "fields[resource]", value: "")
-    
+        
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let urlSessionPriority: URLSessionPriority
-    private let requestSender: RequestSender
+    private let requestSender: RequestSenderInterface
     private let baseUrl: String
-    
-    init(config: AppConfigInterface, urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
-            
+
+    init(config: AppConfigInterface, urlSessionPriority: URLSessionPriority, requestSender: RequestSenderInterface) {
+
         self.urlSessionPriority = urlSessionPriority
         self.requestSender = requestSender
         baseUrl = config.getMobileContentApiBaseUrl()
     }
     
-    private func getAllRankedResourcesUrlRequest(urlSession: URLSession, country: TwoLetterCountryCode?, language: TwoLetterLanguageCode?, resourceType: ResourceType?) -> URLRequest {
-        
+    private func getAllRankedResourcesUrlRequest(urlSession: URLSession, country: TwoLetterCountryCode?, language: TwoLetterLanguageCode?, resourceTypes: [ResourceType]?) throws -> URLRequest {
+
         var queryItems: [URLQueryItem]? = JsonApiFilter.buildQueryItems(
             nameValues: [
                 QueryName.country.rawValue: [country],
-                QueryName.language.rawValue: [language],
-                QueryName.resourceType.rawValue: [resourceType?.rawValue]
+                QueryName.language.rawValue: [language]
             ]
         )
-                
-        queryItems?.append(Self.fieldsQueryItem)
-        
-        return requestBuilder
+
+        let resourceTypeQueryItems: [URLQueryItem] = buildResourceTypeQueryItems(resourceTypes: resourceTypes)
+        queryItems?.append(contentsOf: resourceTypeQueryItems)
+
+        return try requestBuilder
             .build(
-                parameters: RequestBuilderParameters(
+                parameters: try RequestBuilderParameters(
                     configuration: urlSession.configuration,
                     urlString: baseUrl + "/resources/featured",
                     method: .get,
@@ -60,20 +54,20 @@ final class PersonalizedToolsApi {
             )
     }
     
-    private func getDefaultOrderResourcesUrlRequest(urlSession: URLSession, language: TwoLetterLanguageCode?, resourceType: ResourceType?) -> URLRequest {
-        
+    private func getDefaultOrderResourcesUrlRequest(urlSession: URLSession, language: TwoLetterLanguageCode?, resourceTypes: [ResourceType]?) throws -> URLRequest {
+
         var queryItems: [URLQueryItem]? = JsonApiFilter.buildQueryItems(
             nameValues: [
-                QueryName.language.rawValue: [language],
-                QueryName.resourceType.rawValue: [resourceType?.rawValue]
+                QueryName.language.rawValue: [language]
             ]
         )
-        
-        queryItems?.append(Self.fieldsQueryItem)
-        
-        return requestBuilder
+
+        let resourceTypeQueryItems: [URLQueryItem] = buildResourceTypeQueryItems(resourceTypes: resourceTypes)
+        queryItems?.append(contentsOf: resourceTypeQueryItems)
+
+        return try requestBuilder
             .build(
-                parameters: RequestBuilderParameters(
+                parameters: try RequestBuilderParameters(
                     configuration: urlSession.configuration,
                     urlString: baseUrl + "/resources/default_order",
                     method: .get,
@@ -84,15 +78,24 @@ final class PersonalizedToolsApi {
             )
     }
     
-    func getAllRankedResources(requestPriority: RequestPriority, country: TwoLetterCountryCode?, language: TwoLetterLanguageCode?, resourceType: ResourceType?) async throws -> [ResourceCodable] {
-            
+    private func buildResourceTypeQueryItems(resourceTypes: [ResourceType]?) -> [URLQueryItem] {
+
+        guard let resourceTypes = resourceTypes, !resourceTypes.isEmpty else { return [] }
+
+        return resourceTypes.map { resourceType in
+            URLQueryItem(name: "filter[resource_type][]", value: resourceType.rawValue)
+        }
+    }
+    
+    func getAllRankedResources(requestPriority: RequestPriority, country: TwoLetterCountryCode?, language: TwoLetterLanguageCode?, resourceTypes: [ResourceType]?) async throws -> [ResourceCodable] {
+
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
-        
-        let urlRequest: URLRequest = getAllRankedResourcesUrlRequest(
+
+        let urlRequest: URLRequest = try getAllRankedResourcesUrlRequest(
             urlSession: urlSession,
             country: country,
             language: language,
-            resourceType: resourceType
+            resourceTypes: resourceTypes
         )
         
         let response: RequestDataResponse = try await requestSender.sendDataTask(urlRequest: urlRequest, urlSession: urlSession)
@@ -102,14 +105,14 @@ final class PersonalizedToolsApi {
         return codableResponse.successCodable?.dataArray ?? []
     }
     
-    func getDefaultOrderResources(requestPriority: RequestPriority, language: TwoLetterLanguageCode?, resourceType: ResourceType?) async throws -> [ResourceCodable] {
+    func getDefaultOrderResources(requestPriority: RequestPriority, language: TwoLetterLanguageCode?, resourceTypes: [ResourceType]?) async throws -> [ResourceCodable] {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
-        let urlRequest: URLRequest = getDefaultOrderResourcesUrlRequest(
+        let urlRequest: URLRequest = try getDefaultOrderResourcesUrlRequest(
             urlSession: urlSession,
             language: language,
-            resourceType: resourceType
+            resourceTypes: resourceTypes
         )
         
         let response: RequestDataResponse = try await requestSender.sendDataTask(urlRequest: urlRequest, urlSession: urlSession)
@@ -117,48 +120,5 @@ final class PersonalizedToolsApi {
         let codableResponse: RequestCodableResponse<JsonApiResponseDataArray<ResourceCodable>, NoResponseCodable> = try response.decodeRequestDataResponseForSuccessCodable()
         
         return codableResponse.successCodable?.dataArray ?? []
-    }
-    
-    func getAllRankedResourcesPublisher(requestPriority: RequestPriority, country: TwoLetterCountryCode?, language: TwoLetterLanguageCode?, resourceType: ResourceType?) -> AnyPublisher<[ResourceCodable], Error> {
-        
-        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
-        
-        let urlRequest: URLRequest = getAllRankedResourcesUrlRequest(
-            urlSession: urlSession,
-            country: country,
-            language: language,
-            resourceType: resourceType
-        )
-        
-        return requestSender
-            .sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
-            .decodeRequestDataResponseForSuccessCodable()
-            .map { (response: RequestCodableResponse<JsonApiResponseDataArray<ResourceCodable>, NoResponseCodable>) in
-                
-                let resources: [ResourceCodable] = response.successCodable?.dataArray ?? []
-                return resources
-            }
-            .eraseToAnyPublisher()
-    }
-    
-    func getDefaultOrderResourcesPublisher(requestPriority: RequestPriority, language: TwoLetterLanguageCode?, resourceType: ResourceType?) -> AnyPublisher<[ResourceCodable], Error> {
-        
-        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
-        
-        let urlRequest: URLRequest = getDefaultOrderResourcesUrlRequest(
-            urlSession: urlSession,
-            language: language,
-            resourceType: resourceType
-        )
-        
-        return requestSender
-            .sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
-            .decodeRequestDataResponseForSuccessCodable()
-            .map { (response: RequestCodableResponse<JsonApiResponseDataArray<ResourceCodable>, NoResponseCodable>) in
-                
-                let resources: [ResourceCodable] = response.successCodable?.dataArray ?? []
-                return resources
-            }
-            .eraseToAnyPublisher()
     }
 }

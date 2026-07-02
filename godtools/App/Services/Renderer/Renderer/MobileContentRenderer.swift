@@ -9,7 +9,8 @@
 import UIKit
 import GodToolsShared
 
-@MainActor class MobileContentRenderer {
+@MainActor
+class MobileContentRenderer {
             
     private let sharedState: State
     private let pageViewFactories: MobileContentRendererPageViewFactories
@@ -21,7 +22,13 @@ import GodToolsShared
     let languages: MobileContentRendererLanguages
     let pageRenderers: [MobileContentPageRenderer]
     
-    init(navigation: MobileContentRendererNavigation, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, pageViewFactories: MobileContentRendererPageViewFactories, manifestResourcesCache: MobileContentRendererManifestResourcesCache) {
+    init(
+        navigation: MobileContentRendererNavigation,
+        appLanguage: AppLanguageDomainModel,
+        toolTranslations: ToolTranslationsDomainModel,
+        pageViewFactories: MobileContentRendererPageViewFactories,
+        manifestResourcesCache: MobileContentRendererManifestResourcesCache
+    ) {
         
         let sharedState: State = State()
         let resource: ResourceDataModel = toolTranslations.tool

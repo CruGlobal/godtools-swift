@@ -8,23 +8,22 @@
 
 import Foundation
 import RequestOperation
-import Combine
 
-class EmailSignUpApi {
+final class EmailSignUpApi: EmailSignUpApiInterface {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let urlSessionPriority: URLSessionPriority
-    private let requestSender: RequestSender
+    private let requestSender: RequestSenderInterface
     private let baseUrl: String = "https://campaign-forms.cru.org"
     private let campaignId: String = "3fb6022c-5ef9-458c-928a-0380c4a0e57b"
     
-    init(urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
+    init(urlSessionPriority: URLSessionPriority, requestSender: RequestSenderInterface) {
         
         self.urlSessionPriority = urlSessionPriority
         self.requestSender = requestSender
     }
     
-    private func getEmailSignUpRequest(emailSignUp: EmailSignUpModelType, urlSession: URLSession) -> URLRequest {
+    private func getEmailSignUpRequest(emailSignUp: EmailSignUp, urlSession: URLSession) throws -> URLRequest {
         
         var body: [String: String] = Dictionary()
         
@@ -37,8 +36,8 @@ class EmailSignUpApi {
             body["last_name"] = lastName
         }
         
-        let request: URLRequest = requestBuilder.build(
-            parameters: RequestBuilderParameters(
+        let request: URLRequest = try requestBuilder.build(
+            parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseUrl + "/forms",
                 method: .post,
@@ -51,13 +50,15 @@ class EmailSignUpApi {
         return request
     }
     
-    func postEmailSignUpPublisher(emailSignUp: EmailSignUpModelType, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
+    func postEmailSignUp(emailSignUp: EmailSignUp, requestPriority: RequestPriority) async throws -> RequestDataResponse {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
-        let urlRequest = getEmailSignUpRequest(emailSignUp: emailSignUp, urlSession: urlSession)
+        let urlRequest = try getEmailSignUpRequest(emailSignUp: emailSignUp, urlSession: urlSession)
         
-        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
-            .eraseToAnyPublisher()
+        return try await requestSender.sendDataTask(
+            urlRequest: urlRequest,
+            urlSession: urlSession
+        )
     }
 }

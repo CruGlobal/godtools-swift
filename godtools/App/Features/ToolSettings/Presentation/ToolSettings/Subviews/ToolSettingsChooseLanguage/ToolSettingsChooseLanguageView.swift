@@ -25,11 +25,11 @@ struct ToolSettingsChooseLanguageView: View {
             
             VStack(alignment: .leading, spacing: 4) {
                 
-                Text(viewModel.chooseLanguageTitle)
+                Text(viewModel.strings.chooseLanguageTitle)
                     .foregroundColor(ColorPalette.gtGrey.color)
                     .font(FontLibrary.sfProTextRegular.font(size: 19))
                 
-                Text(viewModel.chooseLanguageToggleMessage)
+                Text(viewModel.strings.chooseLanguageMessage)
                     .foregroundColor(ColorPalette.gtGrey.color)
                     .font(FontLibrary.sfProTextRegular.font(size: 14))
             }

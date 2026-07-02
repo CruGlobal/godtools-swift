@@ -8,7 +8,8 @@
 
 import Foundation
 
-@MainActor class MobileContentViewRenderer {
+@MainActor
+class MobileContentViewRenderer {
     
     let pageViewFactories: MobileContentRendererPageViewFactories
     

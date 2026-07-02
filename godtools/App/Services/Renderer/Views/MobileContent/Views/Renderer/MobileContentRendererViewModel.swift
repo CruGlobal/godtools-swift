@@ -10,7 +10,8 @@ import UIKit
 import GodToolsShared
 import Combine
 
-@MainActor class MobileContentRendererViewModel: MobileContentPagesViewModel {
+@MainActor
+class MobileContentRendererViewModel: MobileContentPagesViewModel {
     
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     
@@ -26,6 +27,7 @@ import Combine
     
     private var languagelocaleIdUsed: Set<String> = Set()
     private var cancellables: Set<AnyCancellable> = Set()
+    private var updateTranslationsTask: Task<Void, Error>?
     
     private(set) var renderer: CurrentValueSubject<MobileContentRenderer, Never>
     private(set) var currentPageRenderer: CurrentValueSubject<MobileContentPageRenderer, Never>
@@ -40,7 +42,20 @@ import Combine
     let rendererWillChangeSignal: Signal = Signal()
     let incrementUserCounterUseCase: IncrementUserCounterUseCase
     
-    init(renderer: MobileContentRenderer, initialPage: MobileContentRendererInitialPage?, initialPageConfig: MobileContentRendererInitialPageConfig?, initialPageSubIndex: Int?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
+    init(
+        renderer: MobileContentRenderer,
+        initialPage: MobileContentRendererInitialPage?,
+        initialPageConfig: MobileContentRendererInitialPageConfig?,
+        initialPageSubIndex: Int?,
+        resourcesRepository: ResourcesRepository,
+        translationsRepository: TranslationsRepository,
+        mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getTranslatedLanguageName: GetTranslatedLanguageName,
+        trainingTipsEnabled: Bool,
+        incrementUserCounterUseCase: IncrementUserCounterUseCase,
+        selectedLanguageIndex: Int?
+    ) {
         
         self.renderer = CurrentValueSubject(renderer)
         self.currentPageRenderer = CurrentValueSubject(renderer.pageRenderers[0])
@@ -61,7 +76,6 @@ import Combine
         
         getCurrentAppLanguageUseCase
             .execute()
-            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         Publishers.CombineLatest(
@@ -78,12 +92,12 @@ import Combine
         .store(in: &cancellables)
               
         resourcesRepository
-            .persistence
             .observeCollectionChangesPublisher()
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { _ in
                 
             }, receiveValue: { [weak self] _ in
+                
                 self?.updateTranslationsIfNeeded()
             })
             .store(in: &cancellables)
@@ -104,6 +118,10 @@ import Combine
         return languages[selectedLanguageIndex]
     }
     
+    func getSelectedLanguageCode() -> String {
+        return getSelectedLanguage()?.code ?? ""
+    }
+    
     override func viewDidFinishLayout(window: UIViewController, safeArea: UIEdgeInsets) {
         
         super.viewDidFinishLayout(window: window, safeArea: safeArea)
@@ -117,6 +135,7 @@ import Combine
         
         let event = DismissToolEvent(
             resource: resource,
+            language: getSelectedLanguageCode(),
             highestPageNumberViewed: highestPageNumberViewed
         )
         
@@ -217,7 +236,7 @@ import Combine
     }
     
     func setRendererPrimaryLanguage(primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageId: String?) {
-        
+                
         let appLanguage: AppLanguageDomainModel = self.appLanguage
         let currentRenderer: MobileContentRenderer = renderer.value
         
@@ -229,26 +248,28 @@ import Combine
         
         let newSelectedLanguageIndex: Int? = newLanguageIds.firstIndex(where: {$0 == selectedLanguageId})
         
-        let didDownloadToolTranslationsClosure = { [weak self] (result: Result<ToolTranslationsDomainModel, Error>) in
+        let downloadToolFlowCompleted = { [weak self] (state: DownloadToolFlow.CompletedState) in
                    
-            switch result {
+            switch state {
             
-            case .success(let toolTranslations):
+            case .downloadSuccess(let toolTranslations):
                 
                 let newRenderer: MobileContentRenderer = currentRenderer.copy(toolTranslations: toolTranslations)
                 
                 self?.setRenderer(renderer: newRenderer, pageRendererIndex: newSelectedLanguageIndex, navigationEvent: nil)
-                
-            case .failure(let error):
-                
+            
+            case .downloadFailed(let error):
                 currentRenderer.navigation.presentError(error: error, appLanguage: appLanguage)
+            
+            case .userClosed:
+                break
             }
         }
         
         currentRenderer.navigation.downloadToolLanguages(
             toolId: currentRenderer.resource.id,
             languageIds: newLanguageIds,
-            completion: didDownloadToolTranslationsClosure
+            completion: downloadToolFlowCompleted
         )
     }
     
@@ -649,85 +670,118 @@ extension MobileContentRendererViewModel {
     
     private func updateTranslationsIfNeeded() {
         
-        var translationsNeededDownloading: [TranslationDataModel] = Array()
-                
-        for pageRenderer in renderer.value.pageRenderers {
+        updateTranslationsTask?.cancel()
+        
+        updateTranslationsTask = Task {
+            
+            try await asyncUpdateTranslationsIfNeeded()
+        }
+    }
+    
+    private func asyncUpdateTranslationsIfNeeded() async throws {
+        
+        let translations: [TranslationDataModel] = getTranslationsNeededDownloading()
+        
+        let translationManifests: [TranslationManifestFileDataModel] = try await downloadTranslationManifests(translations: translations)
+        
+        updateRendererTranslationManifests(translationManifests: translationManifests)
+    }
+    
+    private func getTranslationsNeededDownloading() -> [TranslationDataModel] {
+        
+        let translationsNeededDownloading: [TranslationDataModel] = renderer.value.pageRenderers.compactMap { (pageRenderer: MobileContentPageRenderer) in
+         
+            let resource: ResourceDataModel = pageRenderer.resource
+            let language: LanguageDataModel = pageRenderer.language
+            let currentTranslation: TranslationDataModel = pageRenderer.translation
+            
+            guard let latestTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageId: language.id) else {
+                return nil
+            }
+            
+            guard latestTranslation.version > currentTranslation.version else {
+                return nil
+            }
+            
+            return latestTranslation
+        }
+        
+        return translationsNeededDownloading
+    }
+    
+    private func downloadTranslationManifests(translations: [TranslationDataModel]) async throws -> [TranslationManifestFileDataModel] {
+         
+        guard !translations.isEmpty else {
+            return []
+        }
+        
+        let translationManifests: [TranslationManifestFileDataModel] = try await translationsRepository.getTranslationManifestsFromRemote(
+            translations: translations,
+            manifestParserType: .renderer,
+            requestPriority: .high,
+            includeRelatedFiles: true,
+            shouldFallbackToLatestDownloadedTranslationIfRemoteFails: false
+        )
+        
+        return translationManifests
+    }
+    
+    private func updateRendererTranslationManifests(translationManifests: [TranslationManifestFileDataModel]) {
+        
+        guard !translationManifests.isEmpty else {
+            return
+        }
+        
+        let currentRenderer: MobileContentRenderer = renderer.value
+        let currentPageRenderer: MobileContentPageRenderer = currentPageRenderer.value
+        
+        var languageTranslationManifests: [MobileContentRendererLanguageTranslationManifest] = Array()
+                        
+        for pageRenderer in currentRenderer.pageRenderers {
             
             let resource: ResourceDataModel = pageRenderer.resource
             let language: LanguageDataModel = pageRenderer.language
             let currentTranslation: TranslationDataModel = pageRenderer.translation
             
-            guard let latestTranslation = translationsRepository.cache.getLatestTranslation(resourceId: resource.id, languageId: language.id) else {
-                continue
+            let updatedManifest: Manifest
+            let updatedTranslation: TranslationDataModel
+            
+            if let latestTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageId: language.id),
+               latestTranslation.version > currentTranslation.version,
+               let manifestFileDataModel = translationManifests.filter({$0.translation.id == latestTranslation.id}).first {
+                
+                updatedManifest = manifestFileDataModel.manifest
+                updatedTranslation = manifestFileDataModel.translation
+            }
+            else {
+                
+                updatedManifest = pageRenderer.manifest
+                updatedTranslation = pageRenderer.translation
             }
             
-            guard latestTranslation.version > currentTranslation.version else {
-                continue
-            }
+            let languageTranslationManifest = MobileContentRendererLanguageTranslationManifest(
+                manifest: updatedManifest,
+                language: pageRenderer.language,
+                translation: updatedTranslation
+            )
             
-            translationsNeededDownloading.append(latestTranslation)
+            languageTranslationManifests.append(languageTranslationManifest)
         }
         
-        guard !translationsNeededDownloading.isEmpty else {
-            return
-        }
+        let toolTranslations = ToolTranslationsDomainModel(
+            tool: currentRenderer.resource,
+            languageTranslationManifests: languageTranslationManifests
+        )
         
-        translationsRepository.getTranslationManifestsFromRemote(translations: translationsNeededDownloading, manifestParserType: .renderer, requestPriority: .high, includeRelatedFiles: true, shouldFallbackToLatestDownloadedTranslationIfRemoteFails: false)
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                
-            } receiveValue: { [weak self] (manifestFileDataModels: [TranslationManifestFileDataModel]) in
-                
-                guard let weakSelf = self else {
-                    return
-                }
-                
-                let currentRenderer: MobileContentRenderer = weakSelf.renderer.value
-                let currentPageRenderer: MobileContentPageRenderer = weakSelf.currentPageRenderer.value
-                
-                var languageTranslationManifests: [MobileContentRendererLanguageTranslationManifest] = Array()
-                                
-                for pageRenderer in currentRenderer.pageRenderers {
-                    
-                    let resource: ResourceDataModel = pageRenderer.resource
-                    let language: LanguageDataModel = pageRenderer.language
-                    let currentTranslation: TranslationDataModel = pageRenderer.translation
-                    
-                    let updatedManifest: Manifest
-                    let updatedTranslation: TranslationDataModel
-                    
-                    if let latestTranslation = self?.translationsRepository.cache.getLatestTranslation(resourceId: resource.id, languageId: language.id), latestTranslation.version > currentTranslation.version, let manifestFileDataModel = manifestFileDataModels.filter({$0.translation.id == latestTranslation.id}).first {
-                        
-                        updatedManifest = manifestFileDataModel.manifest
-                        updatedTranslation = manifestFileDataModel.translation
-                    }
-                    else {
-                        
-                        updatedManifest = pageRenderer.manifest
-                        updatedTranslation = pageRenderer.translation
-                    }
-                    
-                    let languageTranslationManifest = MobileContentRendererLanguageTranslationManifest(
-                        manifest: updatedManifest,
-                        language: pageRenderer.language,
-                        translation: updatedTranslation
-                    )
-                    
-                    languageTranslationManifests.append(languageTranslationManifest)
-                }
-                
-                let toolTranslations = ToolTranslationsDomainModel(
-                    tool: currentRenderer.resource,
-                    languageTranslationManifests: languageTranslationManifests
-                )
-                
-                let updatedRenderer: MobileContentRenderer = currentRenderer.copy(toolTranslations: toolTranslations)
-                
-                let pageRendererIndex: Int? = currentRenderer.pageRenderers.firstIndex(where: {$0.language.id == currentPageRenderer.language.id})
-                
-                self?.setRenderer(renderer: updatedRenderer, pageRendererIndex: pageRendererIndex, navigationEvent: nil)
-            }
-            .store(in: &cancellables)
+        let updatedRenderer: MobileContentRenderer = currentRenderer.copy(toolTranslations: toolTranslations)
+        
+        let pageRendererIndex: Int? = currentRenderer.pageRenderers.firstIndex(where: { $0.language.id == currentPageRenderer.language.id })
+        
+        setRenderer(
+            renderer: updatedRenderer,
+            pageRendererIndex: pageRendererIndex,
+            navigationEvent: nil
+        )
     }
     
     private func trackContentEvent(eventId: EventId) {

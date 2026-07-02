@@ -8,14 +8,14 @@
 
 import Foundation
 
-class UserLessonProgressDiContainer {
+final class UserLessonProgressDiContainer {
     
     let dataLayer: UserLessonProgressDataLayerDependencies
     let domainLayer: UserLessonProgressDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(core: AppCoreDiContainer) {
         
-        dataLayer = UserLessonProgressDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainLayer = UserLessonProgressDomainLayerDependencies(dataLayer: dataLayer, coreDataLayer: coreDataLayer)
+        dataLayer = UserLessonProgressDataLayerDependencies(coreDataLayer: core.dataLayer)
+        domainLayer = UserLessonProgressDomainLayerDependencies(core: core, dataLayer: dataLayer)
     }
 }

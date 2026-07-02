@@ -10,8 +10,10 @@ import Foundation
 import UIKit
 import Combine
 
-@MainActor class SocialSignInViewModel: ObservableObject {
+@MainActor
+final class SocialSignInViewModel: ObservableObject {
     
+    private let stepEmitter: FlowStepEmitter
     private let presentAuthViewController: UIViewController
     private let authenticationType: SocialSignInAuthenticationType
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
@@ -21,9 +23,7 @@ import Combine
     
     private var authenticateUserTask: Task<Void, Error>?
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     @Published private var appLanguage: String = LanguageCodeDomainModel.english.value
     
     @Published var title: String = ""
@@ -32,9 +32,17 @@ import Combine
     @Published var signInWithFacebookButtonTitle: String = ""
     @Published var signInWithGoogleButtonTitle: String = ""
     
-    init(flowDelegate: FlowDelegate, presentAuthViewController: UIViewController, authenticationType: SocialSignInAuthenticationType, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getSocialCreateAccountStringsUseCase: GetSocialCreateAccountStringsUseCase, getSocialSignInStringsUseCase: GetSocialSignInStringsUseCase, authenticateUserUseCase: AuthenticateUserUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        presentAuthViewController: UIViewController,
+        authenticationType: SocialSignInAuthenticationType,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getSocialCreateAccountStringsUseCase: GetSocialCreateAccountStringsUseCase,
+        getSocialSignInStringsUseCase: GetSocialSignInStringsUseCase,
+        authenticateUserUseCase: AuthenticateUserUseCase
+    ) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.presentAuthViewController = presentAuthViewController
         self.authenticationType = authenticationType
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
@@ -45,55 +53,45 @@ import Combine
         getCurrentAppLanguageUseCase
             .execute()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$appLanguage)
-        
-        switch authenticationType {
-        case .createAccount:
-            
-            $appLanguage
-                .dropFirst()
-                .map { (appLanguage: AppLanguageDomainModel) in
-                    return getSocialCreateAccountStringsUseCase
-                        .execute(appLanguage: appLanguage)
-                }
-                .switchToLatest()
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] (interfaceStrings: SocialCreateAccountStringsDomainModel) in
-                    
-                    self?.title = interfaceStrings.title
-                    self?.subtitle = interfaceStrings.subtitle
-                    self?.signInWithAppleButtonTitle = interfaceStrings.createWithAppleActionTitle
-                    self?.signInWithFacebookButtonTitle = interfaceStrings.createWithFacebookActionTitle
-                    self?.signInWithGoogleButtonTitle = interfaceStrings.createWithGoogleActionTitle
-                }
-                .store(in: &cancellables)
-        
-        case .login:
-            
-            $appLanguage
-                .dropFirst()
-                .map { (appLanguage: AppLanguageDomainModel) in
-                    return getSocialSignInStringsUseCase
-                        .execute(appLanguage: appLanguage)
-                }
-                .switchToLatest()
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] (interfaceStrings: SocialSignInStringsDomainModel) in
-                    
-                    self?.title = interfaceStrings.title
-                    self?.subtitle = interfaceStrings.subtitle
-                    self?.signInWithAppleButtonTitle = interfaceStrings.signInWithAppleActionTitle
-                    self?.signInWithFacebookButtonTitle = interfaceStrings.signInWithFacebookActionTitle
-                    self?.signInWithGoogleButtonTitle = interfaceStrings.signInWithGoogleActionTitle
-                }
-                .store(in: &cancellables)
-        }
+            .sink(receiveValue: { [weak self] (appLanguage: AppLanguageDomainModel) in
+
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
+            })
+            .store(in: &cancellables)
     }
-    
+
     deinit {
         print("x deinit: \(type(of: self))")
     }
-    
+
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+
+        switch authenticationType {
+        case .createAccount:
+
+            let strings = getSocialCreateAccountStringsUseCase
+                .execute(appLanguage: appLanguage)
+
+            title = strings.title
+            subtitle = strings.subtitle
+            signInWithAppleButtonTitle = strings.createWithAppleActionTitle
+            signInWithFacebookButtonTitle = strings.createWithFacebookActionTitle
+            signInWithGoogleButtonTitle = strings.createWithGoogleActionTitle
+
+        case .login:
+
+            let strings = getSocialSignInStringsUseCase
+                .execute(appLanguage: appLanguage)
+
+            title = strings.title
+            subtitle = strings.subtitle
+            signInWithAppleButtonTitle = strings.signInWithAppleActionTitle
+            signInWithFacebookButtonTitle = strings.signInWithFacebookActionTitle
+            signInWithGoogleButtonTitle = strings.signInWithGoogleActionTitle
+        }
+    }
+
     private func authenticateUser(authPlatform: AuthenticateUserAuthPlatformDomainModel) {
                 
         authenticateUserTask = Task {
@@ -120,10 +118,10 @@ import Combine
         switch authenticationType {
         
         case .createAccount:
-            flowDelegate?.navigate(step: .userCompletedSignInFromCreateAccount(error: error))
+            stepEmitter.emit(step: AppFlowStep.userCompletedSignInFromCreateAccount(error: error))
         
         case .login:
-            flowDelegate?.navigate(step: .userCompletedSignInFromLogin(error: error))
+            stepEmitter.emit(step: AppFlowStep.userCompletedSignInFromLogin(error: error))
         }
     }
 }
@@ -136,10 +134,10 @@ extension SocialSignInViewModel {
         
         switch authenticationType {
         case .createAccount:
-            flowDelegate?.navigate(step: .closeTappedFromCreateAccount)
+            stepEmitter.emit(step: AppFlowStep.closeTappedFromCreateAccount)
             
         case .login:
-            flowDelegate?.navigate(step: .closeTappedFromLogin)
+            stepEmitter.emit(step: AppFlowStep.closeTappedFromLogin)
         }
     }
     

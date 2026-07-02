@@ -18,7 +18,7 @@ typealias SwiftResource = SwiftResourceV1.SwiftResource
 enum SwiftResourceV1 {
  
     @Model
-    class SwiftResource: IdentifiableSwiftDataObject, ResourceDataModelInterface {
+    class SwiftResource: IdentifiableSwiftDataObject {
         
         var abbreviation: String = ""
         var attachmentIds: [String] = Array<String>()
@@ -56,39 +56,72 @@ enum SwiftResourceV1 {
         init() {
             
         }
-        
-        func mapFrom(interface: ResourceDataModelInterface) {
-            abbreviation = interface.abbreviation
-            attachmentIds = interface.getAttachmentIds()
-            attrAboutBannerAnimation = interface.attrAboutBannerAnimation
-            attrAboutOverviewVideoYoutube = interface.attrAboutOverviewVideoYoutube
-            attrBanner = interface.attrBanner
-            attrBannerAbout = interface.attrBannerAbout
-            attrCategory = interface.attrCategory
-            attrDefaultLocale = interface.attrDefaultLocale
-            attrDefaultOrder = interface.attrDefaultOrder
-            attrSpotlight = interface.attrSpotlight
-            defaultVariantId = interface.defaultVariantId
-            id = interface.id
-            isHidden = interface.isHidden
-            languageIds = interface.getLanguageIds()
-            latestTranslationIds = interface.getLatestTranslationIds()
-            manifest = interface.manifest
-            metatoolId = interface.metatoolId
-            name = interface.name
-            oneskyProjectId = interface.oneskyProjectId
-            resourceDescription = interface.resourceDescription
-            resourceType = interface.resourceType
-            totalViews = interface.totalViews
-            type = interface.type
-            variantIds = interface.getVariantIds()
-        }
-        
-        static func createNewFrom(interface: ResourceDataModelInterface) -> SwiftResource {
-            let resource = SwiftResource()
-            resource.mapFrom(interface: interface)
-            return resource
-        }
+    }
+}
+
+@available(iOS 17.4, *)
+extension SwiftResource {
+    
+    func mapFrom(model: ResourceDataModel) {
+        abbreviation = model.abbreviation
+        attachmentIds = model.attachmentIds
+        attrAboutBannerAnimation = model.attrAboutBannerAnimation
+        attrAboutOverviewVideoYoutube = model.attrAboutOverviewVideoYoutube
+        attrBanner = model.attrBanner
+        attrBannerAbout = model.attrBannerAbout
+        attrCategory = model.attrCategory
+        attrDefaultLocale = model.attrDefaultLocale
+        attrDefaultOrder = model.attrDefaultOrder
+        attrSpotlight = model.attrSpotlight
+        defaultVariantId = model.defaultVariantId
+        id = model.id
+        isHidden = model.isHidden
+        languageIds = model.languageIds
+        latestTranslationIds = model.latestTranslationIds
+        manifest = model.manifest
+        metatoolId = model.metatoolId
+        name = model.name
+        oneskyProjectId = model.oneskyProjectId
+        resourceDescription = model.resourceDescription
+        resourceType = model.resourceType
+        totalViews = model.totalViews
+        type = model.type
+        variantIds = model.variantIds
+    }
+    
+    static func createNewFrom(model: ResourceDataModel) -> SwiftResource {
+        let resource = SwiftResource()
+        resource.mapFrom(model: model)
+        return resource
+    }
+    
+    func toModel() -> ResourceDataModel {
+        return ResourceDataModel(
+            abbreviation: abbreviation,
+            attrAboutBannerAnimation: attrAboutBannerAnimation,
+            attrAboutOverviewVideoYoutube: attrAboutOverviewVideoYoutube,
+            attrBanner: attrBanner,
+            attrBannerAbout: attrBannerAbout,
+            attrCategory: attrCategory,
+            attrDefaultLocale: attrDefaultLocale,
+            attrDefaultOrder: attrDefaultOrder,
+            attrSpotlight: attrSpotlight,
+            defaultVariantId: defaultVariantId,
+            id: id,
+            isHidden: isHidden,
+            manifest: manifest,
+            metatoolId: metatoolId,
+            name: name,
+            oneskyProjectId: oneskyProjectId,
+            resourceDescription: resourceDescription,
+            resourceType: resourceType,
+            totalViews: totalViews,
+            type: type,
+            attachmentIds: getAttachmentIds(),
+            languageIds: getLanguageIds(),
+            latestTranslationIds: getLatestTranslationIds(),
+            variantIds: getVariantIds()
+        )
     }
 }
 

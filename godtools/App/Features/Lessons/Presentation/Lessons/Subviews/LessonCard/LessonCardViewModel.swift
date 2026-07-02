@@ -9,11 +9,12 @@
 import SwiftUI
 import Combine
 
-@MainActor class LessonCardViewModel: ObservableObject {
+@MainActor
+class LessonCardViewModel: ObservableObject {
         
     private let lessonListItem: LessonListItemDomainModelInterface
     
-    private var cancellables: Set<AnyCancellable> = Set()
+    private var getBannerImageTask: Task<Void, Error>?
     
     @Published private(set) var banner: OptionalImageData?
     @Published private(set) var title: String = ""
@@ -25,7 +26,11 @@ import Combine
     @Published private(set) var attachmentsDownloadProgressValue: Double = 0
     @Published private(set) var translationDownloadProgressValue: Double = 0
     
-    init(lessonListItem: LessonListItemDomainModelInterface, getToolBannerUseCase: GetToolBannerUseCase) {
+    init(
+        lessonListItem: LessonListItemDomainModelInterface,
+        getToolBannerUseCase: GetToolBannerUseCase,
+        inMemoryDataCache: InMemoryDataCache
+    ) {
         
         self.lessonListItem = lessonListItem
         self.title = lessonListItem.name
@@ -50,14 +55,33 @@ import Combine
         
         let attachmentId: String = lessonListItem.bannerImageId
         
-        getToolBannerUseCase
-            .execute(attachmentId: attachmentId)
-            .sink { _ in
+        getBannerImageTask = Task {
+            
+            if let imageData = await inMemoryDataCache.getData(id: attachmentId), let image = imageData.toImage() {
                 
-            } receiveValue: { [weak self] (image: Image?) in
-                
-                self?.banner = OptionalImageData(image: image, imageIdForAnimationChange: attachmentId)
+                banner = getBanner(image: image, attachmentId: attachmentId)
             }
-            .store(in: &cancellables)
+            else {
+                
+                let imageData = try await getToolBannerUseCase
+                    .execute(
+                        attachmentId: attachmentId
+                    )
+                
+                if let imageData = imageData {
+                    inMemoryDataCache.cacheData(id: attachmentId, data: imageData)
+                }
+                
+                banner = getBanner(image: imageData?.toImage(), attachmentId: attachmentId)
+            }
+        }
+    }
+    
+    deinit {
+        getBannerImageTask?.cancel()
+    }
+    
+    private func getBanner(image: Image?, attachmentId: String) -> OptionalImageData {
+        return OptionalImageData(image: image, imageIdForAnimationChange: attachmentId)
     }
 }

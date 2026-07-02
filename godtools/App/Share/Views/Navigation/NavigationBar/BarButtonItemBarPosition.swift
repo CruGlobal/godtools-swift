@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum BarButtonItemBarPosition {
+public enum BarButtonItemBarPosition: Sendable {
     
     case leading
     case trailing

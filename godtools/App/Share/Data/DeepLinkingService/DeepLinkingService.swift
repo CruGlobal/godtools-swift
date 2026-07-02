@@ -9,11 +9,13 @@
 import Foundation
 import Combine
 
-class DeepLinkingService {
+final class DeepLinkingService {
     
     private let manifest: DeepLinkingManifestInterface
     private let lastParsedDeepLinkSubject: PassthroughSubject<ParsedDeepLinkType?, Never> = PassthroughSubject()
-            
+    
+    private var lastProcessedDeepLink: ProcessedDeepLink?
+    
     init(manifest: DeepLinkingManifestInterface) {
         
         self.manifest = manifest
@@ -41,7 +43,11 @@ class DeepLinkingService {
                     continue
                 }
                 
-                parsedDeepLink = urlParser.parse(url: incomingUrl.url, pathComponents: incomingUrl.pathComponents, queryParameters: incomingUrl.queryParameters)
+                parsedDeepLink = urlParser.parse(
+                    url: incomingUrl.url,
+                    pathComponents: incomingUrl.pathComponents,
+                    queryParameters: incomingUrl.getQueryParameters()
+                )
             }
                         
             guard let deepLink = parsedDeepLink else {
@@ -54,11 +60,25 @@ class DeepLinkingService {
         return nil
     }
      
+    @MainActor
     func parseDeepLinkAndNotify(incomingDeepLink: IncomingDeepLinkType) -> Bool {
         
         guard let parsedDeepLink = parseDeepLink(incomingDeepLink: incomingDeepLink) else {
             return false
         }
+        
+        if let lastProcessedDeepLink = self.lastProcessedDeepLink,
+           lastProcessedDeepLink.deepLink == parsedDeepLink,
+            lastProcessedDeepLink.secondsSincedProcessed < 4 {
+                        
+            return true
+        }
+        
+        lastProcessedDeepLink = ProcessedDeepLink(
+            deepLink: parsedDeepLink,
+            date: Date(),
+            incomingDeepLink: incomingDeepLink
+        )
         
         lastParsedDeepLinkSubject.send(parsedDeepLink)
         

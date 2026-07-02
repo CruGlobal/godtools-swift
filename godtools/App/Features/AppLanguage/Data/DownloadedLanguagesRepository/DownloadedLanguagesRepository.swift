@@ -9,51 +9,82 @@
 import Foundation
 import Combine
 
-class DownloadedLanguagesRepository {
+final class DownloadedLanguagesRepository {
     
-    private let cache: RealmDownloadedLanguagesCache
+    private let cache: DownloadedLanguagesCache
     
-    init(cache: RealmDownloadedLanguagesCache) {
+    init(cache: DownloadedLanguagesCache) {
         
         self.cache = cache
     }
     
-    @MainActor func getDownloadedLanguagesChangedPublisher() -> AnyPublisher<Void, Never> {
+    @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Error> {
         
-        return cache.getDownloadedLanguagesChangedPublisher()
+        return cache.persistence
+            .observeCollectionChangesPublisher()
+            .eraseToAnyPublisher()
     }
     
-    func getDownloadedLanguagesPublisher(completedDownloadsOnly: Bool) -> AnyPublisher<[DownloadedLanguageDataModel], Never> {
+    func getDownloadedLanguage(languageId: String) throws -> DownloadedLanguageDataModel? {
         
-        return cache.getDownloadedLanguagesPublisher(completedDownloadsOnly: completedDownloadsOnly)
+        return try cache.persistence.getDataModel(id: languageId)
     }
     
-    func getDownloadedLanguage(languageId: String) -> DownloadedLanguageDataModel? {
+    func getDownloadedLanguagesByDownloadComplete(downloadComplete: Bool) async throws -> [DownloadedLanguageDataModel] {
         
-        return cache.getDownloadedLanguage(languageId: languageId)
+        return try await cache.getDownloadedLanguagesByDownloadComplete(downloadComplete: downloadComplete)
     }
     
-    func getDownloadedLanguagePublisher(languageId: String) -> AnyPublisher<DownloadedLanguageDataModel?, Never> {
+    func getDownloadedLanguages() async throws -> [DownloadedLanguageDataModel] {
         
-        return cache.getDownloadedLanguagePublisher(languageId: languageId)
+        return try await self.cache.persistence.getDataModels(getOption: .allObjects)
     }
     
-    func storeDownloadedLanguage(languageId: String, downloadComplete: Bool) {
+    func storeDownloadedLanguage(languageId: String, downloadComplete: Bool) async throws -> DownloadedLanguageDataModel {
+                
+        let downloadedLanguage: DownloadedLanguageDataModel
         
-        cache.storeDownloadedLanguage(languageId: languageId, downloadComplete: downloadComplete)
+        if let existing = try getDownloadedLanguage(languageId: languageId) {
+            downloadedLanguage = existing.copy(downloadComplete: downloadComplete)
+        }
+        else {
+            downloadedLanguage = DownloadedLanguageDataModel(languageId: languageId, downloadComplete: downloadComplete, createdAt: Date())
+        }
+        
+        _ = try await cache.persistence.writeObjects(externalObjects: [downloadedLanguage])
+        
+        return downloadedLanguage
     }
     
-    func storeDownloadedLanguagePublisher(languageId: String, downloadComplete: Bool) -> AnyPublisher<DownloadedLanguageDataModel, Error> {
+    func storeDownloadedLanguage(downloadedLanguage: DownloadedLanguageDataModel) async throws -> DownloadedLanguageDataModel {
         
-        return cache.storeDownloadedLanguagePublisher(languageId: languageId, downloadComplete: downloadComplete)
+        _ = try await cache.persistence.writeObjects(externalObjects: [downloadedLanguage])
+        
+        return downloadedLanguage
     }
     
-    func deleteDownloadedLanguagePublisher(languageId: String) -> AnyPublisher<Void, Error> {
+    func deleteDownloadedLanguage(languageId: String) async throws {
         
-        return cache.deleteDownloadedLanguagePublisher(languageId: languageId)
+        try await cache.deleteDownloadedLanguage(languageId: languageId)
     }
     
-    func markAllDownloadsAsCompleted() {
-        cache.markAllDownloadsAsCompleted()
+    func markAllDownloadsAsCompleted() async throws {
+        
+        let incompleteDownloads: [DownloadedLanguageDataModel] = try await cache.getDownloadedLanguagesByDownloadComplete(downloadComplete: false)
+        
+        guard incompleteDownloads.count > 0 else {
+            return
+        }
+                
+        var downloadsToUpdate: [DownloadedLanguageDataModel] = Array()
+        
+        for download in incompleteDownloads {
+                        
+            downloadsToUpdate.append(
+                download.copy(downloadComplete: true)
+            )
+        }
+        
+        try await cache.persistence.writeObjects(externalObjects: downloadsToUpdate)
     }
 }

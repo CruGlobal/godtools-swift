@@ -9,23 +9,29 @@
 import Foundation
 import Combine
 
-@MainActor class ConfirmAppLanguageViewModel: ObservableObject {
+@MainActor
+final class ConfirmAppLanguageViewModel: ObservableObject {
     
+    private let stepEmitter: FlowStepEmitter
     private let selectedLanguage: AppLanguageListItemDomainModel
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getConfirmAppLanguageStringsUseCase: GetConfirmAppLanguageStringsUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
-    private weak var flowDelegate: FlowDelegate?
     
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var appLanguage = AppLanguageDomainModel.english
     
     @Published private(set) var strings = ConfirmAppLanguageStringsDomainModel.emptyValue
     
-    init(selectedLanguage: AppLanguageListItemDomainModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getConfirmAppLanguageStringsUseCase: GetConfirmAppLanguageStringsUseCase, flowDelegate: FlowDelegate?) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        selectedLanguage: AppLanguageListItemDomainModel,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getConfirmAppLanguageStringsUseCase: GetConfirmAppLanguageStringsUseCase
+    ) {
         
+        self.stepEmitter = stepEmitter
         self.selectedLanguage = selectedLanguage
-        self.flowDelegate = flowDelegate
         
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getConfirmAppLanguageStringsUseCase = getConfirmAppLanguageStringsUseCase
@@ -33,26 +39,22 @@ import Combine
         getCurrentAppLanguageUseCase
             .execute()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                
-                getConfirmAppLanguageStringsUseCase
-                    .execute(appLanguage: appLanguage, selectedLanguage: selectedLanguage.language)
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: ConfirmAppLanguageStringsDomainModel) in
-                
-                self?.strings = strings
-            }
+            .sink(receiveValue: { [weak self] (appLanguage: AppLanguageDomainModel) in
+
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
+            })
             .store(in: &cancellables)
     }
-    
+
     deinit {
         print("x deinit: \(type(of: self))")
+    }
+
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+
+        strings = getConfirmAppLanguageStringsUseCase
+            .execute(appLanguage: appLanguage, selectedLanguage: selectedLanguage.language)
     }
 }
 
@@ -61,14 +63,14 @@ import Combine
 extension ConfirmAppLanguageViewModel {
     
     func confirmLanguageButtonTapped() {
-        flowDelegate?.navigate(step: .appLanguageChangeConfirmed(appLanguage: selectedLanguage))
+        stepEmitter.emit(step: AppFlowStep.appLanguageChangeConfirmed(appLanguage: selectedLanguage))
     }
     
     func nevermindButtonTapped() {
-        flowDelegate?.navigate(step: .nevermindTappedFromConfirmAppLanguageChange)
+        stepEmitter.emit(step: AppFlowStep.nevermindTappedFromConfirmAppLanguageChange)
     }
     
     @objc func closeTapped() {
-        flowDelegate?.navigate(step: .backTappedFromConfirmAppLanguageChange)
+        stepEmitter.emit(step: AppFlowStep.backTappedFromConfirmAppLanguageChange)
     }
 }

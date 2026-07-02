@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import RepositorySync
 
-class RealmAttachment: Object, IdentifiableRealmObject, AttachmentDataModelInterface {
+class RealmAttachment: Object, IdentifiableRealmObject {
     
     @objc dynamic var file: String = ""
     @objc dynamic var fileFilename: String = ""
@@ -25,22 +25,38 @@ class RealmAttachment: Object, IdentifiableRealmObject, AttachmentDataModelInter
     override static func primaryKey() -> String? {
         return "id"
     }
-    
-    func mapFrom(interface: AttachmentDataModelInterface) {
+}
 
-        file = interface.file
-        fileFilename = interface.fileFilename
-        id = interface.id
-        isZipped = interface.isZipped
-        sha256 = interface.sha256
-        type = interface.type
+extension RealmAttachment {
+    
+    func mapFrom(model: AttachmentDataModel) {
+
+        file = model.file
+        fileFilename = model.fileFilename
+        id = model.id
+        isZipped = model.isZipped
+        sha256 = model.sha256
+        type = model.type
     }
     
-    static func createNewFrom(interface: AttachmentDataModelInterface) -> RealmAttachment {
+    static func createNewFrom(model: AttachmentDataModel) -> RealmAttachment {
         
         let realmAttachment = RealmAttachment()
-        realmAttachment.mapFrom(interface: interface)
+        realmAttachment.mapFrom(model: model)
         return realmAttachment
+    }
+    
+    func toModel() -> AttachmentDataModel {
+        return AttachmentDataModel(
+            id: id,
+            file: file,
+            fileFilename: fileFilename,
+            isZipped: isZipped,
+            sha256: sha256,
+            type: type,
+            resourceDataModel: resourceDataModel,
+            storedAttachment: nil
+        )
     }
     
     var resourceDataModel: ResourceDataModel? {
@@ -49,6 +65,6 @@ class RealmAttachment: Object, IdentifiableRealmObject, AttachmentDataModelInter
             return nil
         }
         
-        return ResourceDataModel(interface: realmResource)
+        return realmResource.toModel()
     }
 }

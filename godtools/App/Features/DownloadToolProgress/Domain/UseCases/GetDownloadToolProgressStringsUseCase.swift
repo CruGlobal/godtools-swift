@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetDownloadToolProgressStringsUseCase {
     
@@ -15,20 +14,24 @@ final class GetDownloadToolProgressStringsUseCase {
     private let localizationServices: LocalizationServicesInterface
     private let favoritedResourcesRepository: FavoritedResourcesRepository
     
-    init(resourcesRepository: ResourcesRepository, localizationServices: LocalizationServicesInterface, favoritedResourcesRepository: FavoritedResourcesRepository) {
+    init(
+        resourcesRepository: ResourcesRepository,
+        localizationServices: LocalizationServicesInterface,
+        favoritedResourcesRepository: FavoritedResourcesRepository
+    ) {
         
         self.resourcesRepository = resourcesRepository
         self.localizationServices = localizationServices
         self.favoritedResourcesRepository = favoritedResourcesRepository
     }
     
-    func execute(toolId: String?, appLanguage: AppLanguageDomainModel) -> AnyPublisher<DownloadToolProgressStringsDomainModel, Never> {
+    func execute(toolId: String?, appLanguage: AppLanguageDomainModel) -> DownloadToolProgressStringsDomainModel {
                         
         let localeId: String = appLanguage
         
         let resource: ResourceDataModel?
         
-        if let toolId = toolId, let resourceModel = resourcesRepository.persistence.getDataModelNonThrowing(id: toolId) {
+        if let toolId = toolId, let resourceModel = resourcesRepository.getResourceById(id: toolId) {
             resource = resourceModel
         }
         else {
@@ -48,17 +51,16 @@ final class GetDownloadToolProgressStringsUseCase {
         let downloadMessage: String
         
         if toolCanBeFavorited && !toolIsFavorited {
-            downloadMessage = localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "loading_unfavorited_tool")
+            downloadMessage = localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.loadingUnfavoritedTool.key)
         }
         else {
-            downloadMessage = localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "loading_favorited_tool")
+            downloadMessage = localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.loadingFavoritedTool.key)
         }
         
         let strings = DownloadToolProgressStringsDomainModel(
             downloadMessage: downloadMessage
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

@@ -9,7 +9,7 @@
 import Foundation
 import RepositorySync
 
-class AccountDataLayerDependencies {
+final class AccountDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     
@@ -26,32 +26,31 @@ class AccountDataLayerDependencies {
             
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
-                dataModelMapping: SwiftUserDetailsMapping()
+                mapping: SwiftUserDetailsMapping()
             )
         }
         else {
             
             persistence = RealmRepositorySyncPersistence(
                 database: coreDataLayer.getSharedRealmDatabase(),
-                dataModelMapping: RealmUserDetailsMapping()
+                mapping: RealmUserDetailsMapping()
             )
         }
         
-        let api = UserDetailsAPI(
+        let api = UserDetailsApi(
             config: coreDataLayer.getAppConfig(),
             urlSessionPriority: coreDataLayer.getSharedUrlSessionPriority(),
             mobileContentApiAuthSession: coreDataLayer.getMobileContentApiAuthSession()
         )
         
         let cache = UserDetailsCache(
-            persistence: persistence,
-            authTokenRepository: coreDataLayer.getMobileContentAuthTokenRepository()
+            persistence: persistence
         )
         
         return UserDetailsRepository(
-            externalDataFetch: api,
-            persistence: persistence,
-            cache: cache
+            api: api,
+            cache: cache,
+            authTokenRepository: coreDataLayer.getMobileContentAuthTokenRepository()
         )
     }
 }

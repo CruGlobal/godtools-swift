@@ -13,7 +13,10 @@ struct MobileContentRendererInitialPageConfig {
     let shouldNavigateToStartPageIfLastPage: Bool
     let shouldNavigateToPreviousVisiblePageIfHiddenPage: Bool
     
-    init(shouldNavigateToStartPageIfLastPage: Bool = false, shouldNavigateToPreviousVisiblePageIfHiddenPage: Bool = false) {
+    init(
+        shouldNavigateToStartPageIfLastPage: Bool = false,
+        shouldNavigateToPreviousVisiblePageIfHiddenPage: Bool = false
+    ) {
         
         self.shouldNavigateToStartPageIfLastPage = shouldNavigateToStartPageIfLastPage
         self.shouldNavigateToPreviousVisiblePageIfHiddenPage = shouldNavigateToPreviousVisiblePageIfHiddenPage

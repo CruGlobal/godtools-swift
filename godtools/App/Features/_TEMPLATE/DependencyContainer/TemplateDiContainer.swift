@@ -1,14 +1,14 @@
 import Foundation
 
-class TemplateDiContainer {
+final class TemplateDiContainer {
         
     private let dataLayer: TemplateDataLayerDependencies
     
     let domainLayer: TemplateDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(core: AppCoreDiContainer) {
         
-        self.dataLayer = TemplateDataLayerDependencies(coreDataLayer: coreDataLayer)
-        self.domainLayer = TemplateDomainLayerDependencies(coreDataLayer: coreDataLayer, dataLayer: dataLayer)
+        self.dataLayer = TemplateDataLayerDependencies(coreDataLayer: core.dataLayer)
+        self.domainLayer = TemplateDomainLayerDependencies(core: core, dataLayer: dataLayer)
     }
 }

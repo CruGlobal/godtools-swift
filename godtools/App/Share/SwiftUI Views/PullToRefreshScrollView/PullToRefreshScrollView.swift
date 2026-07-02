@@ -14,7 +14,11 @@ struct PullToRefreshScrollView<Content: View>: View {
     private let content: () -> Content
     private let refreshHandler: () -> Void
     
-    init(showsIndicators: Bool = false, @ViewBuilder content: @escaping () -> Content, refreshHandler: @escaping () -> Void) {
+    init(
+        showsIndicators: Bool = false,
+        @ViewBuilder content: @escaping () -> Content,
+        refreshHandler: @escaping () -> Void
+    ) {
         
         self.showsIndicators = showsIndicators
         self.content = content

@@ -15,7 +15,11 @@ struct AllYourFavoriteToolsView: View {
     
     @ObservedObject private var viewModel: AllYourFavoriteToolsViewModel
         
-    init(viewModel: AllYourFavoriteToolsViewModel, contentHorizontalInsets: CGFloat = DashboardView.contentHorizontalInsets, toolCardSpacing: CGFloat = DashboardView.toolCardVerticalSpacing) {
+    init(
+        viewModel: AllYourFavoriteToolsViewModel,
+        contentHorizontalInsets: CGFloat = DashboardView.contentHorizontalInsets,
+        toolCardSpacing: CGFloat = DashboardView.toolCardVerticalSpacing
+    ) {
         
         self.viewModel = viewModel
         self.contentHorizontalInsets = contentHorizontalInsets
@@ -39,7 +43,6 @@ struct AllYourFavoriteToolsView: View {
                             geometry: geometry,
                             layout: .landscape,
                             showsCategory: true,
-                            navButtonTitleHorizontalPadding: YourFavoriteToolsView.toolCardNavButtonTitleHorizontalPadding,
                             favoriteTappedClosure: {
                                 
                                 viewModel.unfavoriteToolTapped(tool: tool)
@@ -84,15 +87,16 @@ struct AllYourFavoriteToolsView_Preview: PreviewProvider {
         let appDiContainer = AppDiContainer.createUITestsDiContainer()
         
         let viewModel = AllYourFavoriteToolsViewModel(
-            flowDelegate: MockFlowDelegate(),
+            stepEmitter: PreviewFlowStepEmitter.emitter,
             getAllYourFavoritedToolsStringsUseCase: appDiContainer.feature.favorites.domainLayer.getAllYourFavoritedToolsStringsUseCase(),
             getYourFavoritedToolsUseCase: appDiContainer.feature.favorites.domainLayer.getYourFavoritedToolsUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToolIsFavoritedUseCase(),
             reorderFavoritedToolUseCase: appDiContainer.feature.favorites.domainLayer.getReorderFavoritedToolUseCase(),
-            getToolBannerUseCase: appDiContainer.domainLayer.getToolBannerUseCase(),
-            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
+            getToolBannerUseCase: appDiContainer.core.domainLayer.getToolBannerUseCase(),
+            inMemoryDataCache: appDiContainer.core.dataLayer.getSharedInMemoryDataCache(),
+            trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+            trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase()
         )
         
         AllYourFavoriteToolsView(viewModel: viewModel)

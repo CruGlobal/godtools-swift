@@ -39,7 +39,11 @@ class MobileContentTextView: MobileContentView, NibBased {
     @IBOutlet weak private var endImageViewWidth: NSLayoutConstraint!
     @IBOutlet weak private var endImageViewHeight: NSLayoutConstraint!
         
-    init(viewModel: MobileContentTextViewModel, viewType: MobileContentTextView.ViewType?, additionalLabelAttributes: MobileContentTextLabelAttributes?) {
+    init(
+        viewModel: MobileContentTextViewModel,
+        viewType: MobileContentTextView.ViewType?,
+        additionalLabelAttributes: MobileContentTextLabelAttributes?
+    ) {
         
         self.viewModel = viewModel
 

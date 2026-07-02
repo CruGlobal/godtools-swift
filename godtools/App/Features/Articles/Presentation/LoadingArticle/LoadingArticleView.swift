@@ -6,20 +6,22 @@
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
-import UIKit
+import SwiftUI
 
-class LoadingArticleView: LoadingView {
+struct LoadingArticleView: View {
+
+    @ObservedObject private var viewModel: LoadingArticleViewModel
     
-    private let viewModel: LoadingArticleViewModel
-    
-    init(viewModel: LoadingArticleViewModel, navigationBar: AppNavigationBar?) {
+    init(viewModel: LoadingArticleViewModel) {
         
         self.viewModel = viewModel
-        
-        super.init(navigationBar: navigationBar, message: viewModel.message)
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    var body: some View {
+        GeometryReader { geometry in
+            FullScreenDownloadProgressView(
+                downloadMessage: viewModel.message
+            )
+        }
     }
 }

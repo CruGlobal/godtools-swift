@@ -31,7 +31,10 @@ class PageNavigationCollectionViewCenteredLayout: UICollectionViewFlowLayout {
     
     private weak var pageNavigationCollectionView: PageNavigationCollectionView?
     
-    init(layoutType: PageNavigationCollectionViewLayoutType, pageNavigationCollectionView: PageNavigationCollectionView) {
+    init(
+        layoutType: PageNavigationCollectionViewLayoutType,
+        pageNavigationCollectionView: PageNavigationCollectionView
+    ) {
         
         self.layoutType = layoutType
         self.pageNavigationCollectionView = pageNavigationCollectionView

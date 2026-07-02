@@ -18,7 +18,7 @@ enum SwiftUserAppLanguageV1 {
  
     @available(iOS 17.4, *)
     @Model
-    class SwiftUserAppLanguage: IdentifiableSwiftDataObject, UserAppLanguageDataModelInterface {
+    class SwiftUserAppLanguage: IdentifiableSwiftDataObject {
         
         var languageId: BCP47LanguageIdentifier = ""
         
@@ -27,16 +27,27 @@ enum SwiftUserAppLanguageV1 {
         init() {
             
         }
-        
-        func mapFrom(interface: UserAppLanguageDataModelInterface) {
-            id = interface.id
-            languageId = interface.languageId
-        }
-        
-        static func createNewFrom(interface: UserAppLanguageDataModelInterface) -> SwiftUserAppLanguage {
-            let object = SwiftUserAppLanguage()
-            object.mapFrom(interface: interface)
-            return object
-        }
+    }
+}
+
+@available(iOS 17.4, *)
+extension SwiftUserAppLanguage {
+    
+    func mapFrom(model: UserAppLanguageDataModel) {
+        id = model.id
+        languageId = model.languageId
+    }
+    
+    static func createNewFrom(model: UserAppLanguageDataModel) -> SwiftUserAppLanguage {
+        let object = SwiftUserAppLanguage()
+        object.mapFrom(model: model)
+        return object
+    }
+    
+    func toModel() -> UserAppLanguageDataModel {
+        return UserAppLanguageDataModel(
+            id: id,
+            languageId: languageId
+        )
     }
 }

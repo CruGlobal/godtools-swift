@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LanguageDataModel: LanguageDataModelInterface {
+struct LanguageDataModel: Sendable {
     
     let code: BCP47LanguageIdentifier
     let directionString: String
@@ -17,14 +17,8 @@ struct LanguageDataModel: LanguageDataModelInterface {
     let type: String
     let forceLanguageName: Bool
     
-    init(interface: LanguageDataModelInterface) {
-        
-        self.code = interface.code
-        self.directionString = interface.directionString
-        self.id = interface.id
-        self.name = interface.name
-        self.type = interface.type
-        self.forceLanguageName = interface.forceLanguageName
+    static func create(id: String, code: BCP47LanguageIdentifier) -> LanguageDataModel {
+        return LanguageDataModel(code: code, directionString: "", id: id, name: "", type: "", forceLanguageName: false)
     }
 }
 

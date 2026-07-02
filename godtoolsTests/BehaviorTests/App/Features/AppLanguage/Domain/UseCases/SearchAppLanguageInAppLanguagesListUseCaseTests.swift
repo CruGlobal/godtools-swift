@@ -23,20 +23,27 @@ struct SearchAppLanguageInAppLanguagesListUseCaseTests {
         
         let searchAppLanguageList: SearchAppLanguageInAppLanguagesListUseCase = getSearchAppLanguageInAppLanguagesListUseCase()
         let appLanguagesList: [AppLanguageListItemDomainModel] = getAppLanguagesList()
+                
+        var resultRef: [AppLanguageListItemDomainModel] = Array()
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var resultRef: [AppLanguageListItemDomainModel] = Array()
-        
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
+            
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
             
             searchAppLanguageList
                 .execute(searchText: "e", appLanguagesList: appLanguagesList)
                 .sink { (result: [AppLanguageListItemDomainModel]) in
-                
-                    confirmation()
-                    
+                                    
                     resultRef = result
+                    
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
                 }
                 .store(in: &cancellables)
         }
@@ -59,20 +66,27 @@ struct SearchAppLanguageInAppLanguagesListUseCaseTests {
         
         let searchAppLanguageList: SearchAppLanguageInAppLanguagesListUseCase = getSearchAppLanguageInAppLanguagesListUseCase()
         let appLanguagesList: [AppLanguageListItemDomainModel] = getAppLanguagesList()
+                
+        var resultRef: [AppLanguageListItemDomainModel] = Array()
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var resultRef: [AppLanguageListItemDomainModel] = Array()
-        
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
+            
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
             
             searchAppLanguageList
                 .execute(searchText: "Ind", appLanguagesList: appLanguagesList)
                 .sink { (result: [AppLanguageListItemDomainModel]) in
-                
-                    confirmation()
-                    
+                                    
                     resultRef = result
+                    
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
                 }
                 .store(in: &cancellables)
         }

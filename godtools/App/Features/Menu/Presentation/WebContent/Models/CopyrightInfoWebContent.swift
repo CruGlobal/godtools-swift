@@ -17,6 +17,6 @@ struct CopyrightInfoWebContent: WebContentType {
     
     init(localizationServices: LocalizationServicesInterface) {
         
-        navTitle = localizationServices.stringForSystemElseEnglish(key: "copyright_info")
+        navTitle = localizationServices.stringForSystemElseEnglish(key: LocalizableStringKeys.copyrightInfo.key)
     }
 }

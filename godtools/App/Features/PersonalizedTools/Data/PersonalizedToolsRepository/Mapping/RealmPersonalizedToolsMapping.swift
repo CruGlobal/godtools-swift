@@ -12,14 +12,14 @@ import RepositorySync
 final class RealmPersonalizedToolsMapping: Mapping {
 
     func toDataModel(externalObject: PersonalizedToolsDataModel) -> PersonalizedToolsDataModel? {
-        return PersonalizedToolsDataModel(interface: externalObject)
+        return externalObject
     }
 
     func toDataModel(persistObject: RealmPersonalizedTools) -> PersonalizedToolsDataModel? {
-        return PersonalizedToolsDataModel(interface: persistObject)
+        return persistObject.toModel()
     }
 
     func toPersistObject(externalObject: PersonalizedToolsDataModel) -> RealmPersonalizedTools? {
-        return RealmPersonalizedTools.createNewFrom(interface: externalObject)
+        return RealmPersonalizedTools.createNewFrom(model: externalObject)
     }
 }

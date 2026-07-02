@@ -10,11 +10,13 @@ import Foundation
 import SwiftUI
 import Combine
 
-@MainActor class ToolCardViewModel: ObservableObject {
+@MainActor
+class ToolCardViewModel: ObservableObject {
         
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
+    private var getBannerImageTask: Task<Void, Error>?
 
     let tool: ToolListItemDomainModelInterface
     let accessibilityWithToolName: String
@@ -27,7 +29,13 @@ import Combine
     @Published private(set) var detailsButtonTitle: String = ""
     @Published private(set) var openButtonTitle: String = ""
             
-    init(tool: ToolListItemDomainModelInterface, accessibility: AccessibilityStrings.Button, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getToolBannerUseCase: GetToolBannerUseCase) {
+    init(
+        tool: ToolListItemDomainModelInterface,
+        accessibility: AccessibilityStrings.Button,
+        getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase,
+        getToolBannerUseCase: GetToolBannerUseCase,
+        inMemoryDataCache: InMemoryDataCache
+    ) {
         
         self.tool = tool
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
@@ -36,8 +44,8 @@ import Combine
         category = tool.category
         languageAvailability = tool.languageAvailability?.availabilityString
         isFavorited = tool.isFavorited
-        openButtonTitle = tool.interfaceStrings.openToolActionTitle
-        detailsButtonTitle = tool.interfaceStrings.openToolDetailsActionTitle
+        openButtonTitle = tool.strings.openToolActionTitle
+        detailsButtonTitle = tool.strings.openToolDetailsActionTitle
         
         accessibilityWithToolName = AccessibilityStrings.Button.getToolButtonAccessibility(toolButton: accessibility, toolName: tool.name)
             
@@ -56,14 +64,33 @@ import Combine
         
         let attachmentId: String = tool.bannerImageId
         
-        getToolBannerUseCase
-            .execute(attachmentId:attachmentId)
-            .sink { _ in
+        getBannerImageTask = Task {
+            
+            if let imageData = await inMemoryDataCache.getData(id: attachmentId), let image = imageData.toImage() {
                 
-            } receiveValue: { [weak self] (image: Image?) in
-                
-                self?.banner = OptionalImageData(image: image, imageIdForAnimationChange: attachmentId)
+                banner = getBanner(image: image, attachmentId: attachmentId)
             }
-            .store(in: &cancellables)
+            else {
+                
+                let imageData = try await getToolBannerUseCase
+                    .execute(
+                        attachmentId: attachmentId
+                    )
+                
+                if let imageData = imageData {
+                    inMemoryDataCache.cacheData(id: attachmentId, data: imageData)
+                }
+                
+                banner = getBanner(image: imageData?.toImage(), attachmentId: attachmentId)
+            }
+        }
+    }
+    
+    deinit {
+        getBannerImageTask?.cancel()
+    }
+    
+    private func getBanner(image: Image?, attachmentId: String) -> OptionalImageData {
+        return OptionalImageData(image: image, imageIdForAnimationChange: attachmentId)
     }
 }

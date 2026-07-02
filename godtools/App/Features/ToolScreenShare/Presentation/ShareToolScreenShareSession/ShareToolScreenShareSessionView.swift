@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+@MainActor
 class ShareToolScreenShareSessionView {
     
     private static let qrCodeActivityType = UIActivity.ActivityType(rawValue: "org.cru.godtools.screenShareQRCodeActivity")
@@ -22,7 +23,7 @@ class ShareToolScreenShareSessionView {
         self.viewModel = viewModel
                 
         let shareQRCodeActivityItem = QRCodeActivity(
-            title: viewModel.qrCodeString,
+            title: viewModel.strings.qrCodeActionTitle,
             activityType: Self.qrCodeActivityType
         )
         

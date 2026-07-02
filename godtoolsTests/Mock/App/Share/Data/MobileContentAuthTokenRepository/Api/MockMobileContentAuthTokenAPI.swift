@@ -1,5 +1,5 @@
 //
-//  MockMobileContentAuthTokenAPI.swift
+//  MockMobileContentAuthTokenApi.swift
 //  godtoolsTests
 //
 //  Created by Rachael Skeath on 8/6/25.
@@ -8,18 +8,14 @@
 
 @testable import godtools
 import Foundation
-import Combine
 
-class MockMobileContentAuthTokenAPI {
+final class MockMobileContentAuthTokenApi: AuthTokenApiInterface {
     
     private let fetchedAuthToken: MobileContentAuthTokenDecodable?
     
     init(fetchedAuthToken: MobileContentAuthTokenDecodable?) {
         self.fetchedAuthToken = fetchedAuthToken
     }
-}
-
-extension MockMobileContentAuthTokenAPI: MobileContentAuthTokenAPIInterface {
     
     func fetchAuthToken(providerToken: MobileContentAuthProviderToken, createUser: Bool) async throws -> Result<MobileContentAuthTokenDecodable, MobileContentApiError> {
         

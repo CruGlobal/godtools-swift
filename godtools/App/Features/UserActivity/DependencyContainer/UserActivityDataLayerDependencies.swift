@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import RepositorySync
 
-class UserActivityDataLayerDependencies {
+final class UserActivityDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     

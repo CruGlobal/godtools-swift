@@ -18,7 +18,11 @@ class MobileContentTextViewModel: MobileContentViewModel {
         
     let textColor: UIColor
     
-    init(textModel: Text, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
+    init(
+        textModel: Text,
+        renderedPageContext: MobileContentRenderedPageContext,
+        mobileContentAnalytics: MobileContentRendererAnalytics
+    ) {
         
         self.textModel = textModel
         
@@ -41,7 +45,7 @@ class MobileContentTextViewModel: MobileContentViewModel {
             return nil
         }
         
-        guard let resourceImage = renderedPageContext.resourcesCache.getNonThrowingUIImage(resource: resource) else {
+        guard let resourceImage = renderedPageContext.resourcesCache.getUIImageNonThrowing(resource: resource) else {
             return nil
         }
         
@@ -84,7 +88,7 @@ class MobileContentTextViewModel: MobileContentViewModel {
             return nil
         }
         
-        guard let resourceImage = renderedPageContext.resourcesCache.getNonThrowingUIImage(resource: resource) else {
+        guard let resourceImage = renderedPageContext.resourcesCache.getUIImageNonThrowing(resource: resource) else {
             return nil
         }
         

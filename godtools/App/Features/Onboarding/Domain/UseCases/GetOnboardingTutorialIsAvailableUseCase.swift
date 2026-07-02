@@ -18,11 +18,10 @@ final class GetOnboardingTutorialIsAvailableUseCase {
         self.getOnboardingTutorialIsAvailable = getOnboardingTutorialIsAvailable
     }
     
-    func execute() -> AnyPublisher<Bool, Never> {
+    func execute() -> Bool {
         
         let isAvailable: Bool = getOnboardingTutorialIsAvailable.getIsAvailable()
         
-        return Just(isAvailable)
-            .eraseToAnyPublisher()
+        return isAvailable
     }
 }

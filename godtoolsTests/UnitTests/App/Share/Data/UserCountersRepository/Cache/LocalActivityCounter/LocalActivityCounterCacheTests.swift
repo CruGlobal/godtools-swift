@@ -1,0 +1,128 @@
+//
+//  LocalActivityCounterCacheTests.swift
+//  godtools
+//
+//  Created by Levi Eggert on 3/4/26.
+//  Copyright © 2026 Cru. All rights reserved.
+//
+
+import Foundation
+import Testing
+@testable import godtools
+import RepositorySync
+
+struct LocalActivityCounterCacheTests {
+        
+    private let sessionsCounterId: String = "sessions"
+    private let toolOpensCounterId: String = "tool_opens"
+    
+    @Test()
+    func initialCountShouldBe1() async throws {
+        
+        let persistence = try getPersistence()
+        
+        let cache = try getLocalActivityCounterCache(
+            persistence: persistence
+        )
+        
+        let counterId: String = toolOpensCounterId
+        
+        #expect(try cache.getCounter(id: counterId) == nil)
+        
+        let updateCounter_1: LocalActivityCountDataModel = try await cache.incrementCounter(id: counterId)
+        let updateCounter_2: LocalActivityCountDataModel = try await cache.incrementCounter(id: counterId)
+        let updateCounter_3: LocalActivityCountDataModel = try await cache.incrementCounter(id: counterId)
+        
+        #expect(updateCounter_1.count == 1)
+        
+        #expect(updateCounter_2.count == 2)
+        
+        #expect(updateCounter_3.count == 3)
+    }
+    
+    @Test()
+    func getCountersReturnsAllCounters() async throws {
+        
+        let persistence = try getPersistence()
+        
+        let cache = try getLocalActivityCounterCache(
+            persistence: persistence
+        )
+                
+        #expect(try cache.getCounter(id: sessionsCounterId) == nil)
+        #expect(try cache.getCounter(id: toolOpensCounterId) == nil)
+        #expect(try await cache.getCounters().count == 0)
+        
+        let sessionCounter: LocalActivityCountDataModel = try await cache.incrementCounter(id: sessionsCounterId)
+        
+        _ = try await cache.incrementCounter(id: toolOpensCounterId)
+        let toolOpensCounter: LocalActivityCountDataModel = try await cache.incrementCounter(id: toolOpensCounterId)
+        
+        #expect(sessionCounter.count == 1)
+        
+        #expect(toolOpensCounter.count == 2)
+        
+        let counters: [LocalActivityCountDataModel] = try await cache.getCounters()
+        let counterIds: [String] = counters.map { $0.id }.sorted()
+        
+        #expect(counterIds == [sessionsCounterId, toolOpensCounterId])
+    }
+    
+    @Test()
+    func decrementCounters() async throws {
+        
+        let persistence = try getPersistence()
+        
+        let cache = try getLocalActivityCounterCache(
+            persistence: persistence
+        )
+        
+        #expect(try cache.getCounter(id: sessionsCounterId) == nil)
+        #expect(try cache.getCounter(id: toolOpensCounterId) == nil)
+        #expect(try await cache.getCounters().count == 0)
+        
+        _ = try await cache.incrementCounter(id: sessionsCounterId)
+        _ = try await cache.incrementCounter(id: sessionsCounterId)
+        
+        _ = try await cache.incrementCounter(id: toolOpensCounterId)
+        _ = try await cache.incrementCounter(id: toolOpensCounterId)
+        _ = try await cache.incrementCounter(id: toolOpensCounterId)
+        _ = try await cache.incrementCounter(id: toolOpensCounterId)
+        
+        #expect(try cache.getCounter(id: sessionsCounterId)?.count == 2)
+        
+        #expect(try cache.getCounter(id: toolOpensCounterId)?.count == 4)
+        
+        try await cache.decrementCount(id: sessionsCounterId, decrementBy: 3)
+        
+        try await cache.decrementCount(id: toolOpensCounterId, decrementBy: 2)
+        
+        #expect(try cache.getCounter(id: sessionsCounterId)?.count == 0)
+        
+        #expect(try cache.getCounter(id: toolOpensCounterId)?.count == 2)
+    }
+}
+
+extension LocalActivityCounterCacheTests {
+    
+    private func getPersistence() throws -> RealmRepositorySyncPersistence<LocalActivityCountDataModel, LocalActivityCountDataModel, RealmLocalActivityCount> {
+        
+        let databaseConfig = try RealmDatabaseConfig.createInMemoryConfig()
+        
+        let database = RealmDatabase(databaseConfig: databaseConfig)
+        
+        let persistence = RealmRepositorySyncPersistence(
+            database: database,
+            mapping: RealmLocalActivityCountMapping()
+        )
+                
+        return persistence
+    }
+    
+    private func getLocalActivityCounterCache(persistence: any Persistence<LocalActivityCountDataModel, LocalActivityCountDataModel>) throws -> LocalActivityCounterCache {
+        
+        return LocalActivityCounterCache(
+            persistence: persistence
+        )
+    }
+}

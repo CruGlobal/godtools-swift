@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ArticleAemJcrContentParser {
+final class ArticleAemJcrContentParser {
     
     init() {
         
@@ -37,6 +37,7 @@ class ArticleAemJcrContentParser {
                     let uuid: String? = childJsonDictionary["jcr:uuid"] as? String
                     
                     let jcrContent = ArticleJcrContent(
+                        id: uuid ?? aemUri,
                         aemUri: aemUri,
                         canonical: canonical,
                         tags: tags,

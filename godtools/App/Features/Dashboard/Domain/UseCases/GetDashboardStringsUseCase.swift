@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetDashboardStringsUseCase {
     
@@ -18,17 +17,16 @@ final class GetDashboardStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<DashboardStringsDomainModel, Never> {
+    func execute(translateInLanguage: AppLanguageDomainModel) -> DashboardStringsDomainModel {
         
         let localeId: String = translateInLanguage
         
-        let interfaceStrings = DashboardStringsDomainModel(
-            lessonsActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "tool_menu_item.lessons"),
-            favoritesActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "my_tools"),
-            toolsActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "tool_menu_item.tools")
+        let strings = DashboardStringsDomainModel(
+            lessonsActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolMenuItemLessons.key),
+            favoritesActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.myTools.key),
+            toolsActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolMenuItemTools.key)
         )
         
-        return Just(interfaceStrings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

@@ -10,14 +10,19 @@ import Foundation
 import GodToolsShared
 import Combine
 
-class GetLessonListItemProgress {
+final class GetLessonListItemProgress {
     
     private let lessonProgressRepository: UserLessonProgressRepository
     private let userCountersRepository: UserCountersRepository
     private let localizationServices: LocalizationServicesInterface
     private let getTranslatedPercentage: GetTranslatedPercentage
     
-    init(lessonProgressRepository: UserLessonProgressRepository, userCountersRepository: UserCountersRepository, localizationServices: LocalizationServicesInterface, getTranslatedPercentage: GetTranslatedPercentage) {
+    init(
+        lessonProgressRepository: UserLessonProgressRepository,
+        userCountersRepository: UserCountersRepository,
+        localizationServices: LocalizationServicesInterface,
+        getTranslatedPercentage: GetTranslatedPercentage
+    ) {
         
         self.lessonProgressRepository = lessonProgressRepository
         self.userCountersRepository = userCountersRepository
@@ -27,19 +32,22 @@ class GetLessonListItemProgress {
     
     func getLessonProgress(lesson: ResourceDataModel, appLanguage: AppLanguageDomainModel) throws -> LessonListItemProgressDomainModel {
         
-        let lessonId = lesson.id
-        let lessonCompletionUserCounterId = UserCounterNames.shared.LESSON_COMPLETION(tool: lesson.abbreviation)
+        let lessonId: String = lesson.id
+        let lessonCompletionUserCounterId: String = UserCounterNames.shared.LESSON_COMPLETION(tool: lesson.abbreviation)
+        let lessonProgress: UserLessonProgressDataModel? = lessonProgressRepository.getLessonProgress(lessonId: lessonId)
+        let progress: Double? = lessonProgress?.progress
+        let lessonProgressIsComplete: Bool = progress == 1
         
-        if try userCountersRepository.getCachedCounter(id: lessonCompletionUserCounterId) != nil {
+        if try userCountersRepository.getCachedCounter(id: lessonCompletionUserCounterId) != nil || lessonProgressIsComplete {
             
-            let completeString = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage.localeId, key: "lessons.lessonCompleted")
+            let completeString = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage.localeId, key: LocalizableStringKeys.lessonsLessonCompleted.key)
             return .complete(completeString: completeString)
         }
-        else if let lessonProgress = lessonProgressRepository.getLessonProgress(lessonId: lessonId) {
+        else if let lessonProgress = lessonProgress {
             
-            let progress = lessonProgress.progress
+            let progress: Double = lessonProgress.progress
             
-            let formatString = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage.localeId, key: "lessons.completionProgress")
+            let formatString = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage.localeId, key: LocalizableStringKeys.lessonsCompletionProgress.key)
             let percentageString = getTranslatedPercentage.getTranslatedPercentage(percentValue: progress, translateInLanguage: appLanguage)
             
             let progressString = String(

@@ -8,35 +8,23 @@
 
 import Foundation
 
-struct ArticleAemData: ArticleAemDataType {
+struct ArticleAemData: Sendable {
     
     private let htmlExtension: String = "html"
     private let internalWebUrl: String
     
+    let id: String
     let aemUri: String
     let articleJcrContent: ArticleJcrContent?
     let updatedAt: Date
     
-    init(aemUri: String, articleJcrContent: ArticleJcrContent?, webUrl: String, updatedAt: Date) {
+    init(id: String, aemUri: String, articleJcrContent: ArticleJcrContent?, webUrl: String, updatedAt: Date) {
         
+        self.id = id
         self.aemUri = aemUri
         self.articleJcrContent = articleJcrContent
         self.internalWebUrl = webUrl
         self.updatedAt = updatedAt
-    }
-    
-    init(realmModel: RealmArticleAemData) {
-        
-        aemUri = realmModel.aemUri
-        if let realmArticleJcrContent = realmModel.articleJcrContent {
-            articleJcrContent = ArticleJcrContent(realmModel: realmArticleJcrContent)
-        }
-        else {
-            articleJcrContent = nil
-        }
-        
-        internalWebUrl = realmModel.webUrl
-        updatedAt = realmModel.updatedAt
     }
     
     var webUrl: String {

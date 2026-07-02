@@ -8,6 +8,7 @@
 
 import UIKit
 
+@MainActor
 class OverlayNavigationController: AppNavigationController {
         
     private let overlayAlpha: CGFloat = 0.4

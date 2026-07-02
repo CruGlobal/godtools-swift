@@ -9,26 +9,39 @@
 import Foundation
 import Combine
 
-class ConfirmRemoveToolFromFavoritesAlertViewModel: AlertMessageViewModelType {
+@MainActor
+final class ConfirmRemoveToolFromFavoritesAlertViewModel {
     
-    private static var removeToolFromFavoritesCancellable: AnyCancellable?
+    private static var removeToolFromFavoritesTask: Task<Void, Error>?
     
     private let toolId: String
+    private let appLanguage: AppLanguageDomainModel
     private let strings: ConfirmRemoveToolFromFavoritesStringsDomainModel
+    private let getConfirmRemoveToolFromFavoritesStringsUseCase: GetConfirmRemoveToolFromFavoritesStringsUseCase
     private let removeFavoritedToolUseCase: RemoveFavoritedToolUseCase
     private let didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?
     
-    let title: String?
-    let message: String?
+    let title: String
+    let message: String
     let cancelTitle: String?
     let acceptTitle: String
     
-    init(toolId: String, strings: ConfirmRemoveToolFromFavoritesStringsDomainModel, removeFavoritedToolUseCase: RemoveFavoritedToolUseCase, didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?) {
+    init(
+        toolId: String,
+        appLanguage: AppLanguageDomainModel,
+        getConfirmRemoveToolFromFavoritesStringsUseCase: GetConfirmRemoveToolFromFavoritesStringsUseCase,
+        removeFavoritedToolUseCase: RemoveFavoritedToolUseCase,
+        didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?
+    ) {
         
         self.toolId = toolId
-        self.strings = strings
+        self.appLanguage = appLanguage
+        self.getConfirmRemoveToolFromFavoritesStringsUseCase = getConfirmRemoveToolFromFavoritesStringsUseCase
         self.removeFavoritedToolUseCase = removeFavoritedToolUseCase
         self.didConfirmToolRemovalSubject = didConfirmToolRemovalSubject
+        
+        strings = getConfirmRemoveToolFromFavoritesStringsUseCase
+            .execute(toolId: toolId, appLanguage: appLanguage)
         
         title = strings.title
         message = strings.message
@@ -48,15 +61,12 @@ class ConfirmRemoveToolFromFavoritesAlertViewModel: AlertMessageViewModelType {
         
         didConfirmToolRemovalSubject?.send(Void())
         
-        ConfirmRemoveToolFromFavoritesAlertViewModel.removeToolFromFavoritesCancellable = removeFavoritedToolUseCase
-            .execute(
-                toolId: toolId
-            )
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { _ in
-                
-            }, receiveValue: { _ in
-                
-            })
+        Self.removeToolFromFavoritesTask?.cancel()
+        
+        Self.removeToolFromFavoritesTask = Task {
+            
+            _ = try await removeFavoritedToolUseCase
+                .execute(toolId: toolId)
+        }
     }
 }

@@ -37,7 +37,7 @@ struct ToolSettingsToolLanguagesListView: View {
                         if viewModel.showsDeleteLanguageButton {
                             
                             ToolSettingsToolLanguagesListItemView(
-                                title: viewModel.deleteLanguageActionTitle,
+                                title: viewModel.strings.deleteParallelLanguageActionTitle,
                                 isSelected: false,
                                 tappedClosure: {
                                     viewModel.deleteLanguageTapped()

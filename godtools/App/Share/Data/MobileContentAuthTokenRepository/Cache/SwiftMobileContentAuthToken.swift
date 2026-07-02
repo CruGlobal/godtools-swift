@@ -17,7 +17,7 @@ typealias SwiftMobileContentAuthToken = SwiftMobileContentAuthTokenV1.SwiftMobil
 enum SwiftMobileContentAuthTokenV1 {
  
     @Model
-    class SwiftMobileContentAuthToken: IdentifiableSwiftDataObject, MobileContentAuthTokenDataModelInterface {
+    class SwiftMobileContentAuthToken: IdentifiableSwiftDataObject {
         
         var expirationDate: Date?
         
@@ -27,18 +27,33 @@ enum SwiftMobileContentAuthTokenV1 {
         init() {
             
         }
+    }
+}
+
+@available(iOS 17.4, *)
+extension SwiftMobileContentAuthToken {
+    
+    func mapFrom(model: MobileContentAuthTokenDataModel) {
         
-        func mapFrom(interface: MobileContentAuthTokenDataModelInterface) {
-            
-            expirationDate = interface.expirationDate
-            id = interface.id
-            userId = interface.userId
-        }
-        
-        static func createNewFrom(interface: MobileContentAuthTokenDataModelInterface) -> SwiftMobileContentAuthToken {
-            let object = SwiftMobileContentAuthToken()
-            object.mapFrom(interface: interface)
-            return object
-        }
+        expirationDate = model.expirationDate
+        id = model.id
+        userId = model.userId
+    }
+    
+    static func createNewFrom(model: MobileContentAuthTokenDataModel) -> SwiftMobileContentAuthToken {
+        let object = SwiftMobileContentAuthToken()
+        object.mapFrom(model: model)
+        return object
+    }
+    
+    func toModel() -> MobileContentAuthTokenDataModel {
+    
+        return MobileContentAuthTokenDataModel(
+            appleRefreshToken: nil,
+            expirationDate: expirationDate,
+            id: id,
+            token: "",
+            userId: userId
+        )
     }
 }

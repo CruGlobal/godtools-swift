@@ -23,14 +23,14 @@ struct ToolSettingsOptionsView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     
-                    ForEach(viewModel.toolOptions) { toolOption in
+                    ForEach(viewModel.toolOptions) { (toolOption: ToolSettingsOption) in
                         
                         switch toolOption {
                         
                         case .shareLink:
                             ToolSettingsOptionView(
                                 viewBackground: .color(color: Color(.sRGB, red: 59 / 256, green: 164 / 256, blue: 219 / 256, opacity: 1)),
-                                title: viewModel.shareLinkTitle,
+                                title: viewModel.strings.shareLinkTitle,
                                 titleColorStyle: .darkBackground,
                                 iconImage: ImageCatalog.toolSettingsOptionShareLink.image,
                                 accessibility: .shareLink,
@@ -42,7 +42,7 @@ struct ToolSettingsOptionsView: View {
                         case .shareScreen:
                             ToolSettingsOptionView(
                                 viewBackground: .color(color: Color(.sRGB, red: 245 / 256, green: 245 / 256, blue: 245 / 256, opacity: 1)),
-                                title: viewModel.screenShareTitle,
+                                title: viewModel.strings.screenShareTitle,
                                 titleColorStyle: .lightBackground,
                                 iconImage: ImageCatalog.toolSettingsOptionScreenShare.image,
                                 accessibility: .shareScreen,

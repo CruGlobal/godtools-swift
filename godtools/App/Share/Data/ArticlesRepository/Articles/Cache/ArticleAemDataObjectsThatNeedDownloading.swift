@@ -8,8 +8,12 @@
 
 import Foundation
 
-struct ArticleAemDataObjectsThatNeedDownloading {
+struct ArticleAemDataObjectsThatNeedDownloading: Sendable {
     
     let aemDataDictionary: [ArticleAemCache.AemUri: ArticleAemData]
     let webArchiveUrls: [WebArchiveUrl]
+    
+    static var emptyValue: ArticleAemDataObjectsThatNeedDownloading {
+        return ArticleAemDataObjectsThatNeedDownloading(aemDataDictionary: [:], webArchiveUrls: [])
+    }
 }

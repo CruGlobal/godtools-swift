@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum MenuAccountSectionVisibility {
+enum MenuAccountSectionVisibility: Sendable {
     
     case hidden
     case visibleLoggedIn

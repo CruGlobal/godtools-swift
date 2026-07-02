@@ -6,13 +6,11 @@
 //  Copyright © 2024 Cru. All rights reserved.
 //
 
+import Foundation
 import Testing
 @testable import godtools
-import Combine
-import RealmSwift
 import RepositorySync
 
-@Suite(.serialized)
 struct GetDownloadToolProgressStringsUseCaseTests {
     
     private let favoritedToolId: String = "1"
@@ -30,42 +28,15 @@ struct GetDownloadToolProgressStringsUseCaseTests {
     )
     func correctMessageShowsWhenDownloadingAFavoritedTool() async throws {
         
-        let getDownloadToolProgressStringsUseCase: GetDownloadToolProgressStringsUseCase = try getDownloadToolProgressStringsUseCase()
+        let useCase = try await getUseCase()
         
-        var cancellables: Set<AnyCancellable> = Set()
-                
-        var stringsRef: DownloadToolProgressStringsDomainModel?
+        let strings = useCase
+            .execute(
+                toolId: favoritedToolId,
+                appLanguage: LanguageCodeDomainModel.english.value
+            )
         
-        await confirmation(expectedCount: 1) { confirmation in
-            
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                getDownloadToolProgressStringsUseCase
-                    .execute(
-                        toolId: favoritedToolId,
-                        appLanguage: LanguageCodeDomainModel.english.value
-                    )
-                    .sink { (strings: DownloadToolProgressStringsDomainModel) in
-                                                
-                        stringsRef = strings
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                                
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    }
-                    .store(in: &cancellables)
-            }
-        }
-        
-        #expect(stringsRef?.downloadMessage == downloadToolMessage)
+        #expect(strings.downloadMessage == downloadToolMessage)
     }
     
     @Test(
@@ -77,42 +48,15 @@ struct GetDownloadToolProgressStringsUseCaseTests {
     )
     func correctMessageShowsWhenDownloadingAToolThatIsNotFavoritedButCanBeFavorited() async throws {
         
-        let getDownloadToolProgressStringsUseCase: GetDownloadToolProgressStringsUseCase = try getDownloadToolProgressStringsUseCase()
+        let useCase = try await getUseCase()
         
-        var cancellables: Set<AnyCancellable> = Set()
-              
-        var stringsRef: DownloadToolProgressStringsDomainModel?
+        let strings = useCase
+            .execute(
+                toolId: unFavoritedToolId,
+                appLanguage: LanguageCodeDomainModel.english.value
+            )
         
-        await confirmation(expectedCount: 1) { confirmation in
-            
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                getDownloadToolProgressStringsUseCase
-                    .execute(
-                        toolId: unFavoritedToolId,
-                        appLanguage: LanguageCodeDomainModel.english.value
-                    )
-                    .sink { (strings: DownloadToolProgressStringsDomainModel) in
-                                                
-                        stringsRef = strings
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                                
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    }
-                    .store(in: &cancellables)
-            }
-        }
-        
-        #expect(stringsRef?.downloadMessage == favoriteThisToolForOfflineUseMessage)
+        #expect(strings.downloadMessage == favoriteThisToolForOfflineUseMessage)
     }
     
     @Test(
@@ -124,79 +68,32 @@ struct GetDownloadToolProgressStringsUseCaseTests {
     )
     func correctMessageShowsWhenDownloadingAToolThatCantBeFavorited() async throws {
         
-        let getDownloadToolProgressStringsUseCase: GetDownloadToolProgressStringsUseCase = try getDownloadToolProgressStringsUseCase()
+        let useCase = try await getUseCase()
         
-        var cancellables: Set<AnyCancellable> = Set()
-                
-        var stringsRef: DownloadToolProgressStringsDomainModel?
+        let strings = useCase
+            .execute(
+                toolId: unFavoritableToolId,
+                appLanguage: LanguageCodeDomainModel.english.value
+            )
         
-        await confirmation(expectedCount: 1) { confirmation in
-            
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                getDownloadToolProgressStringsUseCase
-                    .execute(
-                        toolId: unFavoritableToolId,
-                        appLanguage: LanguageCodeDomainModel.english.value
-                    )
-                    .sink { (strings: DownloadToolProgressStringsDomainModel) in
-                                                
-                        stringsRef = strings
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                                
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    }
-                    .store(in: &cancellables)
-            }
-        }
-        
-        #expect(stringsRef?.downloadMessage == downloadToolMessage)
+        #expect(strings.downloadMessage == downloadToolMessage)
     }
 }
 
 extension GetDownloadToolProgressStringsUseCaseTests {
-    
-    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
-                
-        return try TestsDiContainer(
-            realmFileName: String(describing: GetDownloadToolProgressStringsUseCaseTests.self),
-            addRealmObjects: addRealmObjects
-        )
-    }
-    
-    private func getRealmObjects() -> [IdentifiableRealmObject] {
-        
-        let resource_1 = RealmResource()
-        let favoritedResource_1 = RealmFavoritedResource()
-        resource_1.id = favoritedToolId
-        resource_1.resourceType = ResourceType.tract.rawValue
-        favoritedResource_1.resourceId = favoritedToolId
-        
-        let resource_2 = RealmResource()
-        resource_2.id = unFavoritedToolId
-        resource_2.resourceType = ResourceType.tract.rawValue
-        
-        let resource_3 = RealmResource()
-        resource_3.id = unFavoritableToolId
-        resource_3.resourceType = ResourceType.lesson.rawValue
-        
-        let realmObjects: [IdentifiableRealmObject] = [resource_1, favoritedResource_1, resource_2, resource_3]
-        
-        return realmObjects
-    }
  
-    private func getDownloadToolProgressStringsUseCase() throws -> GetDownloadToolProgressStringsUseCase {
+    private func getUseCase() async throws -> GetDownloadToolProgressStringsUseCase {
         
-        let testsDiContainer = try getTestsDiContainer(addRealmObjects: getRealmObjects())
+        let testsDiContainer = try TestsDiContainer()
+        
+        let favoritedTract = ResourceCodable(id: favoritedToolId, resourceType: ResourceType.tract.rawValue)
+        let unfavoritedTract = ResourceCodable(id: unFavoritedToolId, resourceType: ResourceType.tract.rawValue)
+        let unfavoritable = ResourceCodable(id: unFavoritableToolId, resourceType: ResourceType.lesson.rawValue)
+        
+        let favorite0 = FavoritedResourceDataModel(id: favoritedTract.id, createdAt: Date(), position: 0)
+        
+        try await testsDiContainer.core.dataLayer.getResourcesPersistence().writeObjects(externalObjects: [favoritedTract, unfavoritedTract, unfavoritable])
+        try await testsDiContainer.core.dataLayer.getFavoritedResourcesPersistence().writeObjects(externalObjects: [favorite0])
         
         let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
             LanguageCodeDomainModel.english.value: [
@@ -206,9 +103,9 @@ extension GetDownloadToolProgressStringsUseCaseTests {
         ]
         
         let getDownloadToolProgressStringsUseCase = GetDownloadToolProgressStringsUseCase(
-            resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
+            resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),
             localizationServices: MockLocalizationServices(localizableStrings: localizableStrings),
-            favoritedResourcesRepository: testsDiContainer.dataLayer.getFavoritedResourcesRepository()
+            favoritedResourcesRepository: testsDiContainer.core.dataLayer.getFavoritedResourcesRepository()
         )
         
         return getDownloadToolProgressStringsUseCase

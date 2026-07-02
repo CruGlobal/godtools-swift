@@ -8,15 +8,26 @@
 
 import UIKit
 
+@MainActor
 class ShareArticleView {
     
     let controller: UIActivityViewController
     
-    required init(viewModel: ShareArticleViewModel) {
+    init(viewModel: ShareArticleViewModel) {
         
-        controller = UIActivityViewController(activityItems: [viewModel.shareMessage as Any], applicationActivities: nil)
+        controller = UIActivityViewController(activityItems: [viewModel.shareArticle.shareMessage as Any], applicationActivities: nil)
         
         viewModel.pageViewed()
         viewModel.articleShared()
+        
+        controller.completionWithItemsHandler = { (
+            activityType: UIActivity.ActivityType?,
+            serviceCompleted: Bool,
+            returnedItems: [Any]?,
+            activityError: Error?
+        ) in
+            
+            viewModel.activityViewDismissed()
+        }
     }
 }

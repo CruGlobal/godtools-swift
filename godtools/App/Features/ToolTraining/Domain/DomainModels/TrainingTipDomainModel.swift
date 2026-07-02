@@ -13,8 +13,4 @@ struct TrainingTipDomainModel: Sendable {
     let trainingTipId: String
     let resourceId: String
     let languageId: String
-    
-    var id: String {
-        return trainingTipId + "_" + resourceId + "_" + languageId
-    }
 }

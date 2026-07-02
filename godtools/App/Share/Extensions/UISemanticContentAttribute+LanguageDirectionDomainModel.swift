@@ -10,6 +10,7 @@ import UIKit
 
 extension UISemanticContentAttribute {
     
+    @MainActor
     static func from(languageDirection: LanguageDirectionDomainModel) -> UISemanticContentAttribute {
         switch languageDirection {
         case .leftToRight:

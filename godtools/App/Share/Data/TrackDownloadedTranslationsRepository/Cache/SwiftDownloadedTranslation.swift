@@ -17,7 +17,7 @@ typealias SwiftDownloadedTranslation = SwiftDownloadedTranslationV1.SwiftDownloa
 enum SwiftDownloadedTranslationV1 {
  
     @Model
-    class SwiftDownloadedTranslation: IdentifiableSwiftDataObject, DownloadedTranslationDataModelInterface {
+    class SwiftDownloadedTranslation: IdentifiableSwiftDataObject {
         
         var languageId: String = ""
         var manifestAndRelatedFilesPersistedToDevice: Bool = false
@@ -30,20 +30,35 @@ enum SwiftDownloadedTranslationV1 {
         init() {
             
         }
-        
-        func mapFrom(interface: DownloadedTranslationDataModelInterface) {
-            id = interface.id
-            languageId = interface.languageId
-            manifestAndRelatedFilesPersistedToDevice = interface.manifestAndRelatedFilesPersistedToDevice
-            resourceId = interface.resourceId
-            translationId = interface.translationId
-            version = interface.version
-        }
-        
-        static func createNewFrom(interface: DownloadedTranslationDataModelInterface) -> SwiftDownloadedTranslation {
-            let downloadedTranslation = SwiftDownloadedTranslation()
-            downloadedTranslation.mapFrom(interface: interface)
-            return downloadedTranslation
-        }
+    }
+}
+
+@available(iOS 17.4, *)
+extension SwiftDownloadedTranslation {
+    
+    func mapFrom(model: DownloadedTranslationDataModel) {
+        id = model.id
+        languageId = model.languageId
+        manifestAndRelatedFilesPersistedToDevice = model.manifestAndRelatedFilesPersistedToDevice
+        resourceId = model.resourceId
+        translationId = model.translationId
+        version = model.version
+    }
+    
+    static func createNewFrom(model: DownloadedTranslationDataModel) -> SwiftDownloadedTranslation {
+        let downloadedTranslation = SwiftDownloadedTranslation()
+        downloadedTranslation.mapFrom(model: model)
+        return downloadedTranslation
+    }
+    
+    func toModel() -> DownloadedTranslationDataModel {
+        return DownloadedTranslationDataModel(
+            id: id,
+            languageId: languageId,
+            manifestAndRelatedFilesPersistedToDevice: manifestAndRelatedFilesPersistedToDevice,
+            resourceId: resourceId,
+            translationId: translationId,
+            version: version
+        )
     }
 }

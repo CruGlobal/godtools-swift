@@ -11,139 +11,127 @@ import MessageUI
 import SwiftUI
 import Combine
 
-class MenuFlow: Flow, LocalizationSettingsNavigationFlow {
+final class MenuFlow: GTFlow {
             
-    private var tutorialFlow: TutorialFlow?
-    private var languageSettingsFlow: LanguageSettingsFlow?
     private var cancellables: Set<AnyCancellable> = Set()
-
-    private weak var flowDelegate: FlowDelegate?
     
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-    @Published private var shareGodToolsStringsDomainModel: ShareGodToolsStringsDomainModel?
-    
-    let appDiContainer: AppDiContainer
-    let navigationController: AppNavigationController
-    
-    var localizationSettingsFlow: LocalizationSettingsFlow?
-        
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, initialNavigationStep: FlowStep? = nil) {
-        
-        self.flowDelegate = flowDelegate
-        self.appDiContainer = appDiContainer
+    @Published private var appLanguage: AppLanguageDomainModel
                 
-        let navigationBarAppearance = AppNavigationBarAppearance(
-            backgroundColor: AppFlow.defaultNavBarColor,
-            controlColor: AppFlow.defaultNavBarControlColor,
-            titleFont: FontLibrary.systemUIFont(size: 17, weight: .semibold),
-            titleColor: AppFlow.defaultNavBarControlColor,
-            isTranslucent: false
+    init(appDiContainer: AppDiContainer, appLanguage: AppLanguageDomainModel, initialNavigationStep: AppFlowStep? = nil) {
+        
+        self.appLanguage = appLanguage
+        
+        let stepEmitter = FlowStepEmitter()
+        
+        super.init(
+            appDiContainer: appDiContainer,
+            initialView: nil,
+            stepEmitter: stepEmitter,
+            navigationController: AppNavigationController(
+                navigationBarAppearance: AppNavigationBarAppearance(
+                    backgroundColor: AppFlow.defaultNavBarColor,
+                    controlColor: AppFlow.defaultNavBarControlColor,
+                    titleFont: FontLibrary.systemUIFont(size: 17, weight: .semibold),
+                    titleColor: AppFlow.defaultNavBarControlColor,
+                    isTranslucent: false
+                )
+            )
         )
         
-        navigationController = AppNavigationController(navigationBarAppearance: navigationBarAppearance)
         navigationController.setNavigationBarHidden(false, animated: false)
-        
-        let menuView: UIViewController = getMenuView()
-        
-        navigationController.setViewControllers([menuView], animated: false)
-        
+        navigationController.setViewControllers([getMenuView(appLanguage: appLanguage)], animated: false)
+                                
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()
             .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                
-                appDiContainer.feature.shareGodTools.domainLayer
-                    .getShareGodToolsStringsUseCase()
-                    .execute(appLanguage: appLanguage)
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: ShareGodToolsStringsDomainModel) in
-                self?.shareGodToolsStringsDomainModel = strings
-            }
-            .store(in: &cancellables)
-        
         if let initialNavigationStep = initialNavigationStep {
             navigate(step: initialNavigationStep)
         }
-    }
-    
-    deinit {
-        print("x deinit: \(type(of: self))")
     }
     
     var view: UIView {
         return navigationController.view
     }
     
-    func navigate(step: FlowStep) {
+    override func navigate(step: FlowStep) {
         
-        switch step {
+        guard let appStep = step as? AppFlowStep else {
+            return
+        }
+
+        switch appStep {
             
         case .languageSettingsTappedFromMenu:
-            navigateToLanguageSettings(deepLink: nil)
-            
-        case .languageSettingsFlowCompleted( _):
-            closeLanguageSettings()
-            
-        case .localizationSettingsTappedFromMenu:
-            navigateToLocalizationSettings(
-                showsPreferNotToSay: false,
-                shouldStoreCountryWhenSelected: true,
-                userShouldConfirmSelectedCountry: false
+            pushFlow(
+                flow: LanguageSettingsFlow(
+                    appDiContainer: appDiContainer,
+                    deepLink: nil
+                )
             )
             
-        case .localizationSettingsFlowCompleted(let state):
-            switch state {
-            case .userTappedBackFromLocalizationSettings:
-                navigateBackFromLocalizationSettingsFlow()
-            case .userConfirmedLocalizationSetting(let countryListItem):
-                navigateBackFromLocalizationSettingsFlow()
-            }
+        case .languageSettingsFlowCompleted( _):
+            popFlow()
+            
+        case .localizationSettingsTappedFromMenu:
+            pushFlow(
+                flow: LocalizationSettingsFlow(
+                    appDiContainer: appDiContainer,
+                    shouldStoreCountryWhenSelected: true
+                )
+            )
+
+        case .localizationSettingsFlowCompleted( _):
+            popFlow()
             
         case .tutorialTappedFromMenu:
-            navigateToTutorial()
+            presentFlow(
+                flow: TutorialFlow(appDiContainer: appDiContainer)
+            )
             
         case .tutorialFlowCompleted( _):
-            dismissTutorial()
+            dismissFlow()
             
         case .doneTappedFromMenu:
-            flowDelegate?.navigate(step: .doneTappedFromMenu)
+            parent?.stepEmitter.emit(step: AppFlowStep.doneTappedFromMenu)
             
         case .loginTappedFromMenu:
-            let view = getSocialSignInView(authenticationType: .login)
-            navigationController.present(view, animated: true)
+            
+            presentView(
+                view: getSocialSignInView(authenticationType: .login),
+                animated: true
+            )
             
         case .closeTappedFromLogin:
-            navigationController.dismiss(animated: true)
+            dismissView(animated: true)
             
         case .createAccountTappedFromMenu:
-            let view = getSocialSignInView(authenticationType: .createAccount)
-            navigationController.present(view, animated: true)
+            
+            presentView(
+                view: getSocialSignInView(authenticationType: .createAccount),
+                animated: true
+            )
             
         case .closeTappedFromCreateAccount:
-            navigationController.dismiss(animated: true)
+            dismissView(animated: true)
                                 
         case .userCompletedSignInFromCreateAccount(let authError):
                         
-            navigationController.dismissPresented(animated: true) { [weak self] in
+            dismissView(animated: true, completion: { [weak self] in
                 if let authError = authError {
                     self?.presentSocialAuthError(authError: authError)
                 }
-            }
+            })
             
         case .userCompletedSignInFromLogin(let authError):
-                        
-            navigationController.dismissPresented(animated: true) { [weak self] in
+            
+            dismissView(animated: true, completion: { [weak self] in
                 if let authError = authError {
                     self?.presentSocialAuthError(authError: authError)
                 }
-            }
+            })
             
         case .activityTappedFromMenu:
             navigationController.pushViewController(getAccountView(), animated: true)
@@ -152,40 +140,47 @@ class MenuFlow: Flow, LocalizationSettingsNavigationFlow {
             navigationController.popViewController(animated: true)
 
         case .shareGodToolsTappedFromMenu:
-
-            navigationController.present(getShareGodToolsView(), animated: true, completion: nil)
+            
+            presentView(
+                view: getShareGodToolsView(),
+                animated: true
+            )
+            
+        case .dismissedShareGodToolsActivityViewController:
+            // NOTE: Nothing to do here since UIActivityViewController dismisses itself. ~Levi
+            break
             
         case .sendFeedbackTappedFromMenu:
-            let sendFeedbackWebContent = SendFeedbackWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
+            let sendFeedbackWebContent = SendFeedbackWebContent(localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
             
             pushWebContentView(
                 webContent: sendFeedbackWebContent,
                 screenAccessibility: .sendFeedback,
-                backTappedFromWebContentStep: .backTappedFromSendFeedback
+                backTappedFromWebContentStep: AppFlowStep.backTappedFromSendFeedback
             )
             
         case .backTappedFromSendFeedback:
             navigationController.popViewController(animated: true)
             
         case .reportABugTappedFromMenu:
-            let reportABugWebContent = ReportABugWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
+            let reportABugWebContent = ReportABugWebContent(localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
             
             pushWebContentView(
                 webContent: reportABugWebContent,
                 screenAccessibility: .reportABug,
-                backTappedFromWebContentStep: .backTappedFromReportABug
+                backTappedFromWebContentStep: AppFlowStep.backTappedFromReportABug
             )
             
         case .backTappedFromReportABug:
             navigationController.popViewController(animated: true)
             
         case .askAQuestionTappedFromMenu:
-            let askAQuestionWebContent = AskAQuestionWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
+            let askAQuestionWebContent = AskAQuestionWebContent(localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
             
             pushWebContentView(
                 webContent: askAQuestionWebContent,
                 screenAccessibility: .askAQuestion,
-                backTappedFromWebContentStep: .backTappedFromAskAQuestion
+                backTappedFromWebContentStep: AppFlowStep.backTappedFromAskAQuestion
             )
             
         case .backTappedFromAskAQuestion:
@@ -193,7 +188,7 @@ class MenuFlow: Flow, LocalizationSettingsNavigationFlow {
             
         case .leaveAReviewTappedFromMenu(let screenName, let siteSection, let siteSubSection, let contentLanguage, let contentLanguageSecondary):
             
-            let appleAppId: String = appDiContainer.dataLayer.getAppConfig().getAppleAppId()
+            let appleAppId: String = appDiContainer.core.dataLayer.getAppConfig().getAppleAppId()
             
             guard let writeReviewURL = URL(string: "https://apps.apple.com/app/id\(appleAppId)?action=write-review") else {
                 let error: Error = NSError.errorWithDescription(description: "Failed to open to apple review.  Invalid URL.")
@@ -201,15 +196,24 @@ class MenuFlow: Flow, LocalizationSettingsNavigationFlow {
                 return
             }
             
-            navigateToURL(url: writeReviewURL, screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, appLanguage: appLanguage, contentLanguage: contentLanguage, contentLanguageSecondary: contentLanguageSecondary)
+            let linkTapped = URLLinkTappedParams(
+                url: writeReviewURL,
+                screenName: screenName,
+                siteSection: siteSection,
+                siteSubSection: siteSubSection,
+                contentLanguage: contentLanguage,
+                contentLanguageSecondary: contentLanguageSecondary
+            )
+            
+            navigateToURL(linkTapped: linkTapped, appLanguage: appLanguage)
             
         case .shareAStoryWithUsTappedFromMenu:
-            let shareStoryWebContent = ShareAStoryWithUsWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
+            let shareStoryWebContent = ShareAStoryWithUsWebContent(localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
             
             pushWebContentView(
                 webContent: shareStoryWebContent,
                 screenAccessibility: .shareAStoryWithUs,
-                backTappedFromWebContentStep: .backTappedFromShareAStoryWithUs
+                backTappedFromWebContentStep: AppFlowStep.backTappedFromShareAStoryWithUs
             )
             
         case .backTappedFromShareAStoryWithUs:
@@ -217,12 +221,12 @@ class MenuFlow: Flow, LocalizationSettingsNavigationFlow {
             
         case .termsOfUseTappedFromMenu:
             
-            let termsOfUserWebContent = TermsOfUseWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
+            let termsOfUserWebContent = TermsOfUseWebContent(localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
             
             pushWebContentView(
                 webContent: termsOfUserWebContent,
                 screenAccessibility: .termsOfUse,
-                backTappedFromWebContentStep: .backTappedFromTermsOfUse
+                backTappedFromWebContentStep: AppFlowStep.backTappedFromTermsOfUse
             )
             
         case .backTappedFromTermsOfUse:
@@ -230,12 +234,12 @@ class MenuFlow: Flow, LocalizationSettingsNavigationFlow {
             
         case .privacyPolicyTappedFromMenu:
             
-            let privacyPolicyWebContent = PrivacyPolicyWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
+            let privacyPolicyWebContent = PrivacyPolicyWebContent(localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
             
             pushWebContentView(
                 webContent: privacyPolicyWebContent,
                 screenAccessibility: .privacyPolicy,
-                backTappedFromWebContentStep: .backTappedFromPrivacyPolicy
+                backTappedFromWebContentStep: AppFlowStep.backTappedFromPrivacyPolicy
             )
             
         case .backTappedFromPrivacyPolicy:
@@ -243,57 +247,73 @@ class MenuFlow: Flow, LocalizationSettingsNavigationFlow {
             
         case .copyrightInfoTappedFromMenu:
             
-            let copyrightInfoWebContent = CopyrightInfoWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
+            let copyrightInfoWebContent = CopyrightInfoWebContent(localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
             
             pushWebContentView(
                 webContent: copyrightInfoWebContent,
                 screenAccessibility: .copyrightInfo,
-                backTappedFromWebContentStep: .backTappedFromCopyrightInfo
+                backTappedFromWebContentStep: AppFlowStep.backTappedFromCopyrightInfo
             )
             
         case .backTappedFromCopyrightInfo:
             navigationController.popViewController(animated: true)
             
         case .deleteAccountTappedFromMenu:
-            navigationController.present(getDeleteAccountView(), animated: true)
+            
+            presentView(
+                view: getDeleteAccountView(),
+                animated: true
+            )
             
         case .closeTappedFromDeleteAccount:
-            navigationController.dismissPresented(animated: true, completion: nil)
+            dismissView(animated: true)
             
         case .deleteAccountTappedFromDeleteAccount:
-            navigationController.dismissPresented(animated: true) {
-                self.navigationController.present(self.getConfirmDeleteAccountView(), animated: true)
-            }
-                        
+            
+            let confirmDeleteAccountView = getConfirmDeleteAccountView()
+            
+            dismissView(animated: true, completion: { [weak self] in
+             
+                self?.presentView(
+                    view: confirmDeleteAccountView,
+                    animated: true
+                )
+            })
+       
         case .deleteAccountTappedFromConfirmDeleteAccount:
-            navigationController.present(self.getDeleteAccountProgressView(), animated: true)
-                    
+            
+            presentView(
+                view: getDeleteAccountProgressView(),
+                animated: true
+            )
+                                
         case .cancelTappedFromDeleteAccount:
-            navigationController.dismissPresented(animated: true, completion: nil)
+            dismissView(animated: true)
 
         case .didFinishAccountDeletionWithSuccessFromDeleteAccountProgress:
             
-            let localizationServices: LocalizationServicesInterface = appDiContainer.dataLayer.getLocalizationServices()
+            let localizationServices: LocalizationServicesInterface = appDiContainer.core.dataLayer.getLocalizationServices()
             let appLanguage: AppLanguageDomainModel = self.appLanguage
             
-            navigationController.dismissPresented(animated: true) {
+            dismissView(animated: true, completion: { [weak self] in
                 
                 let title: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.accountDeletedAlertTitle.key)
                 let message: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.accountDeletedAlertMessage.key)
                 
-                self.presentAlert(appLanguage: appLanguage, title: title, message: message)
-            }
+                self?.presentAlert(appLanguage: appLanguage, title: title, message: message)
+            })
             
         case .didFinishAccountDeletionWithErrorFromDeleteAccountProgress(let error):
             
             let appLanguage: AppLanguageDomainModel = self.appLanguage
             
-            navigationController.dismissPresented(animated: true) {
-                self.presentError(appLanguage: appLanguage, error: error)
-            }
+            dismissView(animated: true, completion: { [weak self] in
+                
+                self?.presentError(appLanguage: appLanguage, error: error)
+            })
             
         case .copyFirebaseDeviceTokenTappedFromMenu:
-            if appDiContainer.dataLayer.getAppConfig().isDebug {
+            if appDiContainer.core.dataLayer.getAppConfig().isDebug {
                 copyFirebaseDeviceTokenToClipboard()
             }
             
@@ -308,14 +328,11 @@ class MenuFlow: Flow, LocalizationSettingsNavigationFlow {
 extension MenuFlow {
     
     private func getShareGodToolsView() -> UIViewController {
-        
-        guard let strings = shareGodToolsStringsDomainModel else {
-            let viewModel = AlertMessageViewModel(title: "Internal Error", message: "Failed to fetch data for share godtools modal.", cancelTitle: nil, acceptTitle: "OK")
-            return AlertMessageView(viewModel: viewModel).controller
-        }
-        
+
         let viewModel = ShareGodToolsViewModel(
-            strings: strings
+            stepEmitter: stepEmitter,
+            appLanguage: appLanguage,
+            getShareGodToolsStringsUseCase: appDiContainer.feature.shareGodTools.domainLayer.getShareGodToolsStringsUseCase()
         )
         
         let view = ShareGodToolsView(viewModel: viewModel)
@@ -324,88 +341,32 @@ extension MenuFlow {
     }
 }
 
-// MARK: - Language Settings
-
-extension MenuFlow {
-    
-    private func navigateToLanguageSettings(deepLink: ParsedDeepLinkType?) {
-        
-        let languageSettingsFlow = LanguageSettingsFlow(
-            flowDelegate: self,
-            appDiContainer: appDiContainer,
-            sharedNavigationController: navigationController,
-            deepLink: deepLink
-        )
-        
-        self.languageSettingsFlow = languageSettingsFlow
-    }
-    
-    private func closeLanguageSettings() {
-        
-        guard languageSettingsFlow != nil else {
-            return
-        }
-        
-        navigationController.popViewController(animated: true)
-        
-        self.languageSettingsFlow = nil
-    }
-}
-
-// MARK: - Tutorial
-
-extension MenuFlow {
-    
-    private func navigateToTutorial() {
-        
-        let tutorialFlow = TutorialFlow(
-            flowDelegate: self,
-            appDiContainer: appDiContainer,
-            sharedNavigationController: nil
-        )
-        
-        navigationController.present(tutorialFlow.navigationController, animated: true, completion: nil)
-        
-        self.tutorialFlow = tutorialFlow
-    }
-    
-    private func dismissTutorial() {
-        
-        guard tutorialFlow != nil else {
-            return
-        }
-        
-        navigationController.dismiss(animated: true, completion: nil)
-        
-        self.tutorialFlow = nil
-    }
-}
-
 // MARK: - Menu
 
 extension MenuFlow {
     
-    private func getMenuView() -> UIViewController {
+    private func getMenuView(appLanguage: AppLanguageDomainModel) -> UIViewController {
             
         let viewModel = MenuViewModel(
-            flowDelegate: self,
+            stepEmitter: stepEmitter,
+            appLanguage: appLanguage,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getMenuStringsUseCase: appDiContainer.feature.menu.domainLayer.getMenuStringsUseCase(),
-            getOptInOnboardingTutorialAvailableUseCase: appDiContainer.domainLayer.getOptInOnboardingTutorialAvailableUseCase(),
-            disableOptInOnboardingBannerUseCase: appDiContainer.domainLayer.getDisableOptInOnboardingBannerUseCase(),
+            getTutorialIsAvailableUseCase: appDiContainer.feature.tutorial.domainLayer.getTutorialIsAvailableUseCase(),
+            disableOptInOnboardingBannerUseCase: appDiContainer.feature.tools.domainLayer.getDisableOptInOnboardingBannerUseCase(),
             getAccountCreationIsSupportedUseCase: appDiContainer.feature.account.domainLayer.getAccountCreationIsSupportedUseCase(),
             getUserIsAuthenticatedUseCase: appDiContainer.feature.account.domainLayer.getUserIsAuthenticatedUseCase(),
             logOutUserUseCase: appDiContainer.feature.account.domainLayer.getLogOutUserUseCase(),
-            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
-            appConfig: appDiContainer.dataLayer.getAppConfig()
+            trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+            trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase(),
+            appConfig: appDiContainer.core.dataLayer.getAppConfig()
         )
         
         let view = MenuView(viewModel: viewModel)
         
         let doneButton = AppInterfaceStringBarItem(
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
+            localizationServices: appDiContainer.core.dataLayer.getLocalizationServices(),
             localizedStringKey: "done",
             color: nil,
             target: viewModel,
@@ -437,7 +398,7 @@ extension MenuFlow {
         let viewBackgroundUIColor: UIColor = UIColor(viewBackgroundColor)
         
         let viewModel = SocialSignInViewModel(
-            flowDelegate: self,
+            stepEmitter: stepEmitter,
             presentAuthViewController: navigationController,
             authenticationType: authenticationType,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
@@ -508,19 +469,19 @@ extension MenuFlow {
         presentAlertMessage(appLanguage: appLanguage, alertMessage: self.getAuthErrorAlertMessage(authError: authError))
     }
     
-    private func getAuthErrorAlertMessage(authError: AuthErrorDomainModel) -> AlertMessageType {
+    private func getAuthErrorAlertMessage(authError: AuthErrorDomainModel) -> AlertMessage {
         
-        let localizationServices: LocalizationServicesInterface = appDiContainer.dataLayer.getLocalizationServices()
+        let localizationServices: LocalizationServicesInterface = appDiContainer.core.dataLayer.getLocalizationServices()
         let appLanguageLocaleId = appLanguage.localeId
         
         let message: String
         
         switch authError {
         case .accountAlreadyExists:
-            message = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageLocaleId, key: "authError.userAccountAlreadyExists.message")
+            message = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageLocaleId, key: LocalizableStringKeys.authErrorUserAccountAlreadyExistsMessage.key)
             
         case .accountNotFound:
-            message = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageLocaleId, key: "authError.userAccountNotFound.message")
+            message = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageLocaleId, key: LocalizableStringKeys.authErrorUserAccountNotFoundMessage.key)
             
         case .other(let error):
             message = error.localizedDescription
@@ -540,14 +501,15 @@ extension MenuFlow {
     private func getAccountView() -> UIViewController {
         
         let viewModel = AccountViewModel(
-            flowDelegate: self,
+            stepEmitter: stepEmitter,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getUserAccountDetailsUseCase: appDiContainer.feature.account.domainLayer.getUserAccountDetailsUseCase(),
             getUserActivityUseCase: appDiContainer.feature.userActivity.domainLayer.getUserActivityUseCase(),
             getGlobalActivityThisWeekUseCase: appDiContainer.feature.globalActivity.domainLayer.getGlobalActivityThisWeekUseCase(),
-            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+            trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             getAccountStringsUseCase: appDiContainer.feature.account.domainLayer.getAccountStringsUseCase(),
-            getGlobalActivityEnabledUseCase: appDiContainer.feature.globalActivity.domainLayer.getGlobalActivityEnabledUseCase()
+            getGlobalActivityEnabledUseCase: appDiContainer.feature.globalActivity.domainLayer.getGlobalActivityEnabledUseCase(),
+            didPullToRefreshAccountUseCase: appDiContainer.feature.account.domainLayer.getDidPullToRefreshAccountUseCase()
         )
         
         let view = AccountView(viewModel: viewModel)
@@ -582,8 +544,8 @@ extension MenuFlow {
         let viewBackgroundUIColor: UIColor = UIColor(viewBackgroundColor)
         
         let viewModel = DeleteAccountViewModel(
-            flowDelegate: self,
-            getCurrentAppLanguage: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            stepEmitter: stepEmitter,
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getDeleteAccountStringsUseCase: appDiContainer.feature.account.domainLayer.getDeleteAccountStringsUseCase()
         )
         
@@ -622,7 +584,7 @@ extension MenuFlow {
     
     private func getConfirmDeleteAccountView() -> UIViewController {
         
-        let localizationServices: LocalizationServicesInterface = appDiContainer.dataLayer.getLocalizationServices()
+        let localizationServices: LocalizationServicesInterface = appDiContainer.core.dataLayer.getLocalizationServices()
         
         let viewController = UIAlertController(
             title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.confirmDeleteAccountTitle.key),
@@ -630,14 +592,25 @@ extension MenuFlow {
             preferredStyle: .actionSheet
         )
         
-        viewController.addAction(UIAlertAction(title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.confirmDeleteAccountConfirmButtonTitle.key), style: .destructive, handler: { (action: UIAlertAction) in
-                        
-            self.navigate(step: .deleteAccountTappedFromConfirmDeleteAccount)
-        }))
+        viewController.addAction(
+            UIAlertAction(
+                title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.confirmDeleteAccountConfirmButtonTitle.key),
+                style: .destructive,
+                handler: { [weak self] (action: UIAlertAction) in
+                    
+                    self?.navigate(step: AppFlowStep.deleteAccountTappedFromConfirmDeleteAccount)
+                }
+            )
+        )
         
-        viewController.addAction(UIAlertAction(title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.cancel.key), style: .cancel, handler: { (action: UIAlertAction) in
-            
-        }))
+        viewController.addAction(
+            UIAlertAction(
+                title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.cancel.key),
+                style: .cancel,
+                handler: { (action: UIAlertAction) in
+                }
+            )
+        )
         
         return viewController
     }
@@ -648,8 +621,8 @@ extension MenuFlow {
         let viewBackgroundUIColor: UIColor = UIColor(viewBackgroundColor)
         
         let viewModel = DeleteAccountProgressViewModel(
-            flowDelegate: self,
-            getCurrentAppLanguage: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            stepEmitter: stepEmitter,
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getDeleteAccountProgressStringsUseCase: appDiContainer.feature.account.domainLayer.getDeleteAccountProgressStringsUseCase(),
             deleteAccountUseCase: appDiContainer.feature.account.domainLayer.getDeleteAccountUseCase()
         )
@@ -681,13 +654,13 @@ extension MenuFlow {
 
 extension MenuFlow {
     
-    private func getWebContentView(webContent: WebContentType, screenAccessibility: AccessibilityStrings.Screen?, backTappedFromWebContentStep: FlowStep) -> UIViewController {
+    private func getWebContentView(webContent: WebContentType, screenAccessibility: AccessibilityStrings.Screen?, backTappedFromWebContentStep: AppFlowStep) -> UIViewController {
         
         let viewModel = WebContentViewModel(
-            flowDelegate: self,
+            stepEmitter: stepEmitter,
             webContent: webContent,
             backTappedFromWebContentStep: backTappedFromWebContentStep,
-            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase()
+            trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase()
         )
         
         let backButton = AppBackBarItem(
@@ -710,7 +683,7 @@ extension MenuFlow {
         return view
     }
     
-    private func pushWebContentView(webContent: WebContentType, screenAccessibility: AccessibilityStrings.Screen?, backTappedFromWebContentStep: FlowStep) {
+    private func pushWebContentView(webContent: WebContentType, screenAccessibility: AccessibilityStrings.Screen?, backTappedFromWebContentStep: AppFlowStep) {
 
         let view = getWebContentView(
             webContent: webContent,
@@ -728,7 +701,7 @@ extension MenuFlow {
     
     private func copyFirebaseDeviceTokenToClipboard() {
         
-        appDiContainer.dataLayer.getSharedFirebaseMessaging()
+        appDiContainer.core.dataLayer.getSharedFirebaseMessaging()
             .getDeviceTokenPublisher()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
@@ -752,16 +725,16 @@ extension MenuFlow {
     
     private func presentFirebaseDeviceTokenCopied(token: String) {
         
-        let viewModel: AlertMessageViewModelType = AlertMessageViewModel(
+        let view = AlertMessageView(
             title: "Device Token Copied To Clipboard",
             message: "Token String: \(token)",
+            acceptTitle: "OK",
             cancelTitle: nil,
-            acceptTitle: "OK"
+            acceptTapped: nil,
+            cancelTapped: nil
         )
         
-        let view = AlertMessageView(viewModel: viewModel)
-        
-        navigationController.present(view.controller, animated: true)
+        presentView(view: view.controller, animated: true)
     }
     
     private func presentFirebaseDeviceTokenCopyError(error: Error) {

@@ -9,11 +9,21 @@
 import UIKit
 import Combine
 
+@MainActor
 class AppInterfaceStringBarItem: NavBarItem {
     
     let localizedStringKey: String
     
-    init(getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, localizationServices: LocalizationServicesInterface, localizedStringKey: String, color: UIColor?, target: AnyObject, action: Selector, accessibilityIdentifier: String?, hidesBarItemPublisher: AnyPublisher<Bool, Never>? = nil) {
+    init(
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        localizationServices: LocalizationServicesInterface,
+        localizedStringKey: String,
+        color: UIColor?,
+        target: AnyObject,
+        action: Selector,
+        accessibilityIdentifier: String?,
+        hidesBarItemPublisher: AnyPublisher<Bool, Never>? = nil
+    ) {
         
         self.localizedStringKey = localizedStringKey
         

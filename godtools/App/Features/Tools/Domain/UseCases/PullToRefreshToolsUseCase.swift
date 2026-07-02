@@ -16,46 +16,39 @@ final class PullToRefreshToolsUseCase {
     private let personalizedToolsRepository: PersonalizedToolsRepository
     private let getLanguageElseAppLanguage: GetLanguageElseAppLanguage
 
-    init(resourcesRepository: ResourcesRepository, personalizedToolsRepository: PersonalizedToolsRepository, getLanguageElseAppLanguage: GetLanguageElseAppLanguage) {
+    init(
+        resourcesRepository: ResourcesRepository,
+        personalizedToolsRepository: PersonalizedToolsRepository,
+        getLanguageElseAppLanguage: GetLanguageElseAppLanguage
+    ) {
 
         self.resourcesRepository = resourcesRepository
         self.personalizedToolsRepository = personalizedToolsRepository
         self.getLanguageElseAppLanguage = getLanguageElseAppLanguage
     }
 
-    func execute(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterToolsByLanguage: ToolFilterLanguageDomainModel?) -> AnyPublisher<Void, Error> {
+    func execute(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterToolsByLanguage: ToolFilterLanguageDomainModel) async throws {
 
         let requestPriority: RequestPriority = .high
-
-        return Publishers.Merge(
-            refreshResources(requestPriority: requestPriority),
-            refreshPersonalizedTools(
-                requestPriority: requestPriority,
-                appLanguage: appLanguage,
-                country: country,
-                filterToolsByLanguage: filterToolsByLanguage
-            )
-        )
-        .eraseToAnyPublisher()
-    }
-    
-    private func refreshResources(requestPriority: RequestPriority) -> AnyPublisher<Void, Error> {
         
-        return resourcesRepository
-            .syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsPublisher(
+        _ = try await resourcesRepository
+            .syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments(
                 requestPriority: requestPriority,
                 forceFetchFromRemote: true
             )
-            .map { _ in
-                return ()
-            }
-            .eraseToAnyPublisher()
+        
+        try await refreshPersonalizedTools(
+            requestPriority: requestPriority,
+            appLanguage: appLanguage,
+            country: country,
+            filterToolsByLanguage: filterToolsByLanguage
+        )
     }
     
-    private func refreshPersonalizedTools(requestPriority: RequestPriority, appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterToolsByLanguage: ToolFilterLanguageDomainModel?) -> AnyPublisher<Void, Error> {
+    private func refreshPersonalizedTools(requestPriority: RequestPriority, appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterToolsByLanguage: ToolFilterLanguageDomainModel) async throws {
 
         let languageCode: String = getLanguageElseAppLanguage.getLanguageCode(
-            languageId: filterToolsByLanguage?.languageDataModelId,
+            languageId: filterToolsByLanguage.filterId,
             appLanguage: appLanguage
         )
 
@@ -66,16 +59,12 @@ final class PullToRefreshToolsUseCase {
             return nil
         }()
 
-        return personalizedToolsRepository
-            .syncPersonalizedToolsPublisher(
+        _ = try await personalizedToolsRepository
+            .syncPersonalizedTools(
                 requestPriority: requestPriority,
                 country: countryIsoRegionCode,
                 language: languageCode,
                 forceNewSync: true
             )
-            .map { _ in
-                return ()
-            }
-            .eraseToAnyPublisher()
     }
 }

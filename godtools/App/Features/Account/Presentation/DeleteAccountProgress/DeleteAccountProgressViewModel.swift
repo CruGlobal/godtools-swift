@@ -9,42 +9,41 @@
 import Foundation
 import Combine
 
-@MainActor class DeleteAccountProgressViewModel: ObservableObject {
-    
-    private static var backgroundCancellables: Set<AnyCancellable> = Set()
-    
+@MainActor
+final class DeleteAccountProgressViewModel: ObservableObject {
+        
+    private let stepEmitter: FlowStepEmitter
+    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    private let getDeleteAccountProgressStringsUseCase: GetDeleteAccountProgressStringsUseCase
     private let deleteAccountUseCase: DeleteAccountUseCase
     private let minimumSecondsToDisplayDeleteAccountProgress: TimeInterval = 2
     
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     @Published private var appLanguage: AppLanguageDomainModel = ""
     
     @Published private(set) var strings = DeleteAccountProgressStringsDomainModel.emptyValue
     
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguage: GetCurrentAppLanguageUseCase, getDeleteAccountProgressStringsUseCase: GetDeleteAccountProgressStringsUseCase, deleteAccountUseCase: DeleteAccountUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getDeleteAccountProgressStringsUseCase: GetDeleteAccountProgressStringsUseCase,
+        deleteAccountUseCase: DeleteAccountUseCase
+    ) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
+        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
+        self.getDeleteAccountProgressStringsUseCase = getDeleteAccountProgressStringsUseCase
         self.deleteAccountUseCase = deleteAccountUseCase
         
-        getCurrentAppLanguage
+        getCurrentAppLanguageUseCase
             .execute()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                getDeleteAccountProgressStringsUseCase
-                    .execute(appLanguage: appLanguage)
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: DeleteAccountProgressStringsDomainModel) in
-                self?.strings = strings
-            }
+            .sink(receiveValue: { [weak self] (appLanguage: AppLanguageDomainModel) in
+                
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
+            })
             .store(in: &cancellables)
         
         deleteAccount()
@@ -54,33 +53,35 @@ import Combine
         print("x deinit: \(type(of: self))")
     }
     
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+        
+        strings = getDeleteAccountProgressStringsUseCase
+            .execute(appLanguage: appLanguage)
+    }
+    
     private func deleteAccount() {
         
         let startDeleteAccountTime = Date()
         
-        deleteAccountUseCase
-            .execute()
-            .receive(on: DispatchQueue.main)
-            .delay(for: .seconds(getRemainingSecondsToDisplayDeleteAccountProgress(startTime: startDeleteAccountTime)), scheduler: DispatchQueue.main)
-            .sink { [weak self] subscribersCompletion in
-                
-                let deleteAccountError: Error?
-                
-                switch subscribersCompletion {
-                    
-                case .finished:
-                    deleteAccountError = nil
-                    
-                case .failure(let error):
-                    deleteAccountError = error
-                }
-                
-                self?.didFinishAccountDeletion(error: deleteAccountError)
-                
-            } receiveValue: { _ in
-                
+        Task {
+            
+            let error: Error?
+            
+            do {
+                try await deleteAccountUseCase
+                    .execute()
+                error = nil
             }
-            .store(in: &Self.backgroundCancellables)
+            catch let deleteAccountError {
+                error = deleteAccountError
+            }
+            
+            let seconds = getRemainingSecondsToDisplayDeleteAccountProgress(startTime: startDeleteAccountTime)
+            
+            try await Task.sleep(for: .seconds(seconds))
+            
+            didFinishAccountDeletion(error: error)
+        }
     }
     
     private func getRemainingSecondsToDisplayDeleteAccountProgress(startTime: Date) -> TimeInterval {
@@ -99,10 +100,10 @@ import Combine
     private func didFinishAccountDeletion(error: Error?) {
                 
         if let deleteAccountError = error {
-            flowDelegate?.navigate(step: .didFinishAccountDeletionWithErrorFromDeleteAccountProgress(error: deleteAccountError))
+            stepEmitter.emit(step: AppFlowStep.didFinishAccountDeletionWithErrorFromDeleteAccountProgress(error: deleteAccountError))
         }
         else {
-            flowDelegate?.navigate(step: .didFinishAccountDeletionWithSuccessFromDeleteAccountProgress)
+            stepEmitter.emit(step: AppFlowStep.didFinishAccountDeletionWithSuccessFromDeleteAccountProgress)
         }
     }
 }

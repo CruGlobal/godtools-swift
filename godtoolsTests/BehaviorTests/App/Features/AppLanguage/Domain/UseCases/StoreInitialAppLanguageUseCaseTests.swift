@@ -12,7 +12,6 @@ import Foundation
 import Combine
 import RepositorySync
 
-@Suite(.serialized)
 struct StoreInitialAppLanguageUseCaseTests {
     
     struct TestArgument {
@@ -20,6 +19,13 @@ struct StoreInitialAppLanguageUseCaseTests {
         let appLanguage: LanguageCodeDomainModel?
         let deviceLanguage: LanguageCodeDomainModel
         let expectedValue: String
+    }
+    
+    private let testsDiContainer: TestsDiContainer
+    
+    init() throws {
+        
+        testsDiContainer = try TestsDiContainer()
     }
     
     @Test(
@@ -41,12 +47,8 @@ struct StoreInitialAppLanguageUseCaseTests {
             )
         ]
     )
-    func noAppLanguageSetDefaultsToDeviceLanguageWhenSupported(argument: TestArgument) async throws {
-        
-        let testsDiContainer = try getTestsDiContainer()
-        
-        let realmDatabase: RealmDatabase = testsDiContainer.dataLayer.getSharedRealmDatabase()
-                
+    @MainActor func noAppLanguageSetDefaultsToDeviceLanguageWhenSupported(argument: TestArgument) async throws {
+                                
         let appLanguages: [AppLanguageCodable] = [
             AppLanguageCodable(languageCode: "ar", languageDirection: .rightToLeft, languageScriptCode: nil),
             AppLanguageCodable(languageCode: "en", languageDirection: .leftToRight, languageScriptCode: nil),
@@ -56,14 +58,11 @@ struct StoreInitialAppLanguageUseCaseTests {
             AppLanguageCodable(languageCode: "lv", languageDirection: .leftToRight, languageScriptCode: nil)
         ]
         
-        let mockAppLanguagesSync: AppLanguagesRepositorySyncInterface = try MockAppLanguagesRepositorySync(
-            realmDatabase: realmDatabase,
-            appLanguages: appLanguages
-        )
+        let mockAppLanguagesSync: AppLanguagesRepositorySyncInterface = try await getMockAppLanguagesRepositorySync(appLanguages: appLanguages)
         
-        let userAppLanguageRepository = getUserAppLanguageRepository(testsDiContainer: testsDiContainer)
+        let userAppLanguageRepository = testsDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository()
         
-        try userAppLanguageRepository.deleteLanguage()
+        try await userAppLanguageRepository.deleteLanguage()
                         
         let appLanguagesRepository: AppLanguagesRepository = testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesRepository(
             sync: mockAppLanguagesSync
@@ -79,32 +78,26 @@ struct StoreInitialAppLanguageUseCaseTests {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                storeInitialAppLanguage
-                    .execute()
-                    .sink(receiveCompletion: { _ in
-                        
-                    }, receiveValue: { (result: AppLanguageDomainModel) in
-                        
-                        resultRef = result
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                                
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    })
-                    .store(in: &cancellables)
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
             }
+            
+            storeInitialAppLanguage
+                .execute()
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { (result: AppLanguageDomainModel) in
+                    
+                    resultRef = result
+                                     
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
+                })
+                .store(in: &cancellables)
         }
         
         #expect(resultRef == argument.expectedValue)
@@ -129,12 +122,8 @@ struct StoreInitialAppLanguageUseCaseTests {
             )
         ]
     )
-    func appLanguageSetAndSupportedShowsMyAppLanguage(argument: TestArgument) async throws {
-        
-        let testsDiContainer = try getTestsDiContainer()
-        
-        let realmDatabase: RealmDatabase = testsDiContainer.dataLayer.getSharedRealmDatabase()
-        
+    @MainActor func appLanguageSetAndSupportedShowsMyAppLanguage(argument: TestArgument) async throws {
+                        
         let appLanguages: [AppLanguageCodable] = [
             AppLanguageCodable(languageCode: "ar", languageDirection: .rightToLeft, languageScriptCode: nil),
             AppLanguageCodable(languageCode: "en", languageDirection: .leftToRight, languageScriptCode: nil),
@@ -144,15 +133,10 @@ struct StoreInitialAppLanguageUseCaseTests {
             AppLanguageCodable(languageCode: "lv", languageDirection: .leftToRight, languageScriptCode: nil)
         ]
         
-        let mockAppLanguagesSync: AppLanguagesRepositorySyncInterface = try MockAppLanguagesRepositorySync(
-            realmDatabase: realmDatabase,
-            appLanguages: appLanguages
-        )
+        let mockAppLanguagesSync: AppLanguagesRepositorySyncInterface = try await getMockAppLanguagesRepositorySync(appLanguages: appLanguages)
         
-        let userAppLanguageRepository = getUserAppLanguageRepository(testsDiContainer: testsDiContainer)
-        
-        //userAppLanguageCache.storeLanguage(appLanguageId: argument.appLanguage?.rawValue ?? "")
-                        
+        let userAppLanguageRepository = testsDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository()
+                                
         let appLanguagesRepository: AppLanguagesRepository = testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesRepository(
             sync: mockAppLanguagesSync
         )
@@ -163,42 +147,34 @@ struct StoreInitialAppLanguageUseCaseTests {
             appLanguagesRepository: appLanguagesRepository
         )
         
+        let storeAppLanguage: String = try #require(argument.appLanguage?.rawValue)
+        
+        try await userAppLanguageRepository.storeLanguage(appLanguageId: storeAppLanguage)
+        
         var resultRef: AppLanguageDomainModel?
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
+            
+            storeInitialAppLanguage
+                .execute()
+                .sink { _ in
+                    
+                } receiveValue: { (appLanguage: BCP47LanguageIdentifier) in
+                    
+                    resultRef = appLanguage
+                    
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
                     continuation.resume(returning: ())
                 }
-                
-                userAppLanguageRepository
-                    .storeLanguagePublisher(appLanguageId: argument.appLanguage?.rawValue ?? "")
-                    .receive(on: DispatchQueue.main)
-                    .flatMap { _ -> AnyPublisher<AppLanguageDomainModel, Error> in
-                        
-                        return storeInitialAppLanguage
-                            .execute()
-                    }
-                    .sink(receiveCompletion: { _ in
-                        
-                    }, receiveValue: { (result: AppLanguageDomainModel) in
-                        
-                        resultRef = result
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                                
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    })
-                    .store(in: &cancellables)                    
-            }
+                .store(in: &cancellables)
         }
                 
         #expect(resultRef == argument.expectedValue)
@@ -218,12 +194,8 @@ struct StoreInitialAppLanguageUseCaseTests {
             )
         ]
     )
-    func noAppLanguageSetAndDeviceLanguageIsNotASupportedAppLanguage(argument: TestArgument) async throws {
-        
-        let testsDiContainer = try getTestsDiContainer()
-        
-        let realmDatabase: RealmDatabase = testsDiContainer.dataLayer.getSharedRealmDatabase()
-        
+    @MainActor func noAppLanguageSetAndDeviceLanguageIsNotASupportedAppLanguage(argument: TestArgument) async throws {
+                        
         let appLanguages: [AppLanguageCodable] = [
             AppLanguageCodable(languageCode: "ar", languageDirection: .rightToLeft, languageScriptCode: nil),
             AppLanguageCodable(languageCode: "en", languageDirection: .leftToRight, languageScriptCode: nil),
@@ -233,14 +205,11 @@ struct StoreInitialAppLanguageUseCaseTests {
             AppLanguageCodable(languageCode: "lv", languageDirection: .leftToRight, languageScriptCode: nil)
         ]
         
-        let mockAppLanguagesSync: AppLanguagesRepositorySyncInterface = try MockAppLanguagesRepositorySync(
-            realmDatabase: realmDatabase,
-            appLanguages: appLanguages
-        )
+        let mockAppLanguagesSync: AppLanguagesRepositorySyncInterface = try await getMockAppLanguagesRepositorySync(appLanguages: appLanguages)
         
-        let userAppLanguageRepository = getUserAppLanguageRepository(testsDiContainer: testsDiContainer)
+        let userAppLanguageRepository = testsDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository()
         
-        try userAppLanguageRepository.deleteLanguage()
+        try await userAppLanguageRepository.deleteLanguage()
                                 
         let appLanguagesRepository: AppLanguagesRepository = testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesRepository(
             sync: mockAppLanguagesSync
@@ -256,32 +225,26 @@ struct StoreInitialAppLanguageUseCaseTests {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                storeInitialAppLanguage
-                    .execute()
-                    .sink(receiveCompletion: { _ in
-                        
-                    }, receiveValue: { (result: AppLanguageDomainModel) in
-                        
-                        resultRef = result
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                                
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    })
-                    .store(in: &cancellables)
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
             }
+            
+            storeInitialAppLanguage
+                .execute()
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { (result: AppLanguageDomainModel) in
+                    
+                    resultRef = result
+                                       
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
+                })
+                .store(in: &cancellables)
         }
         
         #expect(resultRef == argument.expectedValue)
@@ -290,25 +253,12 @@ struct StoreInitialAppLanguageUseCaseTests {
 
 extension StoreInitialAppLanguageUseCaseTests {
     
-    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
-                
-        return try TestsDiContainer(
-            realmFileName: String(describing: StoreInitialAppLanguageUseCaseTests.self),
-            addRealmObjects: addRealmObjects
-        )
-    }
-    
-    private func getUserAppLanguageRepository(testsDiContainer: TestsDiContainer) -> UserAppLanguageRepository {
+    @MainActor
+    private func getMockAppLanguagesRepositorySync(appLanguages: [AppLanguageCodable]) async throws -> MockAppLanguagesRepositorySync {
         
-        let persistence = RealmRepositorySyncPersistence(
-            database: testsDiContainer.dataLayer.getSharedRealmDatabase(),
-            dataModelMapping: RealmUserAppLanguageDataModelMapping()
+        return try await MockAppLanguagesRepositorySync(
+            persistence: testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesPersistence(),
+            appLanguages: appLanguages
         )
-        
-        let cache = UserAppLanguageCache(
-            persistence: persistence
-        )
-        
-        return UserAppLanguageRepository(cache: cache)
     }
 }

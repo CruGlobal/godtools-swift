@@ -8,7 +8,7 @@
 
 import Foundation
 
-class LocaleLanguageRegionName: LocaleLanguageRegionNameInterface {
+final class LocaleLanguageRegionName: LocaleLanguageRegionNameInterface {
     
     init() {
         

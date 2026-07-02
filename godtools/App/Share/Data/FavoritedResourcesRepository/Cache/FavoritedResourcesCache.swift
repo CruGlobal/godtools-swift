@@ -11,9 +11,9 @@ import RepositorySync
 import SwiftData
 import RealmSwift
 
-class FavoritedResourcesCache {
+final class FavoritedResourcesCache {
     
-    private let persistence: any Persistence<FavoritedResourceDataModel, FavoritedResourceDataModel>
+    let persistence: any Persistence<FavoritedResourceDataModel, FavoritedResourceDataModel>
     
     init(persistence: any Persistence<FavoritedResourceDataModel, FavoritedResourceDataModel>) {
                 
@@ -21,20 +21,16 @@ class FavoritedResourcesCache {
     }
     
     @available(iOS 17.4, *)
-    var swiftDatabase: SwiftDatabase? {
+    private var swiftDatabase: SwiftDatabase? {
         return getSwiftPersistence()?.database
     }
     
     @available(iOS 17.4, *)
-    func getSwiftPersistence() -> SwiftRepositorySyncPersistence<FavoritedResourceDataModel, FavoritedResourceDataModel, SwiftFavoritedResource>? {
+    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<FavoritedResourceDataModel, FavoritedResourceDataModel, SwiftFavoritedResource>? {
         return persistence as? SwiftRepositorySyncPersistence<FavoritedResourceDataModel, FavoritedResourceDataModel, SwiftFavoritedResource>
     }
-    
-    var realmDatabase: RealmDatabase? {
-        return getRealmPersistence()?.database
-    }
-    
-    func getRealmPersistence() -> RealmRepositorySyncPersistence<FavoritedResourceDataModel, FavoritedResourceDataModel, RealmFavoritedResource>? {
+
+    private func getRealmPersistence() -> RealmRepositorySyncPersistence<FavoritedResourceDataModel, FavoritedResourceDataModel, RealmFavoritedResource>? {
         return persistence as? RealmRepositorySyncPersistence<FavoritedResourceDataModel, FavoritedResourceDataModel, RealmFavoritedResource>
     }
 }
@@ -44,17 +40,17 @@ class FavoritedResourcesCache {
 extension FavoritedResourcesCache {
     
     @available(iOS 17.4, *)
-    private func getSwiftQuerySortedByPositionAscending() -> SwiftDatabaseQuery<SwiftFavoritedResource> {
+    private func getSwiftQuerySortedByPosition(order: SortOrder) -> SwiftDatabaseQuery<SwiftFavoritedResource> {
         
         return SwiftDatabaseQuery<SwiftFavoritedResource>.sort(
-            sortBy: [SortDescriptor(\SwiftFavoritedResource.position, order: .forward)]
+            sortBy: [SortDescriptor(\SwiftFavoritedResource.position, order: order)]
         )
     }
     
-    private func getRealmQuerySortedByPositionAscending() -> RealmDatabaseQuery {
+    private func getRealmQuerySortedByPosition(ascending: Bool) -> RealmDatabaseQuery {
         
         return RealmDatabaseQuery.sort(
-            byKeyPath: SortByKeyPath(keyPath: #keyPath(RealmFavoritedResource.position), ascending: true)
+            byKeyPath: SortByKeyPath(keyPath: #keyPath(RealmFavoritedResource.position), ascending: ascending)
         )
     }
 }
@@ -90,19 +86,21 @@ extension FavoritedResourcesCache {
         
         if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
             
-            let favorites: [FavoritedResourceDataModel] = try await swiftPersistence.getDataModelsAsync(
-                getOption: .allObjects,
-                query: getSwiftQuerySortedByPositionAscending()
-            )
+            let favorites: [FavoritedResourceDataModel] = try await swiftPersistence
+                .newActorRead()
+                .getDataModels(
+                    query: getSwiftQuerySortedByPosition(order: .forward)
+                )
             
             return favorites
         }
         else if let realmPersistence = getRealmPersistence() {
             
-            let favorites: [FavoritedResourceDataModel] = try await realmPersistence.getDataModelsAsync(
-                getOption: .allObjects,
-                query: getRealmQuerySortedByPositionAscending()
-            )
+            let favorites: [FavoritedResourceDataModel] = try await realmPersistence
+                .newActorRead()
+                .getDataModels(
+                    query: getRealmQuerySortedByPosition(ascending: true)
+                )
             
             return favorites
         }
@@ -130,122 +128,49 @@ extension FavoritedResourcesCache {
             )
         }
         
-        if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
-            
-            _ = try await swiftPersistence.writeObjectsAsync(
-                externalObjects: allFavoritedResourcesSorted,
-                writeOption: nil,
-                getOption: nil
-            )
-            
-            return try await getFavoritedResourcesSortedByPosition()
-        }
-        else if let realmPersistence = getRealmPersistence() {
-            
-            _ = try await realmPersistence.writeObjectsAsync(
-                externalObjects: allFavoritedResourcesSorted,
-                writeOption: nil,
-                getOption: nil
-            )
-            
-            return try await getFavoritedResourcesSortedByPosition()
-        }
-        else {
-            
-            return Array()
-        }
+        let favoritedResources: [FavoritedResourceDataModel] = try await persistence.writeObjects(
+            externalObjects: allFavoritedResourcesSorted,
+            writeOption: nil,
+            getOption: .allObjects
+        )
+        
+        return favoritedResources.sorted(by: {
+            $0.position < $1.position
+        })
     }
     
     func deleteFavoritedResource(id: String) async throws -> [FavoritedResourceDataModel] {
-     
-        if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
-            
-            let context: ModelContext = swiftPersistence.database.openContext()
-            
-            let favoritedResourceToDelete: SwiftFavoritedResource? = try swiftPersistence.database.read.object(context: context, id: id)
-            
-            guard let favoritedResourceToDelete = favoritedResourceToDelete else {
-                return try await getFavoritedResourcesSortedByPosition()
-            }
-            
-            var favoritedResources: [SwiftFavoritedResource] = try swiftPersistence.database.read.objects(
-                context: context,
-                query: getSwiftQuerySortedByPositionAscending()
-            )
-            
-            if let index = favoritedResources.firstIndex(where: { $0.id == favoritedResourceToDelete.id }) {
-                favoritedResources.remove(at: index)
-            }
-            
-            for index in 0 ..< favoritedResources.count {
-                
-                favoritedResources[index].position = index
-            }
-            
-            try swiftPersistence.database.write.context(
-                context: context,
-                writeObjects: WriteSwiftObjects(
-                    deleteObjects: [favoritedResourceToDelete],
-                    insertObjects: favoritedResources
-                )
-            )
-            
-            let dataModels: [FavoritedResourceDataModel] = favoritedResources.map {
-                FavoritedResourceDataModel(interface: $0)
-            }
-            
-            return dataModels
-        }
-        else if let realmPersistence = getRealmPersistence() {
-            
-            let realm: Realm = try realmPersistence.database.openRealm()
-            
-            let favoritedResourceToDelete: RealmFavoritedResource? = realmPersistence.database.read.object(realm: realm, id: id)
-            
-            guard let favoritedResourceToDelete = favoritedResourceToDelete else {
-                return try await getFavoritedResourcesSortedByPosition()
-            }
-            
-            var favoritedResources: [RealmFavoritedResource] = realmPersistence.database.read.objects(
-                realm: realm,
-                query: getRealmQuerySortedByPositionAscending()
-            )
-            
-            if let index = favoritedResources.firstIndex(where: { $0.id == favoritedResourceToDelete.id }) {
-                favoritedResources.remove(at: index)
-            }
-            
-            let remainingFavoritedResources: [RealmFavoritedResource] = favoritedResources.map {
-                RealmFavoritedResource.createNewFrom(interface: $0)
-            }
-            
-            for index in 0 ..< remainingFavoritedResources.count {
-                remainingFavoritedResources[index].position = index
-            }
-            
-            try realmPersistence.database.write.realm(
-                realm: realm,
-                writeClosure: { (realm: Realm) in
-                    return WriteRealmObjects(
-                        deleteObjects: [favoritedResourceToDelete],
-                        addObjects: remainingFavoritedResources
-                    )
-                },
-                updatePolicy: .modified
-            )
-
-            let dataModels: [FavoritedResourceDataModel] = remainingFavoritedResources.map {
-                FavoritedResourceDataModel(interface: $0)
-            }
-            
-            return dataModels
+        
+        let favoritedResourceToDelete: FavoritedResourceDataModel? = try persistence.getDataModel(id: id)
+        
+        guard let favoritedResourceToDelete = favoritedResourceToDelete else {
+            return try await getFavoritedResourcesSortedByPosition()
         }
         
-        return Array()
+        var favoritedResources: [FavoritedResourceDataModel] = try await getFavoritedResourcesSortedByPosition()
+        
+        if let index = favoritedResources.firstIndex(where: { $0.id == favoritedResourceToDelete.id }) {
+            favoritedResources.remove(at: index)
+        }
+        
+        var favoritedResourcesToUpdate: [FavoritedResourceDataModel] = Array()
+        
+        for index in 0 ..< favoritedResources.count {
+            
+            favoritedResourcesToUpdate.append(
+                favoritedResources[index].copy(position: index)
+            )
+        }
+        
+        _ = try await persistence.deleteObjectsByIds(ids: [id], getOption: nil)
+        
+        _ = try await persistence.writeObjects(externalObjects: favoritedResourcesToUpdate, writeOption: nil, getOption: nil)
+        
+        return favoritedResourcesToUpdate
     }
     
     func reorderFavoritedResource(id: String, originalPosition: Int, newPosition: Int) async throws -> [FavoritedResourceDataModel] {
-     
+        
         let resourceToUpdate: FavoritedResourceDataModel? = try persistence.getDataModel(id: id)
         
         guard let resourceToUpdate = resourceToUpdate, resourceToUpdate.position == originalPosition && resourceToUpdate.position != newPosition else {
@@ -254,114 +179,44 @@ extension FavoritedResourcesCache {
         
         let placeholderId: String = "placeholder"
         
-        if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
-            
-            let context: ModelContext = swiftPersistence.database.openContext()
-            
-            var favoritedResources: [SwiftFavoritedResource] = try swiftPersistence.database.read.objects(
-                context: context,
-                query: getSwiftQuerySortedByPositionAscending()
-            )
-            
-            let placeholderResource = SwiftFavoritedResource()
-            placeholderResource.id = placeholderId
-            
-            favoritedResources.insert(placeholderResource, at: originalPosition)
-            
-            guard let index = favoritedResources.firstIndex(where: { $0.id == id }) else {
-                return try await getFavoritedResourcesSortedByPosition()
-            }
-            
-            let resourceToMove: SwiftFavoritedResource = favoritedResources.remove(at: index)
-            
-            if newPosition > originalPosition {
-                favoritedResources.insert(resourceToMove, at: newPosition + 1)
-            }
-            else {
-                favoritedResources.insert(resourceToMove, at: newPosition)
-            }
-                        
-            guard let placeholderIndex = favoritedResources.firstIndex(where: { $0.id == placeholderId }) else {
-                return try await getFavoritedResourcesSortedByPosition()
-            }
-            
-            favoritedResources.remove(at: placeholderIndex)
-            
-            for index in 0 ..< favoritedResources.count {
-                favoritedResources[index].position = index
-            }
-            
-            try swiftPersistence.database.write.context(
-                context: context,
-                writeObjects: WriteSwiftObjects(
-                    deleteObjects: nil,
-                    insertObjects: favoritedResources
-                )
-            )
-            
-            let dataModels: [FavoritedResourceDataModel] = favoritedResources.map {
-                FavoritedResourceDataModel(interface: $0)
-            }
-            
-            return dataModels
-        }
-        else if let realmPersistence = getRealmPersistence() {
-            
-            let realm: Realm = try realmPersistence.database.openRealm()
-            
-            var favoritedResources: [RealmFavoritedResource] = realmPersistence.database.read.objects(
-                realm: realm,
-                query: getRealmQuerySortedByPositionAscending()
-            ).map { (object: RealmFavoritedResource) in
-                RealmFavoritedResource.createNewFrom(interface: object)
-            }
-            
-            let placeholderResource = RealmFavoritedResource()
-            placeholderResource.id = placeholderId
-            
-            favoritedResources.insert(placeholderResource, at: originalPosition)
-            
-            guard let index = favoritedResources.firstIndex(where: { $0.id == id }) else {
-                return try await getFavoritedResourcesSortedByPosition()
-            }
-            
-            let resourceToMove: RealmFavoritedResource = favoritedResources.remove(at: index)
-            
-            if newPosition > originalPosition {
-                favoritedResources.insert(resourceToMove, at: newPosition + 1)
-            }
-            else {
-                favoritedResources.insert(resourceToMove, at: newPosition)
-            }
-
-            guard let placeholderIndex = favoritedResources.firstIndex(where: { $0.id == placeholderId }) else {
-                return try await getFavoritedResourcesSortedByPosition()
-            }
-            
-            favoritedResources.remove(at: placeholderIndex)
-            
-            for index in 0 ..< favoritedResources.count {
-                favoritedResources[index].position = index
-            }
-            
-            try realmPersistence.database.write.realm(
-                realm: realm,
-                writeClosure: { (realm: Realm) in
-                    return WriteRealmObjects(
-                        deleteObjects: nil,
-                        addObjects: favoritedResources
-                    )
-                },
-                updatePolicy: .modified
-            )
-            
-            let dataModels: [FavoritedResourceDataModel] = favoritedResources.map {
-                FavoritedResourceDataModel(interface: $0)
-            }
-            
-            return dataModels
+        var favoritedResources: [FavoritedResourceDataModel] = try await getFavoritedResourcesSortedByPosition()
+        
+        let placeholderResource = FavoritedResourceDataModel(id: placeholderId, createdAt: Date(), position: 0)
+        
+        favoritedResources.insert(placeholderResource, at: originalPosition)
+        
+        guard let index = favoritedResources.firstIndex(where: { $0.id == id }) else {
+            return try await getFavoritedResourcesSortedByPosition()
         }
         
-        return Array()
+        let resourceToMove: FavoritedResourceDataModel = favoritedResources.remove(at: index)
+        
+        if newPosition > originalPosition {
+            favoritedResources.insert(resourceToMove, at: newPosition + 1)
+        }
+        else {
+            favoritedResources.insert(resourceToMove, at: newPosition)
+        }
+                    
+        guard let placeholderIndex = favoritedResources.firstIndex(where: { $0.id == placeholderId }) else {
+            return try await getFavoritedResourcesSortedByPosition()
+        }
+        
+        favoritedResources.remove(at: placeholderIndex)
+        
+        var updatedFavoritedResources: [FavoritedResourceDataModel] = Array()
+        
+        for index in 0 ..< favoritedResources.count {
+            
+            updatedFavoritedResources.append(
+                favoritedResources[index].copy(position: index)
+            )
+        }
+        
+        try await persistence.writeObjects(
+            externalObjects: updatedFavoritedResources
+        )
+        
+        return updatedFavoritedResources
     }
 }

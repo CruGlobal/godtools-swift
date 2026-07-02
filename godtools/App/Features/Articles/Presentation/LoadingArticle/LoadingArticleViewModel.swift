@@ -7,61 +7,80 @@
 //
 
 import Foundation
-import Combine
 
-@MainActor class LoadingArticleViewModel: ObservableObject {
+@MainActor
+final class LoadingArticleViewModel: ObservableObject {
     
+    private let stepEmitter: FlowStepEmitter
     private let articleAemRepository: ArticleAemRepository
     private let appLanguage: AppLanguageDomainModel
     
-    private var downloadArticleOperation: OperationQueue?
-    private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+    private var downloadArticleTask: Task<Void, Error>?
+        
     let message: String
     
-    init(flowDelegate: FlowDelegate, aemUri: String, appLanguage: AppLanguageDomainModel, articleAemRepository: ArticleAemRepository, localizationServices: LocalizationServicesInterface) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        aemUri: String,
+        appLanguage: AppLanguageDomainModel,
+        articleAemRepository: ArticleAemRepository,
+        localizationServices: LocalizationServicesInterface
+    ) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.articleAemRepository = articleAemRepository
         self.appLanguage = appLanguage
-        self.message = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "Download in progress")
+        self.message = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.downloadInProgress.key)
         
-        articleAemRepository
-            .downloadAndCachePublisher(
-                aemUris: [aemUri],
-                downloadCachePolicy: .fetchFromCacheUpToNextHour,
-                requestPriority: .high
-            )
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (result: ArticleAemRepositoryResult) in
+        downloadArticleTask = Task { [weak self] in
+            
+            let downloadError: Error?
+            
+            do {
                 
-                if let aemCacheObject = articleAemRepository.getAemCacheObject(aemUri: aemUri) {
-                    
-                    self?.flowDelegate?.navigate(step: .didDownloadArticleFromLoadingArticle(aemCacheObject: aemCacheObject))
+                let download = try await articleAemRepository
+                    .downloadAndCache(
+                        aemUris: [aemUri],
+                        downloadCachePolicy: .fetchFromCacheUpToNextHour,
+                        requestPriority: .high
+                    )
+                
+                if let error = download.errors.first {
+                    downloadError = error
                 }
                 else {
-                    
-                    let errorTitle: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.error.key)
-                    let errorMessage: String
-                    
-                    if let downloadError = result.downloaderResult.downloadError {
-                        errorMessage = DownloadArticlesErrorViewModel(appLanguage: appLanguage, localizationServices: localizationServices, error: downloadError).message
-                    }
-                    else {
-                        errorMessage = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.downloadError.key)
-                    }
-                    
-                    let alertMessage = AlertMessage(title: errorTitle, message: errorMessage)
-                    
-                    self?.flowDelegate?.navigate(step: .didFailToDownloadArticleFromLoadingArticle(alertMessage: alertMessage))
+                    downloadError = nil
                 }
             }
-            .store(in: &cancellables)
+            catch let error {
+                
+                downloadError = error
+            }
+            
+            try await Task.sleep(for: .seconds(1))
+            
+            if let downloadError = downloadError {
+                
+                let errorTitle: String = localizationServices.stringForLocaleElseEnglish(
+                    localeIdentifier: appLanguage,
+                    key: LocalizableStringKeys.error.key
+                )
+                
+                let errorMessage: String = DownloadArticlesErrorViewModel(appLanguage: appLanguage, localizationServices: localizationServices, error: downloadError).message
+                
+                let alertMessage = AlertMessage(title: errorTitle, message: errorMessage)
+                
+                stepEmitter.emit(step: AppFlowStep.didFailToDownloadArticleFromLoadingArticle(alertMessage: alertMessage))
+            }
+            else {
+                
+                stepEmitter.emit(step: AppFlowStep.didDownloadArticleFromLoadingArticle(aemUri: aemUri))
+            }
+        }
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+        downloadArticleTask?.cancel()
     }
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MobileContentBackgroundImageView: UIImageView {
+final class MobileContentBackgroundImageView: UIImageView {
     
     private let boundsKeyPath: String = #keyPath(UIView.bounds)
     
@@ -16,7 +16,7 @@ class MobileContentBackgroundImageView: UIImageView {
     private var lastRenderedParentBounds: CGRect = .zero
     private var isObservingParentBoundsChanges: Bool = false
     
-    required init() {
+    init() {
         super.init(frame: .zero)
     }
     

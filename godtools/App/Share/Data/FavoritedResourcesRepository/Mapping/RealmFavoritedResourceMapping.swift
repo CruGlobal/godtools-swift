@@ -12,14 +12,14 @@ import RepositorySync
 final class RealmFavoritedResourceMapping: Mapping {
     
     func toDataModel(externalObject: FavoritedResourceDataModel) -> FavoritedResourceDataModel? {
-        return FavoritedResourceDataModel(interface: externalObject)
+        return externalObject
     }
     
     func toDataModel(persistObject: RealmFavoritedResource) -> FavoritedResourceDataModel? {
-        return FavoritedResourceDataModel(interface: persistObject)
+        return persistObject.toModel()
     }
     
     func toPersistObject(externalObject: FavoritedResourceDataModel) -> RealmFavoritedResource? {
-        return RealmFavoritedResource.createNewFrom(interface: externalObject)
+        return RealmFavoritedResource.createNewFrom(model: externalObject)
     }
 }

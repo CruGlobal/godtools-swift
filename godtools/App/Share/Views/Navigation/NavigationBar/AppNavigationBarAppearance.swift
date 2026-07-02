@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+@MainActor
 class AppNavigationBarAppearance {
     
     let backgroundColor: UIColor
@@ -18,7 +19,13 @@ class AppNavigationBarAppearance {
     let isTranslucent: Bool
     let titleTextAttributes: [NSAttributedString.Key: Any]
     
-    init(backgroundColor: UIColor, controlColor: UIColor?, titleFont: UIFont?, titleColor: UIColor?, isTranslucent: Bool) {
+    init(
+        backgroundColor: UIColor,
+        controlColor: UIColor?,
+        titleFont: UIFont?,
+        titleColor: UIColor?,
+        isTranslucent: Bool
+    ) {
         
         self.backgroundColor = backgroundColor
         self.controlColor = controlColor

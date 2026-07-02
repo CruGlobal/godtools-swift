@@ -8,16 +8,14 @@
 
 import Foundation
 import RequestOperation
-import RepositorySync
-import Combine
 
-class MobileContentAttachmentsApi {
+final class MobileContentAttachmentsApi: AttachmentsApiInterface {
     
     private let urlSessionPriority: URLSessionPriority
-    private let requestSender: RequestSender
+    private let requestSender: RequestSenderInterface
     private let baseUrl: String
     
-    init(config: AppConfigInterface, urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
+    init(config: AppConfigInterface, urlSessionPriority: URLSessionPriority, requestSender: RequestSenderInterface) {
                     
         self.urlSessionPriority = urlSessionPriority
         self.requestSender = requestSender
@@ -34,37 +32,5 @@ class MobileContentAttachmentsApi {
             urlRequest: urlRequest,
             urlSession: urlSession
         )
-    }
-    
-    func getAttachmentFilePublisher(url: URL, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
-        
-        let urlRequest: URLRequest = URLRequest(url: url)
-        
-        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
-
-        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
-            .validate()
-            .eraseToAnyPublisher()
-    }
-}
-
-// MARK: - ExternalDataFetchInterface
-
-extension MobileContentAttachmentsApi: ExternalDataFetchInterface {
-    
-    func getObject(id: String, context: RequestOperationFetchContext) async throws -> [AttachmentCodable] {
-        return Array()
-    }
-    
-    func getObjects(context: RequestOperationFetchContext) async throws -> [AttachmentCodable] {
-        return Array()
-    }
-    
-    func getObjectPublisher(id: String, context: RequestOperationFetchContext) -> AnyPublisher<[AttachmentCodable], Error> {
-        return emptyResponsePublisher()
-    }
-    
-    func getObjectsPublisher(context: RequestOperationFetchContext) -> AnyPublisher<[AttachmentCodable], Error> {
-        return emptyResponsePublisher()
     }
 }

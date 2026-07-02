@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TranslationFilesDataModel {
+struct TranslationFilesDataModel: Sendable {
     
     let files: [FileCacheLocation]
     let translation: TranslationDataModel

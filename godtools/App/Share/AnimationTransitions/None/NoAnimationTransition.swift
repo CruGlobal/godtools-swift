@@ -15,7 +15,10 @@ class NoAnimationTransition: FadeAnimationTransition {
         case transitionOut
     }
         
-    init(transition: NoAnimationTransition.Transition, duration: TimeInterval = FadeAnimationTransition.defaultDuration) {
+    init(
+        transition: NoAnimationTransition.Transition,
+        duration: TimeInterval = FadeAnimationTransition.defaultDuration
+    ) {
                 
         let fade: FadeAnimationTransition.Fade
         
@@ -25,7 +28,6 @@ class NoAnimationTransition: FadeAnimationTransition {
         case .transitionOut:
             fade = .fadeOut
         }
-        
         
         super.init(fade: fade, duration: duration, fadeOutAlpha: 0.99, fadeInAlpha: 1)
     }

@@ -10,5 +10,5 @@ import Foundation
 
 protocol AppMessagingDelegate: AnyObject {
     
-    func actionTappedWithUrl(url: URL)
+    func actionTappedWithUrl(url: URL, didOpenUrl: Bool)
 }

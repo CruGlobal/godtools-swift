@@ -11,21 +11,26 @@ import Combine
 
 final class GetOptInOnboardingBannerEnabledUseCase {
     
-    private let getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase
+    private let getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase
     private let optInOnboardingBannerEnabledRepository: OptInOnboardingBannerEnabledRepository
     
-    required init(getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, optInOnboardingBannerEnabledRepository: OptInOnboardingBannerEnabledRepository) {
+    init(
+        getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase,
+        optInOnboardingBannerEnabledRepository: OptInOnboardingBannerEnabledRepository
+    ) {
         
-        self.getOptInOnboardingTutorialAvailableUseCase = getOptInOnboardingTutorialAvailableUseCase
+        self.getTutorialIsAvailableUseCase = getTutorialIsAvailableUseCase
         self.optInOnboardingBannerEnabledRepository = optInOnboardingBannerEnabledRepository
     }
         
     func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<Bool, Never> {
+        
+        let tutorialAvailable: Bool = getTutorialIsAvailableUseCase.execute(appLanguage: appLanguage)
+        
+        return optInOnboardingBannerEnabledRepository
+            .getEnabledPublisher()
+            .map { (bannerEnabled: Bool) in
                 
-        return Publishers
-            .CombineLatest(getOptInOnboardingTutorialAvailableUseCase.getIsAvailablePublisher(appLanguage: appLanguage), optInOnboardingBannerEnabledRepository.getEnabled())
-            .map { (tutorialAvailable: Bool, bannerEnabled: Bool) in
-                                
                 return tutorialAvailable && bannerEnabled
             }
             .eraseToAnyPublisher()

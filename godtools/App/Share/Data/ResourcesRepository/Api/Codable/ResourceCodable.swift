@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ResourceCodable: ResourceDataModelInterface, Codable {
+struct ResourceCodable: Codable {
     
     let abbreviation: String
     let attachmentIds: [String]
@@ -75,6 +75,62 @@ struct ResourceCodable: ResourceDataModelInterface, Codable {
     
     enum DataCodingKeys: String, CodingKey {
         case data = "data"
+    }
+    
+    init(
+        abbreviation: String = "",
+        attachmentIds: [String] = Array(),
+        attrAboutBannerAnimation: String = "",
+        attrAboutOverviewVideoYoutube: String = "",
+        attrBanner: String = "",
+        attrBannerAbout: String = "",
+        attrCategory: String = "",
+        attrDefaultLocale: String = "",
+        attrDefaultOrder: Int = 0,
+        attrSpotlight: Bool = false,
+        defaultVariantId: String? = nil,
+        id: String = "",
+        isHidden: Bool = false,
+        languageIds: [String] = Array(),
+        latestTranslationIds: [String] = Array(),
+        manifest: String = "",
+        metatoolId: String? = nil,
+        name: String = "",
+        oneskyProjectId: Int = 0,
+        resourceDefaultOrders: [ResourceDefaultOrderCodable] = Array(),
+        resourceDescription: String = "",
+        resourceScores: [ResourceScoreCodable] = Array(),
+        resourceType: String = "",
+        totalViews: Int = 0,
+        type: String = "",
+        variantIds: [String] = Array()
+    ) {
+        self.abbreviation = abbreviation
+        self.attachmentIds = attachmentIds
+        self.attrAboutBannerAnimation = attrAboutBannerAnimation
+        self.attrAboutOverviewVideoYoutube = attrAboutOverviewVideoYoutube
+        self.attrBanner = attrBanner
+        self.attrBannerAbout = attrBannerAbout
+        self.attrCategory = attrCategory
+        self.attrDefaultLocale = attrDefaultLocale
+        self.attrDefaultOrder = attrDefaultOrder
+        self.attrSpotlight = attrSpotlight
+        self.defaultVariantId = defaultVariantId
+        self.id = id
+        self.isHidden = isHidden
+        self.languageIds = languageIds
+        self.latestTranslationIds = latestTranslationIds
+        self.manifest = manifest
+        self.metatoolId = metatoolId
+        self.name = name
+        self.oneskyProjectId = oneskyProjectId
+        self.resourceDefaultOrders = resourceDefaultOrders
+        self.resourceDescription = resourceDescription
+        self.resourceScores = resourceScores
+        self.resourceType = resourceType
+        self.totalViews = totalViews
+        self.type = type
+        self.variantIds = variantIds
     }
     
     init(from decoder: Decoder) throws {
@@ -172,21 +228,5 @@ struct ResourceCodable: ResourceDataModelInterface, Codable {
         
         // set when initialized from a model.
         languageIds = Array()
-    }
-    
-    func getAttachmentIds() -> [String] {
-        return attachmentIds
-    }
-    
-    func getLanguageIds() -> [String] {
-        return languageIds
-    }
-    
-    func getLatestTranslationIds() -> [String] {
-        return latestTranslationIds
-    }
-    
-    func getVariantIds() -> [String] {
-        return variantIds
     }
 }

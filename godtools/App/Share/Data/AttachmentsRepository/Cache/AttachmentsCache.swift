@@ -8,15 +8,19 @@
 
 import Foundation
 import RepositorySync
-import Combine
 
-class AttachmentsCache {
+final class AttachmentsCache {
     
-    private let persistence: any Persistence<AttachmentDataModel, AttachmentCodable>
     private let resourcesFileCache: ResourcesSHA256FileCache
     private let bundle: AttachmentsBundleCache
     
-    init(persistence: any Persistence<AttachmentDataModel, AttachmentCodable>, resourcesFileCache: ResourcesSHA256FileCache, bundle: AttachmentsBundleCache) {
+    let persistence: any Persistence<AttachmentDataModel, AttachmentCodable>
+    
+    init(
+        persistence: any Persistence<AttachmentDataModel, AttachmentCodable>,
+        resourcesFileCache: ResourcesSHA256FileCache,
+        bundle: AttachmentsBundleCache
+    ) {
         
         self.persistence = persistence
         self.resourcesFileCache = resourcesFileCache
@@ -24,20 +28,16 @@ class AttachmentsCache {
     }
     
     @available(iOS 17.4, *)
-    var swiftDatabase: SwiftDatabase? {
+    private var swiftDatabase: SwiftDatabase? {
         return getSwiftPersistence()?.database
     }
     
     @available(iOS 17.4, *)
-    func getSwiftPersistence() -> SwiftRepositorySyncPersistence<AttachmentDataModel, AttachmentCodable, SwiftAttachment>? {
+    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<AttachmentDataModel, AttachmentCodable, SwiftAttachment>? {
         return persistence as? SwiftRepositorySyncPersistence<AttachmentDataModel, AttachmentCodable, SwiftAttachment>
     }
     
-    var realmDatabase: RealmDatabase? {
-        return getRealmPersistence()?.database
-    }
-    
-    func getRealmPersistence() -> RealmRepositorySyncPersistence<AttachmentDataModel, AttachmentCodable, RealmAttachment>? {
+    private func getRealmPersistence() -> RealmRepositorySyncPersistence<AttachmentDataModel, AttachmentCodable, RealmAttachment>? {
         return persistence as? RealmRepositorySyncPersistence<AttachmentDataModel, AttachmentCodable, RealmAttachment>
     }
 }
@@ -45,22 +45,8 @@ class AttachmentsCache {
 extension AttachmentsCache {
     
     func getAttachment(id: String) throws -> AttachmentDataModel? {
-            
-        let cachedAttachment: AttachmentDataModelInterface?
-        
-        if #available(iOS 17.4, *), let swiftDatabase = swiftDatabase {
-            let swiftAttachment: SwiftAttachment? = swiftDatabase.read.objectNonThrowing(context: swiftDatabase.openContext(), id: id)
-            cachedAttachment = swiftAttachment
-        }
-        else if let realmDatabase = realmDatabase, let realm = realmDatabase.openRealmNonThrowing() {
-            let realmAttachment: RealmAttachment? = realmDatabase.read.object(realm: realm, id: id)
-            cachedAttachment = realmAttachment
-        }
-        else {
-            cachedAttachment = nil
-        }
-        
-        guard let cachedAttachment = cachedAttachment else {
+                    
+        guard let cachedAttachment = try persistence.getDataModel(id: id) else {
             return nil
         }
                 
@@ -93,47 +79,22 @@ extension AttachmentsCache {
             
             storedAttachment = nil
         }
-
-        return AttachmentDataModel(
-            interface: cachedAttachment,
-            storedAttachment: storedAttachment
-        )
+        
+        return cachedAttachment.copy(storedAttachment: storedAttachment)
     }
     
-    func getAttachmentPublisher(id: String) -> AnyPublisher<AttachmentDataModel?, Error> {
+    func storeAttachmentData(attachment: AttachmentDataModel, data: Data) async throws -> StoredAttachmentDataModel {
         
-        let attachment: AttachmentDataModel?
-        
-        do {
-            attachment = try getAttachment(id: id)
-        }
-        catch let error {
-            return Fail(error: error)
-                .eraseToAnyPublisher()
-        }
-        
-        return Just(attachment)
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
-    }
-    
-    func storeAttachmentDataPublisher(attachment: AttachmentDataModel, data: Data) -> AnyPublisher<StoredAttachmentDataModel, Error> {
-        
-        let resourcesFileCache: ResourcesSHA256FileCache = self.resourcesFileCache
-        
-        return resourcesFileCache.storeAttachmentFilePublisher(
+        let location: FileCacheLocation = try await resourcesFileCache.storeAttachmentFile(
             attachmentId: attachment.id,
             fileName: attachment.sha256,
             fileData: data
         )
-        .tryMap { (location: FileCacheLocation) in
-            
-            return try StoredAttachmentDataModel(
-                data: data,
-                fileCacheLocation: location,
-                resourcesFileCache: resourcesFileCache
-            )
-        }
-        .eraseToAnyPublisher()
+        
+        return try StoredAttachmentDataModel(
+            data: data,
+            fileCacheLocation: location,
+            resourcesFileCache: resourcesFileCache
+        )
     }
 }

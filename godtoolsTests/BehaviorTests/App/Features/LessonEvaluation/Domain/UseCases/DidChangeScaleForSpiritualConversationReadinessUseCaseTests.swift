@@ -8,7 +8,6 @@
 
 import Testing
 @testable import godtools
-import Combine
 
 struct DidChangeScaleForSpiritualConversationReadinessUseCaseTests {
     
@@ -23,25 +22,11 @@ struct DidChangeScaleForSpiritualConversationReadinessUseCaseTests {
         
         let didChangeSpiritualConversationReadinessScaleUseCase = getDidChangeScaleForSpiritualConversationReadinessUseCase()
         
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
-        
-        await confirmation(expectedCount: 1) { confirmation in
-            
-            didChangeSpiritualConversationReadinessScaleUseCase
-                .execute(scale: 5, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
-                .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
-                    
-                    readinessScaleRef = readinessScale
-                    
-                    confirmation()
-                }
-                .store(in: &cancellables)
-        }
-        
-        #expect(readinessScaleRef?.minScale.integerValue == 1)
-        #expect(readinessScaleRef?.maxScale.integerValue == 10)
+        let readinessScale = didChangeSpiritualConversationReadinessScaleUseCase
+            .execute(scale: 5, appLanguage: LanguageCodeDomainModel.english.rawValue)
+                
+        #expect(readinessScale.minScale.integerValue == 1)
+        #expect(readinessScale.maxScale.integerValue == 10)
     }
     
     @Test(
@@ -55,26 +40,12 @@ struct DidChangeScaleForSpiritualConversationReadinessUseCaseTests {
         
         let didChangeSpiritualConversationReadinessScaleUseCase = getDidChangeScaleForSpiritualConversationReadinessUseCase()
         
-        var cancellables: Set<AnyCancellable> = Set()
+        let readinessScale = didChangeSpiritualConversationReadinessScaleUseCase
+            .execute(scale: 5, appLanguage: LanguageCodeDomainModel.english.rawValue)
         
-        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
-        
-        await confirmation(expectedCount: 1) { confirmation in
-            
-            didChangeSpiritualConversationReadinessScaleUseCase
-                .execute(scale: 5, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
-                .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
-                    
-                    readinessScaleRef = readinessScale
-                    
-                    confirmation()
-                }
-                .store(in: &cancellables)
-        }
-        
-        #expect(readinessScaleRef?.minScale.valueTranslatedInAppLanguage == "1")
-        #expect(readinessScaleRef?.maxScale.valueTranslatedInAppLanguage == "10")
-        #expect(readinessScaleRef?.scale.valueTranslatedInAppLanguage == "5")
+        #expect(readinessScale.minScale.valueTranslatedInAppLanguage == "1")
+        #expect(readinessScale.maxScale.valueTranslatedInAppLanguage == "10")
+        #expect(readinessScale.scale.valueTranslatedInAppLanguage == "5")
     }
     
     @Test(
@@ -88,34 +59,21 @@ struct DidChangeScaleForSpiritualConversationReadinessUseCaseTests {
         
         let didChangeSpiritualConversationReadinessScaleUseCase = getDidChangeScaleForSpiritualConversationReadinessUseCase()
         
-        var cancellables: Set<AnyCancellable> = Set()
+        let readinessScale = didChangeSpiritualConversationReadinessScaleUseCase
+            .execute(scale: 5, appLanguage: LanguageCodeDomainModel.arabic.rawValue)
         
-        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
-        
-        await confirmation(expectedCount: 1) { confirmation in
-            
-            didChangeSpiritualConversationReadinessScaleUseCase
-                .execute(scale: 5, translateInAppLanguage: LanguageCodeDomainModel.arabic.rawValue)
-                .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
-                    
-                    readinessScaleRef = readinessScale
-                    
-                    confirmation()
-                }
-                .store(in: &cancellables)
-        }
         
         if #available(iOS 18, *) {
             
-            #expect(readinessScaleRef?.minScale.valueTranslatedInAppLanguage == "1")
-            #expect(readinessScaleRef?.maxScale.valueTranslatedInAppLanguage == "10")
-            #expect(readinessScaleRef?.scale.valueTranslatedInAppLanguage == "5")
+            #expect(readinessScale.minScale.valueTranslatedInAppLanguage == "1")
+            #expect(readinessScale.maxScale.valueTranslatedInAppLanguage == "10")
+            #expect(readinessScale.scale.valueTranslatedInAppLanguage == "5")
         }
         else {
             
-            #expect(readinessScaleRef?.minScale.valueTranslatedInAppLanguage == "١")
-            #expect(readinessScaleRef?.maxScale.valueTranslatedInAppLanguage == "١٠")
-            #expect(readinessScaleRef?.scale.valueTranslatedInAppLanguage == "٥")
+            #expect(readinessScale.minScale.valueTranslatedInAppLanguage == "١")
+            #expect(readinessScale.maxScale.valueTranslatedInAppLanguage == "١٠")
+            #expect(readinessScale.scale.valueTranslatedInAppLanguage == "٥")
         }
     }
     
@@ -139,24 +97,10 @@ struct DidChangeScaleForSpiritualConversationReadinessUseCaseTests {
         
         let didChangeSpiritualConversationReadinessScaleUseCase = getDidChangeScaleForSpiritualConversationReadinessUseCase()
         
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
-        
-        await confirmation(expectedCount: 1) { confirmation in
-            
-            didChangeSpiritualConversationReadinessScaleUseCase
-                .execute(scale: argument.scaleValue, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
-                .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
-                    
-                    readinessScaleRef = readinessScale
-                    
-                    confirmation()
-                }
-                .store(in: &cancellables)
-        }
-        
-        #expect(readinessScaleRef?.scale.integerValue == 1)
+        let readinessScale = didChangeSpiritualConversationReadinessScaleUseCase
+            .execute(scale: argument.scaleValue, appLanguage: LanguageCodeDomainModel.english.rawValue)
+
+        #expect(readinessScale.scale.integerValue == 1)
     }
     
     @Test(
@@ -174,24 +118,10 @@ struct DidChangeScaleForSpiritualConversationReadinessUseCaseTests {
         
         let didChangeSpiritualConversationReadinessScaleUseCase = getDidChangeScaleForSpiritualConversationReadinessUseCase()
         
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
-        
-        await confirmation(expectedCount: 1) { confirmation in
-            
-            didChangeSpiritualConversationReadinessScaleUseCase
-                .execute(scale: argument.scaleValue, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
-                .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
-                    
-                    readinessScaleRef = readinessScale
-                    
-                    confirmation()
-                }
-                .store(in: &cancellables)
-        }
-        
-        #expect(readinessScaleRef?.scale.integerValue == 10)
+        let readinessScale = didChangeSpiritualConversationReadinessScaleUseCase
+            .execute(scale: argument.scaleValue, appLanguage: LanguageCodeDomainModel.english.rawValue)
+                
+        #expect(readinessScale.scale.integerValue == 10)
     }
 }
 

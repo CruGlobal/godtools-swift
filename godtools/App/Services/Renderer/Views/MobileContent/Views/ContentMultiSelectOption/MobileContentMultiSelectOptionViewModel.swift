@@ -19,7 +19,11 @@ class MobileContentMultiSelectOptionViewModel: MobileContentViewModel {
     let backgroundColor: ObservableValue<UIColor>
     let hidesShadow: Bool
     
-    init(multiSelectOptionModel: Multiselect.Option, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
+    init(
+        multiSelectOptionModel: Multiselect.Option,
+        renderedPageContext: MobileContentRenderedPageContext,
+        mobileContentAnalytics: MobileContentRendererAnalytics
+    ) {
         
         self.multiSelectOptionModel = multiSelectOptionModel
         self.mobileContentAnalytics = mobileContentAnalytics

@@ -9,10 +9,12 @@
 import Foundation
 import Combine
 
-class ShareToolViewModel {
+@MainActor
+final class ShareToolViewModel {
         
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     
+    private let stepEmitter: FlowStepEmitter
     private let toolId: String
     private let toolAnalyticsAbbreviation: String
     private let incrementUserCounterUseCase: IncrementUserCounterUseCase
@@ -23,12 +25,19 @@ class ShareToolViewModel {
     let strings: ShareToolStringsDomainModel
     
     private var cancellables = Set<AnyCancellable>()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
-    init(flowDelegate: FlowDelegate, strings: ShareToolStringsDomainModel, toolId: String, toolAnalyticsAbbreviation: String, pageNumber: Int, incrementUserCounterUseCase: IncrementUserCounterUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+        
+    init(
+        stepEmitter: FlowStepEmitter,
+        strings: ShareToolStringsDomainModel,
+        toolId: String,
+        toolAnalyticsAbbreviation: String,
+        pageNumber: Int,
+        incrementUserCounterUseCase: IncrementUserCounterUseCase,
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
+        trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
+    ) {
              
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.strings = strings
         self.toolId = toolId
         self.toolAnalyticsAbbreviation = toolAnalyticsAbbreviation
@@ -96,11 +105,11 @@ extension ShareToolViewModel {
     
     func qrCodeTapped() {
     
-        flowDelegate?.navigate(step: .qrCodeTappedFromShareTool)
+        stepEmitter.emit(step: AppFlowStep.qrCodeTappedFromShareTool)
     }
     
     func activityViewDismissed() {
         
-        flowDelegate?.navigate(step: .dismissedShareTool)
+        stepEmitter.emit(step: AppFlowStep.dismissedShareTool)
     }
 }

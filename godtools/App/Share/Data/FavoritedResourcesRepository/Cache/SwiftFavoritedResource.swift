@@ -17,7 +17,7 @@ typealias SwiftFavoritedResource = SwiftFavoritedResourceV1.SwiftFavoritedResour
 enum SwiftFavoritedResourceV1 {
 
     @Model
-    class SwiftFavoritedResource: IdentifiableSwiftDataObject, FavoritedResourceDataModelInterface {
+    class SwiftFavoritedResource: IdentifiableSwiftDataObject {
         
         var createdAt: Date = Date()
         var position: Int = 0
@@ -28,19 +28,31 @@ enum SwiftFavoritedResourceV1 {
         init() {
             
         }
+    }
+}
+
+@available(iOS 17.4, *)
+extension SwiftFavoritedResource {
+    
+    func mapFrom(model: FavoritedResourceDataModel) {
         
-        func mapFrom(interface: FavoritedResourceDataModelInterface) {
-            
-            createdAt = interface.createdAt
-            id = interface.id
-            resourceId = interface.id
-            position = interface.position
-        }
-        
-        static func createNewFrom(interface: FavoritedResourceDataModelInterface) -> SwiftFavoritedResource {
-            let object = SwiftFavoritedResource()
-            object.mapFrom(interface: interface)
-            return object
-        }
+        createdAt = model.createdAt
+        id = model.id
+        resourceId = model.id
+        position = model.position
+    }
+    
+    static func createNewFrom(model: FavoritedResourceDataModel) -> SwiftFavoritedResource {
+        let object = SwiftFavoritedResource()
+        object.mapFrom(model: model)
+        return object
+    }
+    
+    func toModel() -> FavoritedResourceDataModel {
+        return FavoritedResourceDataModel(
+            id: id,
+            createdAt: createdAt,
+            position: position
+        )
     }
 }

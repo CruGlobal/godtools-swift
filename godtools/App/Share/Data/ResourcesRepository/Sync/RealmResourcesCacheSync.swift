@@ -8,33 +8,59 @@
 
 import Foundation
 import RealmSwift
-import Combine
 import RepositorySync
 
-class RealmResourcesCacheSync {
+final class RealmResourcesCacheSync {
     
     typealias SHA256PlusPathExtension = String
     typealias ResourceId = String
     typealias TranslationId = String
     
     private let realmDatabase: RealmDatabase
+    private let realmDataWrite: RealmDataWrite
     private let trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
     
-    init(realmDatabase: RealmDatabase, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository) {
+    init(
+        realmDatabase: RealmDatabase,
+        realmDataWrite: RealmDataWrite,
+        trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
+    ) {
         
         self.realmDatabase = realmDatabase
+        self.realmDataWrite = realmDataWrite
         self.trackDownloadedTranslationsRepository = trackDownloadedTranslationsRepository
     }
     
-    func syncResources(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable, shouldRemoveDataThatNoLongerExists: Bool) -> AnyPublisher<ResourcesCacheSyncResult, Error> {
-             
-        return Future() { promise in            
-            
-            self.realmDatabase.write.serialAsync(asyncClosure: { (result: Result<Realm, Error>) in
+    func syncResources(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable, shouldRemoveDataThatNoLongerExists: Bool) async throws -> ResourcesCacheSyncResult {
+        
+        return try await withCheckedThrowingContinuation { continuation in
+            syncResourcesWithCompletion(resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments, shouldRemoveDataThatNoLongerExists: shouldRemoveDataThatNoLongerExists, completion: { (result: Result<ResourcesCacheSyncResult, Error>) in
                 
                 switch result {
                 
-                case .success(let realm):
+                case .success(let resourcesCacheSyncResult):
+                    continuation.resume(returning: resourcesCacheSyncResult)
+                
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
+            })
+        }
+    }
+    
+    private func syncResourcesWithCompletion(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable, shouldRemoveDataThatNoLongerExists: Bool, completion: @escaping ((_ result: Result<ResourcesCacheSyncResult, Error>) -> Void)) {
+     
+        realmDataWrite.serialAsync(asyncClosure: { [weak self] (result: Result<Realm, Error>) in
+            
+            guard let weakSelf = self else {
+                return
+            }
+            
+            switch result {
+            
+            case .success(let realm):
+                
+                do {
                     
                     var newObjectsToStore: [Object] = Array()
                     
@@ -56,7 +82,7 @@ class RealmResourcesCacheSync {
                         
                         for newResource in resourcesPlusLatestTranslationsAndAttachments.resources {
                             
-                            let resource = RealmResource.createNewFrom(interface: newResource)
+                            let resource = RealmResource.createNewFrom(model: newResource.toModel())
                             resourcesDictionary[resource.id] = resource
                             
                             newObjectsToStore.append(resource)
@@ -87,7 +113,7 @@ class RealmResourcesCacheSync {
                         
                         for newTranslation in resourcesPlusLatestTranslationsAndAttachments.translations {
                             
-                            let translation = RealmTranslation.createNewFrom(interface: newTranslation)
+                            let translation = RealmTranslation.createNewFrom(model: newTranslation.toModel())
                             
                             if let resourceId = newTranslation.resource?.id {
                                 translation.resource = resourcesDictionary[resourceId]
@@ -127,7 +153,7 @@ class RealmResourcesCacheSync {
                         
                         for newAttachment in resourcesPlusLatestTranslationsAndAttachments.attachments {
                             
-                            let attachment = RealmAttachment.createNewFrom(interface: newAttachment)
+                            let attachment = RealmAttachment.createNewFrom(model: newAttachment.toModel())
                             
                             if let resourceId = newAttachment.resource?.id {
                                 attachment.resource = resourcesDictionary[resourceId]
@@ -181,7 +207,7 @@ class RealmResourcesCacheSync {
                     
                     // filter latest downloaded translations from translations to delete
                     
-                    existingTranslationsMinusNewlyAddedTranslations = existingTranslationsMinusNewlyAddedTranslations.filter({
+                    existingTranslationsMinusNewlyAddedTranslations = try existingTranslationsMinusNewlyAddedTranslations.filter({
                                             
                         guard let resourceId = $0.resource?.id else {
                             return true
@@ -191,7 +217,10 @@ class RealmResourcesCacheSync {
                             return true
                         }
                         
-                        let latestTrackedDownloadedTranslation: DownloadedTranslationDataModel? = self.trackDownloadedTranslationsRepository.cache.getLatestDownloadedTranslation(resourceId: resourceId, languageId: languageId)
+                        let latestTrackedDownloadedTranslation: DownloadedTranslationDataModel? = try weakSelf.trackDownloadedTranslationsRepository.getLatestDownloadedTranslation(
+                            resourceId: resourceId,
+                            languageId: languageId
+                        )
                         
                         let translationIsLatestDownloadedTranslation: Bool = latestTrackedDownloadedTranslation?.translationId == $0.id
                         
@@ -208,10 +237,10 @@ class RealmResourcesCacheSync {
                     let translationIdsToRemove: [String] = existingTranslationsMinusNewlyAddedTranslations.map({$0.id})
                     let downloadedTranslationsToRemove: [RealmDownloadedTranslation] = Array(realm.objects(RealmDownloadedTranslation.self).filter("\(#keyPath(RealmDownloadedTranslation.translationId)) IN %@", translationIdsToRemove))
 
-                    let resourcesRemoved: [ResourceDataModel] = existingResourcesMinusNewlyAddedResources.map({ResourceDataModel(interface: $0)})
-                    let translationsRemoved: [TranslationDataModel] = existingTranslationsMinusNewlyAddedTranslations.map({TranslationDataModel(interface: $0)})
-                    let attachmentsRemoved: [AttachmentDataModel] = existingAttachmentsMinusNewlyAddedAttachments.map({AttachmentDataModel(interface: $0, storedAttachment: nil)})
-                    let downloadedTranslationsRemoved: [DownloadedTranslationDataModel] = downloadedTranslationsToRemove.map({DownloadedTranslationDataModel(interface: $0)})
+                    let resourcesRemoved: [ResourceDataModel] = existingResourcesMinusNewlyAddedResources.map({ $0.toModel() })
+                    let translationsRemoved: [TranslationDataModel] = existingTranslationsMinusNewlyAddedTranslations.map({ $0.toModel() })
+                    let attachmentsRemoved: [AttachmentDataModel] = existingAttachmentsMinusNewlyAddedAttachments.map({ $0.toModel() })
+                    let downloadedTranslationsRemoved: [DownloadedTranslationDataModel] = downloadedTranslationsToRemove.map({ $0.toModel() })
                     
                     // delete realm objects that no longer exist
                     var objectsToRemove: [Object] = Array()
@@ -221,31 +250,28 @@ class RealmResourcesCacheSync {
                     objectsToRemove.append(contentsOf: existingAttachmentsMinusNewlyAddedAttachments)
                     objectsToRemove.append(contentsOf: downloadedTranslationsToRemove)
                     
-                    do {
-                        
-                        try realm.write {
-                            realm.add(newObjectsToStore, update: .all)
-                            realm.delete(objectsToRemove)
-                        }
-                        
-                        let syncResult = ResourcesCacheSyncResult(
-                            resourcesRemoved: resourcesRemoved,
-                            translationsRemoved: translationsRemoved,
-                            attachmentsRemoved: attachmentsRemoved,
-                            downloadedTranslationsRemoved: downloadedTranslationsRemoved
-                        )
-                        
-                        promise(.success(syncResult))
-                    }
-                    catch let error {
-                        promise(.failure(error))
+                    try realm.write {
+                        realm.add(newObjectsToStore, update: .all)
+                        realm.delete(objectsToRemove)
                     }
                     
-                case .failure(let error):
-                    promise(.failure(error))
-                }// end switch
-            })
-        }
-        .eraseToAnyPublisher()
+                    let syncResult = ResourcesCacheSyncResult(
+                        resourcesRemoved: resourcesRemoved,
+                        translationsRemoved: translationsRemoved,
+                        attachmentsRemoved: attachmentsRemoved,
+                        downloadedTranslationsRemoved: downloadedTranslationsRemoved
+                    )
+                                        
+                    completion(.success(syncResult))
+                }
+                catch let error {
+                    
+                    completion(.failure(error))
+                }
+                
+            case .failure(let error):
+                completion(.failure(error))
+            }// end switch
+        })
     }
 }

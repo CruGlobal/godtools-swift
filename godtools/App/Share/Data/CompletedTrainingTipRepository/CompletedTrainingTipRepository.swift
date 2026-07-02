@@ -7,29 +7,46 @@
 //
 
 import Foundation
-import Combine
 
-class CompletedTrainingTipRepository {
+final class CompletedTrainingTipRepository {
     
-    private let cache: RealmCompletedTrainingTipCache
+    private let cache: CompletedTrainingTipCache
     
-    init(cache: RealmCompletedTrainingTipCache) {
+    init(cache: CompletedTrainingTipCache) {
         
         self.cache = cache
     }
     
-    func getCompletedTrainingTip(id: String) -> CompletedTrainingTipDataModel? {
+    func getCompletedTrainingTip(id: TrainingTipId) -> CompletedTrainingTipDataModel? {
         
-        return cache.getCompletedTrainingTip(id: id)
+        do {
+            return try cache.persistence.getDataModel(id: id.value)
+        }
+        catch _ {
+            return nil
+        }
     }
     
     func getNumberOfCompletedTrainingTips() -> Int {
         
-        return cache.countCompletedTrainingTips()
+        do {
+            return try cache.persistence.getObjectCount()
+        }
+        catch _ {
+            return 0
+        }
     }
     
-    func storeCompletedTrainingTip(_ completedTrainingTip: CompletedTrainingTipDataModel) -> AnyPublisher<CompletedTrainingTipDataModel, Error> {
+    func storeCompletedTrainingTip(id: TrainingTipId) async throws {
         
-        return cache.storeCompletedTrainingTip(completedTrainingTip: completedTrainingTip)
+        let trainingTipDataModel = CompletedTrainingTipDataModel(
+            id: id
+        )
+        
+        _ = try await cache.persistence.writeObjects(
+            externalObjects: [trainingTipDataModel],
+            writeOption: nil,
+            getOption: nil
+        )
     }
 }

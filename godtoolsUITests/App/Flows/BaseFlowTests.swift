@@ -9,6 +9,7 @@
 import Foundation
 import XCTest
 
+@MainActor
 class BaseFlowTests: XCTestCase {
         
     private static let defaultWaitForScreenExistence: TimeInterval = 2

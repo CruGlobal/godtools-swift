@@ -10,7 +10,6 @@ import Testing
 @testable import godtools
 import RepositorySync
 
-@Suite(.serialized)
 struct GetTranslatedToolNameTests {
     
     struct TestArgument {
@@ -39,11 +38,7 @@ struct GetTranslatedToolNameTests {
     )
     func testToolNameIsTranslated(argument: TestArgument) throws {
         
-        let testsDiContainer: TestsDiContainer = try getTestsDiContainer()
-        
-        let getTranslatedToolName: GetTranslatedToolName = getTranslatedToolName(
-            testsDiContainer: testsDiContainer
-        )
+        let getTranslatedToolName = try getTranslatedToolName()
         
         let translatedToolName: String = getTranslatedToolName.getToolName(
             toolId: toolId,
@@ -66,12 +61,8 @@ struct GetTranslatedToolNameTests {
         ]
     )
     func testToolNameIsTranslatedInDefaultLocale(argument: TestArgument) throws {
-        
-        let testsDiContainer: TestsDiContainer = try getTestsDiContainer()
-        
-        let getTranslatedToolName: GetTranslatedToolName = getTranslatedToolName(
-            testsDiContainer: testsDiContainer
-        )
+                
+        let getTranslatedToolName = try getTranslatedToolName()
         
         let translatedToolName: String = getTranslatedToolName.getToolName(
             toolId: toolId,
@@ -84,18 +75,15 @@ struct GetTranslatedToolNameTests {
 
 extension GetTranslatedToolNameTests {
     
-    private func getTestsDiContainer() throws -> TestsDiContainer {
+    private func getTranslatedToolName() throws -> GetTranslatedToolName {
         
-        return try TestsDiContainer(
-            realmFileName: String(describing: GetTranslatedToolNameTests.self),
+        let testsDiContainer = try TestsDiContainer(
             addRealmObjects: getRealmObjects()
         )
-    }
-    
-    private func getTranslatedToolName(testsDiContainer: TestsDiContainer) -> GetTranslatedToolName {
+        
         return GetTranslatedToolName(
-            resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
-            translationsRepository: testsDiContainer.dataLayer.getTranslationsRepository()
+            resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),
+            translationsRepository: testsDiContainer.core.dataLayer.getTranslationsRepository()
         )
     }
     

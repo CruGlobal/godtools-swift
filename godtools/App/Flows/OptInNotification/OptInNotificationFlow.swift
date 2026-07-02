@@ -10,72 +10,66 @@ import Foundation
 import UIKit
 import Combine
 
-class OptInNotificationFlow: Flow {
+final class OptInNotificationFlow: GTFlow {
     
-    private var cancellables: Set<AnyCancellable> = Set()
-    private var checkNotificationStatusCancellable: AnyCancellable?
+    enum CompletedState: Sendable {
+        case completed
+    }
+                
+    @Published private var appLanguage = AppLanguageDomainModel.english
     
-    private weak var flowDelegate: FlowDelegate?
-    
-    let appDiContainer: AppDiContainer
-    let navigationController: AppNavigationController
-    
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-    
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, presentOnNavigationController: AppNavigationController) {
+    init(appDiContainer: AppDiContainer, notificationPromptType: OptInNotificationViewModel.NotificationPromptType) {
         
-        self.flowDelegate = flowDelegate
-        self.appDiContainer = appDiContainer
-        self.navigationController = presentOnNavigationController
+        let stepEmitter = FlowStepEmitter()
         
+        let viewModel = OptInNotificationViewModel(
+            stepEmitter: stepEmitter,
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            getOptInNotificationStringsUseCase: appDiContainer.feature.optInNotification.domainLayer.getOptInNotificationStringsUseCase(),
+            notificationPromptType: notificationPromptType
+        )
+        
+        let view = OptInNotificationView(viewModel: viewModel)
+        
+        let hostingView = AppHostingController<OptInNotificationView>(
+            rootView: view,
+            navigationBar: nil,
+            animateInAnimatedTransitioning: NoAnimationTransition(transition: .transitionIn),
+            animateOutAnimatedTransitioning: NoAnimationTransition(transition: .transitionOut)
+        )
+        
+        hostingView.view.backgroundColor = .clear
+        hostingView.modalPresentationStyle = .overCurrentContext
+        
+        super.init(
+            appDiContainer: appDiContainer,
+            initialView: hostingView,
+            stepEmitter: stepEmitter,
+            navigationController: AppNavigationController(
+                navigationBarAppearance: nil,
+                hidesNavigationBar: true
+            ),
+            onPresentType: .presentInitialView
+        )
+  
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()
             .execute()
             .assign(to: &$appLanguage)
         
-        
-        checkNotificationStatusCancellable = appDiContainer.feature
-            .optInNotification
-            .domainLayer
-            .getCheckNotificationStatusUseCase()
-            .execute()
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { _ in
-                
-            }, receiveValue: { [weak self] (status: PermissionStatusDomainModel) in
-                
-                self?.checkNotificationStatusCancellable = nil
-                
-                guard let weakSelf = self else {
-                    return
-                }
-                
-                let notificationPromptType: OptInNotificationViewModel.NotificationPromptType
-                
-                switch status {
-                case .undetermined:
-                    notificationPromptType = .allow
-                default:
-                    notificationPromptType = .settings
-                }
-                                
-                let optInNotificationView: UIViewController = weakSelf.getOptInNotificationView(
-                    notificationPromptType: notificationPromptType
-                )
-                
-                presentOnNavigationController.present(optInNotificationView, animated: true)
-            })
-        
-        appDiContainer.feature.optInNotification.dataLayer.getOptInNotificationRepository().recordPrompt()
+        appDiContainer.feature.optInNotification.dataLayer
+            .getOptInNotificationRepository()
+            .recordPrompt()
     }
     
-    deinit {
-        print("x deinit: \(type(of: self))")
-    }
-    
-    func navigate(step: FlowStep) {
+    override func navigate(step: FlowStep) {
         
-        switch step {
+        guard let appStep = step as? AppFlowStep else {
+            return
+        }
+
+        switch appStep {
+            
         case .closeTappedFromOptInNotification:
             completeFlow(state: .completed)
             
@@ -106,57 +100,24 @@ class OptInNotificationFlow: Flow {
         }
     }
     
-    private func completeFlow(state: OptInNotificationFlowCompletedState) {
-        flowDelegate?.navigate(step: .optInNotificationFlowCompleted(state: .completed))
+    private func completeFlow(state: OptInNotificationFlow.CompletedState) {
+        parent?.stepEmitter.emit(step: AppFlowStep.optInNotificationFlowCompleted(state: state))
     }
 }
 
 extension OptInNotificationFlow {
     
-    private func getOptInNotificationView(notificationPromptType: OptInNotificationViewModel.NotificationPromptType) -> UIViewController {
-        
-        let viewModel = OptInNotificationViewModel(
-            flowDelegate: self,
-            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getOptInNotificationStringsUseCase: appDiContainer.feature.optInNotification.domainLayer.getOptInNotificationStringsUseCase(),
-            notificationPromptType: notificationPromptType
-        )
-        
-        let view = OptInNotificationView(viewModel: viewModel, overlayTappedClosure: { [weak self] in
-            
-            self?.navigate(step: .closeTappedFromOptInNotification)
-        })
-        
-        let hostingView = AppHostingController<OptInNotificationView>(
-            rootView: view,
-            navigationBar: nil,
-            animateInAnimatedTransitioning: NoAnimationTransition(transition: .transitionIn),
-            animateOutAnimatedTransitioning: NoAnimationTransition(transition: .transitionOut)
-        )
-
-        hostingView.view.backgroundColor = .clear
-        hostingView.modalPresentationStyle = .overCurrentContext
-        
-        return hostingView
-    }
-    
     private func presentRequestNotificationPermission() {
         
-        appDiContainer.feature.optInNotification.domainLayer
-            .getRequestNotificationPermissionUseCase()
-            .execute()
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { _ in
-                
-            }, receiveValue: { [weak self] (granted: Bool) in
-                
-                if granted {
-                    self?.navigate(step: .allowTappedFromRequestNotificationPermission)
-                }
-                else {
-                    self?.navigate(step: .dontAllowTappedFromRequestNotificationPermission)
-                }
-            })
-            .store(in: &cancellables)
+        Task {
+            
+            let granted: Bool = try await appDiContainer.feature.optInNotification.domainLayer
+                .getRequestNotificationPermissionUseCase()
+                .execute()
+                        
+            navigate(
+                step: granted ? AppFlowStep.allowTappedFromRequestNotificationPermission : AppFlowStep.dontAllowTappedFromRequestNotificationPermission
+            )
+        }
     }
 }

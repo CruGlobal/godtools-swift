@@ -17,13 +17,17 @@ class MobileContentBackgroundImageViewModel {
         
     let backgroundImage: UIImage?
     
-    init(backgroundImageModel: BackgroundImageModel, manifestResourcesCache: MobileContentRendererManifestResourcesCache, languageDirection: LanguageDirectionDomainModel) {
+    init(
+        backgroundImageModel: BackgroundImageModel,
+        manifestResourcesCache: MobileContentRendererManifestResourcesCache,
+        languageDirection: LanguageDirectionDomainModel
+    ) {
         
         self.backgroundImageModel = backgroundImageModel
         self.manifestResourcesCache = manifestResourcesCache
         self.languageDirection = languageDirection
         
-        if let backgroundImage = manifestResourcesCache.getNonThrowingUIImage(resource: backgroundImageModel.backgroundImageResource) {
+        if let backgroundImage = manifestResourcesCache.getUIImageNonThrowing(resource: backgroundImageModel.backgroundImageResource) {
             self.backgroundImage = backgroundImage
         }
         else {

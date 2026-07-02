@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ToolSettingsDataLayerDependencies {
+final class ToolSettingsDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     

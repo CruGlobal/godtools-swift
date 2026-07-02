@@ -8,26 +8,34 @@
 
 import UIKit
 
+@MainActor
 class AlertMessageView {
     
     let controller: UIAlertController
     
-    required init(viewModel: AlertMessageViewModelType) {
+    init(
+        title: String,
+        message: String,
+        acceptTitle: String,
+        cancelTitle: String?,
+        acceptTapped: (() -> Void)?,
+        cancelTapped: (() -> Void)?
+    ) {
                         
         controller = UIAlertController(
-            title: viewModel.title,
-            message: viewModel.message,
+            title: title,
+            message: message,
             preferredStyle: .alert
         )
         
-        if let cancelTitle = viewModel.cancelTitle {
+        if let cancelTitle = cancelTitle, !cancelTitle.isEmpty {
             controller.addAction(UIAlertAction(title: cancelTitle, style: .default, handler: { (action: UIAlertAction) in
-                viewModel.cancelTapped()
+                cancelTapped?()
             }))
         }
         
-        controller.addAction(UIAlertAction(title: viewModel.acceptTitle, style: .default, handler: { (action: UIAlertAction) in
-            viewModel.acceptTapped()
+        controller.addAction(UIAlertAction(title: acceptTitle, style: .default, handler: { (action: UIAlertAction) in
+            acceptTapped?()
         }))
     }
 }

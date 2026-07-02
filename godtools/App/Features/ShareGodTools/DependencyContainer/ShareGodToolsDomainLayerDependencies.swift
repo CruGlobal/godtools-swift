@@ -8,20 +8,20 @@
 
 import Foundation
 
-class ShareGodToolsDomainLayerDependencies {
+final class ShareGodToolsDomainLayerDependencies {
     
-    private let coreDataLayer: AppDataLayerDependencies
+    private let core: AppCoreDiContainer
     private let dataLayer: ShareGodToolsDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, dataLayer: ShareGodToolsDataLayerDependencies) {
+    init(core: AppCoreDiContainer, dataLayer: ShareGodToolsDataLayerDependencies) {
         
-        self.coreDataLayer = coreDataLayer
+        self.core = core
         self.dataLayer = dataLayer
     }
     
     func getShareGodToolsStringsUseCase() -> GetShareGodToolsStringsUseCase {
         return GetShareGodToolsStringsUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
 }

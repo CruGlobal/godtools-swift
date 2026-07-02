@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetDeferredDeepLinkModalStringsUseCase {
     
@@ -17,16 +16,15 @@ final class GetDeferredDeepLinkModalStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<DeferredDeepLinkModalStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> DeferredDeepLinkModalStringsDomainModel {
         
         let localeIdentifier = appLanguage
         
         let strings = DeferredDeepLinkModalStringsDomainModel(
-            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeIdentifier, key: "deferredDeepLinkModal.title"),
-            message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeIdentifier, key: "deferredDeepLinkModal.message")
+            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeIdentifier, key: LocalizableStringKeys.deferredDeepLinkModalTitle.key),
+            message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeIdentifier, key: LocalizableStringKeys.deferredDeepLinkModalMessage.key)
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

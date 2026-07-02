@@ -10,8 +10,11 @@ import Foundation
 import SocialAuthentication
 import RepositorySync
 
-class GodToolsAppConfig: AppConfigInterface {
+final class GodToolsAppConfig: AppConfigInterface {
 
+    private static let mobileContentCDNProduction: String = "https://mobilecontent.cru.org"
+    private static let mobileContentCDNStaging: String = "https://mobilecontent-stage.cru.org"
+    
     private let appBuild: AppBuild
         
     init() {
@@ -110,29 +113,20 @@ class GodToolsAppConfig: AppConfigInterface {
         return Self.getMobileContentApiBaseUrlByScheme(environment: environment)
     }
     
-    func getLegacyRealmDatabase() -> LegacyRealmDatabase {
-        
-        switch appBuild.environment {
-        
-        case .staging:
-            return LegacyRealmDatabase(realmDatabase: getRealmDatabase())
-        case .production:
-            return LegacyRealmDatabase(realmDatabase: getRealmDatabase())
-        }
+    func getMobileContentCDNBaseUrl() -> String {
+        return Self.getMobileContentCDNBaseUrl(environment: environment)
     }
     
-    func getRealmDatabase() -> RealmDatabase {
-        
-        let config: RealmDatabaseConfig
-        
+    func getRealmDatabaseConfig() throws -> RealmDatabaseConfig {
+                
         switch appBuild.environment {
-        case .staging:
-            config = RealmStagingConfig().createConfig()
-        case .production:
-            config = RealmProductionConfig().createConfig()
-        }
         
-        return RealmDatabase(databaseConfig: config)
+        case .staging:
+            return try RealmStagingConfig().createConfig()
+        
+        case .production:
+            return try RealmProductionConfig().createConfig()
+        }
     }
     
     @available(iOS 17.4, *)
@@ -180,6 +174,17 @@ extension GodToolsAppConfig {
             return "\(scheme)://mobile-content-api-stage.cru.org"
         case .production:
             return "\(scheme)://mobile-content-api.cru.org"
+        }
+    }
+    
+    static func getMobileContentCDNBaseUrl(environment: AppEnvironment) -> String {
+        
+        switch environment {
+        
+        case .staging:
+            return Self.mobileContentCDNStaging
+        case .production:
+            return Self.mobileContentCDNProduction
         }
     }
     

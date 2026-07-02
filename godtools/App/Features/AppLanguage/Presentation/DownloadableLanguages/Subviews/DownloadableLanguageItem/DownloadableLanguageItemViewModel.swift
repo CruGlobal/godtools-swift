@@ -9,32 +9,37 @@
 import Foundation
 import Combine
 
-@MainActor class DownloadableLanguageItemViewModel: ObservableObject {
+@MainActor
+class DownloadableLanguageItemViewModel: ObservableObject {
     
     typealias LanguageId = String
     
     private static let endMarkedForRemovalAfterSeconds: TimeInterval = 3
     
     private static var inMemoryStateForRecycle: [LanguageId: DownloadableLanguageItemRecycleState] = Dictionary()
-    private static var languageDownloads: [LanguageId: AnimateDownloadProgress] = Dictionary()
+    private static var languageDownloads: [LanguageId: AnyCancellable] = Dictionary()
     private static var resetIsMarkedForRemovalTimers: [LanguageId: SwiftUITimer] = Dictionary()
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     
+    private let stepEmitter: FlowStepEmitter
     private let downloadToolLanguageUseCase: DownloadToolLanguageUseCase
     private let removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     let downloadableLanguage: DownloadableLanguageListItemDomainModel
     let recycleState: DownloadableLanguageItemRecycleState
     
     @Published private(set) var iconState: LanguageDownloadIconState = .notDownloaded
     
-    init(flowDelegate: FlowDelegate, downloadableLanguage: DownloadableLanguageListItemDomainModel, downloadToolLanguageUseCase: DownloadToolLanguageUseCase, removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        downloadableLanguage: DownloadableLanguageListItemDomainModel,
+        downloadToolLanguageUseCase: DownloadToolLanguageUseCase,
+        removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase
+    ) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.downloadableLanguage = downloadableLanguage
         self.downloadToolLanguageUseCase = downloadToolLanguageUseCase
         self.removeDownloadedToolLanguageUseCase = removeDownloadedToolLanguageUseCase
@@ -48,43 +53,37 @@ import Combine
             recycleState = DownloadableLanguageItemRecycleState(downloadableLanguage: downloadableLanguage)
             Self.inMemoryStateForRecycle[languageId] = recycleState
         }
-             
+                
         Publishers.CombineLatest(
             recycleState.$downloadState,
             recycleState.$isMarkedForRemoval
         )
-        .flatMap { (downloadState: DownloadableLanguageDownloadState, isMarkedForRemoval: Bool) -> AnyPublisher<LanguageDownloadIconState, Never>  in
-            
-            let iconState: LanguageDownloadIconState
-            
-            if isMarkedForRemoval {
-                iconState = .remove
-            }
-            else {
-                
-                switch downloadState {
-                case .downloaded:
-                    iconState = .downloaded
-                case .downloading(let progress):
-                    iconState = .downloading(progress: progress)
-                case .notDownloaded:
-                    iconState = .notDownloaded
-                }
+        .map { (downloadState: DownloadableLanguageDownloadState, isMarkedForRemoval: Bool) in
+                        
+            guard !isMarkedForRemoval else {
+                return .remove
             }
             
-            return Just(iconState)
-                .eraseToAnyPublisher()
+            switch downloadState {
+            case .downloaded:
+                return .downloaded
+            case .downloading(let progress):
+                return .downloading(progress: progress)
+            case .notDownloaded:
+                return .notDownloaded
+            case .failed( _):
+                return .notDownloaded
+            }
         }
-        .assign(to: &$iconState)
-        
-        recycleState
-            .$downloadError
-            .sink(receiveValue: { [weak self] (downloadError: Error?) in
-                if let downloadError = downloadError {
-                    self?.flowDelegate?.navigate(step: .languageDownloadFailedFromDownloadedLanguages(error: downloadError))
-                }
-            })
-            .store(in: &cancellables)
+        .sink { [weak self] (iconState: LanguageDownloadIconState) in
+                        
+            self?.iconState = iconState
+        }
+        .store(in: &cancellables)
+    }
+    
+    deinit {
+        //print("x deinit: \(type(of: self))")
     }
     
     private var languageId: String {
@@ -108,13 +107,9 @@ extension DownloadableLanguageItemViewModel {
         
         recycleState.downloadState = .notDownloaded
         
-        removeDownloadedToolLanguageUseCase
-            .execute(languageId: languageId)
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-
-            }
-            .store(in: &Self.backgroundCancellables)
+        Task {
+            try await removeDownloadedToolLanguageUseCase.execute(languageId: languageId)
+        }
     }
 }
 
@@ -122,21 +117,26 @@ extension DownloadableLanguageItemViewModel {
 
 extension DownloadableLanguageItemViewModel {
     
-    private static func startLanguageDownload(downloadToolLanguageUseCase: DownloadToolLanguageUseCase, recycleState: DownloadableLanguageItemRecycleState, languageId: String, flowDelegate: FlowDelegate?) {
+    private func startDownload() {
+        Self.startLanguageDownload(
+            downloadToolLanguageUseCase: downloadToolLanguageUseCase,
+            recycleState: recycleState,
+            languageId: languageId
+        )
+    }
+    
+    private static func startLanguageDownload(downloadToolLanguageUseCase: DownloadToolLanguageUseCase, recycleState: DownloadableLanguageItemRecycleState, languageId: String) {
                   
         let isDownloading: Bool = recycleState.downloadState.isDownloading
 
         guard !isDownloading else {
             return
         }
-        
-        let languageDownloadWithAnimateDownloadProgress = AnimateDownloadProgress()
-        
+                
         recycleState.downloadState = .downloading(progress: 0)
-        Self.languageDownloads[languageId] = languageDownloadWithAnimateDownloadProgress
         
-        languageDownloadWithAnimateDownloadProgress
-            .start(downloadProgressPublisher: downloadToolLanguageUseCase.execute(languageId: languageId))
+        Self.languageDownloads[languageId] = downloadToolLanguageUseCase
+            .execute(languageId: languageId)
             .receive(on: DispatchQueue.main)
             .sink { completion in
                 
@@ -146,16 +146,18 @@ extension DownloadableLanguageItemViewModel {
                 case .finished:
                     recycleState.downloadState = .downloaded
                 case .failure(let error):
-                    recycleState.downloadError = error
-                    recycleState.downloadError = nil
-                    recycleState.downloadState = .notDownloaded
+                    recycleState.downloadState = .failed(errorReason: error.localizedDescription)
                 }
                 
             } receiveValue: { (progress: Double) in
                 
-                recycleState.downloadState = .downloading(progress: progress)
+                if progress < 1 {
+                    recycleState.downloadState = .downloading(progress: progress)
+                }
+                else {
+                    recycleState.downloadState = .downloaded
+                }
             }
-            .store(in: &backgroundCancellables)
     }
 }
 
@@ -215,12 +217,14 @@ extension DownloadableLanguageItemViewModel {
             break
             
         case .notDownloaded:
-            Self.startLanguageDownload(
-                downloadToolLanguageUseCase: downloadToolLanguageUseCase,
-                recycleState: recycleState,
-                languageId: languageId,
-                flowDelegate: flowDelegate
-            )
+            startDownload()
+            
+        case .failed( _):
+            retryDownloadTapped()
         }
+    }
+    
+    func retryDownloadTapped() {
+        startDownload()
     }
 }

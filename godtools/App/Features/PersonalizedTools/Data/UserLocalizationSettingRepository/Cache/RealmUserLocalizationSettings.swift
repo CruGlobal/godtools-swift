@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import RepositorySync
 
-class RealmUserLocalizationSettings: Object, IdentifiableRealmObject, UserLocalizationSettingsDataModelInterface {
+class RealmUserLocalizationSettings: Object, IdentifiableRealmObject {
 
     @Persisted var id: String = ""
     @Persisted var createdAt: Date = Date()
@@ -19,16 +19,27 @@ class RealmUserLocalizationSettings: Object, IdentifiableRealmObject, UserLocali
     override static func primaryKey() -> String? {
         return "id"
     }
+}
 
-    func mapFrom(interface: UserLocalizationSettingsDataModelInterface) {
-        id = interface.id
-        createdAt = interface.createdAt
-        selectedCountryIsoRegionCode = interface.selectedCountryIsoRegionCode
+extension RealmUserLocalizationSettings {
+    
+    func mapFrom(model: UserLocalizationSettingsDataModel) {
+        id = model.id
+        createdAt = model.createdAt
+        selectedCountryIsoRegionCode = model.selectedCountryIsoRegionCode
     }
     
-    static func createNewFrom(interface: UserLocalizationSettingsDataModelInterface) -> RealmUserLocalizationSettings {
+    static func createNewFrom(model: UserLocalizationSettingsDataModel) -> RealmUserLocalizationSettings {
         let object = RealmUserLocalizationSettings()
-        object.mapFrom(interface: interface)
+        object.mapFrom(model: model)
         return object
+    }
+    
+    func toModel() -> UserLocalizationSettingsDataModel {
+        UserLocalizationSettingsDataModel(
+            id: id,
+            createdAt: createdAt,
+            selectedCountryIsoRegionCode: selectedCountryIsoRegionCode
+        )
     }
 }

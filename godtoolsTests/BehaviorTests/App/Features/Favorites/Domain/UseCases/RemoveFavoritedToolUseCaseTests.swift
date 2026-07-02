@@ -9,15 +9,12 @@
 import Testing
 import Foundation
 @testable import godtools
-import Combine
 import RepositorySync
-import RealmSwift
 
-@Suite(.serialized)
 struct RemoveFavoritedToolUseCaseTests {
     
     struct TestArgument {
-        let resourcesInRealmIdsAtPositions: [String: Int]
+        let initialResources: [String: Int]
         let resourceIdToDelete: String
         let expectedUpdatedIdsAtPositions: [String: Int]
     }
@@ -28,58 +25,26 @@ struct RemoveFavoritedToolUseCaseTests {
         Then: The tool should be removed from the repo, and tools listed after should be moved up one position.
         """,
         arguments: [
-            TestArgument(resourcesInRealmIdsAtPositions: ["A": 0, "B": 1, "C": 2, "D": 3, "E": 4], resourceIdToDelete: "A", expectedUpdatedIdsAtPositions: ["B": 0, "C": 1, "D": 2, "E": 3]),
-            TestArgument(resourcesInRealmIdsAtPositions: ["A": 0, "B": 1, "C": 2, "D": 3], resourceIdToDelete: "B", expectedUpdatedIdsAtPositions: ["A": 0, "C": 1, "D": 2]),
-            TestArgument(resourcesInRealmIdsAtPositions: ["A": 0, "B": 1, "C": 2, "D": 3, "E": 4], resourceIdToDelete: "E", expectedUpdatedIdsAtPositions: ["A": 0, "B": 1, "C": 2, "D": 3]),
-            TestArgument(resourcesInRealmIdsAtPositions: ["A": 0], resourceIdToDelete: "A", expectedUpdatedIdsAtPositions: [:]),
-            TestArgument(resourcesInRealmIdsAtPositions: ["A": 0, "B": 1, "C": 2, "D": 3, "E": 4], resourceIdToDelete: "F", expectedUpdatedIdsAtPositions: ["A": 0, "B": 1, "C": 2, "D": 3, "E": 4])
+            TestArgument(initialResources: ["A": 0, "B": 1, "C": 2, "D": 3, "E": 4], resourceIdToDelete: "A", expectedUpdatedIdsAtPositions: ["B": 0, "C": 1, "D": 2, "E": 3]),
+            TestArgument(initialResources: ["A": 0, "B": 1, "C": 2, "D": 3], resourceIdToDelete: "B", expectedUpdatedIdsAtPositions: ["A": 0, "C": 1, "D": 2]),
+            TestArgument(initialResources: ["A": 0, "B": 1, "C": 2, "D": 3, "E": 4], resourceIdToDelete: "E", expectedUpdatedIdsAtPositions: ["A": 0, "B": 1, "C": 2, "D": 3]),
+            TestArgument(initialResources: ["A": 0], resourceIdToDelete: "A", expectedUpdatedIdsAtPositions: [:]),
+            TestArgument(initialResources: ["A": 0, "B": 1, "C": 2, "D": 3, "E": 4], resourceIdToDelete: "F", expectedUpdatedIdsAtPositions: ["A": 0, "B": 1, "C": 2, "D": 3, "E": 4])
         ]
     )
     func testRemoveFavoritedTool(argument: TestArgument) async throws {
-        
-        let realmObjects: [IdentifiableRealmObject] = getRealmObjects(with: argument.resourcesInRealmIdsAtPositions)
-        
-        let testsDiContainer = try getTestsDiContainer(addRealmObjects: realmObjects)
-        
-        let removeFavoritedToolUseCase: RemoveFavoritedToolUseCase = testsDiContainer.feature.favorites.domainLayer.getRemoveFavoritedToolUseCase()
                 
-        var cancellables: Set<AnyCancellable> = Set()
+        let testsDiContainer = try await getTestsDiContainer(addResources: argument.initialResources)
         
-        var remainingResources: [FavoritedResourceDataModel] = Array()
-                
-        await confirmation(expectedCount: 1) { confirmation in
-            
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                removeFavoritedToolUseCase
-                    .execute(
-                        toolId: argument.resourceIdToDelete
-                    )
-                    .sink(receiveCompletion: { _ in
-                        
-                    }, receiveValue: { (favoritedResources: [FavoritedResourceDataModel]) in
-                        
-                        remainingResources = favoritedResources
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                                
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    })
-                    .store(in: &cancellables)
-            }
-        }
+        let useCase = testsDiContainer.feature.favorites.domainLayer.getRemoveFavoritedToolUseCase()
+        
+        let remainingResources: [FavoritedResourceDataModel] = try await useCase.execute(toolId: argument.resourceIdToDelete)
         
         for (expectedId, expectedPosition) in argument.expectedUpdatedIdsAtPositions {
             
-            let actualPosition: Int = try #require(remainingResources.first(where: { $0.id == expectedId })?.position)
+            let resource: FavoritedResourceDataModel = try #require(remainingResources.first(where: { $0.id == expectedId }))
+            
+            let actualPosition: Int = resource.position
             
             #expect(
                 actualPosition == expectedPosition,
@@ -91,17 +56,21 @@ struct RemoveFavoritedToolUseCaseTests {
 
 extension RemoveFavoritedToolUseCaseTests {
     
-    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
+    private func getTestsDiContainer(addResources: [String: Int]) async throws -> TestsDiContainer {
                 
-        return try TestsDiContainer(
-            realmFileName: String(describing: RemoveFavoritedToolUseCaseTests.self),
-            addRealmObjects: addRealmObjects
-        )
+        let testsDiContainer = try TestsDiContainer()
+        
+        let favoritedResources = getFavoritedResources(resources: addResources)
+        
+        try await testsDiContainer.core.dataLayer.getFavoritedResourcesPersistence()
+            .writeObjects(externalObjects: favoritedResources)
+        
+        return testsDiContainer
     }
     
-    private func getRealmObjects(with resources: [String: Int]) -> [IdentifiableRealmObject] {
+    private func getFavoritedResources(resources: [String: Int]) -> [FavoritedResourceDataModel] {
         
-        var resourceObjects = [RealmFavoritedResource]()
+        var favoritedResources = [FavoritedResourceDataModel]()
         
         for (resourceId, resourcePosition) in resources {
             
@@ -111,9 +80,9 @@ extension RemoveFavoritedToolUseCaseTests {
                 position: resourcePosition
             )
             
-            resourceObjects.append(RealmFavoritedResource.createNewFrom(interface: dataModel))
+            favoritedResources.append(dataModel)
         }
         
-        return resourceObjects
+        return favoritedResources
     }
 }

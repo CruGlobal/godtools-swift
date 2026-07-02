@@ -17,7 +17,13 @@ class MobileContentPagesNavigationEvent {
     let parentPageParams: MobileContentParentPageParams?
     let pageSubIndex: Int?
     
-    init(pageNavigation: PageNavigationCollectionViewNavigationModel, setPages: [Page]?, pagePositions: MobileContentViewPositionState?, parentPageParams: MobileContentParentPageParams?, pageSubIndex: Int?) {
+    init(
+        pageNavigation: PageNavigationCollectionViewNavigationModel,
+        setPages: [Page]?,
+        pagePositions: MobileContentViewPositionState?,
+        parentPageParams: MobileContentParentPageParams?,
+        pageSubIndex: Int?
+    ) {
         
         self.pageNavigation = pageNavigation
         self.setPages = setPages

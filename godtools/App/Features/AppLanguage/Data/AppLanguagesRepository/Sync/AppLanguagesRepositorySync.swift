@@ -10,45 +10,38 @@ import Foundation
 import RepositorySync
 import Combine
 
-class AppLanguagesRepositorySync: AppLanguagesRepositorySyncInterface {
+final class AppLanguagesRepositorySync: AppLanguagesRepositorySyncInterface {
         
     private let api: AppLanguagesApi
     private let persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>
     private let syncInvalidator: SyncInvalidator
     
-    init(api: AppLanguagesApi, persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>, syncInvalidator: SyncInvalidator) {
+    init(
+        api: AppLanguagesApi,
+        persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>,
+        syncInvalidator: SyncInvalidator
+    ) {
         
         self.api = api
         self.persistence = persistence
         self.syncInvalidator = syncInvalidator
     }
     
-    func syncPublisher() -> AnyPublisher<Void, Error> {
-
+    func sync() async throws {
+        
         guard syncInvalidator.shouldSync else {
-            return Just(Void())
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
+            return
         }
-                
-        return api
-            .getAppLanguagesPublisher()
-            .flatMap({ (appLanguages: [AppLanguageCodable]) -> AnyPublisher<Void, Error> in
-                
-                return self.persistence
-                    .writeObjectsPublisher(
-                        externalObjects: appLanguages,
-                        writeOption: nil,
-                        getOption: nil
-                    )
-                    .map { _ in
-                        
-                        self.syncInvalidator.didSync()
-                        
-                        return ()
-                    }
-                    .eraseToAnyPublisher()
-            })
-            .eraseToAnyPublisher()
+        
+        let appLanguages: [AppLanguageCodable] = try await api.getAppLanguages()
+        
+        _ = try await persistence
+            .writeObjects(
+                externalObjects: appLanguages,
+                writeOption: nil,
+                getOption: nil
+            )
+        
+        syncInvalidator.didSync()
     }
 }

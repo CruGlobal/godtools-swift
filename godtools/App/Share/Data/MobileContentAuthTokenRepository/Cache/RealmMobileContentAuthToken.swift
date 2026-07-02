@@ -10,26 +10,44 @@ import Foundation
 import RealmSwift
 import RepositorySync
 
-class RealmMobileContentAuthToken: Object, IdentifiableRealmObject, MobileContentAuthTokenDataModelInterface {
+class RealmMobileContentAuthToken: Object, IdentifiableRealmObject {
     
-    @objc dynamic var expirationDate: Date?
     @objc dynamic var id: String = ""
-    @objc dynamic var userId: String = ""
+    @objc dynamic var expirationDate: Date?
+    @objc dynamic var userId: String = "" {
+        didSet {
+            id = userId
+        }
+    }
     
     override static func primaryKey() -> String? {
         return "userId"
     }
+}
+
+extension RealmMobileContentAuthToken {
     
-    func mapFrom(interface: MobileContentAuthTokenDataModelInterface) {
+    func mapFrom(model: MobileContentAuthTokenDataModel) {
         
-        expirationDate = interface.expirationDate
-        id = interface.id
-        userId = interface.userId
+        expirationDate = model.expirationDate
+        id = model.id
+        userId = model.userId
     }
     
-    static func createNewFrom(interface: MobileContentAuthTokenDataModelInterface) -> RealmMobileContentAuthToken {
+    static func createNewFrom(model: MobileContentAuthTokenDataModel) -> RealmMobileContentAuthToken {
         let object = RealmMobileContentAuthToken()
-        object.mapFrom(interface: interface)
+        object.mapFrom(model: model)
         return object
+    }
+    
+    func toModel() -> MobileContentAuthTokenDataModel {
+    
+        return MobileContentAuthTokenDataModel(
+            appleRefreshToken: nil,
+            expirationDate: expirationDate,
+            id: id,
+            token: "",
+            userId: userId
+        )
     }
 }

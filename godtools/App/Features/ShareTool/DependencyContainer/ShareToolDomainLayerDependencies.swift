@@ -8,27 +8,27 @@
 
 import Foundation
 
-class ShareToolDomainLayerDependencies {
+final class ShareToolDomainLayerDependencies {
     
-    private let coreDataLayer: AppDataLayerDependencies
+    private let core: AppCoreDiContainer
     private let dataLayer: ShareToolDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, dataLayer: ShareToolDataLayerDependencies) {
+    init(core: AppCoreDiContainer, dataLayer: ShareToolDataLayerDependencies) {
         
-        self.coreDataLayer = coreDataLayer
+        self.core = core
         self.dataLayer = dataLayer
     }
     
     func getShareToolQRCodeStringsUseCase() -> GetShareToolQRCodeStringsUseCase {
         return GetShareToolQRCodeStringsUseCase(
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
     
     func getShareToolStringsUseCase() -> GetShareToolStringsUseCase {
         return GetShareToolStringsUseCase(
             getShareToolUrl: getShareToolUrl(),
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
     
@@ -40,8 +40,8 @@ class ShareToolDomainLayerDependencies {
     
     private func getShareToolUrl() -> GetShareToolUrl {
         return GetShareToolUrl(
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
-            languagesRepository: coreDataLayer.getLanguagesRepository()
+            resourcesRepository: core.dataLayer.getResourcesRepository(),
+            languagesRepository: core.dataLayer.getLanguagesRepository()
         )
     }
 }

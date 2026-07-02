@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TrackActionAnalyticsUseCase {
+final class TrackActionAnalyticsUseCase {
     
     private let trackActionAnalytics: TrackActionAnalyticsInterface
     

@@ -8,6 +8,7 @@
 
 import UIKit
 
+@MainActor
 class ShareToolView {
     
     private static let qrCodeActivityType = UIActivity.ActivityType(rawValue: "org.cru.godtools.shareToolQRCodeActivity")

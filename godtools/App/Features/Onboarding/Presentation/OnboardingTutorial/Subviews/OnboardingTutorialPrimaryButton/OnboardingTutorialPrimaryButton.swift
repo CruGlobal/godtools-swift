@@ -13,21 +13,33 @@ struct OnboardingTutorialPrimaryButton: View {
     private let geometry: GeometryProxy
     private let title: String
     private let accessibility: AccessibilityStrings.Button?
-    private let action: (() -> Void)
+    private let tappedClosure: (() -> Void)?
     
-    init(geometry: GeometryProxy, title: String, accessibility: AccessibilityStrings.Button?, action: @escaping (() -> Void)) {
+    init(
+        geometry: GeometryProxy,
+        title: String,
+        accessibility: AccessibilityStrings.Button?,
+        tappedClosure: (() -> Void)?
+    ) {
         
         self.geometry = geometry
         self.title = title
         self.accessibility = accessibility
-        self.action = action
+        self.tappedClosure = tappedClosure
     }
     
     var body: some View {
         
-        GTBlueButton(title: title, font: FontLibrary.sfProTextSemibold.font(size: 17), width: geometry.size.width - 60, height: 50, highlightsTitleOnTap: false, accessibility: accessibility) {
-            
-            action()
-        }
+        GTButton(
+            style: .blue,
+            title: title,
+            font: FontLibrary.sfProTextSemibold.font(size: 17),
+            width: geometry.size.width - 60,
+            height: 50,
+            accessibility: accessibility,
+            tapped: {
+                tappedClosure?()
+            }
+        )
     }
 }

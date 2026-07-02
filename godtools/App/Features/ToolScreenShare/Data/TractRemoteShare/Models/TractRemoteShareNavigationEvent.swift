@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TractRemoteShareNavigationEvent: Codable {
+struct TractRemoteShareNavigationEvent: Codable, Sendable {
     
     let message: TractRemoteShareNavigationEvent.Message?
     let identifier: ActionCableIdentifier?
@@ -70,7 +70,16 @@ struct TractRemoteShareNavigationEvent: Codable {
         }
     }
     
-    init(card: Int?, channel: String, channelId: String, locale: String?, page: Int?, parallelLocale: String?, primaryLocale: String?, tool: String?) {
+    init(
+        card: Int?,
+        channel: String,
+        channelId: String,
+        locale: String?,
+        page: Int?,
+        parallelLocale: String?,
+        primaryLocale: String?,
+        tool: String?
+    ) {
         
         let attributes = TractRemoteShareNavigationEvent.Attributes(
             card: card,

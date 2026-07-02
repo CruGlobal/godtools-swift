@@ -8,26 +8,34 @@
 
 import Foundation
 
-class ShareToolScreenShareSessionViewModel {
+@MainActor
+final class ShareToolScreenShareSessionViewModel {
     
+    private let stepEmitter: FlowStepEmitter
+    private let appLanguage: AppLanguageDomainModel
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
-    private let domainModel: ShareToolScreenShareSessionDomainModel
     private let shareUrl: String
     
+    let strings: ShareToolScreenShareSessionStringsDomainModel
     let shareMessage: String
-    let qrCodeString: String
-    
-    private weak var flowDelegate: FlowDelegate?
-    
-    init(flowDelegate: FlowDelegate?, domainModel: ShareToolScreenShareSessionDomainModel, shareMessage: String, shareUrl: String, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
-            
-        self.flowDelegate = flowDelegate
-        self.domainModel = domainModel
-        self.shareMessage = shareMessage
-        self.shareUrl = shareUrl
-        self.qrCodeString = domainModel.strings.qrCodeActionTitle
         
+    init(
+        stepEmitter: FlowStepEmitter,
+        appLanguage: AppLanguageDomainModel,
+        shareUrl: String,
+        getShareToolScreenShareSessionStringsUseCase: GetShareToolScreenShareSessionStringsUseCase,
+        trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
+    ) {
+            
+        self.stepEmitter = stepEmitter
+        self.appLanguage = appLanguage
+        self.shareUrl = shareUrl
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
+        
+        strings = getShareToolScreenShareSessionStringsUseCase
+            .execute(appLanguage: appLanguage)
+        
+        self.shareMessage = String.localizedStringWithFormat(strings.shareMessage, shareUrl)
     }
     
     deinit {
@@ -58,11 +66,11 @@ extension ShareToolScreenShareSessionViewModel {
     
     func qrCodeTapped() {
     
-        flowDelegate?.navigate(step: .shareQRCodeTappedFromToolScreenShareSession(shareUrl: shareUrl))
+        stepEmitter.emit(step: AppFlowStep.shareQRCodeTappedFromToolScreenShareSession(shareUrl: shareUrl))
     }
     
     func activityViewDismissed() {
         
-        flowDelegate?.navigate(step: .dismissedShareToolScreenShareActivityViewController)
+        stepEmitter.emit(step: AppFlowStep.dismissedShareToolScreenShareActivityViewController)
     }
 }

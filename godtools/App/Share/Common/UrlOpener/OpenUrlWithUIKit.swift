@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class OpenUrlWithUIKit: UrlOpenerInterface {
+final class OpenUrlWithUIKit: UrlOpenerInterface {
     
     init() {
         

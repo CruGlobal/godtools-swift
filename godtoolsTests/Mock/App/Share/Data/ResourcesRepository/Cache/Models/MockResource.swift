@@ -9,7 +9,7 @@
 import Foundation
 @testable import godtools
 
-class MockResource: ResourceDataModelInterface {
+class MockResource {
     
     var abbreviation: String = ""
     var attrAboutBannerAnimation: String = ""
@@ -60,5 +60,12 @@ class MockResource: ResourceDataModelInterface {
     
     func getVariantIds() -> [String] {
         return Array()
+    }
+}
+
+extension MockResource {
+    
+    func toModel() -> ResourceDataModel {
+        return ResourceDataModel(abbreviation: abbreviation, attrAboutBannerAnimation: attrAboutBannerAnimation, attrAboutOverviewVideoYoutube: attrAboutOverviewVideoYoutube, attrBanner: attrBanner, attrBannerAbout: attrBannerAbout, attrCategory: attrCategory, attrDefaultLocale: attrDefaultLocale, attrDefaultOrder: attrDefaultOrder, attrSpotlight: attrSpotlight, defaultVariantId: defaultVariantId, id: id, isHidden: isHidden, manifest: manifest, metatoolId: metatoolId, name: name, oneskyProjectId: oneskyProjectId, resourceDescription: resourceDescription, resourceType: resourceType, totalViews: totalViews, type: type, attachmentIds: getAttachmentIds(), languageIds: getLanguageIds(), latestTranslationIds: getLatestTranslationIds(), variantIds: getVariantIds())
     }
 }

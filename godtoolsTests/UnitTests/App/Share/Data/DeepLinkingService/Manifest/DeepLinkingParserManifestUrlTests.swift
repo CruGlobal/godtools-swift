@@ -9,7 +9,6 @@
 import Testing
 @testable import godtools
 import Foundation
-import Combine
 
 struct DeepLinkingParserManifestUrlTests {
     
@@ -20,7 +19,7 @@ struct DeepLinkingParserManifestUrlTests {
     private static let hostGodToolsApp: String = "godtoolsapp.com"
     private static let hostKnowGod: String = "knowgod.com"
     
-    struct TestArgument {
+    struct TestArgument: Sendable {
         let scheme: String
         let hosts: [String]
         let path: String?

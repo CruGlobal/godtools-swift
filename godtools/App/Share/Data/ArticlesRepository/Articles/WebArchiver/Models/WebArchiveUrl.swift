@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct WebArchiveUrl {
+struct WebArchiveUrl: Sendable {
     
     let webUrl: URL
     let uuid: String

@@ -8,7 +8,8 @@
 
 import UIKit
 
-class ToolTrainingAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
+@MainActor
+final class ToolTrainingAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
     
     enum AnimationType {
         case animateIn
@@ -17,7 +18,7 @@ class ToolTrainingAnimatedTransitioning: NSObject, UIViewControllerAnimatedTrans
     
     let animationType: AnimationType
     
-    required init(animationType: AnimationType) {
+    init(animationType: AnimationType) {
         
         self.animationType = animationType
         

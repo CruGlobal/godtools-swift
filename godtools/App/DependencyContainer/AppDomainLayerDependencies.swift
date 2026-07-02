@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AppDomainLayerDependencies {
+final class AppDomainLayerDependencies {
         
     private let dataLayer: AppDataLayerDependencies
     
@@ -26,40 +26,15 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getDisableOptInOnboardingBannerUseCase() -> DisableOptInOnboardingBannerUseCase {
-        return DisableOptInOnboardingBannerUseCase(
-            optInOnboardingBannerEnabledRepository: dataLayer.getOptInOnboardingBannerEnabledRepository()
+    func getSearchBarStringsUseCase() -> GetSearchBarStringsUseCase {
+        return GetSearchBarStringsUseCase(
+            localizationServices: dataLayer.getLocalizationServices()
         )
     }
     
-    func getDownloadLatestToolsForFavoritedToolsUseCase() -> DownloadLatestToolsForFavoritedToolsUseCase {
-        return DownloadLatestToolsForFavoritedToolsUseCase(
-            favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository(),
-            resourcesRepository: dataLayer.getResourcesRepository(),
-            toolDownloader: dataLayer.getToolDownloader()
-        )
-    }
-    
-    func getOptInOnboardingBannerEnabledUseCase() -> GetOptInOnboardingBannerEnabledUseCase {
-        return GetOptInOnboardingBannerEnabledUseCase(
-            getOptInOnboardingTutorialAvailableUseCase: getOptInOnboardingTutorialAvailableUseCase(),
-            optInOnboardingBannerEnabledRepository: dataLayer.getOptInOnboardingBannerEnabledRepository()
-        )
-    }
-    
-    func getOptInOnboardingTutorialAvailableUseCase() -> GetOptInOnboardingTutorialAvailableUseCase {
-        return GetOptInOnboardingTutorialAvailableUseCase()
-    }
-
     func getSetCompletedTrainingTipUseCase() -> SetCompletedTrainingTipUseCase {
         return SetCompletedTrainingTipUseCase(
             repository: dataLayer.getCompletedTrainingTipRepository()
-        )
-    }
-    
-    func getStoreInitialFavoritedToolsUseCase() -> StoreInitialFavoritedToolsUseCase {
-        return StoreInitialFavoritedToolsUseCase(
-            favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository()
         )
     }
 
@@ -69,8 +44,8 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getToolTranslationsFilesUseCase() -> GetToolTranslationsFilesUseCase {
-        return GetToolTranslationsFilesUseCase(
+    func getDownloadToolUseCase() -> DownloadToolUseCase {
+        return DownloadToolUseCase(
             resourcesRepository: dataLayer.getResourcesRepository(),
             translationsRepository: dataLayer.getTranslationsRepository(),
             languagesRepository: dataLayer.getLanguagesRepository()
@@ -98,12 +73,6 @@ class AppDomainLayerDependencies {
     func getTrainingTipCompletedUseCase() -> GetTrainingTipCompletedUseCase {
         return GetTrainingTipCompletedUseCase(
             repository: dataLayer.getCompletedTrainingTipRepository()
-        )
-    }
-    
-    func getViewSearchBarUseCase() -> ViewSearchBarUseCase {
-        return ViewSearchBarUseCase(
-            getSearchBarStrings: supporting.getSearchBarStrings()
         )
     }
 }

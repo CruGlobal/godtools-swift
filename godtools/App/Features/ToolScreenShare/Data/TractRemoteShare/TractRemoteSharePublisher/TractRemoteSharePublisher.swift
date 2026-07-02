@@ -24,7 +24,11 @@ final class TractRemoteSharePublisher: NSObject {
     
     private(set) var tractRemoteShareChannel: WebSocketChannel?
         
-    init(webSocket: WebSocketInterface, webSocketChannelPublisher: WebSocketChannelPublisherInterface, loggingEnabled: Bool) {
+    init(
+        webSocket: WebSocketInterface,
+        webSocketChannelPublisher: WebSocketChannelPublisherInterface,
+        loggingEnabled: Bool
+    ) {
         
         self.webSocket = webSocket
         self.webSocketChannelPublisher = webSocketChannelPublisher

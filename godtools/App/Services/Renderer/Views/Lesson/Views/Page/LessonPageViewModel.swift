@@ -13,7 +13,12 @@ class LessonPageViewModel: MobileContentPageViewModel {
     
     private let pageModel: Page
     
-    init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, mobileContentAnalytics: MobileContentRendererAnalytics) {
+    init(
+        pageModel: Page,
+        renderedPageContext: MobileContentRenderedPageContext,
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
+        mobileContentAnalytics: MobileContentRendererAnalytics
+    ) {
             
         self.pageModel = pageModel
         

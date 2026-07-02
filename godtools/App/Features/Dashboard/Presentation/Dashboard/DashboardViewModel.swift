@@ -10,18 +10,19 @@ import Foundation
 import Combine
 import SwiftUI
 
-@MainActor class DashboardViewModel: ObservableObject {
+@MainActor
+final class DashboardViewModel: ObservableObject {
     
+    private let stepEmitter: FlowStepEmitter
     private let dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies
+    private let startingTab: DashboardTabTypeDomainModel
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getDashboardStringsUseCase: GetDashboardStringsUseCase
-        
+
     private var cancellables: Set<AnyCancellable> = Set()
     private var initialTabSet: Bool = false
-    
-    private weak var flowDelegate: FlowDelegate?
-        
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+            
+    @Published private var appLanguage = AppLanguageDomainModel.english
     
     @Published var tabs: [DashboardTabTypeDomainModel] = [.lessons, .favorites, .tools]
     @Published var lessonsButtonTitle: String = ""
@@ -29,38 +30,31 @@ import SwiftUI
     @Published var toolsButtonTitle: String = ""
     @Published var currentTab: Int = 0
         
-    init(startingTab: DashboardTabTypeDomainModel, flowDelegate: FlowDelegate, dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getDashboardStringsUseCase: GetDashboardStringsUseCase, dashboardTabObserver: CurrentValueSubject<DashboardTabTypeDomainModel, Never>) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        startingTab: DashboardTabTypeDomainModel,
+        dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getDashboardStringsUseCase: GetDashboardStringsUseCase,
+        dashboardTabObserver: CurrentValueSubject<DashboardTabTypeDomainModel, Never>
+    ) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
+        self.startingTab = startingTab
         self.dashboardPresentationLayerDependencies = dashboardPresentationLayerDependencies
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getDashboardStringsUseCase = getDashboardStringsUseCase
-        
+
         getCurrentAppLanguageUseCase
             .execute()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                
-                getDashboardStringsUseCase
-                    .execute(translateInLanguage: appLanguage)
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: DashboardStringsDomainModel) in
-                
-                self?.lessonsButtonTitle = strings.lessonsActionTitle
-                self?.favoritesButtonTitle = strings.favoritesActionTitle
-                self?.toolsButtonTitle = strings.toolsActionTitle
-                
-                self?.reloadTabs() // NOTE: Needed since button title interface strings aren't connected to the View. ~Levi
-                self?.setStartingTabIfNeeded(startingTab: startingTab, tabs: self?.tabs ?? Array())
-            }
+            .sink(receiveValue: { [weak self] (appLanguage: AppLanguageDomainModel) in
+
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
+            })
             .store(in: &cancellables)
-        
+
         $currentTab.eraseToAnyPublisher()
             .sink { [weak self] currentTab in
                 
@@ -76,7 +70,20 @@ import SwiftUI
     deinit {
         print("x deinit: \(type(of: self))")
     }
-    
+
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+
+        let strings = getDashboardStringsUseCase
+            .execute(translateInLanguage: appLanguage)
+
+        lessonsButtonTitle = strings.lessonsActionTitle
+        favoritesButtonTitle = strings.favoritesActionTitle
+        toolsButtonTitle = strings.toolsActionTitle
+
+        reloadTabs() // NOTE: Needed since button title interface strings aren't connected to the View. ~Levi
+        setStartingTabIfNeeded(startingTab: startingTab, tabs: tabs)
+    }
+
     private func reloadTabs() {
         
         let currentTabs: [DashboardTabTypeDomainModel] = tabs
@@ -111,7 +118,7 @@ import SwiftUI
 extension DashboardViewModel {
     
     @objc func menuTapped() {
-        flowDelegate?.navigate(step: .menuTappedFromTools)
+        stepEmitter.emit(step: AppFlowStep.menuTappedFromTools)
     }
             
     func getLessonsViewModel() -> LessonsViewModel {

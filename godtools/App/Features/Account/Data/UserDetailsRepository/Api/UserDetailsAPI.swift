@@ -1,5 +1,5 @@
 //
-//  UserDetailsAPI.swift
+//  UserDetailsApi.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 11/18/22.
@@ -8,17 +8,20 @@
 
 import Foundation
 import RequestOperation
-import Combine
 import RepositorySync
 
-class UserDetailsAPI {
+final class UserDetailsApi: UserDetailsApiInterface {
     
     private let authSession: MobileContentApiAuthSession
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let urlSessionPriority: URLSessionPriority
     private let baseURL: String
     
-    init(config: AppConfigInterface, urlSessionPriority: URLSessionPriority, mobileContentApiAuthSession: MobileContentApiAuthSession) {
+    init(
+        config: AppConfigInterface,
+        urlSessionPriority: URLSessionPriority,
+        mobileContentApiAuthSession: MobileContentApiAuthSession
+    ) {
         
         self.urlSessionPriority = urlSessionPriority
         self.authSession = mobileContentApiAuthSession
@@ -29,7 +32,7 @@ class UserDetailsAPI {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
-        let urlRequest: URLRequest = getAuthUserDetailsRequest(urlSession: urlSession)
+        let urlRequest: URLRequest = try getAuthUserDetailsRequest(urlSession: urlSession)
                 
         let responseData: Data = try await authSession.sendAuthenticatedRequest(
             urlRequest: urlRequest,
@@ -44,14 +47,14 @@ class UserDetailsAPI {
         return codable.dataObject
     }
     
-    private func getAuthUserDetailsRequest(urlSession: URLSession) -> URLRequest {
+    private func getAuthUserDetailsRequest(urlSession: URLSession) throws -> URLRequest {
         
         let headers: [String: String] = [
             "Content-Type": "application/vnd.api+json"
         ]
         
-        return requestBuilder.build(
-            parameters: RequestBuilderParameters(
+        return try requestBuilder.build(
+            parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseURL + "/users/me",
                 method: .get,
@@ -66,7 +69,7 @@ class UserDetailsAPI {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
-        let urlRequest = getDeleteAuthorizedUserDetailsRequest(urlSession: urlSession)
+        let urlRequest: URLRequest = try getDeleteAuthorizedUserDetailsRequest(urlSession: urlSession)
         
         _ = try await authSession.sendAuthenticatedRequest(
             urlRequest: urlRequest,
@@ -74,14 +77,14 @@ class UserDetailsAPI {
         )
     }
     
-    private func getDeleteAuthorizedUserDetailsRequest(urlSession: URLSession) -> URLRequest {
+    private func getDeleteAuthorizedUserDetailsRequest(urlSession: URLSession) throws -> URLRequest {
         
         let headers: [String: String] = [
             "Content-Type": "application/vnd.api+json"
         ]
         
-        return requestBuilder.build(
-            parameters: RequestBuilderParameters(
+        return try requestBuilder.build(
+            parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseURL + "/users/me",
                 method: .delete,
@@ -90,26 +93,5 @@ class UserDetailsAPI {
                 queryItems: nil
             )
         )
-    }
-}
-
-// MARK: - ExternalDataFetchInterface
-
-extension UserDetailsAPI: ExternalDataFetchInterface {
-    
-    func getObject(id: String, context: RequestOperationFetchContext) async throws -> [MobileContentApiUsersMeCodable] {
-        return Array()
-    }
-    
-    func getObjects(context: RequestOperationFetchContext) async throws -> [MobileContentApiUsersMeCodable] {
-        return Array()
-    }
-    
-    func getObjectPublisher(id: String, context: RequestOperationFetchContext) -> AnyPublisher<[MobileContentApiUsersMeCodable], Error> {
-        return emptyResponsePublisher()
-    }
-    
-    func getObjectsPublisher(context: RequestOperationFetchContext) -> AnyPublisher<[MobileContentApiUsersMeCodable], Error> {
-        return emptyResponsePublisher()
     }
 }

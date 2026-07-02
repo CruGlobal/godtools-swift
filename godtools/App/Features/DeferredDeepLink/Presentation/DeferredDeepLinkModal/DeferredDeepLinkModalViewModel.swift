@@ -9,24 +9,30 @@
 import Foundation
 import Combine
 
-@MainActor class DeferredDeepLinkModalViewModel: ObservableObject {
+@MainActor
+final class DeferredDeepLinkModalViewModel: ObservableObject {
     
+    private let stepEmitter: FlowStepEmitter
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getDeferredDeepLinkModalStringsUseCase: GetDeferredDeepLinkModalStringsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let deepLinkingService: DeepLinkingService
 
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-        
+            
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
     @Published private(set) var strings = DeferredDeepLinkModalStringsDomainModel.emptyValue
     
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getDeferredDeepLinkModalStringsUseCase: GetDeferredDeepLinkModalStringsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, deepLinkingService: DeepLinkingService) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getDeferredDeepLinkModalStringsUseCase: GetDeferredDeepLinkModalStringsUseCase,
+        trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase,
+        deepLinkingService: DeepLinkingService
+    ) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getDeferredDeepLinkModalStringsUseCase = getDeferredDeepLinkModalStringsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
@@ -35,25 +41,22 @@ import Combine
         getCurrentAppLanguageUseCase
             .execute()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { appLanguage in
-                getDeferredDeepLinkModalStringsUseCase
-                    .execute(appLanguage: appLanguage)
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: DeferredDeepLinkModalStringsDomainModel) in
-                
-                self?.strings = strings
-            }
+            .sink(receiveValue: { [weak self] (appLanguage: AppLanguageDomainModel) in
+
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
+            })
             .store(in: &cancellables)
     }
-    
+
     deinit {
         print("x deinit: \(type(of: self))")
+    }
+
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+
+        strings = getDeferredDeepLinkModalStringsUseCase
+            .execute(appLanguage: appLanguage)
     }
 }
 
@@ -62,7 +65,7 @@ import Combine
 extension DeferredDeepLinkModalViewModel {
     
     func closeButtonTapped() {
-        flowDelegate?.navigate(step: .closeTappedFromDeferredDeepLinkModal)
+        stepEmitter.emit(step: AppFlowStep.closeTappedFromDeferredDeepLinkModal)
     }
     
     func pasteButtonTapped(pastedString: String?) {
@@ -86,6 +89,6 @@ extension DeferredDeepLinkModalViewModel {
             return
         }
                 
-        flowDelegate?.navigate(step: .handleDeepLinkFromDeferredDeepLinkModal(deepLinkType: deepLink))
+        stepEmitter.emit(step: AppFlowStep.handleDeepLinkFromDeferredDeepLinkModal(deepLinkType: deepLink))
     }
 }

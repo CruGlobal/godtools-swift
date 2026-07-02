@@ -48,12 +48,30 @@ struct ResumeLessonProgressModal: View {
                         .padding(.bottom, 35)
                     
                     VStack(spacing: buttonSpace) {
-                        GTWhiteButton(title: viewModel.strings.startOverButtonText, fontSize: 15, width: buttonWidth, height: buttonHeight) {
-                            viewModel.startOverButtonTapped()
-                        }
-                        GTBlueButton(title: viewModel.strings.continueButtonText, fontSize: 15, width: buttonWidth, height: buttonHeight) {
-                            viewModel.continueButtonTapped()
-                        }
+                        
+                        let buttonFontSize: CGFloat = 15
+                        
+                        GTButton(
+                            style: .white,
+                            title: viewModel.strings.startOverButtonText,
+                            fontSize: buttonFontSize,
+                            width: buttonWidth,
+                            height: buttonHeight,
+                            tapped: {
+                                viewModel.startOverButtonTapped()
+                            }
+                        )
+                        
+                        GTButton(
+                            style: .blue,
+                            title: viewModel.strings.continueButtonText,
+                            fontSize: buttonFontSize,
+                            width: buttonWidth,
+                            height: buttonHeight,
+                            tapped: {
+                                viewModel.continueButtonTapped()
+                            }
+                        )
                     }
                     .padding(.horizontal, buttonInset)
                     .padding(.bottom, 21)

@@ -21,7 +21,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Bundle Install
         uses: ./.github/actions/bundle-install
@@ -55,7 +55,7 @@ jobs:
         run: xcresultparser -o cobertura /Users/runner/work/godtools-swift/godtools-swift/fastlane_scan_output_directory/GodTools-Production.xcresult > /Users/runner/work/godtools-swift/godtools-swift/fastlane_scan_output_directory/coverage.xml
 
       - name: Upload Coverage XML to CodeCov
-        uses: codecov/codecov-action@v6
+        uses: codecov/codecov-action@v7
         with:
           files: /Users/runner/work/godtools-swift/godtools-swift/fastlane_scan_output_directory/coverage.xml
           plugin: xcode

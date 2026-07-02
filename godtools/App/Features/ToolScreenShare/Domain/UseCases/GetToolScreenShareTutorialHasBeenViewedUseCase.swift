@@ -7,20 +7,22 @@
 //
 
 import Foundation
-import Combine
 
-class GetToolScreenShareTutorialHasBeenViewedUseCase {
+final class GetToolScreenShareTutorialHasBeenViewedUseCase {
     
-    private let tutorialViewedRepositoryInterface: GetToolScreenShareTutorialViewedRepositoryInterface
+    private let tutorialViewsRepository: ToolScreenShareTutorialViewsRepository
     
-    init(tutorialViewedRepositoryInterface: GetToolScreenShareTutorialViewedRepositoryInterface) {
+    init(tutorialViewsRepository: ToolScreenShareTutorialViewsRepository) {
         
-        self.tutorialViewedRepositoryInterface = tutorialViewedRepositoryInterface
+        self.tutorialViewsRepository = tutorialViewsRepository
     }
     
-    func getViewedPublisher(toolId: String) -> AnyPublisher<ToolScreenShareTutorialViewedDomainModel, Never> {
+    func execute(toolId: String) -> ToolScreenShareTutorialViewedDomainModel {
         
-        return tutorialViewedRepositoryInterface.getViewed(toolId: toolId)
-            .eraseToAnyPublisher()
+        let toolScreenShare: ToolScreenShareTutorialViewDataModel? = tutorialViewsRepository.getToolScreenShareTutorialView(id: toolId)
+        
+        let numberOfViews: Int = toolScreenShare?.numberOfViews ?? 0
+        
+        return ToolScreenShareTutorialViewedDomainModel(numberOfViews: numberOfViews)
     }
 }

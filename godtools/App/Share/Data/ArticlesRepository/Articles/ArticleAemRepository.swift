@@ -7,13 +7,12 @@
 //
 
 import Foundation
-import Combine
 import RequestOperation
 
 open class ArticleAemRepository: NSObject {
     
-    let downloader: ArticleAemDownloader
-    let cache: ArticleAemCache
+    private let cache: ArticleAemCache
+    private let downloader: ArticleAemDownloaderInterface
     
     init(downloader: ArticleAemDownloader, cache: ArticleAemCache) {
         
@@ -23,22 +22,25 @@ open class ArticleAemRepository: NSObject {
         super.init()
     }
     
-    @MainActor func observeArticleAemCacheObjectsChangedPublisher() -> AnyPublisher<Void, Never> {
-        return cache.observeArticleAemCacheObjectsChangedPublisher()
-            .eraseToAnyPublisher()
-    }
-    
-    func getAemCacheObjectsPublisher(aemUris: [String]) -> AnyPublisher<[ArticleAemCacheObject], Never> {
-        
-        return cache.getAemCacheObjectsPublisher(aemUris: aemUris)
-            .eraseToAnyPublisher()
-    }
-    
     func getAemCacheObject(aemUri: String) -> ArticleAemCacheObject? {
-        return cache.getAemCacheObject(aemUri: aemUri)
+        do {
+            return try cache.getAemCacheObject(aemUri: aemUri)
+        }
+        catch _ {
+            return nil
+        }
     }
     
-    func downloadAndCachePublisher(aemUris: [String], downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority) -> AnyPublisher<ArticleAemRepositoryResult, Never> {
+    func getAemCacheObjects(aemUris: [String]) throws -> [ArticleAemCacheObject] {
+        
+        return try cache.getAemCacheObjects(aemUris: aemUris)
+    }
+    
+    func downloadAndCache(
+        aemUris: [String],
+        downloadCachePolicy: ArticleAemDownloaderCachePolicy,
+        requestPriority: RequestPriority
+    ) async throws -> ArticleAemDownload {
         
         let aemUrisNeedingUpdate: [String]
 
@@ -50,27 +52,18 @@ open class ArticleAemRepository: NSObject {
             aemUrisNeedingUpdate = aemUris
         }
         
-        return downloader.downloadPublisher(
+        let download: ArticleAemDownload = try await downloader.download(
             aemUris: aemUrisNeedingUpdate,
             downloadCachePolicy: downloadCachePolicy,
             requestPriority: requestPriority
         )
-        .flatMap { (downloaderResult: ArticleAemDownloaderResult) -> AnyPublisher<ArticleAemRepositoryResult, Never> in
-            
-            return self.cache.storeAemDataObjectsPublisher(
-                aemDataObjects: downloaderResult.aemDataObjects,
-                requestPriority: requestPriority
-            )
-            .map { (cacheResult: ArticleAemCacheResult) in
-                
-                return ArticleAemRepositoryResult(
-                    downloaderResult: downloaderResult,
-                    cacheResult: cacheResult
-                )
-            }
-            .eraseToAnyPublisher()
-        }
-        .eraseToAnyPublisher()
+        
+        let webArchive = try await cache.storeAemDataObjects(
+            aemDataObjects: download.aemDataObjects,
+            requestPriority: requestPriority
+        )
+        
+        return download.copyByAppendingErrors(errors: webArchive.errors)
     }
     
     private func filterAemUrisByLastUpdate(aemUris: [String]) -> [String] {
@@ -83,14 +76,20 @@ open class ArticleAemRepository: NSObject {
             
             let shouldUpdateAemUri: Bool
             
-            if let aemCacheObject = cache.getAemCacheObject(aemUri: aemUri) {
+            do {
                 
-                let lastUpdatedAt: Date = aemCacheObject.aemData.updatedAt
-                let secondsSinceLastUpdate: Double = Date().timeIntervalSince(lastUpdatedAt)
-                
-                shouldUpdateAemUri = secondsSinceLastUpdate >= secondsInDay
+                if let aemCacheObject = try cache.getAemCacheObject(aemUri: aemUri) {
+                    
+                    let lastUpdatedAt: Date = aemCacheObject.aemData.updatedAt
+                    let secondsSinceLastUpdate: Double = Date().timeIntervalSince(lastUpdatedAt)
+                    
+                    shouldUpdateAemUri = secondsSinceLastUpdate >= secondsInDay
+                }
+                else {
+                    shouldUpdateAemUri = true
+                }
             }
-            else {
+            catch _ {
                 shouldUpdateAemUri = true
             }
             

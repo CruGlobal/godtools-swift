@@ -46,7 +46,7 @@ final class IncrementUserCounterUseCase {
             .incrementCounterPublisher(
                 id: userCounterId
             )
-            .tryMap { (localCounter: LocalUserCounter) in
+            .tryMap { (localCounter: LocalActivityCountDataModel) in
                     
                 return try self.userCountersRepository
                     .getCachedCounter(

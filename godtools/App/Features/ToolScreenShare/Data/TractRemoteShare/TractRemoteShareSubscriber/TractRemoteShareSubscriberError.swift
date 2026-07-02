@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum TractRemoteShareSubscriberError: Error {
+enum TractRemoteShareSubscriberError: Error, Sendable {
     
     case timedOut
 }

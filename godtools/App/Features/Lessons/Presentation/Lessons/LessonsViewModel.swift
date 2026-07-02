@@ -10,8 +10,10 @@ import Foundation
 import Combine
 import SwiftUI
 
-@MainActor class LessonsViewModel: ObservableObject {
+@MainActor
+final class LessonsViewModel: ObservableObject {
         
+    private let stepEmitter: FlowStepEmitter
     private let pullToRefreshLessonsUseCase: PullToRefreshLessonsUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase
@@ -22,33 +24,40 @@ import SwiftUI
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let getToolBannerUseCase: GetToolBannerUseCase
+    private let inMemoryDataCache: InMemoryDataCache
     
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    private var pullToRefreshLessonsTask: Task<Void, Error>?
+        
+    @Published private var appLanguage = AppLanguageDomainModel.english
     @Published private var lessonFilterLanguageSelection: LessonFilterLanguageDomainModel?
     @Published private var localizationSettings: UserLocalizationSettingsDomainModel?
+    @Published private var allLessonsList: [LessonListItemDomainModel] = Array()
     
     @Published private(set) var toggleOptions: [PersonalizationToggleOption] = []
     @Published private(set) var strings: LessonsStringsDomainModel = .emptyValue
     @Published private(set) var languageFilterButtonTitle: String = ""
-    @Published private(set) var lessons: [LessonListItemDomainModel] = []
-    @Published private(set) var isLoadingLessons: Bool = true
-    @Published private(set) var personalizationUnavailableState: PersonalizedLessonsUnavailableDomainModel?
+    @Published private(set) var personalizedLessons = PersonalizedLessonsDomainModel.emptyValue
+    @Published private(set) var lessonsList: [LessonListItemDomainModel] = []
 
     @Published var selectedToggle: PersonalizationToggleOptionValue = .personalized
 
-    var isPersonalizationUnavailable: Bool {
-        return selectedToggle == .personalized &&
-                personalizationUnavailableState != nil &&
-                !isLoadingLessons
-    }
-        
-    init(flowDelegate: FlowDelegate, pullToRefreshLessonsUseCase: PullToRefreshLessonsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase, getLessonsStringsUseCase: GetLessonsStringsUseCase, getAllLessonsUseCase: GetAllLessonsUseCase, getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getToolBannerUseCase: GetToolBannerUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        pullToRefreshLessonsUseCase: PullToRefreshLessonsUseCase,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase,
+        getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase,
+        getLessonsStringsUseCase: GetLessonsStringsUseCase,
+        getAllLessonsUseCase: GetAllLessonsUseCase,
+        getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase,
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
+        trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase,
+        getToolBannerUseCase: GetToolBannerUseCase,
+        inMemoryDataCache: InMemoryDataCache
+    ) {
 
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.pullToRefreshLessonsUseCase = pullToRefreshLessonsUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getLocalizationSettingsUseCase = getLocalizationSettingsUseCase
@@ -59,77 +68,94 @@ import SwiftUI
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.getToolBannerUseCase = getToolBannerUseCase
+        self.inMemoryDataCache = inMemoryDataCache
         
         getCurrentAppLanguageUseCase
             .execute()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$appLanguage)
+            .sink(receiveValue: { [weak self] (appLanguage: AppLanguageDomainModel) in
+
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
+            })
+            .store(in: &cancellables)
 
         getLocalizationSettingsUseCase
             .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$localizationSettings)
 
-        $appLanguage
-            .dropFirst()
-            .map { appLanguage in
-                getLessonsStringsUseCase
-                    .execute(translateInLanguage: appLanguage)
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: LessonsStringsDomainModel) in
-
-                self?.strings = strings
-                
-                self?.toggleOptions = Self.getToggleOptions(strings: strings)
-            }
-            .store(in: &cancellables)
-
-        Publishers.CombineLatest4(
-            $appLanguage,
-            $lessonFilterLanguageSelection,
+        Publishers.CombineLatest3(
+            $appLanguage.dropFirst(),
             $localizationSettings,
-            $selectedToggle
+            $lessonFilterLanguageSelection
         )
-        .dropFirst()
-        .map { (appLanguage, languageFilter, localizationSettings, toggle) -> AnyPublisher<LessonsResultDomainModel, Error> in
-
-            switch toggle {
-
-            case .personalized:
-                return getPersonalizedLessonsUseCase
-                    .execute(
-                        appLanguage: appLanguage,
-                        country: localizationSettings?.selectedCountry,
-                        filterLessonsByLanguage: languageFilter
-                    )
-
-            case .all:
-                return getAllLessonsUseCase
-                    .execute(
-                        appLanguage: appLanguage,
-                        filterLessonsByLanguage: languageFilter
-                    )
-                    .map { lessons in
-                        LessonsResultDomainModel(
-                            lessons: lessons,
-                            unavailableStrings: nil
-                        )
-                    }
-                    .eraseToAnyPublisher()
-            }
+        .map { (appLanguage: AppLanguageDomainModel, localizationSettings: UserLocalizationSettingsDomainModel?, languageFilter: LessonFilterLanguageDomainModel?) in
+            
+            getPersonalizedLessonsUseCase
+                .execute(
+                    appLanguage: appLanguage,
+                    country: localizationSettings?.selectedCountry,
+                    filterLessonsByLanguage: languageFilter
+                )
         }
         .switchToLatest()
         .receive(on: DispatchQueue.main)
-        .sink(receiveCompletion: { _ in
-
-        }, receiveValue: { [weak self] (result: LessonsResultDomainModel) in
-
-            self?.lessons = result.lessons
-            self?.personalizationUnavailableState = result.unavailableStrings
-            self?.isLoadingLessons = false
-        })
+        .sink { _ in
+            
+        } receiveValue: { [weak self] (personalizedLessons: PersonalizedLessonsDomainModel) in
+            
+            self?.personalizedLessons = personalizedLessons
+        }
+        .store(in: &cancellables)
+        
+        Publishers.CombineLatest(
+            $appLanguage.dropFirst(),
+            $lessonFilterLanguageSelection
+        )
+        .map { (appLanguage: AppLanguageDomainModel, languageFilter: LessonFilterLanguageDomainModel?) in
+            
+            getAllLessonsUseCase
+                .execute(
+                    appLanguage: appLanguage,
+                    filterLessonsByLanguage: languageFilter
+                )
+        }
+        .switchToLatest()
+        .receive(on: DispatchQueue.main)
+        .sink { _ in
+            
+        } receiveValue: { [weak self] (lessons: [LessonListItemDomainModel]) in
+            
+            self?.allLessonsList = lessons
+        }
+        .store(in: &cancellables)
+        
+        Publishers.CombineLatest3(
+            $personalizedLessons,
+            $allLessonsList,
+            $selectedToggle
+        )
+        .map { (personalizedLessons: PersonalizedLessonsDomainModel, allLessons: [LessonListItemDomainModel], toggle: PersonalizationToggleOptionValue) in
+            
+            let lessonsList: [LessonListItemDomainModel]
+            
+            switch toggle {
+            case .personalized:
+                lessonsList = personalizedLessons.lessons
+            case .all:
+                lessonsList = allLessons
+            }
+            
+            return Just(lessonsList)
+                .eraseToAnyPublisher()
+        }
+        .switchToLatest()
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] (lessonsList: [LessonListItemDomainModel]) in
+            
+            self?.lessonsList = lessonsList
+        }
         .store(in: &cancellables)
     
         $appLanguage
@@ -153,8 +179,19 @@ import SwiftUI
     
     deinit {
         print("x deinit: \(type(of: self))")
+        pullToRefreshLessonsTask?.cancel()
     }
-    
+
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+
+        let strings = getLessonsStringsUseCase
+            .execute(translateInLanguage: appLanguage)
+
+        self.strings = strings
+
+        toggleOptions = Self.getPersonalizedToggleOptions(strings: strings)
+    }
+
     // MARK: - Analytics
     
     private var analyticsScreenName: String {
@@ -211,7 +248,7 @@ import SwiftUI
         )
     }
     
-    private static func getToggleOptions(strings: LessonsStringsDomainModel) -> [PersonalizationToggleOption] {
+    private static func getPersonalizedToggleOptions(strings: LessonsStringsDomainModel) -> [PersonalizationToggleOption] {
         
         return [
             PersonalizationToggleOption(title: strings.personalizedToolToggleTitle, selection: .personalized, buttonAccessibility: .personalizedLessons),
@@ -228,25 +265,22 @@ extension LessonsViewModel {
         
         return LessonCardViewModel(
             lessonListItem: lessonListItem,
-            getToolBannerUseCase: getToolBannerUseCase
+            getToolBannerUseCase: getToolBannerUseCase,
+            inMemoryDataCache: inMemoryDataCache
         )
     }
     
     func pullToRefresh() {
         
-        pullToRefreshLessonsUseCase
-            .execute(
-                appLanguage: appLanguage,
-                country: localizationSettings?.selectedCountry,
-                filterLessonsByLanguage: lessonFilterLanguageSelection
-            )
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completed in
-
-            }, receiveValue: { _ in
-                
-            })
-            .store(in: &cancellables)
+        pullToRefreshLessonsTask = Task {
+            
+            try await pullToRefreshLessonsUseCase
+                .execute(
+                    appLanguage: appLanguage,
+                    country: localizationSettings?.selectedCountry,
+                    filterLessonsByLanguage: lessonFilterLanguageSelection
+                )
+        }
     }
     
     func pageViewed() {
@@ -255,19 +289,19 @@ extension LessonsViewModel {
     }
     
     func lessonLanguageFilterTapped() {
-        flowDelegate?.navigate(step: .lessonLanguageFilterTappedFromLessons)
+        stepEmitter.emit(step: AppFlowStep.lessonLanguageFilterTappedFromLessons)
     }
     
     func lessonCardTapped(lessonListItem: LessonListItemDomainModel) {
 
-        flowDelegate?.navigate(step: .lessonTappedFromLessonsList(lessonListItem: lessonListItem, languageFilter: lessonFilterLanguageSelection))
+        stepEmitter.emit(step: AppFlowStep.lessonTappedFromLessonsList(lessonListItem: lessonListItem, languageFilter: lessonFilterLanguageSelection))
 
         trackLessonTappedAnalytics(lessonListItem: lessonListItem)
     }
 
-    func localizationSettingsTapped() {
+    func changeLocalizationSettingsTapped() {
 
-        flowDelegate?.navigate(step: .localizationSettingsTappedFromLessons)
+        stepEmitter.emit(step: AppFlowStep.changeLocalizationSettingsTappedFromLessons)
     }
 
     func goToAllLessonsTapped() {

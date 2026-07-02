@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import Combine
 
-class GetAppUIDebuggingIsEnabledUseCase {
+final class GetAppUIDebuggingIsEnabledUseCase {
     
     private let appConfig: AppConfigInterface
     
@@ -18,11 +17,10 @@ class GetAppUIDebuggingIsEnabledUseCase {
         self.appConfig = appConfig
     }
     
-    func getIsEnabledPublisher() -> AnyPublisher<Bool, Never> {
+    func execute() -> Bool {
         
         let isEnabled: Bool = appConfig.isDebug
         
-        return Just(isEnabled)
-            .eraseToAnyPublisher()
+        return isEnabled
     }
 }

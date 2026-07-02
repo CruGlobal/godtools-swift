@@ -14,7 +14,7 @@ final class RealmStagingConfig {
     
     static let diskFileName: String = "godtools_realm_staging"
     
-    func createConfig() -> RealmDatabaseConfig {
+    func createConfig() throws -> RealmDatabaseConfig {
         
         let migrationBlock = { @Sendable (migration: Migration, oldSchemaVersion: UInt64) in
                                     
@@ -25,7 +25,7 @@ final class RealmStagingConfig {
             }
         }
         
-        return RealmDatabaseConfig(
+        return try RealmDatabaseConfig(
             fileName: Self.diskFileName,
             schemaVersion: RealmProductionConfig.schemaVersion,
             migrationBlock: migrationBlock

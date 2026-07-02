@@ -10,7 +10,8 @@ import Foundation
 import UIKit
 import Combine
 
-@MainActor class ToolShortcutLinksViewModel: ObservableObject {
+@MainActor
+final class ToolShortcutLinksViewModel: ObservableObject {
     
     enum ShortcutItemType: String {
         case tool
@@ -25,11 +26,14 @@ import Combine
     
     private var cancellables: Set<AnyCancellable> = Set()
     
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var appLanguage = AppLanguageDomainModel.english
     
     @Published private(set) var shortcutLinks: [UIApplicationShortcutItem] = Array()
     
-    init(getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolShortcutLinksUseCase: GetToolShortcutLinksUseCase) {
+    init(
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getToolShortcutLinksUseCase: GetToolShortcutLinksUseCase
+    ) {
         
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getToolShortcutLinksUseCase = getToolShortcutLinksUseCase

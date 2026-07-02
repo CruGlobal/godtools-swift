@@ -14,7 +14,11 @@ class TractPageHeroViewModel: MobileContentViewModel {
     private let heroModel: Hero
     private let visibleAnalyticsEventsObjects: [MobileContentRendererAnalyticsEvent]
     
-    init(heroModel: Hero, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
+    init(
+        heroModel: Hero,
+        renderedPageContext: MobileContentRenderedPageContext,
+        mobileContentAnalytics: MobileContentRendererAnalytics
+    ) {
         
         self.heroModel = heroModel
                 

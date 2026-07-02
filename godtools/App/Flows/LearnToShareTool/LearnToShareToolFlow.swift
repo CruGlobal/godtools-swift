@@ -8,78 +8,95 @@
 
 import UIKit
 import SwiftUI
-import Combine
 
-class LearnToShareToolFlow: Flow {
-    
-    private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+final class LearnToShareToolFlow: GTFlow {
+            
     private let toolPrimaryLanguage: AppLanguageDomainModel
     private let toolParallelLanguage: AppLanguageDomainModel?
     private let toolSelectedLanguageIndex: Int?
-    
-    let appDiContainer: AppDiContainer
-    let navigationController: AppNavigationController
-    
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, toolId: String, toolPrimaryLanguage: AppLanguageDomainModel, toolParallelLanguage: AppLanguageDomainModel?, toolSelectedLanguageIndex: Int?) {
         
-        let navigationBarAppearance = AppNavigationBarAppearance(
-            backgroundColor: .clear,
-            controlColor: ColorPalette.gtBlue.uiColor,
-            titleFont: nil,
-            titleColor: nil,
-            isTranslucent: true
-        )
+    init(
+        appDiContainer: AppDiContainer,
+        toolId: String,
+        toolPrimaryLanguage: AppLanguageDomainModel,
+        toolParallelLanguage: AppLanguageDomainModel?,
+        toolSelectedLanguageIndex: Int?
+    ) {
         
-        self.flowDelegate = flowDelegate
-        self.appDiContainer = appDiContainer
-        self.navigationController = AppNavigationController(navigationBarAppearance: navigationBarAppearance)
         self.toolPrimaryLanguage = toolPrimaryLanguage
         self.toolParallelLanguage = toolParallelLanguage
         self.toolSelectedLanguageIndex = toolSelectedLanguageIndex
         
+        let stepEmitter = FlowStepEmitter()
+        
+        super.init(
+            appDiContainer: appDiContainer,
+            initialView: Self.getLearnToShareToolView(
+                appDiContainer: appDiContainer,
+                stepEmitter: stepEmitter,
+                toolId: toolId,
+                toolPrimaryLanguage: toolPrimaryLanguage,
+                toolParallelLanguage: toolParallelLanguage,
+                toolSelectedLanguageIndex: toolSelectedLanguageIndex
+            ),
+            stepEmitter: stepEmitter,
+            navigationController: AppNavigationController(
+                navigationBarAppearance: AppNavigationBarAppearance(
+                    backgroundColor: .clear,
+                    controlColor: ColorPalette.gtBlue.uiColor,
+                    titleFont: nil,
+                    titleColor: nil,
+                    isTranslucent: true
+                )
+            )
+        )
+
         navigationController.modalPresentationStyle = .fullScreen
-        
         navigationController.setNavigationBarHidden(false, animated: false)
-        
-        navigationController.setViewControllers([getLearnToShareToolView(toolId: toolId)], animated: false)
     }
     
-    deinit {
-        print("x deinit: \(type(of: self))")
-    }
-    
-    func navigate(step: FlowStep) {
+    override func navigate(step: FlowStep) {
         
-        switch step {
+        guard let appStep = step as? AppFlowStep else {
+            return
+        }
+
+        switch appStep {
             
         case .startTrainingTappedFromLearnToShareTool(let toolId, let primaryLanguage, let parallelLanguage, let selectedLanguageIndex):
-            flowDelegate?.navigate(step: .startTrainingTappedFromLearnToShareTool(toolId: toolId, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex))
+            parent?.stepEmitter.emit(step: AppFlowStep.startTrainingTappedFromLearnToShareTool(toolId: toolId, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex))
             
         case .closeTappedFromLearnToShareTool(let toolId, let primaryLanguage, let parallelLanguage, let selectedLanguageIndex):
-            flowDelegate?.navigate(step: .closeTappedFromLearnToShareTool(toolId: toolId, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex))
+            parent?.stepEmitter.emit(step: AppFlowStep.closeTappedFromLearnToShareTool(toolId: toolId, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex))
             
         default:
             break
         }
     }
+}
+
+extension LearnToShareToolFlow {
     
-    private func getLearnToShareToolView(toolId: String) -> UIViewController {
+    private static func getLearnToShareToolView(
+        appDiContainer: AppDiContainer,
+        stepEmitter: FlowStepEmitter,
+        toolId: String,
+        toolPrimaryLanguage: AppLanguageDomainModel,
+        toolParallelLanguage: AppLanguageDomainModel?,
+        toolSelectedLanguageIndex: Int?
+    ) -> UIViewController {
         
         let viewModel = LearnToShareToolViewModel(
-            flowDelegate: self,
+            stepEmitter: stepEmitter,
             toolId: toolId,
             toolPrimaryLanguage: toolPrimaryLanguage,
             toolParallelLanguage: toolParallelLanguage,
             toolSelectedLanguageIndex: toolSelectedLanguageIndex,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewLearnToShareToolUseCase: appDiContainer.feature.learnToShareTool.domainLayer.getViewLearnToShareToolUseCase()
+            getLearnToShareToolStringsUseCase: appDiContainer.feature.learnToShareTool.domainLayer.getLearnToShareToolStringsUseCase(),
+            getLearnToShareToolTutorialUseCase: appDiContainer.feature.learnToShareTool.domainLayer.getLearnToShareToolTutorialUseCase()
         )
-        
-        let view = LearnToShareToolView(viewModel: viewModel)
-        
+                
         let backButton = AppBackBarItem(
             target: viewModel,
             action: #selector(viewModel.backTapped),
@@ -93,8 +110,8 @@ class LearnToShareToolFlow: Flow {
             action: #selector(viewModel.closeTapped)
         )
         
-        let hostingView = AppHostingController<LearnToShareToolView>(
-            rootView: view,
+        let learnToShareToolView = AppHostingController<LearnToShareToolView>(
+            rootView: LearnToShareToolView(viewModel: viewModel),
             navigationBar: AppNavigationBar(
                 appearance: nil,
                 backButton: backButton,
@@ -103,6 +120,6 @@ class LearnToShareToolFlow: Flow {
             )
         )
         
-        return hostingView
+        return learnToShareToolView
     }
 }

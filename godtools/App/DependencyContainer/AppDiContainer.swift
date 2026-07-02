@@ -9,112 +9,92 @@
 import UIKit
 
 class AppDiContainer {
-        
-    private let failedFollowUpsCache: FailedFollowUpsCache
-    private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
     
-    let dataLayer: AppDataLayerDependencies
-    let domainLayer: AppDomainLayerDependencies
+    let core: AppCoreDiContainer
     let feature: AppFeatureDiContainer
     
     init(appConfig: AppConfigInterface) {
-                       
-        dataLayer = AppDataLayerDependencies(
+                
+        // core
+        let dataLayer = AppDataLayerDependencies(
             appConfig: appConfig
         )
         
-        domainLayer = AppDomainLayerDependencies(dataLayer: dataLayer)
-                
-        // feature data layer dependencies
-        let personalizedToolsDataLayer = PersonalizedToolsDataLayerDependencies(coreDataLayer: dataLayer)
-                
-        let onboardingDomainLayer = OnboardingDomainLayerDependencies(coreDataLayer: dataLayer, dataLayer: OnboardingDataLayerDependencies(coreDataLayer: dataLayer))
-        
-        // feature dependency containers
-        let accountDiContainer = AccountDiContainer(coreDataLayer: dataLayer)
-        let appLanguageDiContainer = AppLanguageFeatureDiContainer(coreDataLayer: dataLayer, coreDomainLayer: domainLayer)
-        let dashboardDiContainer = DashboardDiContainer(coreDataLayer: dataLayer)
-        let deferredDeepLinkDiContainer = DeferredDeepLinkDiContainer(coreDataLayer: dataLayer)
-        let downloadToolProgressDiContainer = DownloadToolProgressFeatureDiContainer(coreDataLayer: dataLayer)
-        let favoritesDiContainer = FavoritesDiContainer(coreDataLayer: dataLayer, coreDomainLayer: domainLayer)
-        let featuredLessonsDiContainer = FeaturedLessonsDiContainer(coreDataLayer: dataLayer, coreDomainLayer: domainLayer)
-        let globalActivityDiContainer = GlobalActivityDiContainer(coreDataLayer: dataLayer, coreDomainLayer: domainLayer)
-        let learnToShareToolDiContainer = LearnToShareToolDiContainer(coreDataLayer: dataLayer)
-        let lessonEvaluationDiContainer = LessonEvaluationFeatureDiContainer(coreDataLayer: dataLayer, coreDomainLayer: domainLayer)
-        let lessonFilterDiContainer = LessonFilterDiContainer(coreDataLayer: dataLayer, coreDomainLayer: domainLayer)
-        let lessonsDiContainer = LessonsFeatureDiContainer(coreDataLayer: dataLayer, coreDomainlayer: domainLayer, personalizedToolsDataLayer: personalizedToolsDataLayer)
-        let lessonProgressDiContainer = UserLessonProgressDiContainer(coreDataLayer: dataLayer)
-        let lessonSwipeTutorialDiContainer = LessonSwipeTutorialDiContainer(coreDataLayer: dataLayer)
-        let menuDiContainer = MenuDiContainer(coreDataLayer: dataLayer)
-        let onboardingDiContainer = OnboardingDiContainer(coreDataLayer: dataLayer, domainLayer: onboardingDomainLayer)
-        let optInNotification = OptInNotificationDiContainer(coreDataLayer: dataLayer, getOnboardingTutorialIsAvailable: onboardingDomainLayer.getOnboardingTutorialIsAvailable())
-        let persistToolLanguageSettingsForFavoritedToolDiContainer = PersistToolLanguageSettingsForFavoritedToolDiContainer(coreDataLayer: dataLayer)
-        let personalizedToolsDiContainer: PersonalizedToolsDiContainer = PersonalizedToolsDiContainer(coreDataLayer: dataLayer, coreDomainlayer: domainLayer, personalizedToolsDataLayer: personalizedToolsDataLayer)
-        let shareablesDiContainer: ShareablesDiContainer = ShareablesDiContainer(coreDataLayer: dataLayer)
-        let shareGodToolsDiContainer = ShareGodToolsDiContainer(coreDataLayer: dataLayer)
-        let shareToolDiContainer = ShareToolDiContainer(coreDataLayer: dataLayer)
-        let spotlightToolsDiContainer = SpotlightToolsDiContainer(coreDataLayer: dataLayer, coreDomainLayer: domainLayer)
-        let toolDetailsDiContainer = ToolDetailsFeatureDiContainer(coreDataLayer: dataLayer, coreDomainLayer: domainLayer)
-        let toolsDiContainer = ToolsDiContainer(coreDataLayer: dataLayer, coreDomainLayer: domainLayer, personalizedToolsDataLayer: personalizedToolsDataLayer)
-        let toolScreenShareDiContainer = ToolScreenShareFeatureDiContainer(coreDataLayer: dataLayer)
-        let toolScreenShareQRCodeDiContainer = ToolScreenShareQRCodeFeatureDiContainer(coreDataLayer: dataLayer)
-        let toolSettingsDiContainer = ToolSettingsDiContainer(coreDataLayer: dataLayer, coreDomainLayer: domainLayer)
-        let toolsFilterDiContainer = ToolsFilterFeatureDiContainer(coreDataLayer: dataLayer, coreDomainLayer: domainLayer)
-        let toolShortcutLinks = ToolShortcutLinksDiContainer(coreDataLayer: dataLayer)
-        let tutorialDiContainer = TutorialFeatureDiContainer(coreDataLayer: dataLayer)
-        let userActivityDiContainer = UserActivityDiContainer(coreDataLayer: dataLayer, coreDomainLayer: domainLayer)
-        
-        feature = AppFeatureDiContainer(
-            account: accountDiContainer,
-            appLanguage: appLanguageDiContainer,
-            dashboard: dashboardDiContainer,
-            deferredDeepLink: deferredDeepLinkDiContainer,
-            downloadToolProgress: downloadToolProgressDiContainer,
-            favorites: favoritesDiContainer,
-            featuredLessons: featuredLessonsDiContainer,
-            globalActivity: globalActivityDiContainer,
-            learnToShareTool: learnToShareToolDiContainer,
-            lessonEvaluation: lessonEvaluationDiContainer,
-            lessonFilter: lessonFilterDiContainer,
-            lessons: lessonsDiContainer, 
-            lessonProgress: lessonProgressDiContainer,
-            lessonSwipeTutorial: lessonSwipeTutorialDiContainer,
-            menu: menuDiContainer,
-            onboarding: onboardingDiContainer,
-            optInNotification: optInNotification,
-            persistToolLanguageSettingsForFavoritedTool: persistToolLanguageSettingsForFavoritedToolDiContainer,
-            personalizedTools: personalizedToolsDiContainer,
-            shareables: shareablesDiContainer,
-            shareGodTools: shareGodToolsDiContainer,
-            shareTool: shareToolDiContainer,
-            spotlightTools: spotlightToolsDiContainer,
-            toolDetails: toolDetailsDiContainer,
-            tools: toolsDiContainer,
-            toolScreenShare: toolScreenShareDiContainer,
-            toolScreenShareQRCode: toolScreenShareQRCodeDiContainer,
-            toolSettings: toolSettingsDiContainer,
-            toolsFilter: toolsFilterDiContainer,
-            toolShortcutLinks: toolShortcutLinks,
-            tutorial: tutorialDiContainer,
-            userActivity: userActivityDiContainer
+        let domainLayer = AppDomainLayerDependencies(
+            dataLayer: dataLayer
         )
-                                                                
-        failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: dataLayer.getSharedLegacyRealmDatabase())
+        
+        let core = AppCoreDiContainer(
+            dataLayer: dataLayer,
+            domainLayer: domainLayer
+        )
+        
+        // feature
+        let articlesDataLayer = ArticlesDataLayerDependencies(coreDataLayer: dataLayer)
+        let articlesDomainLayer = ArticlesDomainLayerDependencies(core: core, dataLayer: articlesDataLayer)
+        
+        let onboardingDataLayer = OnboardingDataLayerDependencies(coreDataLayer: dataLayer)
+        let onboardingDomainLayer = OnboardingDomainLayerDependencies(core: core, dataLayer: onboardingDataLayer)
+        
+        let personalizedToolsDataLayer = PersonalizedToolsDataLayerDependencies(coreDataLayer: dataLayer)
+        
+        let tutorialDataLayer = TutorialDataLayerDependencies(coreDataLayer: dataLayer)
+        let tutorialDomainLayer = TutorialDomainLayerDependencies(core: core, dataLayer: tutorialDataLayer)
+        
+        let feature = AppFeatureDiContainer(
+            account: AccountDiContainer(core: core),
+            appLanguage: AppLanguageDiContainer(core: core),
+            articles: ArticlesDiContainer(dataLayer: articlesDataLayer, domainLayer: articlesDomainLayer),
+            dashboard: DashboardDiContainer(core: core),
+            deferredDeepLink: DeferredDeepLinkDiContainer(core: core),
+            downloadToolProgress: DownloadToolProgressDiContainer(core: core),
+            favorites: FavoritesDiContainer(core: core),
+            featuredLessons: FeaturedLessonsDiContainer(core: core),
+            globalActivity: GlobalActivityDiContainer(core: core),
+            learnToShareTool: LearnToShareToolDiContainer(core: core),
+            lessonEvaluation: LessonEvaluationDiContainer(core: core),
+            lessonFilter: LessonFilterDiContainer(core: core),
+            lessons: LessonsDiContainer(core: core, personalizedToolsDataLayer: personalizedToolsDataLayer),
+            lessonProgress: UserLessonProgressDiContainer(core: core),
+            lessonSwipeTutorial: LessonSwipeTutorialDiContainer(core: core),
+            menu: MenuDiContainer(core: core),
+            onboarding: OnboardingDiContainer(dataLayer: onboardingDataLayer, domainLayer: onboardingDomainLayer),
+            optInNotification: OptInNotificationDiContainer(core: core, getOnboardingTutorialIsAvailable: onboardingDomainLayer.getOnboardingTutorialIsAvailable()),
+            persistToolLanguageSettingsForFavoritedTool: PersistToolLanguageSettingsForFavoritedToolDiContainer(core: core),
+            personalizedTools: PersonalizedToolsDiContainer(core: core, personalizedToolsDataLayer: personalizedToolsDataLayer),
+            shareables: ShareablesDiContainer(core: core),
+            shareGodTools: ShareGodToolsDiContainer(core: core),
+            shareTool: ShareToolDiContainer(core: core),
+            spotlightTools: SpotlightToolsDiContainer(core: core),
+            toolDetails: ToolDetailsDiContainer(core: core),
+            tools: ToolsDiContainer(core: core, personalizedToolsDataLayer: personalizedToolsDataLayer, tutorialDomainLayer: tutorialDomainLayer),
+            toolScreenShare: ToolScreenShareDiContainer(core: core),
+            toolScreenShareQRCode: ToolScreenShareQRCodeDiContainer(core: core),
+            toolSettings: ToolSettingsDiContainer(core: core),
+            toolsFilter: ToolsFilterDiContainer(core: core),
+            toolShortcutLinks: ToolShortcutLinksDiContainer(core: core),
+            tutorial: TutorialDiContainer(dataLayer: tutorialDataLayer, domainLayer: tutorialDomainLayer),
+            userActivity: UserActivityDiContainer(core: core)
+        )
+        
+        self.core = core
+        self.feature = feature
     }
     
     static func createUITestsDiContainer() -> AppDiContainer {
         return AppDiContainer(appConfig: UITestsAppConfig())
     }
     
-    func getCardJumpService() -> CardJumpService {
-        return CardJumpService(cardJumpCache: CardJumpUserDefaultsCache(userDefaultsCache: sharedUserDefaultsCache))
-    }
-    
     func getUrlOpener() -> UrlOpenerInterface {
         return OpenUrlWithSwiftUI() // TODO: GT-2466 Return OpenUrlWithUIKit() once supporting FBSDK 17.3+ ~Levi
     }
     
-    @MainActor func getMobileContentRenderer(type: MobileContentRendererPageViewFactoriesType, navigation: MobileContentRendererNavigation, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel) -> MobileContentRenderer {
+    @MainActor func getMobileContentRenderer(
+        type: MobileContentRendererPageViewFactoriesType,
+        navigation: MobileContentRendererNavigation,
+        appLanguage: AppLanguageDomainModel,
+        toolTranslations: ToolTranslationsDomainModel
+    ) -> MobileContentRenderer {
 
         let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
             type: type,
@@ -126,30 +106,24 @@ class AppDiContainer {
             appLanguage: appLanguage,
             toolTranslations: toolTranslations,
             pageViewFactories: pageViewFactories,
-            manifestResourcesCache: getMobileContentRendererManifestResourcesCache()
+            manifestResourcesCache: core.dataLayer.getMobileContentRendererManifestResourcesCache()
         )
     }
     
     func getMobileContentRendererAnalytics() -> MobileContentRendererAnalytics {
         return MobileContentRendererAnalytics(
-            analytics: dataLayer.getAnalytics(),
+            analytics: core.dataLayer.getAnalytics(),
             userAnalytics: getMobileContentRendererUserAnalytics()
         )
     }
     
     func getMobileContentRendererEventAnalyticsTracking() -> MobileContentRendererEventAnalyticsTracking {
-        return MobileContentRendererEventAnalyticsTracking(firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics)
+        return MobileContentRendererEventAnalyticsTracking(firebaseAnalytics: core.dataLayer.getAnalytics().firebaseAnalytics)
     }
     
-    func getMobileContentRendererManifestResourcesCache() -> MobileContentRendererManifestResourcesCache {
-        return MobileContentRendererManifestResourcesCache(resourcesFileCache: dataLayer.getResourcesFileCache())
-    }
-    
-    @MainActor func getMobileContentRendererNavigation(parentFlow: ToolNavigationFlow, navigationDelegate: MobileContentRendererNavigationDelegate, appLanguage: AppLanguageDomainModel) -> MobileContentRendererNavigation {
+    @MainActor func getMobileContentRendererNavigation(appLanguage: AppLanguageDomainModel) -> MobileContentRendererNavigation {
         
         return MobileContentRendererNavigation(
-            parentFlow: parentFlow,
-            delegate: navigationDelegate,
             appDiContainer: self,
             appLanguage: appLanguage
         )
@@ -158,15 +132,6 @@ class AppDiContainer {
     private func getMobileContentRendererUserAnalytics() -> MobileContentRendererUserAnalytics {
         return MobileContentRendererUserAnalytics(
             incrementUserCounterUseCase: feature.userActivity.domainLayer.getIncrementUserCounterUseCase()
-        )
-    }
-    
-    func getToolTrainingTipsOnboardingViews() -> ToolTrainingTipsOnboardingViewsService {
-        return ToolTrainingTipsOnboardingViewsService(
-            cache: ToolTrainingTipsOnboardingViewsUserDefaultsCache(
-                userDefaultsCache: sharedUserDefaultsCache,
-                getTranslatedToolName: domainLayer.supporting.getTranslatedToolName()
-            )
         )
     }
 }

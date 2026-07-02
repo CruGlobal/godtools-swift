@@ -11,6 +11,7 @@ import Testing
 @testable import godtools
 import Combine
 
+@Suite(.serialized)
 struct LaunchCountCacheTests {
 
     init() {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol DeepLinkingParserManifestInterface {
+protocol DeepLinkingParserManifestInterface: Sendable {
     
     var parserClass: DeepLinkParserInterface.Type { get }
         

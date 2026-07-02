@@ -9,13 +9,18 @@
 import UIKit
 import Combine
 
+@MainActor
 class NavBarItem {
     
     let controllerType: NavBarItemControllerType
     let itemData: NavBarItemData
     let hidesBarItemPublisher: AnyPublisher<Bool, Never>?
         
-    init(controllerType: NavBarItemControllerType, itemData: NavBarItemData, hidesBarItemPublisher: AnyPublisher<Bool, Never>?) {
+    init(
+        controllerType: NavBarItemControllerType,
+        itemData: NavBarItemData,
+        hidesBarItemPublisher: AnyPublisher<Bool, Never>?
+    ) {
         
         self.controllerType = controllerType
         self.itemData = itemData

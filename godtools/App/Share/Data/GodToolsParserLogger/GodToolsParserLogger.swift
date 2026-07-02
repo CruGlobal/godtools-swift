@@ -10,7 +10,7 @@ import Foundation
 import GodToolsShared
 import FirebaseCrashlytics
 
-class GodToolsParserLogger {
+final class GodToolsParserLogger {
     
     private var errorReporting: ErrorReportingInterface?
     private var firebaseErrorReporting: FirebaseNonFatalErrorReporting?

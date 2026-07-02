@@ -1,6 +1,6 @@
 import Foundation
 
-class TemplateDataLayerDependencies {
+final class TemplateDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     

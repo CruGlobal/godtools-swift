@@ -9,6 +9,7 @@
 import UIKit
 import Combine
 
+@MainActor
 class AppLayoutDirectionNavBarItemController: NavBarItemController {
     
     private let layoutDirectionBasedBarItem: AppLayoutDirectionBasedBarItem
@@ -17,7 +18,14 @@ class AppLayoutDirectionNavBarItemController: NavBarItemController {
     private var currentSemanticContentAttribute: UISemanticContentAttribute?
     private var cancellables: Set<AnyCancellable> = Set()
     
-    init(delegate: NavBarItemControllerDelegate, navBarAppearance: AppNavigationBarAppearance?, navBarItem: AppLayoutDirectionBasedBarItem, itemBarPosition: BarButtonItemBarPosition, itemIndex: Int, layoutDirectionPublisher: AnyPublisher<UISemanticContentAttribute, Never>? = nil) {
+    init(
+        delegate: NavBarItemControllerDelegate,
+        navBarAppearance: AppNavigationBarAppearance?,
+        navBarItem: AppLayoutDirectionBasedBarItem,
+        itemBarPosition: BarButtonItemBarPosition,
+        itemIndex: Int,
+        layoutDirectionPublisher: AnyPublisher<UISemanticContentAttribute, Never>? = nil
+    ) {
         
         self.layoutDirectionBasedBarItem = navBarItem
         self.layoutDirectionPublisher = layoutDirectionPublisher ?? ApplicationLayout.shared.semanticContentAttributePublisher

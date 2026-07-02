@@ -8,14 +8,14 @@
 
 import Foundation
 
-class OnboardingDiContainer {
+final class OnboardingDiContainer {
         
     let dataLayer: OnboardingDataLayerDependencies
     let domainLayer: OnboardingDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, domainLayer: OnboardingDomainLayerDependencies) {
+    init(dataLayer: OnboardingDataLayerDependencies, domainLayer: OnboardingDomainLayerDependencies) {
         
-        self.dataLayer = OnboardingDataLayerDependencies(coreDataLayer: coreDataLayer)
+        self.dataLayer = dataLayer
         self.domainLayer = domainLayer
     }
 }

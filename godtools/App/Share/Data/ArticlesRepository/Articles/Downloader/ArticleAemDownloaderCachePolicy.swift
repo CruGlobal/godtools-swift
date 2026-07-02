@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ArticleAemDownloaderCachePolicy {
+enum ArticleAemDownloaderCachePolicy: Sendable {
     
     case fetchFromCacheUpToNextHour
     case ignoreCache

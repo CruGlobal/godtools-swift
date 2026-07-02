@@ -17,7 +17,13 @@ final class GetYourFavoritedToolsUseCase {
     private let getTranslatedToolCategory: GetTranslatedToolCategory
     private let getToolListItemStrings: GetToolListItemStrings
     
-    init(favoritedResourcesRepository: FavoritedResourcesRepository, resourcesRepository: ResourcesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolCategory: GetTranslatedToolCategory, getToolListItemStrings: GetToolListItemStrings) {
+    init(
+        favoritedResourcesRepository: FavoritedResourcesRepository,
+        resourcesRepository: ResourcesRepository,
+        getTranslatedToolName: GetTranslatedToolName,
+        getTranslatedToolCategory: GetTranslatedToolCategory,
+        getToolListItemStrings: GetToolListItemStrings
+    ) {
         
         self.favoritedResourcesRepository = favoritedResourcesRepository
         self.resourcesRepository = resourcesRepository
@@ -28,49 +34,40 @@ final class GetYourFavoritedToolsUseCase {
     
     @MainActor func execute(appLanguage: AppLanguageDomainModel, maxCount: Int?) -> AnyPublisher<[YourFavoritedToolDomainModel], Error> {
         
-        return Publishers.CombineLatest3(
+        let strings: ToolListItemStringsDomainModel = getToolListItemStrings.getStrings(appLanguage: appLanguage)
+        
+        return Publishers.CombineLatest(
             resourcesRepository
-                .persistence
                 .observeCollectionChangesPublisher(),
-            getToolListItemStrings
-                .getStringsPublisher(translateInLanguage: appLanguage)
-                .setFailureType(to: Error.self),
             favoritedResourcesRepository
-                .persistence
                 .observeCollectionChangesPublisher()
         )
-        .flatMap { (resourcesChanged: Void, strings: ToolListItemInterfaceStringsDomainModel, favoritedResourcesChanged: Void) -> AnyPublisher<[YourFavoritedToolDomainModel], Error> in
+        .receive(on: DispatchQueue.global())
+        .flatMap { (resourcesChanged: Void, favoritedResourcesChanged: Void) -> AnyPublisher<[YourFavoritedToolDomainModel], Error> in
             
-            return self.favoritedResourcesRepository
-                .getFavoritedResourcesSortedByPositionPublisher()
-                .tryMap { (favoritedResources: [FavoritedResourceDataModel]) in
-                    
-                    return try self.mapToDomainModels(
-                        appLanguage: appLanguage,
-                        maxCount: maxCount,
-                        strings: strings,
-                        favoritedResources: favoritedResources
-                    )
-                }
-                .eraseToAnyPublisher()
+            return AnyPublisher() {
+                try await self.asyncExecute(appLanguage: appLanguage, maxCount: maxCount, strings: strings)
+            }
         }
         .eraseToAnyPublisher()
     }
     
-    private func mapToDomainModels(appLanguage: AppLanguageDomainModel, maxCount: Int?, strings: ToolListItemInterfaceStringsDomainModel, favoritedResources: [FavoritedResourceDataModel]) throws -> [YourFavoritedToolDomainModel] {
+    private func asyncExecute(appLanguage: AppLanguageDomainModel, maxCount: Int?, strings: ToolListItemStringsDomainModel) async throws -> [YourFavoritedToolDomainModel] {
         
-        let numberOfFavoritedTools: Int = try self.favoritedResourcesRepository.persistence.getObjectCount()
+        let favoritedResources: [FavoritedResourceDataModel] = try await favoritedResourcesRepository.getFavoritedResourcesSortedByPosition()
         
-        let prefixedFavoritedResources: [ResourceDataModel] = try favoritedResources
+        let numberOfFavoritedTools: Int = try self.favoritedResourcesRepository.getObjectCount()
+        
+        let prefixedFavoritedResources: [ResourceDataModel] = favoritedResources
             .prefix(maxCount ?? numberOfFavoritedTools)
             .compactMap {
-                try self.resourcesRepository.persistence.getDataModel(id: $0.id)
+                self.resourcesRepository.getResourceById(id: $0.id)
             }
         
         let yourFavoritedTools: [YourFavoritedToolDomainModel] = prefixedFavoritedResources
             .map {
                 YourFavoritedToolDomainModel(
-                    interfaceStrings: strings,
+                    strings: strings,
                     analyticsToolAbbreviation: $0.abbreviation,
                     dataModelId: $0.id,
                     bannerImageId: $0.attrBanner,

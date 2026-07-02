@@ -19,7 +19,11 @@ final class StoreUserLessonFiltersUseCase {
     
     func execute(languageFilter: LessonFilterLanguageDomainModel) -> AnyPublisher<Void, Never> {
         
-        userLessonFiltersRepository.storeUserLessonLanguageFilter(with: languageFilter.languageId)
+        Task {
+            try await userLessonFiltersRepository.storeUserLessonLanguageFilter(
+                languageId: languageFilter.languageId
+            )
+        }
         
         return Just(())
             .eraseToAnyPublisher()

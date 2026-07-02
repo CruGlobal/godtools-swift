@@ -7,23 +7,24 @@
 //
 
 import Foundation
+import RepositorySync
 import RealmSwift
 import SwiftUI
 import UIKit
-import RepositorySync
-import Combine
 
-class ResourcesSHA256FileCache {
+final class ResourcesSHA256FileCache {
     
     private static let rootDirectoryName: String = "godtools_resources_files"
     
     private let fileCache: FileCache
     private let realmDatabase: RealmDatabase
+    private let realmDataWrite: RealmDataWrite
     
-    init(realmDatabase: RealmDatabase) {
+    init(realmDatabase: RealmDatabase, realmDataWrite: RealmDataWrite) {
         
         self.fileCache = FileCache(rootDirectory: ResourcesSHA256FileCache.rootDirectoryName)
         self.realmDatabase = realmDatabase
+        self.realmDataWrite = realmDataWrite
     }
     
     func getFileExists(location: FileCacheLocation) throws -> Bool {
@@ -48,100 +49,61 @@ class ResourcesSHA256FileCache {
         
     // MARK: - Attachment Files
     
-    func storeAttachmentFilePublisher(attachmentId: String, fileName: String, fileData: Data) -> AnyPublisher<FileCacheLocation, Error> {
-        
-        let fileCacheLocation: FileCacheLocation = FileCacheLocation(relativeUrlString: fileName)
-        
-        do {
-            _ = try fileCache.storeFile(location: fileCacheLocation, data: fileData)
-        }
-        catch let error {
-            return Fail(error: error)
-                .eraseToAnyPublisher()
-        }
-        
-        return realmCreateStoredFileRelationshipsToAttachmentPublisher(
-            attachmentId: attachmentId,
-            location: fileCacheLocation
-        )
-        .map { _ in
-            return fileCacheLocation
-        }
-        .eraseToAnyPublisher()
-    }
-    
     func storeAttachmentFile(attachmentId: String, fileName: String, fileData: Data) async throws -> FileCacheLocation {
         
         let fileCacheLocation: FileCacheLocation = FileCacheLocation(relativeUrlString: fileName)
         
         _ = try fileCache.storeFile(location: fileCacheLocation, data: fileData)
         
-        let storedResult: StoreResourcesFilesResult = try await realmCreateStoredFileRelationshipsToAttachment(
+        _ = try await createStoredFileRelationshipsToAttachment(
             attachmentId: attachmentId,
             location: fileCacheLocation
         )
         
         return fileCacheLocation
     }
-    
-    private func realmCreateStoredFileRelationshipsToAttachment(attachmentId: String, location: FileCacheLocation) async throws -> StoreResourcesFilesResult {
+
+    private func createStoredFileRelationshipsToAttachment(attachmentId: String, location: FileCacheLocation) async throws -> StoreResourcesFilesResult {
         
         return try await withCheckedThrowingContinuation { continuation in
-            self.realmCreateStoredFileRelationshipsToAttachment(attachmentId: attachmentId, location: location) { result in
-                switch result {
-                case .success(let value):
-                    continuation.resume(returning: value)
-                case .failure(let error):
-                    continuation.resume(throwing: error)
-                }
-            }
-        }
-    }
-    
-    private func realmCreateStoredFileRelationshipsToAttachmentPublisher(attachmentId: String, location: FileCacheLocation) -> AnyPublisher<StoreResourcesFilesResult, Error> {
-        
-        return Future { promise in
             
-            self.realmCreateStoredFileRelationshipsToAttachment(attachmentId: attachmentId, location: location, completion: { (result: Result<StoreResourcesFilesResult, Error>) in
-                
-                switch result {
-                case .success(let storedFilesResult):
-                    promise(.success(storedFilesResult))
-                case .failure(let error):
-                    promise(.failure(error))
+            createStoredFileRelationshipsToAttachmentWithCompletion(
+                attachmentId: attachmentId,
+                location: location,
+                completion: { (result: Result<StoreResourcesFilesResult, Error>) in
+                    
+                    switch result {
+                    case .success(let storeResourcesFilesResult):
+                        continuation.resume(returning: storeResourcesFilesResult)
+                    case .failure(let error):
+                        continuation.resume(throwing: error)
+                    }
                 }
-            })
-        }
-        .eraseToAnyPublisher()
-    }
-    
-    private func realmCreateStoredFileRelationshipsToAttachment(attachmentId: String, location: FileCacheLocation, completion: @escaping ((_ result: Result<StoreResourcesFilesResult, Error>) -> Void)) {
-        
-        guard let filenameWithPathExtension = location.filenameWithPathExtension else {
-            
-            let error: Error = NSError.errorWithDescription(
-                description: "Failed to create attachment file relationships because a file with path extension does not exist."
             )
-            
-            completion(.failure(error))
-            
-            return
         }
+    }
+    
+    private func createStoredFileRelationshipsToAttachmentWithCompletion(attachmentId: String, location: FileCacheLocation, completion: @escaping ((_ result: Result<StoreResourcesFilesResult, Error>) -> Void)) {
         
-        realmDatabase.write.serialAsync { (result: Result<Realm, Error>) in
-         
+        realmDataWrite.serialAsync { result in
+            
             switch result {
                 
             case .success(let realm):
                 
+                guard let filenameWithPathExtension = location.filenameWithPathExtension else {
+                    let error = NSError.errorWithDescription(
+                        description: "Failed to create attachment file relationships because a file with path extension does not exist."
+                    )
+                    completion(.failure(error))
+                    return
+                }
+                
                 guard let realmAttachment = realm.object(ofType: RealmAttachment.self, forPrimaryKey: attachmentId) else {
-                    
-                    let error: Error = NSError.errorWithDescription(
+                    let error = NSError.errorWithDescription(
                         description: "Failed to create file relationships because an attachment object does not exist in realm."
                     )
-                    
                     completion(.failure(error))
-                    
                     return
                 }
                 
@@ -171,7 +133,6 @@ class ResourcesSHA256FileCache {
                     completion(.success(storeResourcesFilesResult))
                 }
                 catch let error {
-                   
                     completion(.failure(error))
                 }
                 
@@ -183,84 +144,25 @@ class ResourcesSHA256FileCache {
     
     // MARK: - Translation Files
     
-    func storeTranslationFilePublisher(translationId: String, fileName: String, fileData: Data) -> AnyPublisher<FileCacheLocation, Error> {
-        
-        let fileCacheLocation: FileCacheLocation = FileCacheLocation(relativeUrlString: fileName)
-        
-        do {
-            _ = try self.fileCache.storeFile(location: fileCacheLocation, data: fileData)
-        }
-        catch let error {
-            return Fail(error: error)
-                .eraseToAnyPublisher()
-        }
-        
-        return realmCreateStoredFileRelationshipsToTranslationPublisher(
-            translationId: translationId,
-            fileCacheLocations: [fileCacheLocation]
-        )
-        .map { _ in
-            return fileCacheLocation
-        }
-        .eraseToAnyPublisher()
-    }
-    
     func storeTranslationFile(translationId: String, fileName: String, fileData: Data) async throws -> FileCacheLocation {
                 
         let fileCacheLocation: FileCacheLocation = FileCacheLocation(relativeUrlString: fileName)
         
         _ = try fileCache.storeFile(location: fileCacheLocation, data: fileData)
         
-        let storedResult: StoreResourcesFilesResult = try await realmCreateStoredFileRelationshipsToTranslation(
+        _ = try await createStoredFileRelationshipsToTranslation(
             translationId: translationId,
             fileCacheLocations: [fileCacheLocation]
         )
         
         return fileCacheLocation
-    }
-    
-    func storeTranslationFile(realm: Realm, translationId: String, fileName: String, fileData: Data) throws -> FileCacheLocation {
-                
-        let fileCacheLocation: FileCacheLocation = FileCacheLocation(relativeUrlString: fileName)
-        
-        _ = try fileCache.storeFile(location: fileCacheLocation, data: fileData)
-        
-        let storedResult: StoreResourcesFilesResult = try realmCreateStoredFileRelationshipsToTranslation(
-            realm: realm,
-            translationId: translationId,
-            fileCacheLocations: [fileCacheLocation]
-        )
-        
-        return fileCacheLocation
-    }
-    
-    func storeTranslationZipFilePublisher(translationId: String, zipFileData: Data) -> AnyPublisher<[FileCacheLocation], Error> {
-        
-        let fileCacheLocations: [FileCacheLocation]
-        
-        do {
-            fileCacheLocations = try fileCache.decompressZipFileAndStoreFileContents(zipFileData: zipFileData)
-        }
-        catch let error {
-            return Fail(error: error)
-                .eraseToAnyPublisher()
-        }
-        
-        return realmCreateStoredFileRelationshipsToTranslationPublisher(
-            translationId: translationId,
-            fileCacheLocations: fileCacheLocations
-        )
-        .map { _ in
-            return fileCacheLocations
-        }
-        .eraseToAnyPublisher()
     }
     
     func storeTranslationZipFile(translationId: String, zipFileData: Data) async throws -> [FileCacheLocation] {
         
         let fileCacheLocations: [FileCacheLocation] = try fileCache.decompressZipFileAndStoreFileContents(zipFileData: zipFileData)
         
-        let storedResult: StoreResourcesFilesResult = try await realmCreateStoredFileRelationshipsToTranslation(
+        _ = try await createStoredFileRelationshipsToTranslation(
             translationId: translationId,
             fileCacheLocations: fileCacheLocations
         )
@@ -268,72 +170,48 @@ class ResourcesSHA256FileCache {
         return fileCacheLocations
     }
     
-    func storeTranslationZipFile(realm: Realm, translationId: String, zipFileData: Data) throws -> [FileCacheLocation] {
-        
-        let fileCacheLocations: [FileCacheLocation] = try fileCache.decompressZipFileAndStoreFileContents(zipFileData: zipFileData)
-        
-        let storedResult: StoreResourcesFilesResult = try realmCreateStoredFileRelationshipsToTranslation(
-            realm: realm,
-            translationId: translationId,
-            fileCacheLocations: fileCacheLocations
-        )
-        
-        return fileCacheLocations
-    }
-    
-    private func realmCreateStoredFileRelationshipsToTranslationPublisher(translationId: String, fileCacheLocations: [FileCacheLocation]) -> AnyPublisher<StoreResourcesFilesResult, Error> {
-        
-        return Future { promise in
-            
-            self.realmCreateStoredFileRelationshipsToTranslation(translationId: translationId, fileCacheLocations: fileCacheLocations, completion: { (result: Result<StoreResourcesFilesResult, Error>) in
-                
-                switch result {
-                case .success(let storedFilesResult):
-                    promise(.success(storedFilesResult))
-                case .failure(let error):
-                    promise(.failure(error))
-                }
-            })
-        }
-        .eraseToAnyPublisher()
-    }
-    
-    private func realmCreateStoredFileRelationshipsToTranslation(translationId: String, fileCacheLocations: [FileCacheLocation]) async throws -> StoreResourcesFilesResult {
+    private func createStoredFileRelationshipsToTranslation(translationId: String, fileCacheLocations: [FileCacheLocation]) async throws -> StoreResourcesFilesResult {
         
         return try await withCheckedThrowingContinuation { continuation in
-            self.realmCreateStoredFileRelationshipsToTranslation(translationId: translationId, fileCacheLocations: fileCacheLocations) { result in
-                switch result {
-                case .success(let value):
-                    continuation.resume(returning: value)
-                case .failure(let error):
-                    continuation.resume(throwing: error)
+            
+            createStoredFileRelationshipsToTranslationWithCompletion(
+                translationId: translationId,
+                fileCacheLocations: fileCacheLocations,
+                completion: { (result: Result<StoreResourcesFilesResult, Error>) in
+                    
+                    switch result {
+                    case .success(let storeResourcesFilesResult):
+                        continuation.resume(returning: storeResourcesFilesResult)
+                    case .failure(let error):
+                        continuation.resume(throwing: error)
+                    }
                 }
-            }
+            )
         }
     }
     
-    private func realmCreateStoredFileRelationshipsToTranslation(translationId: String, fileCacheLocations: [FileCacheLocation], completion: @escaping ((_ result: Result<StoreResourcesFilesResult, Error>) -> Void)) {
+    private func createStoredFileRelationshipsToTranslationWithCompletion(translationId: String, fileCacheLocations: [FileCacheLocation], completion: @escaping ((_ result: Result<StoreResourcesFilesResult, Error>) -> Void)) {
         
-        realmDatabase.write.serialAsync { (result: Result<Realm, Error>) in
+        realmDataWrite.serialAsync { result in
             
             switch result {
-                
+            
             case .success(let realm):
                 
                 do {
                     
-                    let result = try self.realmCreateStoredFileRelationshipsToTranslation(
+                    let storeResourcesFilesResult = try self.realmCreateStoredFileRelationshipsToTranslation(
                         realm: realm,
                         translationId: translationId,
                         fileCacheLocations: fileCacheLocations
                     )
                     
-                    completion(.success(result))
+                    completion(.success(storeResourcesFilesResult))
                 }
                 catch let error {
                     completion(.failure(error))
                 }
-                
+            
             case .failure(let error):
                 completion(.failure(error))
             }
@@ -341,7 +219,7 @@ class ResourcesSHA256FileCache {
     }
     
     private func realmCreateStoredFileRelationshipsToTranslation(realm: Realm, translationId: String, fileCacheLocations: [FileCacheLocation]) throws -> StoreResourcesFilesResult {
-        
+            
         guard let realmTranslation = realm.object(ofType: RealmTranslation.self, forPrimaryKey: translationId) else {
             
             let error: Error = NSError.errorWithDescription(description: "Failed to create file relationships because a translation object does not exist in realm.")
@@ -349,42 +227,50 @@ class ResourcesSHA256FileCache {
             throw error
         }
         
-        do {
+        var updateSha256Files: [RealmSHA256File] = Array()
+        
+        for location in fileCacheLocations {
             
-            try realm.write {
-
-                for location in fileCacheLocations {
-                          
-                    guard let filenameWithPathExtension = location.filenameWithPathExtension else {
-                        continue
-                    }
-                    
-                    if let existingRealmSHA256File = realm.object(ofType: RealmSHA256File.self, forPrimaryKey: filenameWithPathExtension), !existingRealmSHA256File.translations.contains(realmTranslation) {
-                        
-                        existingRealmSHA256File.translations.append(realmTranslation)
-                    }
-                    else {
-                        
-                        let newRealmSHA256File: RealmSHA256File = RealmSHA256File()
-                        newRealmSHA256File.sha256WithPathExtension = filenameWithPathExtension
-                        newRealmSHA256File.translations.append(realmTranslation)
-                        
-                        realm.add(newRealmSHA256File, update: .all)
-                    }
-                }
+            guard !realmTranslation.isInvalidated else {
+                updateSha256Files.removeAll()
+                break
             }
             
-            let storeResourcesFilesResult = StoreResourcesFilesResult(
-                storedFiles: fileCacheLocations,
-                deleteResourcesFilesResult: try self.deleteUnusedResourceFiles(realm: realm)
-            )
+            guard let filenameWithPathExtension = location.filenameWithPathExtension else {
+                continue
+            }
             
-            return storeResourcesFilesResult
-        }
-        catch let error {
+            let sha256File: RealmSHA256File
             
-            throw error
+            if let existingRealmSHA256File = realm.object(ofType: RealmSHA256File.self, forPrimaryKey: filenameWithPathExtension), !existingRealmSHA256File.translations.contains(realmTranslation) {
+                
+                sha256File = existingRealmSHA256File.copy()
+            }
+            else {
+                
+                sha256File = RealmSHA256File()
+                sha256File.sha256WithPathExtension = filenameWithPathExtension
+            }
+            
+            sha256File.translations.append(realmTranslation)
+            
+            updateSha256Files.append(sha256File)
         }
+        
+        if updateSha256Files.count > 0 {
+            
+            try realm.write {
+                
+                realm.add(updateSha256Files, update: .all)
+            }
+        }
+        
+        let storeResourcesFilesResult = StoreResourcesFilesResult(
+            storedFiles: fileCacheLocations,
+            deleteResourcesFilesResult: try self.deleteUnusedResourceFiles(realm: realm)
+        )
+        
+        return storeResourcesFilesResult
     }
     
     // MARK: - Deleting Unused Files

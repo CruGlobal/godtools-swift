@@ -8,23 +8,22 @@
 
 import Foundation
 import RequestOperation
-import Combine
 
-class FollowUpsApi {
+final class FollowUpsApi: FollowUpsApiInterface {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let urlSessionPriority: URLSessionPriority
-    private let requestSender: RequestSender
+    private let requestSender: RequestSenderInterface
     private let baseUrl: String
     
-    init(baseUrl: String, urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
+    init(baseUrl: String, urlSessionPriority: URLSessionPriority, requestSender: RequestSenderInterface) {
         
         self.urlSessionPriority = urlSessionPriority
         self.requestSender = requestSender
         self.baseUrl = baseUrl
     }
     
-    private func getFollowUpRequest(followUp: FollowUpModelType, urlSession: URLSession) -> URLRequest {
+    private func getFollowUpRequest(followUp: FollowUp, urlSession: URLSession) throws -> URLRequest {
         
         let headers: [String: String] = [
             "Content-Type": "application/vnd.api+json"
@@ -42,8 +41,8 @@ class FollowUpsApi {
             ]
         ]
         
-        return requestBuilder.build(
-            parameters: RequestBuilderParameters(
+        return try requestBuilder.build(
+            parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseUrl + "/follow_ups",
                 method: .post,
@@ -54,13 +53,15 @@ class FollowUpsApi {
         )
     }
     
-    func postFollowUpPublisher(followUp: FollowUpModelType, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
-            
+    func postFollowUp(followUp: FollowUp, requestPriority: RequestPriority) async throws -> RequestDataResponse {
+        
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
-        let urlRequest = getFollowUpRequest(followUp: followUp, urlSession: urlSession)
+        let urlRequest: URLRequest = try getFollowUpRequest(followUp: followUp, urlSession: urlSession)
         
-        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
-            .eraseToAnyPublisher()
+        return try await requestSender.sendDataTask(
+            urlRequest: urlRequest,
+            urlSession: urlSession
+        )
     }
 }

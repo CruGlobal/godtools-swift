@@ -9,18 +9,86 @@
 import Foundation
 import Combine
 
-class GetToolDetailsMediaUseCase {
+final class GetToolDetailsMediaUseCase {
     
-    private let getToolDetailsMediaRepository: GetToolDetailsMediaRepositoryInterface
+    private let resourcesRepository: ResourcesRepository
+    private let attachmentsRepository: AttachmentsRepository
     
-    init(getToolDetailsMediaRepository: GetToolDetailsMediaRepositoryInterface) {
+    init(resourcesRepository: ResourcesRepository, attachmentsRepository: AttachmentsRepository) {
         
-        self.getToolDetailsMediaRepository = getToolDetailsMediaRepository
+        self.resourcesRepository = resourcesRepository
+        self.attachmentsRepository = attachmentsRepository
     }
     
-    func getMediaPublisher(toolId: String) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
+    func execute(toolId: String) -> AnyPublisher<ToolDetailsMediaDomainModel, Error> {
+                
+        return AnyPublisher() {
+            return try await self.asyncExecute(toolId: toolId)
+        }
+    }
+    
+    func asyncExecute(toolId: String) async throws -> ToolDetailsMediaDomainModel {
         
-        return self.getToolDetailsMediaRepository.getMediaPublisher(toolId: toolId)
+        guard let resource = resourcesRepository.getResourceById(id: toolId) else {
+            return .empty
+        }
+        
+        if !resource.attrAboutOverviewVideoYoutube.isEmpty {
+            
+            return getYouTubeMedia(videoId: resource.attrAboutOverviewVideoYoutube)
+        }
+        else if !resource.attrAboutBannerAnimation.isEmpty {
+            
+            return try await getAnimatedMediaElseImageElseEmpty(resource: resource)
+        }
+        else {
+            
+            return try await getImageMediaElseEmpty(resource: resource)
+        }
+    }
+    
+    private func getYouTubeMedia(videoId: String) -> ToolDetailsMediaDomainModel {
+        
+        let playsInFullScreen: Int = 0
+        let playerParameters: [String: Any] = [YoutubePlayerParameters.playsInline.rawValue: playsInFullScreen]
+        
+        return .youtube(videoId: videoId, playerParameters: playerParameters)
+    }
+    
+    private func getAnimatedMediaElseImageElseEmpty(resource: ResourceDataModel) async throws -> ToolDetailsMediaDomainModel {
+        
+        let attachment: AttachmentDataModel? = try await attachmentsRepository.getAttachmentFromCacheElseRemote(
+            id: resource.attrAboutBannerAnimation,
+            requestPriority: .high
+        )
+        
+        guard let diskFileUrl = attachment?.storedAttachment?.diskFileUrl else {
+            return try await getImageMediaElseEmpty(resource: resource)
+        }
+        
+        let resource: AnimatedResource = .deviceFileManagerfilepathJsonFile(filepath: diskFileUrl.path)
+        let viewModel = AnimatedViewModel(animationDataResource: resource, autoPlay: true, loop: true)
+        
+        return .animation(viewModel: viewModel)
+    }
+    
+    private func getImageMediaElseEmpty(resource: ResourceDataModel) async throws -> ToolDetailsMediaDomainModel {
+        
+        let attachment: AttachmentDataModel? = try await attachmentsRepository.getAttachmentFromCacheElseRemote(
+            id: resource.attrBannerAbout,
+            requestPriority: .high
+        )
+        
+        if let image = attachment?.getImage() {
+            return .image(image: image)
+        }
+        
+        return .empty
+    }
+    
+    private func getEmptyMediaPublisher() -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
+        
+        return Just(.empty)
             .eraseToAnyPublisher()
     }
 }

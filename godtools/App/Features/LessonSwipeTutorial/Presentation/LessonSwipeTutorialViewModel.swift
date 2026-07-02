@@ -9,42 +9,43 @@
 import Foundation
 import Combine
 
-@MainActor class LessonSwipeTutorialViewModel: ObservableObject {
+@MainActor
+final class LessonSwipeTutorialViewModel: ObservableObject {
     
+    private let stepEmitter: FlowStepEmitter
     private let getStringsUseCase: GetLessonSwipeTutorialStringsUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
     
-    private weak var flowDelegate: FlowDelegate?
-
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var appLanguage = AppLanguageDomainModel.english
     
     @Published private(set) var strings: LessonSwipeTutorialStringsDomainModel = LessonSwipeTutorialStringsDomainModel.emptyValue
 
-    init(flowDelegate: FlowDelegate, getStringsUseCase: GetLessonSwipeTutorialStringsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase) {
-        self.flowDelegate = flowDelegate
+    init(
+        stepEmitter: FlowStepEmitter,
+        getStringsUseCase: GetLessonSwipeTutorialStringsUseCase,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    ) {
+        self.stepEmitter = stepEmitter
         self.getStringsUseCase = getStringsUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         
         getCurrentAppLanguageUseCase
             .execute()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { appLanguage in
-                getStringsUseCase
-                    .execute(translateInLanguage: appLanguage)
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: LessonSwipeTutorialStringsDomainModel) in
-                
-                self?.strings = strings
-            }
+            .sink(receiveValue: { [weak self] (appLanguage: AppLanguageDomainModel) in
+
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
+            })
             .store(in: &cancellables)
+    }
+
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+
+        strings = getStringsUseCase
+            .execute(translateInLanguage: appLanguage)
     }
 }
 
@@ -53,6 +54,6 @@ import Combine
 extension LessonSwipeTutorialViewModel {
     
     func dismissTutorial() {
-        flowDelegate?.navigate(step: .closeLessonSwipeTutorial)
+        stepEmitter.emit(step: AppFlowStep.closeLessonSwipeTutorial)
     }
 }

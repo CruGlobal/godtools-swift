@@ -1,1 +1,1 @@
-
+Correzione di vari bug e miglioramenti all'interfaccia utente

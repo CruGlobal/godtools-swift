@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetLessonEvaluationStringsUseCase {
     
@@ -18,20 +17,19 @@ final class GetLessonEvaluationStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<LessonEvaluationStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> LessonEvaluationStringsDomainModel {
         
-        let localeId: String = translateInAppLanguage
+        let localeId: String = appLanguage
         
-        let interfaceStrings = LessonEvaluationStringsDomainModel(
-            title: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: "lesson_evaluation.title"),
-            wasThisHelpful: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: "lesson_evaluation.wasThisHelpful"),
-            yesActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: "yes"),
-            noActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: "no"),
-            shareFaithReadiness: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: "lesson_evaluation.shareFaith"),
-            sendFeedbackActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: "lesson_evaluation.sendButtonTitle")
+        let strings = LessonEvaluationStringsDomainModel(
+            title: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonEvaluationTitle.key),
+            wasThisHelpful: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonEvaluationWasThisHelpful.key),
+            yesActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.yes.key),
+            noActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.no.key),
+            shareFaithReadiness: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonEvaluationShareFaith.key),
+            sendFeedbackActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonEvaluationSendButtonTitle.key)
         )
         
-        return Just(interfaceStrings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

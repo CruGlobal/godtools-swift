@@ -18,13 +18,10 @@ final class GetGlobalActivityEnabledUseCase {
         self.remoteConfigRepository = remoteConfigRepository
     }
     
-    func execute() -> AnyPublisher<Bool, Never> {
+    func execute() -> Bool {
         
         return remoteConfigRepository
-            .getRemoteConfigPublisher()
-            .map { (dataModel: RemoteConfigDataModel?) in
-                return dataModel?.globalActivityIsEnabled ?? false
-            }
-            .eraseToAnyPublisher()
+            .getRemoteConfig()?
+            .globalActivityIsEnabled ?? false
     }
 }

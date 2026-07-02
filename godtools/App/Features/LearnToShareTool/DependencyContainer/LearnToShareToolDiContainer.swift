@@ -8,14 +8,14 @@
 
 import Foundation
 
-class LearnToShareToolDiContainer {
+final class LearnToShareToolDiContainer {
     
     let dataLayer: LearnToShareToolDataLayerDependencies
     let domainLayer: LearnToShareToolDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(core: AppCoreDiContainer) {
         
-        dataLayer = LearnToShareToolDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainLayer = LearnToShareToolDomainLayerDependencies(dataLayer: dataLayer)
+        dataLayer = LearnToShareToolDataLayerDependencies(coreDataLayer: core.dataLayer)
+        domainLayer = LearnToShareToolDomainLayerDependencies(core: core, dataLayer: dataLayer)
     }
 }

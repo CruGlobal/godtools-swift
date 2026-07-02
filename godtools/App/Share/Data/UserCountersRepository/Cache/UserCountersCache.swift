@@ -13,130 +13,80 @@ import SwiftData
 
 final class UserCountersCache {
     
-    private let persistence: any Persistence<UserCounterDataModel, UserCounterCodable>
+    private let localActivityCounterCache: LocalActivityCounterCache
     
-    init(persistence: any Persistence<UserCounterDataModel, UserCounterCodable>) {
+    let persistence: any Persistence<UserCounterDataModel, UserCounterCodable>
+    
+    init(
+        localActivityCounterCache: LocalActivityCounterCache,
+        persistence: any Persistence<UserCounterDataModel, UserCounterCodable>
+    ) {
 
+        self.localActivityCounterCache = localActivityCounterCache
         self.persistence = persistence
     }
     
     @available(iOS 17.4, *)
-    var swiftDatabase: SwiftDatabase? {
+    private var swiftDatabase: SwiftDatabase? {
         return getSwiftPersistence()?.database
     }
     
     @available(iOS 17.4, *)
-    func getSwiftPersistence() -> SwiftRepositorySyncPersistence<UserCounterDataModel, UserCounterCodable, SwiftUserCounter>? {
+    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<UserCounterDataModel, UserCounterCodable, SwiftUserCounter>? {
         return persistence as? SwiftRepositorySyncPersistence<UserCounterDataModel, UserCounterCodable, SwiftUserCounter>
     }
     
-    var realmDatabase: RealmDatabase? {
-        return getRealmPersistence()?.database
-    }
-    
-    func getRealmPersistence() -> RealmRepositorySyncPersistence<UserCounterDataModel, UserCounterCodable, RealmUserCounter>? {
+    private func getRealmPersistence() -> RealmRepositorySyncPersistence<UserCounterDataModel, UserCounterCodable, RealmUserCounter>? {
         return persistence as? RealmRepositorySyncPersistence<UserCounterDataModel, UserCounterCodable, RealmUserCounter>
     }
 }
 
 extension UserCountersCache {
     
-    func writeCounters(counters: [UserCounterCodable]) throws {
+    func mergeLocalCountersWithCachedCounters() async throws -> [UserCounterDataModel] {
         
-        if #available(iOS 17.4, *), let database = getSwiftPersistence()?.database {
+        let cachedCounters: [UserCounterDataModel] = try await persistence.getDataModels(getOption: .allObjects)
+        
+        return try mergeLocalCountersWithCounters(counters: cachedCounters)
+    }
+    
+    func mergeLocalCountersWithCounters(counters: [UserCounterDataModel]) throws -> [UserCounterDataModel] {
+                
+        return try counters.map { (counter: UserCounterDataModel) in
             
-            let context: ModelContext = database.openContext()
-            
-            var countersToWrite: [SwiftUserCounter] = Array()
-            
-            for counter in counters {
-                
-                let swiftCounter: SwiftUserCounter = try database.read.object(context: context, id: counter.id) ?? SwiftUserCounter()
-                
-                swiftCounter.mapFrom(interface: counter)
-                
-                countersToWrite.append(swiftCounter)
-            }
-            
-            try database.write.context(
-                context: context,
-                writeObjects: WriteSwiftObjects(deleteObjects: nil, insertObjects: countersToWrite)
-            )
-        }
-        else if let database = getRealmPersistence()?.database {
-                        
-            var countersToWrite: [RealmUserCounter] = Array()
-            
-            database.write.async { (realm: Realm) in
-                
-                for counter in counters {
-                    
-                    let realmUserCounter: RealmUserCounter
-                    
-                    let existingCounter: RealmUserCounter? = database.read.object(realm: realm, id: counter.id)
-                    
-                    if let existingCounter = existingCounter {
-                        realmUserCounter = existingCounter
-                    }
-                    else {
-                        realmUserCounter = RealmUserCounter()
-                        realmUserCounter.id = counter.id
-                    }
-                    
-                    realmUserCounter.count = counter.count
-                    
-                    countersToWrite.append(realmUserCounter)
-                }
-                
-                realm.add(countersToWrite, update: .modified)
-                
-            } writeError: { error in
-                
-            }
+            try mergeLocalCounterWithCounter(counter: counter)
         }
     }
     
-    func deleteCounters() throws {
-                
-        if #available(iOS 17.4, *), let database = getSwiftPersistence()?.database {
-            
-            let context: ModelContext = database.openContext()
-            
-            let counters: [SwiftUserCounter] = try database.read.objects(context: context, query: nil)
-            
-            guard counters.count > 0 else {
-                return
-            }
-            
-            try database.write.context(
-                context: context,
-                writeObjects: WriteSwiftObjects(
-                    deleteObjects: counters,
-                    insertObjects: nil
-                )
-            )
+    func getCounter(id: String) throws -> UserCounterDataModel? {
+        
+        let localCounter: LocalActivityCountDataModel? = try localActivityCounterCache.persistence.getDataModel(id: id)
+        let counter: UserCounterDataModel? = try persistence.getDataModel(id: id)
+        
+        if localCounter == nil && counter == nil {
+            return nil
         }
-        else if let database = getRealmPersistence()?.database {
-            
-            let realm: Realm = try database.openRealm()
-            
-            let counters: [RealmUserCounter] = database.read.objects(realm: realm, query: nil)
-            
-            guard counters.count > 0 else {
-                return
-            }
-            
-            try database.write.realm(
-                realm: realm,
-                writeClosure: { (realm: Realm) in
+        
+        let localCount: Int = localCounter?.count ?? 0
+        let counterCount: Int = counter?.count ?? 0
+        
+        return UserCounterDataModel(id: id, count: localCount + counterCount)
+    }
+    
+    private func mergeLocalCounterWithCounter(counter: UserCounterDataModel) throws -> UserCounterDataModel {
+        
+        let localCounter: LocalActivityCountDataModel? = try localActivityCounterCache.persistence.getDataModel(id: counter.id)
+        
+        let localCount: Int = localCounter?.count ?? 0
                     
-                    return WriteRealmObjects(
-                        deleteObjects: counters,
-                        addObjects: nil
-                    )
-                },
-                updatePolicy: .modified
-            )
-        }
+        return UserCounterDataModel(
+            id: counter.id,
+            count: counter.count + localCount
+        )
+    }
+    
+    func deleteCounters() async throws {
+        
+        try await persistence.deleteCollection()
     }
 }

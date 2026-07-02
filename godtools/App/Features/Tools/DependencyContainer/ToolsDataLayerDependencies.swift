@@ -8,12 +8,18 @@
 
 import Foundation
 
-class ToolsDataLayerDependencies {
+final class ToolsDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     
     init(coreDataLayer: AppDataLayerDependencies) {
         
         self.coreDataLayer = coreDataLayer
+    }
+    
+    func getOptInOnboardingBannerEnabledRepository() -> OptInOnboardingBannerEnabledRepository {
+        return OptInOnboardingBannerEnabledRepository(
+            cache: OptInOnboardingBannerEnabledCache()
+        )
     }
 }

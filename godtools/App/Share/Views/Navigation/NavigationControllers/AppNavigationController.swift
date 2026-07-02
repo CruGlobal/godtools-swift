@@ -10,6 +10,7 @@ import UIKit
 import SwiftUI
 import Combine
 
+@MainActor
 class AppNavigationController: UINavigationController {
     
     private let hidesNavigationBar: Bool
@@ -19,7 +20,11 @@ class AppNavigationController: UINavigationController {
     
     let navigationBarAppearance: AppNavigationBarAppearance?
     
-    init(navigationBarAppearance: AppNavigationBarAppearance?, hidesNavigationBar: Bool = false, layoutDirectionPublisher: AnyPublisher<UISemanticContentAttribute, Never>? = nil) {
+    init(
+        navigationBarAppearance: AppNavigationBarAppearance?,
+        hidesNavigationBar: Bool = false,
+        layoutDirectionPublisher: AnyPublisher<UISemanticContentAttribute, Never>? = nil
+    ) {
         
         self.navigationBarAppearance = navigationBarAppearance
         self.hidesNavigationBar = hidesNavigationBar

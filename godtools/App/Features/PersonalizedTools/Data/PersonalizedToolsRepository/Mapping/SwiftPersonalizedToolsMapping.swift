@@ -13,14 +13,14 @@ import RepositorySync
 final class SwiftPersonalizedToolsMapping: Mapping {
 
     func toDataModel(externalObject: PersonalizedToolsDataModel) -> PersonalizedToolsDataModel? {
-        return PersonalizedToolsDataModel(interface: externalObject)
+        return externalObject
     }
 
     func toDataModel(persistObject: SwiftPersonalizedTools) -> PersonalizedToolsDataModel? {
-        return PersonalizedToolsDataModel(interface: persistObject)
+        return persistObject.toModel()
     }
 
     func toPersistObject(externalObject: PersonalizedToolsDataModel) -> SwiftPersonalizedTools? {
-        return SwiftPersonalizedTools.createNewFrom(interface: externalObject)
+        return SwiftPersonalizedTools.createNewFrom(model: externalObject)
     }
 }

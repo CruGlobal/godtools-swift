@@ -29,3 +29,27 @@ enum SwiftResourceViewV1 {
         }
     }
 }
+
+@available(iOS 17.4, *)
+extension SwiftResourceView {
+    
+    func mapFrom(model: ResourceViewDataModel) {
+        id = model.id
+        resourceId = model.resourceId
+        quantity = model.quantity
+    }
+    
+    static func createNewFrom(model: ResourceViewDataModel) -> SwiftResourceView {
+        let object = SwiftResourceView()
+        object.mapFrom(model: model)
+        return object
+    }
+    
+    func toModel() -> ResourceViewDataModel {
+        return ResourceViewDataModel(
+            id: id,
+            resourceId: resourceId,
+            quantity: quantity
+        )
+    }
+}

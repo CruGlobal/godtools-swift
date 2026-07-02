@@ -9,12 +9,22 @@
 import UIKit
 import Combine
 
+@MainActor
 class AppLayoutDirectionBasedBarItem: NavBarItem {
     
     let leftToRightImage: UIImage?
     let rightToLeftImage: UIImage?
     
-    init(leftToRightImage: UIImage?, rightToLeftImage: UIImage?, color: UIColor?, target: AnyObject, action: Selector, accessibilityIdentifier: String?, hidesBarItemPublisher: AnyPublisher<Bool, Never>? = nil, layoutDirectionPublisher: AnyPublisher<UISemanticContentAttribute, Never>? = nil) {
+    init(
+        leftToRightImage: UIImage?,
+        rightToLeftImage: UIImage?,
+        color: UIColor?,
+        target: AnyObject,
+        action: Selector,
+        accessibilityIdentifier: String?,
+        hidesBarItemPublisher: AnyPublisher<Bool, Never>? = nil,
+        layoutDirectionPublisher: AnyPublisher<UISemanticContentAttribute, Never>? = nil
+    ) {
         
         self.leftToRightImage = leftToRightImage
         self.rightToLeftImage = rightToLeftImage

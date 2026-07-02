@@ -13,7 +13,11 @@ class MobileContentMultiSelectViewModel: MobileContentViewModel {
     
     private let multiSelectModel: Multiselect
     
-    init(multiSelectModel: Multiselect, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
+    init(
+        multiSelectModel: Multiselect,
+        renderedPageContext: MobileContentRenderedPageContext,
+        mobileContentAnalytics: MobileContentRendererAnalytics
+    ) {
         
         self.multiSelectModel = multiSelectModel
         

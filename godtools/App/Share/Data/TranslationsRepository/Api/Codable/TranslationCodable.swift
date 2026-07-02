@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TranslationCodable: TranslationDataModelInterface, Codable {
+struct TranslationCodable: Codable, Sendable {
     
     let id: String
     let isPublished: Bool
@@ -52,6 +52,36 @@ struct TranslationCodable: TranslationDataModelInterface, Codable {
         case data = "data"
     }
     
+    init(
+        id: String = "",
+        isPublished: Bool = false,
+        language: LanguageCodable? = nil,
+        manifestName: String = "",
+        resource: ResourceCodable? = nil,
+        toolDetailsBibleReferences: String = "",
+        toolDetailsConversationStarters: String = "",
+        toolDetailsOutline: String = "",
+        translatedDescription: String = "",
+        translatedName: String = "",
+        translatedTagline: String = "",
+        type: String = "",
+        version: Int = 0
+    ) {
+        self.id = id
+        self.isPublished = isPublished
+        self.language = language
+        self.manifestName = manifestName
+        self.resource = resource
+        self.toolDetailsBibleReferences = toolDetailsBibleReferences
+        self.toolDetailsConversationStarters = toolDetailsConversationStarters
+        self.toolDetailsOutline = toolDetailsOutline
+        self.translatedDescription = translatedDescription
+        self.translatedName = translatedName
+        self.translatedTagline = translatedTagline
+        self.type = type
+        self.version = version
+    }
+    
     init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: RootKeys.self)
@@ -90,26 +120,5 @@ struct TranslationCodable: TranslationDataModelInterface, Codable {
                 
         // relationships - language
         language = try languageContainer?.decodeIfPresent(LanguageCodable.self, forKey: .data)
-    }
-}
-
-extension TranslationCodable {
-    
-    var resourceDataModel: ResourceDataModel? {
-        
-        guard let resource = resource else {
-            return nil
-        }
-        
-        return ResourceDataModel(interface: resource)
-    }
-    
-    var languageDataModel: LanguageDataModel? {
-        
-        guard let language = language else {
-            return nil
-        }
-        
-        return LanguageDataModel(interface: language)
     }
 }

@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import RequestOperation
 
-class URLSessionWebSocket: NSObject, WebSocketInterface {
+final class URLSessionWebSocket: NSObject, WebSocketInterface {
     
     private let session: URLSession = URLSession(configuration: CreateIgnoreCacheSessionConfig().createConfig())
     private let didConnectSubject: PassthroughSubject<Void, Never> = PassthroughSubject()

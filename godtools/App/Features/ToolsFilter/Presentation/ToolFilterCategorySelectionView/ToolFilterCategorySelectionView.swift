@@ -25,14 +25,14 @@ struct ToolFilterCategorySelectionView: View {
             
             AccessibilityScreenElementView(screenAccessibility: .toolsCategoryFilters)
             
-            SearchBarView(viewModel: viewModel.getSearchBarViewModel(), searchText: $viewModel.searchText)
+            SearchBarView(searchText: $viewModel.searchText, strings: viewModel.searchBarStrings)
             
             List {
-                ForEach(viewModel.categorySearchResults, id: \.filterId) { category in
+                ForEach(viewModel.categorySearchResults) { category in
                     
                     Button {
                         
-                        viewModel.rowTapped(with: category)
+                        viewModel.categoryTapped(category: category)
                         
                     } label: {
                         
@@ -45,8 +45,8 @@ struct ToolFilterCategorySelectionView: View {
             }
             .listStyle(.inset)
         }
-        .navigationBarBackButtonHidden(true) // TODO: (GT-1794) This is a temp fix for iOS 16.  Will need to update to configure the navigation bar using SwiftUI instead of UIHostingController's. ~Levi
-        .navigationTitle(viewModel.navTitle)
+        .navigationBarBackButtonHidden(true)
+        .navigationTitle(viewModel.strings.navTitle)
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
 }

@@ -15,28 +15,41 @@ final class EvaluateLessonUseCase {
     private let lessonEvaluationRepository: LessonEvaluationRepository
     private let lessonFeedbackAnalytics: LessonFeedbackAnalytics
     
-    init(resourcesRepository: ResourcesRepository, lessonEvaluationRepository: LessonEvaluationRepository, lessonFeedbackAnalytics: LessonFeedbackAnalytics) {
+    init(
+        resourcesRepository: ResourcesRepository,
+        lessonEvaluationRepository: LessonEvaluationRepository,
+        lessonFeedbackAnalytics: LessonFeedbackAnalytics
+    ) {
         
         self.resourcesRepository = resourcesRepository
         self.lessonEvaluationRepository = lessonEvaluationRepository
         self.lessonFeedbackAnalytics = lessonFeedbackAnalytics
     }
     
-    func execute(lessonId: String, feedback: TrackLessonFeedbackDomainModel) -> AnyPublisher<Void, Never> {
+    func execute(
+        lessonId: String,
+        feedback: TrackLessonFeedbackDomainModel,
+        lessonLanguage: AppLanguageDomainModel
+    ) -> AnyPublisher<Void, Never> {
         
-        guard let lessonResource = resourcesRepository.persistence.getDataModelNonThrowing(id: lessonId) else {
+        let lessonResource: ResourceDataModel? = resourcesRepository.getResourceById(id: lessonId)
+        
+        guard let lessonResource = lessonResource else {
             return Just(Void())
                 .eraseToAnyPublisher()
         }
         
-        lessonEvaluationRepository.storeLessonEvaluation(
-            lesson: lessonResource,
-            lessonEvaluated: true
-        )
-        
+        Task {
+            try await lessonEvaluationRepository.storeLessonEvaluation(
+                lesson: lessonResource,
+                lessonEvaluated: true
+            )
+        }
+
         lessonFeedbackAnalytics.trackLessonFeedback(
             lesson: lessonResource,
-            feedback: feedback
+            feedback: feedback,
+            contentLanguage: lessonLanguage
         )
         
         return Just(Void())

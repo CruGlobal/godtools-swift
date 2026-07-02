@@ -16,7 +16,11 @@ final class UserAuthentication {
     private let lastAuthenticatedProviderCache: LastAuthenticatedProviderCache
     private let mobileContentAuthTokenRepository: MobileContentAuthTokenRepository
     
-    init(authenticationProviders: [AuthenticationProviderType: AuthenticationProviderInterface], lastAuthenticatedProviderCache: LastAuthenticatedProviderCache, mobileContentAuthTokenRepository: MobileContentAuthTokenRepository) {
+    init(
+        authenticationProviders: [AuthenticationProviderType: AuthenticationProviderInterface],
+        lastAuthenticatedProviderCache: LastAuthenticatedProviderCache,
+        mobileContentAuthTokenRepository: MobileContentAuthTokenRepository
+    ) {
                 
         self.authenticationProviders = authenticationProviders
         self.lastAuthenticatedProviderCache = lastAuthenticatedProviderCache
@@ -138,7 +142,7 @@ final class UserAuthentication {
         }
     }
     
-    func signOut() throws {
+    func signOut() async throws {
         
         let allProviders: [AuthenticationProviderInterface] = Array(authenticationProviders.values)
         
@@ -148,7 +152,7 @@ final class UserAuthentication {
         
         lastAuthenticatedProviderCache.deleteLastAuthenticatedProvider()
         
-        try mobileContentAuthTokenRepository.deleteCachedAuthToken()
+        try await mobileContentAuthTokenRepository.deleteCachedAuthToken()
     }
 
     private func renewAppleToken(appleProvider: AppleAuthentication) async throws -> AuthenticationProviderResponse {

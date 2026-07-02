@@ -13,7 +13,6 @@ import Combine
 import RealmSwift
 import RepositorySync
 
-@Suite(.serialized)
 struct GetAllToolsUseCaseTests {
     
     private let categoryConversationStarter: String = "conversation_starter"
@@ -39,7 +38,7 @@ struct GetAllToolsUseCaseTests {
     )
     @MainActor func anyCategoryAndAnyLanguageShouldShowAllTools() async throws {
         
-        let getAllToolsUseCase = try getAllToolsUseCase()
+        let useCase = try getUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -52,12 +51,12 @@ struct GetAllToolsUseCaseTests {
                 continuation.resume(returning: ())
             }
             
-            getAllToolsUseCase
+            useCase
                 .execute(
                     appLanguage: "",
                     languageIdForAvailabilityText: nil,
-                    filterToolsByCategory: nil,
-                    filterToolsByLanguage: nil
+                    filterToolsByCategory: ToolFilterCategoryDomainModel.emptyValue,
+                    filterToolsByLanguage: ToolFilterLanguageDomainModel.emptyValue
                 )
                 .sink(receiveCompletion: { _ in
                     
@@ -92,23 +91,15 @@ struct GetAllToolsUseCaseTests {
     )
     @MainActor func categoryGrowthCategoryAndAnyLanguageShouldShowCategoryGrowthTools() async throws {
         
-        let getAllToolsUseCase = try getAllToolsUseCase()
+        let useCase = try getUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
         
         var toolsListRef: [ToolListItemDomainModel] = Array()
         
-        let growthCategoryFilter = ToolFilterCategoryDomainModel(
-            categoryId: categoryGrowth,
-            translatedName: "",
-            toolsAvailableText: ""
-        )
+        let growthCategoryFilter = ToolFilterCategoryDomainModel.createCategory(id: categoryGrowth, title: "", toolsAvailable: "")
         
-        let anyLanguageFilter = ToolFilterAnyLanguageDomainModel(
-            text: "",
-            toolsAvailableText: "",
-            numberOfToolsAvailable: 0
-        )
+        let anyLanguageFilter = ToolFilterLanguageDomainModel.createAnyLanguage(languageNameTranslatedInAppLanguage: "", toolsAvailable: "", numberOfToolsAvailable: 0)
         
         await withCheckedContinuation { continuation in
             
@@ -117,7 +108,7 @@ struct GetAllToolsUseCaseTests {
                 continuation.resume(returning: ())
             }
             
-            getAllToolsUseCase
+            useCase
                 .execute(
                     appLanguage: "",
                     languageIdForAvailabilityText: nil,
@@ -157,25 +148,15 @@ struct GetAllToolsUseCaseTests {
     )
     @MainActor func categoryIsAnyAndLanguageIsRussianShouldShowToolsThatSupportRussian() async throws {
         
-        let getAllToolsUseCase = try getAllToolsUseCase()
+        let useCase = try getUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
         
         var toolsListRef: [ToolListItemDomainModel] = Array()
         
-        let anyCategoryFilter = ToolFilterAnyCategoryDomainModel(
-            text: "",
-            toolsAvailableText: ""
-        )
+        let anyCategoryFilter = ToolFilterCategoryDomainModel.createAnyCategory(title: "", toolsAvailable: "")
         
-        let russianLanguageFilter = ToolFilterLanguageDomainModel(
-            languageName: "",
-            translatedName: "",
-            toolsAvailableText: "",
-            languageId: russianLanguageId,
-            languageLocaleId: "",
-            numberOfToolsAvailable: 0
-        )
+        let russianLanguageFilter = ToolFilterLanguageDomainModel.createLanguage(id: russianLanguageId, languageName: "", languageNameTranslatedInAppLanguage: "", toolsAvailable: "", numberOfToolsAvailable: 0)
         
         await withCheckedContinuation { continuation in
             
@@ -184,7 +165,7 @@ struct GetAllToolsUseCaseTests {
                 continuation.resume(returning: ())
             }
             
-            getAllToolsUseCase
+            useCase
                 .execute(
                     appLanguage: "",
                     languageIdForAvailabilityText: nil,
@@ -224,25 +205,15 @@ struct GetAllToolsUseCaseTests {
     )
     @MainActor func categoryIsAnyAndLanguageIsSpanishShouldShowToolsThatSupportSpanish() async throws {
         
-        let getAllToolsUseCase = try getAllToolsUseCase()
+        let useCase = try getUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
         
         var toolsListRef: [ToolListItemDomainModel] = Array()
         
-        let anyCategoryFilter = ToolFilterAnyCategoryDomainModel(
-            text: "",
-            toolsAvailableText: ""
-        )
+        let anyCategoryFilter = ToolFilterCategoryDomainModel.createAnyCategory(title: "", toolsAvailable: "")
         
-        let spanishLanguageFilter = ToolFilterLanguageDomainModel(
-            languageName: "",
-            translatedName: "",
-            toolsAvailableText: "",
-            languageId: spanishLanguageId,
-            languageLocaleId: "",
-            numberOfToolsAvailable: 0
-        )
+        let spanishLanguageFilter = ToolFilterLanguageDomainModel.createLanguage(id: spanishLanguageId, languageName: "", languageNameTranslatedInAppLanguage: "", toolsAvailable: "", numberOfToolsAvailable: 0)
         
         await withCheckedContinuation { continuation in
             
@@ -251,7 +222,7 @@ struct GetAllToolsUseCaseTests {
                 continuation.resume(returning: ())
             }
             
-            getAllToolsUseCase
+            useCase
                 .execute(
                     appLanguage: "",
                     languageIdForAvailabilityText: nil,
@@ -403,11 +374,13 @@ struct GetAllToolsUseCaseTests {
 
 extension GetAllToolsUseCaseTests {
     
-    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject] = Array()) throws -> TestsDiContainer {
-                
-        return try TestsDiContainer(
-            realmFileName: String(describing: GetAllToolsUseCaseTests.self),
-            addRealmObjects: allTools + addRealmObjects
+    private func getUseCase() throws -> GetAllToolsUseCase {
+        
+        let testsDiContainer: TestsDiContainer = try TestsDiContainer(addRealmObjects: allTools)
+        
+        return GetAllToolsUseCase(
+            resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),
+            getToolsListItems: testsDiContainer.core.domainLayer.supporting.getToolsListItems()
         )
     }
     
@@ -452,15 +425,5 @@ extension GetAllToolsUseCaseTests {
         return allTools.filter { (resource: RealmResource) in
             resource.getLanguages().contains(where: {$0.code == language.rawValue})
         }
-    }
-    
-    private func getAllToolsUseCase() throws -> GetAllToolsUseCase {
-        
-        let testsDiContainer: TestsDiContainer = try getTestsDiContainer()
-        
-        return GetAllToolsUseCase(
-            resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
-            getToolsListItems: testsDiContainer.domainLayer.supporting.getToolsListItems()
-        )
     }
 }

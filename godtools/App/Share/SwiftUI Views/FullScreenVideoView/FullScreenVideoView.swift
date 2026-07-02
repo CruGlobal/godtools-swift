@@ -18,7 +18,11 @@ struct FullScreenVideoView: View {
     
     let backgroundColor: Color
     
-    init(viewModel: FullScreenVideoViewModel, backgroundColor: Color, screenAccessibility: AccessibilityStrings.Screen) {
+    init(
+        viewModel: FullScreenVideoViewModel,
+        backgroundColor: Color,
+        screenAccessibility: AccessibilityStrings.Screen
+    ) {
         
         self.viewModel = viewModel
         self.backgroundColor = backgroundColor

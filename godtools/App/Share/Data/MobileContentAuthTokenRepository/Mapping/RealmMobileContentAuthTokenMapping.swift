@@ -12,14 +12,14 @@ import RepositorySync
 final class RealmMobileContentAuthTokenMapping: Mapping {
     
     func toDataModel(externalObject: MobileContentAuthTokenDecodable) -> MobileContentAuthTokenDataModel? {
-        return MobileContentAuthTokenDataModel(interface: externalObject)
+        return externalObject.toModel()
     }
     
     func toDataModel(persistObject: RealmMobileContentAuthToken) -> MobileContentAuthTokenDataModel? {
-        return MobileContentAuthTokenDataModel(interface: persistObject)
+        return persistObject.toModel()
     }
     
     func toPersistObject(externalObject: MobileContentAuthTokenDecodable) -> RealmMobileContentAuthToken? {
-        return RealmMobileContentAuthToken.createNewFrom(interface: externalObject)
+        return RealmMobileContentAuthToken.createNewFrom(model: externalObject.toModel())
     }
 }

@@ -8,17 +8,15 @@
 
 import Foundation
 import RequestOperation
-import RepositorySync
-import Combine
 
-class MobileContentTranslationsApi {
+final class MobileContentTranslationsApi: TranslationsApiInterface {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let urlSessionPriority: URLSessionPriority
-    private let requestSender: RequestSender
+    private let requestSender: RequestSenderInterface
     private let baseUrl: String
     
-    init(config: AppConfigInterface, urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
+    init(config: AppConfigInterface, urlSessionPriority: URLSessionPriority, requestSender: RequestSenderInterface) {
                     
         self.urlSessionPriority = urlSessionPriority
         self.requestSender = requestSender
@@ -27,10 +25,10 @@ class MobileContentTranslationsApi {
     
     // MARK: - Files
     
-    private func getTranslationFileRequest(urlSession: URLSession, fileName: String) -> URLRequest {
+    private func getTranslationFileRequest(urlSession: URLSession, fileName: String) throws -> URLRequest {
         
-        return requestBuilder.build(
-            parameters: RequestBuilderParameters(
+        return try requestBuilder.build(
+            parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseUrl + "/translations/files/" + fileName,
                 method: .get,
@@ -41,23 +39,24 @@ class MobileContentTranslationsApi {
         )
     }
     
-    func getTranslationFile(fileName: String, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
+    func getTranslationFile(fileName: String, requestPriority: RequestPriority) async throws -> RequestDataResponse {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
-        let urlRequest: URLRequest = getTranslationFileRequest(urlSession: urlSession, fileName: fileName)
-                
-        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
-            .validate()
-            .eraseToAnyPublisher()
+        let urlRequest: URLRequest = try getTranslationFileRequest(urlSession: urlSession, fileName: fileName)
+        
+        return try await requestSender.sendDataTask(
+            urlRequest: urlRequest,
+            urlSession: urlSession
+        )
     }
     
     // MARK: - Translation Zip File Data
     
-    private func getTranslationZipFileRequest(urlSession: URLSession, translationId: String) -> URLRequest {
+    private func getTranslationZipFileRequest(urlSession: URLSession, translationId: String) throws -> URLRequest {
         
-        return requestBuilder.build(
-            parameters: RequestBuilderParameters(
+        return try requestBuilder.build(
+            parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseUrl + "/translations/" + translationId,
                 method: .get,
@@ -68,35 +67,15 @@ class MobileContentTranslationsApi {
         )
     }
     
-    func getTranslationZipFile(translationId: String, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
+    func getTranslationZipFile(translationId: String, requestPriority: RequestPriority) async throws -> RequestDataResponse {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
-        let urlRequest: URLRequest = getTranslationZipFileRequest(urlSession: urlSession, translationId: translationId)
-                
-        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
-            .validate()
-            .eraseToAnyPublisher()
-    }
-}
-
-// MARK: - ExternalDataFetchInterface
-
-extension MobileContentTranslationsApi: ExternalDataFetchInterface {
-    
-    func getObject(id: String, context: RequestOperationFetchContext) async throws -> [TranslationCodable] {
-        return Array()
-    }
-    
-    func getObjects(context: RequestOperationFetchContext) async throws -> [TranslationCodable] {
-        return Array()
-    }
-    
-    func getObjectPublisher(id: String, context: RequestOperationFetchContext) -> AnyPublisher<[TranslationCodable], Error> {
-        return emptyResponsePublisher()
-    }
-    
-    func getObjectsPublisher(context: RequestOperationFetchContext) -> AnyPublisher<[TranslationCodable], Error> {
-        return emptyResponsePublisher()
+        let urlRequest: URLRequest = try getTranslationZipFileRequest(urlSession: urlSession, translationId: translationId)
+        
+        return try await requestSender.sendDataTask(
+            urlRequest: urlRequest,
+            urlSession: urlSession
+        )
     }
 }

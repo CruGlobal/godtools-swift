@@ -10,66 +10,69 @@ import Foundation
 import Combine
 import SwiftUI
 
-@MainActor class AllYourFavoriteToolsViewModel: ObservableObject {
+@MainActor
+final class AllYourFavoriteToolsViewModel: ObservableObject {
         
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     
+    private let stepEmitter: FlowStepEmitter
     private let getAllYourFavoritedToolsStringsUseCase: GetAllYourFavoritedToolsStringsUseCase
     private let getYourFavoritedToolsUseCase: GetYourFavoritedToolsUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     private let reorderFavoritedToolUseCase: ReorderFavoritedToolUseCase
     private let getToolBannerUseCase: GetToolBannerUseCase
+    private let inMemoryDataCache: InMemoryDataCache
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let didConfirmToolRemovalSubject: PassthroughSubject<Void, Never> = PassthroughSubject()
     
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+        
+    @Published private var appLanguage = AppLanguageDomainModel.english
     
     @Published private(set) var strings = AllYourFavoritedToolsStringsDomainModel.emptyValue
     
     @Published var favoritedTools: [YourFavoritedToolDomainModel] = Array()
         
-    init(flowDelegate: FlowDelegate?, getAllYourFavoritedToolsStringsUseCase: GetAllYourFavoritedToolsStringsUseCase, getYourFavoritedToolsUseCase: GetYourFavoritedToolsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, reorderFavoritedToolUseCase: ReorderFavoritedToolUseCase, getToolBannerUseCase: GetToolBannerUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        getAllYourFavoritedToolsStringsUseCase: GetAllYourFavoritedToolsStringsUseCase,
+        getYourFavoritedToolsUseCase: GetYourFavoritedToolsUseCase,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase,
+        reorderFavoritedToolUseCase: ReorderFavoritedToolUseCase,
+        getToolBannerUseCase: GetToolBannerUseCase,
+        inMemoryDataCache: InMemoryDataCache,
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
+        trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
+    ) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.getAllYourFavoritedToolsStringsUseCase = getAllYourFavoritedToolsStringsUseCase
         self.getYourFavoritedToolsUseCase = getYourFavoritedToolsUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.reorderFavoritedToolUseCase = reorderFavoritedToolUseCase
         self.getToolBannerUseCase = getToolBannerUseCase
+        self.inMemoryDataCache = inMemoryDataCache
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         
         getCurrentAppLanguageUseCase
             .execute()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                
-                getAllYourFavoritedToolsStringsUseCase
-                    .execute(appLanguage: appLanguage)
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] (strings: AllYourFavoritedToolsStringsDomainModel) in
-                
-                self?.strings = strings
+            .sink(receiveValue: { [weak self] (appLanguage: AppLanguageDomainModel) in
+
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
             })
             .store(in: &cancellables)
-        
+
         $appLanguage
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
-                
+
                 getYourFavoritedToolsUseCase
                     .execute(
                         appLanguage: appLanguage,
@@ -102,7 +105,13 @@ import SwiftUI
     deinit {
         print("x deinit: \(type(of: self))")
     }
-    
+
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+
+        strings = getAllYourFavoritedToolsStringsUseCase
+            .execute(appLanguage: appLanguage)
+    }
+
     private var analyticsScreenName: String {
         return "All Favorites"
     }
@@ -164,7 +173,7 @@ import SwiftUI
     }
     
     private func closePage() {
-        flowDelegate?.navigate(step: .backTappedFromAllYourFavoriteTools)
+        stepEmitter.emit(step: AppFlowStep.backTappedFromAllYourFavoriteTools)
     }
 }
 
@@ -187,7 +196,8 @@ extension AllYourFavoriteToolsViewModel {
             tool: tool,
             accessibility: .favoriteTool,
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
-            getToolBannerUseCase: getToolBannerUseCase
+            getToolBannerUseCase: getToolBannerUseCase,
+            inMemoryDataCache: inMemoryDataCache
         )
     }
     
@@ -195,53 +205,49 @@ extension AllYourFavoriteToolsViewModel {
         
         trackFavoritedToolDetailsButtonAnalytics(tool: tool)
         
-        flowDelegate?.navigate(step: .toolDetailsTappedFromAllYourFavoriteTools(tool: tool))
+        stepEmitter.emit(step: AppFlowStep.toolDetailsTappedFromAllYourFavoriteTools(tool: tool))
     }
     
     func openToolTapped(tool: YourFavoritedToolDomainModel) {
         
         trackOpenFavoritedToolButtonAnalytics(tool: tool)
         
-        flowDelegate?.navigate(step: .openToolTappedFromAllYourFavoriteTools(tool: tool))
+        stepEmitter.emit(step: AppFlowStep.openToolTappedFromAllYourFavoriteTools(tool: tool))
     }
     
     func unfavoriteToolTapped(tool: YourFavoritedToolDomainModel) {
         
-        flowDelegate?.navigate(step: .unfavoriteToolTappedFromAllYourFavoritedTools(tool: tool, didConfirmToolRemovalSubject: didConfirmToolRemovalSubject))
+        stepEmitter.emit(step: AppFlowStep.unfavoriteToolTappedFromAllYourFavoritedTools(tool: tool, didConfirmToolRemovalSubject: didConfirmToolRemovalSubject))
     }
     
     func toolTapped(tool: YourFavoritedToolDomainModel) {
         
         trackOpenFavoritedToolButtonAnalytics(tool: tool)
         
-        flowDelegate?.navigate(step: .toolTappedFromAllYourFavoritedTools(tool: tool))
+        stepEmitter.emit(step: AppFlowStep.toolTappedFromAllYourFavoritedTools(tool: tool))
     }
     
     func toolMoved(fromOffsets source: IndexSet, toOffset destination: Int) {
+        
         for index in source {
-            guard index < favoritedTools.count else { continue }
-            let toolToMove = favoritedTools[index]
             
-            var newIndex: Int
-            if index < destination {
-                newIndex = destination - 1
-            } else {
-                newIndex = destination
+            guard index < favoritedTools.count && index >= 0 else {
+                continue
             }
             
-            reorderFavoritedToolUseCase
-                .execute(
-                    toolId: toolToMove.id,
-                    originalPosition: index,
-                    newPosition: newIndex
-                )
-                .sink { _ in
-                    
-                } receiveValue: { _ in
-                    
-                }
-                .store(in: &Self.backgroundCancellables)
-
+            let toolToMove: YourFavoritedToolDomainModel = favoritedTools[index]
+            
+            let newPosition: Int = index < destination ? destination - 1 : destination
+            
+            Task {
+                
+                try await reorderFavoritedToolUseCase
+                    .execute(
+                        toolId: toolToMove.id,
+                        originalPosition: index,
+                        newPosition: newPosition
+                    )
+            }
         }
     }
 }

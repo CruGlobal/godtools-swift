@@ -9,9 +9,17 @@
 import Foundation
 import Combine
 
+@MainActor
 class AppSkipBarItem: AppInterfaceStringBarItem {
     
-    init(getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, localizationServices: LocalizationServicesInterface, target: AnyObject, action: Selector, accessibilityIdentifier: String?, hidesBarItemPublisher: AnyPublisher<Bool, Never>? = nil) {
+    init(
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        localizationServices: LocalizationServicesInterface,
+        target: AnyObject,
+        action: Selector,
+        accessibilityIdentifier: String?,
+        hidesBarItemPublisher: AnyPublisher<Bool, Never>? = nil
+    ) {
         
         super.init(
             getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase,

@@ -10,7 +10,6 @@ import Testing
 @testable import godtools
 import RepositorySync
 
-@Suite(.serialized)
 struct GetTranslatedToolCategoryTests {
     
     struct TestArgument {
@@ -58,7 +57,6 @@ extension GetTranslatedToolCategoryTests {
     private func getTestsDiContainer() throws -> TestsDiContainer {
         
         return try TestsDiContainer(
-            realmFileName: String(describing: GetTranslatedToolCategoryTests.self),
             addRealmObjects: getRealmObjects()
         )
     }
@@ -98,7 +96,7 @@ extension GetTranslatedToolCategoryTests {
     private func getTranslatedToolCategory(testsDiContainer: TestsDiContainer) -> GetTranslatedToolCategory {
         return GetTranslatedToolCategory(
             localizationServices: getLocalizationServices(),
-            resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository()
+            resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository()
         )
     }
     

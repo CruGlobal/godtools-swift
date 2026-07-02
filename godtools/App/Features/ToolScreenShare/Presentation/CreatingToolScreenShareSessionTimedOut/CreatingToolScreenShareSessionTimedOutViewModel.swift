@@ -9,26 +9,34 @@
 import Foundation
 import Combine
 
-class CreatingToolScreenShareSessionTimedOutViewModel: AlertMessageViewModelType {
+@MainActor
+final class CreatingToolScreenShareSessionTimedOutViewModel {
         
+    private let stepEmitter: FlowStepEmitter
+    private let appLanguage: AppLanguageDomainModel
+    
     private var cancellables = Set<AnyCancellable>()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
-    let title: String?
-    let message: String?
+        
+    let title: String
+    let message: String
     let cancelTitle: String? = nil
     let acceptTitle: String
     
-    init(flowDelegate: FlowDelegate, domainModel: CreatingToolScreenShareSessionTimedOutDomainModel) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        appLanguage: AppLanguageDomainModel,
+        getCreatingToolScreenShareSessionTimedOutStringsUseCase: GetCreatingToolScreenShareSessionTimedOutStringsUseCase
+    ) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
+        self.appLanguage = appLanguage
         
-        let interfaceStrings: CreatingToolScreenShareSessionTimedOutInterfaceStringsDomainModel = domainModel.interfaceStrings
-        
-        title = interfaceStrings.title
-        message = interfaceStrings.message
-        acceptTitle = interfaceStrings.acceptActionTitle
+        let strings = getCreatingToolScreenShareSessionTimedOutStringsUseCase
+            .execute(appLanguage: appLanguage)
+                
+        title = strings.title
+        message = strings.message
+        acceptTitle = strings.acceptActionTitle
     }
     
     deinit {
@@ -41,10 +49,10 @@ class CreatingToolScreenShareSessionTimedOutViewModel: AlertMessageViewModelType
 extension CreatingToolScreenShareSessionTimedOutViewModel {
     
     func cancelTapped() {
-        flowDelegate?.navigate(step: .cancelTappedFromCreateToolScreenShareSessionTimeout)
+        stepEmitter.emit(step: AppFlowStep.cancelTappedFromCreateToolScreenShareSessionTimeout)
     }
     
     func acceptTapped() {
-        flowDelegate?.navigate(step: .acceptTappedFromCreateToolScreenShareSessionTimeout)
+        stepEmitter.emit(step: AppFlowStep.acceptTappedFromCreateToolScreenShareSessionTimeout)
     }
 }

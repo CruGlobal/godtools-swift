@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class ProgressTimer {
+final class ProgressTimer {
     
     private static let intervalRatePerSecond: TimeInterval = 60
     private static let interval: TimeInterval = 1 / ProgressTimer.intervalRatePerSecond

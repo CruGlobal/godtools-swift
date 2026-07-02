@@ -7,20 +7,19 @@
 //
 
 import Foundation
-import Combine
 
 final class GetMenuStringsUseCase {
     
     private let localizationServices: LocalizationServicesInterface
-    private let infoPlist: InfoPlist
+    private let infoPlist: InfoPlistInterface
     
-    init(localizationServices: LocalizationServicesInterface, infoPlist: InfoPlist) {
+    init(localizationServices: LocalizationServicesInterface, infoPlist: InfoPlistInterface) {
         
         self.localizationServices = localizationServices
         self.infoPlist = infoPlist
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<MenuStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> MenuStringsDomainModel {
         
         let localeId: String = appLanguage
         
@@ -33,35 +32,34 @@ final class GetMenuStringsUseCase {
             versionString = ""
         }
         
-        let interfaceStrings = MenuStringsDomainModel(
-            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "settings"),
-            getStartedTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.SectionTitles.getStarted.rawValue),
-            tutorialOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.ItemTitles.tutorial.rawValue),
-            languageSettingsOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.ItemTitles.languageSettings.rawValue),
-            localizationSettingsOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.ItemTitles.localizationSettings.rawValue),
-            accountTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.SectionTitles.account.rawValue),
-            loginOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.ItemTitles.login.rawValue),
-            createAccountOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.ItemTitles.createAccount.rawValue),
-            activityOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.ItemTitles.activity.rawValue),
-            logoutOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.ItemTitles.logout.rawValue),
-            deleteAccountOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.ItemTitles.deleteAccount.rawValue),
-            supportTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.SectionTitles.support.rawValue),
-            sendFeedbackOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.ItemTitles.sendFeedback.rawValue),
-            reportABugOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.ItemTitles.reportABug.rawValue),
-            askAQuestionOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.ItemTitles.askAQuestion.rawValue),
-            shareTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.SectionTitles.share.rawValue),
-            leaveAReviewOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.ItemTitles.leaveAReview.rawValue),
-            shareAStoryWithUsOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.ItemTitles.shareAStoryWithUs.rawValue),
-            shareGodToolsOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.ItemTitles.shareGodTools.rawValue),
-            aboutTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.SectionTitles.about.rawValue),
-            termsOfUseOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.ItemTitles.termsOfUse.rawValue),
-            privacyPolicyOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.ItemTitles.privacyPolicy.rawValue),
-            copyrightInfoOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.ItemTitles.copyrightInfo.rawValue),
-            versionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.SectionTitles.version.rawValue),
+        let strings = MenuStringsDomainModel(
+            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.settings.key),
+            getStartedTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.menuGetStarted.key),
+            tutorialOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.menuTutorial.key),
+            languageSettingsOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsNavTitle.key),
+            localizationSettingsOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.menuLocalizationSettings.key),
+            accountTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.menuAccount.key),
+            loginOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.login.key),
+            createAccountOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.createAccount.key),
+            activityOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.accountActivityTitle.key),
+            logoutOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.logout.key),
+            deleteAccountOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.menuDeleteAccount.key),
+            supportTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.menuSupport.key),
+            sendFeedbackOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.menuSendFeedback.key),
+            reportABugOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.menuReportABug.key),
+            askAQuestionOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.menuAskAQuestion.key),
+            shareTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.menuShare.key),
+            leaveAReviewOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.menuLeaveAReview.key),
+            shareAStoryWithUsOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.shareAStoryWithUs.key),
+            shareGodToolsOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.shareGodTools.key),
+            aboutTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.menuAbout.key),
+            termsOfUseOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.termsOfUse.key),
+            privacyPolicyOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.privacyPolicy.key),
+            copyrightInfoOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.copyrightInfo.key),
+            versionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.menuVersion.key),
             version: versionString
         )
         
-        return Just(interfaceStrings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

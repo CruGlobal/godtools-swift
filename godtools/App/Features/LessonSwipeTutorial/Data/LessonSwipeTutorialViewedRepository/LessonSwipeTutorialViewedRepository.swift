@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class LessonSwipeTutorialViewedRepository {
+final class LessonSwipeTutorialViewedRepository {
     
     private let cache: LessonSwipeTutorialViewedUserDefaultsCache
     

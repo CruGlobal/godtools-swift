@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class ShouldShowLessonSwipeTutorialUseCase {
 
@@ -17,11 +16,10 @@ final class ShouldShowLessonSwipeTutorialUseCase {
         self.lessonSwipeTutorialViewedRepo = lessonSwipeTutorialViewedRepo
     }
     
-    func execute() -> AnyPublisher<Bool, Never> {
+    func execute() -> Bool {
         
         let swipeTutorialViewed = lessonSwipeTutorialViewedRepo.getLessonSwipeTutorialViewed()
         
-        return Just(swipeTutorialViewed == false)
-            .eraseToAnyPublisher()
+        return !swipeTutorialViewed
     }
 }

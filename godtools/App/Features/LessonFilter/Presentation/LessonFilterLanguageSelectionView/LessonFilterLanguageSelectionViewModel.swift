@@ -9,62 +9,59 @@
 import Foundation
 import Combine
 
-@MainActor class LessonFilterLanguageSelectionViewModel: ObservableObject {
+@MainActor
+final class LessonFilterLanguageSelectionViewModel: ObservableObject {
     
     private static var staticCancellables: Set<AnyCancellable> = Set()
     
+    private let stepEmitter: FlowStepEmitter
     private let getLessonFilterLanguagesStringsUseCase: GetLessonFilterLanguagesStringsUseCase
     private let getLessonFilterLanguagesUseCase: GetLessonFilterLanguagesUseCase
     private let getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase
     private let storeUserLessonFiltersUseCase: StoreUserLessonFiltersUseCase
-    private let viewSearchBarUseCase: ViewSearchBarUseCase
+    private let getSearchBarStringsUseCase: GetSearchBarStringsUseCase
     private let searchLessonFilterLanguagesUseCase: SearchLessonFilterLanguagesUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
-    private weak var flowDelegate: FlowDelegate?
-    private lazy var searchBarViewModel = SearchBarViewModel(getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, viewSearchBarUseCase: viewSearchBarUseCase)
     
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var appLanguage = AppLanguageDomainModel.english
     @Published private var allLanguages: [LessonFilterLanguageDomainModel] = Array()
     
+    @Published private(set) var searchBarStrings = SearchBarStringsDomainModel.emptyValue
     @Published private(set) var strings = LessonFilterLanguagesStringsDomainModel.emptyValue
     
     @Published var searchText: String = ""
     @Published var languageSearchResults: [LessonFilterLanguageDomainModel] = Array()
     @Published var selectedLanguage: LessonFilterLanguageDomainModel?
     
-    init(getLessonFilterLanguagesStringsUseCase: GetLessonFilterLanguagesStringsUseCase, getLessonFilterLanguagesUseCase: GetLessonFilterLanguagesUseCase, getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase, storeUserLessonFiltersUseCase: StoreUserLessonFiltersUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, searchLessonFilterLanguagesUseCase: SearchLessonFilterLanguagesUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, flowDelegate: FlowDelegate) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        getLessonFilterLanguagesStringsUseCase: GetLessonFilterLanguagesStringsUseCase,
+        getLessonFilterLanguagesUseCase: GetLessonFilterLanguagesUseCase,
+        getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase,
+        storeUserLessonFiltersUseCase: StoreUserLessonFiltersUseCase,
+        getSearchBarStringsUseCase: GetSearchBarStringsUseCase,
+        searchLessonFilterLanguagesUseCase: SearchLessonFilterLanguagesUseCase,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    ) {
         
+        self.stepEmitter = stepEmitter
         self.getLessonFilterLanguagesStringsUseCase = getLessonFilterLanguagesStringsUseCase
         self.getLessonFilterLanguagesUseCase = getLessonFilterLanguagesUseCase
         self.getUserLessonFiltersUseCase = getUserLessonFiltersUseCase
         self.storeUserLessonFiltersUseCase = storeUserLessonFiltersUseCase
-        self.viewSearchBarUseCase = viewSearchBarUseCase
+        self.getSearchBarStringsUseCase = getSearchBarStringsUseCase
         self.searchLessonFilterLanguagesUseCase = searchLessonFilterLanguagesUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
-        self.flowDelegate = flowDelegate
         
         getCurrentAppLanguageUseCase
             .execute()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                
-                getLessonFilterLanguagesStringsUseCase
-                    .execute(
-                        appLanguage: appLanguage
-                    )
+            .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
+                self?.appLanguage = appLanguage
+                self?.didSetApplanguage(appLanguage: appLanguage)
             }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] (strings: LessonFilterLanguagesStringsDomainModel) in
-                
-                self?.strings = strings
-            })
             .store(in: &cancellables)
         
         $appLanguage
@@ -122,6 +119,19 @@ import Combine
         .receive(on: DispatchQueue.main)
         .assign(to: &$languageSearchResults)
     }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
+    private func didSetApplanguage(appLanguage: AppLanguageDomainModel) {
+        
+        searchBarStrings = getSearchBarStringsUseCase
+            .execute(appLanguage: appLanguage)
+        
+        strings = getLessonFilterLanguagesStringsUseCase
+            .execute(appLanguage: appLanguage)
+    }
 }
 
 // MARK: - Inputs
@@ -130,7 +140,7 @@ extension LessonFilterLanguageSelectionViewModel {
     
     @objc func backTapped() {
         
-        flowDelegate?.navigate(step: .backTappedFromLessonLanguageFilter)
+        stepEmitter.emit(step: AppFlowStep.backTappedFromLessonLanguageFilter)
     }
     
     func languageTapped(_ language: LessonFilterLanguageDomainModel) {
@@ -145,11 +155,6 @@ extension LessonFilterLanguageSelectionViewModel {
             }
             .store(in: &LessonFilterLanguageSelectionViewModel.staticCancellables)
         
-        flowDelegate?.navigate(step: .languageTappedFromLessonLanguageFilter)
-    }
-    
-    func getSearchBarViewModel() -> SearchBarViewModel {
-        
-        return searchBarViewModel
+        stepEmitter.emit(step: AppFlowStep.languageTappedFromLessonLanguageFilter)
     }
 }

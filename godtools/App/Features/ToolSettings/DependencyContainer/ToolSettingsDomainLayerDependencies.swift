@@ -8,28 +8,42 @@
 
 import Foundation
 
-class ToolSettingsDomainLayerDependencies {
+final class ToolSettingsDomainLayerDependencies {
     
-    private let domainInterfaceLayer: ToolSettingsDomainInterfaceDependencies
+    private let core: AppCoreDiContainer
+    private let dataLayer: ToolSettingsDataLayerDependencies
     
-    init(domainInterfaceLayer: ToolSettingsDomainInterfaceDependencies) {
+    init(core: AppCoreDiContainer, dataLayer: ToolSettingsDataLayerDependencies) {
         
-        self.domainInterfaceLayer = domainInterfaceLayer
+        self.core = core
+        self.dataLayer = dataLayer
     }
     
-    func getViewToolSettingsToolLanguagesListUseCase() -> ViewToolSettingsToolLanguagesListUseCase {
-        return ViewToolSettingsToolLanguagesListUseCase(
-            getInterfaceStringsRepository: domainInterfaceLayer.getToolSettingsToolLanguagesListInterfaceStringsRepositoryInterface(),
-            getToolLanguagesRepository: domainInterfaceLayer.getToolSettingsToolLanguagesListRepositoryInterface()
+    func getToolSettingsStringsUseCase() -> GetToolSettingsStringsUseCase {
+        return GetToolSettingsStringsUseCase(
+            localizationServices: core.dataLayer.getLocalizationServices()
         )
     }
     
-    func getViewToolSettingsUseCase() -> ViewToolSettingsUseCase {
-        return ViewToolSettingsUseCase(
-            getInterfaceStringsRepository: domainInterfaceLayer.getToolSettingsInterfaceStringsRepositoryInterface(),
-            getToolHasTipsRepository: domainInterfaceLayer.getToolSettingsToolHasTipsRepositoryInterface(),
-            getPrimaryLanguageRepository: domainInterfaceLayer.getToolSettingsPrimaryLanguageRepositoryInterface(),
-            getParallelLanguageRepository: domainInterfaceLayer.getToolSettingsParallelLanguageRepositoryInterface()
+    func getToolSettingsToolLanguagesListStringsUseCase() -> GetToolSettingsToolLanguagesListStringsUseCase {
+        return GetToolSettingsToolLanguagesListStringsUseCase(
+            localizationServices: core.dataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getToolSettingsToolLanguagesListUseCase() -> GetToolSettingsToolLanguagesListUseCase {
+        return GetToolSettingsToolLanguagesListUseCase(
+            resourcesRepository: core.dataLayer.getResourcesRepository(),
+            languagesRepository: core.dataLayer.getLanguagesRepository(),
+            getTranslatedLanguageName: core.domainLayer.supporting.getTranslatedLanguageName()
+        )
+    }
+    
+    func getToolSettingsUseCase() -> GetToolSettingsUseCase {
+        return GetToolSettingsUseCase(
+            translationsRepository: core.dataLayer.getTranslationsRepository(),
+            languagesRepository: core.dataLayer.getLanguagesRepository(),
+            getTranslatedLanguageName: core.domainLayer.supporting.getTranslatedLanguageName()
         )
     }
 }

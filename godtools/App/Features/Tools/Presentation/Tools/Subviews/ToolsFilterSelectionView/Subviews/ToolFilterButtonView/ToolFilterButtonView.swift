@@ -19,7 +19,12 @@ struct ToolFilterButtonView: View {
     private let accessibility: AccessibilityStrings.Button
     private let tappedClosure: (() -> Void)?
         
-    init(title: String, width: CGFloat? = nil, accessibility: AccessibilityStrings.Button, tappedClosure: (() -> Void)?) {
+    init(
+        title: String,
+        accessibility: AccessibilityStrings.Button,
+        width: CGFloat? = nil,
+        tappedClosure: (() -> Void)? = nil
+    ) {
         
         self.buttonTitle = title
         self.width = width
@@ -82,9 +87,8 @@ struct ToolFilterButtonView_Previews: PreviewProvider {
         
         ToolFilterButtonView(
             title: "Button Title",
-            width: 40,
             accessibility: .toolsCategoryFilter,
-            tappedClosure: nil
+            width: 40
         )
     }
 }

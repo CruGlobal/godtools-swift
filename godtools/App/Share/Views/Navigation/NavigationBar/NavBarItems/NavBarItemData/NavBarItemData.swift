@@ -8,7 +8,8 @@
 
 import UIKit
 
-class NavBarItemData {
+@MainActor
+final class NavBarItemData {
     
     let contentType: NavBarItemContentType
     let style: UIBarButtonItem.Style
@@ -17,7 +18,14 @@ class NavBarItemData {
     let action: Selector?
     let accessibilityIdentifier: String?
     
-    init(contentType: NavBarItemContentType, color: UIColor?, target: AnyObject?, action: Selector?, accessibilityIdentifier: String?, style: UIBarButtonItem.Style = .plain) {
+    init(
+        contentType: NavBarItemContentType,
+        color: UIColor?,
+        target: AnyObject?,
+        action: Selector?,
+        accessibilityIdentifier: String?,
+        style: UIBarButtonItem.Style = .plain
+    ) {
         
         self.contentType = contentType
         self.style = style // NOTE: I noticed in iOS 26 when Style is (done) the UIBarButtonItem tintColor is not applied. ~Levi

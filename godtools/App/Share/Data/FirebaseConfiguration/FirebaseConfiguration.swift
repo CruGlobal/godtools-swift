@@ -9,7 +9,7 @@
 import Foundation
 import FirebaseCore
 
-class FirebaseConfiguration {
+final class FirebaseConfiguration {
     
     private let config: AppConfigInterface
         

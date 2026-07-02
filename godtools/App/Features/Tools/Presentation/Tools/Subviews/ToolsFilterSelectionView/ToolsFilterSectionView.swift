@@ -15,7 +15,11 @@ struct ToolsFilterSectionView: View {
     
     @ObservedObject private var viewModel: ToolsViewModel
     
-    init(viewModel: ToolsViewModel, contentHorizontalInsets: CGFloat = DashboardView.contentHorizontalInsets, width: CGFloat) {
+    init(
+        viewModel: ToolsViewModel,
+        width: CGFloat,
+        contentHorizontalInsets: CGFloat = DashboardView.contentHorizontalInsets
+    ) {
         
         self.viewModel = viewModel
         self.contentHorizontalInsets = contentHorizontalInsets
@@ -36,9 +40,9 @@ struct ToolsFilterSectionView: View {
             HStack(spacing: buttonSpacing) {
                 let buttonWidth = (width - (contentHorizontalInsets * 2) - buttonSpacing) / 2
                 ToolFilterButtonView(
-                    title: viewModel.categoryFilterButtonTitle,
-                    width: buttonWidth,
+                    title: viewModel.categoryFilterActionTitle,
                     accessibility: .toolsCategoryFilter,
+                    width: buttonWidth,
                     tappedClosure: {
                         
                         viewModel.toolCategoryFilterTapped()
@@ -46,9 +50,9 @@ struct ToolsFilterSectionView: View {
                 )
                 
                 ToolFilterButtonView(
-                    title: viewModel.languageFilterButtonTitle,
-                    width: buttonWidth,
+                    title: viewModel.languageFilterActionTitle,
                     accessibility: .toolsLanguageFilter,
+                    width: buttonWidth,
                     tappedClosure: {
                         
                         viewModel.toolLanguageFilterTapped()

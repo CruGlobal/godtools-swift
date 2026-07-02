@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum MobileContentAuthProviderToken {
+enum MobileContentAuthProviderToken: Sendable {
     
     case appleAuth(authCode: String, givenName: String?, familyName: String?, name: String?)
     case appleRefresh(refreshToken: String)

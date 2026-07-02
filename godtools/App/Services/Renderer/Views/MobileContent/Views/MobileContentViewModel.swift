@@ -9,7 +9,8 @@
 import UIKit
 import GodToolsShared
 
-@MainActor class MobileContentViewModel: NSObject {
+@MainActor
+class MobileContentViewModel: NSObject {
     
     private let mobileContentAnalytics: MobileContentRendererAnalytics
     
@@ -17,7 +18,11 @@ import GodToolsShared
     let baseModels: [BaseModel]
     let renderedPageContext: MobileContentRenderedPageContext
     
-    init(baseModel: BaseModel?, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
+    init(
+        baseModel: BaseModel?,
+        renderedPageContext: MobileContentRenderedPageContext,
+        mobileContentAnalytics: MobileContentRendererAnalytics
+    ) {
         
         self.baseModel = baseModel
         
@@ -34,7 +39,11 @@ import GodToolsShared
         super.init()
     }
     
-    init(baseModels: [BaseModel], renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
+    init(
+        baseModels: [BaseModel],
+        renderedPageContext: MobileContentRenderedPageContext,
+        mobileContentAnalytics: MobileContentRendererAnalytics
+    ) {
         
         self.baseModel = baseModels.first
         self.baseModels = baseModels

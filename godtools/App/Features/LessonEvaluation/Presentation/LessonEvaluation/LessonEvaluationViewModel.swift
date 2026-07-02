@@ -9,19 +9,22 @@
 import Foundation
 import Combine
 
-@MainActor class LessonEvaluationViewModel: ObservableObject {
+@MainActor
+final class LessonEvaluationViewModel: ObservableObject {
     
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
         
+    private let stepEmitter: FlowStepEmitter
     private let lessonId: String
+    private let lessonLanguage: AppLanguageDomainModel
     private let pageIndexReached: Int
+    private let getLessonEvaluationStringsUseCase: GetLessonEvaluationStringsUseCase
+    private let didChangeScaleForSpiritualConversationReadinessUseCase: DidChangeScaleForSpiritualConversationReadinessUseCase
     private let evaluateLessonUseCase: EvaluateLessonUseCase
     private let cancelLessonEvaluationUseCase: CancelLessonEvaluationUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
-            
-    private weak var flowDelegate: FlowDelegate?
-            
+                        
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
     @Published private(set) var strings = LessonEvaluationStringsDomainModel.emptyValue
@@ -32,8 +35,10 @@ import Combine
     @Published var readyToShareFaithScaleIntValue: Int = 6
     
     init(
-        flowDelegate: FlowDelegate,
-        lessonId: String, pageIndexReached: Int,
+        stepEmitter: FlowStepEmitter,
+        lessonId: String,
+        lessonLanguage: AppLanguageDomainModel,
+        pageIndexReached: Int,
         getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
         getLessonEvaluationStringsUseCase: GetLessonEvaluationStringsUseCase,
         didChangeScaleForSpiritualConversationReadinessUseCase: DidChangeScaleForSpiritualConversationReadinessUseCase,
@@ -41,47 +46,50 @@ import Combine
         cancelLessonEvaluationUseCase: CancelLessonEvaluationUseCase
     ) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.lessonId = lessonId
+        self.lessonLanguage = lessonLanguage
         self.pageIndexReached = pageIndexReached
+        self.getLessonEvaluationStringsUseCase = getLessonEvaluationStringsUseCase
+        self.didChangeScaleForSpiritualConversationReadinessUseCase = didChangeScaleForSpiritualConversationReadinessUseCase
         self.evaluateLessonUseCase = evaluateLessonUseCase
         self.cancelLessonEvaluationUseCase = cancelLessonEvaluationUseCase
         
         getCurrentAppLanguageUseCase
             .execute()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                
-                getLessonEvaluationStringsUseCase
-                    .execute(translateInAppLanguage: appLanguage)
+            .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
+                self?.appLanguage = appLanguage
+                self?.didSetApplanguage(appLanguage: appLanguage)
             }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$strings)
+            .store(in: &cancellables)
         
         Publishers.CombineLatest(
             $appLanguage.dropFirst(),
             $readyToShareFaithScaleIntValue
         )
-        .map { (appLanguage: AppLanguageDomainModel, scale: Int) in
-            
-            didChangeScaleForSpiritualConversationReadinessUseCase
-                .execute(scale: scale, translateInAppLanguage: appLanguage)
-        }
-        .switchToLatest()
         .receive(on: DispatchQueue.main)
-        .sink { [weak self] (domainModel: SpiritualConversationReadinessScaleDomainModel) in
-            self?.readyToShareFaithScale = domainModel
+        .sink { [weak self] (appLanguage: AppLanguageDomainModel, scale: Int) in
+            
+            self?.didSetAppLanguage(appLanguage: appLanguage, readyToShareFaithScaleValue: scale)
         }
         .store(in: &cancellables)
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+    }
+    
+    private func didSetApplanguage(appLanguage: AppLanguageDomainModel) {
+        
+        strings = getLessonEvaluationStringsUseCase
+            .execute(appLanguage: appLanguage)
+    }
+    
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel, readyToShareFaithScaleValue: Int) {
+        
+        readyToShareFaithScale = didChangeScaleForSpiritualConversationReadinessUseCase
+            .execute(scale: readyToShareFaithScaleValue, appLanguage: appLanguage)
     }
 }
 
@@ -99,7 +107,7 @@ extension LessonEvaluationViewModel {
             })
             .store(in: &Self.backgroundCancellables)
         
-        flowDelegate?.navigate(step: .closeTappedFromLessonEvaluation)
+        stepEmitter.emit(step: AppFlowStep.closeTappedFromLessonEvaluation)
     }
     
     func yesTapped() {
@@ -135,13 +143,13 @@ extension LessonEvaluationViewModel {
         )
         
         evaluateLessonUseCase
-            .execute(lessonId: lessonId, feedback: feedback)
+            .execute(lessonId: lessonId, feedback: feedback, lessonLanguage: lessonLanguage)
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { _ in
                 
             })
             .store(in: &Self.backgroundCancellables)
         
-        flowDelegate?.navigate(step: .sendFeedbackTappedFromLessonEvaluation)
+        stepEmitter.emit(step: AppFlowStep.sendFeedbackTappedFromLessonEvaluation)
     }
 }

@@ -9,9 +9,16 @@
 import UIKit
 import Combine
 
+@MainActor
 class AppBackBarItem: AppLayoutDirectionBasedBarItem {
     
-    init(target: AnyObject, action: Selector, accessibilityIdentifier: String?, hidesBarItemPublisher: AnyPublisher<Bool, Never>? = nil, layoutDirectionPublisher: AnyPublisher<UISemanticContentAttribute, Never>? = nil) {
+    init(
+        target: AnyObject,
+        action: Selector,
+        accessibilityIdentifier: String?,
+        hidesBarItemPublisher: AnyPublisher<Bool, Never>? = nil,
+        layoutDirectionPublisher: AnyPublisher<UISemanticContentAttribute, Never>? = nil
+    ) {
         
         super.init(
             leftToRightImage: ImageCatalog.navBack.uiImage,

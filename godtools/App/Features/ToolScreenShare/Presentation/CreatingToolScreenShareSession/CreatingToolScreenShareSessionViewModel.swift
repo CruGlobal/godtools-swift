@@ -9,57 +9,53 @@
 import Foundation
 import Combine
 
-@MainActor class CreatingToolScreenShareSessionViewModel: ObservableObject {
+@MainActor
+final class CreatingToolScreenShareSessionViewModel: ObservableObject {
     
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
         
+    private let stepEmitter: FlowStepEmitter
     private let toolId: String
     private let createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger
-    private let getCurrentAppLanguage: GetCurrentAppLanguageUseCase
-    private let viewCreatingToolScreenShareSessionUseCase: ViewCreatingToolScreenShareSessionUseCase
+    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    private let getCreatingToolScreenShareSessionStringsUseCase: GetCreatingToolScreenShareSessionStringsUseCase
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
     private let incrementUserCounterUseCase: IncrementUserCounterUseCase
     
     private var cancellables = Set<AnyCancellable>()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
-    @Published var creatingSessionMessage: String = ""
-    
-    init(flowDelegate: FlowDelegate, toolId: String, createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger, getCurrentAppLanguage: GetCurrentAppLanguageUseCase, viewCreatingToolScreenShareSessionUseCase: ViewCreatingToolScreenShareSessionUseCase, tractRemoteSharePublisher: TractRemoteSharePublisher, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
+    @Published private(set) var strings = CreatingToolScreenShareSessionStringsDomainModel.emptyValue
         
-        self.flowDelegate = flowDelegate
+    init(
+        stepEmitter: FlowStepEmitter,
+        toolId: String,
+        createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getCreatingToolScreenShareSessionStringsUseCase: GetCreatingToolScreenShareSessionStringsUseCase,
+        tractRemoteSharePublisher: TractRemoteSharePublisher,
+        incrementUserCounterUseCase: IncrementUserCounterUseCase
+    ) {
+        
+        self.stepEmitter = stepEmitter
         self.toolId = toolId
         self.createSessionTrigger = createSessionTrigger
-        self.getCurrentAppLanguage = getCurrentAppLanguage
-        self.viewCreatingToolScreenShareSessionUseCase = viewCreatingToolScreenShareSessionUseCase
+        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
+        self.getCreatingToolScreenShareSessionStringsUseCase = getCreatingToolScreenShareSessionStringsUseCase
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
         self.incrementUserCounterUseCase = incrementUserCounterUseCase
         
-        getCurrentAppLanguage
+        getCurrentAppLanguageUseCase
             .execute()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                
-                viewCreatingToolScreenShareSessionUseCase
-                    .viewPublisher(appLanguage: appLanguage)
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (domainModel: CreatingToolScreenShareSessionDomainModel) in
-                
-                let interfaceStrings: CreatingToolScreenShareSessionInterfaceStringsDomainModel = domainModel.interfaceStrings
-                
-                self?.creatingSessionMessage = interfaceStrings.creatingSessionMessage
-            }
+            .sink(receiveValue: { [weak self] (appLanguage: AppLanguageDomainModel) in
+
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
+            })
             .store(in: &cancellables)
-        
+
         tractRemoteSharePublisher
             .didCreateChannelPublisher
             .receive(on: DispatchQueue.main)
@@ -86,7 +82,13 @@ import Combine
     deinit {
         print("x deinit: \(type(of: self))")
     }
-    
+
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+
+        strings = getCreatingToolScreenShareSessionStringsUseCase
+            .execute(appLanguage: appLanguage)
+    }
+
     private func didCreateNewSubscriberChannelForPublish(result: Result<WebSocketChannel, TractRemoteSharePublisherError>) {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
@@ -95,8 +97,8 @@ import Combine
                 return
             }
             
-            weakSelf.flowDelegate?.navigate(
-                step: .didCreateSessionFromCreatingToolScreenShareSession(
+            weakSelf.stepEmitter.emit(
+                step: AppFlowStep.didCreateSessionFromCreatingToolScreenShareSession(
                     result: result,
                     createSessionTrigger: weakSelf.createSessionTrigger
                 )
@@ -113,7 +115,7 @@ extension CreatingToolScreenShareSessionViewModel {
         
         tractRemoteSharePublisher.endPublishingSession(disconnectSocket: true)
         
-        flowDelegate?.navigate(step: .closeTappedFromCreatingToolScreenShareSession)
+        stepEmitter.emit(step: AppFlowStep.closeTappedFromCreatingToolScreenShareSession)
     }
     
     func pageViewed() {

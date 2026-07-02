@@ -8,22 +8,20 @@
 
 import Foundation
 
-class IncomingDeepLinkUrl {
+struct IncomingDeepLinkUrl: Sendable {
     
     let url: URL
     let pathComponents: [String]
     let rootPath: String?
-    let queryParameters: [String: Any]
     
-    required init(url: URL) {
+    init(url: URL) {
         
         self.url = url
         self.pathComponents = url.pathComponents.filter({$0 != "/"})
         self.rootPath = pathComponents.first
-        self.queryParameters = IncomingDeepLinkUrl.getJsonFromUrlQuery(url: url)
     }
     
-    private static func getJsonFromUrlQuery(url: URL) -> [String: Any] {
+    private func getJsonFromUrlQuery(url: URL) -> [String: Any] {
         
         let components: URLComponents? = URLComponents(url: url, resolvingAgainstBaseURL: false)
         let queryItems: [URLQueryItem] = components?.queryItems ?? []
@@ -35,5 +33,10 @@ class IncomingDeepLinkUrl {
         }
         
         return queryParameters
+    }
+    
+    func getQueryParameters() -> [String: Any] {
+        
+        return getJsonFromUrlQuery(url: url)
     }
 }

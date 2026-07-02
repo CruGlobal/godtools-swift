@@ -10,6 +10,7 @@ import UIKit
 import GodToolsShared
 import Combine
 
+@MainActor
 protocol TractPageCardsViewDelegate: AnyObject {
     
     func tractPageCardsDidChangeCardState(cardsView: TractPageCardsView, cardsState: TractPageCardsState, animated: Bool)
@@ -44,8 +45,6 @@ class TractPageCardsView: MobileContentView {
         
         setupLayout()
         setupBinding()
-        
-        keyboardObserver.startObservingKeyboardChanges(delegate: self)
     }
     
     required init?(coder: NSCoder) {
@@ -54,7 +53,6 @@ class TractPageCardsView: MobileContentView {
     
     deinit {
         print("x deinit: \(type(of: self))")
-        keyboardObserver.stopObservingKeyboardChanges()
     }
     
     private func setupLayout() {
@@ -127,6 +125,17 @@ class TractPageCardsView: MobileContentView {
         }
         
         return nil
+    }
+    
+    override func viewDidAppear(navigationEvent: MobileContentPagesNavigationEvent?) {
+        super.viewDidAppear(navigationEvent: navigationEvent)
+        
+        keyboardObserver.startObservingKeyboardChanges(delegate: self)
+    }
+    
+    override func viewDidDisappear() {
+        
+        keyboardObserver.stopObservingKeyboardChanges()
     }
     
     // MARK: -

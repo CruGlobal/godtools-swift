@@ -10,12 +10,12 @@ import UIKit
 import GodToolsShared
 import Combine
 
-class TractViewModel: MobileContentRendererViewModel {
-    
-    private static var backgroundCancellables: Set<AnyCancellable> = Set()
-    
+@MainActor
+final class TractViewModel: MobileContentRendererViewModel {
+        
     static let isLiveShareStreamingKey: String = "TractViewModel.isLiveShareStreamKey"
     
+    private let stepEmitter: FlowStepEmitter
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
     private let tractRemoteShareSubscriber: TractRemoteShareSubscriber
     private let languagesRepository: LanguagesRepository
@@ -26,9 +26,7 @@ class TractViewModel: MobileContentRendererViewModel {
     
     private var cancellables: Set<AnyCancellable> = Set()
     private var remoteShareIsActive: Bool = false
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     let navBarAppearance: AppNavigationBarAppearance
     let languageFont: UIFont?
     let didSubscribeForRemoteSharePublishing: ObservableValue<Bool> = ObservableValue(value: false)
@@ -36,9 +34,29 @@ class TractViewModel: MobileContentRendererViewModel {
     @Published private(set) var toolSettingsDidClose: Void?
     @Published private(set) var hidesRemoteShareIsActive: Bool = true
         
-    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, languagesRepository: LanguagesRepository, resourceViewsService: ResourceViewsService, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, liveShareStream: String?, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?, persistToolLanguageSettings: PersistToolLanguageSettingsInterface?) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        renderer: MobileContentRenderer,
+        tractRemoteSharePublisher: TractRemoteSharePublisher,
+        tractRemoteShareSubscriber: TractRemoteShareSubscriber,
+        languagesRepository: LanguagesRepository,
+        resourceViewsService: ResourceViewsService,
+        trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase,
+        resourcesRepository: ResourcesRepository,
+        translationsRepository: TranslationsRepository,
+        mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getTranslatedLanguageName: GetTranslatedLanguageName,
+        liveShareStream: String?,
+        initialPage: MobileContentRendererInitialPage?,
+        initialPageSubIndex: Int?,
+        trainingTipsEnabled: Bool,
+        incrementUserCounterUseCase: IncrementUserCounterUseCase,
+        selectedLanguageIndex: Int?,
+        persistToolLanguageSettings: PersistToolLanguageSettingsInterface?
+    ) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
         self.tractRemoteShareSubscriber = tractRemoteShareSubscriber
         self.languagesRepository = languagesRepository
@@ -101,6 +119,10 @@ class TractViewModel: MobileContentRendererViewModel {
         tractRemoteShareSubscriber.unsubscribe(disconnectSocket: true)
     }
     
+    private var isScreenSharing: Bool {
+        return remoteShareIsActive
+    }
+    
     private var isLiveStreaming: Bool {
         
         let liveShareStreamChannelIdIsEmpty: Bool = (liveShareStream?.isEmpty) ?? true
@@ -154,14 +176,12 @@ class TractViewModel: MobileContentRendererViewModel {
         
         subscribeToLiveShareStreamIfNeeded()
         
-        resourceViewsService
-            .postNewResourceViewPublisher(resourceId: resource.id, requestPriority: .medium)
-            .sink { _ in
-                
-            } receiveValue: { _ in
-                
-            }
-            .store(in: &Self.backgroundCancellables)
+        Task {
+            try await resourceViewsService.postNewResourceView(
+                resourceId: resource.id,
+                requestPriority: .medium
+            )
+        }
     }
     
     private func trackLanguageTapped(tappedLanguage: LanguageDataModel) {
@@ -244,15 +264,13 @@ class TractViewModel: MobileContentRendererViewModel {
 extension TractViewModel {
     
     @objc func homeTapped() {
-        
-        let isScreenSharing: Bool = remoteShareIsActive
-        
-        flowDelegate?.navigate(step: .homeTappedFromTool(isScreenSharing: isScreenSharing))
+                
+        stepEmitter.emit(step: AppFlowStep.homeTappedFromTool(isScreenSharing: isScreenSharing))
     }
     
     @objc func backTapped() {
-        
-        flowDelegate?.navigate(step: .backTappedFromTool)
+                
+        stepEmitter.emit(step: AppFlowStep.backTappedFromTool(isScreenSharing: isScreenSharing))
     }
     
     @objc func toolSettingsTapped() {
@@ -276,7 +294,7 @@ extension TractViewModel {
                 data: [ToolAnalyticsActionNames.shared.ACTION_SETTINGS: 1]
             )
         
-        flowDelegate?.navigate(step: .toolSettingsTappedFromTool(toolSettingsObserver: toolSettingsObserver, toolSettingsDidCloseClosure: toolSettingsDidCloseClosure))
+        stepEmitter.emit(step: AppFlowStep.toolSettingsTappedFromTool(toolSettingsObserver: toolSettingsObserver, toolSettingsDidCloseClosure: toolSettingsDidCloseClosure))
     }
     
     func languageTapped(index: Int, page: Int, pagePositions: TractPagePositions) {
@@ -418,7 +436,7 @@ extension TractViewModel {
             super.setRendererPrimaryLanguage(
                 primaryLanguageId: primaryLanguageId,
                 parallelLanguageId: parallelLanguageId,
-                selectedLanguageId: languagesRepository.cache.getCachedLanguage(code: remoteShareSelectedLocale)?.id
+                selectedLanguageId: languagesRepository.getLanguageByCode(code: remoteShareSelectedLocale)?.id
             )
         }
         else {
@@ -438,10 +456,10 @@ extension TractViewModel {
         let attributes = remoteShareNavigationEvent.message?.data?.attributes
                 
         if let primaryLocale = attributes?.primaryLocale, !primaryLocale.isEmpty {
-            return languagesRepository.cache.getCachedLanguage(code: primaryLocale)?.id
+            return languagesRepository.getLanguageByCode(code: primaryLocale)?.id
         }
         else if let locale = attributes?.locale, !locale.isEmpty {
-            return languagesRepository.cache.getCachedLanguage(code: locale)?.id
+            return languagesRepository.getLanguageByCode(code: locale)?.id
         }
         
         return nil
@@ -452,7 +470,7 @@ extension TractViewModel {
         let attributes = remoteShareNavigationEvent.message?.data?.attributes
                 
         if let parallelLocale = attributes?.parallelLocale, !parallelLocale.isEmpty {
-            return languagesRepository.cache.getCachedLanguage(code: parallelLocale)?.id
+            return languagesRepository.getLanguageByCode(code: parallelLocale)?.id
         }
         
         return nil

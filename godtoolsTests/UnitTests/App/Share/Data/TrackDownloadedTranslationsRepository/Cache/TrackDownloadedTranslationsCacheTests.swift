@@ -197,7 +197,7 @@ extension TrackDownloadedTranslationsCacheTests {
     private func getRealmDatabaseObjects() -> [Object] {
         return getMockTrackDownloadedTranslations()
             .map {
-                RealmDownloadedTranslation.createNewFrom(interface: $0)
+                RealmDownloadedTranslation.createNewFrom(model: $0)
             }
     }
     
@@ -216,7 +216,7 @@ extension TrackDownloadedTranslationsCacheTests {
     private func getSwiftDatabaseObjects() -> [any IdentifiableSwiftDataObject] {
         return getMockTrackDownloadedTranslations()
             .map {
-                SwiftDownloadedTranslation.createNewFrom(interface: $0)
+                SwiftDownloadedTranslation.createNewFrom(model: $0)
             }
     }
     

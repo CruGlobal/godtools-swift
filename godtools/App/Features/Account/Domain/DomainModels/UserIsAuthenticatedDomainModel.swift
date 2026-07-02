@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct UserIsAuthenticatedDomainModel {
+struct UserIsAuthenticatedDomainModel: Sendable {
     
     let isAuthenticated: Bool
 }

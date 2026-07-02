@@ -17,7 +17,7 @@ typealias SwiftUserLocalizationSettings = SwiftUserLocalizationSettingsV1.SwiftU
 enum SwiftUserLocalizationSettingsV1 {
  
     @Model
-    class SwiftUserLocalizationSettings: IdentifiableSwiftDataObject, UserLocalizationSettingsDataModelInterface {
+    class SwiftUserLocalizationSettings: IdentifiableSwiftDataObject {
         
         var createdAt: Date = Date()
         var selectedCountryIsoRegionCode: String = ""
@@ -27,17 +27,29 @@ enum SwiftUserLocalizationSettingsV1 {
         init() {
             
         }
-        
-        func mapFrom(interface: UserLocalizationSettingsDataModelInterface) {
-            createdAt = interface.createdAt
-            selectedCountryIsoRegionCode = interface.selectedCountryIsoRegionCode
-            id = interface.id
-        }
-        
-        static func createNewFrom(interface: UserLocalizationSettingsDataModelInterface) -> SwiftUserLocalizationSettings {
-            let object = SwiftUserLocalizationSettings()
-            object.mapFrom(interface: interface)
-            return object
-        }
+    }
+}
+
+@available(iOS 17.4, *)
+extension SwiftUserLocalizationSettings {
+    
+    func mapFrom(model: UserLocalizationSettingsDataModel) {
+        createdAt = model.createdAt
+        selectedCountryIsoRegionCode = model.selectedCountryIsoRegionCode
+        id = model.id
+    }
+    
+    static func createNewFrom(model: UserLocalizationSettingsDataModel) -> SwiftUserLocalizationSettings {
+        let object = SwiftUserLocalizationSettings()
+        object.mapFrom(model: model)
+        return object
+    }
+    
+    func toModel() -> UserLocalizationSettingsDataModel {
+        UserLocalizationSettingsDataModel(
+            id: id,
+            createdAt: createdAt,
+            selectedCountryIsoRegionCode: selectedCountryIsoRegionCode
+        )
     }
 }

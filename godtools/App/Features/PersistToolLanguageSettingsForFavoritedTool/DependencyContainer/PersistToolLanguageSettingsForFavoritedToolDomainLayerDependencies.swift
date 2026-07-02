@@ -8,14 +8,14 @@
 
 import Foundation
 
-class PersistToolLanguageSettingsForFavoritedToolDomainLayerDependencies {
+final class PersistToolLanguageSettingsForFavoritedToolDomainLayerDependencies {
     
-    private let coreDataLayer: AppDataLayerDependencies
+    private let core: AppCoreDiContainer
     private let dataLayer: PersistToolLanguageSettingsForFavoritedToolDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, dataLayer: PersistToolLanguageSettingsForFavoritedToolDataLayerDependencies) {
+    init(core: AppCoreDiContainer, dataLayer: PersistToolLanguageSettingsForFavoritedToolDataLayerDependencies) {
         
-        self.coreDataLayer = coreDataLayer
+        self.core = core
         self.dataLayer = dataLayer
     }
     

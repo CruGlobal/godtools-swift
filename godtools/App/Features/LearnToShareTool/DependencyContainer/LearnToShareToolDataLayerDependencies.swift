@@ -8,7 +8,7 @@
 
 import Foundation
 
-class LearnToShareToolDataLayerDependencies {
+final class LearnToShareToolDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     
@@ -17,19 +17,11 @@ class LearnToShareToolDataLayerDependencies {
         self.coreDataLayer = coreDataLayer
     }
     
-    // MARK: - Data Layer Classes
-    
-    // MARK: - Domain Interface
-    
-    func getLearnToShareToolInterfaceStringsRepositoryInterface() -> GetLearnToShareToolInterfaceStringsRepositoryInterface {
-        return GetLearnToShareToolInterfaceStringsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
-    
-    func getLearnToShareToolTutorialItemsRepositoryInterface() -> GetLearnToShareToolTutorialItemsRepositoryInterface {
-        return GetLearnToShareToolTutorialItemsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
+    func getToolTrainingTipsOnboardingViewsRepository() -> ToolTrainingTipsOnboardingViewsRepository {
+        return ToolTrainingTipsOnboardingViewsRepository(
+            cache: ToolTrainingTipsOnboardingViewsCache(
+                userDefaultsCache: coreDataLayer.getUserDefaultsCache()
+            )
         )
     }
 }

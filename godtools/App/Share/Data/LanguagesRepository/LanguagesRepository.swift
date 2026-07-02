@@ -11,15 +11,54 @@ import RequestOperation
 import RepositorySync
 import Combine
 
-class LanguagesRepository: RepositorySync<LanguageDataModel, MobileContentLanguagesApi> {
+final class LanguagesRepository {
     
-    let cache: LanguagesCache
+    private let api: LanguagesApiInterface
+    private let jsonFileCache: LanguagesJsonFileCache
+    private let cache: LanguagesCache
     
-    init(externalDataFetch: MobileContentLanguagesApi, persistence: any Persistence<LanguageDataModel, LanguageCodable>, cache: LanguagesCache) {
+    init(api: LanguagesApiInterface, jsonFileCache: LanguagesJsonFileCache, cache: LanguagesCache) {
         
+        self.api = api
+        self.jsonFileCache = jsonFileCache
         self.cache = cache
+    }
+    
+    @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Error> {
+        return cache
+            .persistence
+            .observeCollectionChangesPublisher()
+    }
+    
+    func getLanguageById(id: String) -> LanguageDataModel? {
+        do {
+            return try cache.persistence.getDataModel(id: id)
+        }
+        catch _ {
+            return nil
+        }
+    }
+    
+    func getLanguageByCode(code: BCP47LanguageIdentifier) -> LanguageDataModel? {
         
-        super.init(externalDataFetch: externalDataFetch, persistence: persistence)
+        do {
+            return try cache.getLanguageByCode(code: code)
+        }
+        catch _ {
+            return nil
+        }
+    }
+    
+    func getLanguagesByCodes(codes: [BCP47LanguageIdentifier]) async throws -> [LanguageDataModel] {
+        return try await cache.getLanguagesByCodes(codes: codes)
+    }
+    
+    func getLanguages() async throws -> [LanguageDataModel] {
+        return try await cache.persistence.getDataModels(getOption: .allObjects)
+    }
+    
+    func getLanguagesByIds(ids: [String]) async throws -> [LanguageDataModel] {
+        return try await cache.persistence.getDataModels(getOption: .objectsByIds(ids: Set(ids)))
     }
 }
 
@@ -27,39 +66,25 @@ class LanguagesRepository: RepositorySync<LanguageDataModel, MobileContentLangua
 
 extension LanguagesRepository {
     
-    func syncLanguagesFromRemote(requestPriority: RequestPriority) -> AnyPublisher<[LanguageDataModel], Error> {
+    func syncLanguagesFromRemote(requestPriority: RequestPriority) async throws -> [LanguageDataModel] {
         
-        return externalDataFetch.getObjectsPublisher(
-            context: RequestOperationFetchContext(requestPriority: requestPriority)
+        let languages: [LanguageCodable] = try await api.getLanguages(requestPriority: requestPriority)
+        
+        return try await cache.persistence.writeObjects(
+            externalObjects: languages,
+            writeOption: .deleteObjectsNotInExternal,
+            getOption: .allObjects
         )
-        .flatMap { (languages: [LanguageCodable]) in
-            
-            return super.persistence.writeObjectsPublisher(
-                externalObjects: languages,
-                writeOption: .deleteObjectsNotInExternal,
-                getOption: .allObjects
-            )
-            .eraseToAnyPublisher()
-        }
-        .eraseToAnyPublisher()
     }
     
-    func syncLanguagesFromJsonFileCache() -> AnyPublisher<[LanguageDataModel], Error> {
+    func syncLanguagesFromJsonFileCache() async throws -> [LanguageDataModel] {
         
-        return LanguagesJsonFileCache(
-            jsonServices: JsonServices()
+        let languages: [LanguageCodable] = try jsonFileCache.getLanguages()
+        
+        return try await cache.persistence.writeObjects(
+            externalObjects: languages,
+            writeOption: nil,
+            getOption: .allObjects
         )
-        .getLanguages()
-        .publisher
-        .flatMap { (languages: [LanguageCodable]) -> AnyPublisher<[LanguageDataModel], Error> in
-            
-            return super.persistence.writeObjectsPublisher(
-                externalObjects: languages,
-                writeOption: nil,
-                getOption: .allObjects
-            )
-            .eraseToAnyPublisher()
-        }
-        .eraseToAnyPublisher()
     }
 }

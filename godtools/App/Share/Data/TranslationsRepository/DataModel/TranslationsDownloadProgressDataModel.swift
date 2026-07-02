@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TranslationsDownloadProgressDataModel {
+struct TranslationsDownloadProgressDataModel: Sendable {
     
     let progress: Double
     let numberOfTranslationsToDownload: Int

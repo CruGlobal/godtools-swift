@@ -21,7 +21,7 @@ struct ToolSettingsShareablesView: View {
         
         VStack(alignment: .leading, spacing: 10) {
             
-            Text(viewModel.shareablesTitle)
+            Text(viewModel.strings.shareablesTitle)
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .font(FontLibrary.sfProTextRegular.font(size: 19))
             

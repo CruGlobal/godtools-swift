@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class SearchCountriesInLocalizationSettingsCountriesListUseCase {
+final class SearchCountriesInLocalizationSettingsCountriesListUseCase {
 
     private let stringSearcher: StringSearcher
 

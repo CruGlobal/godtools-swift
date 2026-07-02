@@ -9,14 +9,14 @@
 import Foundation
 import Combine
 
-@MainActor class ShareToolQRCodeViewModel: ObservableObject {
+@MainActor
+final class ShareToolQRCodeViewModel: ObservableObject {
     
+    private let stepEmitter: FlowStepEmitter
     private let getShareToolQRCodeStringsUseCase: GetShareToolQRCodeStringsUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
     @Published private(set) var strings = ShareToolQRCodeStringsDomainModel.emptyValue
@@ -24,31 +24,32 @@ import Combine
     
     let shareUrl: String
     
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getShareToolQRCodeStringsUseCase: GetShareToolQRCodeStringsUseCase, shareUrl: String) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getShareToolQRCodeStringsUseCase: GetShareToolQRCodeStringsUseCase,
+        shareUrl: String
+    ) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.getShareToolQRCodeStringsUseCase = getShareToolQRCodeStringsUseCase
         self.shareUrl = shareUrl
         
         getCurrentAppLanguageUseCase
             .execute()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                
-                getShareToolQRCodeStringsUseCase
-                    .execute(appLanguage: appLanguage)
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: ShareToolQRCodeStringsDomainModel) in
-                       
-                self?.strings = strings
-            }
+            .sink(receiveValue: { [weak self] (appLanguage: AppLanguageDomainModel) in
+
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
+            })
             .store(in: &cancellables)
+    }
+
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+
+        strings = getShareToolQRCodeStringsUseCase
+            .execute(appLanguage: appLanguage)
     }
 }
 
@@ -57,6 +58,6 @@ import Combine
 extension ShareToolQRCodeViewModel {
     
     func closeTapped() {
-        flowDelegate?.navigate(step: .closedTappedFromShareToolQrCode)
+        stepEmitter.emit(step: AppFlowStep.closedTappedFromShareToolQrCode)
     }
 }

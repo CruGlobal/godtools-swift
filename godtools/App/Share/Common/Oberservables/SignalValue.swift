@@ -8,13 +8,13 @@
 
 import Foundation
 
-class SignalValue<T> {
+final class SignalValue<T> {
     
     typealias Handler = ((_ value: T) -> Void)
     
     private var observers: [String: Handler] = Dictionary()
         
-    required init() {
+    init() {
 
     }
     

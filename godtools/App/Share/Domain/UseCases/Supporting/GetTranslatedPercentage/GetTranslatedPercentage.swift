@@ -8,7 +8,7 @@
 
 import Foundation
 
-class GetTranslatedPercentage {
+final class GetTranslatedPercentage {
     
     private static let sharedNumberFormatter: NumberFormatter = NumberFormatter()
     

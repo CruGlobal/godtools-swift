@@ -8,22 +8,22 @@
 
 import Foundation
 
-class ToolShortcutLinksDomainLayerDependencies {
+final class ToolShortcutLinksDomainLayerDependencies {
     
-    private let coreDataLayer: AppDataLayerDependencies
+    private let core: AppCoreDiContainer
     private let dataLayer: ToolShortcutLinksDataLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, dataLayer: ToolShortcutLinksDataLayerDependencies) {
+    init(core: AppCoreDiContainer, dataLayer: ToolShortcutLinksDataLayerDependencies) {
         
-        self.coreDataLayer = coreDataLayer
+        self.core = core
         self.dataLayer = dataLayer
     }
     
     func getToolShortcutLinksUseCase() -> GetToolShortcutLinksUseCase {
         return GetToolShortcutLinksUseCase(
-            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository(),
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
-            translationsRepository: coreDataLayer.getTranslationsRepository()
+            favoritedResourcesRepository: core.dataLayer.getFavoritedResourcesRepository(),
+            resourcesRepository: core.dataLayer.getResourcesRepository(),
+            translationsRepository: core.dataLayer.getTranslationsRepository()
         )
     }
 }

@@ -17,7 +17,7 @@ typealias SwiftTranslation = SwiftTranslationV1.SwiftTranslation
 enum SwiftTranslationV1 {
  
     @Model
-    class SwiftTranslation: IdentifiableSwiftDataObject, TranslationDataModelInterface {
+    class SwiftTranslation: IdentifiableSwiftDataObject {
         
         var isPublished: Bool = false
         var manifestName: String = ""
@@ -38,44 +38,66 @@ enum SwiftTranslationV1 {
         init() {
             
         }
+    }
+}
+
+@available(iOS 17.4, *)
+extension SwiftTranslation {
+    
+    func mapFrom(model: TranslationDataModel) {
+        id = model.id
+        isPublished = model.isPublished
+        manifestName = model.manifestName
+        toolDetailsBibleReferences = model.toolDetailsBibleReferences
+        toolDetailsConversationStarters = model.toolDetailsConversationStarters
+        toolDetailsOutline = model.toolDetailsOutline
+        translatedDescription = model.translatedDescription
+        translatedName = model.translatedName
+        translatedTagline = model.translatedTagline
+        type = model.type
+        version = model.version
+    }
+    
+    static func createNewFrom(model: TranslationDataModel) -> SwiftTranslation {
+        let translation = SwiftTranslation()
+        translation.mapFrom(model: model)
+        return translation
+    }
+    
+    func toModel() -> TranslationDataModel {
+        return TranslationDataModel(
+            id: id,
+            isPublished: isPublished,
+            languageDataModel: languageDataModel,
+            manifestName: manifestName,
+            resourceDataModel: resourceDataModel,
+            toolDetailsBibleReferences: toolDetailsBibleReferences,
+            toolDetailsConversationStarters: toolDetailsConversationStarters,
+            toolDetailsOutline: toolDetailsOutline,
+            translatedDescription: translatedDescription,
+            translatedName: translatedName,
+            translatedTagline: translatedTagline,
+            type: type,
+            version: version
+        )
+    }
+    
+    var resourceDataModel: ResourceDataModel? {
         
-        func mapFrom(interface: TranslationDataModelInterface) {
-            id = interface.id
-            isPublished = interface.isPublished
-            manifestName = interface.manifestName
-            toolDetailsBibleReferences = interface.toolDetailsBibleReferences
-            toolDetailsConversationStarters = interface.toolDetailsConversationStarters
-            toolDetailsOutline = interface.toolDetailsOutline
-            translatedDescription = interface.translatedDescription
-            translatedName = interface.translatedName
-            translatedTagline = interface.translatedTagline
-            type = interface.type
-            version = interface.version
+        guard let swiftResource = resource else {
+            return nil
         }
         
-        static func createNewFrom(interface: TranslationDataModelInterface) -> SwiftTranslation {
-            let translation = SwiftTranslation()
-            translation.mapFrom(interface: interface)
-            return translation
+        return swiftResource.toModel()
+    }
+    
+    var languageDataModel: LanguageDataModel? {
+        
+        guard let swiftLanguage = language else {
+            return nil
         }
         
-        var resourceDataModel: ResourceDataModel? {
-            
-            guard let swiftResource = resource else {
-                return nil
-            }
-            
-            return ResourceDataModel(interface: swiftResource)
-        }
-        
-        var languageDataModel: LanguageDataModel? {
-            
-            guard let swiftLanguage = language else {
-                return nil
-            }
-            
-            return LanguageDataModel(interface: swiftLanguage)
-        }
+        return swiftLanguage.toModel()
     }
 }
 

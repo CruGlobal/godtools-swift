@@ -8,20 +8,25 @@
 
 import Foundation
 
-class WebContentViewModel {
+@MainActor
+final class WebContentViewModel {
     
+    private let stepEmitter: FlowStepEmitter
     private let webContent: WebContentType
-    private let backTappedFromWebContentStep: FlowStep
+    private let backTappedFromWebContentStep: AppFlowStep
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
     let url: ObservableValue<URL?> = ObservableValue(value: nil)
     
-    init(flowDelegate: FlowDelegate, webContent: WebContentType, backTappedFromWebContentStep: FlowStep, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        webContent: WebContentType,
+        backTappedFromWebContentStep: AppFlowStep,
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
+    ) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.webContent = webContent
         self.backTappedFromWebContentStep = backTappedFromWebContentStep
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
@@ -53,7 +58,7 @@ extension WebContentViewModel {
     
     @objc func backTapped() {
         
-        flowDelegate?.navigate(step: backTappedFromWebContentStep)
+        stepEmitter.emit(step: backTappedFromWebContentStep)
     }
     
     func pageViewed() {

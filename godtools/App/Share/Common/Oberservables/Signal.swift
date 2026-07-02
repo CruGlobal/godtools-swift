@@ -8,13 +8,13 @@
 
 import Foundation
 
-class Signal {
+final class Signal {
     
     typealias Handler = (() -> Void)
     
     private var observers: [String: Handler] = Dictionary()
         
-    required init() {
+    init() {
 
     }
     

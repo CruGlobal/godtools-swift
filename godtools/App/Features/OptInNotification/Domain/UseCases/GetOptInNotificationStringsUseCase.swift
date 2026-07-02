@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetOptInNotificationStringsUseCase {
 
@@ -18,24 +17,23 @@ final class GetOptInNotificationStringsUseCase {
         self.localizationServices = localizationServices
     }
 
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<OptInNotificationStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> OptInNotificationStringsDomainModel {
         
         let strings = OptInNotificationStringsDomainModel(
             title: localizationServices.stringForLocaleElseEnglish(
-                localeIdentifier: appLanguage, key: "optInNotification.title"),
+                localeIdentifier: appLanguage, key: LocalizableStringKeys.optInNotificationTitle.key),
             body: localizationServices.stringForLocaleElseEnglish(
-                localeIdentifier: appLanguage, key: "optInNotification.body"),
+                localeIdentifier: appLanguage, key: LocalizableStringKeys.optInNotificationBody.key),
             allowNotificationsActionTitle:
                 localizationServices.stringForLocaleElseEnglish(
-                    localeIdentifier: appLanguage, key: "optInNotification.allowNotifications"),
+                    localeIdentifier: appLanguage, key: LocalizableStringKeys.optInNotificationAllowNotifications.key),
             notificationSettingsActionTitle: localizationServices.stringForLocaleElseEnglish(
-                localeIdentifier: appLanguage, key: "optInNotification.notificationSettings"),
+                localeIdentifier: appLanguage, key: LocalizableStringKeys.optInNotificationNotificationSettings.key),
             maybeLaterActionTitle:
                 localizationServices.stringForLocaleElseEnglish(
-                    localeIdentifier: appLanguage, key: "optInNotification.maybeLater")
+                    localeIdentifier: appLanguage, key: LocalizableStringKeys.optInNotificationMaybeLater.key)
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

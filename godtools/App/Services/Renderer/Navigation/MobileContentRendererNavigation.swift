@@ -9,7 +9,8 @@
 import UIKit
 import GodToolsShared
 
-@MainActor protocol MobileContentRendererNavigationDelegate: AnyObject {
+@MainActor
+protocol MobileContentRendererNavigationDelegate: AnyObject {
     
     func mobileContentRendererNavigationDismissRenderer(navigation: MobileContentRendererNavigation, event: DismissToolEvent)
     func mobileContentRendererNavigationDeepLink(navigation: MobileContentRendererNavigation, deepLink: MobileContentRendererNavigationDeepLinkType)
@@ -21,15 +22,12 @@ import GodToolsShared
     private let appLanguage: AppLanguageDomainModel
     
     private var toolTraining: ToolTrainingView?
-    private var downloadToolTranslationsFlow: DownloadToolTranslationsFlow?
     
-    private weak var parentFlow: ToolNavigationFlow?
+    private weak var toolFlow: GTFlow?
     private weak var delegate: MobileContentRendererNavigationDelegate?
     
-    init(parentFlow: ToolNavigationFlow, delegate: MobileContentRendererNavigationDelegate, appDiContainer: AppDiContainer, appLanguage: AppLanguageDomainModel) {
+    init(appDiContainer: AppDiContainer, appLanguage: AppLanguageDomainModel) {
         
-        self.parentFlow = parentFlow
-        self.delegate = delegate
         self.appDiContainer = appDiContainer
         self.appLanguage = appLanguage
     }
@@ -38,9 +36,23 @@ import GodToolsShared
         print("x deinit: \(type(of: self))")
     }
     
-    func buttonWithUrlTapped(url: URL, analyticsScreenName: String, analyticsSiteSection: String, analyticsSiteSubSection: String, languages: MobileContentRendererLanguages) {
+    func setToolFlow(toolFlow: GTFlow?) {
+        self.toolFlow = toolFlow
+    }
+    
+    func setDelegate(delegate: MobileContentRendererNavigationDelegate?) {
+        self.delegate = delegate
+    }
+    
+    func buttonWithUrlTapped(
+        url: URL,
+        analyticsScreenName: String,
+        analyticsSiteSection: String,
+        analyticsSiteSubSection: String,
+        languages: MobileContentRendererLanguages
+    ) {
         
-        let deepLinkingService: DeepLinkingService = appDiContainer.dataLayer.getDeepLinkingService()
+        let deepLinkingService: DeepLinkingService = appDiContainer.core.dataLayer.getDeepLinkingService()
         let deepLink: ParsedDeepLinkType? = deepLinkingService.parseDeepLink(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
         
         if let deepLink = deepLink {
@@ -49,11 +61,20 @@ import GodToolsShared
             
             case .lessonsList:
                
-                delegate?.mobileContentRendererNavigationDeepLink(navigation: self, deepLink: .lessonsList)
+                delegate?.mobileContentRendererNavigationDeepLink(
+                    navigation: self,
+                    deepLink: .lessonsList
+                )
                             
             case .tool(let toolDeepLink):
                 
-                parentFlow?.navigateToToolFromToolDeepLink(appLanguage: appLanguage, toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
+                toolFlow?.pushFlow(
+                    flow: ToolNavigationFlow(
+                        appDiContainer: appDiContainer,
+                        appLanguage: appLanguage,
+                        toolDeepLink: toolDeepLink
+                    )
+                )
                 
             default:
                 break
@@ -61,14 +82,18 @@ import GodToolsShared
         }
         else {
             
-            parentFlow?.navigateToURL(
+            let linkTapped = URLLinkTappedParams(
                 url: url,
                 screenName: analyticsScreenName,
                 siteSection: analyticsSiteSection,
                 siteSubSection: analyticsSiteSubSection,
-                appLanguage: appLanguage,
                 contentLanguage: languages.primaryLanguage.localeId,
                 contentLanguageSecondary: languages.parallelLanguage?.localeId
+            )
+            
+            toolFlow?.navigateToURL(
+                linkTapped: linkTapped,
+                appLanguage: appLanguage
             )
         }
     }
@@ -80,14 +105,14 @@ import GodToolsShared
     
     func presentError(error: Error, appLanguage: AppLanguageDomainModel) {
         
-        parentFlow?.presentError(appLanguage: appLanguage, error: error)
+        toolFlow?.presentError(appLanguage: appLanguage, error: error)
     }
     
     func errorOccurred(error: MobileContentErrorViewModel) {
         
         let view = MobileContentErrorView(viewModel: error)
         
-        parentFlow?.navigationController.present(view.controller, animated: true, completion: nil)
+        toolFlow?.presentView(view: view.controller, animated: true)
     }
     
     func trainingTipTapped(event: TrainingTipEvent) {
@@ -95,34 +120,66 @@ import GodToolsShared
         presentToolTraining(event: event)
     }
     
-    func downloadToolLanguages(toolId: String, languageIds: [String], completion: @escaping ((_ result: Result<ToolTranslationsDomainModel, Error>) -> Void)) {
+    func downloadToolLanguages(
+        toolId: String,
+        languageIds: [String],
+        completion: @escaping ((_ state: DownloadToolFlow.CompletedState) -> Void)
+    ) {
              
-        guard let flow = parentFlow else {
-            completion(.failure(NSError.errorWithDescription(description: "Failed to download tool languages.  Parent flow is null.")))
+        guard let toolFlow = self.toolFlow else {
+            
+            let error: Error = NSError.errorWithDescription(description: "Failed to download tool languages.  Parent flow is null.")
+            completion(.downloadFailed(error: error))
+            
             return
         }
         
         let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
             resourceId: toolId,
             languageIds: languageIds,
-            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
-            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository()
+            resourcesRepository: appDiContainer.core.dataLayer.getResourcesRepository(),
+            translationsRepository: appDiContainer.core.dataLayer.getTranslationsRepository()
         )
         
-        downloadToolTranslationsFlow = DownloadToolTranslationsFlow(
-            presentInFlow: flow,
-            appDiContainer: appDiContainer,
-            determineToolTranslationsToDownload: determineToolTranslationsToDownload,
-            didDownloadToolTranslations: { [weak self] (result: Result<ToolTranslationsDomainModel, Error>) in
-                self?.downloadToolTranslationsFlow = nil
-                completion(result)
+        let downloadToolUseCase = appDiContainer.core.domainLayer.getDownloadToolUseCase()
+        
+        Task {
+            
+            let toolTranslations = try await downloadToolUseCase
+                .execute(
+                    filter: .downloadManifestAndRelatedFilesForRenderer,
+                    determineToolTranslationsToDownload: determineToolTranslationsToDownload,
+                    downloadType: .cache
+                )
+            
+            if let toolTranslations = toolTranslations {
+                
+                completion(.downloadSuccess(toolTranslations: toolTranslations))
             }
-        )
+            else {
+                
+                let presentOnFlow: Flow = toolFlow.getTopMostPresentedFlow() ?? toolFlow
+                
+                presentOnFlow.presentFlow(
+                    flow: DownloadToolFlow(
+                        appDiContainer: appDiContainer,
+                        appLanguage: appLanguage,
+                        determineToolTranslationsToDownload: determineToolTranslationsToDownload,
+                        flowCompleted: { (state: DownloadToolFlow.CompletedState) in
+                            
+                            completion(state)
+                            
+                            presentOnFlow.dismissFlow()
+                        }
+                    )
+                )
+            }
+        }
     }
     
     private func presentToolTraining(event: TrainingTipEvent) {
         
-        guard let parentFlow = parentFlow else {
+        guard let toolFlow = self.toolFlow else {
             return
         }
 
@@ -138,11 +195,12 @@ import GodToolsShared
         )
         
         let navigation = MobileContentRendererNavigation(
-            parentFlow: parentFlow,
-            delegate: self,
             appDiContainer: appDiContainer,
             appLanguage: appLanguage
         )
+        
+        navigation.setDelegate(delegate: self)
+        navigation.setToolFlow(toolFlow: toolFlow)
         
         let pageRenderer = MobileContentPageRenderer(
             sharedState: State(),
@@ -152,7 +210,7 @@ import GodToolsShared
             languageTranslationManifest: languageTranslationManifest,
             pageViewFactories: pageViewFactories,
             navigation: navigation,
-            manifestResourcesCache: appDiContainer.getMobileContentRendererManifestResourcesCache()
+            manifestResourcesCache: appDiContainer.core.dataLayer.getMobileContentRendererManifestResourcesCache()
         )
                            
         let viewModel = ToolTrainingViewModel(
@@ -160,10 +218,10 @@ import GodToolsShared
             renderedPageContext: event.renderedPageContext,
             trainingTipId: event.trainingTipId,
             tipModel: event.tipModel,
-            setCompletedTrainingTipUseCase: appDiContainer.domainLayer.getSetCompletedTrainingTipUseCase(),
-            getTrainingTipCompletedUseCase: appDiContainer.domainLayer.getTrainingTipCompletedUseCase(),
-            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
+            setCompletedTrainingTipUseCase: appDiContainer.core.domainLayer.getSetCompletedTrainingTipUseCase(),
+            getTrainingTipCompletedUseCase: appDiContainer.core.domainLayer.getTrainingTipCompletedUseCase(),
+            trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+            localizationServices: appDiContainer.core.dataLayer.getLocalizationServices(),
             closeTappedClosure: { [weak self] in
                 self?.dismissToolTraining()
             }
@@ -171,7 +229,7 @@ import GodToolsShared
         
         let view = ToolTrainingView(viewModel: viewModel)
         
-        parentFlow.navigationController.present(view, animated: true, completion: nil)
+        toolFlow.presentView(view: view, animated: true)
         
         self.toolTraining = view
     }
@@ -182,7 +240,8 @@ import GodToolsShared
             return
         }
         
-        parentFlow?.navigationController.dismiss(animated: true, completion: nil)
+        toolFlow?.dismissView(animated: true)
+        
         toolTraining = nil
     }
 }

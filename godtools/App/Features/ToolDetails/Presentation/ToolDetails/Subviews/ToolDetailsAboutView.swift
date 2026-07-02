@@ -32,7 +32,7 @@ struct ToolDetailsAboutView: View {
             ToolDetailsSectionDescriptionTextView(
                 viewModel: viewModel,
                 geometry: geometry,
-                text: viewModel.aboutDescription
+                text: viewModel.toolDetails.aboutDescription
             )
             
             Rectangle()
@@ -41,24 +41,24 @@ struct ToolDetailsAboutView: View {
             
             VStack(spacing: 20) {
                 
-                if viewModel.conversationStartersContent.isEmpty == false {
+                if viewModel.toolDetails.conversationStarters.isEmpty == false {
                     
-                    AccordionView(title: viewModel.conversationStartersTitle, contents: viewModel.conversationStartersContent, isExpanded: $accordionExpandedConversationStarters)
+                    AccordionView(title: viewModel.strings.conversationStartersTitle, contents: viewModel.toolDetails.conversationStarters, isExpanded: $accordionExpandedConversationStarters)
                 }
                 
                 if viewModel.outlineContent.isEmpty == false {
                     
-                    AccordionView(title: viewModel.outlineTitle, contents: viewModel.outlineContent, isExpanded: $accordionExpandedOutline)
+                    AccordionView(title: viewModel.strings.outlineTitle, contents: viewModel.outlineContent, isExpanded: $accordionExpandedOutline)
                 }
 
-                if viewModel.bibleReferencesContent.isEmpty == false {
+                if viewModel.toolDetails.bibleReferences.isEmpty == false {
                     
-                    AccordionView(title: viewModel.bibleReferencesTitle, contents: viewModel.bibleReferencesContent, isExpanded: $accordionExpandedBibleReferences)
+                    AccordionView(title: viewModel.strings.bibleReferencesTitle, contents: viewModel.toolDetails.bibleReferences, isExpanded: $accordionExpandedBibleReferences)
                 }
                 
-                if viewModel.languagesAvailable.isEmpty == false {
+                if viewModel.toolDetails.languagesAvailable.isEmpty == false {
                     
-                    AccordionView(title: viewModel.languagesAvailableTitle, contents: viewModel.languagesAvailable, isExpanded: $accordionExpandedLanguageAvailability)
+                    AccordionView(title: viewModel.strings.languagesAvailableTitle, contents: viewModel.toolDetails.languagesAvailable, isExpanded: $accordionExpandedLanguageAvailability)
                 }
             }
             .padding(ToolDetailsView.sectionDescriptionTextInsets)

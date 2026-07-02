@@ -13,14 +13,14 @@ import RepositorySync
 final class SwiftFavoritedResourceMapping: Mapping {
     
     func toDataModel(externalObject: FavoritedResourceDataModel) -> FavoritedResourceDataModel? {
-        return FavoritedResourceDataModel(interface: externalObject)
+        return externalObject
     }
     
     func toDataModel(persistObject: SwiftFavoritedResource) -> FavoritedResourceDataModel? {
-        return FavoritedResourceDataModel(interface: persistObject)
+        return persistObject.toModel()
     }
     
     func toPersistObject(externalObject: FavoritedResourceDataModel) -> SwiftFavoritedResource? {
-        return SwiftFavoritedResource.createNewFrom(interface: externalObject)
+        return SwiftFavoritedResource.createNewFrom(model: externalObject)
     }
 }

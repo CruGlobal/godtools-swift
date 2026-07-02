@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class TractRemoteShareSubscriber: NSObject {
+final class TractRemoteShareSubscriber: NSObject {
             
     private static let timeoutIntervalSeconds: TimeInterval = 10
     
@@ -24,7 +24,11 @@ class TractRemoteShareSubscriber: NSObject {
     private var timeoutTimer: Timer?
     private var isSubscribingToChannel: WebSocketChannel?
     
-    required init(webSocket: WebSocketInterface, webSocketChannelSubscriber: WebSocketChannelSubscriberInterface, loggingEnabled: Bool) {
+    init(
+        webSocket: WebSocketInterface,
+        webSocketChannelSubscriber: WebSocketChannelSubscriberInterface,
+        loggingEnabled: Bool
+    ) {
         
         self.webSocket = webSocket
         self.webSocketChannelSubscriber = webSocketChannelSubscriber
@@ -134,11 +138,21 @@ extension TractRemoteShareSubscriber {
         
         let data: Data? = text.data(using: .utf8)
         
-        let object: TractRemoteShareNavigationEvent? = JsonServices().decodeObject(data: data)
-                
-        if let object = object, object.message?.data?.type == "navigation-event" {
+        guard let data = data else {
+            return
+        }
+        
+        do {
             
-            navigationEventSubject.send(object)
+            let object: TractRemoteShareNavigationEvent = try JsonServices().decodeObject(data: data)
+            
+            if object.message?.data?.type == "navigation-event" {
+                
+                navigationEventSubject.send(object)
+            }
+        }
+        catch _ {
+            
         }
     }
 }

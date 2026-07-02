@@ -10,7 +10,8 @@ import UIKit
 import GodToolsShared
 import Combine
 
-@MainActor class ToolTrainingViewModel: NSObject {
+@MainActor
+final class ToolTrainingViewModel: NSObject {
     
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     
@@ -34,7 +35,17 @@ import Combine
     let continueButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     let numberOfTipPages: ObservableValue<Int> = ObservableValue(value: 0)
     
-    init(pageRenderer: MobileContentPageRenderer, renderedPageContext: MobileContentRenderedPageContext, trainingTipId: String, tipModel: Tip, setCompletedTrainingTipUseCase: SetCompletedTrainingTipUseCase, getTrainingTipCompletedUseCase: GetTrainingTipCompletedUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, localizationServices: LocalizationServicesInterface, closeTappedClosure: @escaping (() -> Void)) {
+    init(
+        pageRenderer: MobileContentPageRenderer,
+        renderedPageContext: MobileContentRenderedPageContext,
+        trainingTipId: String,
+        tipModel: Tip,
+        setCompletedTrainingTipUseCase: SetCompletedTrainingTipUseCase,
+        getTrainingTipCompletedUseCase: GetTrainingTipCompletedUseCase,
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
+        localizationServices: LocalizationServicesInterface,
+        closeTappedClosure: @escaping (() -> Void)
+    ) {
         
         self.renderedPageContext = renderedPageContext
         self.pageRenderer = pageRenderer
@@ -154,17 +165,17 @@ extension ToolTrainingViewModel {
     
     func viewLoaded() {
         
-        let trainingTipCompleted = TrainingTipDomainModel(trainingTipId: trainingTipId, resourceId: resource.id, languageId: language.id)
-        
-        setCompletedTrainingTipUseCase
-            .execute(tip: trainingTipCompleted)
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                
-            } receiveValue: { _ in
-                
-            }
-            .store(in: &Self.backgroundCancellables)
+        Task {
+            
+            let trainingTipCompleted = TrainingTipDomainModel(
+                trainingTipId: trainingTipId,
+                resourceId: resource.id,
+                languageId: language.id
+            )
+            
+            try await setCompletedTrainingTipUseCase
+                .execute(tip: trainingTipCompleted)
+        }
     }
     
     func overlayTapped() {

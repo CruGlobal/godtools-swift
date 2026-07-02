@@ -13,14 +13,14 @@ import RepositorySync
 final class SwiftUserDetailsMapping: Mapping {
     
     func toDataModel(externalObject: MobileContentApiUsersMeCodable) -> UserDetailsDataModel? {
-        return UserDetailsDataModel(interface: externalObject)
+        return externalObject.toModel()
     }
     
     func toDataModel(persistObject: SwiftUserDetails) -> UserDetailsDataModel? {
-        return UserDetailsDataModel(interface: persistObject)
+        return persistObject.toModel()
     }
     
     func toPersistObject(externalObject: MobileContentApiUsersMeCodable) -> SwiftUserDetails? {
-        return SwiftUserDetails.createNewFrom(interface: externalObject)
+        return SwiftUserDetails.createNewFrom(model: externalObject.toModel())
     }
 }

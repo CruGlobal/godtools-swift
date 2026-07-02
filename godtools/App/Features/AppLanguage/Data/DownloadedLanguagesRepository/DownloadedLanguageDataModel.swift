@@ -8,23 +8,27 @@
 
 import Foundation
 
-struct DownloadedLanguageDataModel {
+struct DownloadedLanguageDataModel: Sendable {
     
-    let createdAt: Date
+    let id: String
     let languageId: String
     let downloadComplete: Bool
+    let createdAt: Date
     
-    init(languageId: String, downloadComplete: Bool) {
+    init(languageId: String, downloadComplete: Bool, createdAt: Date) {
         
-        self.createdAt = Date()
+        self.id = languageId
         self.languageId = languageId
         self.downloadComplete = downloadComplete
+        self.createdAt = createdAt
     }
     
-    init(realmDownloadedLanguage: RealmDownloadedLanguage) {
+    func copy(downloadComplete: Bool? = nil, createdAt: Date? = nil) -> DownloadedLanguageDataModel {
         
-        createdAt = realmDownloadedLanguage.createdAt
-        languageId = realmDownloadedLanguage.languageId
-        downloadComplete = realmDownloadedLanguage.downloadComplete
+        return DownloadedLanguageDataModel(
+            languageId: languageId,
+            downloadComplete: downloadComplete ?? self.downloadComplete,
+            createdAt: createdAt ?? self.createdAt,
+        )
     }
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ResourceType: String {
+enum ResourceType: String, Sendable {
 
     case article = "article"
     case chooseYourOwnAdventure = "cyoa"

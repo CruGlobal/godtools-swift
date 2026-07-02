@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import RepositorySync
 
-class RealmLanguage: Object, IdentifiableRealmObject, LanguageDataModelInterface {
+class RealmLanguage: Object, IdentifiableRealmObject {
     
     @objc dynamic var code: String = ""
     @objc dynamic var directionString: String = ""
@@ -26,19 +26,33 @@ class RealmLanguage: Object, IdentifiableRealmObject, LanguageDataModelInterface
     // Backlink to the resource. This is automatically updated whenever this language is added to or removed from a resource's languages list. ~Levi
     // (https://www.mongodb.com/docs/realm/sdk/swift/model-data/relationships/)
     let resource = LinkingObjects(fromType: RealmResource.self, property: "languages")
+}
+
+extension RealmLanguage {
     
-    func mapFrom(interface: LanguageDataModelInterface) {
-        code = interface.code
-        directionString = interface.directionString
-        id = interface.id
-        name = interface.name
-        type = interface.type
-        forceLanguageName = interface.forceLanguageName
+    func mapFrom(model: LanguageDataModel) {
+        code = model.code
+        directionString = model.directionString
+        id = model.id
+        name = model.name
+        type = model.type
+        forceLanguageName = model.forceLanguageName
     }
     
-    static func createNewFrom(interface: LanguageDataModelInterface) -> RealmLanguage {
+    static func createNewFrom(model: LanguageDataModel) -> RealmLanguage {
         let realmLanguage = RealmLanguage()
-        realmLanguage.mapFrom(interface: interface)
+        realmLanguage.mapFrom(model: model)
         return realmLanguage
+    }
+    
+    func toModel() -> LanguageDataModel {
+        return LanguageDataModel(
+            code: code,
+            directionString: directionString,
+            id: id,
+            name: name,
+            type: type,
+            forceLanguageName: forceLanguageName
+        )
     }
 }

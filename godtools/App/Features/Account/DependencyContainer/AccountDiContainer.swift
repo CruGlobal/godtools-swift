@@ -8,14 +8,14 @@
 
 import Foundation
 
-class AccountDiContainer {
+final class AccountDiContainer {
     
     let dataLayer: AccountDataLayerDependencies
     let domainLayer: AccountDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(core: AppCoreDiContainer) {
         
-        dataLayer = AccountDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainLayer = AccountDomainLayerDependencies(coreDataLayer: coreDataLayer, dataLayer: dataLayer)
+        dataLayer = AccountDataLayerDependencies(coreDataLayer: core.dataLayer)
+        domainLayer = AccountDomainLayerDependencies(core: core, dataLayer: dataLayer)
     }
 }

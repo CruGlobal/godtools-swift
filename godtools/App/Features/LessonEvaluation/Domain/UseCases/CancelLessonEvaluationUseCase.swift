@@ -22,15 +22,19 @@ final class CancelLessonEvaluationUseCase {
     
     func execute(lessonId: String) -> AnyPublisher<Void, Never> {
         
-        guard let lessonResource = resourcesRepository.persistence.getDataModelNonThrowing(id: lessonId) else {
+        let lessonResource: ResourceDataModel? = resourcesRepository.getResourceById(id: lessonId)
+
+        guard let lessonResource = lessonResource else {
             return Just(Void())
                 .eraseToAnyPublisher()
         }
         
-        lessonEvaluationRepository.storeLessonEvaluation(
-            lesson: lessonResource,
-            lessonEvaluated: false
-        )
+        Task {
+            try await lessonEvaluationRepository.storeLessonEvaluation(
+                lesson: lessonResource,
+                lessonEvaluated: false
+            )
+        }
         
         return Just(Void())
             .eraseToAnyPublisher()

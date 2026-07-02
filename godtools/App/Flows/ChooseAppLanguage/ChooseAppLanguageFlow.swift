@@ -8,81 +8,86 @@
 
 import UIKit
 import SwiftUI
-import Combine
 
-class ChooseAppLanguageFlow: Flow {
+final class ChooseAppLanguageFlow: GTFlow {
     
-    private static var setAppLanguageInBackgroundCancellable: AnyCancellable?
+    enum CompletedState: Sendable {
+        case userChoseAppLanguage(appLanguage: AppLanguageListItemDomainModel)
+        case userClosedChooseAppLanguage
+    }
+                
+    init(appDiContainer: AppDiContainer) {
         
-    private weak var flowDelegate: FlowDelegate?
-    
-    let appDiContainer: AppDiContainer
-    let navigationController: AppNavigationController
-    
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, animated: Bool = true) {
+        let stepEmitter = FlowStepEmitter()
         
-        self.flowDelegate = flowDelegate
-        self.appDiContainer = appDiContainer
-        self.navigationController = sharedNavigationController
-        
-        sharedNavigationController.pushViewController(getAppLanguagesView(), animated: animated)
+        super.init(
+            appDiContainer: appDiContainer,
+            initialView: Self.getAppLanguagesView(
+                appDiContainer: appDiContainer,
+                stepEmitter: stepEmitter
+            ),
+            stepEmitter: stepEmitter
+        )
     }
     
-    deinit {
-        print("x deinit: \(type(of: self))")
-    }
-    
-    func navigate(step: FlowStep) {
+    override func navigate(step: FlowStep) {
         
-        switch step {
+        guard let appStep = step as? AppFlowStep else {
+            return
+        }
+
+        switch appStep {
             
         case .backTappedFromAppLanguages:
-            flowDelegate?.navigate(step: .chooseAppLanguageFlowCompleted(state: .userClosedChooseAppLanguage))
+            completeFlow(state: .userClosedChooseAppLanguage)
             
         case .appLanguageTappedFromAppLanguages(let appLanguage):
-            
-            let view = getConfirmAppLanguageView(selectedLanguage: appLanguage)
-            navigationController.present(view, animated: true)
+                        
+            presentView(
+                view: getConfirmAppLanguageView(selectedLanguage: appLanguage),
+                animated: true
+            )
         
         case .appLanguageChangeConfirmed(let appLanguage):
             
             let setAppLanguageUseCase: SetAppLanguageUseCase = appDiContainer.feature.appLanguage.domainLayer.getSetAppLanguageUseCase()
+                        
+            Task {
+                _ = try await setAppLanguageUseCase
+                    .execute(appLanguage: appLanguage.language)
+            }
             
-            ChooseAppLanguageFlow.setAppLanguageInBackgroundCancellable = setAppLanguageUseCase.execute(appLanguage: appLanguage.language)
-                .receive(on: DispatchQueue.main)
-                .sink(receiveCompletion: { _ in
-                    
-                }, receiveValue: { _ in
-                    
-                })
+            dismissView(animated: true)
             
-            navigationController.dismiss(animated: true)
-            
-            flowDelegate?.navigate(step: .chooseAppLanguageFlowCompleted(state: .userChoseAppLanguage(appLanguage: appLanguage)))
-            
+            completeFlow(state: .userChoseAppLanguage(appLanguage: appLanguage))
+                        
         case .nevermindTappedFromConfirmAppLanguageChange:
-            navigationController.dismiss(animated: true)
+            dismissView(animated: true)
             
         case .backTappedFromConfirmAppLanguageChange:
-            navigationController.dismiss(animated: true)
+            dismissView(animated: true)
             
         default:
             break
         }
     }
+    
+    private func completeFlow(state: CompletedState) {
+        parent?.stepEmitter.emit(step: AppFlowStep.chooseAppLanguageFlowCompleted(state: state))
+    }
 }
 
 extension ChooseAppLanguageFlow {
     
-    func getAppLanguagesView() -> UIViewController {
+    private static func getAppLanguagesView(appDiContainer: AppDiContainer, stepEmitter: FlowStepEmitter) -> UIViewController {
         
         let viewModel = AppLanguagesViewModel(
-            flowDelegate: self,
+            stepEmitter: stepEmitter,
             getAppLanguagesStringsUseCase: appDiContainer.feature.appLanguage.domainLayer.getAppLanguagesStringsUseCase(),
             searchAppLanguageInAppLanguagesListUseCase: appDiContainer.feature.appLanguage.domainLayer.getSearchAppLanguageInAppLanguagesListUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getAppLanguagesListUseCase: appDiContainer.feature.appLanguage.domainLayer.getAppLanguagesListUseCase(),
-            viewSearchBarUseCase: appDiContainer.domainLayer.getViewSearchBarUseCase()
+            getSearchBarStringsUseCase: appDiContainer.core.domainLayer.getSearchBarStringsUseCase()
         )
         
         let view = AppLanguagesView(viewModel: viewModel)
@@ -106,13 +111,13 @@ extension ChooseAppLanguageFlow {
         return hostingView
     }
     
-    func getConfirmAppLanguageView(selectedLanguage: AppLanguageListItemDomainModel) -> UIViewController {
+    private func getConfirmAppLanguageView(selectedLanguage: AppLanguageListItemDomainModel) -> UIViewController {
         
         let viewModel = ConfirmAppLanguageViewModel(
+            stepEmitter: stepEmitter,
             selectedLanguage: selectedLanguage,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getConfirmAppLanguageStringsUseCase: appDiContainer.feature.appLanguage.domainLayer.getConfirmAppLanguageStringsUseCase(),
-            flowDelegate: self
+            getConfirmAppLanguageStringsUseCase: appDiContainer.feature.appLanguage.domainLayer.getConfirmAppLanguageStringsUseCase()
         )
         
         let view = ConfirmAppLanguageView(viewModel: viewModel)

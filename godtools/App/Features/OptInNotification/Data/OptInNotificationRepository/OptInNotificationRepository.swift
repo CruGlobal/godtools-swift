@@ -8,7 +8,7 @@
 
 import Foundation
 
-class OptInNotificationRepository: OptInNotificationRepositoryInterface {
+final class OptInNotificationRepository: OptInNotificationRepositoryInterface {
     
     private let cache: OptInNotificationUserDefaultsCache
     private let remoteConfigRepository: RemoteConfigRepository
@@ -18,10 +18,9 @@ class OptInNotificationRepository: OptInNotificationRepositoryInterface {
         self.remoteConfigRepository = remoteConfigRepository
     }
     
-    // remoteConfig
     private var remoteConfigData: RemoteConfigDataModel? {
-            remoteConfigRepository.getRemoteConfig()
-        }
+        remoteConfigRepository.getRemoteConfig()
+    }
     
     func getRemoteFeatureEnabled() -> Bool {
         return remoteConfigData?.optInNotificationEnabled ?? true
@@ -40,7 +39,6 @@ class OptInNotificationRepository: OptInNotificationRepositoryInterface {
         return remoteConfigData?.optInNotificationPromptLimit ?? 5
     }
     
-    // cache
     func getLastPrompted() -> Date? {
         return cache.getLastPrompted()
     }

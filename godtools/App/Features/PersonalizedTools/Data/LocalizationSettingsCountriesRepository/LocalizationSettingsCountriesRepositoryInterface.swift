@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import Combine
 
 protocol LocalizationSettingsCountriesRepositoryInterface {
 
-    func getCountriesPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[LocalizationSettingsCountryDataModel], Never>
+    func getCountries(appLanguage: AppLanguageDomainModel) -> [LocalizationSettingsCountryDataModel]
 }

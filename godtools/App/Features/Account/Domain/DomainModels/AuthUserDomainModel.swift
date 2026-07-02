@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct AuthUserDomainModel {
+struct AuthUserDomainModel: Sendable {
     
     let email: String
     let firstName: String?

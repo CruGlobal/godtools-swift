@@ -10,12 +10,14 @@ import Foundation
 import SwiftUI
 import Combine
 
-@MainActor class ToolsViewModel: ObservableObject {
+@MainActor
+final class ToolsViewModel: ObservableObject {
     
     typealias ToolId = String
     
-    private static var favoriteToolCancellables: [ToolId: AnyCancellable?] = Dictionary()
+    private static var favoriteToolTasks: [ToolId: Task<Void, Error>] = Dictionary()
     
+    private let stepEmitter: FlowStepEmitter
     private let pullToRefreshToolsUseCase: PullToRefreshToolsUseCase
     private let getToolsStringsUseCase: GetToolsStringsUseCase
     private let getAllToolsUseCase: GetAllToolsUseCase
@@ -25,42 +27,55 @@ import Combine
     private let favoritingToolMessageCache: FavoritingToolMessageCache
     private let getSpotlightToolsUseCase: GetSpotlightToolsUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
-    private let getUserToolFiltersUseCase: GetUserToolFiltersUseCase
+    private let getUserToolFilterCategoryUseCase: GetUserToolFilterCategoryUseCase
+    private let getUserToolFilterLanguageUseCase: GetUserToolFilterLanguageUseCase
     private let toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let getToolBannerUseCase: GetToolBannerUseCase
+    private let inMemoryDataCache: InMemoryDataCache
     
     private var cancellables: Set<AnyCancellable> = Set()
+    private var pullToRefreshToolsTask: Task<Void, Error>?
     
-    private weak var flowDelegate: FlowDelegate?
-
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-    @Published private var toolFilterCategorySelection: ToolFilterCategoryDomainModel = ToolFilterAnyCategoryDomainModel.emptyValue
-    @Published private var toolFilterLanguageSelection: ToolFilterLanguageDomainModel = ToolFilterAnyLanguageDomainModel.emptyValue
+    @Published private var appLanguage = AppLanguageDomainModel.english
+    @Published private var toolFilterCategorySelection = ToolFilterCategoryDomainModel.emptyValue
+    @Published private var toolFilterLanguageSelection = ToolFilterLanguageDomainModel.emptyValue
     @Published private var localizationSettings: UserLocalizationSettingsDomainModel?
+    @Published private var allToolsList: [ToolListItemDomainModel] = Array()
     
-    @Published private(set) var toggleOptions: [PersonalizationToggleOption] = ToolsViewModel.getToggleOptions(strings: ToolsStringsDomainModel.emptyValue)
+    @Published private(set) var toggleOptions: [PersonalizationToggleOption] = ToolsViewModel.getPersonalizedToggleOptions(strings: ToolsStringsDomainModel.emptyValue)
     @Published private(set) var strings: ToolsStringsDomainModel = .emptyValue
     @Published private(set) var showsFavoritingToolBanner: Bool = false
     @Published private(set) var spotlightTools: [SpotlightToolListItemDomainModel] = Array()
-    @Published private(set) var categoryFilterButtonTitle: String = ""
-    @Published private(set) var languageFilterButtonTitle: String = ""
-    @Published private(set) var allTools: [ToolListItemDomainModel] = Array()
-    @Published private(set) var isLoadingAllTools: Bool = true
-    @Published private(set) var personalizationUnavailableState: PersonalizedToolsUnavailableDomainModel?
+    @Published private(set) var categoryFilterActionTitle: String = ""
+    @Published private(set) var languageFilterActionTitle: String = ""
+    @Published private(set) var personalizedTools = PersonalizedToolsDomainModel.emptyValue
+    @Published private(set) var toolsList: [ToolListItemDomainModel] = Array()
 
     @Published var selectedToggle: PersonalizationToggleOptionValue = .personalized
 
-    var isPersonalizationUnavailable: Bool {
-        return selectedToggle == .personalized &&
-                personalizationUnavailableState != nil &&
-                !isLoadingAllTools
-    }
+    init(
+        stepEmitter: FlowStepEmitter,
+        pullToRefreshToolsUseCase: PullToRefreshToolsUseCase,
+        getToolsStringsUseCase: GetToolsStringsUseCase,
+        getAllToolsUseCase: GetAllToolsUseCase,
+        getPersonalizedToolsUseCase: GetPersonalizedToolsUseCase,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase,
+        favoritingToolMessageCache: FavoritingToolMessageCache,
+        getSpotlightToolsUseCase: GetSpotlightToolsUseCase,
+        getUserToolFilterCategoryUseCase: GetUserToolFilterCategoryUseCase,
+        getUserToolFilterLanguageUseCase: GetUserToolFilterLanguageUseCase,
+        getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase,
+        toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase,
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
+        trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase,
+        getToolBannerUseCase: GetToolBannerUseCase,
+        inMemoryDataCache: InMemoryDataCache
+    ) {
         
-    init(flowDelegate: FlowDelegate, pullToRefreshToolsUseCase: PullToRefreshToolsUseCase, getToolsStringsUseCase: GetToolsStringsUseCase, getAllToolsUseCase: GetAllToolsUseCase, getPersonalizedToolsUseCase: GetPersonalizedToolsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase, favoritingToolMessageCache: FavoritingToolMessageCache, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getUserToolFiltersUseCase: GetUserToolFiltersUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getToolBannerUseCase: GetToolBannerUseCase) {
-
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.pullToRefreshToolsUseCase = pullToRefreshToolsUseCase
         self.getToolsStringsUseCase = getToolsStringsUseCase
         self.getAllToolsUseCase = getAllToolsUseCase
@@ -70,97 +85,106 @@ import Combine
         self.favoritingToolMessageCache = favoritingToolMessageCache
         self.getSpotlightToolsUseCase = getSpotlightToolsUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
-        self.getUserToolFiltersUseCase = getUserToolFiltersUseCase
+        self.getUserToolFilterCategoryUseCase = getUserToolFilterCategoryUseCase
+        self.getUserToolFilterLanguageUseCase = getUserToolFilterLanguageUseCase
         self.toggleToolFavoritedUseCase = toggleToolFavoritedUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.getToolBannerUseCase = getToolBannerUseCase
+        self.inMemoryDataCache = inMemoryDataCache
         
         showsFavoritingToolBanner = !favoritingToolMessageCache.favoritingToolMessageDisabled
         
         getCurrentAppLanguageUseCase
             .execute()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$appLanguage)
-        
+            .sink(receiveValue: { [weak self] (appLanguage: AppLanguageDomainModel) in
+
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
+            })
+            .store(in: &cancellables)
+
         getLocalizationSettingsUseCase
             .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$localizationSettings)
         
-        Publishers.CombineLatest4(
-            $appLanguage,
-            Publishers.CombineLatest(
-                $toolFilterCategorySelection,
-                $toolFilterLanguageSelection,
-            ),
-            $localizationSettings,
-            $selectedToggle
+        Publishers.CombineLatest3(
+            $appLanguage.dropFirst(),
+            $toolFilterLanguageSelection.dropFirst(),
+            $localizationSettings
         )
-        .dropFirst()
-        .map { [weak self] (appLanguage, toolFilters, localizationSettings, toggle) -> AnyPublisher<ToolsResultDomainModel, Error> in
-
-            let (toolFilterCategory, toolFilterLanguage) = toolFilters
-
-            guard let self = self else {
-                return Just(ToolsResultDomainModel.empty)
-                    .setFailureType(to: Error.self)
-                    .eraseToAnyPublisher()
-            }
-
-            switch toggle {
-
-            case .personalized:
-                return self.getPersonalizedToolsUseCase
-                    .execute(
-                        appLanguage: appLanguage,
-                        country: localizationSettings?.selectedCountry,
-                        filterToolsByLanguage: toolFilterLanguage
-                    )
-
-            case .all:
-                return getAllToolsUseCase
-                    .execute(
-                        appLanguage: appLanguage,
-                        languageIdForAvailabilityText: toolFilterLanguage.languageDataModelId,
-                        filterToolsByCategory: toolFilterCategory,
-                        filterToolsByLanguage: toolFilterLanguage
-                    )
-                    .map { tools in
-                        ToolsResultDomainModel(
-                            tools: tools,
-                            unavailableStrings: nil
-                        )
-                    }
-                    .eraseToAnyPublisher()
-            }
+        .map { (appLanguage: AppLanguageDomainModel, toolFilterLanguage: ToolFilterLanguageDomainModel, localizationSettings: UserLocalizationSettingsDomainModel?) in
+            
+            getPersonalizedToolsUseCase
+                .execute(
+                    appLanguage: appLanguage,
+                    country: localizationSettings?.selectedCountry,
+                    filterToolsByLanguage: toolFilterLanguage
+                )
         }
         .switchToLatest()
         .receive(on: DispatchQueue.main)
-        .sink(receiveCompletion: { _ in
+        .sink { _ in
+            
+        } receiveValue: { [weak self] (personalizedTools: PersonalizedToolsDomainModel) in
+            
+            self?.personalizedTools = personalizedTools
+        }
+        .store(in: &cancellables)
 
-        }, receiveValue: { [weak self] (result: ToolsResultDomainModel) in
-
-            self?.allTools = result.tools
-            self?.personalizationUnavailableState = result.unavailableStrings
-            self?.isLoadingAllTools = false
-        })
+        Publishers.CombineLatest3(
+            $appLanguage.dropFirst(),
+            $toolFilterLanguageSelection.dropFirst(),
+            $toolFilterCategorySelection.dropFirst()
+        )
+        .map { (appLanguage: AppLanguageDomainModel, toolFilterLanguage: ToolFilterLanguageDomainModel, toolFilterCategory: ToolFilterCategoryDomainModel) in
+            
+            getAllToolsUseCase
+                .execute(
+                    appLanguage: appLanguage,
+                    languageIdForAvailabilityText: toolFilterLanguage.id,
+                    filterToolsByCategory: toolFilterCategory,
+                    filterToolsByLanguage: toolFilterLanguage
+                )
+        }
+        .switchToLatest()
+        .receive(on: DispatchQueue.main)
+        .sink { _ in
+            
+        } receiveValue: { [weak self] (allTools: [ToolListItemDomainModel]) in
+            
+            self?.allToolsList = allTools
+        }
         .store(in: &cancellables)
         
-        $appLanguage.dropFirst()
-            .map { appLanguage in
-                return getToolsStringsUseCase
-                    .execute(translateInLanguage: appLanguage)
+        Publishers.CombineLatest3(
+            $personalizedTools,
+            $allToolsList,
+            $selectedToggle
+        )
+        .map { (personalizedTools: PersonalizedToolsDomainModel, allTools: [ToolListItemDomainModel], toggle: PersonalizationToggleOptionValue) in
+            
+            let toolsList: [ToolListItemDomainModel]
+            
+            switch toggle {
+            case .personalized:
+                toolsList = personalizedTools.tools
+            case .all:
+                toolsList = allTools
             }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: ToolsStringsDomainModel) in
-                
-                self?.strings = strings
-                
-                self?.toggleOptions = Self.getToggleOptions(strings: strings)
-            }
-            .store(in: &cancellables)
+            
+            return Just(toolsList)
+                .eraseToAnyPublisher()
+        }
+        .switchToLatest()
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] (toolsList: [ToolListItemDomainModel]) in
+            
+            self?.toolsList = toolsList
+        }
+        .store(in: &cancellables)
         
         Publishers.CombineLatest3(
             $appLanguage.dropFirst(),
@@ -171,8 +195,8 @@ import Combine
             
             getSpotlightToolsUseCase
                 .execute(
-                    translatedInAppLanguage: appLanguage,
-                    languageIdForAvailabilityText: toolFilterLanguage.languageDataModelId
+                    appLanguage: appLanguage,
+                    languageIdForAvailabilityText: toolFilterLanguage.id
                 )
         }
         .switchToLatest()
@@ -189,23 +213,48 @@ import Combine
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
                 
-                getUserToolFiltersUseCase
-                    .getUserToolFiltersPublisher(translatedInAppLanguage: appLanguage)
+                getUserToolFilterCategoryUseCase
+                    .execute(appLanguage: appLanguage)
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] userFilters in
+            .sink { [weak self] (categoryFilter: ToolFilterCategoryDomainModel) in
             
-                self?.toolFilterCategorySelection = userFilters.categoryFilter
-                self?.toolFilterLanguageSelection = userFilters.languageFilter
-                self?.categoryFilterButtonTitle = userFilters.categoryFilter.categoryButtonText
-                self?.languageFilterButtonTitle = userFilters.languageFilter.languageButtonText
+                self?.toolFilterCategorySelection = categoryFilter
+                self?.categoryFilterActionTitle = categoryFilter.title
+            }
+            .store(in: &cancellables)
+        
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+                
+                getUserToolFilterLanguageUseCase
+                    .execute(appLanguage: appLanguage)
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (languageFilter: ToolFilterLanguageDomainModel) in
+            
+                self?.toolFilterLanguageSelection = languageFilter
+                self?.languageFilterActionTitle = languageFilter.languageNameTranslatedInAppLanguage
             }
             .store(in: &cancellables)
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+        pullToRefreshToolsTask?.cancel()
+    }
+
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+
+        let strings = getToolsStringsUseCase
+            .execute(translateInLanguage: appLanguage)
+
+        self.strings = strings
+
+        toggleOptions = Self.getPersonalizedToggleOptions(strings: strings)
     }
     
     private var analyticsScreenName: String {
@@ -273,19 +322,16 @@ import Combine
     
     private func toggleToolIsFavorited(toolId: String) {
         
-        ToolsViewModel.favoriteToolCancellables[toolId] = toggleToolFavoritedUseCase
-            .execute(
-                toolId: toolId
-            )
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { _ in
-                
-            }, receiveValue: { (domainModel: ToolIsFavoritedDomainModel) in
-                
-            })
+        Self.favoriteToolTasks[toolId]?.cancel()
+        
+        Self.favoriteToolTasks[toolId] = Task {
+            
+            _ = try await toggleToolFavoritedUseCase
+                .execute(toolId: toolId)
+        }
     }
     
-    private static func getToggleOptions(strings: ToolsStringsDomainModel) -> [PersonalizationToggleOption] {
+    private static func getPersonalizedToggleOptions(strings: ToolsStringsDomainModel) -> [PersonalizationToggleOption] {
         
         return [
             PersonalizationToggleOption(title: strings.personalizedToolToggleTitle, selection: .personalized, buttonAccessibility: .personalizedTools),
@@ -299,20 +345,16 @@ import Combine
 extension ToolsViewModel {
     
     func pullToRefresh() {
-
-        pullToRefreshToolsUseCase
-            .execute(
-                appLanguage: appLanguage,
-                country: localizationSettings?.selectedCountry,
-                filterToolsByLanguage: toolFilterLanguageSelection
-            )
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completed in
-
-            }, receiveValue: { _ in
-
-            })
-            .store(in: &cancellables)
+        
+        pullToRefreshToolsTask = Task {
+            
+            try await pullToRefreshToolsUseCase
+                .execute(
+                    appLanguage: appLanguage,
+                    country: localizationSettings?.selectedCountry,
+                    filterToolsByLanguage: toolFilterLanguageSelection
+                )
+        }
     }
     
     func pageViewed() {
@@ -343,18 +385,19 @@ extension ToolsViewModel {
             tool: tool,
             accessibility: accessibility,
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
-            getToolBannerUseCase: getToolBannerUseCase
+            getToolBannerUseCase: getToolBannerUseCase,
+            inMemoryDataCache: inMemoryDataCache
         )
     }
     
     func toolCategoryFilterTapped() {
         
-        flowDelegate?.navigate(step: .toolCategoryFilterTappedFromTools)
+        stepEmitter.emit(step: AppFlowStep.toolCategoryFilterTappedFromTools)
     }
     
     func toolLanguageFilterTapped() {
         
-        flowDelegate?.navigate(step: .toolLanguageFilterTappedFromTools)
+        stepEmitter.emit(step: AppFlowStep.toolLanguageFilterTappedFromTools)
     }
     
     func spotlightToolFavoriteTapped(spotlightTool: SpotlightToolListItemDomainModel) {
@@ -366,7 +409,7 @@ extension ToolsViewModel {
         
         trackToolTappedAnalytics(tool: spotlightTool)
         
-        flowDelegate?.navigate(step: .spotlightToolTappedFromTools(spotlightTool: spotlightTool, toolFilterLanguage: toolFilterLanguageSelection))
+        stepEmitter.emit(step: AppFlowStep.spotlightToolTappedFromTools(spotlightTool: spotlightTool, toolFilterLanguage: toolFilterLanguageSelection))
     }
     
     func toolFavoriteTapped(tool: ToolListItemDomainModel) {
@@ -378,12 +421,12 @@ extension ToolsViewModel {
 
         trackToolTappedAnalytics(tool: tool)
 
-        flowDelegate?.navigate(step: .toolTappedFromTools(tool: tool, toolFilterLanguage: toolFilterLanguageSelection))
+        stepEmitter.emit(step: AppFlowStep.toolTappedFromTools(tool: tool, toolFilterLanguage: toolFilterLanguageSelection))
     }
 
-    func localizationSettingsTapped() {
+    func changeLocalizationSettingsTapped() {
 
-        flowDelegate?.navigate(step: .localizationSettingsTappedFromTools)
+        stepEmitter.emit(step: AppFlowStep.changeLocalizationSettingsTappedFromTools)
     }
 
     func goToAllToolsTapped() {

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetResumeLessonProgressStringsUseCase {
     
@@ -17,18 +16,17 @@ final class GetResumeLessonProgressStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ResumeLessonProgressStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> ResumeLessonProgressStringsDomainModel {
         
         let localeId: String = appLanguage.localeId
         
-        let interfaceStrings = ResumeLessonProgressStringsDomainModel(
-            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.resumeLessonModal.title"),
-            subtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.resumeLessonModal.subtitle"),
-            startOverButtonText: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.resumeLessonModal.startOverButton"),
-            continueButtonText: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.resumeLessonModal.continueButton")
+        let strings = ResumeLessonProgressStringsDomainModel(
+            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsResumeLessonModalTitle.key),
+            subtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsResumeLessonModalSubtitle.key),
+            startOverButtonText: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsResumeLessonModalStartOverButton.key),
+            continueButtonText: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsResumeLessonModalContinueButton.key)
         )
         
-        return Just(interfaceStrings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

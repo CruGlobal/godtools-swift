@@ -34,6 +34,7 @@ enum ProductionSwiftDataSchemaV1: VersionedSchema {
             SwiftTranslationV1.SwiftTranslation.self,
             SwiftResourceV1.SwiftResource.self,
             SwiftLanguageV1.SwiftLanguage.self,
+            SwiftLocalActivityCountV1.SwiftLocalActivityCount.self,
             SwiftUserCounterV1.SwiftUserCounter.self,
             SwiftCompletedTrainingTipV1.SwiftCompletedTrainingTip.self,
             SwiftUserLessonProgressV1.SwiftUserLessonProgress.self,
@@ -41,8 +42,10 @@ enum ProductionSwiftDataSchemaV1: VersionedSchema {
             SwiftUserToolCategoryFilterV1.SwiftUserToolCategoryFilter.self,
             SwiftUserToolSettingsV1.SwiftUserToolSettings.self,
             SwiftUserLessonLanguageFilterV1.SwiftUserLessonLanguageFilter.self,
-            SwiftDownloadedLanguageV1.SwiftDownloadedLanguage.self,
-            SwiftUserDetailsV1.SwiftUserDetails.self
+            SwiftUserDetailsV1.SwiftUserDetails.self,
+            SwiftSHA256FileV1.SwiftSHA256File.self,
+            SwiftToolDownloadV1.SwiftToolDownload.self,
+            SwiftDownloadedLanguageV1.SwiftDownloadedLanguage.self
         ]
     }
 }

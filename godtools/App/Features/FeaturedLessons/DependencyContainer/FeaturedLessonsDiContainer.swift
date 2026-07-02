@@ -8,14 +8,14 @@
 
 import Foundation
 
-class FeaturedLessonsDiContainer {
+final class FeaturedLessonsDiContainer {
     
     let dataLayer: FeaturedLessonsDataLayerDependencies
     let domainLayer: FeaturedLessonsDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies) {
+    init(core: AppCoreDiContainer) {
         
-        dataLayer = FeaturedLessonsDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainLayer = FeaturedLessonsDomainLayerDependencies(coreDataLayer: coreDataLayer, coreDomainLayer: coreDomainLayer, dataLayer: dataLayer)
+        dataLayer = FeaturedLessonsDataLayerDependencies(coreDataLayer: core.dataLayer)
+        domainLayer = FeaturedLessonsDomainLayerDependencies(core: core, dataLayer: dataLayer)
     }
 }

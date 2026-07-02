@@ -8,17 +8,10 @@
 
 import Foundation
 
-struct UserLessonProgressDataModel {
+struct UserLessonProgressDataModel: Sendable {
     
+    let id: String
     let lessonId: String
     let lastViewedPageId: String
     let progress: Double
-}
-
-extension UserLessonProgressDataModel {
-    init(realmUserLessonProgress: RealmUserLessonProgress) {
-        lessonId = realmUserLessonProgress.lessonId
-        lastViewedPageId = realmUserLessonProgress.lastViewedPageId
-        progress = realmUserLessonProgress.progress
-    }
 }

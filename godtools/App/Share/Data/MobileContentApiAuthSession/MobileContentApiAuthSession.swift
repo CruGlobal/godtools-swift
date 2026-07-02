@@ -9,16 +9,20 @@
 import Foundation
 import RequestOperation
 
-final class MobileContentApiAuthSession {
+final class MobileContentApiAuthSession: MobileContentApiAuthSessionInterface {
     
-    private let requestSender: RequestSender
+    private let requestSender: RequestSenderInterface
     
     let mobileContentAuthTokenRepository: MobileContentAuthTokenRepository
     let userAuthentication: UserAuthentication
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     
-    init(requestSender: RequestSender, mobileContentAuthTokenRepository: MobileContentAuthTokenRepository, userAuthentication: UserAuthentication) {
+    init(
+        requestSender: RequestSenderInterface,
+        mobileContentAuthTokenRepository: MobileContentAuthTokenRepository,
+        userAuthentication: UserAuthentication
+    ) {
      
         self.requestSender = requestSender
         self.mobileContentAuthTokenRepository = mobileContentAuthTokenRepository
@@ -77,7 +81,7 @@ final class MobileContentApiAuthSession {
     
     private func attemptDataTaskWithAuthToken(authToken: String, urlRequest: URLRequest, session: URLSession) async throws -> Data {
         
-        let urlRequest: URLRequest = buildAuthenticatedRequest(
+        let urlRequest: URLRequest = try buildAuthenticatedRequest(
             from: urlRequest,
             authToken: authToken
         )
@@ -101,7 +105,7 @@ final class MobileContentApiAuthSession {
         )
     }
     
-    private func buildAuthenticatedRequest(from urlRequest: URLRequest, authToken: String) -> URLRequest {
+    private func buildAuthenticatedRequest(from urlRequest: URLRequest, authToken: String) throws -> URLRequest {
         
         var authenticatedRequest = urlRequest
         

@@ -9,19 +9,26 @@
 import Foundation
 import Combine
 
-class DidViewToolScreenShareTutorialUseCase {
+final class DidViewToolScreenShareTutorialUseCase {
     
-    private let incrementNumberOfViewsRepositoryInterface: IncrementNumberOfToolScreenShareTutorialViewsRepositoryInterface
+    private let tutorialViewsRepository: ToolScreenShareTutorialViewsRepository
     
-    init(incrementNumberOfViewsRepositoryInterface: IncrementNumberOfToolScreenShareTutorialViewsRepositoryInterface) {
+    init(tutorialViewsRepository: ToolScreenShareTutorialViewsRepository) {
         
-        self.incrementNumberOfViewsRepositoryInterface = incrementNumberOfViewsRepositoryInterface
+        self.tutorialViewsRepository = tutorialViewsRepository
     }
     
-    func didViewPublisher(toolId: String) -> AnyPublisher<Void, Never> {
+    func execute(toolId: String) -> AnyPublisher<Void, Never> {
         
-        return incrementNumberOfViewsRepositoryInterface
-            .incrementNumberOfViewsForTool(toolId: toolId, incrementBy: 1)
+        return tutorialViewsRepository
+            .incrementNumberOfViewsPublisher(
+                id: toolId,
+                incrementNumberOfViewsBy: 1
+            )
+            .catch { _ in
+                return Just(Void())
+                    .eraseToAnyPublisher()
+            }
             .eraseToAnyPublisher()
     }
 }

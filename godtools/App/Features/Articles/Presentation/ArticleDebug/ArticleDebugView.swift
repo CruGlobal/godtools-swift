@@ -45,9 +45,16 @@ struct ArticleDebugView: View {
                 
                 Spacer()
                 
-                GTBlueButton(title: "Copy Url", font: FontLibrary.sfProTextSemibold.font(size: 15), width: geometry.size.width - (horizontalPadding * 2), height: 50) {
-                    viewModel.copyUrlTapped()
-                }
+                GTButton(
+                    style: .blue,
+                    title: "Copy Url",
+                    font: FontLibrary.sfProTextSemibold.font(size: 15),
+                    width: geometry.size.width - (horizontalPadding * 2),
+                    height: 50,
+                    tapped: {
+                        viewModel.copyUrlTapped()
+                    }
+                )
                 .padding(EdgeInsets(top: 0, leading: horizontalPadding, bottom: 40, trailing: 0))
             }
         }

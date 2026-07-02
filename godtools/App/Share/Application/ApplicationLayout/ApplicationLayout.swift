@@ -11,7 +11,8 @@ import Combine
 import UIKit
 import SwiftUI
 
-@MainActor class ApplicationLayout: ObservableObject {
+@MainActor
+class ApplicationLayout: ObservableObject {
         
     static let shared: ApplicationLayout = ApplicationLayout()
     
@@ -37,7 +38,7 @@ import SwiftUI
         semanticContentAttributeSubject = CurrentValueSubject(currentDirection.semanticContentAttribute)
     }
         
-    func configure(appLanguageFeatureDiContainer: AppLanguageFeatureDiContainer) {
+    func configure(appLanguageDiContainer: AppLanguageDiContainer) {
         
         guard !isConfigured else {
             return
@@ -45,38 +46,38 @@ import SwiftUI
         
         isConfigured = true
         
-        let getCurrentAppLanguageUseCase = appLanguageFeatureDiContainer.domainLayer.getCurrentAppLanguageUseCase()
+        let getCurrentAppLanguageUseCase = appLanguageDiContainer.domainLayer.getCurrentAppLanguageUseCase()
         
         getCurrentAppLanguageUseCase
             .execute()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$appLanguage)
-        
-        let getInterfaceLayoutDirectionUseCase = appLanguageFeatureDiContainer.domainLayer.getInterfaceLayoutDirectionUseCase()
-
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
+            .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
                 
-                getInterfaceLayoutDirectionUseCase
-                    .execute(appLanguage: appLanguage)
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage, appLanguageDiContainer: appLanguageDiContainer)
             }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { _ in
-                
-            }, receiveValue: { [weak self] (interfaceLayoutDirection: AppInterfaceLayoutDirectionDomainModel) in
-                
-                let newLayoutDirection: ApplicationLayoutDirection = interfaceLayoutDirection == .leftToRight ? .leftToRight : .rightToLeft
-                
-                if newLayoutDirection != self?.currentDirection {
-                    
-                    self?.currentDirection = newLayoutDirection
-                    
-                    self?.layoutDirection = newLayoutDirection.layoutDirection
-                    self?.semanticContentAttributeSubject.send(newLayoutDirection.semanticContentAttribute)
-                }
-            })
             .store(in: &cancellables)
+    }
+    
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel, appLanguageDiContainer: AppLanguageDiContainer) {
+        
+        refreshLayoutDirection(appLanguage: appLanguage, appLanguageDiContainer: appLanguageDiContainer)
+    }
+    
+    private func refreshLayoutDirection(appLanguage: AppLanguageDomainModel, appLanguageDiContainer: AppLanguageDiContainer) {
+        
+        let getInterfaceLayoutDirectionUseCase = appLanguageDiContainer.domainLayer.getInterfaceLayoutDirectionUseCase()
+        
+        let interfaceLayoutDirection: AppInterfaceLayoutDirectionDomainModel = getInterfaceLayoutDirectionUseCase.execute(appLanguage: appLanguage)
+        
+        let newLayoutDirection: ApplicationLayoutDirection = interfaceLayoutDirection == .leftToRight ? .leftToRight : .rightToLeft
+        
+        if newLayoutDirection != currentDirection {
+            
+            currentDirection = newLayoutDirection
+            
+            layoutDirection = newLayoutDirection.layoutDirection
+            semanticContentAttributeSubject.send(newLayoutDirection.semanticContentAttribute)
+        }
     }
 }

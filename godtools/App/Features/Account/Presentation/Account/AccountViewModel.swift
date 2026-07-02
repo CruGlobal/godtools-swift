@@ -11,8 +11,12 @@ import Combine
 import SwiftUI
 import GodToolsShared
 
-@MainActor class AccountViewModel: ObservableObject {
+@MainActor
+final class AccountViewModel: ObservableObject {
     
+    private static var didPullToRefreshCancellable: AnyCancellable?
+    
+    private let stepEmitter: FlowStepEmitter
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase
     private let getUserActivityUseCase: GetUserActivityUseCase
@@ -20,13 +24,11 @@ import GodToolsShared
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let getAccountStringsUseCase: GetAccountStringsUseCase
     private let getGlobalActivityEnabledUseCase: GetGlobalActivityEnabledUseCase
+    private let didPullToRefreshAccountUseCase: DidPullToRefreshAccountUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
-    @Published private var didPullToRefresh: Void = ()
     
     @Published private(set) var strings = AccountStringsDomainModel.emptyValue
     @Published private(set) var isLoadingProfile: Bool = true
@@ -37,9 +39,19 @@ import GodToolsShared
     @Published private(set) var stats = [UserActivityStatDomainModel]()
     @Published private(set) var globalActivityIsEnabled: Bool = false
         
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase, getUserActivityUseCase: GetUserActivityUseCase, getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, getAccountStringsUseCase: GetAccountStringsUseCase, getGlobalActivityEnabledUseCase: GetGlobalActivityEnabledUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase,
+        getUserActivityUseCase: GetUserActivityUseCase,
+        getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase,
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
+        getAccountStringsUseCase: GetAccountStringsUseCase,
+        getGlobalActivityEnabledUseCase: GetGlobalActivityEnabledUseCase,
+        didPullToRefreshAccountUseCase: DidPullToRefreshAccountUseCase
+    ) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getUserAccountDetailsUseCase = getUserAccountDetailsUseCase
         self.getGlobalActivityThisWeekUseCase = getGlobalActivityThisWeekUseCase
@@ -47,25 +59,16 @@ import GodToolsShared
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.getAccountStringsUseCase = getAccountStringsUseCase
         self.getGlobalActivityEnabledUseCase = getGlobalActivityEnabledUseCase
+        self.didPullToRefreshAccountUseCase = didPullToRefreshAccountUseCase
         
         getCurrentAppLanguageUseCase
             .execute()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$appLanguage)
-
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
+            .sink(receiveValue: { [weak self] (appLanguage: AppLanguageDomainModel) in
                 
-                getAccountStringsUseCase
-                    .execute(appLanguage: appLanguage)
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: AccountStringsDomainModel) in
-                       
-                self?.strings = strings
-            }
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
+            })
             .store(in: &cancellables)
         
         $appLanguage
@@ -97,41 +100,44 @@ import GodToolsShared
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (domainModels: [GlobalActivityDomainModel]) in
+            .sink(receiveCompletion: { [weak self] _ in
+                self?.isLoadingGlobalActivityThisWeek = false
+            }, receiveValue: { [weak self] (domainModels: [GlobalActivityDomainModel]) in
                 
                 self?.isLoadingGlobalActivityThisWeek = false
                 self?.globalActivitiesThisWeek = domainModels
-            }
+            })
             .store(in: &cancellables)
         
-        Publishers.CombineLatest(
-            $appLanguage.dropFirst(),
-            $didPullToRefresh
-        )
-        .map { (appLanguage: AppLanguageDomainModel, didPullToRefresh: Void) in
-            
-            getUserActivityUseCase
-                .execute(appLanguage: appLanguage)
-        }
-        .switchToLatest()
-        .receive(on: DispatchQueue.main)
-        .sink(receiveCompletion: { _ in
-            
-        }, receiveValue: { [weak self] (userActivity: UserActivityDomainModel) in
-            
-            self?.badges = userActivity.badges
-            self?.stats = userActivity.stats
-        })
-        .store(in: &cancellables)
-        
-        getGlobalActivityEnabledUseCase
-            .execute()
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+                
+                getUserActivityUseCase
+                    .execute(appLanguage: appLanguage)
+            }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$globalActivityIsEnabled)
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (userActivity: UserActivityDomainModel) in
+                
+                self?.badges = userActivity.badges
+                self?.stats = userActivity.stats
+            })
+            .store(in: &cancellables)
+        
+        globalActivityIsEnabled = getGlobalActivityEnabledUseCase.execute()
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+    }
+    
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+        
+        strings = getAccountStringsUseCase
+            .execute(appLanguage: appLanguage)
     }
     
     private func trackSectionViewedAnalytics(screenName: String) {
@@ -152,12 +158,19 @@ import GodToolsShared
 extension AccountViewModel {
     
     @objc func backTapped() {
-        flowDelegate?.navigate(step: .backTappedFromActivity)
+        stepEmitter.emit(step: AppFlowStep.backTappedFromActivity)
     }
     
     func pullToRefresh() {
         
-        didPullToRefresh = ()
+        Self.didPullToRefreshCancellable = didPullToRefreshAccountUseCase
+            .execute()
+            .sink { _ in
+                
+            } receiveValue: { _ in
+                
+            }
+
     }
     
     func activityViewed() {

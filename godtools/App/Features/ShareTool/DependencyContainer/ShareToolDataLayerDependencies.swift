@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ShareToolDataLayerDependencies {
+final class ShareToolDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     

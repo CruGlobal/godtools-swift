@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct AccountCreationIsSupportedDomainModel {
+struct AccountCreationIsSupportedDomainModel: Sendable {
     
     let isSupported: Bool
 }

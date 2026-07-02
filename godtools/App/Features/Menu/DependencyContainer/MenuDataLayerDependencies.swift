@@ -6,7 +6,9 @@
 //  Copyright © 2025 Cru. All rights reserved.
 //
 
-class MenuDataLayerDependencies {
+import Foundation
+
+final class MenuDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class SetAppLanguageUseCase {
     
@@ -15,25 +14,29 @@ final class SetAppLanguageUseCase {
     private let userLessonFiltersRepository: UserLessonFiltersRepository
     private let languagesRepository: LanguagesRepository
     
-    init(userAppLanguageRepository: UserAppLanguageRepository, userLessonFiltersRepository: UserLessonFiltersRepository, languagesRepository: LanguagesRepository) {
+    init(
+        userAppLanguageRepository: UserAppLanguageRepository,
+        userLessonFiltersRepository: UserLessonFiltersRepository,
+        languagesRepository: LanguagesRepository
+    ) {
         
         self.userAppLanguageRepository = userAppLanguageRepository
         self.userLessonFiltersRepository = userLessonFiltersRepository
         self.languagesRepository = languagesRepository
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppLanguageDomainModel, Error> {
+    func execute(appLanguage: AppLanguageDomainModel) async throws -> AppLanguageDomainModel {
         
-        if let languageModelId = languagesRepository.cache.getCachedLanguage(code: appLanguage)?.id {
+        if let languageModelId = languagesRepository.getLanguageByCode(code: appLanguage)?.id {
             
-            userLessonFiltersRepository.storeUserLessonLanguageFilter(with: languageModelId)
+            try await userLessonFiltersRepository.storeUserLessonLanguageFilter(
+                languageId: languageModelId
+            )
         }
         
-        return userAppLanguageRepository
-            .storeLanguagePublisher(appLanguageId: appLanguage)
-            .map { _ in
-                return appLanguage
-            }
-            .eraseToAnyPublisher()
+        try await userAppLanguageRepository
+            .storeLanguage(appLanguageId: appLanguage)
+        
+        return appLanguage
     }
 }

@@ -8,14 +8,14 @@
 
 import Foundation
 
-class LessonFilterDiContainer {
+final class LessonFilterDiContainer {
     
     let dataLayer: LessonFilterDataLayerDependencies
     let domainLayer: LessonFilterDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, coreDomainLayer: AppDomainLayerDependencies) {
+    init(core: AppCoreDiContainer) {
         
-        dataLayer = LessonFilterDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainLayer = LessonFilterDomainLayerDependencies(coreDataLayer: coreDataLayer, coreDomainLayer: coreDomainLayer, dataLayer: dataLayer)
+        dataLayer = LessonFilterDataLayerDependencies(coreDataLayer: core.dataLayer)
+        domainLayer = LessonFilterDomainLayerDependencies(core: core, dataLayer: dataLayer)
     }
 }

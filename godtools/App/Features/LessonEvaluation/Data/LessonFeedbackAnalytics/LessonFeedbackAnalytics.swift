@@ -8,7 +8,7 @@
 
 import Foundation
 
-class LessonFeedbackAnalytics {
+final class LessonFeedbackAnalytics {
     
     private static let trackLessonFeedbackActionName: String = "lesson_feedback"
     private static let propertyHelpful: String = "helpful"
@@ -19,12 +19,16 @@ class LessonFeedbackAnalytics {
     
     private let firebaseAnalytics: FirebaseAnalyticsInterface
     
-    required init(firebaseAnalytics: FirebaseAnalyticsInterface) {
+    init(firebaseAnalytics: FirebaseAnalyticsInterface) {
         
         self.firebaseAnalytics = firebaseAnalytics
     }
     
-    func trackLessonFeedback(lesson: ResourceDataModel, feedback: TrackLessonFeedbackDomainModel) {
+    func trackLessonFeedback(
+        lesson: ResourceDataModel,
+        feedback: TrackLessonFeedbackDomainModel,
+        contentLanguage: AppLanguageDomainModel
+    ) {
             
         var data: [String: String] = Dictionary()
         
@@ -50,7 +54,7 @@ class LessonFeedbackAnalytics {
             siteSection: lesson.abbreviation,
             siteSubSection: "",
             appLanguage: nil,
-            contentLanguage: nil,
+            contentLanguage: contentLanguage,
             secondaryContentLanguage: nil,
             actionName: LessonFeedbackAnalytics.trackLessonFeedbackActionName,
             data: data

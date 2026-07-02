@@ -8,26 +8,28 @@
 
 import Foundation
 
-class AttachmentDataModel: AttachmentDataModelInterface {
+struct AttachmentDataModel: Sendable {
         
+    let id: String
     let file: String
     let fileFilename: String
-    let id: String
     let isZipped: Bool
-    let resourceDataModel: ResourceDataModel?
     let sha256: String
-    let storedAttachment: StoredAttachmentDataModel?
     let type: String
+    let resourceDataModel: ResourceDataModel?
+    let storedAttachment: StoredAttachmentDataModel?
     
-    init(interface: AttachmentDataModelInterface, storedAttachment: StoredAttachmentDataModel?) {
+    func copy(storedAttachment: StoredAttachmentDataModel?) -> AttachmentDataModel {
         
-        file = interface.file
-        fileFilename = interface.fileFilename
-        id = interface.id
-        isZipped = interface.isZipped
-        resourceDataModel = interface.resourceDataModel
-        sha256 = interface.sha256
-        self.storedAttachment = storedAttachment
-        type = interface.type
+        return AttachmentDataModel(
+            id: id,
+            file: file,
+            fileFilename: fileFilename,
+            isZipped: isZipped,
+            sha256: sha256,
+            type: type,
+            resourceDataModel: resourceDataModel,
+            storedAttachment: storedAttachment ?? self.storedAttachment
+        )
     }
 }

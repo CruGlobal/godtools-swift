@@ -9,7 +9,8 @@
 import Foundation
 import WebKit
 
-class WebContentView: AppViewController {
+@MainActor
+final class WebContentView: AppViewController {
     
     private let viewModel: WebContentViewModel
     private let webView: WKWebView = WKWebView(frame: UIScreen.main.bounds)
@@ -17,7 +18,11 @@ class WebContentView: AppViewController {
     
     @IBOutlet weak private var loadingView: UIActivityIndicatorView!
         
-    init(viewModel: WebContentViewModel, navigationBar: AppNavigationBar?, screenAccessibility: AccessibilityStrings.Screen?) {
+    init(
+        viewModel: WebContentViewModel,
+        navigationBar: AppNavigationBar?,
+        screenAccessibility: AccessibilityStrings.Screen?
+    ) {
         
         self.viewModel = viewModel
         self.screenAccessibility = screenAccessibility

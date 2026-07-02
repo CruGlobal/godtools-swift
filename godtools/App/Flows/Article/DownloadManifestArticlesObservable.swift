@@ -7,22 +7,27 @@
 //
 
 import Foundation
-import Combine
 import GodToolsShared
 
-@MainActor class DownloadManifestArticlesObservable: ObservableObject {
+@MainActor
+final class DownloadManifestArticlesObservable: ObservableObject {
     
     private let translation: TranslationDataModel
     private let language: LanguageDataModel
     private let manifest: Manifest
     private let articleManifestAemRepository: ArticleManifestAemRepository
     
-    private var downloadArticlesCancellable: AnyCancellable?
+    private var downloadArticlesTask: Task<Void, Error>?
     
-    @Published private(set) var articleAemRepositoryResult: ArticleAemRepositoryResult = ArticleAemRepositoryResult.emptyResult()
+    @Published private(set) var downloadResult: Result<Void, Error>?
     @Published private(set) var isDownloading: Bool = false
     
-    init(translation: TranslationDataModel, language: LanguageDataModel, manifest: Manifest, articleManifestAemRepository: ArticleManifestAemRepository) {
+    init(
+        translation: TranslationDataModel,
+        language: LanguageDataModel,
+        manifest: Manifest,
+        articleManifestAemRepository: ArticleManifestAemRepository
+    ) {
         
         self.translation = translation
         self.language = language
@@ -32,8 +37,8 @@ import GodToolsShared
     
     func cancelDownload() {
 
-        downloadArticlesCancellable?.cancel()
-        downloadArticlesCancellable = nil
+        downloadArticlesTask?.cancel()
+        downloadArticlesTask = nil
     }
     
     func downloadArticles(downloadCachePolicy: ArticleAemDownloaderCachePolicy, forceFetchFromRemote: Bool) {
@@ -42,33 +47,34 @@ import GodToolsShared
         
         isDownloading = true
         
-        downloadArticlesCancellable = articleManifestAemRepository
-            .downloadAndCacheManifestAemUrisPublisher(
-                manifest: manifest,
-                translationId: translation.id,
-                languageCode: language.localeId,
-                downloadCachePolicy: downloadCachePolicy,
-                requestPriority: .high,
-                forceFetchFromRemote: forceFetchFromRemote
-            )
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] (articleAemRepositoryResult: ArticleAemRepositoryResult) in
+        downloadArticlesTask = Task {
+            
+            do {
                 
-                guard let weakSelf = self else {
-                    return
-                }
+                let download = try await articleManifestAemRepository.downloadAndCacheManifestAemUris(
+                    manifest: manifest,
+                    translationId: translation.id,
+                    languageCode: language.localeId,
+                    downloadCachePolicy: downloadCachePolicy,
+                    requestPriority: .high,
+                    forceFetchFromRemote: forceFetchFromRemote
+                )
                 
-                let articleDownloadCancelled: Bool = articleAemRepositoryResult.downloaderResult.downloadError == .cancelled
-                let articleDownloadRunning: Bool = weakSelf.downloadArticlesCancellable != nil
+                isDownloading = false
                 
-                if articleDownloadCancelled && articleDownloadRunning {
-                    weakSelf.isDownloading = true
+                if let error = download.firstErrorNotConnectedToInternet {
+                    downloadResult = .failure(error)
                 }
                 else {
-                    weakSelf.isDownloading = false
+                    downloadResult = .success(Void())
                 }
+            }
+            catch let error {
+             
+                isDownloading = false
                 
-                weakSelf.articleAemRepositoryResult = articleAemRepositoryResult
-            })
+                downloadResult = .failure(error)
+            }
+        }
     }
 }

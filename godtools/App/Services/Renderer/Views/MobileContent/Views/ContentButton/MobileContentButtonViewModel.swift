@@ -28,7 +28,11 @@ class MobileContentButtonViewModel: MobileContentViewModel {
     let visibilityState: ObservableValue<MobileContentViewVisibilityState> = ObservableValue(value: .visible)
     let icon: MobileContentButtonIcon?
     
-    init(buttonModel: Button, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
+    init(
+        buttonModel: Button,
+        renderedPageContext: MobileContentRenderedPageContext,
+        mobileContentAnalytics: MobileContentRendererAnalytics
+    ) {
         
         self.buttonModel = buttonModel
         self.mobileContentAnalytics = mobileContentAnalytics
@@ -69,7 +73,7 @@ class MobileContentButtonViewModel: MobileContentViewModel {
             borderColor = defaultBorderColor
         }
                 
-        if let resource = buttonModel.icon, let image = renderedPageContext.resourcesCache.getNonThrowingUIImage(resource: resource)  {
+        if let resource = buttonModel.icon, let image = renderedPageContext.resourcesCache.getUIImageNonThrowing(resource: resource)  {
             
             let iconSize = min(Int(buttonModel.iconSize), maxAllowedIconSize)
                     

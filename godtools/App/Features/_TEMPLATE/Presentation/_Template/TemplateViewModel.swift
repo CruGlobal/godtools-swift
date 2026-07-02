@@ -8,7 +8,8 @@
 
 import Foundation
 
-@MainActor class TemplateViewModel: ObservableObject {
+@MainActor
+class TemplateViewModel: ObservableObject {
     
     init() {
         

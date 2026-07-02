@@ -9,41 +9,48 @@
 import Foundation
 import Combine
 
-@MainActor class DeleteAccountViewModel: ObservableObject {
+@MainActor
+final class DeleteAccountViewModel: ObservableObject {
    
+    private let stepEmitter: FlowStepEmitter
+    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    private let getDeleteAccountStringsUseCase: GetDeleteAccountStringsUseCase
+    
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     @Published private var appLanguage: AppLanguageDomainModel = ""
     
     @Published private(set) var strings = DeleteAccountStringsDomainModel.emptyValue
     
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguage: GetCurrentAppLanguageUseCase, getDeleteAccountStringsUseCase: GetDeleteAccountStringsUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getDeleteAccountStringsUseCase: GetDeleteAccountStringsUseCase
+    ) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
+        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
+        self.getDeleteAccountStringsUseCase = getDeleteAccountStringsUseCase
         
-        getCurrentAppLanguage
+        getCurrentAppLanguageUseCase
             .execute()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                getDeleteAccountStringsUseCase
-                    .execute(appLanguage: appLanguage)
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: DeleteAccountStringsDomainModel) in
-                self?.strings = strings
-            }
+            .sink(receiveValue: { [weak self] (appLanguage: AppLanguageDomainModel) in
+                
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
+            })
             .store(in: &cancellables)
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+    }
+    
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+        
+        strings = getDeleteAccountStringsUseCase
+            .execute(appLanguage: appLanguage)
     }
 }
 
@@ -53,16 +60,16 @@ extension DeleteAccountViewModel {
     
     @objc func closeTapped() {
         
-        flowDelegate?.navigate(step: .closeTappedFromDeleteAccount)
+        stepEmitter.emit(step: AppFlowStep.closeTappedFromDeleteAccount)
     }
     
     func deleteAccountTapped() {
         
-        flowDelegate?.navigate(step: .deleteAccountTappedFromDeleteAccount)
+        stepEmitter.emit(step: AppFlowStep.deleteAccountTappedFromDeleteAccount)
     }
     
     func cancelTapped() {
         
-        flowDelegate?.navigate(step: .cancelTappedFromDeleteAccount)
+        stepEmitter.emit(step: AppFlowStep.cancelTappedFromDeleteAccount)
     }
 }

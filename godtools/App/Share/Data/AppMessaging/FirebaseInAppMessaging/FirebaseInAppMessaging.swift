@@ -9,7 +9,7 @@
 import Foundation
 import FirebaseInAppMessaging
 
-class FirebaseInAppMessaging: NSObject, AppMessagingInterface {
+final class FirebaseInAppMessaging: NSObject, AppMessagingInterface {
     
     static let shared: FirebaseInAppMessaging = FirebaseInAppMessaging()
     
@@ -24,7 +24,18 @@ class FirebaseInAppMessaging: NSObject, AppMessagingInterface {
     
     func setMessagingDelegate(messagingDelegate: AppMessagingDelegate?) {
         
-        self.messagingDelegate = messagingDelegate
+        if let messagingDelegate = messagingDelegate {
+            
+            sharedInAppMessaging.delegate = self
+            
+            self.messagingDelegate = messagingDelegate
+        }
+        else {
+            
+            sharedInAppMessaging.delegate = nil
+            
+            self.messagingDelegate = nil
+        }
     }
 }
 
@@ -35,7 +46,8 @@ extension FirebaseInAppMessaging: InAppMessagingDisplayDelegate {
     func messageClicked(_ inAppMessage: InAppMessagingDisplayMessage, with action: InAppMessagingAction) {
         
         if let url = action.actionURL {
-            messagingDelegate?.actionTappedWithUrl(url: url)
+            let didOpenUrl: Bool = true // Firebase opens the URL internally so pass this information along. ~Levi
+            messagingDelegate?.actionTappedWithUrl(url: url, didOpenUrl: didOpenUrl)
         }
     }
         

@@ -8,15 +8,70 @@
 
 import Foundation
 import RealmSwift
+import RepositorySync
 
-class RealmSHA256File: Object, SHA256FileModelType {
+class RealmSHA256File: Object, IdentifiableRealmObject {
     
-    @objc dynamic var sha256WithPathExtension: String = ""
+    @objc dynamic var id: String = ""
+    @objc dynamic var sha256WithPathExtension: String = "" {
+        didSet {
+            id = sha256WithPathExtension
+        }
+    }
     
     let attachments = List<RealmAttachment>()
     let translations = List<RealmTranslation>()
-        
+ 
     override static func primaryKey() -> String? {
         return "sha256WithPathExtension"
+    }
+    
+    func copy() -> RealmSHA256File {
+        
+        let object = RealmSHA256File()
+        
+        object.sha256WithPathExtension = sha256WithPathExtension
+        object.attachments.append(objectsIn: attachments)
+        object.translations.append(objectsIn: translations)
+        
+        return object
+    }
+}
+
+extension RealmSHA256File {
+    
+    func mapFrom(model: SHA256FileModel) {
+        
+        id = model.id
+        sha256WithPathExtension = model.sha256WithPathExtension
+        
+        attachments.removeAll()
+        attachments.append(
+            objectsIn: model.attachments.map {
+                RealmAttachment.createNewFrom(model: $0)
+            }
+        )
+        
+        translations.removeAll()
+        translations.append(
+            objectsIn: model.translations.map {
+                RealmTranslation.createNewFrom(model: $0)
+            }
+        )
+    }
+    
+    static func createNewFrom(model: SHA256FileModel) -> RealmSHA256File {
+        let object = RealmSHA256File()
+        object.mapFrom(model: model)
+        return object
+    }
+   
+    func toModel() -> SHA256FileModel {
+        return SHA256FileModel(
+            id: id,
+            sha256WithPathExtension: sha256WithPathExtension,
+            attachments: attachments.map { $0.toModel() },
+            translations: translations.map { $0.toModel() }
+        )
     }
 }

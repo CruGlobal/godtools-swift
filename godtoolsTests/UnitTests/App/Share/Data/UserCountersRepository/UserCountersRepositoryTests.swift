@@ -6,13 +6,26 @@
 //  Copyright © 2023 Cru. All rights reserved.
 //
 
-import XCTest
+import Foundation
+import Testing
 @testable import godtools
 import Combine
 
-// TODO: Update for SwiftTesting and remove TestsInMemoryRealmDatabase. ~Levi
+struct UserCountersRepositoryTests {
+    
+}
+
+extension UserCountersRepositoryTests {
+    
+}
+
 
 /*
+ import XCTest
+ @testable import godtools
+ import Combine
+ 
+ 
 final class UserCountersRepositoryTests: XCTestCase {
 
     private var userCountersRepository: UserCountersRepository!

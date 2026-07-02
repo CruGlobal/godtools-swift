@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetSocialSignInStringsUseCase {
     
@@ -18,19 +17,18 @@ final class GetSocialSignInStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<SocialSignInStringsDomainModel, Never> {
+    func execute(appLanguage: AppLanguageDomainModel) -> SocialSignInStringsDomainModel {
         
         let localeId: String = appLanguage
         
         let strings = SocialSignInStringsDomainModel(
-            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.SocialSignIn.signInTitle.rawValue),
-            subtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.SocialSignIn.signInSubtitle.rawValue),
-            signInWithAppleActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.SocialSignIn.appleSignIn.rawValue),
-            signInWithFacebookActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.SocialSignIn.facebookSignIn.rawValue),
-            signInWithGoogleActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.SocialSignIn.googleSignIn.rawValue)
+            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.signInTitle.key),
+            subtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.signInSubtitle.key),
+            signInWithAppleActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.signInApple.key),
+            signInWithFacebookActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.signInFacebook.key),
+            signInWithGoogleActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.signInGoogle.key)
         )
         
-        return Just(strings)
-            .eraseToAnyPublisher()
+        return strings
     }
 }

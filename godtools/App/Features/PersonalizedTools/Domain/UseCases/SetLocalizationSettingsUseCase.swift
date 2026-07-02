@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class SetLocalizationSettingsUseCase {
+final class SetLocalizationSettingsUseCase {
 
     private let userLocalizationSettingsRepository: UserLocalizationSettingsRepository
 
@@ -19,13 +19,16 @@ class SetLocalizationSettingsUseCase {
 
     func execute(country: LocalizationSettingsCountryDomainModel) -> AnyPublisher<UserLocalizationSettingsDomainModel, Error> {
 
-        userLocalizationSettingsRepository
-            .setCountryPublisher(isoRegionCode: country.isoRegionCode)
-            .map { _ in
-                return UserLocalizationSettingsDomainModel(
-                    selectedCountry: country
-                )
-            }
+        Task {
+            try await userLocalizationSettingsRepository.storeUserCountry(isoRegionCode: country.isoRegionCode)
+        }
+        
+        let domainModel = UserLocalizationSettingsDomainModel(
+            selectedCountry: country
+        )
+        
+        return Just(domainModel)
+            .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
     }
 }

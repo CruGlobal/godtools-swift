@@ -21,7 +21,6 @@ struct ToolCardView: View {
     private let navButtonWidth: CGFloat = 92
     private let navButtonHeight: CGFloat = 30
     private let navButtonSpacing: CGFloat = 8
-    private let navButtonTitleHorizontalPadding: CGFloat?
     private let contentHorizontalInsets: CGFloat = 15
     private let showsCategory: Bool
     private let favoriteTappedClosure: (() -> Void)?
@@ -31,7 +30,16 @@ struct ToolCardView: View {
     
     @ObservedObject private var viewModel: ToolCardViewModel
     
-    init(viewModel: ToolCardViewModel, geometry: GeometryProxy, layout: ToolCardLayout, showsCategory: Bool, navButtonTitleHorizontalPadding: CGFloat?, favoriteTappedClosure: (() -> Void)?, toolDetailsTappedClosure: (() -> Void)?, openToolTappedClosure: (() -> Void)?, toolTappedClosure: (() -> Void)?) {
+    init(
+        viewModel: ToolCardViewModel,
+        geometry: GeometryProxy,
+        layout: ToolCardLayout,
+        showsCategory: Bool,
+        favoriteTappedClosure: (() -> Void)?,
+        toolDetailsTappedClosure: (() -> Void)?,
+        openToolTappedClosure: (() -> Void)?,
+        toolTappedClosure: (() -> Void)?
+    ) {
         
         var navButtons: [ToolCardNavButtonType] = Array()
         
@@ -50,7 +58,6 @@ struct ToolCardView: View {
         self.layout = layout
         self.navButtons = navButtons
         self.showsCategory = showsCategory
-        self.navButtonTitleHorizontalPadding = navButtonTitleHorizontalPadding
         self.favoriteTappedClosure = favoriteTappedClosure
         self.toolDetailsTappedClosure = toolDetailsTappedClosure
         self.openToolTappedClosure = openToolTappedClosure
@@ -145,15 +152,31 @@ struct ToolCardView: View {
                                 Spacer()
                             }
                             
-                            GTWhiteButton(title: viewModel.detailsButtonTitle, font: navButtonFont, width: navButtonWidth, height: navButtonHeight, titleHorizontalPadding: navButtonTitleHorizontalPadding, accessibility: .toolDetails) {
-                                
-                                toolDetailsTappedClosure?()
-                            }
+                            GTButton(
+                                style: .white,
+                                title: viewModel.detailsButtonTitle,
+                                font: navButtonFont,
+                                width: navButtonWidth,
+                                height: navButtonHeight,
+                                accessibility: .toolDetails,
+                                tapped: {
+                                    
+                                    toolDetailsTappedClosure?()
+                                }
+                            )
                             
-                            GTBlueButton(title: viewModel.openButtonTitle, font: navButtonFont, width: navButtonWidth, height: navButtonHeight, titleHorizontalPadding: navButtonTitleHorizontalPadding, accessibility: .openTool) {
-
-                                openToolTappedClosure?()
-                            }
+                            GTButton(
+                                style: .blue,
+                                title: viewModel.openButtonTitle,
+                                font: navButtonFont,
+                                width: navButtonWidth,
+                                height: navButtonHeight,
+                                accessibility: .openTool,
+                                tapped: {
+                                    
+                                    openToolTappedClosure?()
+                                }
+                            )
                         }
                         .padding([.top], 10)
                     }
@@ -194,7 +217,7 @@ struct ToolCardView_Previews: PreviewProvider {
         let appDiContainer = AppDiContainer.createUITestsDiContainer()
             
         let tool = ToolListItemDomainModel(
-            interfaceStrings: ToolListItemInterfaceStringsDomainModel(openToolActionTitle: "Open", openToolDetailsActionTitle: "Tool Details"),
+            strings: ToolListItemStringsDomainModel(openToolActionTitle: "Open", openToolDetailsActionTitle: "Tool Details"),
             analyticsToolAbbreviation: "",
             dataModelId: "1",
             bannerImageId: "1",
@@ -208,7 +231,8 @@ struct ToolCardView_Previews: PreviewProvider {
             tool: tool,
             accessibility: .tool,
             getToolIsFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToolIsFavoritedUseCase(),
-            getToolBannerUseCase: appDiContainer.domainLayer.getToolBannerUseCase()
+            getToolBannerUseCase: appDiContainer.core.domainLayer.getToolBannerUseCase(),
+            inMemoryDataCache: appDiContainer.core.dataLayer.getSharedInMemoryDataCache()
         )
     }
     
@@ -223,7 +247,6 @@ struct ToolCardView_Previews: PreviewProvider {
                 geometry: geometry,
                 layout: .landscape,
                 showsCategory: true,
-                navButtonTitleHorizontalPadding: nil,
                 favoriteTappedClosure: nil,
                 toolDetailsTappedClosure: nil,
                 openToolTappedClosure: nil,

@@ -10,7 +10,7 @@ import Foundation
 import SocialAuthentication
 import RepositorySync
 
-protocol AppConfigInterface {
+protocol AppConfigInterface: Sendable {
     
     var analyticsEnabled: Bool { get }
     var buildConfig: AppBuildConfiguration { get }
@@ -25,8 +25,8 @@ protocol AppConfigInterface {
     func getFirebaseGoogleServiceFileName() -> String
     func getGoogleAuthenticationConfiguration() -> GoogleAuthenticationConfiguration?
     func getMobileContentApiBaseUrl() -> String
-    func getLegacyRealmDatabase() -> LegacyRealmDatabase
-    func getRealmDatabase() -> RealmDatabase
+    func getMobileContentCDNBaseUrl() -> String
+    func getRealmDatabaseConfig() throws -> RealmDatabaseConfig
     @available(iOS 17.4, *)
     func getSwiftDatabase() throws -> SwiftDatabase?
     func getTractRemoteShareConnectionUrl() -> String

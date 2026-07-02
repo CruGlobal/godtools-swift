@@ -17,6 +17,6 @@ struct ShareAStoryWithUsWebContent: WebContentType {
     
     init(localizationServices: LocalizationServicesInterface) {
         
-        navTitle = localizationServices.stringForSystemElseEnglish(key: "share_a_story_with_us")
+        navTitle = localizationServices.stringForSystemElseEnglish(key: LocalizableStringKeys.shareAStoryWithUs.key)
     }
 }

@@ -30,3 +30,30 @@ enum SwiftDownloadedLanguageV1 {
         }
     }
 }
+
+@available(iOS 17.4, *)
+extension SwiftDownloadedLanguage {
+    
+    func mapFrom(model: DownloadedLanguageDataModel) {
+        
+        id = model.id
+        createdAt = model.createdAt
+        languageId = model.languageId
+        downloadComplete = model.downloadComplete
+    }
+    
+    static func createNewFrom(model: DownloadedLanguageDataModel) -> SwiftDownloadedLanguage {
+        
+        let object = SwiftDownloadedLanguage()
+        object.mapFrom(model: model)
+        return object
+    }
+    
+    func toModel() -> DownloadedLanguageDataModel {
+        return DownloadedLanguageDataModel(
+            languageId: languageId,
+            downloadComplete: downloadComplete,
+            createdAt: createdAt
+        )
+    }
+}

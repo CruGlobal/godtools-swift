@@ -11,6 +11,7 @@
 		452556452C383C3F00AA0046 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 452556432C383C3F00AA0046 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4548320B2F0C4EFC00CF9CF0 /* RepositorySync in Frameworks */ = {isa = PBXBuildFile; productRef = 4548320A2F0C4EFC00CF9CF0 /* RepositorySync */; };
 		4548320D2F0C4F0900CF9CF0 /* RepositorySync in Frameworks */ = {isa = PBXBuildFile; productRef = 4548320C2F0C4F0900CF9CF0 /* RepositorySync */; };
+		4557A2122FBC91A600BD9598 /* SwiftData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4557A2112FBC91A600BD9598 /* SwiftData.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		4581EAA32BFBE194008115FF /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4581EAA22BFBE194008115FF /* RealmSwift */; };
 		4581EAA52BFBE257008115FF /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4581EAA42BFBE257008115FF /* RealmSwift */; };
 		4581EAA72BFBE2B9008115FF /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 4581EAA22BFBE194008115FF /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -41,6 +42,7 @@
 		45B6482925E593110098BAF1 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		45B6482A25E593110098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		45C15DF92F6C78F1006B9020 /* DynalinksSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 45C15DF82F6C78F1006B9020 /* DynalinksSDK */; };
+		45C832D92FF3E97D0056C475 /* GoogleTagManager in Frameworks */ = {isa = PBXBuildFile; productRef = 45C832D82FF3E97D0056C475 /* GoogleTagManager */; };
 		45CF09702784B910007F13D3 /* RequestOperation in Frameworks */ = {isa = PBXBuildFile; productRef = 45CF096F2784B910007F13D3 /* RequestOperation */; };
 		45D40C6B2A5315D500E8E4AE /* Fuzi in Frameworks */ = {isa = PBXBuildFile; productRef = 45D40C6A2A5315D500E8E4AE /* Fuzi */; };
 		45D48C8629F81324004E92B1 /* SocialAuthentication in Frameworks */ = {isa = PBXBuildFile; productRef = 45D48C8529F81324004E92B1 /* SocialAuthentication */; };
@@ -144,6 +146,7 @@
 		407763C996134F95C162DFB6 /* libPods-godtoolsTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-godtoolsTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		451F7A802ABD2F1100006EF2 /* Quick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		451F7A822ABD2F1400006EF2 /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4557A2112FBC91A600BD9598 /* SwiftData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftData.framework; path = System/Library/Frameworks/SwiftData.framework; sourceTree = SDKROOT; };
 		45AD217E2593ABC800A096A0 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		45B4DA262F50CD3E007EF287 /* FirebaseNotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FirebaseNotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F12296C20852BE3008842CC /* godtoolsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = godtoolsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -196,7 +199,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				App/Features/AppLanguage/Data/AppLanguagesRepository/AppLanguageDataModel.swift,
-				App/Features/AppLanguage/Data/AppLanguagesRepository/AppLanguageDataModelInterface.swift,
 				App/Share/Application/Accessibility/AccessibilityStrings.swift,
 				App/Share/Application/LaunchEnvironment/LaunchEnvironmentKey.swift,
 				App/Share/Application/LaunchEnvironment/LaunchEnvironmentReader.swift,
@@ -204,7 +206,7 @@
 				App/Share/Application/LaunchEnvironment/UITestsLaunchEnvironment/UITestsLaunchEnvironment.swift,
 				App/Share/Application/LaunchEnvironment/UITestsLaunchEnvironment/UITestsLaunchEnvironmentKey.swift,
 				App/Share/Common/BCP47LanguageIdentifier/BCP47LanguageIdentifier.swift,
-				App/Share/Domain/Entities/LanguageCodeDomainModel.swift,
+				App/Share/Domain/DomainModels/LanguageCodeDomainModel.swift,
 			);
 			target = 4F12296B20852BE3008842CC /* godtoolsUITests */;
 		};
@@ -324,6 +326,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				45D40C6B2A5315D500E8E4AE /* Fuzi in Frameworks */,
+				45C832D92FF3E97D0056C475 /* GoogleTagManager in Frameworks */,
 				45F671912C3344010017C8C2 /* LocalizationServices in Frameworks */,
 				45DF96492D386C1C00C6AE68 /* FirebaseAnalytics in Frameworks */,
 				4F2500621F0C1E8D00364FBC /* AdSupport.framework in Frameworks */,
@@ -331,6 +334,7 @@
 				45CF09702784B910007F13D3 /* RequestOperation in Frameworks */,
 				4593DEFE2EABFD45004E1C8D /* GodToolsShared in Frameworks */,
 				45C15DF92F6C78F1006B9020 /* DynalinksSDK in Frameworks */,
+				4557A2122FBC91A600BD9598 /* SwiftData.framework in Frameworks */,
 				45DF96512D386C1C00C6AE68 /* FirebaseRemoteConfig in Frameworks */,
 				45E7D4C42977430A008C7503 /* ZipArchive in Frameworks */,
 				45B0F6A72DBBCC300011FF1D /* FirebaseMessaging in Frameworks */,
@@ -360,6 +364,7 @@
 		20ECC28E617DF10976739E6B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4557A2112FBC91A600BD9598 /* SwiftData.framework */,
 				451F7A822ABD2F1400006EF2 /* Nimble.framework */,
 				451F7A802ABD2F1100006EF2 /* Quick.framework */,
 				4F2500611F0C1E8D00364FBC /* AdSupport.framework */,
@@ -521,6 +526,7 @@
 				4593DEFD2EABFD45004E1C8D /* GodToolsShared */,
 				4548320A2F0C4EFC00CF9CF0 /* RepositorySync */,
 				45C15DF82F6C78F1006B9020 /* DynalinksSDK */,
+				45C832D82FF3E97D0056C475 /* GoogleTagManager */,
 			);
 			productName = godtools;
 			productReference = 4F5732891EA69CF00082035C /* godtools.app */;
@@ -685,6 +691,7 @@
 				4593DEFC2EABFD45004E1C8D /* XCRemoteSwiftPackageReference "godtools-shared-swift" */,
 				454832092F0C4EFC00CF9CF0 /* XCRemoteSwiftPackageReference "repository-sync-ios" */,
 				45C15DF72F6C78F1006B9020 /* XCRemoteSwiftPackageReference "dynalinks-ios-sdk" */,
+				45C832D72FF3E97D0056C475 /* XCRemoteSwiftPackageReference "google-tag-manager-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4F57328A1EA69CF00082035C /* Products */;
@@ -753,14 +760,10 @@
 			inputPaths = (
 				"$(SRCROOT)/Scripts/Scripts/DownloadInitialResources/DownloadInitialResourcesScript.swift",
 				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/Api/Codable/ResourceCodable.swift",
-				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/DataModel/ResourceDataModelInterface.swift",
 				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/Api/Codable/ResourceType.swift",
 				"$(SRCROOT)/godtools/App/Share/Data/TranslationsRepository/Api/Codable/TranslationCodable.swift",
-				"$(SRCROOT)/godtools/App/Share/Data/TranslationsRepository/DataModel/TranslationDataModelInterface.swift",
 				"$(SRCROOT)/godtools/App/Share/Data/AttachmentsRepository/Api/Codable/AttachmentCodable.swift",
-				"$(SRCROOT)/godtools/App/Share/Data/AttachmentsRepository/DataModel/AttachmentDataModelInterface.swift",
 				"$(SRCROOT)/godtools/App/Share/Data/LanguagesRepository/Api/Codable/LanguageCodable.swift",
-				"$(SRCROOT)/godtools/App/Share/Data/LanguagesRepository/DataModel/LanguageDataModelInterface.swift",
 				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/Api/Codable/ResourcesPlusLatestTranslationsAndAttachmentsCodable.swift",
 				"$(SRCROOT)/godtools/App/Share/Common/SharedAppleExtensions/Foundation/Error/NSError+WithDescription.swift",
 				"$(SRCROOT)/Scripts/Scripts/DownloadInitialResources/GetResourcesAndLanguagesData.swift",
@@ -769,9 +772,6 @@
 				"$(SRCROOT)/Scripts/Scripts/DownloadInitialResources/RequestOperation/Codable/JsonApi/ScriptJsonApiResponseBaseData.swift",
 				"$(SRCROOT)/Scripts/Scripts/DownloadInitialResources/RequestOperation/Codable/JsonApi/ScriptJsonApiResponseDataArray.swift",
 				"$(SRCROOT)/Scripts/Scripts/DownloadInitialResources/RequestOperation/Codable/JsonApi/ScriptJsonApiResponseDataObject.swift",
-				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/DataModel/ResourceDataModel.swift",
-				"$(SRCROOT)/godtools/App/Share/Data/TranslationsRepository/DataModel/TranslationDataModel.swift",
-				"$(SRCROOT)/godtools/App/Share/Data/LanguagesRepository/DataModel/LanguageDataModel.swift",
 				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/Api/Codable/Resource/ResourceDefaultOrderCodable.swift",
 				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/Api/Codable/Resource/ResourceScoreCodable.swift",
 			);
@@ -782,7 +782,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "xcrun --sdk macosx swiftc -parse-as-library $SCRIPT_INPUT_FILE_0 $SCRIPT_INPUT_FILE_1 $SCRIPT_INPUT_FILE_2 $SCRIPT_INPUT_FILE_3 $SCRIPT_INPUT_FILE_4 $SCRIPT_INPUT_FILE_5 $SCRIPT_INPUT_FILE_6 $SCRIPT_INPUT_FILE_7 $SCRIPT_INPUT_FILE_8 $SCRIPT_INPUT_FILE_9 $SCRIPT_INPUT_FILE_10 $SCRIPT_INPUT_FILE_11 $SCRIPT_INPUT_FILE_12 $SCRIPT_INPUT_FILE_13 $SCRIPT_INPUT_FILE_14 $SCRIPT_INPUT_FILE_15 $SCRIPT_INPUT_FILE_16 $SCRIPT_INPUT_FILE_17 $SCRIPT_INPUT_FILE_18 $SCRIPT_INPUT_FILE_19 $SCRIPT_INPUT_FILE_20 $SCRIPT_INPUT_FILE_21 $SCRIPT_INPUT_FILE_22 \\\n  -o DownloadInitialResourcesScript\n  \n./DownloadInitialResourcesScript\n";
+			shellScript = "xcrun --sdk macosx swiftc -parse-as-library $SCRIPT_INPUT_FILE_0 $SCRIPT_INPUT_FILE_1 $SCRIPT_INPUT_FILE_2 $SCRIPT_INPUT_FILE_3 $SCRIPT_INPUT_FILE_4 $SCRIPT_INPUT_FILE_5 $SCRIPT_INPUT_FILE_6 $SCRIPT_INPUT_FILE_7 $SCRIPT_INPUT_FILE_8 $SCRIPT_INPUT_FILE_9 $SCRIPT_INPUT_FILE_10 $SCRIPT_INPUT_FILE_11 $SCRIPT_INPUT_FILE_12 $SCRIPT_INPUT_FILE_13 $SCRIPT_INPUT_FILE_14 $SCRIPT_INPUT_FILE_15 \\\n  -o DownloadInitialResourcesScript\n  \n./DownloadInitialResourcesScript\n";
 		};
 		45AD220F2593C66B00A096A0 /* Run Crashlytics */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -792,8 +792,11 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
-				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
+				"$(TARGET_BUILD_DIR)/$(EXECUTABLE_PATH)",
 			);
 			name = "Run Crashlytics";
 			outputFileListPaths = (
@@ -968,6 +971,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
 			};
@@ -993,7 +997,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 6.3.15;
+				MARKETING_VERSION = 6.3.19;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1169,6 +1173,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
 			};
@@ -1194,7 +1199,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 6.3.15;
+				MARKETING_VERSION = 6.3.19;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1337,7 +1342,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 6.3.15;
+				MARKETING_VERSION = 6.3.19;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.beta.FirebaseNotificationService;
@@ -1351,7 +1356,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
@@ -1385,7 +1390,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 6.3.15;
+				MARKETING_VERSION = 6.3.19;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.beta.FirebaseNotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1397,7 +1402,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
@@ -1431,7 +1436,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 6.3.15;
+				MARKETING_VERSION = 6.3.19;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.FirebaseNotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1443,7 +1448,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
@@ -1476,7 +1481,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 6.3.15;
+				MARKETING_VERSION = 6.3.19;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.FirebaseNotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1487,7 +1492,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
@@ -1520,7 +1525,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 6.3.15;
+				MARKETING_VERSION = 6.3.19;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.FirebaseNotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1531,7 +1536,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
@@ -1599,6 +1604,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
 			};
@@ -1624,7 +1630,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 6.3.15;
+				MARKETING_VERSION = 6.3.19;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1800,6 +1806,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
 			};
@@ -1825,7 +1832,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 6.3.15;
+				MARKETING_VERSION = 6.3.19;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2034,6 +2041,7 @@
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
@@ -2060,7 +2068,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 6.3.15;
+				MARKETING_VERSION = 6.3.19;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DRELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2186,7 +2194,7 @@
 			repositoryURL = "https://github.com/CruGlobal/repository-sync-ios";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.8.2;
+				minimumVersion = 1.3.0;
 			};
 		};
 		4581EAA12BFBE194008115FF /* XCRemoteSwiftPackageReference "realm-swift" */ = {
@@ -2194,15 +2202,15 @@
 			repositoryURL = "https://github.com/realm/realm-swift.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 20.0.3;
+				minimumVersion = 20.0.4;
 			};
 		};
 		4593DEFC2EABFD45004E1C8D /* XCRemoteSwiftPackageReference "godtools-shared-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CruGlobal/godtools-shared-swift.git";
 			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 1.2.0;
+				kind = revision;
+				revision = 26d93fc5290486672ebe402e8695b628fa5e4303;
 			};
 		};
 		45C15DF72F6C78F1006B9020 /* XCRemoteSwiftPackageReference "dynalinks-ios-sdk" */ = {
@@ -2213,12 +2221,20 @@
 				minimumVersion = 1.0.4;
 			};
 		};
+		45C832D72FF3E97D0056C475 /* XCRemoteSwiftPackageReference "google-tag-manager-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleanalytics/google-tag-manager-ios-sdk.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 9.1.0;
+			};
+		};
 		45CF096E2784B910007F13D3 /* XCRemoteSwiftPackageReference "request-operation-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CruGlobal/request-operation-ios.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 1.13.4;
+				minimumVersion = 2.1.0;
 			};
 		};
 		45D40C692A5315D500E8E4AE /* XCRemoteSwiftPackageReference "Fuzi" */ = {
@@ -2234,7 +2250,7 @@
 			repositoryURL = "https://github.com/CruGlobal/social-authentication-ios.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 1.0.1;
+				minimumVersion = 1.0.2;
 			};
 		};
 		45DF96472D386C1C00C6AE68 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
@@ -2242,7 +2258,7 @@
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 11.7.0;
+				minimumVersion = 12.12.1;
 			};
 		};
 		45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
@@ -2250,7 +2266,7 @@
 			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 4.5.2;
+				minimumVersion = 4.6.0;
 			};
 		};
 		45E7D4C22977430A008C7503 /* XCRemoteSwiftPackageReference "ZipArchive" */ = {
@@ -2369,6 +2385,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 45C15DF72F6C78F1006B9020 /* XCRemoteSwiftPackageReference "dynalinks-ios-sdk" */;
 			productName = DynalinksSDK;
+		};
+		45C832D82FF3E97D0056C475 /* GoogleTagManager */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 45C832D72FF3E97D0056C475 /* XCRemoteSwiftPackageReference "google-tag-manager-ios-sdk" */;
+			productName = GoogleTagManager;
 		};
 		45CF096F2784B910007F13D3 /* RequestOperation */ = {
 			isa = XCSwiftPackageProductDependency;

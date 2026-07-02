@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetToolsListItems {
  
@@ -18,7 +17,14 @@ final class GetToolsListItems {
     private let getToolListItemStrings: GetToolListItemStrings
     private let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability
     
-    init(favoritedResourcesRepository: FavoritedResourcesRepository, languagesRepository: LanguagesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolCategory: GetTranslatedToolCategory, getToolListItemStrings: GetToolListItemStrings, getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability) {
+    init(
+        favoritedResourcesRepository: FavoritedResourcesRepository,
+        languagesRepository: LanguagesRepository,
+        getTranslatedToolName: GetTranslatedToolName,
+        getTranslatedToolCategory: GetTranslatedToolCategory,
+        getToolListItemStrings: GetToolListItemStrings,
+        getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability
+    ) {
         
         self.favoritedResourcesRepository = favoritedResourcesRepository
         self.languagesRepository = languagesRepository
@@ -28,45 +34,39 @@ final class GetToolsListItems {
         self.getTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability
     }
     
-    func mapToolsToListItemsPublisher(tools: [ResourceDataModel], appLanguage: AppLanguageDomainModel, languageIdForAvailabilityText: String?) -> AnyPublisher<[ToolListItemDomainModel], Never> {
+    func mapToolsToListItems(tools: [ResourceDataModel], appLanguage: AppLanguageDomainModel, languageIdForAvailabilityText: String?) -> [ToolListItemDomainModel] {
        
         let languageForAvailabilityTextModel: LanguageDataModel?
         
         if let languageForAvailabilityTextId = languageIdForAvailabilityText {
-            languageForAvailabilityTextModel = languagesRepository.persistence.getDataModelNonThrowing(id: languageForAvailabilityTextId)
+            languageForAvailabilityTextModel = languagesRepository.getLanguageById(id: languageForAvailabilityTextId)
         } else {
             languageForAvailabilityTextModel = nil
         }
         
-        return getToolListItemStrings
-            .getStringsPublisher(
-                translateInLanguage: appLanguage
-            )
-            .map { (strings: ToolListItemInterfaceStringsDomainModel) in
-             
-                return tools.map { tool in
-                        
-                    let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel
-                    
-                    if let language = languageForAvailabilityTextModel {
-                        toolLanguageAvailability = self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: tool, language: language, translateInLanguage: appLanguage)
-                    }
-                    else {
-                        toolLanguageAvailability = ToolLanguageAvailabilityDomainModel(availabilityString: "", isAvailable: false)
-                    }
-                    
-                    return ToolListItemDomainModel(
-                        interfaceStrings: strings,
-                        analyticsToolAbbreviation: tool.abbreviation,
-                        dataModelId: tool.id,
-                        bannerImageId: tool.attrBanner,
-                        name: self.getTranslatedToolName.getToolName(resource: tool, translateInLanguage: appLanguage),
-                        category: self.getTranslatedToolCategory.getTranslatedCategory(resource: tool, translateInLanguage: appLanguage),
-                        isFavorited: self.favoritedResourcesRepository.getResourceIsFavorited(id: tool.id),
-                        languageAvailability: toolLanguageAvailability
-                    )
-                }
+        let strings: ToolListItemStringsDomainModel = getToolListItemStrings.getStrings(appLanguage: appLanguage)
+        
+        return tools.map { tool in
+                
+            let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel
+            
+            if let language = languageForAvailabilityTextModel {
+                toolLanguageAvailability = self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: tool, language: language, translateInLanguage: appLanguage)
             }
-            .eraseToAnyPublisher()
+            else {
+                toolLanguageAvailability = ToolLanguageAvailabilityDomainModel(availabilityString: "", isAvailable: false)
+            }
+            
+            return ToolListItemDomainModel(
+                strings: strings,
+                analyticsToolAbbreviation: tool.abbreviation,
+                dataModelId: tool.id,
+                bannerImageId: tool.attrBanner,
+                name: self.getTranslatedToolName.getToolName(resource: tool, translateInLanguage: appLanguage),
+                category: self.getTranslatedToolCategory.getTranslatedCategory(resource: tool, translateInLanguage: appLanguage),
+                isFavorited: self.favoritedResourcesRepository.getResourceIsFavorited(id: tool.id),
+                languageAvailability: toolLanguageAvailability
+            )
+        }
     }
 }

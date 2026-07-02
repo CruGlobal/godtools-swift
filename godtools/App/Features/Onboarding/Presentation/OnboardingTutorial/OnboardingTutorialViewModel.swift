@@ -9,13 +9,12 @@
 import Foundation
 import Combine
 
-@MainActor class OnboardingTutorialViewModel: ObservableObject {
+@MainActor
+final class OnboardingTutorialViewModel: ObservableObject {
     
-    private static let tutorialPages: [OnboardingTutorialPage] = [.readyForEveryConversation, .talkAboutGodWithAnyone, .prepareForTheMomentsThatMatter, .helpSomeoneDiscoverJesus]
     private static let continueButtonContinueAccessibility: AccessibilityStrings.Button = .continueForward
-    
-    private static var trackInBackgroundViewedOnboardingTutorialCancellable: AnyCancellable?
-    
+        
+    private let stepEmitter: FlowStepEmitter
     private let viewedOnboardingTutorialUseCase: ViewedOnboardingTutorialUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getOnboardingTutorialStringsUseCase: GetOnboardingTutorialStringsUseCase
@@ -26,61 +25,51 @@ import Combine
     private let showsChooseAppLanguageButtonOnPages: [Int] = [0]
     
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+        
+    @Published private var appLanguage = AppLanguageDomainModel.english
     
     @Published private(set) var strings = OnboardingTutorialStringsDomainModel.emptyValue
     @Published private(set) var continueButtonAccessibility: AccessibilityStrings.Button = OnboardingTutorialViewModel.continueButtonContinueAccessibility
     @Published private(set) var hidesSkipButton: Bool = true
     @Published private(set) var showsChooseLanguageButton: Bool = true
-    @Published private(set) var pages: [OnboardingTutorialPage] = Array()
+    @Published private(set) var pages: [OnboardingTutorialPage] = [.readyForEveryConversation, .talkAboutGodWithAnyone, .prepareForTheMomentsThatMatter, .helpSomeoneDiscoverJesus]
     @Published private(set) var continueButtonTitle: String = ""
     
     @Published var currentPage: Int = 0
     
-    init(flowDelegate: FlowDelegate, viewedOnboardingTutorialUseCase: ViewedOnboardingTutorialUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getOnboardingTutorialStringsUseCase: GetOnboardingTutorialStringsUseCase, trackTutorialVideoAnalytics: TutorialVideoAnalytics, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        viewedOnboardingTutorialUseCase: ViewedOnboardingTutorialUseCase,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getOnboardingTutorialStringsUseCase: GetOnboardingTutorialStringsUseCase,
+        trackTutorialVideoAnalytics: TutorialVideoAnalytics,
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
+        trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
+    ) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.viewedOnboardingTutorialUseCase = viewedOnboardingTutorialUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getOnboardingTutorialStringsUseCase = getOnboardingTutorialStringsUseCase
         self.trackTutorialVideoAnalytics = trackTutorialVideoAnalytics
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
-                        
-        OnboardingTutorialViewModel.trackInBackgroundViewedOnboardingTutorialCancellable = viewedOnboardingTutorialUseCase
+        
+        viewedOnboardingTutorialUseCase
             .execute()
-            .receive(on: DispatchQueue.main)
-            .sink { (void: Void) in
-                
-            }
                 
         getCurrentAppLanguageUseCase
             .execute()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                
-                getOnboardingTutorialStringsUseCase
-                    .execute(appLanguage: appLanguage)
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: OnboardingTutorialStringsDomainModel) in
-                
-                self?.strings = strings
-                self?.pages = OnboardingTutorialViewModel.tutorialPages
+            .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
             }
             .store(in: &cancellables)
         
         Publishers.CombineLatest(
             $currentPage,
-            $pages.dropFirst()
+            $pages
         )
         .receive(on: DispatchQueue.main)
         .sink { [weak self] (currentPage: Int, pages: [OnboardingTutorialPage]) in
@@ -100,22 +89,9 @@ import Combine
         print("x deinit: \(type(of: self))")
     }
     
-    func getPage(index: Int) -> OnboardingTutorialPage? {
-        return pages[safe: index]
-    }
-    
-    func getOnboardingTutorialPageAnalyticsProperties(page: OnboardingTutorialPage) -> OnboardingTutorialPageAnalyticsProperties {
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
         
-        let pageOffset: Int = 2
-        let pageIndex: Int = pages.firstIndex(of: page) ?? -1
-        
-        return OnboardingTutorialPageAnalyticsProperties(
-            screenName: "onboarding" + "-" + String(pageIndex + pageOffset),
-            siteSection: "onboarding",
-            siteSubsection: "",
-            contentLanguage: nil,
-            contentLanguageSecondary: nil
-        )
+        strings = getOnboardingTutorialStringsUseCase.execute(appLanguage: appLanguage)
     }
     
     private func updateShowsChooseLanguageButtonState(page: Int) {
@@ -175,6 +151,24 @@ import Combine
         }
     }
     
+    func getPage(index: Int) -> OnboardingTutorialPage? {
+        return pages[safe: index]
+    }
+    
+    func getOnboardingTutorialPageAnalyticsProperties(page: OnboardingTutorialPage) -> OnboardingTutorialPageAnalyticsProperties {
+        
+        let pageOffset: Int = 2
+        let pageIndex: Int = pages.firstIndex(of: page) ?? -1
+        
+        return OnboardingTutorialPageAnalyticsProperties(
+            screenName: "onboarding" + "-" + String(pageIndex + pageOffset),
+            siteSection: "onboarding",
+            siteSubsection: "",
+            contentLanguage: nil,
+            contentLanguageSecondary: nil
+        )
+    }
+    
     func getOnboardingTutorialReadyForEveryConversationViewModel() -> OnboardingTutorialReadyForEveryConversationViewModel {
         
         return OnboardingTutorialReadyForEveryConversationViewModel(
@@ -217,12 +211,12 @@ extension OnboardingTutorialViewModel {
     
     func chooseAppLanguageTapped() {
         
-        flowDelegate?.navigate(step: .chooseAppLanguageTappedFromOnboardingTutorial)
+        stepEmitter.emit(step: AppFlowStep.chooseAppLanguageTappedFromOnboardingTutorial)
     }
     
     @objc func skipTapped() {
         
-        flowDelegate?.navigate(step: .skipTappedFromOnboardingTutorial)
+        stepEmitter.emit(step: AppFlowStep.skipTappedFromOnboardingTutorial)
         
         let pageAnalytics: OnboardingTutorialPageAnalyticsProperties = getOnboardingTutorialPageAnalyticsProperties(page: pages[currentPage])
         
@@ -241,12 +235,12 @@ extension OnboardingTutorialViewModel {
     
     func continueTapped() {
         
-        flowDelegate?.navigate(step: .continueTappedFromTutorial)
+        stepEmitter.emit(step: AppFlowStep.continueTappedFromTutorial)
     }
     
     func watchReadyForEveryConversationVideoTapped() {
         
-        flowDelegate?.navigate(step: .videoButtonTappedFromOnboardingTutorial(youtubeVideoId: readyForEveryConversationYoutubeVideoId))
+        stepEmitter.emit(step: AppFlowStep.videoButtonTappedFromOnboardingTutorial(youtubeVideoId: readyForEveryConversationYoutubeVideoId))
         
         let pageAnalytics: OnboardingTutorialPageAnalyticsProperties = getOnboardingTutorialPageAnalyticsProperties(page: .readyForEveryConversation)
         

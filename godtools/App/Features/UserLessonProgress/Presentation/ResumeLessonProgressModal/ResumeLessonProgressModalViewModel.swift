@@ -9,53 +9,58 @@
 import Foundation
 import Combine
 
-@MainActor class ResumeLessonProgressModalViewModel: ObservableObject {
-    
-    private weak var flowDelegate: FlowDelegate?
+@MainActor
+final class ResumeLessonProgressModalViewModel: ObservableObject {
+
+    private let stepEmitter: FlowStepEmitter
+    private let toolTranslations: ToolTranslationsDomainModel
     private let getResumeLessonProgressStringsUseCase: GetResumeLessonProgressStringsUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
     
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var appLanguage = AppLanguageDomainModel.english
     
     @Published private(set) var strings = ResumeLessonProgressStringsDomainModel.emptyValue
     
-    init(flowDelegate: FlowDelegate, getResumeLessonProgressStringsUseCase: GetResumeLessonProgressStringsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        toolTranslations: ToolTranslationsDomainModel,
+        getResumeLessonProgressStringsUseCase: GetResumeLessonProgressStringsUseCase,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    ) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
+        self.toolTranslations = toolTranslations
         self.getResumeLessonProgressStringsUseCase = getResumeLessonProgressStringsUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         
         getCurrentAppLanguageUseCase
             .execute()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { appLanguage in
-                getResumeLessonProgressStringsUseCase
-                    .execute(
-                        appLanguage: appLanguage
-                    )
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: ResumeLessonProgressStringsDomainModel) in
-                
-                self?.strings = strings
-            }
+            .sink(receiveValue: { [weak self] (appLanguage: AppLanguageDomainModel) in
+
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
+            })
             .store(in: &cancellables)
     }
-    
+
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+
+        strings = getResumeLessonProgressStringsUseCase
+            .execute(
+                appLanguage: appLanguage
+            )
+    }
+
     // MARK: - Inputs
     
     func startOverButtonTapped() {
-        flowDelegate?.navigate(step: .startOverTappedFromResumeLessonModal)
+        stepEmitter.emit(step: AppFlowStep.startOverTappedFromResumeLessonModal(toolTranslations: toolTranslations))
     }
     
     func continueButtonTapped() {
-        flowDelegate?.navigate(step: .continueTappedFromResumeLessonModal)
+        stepEmitter.emit(step: AppFlowStep.continueTappedFromResumeLessonModal(toolTranslations: toolTranslations))
     }
 }

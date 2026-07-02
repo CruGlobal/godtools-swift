@@ -55,15 +55,29 @@ struct DeleteAccountView: View {
                     
                     let buttonWidth: CGFloat = geometry.size.width - contentInsets.leading - contentInsets.trailing
                     
-                    GTWhiteButton(title: viewModel.strings.confirmActionTitle, font: buttonFont, width: buttonWidth, height: buttonHeight, cornerRadius: buttonCornerRadius) {
-                        
-                        viewModel.deleteAccountTapped()
-                    }
+                    GTButton(
+                        style: .white,
+                        title: viewModel.strings.confirmActionTitle,
+                        font: buttonFont,
+                        width: buttonWidth,
+                        height: buttonHeight,
+                        cornerRadius: buttonCornerRadius,
+                        tapped: {
+                            viewModel.deleteAccountTapped()
+                        }
+                    )
                     
-                    GTBlueButton(title: viewModel.strings.cancelActionTitle, font: buttonFont, width: buttonWidth, height: buttonHeight, cornerRadius: buttonCornerRadius) {
-                        
-                        viewModel.cancelTapped()
-                    }
+                    GTButton(
+                        style: .blue,
+                        title: viewModel.strings.cancelActionTitle,
+                        font: buttonFont,
+                        width: buttonWidth,
+                        height: buttonHeight,
+                        cornerRadius: buttonCornerRadius,
+                        tapped: {
+                            viewModel.cancelTapped()
+                        }
+                    )
                 }
                 .padding(EdgeInsets(top: 35, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))
                 
@@ -81,8 +95,8 @@ struct DeleteAccountView_Preview: PreviewProvider {
         let appDiContainer = AppDiContainer.createUITestsDiContainer()
         
         let viewModel = DeleteAccountViewModel(
-            flowDelegate: MockFlowDelegate(),
-            getCurrentAppLanguage: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            stepEmitter: PreviewFlowStepEmitter.emitter,
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getDeleteAccountStringsUseCase: appDiContainer.feature.account.domainLayer.getDeleteAccountStringsUseCase()
         )
         

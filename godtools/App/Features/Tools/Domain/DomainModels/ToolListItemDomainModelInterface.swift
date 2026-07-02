@@ -10,7 +10,7 @@ import Foundation
 
 protocol ToolListItemDomainModelInterface: Sendable {
     
-    var interfaceStrings: ToolListItemInterfaceStringsDomainModel { get }
+    var strings: ToolListItemStringsDomainModel { get }
     var analyticsToolAbbreviation: String { get }
     var dataModelId: String { get }
     var bannerImageId: String { get }

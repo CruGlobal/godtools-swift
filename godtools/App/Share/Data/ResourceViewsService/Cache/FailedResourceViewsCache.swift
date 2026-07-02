@@ -8,83 +8,43 @@
 
 import Foundation
 import RealmSwift
+import RepositorySync
 
-class FailedResourceViewsCache {
+final class FailedResourceViewsCache {
     
-    private let realmDatabase: LegacyRealmDatabase
+    let persistence: any Persistence<ResourceViewDataModel, ResourceViewDataModel>
     
-    init(realmDatabase: LegacyRealmDatabase) {
+    init(persistence: any Persistence<ResourceViewDataModel, ResourceViewDataModel>) {
         
-        self.realmDatabase = realmDatabase
+        self.persistence = persistence
     }
     
-    func getFailedResourceViews() -> [ResourceViewModel] {
-        
-        let realm: Realm = realmDatabase.openRealm()
-        let realmResourceViews: [RealmResourceView] = Array(realm.objects(RealmResourceView.self))
-        
-        return realmResourceViews.map({ResourceViewModel(model: $0)})
-    }
-    
-    func cacheFailedResourceViews(resourceViews: [ResourceViewModel]) {
+    func cacheFailedResourceViews(resourceViews: [ResourceViewDataModel]) async throws {
              
         guard !resourceViews.isEmpty else {
             return
         }
-        
-        realmDatabase.background { (realm: Realm) in
                 
-            do {
-                try realm.write {
-
-                    for resourceView in resourceViews {
-                        
-                        if let existingFailedResourceView = realm.object(ofType: RealmResourceView.self, forPrimaryKey: resourceView.resourceId) {
-                            existingFailedResourceView.quantity += 1
-                        }
-                        else {
-                            let newResourceView = RealmResourceView()
-                            newResourceView.resourceId = resourceView.resourceId
-                            newResourceView.quantity = 1
-                            realm.add(newResourceView)
-                        }
-                    }
-                }
-            }
-            catch let error {
-                assertionFailure(error.localizedDescription)
-            }
-        }
-    }
-    
-    func deleteFailedResourceViews(resourceViews: [ResourceViewModel]) {
+        var updateResourceViews: [ResourceViewDataModel] = Array()
         
-        guard !resourceViews.isEmpty else {
-            return
+        for resourceView in resourceViews {
+            
+            let updateResourceView: ResourceViewDataModel
+            
+            let quantity: Int
+            
+            if let existingResourceView = try persistence.getDataModel(id: resourceView.id) {
+                quantity = existingResourceView.quantity + 1
+            }
+            else {
+                quantity = 1
+            }
+            
+            updateResourceViews.append(
+                resourceView.copy(quantity: quantity)
+            )
         }
         
-        realmDatabase.background { (realm: Realm) in
-            
-            var realmResourceViewsToDelete: [RealmResourceView] = Array()
-            
-            for resourceView in resourceViews {
-                if let realmResourceView = realm.object(ofType: RealmResourceView.self, forPrimaryKey: resourceView.resourceId) {
-                    realmResourceViewsToDelete.append(realmResourceView)
-                }
-            }
-            
-            guard !realmResourceViewsToDelete.isEmpty else {
-                return
-            }
-            
-            do {
-                try realm.write {
-                    realm.delete(realmResourceViewsToDelete)
-                }
-            }
-            catch let error {
-                assertionFailure(error.localizedDescription)
-            }
-        }
+        _ = try await persistence.writeObjects(externalObjects: updateResourceViews, writeOption: nil, getOption: nil)
     }
 }

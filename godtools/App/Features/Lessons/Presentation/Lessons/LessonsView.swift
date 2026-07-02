@@ -15,7 +15,11 @@ struct LessonsView: View {
 
     @ObservedObject private var viewModel: LessonsViewModel
 
-    init(viewModel: LessonsViewModel, contentHorizontalInsets: CGFloat = DashboardView.contentHorizontalInsets, lessonCardSpacing: CGFloat = DashboardView.toolCardVerticalSpacing) {
+    init(
+        viewModel: LessonsViewModel,
+        contentHorizontalInsets: CGFloat = DashboardView.contentHorizontalInsets,
+        lessonCardSpacing: CGFloat = DashboardView.toolCardVerticalSpacing
+    ) {
         
         self.viewModel = viewModel
         self.contentHorizontalInsets = contentHorizontalInsets
@@ -28,12 +32,6 @@ struct LessonsView: View {
                     
             AccessibilityScreenElementView(screenAccessibility: .dashboardLessons)
             
-            if viewModel.isLoadingLessons {
-                CenteredCircularProgressView(
-                    progressColor: ColorPalette.gtGrey.color
-                )
-            }
-
             VStack(alignment: .center, spacing: 0) {
 
                 PersonalizedToolToggle(
@@ -63,36 +61,38 @@ struct LessonsView: View {
 
                             FixedHorizontalSpacer(width: 30)
 
-                            ToolFilterButtonView(title: viewModel.languageFilterButtonTitle, accessibility: .lessonsLanguageFilter) {
+                            ToolFilterButtonView(
+                                title: viewModel.languageFilterButtonTitle,
+                                accessibility: .lessonsLanguageFilter
+                            ) {
                                 viewModel.lessonLanguageFilterTapped()
                             }
                         }
                         .padding(.bottom, 15)
                         .padding(.horizontal, contentHorizontalInsets)
+                        
+                        if viewModel.selectedToggle == .personalized, let personalizedLessonsUnavailable = viewModel.personalizedLessons.unavailableStrings {
+                            
+                            PersonalizationUnavailableView(
+                                geometry: geometry,
+                                heightMultiplier: 0.7,
+                                title: personalizedLessonsUnavailable.title,
+                                message: personalizedLessonsUnavailable.message,
+                                changeSettingsButtonTitle: viewModel.strings.changeLocalizationSettingsAction,
+                                goToAllToolsButtonTitle: viewModel.strings.viewAllLessonsAction,
+                                changeLocalizationSettingsTapped: {
+                                    viewModel.changeLocalizationSettingsTapped()
+                                },
+                                goToAllToolsTapped: {
+                                    viewModel.goToAllLessonsTapped()
+                                }
+                            )
+                        }
+                        else if !viewModel.lessonsList.isEmpty {
+                            
+                            LazyVStack(alignment: .center, spacing: lessonCardSpacing) {
 
-                        LazyVStack(alignment: .center, spacing: lessonCardSpacing) {
-
-                            if viewModel.isPersonalizationUnavailable,
-                               let unavailableState = viewModel.personalizationUnavailableState {
-
-                                PersonalizationUnavailableView(
-                                    title: unavailableState.title,
-                                    message: unavailableState.message,
-                                    changeSettingsButtonTitle: viewModel.strings.changeSettings,
-                                    goToAllLessonsButtonTitle: viewModel.strings.viewAllLessons,
-                                    geometry: geometry,
-                                    heightMultiplier: 0.7,
-                                    changeSettingsAction: {
-                                        viewModel.localizationSettingsTapped()
-                                    },
-                                    goToAllLessonsAction: {
-                                        viewModel.goToAllLessonsTapped()
-                                    }
-                                )
-
-                            } else {
-
-                                ForEach(viewModel.lessons) { (lessonListItem: LessonListItemDomainModel) in
+                                ForEach(viewModel.lessonsList) { (lessonListItem: LessonListItemDomainModel) in
 
                                     LessonCardView(
                                         viewModel: viewModel.getLessonViewModel(lessonListItem: lessonListItem),
@@ -104,16 +104,18 @@ struct LessonsView: View {
                                     )
                                 }
                             }
+                            .padding([.top], lessonCardSpacing)
                         }
-                        .padding([.top], lessonCardSpacing)
 
-                        if viewModel.selectedToggle == .personalized && !viewModel.isPersonalizationUnavailable {
-                            PersonalizedToolFooterView(
+                        if viewModel.selectedToggle == .personalized && viewModel.personalizedLessons.unavailableStrings == nil {
+                            
+                            PersonalizedChangeLocalizationView(
+                                geometry: geometry,
                                 title: viewModel.strings.personalizedLessonExplanationTitle,
                                 subtitle: viewModel.strings.personalizedLessonExplanationSubtitle,
-                                buttonTitle: viewModel.strings.changeSettings,
-                                buttonAction: {
-                                    viewModel.localizationSettingsTapped()
+                                changeLocalizationSettingsAction: viewModel.strings.changeLocalizationSettingsAction,
+                                changeLocalizationSettingsTapped: {
+                                    viewModel.changeLocalizationSettingsTapped()
                                 }
                             )
                             .padding(.top, lessonCardSpacing * 2)
@@ -124,8 +126,6 @@ struct LessonsView: View {
                 } refreshHandler: {
                     viewModel.pullToRefresh()
                 }
-                .opacity(viewModel.isLoadingLessons ? 0 : 1)
-                .animation(.easeOut, value: !viewModel.isLoadingLessons)
             }
             .animation(.spring(response: 0.5, dampingFraction: 0.75), value: viewModel.selectedToggle)
             .onAppear {
@@ -145,17 +145,18 @@ struct LessonsView_Preview: PreviewProvider {
         let appDiContainer = AppDiContainer.createUITestsDiContainer()
         
         let viewModel = LessonsViewModel(
-            flowDelegate: MockFlowDelegate(),
+            stepEmitter: PreviewFlowStepEmitter.emitter,
             pullToRefreshLessonsUseCase: appDiContainer.feature.lessons.domainLayer.getPullToRefreshLessonsUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getLocalizationSettingsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getGetLocalizationSettingsUseCase(),
-            getPersonalizedLessonsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getGetPersonalizedLessonsUseCase(),
+            getLocalizationSettingsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getLocalizationSettingsUseCase(),
+            getPersonalizedLessonsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getPersonalizedLessonsUseCase(),
             getLessonsStringsUseCase: appDiContainer.feature.lessons.domainLayer.getLessonsStringsUseCase(),
             getAllLessonsUseCase: appDiContainer.feature.lessons.domainLayer.getAllLessonsUseCase(),
             getUserLessonFiltersUseCase: appDiContainer.feature.lessonFilter.domainLayer.getUserLessonFiltersUseCase(),
-            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
-            getToolBannerUseCase: appDiContainer.domainLayer.getToolBannerUseCase()
+            trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+            trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase(),
+            getToolBannerUseCase: appDiContainer.core.domainLayer.getToolBannerUseCase(),
+            inMemoryDataCache: appDiContainer.core.dataLayer.getSharedInMemoryDataCache()
         )
         
         return viewModel

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct UserAccountDetailsDomainModel {
+struct UserAccountDetailsDomainModel: Sendable {
     
     let name: String
     let joinedOnString: String

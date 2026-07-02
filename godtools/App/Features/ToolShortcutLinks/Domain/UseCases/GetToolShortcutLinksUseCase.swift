@@ -16,7 +16,11 @@ final class GetToolShortcutLinksUseCase {
     private let translationsRepository: TranslationsRepository
     private let maxNumberOfToolShortcutLinks: Int = 4
     
-    init(favoritedResourcesRepository: FavoritedResourcesRepository, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository) {
+    init(
+        favoritedResourcesRepository: FavoritedResourcesRepository,
+        resourcesRepository: ResourcesRepository,
+        translationsRepository: TranslationsRepository
+    ) {
         
         self.favoritedResourcesRepository = favoritedResourcesRepository
         self.resourcesRepository = resourcesRepository
@@ -26,30 +30,34 @@ final class GetToolShortcutLinksUseCase {
     @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[ToolShortcutLinkDomainModel], Error> {
         
         return favoritedResourcesRepository
-            .persistence
             .observeCollectionChangesPublisher()
-            .flatMap { (favoritesChanged: Void) -> AnyPublisher<[FavoritedResourceDataModel], Error> in
+            .receive(on: DispatchQueue.global())
+            .flatMap { (favoritesChanged: Void) -> AnyPublisher<[ToolShortcutLinkDomainModel], Error> in
                 
-                return self.favoritedResourcesRepository
-                    .getFavoritedResourcesSortedByPositionPublisher()
-            }
-            .tryMap { (favoritedResources: [FavoritedResourceDataModel]) in
-                
-                return try self.getToolShortcutLinks(
-                    appLanguage: appLanguage,
-                    favoritedResources: favoritedResources
-                )
+                return AnyPublisher() {
+                    try await self.asyncExecute(appLanguage: appLanguage)
+                }
             }
             .eraseToAnyPublisher()
     }
     
-    private func getToolShortcutLinks(appLanguage: AppLanguageDomainModel, favoritedResources: [FavoritedResourceDataModel]) throws -> [ToolShortcutLinkDomainModel] {
+    private func asyncExecute(appLanguage: AppLanguageDomainModel) async throws -> [ToolShortcutLinkDomainModel] {
         
-        let toolShortcutLinks: [ToolShortcutLinkDomainModel] = try favoritedResources
+        let favoritedResources: [FavoritedResourceDataModel] = try await favoritedResourcesRepository.getFavoritedResourcesSortedByPosition()
+        
+        return getToolShortcutLinks(
+            appLanguage: appLanguage,
+            favoritedResources: favoritedResources
+        )
+    }
+    
+    private func getToolShortcutLinks(appLanguage: AppLanguageDomainModel, favoritedResources: [FavoritedResourceDataModel]) -> [ToolShortcutLinkDomainModel] {
+        
+        let toolShortcutLinks: [ToolShortcutLinkDomainModel] = favoritedResources
             .prefix(self.maxNumberOfToolShortcutLinks)
             .compactMap { (favoritedResource: FavoritedResourceDataModel) in
                 
-                guard let resource = try resourcesRepository.persistence.getDataModel(id: favoritedResource.id) else {
+                guard let resource = resourcesRepository.getResourceById(id: favoritedResource.id) else {
                     return nil
                 }
                 
@@ -71,11 +79,11 @@ final class GetToolShortcutLinksUseCase {
         
         let toolTranslation: TranslationDataModel?
         
-        if let appLanguageTranslation = translationsRepository.cache.getLatestTranslation(resourceId: resource.id, languageCode: appLanguage) {
+        if let appLanguageTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: appLanguage) {
             
             toolTranslation = appLanguageTranslation
         }
-        else if let englishTranslation = translationsRepository.cache.getLatestTranslation(resourceId: resource.id, languageCode: LanguageCodeDomainModel.english.value) {
+        else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: LanguageCodeDomainModel.english.value) {
             
             toolTranslation = englishTranslation
         }

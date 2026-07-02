@@ -8,7 +8,7 @@
 
 import Foundation
 
-class GetTranslatedToolLanguageAvailability {
+final class GetTranslatedToolLanguageAvailability {
     
     static let languageAvailableCheck: String = "✓"
     static let localizedKeyLanguageNotAvailable: String = "lessonCard.languageNotAvailable"
@@ -18,7 +18,12 @@ class GetTranslatedToolLanguageAvailability {
     private let languagesRepository: LanguagesRepository
     private let getTranslatedLanguageName: GetTranslatedLanguageName
     
-    init(localizationServices: LocalizationServicesInterface, resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName) {
+    init(
+        localizationServices: LocalizationServicesInterface,
+        resourcesRepository: ResourcesRepository,
+        languagesRepository: LanguagesRepository,
+        getTranslatedLanguageName: GetTranslatedLanguageName
+    ) {
         
         self.localizationServices = localizationServices
         self.resourcesRepository = resourcesRepository
@@ -32,7 +37,7 @@ class GetTranslatedToolLanguageAvailability {
     
     func getTranslatedLanguageAvailability(toolId: String, language: LanguageDataModel, translateInLanguage: AppLanguageDomainModel) -> ToolLanguageAvailabilityDomainModel {
         
-        guard let resource = resourcesRepository.persistence.getDataModelNonThrowing(id: toolId) else {
+        guard let resource = resourcesRepository.getResourceById(id: toolId) else {
             return failedToDetermineLanguageAvailability
         }
         
@@ -41,7 +46,7 @@ class GetTranslatedToolLanguageAvailability {
     
     func getTranslatedLanguageAvailability(resource: ResourceDataModel, language: AppLanguageDomainModel, translateInLanguage: AppLanguageDomainModel) -> ToolLanguageAvailabilityDomainModel {
         
-        guard let languageModel = languagesRepository.cache.getCachedLanguage(code: language) else {
+        guard let languageModel = languagesRepository.getLanguageByCode(code: language) else {
             return failedToDetermineLanguageAvailability
         }
         
@@ -50,7 +55,7 @@ class GetTranslatedToolLanguageAvailability {
     
     func getTranslatedLanguageAvailability(resource: ResourceDataModel, language: LanguageDataModel, translateInLanguage: AppLanguageDomainModel) -> ToolLanguageAvailabilityDomainModel {
         
-        guard let translateInLanguageModel = languagesRepository.cache.getCachedLanguage(code: translateInLanguage) else {
+        guard let translateInLanguageModel = languagesRepository.getLanguageByCode(code: translateInLanguage) else {
             return failedToDetermineLanguageAvailability
         }
         

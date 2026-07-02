@@ -8,20 +8,20 @@
 
 import UIKit
 
-extension Flow {
+extension GTFlow {
     
-    func navigateToURL(url: URL, screenName: String, siteSection: String, siteSubSection: String, appLanguage: String?, contentLanguage: String?, contentLanguageSecondary: String?) {
+    func navigateToURL(linkTapped: URLLinkTappedParams, appLanguage: String?) {
         
-        appDiContainer.domainLayer.getTrackExitLinkAnalyticsUseCase().trackExitLinkAnalytics(
-            screenName: screenName,
-            siteSection: siteSection,
-            siteSubSection: siteSubSection,
+        appDiContainer.core.domainLayer.getTrackExitLinkAnalyticsUseCase().trackExitLinkAnalytics(
+            screenName: linkTapped.screenName,
+            siteSection: linkTapped.siteSection,
+            siteSubSection: linkTapped.siteSubSection,
             appLanguage: appLanguage,
-            contentLanguage: contentLanguage,
-            contentLanguageSecondary: contentLanguageSecondary,
-            url: url
+            contentLanguage: linkTapped.contentLanguage,
+            contentLanguageSecondary: linkTapped.contentLanguageSecondary,
+            url: linkTapped.url
         )
             
-        appDiContainer.getUrlOpener().open(url: url)
+        appDiContainer.getUrlOpener().open(url: linkTapped.url)
     }
 }

@@ -9,13 +9,13 @@
 import Foundation
 import Combine
 
-@MainActor class MenuViewModel: ObservableObject {
-        
-    private static var backgroundCancellables: Set<AnyCancellable> = Set()
-    
+@MainActor
+final class MenuViewModel: ObservableObject {
+            
+    private let stepEmitter: FlowStepEmitter
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getMenuStringsUseCase: GetMenuStringsUseCase
-    private let getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase
+    private let getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
     private let getAccountCreationIsSupportedUseCase: GetAccountCreationIsSupportedUseCase
     private let getUserIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase
@@ -24,9 +24,7 @@ import Combine
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
     @Published private(set) var strings = MenuStringsDomainModel.emptyValue
@@ -34,12 +32,25 @@ import Combine
     @Published private(set) var accountSectionVisibility: MenuAccountSectionVisibility = .hidden
     @Published private(set) var showsTutorialOption: Bool = false
     
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getMenuStringsUseCase: GetMenuStringsUseCase, getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAccountCreationIsSupportedUseCase: GetAccountCreationIsSupportedUseCase, getUserIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase, logOutUserUseCase: LogOutUserUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, appConfig: AppConfigInterface) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        appLanguage: AppLanguageDomainModel,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getMenuStringsUseCase: GetMenuStringsUseCase,
+        getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase,
+        disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase,
+        getAccountCreationIsSupportedUseCase: GetAccountCreationIsSupportedUseCase,
+        getUserIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase,
+        logOutUserUseCase: LogOutUserUseCase,
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
+        trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase,
+        appConfig: AppConfigInterface
+    ) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getMenuStringsUseCase = getMenuStringsUseCase
-        self.getOptInOnboardingTutorialAvailableUseCase = getOptInOnboardingTutorialAvailableUseCase
+        self.getTutorialIsAvailableUseCase = getTutorialIsAvailableUseCase
         self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
         self.getAccountCreationIsSupportedUseCase = getAccountCreationIsSupportedUseCase
         self.getUserIsAuthenticatedUseCase = getUserIsAuthenticatedUseCase
@@ -48,23 +59,14 @@ import Combine
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.hidesDebugSection = !appConfig.isDebug
         
+        didSetAppLanguage(appLanguage: appLanguage)
+        
         getCurrentAppLanguageUseCase
             .execute()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                
-                getMenuStringsUseCase
-                    .execute(appLanguage: appLanguage)
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: MenuStringsDomainModel) in
-                
-                self?.strings = strings
+            .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
             }
             .store(in: &cancellables)
     
@@ -93,17 +95,6 @@ import Combine
                 }
             }
             .store(in: &cancellables)
-        
-        $appLanguage
-            .dropFirst()
-            .map { appLanguage in
-                
-                getOptInOnboardingTutorialAvailableUseCase
-                    .getIsAvailablePublisher(appLanguage: appLanguage)
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$showsTutorialOption)
     }
     
     deinit {
@@ -129,6 +120,15 @@ import Combine
     private var analyticsSiteSubSection: String {
         return ""
     }
+    
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+        
+        strings = getMenuStringsUseCase
+            .execute(appLanguage: appLanguage)
+        
+        showsTutorialOption = getTutorialIsAvailableUseCase
+            .execute(appLanguage: appLanguage)
+    }
 }
 
 // MARK: - Inputs
@@ -148,66 +148,61 @@ extension MenuViewModel {
     }
     
     @objc func doneTapped() {
-        flowDelegate?.navigate(step: .doneTappedFromMenu)
+        stepEmitter.emit(step: AppFlowStep.doneTappedFromMenu)
     }
     
     func tutorialTapped() {
         disableOptInOnboardingBannerUseCase.execute()
-        flowDelegate?.navigate(step: .tutorialTappedFromMenu)
+        stepEmitter.emit(step: AppFlowStep.tutorialTappedFromMenu)
     }
     
     func languageSettingsTapped() {
-        flowDelegate?.navigate(step: .languageSettingsTappedFromMenu)
+        stepEmitter.emit(step: AppFlowStep.languageSettingsTappedFromMenu)
     }
     
     func localizationSettingsTapped() {
-        flowDelegate?.navigate(step: .localizationSettingsTappedFromMenu)
+        stepEmitter.emit(step: AppFlowStep.localizationSettingsTappedFromMenu)
     }
     
     func loginTapped() {
-        flowDelegate?.navigate(step: .loginTappedFromMenu)
+        stepEmitter.emit(step: AppFlowStep.loginTappedFromMenu)
     }
     
     func activityTapped() {
-        flowDelegate?.navigate(step: .activityTappedFromMenu)
+        stepEmitter.emit(step: AppFlowStep.activityTappedFromMenu)
     }
     
     func createAccountTapped() {
-        flowDelegate?.navigate(step: .createAccountTappedFromMenu)
+        stepEmitter.emit(step: AppFlowStep.createAccountTappedFromMenu)
     }
     
     func logoutTapped() {
         
-        logOutUserUseCase
-            .execute()
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { _ in
-                
-            }, receiveValue: { (finished: Bool) in
-                
-            })
-            .store(in: &Self.backgroundCancellables)
+        Task {
+            _ = try await logOutUserUseCase
+                .execute()
+        }
     }
     
     func deleteAccountTapped() {
-        flowDelegate?.navigate(step: .deleteAccountTappedFromMenu)
+        stepEmitter.emit(step: AppFlowStep.deleteAccountTappedFromMenu)
     }
     
     func sendFeedbackTapped() {
-        flowDelegate?.navigate(step: .sendFeedbackTappedFromMenu)
+        stepEmitter.emit(step: AppFlowStep.sendFeedbackTappedFromMenu)
     }
     
     func reportABugTapped() {
-        flowDelegate?.navigate(step: .reportABugTappedFromMenu)
+        stepEmitter.emit(step: AppFlowStep.reportABugTappedFromMenu)
     }
     
     func askAQuestionTapped() {
-        flowDelegate?.navigate(step: .askAQuestionTappedFromMenu)
+        stepEmitter.emit(step: AppFlowStep.askAQuestionTappedFromMenu)
     }
     
     func leaveAReviewTapped() {
         
-        flowDelegate?.navigate(step: .leaveAReviewTappedFromMenu(
+        stepEmitter.emit(step: AppFlowStep.leaveAReviewTappedFromMenu(
             screenName: getMenuAnalyticsScreenName(),
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
@@ -218,7 +213,7 @@ extension MenuViewModel {
     
     func shareAStoryWithUsTapped() {
         
-        flowDelegate?.navigate(step: .shareAStoryWithUsTappedFromMenu)
+        stepEmitter.emit(step: AppFlowStep.shareAStoryWithUsTappedFromMenu)
         
         trackScreenViewAnalyticsUseCase.trackScreen(
             screenName: getShareStoryAnalyticsScreenName(),
@@ -232,7 +227,7 @@ extension MenuViewModel {
     
     func shareGodToolsTapped() {
         
-        flowDelegate?.navigate(step: .shareGodToolsTappedFromMenu)
+        stepEmitter.emit(step: AppFlowStep.shareGodToolsTappedFromMenu)
         
         trackActionAnalyticsUseCase.trackAction(
             screenName: getShareAppAnalyticsScreenName(),
@@ -257,15 +252,15 @@ extension MenuViewModel {
     }
     
     func termsOfUseTapped() {
-        flowDelegate?.navigate(step: .termsOfUseTappedFromMenu)
+        stepEmitter.emit(step: AppFlowStep.termsOfUseTappedFromMenu)
     }
     
     func privacyPolicyTapped() {
-        flowDelegate?.navigate(step: .privacyPolicyTappedFromMenu)
+        stepEmitter.emit(step: AppFlowStep.privacyPolicyTappedFromMenu)
     }
     
     func copyrightInfoTapped() {
-        flowDelegate?.navigate(step: .copyrightInfoTappedFromMenu)
+        stepEmitter.emit(step: AppFlowStep.copyrightInfoTappedFromMenu)
     }
 }
 
@@ -274,6 +269,6 @@ extension MenuViewModel {
 extension MenuViewModel {
     
     func copyFirebaseDeviceTokenTapped() {
-        flowDelegate?.navigate(step: .copyFirebaseDeviceTokenTappedFromMenu)
+        stepEmitter.emit(step: AppFlowStep.copyFirebaseDeviceTokenTappedFromMenu)
     }
 }

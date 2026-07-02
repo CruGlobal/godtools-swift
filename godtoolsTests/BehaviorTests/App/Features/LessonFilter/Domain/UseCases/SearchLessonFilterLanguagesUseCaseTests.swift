@@ -43,20 +43,27 @@ struct SearchLessonFilterLanguagesUseCaseTests {
         let searchLessonFilterLanguagesUseCase = SearchLessonFilterLanguagesUseCase(
             stringSearcher: StringSearcher()
         )
+                
+        var searchedLanguages: [String] = Array()
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var searchedLanguages: [String] = Array()
-                
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
+            
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
             
             searchLessonFilterLanguagesUseCase
                 .execute(for: argument.searchString, in: allLessonFilterLanguages)
                 .sink { (languages: [LessonFilterLanguageDomainModel]) in
-                    
-                    confirmation()
-                    
+                                        
                     searchedLanguages = languages.map({$0.languageNameTranslatedInAppLanguage})
+                    
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
                 }
                 .store(in: &cancellables)
         }

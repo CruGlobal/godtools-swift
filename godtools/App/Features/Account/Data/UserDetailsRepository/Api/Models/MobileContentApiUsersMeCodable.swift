@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct MobileContentApiUsersMeCodable: Codable, UserDetailsDataModelInterface {
+struct MobileContentApiUsersMeCodable: Codable, Sendable {
     
     let id: String
     let createdAt: Date?
@@ -31,6 +31,25 @@ struct MobileContentApiUsersMeCodable: Codable, UserDetailsDataModelInterface {
         case givenName = "given-name"
         case name = "name"
         case ssoGuid = "sso-guid"
+    }
+    
+    init(
+        id: String,
+        createdAt: Date?,
+        familyName: String?,
+        givenName: String?,
+        name: String?,
+        ssoGuid: String?,
+        type: String
+    ) {
+        
+        self.id = id
+        self.createdAt = createdAt
+        self.familyName = familyName
+        self.givenName = givenName
+        self.name = name
+        self.ssoGuid = ssoGuid
+        self.type = type
     }
     
     init(from decoder: Decoder) throws {
@@ -60,5 +79,31 @@ struct MobileContentApiUsersMeCodable: Codable, UserDetailsDataModelInterface {
         givenName = try attributesContainer?.decodeIfPresent(String.self, forKey: .givenName)
         name = try attributesContainer?.decodeIfPresent(String.self, forKey: .name)
         ssoGuid = try attributesContainer?.decodeIfPresent(String.self, forKey: .ssoGuid)
+    }
+    
+    static var emptyValue: MobileContentApiUsersMeCodable {
+        return MobileContentApiUsersMeCodable(
+            id: "",
+            createdAt: nil,
+            familyName: nil,
+            givenName: nil,
+            name: nil,
+            ssoGuid: nil,
+            type: ""
+        )
+    }
+}
+
+extension MobileContentApiUsersMeCodable {
+    
+    func toModel() -> UserDetailsDataModel {
+        return UserDetailsDataModel(
+            id: id,
+            createdAt: createdAt,
+            familyName: familyName,
+            givenName: givenName,
+            name: name,
+            ssoGuid: ssoGuid
+        )
     }
 }

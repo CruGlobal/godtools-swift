@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ShowToolScreenShareTutorialPages {
+enum ShowToolScreenShareTutorialPages: Sendable {
     
     case allPages
     case lastPageWithQRCodeOption

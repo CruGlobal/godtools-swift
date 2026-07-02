@@ -12,15 +12,15 @@ import SwiftUI
 
 struct SearchBar: View {
     
-    @ObservedObject private var viewModel: SearchBarViewModel
-
+    private let strings: SearchBarStringsDomainModel
+    
     @Binding private var searchText: String
     @FocusState private var textFieldIsFocused: Bool
     
-    init(viewModel: SearchBarViewModel, searchText: Binding<String>) {
+    init(searchText: Binding<String>, strings: SearchBarStringsDomainModel) {
         
-        self.viewModel = viewModel
         self._searchText = searchText
+        self.strings = strings
     }
         
     var body: some View {
@@ -62,7 +62,7 @@ struct SearchBar: View {
                     self.textFieldIsFocused = false
 
                 }) {
-                    Text(viewModel.cancelText)
+                    Text(strings.cancel)
                 }
             }
         }

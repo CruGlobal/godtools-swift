@@ -31,7 +31,7 @@ class ToolTrainingView: UIViewController {
     
     @IBOutlet weak private var contentViewBottom: NSLayoutConstraint!
     
-    required init(viewModel: ToolTrainingViewModel) {
+    init(viewModel: ToolTrainingViewModel) {
         self.viewModel = viewModel
         super.init(nibName: String(describing: ToolTrainingView.self), bundle: nil)
         

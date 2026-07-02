@@ -8,21 +8,46 @@
 
 import Foundation
 import RealmSwift
+import RepositorySync
 
-class RealmDownloadedLanguage: Object {
+class RealmDownloadedLanguage: Object, IdentifiableRealmObject {
     
+    @objc dynamic var id: String = ""
     @objc dynamic var createdAt: Date = Date()
-    @objc dynamic var languageId: String = ""
+    @objc dynamic var languageId: String = "" {
+        didSet {
+            id = languageId
+        }
+    }
     @objc dynamic var downloadComplete: Bool = false
     
     override static func primaryKey() -> String? {
         return "languageId"
     }
+}
+
+extension RealmDownloadedLanguage {
     
-    func mapFrom(dataModel: DownloadedLanguageDataModel) {
+    func mapFrom(model: DownloadedLanguageDataModel) {
         
-        createdAt = dataModel.createdAt
-        languageId = dataModel.languageId
-        downloadComplete = dataModel.downloadComplete
+        id = model.id
+        createdAt = model.createdAt
+        languageId = model.languageId
+        downloadComplete = model.downloadComplete
+    }
+    
+    static func createNewFrom(model: DownloadedLanguageDataModel) -> RealmDownloadedLanguage {
+        
+        let object = RealmDownloadedLanguage()
+        object.mapFrom(model: model)
+        return object
+    }
+    
+    func toModel() -> DownloadedLanguageDataModel {
+        return DownloadedLanguageDataModel(
+            languageId: languageId,
+            downloadComplete: downloadComplete,
+            createdAt: createdAt
+        )
     }
 }

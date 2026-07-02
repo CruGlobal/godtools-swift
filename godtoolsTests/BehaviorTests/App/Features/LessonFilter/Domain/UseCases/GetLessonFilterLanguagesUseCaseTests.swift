@@ -11,7 +11,6 @@ import Testing
 import Combine
 import RepositorySync
 
-@Suite(.serialized)
 struct GetLessonFilterLanguagesUseCaseTests {
     
     private let englishLessonsAvailableText: String = "lessons available"
@@ -197,12 +196,17 @@ struct GetLessonFilterLanguagesUseCaseTests {
 
 extension GetLessonFilterLanguagesUseCaseTests {
     
-    private func getTestsDiContainer() throws -> TestsDiContainer {
-                
-        return try TestsDiContainer(
-            realmFileName: String(describing: GetLessonFilterLanguagesUseCaseTests.self),
-            addRealmObjects: getRealmObjects()
+    private func getLessonFilterLanguagesUseCase() throws -> GetLessonFilterLanguagesUseCase {
+        
+        let testsDiContainer = try TestsDiContainer(addRealmObjects: getRealmObjects())
+        
+        let getLessonFilterLanguagesRepository = GetLessonFilterLanguagesUseCase(
+            resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),
+            languagesRepository: testsDiContainer.core.dataLayer.getLanguagesRepository(),
+            getLessonFilterLangauge: getLessonFilterLangauge(testsDiContainer: testsDiContainer)
         )
+        
+        return getLessonFilterLanguagesRepository
     }
     
     private func getRealmObjects() -> [IdentifiableRealmObject] {
@@ -231,19 +235,6 @@ extension GetLessonFilterLanguagesUseCaseTests {
         ]
         
         return allLanguages + tracts + lessons
-    }
-    
-    private func getLessonFilterLanguagesUseCase() throws -> GetLessonFilterLanguagesUseCase {
-        
-        let testsDiContainer = try getTestsDiContainer()
-        
-        let getLessonFilterLanguagesRepository = GetLessonFilterLanguagesUseCase(
-            resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
-            languagesRepository: testsDiContainer.dataLayer.getLanguagesRepository(),
-            getLessonFilterLangauge: getLessonFilterLangauge(testsDiContainer: testsDiContainer)
-        )
-        
-        return getLessonFilterLanguagesRepository
     }
     
     private func getAllLanguages() -> [RealmLanguage] {
@@ -275,8 +266,8 @@ extension GetLessonFilterLanguagesUseCaseTests {
     
     private func getLessonFilterLangauge(testsDiContainer: TestsDiContainer) -> GetLessonFilterLanguage {
         return GetLessonFilterLanguage(
-            resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
-            languagesRepository: testsDiContainer.dataLayer.getLanguagesRepository(),
+            resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),
+            languagesRepository: testsDiContainer.core.dataLayer.getLanguagesRepository(),
             getTranslatedLanguageName: getTranslatedLanguageName(),
             localizationServices: getLocalizationServices(),
             stringWithLocaleCount: getStringWithLocaleCount()
@@ -286,7 +277,7 @@ extension GetLessonFilterLanguagesUseCaseTests {
     private func getLocalizationServices() -> MockLocalizationServices {
         
         let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
-            LanguageCodeDomainModel.english.rawValue: [LessonFilterStringKeys.lessonsAvailableText.rawValue: englishLessonsAvailableText]
+            LanguageCodeDomainModel.english.rawValue: [LocalizableStringKeys.lessonsFilterLessonsAvailable.key: englishLessonsAvailableText]
         ]
         
         return MockLocalizationServices.createLanguageNamesLocalizationServices(

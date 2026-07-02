@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct CacheArticleAemWebArchivePlistError {
+struct CacheArticleAemWebArchivePlistError: Sendable {
     
     let webArchiveFilename: String
     let url: URL

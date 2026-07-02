@@ -8,15 +8,15 @@
 
 import Foundation
 
-class OptInNotificationDiContainer {
+final class OptInNotificationDiContainer {
         
     let dataLayer: OptInNotificationDataLayerDependencies
     let domainLayer: OptInNotificationDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, getOnboardingTutorialIsAvailable: GetOnboardingTutorialIsAvailable) {
+    init(core: AppCoreDiContainer, getOnboardingTutorialIsAvailable: GetOnboardingTutorialIsAvailable) {
         
-        dataLayer = OptInNotificationDataLayerDependencies(coreDataLayer: coreDataLayer)
+        dataLayer = OptInNotificationDataLayerDependencies(coreDataLayer: core.dataLayer)
         
-        domainLayer = OptInNotificationDomainLayerDependencies(coreDataLayer: coreDataLayer, dataLayer: dataLayer, getOnboardingTutorialIsAvailable: getOnboardingTutorialIsAvailable)
+        domainLayer = OptInNotificationDomainLayerDependencies(core: core, dataLayer: dataLayer, getOnboardingTutorialIsAvailable: getOnboardingTutorialIsAvailable)
     }
 }

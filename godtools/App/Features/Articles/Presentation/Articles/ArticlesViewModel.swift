@@ -2,81 +2,104 @@
 //  ArticlesViewModel.swift
 //  godtools
 //
-//  Created by Levi Eggert on 4/21/20.
-//  Copyright © 2020 Cru. All rights reserved.
+//  Created by Levi Eggert on 6/1/26.
+//  Copyright © 2026 Cru. All rights reserved.
 //
 
 import Foundation
-import GodToolsShared
 import Combine
+import GodToolsShared
 
-@MainActor class ArticlesViewModel: NSObject {
-        
+@MainActor
+final class ArticlesViewModel: ObservableObject {
+    
     typealias AemUri = String
     
+    private let stepEmitter: FlowStepEmitter
     private let resource: ResourceDataModel
     private let language: LanguageDataModel
-    private let category: GodToolsShared.Category
+    private let category: ArticleCategoryDomainModel
     private let manifest: Manifest
     private let downloadArticlesObservable: DownloadManifestArticlesObservable
-    private let articleManifestAemRepository: ArticleManifestAemRepository
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    private let getArticlesUseCase: GetArticlesUseCase
     private let localizationServices: LocalizationServicesInterface
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
-        
+    
+    private var getArticlesTask: Task<Void, Error>?
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
-    let navTitle: ObservableValue<String> = ObservableValue(value: "")
-    let numberOfArticles: ObservableValue<Int> = ObservableValue(value: 0)
-    let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
-    let errorMessage: ObservableValue<ArticlesErrorMessageViewModel?> = ObservableValue(value: nil)
         
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-    @Published private var articleAemCacheObjects: [ArticleAemCacheObject] = Array()
+    let navTitle: String
     
-    init(flowDelegate: FlowDelegate, resource: ResourceDataModel, language: LanguageDataModel, category: GodToolsShared.Category, manifest: Manifest, downloadArticlesObservable: DownloadManifestArticlesObservable, articleManifestAemRepository: ArticleManifestAemRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, localizationServices: LocalizationServicesInterface, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
+    @Published private var appLanguage = AppLanguageDomainModel.english
+    
+    @Published private(set) var isLoading: Bool = true
+    @Published private(set) var articles: [ArticleListItemDomainModel] = Array()
+    @Published private(set) var articlesError: ArticlesErrorDomainModel?
+    
+    init(
+        stepEmitter: FlowStepEmitter,
+        resource: ResourceDataModel,
+        language: LanguageDataModel,
+        category: ArticleCategoryDomainModel,
+        manifest: Manifest,
+        downloadArticlesObservable: DownloadManifestArticlesObservable,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getArticlesUseCase: GetArticlesUseCase,
+        localizationServices: LocalizationServicesInterface,
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
+    ) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.resource = resource
         self.language = language
         self.category = category
         self.manifest = manifest
         self.downloadArticlesObservable = downloadArticlesObservable
-        self.articleManifestAemRepository = articleManifestAemRepository
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
+        self.getArticlesUseCase = getArticlesUseCase
         self.localizationServices = localizationServices
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         
-        super.init()
+        navTitle = category.title
         
         getCurrentAppLanguageUseCase
             .execute()
             .assign(to: &$appLanguage)
-                        
-        navTitle.accept(value: category.label?.text ?? "")
         
         downloadArticlesObservable
             .$isDownloading
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (isDownloading: Bool) in
 
-                self?.isLoading.accept(value: isDownloading)
+                self?.isLoading = isDownloading
             }
             .store(in: &cancellables)
         
         Publishers.CombineLatest3(
             $appLanguage.dropFirst(),
-            downloadArticlesObservable.$articleAemRepositoryResult,
-            $articleAemCacheObjects.dropFirst()
+            downloadArticlesObservable.$downloadResult,
+            $articles.dropFirst()
         )
-        .map { (appLanguage: AppLanguageDomainModel, result: ArticleAemRepositoryResult, articleAemCacheObjects: [ArticleAemCacheObject]) in
+        .map { (appLanguage: AppLanguageDomainModel, downloadResult: Result<Void, Error>?, articles: [ArticleListItemDomainModel]) in
             
-            let downloadError: ArticleAemDownloaderError? = result.downloaderResult.downloadError
-            let noCachedResults: Bool = articleAemCacheObjects.isEmpty
+            let downloadError: Error?
             
-            if let downloadError = downloadError, noCachedResults {
+            if let downloadResult = downloadResult {
+                switch downloadResult {
+                case .success( _):
+                    downloadError = nil
+                case .failure(let error):
+                    downloadError = error
+                }
+            }
+            else {
+                downloadError = nil
+            }
+            
+            let noArticles: Bool = articles.isEmpty
+            
+            if let downloadError = downloadError, noArticles {
                 
                 let downloadArticlesErrorViewModel = DownloadArticlesErrorViewModel(
                     appLanguage: appLanguage,
@@ -84,13 +107,15 @@ import Combine
                     error: downloadError
                 )
                 
-                let errorViewModel = ArticlesErrorMessageViewModel(
-                    appLanguage: appLanguage,
-                    localizationServices: localizationServices,
-                    message: downloadArticlesErrorViewModel.message
-                )
+                let title: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.downloadError.key)
+                let message: String = downloadArticlesErrorViewModel.message
+                let downloadActionTitle: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.articlesRetryDownloadButtonTitle.key)
                 
-                return errorViewModel
+                return ArticlesErrorDomainModel(
+                    title: title,
+                    message: message,
+                    downloadActionTitle: downloadActionTitle
+                )
             }
             else {
                 
@@ -98,75 +123,31 @@ import Combine
             }
         }
         .receive(on: DispatchQueue.main)
-        .sink { [weak self] (errorViewModel: ArticlesErrorMessageViewModel?) in
+        .sink { [weak self] (error: ArticlesErrorDomainModel?) in
             
-            self?.errorMessage.accept(value: errorViewModel)
+            self?.articlesError = error
         }
         .store(in: &cancellables)
         
         downloadArticlesObservable
-            .$articleAemRepositoryResult
-            .flatMap { (articleAemRepositoryResult: ArticleAemRepositoryResult) -> AnyPublisher<[AemUri], Never> in
-                
-                guard let categoryId = category.id else {
-                    return Just([])
-                        .eraseToAnyPublisher()
-                }
-                
-                return articleManifestAemRepository
-                    .getCategoryArticlesPublisher(
-                        categoryId: categoryId,
-                        languageCode: language.localeId
-                    )
-                    .map { (categoryArticles: [CategoryArticleModel]) in
-                        
-                        var uniqueAemUris: Set<String> = Set()
-                        
-                        for article in categoryArticles {
-                            for uri in article.aemUris {
-                                uniqueAemUris.insert(uri)
-                            }
-                        }
-                        
-                        return uniqueAemUris.sorted()
-                    }
-                    .eraseToAnyPublisher()
-            }
-            .flatMap { (aemUris: [String]) -> AnyPublisher<[ArticleAemCacheObject], Never> in
-                
-                return articleManifestAemRepository.getAemCacheObjectsPublisher(aemUris: aemUris)
-                    .map { (aemCacheObjects: [ArticleAemCacheObject]) in
-                        
-                        let sortedAemCacheObjects: [ArticleAemCacheObject] = aemCacheObjects.sorted(by: {
-                            let thisTitle: String? = $0.aemData.articleJcrContent?.title
-                            let thatTitle: String? = $1.aemData.articleJcrContent?.title
-                            
-                            if let thisTitle = thisTitle, let thatTitle = thatTitle {
-                                return thisTitle < thatTitle
-                            }
-                            
-                            return false
-                        })
-                        
-                        return sortedAemCacheObjects
-                    }
-                    .eraseToAnyPublisher()
-            }
+            .$downloadResult
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (aemCacheObjects: [ArticleAemCacheObject]) in
+            .sink(receiveCompletion: { _ in
                 
-                self?.articleAemCacheObjects = aemCacheObjects
-                self?.numberOfArticles.accept(value: aemCacheObjects.count)
-            }
+            }, receiveValue: { [weak self] _ in
+                
+                self?.didDownloadArticles()
+            })
             .store(in: &cancellables)
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+        getArticlesTask?.cancel()
     }
     
     private var analyticsScreenName: String {
-        return "Category : \(category.label?.text ?? "")"
+        return "Category : \(category.title)"
     }
     
     private var analyticsSiteSection: String {
@@ -176,6 +157,19 @@ import Combine
     private var analyticsSiteSubSection: String {
         return "articles-list"
     }
+    
+    private func didDownloadArticles() {
+        
+        getArticlesTask?.cancel()
+        
+        getArticlesTask = Task {
+            
+            articles = try await getArticlesUseCase.execute(
+                category: category,
+                languageCode: language.localeId
+            )
+        }
+    }
 }
 
 // MARK: - Inputs
@@ -184,7 +178,7 @@ extension ArticlesViewModel {
     
     @objc func backTapped() {
         
-        flowDelegate?.navigate(step: .backTappedFromArticles)
+        stepEmitter.emit(step: AppFlowStep.backTappedFromArticles)
     }
     
     func pageViewed() {
@@ -199,18 +193,9 @@ extension ArticlesViewModel {
         )
     }
     
-    func articleTapped(index: Int) {
-        
-        let aemCacheObject: ArticleAemCacheObject = articleAemCacheObjects[index]
-        
-        flowDelegate?.navigate(step: .articleTappedFromArticles(resource: resource, aemCacheObject: aemCacheObject))
-    }
-    
-    func articleWillAppear(index: Int) -> ArticleCellViewModel {
-        
-        let aemCacheObject: ArticleAemCacheObject = articleAemCacheObjects[index]
-        
-        return ArticleCellViewModel(aemData: aemCacheObject.aemData)
+    func articleTapped(article: ArticleListItemDomainModel) {
+          
+        stepEmitter.emit(step: AppFlowStep.articleTappedFromArticles(resource: resource, articleId: article.id))
     }
     
     func downloadArticlesTapped() {

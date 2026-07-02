@@ -8,10 +8,9 @@
 
 import Foundation
 
-struct ArticleAemCacheObject {
+struct ArticleAemCacheObject: Sendable {
     
     let aemUri: String
     let aemData: ArticleAemData
     let webArchiveFileUrl: URL?
-    let fetchWebArchiveFileUrlError: Error?
 }

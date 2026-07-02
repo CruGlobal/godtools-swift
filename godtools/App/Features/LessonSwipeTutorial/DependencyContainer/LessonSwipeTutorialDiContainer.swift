@@ -8,14 +8,14 @@
 
 import Foundation
 
-class LessonSwipeTutorialDiContainer {
+final class LessonSwipeTutorialDiContainer {
     
     let dataLayer: LessonSwipeTutorialDataLayerDependencies
     let domainlayer: LessonSwipeTutorialDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(core: AppCoreDiContainer) {
         
-        dataLayer = LessonSwipeTutorialDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainlayer = LessonSwipeTutorialDomainLayerDependencies(coreDataLayer: coreDataLayer, dataLayer: dataLayer)
+        dataLayer = LessonSwipeTutorialDataLayerDependencies(coreDataLayer: core.dataLayer)
+        domainlayer = LessonSwipeTutorialDomainLayerDependencies(core: core, dataLayer: dataLayer)
     }
 }

@@ -9,14 +9,19 @@
 import Foundation
 import Combine
 
-class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface {
+final class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface {
     
     private let resourceId: String
     private let languageIds: [String]
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
         
-    init(resourceId: String, languageIds: [String], resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository) {
+    init(
+        resourceId: String,
+        languageIds: [String],
+        resourcesRepository: ResourcesRepository,
+        translationsRepository: TranslationsRepository
+    ) {
         
         self.resourceId = resourceId
         self.languageIds = languageIds
@@ -25,10 +30,37 @@ class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadIn
     }
     
     func getResource() -> ResourceDataModel? {
-        return resourcesRepository.persistence.getDataModelNonThrowing(id: resourceId)
+        return resourcesRepository.getResourceById(id: resourceId)
     }
     
-    func determineToolTranslationsToDownloadPublisher() -> AnyPublisher<DetermineToolTranslationsToDownloadResult, DetermineToolTranslationsToDownloadError> {
+    func determineToolTranslationsToDownload() async throws(DetermineToolTranslationsToDownloadError) -> ToolTranslationsToDownload {
+        
+        guard let resource = getResource() else {
+            throw .failedToFetchResourceFromCache(resourceNeeded: .id(value: resourceId))
+        }
+        
+        let supportedLanguageIds: [String] = languageIds.filter({resource.supportsLanguage(languageId: $0)})
+                
+        var translations: [TranslationDataModel] = Array()
+                
+        for languageId in supportedLanguageIds {
+            
+            guard let translation = translationsRepository.getLatestTranslation(resourceId: resourceId, languageId: languageId) else {
+                throw .failedToFetchResourceFromCache(resourceNeeded: .id(value: resourceId))
+            }
+            
+            translations.append(translation)
+        }
+        
+        if translations.isEmpty, let defaultTranslation = translationsRepository.getLatestTranslation(resourceId: resourceId, languageCode: resource.attrDefaultLocale) {
+            
+            translations = [defaultTranslation]
+        }
+    
+        return ToolTranslationsToDownload(translations: translations)
+    }
+    
+    func determineToolTranslationsToDownloadPublisher() -> AnyPublisher<ToolTranslationsToDownload, DetermineToolTranslationsToDownloadError> {
         
         guard let resource = getResource() else {
             return Fail(error: .failedToFetchResourceFromCache(resourceNeeded: .id(value: resourceId)))
@@ -41,7 +73,7 @@ class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadIn
                 
         for languageId in supportedLanguageIds {
             
-            guard let translation = translationsRepository.cache.getLatestTranslation(resourceId: resourceId, languageId: languageId) else {
+            guard let translation = translationsRepository.getLatestTranslation(resourceId: resourceId, languageId: languageId) else {
                 return Fail(error: .failedToFetchResourceFromCache(resourceNeeded: .id(value: resourceId)))
                     .eraseToAnyPublisher()
             }
@@ -49,12 +81,12 @@ class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadIn
             translations.append(translation)
         }
         
-        if translations.isEmpty, let defaultTranslation = translationsRepository.cache.getLatestTranslation(resourceId: resourceId, languageCode: resource.attrDefaultLocale) {
+        if translations.isEmpty, let defaultTranslation = translationsRepository.getLatestTranslation(resourceId: resourceId, languageCode: resource.attrDefaultLocale) {
             
             translations = [defaultTranslation]
         }
     
-        let result = DetermineToolTranslationsToDownloadResult(translations: translations)
+        let result = ToolTranslationsToDownload(translations: translations)
         
         return Just(result)
             .setFailureType(to: DetermineToolTranslationsToDownloadError.self)

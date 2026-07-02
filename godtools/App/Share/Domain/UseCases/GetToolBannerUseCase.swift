@@ -10,48 +10,24 @@ import Foundation
 import SwiftUI
 import Combine
 
-class GetToolBannerUseCase {
+final class GetToolBannerUseCase {
     
     private let attachmentsRepository: AttachmentsRepository
-            
+    
     init(attachmentsRepository: AttachmentsRepository) {
         
         self.attachmentsRepository = attachmentsRepository
     }
     
-    @MainActor func execute(attachmentId: String) -> AnyPublisher<Image?, Error> {
-                
-        do {
-            
-            let cachedAttachment: AttachmentDataModel? = try attachmentsRepository
-                .cache
-                .getAttachment(id: attachmentId)
-                        
-            if let cachedImage = cachedAttachment?.getImage() {
-                
-                return Just(cachedImage)
-                    .setFailureType(to: Error.self)
-                    .eraseToAnyPublisher()
-            }
-            else {
-                
-                return attachmentsRepository
-                    .getAttachmentFromCacheElseRemotePublisher(
-                        id: attachmentId,
-                        requestPriority: .high
-                    )
-                    .map { (attachment: AttachmentDataModel?) in
-                        
-                        return attachment?.getImage()
-                    }
-                    .receive(on: DispatchQueue.main)
-                    .eraseToAnyPublisher()
-            }
+    func execute(attachmentId: String) async throws -> Data? {
+        
+        if let cachedImageData = attachmentsRepository.getAttachment(id: attachmentId)?.getImageData() {
+            return cachedImageData
         }
-        catch let error {
-            
-            return Fail(error: error)
-                .eraseToAnyPublisher()
-        }
+        
+        return try await attachmentsRepository.getAttachmentFromCacheElseRemote(
+            id: attachmentId,
+            requestPriority: .high
+        )?.getImageData()
     }
 }

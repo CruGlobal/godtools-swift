@@ -18,7 +18,11 @@ class MobileContentLinkViewModel: MobileContentViewModel {
     let mobileContentAnalytics: MobileContentRendererAnalytics
     let titleColor: UIColor
     
-    init(linkModel: Link, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
+    init(
+        linkModel: Link,
+        renderedPageContext: MobileContentRenderedPageContext,
+        mobileContentAnalytics: MobileContentRendererAnalytics
+    ) {
         
         self.linkModel = linkModel
         self.mobileContentAnalytics = mobileContentAnalytics

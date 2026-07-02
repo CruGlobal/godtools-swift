@@ -9,22 +9,59 @@
 import Foundation
 import Combine
 
-class GetToolDetailsLearnToShareToolIsAvailableUseCase {
+final class GetToolDetailsLearnToShareToolIsAvailableUseCase {
     
-    private let getToolDetailsLearnToShareToolIsAvailableRepository: GetToolDetailsLearnToShareToolIsAvailableRepositoryInterface
+    private let translationsRepository: TranslationsRepository
     
-    init(getToolDetailsLearnToShareToolIsAvailableRepository: GetToolDetailsLearnToShareToolIsAvailableRepositoryInterface) {
+    init(translationsRepository: TranslationsRepository) {
         
-        self.getToolDetailsLearnToShareToolIsAvailableRepository = getToolDetailsLearnToShareToolIsAvailableRepository
+        self.translationsRepository = translationsRepository
     }
     
-    func getIsAvailablePublisher(toolId: String, primaryLanguage: BCP47LanguageIdentifier, parallelLanguage: BCP47LanguageIdentifier?) -> AnyPublisher<Bool, Never> {
+    func execute(toolId: String, primaryLanguage: BCP47LanguageIdentifier, parallelLanguage: BCP47LanguageIdentifier?) -> AnyPublisher<Bool, Never> {
         
-        return self.getToolDetailsLearnToShareToolIsAvailableRepository.getIsAvailablePublisher(
-            toolId: toolId,
-            primaryLanguage: primaryLanguage,
-            parallelLanguage: parallelLanguage
-        )
+        return AnyPublisher() {
+            try await self.asyncExecute(
+                toolId: toolId,
+                primaryLanguage: primaryLanguage,
+                parallelLanguage: parallelLanguage
+            )
+        }
+        .catch { _ in
+            return Just(false)
+                .eraseToAnyPublisher()
+        }
         .eraseToAnyPublisher()
+    }
+    
+    private func asyncExecute(toolId: String, primaryLanguage: BCP47LanguageIdentifier, parallelLanguage: BCP47LanguageIdentifier?) async throws -> Bool {
+        
+        let primaryHasTips: Bool = try await getTranslationHasTips(toolId: toolId, language: primaryLanguage)
+        
+        if primaryHasTips {
+            return true
+        }
+        
+        return try await getTranslationHasTips(toolId: toolId, language: parallelLanguage)
+    }
+    
+    private func getTranslationHasTips(toolId: String, language: BCP47LanguageIdentifier?) async throws -> Bool {
+        
+        guard let language = language,
+              let translation = translationsRepository.getLatestTranslation(resourceId: toolId, languageCode: language) else {
+            
+            return false
+        }
+        
+        let manifestParserType: TranslationManifestParserType = .manifestOnly
+        let includeRelatedFiles: Bool = false
+        
+        return try await translationsRepository.getTranslationManifestFromCacheElseRemote(
+            translation: translation,
+            manifestParserType: manifestParserType,
+            requestPriority: .high,
+            includeRelatedFiles: includeRelatedFiles,
+            shouldFallbackToLatestDownloadedTranslationIfRemoteFails: true
+        ).manifest.hasTips
     }
 }

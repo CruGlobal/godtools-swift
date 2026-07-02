@@ -25,14 +25,14 @@ struct ToolFilterLanguageSelectionView: View {
             
             AccessibilityScreenElementView(screenAccessibility: .toolsLanguageFilters)
             
-            SearchBarView(viewModel: viewModel.getSearchBarViewModel(), searchText: $viewModel.searchText)
+            SearchBarView(searchText: $viewModel.searchText, strings: viewModel.searchBarStrings)
             
             List {
-                ForEach(viewModel.languageSearchResults, id: \.filterId) { language in
+                ForEach(viewModel.languageSearchResults) { language in
                     
                     Button {
                         
-                        viewModel.rowTapped(with: language)
+                        viewModel.languageTapped(language: language)
                         
                     } label: {
                         
@@ -45,8 +45,8 @@ struct ToolFilterLanguageSelectionView: View {
             }
             .listStyle(.inset)
         }
-        .navigationBarBackButtonHidden(true) // TODO: (GT-1794) This is a temp fix for iOS 16.  Will need to update to configure the navigation bar using SwiftUI instead of UIHostingController's. ~Levi
-        .navigationTitle(viewModel.navTitle)
+        .navigationBarBackButtonHidden(true)
+        .navigationTitle(viewModel.strings.navTitle)
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
 }

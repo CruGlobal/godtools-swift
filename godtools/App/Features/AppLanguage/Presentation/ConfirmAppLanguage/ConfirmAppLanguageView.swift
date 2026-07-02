@@ -64,17 +64,31 @@ struct ConfirmAppLanguageView: View {
 
                 HStack(spacing: buttonSpacing) {
                     
+                    let fontSize: CGFloat = 15
                     let buttonWidth = (geometry.size.width - buttonSpacing - 2 * horizontalPadding) / 2
+                    let buttonHeight: CGFloat = 48
                     
-                    GTWhiteButton(title: viewModel.strings.nevermindButtonText, fontSize: 15, width: buttonWidth, height: 48) {
-                        
-                        viewModel.nevermindButtonTapped()
-                    }
+                    GTButton(
+                        style: .white,
+                        title: viewModel.strings.nevermindButtonText,
+                        fontSize: fontSize,
+                        width: buttonWidth,
+                        height: buttonHeight,
+                        tapped: {
+                            viewModel.nevermindButtonTapped()
+                        }
+                    )
                     
-                    GTBlueButton(title: viewModel.strings.changeLanguageButtonText, fontSize: 15, width: buttonWidth, height: 48) {
-                        
-                        viewModel.confirmLanguageButtonTapped()
-                    }
+                    GTButton(
+                        style: .blue,
+                        title: viewModel.strings.changeLanguageButtonText,
+                        fontSize: fontSize,
+                        width: buttonWidth,
+                        height: buttonHeight,
+                        tapped: {
+                            viewModel.confirmLanguageButtonTapped()
+                        }
+                    )
                 }
                 
                 Spacer()

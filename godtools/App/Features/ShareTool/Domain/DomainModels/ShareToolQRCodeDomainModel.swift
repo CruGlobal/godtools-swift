@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ShareToolQRCodeDomainModel {
+struct ShareToolQRCodeDomainModel: Sendable {
     
     let url: String
 }

@@ -47,12 +47,6 @@ final class AppSupportingDomainLayerDependencies {
         )
     }
     
-    func getSearchBarStrings() -> GetSearchBarStrings {
-        return GetSearchBarStrings(
-            localizationServices: dataLayer.getLocalizationServices()
-        )
-    }
-    
     func getToolsListItems() -> GetToolsListItems {
         return GetToolsListItems(
             favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository(),

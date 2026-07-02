@@ -8,23 +8,22 @@
 
 import Foundation
 import RequestOperation
-import Combine
 
-class MobileContentResourceViewsApi {
+final class MobileContentResourceViewsApi: ResourceViewsApiInterface {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let urlSessionPriority: URLSessionPriority
-    private let requestSender: RequestSender
+    private let requestSender: RequestSenderInterface
     private let baseUrl: String
     
-    init(config: AppConfigInterface, urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
+    init(config: AppConfigInterface, urlSessionPriority: URLSessionPriority, requestSender: RequestSenderInterface) {
                     
         self.urlSessionPriority = urlSessionPriority
         self.requestSender = requestSender
         baseUrl = config.getMobileContentApiBaseUrl()
     }
     
-    private func getResourceViewRequest(resourceView: ResourceViewModelType, urlSession: URLSession) -> URLRequest {
+    private func getResourceViewRequest(resourceId: String, quantity: Int, urlSession: URLSession) throws -> URLRequest {
         
         let headers: [String: String] = [
             "Content-Type": "application/vnd.api+json"
@@ -34,14 +33,14 @@ class MobileContentResourceViewsApi {
             "data": [
                 "type": "view",
                 "attributes": [
-                    "resource_id": resourceView.resourceId,
-                    "quantity": resourceView.quantity
+                    "resource_id": resourceId,
+                    "quantity": quantity
                 ]
             ]
         ]
         
-        return requestBuilder.build(
-            parameters: RequestBuilderParameters(
+        return try requestBuilder.build(
+            parameters: try RequestBuilderParameters(
                 urlSession: urlSession,
                 urlString: baseUrl + "/views",
                 method: .post,
@@ -52,13 +51,19 @@ class MobileContentResourceViewsApi {
         )
     }
     
-    func postResourceViewPublisher(resourceView: ResourceViewModelType, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
+    func postResourceView(resourceId: String, quantity: Int, requestPriority: RequestPriority) async throws -> RequestDataResponse {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
-        let urlRequest = getResourceViewRequest(resourceView: resourceView, urlSession: urlSession)
+        let urlRequest: URLRequest = try getResourceViewRequest(
+            resourceId: resourceId,
+            quantity: quantity,
+            urlSession: urlSession
+        )
         
-        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
-            .eraseToAnyPublisher()
+        return try await requestSender.sendDataTask(
+            urlRequest: urlRequest,
+            urlSession: urlSession
+        )
     }
 }

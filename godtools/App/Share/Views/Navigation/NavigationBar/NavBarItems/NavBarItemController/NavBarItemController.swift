@@ -9,12 +9,14 @@
 import UIKit
 import Combine
 
-@MainActor protocol NavBarItemControllerDelegate: AnyObject {
+@MainActor
+protocol NavBarItemControllerDelegate: AnyObject {
     
     func didChangeBarButtonItemState(controller: NavBarItemController)
 }
 
-@MainActor class NavBarItemController {
+@MainActor
+class NavBarItemController {
         
     private var hidesBarItemPublisher: AnyPublisher<Bool, Never>?
     private var barButtonItem: UIBarButtonItem?
@@ -29,7 +31,13 @@ import Combine
     let itemBarPosition: BarButtonItemBarPosition
     let itemIndex: Int
     
-    init(delegate: NavBarItemControllerDelegate, navBarAppearance: AppNavigationBarAppearance?, navBarItem: NavBarItem, itemBarPosition: BarButtonItemBarPosition, itemIndex: Int) {
+    init(
+        delegate: NavBarItemControllerDelegate,
+        navBarAppearance: AppNavigationBarAppearance?,
+        navBarItem: NavBarItem,
+        itemBarPosition: BarButtonItemBarPosition,
+        itemIndex: Int
+    ) {
         
         self.delegate = delegate
         self.navBarAppearance = navBarAppearance

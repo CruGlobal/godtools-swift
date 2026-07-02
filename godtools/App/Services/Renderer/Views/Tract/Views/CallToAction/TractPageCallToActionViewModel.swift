@@ -13,7 +13,11 @@ class TractPageCallToActionViewModel: MobileContentViewModel {
     
     private let callToActionModel: CallToAction?
         
-    init(callToActionModel: CallToAction?, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
+    init(
+        callToActionModel: CallToAction?,
+        renderedPageContext: MobileContentRenderedPageContext,
+        mobileContentAnalytics: MobileContentRendererAnalytics
+    ) {
         
         self.callToActionModel = callToActionModel
         

@@ -10,7 +10,7 @@ import Foundation
 
 struct YourFavoritedToolDomainModel: ToolListItemDomainModelInterface {
     
-    let interfaceStrings: ToolListItemInterfaceStringsDomainModel
+    let strings: ToolListItemStringsDomainModel
     let analyticsToolAbbreviation: String
     let dataModelId: String
     let bannerImageId: String

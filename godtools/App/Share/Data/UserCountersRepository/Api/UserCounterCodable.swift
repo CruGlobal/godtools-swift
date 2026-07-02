@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct UserCounterCodable: Codable, UserCounterDataModelInterface, Sendable {
+struct UserCounterCodable: Codable, Sendable {
     
     let id: String
     let count: Int
@@ -22,6 +22,12 @@ struct UserCounterCodable: Codable, UserCounterDataModelInterface, Sendable {
         case count
     }
     
+    init(id: String, count: Int) {
+        
+        self.id = id
+        self.count = count
+    }
+    
     init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: RootKeys.self)
@@ -31,5 +37,15 @@ struct UserCounterCodable: Codable, UserCounterDataModelInterface, Sendable {
         let attributesContainer = try container.nestedContainer(keyedBy: AttributesKeys.self, forKey: .attributes)
         
         count = try attributesContainer.decode(Int.self, forKey: .count)
+    }
+}
+
+extension UserCounterCodable {
+    
+    func toModel() -> UserCounterDataModel {
+        return UserCounterDataModel(
+            id: id,
+            count: count
+        )
     }
 }

@@ -8,90 +8,60 @@
 
 import Testing
 @testable import godtools
-import Combine
 
 struct GetOnboardingTutorialStringsUseCaseTests {
-    
+
     struct TestArgument {
         let appLanguage: AppLanguageDomainModel
-        let expectedChooseLanguageButtonTitle: String
-        let expectedBeginButtonTitle: String
     }
-    
+
+    private static let stringKeys: [LocalizableStringKeys] = [
+        .onboardingTutorialChooseLanguageButtonTitle, .onboardingTutorialBeginButtonTitle,
+        .onboardingTutorialNextButtonTitle, .onboardingTutorialGetStartedButtonTitle,
+        .onboardingTutorial0Title, .onboardingTutorial0VideoLinkTitle,
+        .onboardingTutorial2Title, .onboardingTutorial2Message,
+        .onboardingTutorial1Title, .onboardingTutorial1Message,
+        .onboardingTutorial3Title, .onboardingTutorial3Message
+    ]
+
     @Test(
         """
         Given: User is viewing the onboarding tutorial.
-        When: The app language is set.
-        Then: The interface strings should be translated in the app language.
+        When: The onboarding tutorial strings are requested for an app language.
+        Then: Each string is localized for the requested app language.
         """,
         arguments: [
-            TestArgument(
-                appLanguage: LanguageCodeDomainModel.english.rawValue,
-                expectedChooseLanguageButtonTitle: "Choose Language",
-                expectedBeginButtonTitle: "Begin"
-            ),
-            TestArgument(
-                appLanguage: LanguageCodeDomainModel.spanish.rawValue,
-                expectedChooseLanguageButtonTitle: "Elige lengua",
-                expectedBeginButtonTitle: "Comenzar"
-            )
+            TestArgument(appLanguage: LanguageCodeDomainModel.english.value),
+            TestArgument(appLanguage: LanguageCodeDomainModel.spanish.value)
         ]
     )
-    func stringsAreTranslatedInAppLanguage(argument: TestArgument) async {
-        
-        let getOnboardingTutorialStringsUseCase = getOnboardingTutorialStringsUseCase()
-        
-        var stringsRef: OnboardingTutorialStringsDomainModel?
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            getOnboardingTutorialStringsUseCase
-                .execute(appLanguage: argument.appLanguage)
-                .sink { (strings: OnboardingTutorialStringsDomainModel) in
-                    
-                    stringsRef = strings
-                    
-                    // When finished be sure to call:
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                }
-                .store(in: &cancellables)
-        }
-        
-        #expect(stringsRef?.chooseAppLanguageButtonTitle == argument.expectedChooseLanguageButtonTitle)
-        #expect(stringsRef?.beginTutorialButtonTitle == argument.expectedBeginButtonTitle)
+    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) async {
+
+        let useCase = getUseCase()
+
+        let strings: OnboardingTutorialStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
+
+        #expect(strings.chooseAppLanguageButtonTitle == "\(argument.appLanguage):\(LocalizableStringKeys.onboardingTutorialChooseLanguageButtonTitle.key)")
+        #expect(strings.beginTutorialButtonTitle == "\(argument.appLanguage):\(LocalizableStringKeys.onboardingTutorialBeginButtonTitle.key)")
+        #expect(strings.nextTutorialPageButtonTitle == "\(argument.appLanguage):\(LocalizableStringKeys.onboardingTutorialNextButtonTitle.key)")
+        #expect(strings.endTutorialButtonTitle == "\(argument.appLanguage):\(LocalizableStringKeys.onboardingTutorialGetStartedButtonTitle.key)")
+        #expect(strings.readyForEveryConversationTitle == "\(argument.appLanguage):\(LocalizableStringKeys.onboardingTutorial0Title.key)")
+        #expect(strings.readyForEveryConversationVideoLinkTitle == "\(argument.appLanguage):\(LocalizableStringKeys.onboardingTutorial0VideoLinkTitle.key)")
+        #expect(strings.prepareForMomentsThatMatterTitle == "\(argument.appLanguage):\(LocalizableStringKeys.onboardingTutorial2Title.key)")
+        #expect(strings.prepareForMomentsThatMatterMessage == "\(argument.appLanguage):\(LocalizableStringKeys.onboardingTutorial2Message.key)")
+        #expect(strings.talkWithGodAboutAnyoneTitle == "\(argument.appLanguage):\(LocalizableStringKeys.onboardingTutorial1Title.key)")
+        #expect(strings.talkWithGodAboutAnyoneMessage == "\(argument.appLanguage):\(LocalizableStringKeys.onboardingTutorial1Message.key)")
+        #expect(strings.helpSomeoneDiscoverJesusTitle == "\(argument.appLanguage):\(LocalizableStringKeys.onboardingTutorial3Title.key)")
+        #expect(strings.helpSomeoneDiscoverJesusMessage == "\(argument.appLanguage):\(LocalizableStringKeys.onboardingTutorial3Message.key)")
     }
 }
 
 extension GetOnboardingTutorialStringsUseCaseTests {
-    
-    private func getOnboardingTutorialStringsUseCase() -> GetOnboardingTutorialStringsUseCase {
-        
-        let chooseLanguageButtonTitleKey: String = "onboardingTutorial.chooseLanguageButton.title"
-        let beginButtonTitleKey: String = "onboardingTutorial.beginButton.title"
-        
-        let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
-            LanguageCodeDomainModel.english.value: [
-                chooseLanguageButtonTitleKey: "Choose Language",
-                beginButtonTitleKey: "Begin"
-            ],
-            LanguageCodeDomainModel.spanish.value: [
-                chooseLanguageButtonTitleKey: "Elige lengua",
-                beginButtonTitleKey: "Comenzar"
-            ]
-        ]
-        
+
+    private func getUseCase() -> GetOnboardingTutorialStringsUseCase {
+
         return GetOnboardingTutorialStringsUseCase(
-            localizationServices: MockLocalizationServices(
-                localizableStrings: localizableStrings
-            )
+            localizationServices: MockLocalizationServices(localizableStrings: MockLocalizationServices.getStrings(stringKeys: Self.stringKeys, languages: [.english, .spanish]))
         )
     }
 }

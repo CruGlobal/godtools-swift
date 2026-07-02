@@ -9,37 +9,45 @@
 import Foundation
 import Combine
 
-@MainActor class DownloadableLanguagesViewModel: ObservableObject {
+@MainActor
+final class DownloadableLanguagesViewModel: ObservableObject {
     
+    private let stepEmitter: FlowStepEmitter
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getDownloadableLanguagesStringsUseCase: GetDownloadableLanguagesStringsUseCase
     private let getDownloadableLanguagesListUseCase: GetDownloadableLanguagesListUseCase
-    private let viewSearchBarUseCase: ViewSearchBarUseCase
+    private let getSearchBarStringsUseCase: GetSearchBarStringsUseCase
     private let searchLanguageInDownloadableLanguagesUseCase: SearchLanguageInDownloadableLanguagesUseCase
     private let downloadToolLanguageUseCase: DownloadToolLanguageUseCase
     private let removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase
-    
-    private lazy var searchBarViewModel = SearchBarViewModel(getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, viewSearchBarUseCase: viewSearchBarUseCase)
-    
+        
     private var cancellables = Set<AnyCancellable>()
-    
-    private weak var flowDelegate: FlowDelegate?
-    
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+        
+    @Published private var appLanguage = AppLanguageDomainModel.english
     @Published private var allDownloadableLanguages: [DownloadableLanguageListItemDomainModel] = Array()
     
     @Published private(set) var displayedDownloadableLanguages: [DownloadableLanguageListItemDomainModel] = Array()
+    @Published private(set) var searchBarStrings = SearchBarStringsDomainModel.emptyValue
     @Published private(set) var strings = DownloadableLanguagesStringsDomainModel.emptyValue
     
     @Published var searchText: String = ""
     
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getDownloadableLanguagesStringsUseCase: GetDownloadableLanguagesStringsUseCase, getDownloadableLanguagesListUseCase: GetDownloadableLanguagesListUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, searchLanguageInDownloadableLanguagesUseCase: SearchLanguageInDownloadableLanguagesUseCase, downloadToolLanguageUseCase: DownloadToolLanguageUseCase, removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase) {
+    init(
+        stepEmitter: FlowStepEmitter,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getDownloadableLanguagesStringsUseCase: GetDownloadableLanguagesStringsUseCase,
+        getDownloadableLanguagesListUseCase: GetDownloadableLanguagesListUseCase,
+        getSearchBarStringsUseCase: GetSearchBarStringsUseCase,
+        searchLanguageInDownloadableLanguagesUseCase: SearchLanguageInDownloadableLanguagesUseCase,
+        downloadToolLanguageUseCase: DownloadToolLanguageUseCase,
+        removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase
+    ) {
         
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getDownloadableLanguagesStringsUseCase = getDownloadableLanguagesStringsUseCase
         self.getDownloadableLanguagesListUseCase = getDownloadableLanguagesListUseCase
-        self.viewSearchBarUseCase = viewSearchBarUseCase
+        self.getSearchBarStringsUseCase = getSearchBarStringsUseCase
         self.searchLanguageInDownloadableLanguagesUseCase = searchLanguageInDownloadableLanguagesUseCase
         self.downloadToolLanguageUseCase = downloadToolLanguageUseCase
         self.removeDownloadedToolLanguageUseCase = removeDownloadedToolLanguageUseCase
@@ -47,20 +55,9 @@ import Combine
         getCurrentAppLanguageUseCase
             .execute()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                
-                getDownloadableLanguagesStringsUseCase
-                    .execute(appLanguage: appLanguage)
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: DownloadableLanguagesStringsDomainModel) in
-                
-                self?.strings = strings
+            .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
+                self?.appLanguage = appLanguage
+                self?.didSetApplanguage(appLanguage: appLanguage)
             }
             .store(in: &cancellables)
         
@@ -104,10 +101,19 @@ import Combine
         print("x deinit: \(type(of: self))")
     }
     
+    private func didSetApplanguage(appLanguage: AppLanguageDomainModel) {
+        
+        searchBarStrings = getSearchBarStringsUseCase
+            .execute(appLanguage: appLanguage)
+        
+        strings = getDownloadableLanguagesStringsUseCase
+            .execute(appLanguage: appLanguage)
+    }
+    
     func getDownloadableLanguageItemViewModel(downloadableLanguage: DownloadableLanguageListItemDomainModel) -> DownloadableLanguageItemViewModel {
         
         return DownloadableLanguageItemViewModel(
-            flowDelegate: flowDelegate!,
+            stepEmitter: stepEmitter,
             downloadableLanguage: downloadableLanguage,
             downloadToolLanguageUseCase: downloadToolLanguageUseCase,
             removeDownloadedToolLanguageUseCase: removeDownloadedToolLanguageUseCase
@@ -121,11 +127,6 @@ extension DownloadableLanguagesViewModel {
     
     @objc func backTapped() {
         
-        flowDelegate?.navigate(step: .backTappedFromDownloadedLanguages)
-    }
-    
-    func getSearchBarViewModel() -> SearchBarViewModel {
-        
-        return searchBarViewModel
+        stepEmitter.emit(step: AppFlowStep.backTappedFromDownloadedLanguages)
     }
 }

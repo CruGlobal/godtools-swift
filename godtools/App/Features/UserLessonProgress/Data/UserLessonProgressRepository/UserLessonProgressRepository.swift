@@ -9,23 +9,41 @@
 import Foundation
 import Combine
 
-class UserLessonProgressRepository {
+final class UserLessonProgressRepository {
     
-    private let cache: RealmUserLessonProgressCache
+    private let cache: UserLessonProgressCache
     
-    init(cache: RealmUserLessonProgressCache) {
+    init(cache: UserLessonProgressCache) {
         self.cache = cache
     }
     
-    @MainActor func getLessonProgressChangedPublisher() -> AnyPublisher<Void, Never> {
-        return cache.getUserLessonProgressChangedPublisher()
-    }
-    
-    func storeLessonProgress(_ lessonProgress: UserLessonProgressDataModel) -> AnyPublisher<UserLessonProgressDataModel, Error> {
-        cache.storeUserLessonProgress(lessonProgress)
+    @MainActor func getLessonProgressChangedPublisher() -> AnyPublisher<Void, Error> {
+        return cache.persistence
+            .observeCollectionChangesPublisher()
+            .eraseToAnyPublisher()
     }
     
     func getLessonProgress(lessonId: String) -> UserLessonProgressDataModel? {
-        return cache.getUserLessonProgress(lessonId: lessonId)
+        
+        do {
+            return try cache.persistence.getDataModel(id: lessonId)
+        }
+        catch _ {
+            return nil
+        }
+    }
+    
+    func storeLessonProgress(lessonId: String, lastViewedPageId: String, progress: Double) async throws -> UserLessonProgressDataModel {
+        
+        let dataModel = UserLessonProgressDataModel(
+            id: lessonId,
+            lessonId: lessonId,
+            lastViewedPageId: lastViewedPageId,
+            progress: progress
+        )
+        
+        _ = try await cache.persistence.writeObjects(externalObjects: [dataModel], writeOption: nil, getOption: nil)
+        
+        return dataModel
     }
 }

@@ -23,22 +23,21 @@ struct DownloadableLanguagesView: View {
             
             AccessibilityScreenElementView(screenAccessibility: .downloadableLanguages)
                                     
-            SearchBarView(viewModel: viewModel.getSearchBarViewModel(), searchText: $viewModel.searchText)
+            SearchBarView(searchText: $viewModel.searchText, strings: viewModel.searchBarStrings)
             
-            List {
-                ForEach(viewModel.displayedDownloadableLanguages) { downloadableLanguage in
-                    
-                    DownloadableLanguageItemView(
-                        viewModel: viewModel.getDownloadableLanguageItemViewModel(
-                            downloadableLanguage: downloadableLanguage
+            ScrollView(.vertical) {
+                LazyVStack {
+                    ForEach(viewModel.displayedDownloadableLanguages) { downloadableLanguage in
+                        DownloadableLanguageItemView(
+                            viewModel: viewModel.getDownloadableLanguageItemViewModel(
+                                downloadableLanguage: downloadableLanguage
+                            )
                         )
-                    )
-                    .listRowBackground(Color.clear)
+                        .listRowBackground(Color.clear)
+                    }
                 }
             }
-            .listStyle(.inset)
             .animation(.default, value: viewModel.displayedDownloadableLanguages)
-            
         }
         .navigationBarBackButtonHidden(true)
         .navigationTitle(viewModel.strings.navTitle)

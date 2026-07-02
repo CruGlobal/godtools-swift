@@ -96,10 +96,10 @@ struct LessonEvaluationView: View {
                         ScaleValueSliderView(
                             viewWidth: geometry.size.width - viewInsets.leading - viewInsets.trailing,
                             tintColor: ColorPalette.gtBlue.color,
-                            minScale: ScaleValue(lessonEvaluationScale: readyToShareFaithScale.minScale),
-                            maxScale: ScaleValue(lessonEvaluationScale: readyToShareFaithScale.maxScale),
                             scaleIntValue: $viewModel.readyToShareFaithScaleIntValue,
-                            scaleDisplayValue: readyToShareFaithScale.scale.valueTranslatedInAppLanguage
+                            scaleDisplayValue: readyToShareFaithScale.scale.valueTranslatedInAppLanguage,
+                            minScale: ScaleValue(lessonEvaluationScale: readyToShareFaithScale.minScale),
+                            maxScale: ScaleValue(lessonEvaluationScale: readyToShareFaithScale.maxScale)
                         )
                         .padding([.top], 14)
                     }
@@ -110,13 +110,14 @@ struct LessonEvaluationView: View {
                             .frame(width: geometry.size.width, height: ScaleValueSliderView.scrubberSize)
                     }
                     
-                    GTBlueButton(
+                    GTButton(
+                        style: .blue,
                         title: viewModel.strings.sendFeedbackActionTitle,
                         fontSize: 18,
                         width: 248,
                         height: 50,
                         cornerRadius: 24,
-                        action: {
+                        tapped: {
                             viewModel.sendFeedbackTapped()
                         }
                     )

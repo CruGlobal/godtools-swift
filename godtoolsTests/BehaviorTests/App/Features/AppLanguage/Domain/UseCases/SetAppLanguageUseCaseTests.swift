@@ -12,8 +12,22 @@ import Foundation
 import Combine
 import RepositorySync
 
-@Suite(.serialized)
 struct SetAppLanguageUseCaseTests {
+    
+    private let testsDiContainer: TestsDiContainer
+    private let languageCodes: [LanguageCodeDomainModel] = [.afrikaans, .arabic, .chinese, .czech, .english, .french, .hebrew, .latvian, .portuguese, .russian, .spanish, .vietnamese]
+    private let allLanguages: [LanguageCodable]
+    
+    init() async throws {
+        
+        testsDiContainer = try TestsDiContainer()
+        
+        allLanguages = languageCodes.map {
+            LanguageCodable(code: $0.rawValue, id: UUID().uuidString)
+        }
+        
+        try await testsDiContainer.core.dataLayer.getLanguagesPersistence().writeObjects(externalObjects: allLanguages)
+    }
         
     @Test(
         """
@@ -24,137 +38,60 @@ struct SetAppLanguageUseCaseTests {
     )
     @MainActor func setUserPreferredAppLanguageRepositoryTest() async throws {
         
-        let allLanguages: [RealmLanguage] = getAllLanguages()
-        
-        let testsDiContainer = try getTestsDiContainer(
-            addRealmObjects: allLanguages
-        )
-        
         let setAppLanguageUseCase = SetAppLanguageUseCase(
             userAppLanguageRepository: testsDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository(),
-            userLessonFiltersRepository: testsDiContainer.dataLayer.getUserLessonFiltersRepository(),
-            languagesRepository: testsDiContainer.dataLayer.getLanguagesRepository()
+            userLessonFiltersRepository: testsDiContainer.core.dataLayer.getUserLessonFiltersRepository(),
+            languagesRepository: testsDiContainer.core.dataLayer.getLanguagesRepository()
         )
         
         let getUserLessonFiltersRepository = GetUserLessonFiltersUseCase(
-            userLessonFiltersRepository: testsDiContainer.dataLayer.getUserLessonFiltersRepository(),
+            userLessonFiltersRepository: testsDiContainer.core.dataLayer.getUserLessonFiltersRepository(),
             getLessonFilterLanguage: testsDiContainer.feature.lessonFilter.domainLayer.getLessonFilterLangauge()
         )
         
         let appLanguageSpanish = LanguageCodeDomainModel.spanish.rawValue
-        let realmLanguageSpanish = allLanguages.first(where: { $0.code == appLanguageSpanish.languageCode })
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        
+        let spanishLanguage = allLanguages.first(where: { $0.code == appLanguageSpanish.languageCode })
+                
         var lessonLanguageFilterRef: LessonFilterLanguageDomainModel?
         
-        var sinkCount: Int = 0
+        var cancellables: Set<AnyCancellable> = Set()
+        var triggerCount: Int = 0
         
-        await confirmation(expectedCount: 2) { confirmation in
+        await withCheckedContinuation { continuation in
             
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                getUserLessonFiltersRepository
-                    .execute(
-                        appLanguage: appLanguageSpanish
-                    )
-                    .sink { (userLessonFilters: UserLessonFiltersDomainModel) in
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
+            
+            getUserLessonFiltersRepository
+                .execute(
+                    appLanguage: appLanguageSpanish
+                )
+                .sink { (userLessonFilters: UserLessonFiltersDomainModel) in
+                    
+                    triggerCount += 1
+                    
+                    if triggerCount == 1 {
                         
-                        sinkCount += 1
-                        
-                        // Place inside a sink or other async closure:
-                        confirmation()
-                                        
-                        if sinkCount == 2 {
-                            
-                            lessonLanguageFilterRef = userLessonFilters.languageFilter
-                            
-                            // When finished be sure to call:
-                            timeoutTask.cancel()
-                            continuation.resume(returning: ())
+                        Task {
+                            try await setAppLanguageUseCase
+                                .execute(appLanguage: LanguageCodeDomainModel.spanish.rawValue)
                         }
                     }
-                    .store(in: &cancellables)
-                
-                setAppLanguageUseCase
-                    .execute(appLanguage: LanguageCodeDomainModel.spanish.rawValue)
-                    .sink(receiveCompletion: { completion in
+                    else if triggerCount == 2 {
                         
-                    }, receiveValue: { _ in
+                        lessonLanguageFilterRef = userLessonFilters.languageFilter
                         
-                    })
-                    .store(in: &cancellables)
-            }
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    }
+                }
+                .store(in: &cancellables)            
         }
         
-        #expect(realmLanguageSpanish != nil)
-        #expect(lessonLanguageFilterRef?.languageId == realmLanguageSpanish?.id)
-    }
-}
-
-extension SetAppLanguageUseCaseTests {
-    
-    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject]) throws -> TestsDiContainer {
-                
-        return try TestsDiContainer(
-            realmFileName: String(describing: SetAppLanguageUseCaseTests.self),
-            addRealmObjects: addRealmObjects
-        )
-    }
-    
-    private func getAllLanguages() -> [RealmLanguage] {
-        
-        return [
-            getRealmLanguage(languageCode: .afrikaans),
-            getRealmLanguage(languageCode: .arabic),
-            getRealmLanguage(languageCode: .chinese),
-            getRealmLanguage(languageCode: .czech),
-            getRealmLanguage(languageCode: .english),
-            getRealmLanguage(languageCode: .french),
-            getRealmLanguage(languageCode: .hebrew),
-            getRealmLanguage(languageCode: .latvian),
-            getRealmLanguage(languageCode: .portuguese),
-            getRealmLanguage(languageCode: .russian),
-            getRealmLanguage(languageCode: .spanish),
-            getRealmLanguage(languageCode: .vietnamese)
-        ]
-    }
-    
-    private func getRealmLanguage(languageCode: LanguageCodeDomainModel) -> RealmLanguage {
-        
-        return MockRealmLanguage.createLanguage(language: languageCode, name: languageCode.rawValue + " Name")
-    }
-    
-    private func getLocalizationServices() -> MockLocalizationServices {
-        
-        let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
-            LanguageCodeDomainModel.english.rawValue: [LessonFilterStringKeys.lessonsAvailableText.rawValue: "lessons available"]
-        ]
-        
-        return MockLocalizationServices.createLanguageNamesLocalizationServices(
-            addAdditionalLocalizableStrings: localizableStrings
-        )
-    }
-    
-    private func getTranslatedLanguageName() -> GetTranslatedLanguageName {
-        
-        let getTranslatedLanguageName = GetTranslatedLanguageName(
-            localizationLanguageName: MockLocalizationLanguageNameRepository(localizationServices: getLocalizationServices()),
-            localeLanguageName: MockLocaleLanguageName.defaultMockLocaleLanguageName(),
-            localeRegionName: MockLocaleLanguageRegionName(regionNames: [:]),
-            localeScriptName: MockLocaleLanguageScriptName(scriptNames: [:])
-        )
-        
-        return getTranslatedLanguageName
-    }
-    
-    private func getStringWithLocaleCount() -> StringWithLocaleCountInterface {
-        
-        return MockStringWithLocaleCount()
+        #expect(spanishLanguage != nil)
+        #expect(lessonLanguageFilterRef?.languageId == spanishLanguage?.id)
     }
 }

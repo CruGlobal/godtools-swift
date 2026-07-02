@@ -8,83 +8,42 @@
 
 import Testing
 @testable import godtools
-import Combine
 
 struct GetLessonFilterLanguagesStringsUseCaseTests {
-    
+
+    struct TestArgument {
+        let appLanguage: AppLanguageDomainModel
+    }
+
     @Test(
         """
         Given: User is viewing the lesson filter languages.
-        When: The app language is switched from English to Spanish.
-        Then: The interface strings should be translated into Spanish.
-        """
-    )
-    func lessonFilterInterfaceStringsAreTranslatedWhenAppLanguageChanges() async {
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        let navTitleKey: String = LessonFilterStringKeys.navTitle.rawValue
-        
-        let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
-            LanguageCodeDomainModel.english.value: [
-                navTitleKey: "Lesson language"
-            ],
-            LanguageCodeDomainModel.spanish.value: [
-                navTitleKey: "Idioma de la lección"
-            ]
+        When: The lesson filter languages strings are requested for an app language.
+        Then: Each string is localized for the requested app language.
+        """,
+        arguments: [
+            TestArgument(appLanguage: LanguageCodeDomainModel.english.value),
+            TestArgument(appLanguage: LanguageCodeDomainModel.spanish.value)
         ]
-        
-        let getLessonFilterLanguagesStringsUseCase = GetLessonFilterLanguagesStringsUseCase(
-            localizationServices: MockLocalizationServices(localizableStrings: localizableStrings)
+    )
+    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) async {
+
+        let useCase = getUseCase()
+
+        let strings: LessonFilterLanguagesStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
+
+        #expect(strings.navTitle == "\(argument.appLanguage):\(LocalizableStringKeys.lessonsFilterLanguageNavTitle.key)")
+    }
+}
+
+extension GetLessonFilterLanguagesStringsUseCaseTests {
+
+    private func getUseCase() -> GetLessonFilterLanguagesStringsUseCase {
+
+        let stringKeys: [LocalizableStringKeys] = [.lessonsFilterLanguageNavTitle]
+
+        return GetLessonFilterLanguagesStringsUseCase(
+            localizationServices: MockLocalizationServices(localizableStrings: MockLocalizationServices.getStrings(stringKeys: stringKeys, languages: [.english, .spanish]))
         )
-        
-        let appLanguagePublisher: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
-        
-        var englishStringsRef: LessonFilterLanguagesStringsDomainModel?
-        var spanishStringsRef: LessonFilterLanguagesStringsDomainModel?
-        
-        var sinkCount: Int = 0
-        
-        await confirmation(expectedCount: 2) { confirmation in
-            
-            await withCheckedContinuation { continuation in
-                
-                let timeoutTask = Task {
-                    try await Task.defaultTestSleep()
-                    continuation.resume(returning: ())
-                }
-                
-                appLanguagePublisher
-                    .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<LessonFilterLanguagesStringsDomainModel, Never> in
-                        
-                        return getLessonFilterLanguagesStringsUseCase
-                            .execute(appLanguage: appLanguage)
-                            .eraseToAnyPublisher()
-                    })
-                    .sink { (strings: LessonFilterLanguagesStringsDomainModel) in
-                        
-                        sinkCount += 1
-                        confirmation()
-                        
-                        if sinkCount == 1 {
-                            
-                            englishStringsRef = strings
-                            appLanguagePublisher.send(LanguageCodeDomainModel.spanish.rawValue)
-                        }
-                        else if sinkCount == 2 {
-                            
-                            spanishStringsRef = strings
-                            
-                            // When finished be sure to call:
-                            timeoutTask.cancel()
-                            continuation.resume(returning: ())
-                        }
-                    }
-                    .store(in: &cancellables)
-            }
-        }
-        
-        #expect(englishStringsRef?.navTitle == "Lesson language")
-        #expect(spanishStringsRef?.navTitle == "Idioma de la lección")
     }
 }

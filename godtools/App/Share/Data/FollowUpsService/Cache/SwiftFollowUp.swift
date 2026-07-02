@@ -31,3 +31,32 @@ enum SwiftFollowUpV1 {
         }
     }
 }
+
+@available(iOS 17.4, *)
+extension SwiftFollowUp {
+    
+    func mapFrom(model: FollowUpDataModel) {
+        
+        id = model.id
+        name = model.name
+        email = model.email
+        destinationId = model.destinationId
+        languageId = model.languageId
+    }
+    
+    static func createNewFrom(model: FollowUpDataModel) -> SwiftFollowUp {
+        let object = SwiftFollowUp()
+        object.mapFrom(model: model)
+        return object
+    }
+    
+    func toModel() -> FollowUpDataModel {
+        return FollowUpDataModel(
+            id: id,
+            name: name,
+            email: email,
+            destinationId: destinationId,
+            languageId: languageId
+        )
+    }
+}

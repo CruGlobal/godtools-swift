@@ -8,33 +8,25 @@
 
 import UIKit
 
-@MainActor class ArticleDebugViewModel: ObservableObject {
-    
-    private let article: ArticleDomainModel
-    
-    private weak var flowDelegate: FlowDelegate?
-    
-    @Published var url: String
-    @Published var urlType: String
-    
-    init(flowDelegate: FlowDelegate, article: ArticleDomainModel) {
+@MainActor
+final class ArticleDebugViewModel: ObservableObject {
         
-        self.flowDelegate = flowDelegate
-        self.article = article
+    private let stepEmitter: FlowStepEmitter
         
-        url = article.url?.absoluteString ?? ""
+    @Published private(set) var url: String
+    @Published private(set) var urlType: String
+    
+    init(stepEmitter: FlowStepEmitter, articleUrl: ArticleUrlDomainModel) {
         
-        if let articleUrlType = article.urlType {
-            
-            switch articleUrlType {
-            case .fileUrl:
-                urlType = "web archive file url"
-            case .url:
-                urlType = "http url"
-            }
-        }
-        else {
-            urlType = ""
+        self.stepEmitter = stepEmitter
+        
+        url = articleUrl.url.absoluteString
+        
+        switch articleUrl.urlType {
+        case .archive:
+            urlType = "web archive file url"
+        case .https:
+            urlType = "http url"
         }
     }
 }
@@ -44,7 +36,7 @@ import UIKit
 extension ArticleDebugViewModel {
     
     @objc func closeTapped() {
-        flowDelegate?.navigate(step: .closeTappedFromArticleDebug)
+        stepEmitter.emit(step: AppFlowStep.closeTappedFromArticleDebug)
     }
     
     func copyUrlTapped() {

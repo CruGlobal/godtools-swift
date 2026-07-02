@@ -9,19 +9,35 @@
 import UIKit
 import Combine
 
-class LessonViewModel: MobileContentRendererViewModel {
-    
-    private static var storeLessonProgressCancellable: AnyCancellable?
-    
+@MainActor
+final class LessonViewModel: MobileContentRendererViewModel {
+        
+    private let stepEmitter: FlowStepEmitter
     private let storeLessonProgressUseCase: StoreUserLessonProgressUseCase
     
+    private var storeLessonProgressTask: Task<Void, Error>?
+    
     let progress: ObservableValue<AnimatableValue<CGFloat>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
-    
-    private weak var flowDelegate: FlowDelegate?
-    
-    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, resource: ResourceDataModel, primaryLanguage: LanguageDataModel, initialPage: MobileContentRendererInitialPage?, initialPageConfig: MobileContentRendererInitialPageConfig?, initialPageSubIndex: Int?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, storeLessonProgressUseCase: StoreUserLessonProgressUseCase, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
+        
+    init(
+        stepEmitter: FlowStepEmitter,
+        renderer: MobileContentRenderer,
+        resource: ResourceDataModel,
+        primaryLanguage: LanguageDataModel,
+        initialPage: MobileContentRendererInitialPage?,
+        initialPageConfig: MobileContentRendererInitialPageConfig?,
+        initialPageSubIndex: Int?,
+        resourcesRepository: ResourcesRepository,
+        translationsRepository: TranslationsRepository,
+        mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getTranslatedLanguageName: GetTranslatedLanguageName,
+        storeLessonProgressUseCase: StoreUserLessonProgressUseCase,
+        trainingTipsEnabled: Bool,
+        incrementUserCounterUseCase: IncrementUserCounterUseCase
+    ) {
                 
-        self.flowDelegate = flowDelegate
+        self.stepEmitter = stepEmitter
         self.storeLessonProgressUseCase = storeLessonProgressUseCase
                 
         super.init(renderer: renderer, initialPage: initialPage, initialPageConfig: initialPageConfig, initialPageSubIndex: initialPageSubIndex, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, getTranslatedLanguageName: getTranslatedLanguageName, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase, selectedLanguageIndex: nil)
@@ -61,20 +77,18 @@ class LessonViewModel: MobileContentRendererViewModel {
         
         let resourceId: String = currentPageRenderer.value.resource.id
         
-        Self.storeLessonProgressCancellable?.cancel()
+        storeLessonProgressTask?.cancel()
         
-        Self.storeLessonProgressCancellable = storeLessonProgressUseCase
-            .execute(
-                lessonId: resourceId,
-                lastViewedPageId: currentPage.id,
-                lastViewedPageNumber: page,
-                totalPageCount: getPages().count
-            )
-            .sink(receiveCompletion: { _ in
-                
-            }, receiveValue: { _ in
-                
-            })
+        storeLessonProgressTask = Task {
+            
+            _ = try await storeLessonProgressUseCase
+                .execute(
+                    lessonId: resourceId,
+                    viewedPageId: currentPage.id,
+                    viewedPageNumber: page,
+                    totalPageCount: getPages().count
+                )
+        }
     }
 }
 
@@ -91,11 +105,17 @@ extension LessonViewModel {
         guard let languageId = renderer.value.pageRenderers.first?.language.id else { return }
         let pageNumber = getCurrentPageNumberWithHiddenPagesIncluded() ?? currentPageNumber
         
-        flowDelegate?.navigate(step: .shareLessonTappedFromLesson(pageNumber: pageNumber, languageId: languageId))
+        stepEmitter.emit(step: AppFlowStep.shareLessonTappedFromLesson(pageNumber: pageNumber, languageId: languageId))
     }
     
     func closeTapped() {
                 
-        flowDelegate?.navigate(step: .closeTappedFromLesson(lessonId: resource.id, highestPageNumberViewed: highestPageNumberViewed))
+        stepEmitter.emit(
+            step: AppFlowStep.closeTappedFromLesson(
+                lessonId: resource.id,
+                lessonLanguage: getSelectedLanguageCode(),
+                highestPageNumberViewed: highestPageNumberViewed
+            )
+        )
     }
 }

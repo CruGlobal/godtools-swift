@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct OnboardingTutorialPageAnalyticsProperties {
+struct OnboardingTutorialPageAnalyticsProperties: Sendable {
     
     let screenName: String
     let siteSection: String

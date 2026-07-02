@@ -8,14 +8,19 @@
 
 import Foundation
 
-class GetTranslatedLanguageName {
+final class GetTranslatedLanguageName {
     
     private let localizationLanguageName: LocalizationLanguageNameInterface
     private let localeLanguageName: LocaleLanguageNameInterface
     private let localeRegionName: LocaleLanguageRegionNameInterface
     private let localeScriptName: LocaleLanguageScriptNameInterface
     
-    init(localizationLanguageName: LocalizationLanguageNameInterface, localeLanguageName: LocaleLanguageNameInterface, localeRegionName: LocaleLanguageRegionNameInterface, localeScriptName: LocaleLanguageScriptNameInterface) {
+    init(
+        localizationLanguageName: LocalizationLanguageNameInterface,
+        localeLanguageName: LocaleLanguageNameInterface,
+        localeRegionName: LocaleLanguageRegionNameInterface,
+        localeScriptName: LocaleLanguageScriptNameInterface
+    ) {
         
         self.localizationLanguageName = localizationLanguageName
         self.localeLanguageName = localeLanguageName

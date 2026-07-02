@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct SocialCreateAccountStringsDomainModel {
+struct SocialCreateAccountStringsDomainModel: Sendable {
     
     let title: String
     let subtitle: String

@@ -17,7 +17,7 @@ typealias SwiftAppLanguage = SwiftAppLanguageV1.SwiftAppLanguage
 enum SwiftAppLanguageV1 {
  
     @Model
-    class SwiftAppLanguage: IdentifiableSwiftDataObject, AppLanguageDataModelInterface {
+    class SwiftAppLanguage: IdentifiableSwiftDataObject {
         
         var languageCode: String = ""
         var swiftLanguageDirection: SwiftAppLanguageDirection = SwiftAppLanguageDirection.leftToRight
@@ -29,36 +29,54 @@ enum SwiftAppLanguageV1 {
         init() {
             
         }
+    }
+}
+
+@available(iOS 17.4, *)
+extension SwiftAppLanguage {
+    
+    func mapFrom(model: AppLanguageDataModel) {
         
-        func mapFrom(interface: AppLanguageDataModelInterface) {
-            
-            id = interface.languageId
-            languageCode = interface.languageCode
-            languageId = interface.languageId
-            languageScriptCode = interface.languageScriptCode
-            
-            switch interface.languageDirection {
-            case .leftToRight:
-                swiftLanguageDirection = .leftToRight
-            case .rightToLeft:
-                swiftLanguageDirection = .rightToLeft
-            }
+        id = model.languageId
+        languageCode = model.languageCode
+        languageId = model.languageId
+        languageScriptCode = model.languageScriptCode
+        
+        switch model.languageDirection {
+        case .leftToRight:
+            swiftLanguageDirection = .leftToRight
+        case .rightToLeft:
+            swiftLanguageDirection = .rightToLeft
         }
+    }
+    
+    static func createNewFrom(model: AppLanguageDataModel) -> SwiftAppLanguage {
+        let object = SwiftAppLanguage()
+        object.mapFrom(model: model)
+        return object
+    }
+    
+    func toModel() -> AppLanguageDataModel {
         
-        static func createNewFrom(interface: AppLanguageDataModelInterface) -> SwiftAppLanguage {
-            let object = SwiftAppLanguage()
-            object.mapFrom(interface: interface)
-            return object
-        }
-        
-        var languageDirection: AppLanguageDataModel.Direction {
-        
-            switch swiftLanguageDirection {
-            case .leftToRight:
-                return .leftToRight
-            case .rightToLeft:
-                return .rightToLeft
-            }
+        return AppLanguageDataModel(
+            languageCode: languageCode,
+            languageDirection: languageDirection,
+            languageScriptCode: languageScriptCode
+        )
+    }
+}
+
+@available(iOS 17.4, *)
+extension SwiftAppLanguage {
+    
+    var languageDirection: AppLanguageDataModel.Direction {
+    
+        switch swiftLanguageDirection {
+        case .leftToRight:
+            return .leftToRight
+        case .rightToLeft:
+            return .rightToLeft
         }
     }
 }
+
