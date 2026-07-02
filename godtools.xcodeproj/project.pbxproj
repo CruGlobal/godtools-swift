@@ -888,7 +888,6 @@
 				CODE_SIGN_STYLE = Manual;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = godtoolsUIRecording/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -988,7 +987,6 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQ48D9BF2V;
 				DISPLAY_NAME = "GT-Analytics";
 				INFOPLIST_FILE = godtools/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1020,7 +1018,6 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				INFOPLIST_FILE = godtoolsTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1057,7 +1054,6 @@
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = godtoolsUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1089,7 +1085,6 @@
 				CODE_SIGN_STYLE = Manual;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = godtoolsUIRecording/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1190,7 +1185,6 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQ48D9BF2V;
 				DISPLAY_NAME = "GT-Stage";
 				INFOPLIST_FILE = godtools/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1222,7 +1216,6 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				INFOPLIST_FILE = godtoolsTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1259,7 +1252,6 @@
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = godtoolsUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1291,7 +1283,6 @@
 				CODE_SIGN_STYLE = Manual;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = godtoolsUIRecording/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1333,7 +1324,6 @@
 				INFOPLIST_FILE = FirebaseNotificationService/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = FirebaseNotificationService;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Cru. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1381,7 +1371,6 @@
 				INFOPLIST_FILE = FirebaseNotificationService/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = FirebaseNotificationService;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Cru. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1427,7 +1416,6 @@
 				INFOPLIST_FILE = FirebaseNotificationService/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = FirebaseNotificationService;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Cru. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1472,7 +1460,6 @@
 				INFOPLIST_FILE = FirebaseNotificationService/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = FirebaseNotificationService;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Cru. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1516,7 +1503,6 @@
 				INFOPLIST_FILE = FirebaseNotificationService/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = FirebaseNotificationService;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Cru. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1621,7 +1607,6 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQ48D9BF2V;
 				DISPLAY_NAME = "GT-Debug";
 				INFOPLIST_FILE = godtools/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1653,7 +1638,6 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				INFOPLIST_FILE = godtoolsTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1690,7 +1674,6 @@
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = godtoolsUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1722,7 +1705,6 @@
 				CODE_SIGN_STYLE = Manual;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = godtoolsUIRecording/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1823,7 +1805,6 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQ48D9BF2V;
 				DISPLAY_NAME = "GT-Production";
 				INFOPLIST_FILE = godtools/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1856,7 +1837,6 @@
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQ48D9BF2V;
 				INFOPLIST_FILE = godtoolsTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1894,7 +1874,6 @@
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = godtoolsUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1926,7 +1905,6 @@
 				CODE_SIGN_STYLE = Manual;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = godtoolsUIRecording/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1965,7 +1943,6 @@
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = godtoolsUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2059,7 +2036,6 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQ48D9BF2V;
 				DISPLAY_NAME = GodTools;
 				INFOPLIST_FILE = godtools/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2090,7 +2066,6 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				INFOPLIST_FILE = godtoolsTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
