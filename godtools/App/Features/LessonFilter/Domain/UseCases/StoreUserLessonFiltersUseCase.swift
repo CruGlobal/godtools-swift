@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class StoreUserLessonFiltersUseCase {
     
@@ -17,15 +16,10 @@ final class StoreUserLessonFiltersUseCase {
         self.userLessonFiltersRepository = userLessonFiltersRepository
     }
     
-    func execute(languageFilter: LessonFilterLanguageDomainModel) -> AnyPublisher<Void, Never> {
+    func execute(languageFilter: LessonFilterLanguageDomainModel) async throws {
         
-        Task {
-            try await userLessonFiltersRepository.storeUserLessonLanguageFilter(
-                languageId: languageFilter.languageId
-            )
-        }
-        
-        return Just(())
-            .eraseToAnyPublisher()
+        try await userLessonFiltersRepository.storeUserLessonLanguageFilter(
+            languageId: languageFilter.languageId
+        )
     }
 }

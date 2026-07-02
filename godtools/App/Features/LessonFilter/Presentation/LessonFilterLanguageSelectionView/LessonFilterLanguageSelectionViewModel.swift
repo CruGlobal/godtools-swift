@@ -11,9 +11,7 @@ import Combine
 
 @MainActor
 final class LessonFilterLanguageSelectionViewModel: ObservableObject {
-    
-    private static var staticCancellables: Set<AnyCancellable> = Set()
-    
+        
     private let stepEmitter: FlowStepEmitter
     private let getLessonFilterLanguagesStringsUseCase: GetLessonFilterLanguagesStringsUseCase
     private let getLessonFilterLanguagesUseCase: GetLessonFilterLanguagesUseCase
@@ -146,13 +144,10 @@ extension LessonFilterLanguageSelectionViewModel {
         
         selectedLanguage = language
         
-        storeUserLessonFiltersUseCase
-            .execute(languageFilter: language)
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                
-            }
-            .store(in: &LessonFilterLanguageSelectionViewModel.staticCancellables)
+        Task {
+            try await storeUserLessonFiltersUseCase
+                .execute(languageFilter: language)
+        }
         
         stepEmitter.emit(step: AppFlowStep.languageTappedFromLessonLanguageFilter)
     }

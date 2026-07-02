@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class SetLocalizationSettingsUseCase {
 
@@ -17,18 +16,12 @@ final class SetLocalizationSettingsUseCase {
         self.userLocalizationSettingsRepository = userLocalizationSettingsRepository
     }
 
-    func execute(country: LocalizationSettingsCountryDomainModel) -> AnyPublisher<UserLocalizationSettingsDomainModel, Error> {
+    func execute(country: LocalizationSettingsCountryDomainModel) async throws -> UserLocalizationSettingsDomainModel {
 
-        Task {
-            try await userLocalizationSettingsRepository.storeUserCountry(isoRegionCode: country.isoRegionCode)
-        }
+        try await userLocalizationSettingsRepository.storeUserCountry(isoRegionCode: country.isoRegionCode)
         
-        let domainModel = UserLocalizationSettingsDomainModel(
+        return UserLocalizationSettingsDomainModel(
             selectedCountry: country
         )
-        
-        return Just(domainModel)
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
     }
 }

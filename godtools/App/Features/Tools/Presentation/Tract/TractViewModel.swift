@@ -228,21 +228,25 @@ final class TractViewModel: MobileContentRendererViewModel {
             attachedToolSettingsObserver.$languages
                 .map { [weak self] (languages: ToolSettingsLanguages) in
                     
-                    guard let self = self else {
+                    guard let weakSelf = self else {
                         return Just(false)
+                            .setFailureType(to: Error.self)
                             .eraseToAnyPublisher()
                     }
                     
-                    return persistToolLanguageSettings
-                        .persistToolLanguageSettingsPublisher(
-                            with: renderer.value.resource.id,
+                    return AnyPublisher() {
+                        try await persistToolLanguageSettings.persistSettings(
+                            toolId: weakSelf.renderer.value.resource.id,
                             primaryLanguageId: languages.primaryLanguageId,
                             parallelLanguageId: languages.parallelLanguageId
                         )
+                    }
                 }
                 .switchToLatest()
                 .receive(on: DispatchQueue.main)
-                .sink(receiveValue: { _ in
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { _ in
                     
                 })
                 .store(in: &cancellables)
