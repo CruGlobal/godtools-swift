@@ -8,7 +8,6 @@
 
 import Testing
 @testable import godtools
-import Combine
 
 struct SearchLanguageInDownloadableLanguagesUseCaseTests {
         
@@ -24,31 +23,10 @@ struct SearchLanguageInDownloadableLanguagesUseCaseTests {
         let searchLanguageInDownloadableLanguagesUseCase: SearchLanguageInDownloadableLanguagesUseCase = getSearchLanguageInDownloadableLanguagesUseCase()
         let downloadableLanguagesList: [DownloadableLanguageListItemDomainModel] = getDownloadableLanguagesList()
         
-        var resultRef: [DownloadableLanguageListItemDomainModel] = Array()
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            searchLanguageInDownloadableLanguagesUseCase
-                .execute(searchText: "c", downloadableLanguages: downloadableLanguagesList)
-                .sink { (result: [DownloadableLanguageListItemDomainModel]) in
-                                        
-                    resultRef = result
-                    
-                    // When finished be sure to call:
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                }
-                .store(in: &cancellables)
-        }
+        let searchedDownloadableLanguages: [DownloadableLanguageListItemDomainModel] = await searchLanguageInDownloadableLanguagesUseCase
+            .execute(searchText: "c", downloadableLanguages: downloadableLanguagesList)
 
-        let searchedLanguages: [String] = resultRef.map({$0.languageId})
+        let searchedLanguages: [String] = searchedDownloadableLanguages.map({$0.languageId})
         let expectedLanguageIds: [String] = ["1", "2", "4", "7"]
         
         #expect(searchedLanguages.elementsEqual(expectedLanguageIds))
@@ -66,31 +44,10 @@ struct SearchLanguageInDownloadableLanguagesUseCaseTests {
         let searchLanguageInDownloadableLanguagesUseCase: SearchLanguageInDownloadableLanguagesUseCase = getSearchLanguageInDownloadableLanguagesUseCase()
         let downloadableLanguagesList: [DownloadableLanguageListItemDomainModel] = getDownloadableLanguagesList()
                 
-        var resultRef: [DownloadableLanguageListItemDomainModel] = Array()
+        let searchedDownloadableLanguages: [DownloadableLanguageListItemDomainModel] = await searchLanguageInDownloadableLanguagesUseCase
+            .execute(searchText: "Ber", downloadableLanguages: downloadableLanguagesList)
         
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            searchLanguageInDownloadableLanguagesUseCase
-                .execute(searchText: "Ber", downloadableLanguages: downloadableLanguagesList)
-                .sink { (result: [DownloadableLanguageListItemDomainModel]) in
-                    
-                    resultRef = result
-                    
-                    // When finished be sure to call:
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                }
-                .store(in: &cancellables)
-        }
-        
-        let searchedLanguages: [String] = resultRef.map({$0.languageId})
+        let searchedLanguages: [String] = searchedDownloadableLanguages.map({$0.languageId})
         let expectedLanguageIds: [String] = ["2", "6", "7"]
         
         #expect(searchedLanguages.elementsEqual(expectedLanguageIds))

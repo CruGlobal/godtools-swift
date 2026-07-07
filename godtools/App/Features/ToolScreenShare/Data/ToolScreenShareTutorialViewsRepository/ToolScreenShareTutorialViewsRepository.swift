@@ -28,7 +28,7 @@ final class ToolScreenShareTutorialViewsRepository {
         }
     }
     
-    private func incrementNumberOfViews(id: String, incrementNumberOfViewsBy: Int) async throws {
+    func incrementNumberOfViews(id: String, incrementNumberOfViewsBy: Int) async throws {
         
         let updateToolScreenShare: ToolScreenShareTutorialViewDataModel
         let newNumberOfViews: Int
@@ -56,11 +56,5 @@ final class ToolScreenShareTutorialViewsRepository {
             writeOption: nil,
             getOption: nil
         )
-    }
-    
-    func incrementNumberOfViewsPublisher(id: String, incrementNumberOfViewsBy: Int = 1) -> AnyPublisher<Void, Error> {
-        return AnyPublisher() {
-            try await self.incrementNumberOfViews(id: id, incrementNumberOfViewsBy: incrementNumberOfViewsBy)
-        }
     }
 }

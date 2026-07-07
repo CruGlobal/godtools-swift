@@ -7,13 +7,12 @@
 //
 
 import Foundation
-import Combine
 
 extension PersistToolLanguageSettingsForFavoritedToolUseCase: PersistToolLanguageSettingsInterface {
     
-    func persistToolLanguageSettingsPublisher(with toolId: String, primaryLanguageId: String, parallelLanguageId: String?) -> AnyPublisher<Bool, Never> {
+    func persistSettings(toolId: String, primaryLanguageId: String, parallelLanguageId: String?) async throws -> Bool {
         
-        return execute(
+        return try await execute(
             toolId: toolId,
             primaryLanguageId: primaryLanguageId,
             parallelLanguageId: parallelLanguageId

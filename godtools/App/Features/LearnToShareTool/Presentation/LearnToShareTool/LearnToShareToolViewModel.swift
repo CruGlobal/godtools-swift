@@ -66,9 +66,10 @@ final class LearnToShareToolViewModel: ObservableObject {
         $appLanguage
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
-
-                getLearnToShareToolTutorialUseCase
-                    .execute(appLanguage: appLanguage)
+                return AnyPublisher() {
+                    await getLearnToShareToolTutorialUseCase
+                        .execute(appLanguage: appLanguage)
+                }
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)

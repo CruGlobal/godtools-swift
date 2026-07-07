@@ -11,9 +11,7 @@ import Combine
 
 @MainActor
 final class LessonEvaluationViewModel: ObservableObject {
-    
-    private static var backgroundCancellables: Set<AnyCancellable> = Set()
-        
+            
     private let stepEmitter: FlowStepEmitter
     private let lessonId: String
     private let lessonLanguage: AppLanguageDomainModel
@@ -99,13 +97,10 @@ extension LessonEvaluationViewModel {
     
     func closeTapped() {
         
-        cancelLessonEvaluationUseCase
-            .execute(lessonId: lessonId)
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { _ in
-                
-            })
-            .store(in: &Self.backgroundCancellables)
+        Task {
+            try await cancelLessonEvaluationUseCase
+                .execute(lessonId: lessonId)
+        }
         
         stepEmitter.emit(step: AppFlowStep.closeTappedFromLessonEvaluation)
     }
@@ -142,13 +137,10 @@ extension LessonEvaluationViewModel {
             pageIndexReached: pageIndexReached
         )
         
-        evaluateLessonUseCase
-            .execute(lessonId: lessonId, feedback: feedback, lessonLanguage: lessonLanguage)
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { _ in
-                
-            })
-            .store(in: &Self.backgroundCancellables)
+        Task {
+            try await evaluateLessonUseCase
+                .execute(lessonId: lessonId, feedback: feedback, lessonLanguage: lessonLanguage)
+        }
         
         stepEmitter.emit(step: AppFlowStep.sendFeedbackTappedFromLessonEvaluation)
     }

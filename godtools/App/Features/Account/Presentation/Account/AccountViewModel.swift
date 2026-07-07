@@ -13,9 +13,7 @@ import GodToolsShared
 
 @MainActor
 final class AccountViewModel: ObservableObject {
-    
-    private static var didPullToRefreshCancellable: AnyCancellable?
-    
+        
     private let stepEmitter: FlowStepEmitter
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase
@@ -163,14 +161,9 @@ extension AccountViewModel {
     
     func pullToRefresh() {
         
-        Self.didPullToRefreshCancellable = didPullToRefreshAccountUseCase
-            .execute()
-            .sink { _ in
-                
-            } receiveValue: { _ in
-                
-            }
-
+        Task {
+            try await didPullToRefreshAccountUseCase.execute()
+        }
     }
     
     func activityViewed() {

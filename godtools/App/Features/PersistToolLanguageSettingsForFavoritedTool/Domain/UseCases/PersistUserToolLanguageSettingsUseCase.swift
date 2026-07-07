@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class PersistToolLanguageSettingsForFavoritedToolUseCase {
     
@@ -17,17 +16,14 @@ final class PersistToolLanguageSettingsForFavoritedToolUseCase {
         self.userToolSettingsRepository = userToolSettingsRepository
     }
     
-    func execute(toolId: String, primaryLanguageId: String, parallelLanguageId: String?) -> AnyPublisher<Bool, Never> {
+    func execute(toolId: String, primaryLanguageId: String, parallelLanguageId: String?) async throws -> Bool {
         
-        Task {
-            try await userToolSettingsRepository.storeUserToolSettings(
-                toolId: toolId,
-                primaryLanguageId: primaryLanguageId,
-                parallelLanguageId: parallelLanguageId
-            )
-        }
+        try await userToolSettingsRepository.storeUserToolSettings(
+            toolId: toolId,
+            primaryLanguageId: primaryLanguageId,
+            parallelLanguageId: parallelLanguageId
+        )
         
-        return Just(true)
-            .eraseToAnyPublisher()
+        return true
     }
 }

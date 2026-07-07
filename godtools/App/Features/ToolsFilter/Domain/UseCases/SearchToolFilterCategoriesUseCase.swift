@@ -18,11 +18,11 @@ final class SearchToolFilterCategoriesUseCase {
         self.stringSearcher = stringSearcher
     }
     
-    func execute(for searchText: String, in toolFilterCategories: [ToolFilterCategoryDomainModel]) -> AnyPublisher<[ToolFilterCategoryDomainModel], Never> {
+    func execute(
+        searchText: String,
+        toolFilterCategories: [ToolFilterCategoryDomainModel]
+    ) async -> [ToolFilterCategoryDomainModel] {
         
-        let searchResults = stringSearcher.search(for: searchText, in: toolFilterCategories)
-        
-        return Just(searchResults)
-            .eraseToAnyPublisher()
+        return stringSearcher.search(for: searchText, in: toolFilterCategories)
     }
 }

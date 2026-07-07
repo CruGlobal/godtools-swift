@@ -13,9 +13,7 @@ import Combine
 
 @MainActor
 final class ReviewShareShareableViewModel: ObservableObject {
-    
-    private static var backgroundCancellables: Set<AnyCancellable> = Set()
-    
+        
     private let stepEmitter: FlowStepEmitter
     private let toolId: String
     private let shareable: ShareableDomainModel
@@ -95,18 +93,13 @@ final class ReviewShareShareableViewModel: ObservableObject {
 
     private func trackShareImageTappedAnalytics() {
         
-        trackShareShareableTapUseCase
-            .execute(
-                toolId: toolId,
-                shareableId: shareable.dataModelId
-            )
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { _ in
-                
-            }, receiveValue: { _ in
-                
-            })
-            .store(in: &ReviewShareShareableViewModel.backgroundCancellables)
+        Task {
+            await trackShareShareableTapUseCase
+                .execute(
+                    toolId: toolId,
+                    shareableId: shareable.dataModelId
+                )
+        }
     }
 }
 

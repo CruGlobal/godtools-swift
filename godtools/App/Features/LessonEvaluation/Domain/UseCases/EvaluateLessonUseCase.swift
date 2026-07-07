@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class EvaluateLessonUseCase {
     
@@ -30,29 +29,23 @@ final class EvaluateLessonUseCase {
         lessonId: String,
         feedback: TrackLessonFeedbackDomainModel,
         lessonLanguage: AppLanguageDomainModel
-    ) -> AnyPublisher<Void, Never> {
+    ) async throws {
         
         let lessonResource: ResourceDataModel? = resourcesRepository.getResourceById(id: lessonId)
         
         guard let lessonResource = lessonResource else {
-            return Just(Void())
-                .eraseToAnyPublisher()
+            return
         }
         
-        Task {
-            try await lessonEvaluationRepository.storeLessonEvaluation(
-                lesson: lessonResource,
-                lessonEvaluated: true
-            )
-        }
+        try await lessonEvaluationRepository.storeLessonEvaluation(
+            lesson: lessonResource,
+            lessonEvaluated: true
+        )
 
         lessonFeedbackAnalytics.trackLessonFeedback(
             lesson: lessonResource,
             feedback: feedback,
             contentLanguage: lessonLanguage
         )
-        
-        return Just(Void())
-            .eraseToAnyPublisher()
     }
 }
