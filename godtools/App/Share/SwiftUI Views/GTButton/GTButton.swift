@@ -104,8 +104,6 @@ struct GTButton: View {
         Text(title)
             .font(font)
             .foregroundColor(titleColor)
-            .optionalHorizontalPoadding(titleHorizontalPadding)
-            .optionalVerticalPoadding(titleVerticalPadding)
             .background(ViewGeometry())
             .onPreferenceChange(ViewSizePreferenceKey.self) { size in
                 onTextWidthChanged?(size.width)
@@ -137,6 +135,8 @@ struct GTButton: View {
         return CustomButtonAttributes(
             width: width,
             height: height,
+            backgroundHorizontalPadding: titleHorizontalPadding,
+            backgroundVerticalPadding: titleVerticalPadding,
             color: color ?? buttonColor,
             cornerRadius: cornerRadius,
             borderColor: borderColor,

@@ -72,8 +72,6 @@ struct ToolsView: View {
                         if viewModel.selectedToggle == .personalized, let personalizedToolsUnavailable = viewModel.personalizedTools.unavailableStrings {
 
                             PersonalizationUnavailableView(
-                                geometry: geometry,
-                                heightMultiplier: 0.45,
                                 title: personalizedToolsUnavailable.title,
                                 message: personalizedToolsUnavailable.message,
                                 changeSettingsButtonTitle: viewModel.strings.changePersonalizedToolSettingsAction,
@@ -85,6 +83,8 @@ struct ToolsView: View {
                                     viewModel.goToAllToolsTapped()
                                 }
                             )
+                            .frame(maxWidth: .infinity)
+                            .padding(.horizontal, contentHorizontalInsets)
                         }
                         else if !viewModel.toolsList.isEmpty {
                             

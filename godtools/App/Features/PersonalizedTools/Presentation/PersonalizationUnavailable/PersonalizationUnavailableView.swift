@@ -17,8 +17,6 @@ struct PersonalizationUnavailableView: View {
     static let buttonCornerRadius: CGFloat = 20
     static let buttonFont: Font = FontLibrary.sfProTextSemibold.font(size: 14)
 
-    private let geometry: GeometryProxy
-    private let heightMultiplier: CGFloat
     private let title: String
     private let message: String
     private let changeSettingsButtonTitle: String
@@ -31,8 +29,6 @@ struct PersonalizationUnavailableView: View {
     @State private var maxButtonWidth: CGFloat?
 
     init(
-        geometry: GeometryProxy,
-        heightMultiplier: CGFloat?,
         title: String,
         message: String,
         changeSettingsButtonTitle: String,
@@ -41,8 +37,6 @@ struct PersonalizationUnavailableView: View {
         goToAllToolsTapped: (() -> Void)?
     ) {
                 
-        self.geometry = geometry
-        self.heightMultiplier = heightMultiplier ?? 0.7
         self.title = title
         self.message = message
         self.changeSettingsButtonTitle = changeSettingsButtonTitle
@@ -53,66 +47,59 @@ struct PersonalizationUnavailableView: View {
 
     var body: some View {
 
-        ZStack {
-            PersonalizationUnavailableView.backgroundColor
+        VStack(alignment: .center, spacing: 0) {
 
-            VStack(alignment: .center, spacing: 0) {
+            Text(title)
+                .font(FontLibrary.sfProTextRegular.font(size: 19))
+                .foregroundColor(.black)
+                .multilineTextAlignment(.center)
 
-                Spacer()
-
-                Text(title)
-                    .font(FontLibrary.sfProTextRegular.font(size: 18))
-                    .foregroundColor(.black)
-                    .multilineTextAlignment(.center)
-
-                Text(message)
-                    .font(FontLibrary.sfProTextRegular.font(size: 14))
-                    .foregroundColor(ColorPalette.gtGrey.color)
-                    .multilineTextAlignment(.center)
-                    .lineSpacing(4)
-                    .padding(.top, 10)
-                    .padding(.horizontal, 30)
+            Text(message)
+                .font(FontLibrary.sfProTextRegular.font(size: 15))
+                .foregroundColor(ColorPalette.gtGrey.color)
+                .multilineTextAlignment(.center)
+                .lineSpacing(4)
+                .padding(.top, 10)
+                .padding(.horizontal, 30)
+            
+            VStack(alignment: .center, spacing: 10) {
                 
-                VStack(alignment: .center, spacing: 10) {
-                    
-                    GTButton(
-                        style: .white,
-                        title: changeSettingsButtonTitle,
-                        color: .clear,
-                        font: Self.buttonFont,
-                        width: maxButtonWidth,
-                        titleHorizontalPadding: Self.buttonTitleHorizontalPadding,
-                        titleVerticalPadding: Self.buttonTitleVerticalPadding,
-                        cornerRadius: Self.buttonCornerRadius,
-                        tapped: changeLocalizationSettingsTapped,
-                        onTextWidthChanged: { (width: CGFloat) in
-                            changeLocalizationSettingsButtonWidth = width
-                            updateMaxButtonWidth()
-                        }
-                    )
+                GTButton(
+                    style: .white,
+                    title: changeSettingsButtonTitle,
+                    color: .clear,
+                    font: Self.buttonFont,
+                    width: maxButtonWidth,
+                    titleHorizontalPadding: Self.buttonTitleHorizontalPadding,
+                    titleVerticalPadding: Self.buttonTitleVerticalPadding,
+                    cornerRadius: Self.buttonCornerRadius,
+                    tapped: changeLocalizationSettingsTapped,
+                    onTextWidthChanged: { (width: CGFloat) in
+                        changeLocalizationSettingsButtonWidth = width
+                        updateMaxButtonWidth()
+                    }
+                )
 
-                    GTButton(
-                        style: .blue,
-                        title: goToAllToolsButtonTitle,
-                        font: Self.buttonFont,
-                        width: maxButtonWidth,
-                        titleHorizontalPadding: Self.buttonTitleHorizontalPadding,
-                        titleVerticalPadding: Self.buttonTitleVerticalPadding,
-                        cornerRadius: Self.buttonCornerRadius,
-                        tapped: goToAllToolsTapped,
-                        onTextWidthChanged: { (width: CGFloat) in
-                            goToAllToolsButtonWidth = width
-                            updateMaxButtonWidth()
-                        }
-                    )
-                }
-                .padding(.top, 20)
-
-                Spacer()
+                GTButton(
+                    style: .blue,
+                    title: goToAllToolsButtonTitle,
+                    font: Self.buttonFont,
+                    width: maxButtonWidth,
+                    titleHorizontalPadding: Self.buttonTitleHorizontalPadding,
+                    titleVerticalPadding: Self.buttonTitleVerticalPadding,
+                    cornerRadius: Self.buttonCornerRadius,
+                    tapped: goToAllToolsTapped,
+                    onTextWidthChanged: { (width: CGFloat) in
+                        goToAllToolsButtonWidth = width
+                        updateMaxButtonWidth()
+                    }
+                )
             }
+            .padding(.top, 20)
         }
-        .frame(height: (geometry.size.height * heightMultiplier) - 15)
-        .padding(.horizontal, DashboardView.contentHorizontalInsets)
+        .padding(.horizontal, 20)
+        .padding(.vertical, 110)
+        .background(PersonalizationUnavailableView.backgroundColor)
     }
     
     private func updateMaxButtonWidth() {
