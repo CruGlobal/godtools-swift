@@ -112,7 +112,25 @@ class AppDiContainer {
 
         let toolsDataLayer = ToolsDataLayerDependencies(coreDataLayer: core.dataLayer)
         let toolsDomainLayer = ToolsDomainLayerDependencies(core: core, dataLayer: toolsDataLayer, personalizedToolsDataLayer: personalizedToolsDataLayer, tutorialDomainLayer: tutorialDomainLayer)
-        
+
+        let toolScreenShareDataLayer = ToolScreenShareDataLayerDependencies(coreDataLayer: dataLayer)
+        let toolScreenShareDomainLayer = ToolScreenShareDomainLayerDependencies(core: core, dataLayer: toolScreenShareDataLayer)
+
+        let toolScreenShareQRCodeDataLayer = ToolScreenShareQRCodeDataLayerDependencies(coreDataLayer: dataLayer)
+        let toolScreenShareQRCodeDomainLayer = ToolScreenShareQRCodeDomainLayerDependencies(core: core, dataLayer: toolScreenShareQRCodeDataLayer)
+
+        let toolSettingsDataLayer = ToolSettingsDataLayerDependencies(coreDataLayer: dataLayer)
+        let toolSettingsDomainLayer = ToolSettingsDomainLayerDependencies(core: core, dataLayer: toolSettingsDataLayer)
+
+        let toolsFilterDataLayer = ToolsFilterDataLayerDependencies(coreDataLayer: dataLayer)
+        let toolsFilterDomainLayer = ToolsFilterDomainLayerDependencies(core: core, dataLayer: toolsFilterDataLayer)
+
+        let toolShortcutLinksDataLayer = ToolShortcutLinksDataLayerDependencies(coreDataLayer: dataLayer)
+        let toolShortcutLinksDomainLayer = ToolShortcutLinksDomainLayerDependencies(core: core, dataLayer: toolShortcutLinksDataLayer)
+
+        let userActivityDataLayer = UserActivityDataLayerDependencies(coreDataLayer: dataLayer)
+        let userActivityDomainLayer = UserActivityDomainLayerDependencies(core: core, dataLayer: userActivityDataLayer)
+
         let feature = AppFeatureDiContainer(
             account: AccountDiContainer(dataLayer: accountDataLayer, domainLayer: accountDomainLayer),
             appLanguage: AppLanguageDiContainer(dataLayer: appLanguageDataLayer, domainLayer: appLanguageDomainLayer),
@@ -140,13 +158,13 @@ class AppDiContainer {
             spotlightTools: SpotlightToolsDiContainer(dataLayer: spotlightToolsDataLayer, domainLayer: spotlightToolsDomainLayer),
             toolDetails: ToolDetailsDiContainer(dataLayer: toolDetailsDataLayer, domainLayer: toolDetailsDomainLayer),
             tools: ToolsDiContainer(dataLayer: toolsDataLayer, domainLayer: toolsDomainLayer),
-            toolScreenShare: ToolScreenShareDiContainer(core: core),
-            toolScreenShareQRCode: ToolScreenShareQRCodeDiContainer(core: core),
-            toolSettings: ToolSettingsDiContainer(core: core),
-            toolsFilter: ToolsFilterDiContainer(core: core),
-            toolShortcutLinks: ToolShortcutLinksDiContainer(core: core),
+            toolScreenShare: ToolScreenShareDiContainer(dataLayer: toolScreenShareDataLayer, domainLayer: toolScreenShareDomainLayer),
+            toolScreenShareQRCode: ToolScreenShareQRCodeDiContainer(dataLayer: toolScreenShareQRCodeDataLayer, domainLayer: toolScreenShareQRCodeDomainLayer),
+            toolSettings: ToolSettingsDiContainer(dataLayer: toolSettingsDataLayer, domainLayer: toolSettingsDomainLayer),
+            toolsFilter: ToolsFilterDiContainer(dataLayer: toolsFilterDataLayer, domainLayer: toolsFilterDomainLayer),
+            toolShortcutLinks: ToolShortcutLinksDiContainer(dataLayer: toolShortcutLinksDataLayer, domainLayer: toolShortcutLinksDomainLayer),
             tutorial: TutorialDiContainer(dataLayer: tutorialDataLayer, domainLayer: tutorialDomainLayer),
-            userActivity: UserActivityDiContainer(core: core)
+            userActivity: UserActivityDiContainer(dataLayer: userActivityDataLayer, domainLayer: userActivityDomainLayer)
         )
         
         self.core = core

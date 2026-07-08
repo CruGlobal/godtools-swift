@@ -13,9 +13,9 @@ final class ToolsFilterDiContainer {
     let dataLayer: ToolsFilterDataLayerDependencies
     let domainLayer: ToolsFilterDomainLayerDependencies
     
-    init(core: AppCoreDiContainer) {
-        
-        dataLayer = ToolsFilterDataLayerDependencies(coreDataLayer: core.dataLayer)
-        domainLayer = ToolsFilterDomainLayerDependencies(core: core, dataLayer: dataLayer)
+    init(dataLayer: ToolsFilterDataLayerDependencies, domainLayer: ToolsFilterDomainLayerDependencies) {
+
+        self.dataLayer = dataLayer
+        self.domainLayer = domainLayer
     }
 }
