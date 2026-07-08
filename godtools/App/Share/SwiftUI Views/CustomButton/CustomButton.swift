@@ -48,6 +48,8 @@ struct CustomButton<HighlightContent: View, NonHighlightContent: View>: View {
                 }
             }
             .accessibilityIdentifier(accessibilityId ?? "")
+            .optionalHorizontalPoadding(attributes.backgroundHorizontalPadding)
+            .optionalVerticalPoadding(attributes.backgroundVerticalPadding)
             .background(attributes.color)
             .cornerRadius(attributes.cornerRadius)
             .overlay(
