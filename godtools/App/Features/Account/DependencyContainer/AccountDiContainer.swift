@@ -13,9 +13,9 @@ final class AccountDiContainer {
     let dataLayer: AccountDataLayerDependencies
     let domainLayer: AccountDomainLayerDependencies
     
-    init(core: AppCoreDiContainer) {
-        
-        dataLayer = AccountDataLayerDependencies(coreDataLayer: core.dataLayer)
-        domainLayer = AccountDomainLayerDependencies(core: core, dataLayer: dataLayer)
+    init(dataLayer: AccountDataLayerDependencies, domainLayer: AccountDomainLayerDependencies) {
+
+        self.dataLayer = dataLayer
+        self.domainLayer = domainLayer
     }
 }
