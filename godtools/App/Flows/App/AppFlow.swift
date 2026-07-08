@@ -13,7 +13,7 @@ import Combine
 
 final class AppFlow: RootFlow {
             
-    private static let resetNavigationWhenAppIsBackgroundedForThanMinutes: TimeInterval = 120
+    private static let resetNavigationWhenAppIsBackgroundedForMinutes: TimeInterval = 120
     
     static let defaultNavBarColor: UIColor = .white
     static let defaultNavBarControlColor: UIColor = ColorPalette.gtBlue.uiColor
@@ -142,7 +142,7 @@ final class AppFlow: RootFlow {
             case .willEnterForground(let secondsInBackground):
                 let elapsedTimeInMinutes: TimeInterval = secondsInBackground / 60
                 
-                if appLaunchObserver.appLaunched && elapsedTimeInMinutes >= Self.resetNavigationWhenAppIsBackgroundedForThanMinutes {
+                if appLaunchObserver.appLaunched && elapsedTimeInMinutes >= Self.resetNavigationWhenAppIsBackgroundedForMinutes {
                     attachLaunchScreenImageView()
                 }
                 
@@ -195,7 +195,7 @@ final class AppFlow: RootFlow {
                 
                 let elapsedTimeInMinutes: TimeInterval = secondsInBackground / 60
                 
-                guard elapsedTimeInMinutes >= Self.resetNavigationWhenAppIsBackgroundedForThanMinutes else {
+                guard elapsedTimeInMinutes >= Self.resetNavigationWhenAppIsBackgroundedForMinutes else {
                     removeLaunchScreenImageView(animated: false, delay: 0)
                     return
                 }
