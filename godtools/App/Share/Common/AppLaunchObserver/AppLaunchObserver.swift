@@ -47,7 +47,7 @@ final class AppLaunchObserver {
             }
             else if notification.name == UIApplication.willEnterForegroundNotification {
                 
-                launchState = .willEnterForground
+                launchState = .willEnterForground(secondsInBackground: self.getSecondsInBackground())
             }
             else if notification.name == UIApplication.didBecomeActiveNotification {
                                 
@@ -64,17 +64,7 @@ final class AppLaunchObserver {
                                         
                     self.appIsInBackground = false
                     
-                    let currentDate: Date = Date()
-                    let secondsInBackground: TimeInterval
-                    
-                    if let resignedActiveDate = self.resignedActiveDate {
-                        secondsInBackground = currentDate.timeIntervalSince(resignedActiveDate)
-                    }
-                    else {
-                        secondsInBackground = 0
-                    }
-                    
-                    launchState = .fromBackgroundState(secondsInBackground: secondsInBackground)
+                    launchState = .fromBackgroundState(secondsInBackground: self.getSecondsInBackground())
                     
                     self.resignedActiveDate = nil
                 }
@@ -91,5 +81,20 @@ final class AppLaunchObserver {
             return launchState
         }
         .eraseToAnyPublisher()
+    }
+    
+    private func getSecondsInBackground() -> TimeInterval {
+        
+        let currentDate: Date = Date()
+        let secondsInBackground: TimeInterval
+        
+        if let resignedActiveDate = self.resignedActiveDate {
+            secondsInBackground = currentDate.timeIntervalSince(resignedActiveDate)
+        }
+        else {
+            secondsInBackground = 0
+        }
+        
+        return secondsInBackground
     }
 }
