@@ -13,10 +13,9 @@ final class DownloadToolProgressDiContainer {
     let dataLayer: DownloadToolProgressDataLayerDependencies
     let domainLayer: DownloadToolProgressDomainLayerDependencies
     
-    init(core: AppCoreDiContainer) {
-        
-        dataLayer = DownloadToolProgressDataLayerDependencies(coreDataLayer: core.dataLayer)
-        
-        domainLayer = DownloadToolProgressDomainLayerDependencies(core: core, dataLayer: dataLayer)
+    init(dataLayer: DownloadToolProgressDataLayerDependencies, domainLayer: DownloadToolProgressDomainLayerDependencies) {
+
+        self.dataLayer = dataLayer
+        self.domainLayer = domainLayer
     }
 }

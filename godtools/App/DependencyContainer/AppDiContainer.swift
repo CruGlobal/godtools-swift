@@ -38,6 +38,33 @@ class AppDiContainer {
 
         let articlesDataLayer = ArticlesDataLayerDependencies(coreDataLayer: dataLayer)
         let articlesDomainLayer = ArticlesDomainLayerDependencies(core: core, dataLayer: articlesDataLayer)
+
+        let dashboardDataLayer = DashboardDataLayerDependencies(coreDataLayer: dataLayer)
+        let dashboardDomainLayer = DashboardDomainLayerDependencies(core: core, dataLayer: dashboardDataLayer)
+
+        let deferredDeepLinkDataLayer = DeferredDeepLinkDataLayerDependencies(coreDataLayer: dataLayer)
+        let deferredDeepLinkDomainLayer = DeferredDeepLinkDomainLayerDependencies(core: core, dataLayer: deferredDeepLinkDataLayer)
+
+        let downloadToolProgressDataLayer = DownloadToolProgressDataLayerDependencies(coreDataLayer: dataLayer)
+        let downloadToolProgressDomainLayer = DownloadToolProgressDomainLayerDependencies(core: core, dataLayer: downloadToolProgressDataLayer)
+
+        let favoritesDataLayer = FavoritesDataLayerDependencies(coreDataLayer: dataLayer)
+        let favoritesDomainLayer = FavoritesDomainLayerDependencies(core: core, dataLayer: favoritesDataLayer)
+
+        let featuredLessonsDataLayer = FeaturedLessonsDataLayerDependencies(coreDataLayer: dataLayer)
+        let featuredLessonsDomainLayer = FeaturedLessonsDomainLayerDependencies(core: core, dataLayer: featuredLessonsDataLayer)
+
+        let globalActivityDataLayer = GlobalActivityDataLayerDependencies(coreDataLayer: dataLayer)
+        let globalActivityDomainLayer = GlobalActivityDomainLayerDependencies(core: core, dataLayer: globalActivityDataLayer)
+
+        let learnToShareToolDataLayer = LearnToShareToolDataLayerDependencies(coreDataLayer: dataLayer)
+        let learnToShareToolDomainLayer = LearnToShareToolDomainLayerDependencies(core: core, dataLayer: learnToShareToolDataLayer)
+
+        let lessonEvaluationDataLayer = LessonEvaluationDataLayerDependencies(coreDataLayer: dataLayer)
+        let lessonEvaluationDomainLayer = LessonEvaluationDomainLayerDependencies(core: core, dataLayer: lessonEvaluationDataLayer)
+
+        let lessonFilterDataLayer = LessonFilterDataLayerDependencies(coreDataLayer: dataLayer)
+        let lessonFilterDomainLayer = LessonFilterDomainLayerDependencies(core: core, dataLayer: lessonFilterDataLayer)
         
         let onboardingDataLayer = OnboardingDataLayerDependencies(coreDataLayer: dataLayer)
         let onboardingDomainLayer = OnboardingDomainLayerDependencies(core: core, dataLayer: onboardingDataLayer)
@@ -51,15 +78,15 @@ class AppDiContainer {
             account: AccountDiContainer(dataLayer: accountDataLayer, domainLayer: accountDomainLayer),
             appLanguage: AppLanguageDiContainer(dataLayer: appLanguageDataLayer, domainLayer: appLanguageDomainLayer),
             articles: ArticlesDiContainer(dataLayer: articlesDataLayer, domainLayer: articlesDomainLayer),
-            dashboard: DashboardDiContainer(core: core),
-            deferredDeepLink: DeferredDeepLinkDiContainer(core: core),
-            downloadToolProgress: DownloadToolProgressDiContainer(core: core),
-            favorites: FavoritesDiContainer(core: core),
-            featuredLessons: FeaturedLessonsDiContainer(core: core),
-            globalActivity: GlobalActivityDiContainer(core: core),
-            learnToShareTool: LearnToShareToolDiContainer(core: core),
-            lessonEvaluation: LessonEvaluationDiContainer(core: core),
-            lessonFilter: LessonFilterDiContainer(core: core),
+            dashboard: DashboardDiContainer(dataLayer: dashboardDataLayer, domainLayer: dashboardDomainLayer),
+            deferredDeepLink: DeferredDeepLinkDiContainer(dataLayer: deferredDeepLinkDataLayer, domainLayer: deferredDeepLinkDomainLayer),
+            downloadToolProgress: DownloadToolProgressDiContainer(dataLayer: downloadToolProgressDataLayer, domainLayer: downloadToolProgressDomainLayer),
+            favorites: FavoritesDiContainer(dataLayer: favoritesDataLayer, domainLayer: favoritesDomainLayer),
+            featuredLessons: FeaturedLessonsDiContainer(dataLayer: featuredLessonsDataLayer, domainLayer: featuredLessonsDomainLayer),
+            globalActivity: GlobalActivityDiContainer(dataLayer: globalActivityDataLayer, domainLayer: globalActivityDomainLayer),
+            learnToShareTool: LearnToShareToolDiContainer(dataLayer: learnToShareToolDataLayer, domainLayer: learnToShareToolDomainLayer),
+            lessonEvaluation: LessonEvaluationDiContainer(dataLayer: lessonEvaluationDataLayer, domainLayer: lessonEvaluationDomainLayer),
+            lessonFilter: LessonFilterDiContainer(dataLayer: lessonFilterDataLayer, domainLayer: lessonFilterDomainLayer),
             lessons: LessonsDiContainer(core: core, personalizedToolsDataLayer: personalizedToolsDataLayer),
             lessonProgress: UserLessonProgressDiContainer(core: core),
             lessonSwipeTutorial: LessonSwipeTutorialDiContainer(core: core),
