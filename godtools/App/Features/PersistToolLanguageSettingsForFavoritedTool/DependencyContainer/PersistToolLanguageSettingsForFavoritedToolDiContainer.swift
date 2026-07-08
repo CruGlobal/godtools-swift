@@ -13,9 +13,9 @@ final class PersistToolLanguageSettingsForFavoritedToolDiContainer {
     let dataLayer: PersistToolLanguageSettingsForFavoritedToolDataLayerDependencies
     let domainLayer: PersistToolLanguageSettingsForFavoritedToolDomainLayerDependencies
     
-    init(core: AppCoreDiContainer) {
-        
-        dataLayer = PersistToolLanguageSettingsForFavoritedToolDataLayerDependencies(coreDataLayer: core.dataLayer)
-        domainLayer = PersistToolLanguageSettingsForFavoritedToolDomainLayerDependencies(core: core, dataLayer: dataLayer)
+    init(dataLayer: PersistToolLanguageSettingsForFavoritedToolDataLayerDependencies, domainLayer: PersistToolLanguageSettingsForFavoritedToolDomainLayerDependencies) {
+
+        self.dataLayer = dataLayer
+        self.domainLayer = domainLayer
     }
 }

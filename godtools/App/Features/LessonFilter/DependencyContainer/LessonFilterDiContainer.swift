@@ -13,9 +13,9 @@ final class LessonFilterDiContainer {
     let dataLayer: LessonFilterDataLayerDependencies
     let domainLayer: LessonFilterDomainLayerDependencies
     
-    init(core: AppCoreDiContainer) {
-        
-        dataLayer = LessonFilterDataLayerDependencies(coreDataLayer: core.dataLayer)
-        domainLayer = LessonFilterDomainLayerDependencies(core: core, dataLayer: dataLayer)
+    init(dataLayer: LessonFilterDataLayerDependencies, domainLayer: LessonFilterDomainLayerDependencies) {
+
+        self.dataLayer = dataLayer
+        self.domainLayer = domainLayer
     }
 }

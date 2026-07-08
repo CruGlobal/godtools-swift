@@ -13,9 +13,9 @@ final class ShareGodToolsDiContainer {
     let dataLayer: ShareGodToolsDataLayerDependencies
     let domainLayer: ShareGodToolsDomainLayerDependencies
     
-    init(core: AppCoreDiContainer) {
-        
-        dataLayer = ShareGodToolsDataLayerDependencies(coreDataLayer: core.dataLayer)
-        domainLayer = ShareGodToolsDomainLayerDependencies(core: core, dataLayer: dataLayer)
+    init(dataLayer: ShareGodToolsDataLayerDependencies, domainLayer: ShareGodToolsDomainLayerDependencies) {
+
+        self.dataLayer = dataLayer
+        self.domainLayer = domainLayer
     }
 }

@@ -13,9 +13,9 @@ final class ToolScreenShareDiContainer {
     let dataLayer: ToolScreenShareDataLayerDependencies
     let domainLayer: ToolScreenShareDomainLayerDependencies
     
-    init(core: AppCoreDiContainer) {
-        
-        dataLayer = ToolScreenShareDataLayerDependencies(coreDataLayer: core.dataLayer)
-        domainLayer = ToolScreenShareDomainLayerDependencies(core: core, dataLayer: dataLayer)
+    init(dataLayer: ToolScreenShareDataLayerDependencies, domainLayer: ToolScreenShareDomainLayerDependencies) {
+
+        self.dataLayer = dataLayer
+        self.domainLayer = domainLayer
     }
 }

@@ -13,10 +13,9 @@ final class DashboardDiContainer {
     let dataLayer: DashboardDataLayerDependencies
     let domainLayer: DashboardDomainLayerDependencies
     
-    init(core: AppCoreDiContainer) {
-        
-        dataLayer = DashboardDataLayerDependencies(coreDataLayer: core.dataLayer)
-        
-        domainLayer = DashboardDomainLayerDependencies(core: core, dataLayer: dataLayer)
+    init(dataLayer: DashboardDataLayerDependencies, domainLayer: DashboardDomainLayerDependencies) {
+
+        self.dataLayer = dataLayer
+        self.domainLayer = domainLayer
     }
 }
