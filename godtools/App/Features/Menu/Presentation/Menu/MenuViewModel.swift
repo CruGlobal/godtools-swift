@@ -75,8 +75,10 @@ final class MenuViewModel: ObservableObject {
             .map { (appLanguage: AppLanguageDomainModel) in
                 
                 Publishers.CombineLatest(
-                    getAccountCreationIsSupportedUseCase
-                        .execute(appLanguage: appLanguage),
+                    AnyPublisher() {
+                        await getAccountCreationIsSupportedUseCase
+                            .execute(appLanguage: appLanguage)
+                    },
                     getUserIsAuthenticatedUseCase
                         .execute()
                 )

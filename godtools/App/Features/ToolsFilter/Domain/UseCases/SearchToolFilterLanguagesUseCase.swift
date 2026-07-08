@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class SearchToolFilterLanguagesUseCase {
     
@@ -18,11 +17,11 @@ final class SearchToolFilterLanguagesUseCase {
         self.stringSearcher = stringSearcher
     }
     
-    func execute(for searchText: String, in toolFilterLanguages: [ToolFilterLanguageDomainModel]) -> AnyPublisher<[ToolFilterLanguageDomainModel], Never> {
+    func execute(
+        searchText: String,
+        toolFilterLanguages: [ToolFilterLanguageDomainModel]
+    ) async -> [ToolFilterLanguageDomainModel] {
         
-        let searchResults = stringSearcher.search(for: searchText, in: toolFilterLanguages)
-        
-        return Just(searchResults)
-            .eraseToAnyPublisher()
+        return stringSearcher.search(for: searchText, in: toolFilterLanguages)
     }
 }

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class DidViewToolScreenShareTutorialUseCase {
     
@@ -18,17 +17,12 @@ final class DidViewToolScreenShareTutorialUseCase {
         self.tutorialViewsRepository = tutorialViewsRepository
     }
     
-    func execute(toolId: String) -> AnyPublisher<Void, Never> {
+    func execute(toolId: String) async throws {
         
-        return tutorialViewsRepository
-            .incrementNumberOfViewsPublisher(
+        try await tutorialViewsRepository
+            .incrementNumberOfViews(
                 id: toolId,
                 incrementNumberOfViewsBy: 1
             )
-            .catch { _ in
-                return Just(Void())
-                    .eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
     }
 }

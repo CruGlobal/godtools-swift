@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class TrackViewedLessonSwipeTutorialUseCase {
     
@@ -17,11 +16,8 @@ final class TrackViewedLessonSwipeTutorialUseCase {
         self.lessonSwipeTutorialViewedRepository = lessonSwipeTutorialViewedRepository
     }
     
-    func execute() -> AnyPublisher<Void, Never> {
+    func execute() async {
         
         lessonSwipeTutorialViewedRepository.storeLessonSwipeTutorialViewed(viewed: true)
-        
-        return Just(())
-            .eraseToAnyPublisher()
     }
 }

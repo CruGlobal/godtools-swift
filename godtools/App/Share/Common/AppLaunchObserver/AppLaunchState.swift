@@ -11,7 +11,7 @@ import Foundation
 enum AppLaunchState: Sendable {
     
     case inBackground
-    case willEnterForground
+    case willEnterForground(secondsInBackground: TimeInterval)
     case fromBackgroundState(secondsInBackground: TimeInterval)
     case fromTerminatedState
     case notDetermined

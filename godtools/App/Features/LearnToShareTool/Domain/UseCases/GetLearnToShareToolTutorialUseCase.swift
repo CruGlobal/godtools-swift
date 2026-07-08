@@ -18,7 +18,7 @@ final class GetLearnToShareToolTutorialUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[LearnToShareToolItemDomainModel], Never> {
+    func execute(appLanguage: AppLanguageDomainModel) async -> [LearnToShareToolItemDomainModel] {
         
         let localeId: String = appLanguage
         
@@ -43,7 +43,6 @@ final class GetLearnToShareToolTutorialUseCase {
             )
         ]
         
-        return Just(items)
-            .eraseToAnyPublisher()
+        return items
     }
 }

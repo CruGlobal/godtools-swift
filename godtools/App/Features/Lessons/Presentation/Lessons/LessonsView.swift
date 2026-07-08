@@ -35,6 +35,7 @@ struct LessonsView: View {
             VStack(alignment: .center, spacing: 0) {
 
                 PersonalizedToolToggle(
+                    geometry: geometry,
                     selectedToggle: $viewModel.selectedToggle,
                     toggleOptions: viewModel.toggleOptions
                 )

@@ -69,24 +69,23 @@ final class ToolSettingsViewModel: ObservableObject {
         .map { (appLanguage: AppLanguageDomainModel, languages: ToolSettingsLanguages, strings: ToolSettingsStringsDomainModel) in
             
             Publishers.CombineLatest(
-                getToolSettingsUseCase
-                    .execute(
-                        appLanguage: appLanguage,
-                        toolId: toolSettingsObserver.toolId,
-                        toolLanguageId: languages.selectedLanguageId,
-                        toolPrimaryLanguageId: languages.primaryLanguageId,
-                        toolParallelLanguageId: languages.parallelLanguageId
-                    )
+                AnyPublisher() {
+                    await getToolSettingsUseCase
+                        .execute(
+                            appLanguage: appLanguage,
+                            toolId: toolSettingsObserver.toolId,
+                            toolLanguageId: languages.selectedLanguageId,
+                            toolPrimaryLanguageId: languages.primaryLanguageId,
+                            toolParallelLanguageId: languages.parallelLanguageId
+                        )
+                }
                 ,
                 Just(strings)
-                    .setFailureType(to: Error.self)
             )
         }
         .switchToLatest()
         .receive(on: DispatchQueue.main)
-        .sink(receiveCompletion: { _ in
-            
-        }, receiveValue: { [weak self] (toolSettings: ToolSettingsDomainModel, strings: ToolSettingsStringsDomainModel) in
+        .sink { [weak self] (toolSettings: ToolSettingsDomainModel, strings: ToolSettingsStringsDomainModel) in
             
             self?.toolOptions = Self.getAvailableToolOptions(
                 domainModel: toolSettings,
@@ -95,7 +94,7 @@ final class ToolSettingsViewModel: ObservableObject {
             
             self?.primaryLanguageTitle = toolSettings.primaryLanguage?.languageName ?? ""
             self?.parallelLanguageTitle = toolSettings.parallelLanguage?.languageName ?? strings.chooseParallelLanguageActionTitle
-        })
+        }
         .store(in: &cancellables)
 
         Publishers.CombineLatest(
@@ -116,12 +115,14 @@ final class ToolSettingsViewModel: ObservableObject {
         
         toolSettingsObserver.$languages
             .map { (languages: ToolSettingsLanguages) in
-                
-                getShareablesUseCase
-                    .execute(
-                        toolId: toolSettingsObserver.toolId,
-                        toolLanguageId: languages.selectedLanguageId
-                    )
+
+                AnyPublisher() {
+                    try await getShareablesUseCase
+                        .execute(
+                            toolId: toolSettingsObserver.toolId,
+                            toolLanguageId: languages.selectedLanguageId
+                        )
+                }
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)

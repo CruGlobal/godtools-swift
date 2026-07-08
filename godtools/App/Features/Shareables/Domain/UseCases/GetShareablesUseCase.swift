@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 import GodToolsShared
 
 final class GetShareablesUseCase {
@@ -19,16 +18,8 @@ final class GetShareablesUseCase {
         self.translationsRepository = translationsRepository
     }
     
-    func execute(toolId: String, toolLanguageId: String) -> AnyPublisher<[ShareableDomainModel], Error> {
-        
-        return AnyPublisher() {
-            try await self.asyncExecute(toolId: toolId, toolLanguageId: toolLanguageId)
-        }
-        .eraseToAnyPublisher()
-    }
-    
-    private func asyncExecute(toolId: String, toolLanguageId: String) async throws -> [ShareableDomainModel] {
-        
+    func execute(toolId: String, toolLanguageId: String) async throws -> [ShareableDomainModel] {
+
         guard let translation = translationsRepository.getLatestTranslation(resourceId: toolId, languageId: toolLanguageId) else {
             return Array()
         }

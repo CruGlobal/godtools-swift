@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetLocalizationSettingsCountryListUseCase {
 
@@ -22,15 +21,8 @@ final class GetLocalizationSettingsCountryListUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel, showsPreferNotToSay: Bool) -> AnyPublisher<[LocalizationSettingsCountryListItem], Error> {
-        
-        return AnyPublisher() {
-            await self.asyncExecute(appLanguage: appLanguage, showsPreferNotToSay: showsPreferNotToSay)
-        }
-    }
-    
-    private func asyncExecute(appLanguage: AppLanguageDomainModel, showsPreferNotToSay: Bool) async -> [LocalizationSettingsCountryListItem] {
-        
+    func execute(appLanguage: AppLanguageDomainModel, showsPreferNotToSay: Bool) async -> [LocalizationSettingsCountryListItem] {
+
         let countries: [LocalizationSettingsCountryDataModel] = countriesRepository
             .getCountries(appLanguage: appLanguage)
         

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetToolDetailsLearnToShareToolIsAvailableUseCase {
     
@@ -18,31 +17,20 @@ final class GetToolDetailsLearnToShareToolIsAvailableUseCase {
         self.translationsRepository = translationsRepository
     }
     
-    func execute(toolId: String, primaryLanguage: BCP47LanguageIdentifier, parallelLanguage: BCP47LanguageIdentifier?) -> AnyPublisher<Bool, Never> {
-        
-        return AnyPublisher() {
-            try await self.asyncExecute(
-                toolId: toolId,
-                primaryLanguage: primaryLanguage,
-                parallelLanguage: parallelLanguage
-            )
+    func execute(toolId: String, primaryLanguage: BCP47LanguageIdentifier, parallelLanguage: BCP47LanguageIdentifier?) async -> Bool {
+
+        do {
+            let primaryHasTips: Bool = try await getTranslationHasTips(toolId: toolId, language: primaryLanguage)
+
+            if primaryHasTips {
+                return true
+            }
+
+            return try await getTranslationHasTips(toolId: toolId, language: parallelLanguage)
         }
-        .catch { _ in
-            return Just(false)
-                .eraseToAnyPublisher()
+        catch {
+            return false
         }
-        .eraseToAnyPublisher()
-    }
-    
-    private func asyncExecute(toolId: String, primaryLanguage: BCP47LanguageIdentifier, parallelLanguage: BCP47LanguageIdentifier?) async throws -> Bool {
-        
-        let primaryHasTips: Bool = try await getTranslationHasTips(toolId: toolId, language: primaryLanguage)
-        
-        if primaryHasTips {
-            return true
-        }
-        
-        return try await getTranslationHasTips(toolId: toolId, language: parallelLanguage)
     }
     
     private func getTranslationHasTips(toolId: String, language: BCP47LanguageIdentifier?) async throws -> Bool {

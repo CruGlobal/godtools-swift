@@ -21,8 +21,7 @@ final class LessonFlow: GTFlow {
     private let initialPageSubIndex: Int?
     private let initialPage: MobileContentRendererInitialPage?
     private let toolOpenedFrom: ToolOpenedFrom
-    
-    private var cancellables: Set<AnyCancellable> = Set()
+
     private var lesson: ResourceDataModel {
         return toolTranslations.tool
     }
@@ -174,13 +173,11 @@ final class LessonFlow: GTFlow {
     
     private func trackSwipeTutorialViewed() {
         
-        appDiContainer.feature.lessonSwipeTutorial.domainlayer
-            .getTrackViewedLessonSwipeTutorialUseCase()
-            .execute()
-            .sink { _ in
-                
-            }
-            .store(in: &cancellables)
+        Task {
+            await appDiContainer.feature.lessonSwipeTutorial.domainlayer
+                .getTrackViewedLessonSwipeTutorialUseCase()
+                .execute()
+        }
     }
 }
 

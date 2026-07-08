@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class CancelLessonEvaluationUseCase {
         
@@ -20,23 +19,17 @@ final class CancelLessonEvaluationUseCase {
         self.lessonEvaluationRepository = lessonEvaluationRepository
     }
     
-    func execute(lessonId: String) -> AnyPublisher<Void, Never> {
+    func execute(lessonId: String) async throws {
         
         let lessonResource: ResourceDataModel? = resourcesRepository.getResourceById(id: lessonId)
 
         guard let lessonResource = lessonResource else {
-            return Just(Void())
-                .eraseToAnyPublisher()
+            return
         }
         
-        Task {
-            try await lessonEvaluationRepository.storeLessonEvaluation(
-                lesson: lessonResource,
-                lessonEvaluated: false
-            )
-        }
-        
-        return Just(Void())
-            .eraseToAnyPublisher()
+        try await lessonEvaluationRepository.storeLessonEvaluation(
+            lesson: lessonResource,
+            lessonEvaluated: false
+        )
     }
 }

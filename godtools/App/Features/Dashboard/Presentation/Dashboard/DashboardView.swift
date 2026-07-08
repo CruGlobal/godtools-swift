@@ -74,7 +74,7 @@ struct DashboardView: View {
                     }
                 }//end VStack
 
-                let menuButtonLeading: CGFloat = 20
+                let menuButtonLeading: CGFloat = 12
                 
                 NavMenuButtonGradientView(
                     menuButtonLeading: menuButtonLeading,
