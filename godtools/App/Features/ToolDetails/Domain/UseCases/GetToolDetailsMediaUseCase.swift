@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetToolDetailsMediaUseCase {
     
@@ -20,15 +19,8 @@ final class GetToolDetailsMediaUseCase {
         self.attachmentsRepository = attachmentsRepository
     }
     
-    func execute(toolId: String) -> AnyPublisher<ToolDetailsMediaDomainModel, Error> {
-                
-        return AnyPublisher() {
-            return try await self.asyncExecute(toolId: toolId)
-        }
-    }
-    
-    func asyncExecute(toolId: String) async throws -> ToolDetailsMediaDomainModel {
-        
+    func execute(toolId: String) async throws -> ToolDetailsMediaDomainModel {
+
         guard let resource = resourcesRepository.getResourceById(id: toolId) else {
             return .empty
         }
@@ -82,13 +74,7 @@ final class GetToolDetailsMediaUseCase {
         if let image = attachment?.getImage() {
             return .image(image: image)
         }
-        
+
         return .empty
-    }
-    
-    private func getEmptyMediaPublisher() -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
-        
-        return Just(.empty)
-            .eraseToAnyPublisher()
     }
 }

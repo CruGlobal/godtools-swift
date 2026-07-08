@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import Combine
 
 protocol PersistToolLanguageSettingsInterface {
     
-    func persistToolLanguageSettingsPublisher(with toolId: String, primaryLanguageId: String, parallelLanguageId: String?) -> AnyPublisher<Bool, Never>
+    func persistSettings(toolId: String, primaryLanguageId: String, parallelLanguageId: String?) async throws -> Bool
 }

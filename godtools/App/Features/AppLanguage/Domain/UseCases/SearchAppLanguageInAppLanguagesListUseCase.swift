@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class SearchAppLanguageInAppLanguagesListUseCase {
     
@@ -17,11 +16,11 @@ final class SearchAppLanguageInAppLanguagesListUseCase {
         self.stringSearcher = stringSearcher
     }
     
-    func execute(searchText: String, appLanguagesList: [AppLanguageListItemDomainModel]) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> {
+    func execute(
+        searchText: String,
+        appLanguagesList: [AppLanguageListItemDomainModel]
+    ) async -> [AppLanguageListItemDomainModel] {
         
-        let searchResults = stringSearcher.search(for: searchText, in: appLanguagesList)
-        
-        return Just(searchResults)
-            .eraseToAnyPublisher()
+        return stringSearcher.search(for: searchText, in: appLanguagesList)
     }
 }

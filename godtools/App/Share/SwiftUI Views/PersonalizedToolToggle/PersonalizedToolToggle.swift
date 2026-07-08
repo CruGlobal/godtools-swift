@@ -10,23 +10,28 @@ import SwiftUI
 
 struct PersonalizedToolToggle: View {
 
+    private static let contentHorizontalPadding: CGFloat = 50
+    private static let cornerRadius: CGFloat = 20
+    private static let borderWidth: CGFloat = 1
+    
     static let height: CGFloat = 38
     
+    private let geometry: GeometryProxy
     private let toggleOptions: [PersonalizationToggleOption]
     private let font: Font = FontLibrary.sfProTextRegular.font(size: 14)
-    private let borderWidth: CGFloat = 1
     
     @Binding private var selectedToggle: PersonalizationToggleOptionValue
 
-    init(selectedToggle: Binding<PersonalizationToggleOptionValue>, toggleOptions: [PersonalizationToggleOption]) {
+    init(geometry: GeometryProxy, selectedToggle: Binding<PersonalizationToggleOptionValue>, toggleOptions: [PersonalizationToggleOption]) {
 
+        self.geometry = geometry
         self._selectedToggle = selectedToggle
         self.toggleOptions = toggleOptions
     }
 
     var body: some View {
 
-        EqualWidthHStack(spacing: 0) {
+        EqualWidthHStack(spacing: 0, maxContainerWidth: geometry.size.width - (Self.contentHorizontalPadding * 2)) {
 
             ForEach(toggleOptions.indices, id: \.self) { index in
 
@@ -40,17 +45,17 @@ struct PersonalizedToolToggle: View {
                         .font(font)
                         .foregroundColor(selectedToggle == toggleOption.selection ? .white : ColorPalette.gtBlue.color)
                         .frame(maxWidth: .infinity)
-                        .frame(height: Self.height - (borderWidth * 1))
+                        .frame(height: Self.height)
                         .padding(.horizontal, 16)
                         .background(selectedToggle == toggleOption.selection ? ColorPalette.gtBlue.color : Color.clear)
                 }
                 .accessibilityIdentifier(toggleOption.buttonAccessibility.id)
             }
         }
-        .cornerRadius(20)
+        .cornerRadius(Self.cornerRadius)
         .overlay(
-            RoundedRectangle(cornerRadius: 20)
-                .stroke(ColorPalette.gtBlue.color, lineWidth: 1)
+            RoundedRectangle(cornerRadius: Self.cornerRadius)
+                .stroke(ColorPalette.gtBlue.color, lineWidth: Self.borderWidth)
         )
     }
 }

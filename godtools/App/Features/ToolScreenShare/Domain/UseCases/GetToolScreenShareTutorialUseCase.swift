@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class GetToolScreenShareTutorialUseCase {
     
@@ -18,7 +17,7 @@ final class GetToolScreenShareTutorialUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[ToolScreenShareTutorialPageDomainModel], Never> {
+    func execute(appLanguage: AppLanguageDomainModel) async -> [ToolScreenShareTutorialPageDomainModel] {
         
         let localeId: String = appLanguage
         
@@ -40,7 +39,6 @@ final class GetToolScreenShareTutorialUseCase {
             )
         ]
         
-        return Just(tutorialPages)
-            .eraseToAnyPublisher()
+        return tutorialPages
     }
 }

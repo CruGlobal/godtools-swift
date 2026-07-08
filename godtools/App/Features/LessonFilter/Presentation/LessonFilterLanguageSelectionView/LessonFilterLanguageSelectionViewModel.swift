@@ -11,9 +11,7 @@ import Combine
 
 @MainActor
 final class LessonFilterLanguageSelectionViewModel: ObservableObject {
-    
-    private static var staticCancellables: Set<AnyCancellable> = Set()
-    
+        
     private let stepEmitter: FlowStepEmitter
     private let getLessonFilterLanguagesStringsUseCase: GetLessonFilterLanguagesStringsUseCase
     private let getLessonFilterLanguagesUseCase: GetLessonFilterLanguagesUseCase
@@ -108,14 +106,13 @@ final class LessonFilterLanguageSelectionViewModel: ObservableObject {
             $searchText,
             $allLanguages
         )
-        .flatMap { (searchText: String, languages: [LessonFilterLanguageDomainModel]) in
-            
-            searchLessonFilterLanguagesUseCase
-                .execute(
-                    for: searchText,
-                    in: languages
-                )
+        .map { (searchText: String, languages: [LessonFilterLanguageDomainModel]) in
+            return AnyPublisher() {
+                await searchLessonFilterLanguagesUseCase
+                    .execute(searchText: searchText, lessonFilterLanguages: languages)
+            }
         }
+        .switchToLatest()
         .receive(on: DispatchQueue.main)
         .assign(to: &$languageSearchResults)
     }
@@ -147,13 +144,10 @@ extension LessonFilterLanguageSelectionViewModel {
         
         selectedLanguage = language
         
-        storeUserLessonFiltersUseCase
-            .execute(languageFilter: language)
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                
-            }
-            .store(in: &LessonFilterLanguageSelectionViewModel.staticCancellables)
+        Task {
+            try await storeUserLessonFiltersUseCase
+                .execute(languageFilter: language)
+        }
         
         stepEmitter.emit(step: AppFlowStep.languageTappedFromLessonLanguageFilter)
     }

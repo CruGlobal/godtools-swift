@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class SearchLanguageInDownloadableLanguagesUseCase {
     
@@ -18,11 +17,11 @@ final class SearchLanguageInDownloadableLanguagesUseCase {
         self.stringSearcher = stringSearcher
     }
     
-    func execute(searchText: String, downloadableLanguages: [DownloadableLanguageListItemDomainModel]) -> AnyPublisher<[DownloadableLanguageListItemDomainModel], Never> {
+    func execute(
+        searchText: String,
+        downloadableLanguages: [DownloadableLanguageListItemDomainModel]
+    ) async -> [DownloadableLanguageListItemDomainModel] {
         
-        let searchResults = stringSearcher.search(for: searchText, in: downloadableLanguages)
-        
-        return Just(searchResults)
-            .eraseToAnyPublisher()
+        return stringSearcher.search(for: searchText, in: downloadableLanguages)
     }
 }

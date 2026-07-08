@@ -8,7 +8,6 @@
 
 import Testing
 @testable import godtools
-import Combine
 
 struct SearchCountriesInLocalizationSettingsCountriesListUseCaseTests {
 
@@ -24,29 +23,8 @@ struct SearchCountriesInLocalizationSettingsCountriesListUseCaseTests {
         let searchCountryList = Self.getSearchCountriesListUseCase()
         let countriesList = Self.getCountriesList()
 
-        var searchResults: [LocalizationSettingsCountryListItem] = []
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            searchCountryList
-                .execute(searchText: "e", in: countriesList)
-                .sink { (results: [LocalizationSettingsCountryListItem]) in
-
-                    searchResults = results
-                    
-                    // When finished be sure to call:
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                }
-                .store(in: &cancellables)
-        }
+        let searchResults: [LocalizationSettingsCountryListItem] = await searchCountryList
+            .execute(searchText: "e", countriesList: countriesList)
 
         let searchResultNames = searchResults.compactMap { item -> String? in
             if case .country(let country) = item { return country.countryNameTranslatedInCurrentAppLanguage }
@@ -69,29 +47,8 @@ struct SearchCountriesInLocalizationSettingsCountriesListUseCaseTests {
         let searchCountryList = Self.getSearchCountriesListUseCase()
         let countriesList = Self.getCountriesList()
 
-        var searchResults: [LocalizationSettingsCountryListItem] = []
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            searchCountryList
-                .execute(searchText: "pan", in: countriesList)
-                .sink { (results: [LocalizationSettingsCountryListItem]) in
-
-                    searchResults = results
-                    
-                    // When finished be sure to call:
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                }
-                .store(in: &cancellables)
-        }
+        let searchResults: [LocalizationSettingsCountryListItem] = await searchCountryList
+            .execute(searchText: "pan", countriesList: countriesList)
 
         let searchResultNames = searchResults.compactMap { item -> String? in
             if case .country(let country) = item { return country.countryNameTranslatedInCurrentAppLanguage }

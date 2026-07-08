@@ -190,9 +190,11 @@ final class ToolDetailsViewModel: ObservableObject {
         
         $toolId
             .map { (toolId: String) in
-                
-                getToolDetailsMediaUseCase
-                    .execute(toolId: toolId)
+
+                AnyPublisher() {
+                    try await getToolDetailsMediaUseCase
+                        .execute(toolId: toolId)
+                }
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
@@ -207,13 +209,15 @@ final class ToolDetailsViewModel: ObservableObject {
         
         $toolId
             .map { (toolId: String) in
-                
-                getToolDetailsLearnToShareToolIsAvailableUseCase
-                    .execute(
-                        toolId: toolId,
-                        primaryLanguage: primaryLanguage,
-                        parallelLanguage: parallelLanguage
-                    )
+
+                AnyPublisher() {
+                    await getToolDetailsLearnToShareToolIsAvailableUseCase
+                        .execute(
+                            toolId: toolId,
+                            primaryLanguage: primaryLanguage,
+                            parallelLanguage: parallelLanguage
+                        )
+                }
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)

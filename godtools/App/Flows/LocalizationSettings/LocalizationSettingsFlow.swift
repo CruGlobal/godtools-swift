@@ -16,9 +16,7 @@ final class LocalizationSettingsFlow: GTFlow {
         case userTappedBackFromLocalizationSettings
         case userConfirmedLocalizationSetting(country: LocalizationSettingsCountryListItem)
     }
-            
-    private static var backgroundCancellables: Set<AnyCancellable> = Set()
-    
+                
     private let shouldStoreCountryWhenSelected: Bool
     private let userShouldConfirmSelectedCountry: Bool
         
@@ -95,18 +93,14 @@ final class LocalizationSettingsFlow: GTFlow {
     
     private func storeSelectedCountryListItem(countryListItem: LocalizationSettingsCountryListItem) {
         
-        appDiContainer
-            .feature
-            .personalizedTools
-            .domainLayer
-            .getSetLocalizationSettingsUseCase()
-            .execute(country: countryListItem.countryDomainModel)
-            .sink { _ in
-
-            } receiveValue: { _ in
-
-            }
-            .store(in: &Self.backgroundCancellables)
+        Task {
+            try await appDiContainer
+                .feature
+                .personalizedTools
+                .domainLayer
+                .getSetLocalizationSettingsUseCase()
+                .execute(country: countryListItem.countryDomainModel)
+        }
     }
 }
 

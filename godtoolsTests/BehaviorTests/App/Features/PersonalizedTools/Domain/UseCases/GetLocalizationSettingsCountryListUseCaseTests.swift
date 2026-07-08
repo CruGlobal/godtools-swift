@@ -8,7 +8,6 @@
 
 import Testing
 @testable import godtools
-import Combine
 
 struct GetLocalizationSettingsCountryListUseCaseTests {
 
@@ -41,34 +40,11 @@ struct GetLocalizationSettingsCountryListUseCaseTests {
 
         let useCase = Self.createUseCase(countries: Self.createMockCountries())
 
-        var countryListItems: [LocalizationSettingsCountryListItem] = []
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            useCase
-                .execute(
-                    appLanguage: "en",
-                    showsPreferNotToSay: argument.showsPreferNotToSay
-                )
-                .sink(receiveCompletion: { _ in
-                    
-                }, receiveValue: { (results: [LocalizationSettingsCountryListItem]) in
-                    
-                    countryListItems = results
-                    
-                    // When finished be sure to call:
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                })
-                .store(in: &cancellables)
-        }
+        let countryListItems: [LocalizationSettingsCountryListItem] = await useCase
+            .execute(
+                appLanguage: "en",
+                showsPreferNotToSay: argument.showsPreferNotToSay
+            )
 
         #expect(countryListItems.count == argument.expectedTotalCount)
 
@@ -126,34 +102,11 @@ struct GetLocalizationSettingsCountryListUseCaseTests {
             appLanguage: argument.appLanguage
         )
 
-        var countryListItems: [LocalizationSettingsCountryListItem] = []
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            useCase
-                .execute(
-                    appLanguage: argument.appLanguage,
-                    showsPreferNotToSay: true
-                )
-                .sink(receiveCompletion: { _ in
-                    
-                }, receiveValue: { (results: [LocalizationSettingsCountryListItem]) in
-                    
-                    countryListItems = results
-                    
-                    // When finished be sure to call:
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                })
-                .store(in: &cancellables)
-        }
+        let countryListItems: [LocalizationSettingsCountryListItem] = await useCase
+            .execute(
+                appLanguage: argument.appLanguage,
+                showsPreferNotToSay: true
+            )
 
         if case .preferNotToSay(let preferNotToSay) = countryListItems.first {
             #expect(preferNotToSay.preferNotToSayText == argument.expectedPreferNotToSayText)
@@ -182,34 +135,11 @@ struct GetLocalizationSettingsCountryListUseCaseTests {
 
         let useCase = Self.createUseCase(countries: [])
 
-        var countryListItems: [LocalizationSettingsCountryListItem] = []
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            useCase
-                .execute(
-                    appLanguage: "en",
-                    showsPreferNotToSay: argument.showsPreferNotToSay
-                )
-                .sink(receiveCompletion: { _ in
-                    
-                }, receiveValue: { (results: [LocalizationSettingsCountryListItem]) in
-                    
-                    countryListItems = results
-                    
-                    // When finished be sure to call:
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                })
-                .store(in: &cancellables)
-        }
+        let countryListItems: [LocalizationSettingsCountryListItem] = await useCase
+            .execute(
+                appLanguage: "en",
+                showsPreferNotToSay: argument.showsPreferNotToSay
+            )
 
         #expect(countryListItems.count == argument.expectedCount)
 

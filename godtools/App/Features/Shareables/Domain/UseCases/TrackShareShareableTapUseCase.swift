@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 final class TrackShareShareableTapUseCase {
     
@@ -20,7 +19,7 @@ final class TrackShareShareableTapUseCase {
         self.resourcesRepository = resourcesRepository
     }
     
-    func execute(toolId: String, shareableId: String) -> AnyPublisher<Void, Error> {
+    func execute(toolId: String, shareableId: String) async {
         
         let resource: ResourceDataModel? = resourcesRepository.getResourceById(id: toolId)
         
@@ -37,9 +36,5 @@ final class TrackShareShareableTapUseCase {
         )
         
         trackActionAnalytics.trackAction(trackAction: action)
-        
-        return Just(())
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
     }
 }

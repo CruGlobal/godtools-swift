@@ -8,7 +8,6 @@
 
 import Testing
 @testable import godtools
-import Combine
 
 struct SearchToolFilterCategoriesUseCaseTests {
     
@@ -41,32 +40,11 @@ struct SearchToolFilterCategoriesUseCaseTests {
     func showsCategoriesContainingSearchString(argument: TestArgument) async {
         
         let searchToolFilterCategoriesUseCase = getSearchToolFilterCategoriesUseCase()
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        var searchedCategories: [String] = Array()
-        
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            searchToolFilterCategoriesUseCase
-                .execute(for: argument.searchString, in: allCategories)
-                .sink { (categories: [ToolFilterCategoryDomainModel]) in
-                                        
-                    searchedCategories = categories.map({$0.title})
-                    
-                    // When finished be sure to call:
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                }
-                .store(in: &cancellables)
-        }
+                
+        let searchedCategories: [ToolFilterCategoryDomainModel] = await searchToolFilterCategoriesUseCase
+            .execute(searchText: argument.searchString, toolFilterCategories: allCategories)
 
-        #expect(argument.expectedCategories.elementsEqual(searchedCategories))
+        #expect(argument.expectedCategories.elementsEqual(searchedCategories.map{ $0.title }))
     }
 }
 
