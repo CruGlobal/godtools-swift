@@ -31,11 +31,11 @@ struct NavMenuButtonGradientView: View {
                 
                 Rectangle()
                     .fill(Color.white)
-                    .frame(width: menuButtonLeading + menuButtonSize, height: navHeight)
+                    .frame(width: menuButtonLeading + menuButtonSize - 8, height: navHeight)
                 
                 Rectangle()
                     .fill(Color.clear)
-                    .frame(width: 14, height: navHeight)
+                    .frame(width: 10, height: navHeight)
                     .background(
                         getLinearGradient(layoutDirection: layoutDirection)
                     )
