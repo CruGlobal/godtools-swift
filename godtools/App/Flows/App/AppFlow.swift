@@ -12,9 +12,9 @@ import SwiftUI
 import Combine
 
 final class AppFlow: RootFlow {
+            
+    private static let resetNavigationWhenAppIsBackgroundedForMinutes: TimeInterval = 120
     
-    private static let attachesLaunchScreenToRoot: Bool = true
-        
     static let defaultNavBarColor: UIColor = .white
     static let defaultNavBarControlColor: UIColor = ColorPalette.gtBlue.uiColor
     static let defaultNavBarStatusBarStyle: UIStatusBarStyle = .darkContent
@@ -67,15 +67,11 @@ final class AppFlow: RootFlow {
                 incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: deepLinkUrl))
             )
         }
-        
-        if Self.attachesLaunchScreenToRoot {
-            rootController.view.addSubview(Self.getNewLaunchScreenImageView())
-        }
-                
+              
         rootController.view.frame = UIScreen.main.bounds
         rootController.view.backgroundColor = .clear
         rootController.addChildController(child: appNavigationController)
-        appNavigationController.view.backgroundColor = Self.attachesLaunchScreenToRoot ? .clear : .white
+        appNavigationController.view.backgroundColor = .white
         
         super.init(
             initialView: nil,
@@ -143,12 +139,18 @@ final class AppFlow: RootFlow {
             
             switch launchState {
            
-            case .willEnterForground:
-                attachLaunchScreenImageView()
+            case .willEnterForground(let secondsInBackground):
+                let elapsedTimeInMinutes: TimeInterval = secondsInBackground / 60
+                
+                if appLaunchObserver.appLaunched && elapsedTimeInMinutes >= Self.resetNavigationWhenAppIsBackgroundedForMinutes {
+                    attachLaunchScreenImageView()
+                }
                 
             case .fromTerminatedState:
                 
                 countAppSessionLaunch()
+                
+                removeLaunchScreenImageView(animated: false, delay: 0)
                 
                 Task {
                     
@@ -187,15 +189,13 @@ final class AppFlow: RootFlow {
                     }
                     
                     loadInitialData()
-                    
-                    removeLaunchScreenImageView(animated: true, delay: 1.5)
                 }
                 
             case .fromBackgroundState(let secondsInBackground):
                 
                 let elapsedTimeInMinutes: TimeInterval = secondsInBackground / 60
                 
-                guard elapsedTimeInMinutes >= 120 else {
+                guard elapsedTimeInMinutes >= Self.resetNavigationWhenAppIsBackgroundedForMinutes else {
                     removeLaunchScreenImageView(animated: false, delay: 0)
                     return
                 }
@@ -388,13 +388,20 @@ extension AppFlow {
             .store(in: &cancellables)
     }
     
-    private static func getNewLaunchScreenImageView() -> UIImageView {
+    private static func getNewLaunchScreenImageView() -> UIView {
         
-        let imageView: UIImageView = UIImageView(frame: UIScreen.main.bounds)
-        imageView.contentMode = .scaleAspectFill
+        let screenBounds: CGRect = UIScreen.main.bounds
+        
+        let containerView: UIView = UIView(frame: screenBounds)
+        containerView.backgroundColor = UIColor.white
+        
+        let imageView: UIImageView = UIImageView(frame: screenBounds)
+        imageView.contentMode = .scaleAspectFit
         imageView.image = ImageCatalog.launchImage.uiImage
         
-        return imageView
+        containerView.addSubview(imageView)
+        
+        return containerView
     }
     
     private func attachLaunchScreenImageView() {
@@ -403,7 +410,7 @@ extension AppFlow {
             return
         }
         
-        let launchScreenImageView: UIImageView = Self.getNewLaunchScreenImageView()
+        let launchScreenImageView: UIView = Self.getNewLaunchScreenImageView()
         
         GodToolsSceneDelegate.getWindow()?.addSubview(launchScreenImageView)
         
