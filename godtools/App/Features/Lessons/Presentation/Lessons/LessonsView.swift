@@ -75,8 +75,6 @@ struct LessonsView: View {
                         if viewModel.selectedToggle == .personalized, let personalizedLessonsUnavailable = viewModel.personalizedLessons.unavailableStrings {
                             
                             PersonalizationUnavailableView(
-                                geometry: geometry,
-                                heightMultiplier: 0.7,
                                 title: personalizedLessonsUnavailable.title,
                                 message: personalizedLessonsUnavailable.message,
                                 changeSettingsButtonTitle: viewModel.strings.changeLocalizationSettingsAction,
@@ -88,6 +86,8 @@ struct LessonsView: View {
                                     viewModel.goToAllLessonsTapped()
                                 }
                             )
+                            .frame(maxWidth: .infinity)
+                            .padding(.horizontal, contentHorizontalInsets)
                         }
                         else if !viewModel.lessonsList.isEmpty {
                             
