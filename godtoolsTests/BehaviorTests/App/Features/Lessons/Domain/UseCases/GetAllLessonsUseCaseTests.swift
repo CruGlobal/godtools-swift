@@ -6,6 +6,7 @@
 //  Copyright © 2024 Cru. All rights reserved.
 //
 
+import Foundation
 import Testing
 @testable import godtools
 import Combine
@@ -36,7 +37,8 @@ struct GetAllLessonsUseCaseTests {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var lessonsRef: [LessonListItemDomainModel] = Array()
+        var allLessons: [LessonListItemDomainModel] = Array()
+        var didSetAllLessons: Bool = false
                 
         await withCheckedContinuation { continuation in
             
@@ -50,15 +52,18 @@ struct GetAllLessonsUseCaseTests {
                     appLanguage: appLanguageEnglish,
                     filterLessonsByLanguage: spanishLanguageFilter
                 )
+                .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { _ in
                     
                 }, receiveValue: { (lessons: [LessonListItemDomainModel]) in
                     
-                    guard lessonsRef.isEmpty && lessons.count > 0 else {
+                    guard lessons.count > 0 && !didSetAllLessons else {
                         return
                     }
                     
-                    lessonsRef = lessons
+                    didSetAllLessons = true
+                    
+                    allLessons = lessons
                     
                     timeoutTask.cancel()
                     continuation.resume(returning: ())
@@ -66,7 +71,7 @@ struct GetAllLessonsUseCaseTests {
                 .store(in: &cancellables)
         }
         
-        let lessonIds: [String] = lessonsRef
+        let lessonIds: [String] = allLessons
             .map { $0.id }
             .sorted { $0 < $1 }
         
@@ -88,7 +93,8 @@ struct GetAllLessonsUseCaseTests {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var lessonsRef: [LessonListItemDomainModel] = Array()
+        var allLessons: [LessonListItemDomainModel] = Array()
+        var didSetAllLessons: Bool = false
             
         await withCheckedContinuation { continuation in
             
@@ -102,15 +108,18 @@ struct GetAllLessonsUseCaseTests {
                     appLanguage: appLanguageArabic,
                     filterLessonsByLanguage: nil
                 )
+                .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { _ in
 
                 }, receiveValue: { (lessons: [LessonListItemDomainModel]) in
                     
-                    guard lessonsRef.isEmpty && lessons.count > 0 else {
+                    guard lessons.count > 0 && !didSetAllLessons else {
                         return
                     }
                     
-                    lessonsRef = lessons
+                    didSetAllLessons = true
+                    
+                    allLessons = lessons
                     
                     timeoutTask.cancel()
                     continuation.resume(returning: ())
@@ -118,10 +127,10 @@ struct GetAllLessonsUseCaseTests {
                 .store(in: &cancellables)
         }
         
-        #expect(lessonsRef.first(where: { $0.id == "0" })?.name == "الدرس صفر")
-        #expect(lessonsRef.first(where: { $0.id == "5" })?.name == "الدرس الخامس")
-        #expect(lessonsRef.first(where: { $0.id == "6" })?.name == "الدرس السادس")
-        #expect(lessonsRef.first(where: { $0.id == "8" })?.name == "الدرس الثامن")
+        #expect(allLessons.first(where: { $0.id == "0" })?.name == "الدرس صفر")
+        #expect(allLessons.first(where: { $0.id == "5" })?.name == "الدرس الخامس")
+        #expect(allLessons.first(where: { $0.id == "6" })?.name == "الدرس السادس")
+        #expect(allLessons.first(where: { $0.id == "8" })?.name == "الدرس الثامن")
     }
     
     @Test(
@@ -147,7 +156,8 @@ struct GetAllLessonsUseCaseTests {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var lessonsRef: [LessonListItemDomainModel] = Array()
+        var allLessons: [LessonListItemDomainModel] = Array()
+        var didSetAllLessons: Bool = false
                 
         await withCheckedContinuation { continuation in
             
@@ -161,15 +171,18 @@ struct GetAllLessonsUseCaseTests {
                     appLanguage: appLanguageEnglish,
                     filterLessonsByLanguage: spanishLanguageFilter
                 )
+                .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { _ in
                     
                 }, receiveValue: { (lessons: [LessonListItemDomainModel]) in
                     
-                    guard lessonsRef.isEmpty && lessons.count > 0 else {
+                    guard lessons.count > 0 && !didSetAllLessons else {
                         return
                     }
                     
-                    lessonsRef = lessons
+                    didSetAllLessons = true
+                    
+                    allLessons = lessons
                     
                     timeoutTask.cancel()
                     continuation.resume(returning: ())
@@ -177,11 +190,11 @@ struct GetAllLessonsUseCaseTests {
                 .store(in: &cancellables)
         }
         
-        #expect(lessonsRef.first(where: { $0.id == "0" })?.name == "Lección cero")
-        #expect(lessonsRef.first(where: { $0.id == "2" })?.name == "Leccion dos")
-        #expect(lessonsRef.first(where: { $0.id == "4" })?.name == "Lección cuatro")
-        #expect(lessonsRef.first(where: { $0.id == "6" })?.name == "Lección seis")
-        #expect(lessonsRef.first(where: { $0.id == "8" })?.name == "Lección ocho")
+        #expect(allLessons.first(where: { $0.id == "0" })?.name == "Lección cero")
+        #expect(allLessons.first(where: { $0.id == "2" })?.name == "Leccion dos")
+        #expect(allLessons.first(where: { $0.id == "4" })?.name == "Lección cuatro")
+        #expect(allLessons.first(where: { $0.id == "6" })?.name == "Lección seis")
+        #expect(allLessons.first(where: { $0.id == "8" })?.name == "Lección ocho")
     }
 }
 

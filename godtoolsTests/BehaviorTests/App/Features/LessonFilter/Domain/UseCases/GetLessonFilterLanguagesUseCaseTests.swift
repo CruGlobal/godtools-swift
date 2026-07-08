@@ -6,6 +6,7 @@
 //  Copyright © 2024 Cru. All rights reserved.
 //
 
+import Foundation
 import Testing
 @testable import godtools
 import Combine
@@ -31,6 +32,7 @@ struct GetLessonFilterLanguagesUseCaseTests {
         let appLanguageRussian: AppLanguageDomainModel = LanguageCodeDomainModel.russian.rawValue
         
         var languagesRef: [LessonFilterLanguageDomainModel] = Array()
+        var didSetLanguages: Bool = false
         
         await withCheckedContinuation { continuation in
             
@@ -41,13 +43,16 @@ struct GetLessonFilterLanguagesUseCaseTests {
             
             getLessonFilterLanguagesUseCase
                 .execute(appLanguage: appLanguageRussian)
+                .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { _ in
 
                 }, receiveValue: { (languages: [LessonFilterLanguageDomainModel]) in
                     
-                    guard languagesRef.isEmpty && languages.count > 0 else {
+                    guard languages.count > 0 && !didSetLanguages else {
                         return
                     }
+                    
+                    didSetLanguages = true
                     
                     languagesRef = languages
                     
@@ -102,6 +107,7 @@ struct GetLessonFilterLanguagesUseCaseTests {
         let getLessonFilterLanguagesUseCase: GetLessonFilterLanguagesUseCase = try getLessonFilterLanguagesUseCase()
                 
         var languagesRef: [LessonFilterLanguageDomainModel] = Array()
+        var didSetLanguages: Bool = false
         
         await withCheckedContinuation { continuation in
             
@@ -112,13 +118,16 @@ struct GetLessonFilterLanguagesUseCaseTests {
             
             getLessonFilterLanguagesUseCase
                 .execute(appLanguage: argument.appLanguage.rawValue)
+                .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { _ in
                     
                 }, receiveValue: { (languages: [LessonFilterLanguageDomainModel]) in
                     
-                    guard languagesRef.isEmpty && languages.count > 0 else {
+                    guard languages.count > 0 && !didSetLanguages else {
                         return
                     }
+                    
+                    didSetLanguages = true
                     
                     languagesRef = languages
                     
@@ -147,6 +156,7 @@ struct GetLessonFilterLanguagesUseCaseTests {
         let appLanguageEnglish: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
         
         var languagesRef: [LessonFilterLanguageDomainModel] = Array()
+        var didSetLanguages: Bool = false
 
         await withCheckedContinuation { continuation in
             
@@ -157,14 +167,17 @@ struct GetLessonFilterLanguagesUseCaseTests {
             
             getLessonFilterLanguagesUseCase
                 .execute(appLanguage: appLanguageEnglish)
+                .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { _ in
                     
                     
                 }, receiveValue: { (languages: [LessonFilterLanguageDomainModel]) in
                     
-                    guard languagesRef.isEmpty && languages.count > 0 else {
+                    guard languages.count > 0 && !didSetLanguages else {
                         return
                     }
+                    
+                    didSetLanguages = true
                     
                     languagesRef = languages
                     

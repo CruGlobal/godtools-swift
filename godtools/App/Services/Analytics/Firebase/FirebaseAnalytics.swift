@@ -32,9 +32,9 @@ class FirebaseAnalytics: FirebaseAnalyticsInterface {
         
         isConfigured = true
         
-        if !loggingEnabled {
-            FirebaseCore.FirebaseConfiguration.shared.setLoggerLevel(.min)
-        }
+        let loggerLevel: FirebaseLoggerLevel = !loggingEnabled ? .min : .max
+        
+        FirebaseCore.FirebaseConfiguration.shared.setLoggerLevel(loggerLevel)
                      
         setUserProperty(
             key: AnalyticsConstants.Keys.debug,
