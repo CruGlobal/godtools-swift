@@ -67,6 +67,7 @@ class AccessibilityStrings {
         case appLanguageListItem = "App Language List Item"
         case appLanguagesNavBack = "App Languages Nav Back"
         case askAQuestion = "Ask A Question"
+        case back = "Back"
         case close = "Close"
         case changeLanguage = "Change Language"
         case chooseAppLanguage = "Choose App Language"
