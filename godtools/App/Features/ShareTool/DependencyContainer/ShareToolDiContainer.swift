@@ -14,11 +14,9 @@ final class ShareToolDiContainer {
     
     let domainLayer: ShareToolDomainLayerDependencies
     
-    init(core: AppCoreDiContainer) {
-        
-        let dataLayer = ShareToolDataLayerDependencies(coreDataLayer: core.dataLayer)
-        
+    init(dataLayer: ShareToolDataLayerDependencies, domainLayer: ShareToolDomainLayerDependencies) {
+
         self.dataLayer = dataLayer
-        domainLayer = ShareToolDomainLayerDependencies(core: core, dataLayer: dataLayer)
+        self.domainLayer = domainLayer
     }
 }

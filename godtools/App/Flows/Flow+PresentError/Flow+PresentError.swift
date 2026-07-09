@@ -10,7 +10,7 @@ import Foundation
 
 extension GTFlow {
     
-    func presentError(appLanguage: AppLanguageDomainModel, error: Error) {
+    func presentError(appLanguage: AppLanguageDomainModel, error: Error, acceptTapped: (() -> Void)? = nil) {
         
         let isCancelled: Bool = error.isUrlErrorCancelledCode || error.isUserCancelled
         
@@ -60,7 +60,8 @@ extension GTFlow {
         presentAlert(
             appLanguage: appLanguage,
             title: title,
-            message: message
+            message: message,
+            acceptTapped: acceptTapped
         )
     }
 }

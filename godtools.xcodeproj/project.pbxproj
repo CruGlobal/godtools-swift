@@ -163,6 +163,12 @@
 		45308E152E4F5B5A0082B7DC /* Exceptions for "godtoolsUITests" folder in "godtoolsUITests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				App/Flows/ChooseAppLanguage/ChooseAppLanguageFlowTests.swift,
+				App/Flows/Dashboard/DashboardFlowTests.swift,
+				App/Flows/LanguageSettings/LanguageSettingsFlowTests.swift,
+				App/Flows/LearnToShareTool/LearnToShareToolFlowTests.swift,
+				App/Flows/Menu/MenuFlowTests.swift,
+				App/Flows/ToolScreenShare/ToolScreenShareFlowTests.swift,
 				Info.plist,
 			);
 			target = 4F12296B20852BE3008842CC /* godtoolsUITests */;

@@ -13,9 +13,9 @@ final class UserLessonProgressDiContainer {
     let dataLayer: UserLessonProgressDataLayerDependencies
     let domainLayer: UserLessonProgressDomainLayerDependencies
     
-    init(core: AppCoreDiContainer) {
-        
-        dataLayer = UserLessonProgressDataLayerDependencies(coreDataLayer: core.dataLayer)
-        domainLayer = UserLessonProgressDomainLayerDependencies(core: core, dataLayer: dataLayer)
+    init(dataLayer: UserLessonProgressDataLayerDependencies, domainLayer: UserLessonProgressDomainLayerDependencies) {
+
+        self.dataLayer = dataLayer
+        self.domainLayer = domainLayer
     }
 }
