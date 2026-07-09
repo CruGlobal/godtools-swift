@@ -92,6 +92,11 @@ struct GodToolsApp: App {
             Self.appDiContainer.core.dataLayer.getAnalytics().firebaseAnalytics.configure()
         }
         
+        if Self.appConfig.buildConfig != .analyticsLogging {
+            DisableGoogleTagManagerLogging.hideGTMLogsInfo()
+            DisableGoogleTagManagerLogging.hideGTMLogsWarning()
+        }
+        
         toolShortcutLinksViewModel = ToolShortcutLinksViewModel(
             getCurrentAppLanguageUseCase: Self.appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getToolShortcutLinksUseCase: Self.appDiContainer.feature.toolShortcutLinks.domainLayer.getToolShortcutLinksUseCase()

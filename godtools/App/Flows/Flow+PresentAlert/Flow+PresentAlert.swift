@@ -10,12 +10,26 @@ import Foundation
 
 extension GTFlow {
     
-    func presentAlertMessage(appLanguage: AppLanguageDomainModel, alertMessage: AlertMessage) {
+    func presentAlertMessage(
+        appLanguage: AppLanguageDomainModel,
+        alertMessage: AlertMessage,
+        acceptTapped: (() -> Void)? = nil
+    ) {
         
-        presentAlert(appLanguage: appLanguage, title: alertMessage.title, message: alertMessage.message)
+        presentAlert(
+            appLanguage: appLanguage,
+            title: alertMessage.title,
+            message: alertMessage.message,
+            acceptTapped: acceptTapped
+        )
     }
     
-    func presentAlert(appLanguage: AppLanguageDomainModel, title: String, message: String) {
+    func presentAlert(
+        appLanguage: AppLanguageDomainModel,
+        title: String,
+        message: String,
+        acceptTapped: (() -> Void)? = nil
+    ) {
         
         let localizationServices: LocalizationServicesInterface = appDiContainer.core.dataLayer.getLocalizationServices()
                 
@@ -24,7 +38,7 @@ extension GTFlow {
             message: message,
             acceptTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.ok.key),
             cancelTitle: nil,
-            acceptTapped: nil,
+            acceptTapped: acceptTapped,
             cancelTapped: nil
         )
         
