@@ -34,6 +34,18 @@ enum SwiftCompletedTrainingTipV1 {
 @available(iOS 17.4, *)
 extension SwiftCompletedTrainingTip {
     
+    public static func idPredicate(id: String) -> Predicate<SwiftCompletedTrainingTip> {
+        return #Predicate<SwiftCompletedTrainingTip> { object in
+            object.id == id
+        }
+    }
+
+    public static func idsPredicate(ids: Set<String>) -> Predicate<SwiftCompletedTrainingTip> {
+        return #Predicate<SwiftCompletedTrainingTip> { object in
+            ids.contains(object.id)
+        }
+    }
+    
     func mapFrom(model: CompletedTrainingTipDataModel) {
         
         id = model.id.value

@@ -34,6 +34,18 @@ enum SwiftUserLessonProgressV1 {
 @available(iOS 17.4, *)
 extension SwiftUserLessonProgress {
     
+    public static func idPredicate(id: String) -> Predicate<SwiftUserLessonProgress> {
+        return #Predicate<SwiftUserLessonProgress> { object in
+            object.id == id
+        }
+    }
+
+    public static func idsPredicate(ids: Set<String>) -> Predicate<SwiftUserLessonProgress> {
+        return #Predicate<SwiftUserLessonProgress> { object in
+            ids.contains(object.id)
+        }
+    }
+    
     func mapFrom(model: UserLessonProgressDataModel) {
         
         id = model.id

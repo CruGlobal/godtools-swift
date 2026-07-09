@@ -62,6 +62,18 @@ enum SwiftResourceV1 {
 @available(iOS 17.4, *)
 extension SwiftResource {
     
+    public static func idPredicate(id: String) -> Predicate<SwiftResource> {
+        return #Predicate<SwiftResource> { object in
+            object.id == id
+        }
+    }
+
+    public static func idsPredicate(ids: Set<String>) -> Predicate<SwiftResource> {
+        return #Predicate<SwiftResource> { object in
+            ids.contains(object.id)
+        }
+    }
+    
     func mapFrom(model: ResourceDataModel) {
         abbreviation = model.abbreviation
         attachmentIds = model.attachmentIds

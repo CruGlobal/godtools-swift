@@ -38,6 +38,18 @@ enum SwiftLanguageV1 {
 @available(iOS 17.4, *)
 extension SwiftLanguage {
     
+    public static func idPredicate(id: String) -> Predicate<SwiftLanguage> {
+        return #Predicate<SwiftLanguage> { object in
+            object.id == id
+        }
+    }
+
+    public static func idsPredicate(ids: Set<String>) -> Predicate<SwiftLanguage> {
+        return #Predicate<SwiftLanguage> { object in
+            ids.contains(object.id)
+        }
+    }
+    
     func mapFrom(model: LanguageDataModel) {
         code = model.code
         directionString = model.directionString

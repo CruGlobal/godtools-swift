@@ -36,6 +36,18 @@ enum SwiftArticleJrcContentV1 {
 @available(iOS 17.4, *)
 extension SwiftArticleJrcContent {
     
+    public static func idPredicate(id: String) -> Predicate<SwiftArticleJrcContent> {
+        return #Predicate<SwiftArticleJrcContent> { object in
+            object.id == id
+        }
+    }
+
+    public static func idsPredicate(ids: Set<String>) -> Predicate<SwiftArticleJrcContent> {
+        return #Predicate<SwiftArticleJrcContent> { object in
+            ids.contains(object.id)
+        }
+    }
+    
     func mapFrom(model: ArticleJcrContent) {
         
         id = model.id

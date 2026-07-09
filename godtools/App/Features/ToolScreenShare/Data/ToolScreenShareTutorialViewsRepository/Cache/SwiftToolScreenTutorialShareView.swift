@@ -32,6 +32,18 @@ enum SwiftToolScreenTutorialShareViewV1 {
 @available(iOS 17.4, *)
 extension SwiftToolScreenTutorialShareView {
     
+    public static func idPredicate(id: String) -> Predicate<SwiftToolScreenTutorialShareView> {
+        return #Predicate<SwiftToolScreenTutorialShareView> { object in
+            object.id == id
+        }
+    }
+
+    public static func idsPredicate(ids: Set<String>) -> Predicate<SwiftToolScreenTutorialShareView> {
+        return #Predicate<SwiftToolScreenTutorialShareView> { object in
+            ids.contains(object.id)
+        }
+    }
+    
     func mapFrom(model: ToolScreenShareTutorialViewDataModel) {
         
         id = model.id

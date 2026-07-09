@@ -37,6 +37,18 @@ enum SwiftGlobalAnalyticsV1 {
 @available(iOS 17.4, *)
 extension SwiftGlobalAnalytics {
     
+    public static func idPredicate(id: String) -> Predicate<SwiftGlobalAnalytics> {
+        return #Predicate<SwiftGlobalAnalytics> { object in
+            object.id == id
+        }
+    }
+
+    public static func idsPredicate(ids: Set<String>) -> Predicate<SwiftGlobalAnalytics> {
+        return #Predicate<SwiftGlobalAnalytics> { object in
+            ids.contains(object.id)
+        }
+    }
+    
     func mapFrom(model: GlobalAnalyticsDataModel) {
         
         countries = model.countries
