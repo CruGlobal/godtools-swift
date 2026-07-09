@@ -68,8 +68,9 @@ final class DownloadToolFlow: GTFlow {
             
         case .downloadToolFailed(let error):
             
-            presentError(appLanguage: appLanguage, error: error)
-            completeFlow(state: .downloadFailed(error: error))
+            presentError(appLanguage: appLanguage, error: error, acceptTapped: { [weak self] in
+                self?.completeFlow(state: .downloadFailed(error: error))
+            })
             
         case .closeTappedFromDownloadTool:
             cancelDownloadTool()
@@ -82,9 +83,12 @@ final class DownloadToolFlow: GTFlow {
     
     private func completeFlow(state: CompletedState) {
         
-        parent?.stepEmitter.emit(step: AppFlowStep.downloadToolFlowCompleted(state: state))
-        
-        flowCompleted?(state)
+        if let flowCompleted = flowCompleted {
+            flowCompleted(state)
+        }
+        else {
+            parent?.stepEmitter.emit(step: AppFlowStep.downloadToolFlowCompleted(state: state))
+        }
     }
 }
 

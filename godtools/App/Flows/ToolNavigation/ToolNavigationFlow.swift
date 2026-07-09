@@ -151,15 +151,19 @@ final class ToolNavigationFlow: GTFlow {
                 
             case .downloadSuccess(toolTranslations: let toolTranslations):
                 navigateToTool(toolNavigation: toolNavigation, toolTranslations: toolTranslations, isNavigatingFromResumeLessonModal: false)
+                dismissFlow()
             
             case .downloadFailed(let error):
-                completeFlow(state: .downloadFailed(error: error))
+                dismissFlow(animated: true, completion: { [weak self] in
+                    self?.completeFlow(state: .downloadFailed(error: error))
+                })
+
             
             case .userClosed:
-                completeFlow(state: .userClosedDownloadTool)
+                dismissFlow(animated: true, completion: { [weak self] in
+                    self?.completeFlow(state: .userClosedDownloadTool)
+                })
             }
-            
-            dismissFlow()
             
         case .articleFlowCompleted(let state):
             completeFlow(state: .articleFlowCompleted(state: state))
