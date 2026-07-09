@@ -28,6 +28,8 @@ struct LocalizationSettingsConfirmationView: View {
 
         GeometryReader { geometry in
             
+            AccessibilityScreenElementView(screenAccessibility: .confirmLocalizationSettings)
+            
             FullScreenOverlayView(
                 color: Color.black.opacity(0.3),
                 tappedClosure: {
@@ -81,6 +83,7 @@ struct LocalizationSettingsConfirmationView: View {
                             fontSize: buttonFontSize,
                             width: buttonWidth,
                             height: buttonHeight,
+                            accessibility: AccessibilityStrings.Button.editLocalization,
                             tapped: {
                                 viewModel.cancelTapped()
                             }
@@ -92,6 +95,7 @@ struct LocalizationSettingsConfirmationView: View {
                             fontSize: buttonFontSize,
                             width: buttonWidth,
                             height: buttonHeight,
+                            accessibility: AccessibilityStrings.Button.continueForward,
                             tapped: {
                                 viewModel.confirmTapped()
                             }

@@ -74,6 +74,7 @@ struct ConfirmAppLanguageView: View {
                         fontSize: fontSize,
                         width: buttonWidth,
                         height: buttonHeight,
+                        accessibility: AccessibilityStrings.Button.nevermind,
                         tapped: {
                             viewModel.nevermindButtonTapped()
                         }
@@ -85,6 +86,7 @@ struct ConfirmAppLanguageView: View {
                         fontSize: fontSize,
                         width: buttonWidth,
                         height: buttonHeight,
+                        accessibility: AccessibilityStrings.Button.changeLanguage,
                         tapped: {
                             viewModel.confirmLanguageButtonTapped()
                         }
