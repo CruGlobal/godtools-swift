@@ -25,4 +25,26 @@ class LocalizationSettingsFlowTests: BaseFlowTests {
         
         super.assertIfInitialScreenDoesntExist()
     }
+    
+    func testTappingLocalizationSettingsCountryNavigatesToConfirmLocalizationSettings() {
+        
+        launchApp()
+                
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .localizationSettingsCountryListItem, buttonQueryType: .firstMatch)
+        
+        assertIfScreenDoesNotExist(screenAccessibility: .confirmLocalizationSettings)
+    }
+    
+    func testTappingEditLocalizationFromConfirmLocalizationSettingsNavigatesBackToLocalizationSettings() {
+        
+        launchApp()
+                
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .localizationSettingsCountryListItem, buttonQueryType: .firstMatch)
+        
+        assertIfScreenDoesNotExist(screenAccessibility: .confirmLocalizationSettings)
+        
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .editLocalization)
+        
+        assertIfScreenDoesNotExist(screenAccessibility: .localizationSettings)
+    }
 }

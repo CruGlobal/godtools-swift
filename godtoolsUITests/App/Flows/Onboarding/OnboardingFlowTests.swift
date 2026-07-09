@@ -118,52 +118,6 @@ class OnboardingFlowTests: BaseFlowTests {
         assertIfScreenDoesNotExist(screenAccessibility: .localizationSettings)
     }
     
-    func testTappingLocalizationSettingsCountryNavigatesToConfirmLocalizationSettings() {
-        
-        launchAppToOnboardingTutorial()
-        
-        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .continueForward, buttonQueryType: .exactMatch)
-        
-        assertIfScreenDoesNotExist(screenAccessibility: .appLanguages)
-        
-        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .appLanguageListItem, buttonQueryType: .firstMatch)
-        
-        assertIfScreenDoesNotExist(screenAccessibility: .confirmAppLanguage)
-                
-        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .changeLanguage)
-        
-        assertIfScreenDoesNotExist(screenAccessibility: .localizationSettings)
-        
-        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .localizationSettingsCountryListItem, buttonQueryType: .firstMatch)
-        
-        assertIfScreenDoesNotExist(screenAccessibility: .confirmLocalizationSettings)
-    }
-    
-    func testTappingEditLocalizationFromConfirmLocalizationSettingsNavigatesBackToLocalizationSettings() {
-        
-        launchAppToOnboardingTutorial()
-        
-        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .continueForward, buttonQueryType: .exactMatch)
-        
-        assertIfScreenDoesNotExist(screenAccessibility: .appLanguages)
-        
-        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .appLanguageListItem, buttonQueryType: .firstMatch)
-        
-        assertIfScreenDoesNotExist(screenAccessibility: .confirmAppLanguage)
-                
-        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .changeLanguage)
-        
-        assertIfScreenDoesNotExist(screenAccessibility: .localizationSettings)
-        
-        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .localizationSettingsCountryListItem, buttonQueryType: .firstMatch)
-        
-        assertIfScreenDoesNotExist(screenAccessibility: .confirmLocalizationSettings)
-        
-        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .editLocalization)
-        
-        assertIfScreenDoesNotExist(screenAccessibility: .localizationSettings)
-    }
-    
     func testTappingContinueFromConfirmLocalizationSettingsNavigatesBackToTheTutorialStart() {
         
         launchAppToOnboardingTutorial()
