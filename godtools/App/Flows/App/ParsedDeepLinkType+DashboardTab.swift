@@ -28,6 +28,8 @@ extension ParsedDeepLinkType {
             return defaultTab
         case .languageSettings:
             return defaultTab
+        case .localizationSettings:
+            return defaultTab
         case .lessonsList:
             return .lessons
         case .menu:
