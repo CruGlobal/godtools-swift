@@ -21,4 +21,5 @@ enum ParsedDeepLinkType: Equatable, Sendable {
     case menu
     case onboarding(appLanguage: AppLanguageDomainModel)
     case tool(toolDeepLink: ToolDeepLink)
+    case tutorial
 }

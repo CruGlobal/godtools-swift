@@ -38,6 +38,8 @@ extension ParsedDeepLinkType {
             return defaultTab
         case .tool(toolDeepLink: let toolDeepLink):
             return defaultTab
+        case .tutorial:
+            return defaultTab
         }
     }
 }

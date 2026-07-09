@@ -534,6 +534,11 @@ extension AppFlow {
             }
                         
             navigateToOnboarding()
+            
+        case .tutorial:
+            presentFlow(
+                flow: TutorialFlow(appDiContainer: appDiContainer)
+            )
         }
     }
     

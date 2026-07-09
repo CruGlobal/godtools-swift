@@ -40,6 +40,10 @@ final class UITestsDeepLinkParser: DeepLinkUrlParserInterface {
             
             return .appLanguagesList
         }
+        else if screenPath == "tutorial" {
+            
+            return .tutorial
+        }
         
         return nil
     }
