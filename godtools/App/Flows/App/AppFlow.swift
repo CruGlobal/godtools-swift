@@ -482,8 +482,7 @@ extension AppFlow {
         case .languageSettings:
             pushFlow(
                 flow: LanguageSettingsFlow(
-                    appDiContainer: appDiContainer,
-                    deepLink: nil
+                    appDiContainer: appDiContainer
                 )
             )
             
@@ -497,11 +496,9 @@ extension AppFlow {
             
         case .appLanguagesList:
             pushFlow(
-                flow: LanguageSettingsFlow(
-                    appDiContainer: appDiContainer,
-                    deepLink: .appLanguagesList
-                ),
-                animated: false
+                flow: ChooseAppLanguageFlow(
+                    appDiContainer: appDiContainer
+                )
             )
             
         case .lessonsList:

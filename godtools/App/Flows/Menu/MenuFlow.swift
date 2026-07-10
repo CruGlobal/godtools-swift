@@ -67,8 +67,7 @@ final class MenuFlow: GTFlow {
         case .languageSettingsTappedFromMenu:
             pushFlow(
                 flow: LanguageSettingsFlow(
-                    appDiContainer: appDiContainer,
-                    deepLink: nil
+                    appDiContainer: appDiContainer
                 )
             )
             

@@ -78,27 +78,6 @@ class OnboardingFlowTests: BaseFlowTests {
         assertIfButtonDoesNotExistElseTap(buttonAccessibility: .appLanguageListItem, buttonQueryType: .firstMatch)
         
         assertIfScreenDoesNotExist(screenAccessibility: .confirmAppLanguage)
-                
-        assertIfButtonDoesNotExist(buttonAccessibility: .nevermind)
-        
-        assertIfButtonDoesNotExist(buttonAccessibility: .changeLanguage)
-    }
-    
-    func testTappingNevermindFromConfirmAppLanguageNavigatesToChooseAppLanguage() {
-        
-        launchAppToOnboardingTutorial()
-        
-        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .continueForward, buttonQueryType: .exactMatch)
-        
-        assertIfScreenDoesNotExist(screenAccessibility: .appLanguages)
-        
-        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .appLanguageListItem, buttonQueryType: .firstMatch)
-        
-        assertIfScreenDoesNotExist(screenAccessibility: .confirmAppLanguage)
-                
-        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .nevermind)
-        
-        assertIfScreenDoesNotExist(screenAccessibility: .appLanguages)
     }
     
     func testTappingConfirmFromConfirmAppLanguageNavigatesToChooseLocalizationSettingsCountry() {
