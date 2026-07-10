@@ -77,18 +77,18 @@ extension RealmLanguagesCacheTests {
     private func getLanguages() -> [LanguageCodable] {
         
         return [
-            LanguageCodable.create(id: "a", code: LanguageCodeDomainModel.arabic.rawValue),
-            LanguageCodable.create(id: "b", code: LanguageCodeDomainModel.chinese.rawValue),
-            LanguageCodable.create(id: "c", code: LanguageCodeDomainModel.english.rawValue),
-            LanguageCodable.create(id: "d", code: LanguageCodeDomainModel.french.rawValue),
-            LanguageCodable.create(id: "e", code: LanguageCodeDomainModel.hebrew.rawValue),
-            LanguageCodable.create(id: "f", code: LanguageCodeDomainModel.latvian.rawValue),
-            LanguageCodable.create(id: "g", code: LanguageCodeDomainModel.portuguese.rawValue),
-            LanguageCodable.create(id: "h", code: LanguageCodeDomainModel.russian.rawValue),
-            LanguageCodable.create(id: "i", code: LanguageCodeDomainModel.spanish.rawValue),
-            LanguageCodable.create(id: "j", code: LanguageCodeDomainModel.vietnamese.rawValue),
-            LanguageCodable.create(id: "k", code: LanguageCodeDomainModel.filipino.rawValue),
-            LanguageCodable.create(id: "l", code: LanguageCodeDomainModel.finnish.rawValue)
+            LanguageCodable.random(id: "a", code: LanguageCodeDomainModel.arabic.rawValue),
+            LanguageCodable.random(id: "b", code: LanguageCodeDomainModel.chinese.rawValue),
+            LanguageCodable.random(id: "c", code: LanguageCodeDomainModel.english.rawValue),
+            LanguageCodable.random(id: "d", code: LanguageCodeDomainModel.french.rawValue),
+            LanguageCodable.random(id: "e", code: LanguageCodeDomainModel.hebrew.rawValue),
+            LanguageCodable.random(id: "f", code: LanguageCodeDomainModel.latvian.rawValue),
+            LanguageCodable.random(id: "g", code: LanguageCodeDomainModel.portuguese.rawValue),
+            LanguageCodable.random(id: "h", code: LanguageCodeDomainModel.russian.rawValue),
+            LanguageCodable.random(id: "i", code: LanguageCodeDomainModel.spanish.rawValue),
+            LanguageCodable.random(id: "j", code: LanguageCodeDomainModel.vietnamese.rawValue),
+            LanguageCodable.random(id: "k", code: LanguageCodeDomainModel.filipino.rawValue),
+            LanguageCodable.random(id: "l", code: LanguageCodeDomainModel.finnish.rawValue)
         ]
     }
 }
