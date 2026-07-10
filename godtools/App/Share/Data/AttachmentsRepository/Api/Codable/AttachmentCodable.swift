@@ -10,13 +10,13 @@ import Foundation
 
 struct AttachmentCodable: Codable, Sendable {
     
+    let id: String
     let file: String
     let fileFilename: String
-    let id: String
     let isZipped: Bool
     let sha256: String
     let type: String
-    
+
     let resource: ResourceCodable?
     
     enum RootKeys: String, CodingKey {
@@ -41,8 +41,26 @@ struct AttachmentCodable: Codable, Sendable {
         case data = "data"
     }
     
+    init(
+        id: String = "",
+        file: String = "",
+        fileFilename: String = "",
+        isZipped: Bool = false,
+        sha256: String = "",
+        type: String = "",
+        resource: ResourceCodable? = nil
+    ) {
+        self.id = id
+        self.file = file
+        self.fileFilename = fileFilename
+        self.isZipped = isZipped
+        self.sha256 = sha256
+        self.type = type
+        self.resource = resource
+    }
+
     init(from decoder: Decoder) throws {
-        
+
         let container = try decoder.container(keyedBy: RootKeys.self)
         
         id = try container.decode(String.self, forKey: .id)
