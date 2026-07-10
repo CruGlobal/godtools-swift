@@ -142,23 +142,32 @@ extension ResourcesCacheTests {
         return "language_" + "\(id)"
     }
     
-    private func getEnglishLanguage() -> MockLanguage {
-        return MockLanguage.createLanguage(language: .english, name: "english", id: getLanguageId(id: 0))
+    private func getLanguageCodable(language: LanguageCodeDomainModel, name: String, id: String) -> LanguageCodable {
+        return LanguageCodable.random(
+            id: id,
+            code: language.rawValue,
+            name: name,
+            forceLanguageName: false
+        )
     }
-    
-    private func getSpanishLanguage() -> MockLanguage {
-        return MockLanguage.createLanguage(language: .spanish, name: "spanish", id: getLanguageId(id: spanishLanguageId))
+
+    private func getEnglishLanguage() -> LanguageCodable {
+        return getLanguageCodable(language: .english, name: "english", id: getLanguageId(id: 0))
     }
-    
-    private func getVietnameseLanguage() -> MockLanguage {
-        return MockLanguage.createLanguage(language: .vietnamese, name: "vietnamese", id: getLanguageId(id: 2))
+
+    private func getSpanishLanguage() -> LanguageCodable {
+        return getLanguageCodable(language: .spanish, name: "spanish", id: getLanguageId(id: spanishLanguageId))
     }
-    
-    private func getCzechLanguage() -> MockLanguage {
-        return MockLanguage.createLanguage(language: .czech, name: "czech", id: getLanguageId(id: 3))
+
+    private func getVietnameseLanguage() -> LanguageCodable {
+        return getLanguageCodable(language: .vietnamese, name: "vietnamese", id: getLanguageId(id: 2))
     }
-    
-    private func getMockLanguage(language: LanguageCodeDomainModel) -> MockLanguage {
+
+    private func getCzechLanguage() -> LanguageCodable {
+        return getLanguageCodable(language: .czech, name: "czech", id: getLanguageId(id: 3))
+    }
+
+    private func getLanguage(language: LanguageCodeDomainModel) -> LanguageCodable {
         switch language {
         case .english:
             return getEnglishLanguage()
@@ -181,7 +190,7 @@ extension ResourcesCacheTests {
     
     private func getRealmLanguage(language: LanguageCodeDomainModel) -> RealmLanguage {
         return RealmLanguage.createNewFrom(
-            model: getMockLanguage(language: language).toModel()
+            model: getLanguage(language: language).toModel()
         )
     }
     
@@ -275,7 +284,7 @@ extension ResourcesCacheTests {
     @available(iOS 17.4, *)
     private func getSwiftLanguage(language: LanguageCodeDomainModel) -> SwiftLanguage {
         return SwiftLanguage.createNewFrom(
-            model: getMockLanguage(language: language).toModel()
+            model: getLanguage(language: language).toModel()
         )
     }
     
