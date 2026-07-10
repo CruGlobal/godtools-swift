@@ -93,16 +93,28 @@ extension TranslationsCacheTests {
 
 extension TranslationsCacheTests {
     
+    private func getRealmLanguage(languageCode: LanguageCodeDomainModel, name: String, id: String) -> RealmLanguage {
+
+        let language = LanguageCodable.random(
+            id: id,
+            code: languageCode.rawValue,
+            name: name,
+            forceLanguageName: false
+        )
+
+        return RealmLanguage.createNewFrom(model: language.toModel())
+    }
+
     private func getEnglishLanguage() -> RealmLanguage {
-        return MockRealmLanguage.createLanguage(language: .english, name: "english", id: Self.englishLanguageId)
+        return getRealmLanguage(languageCode: .english, name: "english", id: Self.englishLanguageId)
     }
-    
+
     private func getSpanishLanguage() -> RealmLanguage {
-        return MockRealmLanguage.createLanguage(language: .spanish, name: "spanish", id: Self.spanishLanguageId)
+        return getRealmLanguage(languageCode: .spanish, name: "spanish", id: Self.spanishLanguageId)
     }
-    
+
     private func getVietnameseLanguage() -> RealmLanguage {
-        return MockRealmLanguage.createLanguage(language: .vietnamese, name: "vietnamese", id: Self.vietnameseLanguageId)
+        return getRealmLanguage(languageCode: .vietnamese, name: "vietnamese", id: Self.vietnameseLanguageId)
     }
     
     private func getEnglishTranslations() -> [RealmTranslation] {

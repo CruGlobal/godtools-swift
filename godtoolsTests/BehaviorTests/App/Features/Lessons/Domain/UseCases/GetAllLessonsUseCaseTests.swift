@@ -337,11 +337,15 @@ extension GetAllLessonsUseCaseTests {
     }
     
     private func getRealmLanguage(languageCode: LanguageCodeDomainModel) -> RealmLanguage {
-        return MockRealmLanguage.createLanguage(
-            language: languageCode,
+
+        let language = LanguageCodable.random(
+            id: languageCode.rawValue,
+            code: languageCode.rawValue,
             name: languageCode.rawValue + " Name",
-            id: languageCode.rawValue
+            forceLanguageName: false
         )
+
+        return RealmLanguage.createNewFrom(model: language.toModel())
     }
     
     private func getLessonsListItems(testsDiContainer: TestsDiContainer) -> GetLessonsListItems {
