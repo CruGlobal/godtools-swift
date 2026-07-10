@@ -47,9 +47,9 @@ extension RealmLanguage {
     
     func toModel() -> LanguageDataModel {
         return LanguageDataModel(
+            id: id,
             code: code,
             directionString: directionString,
-            id: id,
             name: name,
             type: type,
             forceLanguageName: forceLanguageName

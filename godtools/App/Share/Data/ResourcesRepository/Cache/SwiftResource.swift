@@ -109,6 +109,7 @@ extension SwiftResource {
     
     func toModel() -> ResourceDataModel {
         return ResourceDataModel(
+            id: id,
             abbreviation: abbreviation,
             attrAboutBannerAnimation: attrAboutBannerAnimation,
             attrAboutOverviewVideoYoutube: attrAboutOverviewVideoYoutube,
@@ -119,7 +120,6 @@ extension SwiftResource {
             attrDefaultOrder: attrDefaultOrder,
             attrSpotlight: attrSpotlight,
             defaultVariantId: defaultVariantId,
-            id: id,
             isHidden: isHidden,
             manifest: manifest,
             metatoolId: metatoolId,
