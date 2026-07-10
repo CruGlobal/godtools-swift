@@ -67,7 +67,7 @@ final class ResourcesSHA256FileCache {
         
         return try await withCheckedThrowingContinuation { continuation in
             
-            createStoredFileRelationshipsToAttachmentWithCompletion(
+            realmCreateStoredFileRelationshipsToAttachmentWithCompletion(
                 attachmentId: attachmentId,
                 location: location,
                 completion: { (result: Result<StoreResourcesFilesResult, Error>) in
@@ -83,7 +83,60 @@ final class ResourcesSHA256FileCache {
         }
     }
     
-    private func createStoredFileRelationshipsToAttachmentWithCompletion(attachmentId: String, location: FileCacheLocation, completion: @escaping ((_ result: Result<StoreResourcesFilesResult, Error>) -> Void)) {
+    // MARK: - Translation Files
+    
+    func storeTranslationFile(translationId: String, fileName: String, fileData: Data) async throws -> FileCacheLocation {
+                
+        let fileCacheLocation: FileCacheLocation = FileCacheLocation(relativeUrlString: fileName)
+        
+        _ = try fileCache.storeFile(location: fileCacheLocation, data: fileData)
+        
+        _ = try await createStoredFileRelationshipsToTranslation(
+            translationId: translationId,
+            fileCacheLocations: [fileCacheLocation]
+        )
+        
+        return fileCacheLocation
+    }
+    
+    func storeTranslationZipFile(translationId: String, zipFileData: Data) async throws -> [FileCacheLocation] {
+        
+        let fileCacheLocations: [FileCacheLocation] = try fileCache.decompressZipFileAndStoreFileContents(zipFileData: zipFileData)
+        
+        _ = try await createStoredFileRelationshipsToTranslation(
+            translationId: translationId,
+            fileCacheLocations: fileCacheLocations
+        )
+        
+        return fileCacheLocations
+    }
+    
+    private func createStoredFileRelationshipsToTranslation(translationId: String, fileCacheLocations: [FileCacheLocation]) async throws -> StoreResourcesFilesResult {
+        
+        return try await withCheckedThrowingContinuation { continuation in
+            
+            realmCreateStoredFileRelationshipsToTranslationWithCompletion(
+                translationId: translationId,
+                fileCacheLocations: fileCacheLocations,
+                completion: { (result: Result<StoreResourcesFilesResult, Error>) in
+                    
+                    switch result {
+                    case .success(let storeResourcesFilesResult):
+                        continuation.resume(returning: storeResourcesFilesResult)
+                    case .failure(let error):
+                        continuation.resume(throwing: error)
+                    }
+                }
+            )
+        }
+    }
+}
+
+// MARK: - Realm Attachments
+
+extension ResourcesSHA256FileCache {
+    
+    private func realmCreateStoredFileRelationshipsToAttachmentWithCompletion(attachmentId: String, location: FileCacheLocation, completion: @escaping ((_ result: Result<StoreResourcesFilesResult, Error>) -> Void)) {
         
         realmDataWrite.serialAsync { result in
             
@@ -127,7 +180,7 @@ final class ResourcesSHA256FileCache {
                     
                     let storeResourcesFilesResult = StoreResourcesFilesResult(
                         storedFiles: [location],
-                        deleteResourcesFilesResult: try self.deleteUnusedResourceFiles(realm: realm)
+                        deleteResourcesFilesResult: try self.realmDeleteUnusedResourceFiles(realm: realm)
                     )
                     
                     completion(.success(storeResourcesFilesResult))
@@ -141,56 +194,13 @@ final class ResourcesSHA256FileCache {
             }
         }
     }
+}
+
+// MARK: - Realm Translations
+
+extension ResourcesSHA256FileCache {
     
-    // MARK: - Translation Files
-    
-    func storeTranslationFile(translationId: String, fileName: String, fileData: Data) async throws -> FileCacheLocation {
-                
-        let fileCacheLocation: FileCacheLocation = FileCacheLocation(relativeUrlString: fileName)
-        
-        _ = try fileCache.storeFile(location: fileCacheLocation, data: fileData)
-        
-        _ = try await createStoredFileRelationshipsToTranslation(
-            translationId: translationId,
-            fileCacheLocations: [fileCacheLocation]
-        )
-        
-        return fileCacheLocation
-    }
-    
-    func storeTranslationZipFile(translationId: String, zipFileData: Data) async throws -> [FileCacheLocation] {
-        
-        let fileCacheLocations: [FileCacheLocation] = try fileCache.decompressZipFileAndStoreFileContents(zipFileData: zipFileData)
-        
-        _ = try await createStoredFileRelationshipsToTranslation(
-            translationId: translationId,
-            fileCacheLocations: fileCacheLocations
-        )
-        
-        return fileCacheLocations
-    }
-    
-    private func createStoredFileRelationshipsToTranslation(translationId: String, fileCacheLocations: [FileCacheLocation]) async throws -> StoreResourcesFilesResult {
-        
-        return try await withCheckedThrowingContinuation { continuation in
-            
-            createStoredFileRelationshipsToTranslationWithCompletion(
-                translationId: translationId,
-                fileCacheLocations: fileCacheLocations,
-                completion: { (result: Result<StoreResourcesFilesResult, Error>) in
-                    
-                    switch result {
-                    case .success(let storeResourcesFilesResult):
-                        continuation.resume(returning: storeResourcesFilesResult)
-                    case .failure(let error):
-                        continuation.resume(throwing: error)
-                    }
-                }
-            )
-        }
-    }
-    
-    private func createStoredFileRelationshipsToTranslationWithCompletion(translationId: String, fileCacheLocations: [FileCacheLocation], completion: @escaping ((_ result: Result<StoreResourcesFilesResult, Error>) -> Void)) {
+    private func realmCreateStoredFileRelationshipsToTranslationWithCompletion(translationId: String, fileCacheLocations: [FileCacheLocation], completion: @escaping ((_ result: Result<StoreResourcesFilesResult, Error>) -> Void)) {
         
         realmDataWrite.serialAsync { result in
             
@@ -267,15 +277,18 @@ final class ResourcesSHA256FileCache {
         
         let storeResourcesFilesResult = StoreResourcesFilesResult(
             storedFiles: fileCacheLocations,
-            deleteResourcesFilesResult: try self.deleteUnusedResourceFiles(realm: realm)
+            deleteResourcesFilesResult: try self.realmDeleteUnusedResourceFiles(realm: realm)
         )
         
         return storeResourcesFilesResult
     }
+}
+
+// MARK: - Realm Deleting Unused Files
+
+extension ResourcesSHA256FileCache {
     
-    // MARK: - Deleting Unused Files
-    
-    private func deleteUnusedResourceFiles(realm: Realm) throws -> DeleteResourcesFilesResult {
+    private func realmDeleteUnusedResourceFiles(realm: Realm) throws -> DeleteResourcesFilesResult {
         
         let query: String = "attachments.@count = 0 AND translations.@count = 0"
         let realmSHA256FilesToDelete: [RealmSHA256File] = Array(realm.objects(RealmSHA256File.self).filter(query))
