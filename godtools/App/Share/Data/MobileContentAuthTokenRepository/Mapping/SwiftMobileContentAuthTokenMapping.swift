@@ -12,7 +12,7 @@ import RepositorySync
 @available(iOS 17.4, *)
 final class SwiftMobileContentAuthTokenMapping: Mapping {
     
-    func toDataModel(externalObject: MobileContentAuthTokenDecodable) -> MobileContentAuthTokenDataModel? {
+    func toDataModel(externalObject: MobileContentAuthTokenCodable) -> MobileContentAuthTokenDataModel? {
         return externalObject.toModel()
     }
     
@@ -20,7 +20,7 @@ final class SwiftMobileContentAuthTokenMapping: Mapping {
         return persistObject.toModel()
     }
     
-    func toPersistObject(externalObject: MobileContentAuthTokenDecodable) -> SwiftMobileContentAuthToken? {
+    func toPersistObject(externalObject: MobileContentAuthTokenCodable) -> SwiftMobileContentAuthToken? {
         return SwiftMobileContentAuthToken.createNewFrom(model: externalObject.toModel())
     }
 }

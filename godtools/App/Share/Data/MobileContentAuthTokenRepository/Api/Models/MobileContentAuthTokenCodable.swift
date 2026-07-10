@@ -1,5 +1,5 @@
 //
-//  MobileContentAuthTokenDecodable.swift
+//  MobileContentAuthTokenCodable.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 11/1/22.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct MobileContentAuthTokenDecodable: Codable, Sendable {
+struct MobileContentAuthTokenCodable: Codable, Sendable {
     
     let appleRefreshToken: String?
     let expirationDate: Date?
@@ -40,7 +40,7 @@ struct MobileContentAuthTokenDecodable: Codable, Sendable {
         id = userId
         
         let expirationDateString = try attributesContainer.decodeIfPresent(String.self, forKey: .expiration) ?? ""
-        expirationDate = MobileContentAuthTokenDecodable.parseExpirationDateFromString(expirationDateString)
+        expirationDate = MobileContentAuthTokenCodable.parseExpirationDateFromString(expirationDateString)
         
         appleRefreshToken = try attributesContainer.decodeIfPresent(String.self, forKey: .appleRefreshToken)
     }
@@ -56,7 +56,7 @@ struct MobileContentAuthTokenDecodable: Codable, Sendable {
     }
 }
 
-extension MobileContentAuthTokenDecodable {
+extension MobileContentAuthTokenCodable {
     
     func toModel() -> MobileContentAuthTokenDataModel {
     

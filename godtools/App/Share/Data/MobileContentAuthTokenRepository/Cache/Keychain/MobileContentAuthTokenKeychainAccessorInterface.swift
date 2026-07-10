@@ -10,7 +10,7 @@ import Foundation
 
 protocol MobileContentAuthTokenKeychainAccessorInterface {
     
-    func saveMobileContentAuthToken(authTokenCodable: MobileContentAuthTokenDecodable) throws
+    func saveMobileContentAuthToken(authTokenCodable: MobileContentAuthTokenCodable) throws
     func deleteMobileContentAuthTokenAndUserId(userId: String)
     func getMobileContentAuthToken(userId: String) -> String?
     func getMobileContentUserId() -> String?

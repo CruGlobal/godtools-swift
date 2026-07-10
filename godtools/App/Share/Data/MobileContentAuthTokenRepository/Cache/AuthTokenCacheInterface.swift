@@ -13,7 +13,7 @@ protocol AuthTokenCacheInterface {
     
     func getUserId() -> String?
     func getCachedAuthToken() throws -> CachedAuthToken?
-    func storeAuthToken(authTokenCodable: MobileContentAuthTokenDecodable) async throws
+    func storeAuthToken(authTokenCodable: MobileContentAuthTokenCodable) async throws
     func deleteAuthToken(userId: String) async throws
     func getAuthTokenChangedPublisher() -> AnyPublisher<MobileContentAuthTokenDataModel?, Never>
 }

@@ -11,13 +11,13 @@ import Foundation
 
 final class MockMobileContentAuthTokenApi: AuthTokenApiInterface {
     
-    private let fetchedAuthToken: MobileContentAuthTokenDecodable?
+    private let fetchedAuthToken: MobileContentAuthTokenCodable?
     
-    init(fetchedAuthToken: MobileContentAuthTokenDecodable?) {
+    init(fetchedAuthToken: MobileContentAuthTokenCodable?) {
         self.fetchedAuthToken = fetchedAuthToken
     }
     
-    func fetchAuthToken(providerToken: MobileContentAuthProviderToken, createUser: Bool) async throws -> Result<MobileContentAuthTokenDecodable, MobileContentApiError> {
+    func fetchAuthToken(providerToken: MobileContentAuthProviderToken, createUser: Bool) async throws -> Result<MobileContentAuthTokenCodable, MobileContentApiError> {
         
         guard let token = fetchedAuthToken else {
             return .failure(MobileContentApiError.other(error: NSError(domain: "TestError", code: -2, userInfo: [NSLocalizedDescriptionKey: "No mock token configured"])))

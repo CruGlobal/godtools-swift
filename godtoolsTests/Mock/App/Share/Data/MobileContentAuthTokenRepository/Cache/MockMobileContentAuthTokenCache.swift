@@ -24,7 +24,7 @@ final class MockMobileContentAuthTokenCache: AuthTokenCacheInterface {
         return nil
     }
     
-    func storeAuthToken(authTokenCodable: MobileContentAuthTokenDecodable) async throws {
+    func storeAuthToken(authTokenCodable: MobileContentAuthTokenCodable) async throws {
         
     }
     

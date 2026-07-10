@@ -12,14 +12,14 @@ import Foundation
 final class MockMobileContentAuthTokenKeychainAccessor: MobileContentAuthTokenKeychainAccessorInterface {
     
     private var userId: String?
-    private var authTokenCodable: MobileContentAuthTokenDecodable?
+    private var authTokenCodable: MobileContentAuthTokenCodable?
     private var appleRefreshToken: String?
     
     init(userId: String?) {
         self.userId = userId
     }
     
-    func saveMobileContentAuthToken(authTokenCodable: MobileContentAuthTokenDecodable) throws {
+    func saveMobileContentAuthToken(authTokenCodable: MobileContentAuthTokenCodable) throws {
         self.authTokenCodable = authTokenCodable
         userId = authTokenCodable.userId
         appleRefreshToken = authTokenCodable.appleRefreshToken

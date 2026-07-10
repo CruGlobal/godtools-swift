@@ -415,7 +415,7 @@ final class AppDataLayerDependencies {
     
     func getMobileContentAuthTokenRepository() -> MobileContentAuthTokenRepository {
         
-        let persistence: any Persistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenDecodable>
+        let persistence: any Persistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenCodable>
         
         if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
             

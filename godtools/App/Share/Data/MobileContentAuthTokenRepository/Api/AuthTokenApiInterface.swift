@@ -10,5 +10,5 @@ import Foundation
 
 protocol AuthTokenApiInterface: Sendable {
     
-    func fetchAuthToken(providerToken: MobileContentAuthProviderToken, createUser: Bool) async throws -> Result<MobileContentAuthTokenDecodable, MobileContentApiError>
+    func fetchAuthToken(providerToken: MobileContentAuthProviderToken, createUser: Bool) async throws -> Result<MobileContentAuthTokenCodable, MobileContentApiError>
 }
