@@ -35,6 +35,18 @@ enum SwiftEmailSignUpV1 {
 @available(iOS 17.4, *)
 extension SwiftEmailSignUp {
     
+    public static func idPredicate(id: String) -> Predicate<SwiftEmailSignUp> {
+        return #Predicate<SwiftEmailSignUp> { object in
+            object.id == id
+        }
+    }
+
+    public static func idsPredicate(ids: Set<String>) -> Predicate<SwiftEmailSignUp> {
+        return #Predicate<SwiftEmailSignUp> { object in
+            ids.contains(object.id)
+        }
+    }
+    
     func mapFrom(model: EmailSignUpDataModel) {
         
         id = model.id

@@ -23,7 +23,7 @@ struct SetAppLanguageUseCaseTests {
         testsDiContainer = try TestsDiContainer()
         
         allLanguages = languageCodes.map {
-            LanguageCodable(code: $0.rawValue, id: UUID().uuidString)
+            LanguageCodable(id: UUID().uuidString, code: $0.rawValue)
         }
         
         try await testsDiContainer.core.dataLayer.getLanguagesPersistence().writeObjects(externalObjects: allLanguages)

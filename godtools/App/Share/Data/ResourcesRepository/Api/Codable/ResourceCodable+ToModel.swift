@@ -12,6 +12,7 @@ extension ResourceCodable {
     
     func toModel() -> ResourceDataModel {
         return ResourceDataModel(
+            id: id,
             abbreviation: abbreviation,
             attrAboutBannerAnimation: attrAboutBannerAnimation,
             attrAboutOverviewVideoYoutube: attrAboutOverviewVideoYoutube,
@@ -22,7 +23,6 @@ extension ResourceCodable {
             attrDefaultOrder: attrDefaultOrder,
             attrSpotlight: attrSpotlight,
             defaultVariantId: defaultVariantId,
-            id: id,
             isHidden: isHidden,
             manifest: manifest,
             metatoolId: metatoolId,

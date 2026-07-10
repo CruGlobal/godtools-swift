@@ -100,7 +100,7 @@ extension GetTranslatedToolNameTests {
         ]
         
         let tracts: [RealmResource] = [
-            MockRealmResource.createTract(
+            FakeRealmResource.createTract(
                 addLanguages: [.english, .spanish, .vietnamese],
                 fromLanguages: allLanguages,
                 id: toolId,
@@ -108,13 +108,13 @@ extension GetTranslatedToolNameTests {
             )
         ]
         
-        let tract0EnglishTranslation: RealmTranslation = MockRealmTranslation.createTranslation(
+        let tract0EnglishTranslation: RealmTranslation = getRealmTranslation(
             translatedName: Self.toolNameInEnglish
         )
-        let tract0SpanishTranslation: RealmTranslation = MockRealmTranslation.createTranslation(
+        let tract0SpanishTranslation: RealmTranslation = getRealmTranslation(
             translatedName: Self.toolNameInSpanish
         )
-        let tract0VietnameseTranslation: RealmTranslation = MockRealmTranslation.createTranslation(
+        let tract0VietnameseTranslation: RealmTranslation = getRealmTranslation(
             translatedName: Self.toolNameInVietnamese
         )
         
@@ -130,10 +130,21 @@ extension GetTranslatedToolNameTests {
     }
     
     private func getRealmLanguage(languageCode: LanguageCodeDomainModel) -> RealmLanguage {
-        return MockRealmLanguage.createLanguage(
-            language: languageCode,
+
+        let language = LanguageCodable.random(
+            id: languageCode.rawValue,
+            code: languageCode.rawValue,
             name: languageCode.rawValue + " Name",
-            id: languageCode.rawValue
+            forceLanguageName: false
         )
+
+        return RealmLanguage.createNewFrom(model: language.toModel())
+    }
+
+    private func getRealmTranslation(translatedName: String) -> RealmTranslation {
+
+        let translation = TranslationCodable.random(translatedName: translatedName)
+
+        return RealmTranslation.createNewFrom(model: translation.toModel())
     }
 }

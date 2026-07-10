@@ -95,7 +95,7 @@ extension GetDownloadToolProgressStringsUseCaseTests {
         try await testsDiContainer.core.dataLayer.getResourcesPersistence().writeObjects(externalObjects: [favoritedTract, unfavoritedTract, unfavoritable])
         try await testsDiContainer.core.dataLayer.getFavoritedResourcesPersistence().writeObjects(externalObjects: [favorite0])
         
-        let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
+        let localizableStrings: [FakeLocalizationServices.LocaleId: [FakeLocalizationServices.StringKey: String]] = [
             LanguageCodeDomainModel.english.value: [
                 "loading_favorited_tool": downloadToolMessage,
                 "loading_unfavorited_tool": favoriteThisToolForOfflineUseMessage
@@ -104,7 +104,7 @@ extension GetDownloadToolProgressStringsUseCaseTests {
         
         let getDownloadToolProgressStringsUseCase = GetDownloadToolProgressStringsUseCase(
             resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),
-            localizationServices: MockLocalizationServices(localizableStrings: localizableStrings),
+            localizationServices: FakeLocalizationServices(localizableStrings: localizableStrings),
             favoritedResourcesRepository: testsDiContainer.core.dataLayer.getFavoritedResourcesRepository()
         )
         

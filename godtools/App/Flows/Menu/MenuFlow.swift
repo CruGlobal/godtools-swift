@@ -67,8 +67,7 @@ final class MenuFlow: GTFlow {
         case .languageSettingsTappedFromMenu:
             pushFlow(
                 flow: LanguageSettingsFlow(
-                    appDiContainer: appDiContainer,
-                    deepLink: nil
+                    appDiContainer: appDiContainer
                 )
             )
             
@@ -516,8 +515,7 @@ extension MenuFlow {
         
         let backButton = AppBackBarItem(
             target: viewModel,
-            action: #selector(viewModel.backTapped),
-            accessibilityIdentifier: nil
+            action: #selector(viewModel.backTapped)
         )
         
         let hostingView = AppHostingController<AccountView>(
@@ -665,8 +663,7 @@ extension MenuFlow {
         
         let backButton = AppBackBarItem(
             target: viewModel,
-            action: #selector(viewModel.backTapped),
-            accessibilityIdentifier: nil
+            action: #selector(viewModel.backTapped)
         )
         
         let view = WebContentView(

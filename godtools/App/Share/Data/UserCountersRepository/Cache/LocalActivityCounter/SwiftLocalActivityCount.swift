@@ -32,6 +32,18 @@ enum SwiftLocalActivityCountV1 {
 @available(iOS 17.4, *)
 extension SwiftLocalActivityCount {
     
+    public static func idPredicate(id: String) -> Predicate<SwiftLocalActivityCount> {
+        return #Predicate<SwiftLocalActivityCount> { object in
+            object.id == id
+        }
+    }
+
+    public static func idsPredicate(ids: Set<String>) -> Predicate<SwiftLocalActivityCount> {
+        return #Predicate<SwiftLocalActivityCount> { object in
+            ids.contains(object.id)
+        }
+    }
+    
     func mapFrom(model: LocalActivityCountDataModel) {
         id = model.id
         count = model.count

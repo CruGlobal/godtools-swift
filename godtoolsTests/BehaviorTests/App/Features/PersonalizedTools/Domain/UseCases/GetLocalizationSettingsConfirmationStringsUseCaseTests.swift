@@ -85,7 +85,7 @@ extension GetLocalizationSettingsConfirmationStringsUseCaseTests {
         ]
 
         return GetLocalizationSettingsConfirmationStringsUseCase(
-            localizationServices: MockLocalizationServices(localizableStrings: localizableStrings)
+            localizationServices: FakeLocalizationServices(localizableStrings: localizableStrings)
         )
     }
 }

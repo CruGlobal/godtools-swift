@@ -12,9 +12,9 @@ extension LanguageCodable {
     
     func toModel() -> LanguageDataModel {
         return LanguageDataModel(
+            id: id,
             code: code,
             directionString: directionString,
-            id: id,
             name: name,
             type: type,
             forceLanguageName: forceLanguageName

@@ -238,24 +238,24 @@ extension GetUserLessonFiltersUseCaseTests {
         )
     }
     
-    private func getLocalizationServices() -> MockLocalizationServices {
+    private func getLocalizationServices() -> FakeLocalizationServices {
         
-        let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
+        let localizableStrings: [FakeLocalizationServices.LocaleId: [FakeLocalizationServices.StringKey: String]] = [
             LanguageCodeDomainModel.spanish.value: [
                 LanguageCodeDomainModel.french.rawValue: "Francés"
             ]
         ]
         
-        return MockLocalizationServices(localizableStrings: localizableStrings)
+        return FakeLocalizationServices(localizableStrings: localizableStrings)
     }
 
     private func getTranslatedLanguageName() -> GetTranslatedLanguageName {
         
         let getTranslatedLanguageName = GetTranslatedLanguageName(
-            localizationLanguageName: MockLocalizationLanguageNameRepository(localizationServices: getLocalizationServices()),
-            localeLanguageName: MockLocaleLanguageName.defaultMockLocaleLanguageName(),
-            localeRegionName: MockLocaleLanguageRegionName(regionNames: [:]),
-            localeScriptName: MockLocaleLanguageScriptName(scriptNames: [:])
+            localizationLanguageName: FakeLocalizationLanguageNameRepository(localizationServices: getLocalizationServices()),
+            localeLanguageName: FakeLocaleLanguageName.getDefault(),
+            localeRegionName: FakeLocaleLanguageRegionName(regionNames: [:]),
+            localeScriptName: FakeLocaleLanguageScriptName(scriptNames: [:])
         )
         
         return getTranslatedLanguageName
@@ -263,6 +263,6 @@ extension GetUserLessonFiltersUseCaseTests {
     
     private func getStringWithLocaleCount() -> StringWithLocaleCountInterface {
         
-        return MockStringWithLocaleCount()
+        return FakeStringWithLocaleCount()
     }
 }

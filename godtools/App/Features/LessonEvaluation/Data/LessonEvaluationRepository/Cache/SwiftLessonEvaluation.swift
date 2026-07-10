@@ -36,6 +36,18 @@ enum SwiftLessonEvaluationV1 {
 @available(iOS 17.4, *)
 extension SwiftLessonEvaluation {
     
+    public static func idPredicate(id: String) -> Predicate<SwiftLessonEvaluation> {
+        return #Predicate<SwiftLessonEvaluation> { object in
+            object.id == id
+        }
+    }
+
+    public static func idsPredicate(ids: Set<String>) -> Predicate<SwiftLessonEvaluation> {
+        return #Predicate<SwiftLessonEvaluation> { object in
+            ids.contains(object.id)
+        }
+    }
+    
     func mapFrom(model: LessonEvaluationDataModel) {
         
         id = model.id

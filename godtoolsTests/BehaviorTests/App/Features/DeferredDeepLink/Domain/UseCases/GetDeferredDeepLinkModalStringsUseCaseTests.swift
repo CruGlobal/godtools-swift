@@ -44,7 +44,7 @@ extension GetDeferredDeepLinkModalStringsUseCaseTests {
         let stringKeys: [LocalizableStringKeys] = [.deferredDeepLinkModalTitle, .deferredDeepLinkModalMessage]
 
         return GetDeferredDeepLinkModalStringsUseCase(
-            localizationServices: MockLocalizationServices(localizableStrings: MockLocalizationServices.getStrings(stringKeys: stringKeys, languages: [.english, .spanish]))
+            localizationServices: FakeLocalizationServices(localizableStrings: FakeLocalizationServices.getStrings(stringKeys: stringKeys, languages: [.english, .spanish]))
         )
     }
 }

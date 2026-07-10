@@ -163,7 +163,6 @@
 		45308E152E4F5B5A0082B7DC /* Exceptions for "godtoolsUITests" folder in "godtoolsUITests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				App/Flows/ChooseAppLanguage/ChooseAppLanguageFlowTests.swift,
 				App/Flows/Dashboard/DashboardFlowTests.swift,
 				App/Flows/LanguageSettings/LanguageSettingsFlowTests.swift,
 				App/Flows/LearnToShareTool/LearnToShareToolFlowTests.swift,
@@ -2180,7 +2179,7 @@
 			repositoryURL = "https://github.com/CruGlobal/repository-sync-ios";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 1.3.0;
+				minimumVersion = 1.4.0;
 			};
 		};
 		4581EAA12BFBE194008115FF /* XCRemoteSwiftPackageReference "realm-swift" */ = {

@@ -79,7 +79,7 @@ class TractFlow: GTFlow {
             backBarItem = AppHomeBarItem(color: nil, target: viewModel, action: #selector(viewModel.homeTapped), accessibilityIdentifier: nil)
         }
         else {
-            backBarItem = AppBackBarItem(target: viewModel, action: #selector(viewModel.backTapped), accessibilityIdentifier: nil)
+            backBarItem = AppBackBarItem(target: viewModel, action: #selector(viewModel.backTapped))
         }
         
         let remoteShareActiveBarItem = AppLottieBarItem(
@@ -130,7 +130,11 @@ class TractFlow: GTFlow {
                 let languageSelectorView: NavBarSelectorView?
                 
                 if languageNames.count > 1 {
-                    languageSelectorView = self?.getNewLanguageSelectorView(view: tractView, viewModel: viewModel, navBarLayoutDirection: navBarLayoutDirection)
+                    languageSelectorView = self?.getNewLanguageSelectorView(
+                        view: tractView,
+                        viewModel: viewModel,
+                        navBarLayoutDirection: navBarLayoutDirection
+                    )
                 }
                 else {
                     languageSelectorView = nil

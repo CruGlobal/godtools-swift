@@ -30,9 +30,9 @@ extension CachedAuthToken {
     
     func toModel() -> MobileContentAuthTokenDataModel {
         return MobileContentAuthTokenDataModel(
+            id: id,
             appleRefreshToken: appleRefreshToken,
             expirationDate: expirationDate,
-            id: id,
             token: token,
             userId: userId
         )

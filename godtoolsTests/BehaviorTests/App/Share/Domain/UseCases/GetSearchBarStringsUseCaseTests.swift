@@ -43,7 +43,7 @@ extension GetSearchBarStringsUseCaseTests {
         let stringKeys: [LocalizableStringKeys] = [.cancel]
 
         return GetSearchBarStringsUseCase(
-            localizationServices: MockLocalizationServices(localizableStrings: MockLocalizationServices.getStrings(stringKeys: stringKeys, languages: [.english, .spanish]))
+            localizationServices: FakeLocalizationServices(localizableStrings: FakeLocalizationServices.getStrings(stringKeys: stringKeys, languages: [.english, .spanish]))
         )
     }
 }

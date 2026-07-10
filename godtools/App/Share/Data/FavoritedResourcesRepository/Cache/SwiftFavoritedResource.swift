@@ -34,6 +34,18 @@ enum SwiftFavoritedResourceV1 {
 @available(iOS 17.4, *)
 extension SwiftFavoritedResource {
     
+    public static func idPredicate(id: String) -> Predicate<SwiftFavoritedResource> {
+        return #Predicate<SwiftFavoritedResource> { object in
+            object.id == id
+        }
+    }
+
+    public static func idsPredicate(ids: Set<String>) -> Predicate<SwiftFavoritedResource> {
+        return #Predicate<SwiftFavoritedResource> { object in
+            ids.contains(object.id)
+        }
+    }
+    
     func mapFrom(model: FavoritedResourceDataModel) {
         
         createdAt = model.createdAt

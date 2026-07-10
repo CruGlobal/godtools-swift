@@ -69,6 +69,7 @@ struct TutorialView: View {
                     font: FontLibrary.sfProTextRegular.font(size: 18),
                     width: Self.getContinueButtonWidth(geometry: geometry),
                     height: Self.getContinueButtonHeight(),
+                    accessibility: AccessibilityStrings.Button.continueForward,
                     tapped: {
                         viewModel.continueTapped()
                     }

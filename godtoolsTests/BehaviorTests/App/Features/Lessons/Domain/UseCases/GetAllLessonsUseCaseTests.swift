@@ -235,42 +235,42 @@ extension GetAllLessonsUseCaseTests {
         ]
         
         let lessons: [RealmResource] = [
-            MockRealmResource.createLesson(addLanguages: [.arabic, .english, .spanish], fromLanguages: allLanguages, id: "0"),
-            MockRealmResource.createLesson(addLanguages: [.afrikaans, .czech, .english], fromLanguages: allLanguages, id: "1"),
-            MockRealmResource.createLesson(addLanguages: [.english, .spanish], fromLanguages: allLanguages, id: "2"),
-            MockRealmResource.createLesson(addLanguages: [.english], fromLanguages: allLanguages, id: "3"),
-            MockRealmResource.createLesson(addLanguages: [.afrikaans, .english, .russian, .spanish], fromLanguages: allLanguages, id: "4"),
-            MockRealmResource.createLesson(addLanguages: [.arabic, .english, .french], fromLanguages: allLanguages, id: "5"),
-            MockRealmResource.createLesson(addLanguages: [.arabic, .english, .spanish], fromLanguages: allLanguages, id: "6"),
-            MockRealmResource.createLesson(addLanguages: [.english, .latvian], fromLanguages: allLanguages, id: "7"),
-            MockRealmResource.createLesson(addLanguages: [.arabic, .english, .spanish, .vietnamese], fromLanguages: allLanguages, id: "8"),
-            MockRealmResource.createLesson(addLanguages: [.english, .hebrew, .vietnamese], fromLanguages: allLanguages, id: "9")
+            FakeRealmResource.createLesson(addLanguages: [.arabic, .english, .spanish], fromLanguages: allLanguages, id: "0"),
+            FakeRealmResource.createLesson(addLanguages: [.afrikaans, .czech, .english], fromLanguages: allLanguages, id: "1"),
+            FakeRealmResource.createLesson(addLanguages: [.english, .spanish], fromLanguages: allLanguages, id: "2"),
+            FakeRealmResource.createLesson(addLanguages: [.english], fromLanguages: allLanguages, id: "3"),
+            FakeRealmResource.createLesson(addLanguages: [.afrikaans, .english, .russian, .spanish], fromLanguages: allLanguages, id: "4"),
+            FakeRealmResource.createLesson(addLanguages: [.arabic, .english, .french], fromLanguages: allLanguages, id: "5"),
+            FakeRealmResource.createLesson(addLanguages: [.arabic, .english, .spanish], fromLanguages: allLanguages, id: "6"),
+            FakeRealmResource.createLesson(addLanguages: [.english, .latvian], fromLanguages: allLanguages, id: "7"),
+            FakeRealmResource.createLesson(addLanguages: [.arabic, .english, .spanish, .vietnamese], fromLanguages: allLanguages, id: "8"),
+            FakeRealmResource.createLesson(addLanguages: [.english, .hebrew, .vietnamese], fromLanguages: allLanguages, id: "9")
         ]
                 
-        let lesson0ArabicTranslation: RealmTranslation = MockRealmTranslation.createTranslation(translatedName: "الدرس صفر")
-        let lesson0EnglishTranslation: RealmTranslation = MockRealmTranslation.createTranslation(translatedName: "Lesson Zero")
-        let lesson0SpanishTranslation: RealmTranslation = MockRealmTranslation.createTranslation(translatedName: "Lección cero")
+        let lesson0ArabicTranslation: RealmTranslation = getRealmTranslation(translatedName: "الدرس صفر")
+        let lesson0EnglishTranslation: RealmTranslation = getRealmTranslation(translatedName: "Lesson Zero")
+        let lesson0SpanishTranslation: RealmTranslation = getRealmTranslation(translatedName: "Lección cero")
         
-        let lesson2EnglishTranslation: RealmTranslation = MockRealmTranslation.createTranslation(translatedName: "Lesson Two")
-        let lesson2SpanishTranslation: RealmTranslation = MockRealmTranslation.createTranslation(translatedName: "Leccion dos")
+        let lesson2EnglishTranslation: RealmTranslation = getRealmTranslation(translatedName: "Lesson Two")
+        let lesson2SpanishTranslation: RealmTranslation = getRealmTranslation(translatedName: "Leccion dos")
         
-        let lesson4AfrikaansTranslation: RealmTranslation = MockRealmTranslation.createTranslation(translatedName: "Les vier")
-        let lesson4EnglishTranslation: RealmTranslation = MockRealmTranslation.createTranslation(translatedName: "Lesson Four")
-        let lesson4SpanishTranslation: RealmTranslation = MockRealmTranslation.createTranslation(translatedName: "Lección cuatro")
-        let lesson4RussianTranslation: RealmTranslation = MockRealmTranslation.createTranslation(translatedName: "Урок четвертый")
+        let lesson4AfrikaansTranslation: RealmTranslation = getRealmTranslation(translatedName: "Les vier")
+        let lesson4EnglishTranslation: RealmTranslation = getRealmTranslation(translatedName: "Lesson Four")
+        let lesson4SpanishTranslation: RealmTranslation = getRealmTranslation(translatedName: "Lección cuatro")
+        let lesson4RussianTranslation: RealmTranslation = getRealmTranslation(translatedName: "Урок четвертый")
         
-        let lesson5ArabicTranslation: RealmTranslation = MockRealmTranslation.createTranslation(translatedName: "الدرس الخامس")
-        let lesson5EnglishTranslation: RealmTranslation = MockRealmTranslation.createTranslation(translatedName: "Lesson Five")
-        let lesson5FrenchTranslation: RealmTranslation = MockRealmTranslation.createTranslation(translatedName: "Leçon cinq")
+        let lesson5ArabicTranslation: RealmTranslation = getRealmTranslation(translatedName: "الدرس الخامس")
+        let lesson5EnglishTranslation: RealmTranslation = getRealmTranslation(translatedName: "Lesson Five")
+        let lesson5FrenchTranslation: RealmTranslation = getRealmTranslation(translatedName: "Leçon cinq")
         
-        let lesson6ArabicTranslation: RealmTranslation = MockRealmTranslation.createTranslation(translatedName: "الدرس السادس")
-        let lesson6EnglishTranslation: RealmTranslation = MockRealmTranslation.createTranslation(translatedName: "Lesson Six")
-        let lesson6SpanishTranslation: RealmTranslation = MockRealmTranslation.createTranslation(translatedName: "Lección seis")
+        let lesson6ArabicTranslation: RealmTranslation = getRealmTranslation(translatedName: "الدرس السادس")
+        let lesson6EnglishTranslation: RealmTranslation = getRealmTranslation(translatedName: "Lesson Six")
+        let lesson6SpanishTranslation: RealmTranslation = getRealmTranslation(translatedName: "Lección seis")
         
-        let lesson8ArabicTranslation: RealmTranslation = MockRealmTranslation.createTranslation(translatedName: "الدرس الثامن")
-        let lesson8EnglishTranslation: RealmTranslation = MockRealmTranslation.createTranslation(translatedName: "Lesson Eight")
-        let lesson8SpanishTranslation: RealmTranslation = MockRealmTranslation.createTranslation(translatedName: "Lección ocho")
-        let lesson8VietnameseTranslation: RealmTranslation = MockRealmTranslation.createTranslation(translatedName: "Bài học thứ tám")
+        let lesson8ArabicTranslation: RealmTranslation = getRealmTranslation(translatedName: "الدرس الثامن")
+        let lesson8EnglishTranslation: RealmTranslation = getRealmTranslation(translatedName: "Lesson Eight")
+        let lesson8SpanishTranslation: RealmTranslation = getRealmTranslation(translatedName: "Lección ocho")
+        let lesson8VietnameseTranslation: RealmTranslation = getRealmTranslation(translatedName: "Bài học thứ tám")
         
         lesson0ArabicTranslation.language = arabicLanguage
         lesson0EnglishTranslation.language = englishLanguage
@@ -337,13 +337,24 @@ extension GetAllLessonsUseCaseTests {
     }
     
     private func getRealmLanguage(languageCode: LanguageCodeDomainModel) -> RealmLanguage {
-        return MockRealmLanguage.createLanguage(
-            language: languageCode,
+
+        let language = LanguageCodable.random(
+            id: languageCode.rawValue,
+            code: languageCode.rawValue,
             name: languageCode.rawValue + " Name",
-            id: languageCode.rawValue
+            forceLanguageName: false
         )
+
+        return RealmLanguage.createNewFrom(model: language.toModel())
     }
-    
+
+    private func getRealmTranslation(translatedName: String) -> RealmTranslation {
+
+        let translation = TranslationCodable.random(translatedName: translatedName)
+
+        return RealmTranslation.createNewFrom(model: translation.toModel())
+    }
+
     private func getLessonsListItems(testsDiContainer: TestsDiContainer) -> GetLessonsListItems {
         
         return GetLessonsListItems(
@@ -370,17 +381,17 @@ extension GetAllLessonsUseCaseTests {
         )
     }
     
-    private func getLocalizationServices() -> MockLocalizationServices {
-        return MockLocalizationServices.createLanguageNamesLocalizationServices()
+    private func getLocalizationServices() -> FakeLocalizationServices {
+        return FakeLocalizationServices.createLanguageNamesLocalizationServices()
     }
     
     private func getTranslatedLanguageName() -> GetTranslatedLanguageName {
         
         let getTranslatedLanguageName = GetTranslatedLanguageName(
-            localizationLanguageName: MockLocalizationLanguageNameRepository(localizationServices: getLocalizationServices()),
-            localeLanguageName: MockLocaleLanguageName.defaultMockLocaleLanguageName(),
-            localeRegionName: MockLocaleLanguageRegionName(regionNames: [:]),
-            localeScriptName: MockLocaleLanguageScriptName(scriptNames: [:])
+            localizationLanguageName: FakeLocalizationLanguageNameRepository(localizationServices: getLocalizationServices()),
+            localeLanguageName: FakeLocaleLanguageName.getDefault(),
+            localeRegionName: FakeLocaleLanguageRegionName(regionNames: [:]),
+            localeScriptName: FakeLocaleLanguageScriptName(scriptNames: [:])
         )
         
         return getTranslatedLanguageName

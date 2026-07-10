@@ -36,6 +36,18 @@ enum SwiftUserDetailsV1 {
 @available(iOS 17.4, *)
 extension SwiftUserDetails {
     
+    public static func idPredicate(id: String) -> Predicate<SwiftUserDetails> {
+        return #Predicate<SwiftUserDetails> { object in
+            object.id == id
+        }
+    }
+
+    public static func idsPredicate(ids: Set<String>) -> Predicate<SwiftUserDetails> {
+        return #Predicate<SwiftUserDetails> { object in
+            ids.contains(object.id)
+        }
+    }
+    
     func mapFrom(model: UserDetailsDataModel) {
         
         id = model.id

@@ -21,7 +21,7 @@ class MobileContentAuthTokenKeychainAccessor: MobileContentAuthTokenKeychainAcce
         case userId
     }
     
-    func saveMobileContentAuthToken(authTokenCodable: MobileContentAuthTokenDecodable) throws {
+    func saveMobileContentAuthToken(authTokenCodable: MobileContentAuthTokenCodable) throws {
         
         try saveUserId(authTokenCodable.userId)
         try saveAuthToken(authTokenCodable: authTokenCodable)
@@ -105,7 +105,7 @@ class MobileContentAuthTokenKeychainAccessor: MobileContentAuthTokenKeychainAcce
  
 extension MobileContentAuthTokenKeychainAccessor {
     
-    private func saveAuthToken(authTokenCodable: MobileContentAuthTokenDecodable) throws {
+    private func saveAuthToken(authTokenCodable: MobileContentAuthTokenCodable) throws {
         
         let saveQuery = buildSaveQueryFromAuthToken(authTokenCodable: authTokenCodable)
         let saveStatus = SecItemAdd(saveQuery, nil)
@@ -175,7 +175,7 @@ extension MobileContentAuthTokenKeychainAccessor {
         }
     }
     
-    private func updateExistingMobileContentAuthToken(authTokenCodable: MobileContentAuthTokenDecodable) throws {
+    private func updateExistingMobileContentAuthToken(authTokenCodable: MobileContentAuthTokenCodable) throws {
         
         let (updateQuery, updateAttributes) = buildUpdateQueryAndAttributesFromAuthToken(authTokenCodable: authTokenCodable)
         
@@ -238,7 +238,7 @@ extension MobileContentAuthTokenKeychainAccessor {
         }
     }
     
-    private func buildSaveQueryFromAuthToken(authTokenCodable: MobileContentAuthTokenDecodable) -> CFDictionary {
+    private func buildSaveQueryFromAuthToken(authTokenCodable: MobileContentAuthTokenCodable) -> CFDictionary {
         
         return [
             kSecClass as String: kSecClassGenericPassword,
@@ -268,7 +268,7 @@ extension MobileContentAuthTokenKeychainAccessor {
         ] as CFDictionary
     }
     
-    private func buildUpdateQueryAndAttributesFromAuthToken(authTokenCodable: MobileContentAuthTokenDecodable) -> (query: CFDictionary, updateAttributes: CFDictionary) {
+    private func buildUpdateQueryAndAttributesFromAuthToken(authTokenCodable: MobileContentAuthTokenCodable) -> (query: CFDictionary, updateAttributes: CFDictionary) {
         
         let updateQuery = [
             kSecClass as String: kSecClassGenericPassword,

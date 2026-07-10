@@ -10,8 +10,8 @@ import Foundation
 
 struct MobileContentGlobalAnalyticsCodable: Codable, Sendable {
     
-    let countries: Int
     let id: String
+    let countries: Int
     let gospelPresentations: Int
     let launches: Int
     let type: String

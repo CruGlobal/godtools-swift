@@ -58,18 +58,18 @@ struct StoreInitialAppLanguageUseCaseTests {
             AppLanguageCodable(languageCode: "lv", languageDirection: .leftToRight, languageScriptCode: nil)
         ]
         
-        let mockAppLanguagesSync: AppLanguagesRepositorySyncInterface = try await getMockAppLanguagesRepositorySync(appLanguages: appLanguages)
+        let appLanguagesSync: AppLanguagesRepositorySyncInterface = try await getAppLanguagesRepositorySync(appLanguages: appLanguages)
         
         let userAppLanguageRepository = testsDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository()
         
         try await userAppLanguageRepository.deleteLanguage()
                         
         let appLanguagesRepository: AppLanguagesRepository = testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesRepository(
-            sync: mockAppLanguagesSync
+            sync: appLanguagesSync
         )
         
         let storeInitialAppLanguage = StoreInitialAppLanguageUseCase(
-            deviceSystemLanguage: MockDeviceSystemLanguage(deviceLocale: Locale(identifier: argument.deviceLanguage.rawValue)),
+            deviceSystemLanguage: FakeDeviceSystemLanguage(deviceLocale: Locale(identifier: argument.deviceLanguage.rawValue)),
             userAppLanguageRepository: userAppLanguageRepository,
             appLanguagesRepository: appLanguagesRepository
         )
@@ -133,16 +133,16 @@ struct StoreInitialAppLanguageUseCaseTests {
             AppLanguageCodable(languageCode: "lv", languageDirection: .leftToRight, languageScriptCode: nil)
         ]
         
-        let mockAppLanguagesSync: AppLanguagesRepositorySyncInterface = try await getMockAppLanguagesRepositorySync(appLanguages: appLanguages)
+        let appLanguagesSync: AppLanguagesRepositorySyncInterface = try await getAppLanguagesRepositorySync(appLanguages: appLanguages)
         
         let userAppLanguageRepository = testsDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository()
                                 
         let appLanguagesRepository: AppLanguagesRepository = testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesRepository(
-            sync: mockAppLanguagesSync
+            sync: appLanguagesSync
         )
         
         let storeInitialAppLanguage = StoreInitialAppLanguageUseCase(
-            deviceSystemLanguage: MockDeviceSystemLanguage(deviceLocale: Locale(identifier: argument.deviceLanguage.rawValue)),
+            deviceSystemLanguage: FakeDeviceSystemLanguage(deviceLocale: Locale(identifier: argument.deviceLanguage.rawValue)),
             userAppLanguageRepository: userAppLanguageRepository,
             appLanguagesRepository: appLanguagesRepository
         )
@@ -205,18 +205,18 @@ struct StoreInitialAppLanguageUseCaseTests {
             AppLanguageCodable(languageCode: "lv", languageDirection: .leftToRight, languageScriptCode: nil)
         ]
         
-        let mockAppLanguagesSync: AppLanguagesRepositorySyncInterface = try await getMockAppLanguagesRepositorySync(appLanguages: appLanguages)
+        let appLanguagesSync: AppLanguagesRepositorySyncInterface = try await getAppLanguagesRepositorySync(appLanguages: appLanguages)
         
         let userAppLanguageRepository = testsDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository()
         
         try await userAppLanguageRepository.deleteLanguage()
                                 
         let appLanguagesRepository: AppLanguagesRepository = testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesRepository(
-            sync: mockAppLanguagesSync
+            sync: appLanguagesSync
         )
         
         let storeInitialAppLanguage = StoreInitialAppLanguageUseCase(
-            deviceSystemLanguage: MockDeviceSystemLanguage(deviceLocale: Locale(identifier: argument.deviceLanguage.rawValue)),
+            deviceSystemLanguage: FakeDeviceSystemLanguage(deviceLocale: Locale(identifier: argument.deviceLanguage.rawValue)),
             userAppLanguageRepository: userAppLanguageRepository,
             appLanguagesRepository: appLanguagesRepository
         )
@@ -254,9 +254,9 @@ struct StoreInitialAppLanguageUseCaseTests {
 extension StoreInitialAppLanguageUseCaseTests {
     
     @MainActor
-    private func getMockAppLanguagesRepositorySync(appLanguages: [AppLanguageCodable]) async throws -> MockAppLanguagesRepositorySync {
+    private func getAppLanguagesRepositorySync(appLanguages: [AppLanguageCodable]) async throws -> FakeAppLanguagesRepositorySync {
         
-        return try await MockAppLanguagesRepositorySync(
+        return try await FakeAppLanguagesRepositorySync(
             persistence: testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesPersistence(),
             appLanguages: appLanguages
         )

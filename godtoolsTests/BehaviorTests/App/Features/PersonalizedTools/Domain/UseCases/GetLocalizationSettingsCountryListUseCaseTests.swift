@@ -38,7 +38,7 @@ struct GetLocalizationSettingsCountryListUseCaseTests {
     )
     func shouldConditionallyIncludePreferNotToSayOption(argument: PreferNotToSayTestArgument) async {
 
-        let useCase = Self.createUseCase(countries: Self.createMockCountries())
+        let useCase = Self.createUseCase(countries: Self.createCountries())
 
         let countryListItems: [LocalizationSettingsCountryListItem] = await useCase
             .execute(
@@ -98,7 +98,7 @@ struct GetLocalizationSettingsCountryListUseCaseTests {
     func shouldLocalizePreferNotToSayOptionBasedOnAppLanguage(argument: LocalizationTestArgument) async {
 
         let useCase = Self.createUseCase(
-            countries: Self.createMockCountries(),
+            countries: Self.createCountries(),
             appLanguage: argument.appLanguage
         )
 
@@ -162,8 +162,8 @@ extension GetLocalizationSettingsCountryListUseCaseTests {
         appLanguage: AppLanguageDomainModel = "en"
     ) -> GetLocalizationSettingsCountryListUseCase {
 
-        let mockRepository = MockLocalizationSettingsCountriesRepository(countries: countries)
-        let mockLocalizationServices = MockLocalizationServices(
+        let repository = FakeLocalizationSettingsCountriesRepository(countries: countries)
+        let localizationServices = FakeLocalizationServices(
             localizableStrings: [
                 "en": ["localizationSettings.preferNotToSay": "Prefer not to say"],
                 "es": ["localizationSettings.preferNotToSay": "Prefiero no decirlo"],
@@ -172,12 +172,12 @@ extension GetLocalizationSettingsCountryListUseCaseTests {
         )
 
         return GetLocalizationSettingsCountryListUseCase(
-            countriesRepository: mockRepository,
-            localizationServices: mockLocalizationServices
+            countriesRepository: repository,
+            localizationServices: localizationServices
         )
     }
 
-    private static func createMockCountries() -> [LocalizationSettingsCountryDataModel] {
+    private static func createCountries() -> [LocalizationSettingsCountryDataModel] {
         return [
             LocalizationSettingsCountryDataModel(
                 isoRegionCode: "US",

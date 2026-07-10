@@ -10,6 +10,7 @@ import Foundation
 
 struct ResourceDataModel: Sendable {
     
+    let id: String
     let abbreviation: String
     let attrAboutBannerAnimation: String
     let attrAboutOverviewVideoYoutube: String
@@ -20,7 +21,6 @@ struct ResourceDataModel: Sendable {
     let attrDefaultOrder: Int
     let attrSpotlight: Bool
     let defaultVariantId: String?
-    let id: String
     let isHidden: Bool
     let manifest: String
     let metatoolId: String?

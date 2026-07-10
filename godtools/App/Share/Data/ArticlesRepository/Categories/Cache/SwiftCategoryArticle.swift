@@ -36,6 +36,18 @@ enum SwiftCategoryArticleV1 {
 @available(iOS 17.4, *)
 extension SwiftCategoryArticle {
     
+    public static func idPredicate(id: String) -> Predicate<SwiftCategoryArticle> {
+        return #Predicate<SwiftCategoryArticle> { object in
+            object.id == id
+        }
+    }
+
+    public static func idsPredicate(ids: Set<String>) -> Predicate<SwiftCategoryArticle> {
+        return #Predicate<SwiftCategoryArticle> { object in
+            ids.contains(object.id)
+        }
+    }
+    
     func mapFrom(model: CategoryArticleModel) {
         
         id = model.id

@@ -43,7 +43,7 @@ extension GetDownloadableLanguagesStringsUseCaseTests {
         let stringKeys: [LocalizableStringKeys] = [.languageSettingsDownloadableLanguagesTitle]
 
         return GetDownloadableLanguagesStringsUseCase(
-            localizationServices: MockLocalizationServices(localizableStrings: MockLocalizationServices.getStrings(stringKeys: stringKeys, languages: [.english, .spanish]))
+            localizationServices: FakeLocalizationServices(localizableStrings: FakeLocalizationServices.getStrings(stringKeys: stringKeys, languages: [.english, .spanish]))
         )
     }
 }

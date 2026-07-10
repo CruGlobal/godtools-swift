@@ -31,6 +31,7 @@ final class AppFlow: RootFlow {
     private var appLaunchedFromDeepLink: ParsedDeepLinkType?
     private var cancellableForShouldPromptForOptInNotification: AnyCancellable?
     private var cancellables: Set<AnyCancellable> = Set()
+    private var didFinishLaunchingFromTerminatedState: Bool = false
     
     @Published private var appLanguage = AppLanguageDomainModel.english
             
@@ -91,7 +92,7 @@ final class AppFlow: RootFlow {
                     return
                 }
                 
-                if !weakSelf.appLaunchObserver.appLaunched {
+                if !weakSelf.didFinishLaunchingFromTerminatedState {
                     weakSelf.appLaunchedFromDeepLink = deepLink
                 }
                 else {
@@ -189,6 +190,8 @@ final class AppFlow: RootFlow {
                     }
                     
                     loadInitialData()
+                    
+                    didFinishLaunchingFromTerminatedState = true
                 }
                 
             case .fromBackgroundState(let secondsInBackground):
@@ -482,18 +485,23 @@ extension AppFlow {
         case .languageSettings:
             pushFlow(
                 flow: LanguageSettingsFlow(
+                    appDiContainer: appDiContainer
+                )
+            )
+            
+        case .localizationSettings:
+            pushFlow(
+                flow: LocalizationSettingsFlow(
                     appDiContainer: appDiContainer,
-                    deepLink: nil
+                    shouldStoreCountryWhenSelected: true
                 )
             )
             
         case .appLanguagesList:
             pushFlow(
-                flow: LanguageSettingsFlow(
-                    appDiContainer: appDiContainer,
-                    deepLink: .appLanguagesList
-                ),
-                animated: false
+                flow: ChooseAppLanguageFlow(
+                    appDiContainer: appDiContainer
+                )
             )
             
         case .lessonsList:
@@ -526,6 +534,11 @@ extension AppFlow {
             }
                         
             navigateToOnboarding()
+            
+        case .tutorial:
+            presentFlow(
+                flow: TutorialFlow(appDiContainer: appDiContainer)
+            )
         }
     }
     

@@ -39,6 +39,18 @@ enum SwiftAttachmentV1 {
 @available(iOS 17.4, *)
 extension SwiftAttachment {
     
+    public static func idPredicate(id: String) -> Predicate<SwiftAttachment> {
+        return #Predicate<SwiftAttachment> { object in
+            object.id == id
+        }
+    }
+
+    public static func idsPredicate(ids: Set<String>) -> Predicate<SwiftAttachment> {
+        return #Predicate<SwiftAttachment> { object in
+            ids.contains(object.id)
+        }
+    }
+    
     func mapFrom(model: AttachmentDataModel) {
         file = model.file
         fileFilename = model.fileFilename

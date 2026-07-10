@@ -46,7 +46,7 @@ extension GetCreatingToolScreenShareSessionTimedOutStringsUseCaseTests {
         ]
 
         return GetCreatingToolScreenShareSessionTimedOutStringsUseCase(
-            localizationServices: MockLocalizationServices(localizableStrings: localizableStrings)
+            localizationServices: FakeLocalizationServices(localizableStrings: localizableStrings)
         )
     }
 }

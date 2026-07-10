@@ -35,6 +35,18 @@ enum SwiftAppLanguageV1 {
 @available(iOS 17.4, *)
 extension SwiftAppLanguage {
     
+    public static func idPredicate(id: String) -> Predicate<SwiftAppLanguage> {
+        return #Predicate<SwiftAppLanguage> { object in
+            object.id == id
+        }
+    }
+
+    public static func idsPredicate(ids: Set<String>) -> Predicate<SwiftAppLanguage> {
+        return #Predicate<SwiftAppLanguage> { object in
+            ids.contains(object.id)
+        }
+    }
+    
     func mapFrom(model: AppLanguageDataModel) {
         
         id = model.languageId

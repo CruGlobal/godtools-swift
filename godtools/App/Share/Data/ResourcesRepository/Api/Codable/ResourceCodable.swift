@@ -10,6 +10,7 @@ import Foundation
 
 struct ResourceCodable: Codable {
     
+    let id: String
     let abbreviation: String
     let attachmentIds: [String]
     let attrAboutBannerAnimation: String
@@ -21,7 +22,6 @@ struct ResourceCodable: Codable {
     let attrDefaultOrder: Int
     let attrSpotlight: Bool
     let defaultVariantId: String?
-    let id: String
     let isHidden: Bool
     let languageIds: [String]
     let latestTranslationIds: [String]
@@ -78,6 +78,7 @@ struct ResourceCodable: Codable {
     }
     
     init(
+        id: String = "",
         abbreviation: String = "",
         attachmentIds: [String] = Array(),
         attrAboutBannerAnimation: String = "",
@@ -89,7 +90,6 @@ struct ResourceCodable: Codable {
         attrDefaultOrder: Int = 0,
         attrSpotlight: Bool = false,
         defaultVariantId: String? = nil,
-        id: String = "",
         isHidden: Bool = false,
         languageIds: [String] = Array(),
         latestTranslationIds: [String] = Array(),
@@ -105,6 +105,7 @@ struct ResourceCodable: Codable {
         type: String = "",
         variantIds: [String] = Array()
     ) {
+        self.id = id
         self.abbreviation = abbreviation
         self.attachmentIds = attachmentIds
         self.attrAboutBannerAnimation = attrAboutBannerAnimation
@@ -116,7 +117,6 @@ struct ResourceCodable: Codable {
         self.attrDefaultOrder = attrDefaultOrder
         self.attrSpotlight = attrSpotlight
         self.defaultVariantId = defaultVariantId
-        self.id = id
         self.isHidden = isHidden
         self.languageIds = languageIds
         self.latestTranslationIds = latestTranslationIds

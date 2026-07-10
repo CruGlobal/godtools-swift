@@ -61,7 +61,7 @@ extension GetOnboardingTutorialStringsUseCaseTests {
     private func getUseCase() -> GetOnboardingTutorialStringsUseCase {
 
         return GetOnboardingTutorialStringsUseCase(
-            localizationServices: MockLocalizationServices(localizableStrings: MockLocalizationServices.getStrings(stringKeys: Self.stringKeys, languages: [.english, .spanish]))
+            localizationServices: FakeLocalizationServices(localizableStrings: FakeLocalizationServices.getStrings(stringKeys: Self.stringKeys, languages: [.english, .spanish]))
         )
     }
 }

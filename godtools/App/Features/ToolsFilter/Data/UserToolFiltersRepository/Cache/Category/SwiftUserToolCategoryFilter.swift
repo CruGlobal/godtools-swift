@@ -34,6 +34,18 @@ enum SwiftUserToolCategoryFilterV1 {
 @available(iOS 17.4, *)
 extension SwiftUserToolCategoryFilter {
     
+    public static func idPredicate(id: String) -> Predicate<SwiftUserToolCategoryFilter> {
+        return #Predicate<SwiftUserToolCategoryFilter> { object in
+            object.id == id
+        }
+    }
+
+    public static func idsPredicate(ids: Set<String>) -> Predicate<SwiftUserToolCategoryFilter> {
+        return #Predicate<SwiftUserToolCategoryFilter> { object in
+            ids.contains(object.id)
+        }
+    }
+    
     func mapFrom(model: UserToolCategoryFilterDataModel) {
         
         id = model.id

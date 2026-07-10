@@ -69,7 +69,7 @@ extension EmailSignUpServiceTests {
     private func getEmailSignUpService(apiResult: Result<RequestDataResponse, Error>, persistence: any Persistence<EmailSignUpDataModel, EmailSignUpDataModel>) throws -> EmailSignUpService {
                 
         return EmailSignUpService(
-            api: MockEmailSignUpApi(result: apiResult),
+            api: FakeEmailSignUpApi(result: apiResult),
             cache: EmailSignUpsCache(
                 persistence: persistence
             )

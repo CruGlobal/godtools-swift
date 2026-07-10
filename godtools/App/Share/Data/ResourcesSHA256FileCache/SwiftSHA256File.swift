@@ -34,6 +34,18 @@ enum SwiftSHA256FileV1 {
 @available(iOS 17.4, *)
 extension SwiftSHA256File {
     
+    public static func idPredicate(id: String) -> Predicate<SwiftSHA256File> {
+        return #Predicate<SwiftSHA256File> { object in
+            object.id == id
+        }
+    }
+
+    public static func idsPredicate(ids: Set<String>) -> Predicate<SwiftSHA256File> {
+        return #Predicate<SwiftSHA256File> { object in
+            ids.contains(object.id)
+        }
+    }
+    
     func mapFrom(model: SHA256FileModel) {
         
         id = model.id

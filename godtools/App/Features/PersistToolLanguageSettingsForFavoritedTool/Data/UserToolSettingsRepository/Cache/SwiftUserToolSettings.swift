@@ -35,6 +35,18 @@ enum SwiftUserToolSettingsV1 {
 @available(iOS 17.4, *)
 extension SwiftUserToolSettings {
     
+    public static func idPredicate(id: String) -> Predicate<SwiftUserToolSettings> {
+        return #Predicate<SwiftUserToolSettings> { object in
+            object.id == id
+        }
+    }
+
+    public static func idsPredicate(ids: Set<String>) -> Predicate<SwiftUserToolSettings> {
+        return #Predicate<SwiftUserToolSettings> { object in
+            ids.contains(object.id)
+        }
+    }
+    
     func mapFrom(model: UserToolSettingsDataModel) {
         
         id = model.id

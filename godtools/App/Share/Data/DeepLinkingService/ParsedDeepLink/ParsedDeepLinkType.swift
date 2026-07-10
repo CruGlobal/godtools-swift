@@ -16,8 +16,10 @@ enum ParsedDeepLinkType: Equatable, Sendable {
     case dashboard
     case favoritedToolsList
     case languageSettings
+    case localizationSettings
     case lessonsList
     case menu
     case onboarding(appLanguage: AppLanguageDomainModel)
     case tool(toolDeepLink: ToolDeepLink)
+    case tutorial
 }
