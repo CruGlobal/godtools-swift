@@ -1,20 +1,18 @@
 //
-//  LanguagesCacheTests.swift
+//  RealmLanguagesCacheTests.swift
 //  godtools
 //
-//  Created by Levi Eggert on 11/7/25.
-//  Copyright © 2025 Cru. All rights reserved.
+//  Created by Levi Eggert on 7/10/26.
+//  Copyright © 2026 Cru. All rights reserved.
 //
 
 import Testing
 @testable import godtools
 import Foundation
 import RepositorySync
-import SwiftData
 
-struct LanguagesCacheTests {
+struct RealmLanguagesCacheTests {
         
-    @available(iOS 17.4, *)
     @Test
     func getLanguageByCode() async throws {
         
@@ -27,7 +25,6 @@ struct LanguagesCacheTests {
         #expect(language?.id == "c")
     }
 
-    @available(iOS 17.4, *)
     @Test
     func getLanguagesByCodes() async  throws {
         
@@ -50,18 +47,17 @@ struct LanguagesCacheTests {
     }
 }
 
-extension LanguagesCacheTests {
+extension RealmLanguagesCacheTests {
     
-    @available(iOS 17.4, *)
-    private func getPersistence() async throws -> SwiftRepositorySyncPersistence<LanguageDataModel, LanguageCodable, SwiftLanguage> {
+    private func getPersistence() async throws -> RealmRepositorySyncPersistence<LanguageDataModel, LanguageCodable, RealmLanguage> {
         
-        let container = try SwiftDataContainer.createInMemoryContainer(schema: Schema(versionedSchema: LatestProductionSwiftDataSchema.self))
+        let databaseConfig = try RealmDatabaseConfig.createInMemoryConfig()
         
-        let database = SwiftDatabase(container: container)
+        let database = RealmDatabase(databaseConfig: databaseConfig)
         
-        let persistence = SwiftRepositorySyncPersistence(
+        let persistence = RealmRepositorySyncPersistence(
             database: database,
-            mapping: SwiftLanguageMapping()
+            mapping: RealmLanguageMapping()
         )
         
         _ = try await persistence.writeObjects(
