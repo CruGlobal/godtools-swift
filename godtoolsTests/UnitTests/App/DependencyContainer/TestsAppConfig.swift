@@ -49,7 +49,7 @@ final class TestsAppConfig: AppConfigInterface {
     }
     
     var urlRequestsEnabled: Bool {
-        return true
+        return false
     }
         
     func getFacebookConfiguration() -> FacebookConfiguration? {

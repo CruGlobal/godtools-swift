@@ -13,20 +13,20 @@ struct StringSearcherTests {
     
     struct TestArgument {
         let searchTerm: String
-        let expectedSearchResults: [MockStringSearchable]
+        let expectedSearchResults: [FakeStringSearchable]
     }
     
-    struct MockStringSearchable: StringSearchable, Equatable {
+    struct FakeStringSearchable: StringSearchable, Equatable {
         let searchableStrings: [String]
     }
     
-    private static let englishSearchable = MockStringSearchable(searchableStrings: ["English", "English"])
-    private static let albanianSearchable = MockStringSearchable(searchableStrings: ["Albanian", "shqip"])
-    private static let amharicSearchable = MockStringSearchable(searchableStrings: ["Amharic", "አማርኛ"])
-    private static let croatianSearchable = MockStringSearchable(searchableStrings: ["Croatian", "hrvatski"])
-    private static let englishBahrainSearchable = MockStringSearchable(searchableStrings: ["English (Bahrain)", "English (Bahrain)"])
-    private static let frenchSearchable = MockStringSearchable(searchableStrings: ["French", "français"])
-    private static let spanishSearchable = MockStringSearchable(searchableStrings: ["Spanish", "español"])
+    private static let englishSearchable = FakeStringSearchable(searchableStrings: ["English", "English"])
+    private static let albanianSearchable = FakeStringSearchable(searchableStrings: ["Albanian", "shqip"])
+    private static let amharicSearchable = FakeStringSearchable(searchableStrings: ["Amharic", "አማርኛ"])
+    private static let croatianSearchable = FakeStringSearchable(searchableStrings: ["Croatian", "hrvatski"])
+    private static let englishBahrainSearchable = FakeStringSearchable(searchableStrings: ["English (Bahrain)", "English (Bahrain)"])
+    private static let frenchSearchable = FakeStringSearchable(searchableStrings: ["French", "français"])
+    private static let spanishSearchable = FakeStringSearchable(searchableStrings: ["Spanish", "español"])
     
     @Test(
         "Search a list of StringSearchables with a search term string and return case-insensitive matches",
@@ -45,7 +45,7 @@ struct StringSearcherTests {
         
         let stringSearcher: StringSearcher = StringSearcher()
         
-        let searchableLanguages: [MockStringSearchable] = [
+        let searchableLanguages: [FakeStringSearchable] = [
             StringSearcherTests.englishSearchable, StringSearcherTests.albanianSearchable, StringSearcherTests.amharicSearchable, StringSearcherTests.croatianSearchable, StringSearcherTests.englishBahrainSearchable, StringSearcherTests.frenchSearchable, StringSearcherTests.spanishSearchable
         ]
         
@@ -65,7 +65,7 @@ struct StringSearcherTests {
         
         let stringSearcher: StringSearcher = StringSearcher()
 
-        let searchableLanguages: [MockStringSearchable] = [
+        let searchableLanguages: [FakeStringSearchable] = [
             StringSearcherTests.englishSearchable, StringSearcherTests.albanianSearchable, StringSearcherTests.amharicSearchable, StringSearcherTests.croatianSearchable, StringSearcherTests.englishBahrainSearchable, StringSearcherTests.frenchSearchable, StringSearcherTests.spanishSearchable
         ]
         

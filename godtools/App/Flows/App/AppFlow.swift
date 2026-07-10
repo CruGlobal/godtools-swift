@@ -482,18 +482,23 @@ extension AppFlow {
         case .languageSettings:
             pushFlow(
                 flow: LanguageSettingsFlow(
+                    appDiContainer: appDiContainer
+                )
+            )
+            
+        case .localizationSettings:
+            pushFlow(
+                flow: LocalizationSettingsFlow(
                     appDiContainer: appDiContainer,
-                    deepLink: nil
+                    shouldStoreCountryWhenSelected: true
                 )
             )
             
         case .appLanguagesList:
             pushFlow(
-                flow: LanguageSettingsFlow(
-                    appDiContainer: appDiContainer,
-                    deepLink: .appLanguagesList
-                ),
-                animated: false
+                flow: ChooseAppLanguageFlow(
+                    appDiContainer: appDiContainer
+                )
             )
             
         case .lessonsList:
@@ -526,6 +531,11 @@ extension AppFlow {
             }
                         
             navigateToOnboarding()
+            
+        case .tutorial:
+            presentFlow(
+                flow: TutorialFlow(appDiContainer: appDiContainer)
+            )
         }
     }
     

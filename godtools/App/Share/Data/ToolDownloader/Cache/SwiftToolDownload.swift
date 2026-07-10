@@ -36,6 +36,18 @@ enum SwiftToolDownloadV1 {
 
 @available(iOS 17.4, *)
 extension SwiftToolDownload {
+    
+    public static func idPredicate(id: String) -> Predicate<SwiftToolDownload> {
+        return #Predicate<SwiftToolDownload> { object in
+            object.id == id
+        }
+    }
+
+    public static func idsPredicate(ids: Set<String>) -> Predicate<SwiftToolDownload> {
+        return #Predicate<SwiftToolDownload> { object in
+            ids.contains(object.id)
+        }
+    }
 
     func mapFrom(model: ToolDownloadDataModel) {
         id = model.id.value

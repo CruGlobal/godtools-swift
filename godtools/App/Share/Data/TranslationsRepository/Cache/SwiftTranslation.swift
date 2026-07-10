@@ -44,6 +44,18 @@ enum SwiftTranslationV1 {
 @available(iOS 17.4, *)
 extension SwiftTranslation {
     
+    public static func idPredicate(id: String) -> Predicate<SwiftTranslation> {
+        return #Predicate<SwiftTranslation> { object in
+            object.id == id
+        }
+    }
+
+    public static func idsPredicate(ids: Set<String>) -> Predicate<SwiftTranslation> {
+        return #Predicate<SwiftTranslation> { object in
+            ids.contains(object.id)
+        }
+    }
+    
     func mapFrom(model: TranslationDataModel) {
         id = model.id
         isPublished = model.isPublished

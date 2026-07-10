@@ -43,9 +43,9 @@ extension RealmMobileContentAuthToken {
     func toModel() -> MobileContentAuthTokenDataModel {
     
         return MobileContentAuthTokenDataModel(
+            id: id,
             appleRefreshToken: nil,
             expirationDate: expirationDate,
-            id: id,
             token: "",
             userId: userId
         )

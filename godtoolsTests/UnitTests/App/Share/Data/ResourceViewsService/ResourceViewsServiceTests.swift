@@ -117,7 +117,7 @@ extension ResourceViewsServiceTests {
     private func getResourceViewsService(apiResult: Result<RequestDataResponse, Error>, persistence: any Persistence<ResourceViewDataModel, ResourceViewDataModel>) -> ResourceViewsService {
                 
         return ResourceViewsService(
-            api: MockResourceViewsApi(result: apiResult),
+            api: FakeResourceViewsApi(result: apiResult),
             cache: FailedResourceViewsCache(persistence: persistence)
         )
     }

@@ -114,7 +114,7 @@ extension GetLanguageSettingsStringsUseCaseTests {
         
         let appLanguages: [AppLanguageCodable] = getAppLanguages()
         
-        let mockAppLanguagesSync = try await MockAppLanguagesRepositorySync(
+        let appLanguagesSync = try await FakeAppLanguagesRepositorySync(
             persistence: testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesPersistence(),
             appLanguages: appLanguages
         )
@@ -124,10 +124,10 @@ extension GetLanguageSettingsStringsUseCaseTests {
         let appLanguagesRepository = AppLanguagesRepository(
             api: api,
             cache: AppLanguagesCache(persistence: persistence),
-            sync: mockAppLanguagesSync
+            sync: appLanguagesSync
         )
         
-        let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
+        let localizableStrings: [FakeLocalizationServices.LocaleId: [FakeLocalizationServices.StringKey: String]] = [
             LanguageCodeDomainModel.english.value: [
                 LocalizableStringKeys.languageSettingsNavTitle.key: "Language settings",
                 LocalizableStringKeys.languageSettingsAppInterfaceTitle.key: "App interface language",
@@ -149,14 +149,14 @@ extension GetLanguageSettingsStringsUseCaseTests {
         ]
                 
         let getTranslatedLanguageName = GetTranslatedLanguageName(
-            localizationLanguageName: MockLocalizationLanguageNameRepository(localizationServices: MockLocalizationServices(localizableStrings: localizableStrings)),
-            localeLanguageName: MockLocaleLanguageName.defaultMockLocaleLanguageName(),
-            localeRegionName: MockLocaleLanguageRegionName(regionNames: [:]),
-            localeScriptName: MockLocaleLanguageScriptName(scriptNames: [:])
+            localizationLanguageName: FakeLocalizationLanguageNameRepository(localizationServices: FakeLocalizationServices(localizableStrings: localizableStrings)),
+            localeLanguageName: FakeLocaleLanguageName.getDefault(),
+            localeRegionName: FakeLocaleLanguageRegionName(regionNames: [:]),
+            localeScriptName: FakeLocaleLanguageScriptName(scriptNames: [:])
         )
         
         let getLanguageSettingsStringsUseCase = GetLanguageSettingsStringsUseCase(
-            localizationServices: MockLocalizationServices(localizableStrings: localizableStrings),
+            localizationServices: FakeLocalizationServices(localizableStrings: localizableStrings),
             getTranslatedLanguageName: getTranslatedLanguageName,
             appLanguagesRepository: appLanguagesRepository
         )

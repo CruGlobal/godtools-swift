@@ -143,8 +143,7 @@ extension ArticleFlow {
         
         let backButton = AppBackBarItem(
             target: viewModel,
-            action: #selector(viewModel.backTapped),
-            accessibilityIdentifier: nil
+            action: #selector(viewModel.backTapped)
         )
 
         let viewContoller = AppHostingController(
@@ -181,8 +180,7 @@ extension ArticleFlow {
         
         let backButton = AppBackBarItem(
             target: viewModel,
-            action: #selector(viewModel.backTapped),
-            accessibilityIdentifier: nil
+            action: #selector(viewModel.backTapped)
         )
         
         let navigationBar = AppNavigationBar(
@@ -211,8 +209,7 @@ extension ArticleFlow {
         
         let backButton = AppBackBarItem(
             target: viewModel,
-            action: #selector(viewModel.backTapped),
-            accessibilityIdentifier: nil
+            action: #selector(viewModel.backTapped)
         )
         
         let shareButton = AppShareBarItem(

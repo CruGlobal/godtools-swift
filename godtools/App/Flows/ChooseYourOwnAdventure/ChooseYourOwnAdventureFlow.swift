@@ -73,7 +73,6 @@ final class ChooseYourOwnAdventureFlow: GTFlow {
         let backButton = AppBackBarItem(
             target: viewModel,
             action: #selector(viewModel.backTapped),
-            accessibilityIdentifier: nil,
             hidesBarItemPublisher: viewModel.$hidesBackButton.eraseToAnyPublisher(),
             layoutDirectionPublisher: Just(navBarLayoutDirection).eraseToAnyPublisher()
         )

@@ -33,6 +33,18 @@ enum SwiftResourceViewV1 {
 @available(iOS 17.4, *)
 extension SwiftResourceView {
     
+    public static func idPredicate(id: String) -> Predicate<SwiftResourceView> {
+        return #Predicate<SwiftResourceView> { object in
+            object.id == id
+        }
+    }
+
+    public static func idsPredicate(ids: Set<String>) -> Predicate<SwiftResourceView> {
+        return #Predicate<SwiftResourceView> { object in
+            ids.contains(object.id)
+        }
+    }
+    
     func mapFrom(model: ResourceViewDataModel) {
         id = model.id
         resourceId = model.resourceId

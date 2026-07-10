@@ -33,6 +33,18 @@ enum SwiftPersonalizedToolsV1 {
 @available(iOS 17.4, *)
 extension SwiftPersonalizedTools {
     
+    public static func idPredicate(id: String) -> Predicate<SwiftPersonalizedTools> {
+        return #Predicate<SwiftPersonalizedTools> { object in
+            object.id == id
+        }
+    }
+
+    public static func idsPredicate(ids: Set<String>) -> Predicate<SwiftPersonalizedTools> {
+        return #Predicate<SwiftPersonalizedTools> { object in
+            ids.contains(object.id)
+        }
+    }
+    
     func mapFrom(model: PersonalizedToolsDataModel) {
         id = model.id
         resourceIds = model.resourceIds

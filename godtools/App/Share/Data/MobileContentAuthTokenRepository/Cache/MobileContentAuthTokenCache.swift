@@ -20,11 +20,11 @@ final class MobileContentAuthTokenCache: AuthTokenCacheInterface {
     private static let sharedAuthUserId: UserId = "shared_auth_user_id"
     
     private let keychainAccessor: MobileContentAuthTokenKeychainAccessorInterface
-    private let persistence: any Persistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenDecodable>
+    private let persistence: any Persistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenCodable>
     
     init(
         mobileContentAuthTokenKeychainAccessor: MobileContentAuthTokenKeychainAccessorInterface,
-        persistence: any Persistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenDecodable>
+        persistence: any Persistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenCodable>
     ) {
         
         self.keychainAccessor = mobileContentAuthTokenKeychainAccessor
@@ -56,12 +56,12 @@ final class MobileContentAuthTokenCache: AuthTokenCacheInterface {
     }
     
     @available(iOS 17.4, *)
-    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenDecodable, SwiftMobileContentAuthToken>? {
-        return persistence as? SwiftRepositorySyncPersistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenDecodable, SwiftMobileContentAuthToken>
+    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenCodable, SwiftMobileContentAuthToken>? {
+        return persistence as? SwiftRepositorySyncPersistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenCodable, SwiftMobileContentAuthToken>
     }
     
-    private func getRealmPersistence() -> RealmRepositorySyncPersistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenDecodable, RealmMobileContentAuthToken>? {
-        return persistence as? RealmRepositorySyncPersistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenDecodable, RealmMobileContentAuthToken>
+    private func getRealmPersistence() -> RealmRepositorySyncPersistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenCodable, RealmMobileContentAuthToken>? {
+        return persistence as? RealmRepositorySyncPersistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenCodable, RealmMobileContentAuthToken>
     }
     
     func getAuthTokenChangedPublisher() -> AnyPublisher<MobileContentAuthTokenDataModel?, Never> {
@@ -82,7 +82,7 @@ final class MobileContentAuthTokenCache: AuthTokenCacheInterface {
         )
     }
     
-    func storeAuthToken(authTokenCodable: MobileContentAuthTokenDecodable) async throws {
+    func storeAuthToken(authTokenCodable: MobileContentAuthTokenCodable) async throws {
         
         try keychainAccessor.saveMobileContentAuthToken(authTokenCodable: authTokenCodable)
         

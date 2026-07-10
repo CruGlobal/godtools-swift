@@ -77,7 +77,7 @@ final class MobileContentAuthTokenApi: AuthTokenApiInterface {
         )
     }
     
-    func fetchAuthToken(providerToken: MobileContentAuthProviderToken, createUser: Bool) async throws -> Result<MobileContentAuthTokenDecodable, MobileContentApiError> {
+    func fetchAuthToken(providerToken: MobileContentAuthProviderToken, createUser: Bool) async throws -> Result<MobileContentAuthTokenCodable, MobileContentApiError> {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: .high)
                 
@@ -88,7 +88,7 @@ final class MobileContentAuthTokenApi: AuthTokenApiInterface {
             urlSession: urlSession
         )
         
-        let codable: RequestCodableResponse<JsonApiResponseDataObject<MobileContentAuthTokenDecodable>, MobileContentApiErrorsCodable> = try response.decodeRequestDataResponseForSuccessOrFailureCodable()
+        let codable: RequestCodableResponse<JsonApiResponseDataObject<MobileContentAuthTokenCodable>, MobileContentApiErrorsCodable> = try response.decodeRequestDataResponseForSuccessOrFailureCodable()
         
         if let mobileContentApiErrors = codable.failureCodable {
             

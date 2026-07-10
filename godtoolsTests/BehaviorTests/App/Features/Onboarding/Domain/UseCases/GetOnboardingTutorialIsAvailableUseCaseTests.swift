@@ -78,7 +78,7 @@ extension GetOnboardingTutorialIsAvailableUseCaseTests {
         cache.storeOnboardingTutorialViewed(viewed: tutorialViewed)
         
         let getOnboardingTutorialIsAvailable = GetOnboardingTutorialIsAvailable(
-            launchCountRepository: MockLaunchCountRepository(launchCount: launchCount),
+            launchCountRepository: FakeLaunchCountRepository(launchCount: launchCount),
             onboardingTutorialViewedRepository: OnboardingTutorialViewedRepository(cache: cache)
         )
             

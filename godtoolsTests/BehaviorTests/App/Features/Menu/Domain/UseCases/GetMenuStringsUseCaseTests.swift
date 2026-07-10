@@ -117,10 +117,10 @@ extension GetMenuStringsUseCaseTests {
         ]
 
         return GetMenuStringsUseCase(
-            localizationServices: MockLocalizationServices(
-                localizableStrings: MockLocalizationServices.getStrings(stringKeys: stringKeys, languages: [.english, .spanish])
+            localizationServices: FakeLocalizationServices(
+                localizableStrings: FakeLocalizationServices.getStrings(stringKeys: stringKeys, languages: [.english, .spanish])
             ),
-            infoPlist: MockInfoPlist(appVersion: appVersion, bundleVersion: bundleVersion)
+            infoPlist: FakeInfoPlist(appVersion: appVersion, bundleVersion: bundleVersion)
         )
     }
 }

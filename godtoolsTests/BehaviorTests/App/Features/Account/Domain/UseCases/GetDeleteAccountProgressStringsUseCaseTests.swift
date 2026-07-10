@@ -43,8 +43,8 @@ extension GetDeleteAccountProgressStringsUseCaseTests {
         let stringKeys: [LocalizableStringKeys] = [.deleteAccountProgressTitle]
 
         return GetDeleteAccountProgressStringsUseCase(
-            localizationServices: MockLocalizationServices(
-                localizableStrings: MockLocalizationServices.getStrings(stringKeys: stringKeys, languages: [.english, .spanish])
+            localizationServices: FakeLocalizationServices(
+                localizableStrings: FakeLocalizationServices.getStrings(stringKeys: stringKeys, languages: [.english, .spanish])
             )
         )
     }

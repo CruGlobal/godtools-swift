@@ -33,6 +33,18 @@ enum SwiftUserCounterV1 {
 @available(iOS 17.4, *)
 extension SwiftUserCounter {
     
+    public static func idPredicate(id: String) -> Predicate<SwiftUserCounter> {
+        return #Predicate<SwiftUserCounter> { object in
+            object.id == id
+        }
+    }
+
+    public static func idsPredicate(ids: Set<String>) -> Predicate<SwiftUserCounter> {
+        return #Predicate<SwiftUserCounter> { object in
+            ids.contains(object.id)
+        }
+    }
+    
     func mapFrom(model: UserCounterDataModel) {
         count = model.count
         id = model.id

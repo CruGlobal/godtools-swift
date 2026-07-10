@@ -15,15 +15,11 @@ final class LanguageSettingsFlow: GTFlow {
     enum CompletedState {
         case userClosed
     }
-            
-    private let deepLink: ParsedDeepLinkType?
-    
+                
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
         
-    init(appDiContainer: AppDiContainer, deepLink: ParsedDeepLinkType?) {
-        
-        self.deepLink = deepLink
-        
+    init(appDiContainer: AppDiContainer) {
+                
         let stepEmitter = FlowStepEmitter()
         
         super.init(
@@ -34,15 +30,6 @@ final class LanguageSettingsFlow: GTFlow {
             ),
             stepEmitter: stepEmitter
         )
-        
-        if deepLink == .appLanguagesList {
-            
-            pushFlow(
-                flow: ChooseAppLanguageFlow(
-                    appDiContainer: appDiContainer
-                )
-            )
-        }
         
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()
@@ -103,8 +90,7 @@ extension LanguageSettingsFlow {
         
         let backButton = AppBackBarItem(
             target: viewModel,
-            action: #selector(viewModel.backTapped),
-            accessibilityIdentifier: nil
+            action: #selector(viewModel.backTapped)
         )
         
         let hostingView = AppHostingController<LanguageSettingsView>(
@@ -136,8 +122,7 @@ extension LanguageSettingsFlow {
         
         let backButton = AppBackBarItem(
             target: viewModel,
-            action: #selector(viewModel.backTapped),
-            accessibilityIdentifier: nil
+            action: #selector(viewModel.backTapped)
         )
         
         let hostingView = AppHostingController<DownloadableLanguagesView>(

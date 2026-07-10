@@ -10,9 +10,9 @@ import Foundation
 
 struct LanguageCodable: Codable, Sendable {
     
+    let id: String
     let code: BCP47LanguageIdentifier
     let directionString: String
-    let id: String
     let name: String
     let type: String
     let forceLanguageName: Bool
@@ -30,22 +30,18 @@ struct LanguageCodable: Codable, Sendable {
         case forceLanguageName = "force-language-name"
     }
     
-    static func create(id: String, code: BCP47LanguageIdentifier) -> LanguageCodable {
-        return LanguageCodable(code: code, directionString: "", id: id, name: "", type: "", forceLanguageName: false)
-    }
-    
     init(
+        id: String = "",
         code: BCP47LanguageIdentifier = "",
         directionString: String = "",
-        id: String = "",
         name: String = "",
         type: String = "",
         forceLanguageName: Bool = false
     ) {
         
+        self.id = id
         self.code = code
         self.directionString = directionString
-        self.id = id
         self.name = name
         self.type = type
         self.forceLanguageName = forceLanguageName

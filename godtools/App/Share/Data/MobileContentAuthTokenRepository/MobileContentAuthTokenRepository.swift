@@ -22,7 +22,7 @@ final class MobileContentAuthTokenRepository {
     
     func fetchRemoteAuthToken(providerToken: MobileContentAuthProviderToken, createUser: Bool) async throws -> Result<MobileContentAuthTokenDataModel, MobileContentApiError> {
         
-        let result: Result<MobileContentAuthTokenDecodable, MobileContentApiError> = try await api.fetchAuthToken(
+        let result: Result<MobileContentAuthTokenCodable, MobileContentApiError> = try await api.fetchAuthToken(
             providerToken: providerToken,
             createUser: createUser
         )

@@ -32,9 +32,17 @@ final class UITestsDeepLinkParser: DeepLinkUrlParserInterface {
             
             return .languageSettings
         }
+        else if screenPath == "settings" && pathComponents[safe: 2] == "localization" {
+            
+            return .localizationSettings
+        }
         else if screenPath == "settings" && pathComponents[safe: 2] == "app_languages" {
             
             return .appLanguagesList
+        }
+        else if screenPath == "tutorial" {
+            
+            return .tutorial
         }
         
         return nil

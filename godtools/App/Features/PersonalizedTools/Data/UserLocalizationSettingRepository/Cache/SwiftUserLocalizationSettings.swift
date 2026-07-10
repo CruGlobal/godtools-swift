@@ -33,6 +33,18 @@ enum SwiftUserLocalizationSettingsV1 {
 @available(iOS 17.4, *)
 extension SwiftUserLocalizationSettings {
     
+    public static func idPredicate(id: String) -> Predicate<SwiftUserLocalizationSettings> {
+        return #Predicate<SwiftUserLocalizationSettings> { object in
+            object.id == id
+        }
+    }
+
+    public static func idsPredicate(ids: Set<String>) -> Predicate<SwiftUserLocalizationSettings> {
+        return #Predicate<SwiftUserLocalizationSettings> { object in
+            ids.contains(object.id)
+        }
+    }
+    
     func mapFrom(model: UserLocalizationSettingsDataModel) {
         createdAt = model.createdAt
         selectedCountryIsoRegionCode = model.selectedCountryIsoRegionCode

@@ -34,6 +34,18 @@ enum SwiftUserLessonLanguageFilterV1 {
 @available(iOS 17.4, *)
 extension SwiftUserLessonLanguageFilter {
     
+    public static func idPredicate(id: String) -> Predicate<SwiftUserLessonLanguageFilter> {
+        return #Predicate<SwiftUserLessonLanguageFilter> { object in
+            object.id == id
+        }
+    }
+
+    public static func idsPredicate(ids: Set<String>) -> Predicate<SwiftUserLessonLanguageFilter> {
+        return #Predicate<SwiftUserLessonLanguageFilter> { object in
+            ids.contains(object.id)
+        }
+    }
+    
     func mapFrom(model: UserLessonLanguageFilterDataModel) {
         
         id = model.id

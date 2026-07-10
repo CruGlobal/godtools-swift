@@ -34,6 +34,18 @@ enum SwiftUserToolLanguageFilterV1 {
 @available(iOS 17.4, *)
 extension SwiftUserToolLanguageFilter {
     
+    public static func idPredicate(id: String) -> Predicate<SwiftUserToolLanguageFilter> {
+        return #Predicate<SwiftUserToolLanguageFilter> { object in
+            object.id == id
+        }
+    }
+
+    public static func idsPredicate(ids: Set<String>) -> Predicate<SwiftUserToolLanguageFilter> {
+        return #Predicate<SwiftUserToolLanguageFilter> { object in
+            ids.contains(object.id)
+        }
+    }
+    
     func mapFrom(model: UserToolLanguageFilterDataModel) {
         
         id = model.id

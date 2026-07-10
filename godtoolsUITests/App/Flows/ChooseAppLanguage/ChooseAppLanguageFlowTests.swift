@@ -31,5 +31,22 @@ class ChooseAppLanguageFlowTests: BaseFlowTests {
         assertIfButtonDoesNotExistElseTap(buttonAccessibility: .appLanguageListItem, buttonQueryType: .firstMatch)
         
         assertIfScreenDoesNotExist(screenAccessibility: .confirmAppLanguage)
+        
+        assertIfButtonDoesNotExist(buttonAccessibility: .nevermind)
+        
+        assertIfButtonDoesNotExist(buttonAccessibility: .changeLanguage)
+    }
+    
+    func testTappingNevermindFromConfirmAppLanguageNavigatesToChooseAppLanguage() {
+        
+        launchApp()
+                
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .appLanguageListItem, buttonQueryType: .firstMatch)
+        
+        assertIfScreenDoesNotExist(screenAccessibility: .confirmAppLanguage)
+                
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .nevermind)
+        
+        assertIfScreenDoesNotExist(screenAccessibility: .appLanguages)
     }
 }

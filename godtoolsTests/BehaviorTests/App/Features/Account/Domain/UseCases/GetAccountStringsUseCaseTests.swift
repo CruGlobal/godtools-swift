@@ -58,7 +58,7 @@ struct GetAccountStringsUseCaseTests {
     )
     func globalAnalyticsTitleIsPrefixedWithTheCurrentYear(argument: TestArgument) async {
 
-        let dateService: DateServiceInterface = MockDateService()
+        let dateService: DateServiceInterface = FakeDateService()
         
         let useCase = getUseCase(dateService: dateService)
 
@@ -74,11 +74,11 @@ struct GetAccountStringsUseCaseTests {
 
 extension GetAccountStringsUseCaseTests {
 
-    private func getUseCase(dateService: DateServiceInterface = MockDateService()) -> GetAccountStringsUseCase {
+    private func getUseCase(dateService: DateServiceInterface = FakeDateService()) -> GetAccountStringsUseCase {
 
         return GetAccountStringsUseCase(
-            localizationServices: MockLocalizationServices(
-                localizableStrings: MockLocalizationServices.getStrings(stringKeys: Self.stringKeys, languages: [.english, .spanish])
+            localizationServices: FakeLocalizationServices(
+                localizableStrings: FakeLocalizationServices.getStrings(stringKeys: Self.stringKeys, languages: [.english, .spanish])
             ),
             dateService: dateService
         )

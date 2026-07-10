@@ -44,7 +44,7 @@ extension GetToolScreenShareQRCodeStringsUseCaseTests {
         let stringKeys: [LocalizableStringKeys] = [.toolScreenShareQrCodeDescription, .toolScreenShareQrCodeCloseButtonTitle]
 
         return GetToolScreenShareQRCodeStringsUseCase(
-            localizationServices: MockLocalizationServices(localizableStrings: MockLocalizationServices.getStrings(stringKeys: stringKeys, languages: [.english, .spanish]))
+            localizationServices: FakeLocalizationServices(localizableStrings: FakeLocalizationServices.getStrings(stringKeys: stringKeys, languages: [.english, .spanish]))
         )
     }
 }

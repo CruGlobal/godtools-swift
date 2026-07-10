@@ -10,16 +10,12 @@ import Foundation
 
 struct LanguageDataModel: Sendable {
     
+    let id: String
     let code: BCP47LanguageIdentifier
     let directionString: String
-    let id: String
     let name: String
     let type: String
     let forceLanguageName: Bool
-    
-    static func create(id: String, code: BCP47LanguageIdentifier) -> LanguageDataModel {
-        return LanguageDataModel(code: code, directionString: "", id: id, name: "", type: "", forceLanguageName: false)
-    }
 }
 
 extension LanguageDataModel: Equatable {

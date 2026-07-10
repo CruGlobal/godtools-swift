@@ -15,7 +15,7 @@ class AppBackBarItem: AppLayoutDirectionBasedBarItem {
     init(
         target: AnyObject,
         action: Selector,
-        accessibilityIdentifier: String?,
+        accessibilityIdentifier: String? = AccessibilityStrings.Button.back.id,
         hidesBarItemPublisher: AnyPublisher<Bool, Never>? = nil,
         layoutDirectionPublisher: AnyPublisher<UISemanticContentAttribute, Never>? = nil
     ) {

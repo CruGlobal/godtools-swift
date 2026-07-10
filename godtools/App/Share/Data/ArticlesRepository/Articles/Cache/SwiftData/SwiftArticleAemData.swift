@@ -37,6 +37,18 @@ enum SwiftArticleAemDataV1 {
 @available(iOS 17.4, *)
 extension SwiftArticleAemData {
     
+    public static func idPredicate(id: String) -> Predicate<SwiftArticleAemData> {
+        return #Predicate<SwiftArticleAemData> { object in
+            object.id == id
+        }
+    }
+
+    public static func idsPredicate(ids: Set<String>) -> Predicate<SwiftArticleAemData> {
+        return #Predicate<SwiftArticleAemData> { object in
+            ids.contains(object.id)
+        }
+    }
+    
     func mapFrom(model: ArticleAemData) {
         
         id = model.id

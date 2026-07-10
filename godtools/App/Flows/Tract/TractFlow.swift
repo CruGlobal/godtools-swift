@@ -79,7 +79,7 @@ class TractFlow: GTFlow {
             backBarItem = AppHomeBarItem(color: nil, target: viewModel, action: #selector(viewModel.homeTapped), accessibilityIdentifier: nil)
         }
         else {
-            backBarItem = AppBackBarItem(target: viewModel, action: #selector(viewModel.backTapped), accessibilityIdentifier: nil)
+            backBarItem = AppBackBarItem(target: viewModel, action: #selector(viewModel.backTapped))
         }
         
         let remoteShareActiveBarItem = AppLottieBarItem(

@@ -17,7 +17,7 @@ struct GetTranslatedLanguageNameTests {
         let expectedValue: String
     }
     
-    private static let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
+    private static let localizableStrings: [FakeLocalizationServices.LocaleId: [FakeLocalizationServices.StringKey: String]] = [
         LanguageCodeDomainModel.spanish.value: [
             LanguageCodeDomainModel.english.rawValue: "Inglés",
             LanguageCodeDomainModel.french.rawValue: "Francés",
@@ -26,7 +26,7 @@ struct GetTranslatedLanguageNameTests {
         ]
     ]
     
-    private static let languageNames: [MockLocaleLanguageName.LanguageCode: [MockLocaleLanguageName.TranslateInLocaleId: MockLocaleLanguageName.LanguageName]] = [
+    private static let languageNames: [FakeLocaleLanguageName.LanguageCode: [FakeLocaleLanguageName.TranslateInLocaleId: FakeLocaleLanguageName.LanguageName]] = [
         LanguageCodeDomainModel.english.rawValue: [
             LanguageCodeDomainModel.english.rawValue: "English",
             LanguageCodeDomainModel.portuguese.rawValue: "Inglês",
@@ -55,10 +55,10 @@ struct GetTranslatedLanguageNameTests {
     ]
             
     private static let getTranslatedLanguageName = GetTranslatedLanguageName(
-        localizationLanguageName: MockLocalizationLanguageNameRepository(localizationServices: MockLocalizationServices(localizableStrings: localizableStrings)),
-        localeLanguageName: MockLocaleLanguageName(languageNames: languageNames),
-        localeRegionName: MockLocaleLanguageRegionName(regionNames: [:]),
-        localeScriptName: MockLocaleLanguageScriptName(scriptNames: [:])
+        localizationLanguageName: FakeLocalizationLanguageNameRepository(localizationServices: FakeLocalizationServices(localizableStrings: localizableStrings)),
+        localeLanguageName: FakeLocaleLanguageName(languageNames: languageNames),
+        localeRegionName: FakeLocaleLanguageRegionName(regionNames: [:]),
+        localeScriptName: FakeLocaleLanguageScriptName(scriptNames: [:])
     )
     
     @Test(
@@ -74,7 +74,7 @@ struct GetTranslatedLanguageNameTests {
         
         let russianFallbackName: String = "Russian Fallback Name"
         
-        let russianLanguage = MockTranslatableLanguage(
+        let russianLanguage = FakeTranslatableLanguage(
             languageCode: LanguageCodeDomainModel.russian.rawValue,
             localeId: LanguageCodeDomainModel.russian.rawValue,
             fallbackName: russianFallbackName,
@@ -102,7 +102,7 @@ struct GetTranslatedLanguageNameTests {
        
         let russianFallbackName: String = "Russian Fallback Name"
         
-        let russianLanguage = MockTranslatableLanguage(
+        let russianLanguage = FakeTranslatableLanguage(
             languageCode: LanguageCodeDomainModel.russian.rawValue,
             localeId: LanguageCodeDomainModel.russian.rawValue,
             fallbackName: russianFallbackName,
@@ -135,7 +135,7 @@ struct GetTranslatedLanguageNameTests {
         
         let fallbackName: String = "French Fallback Name"
         
-        let frenchLanguage = MockTranslatableLanguage(
+        let frenchLanguage = FakeTranslatableLanguage(
             languageCode: LanguageCodeDomainModel.french.rawValue,
             localeId: LanguageCodeDomainModel.french.rawValue,
             fallbackName: fallbackName,
@@ -166,7 +166,7 @@ struct GetTranslatedLanguageNameTests {
         
         let fallbackName: String = "French Fallback Name"
         
-        let frenchLanguage = MockTranslatableLanguage(
+        let frenchLanguage = FakeTranslatableLanguage(
             languageCode: LanguageCodeDomainModel.french.rawValue,
             localeId: LanguageCodeDomainModel.french.rawValue,
             fallbackName: fallbackName,
@@ -197,7 +197,7 @@ struct GetTranslatedLanguageNameTests {
         
         let fallbackName: String = "French Fallback Name"
         
-        let frenchLanguage = MockTranslatableLanguage(
+        let frenchLanguage = FakeTranslatableLanguage(
             languageCode: LanguageCodeDomainModel.french.rawValue,
             localeId: LanguageCodeDomainModel.french.rawValue,
             fallbackName: fallbackName,

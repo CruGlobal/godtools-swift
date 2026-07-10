@@ -77,7 +77,7 @@ extension GetConfirmRemoveToolFromFavoritesStringsUseCaseTests {
         ]
 
         return GetConfirmRemoveToolFromFavoritesStringsUseCase(
-            localizationServices: MockLocalizationServices(localizableStrings: localizableStrings),
+            localizationServices: FakeLocalizationServices(localizableStrings: localizableStrings),
             getTranslatedToolName: getTranslatedToolName
         )
     }
@@ -89,15 +89,15 @@ extension GetConfirmRemoveToolFromFavoritesStringsUseCaseTests {
 
         let allLanguages: [RealmLanguage] = [englishLanguage, spanishLanguage]
 
-        let tract: RealmResource = MockRealmResource.createTract(
+        let tract: RealmResource = FakeRealmResource.createTract(
             addLanguages: [.english, .spanish],
             fromLanguages: allLanguages,
             id: Self.toolId,
             attrDefaultLocale: LanguageCodeDomainModel.english.rawValue
         )
 
-        let englishTranslation: RealmTranslation = MockRealmTranslation.createTranslation(translatedName: Self.toolNameInEnglish)
-        let spanishTranslation: RealmTranslation = MockRealmTranslation.createTranslation(translatedName: Self.toolNameInSpanish)
+        let englishTranslation: RealmTranslation = FakeRealmTranslation.createTranslation(translatedName: Self.toolNameInEnglish)
+        let spanishTranslation: RealmTranslation = FakeRealmTranslation.createTranslation(translatedName: Self.toolNameInSpanish)
 
         englishTranslation.language = englishLanguage
         spanishTranslation.language = spanishLanguage
@@ -109,10 +109,14 @@ extension GetConfirmRemoveToolFromFavoritesStringsUseCaseTests {
     }
 
     private func getRealmLanguage(languageCode: LanguageCodeDomainModel) -> RealmLanguage {
-        return MockRealmLanguage.createLanguage(
-            language: languageCode,
+        
+        let language = LanguageCodable.random(
+            id: languageCode.rawValue,
+            code: languageCode.rawValue,
             name: languageCode.rawValue + " Name",
-            id: languageCode.rawValue
+            forceLanguageName: false
         )
+        
+        return RealmLanguage.createNewFrom(model: language.toModel())
     }
 }

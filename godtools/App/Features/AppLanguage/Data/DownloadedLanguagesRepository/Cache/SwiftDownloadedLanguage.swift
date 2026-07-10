@@ -34,6 +34,18 @@ enum SwiftDownloadedLanguageV1 {
 @available(iOS 17.4, *)
 extension SwiftDownloadedLanguage {
     
+    public static func idPredicate(id: String) -> Predicate<SwiftDownloadedLanguage> {
+        return #Predicate<SwiftDownloadedLanguage> { object in
+            object.id == id
+        }
+    }
+
+    public static func idsPredicate(ids: Set<String>) -> Predicate<SwiftDownloadedLanguage> {
+        return #Predicate<SwiftDownloadedLanguage> { object in
+            ids.contains(object.id)
+        }
+    }
+    
     func mapFrom(model: DownloadedLanguageDataModel) {
         
         id = model.id

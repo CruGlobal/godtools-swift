@@ -497,8 +497,7 @@ extension DashboardFlow {
         
         let backButton = AppBackBarItem(
             target: viewModel,
-            action: #selector(viewModel.backTapped),
-            accessibilityIdentifier: nil
+            action: #selector(viewModel.backTapped)
         )
         
         let hostingView = AppHostingController<LessonFilterLanguageSelectionView>(
@@ -589,8 +588,7 @@ extension DashboardFlow {
         
         let backButton = AppBackBarItem(
             target: viewModel,
-            action: #selector(viewModel.backTapped),
-            accessibilityIdentifier: nil
+            action: #selector(viewModel.backTapped)
         )
         
         let hostingView = AppHostingController<AllYourFavoriteToolsView>(
@@ -629,8 +627,7 @@ extension DashboardFlow {
         
         let backButton = AppBackBarItem(
             target: viewModel,
-            action: #selector(viewModel.backButtonTapped),
-            accessibilityIdentifier: nil
+            action: #selector(viewModel.backButtonTapped)
         )
         
         let hostingView = AppHostingController<ToolFilterCategorySelectionView>(
@@ -664,8 +661,7 @@ extension DashboardFlow {
         
         let backButton = AppBackBarItem(
             target: viewModel,
-            action: #selector(viewModel.backButtonTapped),
-            accessibilityIdentifier: nil
+            action: #selector(viewModel.backButtonTapped)
         )
         
         let hostingView = AppHostingController<ToolFilterLanguageSelectionView>(

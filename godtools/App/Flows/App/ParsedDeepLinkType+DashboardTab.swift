@@ -28,6 +28,8 @@ extension ParsedDeepLinkType {
             return defaultTab
         case .languageSettings:
             return defaultTab
+        case .localizationSettings:
+            return defaultTab
         case .lessonsList:
             return .lessons
         case .menu:
@@ -35,6 +37,8 @@ extension ParsedDeepLinkType {
         case .onboarding(appLanguage: let appLanguage):
             return defaultTab
         case .tool(toolDeepLink: let toolDeepLink):
+            return defaultTab
+        case .tutorial:
             return defaultTab
         }
     }

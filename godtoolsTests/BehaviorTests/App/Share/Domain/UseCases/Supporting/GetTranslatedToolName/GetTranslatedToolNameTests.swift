@@ -100,7 +100,7 @@ extension GetTranslatedToolNameTests {
         ]
         
         let tracts: [RealmResource] = [
-            MockRealmResource.createTract(
+            FakeRealmResource.createTract(
                 addLanguages: [.english, .spanish, .vietnamese],
                 fromLanguages: allLanguages,
                 id: toolId,
@@ -108,13 +108,13 @@ extension GetTranslatedToolNameTests {
             )
         ]
         
-        let tract0EnglishTranslation: RealmTranslation = MockRealmTranslation.createTranslation(
+        let tract0EnglishTranslation: RealmTranslation = FakeRealmTranslation.createTranslation(
             translatedName: Self.toolNameInEnglish
         )
-        let tract0SpanishTranslation: RealmTranslation = MockRealmTranslation.createTranslation(
+        let tract0SpanishTranslation: RealmTranslation = FakeRealmTranslation.createTranslation(
             translatedName: Self.toolNameInSpanish
         )
-        let tract0VietnameseTranslation: RealmTranslation = MockRealmTranslation.createTranslation(
+        let tract0VietnameseTranslation: RealmTranslation = FakeRealmTranslation.createTranslation(
             translatedName: Self.toolNameInVietnamese
         )
         
@@ -130,10 +130,14 @@ extension GetTranslatedToolNameTests {
     }
     
     private func getRealmLanguage(languageCode: LanguageCodeDomainModel) -> RealmLanguage {
-        return MockRealmLanguage.createLanguage(
-            language: languageCode,
+
+        let language = LanguageCodable.random(
+            id: languageCode.rawValue,
+            code: languageCode.rawValue,
             name: languageCode.rawValue + " Name",
-            id: languageCode.rawValue
+            forceLanguageName: false
         )
+
+        return RealmLanguage.createNewFrom(model: language.toModel())
     }
 }

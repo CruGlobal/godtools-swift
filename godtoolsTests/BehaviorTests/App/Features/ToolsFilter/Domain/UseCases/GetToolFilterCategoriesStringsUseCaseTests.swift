@@ -43,7 +43,7 @@ extension GetToolFilterCategoriesStringsUseCaseTests {
         let stringKeys: [LocalizableStringKeys] = [.toolsFilterCategoryNavTitle]
 
         return GetToolFilterCategoriesStringsUseCase(
-            localizationServices: MockLocalizationServices(localizableStrings: MockLocalizationServices.getStrings(stringKeys: stringKeys, languages: [.english, .spanish]))
+            localizationServices: FakeLocalizationServices(localizableStrings: FakeLocalizationServices.getStrings(stringKeys: stringKeys, languages: [.english, .spanish]))
         )
     }
 }

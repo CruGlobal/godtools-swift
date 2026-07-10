@@ -35,6 +35,18 @@ enum SwiftFollowUpV1 {
 @available(iOS 17.4, *)
 extension SwiftFollowUp {
     
+    public static func idPredicate(id: String) -> Predicate<SwiftFollowUp> {
+        return #Predicate<SwiftFollowUp> { object in
+            object.id == id
+        }
+    }
+
+    public static func idsPredicate(ids: Set<String>) -> Predicate<SwiftFollowUp> {
+        return #Predicate<SwiftFollowUp> { object in
+            ids.contains(object.id)
+        }
+    }
+    
     func mapFrom(model: FollowUpDataModel) {
         
         id = model.id
