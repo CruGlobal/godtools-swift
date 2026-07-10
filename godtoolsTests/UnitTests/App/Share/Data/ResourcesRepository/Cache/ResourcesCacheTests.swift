@@ -178,7 +178,7 @@ extension ResourcesCacheTests {
         case .czech:
             return getCzechLanguage()
         default:
-            assertionFailure("Mock language not supported: \(language)")
+            assertionFailure("Language not supported: \(language)")
             return getEnglishLanguage()
         }
     }
@@ -199,36 +199,36 @@ extension ResourcesCacheTests {
         let english = getRealmLanguage(language: .english)
         let spanish = getRealmLanguage(language: .spanish)
         
-        let lesson_0 = RealmResource.createNewFrom(model: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 0)).toModel())
+        let lesson_0 = RealmResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 0)).toModel())
         lesson_0.addLanguage(language: english)
         
-        let lesson_1 = RealmResource.createNewFrom(model: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 1)).toModel())
+        let lesson_1 = RealmResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 1)).toModel())
         lesson_1.addLanguage(language: english)
         
-        let lesson_2 = RealmResource.createNewFrom(model: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 2)).toModel())
+        let lesson_2 = RealmResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 2)).toModel())
         lesson_2.addLanguage(language: english)
         lesson_2.addLanguage(language: spanish)
         
-        let lesson_3 = RealmResource.createNewFrom(model: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 3)).toModel())
+        let lesson_3 = RealmResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 3)).toModel())
         lesson_3.addLanguage(language: english)
                 
         // hidden
-        let lesson_4 = RealmResource.createNewFrom(model: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 4), isHidden: true).toModel())
+        let lesson_4 = RealmResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 4), isHidden: true).toModel())
         lesson_4.addLanguage(language: english)
         lesson_4.addLanguage(language: spanish)
         
-        let lesson_5 = RealmResource.createNewFrom(model: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 5), isHidden: true).toModel())
+        let lesson_5 = RealmResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 5), isHidden: true).toModel())
         lesson_5.addLanguage(language: english)
         
         // featured
-        let lesson_6 = RealmResource.createNewFrom(model: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 6), attrSpotlight: true).toModel())
+        let lesson_6 = RealmResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 6), attrSpotlight: true).toModel())
         lesson_6.addLanguage(language: english)
         lesson_6.addLanguage(language: spanish)
         
-        let lesson_7 = RealmResource.createNewFrom(model: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 7), attrSpotlight: true).toModel())
+        let lesson_7 = RealmResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 7), attrSpotlight: true).toModel())
         lesson_7.addLanguage(language: english)
         
-        let lesson_8 = RealmResource.createNewFrom(model: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 8), attrSpotlight: true).toModel())
+        let lesson_8 = RealmResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 8), attrSpotlight: true).toModel())
         lesson_8.addLanguage(language: english)
         
         return [lesson_0, lesson_1, lesson_2, lesson_3, lesson_4, lesson_5, lesson_6, lesson_7, lesson_8]
@@ -241,30 +241,30 @@ extension ResourcesCacheTests {
         let czech = getRealmLanguage(language: .czech)
         let spanish = getRealmLanguage(language: .spanish)
         
-        let tract_0 = RealmResource.createNewFrom(model: MockResource.createResource(resourceType: .tract, id: getTractId(id: 0)).toModel())
+        let tract_0 = RealmResource.createNewFrom(model: FakeResource.createResource(resourceType: .tract, id: getTractId(id: 0)).toModel())
         tract_0.addLanguage(language: english)
         tract_0.addLanguage(language: czech)
         tract_0.addLanguage(language: vietnamese)
         tract_0.addLanguage(language: spanish)
         
-        let tract_1 = RealmResource.createNewFrom(model: MockResource.createResource(resourceType: .tract, id: getTractId(id: 1)).toModel())
+        let tract_1 = RealmResource.createNewFrom(model: FakeResource.createResource(resourceType: .tract, id: getTractId(id: 1)).toModel())
         tract_1.addLanguage(language: english)
         tract_1.addLanguage(language: vietnamese)
         
-        let tract_2 = RealmResource.createNewFrom(model: MockResource.createResource(resourceType: .tract, id: getTractId(id: 2)).toModel())
+        let tract_2 = RealmResource.createNewFrom(model: FakeResource.createResource(resourceType: .tract, id: getTractId(id: 2)).toModel())
         tract_2.addLanguage(language: english)
         tract_2.addLanguage(language: vietnamese)
         
-        let tract_3 = RealmResource.createNewFrom(model: MockResource.createResource(resourceType: .tract, id: getTractId(id: 3)).toModel())
+        let tract_3 = RealmResource.createNewFrom(model: FakeResource.createResource(resourceType: .tract, id: getTractId(id: 3)).toModel())
         tract_3.addLanguage(language: english)
         tract_3.addLanguage(language: czech)
         
-        let tract_4 = RealmResource.createNewFrom(model: MockResource.createResource(resourceType: .tract, id: getTractId(id: 4)).toModel())
+        let tract_4 = RealmResource.createNewFrom(model: FakeResource.createResource(resourceType: .tract, id: getTractId(id: 4)).toModel())
         tract_4.addLanguage(language: english)
         tract_4.addLanguage(language: czech)
         tract_4.addLanguage(language: spanish)
         
-        let tract_5 = RealmResource.createNewFrom(model: MockResource.createResource(resourceType: .tract, id: getTractId(id: 5)).toModel())
+        let tract_5 = RealmResource.createNewFrom(model: FakeResource.createResource(resourceType: .tract, id: getTractId(id: 5)).toModel())
         tract_5.addLanguage(language: english)
         tract_5.addLanguage(language: spanish)
     
@@ -294,36 +294,36 @@ extension ResourcesCacheTests {
         let english = getSwiftLanguage(language: .english)
         let spanish = getSwiftLanguage(language: .spanish)
         
-        let lesson_0 = SwiftResource.createNewFrom(model: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 0)).toModel())
+        let lesson_0 = SwiftResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 0)).toModel())
         lesson_0.addLanguage(language: english)
         
-        let lesson_1 = SwiftResource.createNewFrom(model: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 1)).toModel())
+        let lesson_1 = SwiftResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 1)).toModel())
         lesson_1.addLanguage(language: english)
         
-        let lesson_2 = SwiftResource.createNewFrom(model: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 2)).toModel())
+        let lesson_2 = SwiftResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 2)).toModel())
         lesson_2.addLanguage(language: english)
         lesson_2.addLanguage(language: spanish)
         
-        let lesson_3 = SwiftResource.createNewFrom(model: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 3)).toModel())
+        let lesson_3 = SwiftResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 3)).toModel())
         lesson_3.addLanguage(language: english)
                 
         // hidden
-        let lesson_4 = SwiftResource.createNewFrom(model: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 4), isHidden: true).toModel())
+        let lesson_4 = SwiftResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 4), isHidden: true).toModel())
         lesson_4.addLanguage(language: english)
         lesson_4.addLanguage(language: spanish)
         
-        let lesson_5 = SwiftResource.createNewFrom(model: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 5), isHidden: true).toModel())
+        let lesson_5 = SwiftResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 5), isHidden: true).toModel())
         lesson_5.addLanguage(language: english)
         
         // featured
-        let lesson_6 = SwiftResource.createNewFrom(model: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 6), attrSpotlight: true).toModel())
+        let lesson_6 = SwiftResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 6), attrSpotlight: true).toModel())
         lesson_6.addLanguage(language: english)
         lesson_6.addLanguage(language: spanish)
         
-        let lesson_7 = SwiftResource.createNewFrom(model: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 7), attrSpotlight: true).toModel())
+        let lesson_7 = SwiftResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 7), attrSpotlight: true).toModel())
         lesson_7.addLanguage(language: english)
         
-        let lesson_8 = SwiftResource.createNewFrom(model: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 8), attrSpotlight: true).toModel())
+        let lesson_8 = SwiftResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 8), attrSpotlight: true).toModel())
         lesson_8.addLanguage(language: english)
         
         return [lesson_0, lesson_1, lesson_2, lesson_3, lesson_4, lesson_5, lesson_6, lesson_7, lesson_8]
@@ -337,30 +337,30 @@ extension ResourcesCacheTests {
         let czech = getSwiftLanguage(language: .czech)
         let spanish = getSwiftLanguage(language: .spanish)
         
-        let tract_0 = SwiftResource.createNewFrom(model: MockResource.createResource(resourceType: .tract, id: getTractId(id: 0)).toModel())
+        let tract_0 = SwiftResource.createNewFrom(model: FakeResource.createResource(resourceType: .tract, id: getTractId(id: 0)).toModel())
         tract_0.addLanguage(language: english)
         tract_0.addLanguage(language: czech)
         tract_0.addLanguage(language: vietnamese)
         tract_0.addLanguage(language: spanish)
         
-        let tract_1 = SwiftResource.createNewFrom(model: MockResource.createResource(resourceType: .tract, id: getTractId(id: 1)).toModel())
+        let tract_1 = SwiftResource.createNewFrom(model: FakeResource.createResource(resourceType: .tract, id: getTractId(id: 1)).toModel())
         tract_1.addLanguage(language: english)
         tract_1.addLanguage(language: vietnamese)
         
-        let tract_2 = SwiftResource.createNewFrom(model: MockResource.createResource(resourceType: .tract, id: getTractId(id: 2)).toModel())
+        let tract_2 = SwiftResource.createNewFrom(model: FakeResource.createResource(resourceType: .tract, id: getTractId(id: 2)).toModel())
         tract_2.addLanguage(language: english)
         tract_2.addLanguage(language: vietnamese)
         
-        let tract_3 = SwiftResource.createNewFrom(model: MockResource.createResource(resourceType: .tract, id: getTractId(id: 3)).toModel())
+        let tract_3 = SwiftResource.createNewFrom(model: FakeResource.createResource(resourceType: .tract, id: getTractId(id: 3)).toModel())
         tract_3.addLanguage(language: english)
         tract_3.addLanguage(language: czech)
         
-        let tract_4 = SwiftResource.createNewFrom(model: MockResource.createResource(resourceType: .tract, id: getTractId(id: 4)).toModel())
+        let tract_4 = SwiftResource.createNewFrom(model: FakeResource.createResource(resourceType: .tract, id: getTractId(id: 4)).toModel())
         tract_4.addLanguage(language: english)
         tract_4.addLanguage(language: czech)
         tract_4.addLanguage(language: spanish)
         
-        let tract_5 = SwiftResource.createNewFrom(model: MockResource.createResource(resourceType: .tract, id: getTractId(id: 5)).toModel())
+        let tract_5 = SwiftResource.createNewFrom(model: FakeResource.createResource(resourceType: .tract, id: getTractId(id: 5)).toModel())
         tract_5.addLanguage(language: english)
         tract_5.addLanguage(language: spanish)
     

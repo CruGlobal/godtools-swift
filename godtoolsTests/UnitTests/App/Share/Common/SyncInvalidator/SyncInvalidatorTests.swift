@@ -172,7 +172,7 @@ struct SyncInvalidatorTests {
     @Test()
     func syncInvalidatorIdIsUnique() async throws {
         
-        let persistence = MockSyncInvalidatorPersistence()
+        let persistence = FakeSyncInvalidatorPersistence()
         
         let syncInvalidator_1: SyncInvalidator = getSyncInvalidator(
             timeInterval: .hours(hour: 4),
@@ -199,7 +199,7 @@ struct SyncInvalidatorTests {
 
 extension SyncInvalidatorTests {
     
-    private func getSyncInvalidator(timeInterval: SyncInvalidatorTimeInterval, persistence: SyncInvalidatorPersistenceInterface = MockSyncInvalidatorPersistence()) -> SyncInvalidator {
+    private func getSyncInvalidator(timeInterval: SyncInvalidatorTimeInterval, persistence: SyncInvalidatorPersistenceInterface = FakeSyncInvalidatorPersistence()) -> SyncInvalidator {
         
         return SyncInvalidator(
             id: UUID().uuidString,

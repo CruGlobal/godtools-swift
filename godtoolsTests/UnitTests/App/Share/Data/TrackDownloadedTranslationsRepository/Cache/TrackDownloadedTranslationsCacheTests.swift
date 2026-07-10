@@ -230,76 +230,76 @@ extension TrackDownloadedTranslationsCacheTests {
 
 extension TrackDownloadedTranslationsCacheTests {
     
-    private func getMockTrackDownloadedTranslations() -> [MockDownloadedTranslation] {
+    private func getMockTrackDownloadedTranslations() -> [FakeDownloadedTranslation] {
         
-        let resourcesA: [MockDownloadedTranslation] = [
-            MockDownloadedTranslation(
+        let resourcesA: [FakeDownloadedTranslation] = [
+            FakeDownloadedTranslation(
                 resourceId: Self.resourceAId,
                 languageId: Self.languageAId,
                 version: 0,
                 id: "a_a_0"
             ),
-            MockDownloadedTranslation(
+            FakeDownloadedTranslation(
                 resourceId: Self.resourceAId,
                 languageId: Self.languageAId,
                 version: 1,
                 id: "a_a_1"
             ),
-            MockDownloadedTranslation(
+            FakeDownloadedTranslation(
                 resourceId: Self.resourceAId,
                 languageId: Self.languageAId,
                 version: 5,
                 id: "a_a_5"
             ),
-            MockDownloadedTranslation(
+            FakeDownloadedTranslation(
                 resourceId: Self.resourceAId,
                 languageId: Self.languageAId,
                 version: 8,
                 id: "a_a_8"
             ),
-            MockDownloadedTranslation(
+            FakeDownloadedTranslation(
                 resourceId: Self.resourceAId,
                 languageId: Self.languageAId,
                 version: 12,
                 id: "a_a_12"
             ),
-            MockDownloadedTranslation(
+            FakeDownloadedTranslation(
                 resourceId: Self.resourceAId,
                 languageId: Self.languageAId,
                 version: 25,
                 id: "a_a_25"
             ),
-            MockDownloadedTranslation(
+            FakeDownloadedTranslation(
                 resourceId: Self.resourceAId,
                 languageId: Self.languageBId,
                 version: 20,
                 id: "a_b_20"
             ),
-            MockDownloadedTranslation(
+            FakeDownloadedTranslation(
                 resourceId: Self.resourceAId,
                 languageId: Self.languageBId,
                 version: 19,
                 id: "a_b_19"
             ),
-            MockDownloadedTranslation(
+            FakeDownloadedTranslation(
                 resourceId: Self.resourceAId,
                 languageId: Self.languageBId,
                 version: 2,
                 id: "a_b_2"
             ),
-            MockDownloadedTranslation(
+            FakeDownloadedTranslation(
                 resourceId: Self.resourceAId,
                 languageId: Self.languageBId,
                 version: 10,
                 id: "a_b_10"
             ),
-            MockDownloadedTranslation(
+            FakeDownloadedTranslation(
                 resourceId: Self.resourceAId,
                 languageId: Self.languageCId,
                 version: 50,
                 id: "a_c_50"
             ),
-            MockDownloadedTranslation(
+            FakeDownloadedTranslation(
                 resourceId: Self.resourceAId,
                 languageId: Self.languageCId,
                 version: 51,
@@ -307,43 +307,43 @@ extension TrackDownloadedTranslationsCacheTests {
             )
         ]
         
-        let resourcesB: [MockDownloadedTranslation] = [
-            MockDownloadedTranslation(
+        let resourcesB: [FakeDownloadedTranslation] = [
+            FakeDownloadedTranslation(
                 resourceId: Self.resourceBId,
                 languageId: Self.languageAId,
                 version: 44
             ),
-            MockDownloadedTranslation(
+            FakeDownloadedTranslation(
                 resourceId: Self.resourceBId,
                 languageId: Self.languageAId,
                 version: 1
             ),
-            MockDownloadedTranslation(
+            FakeDownloadedTranslation(
                 resourceId: Self.resourceBId,
                 languageId: Self.languageAId,
                 version: 10
             ),
-            MockDownloadedTranslation(
+            FakeDownloadedTranslation(
                 resourceId: Self.resourceBId,
                 languageId: Self.languageAId,
                 version: 8
             ),
-            MockDownloadedTranslation(
+            FakeDownloadedTranslation(
                 resourceId: Self.resourceBId,
                 languageId: Self.languageAId,
                 version: 22
             ),
-            MockDownloadedTranslation(
+            FakeDownloadedTranslation(
                 resourceId: Self.resourceBId,
                 languageId: Self.languageAId,
                 version: 0
             ),
-            MockDownloadedTranslation(
+            FakeDownloadedTranslation(
                 resourceId: Self.resourceBId,
                 languageId: Self.languageCId,
                 version: 1
             ),
-            MockDownloadedTranslation(
+            FakeDownloadedTranslation(
                 resourceId: Self.resourceBId,
                 languageId: Self.languageCId,
                 version: 30

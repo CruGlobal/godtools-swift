@@ -77,7 +77,7 @@ extension GetConfirmRemoveToolFromFavoritesStringsUseCaseTests {
         ]
 
         return GetConfirmRemoveToolFromFavoritesStringsUseCase(
-            localizationServices: MockLocalizationServices(localizableStrings: localizableStrings),
+            localizationServices: FakeLocalizationServices(localizableStrings: localizableStrings),
             getTranslatedToolName: getTranslatedToolName
         )
     }
@@ -89,15 +89,15 @@ extension GetConfirmRemoveToolFromFavoritesStringsUseCaseTests {
 
         let allLanguages: [RealmLanguage] = [englishLanguage, spanishLanguage]
 
-        let tract: RealmResource = MockRealmResource.createTract(
+        let tract: RealmResource = FakeRealmResource.createTract(
             addLanguages: [.english, .spanish],
             fromLanguages: allLanguages,
             id: Self.toolId,
             attrDefaultLocale: LanguageCodeDomainModel.english.rawValue
         )
 
-        let englishTranslation: RealmTranslation = MockRealmTranslation.createTranslation(translatedName: Self.toolNameInEnglish)
-        let spanishTranslation: RealmTranslation = MockRealmTranslation.createTranslation(translatedName: Self.toolNameInSpanish)
+        let englishTranslation: RealmTranslation = FakeRealmTranslation.createTranslation(translatedName: Self.toolNameInEnglish)
+        let spanishTranslation: RealmTranslation = FakeRealmTranslation.createTranslation(translatedName: Self.toolNameInSpanish)
 
         englishTranslation.language = englishLanguage
         spanishTranslation.language = spanishLanguage

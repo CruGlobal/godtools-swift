@@ -119,28 +119,28 @@ extension TranslationsCacheTests {
     
     private func getEnglishTranslations() -> [RealmTranslation] {
         return [
-            MockRealmTranslation.createTranslation(translatedName: "english-0", id: "e0", version: 0),
-            MockRealmTranslation.createTranslation(translatedName: "english-1", id: "e1", version: 1),
-            MockRealmTranslation.createTranslation(translatedName: "english-5", id: "e5", version: 5),
-            MockRealmTranslation.createTranslation(translatedName: "english-12", id: "e12", version: 12)
+            FakeRealmTranslation.createTranslation(translatedName: "english-0", id: "e0", version: 0),
+            FakeRealmTranslation.createTranslation(translatedName: "english-1", id: "e1", version: 1),
+            FakeRealmTranslation.createTranslation(translatedName: "english-5", id: "e5", version: 5),
+            FakeRealmTranslation.createTranslation(translatedName: "english-12", id: "e12", version: 12)
         ]
     }
     
     private func getSpanishTranslations() -> [RealmTranslation] {
         return [
-            MockRealmTranslation.createTranslation(translatedName: "spanish-5", id: "s5", version: 5),
-            MockRealmTranslation.createTranslation(translatedName: "spanish-12", id: "s12", version: 12),
-            MockRealmTranslation.createTranslation(translatedName: "spanish-25", id: "s25", version: 25),
-            MockRealmTranslation.createTranslation(translatedName: "spanish-122", id: "s122", version: 122)
+            FakeRealmTranslation.createTranslation(translatedName: "spanish-5", id: "s5", version: 5),
+            FakeRealmTranslation.createTranslation(translatedName: "spanish-12", id: "s12", version: 12),
+            FakeRealmTranslation.createTranslation(translatedName: "spanish-25", id: "s25", version: 25),
+            FakeRealmTranslation.createTranslation(translatedName: "spanish-122", id: "s122", version: 122)
         ]
     }
     
     private func getVietnameseTranslations() -> [RealmTranslation] {
         return [
-            MockRealmTranslation.createTranslation(translatedName: "vietnamese-0", id: "v0", version: 0),
-            MockRealmTranslation.createTranslation(translatedName: "vietnamese-12", id: "v12", version: 12),
-            MockRealmTranslation.createTranslation(translatedName: "vietnamese-15", id: "v15", version: 15),
-            MockRealmTranslation.createTranslation(translatedName: "vietnamese-20", id: "v20", version: 20)
+            FakeRealmTranslation.createTranslation(translatedName: "vietnamese-0", id: "v0", version: 0),
+            FakeRealmTranslation.createTranslation(translatedName: "vietnamese-12", id: "v12", version: 12),
+            FakeRealmTranslation.createTranslation(translatedName: "vietnamese-15", id: "v15", version: 15),
+            FakeRealmTranslation.createTranslation(translatedName: "vietnamese-20", id: "v20", version: 20)
         ]
     }
     
@@ -150,7 +150,7 @@ extension TranslationsCacheTests {
         let spanish: RealmLanguage = getSpanishLanguage()
         let vietnamese: RealmLanguage = getVietnameseLanguage()
         
-        let resource: RealmResource = MockRealmResource.createTract(
+        let resource: RealmResource = FakeRealmResource.createTract(
             addLanguages: [.english, .spanish, .vietnamese],
             fromLanguages: [english, spanish, vietnamese],
             id: Self.resourceId

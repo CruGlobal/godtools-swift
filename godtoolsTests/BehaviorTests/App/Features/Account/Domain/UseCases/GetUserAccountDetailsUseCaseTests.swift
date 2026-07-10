@@ -376,16 +376,16 @@ extension GetUserAccountDetailsUseCaseTests {
         }
                 
         let userDetailsRepository = UserDetailsRepository(
-            api: MockUserDatailsApi(
+            api: FakeUserDatailsApi(
                 user: MobileContentApiUsersMeCodable.emptyValue
             ),
             cache: UserDetailsCache(
                 persistence: userDetailsPersistence
             ),
             authTokenRepository: MobileContentAuthTokenRepository(
-                api: MockMobileContentAuthTokenApi(fetchedAuthToken: nil),
+                api: FakeMobileContentAuthTokenApi(fetchedAuthToken: nil),
                 cache: MobileContentAuthTokenCache(
-                    mobileContentAuthTokenKeychainAccessor: MockMobileContentAuthTokenKeychainAccessor(userId: userDetails?.id),
+                    mobileContentAuthTokenKeychainAccessor: FakeMobileContentAuthTokenKeychainAccessor(userId: userDetails?.id),
                     persistence: RealmRepositorySyncPersistence(
                         database: testsDiContainer.core.dataLayer.getSharedRealmDatabase(),
                         mapping: RealmMobileContentAuthTokenMapping()
@@ -400,11 +400,11 @@ extension GetUserAccountDetailsUseCaseTests {
         )
     }
     
-    private func getLocalizationServices() -> MockLocalizationServices {
+    private func getLocalizationServices() -> FakeLocalizationServices {
         
         let accountJoinedOn = "account.joinedOn"
         
-        let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
+        let localizableStrings: [FakeLocalizationServices.LocaleId: [FakeLocalizationServices.StringKey: String]] = [
             LanguageCodeDomainModel.english.value: [
                 accountJoinedOn: "Joined %@"
             ],
@@ -413,7 +413,7 @@ extension GetUserAccountDetailsUseCaseTests {
             ]
         ]
         
-        return MockLocalizationServices(localizableStrings: localizableStrings)
+        return FakeLocalizationServices(localizableStrings: localizableStrings)
     }
     
     private func getDateFormatter(locale: Locale) -> DateFormatter {

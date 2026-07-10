@@ -41,9 +41,9 @@ struct GetToolListItemStringsTests {
 
 extension GetToolListItemStringsTests {
     
-    private func getLocalizationServices() -> MockLocalizationServices {
+    private func getLocalizationServices() -> FakeLocalizationServices {
                 
-        let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
+        let localizableStrings: [FakeLocalizationServices.LocaleId: [FakeLocalizationServices.StringKey: String]] = [
             LanguageCodeDomainModel.english.value: [
                 keyOpenToolActionTitle: openToolInEnglish,
                 keyOpenToolDetailsActionTitle: toolDetailsInEnglish
@@ -54,6 +54,6 @@ extension GetToolListItemStringsTests {
             ]
         ]
         
-        return MockLocalizationServices(localizableStrings: localizableStrings)
+        return FakeLocalizationServices(localizableStrings: localizableStrings)
     }
 }

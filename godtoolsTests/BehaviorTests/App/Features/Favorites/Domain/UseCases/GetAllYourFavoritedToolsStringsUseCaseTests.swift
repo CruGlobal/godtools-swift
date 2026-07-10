@@ -43,7 +43,7 @@ extension GetAllYourFavoritedToolsStringsUseCaseTests {
         let stringKeys: [LocalizableStringKeys] = [.favoritesFavoriteToolsTitle]
 
         return GetAllYourFavoritedToolsStringsUseCase(
-            localizationServices: MockLocalizationServices(localizableStrings: MockLocalizationServices.getStrings(stringKeys: stringKeys, languages: [.english, .spanish]))
+            localizationServices: FakeLocalizationServices(localizableStrings: FakeLocalizationServices.getStrings(stringKeys: stringKeys, languages: [.english, .spanish]))
         )
     }
 }

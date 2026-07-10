@@ -224,7 +224,7 @@ extension GetTranslatedToolLanguageAvailabilityTests {
     }
     
     private func getLocalizationServices() -> LocalizationServicesInterface {
-        return MockLocalizationServices(
+        return FakeLocalizationServices(
             localizableStrings: [
                 LanguageCodeDomainModel.czech.rawValue: [
                     GetTranslatedToolLanguageAvailability.localizedKeyLanguageNotAvailable: Self.languageNotAvailable
@@ -244,7 +244,7 @@ extension GetTranslatedToolLanguageAvailabilityTests {
     
     private func getTranslatedLanguageName() -> GetTranslatedLanguageName {
         
-        let languageNames: [MockLocaleLanguageName.LanguageCode: [MockLocaleLanguageName.TranslateInLocaleId: MockLocaleLanguageName.LanguageName]] = [
+        let languageNames: [FakeLocaleLanguageName.LanguageCode: [FakeLocaleLanguageName.TranslateInLocaleId: FakeLocaleLanguageName.LanguageName]] = [
             LanguageCodeDomainModel.czech.rawValue: [
                 LanguageCodeDomainModel.czech.rawValue: "čeština",
                 LanguageCodeDomainModel.english.rawValue: "Czech",
@@ -271,9 +271,9 @@ extension GetTranslatedToolLanguageAvailabilityTests {
             ]
         ]
         
-        let localeLanguageName = MockLocaleLanguageName(languageNames: languageNames)
+        let localeLanguageName = FakeLocaleLanguageName(languageNames: languageNames)
         
-        let localizationServices = MockLocalizationServices(
+        let localizationServices = FakeLocalizationServices(
             localizableStrings: [
                 LanguageCodeDomainModel.czech.rawValue: [
                     GetTranslatedToolLanguageAvailability.localizedKeyLanguageNotAvailable: Self.languageNotAvailable
@@ -291,10 +291,10 @@ extension GetTranslatedToolLanguageAvailabilityTests {
         )
         
         return GetTranslatedLanguageName(
-            localizationLanguageName: MockLocalizationLanguageNameRepository(localizationServices: localizationServices),
+            localizationLanguageName: FakeLocalizationLanguageNameRepository(localizationServices: localizationServices),
             localeLanguageName: localeLanguageName,
-            localeRegionName: MockLocaleLanguageRegionName(regionNames: [:]),
-            localeScriptName: MockLocaleLanguageScriptName(scriptNames: [:])
+            localeRegionName: FakeLocaleLanguageRegionName(regionNames: [:]),
+            localeScriptName: FakeLocaleLanguageScriptName(scriptNames: [:])
         )
     }
     
@@ -317,7 +317,7 @@ extension GetTranslatedToolLanguageAvailabilityTests {
         ]
         
         let tracts: [RealmResource] = [
-            MockRealmResource.createTract(
+            FakeRealmResource.createTract(
                 addLanguages: [.english, .spanish],
                 fromLanguages: allLanguages,
                 id: toolId

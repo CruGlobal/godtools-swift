@@ -74,7 +74,7 @@ extension GetTranslatedToolCategoryTests {
         ]
         
         let tracts: [RealmResource] = [
-            MockRealmResource.createTract(
+            FakeRealmResource.createTract(
                 addLanguages: [.english, .spanish, .vietnamese],
                 fromLanguages: allLanguages,
                 id: Self.toolId,
@@ -104,11 +104,11 @@ extension GetTranslatedToolCategoryTests {
         )
     }
     
-    private func getLocalizationServices() -> MockLocalizationServices {
+    private func getLocalizationServices() -> FakeLocalizationServices {
         
         let toolCategoryKey: String = GetTranslatedToolCategory.localizedKeyPrefix + Self.attrCategory
         
-        let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
+        let localizableStrings: [FakeLocalizationServices.LocaleId: [FakeLocalizationServices.StringKey: String]] = [
             LanguageCodeDomainModel.english.value: [
                 toolCategoryKey: Self.toolCategoryInEnglish
             ],
@@ -120,6 +120,6 @@ extension GetTranslatedToolCategoryTests {
             ]
         ]
         
-        return MockLocalizationServices(localizableStrings: localizableStrings)
+        return FakeLocalizationServices(localizableStrings: localizableStrings)
     }
 }

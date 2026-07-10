@@ -49,7 +49,7 @@ extension GetSocialSignInStringsUseCaseTests {
         ]
 
         return GetSocialSignInStringsUseCase(
-            localizationServices: MockLocalizationServices(localizableStrings: MockLocalizationServices.getStrings(stringKeys: stringKeys, languages: [.english, .spanish]))
+            localizationServices: FakeLocalizationServices(localizableStrings: FakeLocalizationServices.getStrings(stringKeys: stringKeys, languages: [.english, .spanish]))
         )
     }
 }

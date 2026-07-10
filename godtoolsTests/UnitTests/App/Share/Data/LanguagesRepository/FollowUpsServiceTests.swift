@@ -123,7 +123,7 @@ extension FollowUpsServiceTests {
     private func getFollowUpsService(apiResult: Result<RequestDataResponse, Error>, persistence: any Persistence<FollowUpDataModel, FollowUpDataModel>) -> FollowUpsService {
                 
         return FollowUpsService(
-            api: MockFollowUpsApi(result: apiResult),
+            api: FakeFollowUpsApi(result: apiResult),
             cache: FailedFollowUpsCache(persistence: persistence)
         )
     }

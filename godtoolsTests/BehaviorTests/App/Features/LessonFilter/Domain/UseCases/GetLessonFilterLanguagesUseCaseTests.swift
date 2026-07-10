@@ -227,24 +227,24 @@ extension GetLessonFilterLanguagesUseCaseTests {
         let allLanguages: [RealmLanguage] = getAllLanguages()
         
         let tracts = [
-            MockRealmResource.createTract(addLanguages: [.english, .arabic, .czech, .spanish], fromLanguages: allLanguages),
-            MockRealmResource.createTract(addLanguages: [.spanish], fromLanguages: allLanguages),
-            MockRealmResource.createTract(addLanguages: [.afrikaans, .arabic], fromLanguages: allLanguages),
-            MockRealmResource.createTract(addLanguages: [.czech, .french, .hebrew], fromLanguages: allLanguages),
-            MockRealmResource.createTract(addLanguages: [.english, .chinese], fromLanguages: allLanguages),
-            MockRealmResource.createTract(addLanguages: [.english, .russian], fromLanguages: allLanguages),
-            MockRealmResource.createTract(addLanguages: [.english, .portuguese], fromLanguages: allLanguages),
-            MockRealmResource.createTract(addLanguages: [.english, .latvian], fromLanguages: allLanguages)
+            FakeRealmResource.createTract(addLanguages: [.english, .arabic, .czech, .spanish], fromLanguages: allLanguages),
+            FakeRealmResource.createTract(addLanguages: [.spanish], fromLanguages: allLanguages),
+            FakeRealmResource.createTract(addLanguages: [.afrikaans, .arabic], fromLanguages: allLanguages),
+            FakeRealmResource.createTract(addLanguages: [.czech, .french, .hebrew], fromLanguages: allLanguages),
+            FakeRealmResource.createTract(addLanguages: [.english, .chinese], fromLanguages: allLanguages),
+            FakeRealmResource.createTract(addLanguages: [.english, .russian], fromLanguages: allLanguages),
+            FakeRealmResource.createTract(addLanguages: [.english, .portuguese], fromLanguages: allLanguages),
+            FakeRealmResource.createTract(addLanguages: [.english, .latvian], fromLanguages: allLanguages)
         ]
         
         let lessons = [
-            MockRealmResource.createLesson(addLanguages: [.english], fromLanguages: allLanguages),
-            MockRealmResource.createLesson(addLanguages: [.english, .spanish], fromLanguages: allLanguages),
-            MockRealmResource.createLesson(addLanguages: [.afrikaans, .spanish], fromLanguages: allLanguages),
-            MockRealmResource.createLesson(addLanguages: [.czech, .french], fromLanguages: allLanguages),
-            MockRealmResource.createLesson(addLanguages: [.english, .french, .spanish], fromLanguages: allLanguages),
-            MockRealmResource.createLesson(addLanguages: [.english], fromLanguages: allLanguages),
-            MockRealmResource.createLesson(addLanguages: [.english], fromLanguages: allLanguages)
+            FakeRealmResource.createLesson(addLanguages: [.english], fromLanguages: allLanguages),
+            FakeRealmResource.createLesson(addLanguages: [.english, .spanish], fromLanguages: allLanguages),
+            FakeRealmResource.createLesson(addLanguages: [.afrikaans, .spanish], fromLanguages: allLanguages),
+            FakeRealmResource.createLesson(addLanguages: [.czech, .french], fromLanguages: allLanguages),
+            FakeRealmResource.createLesson(addLanguages: [.english, .french, .spanish], fromLanguages: allLanguages),
+            FakeRealmResource.createLesson(addLanguages: [.english], fromLanguages: allLanguages),
+            FakeRealmResource.createLesson(addLanguages: [.english], fromLanguages: allLanguages)
         ]
         
         return allLanguages + tracts + lessons
@@ -290,13 +290,13 @@ extension GetLessonFilterLanguagesUseCaseTests {
         )
     }
     
-    private func getLocalizationServices() -> MockLocalizationServices {
+    private func getLocalizationServices() -> FakeLocalizationServices {
         
-        let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
+        let localizableStrings: [FakeLocalizationServices.LocaleId: [FakeLocalizationServices.StringKey: String]] = [
             LanguageCodeDomainModel.english.rawValue: [LocalizableStringKeys.lessonsFilterLessonsAvailable.key: englishLessonsAvailableText]
         ]
         
-        return MockLocalizationServices.createLanguageNamesLocalizationServices(
+        return FakeLocalizationServices.createLanguageNamesLocalizationServices(
             addAdditionalLocalizableStrings: localizableStrings
         )
     }
@@ -304,10 +304,10 @@ extension GetLessonFilterLanguagesUseCaseTests {
     private func getTranslatedLanguageName() -> GetTranslatedLanguageName {
         
         let getTranslatedLanguageName = GetTranslatedLanguageName(
-            localizationLanguageName: MockLocalizationLanguageNameRepository(localizationServices: getLocalizationServices()),
-            localeLanguageName: MockLocaleLanguageName.defaultMockLocaleLanguageName(),
-            localeRegionName: MockLocaleLanguageRegionName(regionNames: [:]),
-            localeScriptName: MockLocaleLanguageScriptName(scriptNames: [:])
+            localizationLanguageName: FakeLocalizationLanguageNameRepository(localizationServices: getLocalizationServices()),
+            localeLanguageName: FakeLocaleLanguageName.getDefault(),
+            localeRegionName: FakeLocaleLanguageRegionName(regionNames: [:]),
+            localeScriptName: FakeLocaleLanguageScriptName(scriptNames: [:])
         )
         
         return getTranslatedLanguageName
@@ -315,6 +315,6 @@ extension GetLessonFilterLanguagesUseCaseTests {
     
     private func getStringWithLocaleCount() -> StringWithLocaleCountInterface {
         
-        return MockStringWithLocaleCount()
+        return FakeStringWithLocaleCount()
     }
 }

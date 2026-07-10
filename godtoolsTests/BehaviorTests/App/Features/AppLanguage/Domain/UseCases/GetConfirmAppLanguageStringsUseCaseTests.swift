@@ -57,14 +57,14 @@ extension GetConfirmAppLanguageStringsUseCaseTests {
         ]
 
         let getTranslatedLanguageName = GetTranslatedLanguageName(
-            localizationLanguageName: MockLocalizationLanguageNameRepository(localizationServices: MockLocalizationServices.createLanguageNamesLocalizationServices()),
-            localeLanguageName: MockLocaleLanguageName.defaultMockLocaleLanguageName(),
-            localeRegionName: MockLocaleLanguageRegionName(regionNames: [:]),
-            localeScriptName: MockLocaleLanguageScriptName(scriptNames: [:])
+            localizationLanguageName: FakeLocalizationLanguageNameRepository(localizationServices: FakeLocalizationServices.createLanguageNamesLocalizationServices()),
+            localeLanguageName: FakeLocaleLanguageName.getDefault(),
+            localeRegionName: FakeLocaleLanguageRegionName(regionNames: [:]),
+            localeScriptName: FakeLocaleLanguageScriptName(scriptNames: [:])
         )
 
         return GetConfirmAppLanguageStringsUseCase(
-            localizationServices: MockLocalizationServices(localizableStrings: localizableStrings),
+            localizationServices: FakeLocalizationServices(localizableStrings: localizableStrings),
             getTranslatedLanguageName: getTranslatedLanguageName
         )
     }

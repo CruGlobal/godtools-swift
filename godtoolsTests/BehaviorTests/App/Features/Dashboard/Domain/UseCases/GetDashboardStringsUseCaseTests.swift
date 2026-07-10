@@ -45,7 +45,7 @@ extension GetDashboardStringsUseCaseTests {
         let stringKeys: [LocalizableStringKeys] = [.toolMenuItemLessons, .myTools, .toolMenuItemTools]
 
         return GetDashboardStringsUseCase(
-            localizationServices: MockLocalizationServices(localizableStrings: MockLocalizationServices.getStrings(stringKeys: stringKeys, languages: [.english, .spanish]))
+            localizationServices: FakeLocalizationServices(localizableStrings: FakeLocalizationServices.getStrings(stringKeys: stringKeys, languages: [.english, .spanish]))
         )
     }
 }
