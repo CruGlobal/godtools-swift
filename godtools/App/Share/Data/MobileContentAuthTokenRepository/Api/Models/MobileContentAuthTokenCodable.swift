@@ -10,9 +10,9 @@ import Foundation
 
 struct MobileContentAuthTokenCodable: Codable, Sendable {
     
+    let id: String
     let appleRefreshToken: String?
     let expirationDate: Date?
-    let id: String
     let token: String
     let userId: String
     
@@ -61,9 +61,9 @@ extension MobileContentAuthTokenCodable {
     func toModel() -> MobileContentAuthTokenDataModel {
     
         return MobileContentAuthTokenDataModel(
+            id: id,
             appleRefreshToken: appleRefreshToken,
             expirationDate: expirationDate,
-            id: id,
             token: token,
             userId: userId
         )

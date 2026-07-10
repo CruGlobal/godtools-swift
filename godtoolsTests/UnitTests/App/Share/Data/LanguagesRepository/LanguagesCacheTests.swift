@@ -13,10 +13,10 @@ import RepositorySync
 import SwiftData
 
 struct LanguagesCacheTests {
-        
+    
     @available(iOS 17.4, *)
     @Test
-    func getLanguageByCode() async throws {
+    func getLanguageByCodeExists() async throws {
         
         let persistence = try await getPersistence()
         
@@ -25,6 +25,19 @@ struct LanguagesCacheTests {
         let language: LanguageDataModel? = try cache.getLanguageByCode(code: LanguageCodeDomainModel.english.rawValue)
         
         #expect(language?.id == "c")
+    }
+        
+    @available(iOS 17.4, *)
+    @Test
+    func getLanguageByCodeIsNil() async throws {
+        
+        let persistence = try await getPersistence()
+        
+        let cache = getCache(persistence: persistence)
+                                
+        let language: LanguageDataModel? = try cache.getLanguageByCode(code: "no_language_code")
+        
+        #expect(language == nil)
     }
 
     @available(iOS 17.4, *)
