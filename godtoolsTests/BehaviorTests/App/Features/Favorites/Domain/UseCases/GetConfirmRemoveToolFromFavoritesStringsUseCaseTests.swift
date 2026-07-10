@@ -96,8 +96,8 @@ extension GetConfirmRemoveToolFromFavoritesStringsUseCaseTests {
             attrDefaultLocale: LanguageCodeDomainModel.english.rawValue
         )
 
-        let englishTranslation: RealmTranslation = FakeRealmTranslation.createTranslation(translatedName: Self.toolNameInEnglish)
-        let spanishTranslation: RealmTranslation = FakeRealmTranslation.createTranslation(translatedName: Self.toolNameInSpanish)
+        let englishTranslation: RealmTranslation = getRealmTranslation(translatedName: Self.toolNameInEnglish)
+        let spanishTranslation: RealmTranslation = getRealmTranslation(translatedName: Self.toolNameInSpanish)
 
         englishTranslation.language = englishLanguage
         spanishTranslation.language = spanishLanguage
@@ -118,5 +118,12 @@ extension GetConfirmRemoveToolFromFavoritesStringsUseCaseTests {
         )
         
         return RealmLanguage.createNewFrom(model: language.toModel())
+    }
+
+    private func getRealmTranslation(translatedName: String) -> RealmTranslation {
+
+        let translation = TranslationCodable.random(translatedName: translatedName)
+
+        return RealmTranslation.createNewFrom(model: translation.toModel())
     }
 }

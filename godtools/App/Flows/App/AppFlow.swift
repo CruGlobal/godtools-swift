@@ -31,6 +31,7 @@ final class AppFlow: RootFlow {
     private var appLaunchedFromDeepLink: ParsedDeepLinkType?
     private var cancellableForShouldPromptForOptInNotification: AnyCancellable?
     private var cancellables: Set<AnyCancellable> = Set()
+    private var didFinishLaunchingFromTerminatedState: Bool = false
     
     @Published private var appLanguage = AppLanguageDomainModel.english
             
@@ -91,7 +92,7 @@ final class AppFlow: RootFlow {
                     return
                 }
                 
-                if !weakSelf.appLaunchObserver.appLaunched {
+                if !weakSelf.didFinishLaunchingFromTerminatedState {
                     weakSelf.appLaunchedFromDeepLink = deepLink
                 }
                 else {
@@ -189,6 +190,8 @@ final class AppFlow: RootFlow {
                     }
                     
                     loadInitialData()
+                    
+                    didFinishLaunchingFromTerminatedState = true
                 }
                 
             case .fromBackgroundState(let secondsInBackground):

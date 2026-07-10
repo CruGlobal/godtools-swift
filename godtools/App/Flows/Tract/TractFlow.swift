@@ -130,7 +130,11 @@ class TractFlow: GTFlow {
                 let languageSelectorView: NavBarSelectorView?
                 
                 if languageNames.count > 1 {
-                    languageSelectorView = self?.getNewLanguageSelectorView(view: tractView, viewModel: viewModel, navBarLayoutDirection: navBarLayoutDirection)
+                    languageSelectorView = self?.getNewLanguageSelectorView(
+                        view: tractView,
+                        viewModel: viewModel,
+                        navBarLayoutDirection: navBarLayoutDirection
+                    )
                 }
                 else {
                     languageSelectorView = nil
