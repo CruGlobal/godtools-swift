@@ -1,5 +1,5 @@
 //
-//  TranslationsCacheTests.swift
+//  RealmTranslationsCacheTests.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/23/25.
@@ -9,11 +9,10 @@
 import Testing
 @testable import godtools
 import Foundation
-import SwiftData
+import RealmSwift
 import RepositorySync
-// TODO: Enable when moving to SwiftDatabase. ~Levi
-/*
-struct TranslationsCacheTests {
+
+struct RealmTranslationsCacheTests {
     
     private static let resourceId: String = "0"
     private static let englishLanguageId: String = "0"
@@ -26,7 +25,7 @@ struct TranslationsCacheTests {
         let languageId: String?
         let expectedVersion: Int
         
-        init(expectedVersion: Int, languageId: String? = nil, resourceId: String = TranslationsCacheTests.resourceId) {
+        init(expectedVersion: Int, languageId: String? = nil, resourceId: String = RealmTranslationsCacheTests.resourceId) {
             
             self.resourceId = resourceId
             self.languageId = languageId
@@ -34,7 +33,6 @@ struct TranslationsCacheTests {
         }
     }
     
-    @available(iOS 17.4, *)
     @Test()
     func getEnglishTranslation() async throws {
         
@@ -49,7 +47,6 @@ struct TranslationsCacheTests {
         #expect(translation.resourceDataModel?.id == Self.resourceId)
     }
 
-    @available(iOS 17.4, *)
     @Test(arguments: [
         TestArgument(expectedVersion: 12, languageId: englishLanguageId),
         TestArgument(expectedVersion: 122, languageId: spanishLanguageId),
@@ -70,32 +67,17 @@ struct TranslationsCacheTests {
     }
 }
 
-extension TranslationsCacheTests {
+extension RealmTranslationsCacheTests {
     
-    @available(iOS 17.4, *)
     private func getCache() throws -> TranslationsCache {
+        
+        let testsDiContainer = try TestsDiContainer(addRealmObjects: getRealmDatabaseObjects())
                 
-        let appConfig = TestsAppConfig()
-                
-        let database = try appConfig.getSwiftDatabase()
-                
-        let persistence = SwiftRepositorySyncPersistence(
-            database: database,
-            mapping: SwiftTranslationMapping()
+        let persistence = RealmRepositorySyncPersistence(
+            database: testsDiContainer.core.dataLayer.getSharedRealmDatabase(),
+            mapping: RealmTranslationMapping()
         )
-        
-        let context: ModelContext = database.openContext()
-        
-        let addObjectsToDatabase = getSwiftDatabaseObjects()
-        
-        for object in addObjectsToDatabase {
-            context.insert(object)
-        }
-        
-        if context.hasChanges {
-            try context.save()
-        }
-        
+                
         return TranslationsCache(
             persistence: persistence
         )
@@ -159,52 +141,43 @@ extension TranslationsCacheTests {
         ]
     }
     
-    @available(iOS 17.4, *)
-    private func getSwiftDatabaseObjects() -> [any IdentifiableSwiftDataObject] {
+    private func getRealmDatabaseObjects() -> [IdentifiableRealmObject] {
         
-        let english = SwiftLanguage.createNewFrom(model: getEnglishLanguage())
-        let spanish = SwiftLanguage.createNewFrom(model: getSpanishLanguage())
-        let vietnamese = SwiftLanguage.createNewFrom(model: getVietnameseLanguage())
+        let english = RealmLanguage.createNewFrom(model: getEnglishLanguage())
+        let spanish = RealmLanguage.createNewFrom(model: getSpanishLanguage())
+        let vietnamese = RealmLanguage.createNewFrom(model: getVietnameseLanguage())
         
-        let resource = SwiftResource()
-        resource.id = Self.resourceId
-        resource.languages = [english, spanish, vietnamese]
+        let resource: RealmResource = FakeRealmResource.createTract(
+            addLanguages: [.english, .spanish, .vietnamese],
+            fromLanguages: [english, spanish, vietnamese],
+            id: Self.resourceId
+        )
         
         let englishTranslations: [TranslationDataModel] = getEnglishTranslations()
         let spanishTranslations: [TranslationDataModel] = getSpanishTranslations()
         let vietnameseTranslations: [TranslationDataModel] = getVietnameseTranslations()
-                        
-        for translation in englishTranslations {
-            
-            let swiftTranslation = SwiftTranslation.createNewFrom(model: translation)
-            
-            swiftTranslation.language = english
-            swiftTranslation.resource = resource
-            
-            resource.latestTranslations.append(swiftTranslation)
+
+        for translationModel in englishTranslations {
+            let translation = RealmTranslation.createNewFrom(model: translationModel)
+            translation.language = english
+            translation.resource = resource
+            resource.addLatestTranslation(translation: translation)
+        }
+
+        for translationModel in spanishTranslations {
+            let translation = RealmTranslation.createNewFrom(model: translationModel)
+            translation.language = spanish
+            translation.resource = resource
+            resource.addLatestTranslation(translation: translation)
+        }
+
+        for translationModel in vietnameseTranslations {
+            let translation = RealmTranslation.createNewFrom(model: translationModel)
+            translation.language = vietnamese
+            translation.resource = resource
+            resource.addLatestTranslation(translation: translation)
         }
         
-        for translation in spanishTranslations {
-            
-            let swiftTranslation = SwiftTranslation.createNewFrom(model: translation)
-            
-            swiftTranslation.language = spanish
-            swiftTranslation.resource = resource
-            
-            resource.latestTranslations.append(swiftTranslation)
-        }
-        
-        for translation in vietnameseTranslations {
-            
-            let swiftTranslation = SwiftTranslation.createNewFrom(model: translation)
-            
-            swiftTranslation.language = vietnamese
-            swiftTranslation.resource = resource
-            
-            resource.latestTranslations.append(swiftTranslation)
-        }
-                
         return [resource]
     }
 }
-*/

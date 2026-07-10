@@ -108,13 +108,13 @@ extension GetTranslatedToolNameTests {
             )
         ]
         
-        let tract0EnglishTranslation: RealmTranslation = FakeRealmTranslation.createTranslation(
+        let tract0EnglishTranslation: RealmTranslation = getRealmTranslation(
             translatedName: Self.toolNameInEnglish
         )
-        let tract0SpanishTranslation: RealmTranslation = FakeRealmTranslation.createTranslation(
+        let tract0SpanishTranslation: RealmTranslation = getRealmTranslation(
             translatedName: Self.toolNameInSpanish
         )
-        let tract0VietnameseTranslation: RealmTranslation = FakeRealmTranslation.createTranslation(
+        let tract0VietnameseTranslation: RealmTranslation = getRealmTranslation(
             translatedName: Self.toolNameInVietnamese
         )
         
@@ -139,5 +139,12 @@ extension GetTranslatedToolNameTests {
         )
 
         return RealmLanguage.createNewFrom(model: language.toModel())
+    }
+
+    private func getRealmTranslation(translatedName: String) -> RealmTranslation {
+
+        let translation = TranslationCodable.random(translatedName: translatedName)
+
+        return RealmTranslation.createNewFrom(model: translation.toModel())
     }
 }
