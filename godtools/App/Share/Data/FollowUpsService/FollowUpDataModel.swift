@@ -37,8 +37,4 @@ struct FollowUpDataModel: Sendable {
     func toFollowUp() -> FollowUp {
         return FollowUp(name: name, email: email, destinationId: destinationId, languageId: languageId)
     }
-    
-    static func random() -> FollowUpDataModel {
-        return FollowUpDataModel(id: UUID().uuidString, name: "", email: "", destinationId: 0, languageId: 0)
-    }
 }

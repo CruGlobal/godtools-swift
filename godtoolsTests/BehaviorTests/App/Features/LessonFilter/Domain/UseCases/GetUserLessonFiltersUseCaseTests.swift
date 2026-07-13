@@ -52,14 +52,16 @@ struct GetUserLessonFiltersUseCaseTests {
             
             getUserLessonFiltersUseCase
                 .execute(appLanguage: appLanguageSpanish)
-                .sink { (userLessonFilters: UserLessonFiltersDomainModel) in
-                        
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { (userLessonFilters: UserLessonFiltersDomainModel) in
+                    
                     lessonLanguageFilterRef = userLessonFilters.languageFilter
                              
                     // When finished be sure to call:
                     timeoutTask.cancel()
                     continuation.resume(returning: ())
-                }
+                })
                 .store(in: &cancellables)
         }
         
@@ -115,14 +117,16 @@ struct GetUserLessonFiltersUseCaseTests {
             
             getUserLessonFiltersUseCase
                 .execute(appLanguage: appLanguageFrench)
-                .sink { (userLessonFilters: UserLessonFiltersDomainModel) in
-                        
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { (userLessonFilters: UserLessonFiltersDomainModel) in
+                    
                     lessonLanguageFilterRef = userLessonFilters.languageFilter
                                      
                     // When finished be sure to call:
                     timeoutTask.cancel()
                     continuation.resume(returning: ())
-                }
+                })
                 .store(in: &cancellables)
         }
         
@@ -172,8 +176,10 @@ struct GetUserLessonFiltersUseCaseTests {
             
             getUserLessonFiltersUseCase
                 .execute(appLanguage: appLanguageFrench)
-                .sink { (userLessonFilters: UserLessonFiltersDomainModel) in
-                                        
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { (userLessonFilters: UserLessonFiltersDomainModel) in
+                    
                     triggerCount += 1
                                             
                     if triggerCount == 1 {
@@ -194,7 +200,7 @@ struct GetUserLessonFiltersUseCaseTests {
                         timeoutTask.cancel()
                         continuation.resume(returning: ())
                     }
-                }
+                })
                 .store(in: &cancellables)
         }
                 
@@ -223,6 +229,7 @@ extension GetUserLessonFiltersUseCaseTests {
     private func getUserLessonFiltersUseCase(testsDiContainer: TestsDiContainer) -> GetUserLessonFiltersUseCase {
                 
         return GetUserLessonFiltersUseCase(
+            languagesRepository: testsDiContainer.core.dataLayer.getLanguagesRepository(),
             userLessonFiltersRepository: testsDiContainer.core.dataLayer.getUserLessonFiltersRepository(),
             getLessonFilterLanguage: getLessonFilterLangauge(testsDiContainer: testsDiContainer)
         )

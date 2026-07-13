@@ -12,15 +12,13 @@ import SwiftUI
 import Combine
 
 @MainActor
-class ToolSettingsShareableItemViewModel: ObservableObject {
+final class ToolSettingsShareableItemViewModel: ObservableObject {
     
     private let shareable: ShareableDomainModel
     private let getShareableImageUseCase: GetShareableImageUseCase
-    
-    private var cancellables: Set<AnyCancellable> = Set()
-    
-    @Published var imageData: OptionalImageData?
-    @Published var title: String = ""
+            
+    @Published private(set) var imageData: OptionalImageData?
+    @Published private(set) var title: String = ""
     
     init(shareable: ShareableDomainModel, getShareableImageUseCase: GetShareableImageUseCase) {
         
@@ -28,21 +26,31 @@ class ToolSettingsShareableItemViewModel: ObservableObject {
         self.getShareableImageUseCase = getShareableImageUseCase
         self.title = shareable.title
         
-        getShareableImageUseCase
-            .execute(shareable: shareable)
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { _ in
-                
-            }, receiveValue: { [weak self] (imageDomainModel: ShareableImageDomainModel?) in
-                
-                if let imageData = imageDomainModel?.imageData, let uiImage = UIImage(data: imageData) {
-                     
-                    self?.imageData = OptionalImageData(
-                        image: Image(uiImage: uiImage),
-                        imageIdForAnimationChange: imageDomainModel?.dataModelId
-                    )
-                }
-            })
-            .store(in: &cancellables)
+        loadShareableImage()
+    }
+    
+    private func loadShareableImage() {
+        
+        do {
+            
+            let shareableImage = try getShareableImageUseCase.execute(shareable: shareable)
+            
+            didRefreshShareableImage(shareableImage: shareableImage)
+        }
+        catch _ {
+            
+        }
+    }
+    
+    private func didRefreshShareableImage(shareableImage: ShareableImageDomainModel?) {
+        
+        guard let data = shareableImage?.imageData, let uiImage = UIImage(data: data) else {
+            return
+        }
+        
+        imageData = OptionalImageData(
+            image: Image(uiImage: uiImage),
+            imageIdForAnimationChange: shareableImage?.dataModelId
+        )
     }
 }

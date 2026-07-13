@@ -55,8 +55,8 @@ extension ResourcesCache {
         
         if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
             
-            return try SwiftResourcesCacheSync(
-                swiftDatabase: swiftPersistence.database,
+            return try await SwiftResourcesCacheSync(
+                container: swiftPersistence.database.container.modelContainer,
                 trackDownloadedTranslationsRepository: trackDownloadedTranslationsRepository
             )
             .syncResources(

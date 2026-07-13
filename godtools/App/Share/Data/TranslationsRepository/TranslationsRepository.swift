@@ -17,7 +17,8 @@ final class TranslationsRepository {
     private let cdn: TranslationsCdnInterface
     private let cache: TranslationsCache
     private let infoPlist: InfoPlistInterface
-    private let resourcesFileCache: ResourcesSHA256FileCache
+    private let resourcesFileCache: ResourcesFileCache
+    private let resourcesSHA256FileCache: ResourcesSHA256FileCacheInterface
     private let trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
     private let remoteConfigRepository: RemoteConfigRepository
     
@@ -26,7 +27,8 @@ final class TranslationsRepository {
         cdn: TranslationsCdnInterface,
         cache: TranslationsCache,
         infoPlist: InfoPlistInterface,
-        resourcesFileCache: ResourcesSHA256FileCache,
+        resourcesFileCache: ResourcesFileCache,
+        resourcesSHA256FileCache: ResourcesSHA256FileCacheInterface,
         trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository,
         remoteConfigRepository: RemoteConfigRepository
     ) {
@@ -36,6 +38,7 @@ final class TranslationsRepository {
         self.cache = cache
         self.infoPlist = infoPlist
         self.resourcesFileCache = resourcesFileCache
+        self.resourcesSHA256FileCache = resourcesSHA256FileCache
         self.trackDownloadedTranslationsRepository = trackDownloadedTranslationsRepository
         self.remoteConfigRepository = remoteConfigRepository
     }
@@ -447,7 +450,7 @@ extension TranslationsRepository {
             )
         }
         
-        return try await resourcesFileCache.storeTranslationFile(
+        return try await resourcesSHA256FileCache.storeTranslationFile(
             translationId: translation.id,
             fileName: fileName,
             fileData: response.data
@@ -461,7 +464,7 @@ extension TranslationsRepository {
             requestPriority: requestPriority
         )
         
-        let files: [FileCacheLocation] = try await resourcesFileCache.storeTranslationZipFile(
+        let files: [FileCacheLocation] = try await resourcesSHA256FileCache.storeTranslationZipFile(
             translationId: translation.id,
             zipFileData: response.data
         )

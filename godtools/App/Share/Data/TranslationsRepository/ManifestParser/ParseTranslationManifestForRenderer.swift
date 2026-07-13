@@ -13,7 +13,7 @@ final class ParseTranslationManifestForRenderer: TranslationManifestParser {
          
     init(
         infoPlist: InfoPlistInterface,
-        resourcesFileCache: ResourcesSHA256FileCache,
+        resourcesFileCache: ResourcesFileCache,
         remoteConfigRepository: RemoteConfigRepository
     ) {
             

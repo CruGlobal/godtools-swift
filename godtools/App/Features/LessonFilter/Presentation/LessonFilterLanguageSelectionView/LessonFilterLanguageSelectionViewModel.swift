@@ -92,14 +92,16 @@ final class LessonFilterLanguageSelectionViewModel: ObservableObject {
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (userFilters: UserLessonFiltersDomainModel) in
-                                
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (userFilters: UserLessonFiltersDomainModel) in
+                
                 guard self?.selectedLanguage == nil, let languageFilter = userFilters.languageFilter else {
                     return
                 }
                 
                 self?.selectedLanguage = languageFilter
-            }
+            })
             .store(in: &cancellables)
         
         Publishers.CombineLatest(

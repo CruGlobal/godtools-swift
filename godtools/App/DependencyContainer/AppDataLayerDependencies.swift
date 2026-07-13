@@ -186,6 +186,7 @@ final class AppDataLayerDependencies {
         let cache = AttachmentsCache(
             persistence: persistence,
             resourcesFileCache: getResourcesFileCache(),
+            resourcesSHA256FileCache: getResourcesSHA256FileCache(),
             bundle: AttachmentsBundleCache()
         )
         
@@ -477,8 +478,18 @@ final class AppDataLayerDependencies {
         return sharedAppConfig.urlRequestsEnabled ? RequestSender() : DoesNotSendUrlRequestSender()
     }
     
-    func getResourcesFileCache() -> ResourcesSHA256FileCache {
-        return ResourcesSHA256FileCache(
+    func getResourcesFileCache() -> ResourcesFileCache {
+        return ResourcesFileCache()
+    }
+    
+    func getResourcesSHA256FileCache() -> ResourcesSHA256FileCacheInterface {
+                
+        if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
+            return ResourcesSHA256FileCache(container: database.container.modelContainer, fileCache: getResourcesFileCache())
+        }
+        
+        return RealmResourcesSHA256FileCache(
+            fileCache: getResourcesFileCache(),
             realmDatabase: getSharedRealmDatabase(),
             realmDataWrite: getRealmDataWrite()
         )
@@ -704,6 +715,7 @@ final class AppDataLayerDependencies {
             cache: cache,
             infoPlist: getInfoPlist(),
             resourcesFileCache: getResourcesFileCache(),
+            resourcesSHA256FileCache: getResourcesSHA256FileCache(),
             trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository(),
             remoteConfigRepository: getRemoteConfigRepository()
         )
@@ -718,7 +730,7 @@ final class AppDataLayerDependencies {
     func getUITestsInitialDataLoader() -> UITestsInitialDataLoader {
         return UITestsInitialDataLoader(
             realmDatabase: getSharedRealmDatabase(),
-            resourcesFileCache: getResourcesFileCache()
+            resourcesFileCache: getResourcesSHA256FileCache()
         )
     }
 
