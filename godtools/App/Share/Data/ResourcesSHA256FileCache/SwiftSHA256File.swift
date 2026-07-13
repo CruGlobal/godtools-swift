@@ -18,12 +18,12 @@ enum SwiftSHA256FileV1 {
  
     @Model
     class SwiftSHA256File: IdentifiableSwiftDataObject {
-                
-        var attachments: [SwiftAttachment] = Array<SwiftAttachment>()
-        var translations: [SwiftTranslation] = Array<SwiftTranslation>()
-        
+                        
         @Attribute(.unique) var id: String = ""
         @Attribute(.unique) var sha256WithPathExtension: String = ""
+        
+        @Relationship(deleteRule: .noAction, inverse: \SwiftAttachment.sha256File) var attachments: [SwiftAttachment] = Array<SwiftAttachment>()
+        @Relationship(deleteRule: .noAction, inverse: \SwiftTranslation.sha256File) var translations: [SwiftTranslation] = Array<SwiftTranslation>()
         
         init() {
             

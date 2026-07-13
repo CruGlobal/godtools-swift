@@ -34,6 +34,7 @@ enum SwiftTranslationV1 {
         
         @Relationship(deleteRule: .nullify) var resource: SwiftResource?
         @Relationship(deleteRule: .nullify) var language: SwiftLanguage?
+        @Relationship(deleteRule: .nullify) var sha256File: SwiftSHA256File?
         
         init() {
             

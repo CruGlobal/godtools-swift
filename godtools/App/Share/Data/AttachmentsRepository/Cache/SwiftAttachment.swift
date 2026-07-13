@@ -29,6 +29,7 @@ enum SwiftAttachmentV1 {
         @Attribute(.unique) var id: String = ""
         
         @Relationship(deleteRule: .nullify) var resource: SwiftResource?
+        @Relationship(deleteRule: .nullify) var sha256File: SwiftSHA256File?
         
         init() {
             
