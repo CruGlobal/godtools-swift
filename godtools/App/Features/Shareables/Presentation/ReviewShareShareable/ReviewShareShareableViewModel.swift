@@ -58,29 +58,37 @@ final class ReviewShareShareableViewModel: ObservableObject {
                 self?.didSetAppLanguage(appLanguage: appLanguage)
             })
             .store(in: &cancellables)
-
-        getShareableImageUseCase
-            .execute(shareable: shareable)
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { _ in
-                
-            }, receiveValue: { [weak self] (domainModel: ShareableImageDomainModel?) in
-              
-                if let imageData = domainModel?.imageData, let uiImage = UIImage(data: imageData) {
-                         
-                    self?.imageToShare = uiImage
-                    
-                    self?.imagePreviewData = OptionalImageData(
-                        image: Image(uiImage: uiImage),
-                        imageIdForAnimationChange: domainModel?.dataModelId
-                    )
-                }
-            })
-            .store(in: &cancellables)
+        
+        loadShareableImage()
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+    }
+    
+    private func loadShareableImage() {
+        
+        do {
+            
+            let shareableImage = try getShareableImageUseCase.execute(shareable: shareable)
+            
+            didRefreshShareableImage(shareableImage: shareableImage)
+        }
+        catch _ {
+            
+        }
+    }
+    
+    private func didRefreshShareableImage(shareableImage: ShareableImageDomainModel?) {
+        
+        guard let data = shareableImage?.imageData, let uiImage = UIImage(data: data) else {
+            return
+        }
+        
+        imagePreviewData = OptionalImageData(
+            image: Image(uiImage: uiImage),
+            imageIdForAnimationChange: shareableImage?.dataModelId
+        )
     }
 
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {

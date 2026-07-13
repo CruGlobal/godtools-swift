@@ -13,9 +13,9 @@ import RealmSwift
 final class UITestsInitialDataLoader {
     
     private let realmDatabase: RealmDatabase
-    private let resourcesFileCache: ResourcesSHA256FileCache
+    private let resourcesFileCache: ResourcesSHA256FileCacheInterface
     
-    init(realmDatabase: RealmDatabase, resourcesFileCache: ResourcesSHA256FileCache) {
+    init(realmDatabase: RealmDatabase, resourcesFileCache: ResourcesSHA256FileCacheInterface) {
         
         self.realmDatabase = realmDatabase
         self.resourcesFileCache = resourcesFileCache
