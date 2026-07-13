@@ -169,11 +169,13 @@ final class LessonsViewModel: ObservableObject {
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (userFilters: UserLessonFiltersDomainModel) in
+            .sink(receiveCompletion: { _ in
+                    
+            }, receiveValue: { [weak self] (userFilters: UserLessonFiltersDomainModel) in
                 
                 self?.languageFilterButtonTitle = userFilters.languageFilter?.languageNameTranslatedInAppLanguage ?? ""
                 self?.lessonFilterLanguageSelection = userFilters.languageFilter
-            }
+            })
             .store(in: &cancellables)
     }
     

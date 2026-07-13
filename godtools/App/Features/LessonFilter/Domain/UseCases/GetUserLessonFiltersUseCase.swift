@@ -11,42 +11,50 @@ import Combine
 
 final class GetUserLessonFiltersUseCase {
     
+    private let languagesRepository: LanguagesRepository
     private let userLessonFiltersRepository: UserLessonFiltersRepository
     private let getLessonFilterLanguage: GetLessonFilterLanguage
     
-    init(userLessonFiltersRepository: UserLessonFiltersRepository, getLessonFilterLanguage: GetLessonFilterLanguage) {
+    init(
+        languagesRepository: LanguagesRepository,
+        userLessonFiltersRepository: UserLessonFiltersRepository,
+        getLessonFilterLanguage: GetLessonFilterLanguage
+    ) {
         
+        self.languagesRepository = languagesRepository
         self.userLessonFiltersRepository = userLessonFiltersRepository
         self.getLessonFilterLanguage = getLessonFilterLanguage
     }
     
-    @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<UserLessonFiltersDomainModel, Never> {
+    @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<UserLessonFiltersDomainModel, Error> {
         
-        return userLessonFiltersRepository
-            .getUserLessonLanguageFilterChangedPublisher()
-            .map { _ in
+        return Publishers.CombineLatest(
+            languagesRepository.observeCollectionChangesPublisher(),
+            userLessonFiltersRepository.observeCollectionChangesPublisher()
+        )
+        .map { (languagesChanged: Void, lessonFiltersChanged: Void) in
+            
+            let languageId: String? = self.userLessonFiltersRepository.getUserLessonLanguageFilter()?.languageId
+            
+            if let languageId = languageId,
+               let languageFilter = self.getLessonFilterLanguage.getLessonLanguageFilterFromLanguageId(languageId: languageId, translatedInAppLanguage: appLanguage) {
                 
-                let languageId: String? = self.userLessonFiltersRepository.getUserLessonLanguageFilter()?.languageId
-                
-                if let languageId = languageId,
-                   let languageFilter = self.getLessonFilterLanguage.getLessonLanguageFilterFromLanguageId(languageId: languageId, translatedInAppLanguage: appLanguage) {
-                    
-                    return languageFilter
-                }
-                
-                return self.getLessonFilterLanguage.getLessonLanguageFilterFromLanguageCode(
-                    languageCode: appLanguage,
-                    translatedInAppLanguage: appLanguage
-                )
+                return languageFilter
             }
-            .map { (languageFilter: LessonFilterLanguageDomainModel?) in
-                
-                let userFilters = UserLessonFiltersDomainModel(
-                    languageFilter: languageFilter
-                )
+            
+            return self.getLessonFilterLanguage.getLessonLanguageFilterFromLanguageCode(
+                languageCode: appLanguage,
+                translatedInAppLanguage: appLanguage
+            )
+        }
+        .map { (languageFilter: LessonFilterLanguageDomainModel?) in
+            
+            let userFilters = UserLessonFiltersDomainModel(
+                languageFilter: languageFilter
+            )
 
-                return userFilters
-            }
-            .eraseToAnyPublisher()
+            return userFilters
+        }
+        .eraseToAnyPublisher()
     }
 }

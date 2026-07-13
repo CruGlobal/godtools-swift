@@ -19,14 +19,10 @@ final class UserLessonFiltersRepository {
         self.cache = cache
     }
     
-    @MainActor func getUserLessonLanguageFilterChangedPublisher() -> AnyPublisher<Void, Never> {
+    @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Error> {
         return cache
             .persistence
             .observeCollectionChangesPublisher()
-            .catch { _ in
-                return Just(Void())
-                    .eraseToAnyPublisher()
-            }
             .eraseToAnyPublisher()
     }
     

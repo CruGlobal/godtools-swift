@@ -11,9 +11,9 @@ import GodToolsShared
 
 final class TranslationManifestParserFactory: IosXmlPullParserFactory {
     
-    private let resourcesFileCache: ResourcesSHA256FileCache
+    private let resourcesFileCache: ResourcesFileCache
     
-    init(resourcesFileCache: ResourcesSHA256FileCache) {
+    init(resourcesFileCache: ResourcesFileCache) {
         
         self.resourcesFileCache = resourcesFileCache
         

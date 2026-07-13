@@ -13,9 +13,14 @@ class TranslationManifestParser {
     
     private let parser: ManifestParser
     private let parserConfig: ParserConfig
-    private let resourcesFileCache: ResourcesSHA256FileCache
+    private let resourcesFileCache: ResourcesFileCache
     
-    static func getManifestParser(type: TranslationManifestParserType, infoPlist: InfoPlistInterface, resourcesFileCache: ResourcesSHA256FileCache, remoteConfigRepository: RemoteConfigRepository) -> TranslationManifestParser {
+    static func getManifestParser(
+        type: TranslationManifestParserType,
+        infoPlist: InfoPlistInterface,
+        resourcesFileCache: ResourcesFileCache,
+        remoteConfigRepository: RemoteConfigRepository
+    ) -> TranslationManifestParser {
         
         switch type {
                 
@@ -24,11 +29,15 @@ class TranslationManifestParser {
             return TranslationManifestParser(parserConfig: parserConfig, resourcesFileCache: resourcesFileCache)
         
         case .renderer:
-            return ParseTranslationManifestForRenderer(infoPlist: infoPlist, resourcesFileCache: resourcesFileCache, remoteConfigRepository: remoteConfigRepository)
+            return ParseTranslationManifestForRenderer(
+                infoPlist: infoPlist,
+                resourcesFileCache: resourcesFileCache,
+                remoteConfigRepository: remoteConfigRepository
+            )
         }
     }
     
-    init(parserConfig: ParserConfig, resourcesFileCache: ResourcesSHA256FileCache) {
+    init(parserConfig: ParserConfig, resourcesFileCache: ResourcesFileCache) {
         
         self.parser = ManifestParser(
             parserFactory: TranslationManifestParserFactory(resourcesFileCache: resourcesFileCache),

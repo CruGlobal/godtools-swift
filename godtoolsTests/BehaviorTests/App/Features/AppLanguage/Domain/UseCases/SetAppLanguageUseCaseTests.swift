@@ -45,6 +45,7 @@ struct SetAppLanguageUseCaseTests {
         )
         
         let getUserLessonFiltersRepository = GetUserLessonFiltersUseCase(
+            languagesRepository: testsDiContainer.core.dataLayer.getLanguagesRepository(),
             userLessonFiltersRepository: testsDiContainer.core.dataLayer.getUserLessonFiltersRepository(),
             getLessonFilterLanguage: testsDiContainer.feature.lessonFilter.domainLayer.getLessonFilterLangauge()
         )
@@ -68,7 +69,9 @@ struct SetAppLanguageUseCaseTests {
                 .execute(
                     appLanguage: appLanguageSpanish
                 )
-                .sink { (userLessonFilters: UserLessonFiltersDomainModel) in
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { (userLessonFilters: UserLessonFiltersDomainModel) in
                     
                     triggerCount += 1
                     
@@ -87,7 +90,7 @@ struct SetAppLanguageUseCaseTests {
                         timeoutTask.cancel()
                         continuation.resume(returning: ())
                     }
-                }
+                })
                 .store(in: &cancellables)            
         }
         
