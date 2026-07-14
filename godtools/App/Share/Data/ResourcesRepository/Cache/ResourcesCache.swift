@@ -110,6 +110,16 @@ extension ResourcesCache {
             object.attrSpotlight == true
         }
     }
+
+    @available(iOS 17.4, *)
+    private var isToolTypePredicate: Predicate<SwiftResource> {
+
+        let toolTypes: [String] = ResourceType.toolTypes.map { $0.rawValue }
+
+        return #Predicate<SwiftResource> { object in
+            toolTypes.contains(object.resourceType)
+        }
+    }
     
     private var isSpotlightNSPredicate: NSPredicate {
         return NSPredicate(format: "\(#keyPath(RealmResource.attrSpotlight)) == %@", NSNumber(value: true))
@@ -493,39 +503,65 @@ extension ResourcesCache {
     
     func getSpotlightTools(sortByDefaultOrder: Bool) throws -> [ResourceDataModel] {
         
-        guard let realmDatabase = getRealmPersistence()?.database else {
-            return []
-        }
-        
-        let realm = try realmDatabase.openRealm()
-                
-        let isSpotlightFilter = NSPredicate(format: "\(#keyPath(RealmResource.attrSpotlight)) == %@", NSNumber(value: true))
-        let isNotHiddenFilter = NSPredicate(format: "\(#keyPath(RealmResource.isHidden)) == %@", NSNumber(value: false))
-        
-        let isToolTypesValues: [String] = ResourceType.toolTypes.map({$0.rawValue.lowercased()})
-        let isToolTypeFilter = NSPredicate(format: "\(#keyPath(RealmResource.resourceType)) IN %@", isToolTypesValues)
-        
-        let filterByAttributes: [NSPredicate] = [isSpotlightFilter, isNotHiddenFilter, isToolTypeFilter]
-        
-        let filterPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: filterByAttributes)
-                
-        let filteredResources: Results<RealmResource> = realm.objects(RealmResource.self).filter(filterPredicate)
-                
-        let spotlightToolsResults: Results<RealmResource>
-        
-        if sortByDefaultOrder {
-            
-            spotlightToolsResults = filteredResources.sorted(byKeyPath: #keyPath(RealmResource.attrDefaultOrder), ascending: true)
-        }
-        else {
-            
-            spotlightToolsResults = filteredResources
-        }
-        
-        return spotlightToolsResults
-            .map {
-                $0.toModel()
+        if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
+
+            let filter = #Predicate<SwiftResource> { object in
+                notHiddenPredicate.evaluate(object)
+                && isSpotlightPredicate.evaluate(object)
+                && isToolTypePredicate.evaluate(object)
             }
+
+            let query = SwiftDatabaseQuery(
+                filter: filter,
+                sortBy: sortByDefaultOrder ? getSortByDefaultOrderDescriptor() : nil
+            )
+
+            let spotlightTools: [SwiftResource] = try swiftPersistence.database.read.objects(
+                context: swiftPersistence.database.openContext(),
+                query: query
+            )
+
+            return spotlightTools
+                .map {
+                    $0.toModel()
+                }
+        }
+        else if let realmPersistence = getRealmPersistence() {
+
+            let realmDatabase = realmPersistence.database
+            
+            let realm = try realmDatabase.openRealm()
+                    
+            let isSpotlightFilter = NSPredicate(format: "\(#keyPath(RealmResource.attrSpotlight)) == %@", NSNumber(value: true))
+            let isNotHiddenFilter = NSPredicate(format: "\(#keyPath(RealmResource.isHidden)) == %@", NSNumber(value: false))
+            
+            let isToolTypesValues: [String] = ResourceType.toolTypes.map({$0.rawValue.lowercased()})
+            let isToolTypeFilter = NSPredicate(format: "\(#keyPath(RealmResource.resourceType)) IN %@", isToolTypesValues)
+            
+            let filterByAttributes: [NSPredicate] = [isSpotlightFilter, isNotHiddenFilter, isToolTypeFilter]
+            
+            let filterPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: filterByAttributes)
+                    
+            let filteredResources: Results<RealmResource> = realm.objects(RealmResource.self).filter(filterPredicate)
+                    
+            let spotlightToolsResults: Results<RealmResource>
+            
+            if sortByDefaultOrder {
+                
+                spotlightToolsResults = filteredResources.sorted(byKeyPath: #keyPath(RealmResource.attrDefaultOrder), ascending: true)
+            }
+            else {
+                
+                spotlightToolsResults = filteredResources
+            }
+            
+            return spotlightToolsResults
+                .map {
+                    $0.toModel()
+                }
+        }
+        
+        return Array()
     }
 }
 

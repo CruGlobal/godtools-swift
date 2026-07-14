@@ -192,17 +192,14 @@ extension RealmResourcesCacheTests {
     
     private func getNewLanguage(id: String, code: BCP47LanguageIdentifier) -> RealmLanguage {
         
-        let realmLanguage = RealmLanguage()
+        let language = LanguageCodable(id: id, code: code)
         
-        realmLanguage.code = code
-        realmLanguage.id = id
-                
-        return realmLanguage
+        return RealmLanguage.createNewFrom(model: language.toModel())
     }
     
     private func getNewRealmResource(
         id: String = UUID().uuidString,
-        category: String?,
+        category: String? = nil,
         isHidden: Bool = false,
         resourceType: ResourceType,
         metatoolId: String? = nil,
@@ -211,14 +208,16 @@ extension RealmResourcesCacheTests {
         languages: [RealmLanguage]
     ) -> RealmResource {
         
-        let realmResource = RealmResource()
-
-        realmResource.attrCategory = category ?? ""
-        realmResource.defaultVariantId = defaultVariant?.id
-        realmResource.id = id
-        realmResource.isHidden = isHidden
-        realmResource.resourceType = resourceType.rawValue
-        realmResource.metatoolId = metatoolId
+        let resource = ResourceCodable(
+            id: id,
+            attrCategory: category ?? "",
+            defaultVariantId: defaultVariant?.id,
+            isHidden: isHidden,
+            metatoolId: metatoolId,
+            resourceType: resourceType.rawValue
+        )
+        
+        let realmResource = RealmResource.createNewFrom(model: resource.toModel())
         
         for language in languages {
             realmResource.addLanguage(language: language)
