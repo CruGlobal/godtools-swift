@@ -613,7 +613,12 @@ extension ResourcesCache {
     
     func getAllToolsList(filterByCategory: String?, filterByLanguageId: String?, sortByDefaultOrder: Bool) throws -> [ResourceDataModel] {
                  
-        guard let allToolsListResults = try getAllToolsListResults(filterByCategory: filterByCategory, filterByLanguageId: filterByLanguageId, sortByDefaultOrder: sortByDefaultOrder) else {
+        guard let allToolsListResults = try getAllToolsListResults(
+            filterByCategory: filterByCategory,
+            filterByLanguageId: filterByLanguageId,
+            sortByDefaultOrder: sortByDefaultOrder
+        ) else {
+            
             return Array()
         }
         
@@ -625,7 +630,12 @@ extension ResourcesCache {
     
     func getAllToolsListCount(filterByCategory: String?, filterByLanguageId: String?) throws -> Int {
                  
-        guard let allToolsListResults = try getAllToolsListResults(filterByCategory: filterByCategory, filterByLanguageId: filterByLanguageId, sortByDefaultOrder: false) else {
+        guard let allToolsListResults = try getAllToolsListResults(
+            filterByCategory: filterByCategory,
+            filterByLanguageId: filterByLanguageId,
+            sortByDefaultOrder: false
+        ) else {
+            
             return 0
         }
         
@@ -634,7 +644,12 @@ extension ResourcesCache {
     
     func getAllToolCategoryIds(filteredByLanguageId: String?) throws -> [String] {
         
-        guard let allToolsListResults = try getAllToolsListResults(filterByCategory: nil, filterByLanguageId: filteredByLanguageId, sortByDefaultOrder: false) else {
+        guard let allToolsListResults = try getAllToolsListResults(
+            filterByCategory: nil,
+            filterByLanguageId: filteredByLanguageId,
+            sortByDefaultOrder: false
+        ) else {
+            
             return Array()
         }
         
@@ -645,7 +660,12 @@ extension ResourcesCache {
     
     func getAllToolLanguageIds(filteredByCategoryId: String?) throws -> [String] {
         
-        guard let allToolsListResults = try getAllToolsListResults(filterByCategory: filteredByCategoryId, filterByLanguageId: nil, sortByDefaultOrder: false) else {
+        guard let allToolsListResults = try getAllToolsListResults(
+            filterByCategory: filteredByCategoryId,
+            filterByLanguageId: nil,
+            sortByDefaultOrder: false
+        ) else {
+           
             return Array()
         }
         
