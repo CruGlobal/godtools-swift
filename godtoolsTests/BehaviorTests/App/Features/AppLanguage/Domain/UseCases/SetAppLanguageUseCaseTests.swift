@@ -20,7 +20,11 @@ struct SetAppLanguageUseCaseTests {
     
     init() async throws {
         
-        testsDiContainer = try TestsDiContainer()
+        testsDiContainer = try TestsDiContainer(
+            testsAppConfig: TestsAppConfig(
+                realmDatabase: FakeRealmDatabase.createRealmDatabase()
+            )
+        )
         
         allLanguages = languageCodes.map {
             LanguageCodable(id: UUID().uuidString, code: $0.rawValue)

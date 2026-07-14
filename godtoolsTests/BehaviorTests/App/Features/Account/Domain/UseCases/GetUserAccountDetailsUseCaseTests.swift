@@ -364,7 +364,11 @@ extension GetUserAccountDetailsUseCaseTests {
     
     private func getUseCase(userDetails: MobileContentApiUsersMeCodable?) async throws -> GetUserAccountDetailsUseCase {
         
-        let testsDiContainer = try TestsDiContainer()
+        let testsDiContainer = try TestsDiContainer(
+            testsAppConfig: TestsAppConfig(
+                realmDatabase: FakeRealmDatabase.createRealmDatabase()
+            )
+        )
         
         let userDetailsPersistence: any Persistence<UserDetailsDataModel, MobileContentApiUsersMeCodable> = RealmRepositorySyncPersistence(
             database: testsDiContainer.core.dataLayer.getSharedRealmDatabase(),

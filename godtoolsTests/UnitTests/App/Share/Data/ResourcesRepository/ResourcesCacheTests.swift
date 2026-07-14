@@ -103,7 +103,9 @@ extension ResourcesCacheTests {
     private func getCache() throws -> ResourcesCache {
         
         let testsDiContainer = try TestsDiContainer(
-            addRealmObjects: getRealmResources()
+            testsAppConfig: TestsAppConfig(
+                realmDatabase: FakeRealmDatabase.createRealmDatabase(addRealmObjects: getRealmResources())
+            )
         )
         
         let realmDatabase: RealmDatabase = testsDiContainer.core.dataLayer.getSharedRealmDatabase()

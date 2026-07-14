@@ -200,7 +200,16 @@ extension RealmResourcesCacheTests {
         return realmLanguage
     }
     
-    private func getNewRealmResource(id: String = UUID().uuidString, category: String?, isHidden: Bool = false, resourceType: ResourceType, metatoolId: String? = nil, defaultVariant: RealmResource? = nil, variants: [RealmResource]? = nil, languages: [RealmLanguage]) -> RealmResource {
+    private func getNewRealmResource(
+        id: String = UUID().uuidString,
+        category: String?,
+        isHidden: Bool = false,
+        resourceType: ResourceType,
+        metatoolId: String? = nil,
+        defaultVariant: RealmResource? = nil,
+        variants: [RealmResource]? = nil,
+        languages: [RealmLanguage]
+    ) -> RealmResource {
         
         let realmResource = RealmResource()
 

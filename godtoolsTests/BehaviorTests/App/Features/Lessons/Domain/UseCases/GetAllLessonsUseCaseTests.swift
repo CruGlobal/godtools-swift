@@ -327,7 +327,11 @@ extension GetAllLessonsUseCaseTests {
     
     private func getAllLessonsUseCase() throws -> GetAllLessonsUseCase {
                 
-        let testsDiContainer = try TestsDiContainer(addRealmObjects: getRealmObjects())
+        let testsDiContainer = try TestsDiContainer(
+            testsAppConfig: TestsAppConfig(
+                realmDatabase: FakeRealmDatabase.createRealmDatabase(addRealmObjects: getRealmObjects())
+            )
+        )
         
         return GetAllLessonsUseCase(
             resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),

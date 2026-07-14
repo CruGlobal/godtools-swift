@@ -71,7 +71,11 @@ extension RealmTranslationsCacheTests {
     
     private func getCache() throws -> TranslationsCache {
         
-        let testsDiContainer = try TestsDiContainer(addRealmObjects: getRealmDatabaseObjects())
+        let testsDiContainer = try TestsDiContainer(
+            testsAppConfig: TestsAppConfig(
+                realmDatabase: FakeRealmDatabase.createRealmDatabase(addRealmObjects: getRealmDatabaseObjects())
+            )
+        )
                 
         let persistence = RealmRepositorySyncPersistence(
             database: testsDiContainer.core.dataLayer.getSharedRealmDatabase(),

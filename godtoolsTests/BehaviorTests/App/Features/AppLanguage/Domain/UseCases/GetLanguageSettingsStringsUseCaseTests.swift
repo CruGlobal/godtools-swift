@@ -103,7 +103,11 @@ extension GetLanguageSettingsStringsUseCaseTests {
     
     private func getUseCase() async throws -> GetLanguageSettingsStringsUseCase {
         
-        let testsDiContainer = try TestsDiContainer()
+        let testsDiContainer = try TestsDiContainer(
+            testsAppConfig: TestsAppConfig(
+                realmDatabase: FakeRealmDatabase.createRealmDatabase()
+            )
+        )
         
         let realmDatabase: RealmDatabase = testsDiContainer.core.dataLayer.getSharedRealmDatabase()
         

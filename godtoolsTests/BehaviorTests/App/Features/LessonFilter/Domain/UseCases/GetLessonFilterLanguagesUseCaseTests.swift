@@ -211,7 +211,11 @@ extension GetLessonFilterLanguagesUseCaseTests {
     
     private func getLessonFilterLanguagesUseCase() throws -> GetLessonFilterLanguagesUseCase {
         
-        let testsDiContainer = try TestsDiContainer(addRealmObjects: getRealmObjects())
+        let testsDiContainer = try TestsDiContainer(
+            testsAppConfig: TestsAppConfig(
+                realmDatabase: FakeRealmDatabase.createRealmDatabase(addRealmObjects: getRealmObjects())
+            )
+        )
         
         let getLessonFilterLanguagesRepository = GetLessonFilterLanguagesUseCase(
             resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),

@@ -53,7 +53,9 @@ extension GetConfirmRemoveToolFromFavoritesStringsUseCaseTests {
     private func getUseCase() throws -> GetConfirmRemoveToolFromFavoritesStringsUseCase {
 
         let testsDiContainer = try TestsDiContainer(
-            addRealmObjects: getRealmObjects()
+            testsAppConfig: TestsAppConfig(
+                realmDatabase: FakeRealmDatabase.createRealmDatabase(addRealmObjects: getRealmObjects())
+            )
         )
 
         let getTranslatedToolName = GetTranslatedToolName(
