@@ -239,10 +239,10 @@ struct ResourcesCacheTests {
     // MARK: - All Tools List
 
     @available(iOS 17.4, *)
-    @Test
-    func getAllToolsListExcludesLessonsMetatoolsAndHiddenTools() async throws {
+    @Test(arguments: PersistenceType.allCases)
+    func getAllToolsListExcludesLessonsMetatoolsAndHiddenTools(persistenceType: PersistenceType) async throws {
 
-        let cache = try getCache(persistenceType: .realm)
+        let cache = try getCache(persistenceType: persistenceType)
 
         let tools: [ResourceDataModel] = try cache.getAllToolsList(filterByCategory: nil, filterByLanguageId: nil, sortByDefaultOrder: true)
 
@@ -250,10 +250,10 @@ struct ResourcesCacheTests {
     }
 
     @available(iOS 17.4, *)
-    @Test
-    func getAllToolsListFilteredByCategoryAndLanguage() async throws {
+    @Test(arguments: PersistenceType.allCases)
+    func getAllToolsListFilteredByCategoryAndLanguage(persistenceType: PersistenceType) async throws {
 
-        let cache = try getCache(persistenceType: .realm)
+        let cache = try getCache(persistenceType: persistenceType)
 
         let gospelToolsCount: Int = try cache.getAllToolsListCount(filterByCategory: "gospel", filterByLanguageId: nil)
 
@@ -267,10 +267,10 @@ struct ResourcesCacheTests {
     }
 
     @available(iOS 17.4, *)
-    @Test
-    func getAllToolCategoryIds() async throws {
+    @Test(arguments: PersistenceType.allCases)
+    func getAllToolCategoryIds(persistenceType: PersistenceType) async throws {
 
-        let cache = try getCache(persistenceType: .realm)
+        let cache = try getCache(persistenceType: persistenceType)
 
         let categoryIds: [String] = try cache.getAllToolCategoryIds(filteredByLanguageId: nil)
 
@@ -278,10 +278,10 @@ struct ResourcesCacheTests {
     }
 
     @available(iOS 17.4, *)
-    @Test
-    func getAllToolLanguageIds() async throws {
+    @Test(arguments: PersistenceType.allCases)
+    func getAllToolLanguageIds(persistenceType: PersistenceType) async throws {
 
-        let cache = try getCache(persistenceType: .realm)
+        let cache = try getCache(persistenceType: persistenceType)
 
         let allLanguageIds: [String] = try cache.getAllToolLanguageIds(filteredByCategoryId: nil)
 

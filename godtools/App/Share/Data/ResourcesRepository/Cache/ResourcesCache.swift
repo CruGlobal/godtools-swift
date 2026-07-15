@@ -568,7 +568,53 @@ extension ResourcesCache {
 // MARK: - All Tools List
 
 extension ResourcesCache {
-    
+
+    @available(iOS 17.4, *)
+    private func getAllToolsListPredicate(filterByCategory: String?, filterByLanguageId: String?) -> Predicate<SwiftResource> {
+
+        let filterByCategory: String = (filterByCategory ?? "").lowercased()
+        let filterByLanguageId: String = filterByLanguageId ?? ""
+        let toolTypes: [String] = ResourceType.toolTypes.map { $0.rawValue }
+
+        return #Predicate<SwiftResource> { object in
+
+            !object.isHidden
+            && toolTypes.contains(object.resourceType)
+            && (filterByCategory.isEmpty || object.attrCategory == filterByCategory)
+            && (filterByLanguageId.isEmpty || object.languages.contains { language in
+                language.id == filterByLanguageId
+            })
+        }
+    }
+
+    @available(iOS 17.4, *)
+    private func getAllToolsListSwiftQuery(filterByCategory: String?, filterByLanguageId: String?, sortByDefaultOrder: Bool) -> SwiftDatabaseQuery<SwiftResource> {
+        return SwiftDatabaseQuery(
+            filter: getAllToolsListPredicate(filterByCategory: filterByCategory, filterByLanguageId: filterByLanguageId),
+            sortBy: sortByDefaultOrder ? getSortByDefaultOrderDescriptor() : nil
+        )
+    }
+
+    @available(iOS 17.4, *)
+    private func getAllToolsListSwiftResources(
+        swiftPersistence: SwiftRepositorySyncPersistence<ResourceDataModel, ResourceCodable, SwiftResource>,
+        filterByCategory: String?,
+        filterByLanguageId: String?,
+        sortByDefaultOrder: Bool
+    ) throws -> [SwiftResource] {
+
+        let query = getAllToolsListSwiftQuery(
+            filterByCategory: filterByCategory,
+            filterByLanguageId: filterByLanguageId,
+            sortByDefaultOrder: sortByDefaultOrder
+        )
+
+        return try swiftPersistence.database.read.objects(
+            context: swiftPersistence.database.openContext(),
+            query: query
+        )
+    }
+
     private func getAllToolsListResults(
         realmDatabase: RealmDatabase,
         filterByCategory: String?,
@@ -619,91 +665,135 @@ extension ResourcesCache {
     ) throws -> [ResourceDataModel] {
         
         if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
-            
+
+            let allToolsListResults = try getAllToolsListSwiftResources(
+                swiftPersistence: swiftPersistence,
+                filterByCategory: filterByCategory,
+                filterByLanguageId: filterByLanguageId,
+                sortByDefaultOrder: sortByDefaultOrder
+            )
+
+            return allToolsListResults
+                .map {
+                    $0.toModel()
+                }
         }
         else if let realmPersistence = getRealmPersistence() {
-            
+
             let allToolsListResults = try getAllToolsListResults(
                 realmDatabase: realmPersistence.database,
                 filterByCategory: filterByCategory,
                 filterByLanguageId: filterByLanguageId,
                 sortByDefaultOrder: sortByDefaultOrder
             )
-            
+
             return allToolsListResults
                 .map {
                     $0.toModel()
                 }
         }
-                 
+
         return Array()
     }
-    
+
     func getAllToolsListCount(filterByCategory: String?, filterByLanguageId: String?) throws -> Int {
-                 
+
         if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
-            
+
+            let query = getAllToolsListSwiftQuery(
+                filterByCategory: filterByCategory,
+                filterByLanguageId: filterByLanguageId,
+                sortByDefaultOrder: false
+            )
+
+            return try swiftPersistence.database.read.objectCount(
+                context: swiftPersistence.database.openContext(),
+                query: query
+            )
         }
         else if let realmPersistence = getRealmPersistence() {
-            
+
             let allToolsListResults = try getAllToolsListResults(
                 realmDatabase: realmPersistence.database,
                 filterByCategory: filterByCategory,
                 filterByLanguageId: filterByLanguageId,
                 sortByDefaultOrder: false
             )
-            
+
             return allToolsListResults.count
         }
-        
+
         return 0
     }
-    
+
     func getAllToolCategoryIds(filteredByLanguageId: String?) throws -> [String] {
-        
+
         if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
-            
+
+            let allToolsListResults = try getAllToolsListSwiftResources(
+                swiftPersistence: swiftPersistence,
+                filterByCategory: nil,
+                filterByLanguageId: filteredByLanguageId,
+                sortByDefaultOrder: false
+            )
+
+            let uniqueCategoryIds = Set(allToolsListResults.map { $0.attrCategory })
+
+            return Array(uniqueCategoryIds)
         }
         else if let realmPersistence = getRealmPersistence() {
-            
+
             let allToolsListResults = try getAllToolsListResults(
                 realmDatabase: realmPersistence.database,
                 filterByCategory: nil,
                 filterByLanguageId: filteredByLanguageId,
                 sortByDefaultOrder: false
             )
-            
+
             return allToolsListResults
                 .distinct(by: [#keyPath(RealmResource.attrCategory)])
                 .map { $0.attrCategory }
         }
-        
+
         return Array()
     }
-    
+
     func getAllToolLanguageIds(filteredByCategoryId: String?) throws -> [String] {
-        
+
         if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
-            
+
+            let allToolsListResults = try getAllToolsListSwiftResources(
+                swiftPersistence: swiftPersistence,
+                filterByCategory: filteredByCategoryId,
+                filterByLanguageId: nil,
+                sortByDefaultOrder: false
+            )
+
+            let allLanguageIds = allToolsListResults
+                .flatMap { $0.getLanguageIds() }
+
+            let uniqueLanguageIds = Set(allLanguageIds)
+
+            return Array(uniqueLanguageIds)
         }
         else if let realmPersistence = getRealmPersistence() {
-            
+
             let allToolsListResults = try getAllToolsListResults(
                 realmDatabase: realmPersistence.database,
                 filterByCategory: filteredByCategoryId,
                 filterByLanguageId: nil,
                 sortByDefaultOrder: false
             )
-            
+
             let allLanguageIds = allToolsListResults
                 .flatMap { $0.getLanguages() }
                 .map { $0.id }
-            
+
             let uniqueLanguageIds = Set(allLanguageIds)
 
             return Array(uniqueLanguageIds)
         }
-        
+
         return Array()
     }
 }
