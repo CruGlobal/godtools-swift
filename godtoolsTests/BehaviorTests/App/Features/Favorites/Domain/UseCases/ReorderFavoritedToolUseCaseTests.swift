@@ -66,7 +66,11 @@ extension ReorderFavoritedToolUseCaseTests {
     
     private func getTestsDiContainer(addResources: [String: Int]) async throws -> TestsDiContainer {
                 
-        let testsDiContainer = try TestsDiContainer()
+        let testsDiContainer = try TestsDiContainer(
+            testsAppConfig: TestsAppConfig(
+                realmDatabase: FakeRealmDatabase.createRealmDatabase()
+            )
+        )
         
         let favoritedResources = getFavoritedResources(resources: addResources)
         

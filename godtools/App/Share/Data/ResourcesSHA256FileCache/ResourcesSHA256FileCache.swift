@@ -96,6 +96,7 @@ actor ResourcesSHA256FileCache: ResourcesSHA256FileCacheInterface, ModelActor {
         else {
             
             sha256File = SwiftSHA256File()
+            sha256File.id = filenameWithPathExtension
             sha256File.sha256WithPathExtension = filenameWithPathExtension
         }
         
@@ -153,10 +154,11 @@ actor ResourcesSHA256FileCache: ResourcesSHA256FileCacheInterface, ModelActor {
         for location in fileCacheLocations {
             
             let translation: SwiftTranslation? = try swiftDataRead.object(context: modelContext, id: translationId)
-            
+
             guard let translation = translation else {
-                updateSha256Files.removeAll()
-                break
+                throw NSError.errorWithDescription(
+                    description: "Failed to create file relationships because a translation object does not exist in the database."
+                )
             }
             
             guard let filenameWithPathExtension = location.filenameWithPathExtension else {

@@ -13,6 +13,10 @@ final class ResourcesFileCache: FileCache {
     private static let rootDirectory: String = "godtools_resources_files"
     
     init() {
-        super.init(rootDirectory: Self.rootDirectory)
+        super.init(rootDirectoryName: Self.rootDirectory)
+    }
+    
+    override init(rootDirectory: URL, fileManager: FileManager = FileManager.default) {
+        super.init(rootDirectory: rootDirectory, fileManager: fileManager)
     }
 }

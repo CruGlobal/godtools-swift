@@ -12,10 +12,11 @@ import UIKit
 
 protocol FileCacheInterface {
     
+    var rootDirectory: URL { get }
+    
     func getIsDirectory(url: URL) -> Bool
     func getUserDocumentsDirectory() throws -> URL
-    func getRootDirectory() throws -> URL
-    func getDirectory(location: FileCacheLocation) throws -> URL
+    func getDirectory(location: FileCacheLocation) -> URL
     func createDirectoryIfNotExists(directoryUrl: URL) throws -> URL
     func getFileExists(location: FileCacheLocation) throws -> Bool
     func getFile(location: FileCacheLocation) throws -> URL

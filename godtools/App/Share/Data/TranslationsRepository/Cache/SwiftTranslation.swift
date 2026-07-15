@@ -125,7 +125,7 @@ extension Array where Element == SwiftTranslation {
     
     func filterByLanguageCode(languageCode: BCP47LanguageIdentifier) -> [SwiftTranslation] {
         return filter {
-            $0.language?.code == languageCode
+            $0.language?.code.lowercased() == languageCode.lowercased()
         }
     }
     

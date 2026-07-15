@@ -25,7 +25,11 @@ struct StoreInitialAppLanguageUseCaseTests {
     
     init() throws {
         
-        testsDiContainer = try TestsDiContainer()
+        testsDiContainer = try TestsDiContainer(
+            testsAppConfig: TestsAppConfig(
+                realmDatabase: FakeRealmDatabase.createRealmDatabase()
+            )
+        )
     }
     
     @Test(
