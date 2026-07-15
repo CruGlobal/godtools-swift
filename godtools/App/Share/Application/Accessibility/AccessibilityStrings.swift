@@ -29,7 +29,6 @@ class AccessibilityStrings {
         case downloadableLanguages = "Downloadable Languages"
         case learnToShareTool
         case languageSettings = "Language Settings"
-        case leaveAReview = "Leave A Review"
         case localizationSettings = "Localization Settings"
         case login = "Login"
         case onboardingTutorial = "Onboarding Tutorial Screen"
