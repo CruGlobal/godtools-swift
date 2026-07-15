@@ -2,94 +2,36 @@
 //  FavoritedResourcesCacheTests.swift
 //  godtoolsTests
 //
-//  Created by Rachael Skeath on 4/5/25.
-//  Copyright © 2025 Cru. All rights reserved.
+//  Created by Levi Eggert on 7/15/26.
+//  Copyright © 2026 Cru. All rights reserved.
 //
 
 import Testing
-import Foundation
 @testable import godtools
+import Foundation
+import RealmSwift
+import SwiftData
 import RepositorySync
 
 struct FavoritedResourcesCacheTests {
-    
+
+    enum PersistenceType: CaseIterable {
+        case realm
+        case swiftData
+    }
+
     struct StoreTestArgument {
         let initialResources: [String: Int]
         let resourceIdsToAdd: [String]
         let expectedUpdatedIdsAtPositions: [String: Int]
     }
-    
-    @Test(
-        "Tools should be added to favorites and all resource positions updated in reserve order that they were added.",
-        arguments: [
-            StoreTestArgument(initialResources: ["A": 0, "B": 1], resourceIdsToAdd: ["C", "D", "E"], expectedUpdatedIdsAtPositions: ["C": 0, "D": 1, "E": 2, "A": 3, "B": 4]),
-            StoreTestArgument(initialResources: [:], resourceIdsToAdd: ["A", "B", "C"], expectedUpdatedIdsAtPositions: ["A": 0, "B": 1, "C": 2])
-        ]
-    )
-    func storeFavoritedResources(argument: StoreTestArgument) async throws {
-        
-        let persistence = try await getPersistence(
-            addObjects: createFavoritedResources(resources: argument.initialResources)
-        )
-        
-        let cache = getCache(persistence: persistence)
-        
-        let favoritedResources: [FavoritedResourceDataModel] = try await cache
-            .storeFavoritedResources(ids: argument.resourceIdsToAdd)
-                
-        for (expectedId, expectedPosition) in argument.expectedUpdatedIdsAtPositions {
-            
-            let favoritedResource: FavoritedResourceDataModel = try #require(favoritedResources.first(where: { $0.id == expectedId }))
-            
-            let actualPosition: Int = favoritedResource.position
-                        
-            #expect(
-                actualPosition == expectedPosition,
-                "Expected position for resource \(expectedId) to be \(expectedPosition), but was \(actualPosition)"
-            )
-        }
-    }
-    
+
     struct DeleteTestArgument {
         let initialResources: [String: Int]
         let resourceIdToDelete: String
         let expectedUpdatedIdsAtPositions: [String: Int]
     }
-    
-    @Test(
-        "Deleting a favorited tool should remove it from favorites and update positions of remaining resources.",
-        arguments: [
-            DeleteTestArgument(initialResources: ["A": 0, "B": 1, "C": 2], resourceIdToDelete: "A", expectedUpdatedIdsAtPositions: ["B": 0, "C": 1]),
-            DeleteTestArgument(initialResources: ["A": 0, "B": 1, "C": 2], resourceIdToDelete: "B", expectedUpdatedIdsAtPositions: ["A":0, "C":1]),
-            DeleteTestArgument(initialResources: ["A": 0, "B": 1, "C": 2], resourceIdToDelete: "C", expectedUpdatedIdsAtPositions: ["A": 0, "B": 1]),
-            DeleteTestArgument(initialResources: ["A": 0], resourceIdToDelete: "A", expectedUpdatedIdsAtPositions: [:]),
-            DeleteTestArgument(initialResources: ["A": 0], resourceIdToDelete: "B", expectedUpdatedIdsAtPositions: ["A": 0])
-        ]
-    )
-    func deleteFavoritedResource(argument: DeleteTestArgument) async throws {
-        
-        let persistence = try await getPersistence(
-            addObjects: createFavoritedResources(resources: argument.initialResources)
-        )
-        
-        let cache = getCache(persistence: persistence)
-                
-        let remainingResources: [FavoritedResourceDataModel] = try await cache
-            .deleteFavoritedResource(id: argument.resourceIdToDelete)
-        
-        for (expectedId, expectedPosition) in argument.expectedUpdatedIdsAtPositions {
-            
-            let favoritedResource: FavoritedResourceDataModel = try #require(remainingResources.first(where: { $0.id == expectedId }))
-            
-            let actualPosition: Int = favoritedResource.position
-                        
-            #expect(
-                actualPosition == expectedPosition,
-                "Expected position for resource \(expectedId) to be \(expectedPosition), but was \(actualPosition)"
-            )
-        }
-    }
-    
+
     struct ReorderTestArgument {
         let initialResources: [String: Int]
         let resourceIdToReorder: String
@@ -97,87 +39,171 @@ struct FavoritedResourcesCacheTests {
         let newPosition: Int
         let expectedUpdatedIdsAtPositions: [String: Int]
     }
-    
+
+    // MARK: - Get Favorited Resources
+
+    @available(iOS 17.4, *)
+    @Test(arguments: PersistenceType.allCases)
+    func getFavoritedResourcesSortedByPosition(persistenceType: PersistenceType) async throws {
+
+        let cache = try await getCache(
+            persistenceType: persistenceType,
+            initialResources: ["C": 2, "A": 0, "B": 1]
+        )
+
+        let favoritedResources: [FavoritedResourceDataModel] = try await cache.getFavoritedResourcesSortedByPosition()
+
+        #expect(favoritedResources.map { $0.id } == ["A", "B", "C"])
+    }
+
+    // MARK: - Store Favorited Resources
+
+    @available(iOS 17.4, *)
+    @Test(
+        "Tools should be added to favorites and all resource positions updated in reverse order that they were added.",
+        arguments: PersistenceType.allCases,
+        [
+            StoreTestArgument(initialResources: ["A": 0, "B": 1], resourceIdsToAdd: ["C", "D", "E"], expectedUpdatedIdsAtPositions: ["C": 0, "D": 1, "E": 2, "A": 3, "B": 4]),
+            StoreTestArgument(initialResources: [:], resourceIdsToAdd: ["A", "B", "C"], expectedUpdatedIdsAtPositions: ["A": 0, "B": 1, "C": 2])
+        ]
+    )
+    func storeFavoritedResources(persistenceType: PersistenceType, argument: StoreTestArgument) async throws {
+
+        let cache = try await getCache(
+            persistenceType: persistenceType,
+            initialResources: argument.initialResources
+        )
+
+        let favoritedResources: [FavoritedResourceDataModel] = try await cache
+            .storeFavoritedResources(ids: argument.resourceIdsToAdd)
+
+        for (expectedId, expectedPosition) in argument.expectedUpdatedIdsAtPositions {
+
+            let favoritedResource: FavoritedResourceDataModel = try #require(favoritedResources.first(where: { $0.id == expectedId }))
+
+            #expect(
+                favoritedResource.position == expectedPosition,
+                "Expected position for resource \(expectedId) to be \(expectedPosition), but was \(favoritedResource.position)"
+            )
+        }
+    }
+
+    // MARK: - Delete Favorited Resource
+
+    @available(iOS 17.4, *)
+    @Test(
+        "Deleting a favorited tool should remove it from favorites and update positions of remaining resources.",
+        arguments: PersistenceType.allCases,
+        [
+            DeleteTestArgument(initialResources: ["A": 0, "B": 1, "C": 2], resourceIdToDelete: "A", expectedUpdatedIdsAtPositions: ["B": 0, "C": 1]),
+            DeleteTestArgument(initialResources: ["A": 0, "B": 1, "C": 2], resourceIdToDelete: "B", expectedUpdatedIdsAtPositions: ["A": 0, "C": 1]),
+            DeleteTestArgument(initialResources: ["A": 0, "B": 1, "C": 2], resourceIdToDelete: "C", expectedUpdatedIdsAtPositions: ["A": 0, "B": 1]),
+            DeleteTestArgument(initialResources: ["A": 0], resourceIdToDelete: "A", expectedUpdatedIdsAtPositions: [:]),
+            DeleteTestArgument(initialResources: ["A": 0], resourceIdToDelete: "B", expectedUpdatedIdsAtPositions: ["A": 0])
+        ]
+    )
+    func deleteFavoritedResource(persistenceType: PersistenceType, argument: DeleteTestArgument) async throws {
+
+        let cache = try await getCache(
+            persistenceType: persistenceType,
+            initialResources: argument.initialResources
+        )
+
+        let remainingResources: [FavoritedResourceDataModel] = try await cache
+            .deleteFavoritedResource(id: argument.resourceIdToDelete)
+
+        #expect(remainingResources.count == argument.expectedUpdatedIdsAtPositions.count)
+
+        for (expectedId, expectedPosition) in argument.expectedUpdatedIdsAtPositions {
+
+            let favoritedResource: FavoritedResourceDataModel = try #require(remainingResources.first(where: { $0.id == expectedId }))
+
+            #expect(
+                favoritedResource.position == expectedPosition,
+                "Expected position for resource \(expectedId) to be \(expectedPosition), but was \(favoritedResource.position)"
+            )
+        }
+    }
+
+    // MARK: - Reorder Favorited Resource
+
+    @available(iOS 17.4, *)
     @Test(
         "Reordering a favorited tool should move the tool to the new position, and update the surrounding tools positions accordingly.",
-        arguments: [
+        arguments: PersistenceType.allCases,
+        [
             ReorderTestArgument(initialResources: ["A": 0, "B": 1, "C": 2], resourceIdToReorder: "A", originalPosition: 0, newPosition: 2, expectedUpdatedIdsAtPositions: ["B": 0, "C": 1, "A": 2]),
             ReorderTestArgument(initialResources: ["H": 0, "I": 1, "J": 2, "K": 3], resourceIdToReorder: "K", originalPosition: 3, newPosition: 0, expectedUpdatedIdsAtPositions: ["K": 0, "H": 1, "I": 2, "J": 3]),
             ReorderTestArgument(initialResources: ["Q": 0, "R": 1, "S": 2, "T": 3], resourceIdToReorder: "R", originalPosition: 1, newPosition: 2, expectedUpdatedIdsAtPositions: ["Q": 0, "S": 1, "R": 2, "T": 3]),
             ReorderTestArgument(initialResources: ["U": 0, "V": 1, "W": 2, "X": 3], resourceIdToReorder: "E", originalPosition: 1, newPosition: 2, expectedUpdatedIdsAtPositions: ["U": 0, "V": 1, "W": 2, "X": 3]),
             ReorderTestArgument(initialResources: ["L": 0, "M": 1, "N": 2, "O": 3, "P": 4], resourceIdToReorder: "N", originalPosition: 2, newPosition: 1, expectedUpdatedIdsAtPositions: ["L": 0, "N": 1, "M": 2, "O": 3, "P": 4]),
-            ReorderTestArgument(initialResources: ["D": 0, "E": 1, "F": 2, "G": 3, "H": 4], resourceIdToReorder: "D", originalPosition: 0, newPosition: 4, expectedUpdatedIdsAtPositions: ["E": 0, "F": 1, "G": 2, "H": 3, "D": 4]),
+            ReorderTestArgument(initialResources: ["D": 0, "E": 1, "F": 2, "G": 3, "H": 4], resourceIdToReorder: "D", originalPosition: 0, newPosition: 4, expectedUpdatedIdsAtPositions: ["E": 0, "F": 1, "G": 2, "H": 3, "D": 4])
         ]
     )
-    func reorderFavoritedResources(argument: ReorderTestArgument) async throws {
-        
-        let persistence = try await getPersistence(
-            addObjects: createFavoritedResources(resources: argument.initialResources)
+    func reorderFavoritedResources(persistenceType: PersistenceType, argument: ReorderTestArgument) async throws {
+
+        let cache = try await getCache(
+            persistenceType: persistenceType,
+            initialResources: argument.initialResources
         )
-        
-        let cache = getCache(persistence: persistence)
-        
+
         let favoritedResources: [FavoritedResourceDataModel] = try await cache
             .reorderFavoritedResource(
                 id: argument.resourceIdToReorder,
                 originalPosition: argument.originalPosition,
                 newPosition: argument.newPosition
             )
-                
+
         for (expectedId, expectedPosition) in argument.expectedUpdatedIdsAtPositions {
-            
+
             let favoritedResource: FavoritedResourceDataModel = try #require(favoritedResources.first(where: { $0.id == expectedId }))
-            
-            let actualPosition: Int = favoritedResource.position
-                        
+
             #expect(
-                actualPosition == expectedPosition,
-                "Expected position for resource \(expectedId) to be \(expectedPosition), but was \(actualPosition).  Favorited resources: \(favoritedResources.map { $0.id })"
+                favoritedResource.position == expectedPosition,
+                "Expected position for resource \(expectedId) to be \(expectedPosition), but was \(favoritedResource.position).  Favorited resources: \(favoritedResources.map { $0.id })"
             )
         }
     }
 }
 
+// MARK: - Test Helpers
+
 extension FavoritedResourcesCacheTests {
-    
-    private func createFavoritedResources(resources: [String: Int]) -> [FavoritedResourceDataModel] {
-        
-        var favoritedResources: [FavoritedResourceDataModel] = Array()
-        
-        for (resourceId, resourcePosition) in resources {
-            
-            let dataModel = FavoritedResourceDataModel(
-                id: resourceId,
-                createdAt: Date(),
-                position: resourcePosition
+
+    @available(iOS 17.4, *)
+    private func getCache(persistenceType: PersistenceType, initialResources: [String: Int]) async throws -> FavoritedResourcesCache {
+
+        let persistence: any Persistence<FavoritedResourceDataModel, FavoritedResourceDataModel>
+
+        switch persistenceType {
+
+        case .realm:
+            let realmDatabase: RealmDatabase = try FakeRealmDatabase.createRealmDatabase()
+            persistence = RealmRepositorySyncPersistence(
+                database: realmDatabase,
+                mapping: RealmFavoritedResourceMapping()
             )
-            
-            favoritedResources.append(dataModel)
+
+        case .swiftData:
+            let container = try SwiftDataContainer.createInMemoryContainer(schema: Schema(versionedSchema: LatestProductionSwiftDataSchema.self))
+            let database = SwiftDatabase(container: container)
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                mapping: SwiftFavoritedResourceMapping()
+            )
         }
-        
-        return favoritedResources
-    }
-    
-    private func getPersistence(addObjects: [FavoritedResourceDataModel]) async throws -> RealmRepositorySyncPersistence<FavoritedResourceDataModel, FavoritedResourceDataModel, RealmFavoritedResource> {
-        
-        let databaseConfig = try RealmDatabaseConfig.createInMemoryConfig()
-        
-        let database = RealmDatabase(databaseConfig: databaseConfig)
-        
-        let persistence = RealmRepositorySyncPersistence(
-            database: database,
-            mapping: RealmFavoritedResourceMapping()
+
+        _ = try await persistence.writeObjects(
+            externalObjects: createFavoritedResources(resources: initialResources)
         )
-        
-        _ = try await persistence.writeObjects(externalObjects: addObjects)
-        
-        return persistence
+
+        return FavoritedResourcesCache(persistence: persistence)
     }
-    
-    private func getCache(persistence: any Persistence<FavoritedResourceDataModel, FavoritedResourceDataModel>) -> FavoritedResourcesCache {
-            
-        return FavoritedResourcesCache(
-            persistence: persistence
-        )
+
+    private func createFavoritedResources(resources: [String: Int]) -> [FavoritedResourceDataModel] {
+
+        return resources.map { (id: String, position: Int) in
+            FavoritedResourceDataModel.random(id: id, position: position)
+        }
     }
 }

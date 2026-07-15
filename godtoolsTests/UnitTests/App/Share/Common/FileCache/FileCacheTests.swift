@@ -22,7 +22,7 @@ class FileCacheTests {
         
         let fileCache = try getTestsFileCache()
         
-        let url = try fileCache.getRootDirectory()
+        let url = fileCache.rootDirectory
         
         #expect(url.absoluteString.contains(testsFileCacheRootDirectory))
     }
@@ -34,7 +34,7 @@ class FileCacheTests {
         
         let location = FileCacheLocation(relativeUrlString: testsFileCacheRootDirectory)
         
-        let url = try fileCache.getDirectory(location: location)
+        let url = fileCache.getDirectory(location: location)
         
         #expect(url.absoluteString.contains(testsFileCacheRootDirectory))
     }
@@ -44,7 +44,7 @@ class FileCacheTests {
         
         let fileCache = try getTestsFileCache()
 
-        let rootDirectoryUrl: URL = try fileCache.getRootDirectory()
+        let rootDirectoryUrl: URL = fileCache.rootDirectory
 
         let newDiretoryUrl: URL = rootDirectoryUrl.appendingPathComponent(tempDirectoryName)
         
@@ -60,7 +60,7 @@ class FileCacheTests {
         
         let fileCache = try getTestsFileCache()
         
-        let rootDirectoryUrl: URL = try fileCache.getRootDirectory()
+        let rootDirectoryUrl: URL = fileCache.rootDirectory
         
         let newDiretoryUrl: URL = rootDirectoryUrl.appendingPathComponent(tempDirectoryName)
         
@@ -95,7 +95,7 @@ class FileCacheTests {
         
         let fileCache = try getTestsFileCache()
         
-        let rootDirectoryUrl: URL = try fileCache.getRootDirectory()
+        let rootDirectoryUrl: URL = fileCache.rootDirectory
         
         let newDiretoryUrl: URL = rootDirectoryUrl.appendingPathComponent(tempDirectoryName)
         
@@ -147,7 +147,7 @@ class FileCacheTests {
         
         let fileCache = try getTestsFileCache()
         
-        let rootDirectoryUrl: URL = try fileCache.getRootDirectory()
+        let rootDirectoryUrl: URL = fileCache.rootDirectory
         
         // add directory original and move to
         
@@ -204,7 +204,7 @@ class FileCacheTests {
         
         let fileCache = try getTestsFileCache()
         
-        let rootDirectoryUrl: URL = try fileCache.getRootDirectory()
+        let rootDirectoryUrl: URL = fileCache.rootDirectory
         
         // add parent directory
         
@@ -269,7 +269,7 @@ class FileCacheTests {
         
         let fileCache = try getTestsFileCache()
         
-        let rootDirectoryUrl: URL = try fileCache.getRootDirectory()
+        let rootDirectoryUrl: URL = fileCache.rootDirectory
         
         // add parent directory
         
@@ -376,16 +376,23 @@ extension FileCacheTests {
     
     private func getTestsFileCache() throws -> FileCache {
         
+        let fileManager = FileManager.default
+        
+        let fileCache = FileCache(
+            rootDirectory: FileCache.createTempDirectoryWithDirectoryName(
+                directoryName: testsFileCacheRootDirectory,
+                fileManager: fileManager
+            ),
+            fileManager: fileManager
+        )
+        
         do {
-            try FileCache(rootDirectory: testsFileCacheRootDirectory)
-                .removeRootDirectory()
+            try fileCache.removeRootDirectory()
         }
         catch _ {
             
         }
         
-        return FileCache(
-            rootDirectory: testsFileCacheRootDirectory
-        )
+        return fileCache
     }
 }

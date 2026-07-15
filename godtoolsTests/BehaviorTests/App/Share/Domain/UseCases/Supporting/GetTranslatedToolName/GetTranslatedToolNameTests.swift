@@ -78,7 +78,9 @@ extension GetTranslatedToolNameTests {
     private func getTranslatedToolName() throws -> GetTranslatedToolName {
         
         let testsDiContainer = try TestsDiContainer(
-            addRealmObjects: getRealmObjects()
+            testsAppConfig: TestsAppConfig(
+                realmDatabase: FakeRealmDatabase.createRealmDatabase(addRealmObjects: getRealmObjects())
+            )
         )
         
         return GetTranslatedToolName(

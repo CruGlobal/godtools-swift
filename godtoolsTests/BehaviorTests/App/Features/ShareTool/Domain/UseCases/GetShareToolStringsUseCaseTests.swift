@@ -49,7 +49,11 @@ extension GetShareToolStringsUseCaseTests {
 
     private func getUseCase() throws -> GetShareToolStringsUseCase {
 
-        let testsDiContainer = try TestsDiContainer()
+        let testsDiContainer = try TestsDiContainer(
+            testsAppConfig: TestsAppConfig(
+                realmDatabase: FakeRealmDatabase.createRealmDatabase()
+            )
+        )
 
         let getShareToolUrl = GetShareToolUrl(
             resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),

@@ -13,14 +13,48 @@ import UIKit
 open class FileCache: FileCacheInterface {
     
     let fileManager: FileManager
-    let rootDirectory: String
+    let rootDirectory: URL
     let errorDomain: String
     
-    init(rootDirectory: String, fileManager: FileManager = FileManager.default) {
+    init(rootDirectory: URL, fileManager: FileManager = FileManager.default) {
         
         self.fileManager = fileManager
         self.rootDirectory = rootDirectory
         self.errorDomain = "\(type(of: self))"
+    }
+    
+    init(rootDirectoryName: String, fileManager: FileManager = FileManager.default) {
+        
+        let rootDirectory: URL
+        
+        do {
+            
+            rootDirectory = try Self.getUserDocumentsDirectory(fileManager: fileManager)
+                .appendingPathComponent(rootDirectoryName)
+        }
+        catch let error {
+            
+            assertionFailure("WARNING: FileCache Failed to initialize rootDirectory with name: \(rootDirectoryName). Error: \(error.localizedDescription). Will use temporary directory.")
+            
+            rootDirectory = fileManager.temporaryDirectory
+        }
+        
+        self.fileManager = fileManager
+        self.rootDirectory = rootDirectory
+        self.errorDomain = "\(type(of: self))"
+    }
+    
+    static func createTempDirectoryWithDirectoryName(directoryName: String, fileManager: FileManager) -> URL {
+        return fileManager.temporaryDirectory.appendingPathComponent(directoryName)
+    }
+    
+    static func getUserDocumentsDirectory(fileManager: FileManager) throws -> URL {
+        return try fileManager.url(
+            for: .documentDirectory,
+            in: .userDomainMask,
+            appropriateFor: nil,
+            create: false
+        )
     }
     
     func getIsDirectory(url: URL) -> Bool {
@@ -44,25 +78,18 @@ open class FileCache: FileCacheInterface {
         )
     }
     
-    func getRootDirectory() throws -> URL {
-    
-        return try getUserDocumentsDirectory()
-            .appendingPathComponent(rootDirectory)
-    }
-    
-    func getDirectory(location: FileCacheLocation) throws -> URL {
+    func getDirectory(location: FileCacheLocation) -> URL {
                 
         guard let directoryUrl = location.directoryUrl else {
-            return try getRootDirectory()
+            return rootDirectory
         }
         
-        return try getRootDirectory()
-            .appendingPathComponent(directoryUrl.path)
+        return rootDirectory.appendingPathComponent(directoryUrl.path)
     }
     
     private func createDirectoryIfNotExists(location: FileCacheLocation) throws -> URL {
         
-        let directoryUrl = try getDirectory(location: location)
+        let directoryUrl = getDirectory(location: location)
         
         return try createDirectoryIfNotExists(directoryUrl: directoryUrl)
     }
@@ -99,9 +126,7 @@ open class FileCache: FileCacheInterface {
             
             throw error
         }
-        
-        let rootDirectory = try getRootDirectory()
-        
+                
         return rootDirectory
             .appendingPathComponent(fileUrl.path)
     }
@@ -156,10 +181,8 @@ open class FileCache: FileCacheInterface {
     }
     
     func removeRootDirectory() throws {
-        
-        let rootDirectoryUrl = try getRootDirectory()
-        
-        try removeItem(url: rootDirectoryUrl)
+                
+        try removeItem(url: rootDirectory)
     }
 
     func removeFile(location: FileCacheLocation) throws {

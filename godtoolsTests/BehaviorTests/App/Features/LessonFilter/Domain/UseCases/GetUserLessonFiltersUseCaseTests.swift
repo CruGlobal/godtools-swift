@@ -216,7 +216,11 @@ extension GetUserLessonFiltersUseCaseTests {
     
     private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject]) throws -> TestsDiContainer {
                 
-        return try TestsDiContainer(addRealmObjects: addRealmObjects)
+        return try TestsDiContainer(
+            testsAppConfig: TestsAppConfig(
+                realmDatabase: FakeRealmDatabase.createRealmDatabase(addRealmObjects: addRealmObjects)
+            )
+        )
     }
     
     private func getUserLessonFiltersUseCase(addRealmObjects: [IdentifiableRealmObject]) throws -> GetUserLessonFiltersUseCase {

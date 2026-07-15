@@ -84,7 +84,11 @@ extension GetDownloadToolProgressStringsUseCaseTests {
  
     private func getUseCase() async throws -> GetDownloadToolProgressStringsUseCase {
         
-        let testsDiContainer = try TestsDiContainer()
+        let testsDiContainer = try TestsDiContainer(
+            testsAppConfig: TestsAppConfig(
+                realmDatabase: FakeRealmDatabase.createRealmDatabase()
+            )
+        )
         
         let favoritedTract = ResourceCodable(id: favoritedToolId, resourceType: ResourceType.tract.rawValue)
         let unfavoritedTract = ResourceCodable(id: unFavoritedToolId, resourceType: ResourceType.tract.rawValue)

@@ -376,7 +376,11 @@ extension GetAllToolsUseCaseTests {
     
     private func getUseCase() throws -> GetAllToolsUseCase {
         
-        let testsDiContainer: TestsDiContainer = try TestsDiContainer(addRealmObjects: allTools)
+        let testsDiContainer: TestsDiContainer = try TestsDiContainer(
+            testsAppConfig: TestsAppConfig(
+                realmDatabase: FakeRealmDatabase.createRealmDatabase(addRealmObjects: allTools)
+            )
+        )
         
         return GetAllToolsUseCase(
             resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),

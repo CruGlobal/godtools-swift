@@ -57,7 +57,9 @@ extension GetTranslatedToolCategoryTests {
     private func getTestsDiContainer() throws -> TestsDiContainer {
         
         return try TestsDiContainer(
-            addRealmObjects: getRealmObjects()
+            testsAppConfig: TestsAppConfig(
+                realmDatabase: FakeRealmDatabase.createRealmDatabase(addRealmObjects: getRealmObjects())
+            )
         )
     }
     

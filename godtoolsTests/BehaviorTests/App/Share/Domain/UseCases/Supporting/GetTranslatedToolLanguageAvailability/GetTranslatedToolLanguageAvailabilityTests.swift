@@ -210,7 +210,11 @@ extension GetTranslatedToolLanguageAvailabilityTests {
     
     private func getTestsDiContainer() throws -> TestsDiContainer {
             
-        return try TestsDiContainer(addRealmObjects: getRealmObjects(toolId: toolId))
+        return try TestsDiContainer(
+            testsAppConfig: TestsAppConfig(
+                realmDatabase: FakeRealmDatabase.createRealmDatabase(addRealmObjects: getRealmObjects(toolId: toolId))
+            )
+        )
     }
     
     private func getTranslatedToolLanguageAvailability(testsDiContainer: TestsDiContainer) -> GetTranslatedToolLanguageAvailability {
