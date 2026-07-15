@@ -16,7 +16,7 @@ final class ArticleAemWebArchiveFileCache {
     
     init() {
         
-        fileCache = FileCache(rootDirectory: ArticleAemWebArchiveFileCache.rootDirectoryName)
+        fileCache = FileCache(rootDirectoryName: ArticleAemWebArchiveFileCache.rootDirectoryName)
                         
         do {
             try deleteLegacyArticlesDirectory()

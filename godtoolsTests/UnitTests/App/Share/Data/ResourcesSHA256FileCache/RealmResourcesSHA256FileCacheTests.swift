@@ -22,8 +22,17 @@ final class RealmResourcesSHA256FileCacheTests {
     private let realmDatabase: RealmDatabase
 
     init() throws {
+        
+        let fileManager = FileManager.default
 
-        fileCache = ResourcesFileCache()
+        fileCache = ResourcesFileCache(
+            rootDirectory: FileCache.createTempDirectoryWithDirectoryName(
+                directoryName: "tests_realm_resources_sha256_files",
+                fileManager: fileManager
+            ),
+            fileManager: fileManager
+        )
+        
         try? fileCache.removeRootDirectory()
 
         realmDatabase = try Self.createOnDiskRealmDatabase()

@@ -13,9 +13,7 @@ import Combine
 extension FileCache {
     
     func decompressZipFileAndStoreFileContents(zipFileData: Data) throws -> [FileCacheLocation] {
-        
-        let rootDirectory = try getRootDirectory()
-        
+                
         return try decompressZipFileAndStoreFileContentsAtDirectory(
             directory: rootDirectory,
             zipFileData: zipFileData

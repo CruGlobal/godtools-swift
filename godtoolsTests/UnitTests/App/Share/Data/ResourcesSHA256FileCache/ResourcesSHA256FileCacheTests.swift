@@ -21,8 +21,14 @@ final class ResourcesSHA256FileCacheTests {
     private let fileCache: ResourcesFileCache
 
     init() throws {
+        
+        let fileManager = FileManager.default
 
-        fileCache = ResourcesFileCache()
+        fileCache = ResourcesFileCache(
+            rootDirectory: FileCache.createTempDirectoryWithDirectoryName(directoryName: "tests_resources_sha256_files", fileManager: fileManager),
+            fileManager: fileManager
+        )
+        
         try? fileCache.removeRootDirectory()
     }
 
