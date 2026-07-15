@@ -96,6 +96,7 @@ actor ResourcesSHA256FileCache: ResourcesSHA256FileCacheInterface, ModelActor {
         else {
             
             sha256File = SwiftSHA256File()
+            sha256File.id = filenameWithPathExtension
             sha256File.sha256WithPathExtension = filenameWithPathExtension
         }
         
