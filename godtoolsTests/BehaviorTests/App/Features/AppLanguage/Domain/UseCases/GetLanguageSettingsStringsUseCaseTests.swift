@@ -12,6 +12,7 @@ import RepositorySync
 
 struct GetLanguageSettingsStringsUseCaseTests {
     
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: User is viewing the language settings.
@@ -39,6 +40,7 @@ struct GetLanguageSettingsStringsUseCaseTests {
         let expectedValue: String
     }
     
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: User is viewing the language settings.
@@ -66,6 +68,7 @@ struct GetLanguageSettingsStringsUseCaseTests {
         #expect(strings.chooseAppLanguageButtonTitle == argument.expectedValue)
     }
     
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: User is viewing the language settings.
@@ -101,25 +104,21 @@ extension GetLanguageSettingsStringsUseCaseTests {
         return appLanguages
     }
     
+    @available(iOS 17.4, *)
     private func getUseCase() async throws -> GetLanguageSettingsStringsUseCase {
-        
+
         let testsDiContainer = try TestsDiContainer(
             testsAppConfig: TestsAppConfig(
-                realmDatabase: FakeRealmDatabase.createRealmDatabase()
+                swiftDatabase: SwiftDatabase(container: SwiftDataProductionContainer.createInMemoryContainer())
             )
         )
-        
-        let realmDatabase: RealmDatabase = testsDiContainer.core.dataLayer.getSharedRealmDatabase()
-        
-        let persistence = RealmRepositorySyncPersistence(
-            database: realmDatabase,
-            mapping: RealmAppLanguageMapping()
-        )
-        
+
+        let persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable> = testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesPersistence()
+
         let appLanguages: [AppLanguageCodable] = getAppLanguages()
-        
+
         let appLanguagesSync = try await FakeAppLanguagesRepositorySync(
-            persistence: testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesPersistence(),
+            persistence: persistence,
             appLanguages: appLanguages
         )
         

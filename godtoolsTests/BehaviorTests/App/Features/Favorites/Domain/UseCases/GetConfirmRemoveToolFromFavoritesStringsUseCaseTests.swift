@@ -8,6 +8,8 @@
 
 import Testing
 @testable import godtools
+import Foundation
+import SwiftData
 import RepositorySync
 
 struct GetConfirmRemoveToolFromFavoritesStringsUseCaseTests {
@@ -21,6 +23,7 @@ struct GetConfirmRemoveToolFromFavoritesStringsUseCaseTests {
     private static let toolNameInEnglish: String = "Tool Name EN"
     private static let toolNameInSpanish: String = "Tool Name ES"
 
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: User is confirming the removal of a tool from their favorites.
@@ -50,11 +53,20 @@ struct GetConfirmRemoveToolFromFavoritesStringsUseCaseTests {
 
 extension GetConfirmRemoveToolFromFavoritesStringsUseCaseTests {
 
+    @available(iOS 17.4, *)
     private func getUseCase() throws -> GetConfirmRemoveToolFromFavoritesStringsUseCase {
+
+        let swiftDatabase = SwiftDatabase(container: try SwiftDataProductionContainer.createInMemoryContainer())
+
+        let context: ModelContext = swiftDatabase.openContext()
+
+        context.insertObjects(objects: getSwiftDatabaseObjects())
+
+        try context.saveIfHasChanges()
 
         let testsDiContainer = try TestsDiContainer(
             testsAppConfig: TestsAppConfig(
-                realmDatabase: FakeRealmDatabase.createRealmDatabase(addRealmObjects: getRealmObjects())
+                swiftDatabase: swiftDatabase
             )
         )
 
@@ -84,48 +96,52 @@ extension GetConfirmRemoveToolFromFavoritesStringsUseCaseTests {
         )
     }
 
-    private func getRealmObjects() -> [IdentifiableRealmObject] {
+    @available(iOS 17.4, *)
+    private func getSwiftDatabaseObjects() -> [any PersistentModel] {
 
-        let englishLanguage: RealmLanguage = getRealmLanguage(languageCode: .english)
-        let spanishLanguage: RealmLanguage = getRealmLanguage(languageCode: .spanish)
+        let englishLanguage: SwiftLanguage = getSwiftLanguage(languageCode: .english)
+        let spanishLanguage: SwiftLanguage = getSwiftLanguage(languageCode: .spanish)
 
-        let allLanguages: [RealmLanguage] = [englishLanguage, spanishLanguage]
+        let allLanguages: [SwiftLanguage] = [englishLanguage, spanishLanguage]
 
-        let tract: RealmResource = FakeRealmResource.createTract(
+        let tract: SwiftResource = SwiftResource()
+        tract.id = Self.toolId
+        tract.resourceType = ResourceType.tract.rawValue
+        tract.attrDefaultLocale = LanguageCodeDomainModel.english.rawValue
+
+        tract.addLanguages(
             addLanguages: [.english, .spanish],
-            fromLanguages: allLanguages,
-            id: Self.toolId,
-            attrDefaultLocale: LanguageCodeDomainModel.english.rawValue
+            fromLanguages: allLanguages
         )
 
-        let englishTranslation: RealmTranslation = getRealmTranslation(translatedName: Self.toolNameInEnglish)
-        let spanishTranslation: RealmTranslation = getRealmTranslation(translatedName: Self.toolNameInSpanish)
-
-        englishTranslation.language = englishLanguage
-        spanishTranslation.language = spanishLanguage
-
-        tract.addLatestTranslation(translation: englishTranslation)
-        tract.addLatestTranslation(translation: spanishTranslation)
+        tract.addLatestTranslation(translation: getSwiftTranslation(translatedName: Self.toolNameInEnglish, language: englishLanguage))
+        tract.addLatestTranslation(translation: getSwiftTranslation(translatedName: Self.toolNameInSpanish, language: spanishLanguage))
 
         return allLanguages + [tract]
     }
 
-    private func getRealmLanguage(languageCode: LanguageCodeDomainModel) -> RealmLanguage {
-        
+    @available(iOS 17.4, *)
+    private func getSwiftLanguage(languageCode: LanguageCodeDomainModel) -> SwiftLanguage {
+
         let language = LanguageCodable.random(
             id: languageCode.rawValue,
             code: languageCode.rawValue,
             name: languageCode.rawValue + " Name",
             forceLanguageName: false
         )
-        
-        return RealmLanguage.createNewFrom(model: language.toModel())
+
+        return SwiftLanguage.createNewFrom(model: language.toModel())
     }
 
-    private func getRealmTranslation(translatedName: String) -> RealmTranslation {
+    @available(iOS 17.4, *)
+    private func getSwiftTranslation(translatedName: String, language: SwiftLanguage) -> SwiftTranslation {
 
-        let translation = TranslationCodable.random(translatedName: translatedName)
+        let translation = SwiftTranslation.createNewFrom(
+            model: TranslationCodable.random(translatedName: translatedName).toModel()
+        )
 
-        return RealmTranslation.createNewFrom(model: translation.toModel())
+        translation.language = language
+
+        return translation
     }
 }

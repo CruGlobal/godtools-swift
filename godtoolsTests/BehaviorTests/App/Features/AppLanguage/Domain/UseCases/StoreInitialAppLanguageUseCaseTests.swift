@@ -13,23 +13,32 @@ import Combine
 import RepositorySync
 
 struct StoreInitialAppLanguageUseCaseTests {
-    
+
     struct TestArgument {
-    
+
         let appLanguage: LanguageCodeDomainModel?
         let deviceLanguage: LanguageCodeDomainModel
         let expectedValue: String
     }
-    
+
     private let testsDiContainer: TestsDiContainer
-    
+
     init() throws {
-        
+
         testsDiContainer = try TestsDiContainer(
             testsAppConfig: TestsAppConfig(
-                realmDatabase: FakeRealmDatabase.createRealmDatabase()
+                swiftDatabase: Self.createSwiftDatabase()
             )
         )
+    }
+
+    private static func createSwiftDatabase() throws -> Any? {
+
+        guard #available(iOS 17.4, *) else {
+            return nil
+        }
+
+        return SwiftDatabase(container: try SwiftDataProductionContainer.createInMemoryContainer())
     }
     
     @Test(
@@ -256,7 +265,7 @@ struct StoreInitialAppLanguageUseCaseTests {
 }
 
 extension StoreInitialAppLanguageUseCaseTests {
-    
+
     @MainActor
     private func getAppLanguagesRepositorySync(appLanguages: [AppLanguageCodable]) async throws -> FakeAppLanguagesRepositorySync {
         

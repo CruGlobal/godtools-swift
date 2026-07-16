@@ -13,16 +13,16 @@ import Combine
 import RepositorySync
 
 struct SetAppLanguageUseCaseTests {
-    
+
     private let testsDiContainer: TestsDiContainer
     private let languageCodes: [LanguageCodeDomainModel] = [.afrikaans, .arabic, .chinese, .czech, .english, .french, .hebrew, .latvian, .portuguese, .russian, .spanish, .vietnamese]
     private let allLanguages: [LanguageCodable]
-    
+
     init() async throws {
-        
+
         testsDiContainer = try TestsDiContainer(
             testsAppConfig: TestsAppConfig(
-                realmDatabase: FakeRealmDatabase.createRealmDatabase()
+                swiftDatabase: Self.createSwiftDatabase()
             )
         )
         
@@ -31,6 +31,15 @@ struct SetAppLanguageUseCaseTests {
         }
         
         try await testsDiContainer.core.dataLayer.getLanguagesPersistence().writeObjects(externalObjects: allLanguages)
+    }
+
+    private static func createSwiftDatabase() throws -> Any? {
+
+        guard #available(iOS 17.4, *) else {
+            return nil
+        }
+
+        return SwiftDatabase(container: try SwiftDataProductionContainer.createInMemoryContainer())
     }
         
     @Test(

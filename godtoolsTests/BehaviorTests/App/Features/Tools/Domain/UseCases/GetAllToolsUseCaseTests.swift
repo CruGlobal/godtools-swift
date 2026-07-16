@@ -10,11 +10,17 @@ import Testing
 @testable import godtools
 import Foundation
 import Combine
-import RealmSwift
+import SwiftData
 import RepositorySync
 
 struct GetAllToolsUseCaseTests {
-    
+
+    struct ToolFixture {
+        let id: String
+        let category: String
+        let languageCodes: [LanguageCodeDomainModel]
+    }
+
     private let categoryConversationStarter: String = "conversation_starter"
     private let categoryGospel: String = "gospel"
     private let categoryArticles: String = "articles"
@@ -23,11 +29,11 @@ struct GetAllToolsUseCaseTests {
     private let frenchLanguageId: String = "1"
     private let russianLanguageId: String = "2"
     private let spanishLanguageId: String = "3"
-    private let conversationStarterTools: [RealmResource]
-    private let gospelTools: [RealmResource]
-    private let growthTools: [RealmResource]
-    private let articleTools: [RealmResource]
-    private let allTools: [RealmResource]
+    private let conversationStarterTools: [ToolFixture]
+    private let gospelTools: [ToolFixture]
+    private let growthTools: [ToolFixture]
+    private let articleTools: [ToolFixture]
+    private let allTools: [ToolFixture]
     
     @Test(
         """
@@ -254,116 +260,111 @@ struct GetAllToolsUseCaseTests {
     }
     
     init() {
-        
-        let englishLanguage: RealmLanguage = Self.createLanguage(id: englishLanguageId, code: .english)
-        let frenchLanguage: RealmLanguage = Self.createLanguage(id: frenchLanguageId, code: .french)
-        let russianLanguage: RealmLanguage = Self.createLanguage(id: russianLanguageId, code: .russian)
-        let spanishLanguage: RealmLanguage = Self.createLanguage(id: spanishLanguageId, code: .spanish)
-        
-        let conversationStarterTools: [RealmResource] = [
+
+        let conversationStarterTools: [ToolFixture] = [
             Self.createTool(
                 category: categoryConversationStarter,
-                addLanguages: [englishLanguage, frenchLanguage, russianLanguage, spanishLanguage]
+                languageCodes: [.english, .french, .russian, .spanish]
             ),
             Self.createTool(
                 category: categoryConversationStarter,
-                addLanguages: [englishLanguage, frenchLanguage]
+                languageCodes: [.english, .french]
             ),
             Self.createTool(
                 category: categoryConversationStarter,
-                addLanguages: [russianLanguage, spanishLanguage]
+                languageCodes: [.russian, .spanish]
             ),
             Self.createTool(
                 category: categoryConversationStarter,
-                addLanguages: [frenchLanguage, spanishLanguage]
+                languageCodes: [.french, .spanish]
             )
         ]
-        
-        let gospelTools: [RealmResource] = [
+
+        let gospelTools: [ToolFixture] = [
             Self.createTool(
                 category: categoryGospel,
-                addLanguages: [englishLanguage, russianLanguage, spanishLanguage]
+                languageCodes: [.english, .russian, .spanish]
             ),
             Self.createTool(
                 category: categoryGospel,
-                addLanguages: [spanishLanguage]
+                languageCodes: [.spanish]
             ),
             Self.createTool(
                 category: categoryGospel,
-                addLanguages: [englishLanguage, frenchLanguage, spanishLanguage]
+                languageCodes: [.english, .french, .spanish]
             ),
             Self.createTool(
                 category: categoryGospel,
-                addLanguages: [russianLanguage, spanishLanguage]
+                languageCodes: [.russian, .spanish]
             ),
             Self.createTool(
                 category: categoryGospel,
-                addLanguages: [englishLanguage]
+                languageCodes: [.english]
             ),
             Self.createTool(
                 category: categoryGospel,
-                addLanguages: [englishLanguage, russianLanguage]
+                languageCodes: [.english, .russian]
             ),
             Self.createTool(
                 category: categoryGospel,
-                addLanguages: [englishLanguage, frenchLanguage, russianLanguage, spanishLanguage]
+                languageCodes: [.english, .french, .russian, .spanish]
             ),
             Self.createTool(
                 category: categoryGospel,
-                addLanguages: [englishLanguage, frenchLanguage, russianLanguage, spanishLanguage]
+                languageCodes: [.english, .french, .russian, .spanish]
             ),
             Self.createTool(
                 category: categoryGospel,
-                addLanguages: [englishLanguage, frenchLanguage, russianLanguage, spanishLanguage]
+                languageCodes: [.english, .french, .russian, .spanish]
             )
         ]
-        
-        let growthTools: [RealmResource] = [
+
+        let growthTools: [ToolFixture] = [
             Self.createTool(
                 category: categoryGrowth,
-                addLanguages: [englishLanguage, russianLanguage, spanishLanguage]
+                languageCodes: [.english, .russian, .spanish]
             ),
             Self.createTool(
                 category: categoryGrowth,
-                addLanguages: [spanishLanguage]
+                languageCodes: [.spanish]
             ),
             Self.createTool(
                 category: categoryGrowth,
-                addLanguages: [englishLanguage, frenchLanguage, spanishLanguage]
+                languageCodes: [.english, .french, .spanish]
             ),
             Self.createTool(
                 category: categoryGrowth,
-                addLanguages: [russianLanguage, spanishLanguage]
+                languageCodes: [.russian, .spanish]
             ),
             Self.createTool(
                 category: categoryGrowth,
-                addLanguages: [englishLanguage]
+                languageCodes: [.english]
             ),
             Self.createTool(
                 category: categoryGrowth,
-                addLanguages: [englishLanguage, russianLanguage]
+                languageCodes: [.english, .russian]
             ),
             Self.createTool(
                 category: categoryGrowth,
-                addLanguages: [englishLanguage, frenchLanguage, russianLanguage, spanishLanguage]
+                languageCodes: [.english, .french, .russian, .spanish]
             ),
             Self.createTool(
                 category: categoryGrowth,
-                addLanguages: [englishLanguage, frenchLanguage, russianLanguage, spanishLanguage]
+                languageCodes: [.english, .french, .russian, .spanish]
             ),
             Self.createTool(
                 category: categoryGrowth,
-                addLanguages: [englishLanguage, frenchLanguage, russianLanguage, spanishLanguage]
+                languageCodes: [.english, .french, .russian, .spanish]
             )
         ]
-        
-        let articleTools: [RealmResource] = [
+
+        let articleTools: [ToolFixture] = [
             Self.createTool(
                 category: categoryArticles,
-                addLanguages: [englishLanguage, spanishLanguage]
+                languageCodes: [.english, .spanish]
             )
         ]
-        
+
         self.conversationStarterTools = conversationStarterTools
         self.gospelTools = gospelTools
         self.growthTools = growthTools
@@ -373,61 +374,106 @@ struct GetAllToolsUseCaseTests {
 }
 
 extension GetAllToolsUseCaseTests {
-    
+
     private func getUseCase() throws -> GetAllToolsUseCase {
-        
+
         let testsDiContainer: TestsDiContainer = try TestsDiContainer(
             testsAppConfig: TestsAppConfig(
-                realmDatabase: FakeRealmDatabase.createRealmDatabase(addRealmObjects: allTools)
+                swiftDatabase: getSwiftDatabase()
             )
         )
-        
+
         return GetAllToolsUseCase(
             resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),
             getToolsListItems: testsDiContainer.core.domainLayer.supporting.getToolsListItems()
         )
     }
-    
-    private static func createLanguage(id: String, code: LanguageCodeDomainModel) -> RealmLanguage {
-        
-        let language = RealmLanguage()
+
+    private func getSwiftDatabase() throws -> Any? {
+
+        guard #available(iOS 17.4, *) else {
+            return nil
+        }
+
+        let swiftDatabase = SwiftDatabase(container: try SwiftDataProductionContainer.createInMemoryContainer())
+
+        let context: ModelContext = swiftDatabase.openContext()
+
+        context.insertObjects(objects: getSwiftDatabaseObjects())
+
+        try context.saveIfHasChanges()
+
+        return swiftDatabase
+    }
+
+    @available(iOS 17.4, *)
+    private func getSwiftDatabaseObjects() -> [any PersistentModel] {
+
+        let languagesByCode: [LanguageCodeDomainModel: SwiftLanguage] = [
+            .english: Self.createLanguage(id: englishLanguageId, code: .english),
+            .french: Self.createLanguage(id: frenchLanguageId, code: .french),
+            .russian: Self.createLanguage(id: russianLanguageId, code: .russian),
+            .spanish: Self.createLanguage(id: spanishLanguageId, code: .spanish)
+        ]
+
+        let tools: [SwiftResource] = allTools.map { fixture in
+
+            let resource = SwiftResource()
+            resource.attrCategory = fixture.category
+            resource.id = fixture.id
+            resource.resourceType = ResourceType.tract.rawValue
+
+            for languageCode in fixture.languageCodes {
+
+                guard let language = languagesByCode[languageCode] else {
+                    continue
+                }
+
+                resource.addLanguage(language: language)
+            }
+
+            return resource
+        }
+
+        return Array(languagesByCode.values) + tools
+    }
+
+    @available(iOS 17.4, *)
+    private static func createLanguage(id: String, code: LanguageCodeDomainModel) -> SwiftLanguage {
+
+        let language = SwiftLanguage()
         language.id = id
         language.code = code.rawValue
-        
+
         return language
     }
-    
-    private static func createTool(category: String, addLanguages: [RealmLanguage]) -> RealmResource {
-        
-        let resource = RealmResource()
-        resource.attrCategory = category
-        resource.id = UUID().uuidString
-        resource.resourceType = ResourceType.tract.rawValue
-        
-        for language in addLanguages {
-            resource.addLanguage(language: language)
-        }
-        
-        return resource
+
+    private static func createTool(category: String, languageCodes: [LanguageCodeDomainModel]) -> ToolFixture {
+
+        return ToolFixture(
+            id: UUID().uuidString,
+            category: category,
+            languageCodes: languageCodes
+        )
     }
-    
-    private func getRussianGrowthTools() -> [RealmResource] {
-        return allTools.filter { (resource: RealmResource) in
-            resource.attrCategory == categoryGrowth && resource.getLanguages().contains(where: {$0.code == LanguageCodeDomainModel.russian.rawValue})
+
+    private func getRussianGrowthTools() -> [ToolFixture] {
+        return allTools.filter { (tool: ToolFixture) in
+            tool.category == categoryGrowth && tool.languageCodes.contains(.russian)
         }
     }
-    
-    private func getRussianTools() -> [RealmResource] {
+
+    private func getRussianTools() -> [ToolFixture] {
         return getToolsByLanguage(language: .russian)
     }
-    
-    private func getSpanishTools() -> [RealmResource] {
+
+    private func getSpanishTools() -> [ToolFixture] {
         return getToolsByLanguage(language: .spanish)
     }
-    
-    private func getToolsByLanguage(language: LanguageCodeDomainModel) -> [RealmResource] {
-        return allTools.filter { (resource: RealmResource) in
-            resource.getLanguages().contains(where: {$0.code == language.rawValue})
+
+    private func getToolsByLanguage(language: LanguageCodeDomainModel) -> [ToolFixture] {
+        return allTools.filter { (tool: ToolFixture) in
+            tool.languageCodes.contains(language)
         }
     }
 }

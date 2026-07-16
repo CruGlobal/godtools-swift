@@ -19,6 +19,7 @@ struct GetUserAccountDetailsUseCaseTests {
         let joinedOnString: String
     }
     
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: User is logged in and app language is set
@@ -88,6 +89,7 @@ struct GetUserAccountDetailsUseCaseTests {
         #expect(userAccountDetails?.joinedOnString == joinedOnStringExpected)
     }
     
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: User is logged in but user details are nil
@@ -134,6 +136,7 @@ struct GetUserAccountDetailsUseCaseTests {
         #expect(userAccountDetails?.joinedOnString == "")
     }
     
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: User is logged in but their full name is nil
@@ -192,6 +195,7 @@ struct GetUserAccountDetailsUseCaseTests {
         #expect(userAccountDetails?.name == "\(giveName) \(familyName)")
     }
     
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: User is logged in but their family name and full name is nil
@@ -249,6 +253,7 @@ struct GetUserAccountDetailsUseCaseTests {
         #expect(userAccountDetails?.name == giveName)
     }
     
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: User is logged in but all names are nil.
@@ -304,6 +309,7 @@ struct GetUserAccountDetailsUseCaseTests {
         #expect(userAccountDetails?.name == "")
     }
     
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: User is logged in but their createdAt date is nil
@@ -362,23 +368,20 @@ struct GetUserAccountDetailsUseCaseTests {
 
 extension GetUserAccountDetailsUseCaseTests {
     
+    @available(iOS 17.4, *)
     private func getUseCase(userDetails: MobileContentApiUsersMeCodable?) async throws -> GetUserAccountDetailsUseCase {
-        
-        let testsDiContainer = try TestsDiContainer(
-            testsAppConfig: TestsAppConfig(
-                realmDatabase: FakeRealmDatabase.createRealmDatabase()
-            )
+
+        let swiftDatabase = SwiftDatabase(container: try SwiftDataProductionContainer.createInMemoryContainer())
+
+        let userDetailsPersistence: any Persistence<UserDetailsDataModel, MobileContentApiUsersMeCodable> = SwiftRepositorySyncPersistence(
+            database: swiftDatabase,
+            mapping: SwiftUserDetailsMapping()
         )
-        
-        let userDetailsPersistence: any Persistence<UserDetailsDataModel, MobileContentApiUsersMeCodable> = RealmRepositorySyncPersistence(
-            database: testsDiContainer.core.dataLayer.getSharedRealmDatabase(),
-            mapping: RealmUserDetailsMapping()
-        )
-        
+
         if let userDetails = userDetails {
             try await userDetailsPersistence.writeObjects(externalObjects: [userDetails])
         }
-                
+
         let userDetailsRepository = UserDetailsRepository(
             api: FakeUserDatailsApi(
                 user: MobileContentApiUsersMeCodable.emptyValue
@@ -390,14 +393,14 @@ extension GetUserAccountDetailsUseCaseTests {
                 api: FakeMobileContentAuthTokenApi(fetchedAuthToken: nil),
                 cache: MobileContentAuthTokenCache(
                     mobileContentAuthTokenKeychainAccessor: FakeMobileContentAuthTokenKeychainAccessor(userId: userDetails?.id),
-                    persistence: RealmRepositorySyncPersistence(
-                        database: testsDiContainer.core.dataLayer.getSharedRealmDatabase(),
-                        mapping: RealmMobileContentAuthTokenMapping()
+                    persistence: SwiftRepositorySyncPersistence(
+                        database: swiftDatabase,
+                        mapping: SwiftMobileContentAuthTokenMapping()
                     )
                 )
             )
         )
-        
+
         return GetUserAccountDetailsUseCase(
             userDetailsRepository: userDetailsRepository,
             localizationServices: getLocalizationServices()
