@@ -14,10 +14,13 @@ import SwiftData
 
 final class TestsAppConfig: AppConfigInterface {
     
-    private let realmDatabase: RealmDatabase
+    private let realmDatabase: RealmDatabase?
     
-    init(realmDatabase: RealmDatabase) {
+    private let swiftDatabase: Any?
+
+    init(realmDatabase: RealmDatabase? = nil, swiftDatabase: Any? = nil) {
         self.realmDatabase = realmDatabase
+        self.swiftDatabase = swiftDatabase
     }
     
     var analyticsEnabled: Bool {
@@ -77,20 +80,23 @@ final class TestsAppConfig: AppConfigInterface {
     }
     
     func getRealmDatabaseConfig() throws -> RealmDatabaseConfig {
-        return realmDatabase.databaseConfig
+        if let databaseConfig = realmDatabase?.databaseConfig {
+            return databaseConfig
+        }
+        
+        return try RealmDatabaseConfig.createInMemoryConfig()
     }
     
     @available(iOS 17.4, *)
     func getSwiftDatabase() throws -> SwiftDatabase? {
+
+        if let existingSwiftDatabase = swiftDatabase as? SwiftDatabase {
+            return existingSwiftDatabase
+        }
         
-        // TODO: Return database once SwiftDatabase can be enabled. ~Levi
-        return nil
-        
-//        return SwiftDatabase(
-//            container: try SwiftDataContainer.createInMemoryContainer(
-//                schema: Schema(versionedSchema: LatestProductionSwiftDataSchema.self)
-//            )
-//        )
+        return SwiftDatabase(
+            container: try SwiftDataProductionContainer.createInMemoryContainer()
+        )
     }
     
     func getTractRemoteShareConnectionUrl() -> String {
