@@ -19,7 +19,7 @@ final class SwiftDataStagingContainer {
         
     }
     
-    func createContainer() throws -> SwiftDataContainer {
+    static func createContainer() throws -> SwiftDataContainer {
         
         let modelConfig = ModelConfiguration(
             Self.configName,
