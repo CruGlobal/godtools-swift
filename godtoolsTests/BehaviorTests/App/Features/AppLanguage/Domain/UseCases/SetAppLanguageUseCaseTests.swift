@@ -18,11 +18,12 @@ struct SetAppLanguageUseCaseTests {
     private let languageCodes: [LanguageCodeDomainModel] = [.afrikaans, .arabic, .chinese, .czech, .english, .french, .hebrew, .latvian, .portuguese, .russian, .spanish, .vietnamese]
     private let allLanguages: [LanguageCodable]
 
+    @available(iOS 17.4, *)
     init() async throws {
 
-        testsDiContainer = try TestsDiContainer(
+        testsDiContainer = TestsDiContainer(
             testsAppConfig: TestsAppConfig(
-                swiftDatabase: Self.createSwiftDatabase()
+                swiftDatabase: SwiftDatabase(container: try SwiftDataProductionContainer.createInMemoryContainer())
             )
         )
         
@@ -32,16 +33,8 @@ struct SetAppLanguageUseCaseTests {
         
         try await testsDiContainer.core.dataLayer.getLanguagesPersistence().writeObjects(externalObjects: allLanguages)
     }
-
-    private static func createSwiftDatabase() throws -> Any? {
-
-        guard #available(iOS 17.4, *) else {
-            return nil
-        }
-
-        return SwiftDatabase(container: try SwiftDataProductionContainer.createInMemoryContainer())
-    }
         
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: User is viewing the language settings

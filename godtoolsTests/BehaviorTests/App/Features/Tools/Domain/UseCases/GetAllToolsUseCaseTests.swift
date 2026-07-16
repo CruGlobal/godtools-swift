@@ -35,6 +35,7 @@ struct GetAllToolsUseCaseTests {
     private let articleTools: [ToolFixture]
     private let allTools: [ToolFixture]
     
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: User is viewing the tools list.
@@ -88,6 +89,7 @@ struct GetAllToolsUseCaseTests {
         #expect(toolsList == allTools)
     }
     
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: User is viewing the tools list.
@@ -145,6 +147,7 @@ struct GetAllToolsUseCaseTests {
         #expect(toolsList == growthTools)
     }
     
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: User is viewing the tools list.
@@ -202,6 +205,7 @@ struct GetAllToolsUseCaseTests {
         #expect(toolsList == russianTools)
     }
     
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: User is viewing the tools list.
@@ -375,25 +379,8 @@ struct GetAllToolsUseCaseTests {
 
 extension GetAllToolsUseCaseTests {
 
+    @available(iOS 17.4, *)
     private func getUseCase() throws -> GetAllToolsUseCase {
-
-        let testsDiContainer: TestsDiContainer = try TestsDiContainer(
-            testsAppConfig: TestsAppConfig(
-                swiftDatabase: getSwiftDatabase()
-            )
-        )
-
-        return GetAllToolsUseCase(
-            resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),
-            getToolsListItems: testsDiContainer.core.domainLayer.supporting.getToolsListItems()
-        )
-    }
-
-    private func getSwiftDatabase() throws -> Any? {
-
-        guard #available(iOS 17.4, *) else {
-            return nil
-        }
 
         let swiftDatabase = SwiftDatabase(container: try SwiftDataProductionContainer.createInMemoryContainer())
 
@@ -402,8 +389,17 @@ extension GetAllToolsUseCaseTests {
         context.insertObjects(objects: getSwiftDatabaseObjects())
 
         try context.saveIfHasChanges()
+        
+        let testsDiContainer: TestsDiContainer = TestsDiContainer(
+            testsAppConfig: TestsAppConfig(
+                swiftDatabase: swiftDatabase
+            )
+        )
 
-        return swiftDatabase
+        return GetAllToolsUseCase(
+            resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),
+            getToolsListItems: testsDiContainer.core.domainLayer.supporting.getToolsListItems()
+        )
     }
 
     @available(iOS 17.4, *)
