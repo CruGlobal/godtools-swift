@@ -70,7 +70,6 @@ extension GetTranslatedToolCategoryTests {
 
         return TestsDiContainer(
             testsAppConfig: TestsAppConfig(
-                realmDatabase: try FakeRealmDatabase.createRealmDatabase(),
                 swiftDatabase: swiftDatabase
             )
         )
