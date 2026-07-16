@@ -75,9 +75,10 @@ final class UITestsAppConfig: AppConfigInterface {
     
     @available(iOS 17.4, *)
     func getSwiftDatabase() throws -> SwiftDatabase? {
-        return SwiftDatabase(
-            container: try SwiftDataProductionContainer.createInMemoryContainer()
-        )
+        return nil
+//        return SwiftDatabase(
+//            container: try SwiftDataProductionContainer.createInMemoryContainer()
+//        )
     }
     
     func getTractRemoteShareConnectionUrl() -> String {
