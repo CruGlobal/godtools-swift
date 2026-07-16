@@ -14,7 +14,7 @@ struct StoredAttachmentDataModel: Sendable {
     let diskFileUrl: URL?
     let fileCacheLocation: FileCacheLocation
     
-    init(data: Data, fileCacheLocation: FileCacheLocation, resourcesFileCache: ResourcesSHA256FileCache) throws {
+    init(data: Data, fileCacheLocation: FileCacheLocation, resourcesFileCache: ResourcesFileCache) throws {
         
         self.data = data
         self.diskFileUrl = try resourcesFileCache.getFile(location: fileCacheLocation)

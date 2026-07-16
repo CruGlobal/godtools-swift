@@ -164,9 +164,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				App/Flows/Dashboard/DashboardFlowTests.swift,
-				App/Flows/LanguageSettings/LanguageSettingsFlowTests.swift,
 				App/Flows/LearnToShareTool/LearnToShareToolFlowTests.swift,
-				App/Flows/Menu/MenuFlowTests.swift,
 				App/Flows/ToolScreenShare/ToolScreenShareFlowTests.swift,
 				Info.plist,
 			);
@@ -2179,7 +2177,7 @@
 			repositoryURL = "https://github.com/CruGlobal/repository-sync-ios";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 1.4.0;
+				minimumVersion = 1.4.1;
 			};
 		};
 		4581EAA12BFBE194008115FF /* XCRemoteSwiftPackageReference "realm-swift" */ = {

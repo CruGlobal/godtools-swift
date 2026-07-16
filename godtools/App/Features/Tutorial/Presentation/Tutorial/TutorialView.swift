@@ -98,7 +98,7 @@ struct TutorialView: View {
     }
     
     private func getTutorialItemView(index: Int, geometry: GeometryProxy) -> TutorialItemView {
-        
+
         return TutorialItemView(
             tutorialPage: viewModel.tutorialPages[index],
             geometry: geometry,
@@ -106,5 +106,20 @@ struct TutorialView: View {
                 viewModel.tutorialVideoPlayTapped(tutorialPageIndex: index)
             }
         )
+    }
+}
+
+extension TutorialView {
+
+    func getPageCount() -> Int {
+        return viewModel.tutorialPages.count
+    }
+
+    func getCurrentPageIndex() -> Int {
+        return viewModel.currentPage
+    }
+
+    func setCurrentPage(page: Int) {
+        viewModel.currentPage = page
     }
 }

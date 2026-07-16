@@ -10,12 +10,14 @@ import Foundation
 import Testing
 @testable import godtools
 import Combine
+import SwiftData
 import RepositorySync
 
 struct GetLessonFilterLanguagesUseCaseTests {
     
     private let englishLessonsAvailableText: String = "lessons available"
     
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: User is viewing the lesson language filter languages list.
@@ -89,6 +91,7 @@ struct GetLessonFilterLanguagesUseCaseTests {
         let expectedValue: [String]
     }
     
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: User is viewing the lesson language filter languages list.
@@ -140,6 +143,7 @@ struct GetLessonFilterLanguagesUseCaseTests {
         #expect(languagesRef.map({$0.languageNameTranslatedInAppLanguage}) == argument.expectedValue)
     }
     
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: User is viewing the lesson language filter languages list.
@@ -209,9 +213,22 @@ struct GetLessonFilterLanguagesUseCaseTests {
 
 extension GetLessonFilterLanguagesUseCaseTests {
     
+    @available(iOS 17.4, *)
     private func getLessonFilterLanguagesUseCase() throws -> GetLessonFilterLanguagesUseCase {
-        
-        let testsDiContainer = try TestsDiContainer(addRealmObjects: getRealmObjects())
+
+        let swiftDatabase = SwiftDatabase(container: try SwiftDataProductionContainer.createInMemoryContainer())
+
+        let context: ModelContext = swiftDatabase.openContext()
+
+        context.insertObjects(objects: getSwiftDatabaseObjects())
+
+        try context.saveIfHasChanges()
+
+        let testsDiContainer = try TestsDiContainer(
+            testsAppConfig: TestsAppConfig(
+                swiftDatabase: swiftDatabase
+            )
+        )
         
         let getLessonFilterLanguagesRepository = GetLessonFilterLanguagesUseCase(
             resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),
@@ -222,53 +239,71 @@ extension GetLessonFilterLanguagesUseCaseTests {
         return getLessonFilterLanguagesRepository
     }
     
-    private func getRealmObjects() -> [IdentifiableRealmObject] {
-        
-        let allLanguages: [RealmLanguage] = getAllLanguages()
-        
-        let tracts = [
-            FakeRealmResource.createTract(addLanguages: [.english, .arabic, .czech, .spanish], fromLanguages: allLanguages),
-            FakeRealmResource.createTract(addLanguages: [.spanish], fromLanguages: allLanguages),
-            FakeRealmResource.createTract(addLanguages: [.afrikaans, .arabic], fromLanguages: allLanguages),
-            FakeRealmResource.createTract(addLanguages: [.czech, .french, .hebrew], fromLanguages: allLanguages),
-            FakeRealmResource.createTract(addLanguages: [.english, .chinese], fromLanguages: allLanguages),
-            FakeRealmResource.createTract(addLanguages: [.english, .russian], fromLanguages: allLanguages),
-            FakeRealmResource.createTract(addLanguages: [.english, .portuguese], fromLanguages: allLanguages),
-            FakeRealmResource.createTract(addLanguages: [.english, .latvian], fromLanguages: allLanguages)
+    @available(iOS 17.4, *)
+    private func getSwiftDatabaseObjects() -> [any PersistentModel] {
+
+        let allLanguages: [SwiftLanguage] = getAllLanguages()
+
+        let tracts: [SwiftResource] = [
+            getSwiftResource(resourceType: .tract, addLanguages: [.english, .arabic, .czech, .spanish], fromLanguages: allLanguages),
+            getSwiftResource(resourceType: .tract, addLanguages: [.spanish], fromLanguages: allLanguages),
+            getSwiftResource(resourceType: .tract, addLanguages: [.afrikaans, .arabic], fromLanguages: allLanguages),
+            getSwiftResource(resourceType: .tract, addLanguages: [.czech, .french, .hebrew], fromLanguages: allLanguages),
+            getSwiftResource(resourceType: .tract, addLanguages: [.english, .chinese], fromLanguages: allLanguages),
+            getSwiftResource(resourceType: .tract, addLanguages: [.english, .russian], fromLanguages: allLanguages),
+            getSwiftResource(resourceType: .tract, addLanguages: [.english, .portuguese], fromLanguages: allLanguages),
+            getSwiftResource(resourceType: .tract, addLanguages: [.english, .latvian], fromLanguages: allLanguages)
         ]
-        
-        let lessons = [
-            FakeRealmResource.createLesson(addLanguages: [.english], fromLanguages: allLanguages),
-            FakeRealmResource.createLesson(addLanguages: [.english, .spanish], fromLanguages: allLanguages),
-            FakeRealmResource.createLesson(addLanguages: [.afrikaans, .spanish], fromLanguages: allLanguages),
-            FakeRealmResource.createLesson(addLanguages: [.czech, .french], fromLanguages: allLanguages),
-            FakeRealmResource.createLesson(addLanguages: [.english, .french, .spanish], fromLanguages: allLanguages),
-            FakeRealmResource.createLesson(addLanguages: [.english], fromLanguages: allLanguages),
-            FakeRealmResource.createLesson(addLanguages: [.english], fromLanguages: allLanguages)
+
+        let lessons: [SwiftResource] = [
+            getSwiftResource(resourceType: .lesson, addLanguages: [.english], fromLanguages: allLanguages),
+            getSwiftResource(resourceType: .lesson, addLanguages: [.english, .spanish], fromLanguages: allLanguages),
+            getSwiftResource(resourceType: .lesson, addLanguages: [.afrikaans, .spanish], fromLanguages: allLanguages),
+            getSwiftResource(resourceType: .lesson, addLanguages: [.czech, .french], fromLanguages: allLanguages),
+            getSwiftResource(resourceType: .lesson, addLanguages: [.english, .french, .spanish], fromLanguages: allLanguages),
+            getSwiftResource(resourceType: .lesson, addLanguages: [.english], fromLanguages: allLanguages),
+            getSwiftResource(resourceType: .lesson, addLanguages: [.english], fromLanguages: allLanguages)
         ]
-        
+
         return allLanguages + tracts + lessons
     }
-    
-    private func getAllLanguages() -> [RealmLanguage] {
-        
+
+    @available(iOS 17.4, *)
+    private func getSwiftResource(resourceType: ResourceType, addLanguages: [LanguageCodeDomainModel], fromLanguages: [SwiftLanguage]) -> SwiftResource {
+
+        let resource: SwiftResource = SwiftResource()
+        resource.id = UUID().uuidString
+        resource.resourceType = resourceType.rawValue
+
+        resource.addLanguages(
+            addLanguages: addLanguages,
+            fromLanguages: fromLanguages
+        )
+
+        return resource
+    }
+
+    @available(iOS 17.4, *)
+    private func getAllLanguages() -> [SwiftLanguage] {
+
         return [
-            getRealmLanguage(languageCode: .afrikaans),
-            getRealmLanguage(languageCode: .arabic),
-            getRealmLanguage(languageCode: .chinese),
-            getRealmLanguage(languageCode: .czech),
-            getRealmLanguage(languageCode: .english),
-            getRealmLanguage(languageCode: .french),
-            getRealmLanguage(languageCode: .hebrew),
-            getRealmLanguage(languageCode: .latvian),
-            getRealmLanguage(languageCode: .portuguese),
-            getRealmLanguage(languageCode: .russian),
-            getRealmLanguage(languageCode: .spanish),
-            getRealmLanguage(languageCode: .vietnamese)
+            getSwiftLanguage(languageCode: .afrikaans),
+            getSwiftLanguage(languageCode: .arabic),
+            getSwiftLanguage(languageCode: .chinese),
+            getSwiftLanguage(languageCode: .czech),
+            getSwiftLanguage(languageCode: .english),
+            getSwiftLanguage(languageCode: .french),
+            getSwiftLanguage(languageCode: .hebrew),
+            getSwiftLanguage(languageCode: .latvian),
+            getSwiftLanguage(languageCode: .portuguese),
+            getSwiftLanguage(languageCode: .russian),
+            getSwiftLanguage(languageCode: .spanish),
+            getSwiftLanguage(languageCode: .vietnamese)
         ]
     }
-    
-    private func getRealmLanguage(languageCode: LanguageCodeDomainModel) -> RealmLanguage {
+
+    @available(iOS 17.4, *)
+    private func getSwiftLanguage(languageCode: LanguageCodeDomainModel) -> SwiftLanguage {
 
         let language = LanguageCodable.random(
             id: languageCode.rawValue,
@@ -277,7 +312,7 @@ extension GetLessonFilterLanguagesUseCaseTests {
             forceLanguageName: false
         )
 
-        return RealmLanguage.createNewFrom(model: language.toModel())
+        return SwiftLanguage.createNewFrom(model: language.toModel())
     }
     
     private func getLessonFilterLangauge(testsDiContainer: TestsDiContainer) -> GetLessonFilterLanguage {

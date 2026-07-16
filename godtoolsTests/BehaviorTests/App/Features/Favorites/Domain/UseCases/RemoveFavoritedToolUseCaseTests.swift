@@ -18,6 +18,7 @@ struct RemoveFavoritedToolUseCaseTests {
         let resourceIdToDelete: String
         let expectedUpdatedIdsAtPositions: [String: Int]
     }
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: User is viewing all their favorite tools.
@@ -56,9 +57,14 @@ struct RemoveFavoritedToolUseCaseTests {
 
 extension RemoveFavoritedToolUseCaseTests {
     
+    @available(iOS 17.4, *)
     private func getTestsDiContainer(addResources: [String: Int]) async throws -> TestsDiContainer {
-                
-        let testsDiContainer = try TestsDiContainer()
+
+        let testsDiContainer = try TestsDiContainer(
+            testsAppConfig: TestsAppConfig(
+                swiftDatabase: SwiftDatabase(container: SwiftDataProductionContainer.createInMemoryContainer())
+            )
+        )
         
         let favoritedResources = getFavoritedResources(resources: addResources)
         

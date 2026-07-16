@@ -46,6 +46,7 @@ final class LessonFilterDomainLayerDependencies {
     
     func getUserLessonFiltersUseCase() -> GetUserLessonFiltersUseCase {
         return GetUserLessonFiltersUseCase(
+            languagesRepository: core.dataLayer.getLanguagesRepository(),
             userLessonFiltersRepository: core.dataLayer.getUserLessonFiltersRepository(),
             getLessonFilterLanguage: getLessonFilterLangauge()
         )

@@ -11,11 +11,11 @@ import SwiftUI
 import UIKit
 import GodToolsShared
 
-class MobileContentRendererManifestResourcesCache {
+final class MobileContentRendererManifestResourcesCache {
     
-    private let resourcesFileCache: ResourcesSHA256FileCache
+    private let resourcesFileCache: ResourcesFileCache
         
-    init(resourcesFileCache: ResourcesSHA256FileCache) {
+    init(resourcesFileCache: ResourcesFileCache) {
         
         self.resourcesFileCache = resourcesFileCache
     }

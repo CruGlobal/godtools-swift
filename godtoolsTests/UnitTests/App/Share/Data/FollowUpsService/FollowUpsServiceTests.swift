@@ -14,6 +14,7 @@ import RepositorySync
 
 struct FollowUpsServiceTests {
         
+    @available(iOS 17.4, *)
     @Test()
     func postedFollowUpsWithErrorArePersisted() async throws {
                 
@@ -38,6 +39,7 @@ struct FollowUpsServiceTests {
         #expect(count == 1)
     }
     
+    @available(iOS 17.4, *)
     @Test()
     func postedFollowUpsWithBadHttpStatusCodeArePersisted() async throws {
         
@@ -57,6 +59,7 @@ struct FollowUpsServiceTests {
         #expect(count == 1)
     }
     
+    @available(iOS 17.4, *)
     @Test()
     func postedFollowUpsWithSuccessHttpStatusCodeAreNotPersisted() async throws {
         
@@ -76,6 +79,7 @@ struct FollowUpsServiceTests {
         #expect(count == 0)
     }
     
+    @available(iOS 17.4, *)
     @Test()
     func postingFailedFollowUpsIfNeededAreRemovedFromTheLocalDatabase() async throws {
         
@@ -104,19 +108,18 @@ struct FollowUpsServiceTests {
 
 extension FollowUpsServiceTests {
     
-    private func getPersistence(addFollowUps: [FollowUpDataModel]) async throws -> RealmRepositorySyncPersistence<FollowUpDataModel, FollowUpDataModel, RealmFollowUp> {
-        
-        let databaseConfig = try RealmDatabaseConfig.createInMemoryConfig()
-        
-        let database = RealmDatabase(databaseConfig: databaseConfig)
-        
-        let persistence = RealmRepositorySyncPersistence(
+    @available(iOS 17.4, *)
+    private func getPersistence(addFollowUps: [FollowUpDataModel]) async throws -> SwiftRepositorySyncPersistence<FollowUpDataModel, FollowUpDataModel, SwiftFollowUp> {
+
+        let database = SwiftDatabase(container: try SwiftDataProductionContainer.createInMemoryContainer())
+
+        let persistence = SwiftRepositorySyncPersistence(
             database: database,
-            mapping: RealmFollowUpMapping()
+            mapping: SwiftFollowUpMapping()
         )
-        
+
         _ = try await persistence.writeObjects(externalObjects: addFollowUps)
-        
+
         return persistence
     }
     

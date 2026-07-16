@@ -10,19 +10,52 @@ import Foundation
 import XCTest
 
 class TutorialFlowTests: BaseFlowTests {
-        
+
     private func launchApp() {
-        
+
         super.launchApp(
             flowDeepLinkUrl: "godtools://org.cru.godtools/ui_tests/tutorial",
             checkInitialScreenExists: .tutorial
         )
     }
-    
+
     func testInitialScreenIsTutorial() {
-        
+
         launchApp()
-        
+
         super.assertIfInitialScreenDoesntExist()
+    }
+
+    func testBackButtonIsHiddenOnFirstTutorialPage() {
+
+        launchApp()
+
+        assertIfButtonExists(buttonAccessibility: .back)
+    }
+
+    func testTappingContinueNavigatesForwardThroughTutorialPages() {
+
+        launchApp()
+
+        assertIfButtonExists(buttonAccessibility: .back)
+
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .continueForward)
+
+        assertIfButtonDoesNotExist(buttonAccessibility: .back)
+
+        assertIfScreenDoesNotExist(screenAccessibility: .tutorial)
+    }
+
+    func testTappingBackNavigatesBackwardThroughTutorialPages() {
+
+        launchApp()
+
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .continueForward)
+
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .back)
+
+        assertIfButtonExists(buttonAccessibility: .back)
+
+        assertIfScreenDoesNotExist(screenAccessibility: .tutorial)
     }
 }

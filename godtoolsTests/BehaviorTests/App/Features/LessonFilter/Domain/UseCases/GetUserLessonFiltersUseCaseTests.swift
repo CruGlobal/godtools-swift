@@ -8,12 +8,14 @@
 
 import Testing
 @testable import godtools
+import Foundation
 import Combine
-import RealmSwift
+import SwiftData
 import RepositorySync
 
 struct GetUserLessonFiltersUseCaseTests {
-    
+
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: User is viewing the language filter in the lessons list.
@@ -22,51 +24,54 @@ struct GetUserLessonFiltersUseCaseTests {
         """
     )
     @MainActor func lessonsLanguageFilterDefaultsToAppLanguageWhenLessonsExistInAppLanguage() async throws {
-        
+
         let appLanguageSpanish: AppLanguageDomainModel = LanguageCodeDomainModel.spanish.rawValue
-        
-        let spanishLanguage = RealmLanguage()
+
+        let spanishLanguage = SwiftLanguage()
         spanishLanguage.id = "0"
         spanishLanguage.code = LanguageCodeDomainModel.spanish.rawValue
         spanishLanguage.name = "Spanish Name"
-        
-        let spanishLesson_0 = RealmResource()
+
+        let spanishLesson_0 = SwiftResource()
         spanishLesson_0.id = "es-lesson-0"
         spanishLesson_0.resourceType = ResourceType.lesson.rawValue
         spanishLesson_0.addLanguage(language: spanishLanguage)
-        
-        let realmObjectsToAdd: [IdentifiableRealmObject] = [spanishLanguage, spanishLesson_0]
-        
-        let getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase = try getUserLessonFiltersUseCase(addRealmObjects: realmObjectsToAdd)
-                
+
+        let swiftObjectsToAdd: [any PersistentModel] = [spanishLanguage, spanishLesson_0]
+
+        let getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase = try getUserLessonFiltersUseCase(addSwiftObjects: swiftObjectsToAdd)
+
         var lessonLanguageFilterRef: LessonFilterLanguageDomainModel?
-        
+
         var cancellables: Set<AnyCancellable> = Set()
-        
+
         await withCheckedContinuation { continuation in
-            
+
             let timeoutTask = Task {
                 try await Task.defaultTestSleep()
                 continuation.resume(returning: ())
             }
-            
+
             getUserLessonFiltersUseCase
                 .execute(appLanguage: appLanguageSpanish)
-                .sink { (userLessonFilters: UserLessonFiltersDomainModel) in
-                        
+                .sink(receiveCompletion: { _ in
+
+                }, receiveValue: { (userLessonFilters: UserLessonFiltersDomainModel) in
+
                     lessonLanguageFilterRef = userLessonFilters.languageFilter
-                             
+
                     // When finished be sure to call:
                     timeoutTask.cancel()
                     continuation.resume(returning: ())
-                }
+                })
                 .store(in: &cancellables)
         }
-        
+
         #expect(lessonLanguageFilterRef?.languageNameTranslatedInLanguage == "Español")
         #expect(lessonLanguageFilterRef?.languageNameTranslatedInAppLanguage == "Español")
     }
-    
+
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: User is viewing the language filter in the lessons list.
@@ -75,61 +80,64 @@ struct GetUserLessonFiltersUseCaseTests {
         """
     )
     @MainActor func lessonsLanguageFilterDefaultsToAppLanguageWhenLessonsDontExistInAppLanguage() async throws {
-        
+
         let appLanguageFrench: AppLanguageDomainModel = LanguageCodeDomainModel.french.rawValue
-        
-        let spanishLanguage = RealmLanguage()
+
+        let spanishLanguage = SwiftLanguage()
         spanishLanguage.id = "0"
         spanishLanguage.code = LanguageCodeDomainModel.spanish.rawValue
         spanishLanguage.name = "Spanish Name"
-        
-        let frenchLanguage = RealmLanguage()
+
+        let frenchLanguage = SwiftLanguage()
         frenchLanguage.id = "1"
         frenchLanguage.code = LanguageCodeDomainModel.french.rawValue
         frenchLanguage.name = "French Name"
-        
-        let spanishLesson_0 = RealmResource()
+
+        let spanishLesson_0 = SwiftResource()
         spanishLesson_0.id = "es-lesson-0"
         spanishLesson_0.resourceType = ResourceType.lesson.rawValue
         spanishLesson_0.addLanguage(language: spanishLanguage)
-        
-        let frenchTract_0 = RealmResource()
+
+        let frenchTract_0 = SwiftResource()
         frenchTract_0.id = "fr-lesson-0"
         frenchTract_0.resourceType = ResourceType.tract.rawValue
         frenchTract_0.addLanguage(language: frenchLanguage)
-        
-        let realmObjectsToAdd: [IdentifiableRealmObject] = [spanishLanguage, frenchLanguage, spanishLesson_0, frenchTract_0]
-        
-        let getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase = try getUserLessonFiltersUseCase(addRealmObjects: realmObjectsToAdd)
-                
+
+        let swiftObjectsToAdd: [any PersistentModel] = [spanishLanguage, frenchLanguage, spanishLesson_0, frenchTract_0]
+
+        let getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase = try getUserLessonFiltersUseCase(addSwiftObjects: swiftObjectsToAdd)
+
         var lessonLanguageFilterRef: LessonFilterLanguageDomainModel?
-        
+
         var cancellables: Set<AnyCancellable> = Set()
-        
+
         await withCheckedContinuation { continuation in
-            
+
             let timeoutTask = Task {
                 try await Task.defaultTestSleep()
                 continuation.resume(returning: ())
             }
-            
+
             getUserLessonFiltersUseCase
                 .execute(appLanguage: appLanguageFrench)
-                .sink { (userLessonFilters: UserLessonFiltersDomainModel) in
-                        
+                .sink(receiveCompletion: { _ in
+
+                }, receiveValue: { (userLessonFilters: UserLessonFiltersDomainModel) in
+
                     lessonLanguageFilterRef = userLessonFilters.languageFilter
-                                     
+
                     // When finished be sure to call:
                     timeoutTask.cancel()
                     continuation.resume(returning: ())
-                }
+                })
                 .store(in: &cancellables)
         }
-        
+
         #expect(lessonLanguageFilterRef?.languageNameTranslatedInLanguage == "Français")
         #expect(lessonLanguageFilterRef?.languageNameTranslatedInAppLanguage == "Français")
     }
-    
+
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: User is viewing the language filter in the lessons list.
@@ -138,48 +146,50 @@ struct GetUserLessonFiltersUseCaseTests {
         """
     )
     @MainActor func lessonsLanguageFilterIsTheSelectedLanguageFilterAndNotDefaultingAppLanguage() async throws {
-                
+
         let appLanguageFrench: AppLanguageDomainModel = LanguageCodeDomainModel.french.rawValue
-        
-        let spanishLanguage = RealmLanguage()
+
+        let spanishLanguage = SwiftLanguage()
         spanishLanguage.id = "0"
         spanishLanguage.code = LanguageCodeDomainModel.spanish.rawValue
         spanishLanguage.name = "Spanish Name"
-        
-        let frenchLanguage = RealmLanguage()
+
+        let frenchLanguage = SwiftLanguage()
         frenchLanguage.id = "1"
         frenchLanguage.code = LanguageCodeDomainModel.french.rawValue
         frenchLanguage.name = "French Name"
-        
-        let realmObjectsToAdd: [IdentifiableRealmObject] = [spanishLanguage, frenchLanguage]
-        
-        let testsDiContainer: TestsDiContainer = try getTestsDiContainer(addRealmObjects: realmObjectsToAdd)
-        
+
+        let swiftObjectsToAdd: [any PersistentModel] = [spanishLanguage, frenchLanguage]
+
+        let testsDiContainer: TestsDiContainer = try getTestsDiContainer(addSwiftObjects: swiftObjectsToAdd)
+
         let getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase = getUserLessonFiltersUseCase(testsDiContainer: testsDiContainer)
-                
+
         var originalLessonLanguageFilterRef: LessonFilterLanguageDomainModel?
         var selectedLessonLanguageFilterRef: LessonFilterLanguageDomainModel?
-        
+
         var cancellables: Set<AnyCancellable> = Set()
         var triggerCount: Int = 0
-        
+
         await withCheckedContinuation { continuation in
-            
+
             let timeoutTask = Task {
                 try await Task.defaultTestSleep()
                 continuation.resume(returning: ())
             }
-            
+
             getUserLessonFiltersUseCase
                 .execute(appLanguage: appLanguageFrench)
-                .sink { (userLessonFilters: UserLessonFiltersDomainModel) in
-                                        
+                .sink(receiveCompletion: { _ in
+
+                }, receiveValue: { (userLessonFilters: UserLessonFiltersDomainModel) in
+
                     triggerCount += 1
-                                            
+
                     if triggerCount == 1 {
-                        
+
                         originalLessonLanguageFilterRef = userLessonFilters.languageFilter
-                        
+
                         Task {
                             try await testsDiContainer.core.dataLayer.getUserLessonFiltersRepository().storeUserLessonLanguageFilter(
                                 languageId: spanishLanguage.id
@@ -187,47 +197,62 @@ struct GetUserLessonFiltersUseCaseTests {
                         }
                     }
                     else if triggerCount == 2 {
-                        
+
                         selectedLessonLanguageFilterRef = userLessonFilters.languageFilter
-                        
+
                         // When finished be sure to call:
                         timeoutTask.cancel()
                         continuation.resume(returning: ())
                     }
-                }
+                })
                 .store(in: &cancellables)
         }
-                
+
         #expect(originalLessonLanguageFilterRef?.languageNameTranslatedInLanguage == "Français")
         #expect(originalLessonLanguageFilterRef?.languageNameTranslatedInAppLanguage == "Français")
-        
+
         #expect(selectedLessonLanguageFilterRef?.languageNameTranslatedInLanguage == "Español")
         #expect(selectedLessonLanguageFilterRef?.languageNameTranslatedInAppLanguage == "Espagnol")
     }
 }
 
 extension GetUserLessonFiltersUseCaseTests {
-    
-    private func getTestsDiContainer(addRealmObjects: [IdentifiableRealmObject]) throws -> TestsDiContainer {
-                
-        return try TestsDiContainer(addRealmObjects: addRealmObjects)
+
+    @available(iOS 17.4, *)
+    private func getTestsDiContainer(addSwiftObjects: [any PersistentModel]) throws -> TestsDiContainer {
+
+        let swiftDatabase = SwiftDatabase(container: try SwiftDataProductionContainer.createInMemoryContainer())
+
+        let context: ModelContext = swiftDatabase.openContext()
+
+        context.insertObjects(objects: addSwiftObjects)
+
+        try context.saveIfHasChanges()
+
+        return TestsDiContainer(
+            testsAppConfig: TestsAppConfig(
+                swiftDatabase: swiftDatabase
+            )
+        )
     }
-    
-    private func getUserLessonFiltersUseCase(addRealmObjects: [IdentifiableRealmObject]) throws -> GetUserLessonFiltersUseCase {
-        
-        let testsDiContainer = try getTestsDiContainer(addRealmObjects: addRealmObjects)
-        
+
+    @available(iOS 17.4, *)
+    private func getUserLessonFiltersUseCase(addSwiftObjects: [any PersistentModel]) throws -> GetUserLessonFiltersUseCase {
+
+        let testsDiContainer = try getTestsDiContainer(addSwiftObjects: addSwiftObjects)
+
         return getUserLessonFiltersUseCase(testsDiContainer: testsDiContainer)
     }
-    
+
     private func getUserLessonFiltersUseCase(testsDiContainer: TestsDiContainer) -> GetUserLessonFiltersUseCase {
-                
+
         return GetUserLessonFiltersUseCase(
+            languagesRepository: testsDiContainer.core.dataLayer.getLanguagesRepository(),
             userLessonFiltersRepository: testsDiContainer.core.dataLayer.getUserLessonFiltersRepository(),
             getLessonFilterLanguage: getLessonFilterLangauge(testsDiContainer: testsDiContainer)
         )
     }
-    
+
     private func getLessonFilterLangauge(testsDiContainer: TestsDiContainer) -> GetLessonFilterLanguage {
         return GetLessonFilterLanguage(
             resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),
@@ -237,32 +262,32 @@ extension GetUserLessonFiltersUseCaseTests {
             stringWithLocaleCount: getStringWithLocaleCount()
         )
     }
-    
+
     private func getLocalizationServices() -> FakeLocalizationServices {
-        
+
         let localizableStrings: [FakeLocalizationServices.LocaleId: [FakeLocalizationServices.StringKey: String]] = [
             LanguageCodeDomainModel.spanish.value: [
                 LanguageCodeDomainModel.french.rawValue: "Francés"
             ]
         ]
-        
+
         return FakeLocalizationServices(localizableStrings: localizableStrings)
     }
 
     private func getTranslatedLanguageName() -> GetTranslatedLanguageName {
-        
+
         let getTranslatedLanguageName = GetTranslatedLanguageName(
             localizationLanguageName: FakeLocalizationLanguageNameRepository(localizationServices: getLocalizationServices()),
             localeLanguageName: FakeLocaleLanguageName.getDefault(),
             localeRegionName: FakeLocaleLanguageRegionName(regionNames: [:]),
             localeScriptName: FakeLocaleLanguageScriptName(scriptNames: [:])
         )
-        
+
         return getTranslatedLanguageName
     }
-    
+
     private func getStringWithLocaleCount() -> StringWithLocaleCountInterface {
-        
+
         return FakeStringWithLocaleCount()
     }
 }

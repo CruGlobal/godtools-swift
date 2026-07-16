@@ -11,17 +11,55 @@ import Foundation
 
 class FakeRealmResource {
     
-    static func createTract(addLanguages: [LanguageCodeDomainModel], fromLanguages: [RealmLanguage], id: String = UUID().uuidString, attrDefaultLocale: String = "", attrCategory: String = "", isHidden: Bool = false) -> RealmResource {
+    static func createTract(
+        addLanguages: [LanguageCodeDomainModel],
+        fromLanguages: [RealmLanguage],
+        id: String = UUID().uuidString,
+        attrDefaultLocale: String = "",
+        attrCategory: String = "",
+        isHidden: Bool = false
+    ) -> RealmResource {
         
-        return createRealmResource(resourceType: .tract, addLanguages: addLanguages, fromLanguages: fromLanguages, id: id, attrDefaultLocale: attrDefaultLocale, attrCategory: attrCategory, isHidden: isHidden)
+        return createRealmResource(
+            resourceType: .tract,
+            addLanguages: addLanguages,
+            fromLanguages: fromLanguages,
+            id: id,
+            attrDefaultLocale: attrDefaultLocale,
+            attrCategory: attrCategory,
+            isHidden: isHidden
+        )
     }
     
-    static func createLesson(addLanguages: [LanguageCodeDomainModel], fromLanguages: [RealmLanguage], id: String = UUID().uuidString, attrDefaultLocale: String = "", attrCategory: String = "", isHidden: Bool = false) -> RealmResource {
+    static func createLesson(
+        addLanguages: [LanguageCodeDomainModel],
+        fromLanguages: [RealmLanguage],
+        id: String = UUID().uuidString,
+        attrDefaultLocale: String = "",
+        attrCategory: String = "",
+        isHidden: Bool = false
+    ) -> RealmResource {
         
-        return createRealmResource(resourceType: .lesson, addLanguages: addLanguages, fromLanguages: fromLanguages, id: id, attrDefaultLocale: attrDefaultLocale, attrCategory: attrCategory, isHidden: isHidden)
+        return createRealmResource(
+            resourceType: .lesson,
+            addLanguages: addLanguages,
+            fromLanguages: fromLanguages,
+            id: id,
+            attrDefaultLocale: attrDefaultLocale,
+            attrCategory: attrCategory,
+            isHidden: isHidden
+        )
     }
     
-    static func createRealmResource(resourceType: ResourceType, addLanguages: [LanguageCodeDomainModel], fromLanguages: [RealmLanguage], id: String = UUID().uuidString, attrDefaultLocale: String = "", attrCategory: String = "", isHidden: Bool = false) -> RealmResource {
+    static func createRealmResource(
+        resourceType: ResourceType,
+        addLanguages: [LanguageCodeDomainModel],
+        fromLanguages: [RealmLanguage],
+        id: String = UUID().uuidString,
+        attrDefaultLocale: String = "",
+        attrCategory: String = "",
+        isHidden: Bool = false
+    ) -> RealmResource {
         
         let resource: RealmResource = RealmResource()
         resource.attrCategory = attrCategory

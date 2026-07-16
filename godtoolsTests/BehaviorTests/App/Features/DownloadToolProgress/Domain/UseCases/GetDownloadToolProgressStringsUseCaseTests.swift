@@ -19,6 +19,7 @@ struct GetDownloadToolProgressStringsUseCaseTests {
     private let downloadToolMessage: String = "Downloading tool."
     private let favoriteThisToolForOfflineUseMessage: String = "Downloading tool. Favorite this tool for offline use."
     
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: User tapped a tool and is viewing the tool download progress.
@@ -39,6 +40,7 @@ struct GetDownloadToolProgressStringsUseCaseTests {
         #expect(strings.downloadMessage == downloadToolMessage)
     }
     
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: User tapped a tool and is viewing the tool download progress.
@@ -59,6 +61,7 @@ struct GetDownloadToolProgressStringsUseCaseTests {
         #expect(strings.downloadMessage == favoriteThisToolForOfflineUseMessage)
     }
     
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: User tapped a tool and is viewing the tool download progress.
@@ -82,9 +85,14 @@ struct GetDownloadToolProgressStringsUseCaseTests {
 
 extension GetDownloadToolProgressStringsUseCaseTests {
  
+    @available(iOS 17.4, *)
     private func getUseCase() async throws -> GetDownloadToolProgressStringsUseCase {
-        
-        let testsDiContainer = try TestsDiContainer()
+
+        let testsDiContainer = try TestsDiContainer(
+            testsAppConfig: TestsAppConfig(
+                swiftDatabase: SwiftDatabase(container: SwiftDataProductionContainer.createInMemoryContainer())
+            )
+        )
         
         let favoritedTract = ResourceCodable(id: favoritedToolId, resourceType: ResourceType.tract.rawValue)
         let unfavoritedTract = ResourceCodable(id: unFavoritedToolId, resourceType: ResourceType.tract.rawValue)

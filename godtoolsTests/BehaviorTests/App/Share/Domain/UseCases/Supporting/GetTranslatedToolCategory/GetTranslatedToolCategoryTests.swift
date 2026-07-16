@@ -8,21 +8,24 @@
 
 import Testing
 @testable import godtools
+import Foundation
+import SwiftData
 import RepositorySync
 
 struct GetTranslatedToolCategoryTests {
-    
+
     struct TestArgument {
         let translateInLanguage: String
         let expectedToolCategory: String
     }
-    
+
     private static let toolId: String = "0"
     private static let attrCategory: String = "test_category"
     private static let toolCategoryInEnglish: String = "Tool Category"
     private static let toolCategoryInSpanish: String = "Categoría de herramienta"
     private static let toolCategoryInVietnamese: String = "Danh mục công cụ"
-    
+
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: User viewing a tool.
@@ -36,56 +39,62 @@ struct GetTranslatedToolCategoryTests {
         ]
     )
     func testToolNameIsTranslated(argument: TestArgument) throws {
-        
+
         let testsDiContainer: TestsDiContainer = try getTestsDiContainer()
-        
+
         let getTranslatedToolCategory: GetTranslatedToolCategory = getTranslatedToolCategory(
             testsDiContainer: testsDiContainer
         )
-        
+
         let category: String = getTranslatedToolCategory.getTranslatedCategory(
             toolId: Self.toolId,
             translateInLanguage: argument.translateInLanguage
         )
-                            
+
         #expect(category == argument.expectedToolCategory)
     }
 }
 
 extension GetTranslatedToolCategoryTests {
-    
+
+    @available(iOS 17.4, *)
     private func getTestsDiContainer() throws -> TestsDiContainer {
-        
-        return try TestsDiContainer(
-            addRealmObjects: getRealmObjects()
+
+        let swiftDatabase = SwiftDatabase(container: try SwiftDataProductionContainer.createInMemoryContainer())
+
+        let context: ModelContext = swiftDatabase.openContext()
+
+        context.insertObjects(objects: getSwiftDatabaseObjects())
+
+        try context.saveIfHasChanges()
+
+        return TestsDiContainer(
+            testsAppConfig: TestsAppConfig(
+                swiftDatabase: swiftDatabase
+            )
         )
     }
-    
-    private func getRealmObjects() -> [IdentifiableRealmObject] {
-        
-        let englishLanguage = getRealmLanguage(languageCode: .english)
-        let spanishLanguage: RealmLanguage = getRealmLanguage(languageCode: .spanish)
-        let vietnameseLanguage: RealmLanguage =  getRealmLanguage(languageCode: .vietnamese)
-        
-        let allLanguages: [RealmLanguage] = [
-            englishLanguage,
-            spanishLanguage,
-            vietnameseLanguage
-        ]
-        
-        let tracts: [RealmResource] = [
-            FakeRealmResource.createTract(
-                addLanguages: [.english, .spanish, .vietnamese],
-                fromLanguages: allLanguages,
-                id: Self.toolId,
-                attrCategory: Self.attrCategory
-            )
-        ]
 
-        return allLanguages + tracts
+    @available(iOS 17.4, *)
+    private func getSwiftDatabaseObjects() -> [SwiftResource] {
+
+        let tract: SwiftResource = SwiftResource.createNewFrom(
+            model: ResourceCodable.random(
+                id: Self.toolId,
+                attrCategory: Self.attrCategory,
+                resourceType: ResourceType.tract.rawValue
+            ).toModel()
+        )
+
+        for languageCode in [LanguageCodeDomainModel.english, .spanish, .vietnamese] {
+            tract.addLanguage(language: getSwiftLanguage(languageCode: languageCode))
+        }
+
+        return [tract]
     }
-    
-    private func getRealmLanguage(languageCode: LanguageCodeDomainModel) -> RealmLanguage {
+
+    @available(iOS 17.4, *)
+    private func getSwiftLanguage(languageCode: LanguageCodeDomainModel) -> SwiftLanguage {
 
         let language = LanguageCodable.random(
             id: languageCode.rawValue,
@@ -94,20 +103,20 @@ extension GetTranslatedToolCategoryTests {
             forceLanguageName: false
         )
 
-        return RealmLanguage.createNewFrom(model: language.toModel())
+        return SwiftLanguage.createNewFrom(model: language.toModel())
     }
-    
+
     private func getTranslatedToolCategory(testsDiContainer: TestsDiContainer) -> GetTranslatedToolCategory {
         return GetTranslatedToolCategory(
             localizationServices: getLocalizationServices(),
             resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository()
         )
     }
-    
+
     private func getLocalizationServices() -> FakeLocalizationServices {
-        
+
         let toolCategoryKey: String = GetTranslatedToolCategory.localizedKeyPrefix + Self.attrCategory
-        
+
         let localizableStrings: [FakeLocalizationServices.LocaleId: [FakeLocalizationServices.StringKey: String]] = [
             LanguageCodeDomainModel.english.value: [
                 toolCategoryKey: Self.toolCategoryInEnglish
@@ -119,7 +128,7 @@ extension GetTranslatedToolCategoryTests {
                 toolCategoryKey: Self.toolCategoryInVietnamese
             ]
         ]
-        
+
         return FakeLocalizationServices(localizableStrings: localizableStrings)
     }
 }

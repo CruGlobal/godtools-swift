@@ -101,7 +101,7 @@ extension TrackDownloadedTranslationsCache {
             .objects(realm: realm, query: query)
     }
     
-    func getLatestDownloadedTranslationsPublisher(resourceId: String, languageId: String) async throws -> [DownloadedTranslationDataModel] {
+    func getLatestDownloadedTranslations(resourceId: String, languageId: String) async throws -> [DownloadedTranslationDataModel] {
         
         if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
             

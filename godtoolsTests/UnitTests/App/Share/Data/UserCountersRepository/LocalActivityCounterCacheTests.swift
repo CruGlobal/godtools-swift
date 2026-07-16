@@ -16,6 +16,7 @@ struct LocalActivityCounterCacheTests {
     private let sessionsCounterId: String = "sessions"
     private let toolOpensCounterId: String = "tool_opens"
     
+    @available(iOS 17.4, *)
     @Test()
     func initialCountShouldBe1() async throws {
         
@@ -40,6 +41,7 @@ struct LocalActivityCounterCacheTests {
         #expect(updateCounter_3.count == 3)
     }
     
+    @available(iOS 17.4, *)
     @Test()
     func getCountersReturnsAllCounters() async throws {
         
@@ -68,6 +70,7 @@ struct LocalActivityCounterCacheTests {
         #expect(counterIds == [sessionsCounterId, toolOpensCounterId])
     }
     
+    @available(iOS 17.4, *)
     @Test()
     func decrementCounters() async throws {
         
@@ -105,17 +108,16 @@ struct LocalActivityCounterCacheTests {
 
 extension LocalActivityCounterCacheTests {
     
-    private func getPersistence() throws -> RealmRepositorySyncPersistence<LocalActivityCountDataModel, LocalActivityCountDataModel, RealmLocalActivityCount> {
-        
-        let databaseConfig = try RealmDatabaseConfig.createInMemoryConfig()
-        
-        let database = RealmDatabase(databaseConfig: databaseConfig)
-        
-        let persistence = RealmRepositorySyncPersistence(
+    @available(iOS 17.4, *)
+    private func getPersistence() throws -> SwiftRepositorySyncPersistence<LocalActivityCountDataModel, LocalActivityCountDataModel, SwiftLocalActivityCount> {
+
+        let database = SwiftDatabase(container: try SwiftDataProductionContainer.createInMemoryContainer())
+
+        let persistence = SwiftRepositorySyncPersistence(
             database: database,
-            mapping: RealmLocalActivityCountMapping()
+            mapping: SwiftLocalActivityCountMapping()
         )
-                
+
         return persistence
     }
     

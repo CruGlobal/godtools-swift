@@ -13,14 +13,19 @@ import Combine
 import RepositorySync
 
 struct SetAppLanguageUseCaseTests {
-    
+
     private let testsDiContainer: TestsDiContainer
     private let languageCodes: [LanguageCodeDomainModel] = [.afrikaans, .arabic, .chinese, .czech, .english, .french, .hebrew, .latvian, .portuguese, .russian, .spanish, .vietnamese]
     private let allLanguages: [LanguageCodable]
-    
+
+    @available(iOS 17.4, *)
     init() async throws {
-        
-        testsDiContainer = try TestsDiContainer()
+
+        testsDiContainer = TestsDiContainer(
+            testsAppConfig: TestsAppConfig(
+                swiftDatabase: SwiftDatabase(container: try SwiftDataProductionContainer.createInMemoryContainer())
+            )
+        )
         
         allLanguages = languageCodes.map {
             LanguageCodable(id: UUID().uuidString, code: $0.rawValue)
@@ -29,6 +34,7 @@ struct SetAppLanguageUseCaseTests {
         try await testsDiContainer.core.dataLayer.getLanguagesPersistence().writeObjects(externalObjects: allLanguages)
     }
         
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: User is viewing the language settings
@@ -45,6 +51,7 @@ struct SetAppLanguageUseCaseTests {
         )
         
         let getUserLessonFiltersRepository = GetUserLessonFiltersUseCase(
+            languagesRepository: testsDiContainer.core.dataLayer.getLanguagesRepository(),
             userLessonFiltersRepository: testsDiContainer.core.dataLayer.getUserLessonFiltersRepository(),
             getLessonFilterLanguage: testsDiContainer.feature.lessonFilter.domainLayer.getLessonFilterLangauge()
         )
@@ -68,7 +75,9 @@ struct SetAppLanguageUseCaseTests {
                 .execute(
                     appLanguage: appLanguageSpanish
                 )
-                .sink { (userLessonFilters: UserLessonFiltersDomainModel) in
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { (userLessonFilters: UserLessonFiltersDomainModel) in
                     
                     triggerCount += 1
                     
@@ -87,7 +96,7 @@ struct SetAppLanguageUseCaseTests {
                         timeoutTask.cancel()
                         continuation.resume(returning: ())
                     }
-                }
+                })
                 .store(in: &cancellables)            
         }
         

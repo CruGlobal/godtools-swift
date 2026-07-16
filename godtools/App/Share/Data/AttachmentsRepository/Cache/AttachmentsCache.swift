@@ -11,19 +11,22 @@ import RepositorySync
 
 final class AttachmentsCache {
     
-    private let resourcesFileCache: ResourcesSHA256FileCache
+    private let resourcesFileCache: ResourcesFileCache
+    private let resourcesSHA256FileCache: ResourcesSHA256FileCacheInterface
     private let bundle: AttachmentsBundleCache
     
     let persistence: any Persistence<AttachmentDataModel, AttachmentCodable>
     
     init(
         persistence: any Persistence<AttachmentDataModel, AttachmentCodable>,
-        resourcesFileCache: ResourcesSHA256FileCache,
+        resourcesFileCache: ResourcesFileCache,
+        resourcesSHA256FileCache: ResourcesSHA256FileCacheInterface,
         bundle: AttachmentsBundleCache
     ) {
         
         self.persistence = persistence
         self.resourcesFileCache = resourcesFileCache
+        self.resourcesSHA256FileCache = resourcesSHA256FileCache
         self.bundle = bundle
     }
     
@@ -85,7 +88,7 @@ extension AttachmentsCache {
     
     func storeAttachmentData(attachment: AttachmentDataModel, data: Data) async throws -> StoredAttachmentDataModel {
         
-        let location: FileCacheLocation = try await resourcesFileCache.storeAttachmentFile(
+        let location: FileCacheLocation = try await resourcesSHA256FileCache.storeAttachmentFile(
             attachmentId: attachment.id,
             fileName: attachment.sha256,
             fileData: data

@@ -10,10 +10,12 @@ import Foundation
 import Testing
 @testable import godtools
 import Combine
+import SwiftData
 import RepositorySync
 
 struct GetAllLessonsUseCaseTests {
-    
+
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: User is viewing the lessons list.
@@ -22,9 +24,9 @@ struct GetAllLessonsUseCaseTests {
         """
     )
     @MainActor func onlyShowLessonsThatSupportMyLessonLanguageFilter() async throws {
-        
+
         let appLanguageEnglish: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-                        
+
         let spanishLanguageFilter = LessonFilterLanguageDomainModel(
             languageId: spanishLanguageId,
             languageNameTranslatedInLanguage: "",
@@ -32,21 +34,21 @@ struct GetAllLessonsUseCaseTests {
             lessonsAvailableText: "",
             lessonsAvailableCount: 0
         )
-        
+
         let getAllLessonsUseCase: GetAllLessonsUseCase = try getAllLessonsUseCase()
-        
+
         var cancellables: Set<AnyCancellable> = Set()
-        
+
         var allLessons: [LessonListItemDomainModel] = Array()
         var didSetAllLessons: Bool = false
-                
+
         await withCheckedContinuation { continuation in
-            
+
             let timeoutTask = Task {
                 try await Task.defaultTestSleep()
                 continuation.resume(returning: ())
             }
-            
+
             getAllLessonsUseCase
                 .execute(
                     appLanguage: appLanguageEnglish,
@@ -54,30 +56,31 @@ struct GetAllLessonsUseCaseTests {
                 )
                 .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { _ in
-                    
+
                 }, receiveValue: { (lessons: [LessonListItemDomainModel]) in
-                    
+
                     guard lessons.count > 0 && !didSetAllLessons else {
                         return
                     }
-                    
+
                     didSetAllLessons = true
-                    
+
                     allLessons = lessons
-                    
+
                     timeoutTask.cancel()
                     continuation.resume(returning: ())
                 })
                 .store(in: &cancellables)
         }
-        
+
         let lessonIds: [String] = allLessons
             .map { $0.id }
             .sorted { $0 < $1 }
-        
+
         #expect(lessonIds == ["0", "2", "4", "6", "8"])
     }
-    
+
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: User is viewing the lessons list.
@@ -86,23 +89,23 @@ struct GetAllLessonsUseCaseTests {
         """
     )
     @MainActor func lessonNamesAreTranslatedInAppLanguageWhenNoLanguageFilterSelected() async throws {
-                
+
         let appLanguageArabic: AppLanguageDomainModel = LanguageCodeDomainModel.arabic.rawValue
-                                
+
         let getAllLessonsUseCase: GetAllLessonsUseCase = try getAllLessonsUseCase()
-        
+
         var cancellables: Set<AnyCancellable> = Set()
-        
+
         var allLessons: [LessonListItemDomainModel] = Array()
         var didSetAllLessons: Bool = false
-            
+
         await withCheckedContinuation { continuation in
-            
+
             let timeoutTask = Task {
                 try await Task.defaultTestSleep()
                 continuation.resume(returning: ())
             }
-            
+
             getAllLessonsUseCase
                 .execute(
                     appLanguage: appLanguageArabic,
@@ -112,27 +115,28 @@ struct GetAllLessonsUseCaseTests {
                 .sink(receiveCompletion: { _ in
 
                 }, receiveValue: { (lessons: [LessonListItemDomainModel]) in
-                    
+
                     guard lessons.count > 0 && !didSetAllLessons else {
                         return
                     }
-                    
+
                     didSetAllLessons = true
-                    
+
                     allLessons = lessons
-                    
+
                     timeoutTask.cancel()
                     continuation.resume(returning: ())
                 })
                 .store(in: &cancellables)
         }
-        
+
         #expect(allLessons.first(where: { $0.id == "0" })?.name == "الدرس صفر")
         #expect(allLessons.first(where: { $0.id == "5" })?.name == "الدرس الخامس")
         #expect(allLessons.first(where: { $0.id == "6" })?.name == "الدرس السادس")
         #expect(allLessons.first(where: { $0.id == "8" })?.name == "الدرس الثامن")
     }
-    
+
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: User is viewing the lessons list.
@@ -141,9 +145,9 @@ struct GetAllLessonsUseCaseTests {
         """
     )
     @MainActor func lessonNamesAreTranslatedInLessonLanguageFilter() async throws {
-                
+
         let appLanguageEnglish: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-                        
+
         let spanishLanguageFilter = LessonFilterLanguageDomainModel(
             languageId: LanguageCodeDomainModel.spanish.rawValue,
             languageNameTranslatedInLanguage: "",
@@ -151,21 +155,21 @@ struct GetAllLessonsUseCaseTests {
             lessonsAvailableText: "",
             lessonsAvailableCount: 0
         )
-                                
+
         let getAllLessonsUseCase: GetAllLessonsUseCase = try getAllLessonsUseCase()
-        
+
         var cancellables: Set<AnyCancellable> = Set()
-        
+
         var allLessons: [LessonListItemDomainModel] = Array()
         var didSetAllLessons: Bool = false
-                
+
         await withCheckedContinuation { continuation in
-            
+
             let timeoutTask = Task {
                 try await Task.defaultTestSleep()
                 continuation.resume(returning: ())
             }
-            
+
             getAllLessonsUseCase
                 .execute(
                     appLanguage: appLanguageEnglish,
@@ -173,23 +177,23 @@ struct GetAllLessonsUseCaseTests {
                 )
                 .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { _ in
-                    
+
                 }, receiveValue: { (lessons: [LessonListItemDomainModel]) in
-                    
+
                     guard lessons.count > 0 && !didSetAllLessons else {
                         return
                     }
-                    
+
                     didSetAllLessons = true
-                    
+
                     allLessons = lessons
-                    
+
                     timeoutTask.cancel()
                     continuation.resume(returning: ())
                 })
                 .store(in: &cancellables)
         }
-        
+
         #expect(allLessons.first(where: { $0.id == "0" })?.name == "Lección cero")
         #expect(allLessons.first(where: { $0.id == "2" })?.name == "Leccion dos")
         #expect(allLessons.first(where: { $0.id == "4" })?.name == "Lección cuatro")
@@ -199,27 +203,52 @@ struct GetAllLessonsUseCaseTests {
 }
 
 extension GetAllLessonsUseCaseTests {
-     
+
     private var spanishLanguageId: String {
         return LanguageCodeDomainModel.spanish.rawValue
     }
-    
-    private func getRealmObjects() -> [IdentifiableRealmObject] {
-        
-        let afrikaansLanguage: RealmLanguage = getRealmLanguage(languageCode: .afrikaans)
-        let arabicLanguage: RealmLanguage =  getRealmLanguage(languageCode: .arabic)
-        let chineseLanguage: RealmLanguage =  getRealmLanguage(languageCode: .chinese)
-        let czechLanguage: RealmLanguage =  getRealmLanguage(languageCode: .czech)
-        let englishLanguage = getRealmLanguage(languageCode: .english)
-        let frenchLanguage: RealmLanguage =  getRealmLanguage(languageCode: .french)
-        let hebrewLanguage: RealmLanguage =  getRealmLanguage(languageCode: .hebrew)
-        let latvianLanguage: RealmLanguage =  getRealmLanguage(languageCode: .latvian)
-        let portugueseLanguage: RealmLanguage =  getRealmLanguage(languageCode: .portuguese)
-        let russianLanguage: RealmLanguage = getRealmLanguage(languageCode: .russian)
-        let spanishLanguage: RealmLanguage = getRealmLanguage(languageCode: .spanish)
-        let vietnameseLanguage: RealmLanguage =  getRealmLanguage(languageCode: .vietnamese)
-        
-        let allLanguages: [RealmLanguage] = [
+
+    @available(iOS 17.4, *)
+    private func getAllLessonsUseCase() throws -> GetAllLessonsUseCase {
+
+        let swiftDatabase = SwiftDatabase(container: try SwiftDataProductionContainer.createInMemoryContainer())
+
+        let context: ModelContext = swiftDatabase.openContext()
+
+        context.insertObjects(objects: getSwiftDatabaseObjects())
+
+        try context.saveIfHasChanges()
+
+        let testsDiContainer = TestsDiContainer(
+            testsAppConfig: TestsAppConfig(
+                swiftDatabase: swiftDatabase
+            )
+        )
+
+        return GetAllLessonsUseCase(
+            resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),
+            lessonProgressRepository: testsDiContainer.core.dataLayer.getUserLessonProgressRepository(),
+            getLessonsListItems: getLessonsListItems(testsDiContainer: testsDiContainer)
+        )
+    }
+
+    @available(iOS 17.4, *)
+    private func getSwiftDatabaseObjects() -> [any PersistentModel] {
+
+        let afrikaansLanguage: SwiftLanguage = getSwiftLanguage(languageCode: .afrikaans)
+        let arabicLanguage: SwiftLanguage = getSwiftLanguage(languageCode: .arabic)
+        let chineseLanguage: SwiftLanguage = getSwiftLanguage(languageCode: .chinese)
+        let czechLanguage: SwiftLanguage = getSwiftLanguage(languageCode: .czech)
+        let englishLanguage: SwiftLanguage = getSwiftLanguage(languageCode: .english)
+        let frenchLanguage: SwiftLanguage = getSwiftLanguage(languageCode: .french)
+        let hebrewLanguage: SwiftLanguage = getSwiftLanguage(languageCode: .hebrew)
+        let latvianLanguage: SwiftLanguage = getSwiftLanguage(languageCode: .latvian)
+        let portugueseLanguage: SwiftLanguage = getSwiftLanguage(languageCode: .portuguese)
+        let russianLanguage: SwiftLanguage = getSwiftLanguage(languageCode: .russian)
+        let spanishLanguage: SwiftLanguage = getSwiftLanguage(languageCode: .spanish)
+        let vietnameseLanguage: SwiftLanguage = getSwiftLanguage(languageCode: .vietnamese)
+
+        let allLanguages: [SwiftLanguage] = [
             afrikaansLanguage,
             arabicLanguage,
             chineseLanguage,
@@ -233,110 +262,65 @@ extension GetAllLessonsUseCaseTests {
             spanishLanguage,
             vietnameseLanguage
         ]
-        
-        let lessons: [RealmResource] = [
-            FakeRealmResource.createLesson(addLanguages: [.arabic, .english, .spanish], fromLanguages: allLanguages, id: "0"),
-            FakeRealmResource.createLesson(addLanguages: [.afrikaans, .czech, .english], fromLanguages: allLanguages, id: "1"),
-            FakeRealmResource.createLesson(addLanguages: [.english, .spanish], fromLanguages: allLanguages, id: "2"),
-            FakeRealmResource.createLesson(addLanguages: [.english], fromLanguages: allLanguages, id: "3"),
-            FakeRealmResource.createLesson(addLanguages: [.afrikaans, .english, .russian, .spanish], fromLanguages: allLanguages, id: "4"),
-            FakeRealmResource.createLesson(addLanguages: [.arabic, .english, .french], fromLanguages: allLanguages, id: "5"),
-            FakeRealmResource.createLesson(addLanguages: [.arabic, .english, .spanish], fromLanguages: allLanguages, id: "6"),
-            FakeRealmResource.createLesson(addLanguages: [.english, .latvian], fromLanguages: allLanguages, id: "7"),
-            FakeRealmResource.createLesson(addLanguages: [.arabic, .english, .spanish, .vietnamese], fromLanguages: allLanguages, id: "8"),
-            FakeRealmResource.createLesson(addLanguages: [.english, .hebrew, .vietnamese], fromLanguages: allLanguages, id: "9")
-        ]
-                
-        let lesson0ArabicTranslation: RealmTranslation = getRealmTranslation(translatedName: "الدرس صفر")
-        let lesson0EnglishTranslation: RealmTranslation = getRealmTranslation(translatedName: "Lesson Zero")
-        let lesson0SpanishTranslation: RealmTranslation = getRealmTranslation(translatedName: "Lección cero")
-        
-        let lesson2EnglishTranslation: RealmTranslation = getRealmTranslation(translatedName: "Lesson Two")
-        let lesson2SpanishTranslation: RealmTranslation = getRealmTranslation(translatedName: "Leccion dos")
-        
-        let lesson4AfrikaansTranslation: RealmTranslation = getRealmTranslation(translatedName: "Les vier")
-        let lesson4EnglishTranslation: RealmTranslation = getRealmTranslation(translatedName: "Lesson Four")
-        let lesson4SpanishTranslation: RealmTranslation = getRealmTranslation(translatedName: "Lección cuatro")
-        let lesson4RussianTranslation: RealmTranslation = getRealmTranslation(translatedName: "Урок четвертый")
-        
-        let lesson5ArabicTranslation: RealmTranslation = getRealmTranslation(translatedName: "الدرس الخامس")
-        let lesson5EnglishTranslation: RealmTranslation = getRealmTranslation(translatedName: "Lesson Five")
-        let lesson5FrenchTranslation: RealmTranslation = getRealmTranslation(translatedName: "Leçon cinq")
-        
-        let lesson6ArabicTranslation: RealmTranslation = getRealmTranslation(translatedName: "الدرس السادس")
-        let lesson6EnglishTranslation: RealmTranslation = getRealmTranslation(translatedName: "Lesson Six")
-        let lesson6SpanishTranslation: RealmTranslation = getRealmTranslation(translatedName: "Lección seis")
-        
-        let lesson8ArabicTranslation: RealmTranslation = getRealmTranslation(translatedName: "الدرس الثامن")
-        let lesson8EnglishTranslation: RealmTranslation = getRealmTranslation(translatedName: "Lesson Eight")
-        let lesson8SpanishTranslation: RealmTranslation = getRealmTranslation(translatedName: "Lección ocho")
-        let lesson8VietnameseTranslation: RealmTranslation = getRealmTranslation(translatedName: "Bài học thứ tám")
-        
-        lesson0ArabicTranslation.language = arabicLanguage
-        lesson0EnglishTranslation.language = englishLanguage
-        lesson0SpanishTranslation.language = spanishLanguage
-        
-        lesson2EnglishTranslation.language = englishLanguage
-        lesson2SpanishTranslation.language = spanishLanguage
-        
-        lesson4AfrikaansTranslation.language = afrikaansLanguage
-        lesson4EnglishTranslation.language = englishLanguage
-        lesson4SpanishTranslation.language = spanishLanguage
-        lesson4RussianTranslation.language = russianLanguage
-        
-        lesson5ArabicTranslation.language = arabicLanguage
-        lesson5EnglishTranslation.language = englishLanguage
-        lesson5FrenchTranslation.language = frenchLanguage
-        
-        lesson6ArabicTranslation.language = arabicLanguage
-        lesson6EnglishTranslation.language = englishLanguage
-        lesson6SpanishTranslation.language = spanishLanguage
-        
-        lesson8ArabicTranslation.language = arabicLanguage
-        lesson8EnglishTranslation.language = englishLanguage
-        lesson8SpanishTranslation.language = spanishLanguage
-        lesson8VietnameseTranslation.language = vietnameseLanguage
 
-        lessons[0].addLatestTranslation(translation: lesson0ArabicTranslation)
-        lessons[0].addLatestTranslation(translation: lesson0EnglishTranslation)
-        lessons[0].addLatestTranslation(translation: lesson0SpanishTranslation)
-        
-        lessons[2].addLatestTranslation(translation: lesson2EnglishTranslation)
-        lessons[2].addLatestTranslation(translation: lesson2SpanishTranslation)
-        
-        lessons[4].addLatestTranslation(translation: lesson4AfrikaansTranslation)
-        lessons[4].addLatestTranslation(translation: lesson4EnglishTranslation)
-        lessons[4].addLatestTranslation(translation: lesson4SpanishTranslation)
-        lessons[4].addLatestTranslation(translation: lesson4RussianTranslation)
-        
-        lessons[5].addLatestTranslation(translation: lesson5ArabicTranslation)
-        lessons[5].addLatestTranslation(translation: lesson5EnglishTranslation)
-        lessons[5].addLatestTranslation(translation: lesson5FrenchTranslation)
-        
-        lessons[6].addLatestTranslation(translation: lesson6ArabicTranslation)
-        lessons[6].addLatestTranslation(translation: lesson6EnglishTranslation)
-        lessons[6].addLatestTranslation(translation: lesson6SpanishTranslation)
-        
-        lessons[8].addLatestTranslation(translation: lesson8ArabicTranslation)
-        lessons[8].addLatestTranslation(translation: lesson8EnglishTranslation)
-        lessons[8].addLatestTranslation(translation: lesson8SpanishTranslation)
-        lessons[8].addLatestTranslation(translation: lesson8VietnameseTranslation)
-        
+        let lessons: [SwiftResource] = [
+            getSwiftLesson(id: "0", addLanguages: [.arabic, .english, .spanish], fromLanguages: allLanguages),
+            getSwiftLesson(id: "1", addLanguages: [.afrikaans, .czech, .english], fromLanguages: allLanguages),
+            getSwiftLesson(id: "2", addLanguages: [.english, .spanish], fromLanguages: allLanguages),
+            getSwiftLesson(id: "3", addLanguages: [.english], fromLanguages: allLanguages),
+            getSwiftLesson(id: "4", addLanguages: [.afrikaans, .english, .russian, .spanish], fromLanguages: allLanguages),
+            getSwiftLesson(id: "5", addLanguages: [.arabic, .english, .french], fromLanguages: allLanguages),
+            getSwiftLesson(id: "6", addLanguages: [.arabic, .english, .spanish], fromLanguages: allLanguages),
+            getSwiftLesson(id: "7", addLanguages: [.english, .latvian], fromLanguages: allLanguages),
+            getSwiftLesson(id: "8", addLanguages: [.arabic, .english, .spanish, .vietnamese], fromLanguages: allLanguages),
+            getSwiftLesson(id: "9", addLanguages: [.english, .hebrew, .vietnamese], fromLanguages: allLanguages)
+        ]
+
+        lessons[0].addLatestTranslation(translation: getSwiftTranslation(translatedName: "الدرس صفر", language: arabicLanguage))
+        lessons[0].addLatestTranslation(translation: getSwiftTranslation(translatedName: "Lesson Zero", language: englishLanguage))
+        lessons[0].addLatestTranslation(translation: getSwiftTranslation(translatedName: "Lección cero", language: spanishLanguage))
+
+        lessons[2].addLatestTranslation(translation: getSwiftTranslation(translatedName: "Lesson Two", language: englishLanguage))
+        lessons[2].addLatestTranslation(translation: getSwiftTranslation(translatedName: "Leccion dos", language: spanishLanguage))
+
+        lessons[4].addLatestTranslation(translation: getSwiftTranslation(translatedName: "Les vier", language: afrikaansLanguage))
+        lessons[4].addLatestTranslation(translation: getSwiftTranslation(translatedName: "Lesson Four", language: englishLanguage))
+        lessons[4].addLatestTranslation(translation: getSwiftTranslation(translatedName: "Lección cuatro", language: spanishLanguage))
+        lessons[4].addLatestTranslation(translation: getSwiftTranslation(translatedName: "Урок четвертый", language: russianLanguage))
+
+        lessons[5].addLatestTranslation(translation: getSwiftTranslation(translatedName: "الدرس الخامس", language: arabicLanguage))
+        lessons[5].addLatestTranslation(translation: getSwiftTranslation(translatedName: "Lesson Five", language: englishLanguage))
+        lessons[5].addLatestTranslation(translation: getSwiftTranslation(translatedName: "Leçon cinq", language: frenchLanguage))
+
+        lessons[6].addLatestTranslation(translation: getSwiftTranslation(translatedName: "الدرس السادس", language: arabicLanguage))
+        lessons[6].addLatestTranslation(translation: getSwiftTranslation(translatedName: "Lesson Six", language: englishLanguage))
+        lessons[6].addLatestTranslation(translation: getSwiftTranslation(translatedName: "Lección seis", language: spanishLanguage))
+
+        lessons[8].addLatestTranslation(translation: getSwiftTranslation(translatedName: "الدرس الثامن", language: arabicLanguage))
+        lessons[8].addLatestTranslation(translation: getSwiftTranslation(translatedName: "Lesson Eight", language: englishLanguage))
+        lessons[8].addLatestTranslation(translation: getSwiftTranslation(translatedName: "Lección ocho", language: spanishLanguage))
+        lessons[8].addLatestTranslation(translation: getSwiftTranslation(translatedName: "Bài học thứ tám", language: vietnameseLanguage))
+
         return allLanguages + lessons
     }
-    
-    private func getAllLessonsUseCase() throws -> GetAllLessonsUseCase {
-                
-        let testsDiContainer = try TestsDiContainer(addRealmObjects: getRealmObjects())
-        
-        return GetAllLessonsUseCase(
-            resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),
-            lessonProgressRepository: testsDiContainer.core.dataLayer.getUserLessonProgressRepository(),
-            getLessonsListItems: getLessonsListItems(testsDiContainer: testsDiContainer)
+
+    @available(iOS 17.4, *)
+    private func getSwiftLesson(id: String, addLanguages: [LanguageCodeDomainModel], fromLanguages: [SwiftLanguage]) -> SwiftResource {
+
+        let lesson: SwiftResource = SwiftResource()
+        lesson.id = id
+        lesson.resourceType = ResourceType.lesson.rawValue
+
+        lesson.addLanguages(
+            addLanguages: addLanguages,
+            fromLanguages: fromLanguages
         )
+
+        return lesson
     }
-    
-    private func getRealmLanguage(languageCode: LanguageCodeDomainModel) -> RealmLanguage {
+
+    @available(iOS 17.4, *)
+    private func getSwiftLanguage(languageCode: LanguageCodeDomainModel) -> SwiftLanguage {
 
         let language = LanguageCodable.random(
             id: languageCode.rawValue,
@@ -345,18 +329,23 @@ extension GetAllLessonsUseCaseTests {
             forceLanguageName: false
         )
 
-        return RealmLanguage.createNewFrom(model: language.toModel())
+        return SwiftLanguage.createNewFrom(model: language.toModel())
     }
 
-    private func getRealmTranslation(translatedName: String) -> RealmTranslation {
+    @available(iOS 17.4, *)
+    private func getSwiftTranslation(translatedName: String, language: SwiftLanguage) -> SwiftTranslation {
 
-        let translation = TranslationCodable.random(translatedName: translatedName)
+        let translation = SwiftTranslation.createNewFrom(
+            model: TranslationCodable.random(translatedName: translatedName).toModel()
+        )
 
-        return RealmTranslation.createNewFrom(model: translation.toModel())
+        translation.language = language
+
+        return translation
     }
 
     private func getLessonsListItems(testsDiContainer: TestsDiContainer) -> GetLessonsListItems {
-        
+
         return GetLessonsListItems(
             languagesRepository: testsDiContainer.core.dataLayer.getLanguagesRepository(),
             getTranslatedToolName: getTranslatedToolName(testsDiContainer: testsDiContainer),
@@ -364,14 +353,14 @@ extension GetAllLessonsUseCaseTests {
             getLessonListItemProgress: testsDiContainer.core.domainLayer.supporting.getLessonListItemProgress()
         )
     }
-    
+
     private func getTranslatedToolName(testsDiContainer: TestsDiContainer) -> GetTranslatedToolName {
         return GetTranslatedToolName(
             resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),
             translationsRepository: testsDiContainer.core.dataLayer.getTranslationsRepository()
         )
     }
-    
+
     private func getTranslatedToolLanguageAvailability(testsDiContainer: TestsDiContainer) -> GetTranslatedToolLanguageAvailability {
         return GetTranslatedToolLanguageAvailability(
             localizationServices: getLocalizationServices(),
@@ -380,20 +369,20 @@ extension GetAllLessonsUseCaseTests {
             getTranslatedLanguageName: getTranslatedLanguageName()
         )
     }
-    
+
     private func getLocalizationServices() -> FakeLocalizationServices {
         return FakeLocalizationServices.createLanguageNamesLocalizationServices()
     }
-    
+
     private func getTranslatedLanguageName() -> GetTranslatedLanguageName {
-        
+
         let getTranslatedLanguageName = GetTranslatedLanguageName(
             localizationLanguageName: FakeLocalizationLanguageNameRepository(localizationServices: getLocalizationServices()),
             localeLanguageName: FakeLocaleLanguageName.getDefault(),
             localeRegionName: FakeLocaleLanguageRegionName(regionNames: [:]),
             localeScriptName: FakeLocaleLanguageScriptName(scriptNames: [:])
         )
-        
+
         return getTranslatedLanguageName
     }
 }

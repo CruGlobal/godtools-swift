@@ -19,7 +19,15 @@ final class SwiftDataProductionContainer {
         
     }
     
-    func createContainer() throws -> SwiftDataContainer {
+    static func createInMemoryContainer(name: String = UUID().uuidString) throws -> SwiftDataContainer {
+        
+        return try SwiftDataContainer.createInMemoryContainer(
+            name: name,
+            schema: Schema(versionedSchema: LatestProductionSwiftDataSchema.self)
+        )
+    }
+    
+    static func createContainer() throws -> SwiftDataContainer {
         
         let modelConfig = ModelConfiguration(
             Self.configName,

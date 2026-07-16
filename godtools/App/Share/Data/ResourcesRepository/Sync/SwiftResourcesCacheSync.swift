@@ -11,26 +11,31 @@ import SwiftData
 import RepositorySync
 
 @available(iOS 17.4, *)
-class SwiftResourcesCacheSync {
+actor SwiftResourcesCacheSync: ModelActor {
     
     typealias SHA256PlusPathExtension = String
     typealias ResourceId = String
     typealias TranslationId = String
     
-    private let swiftDatabase: SwiftDatabase
     private let trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
     
-    init(swiftDatabase: SwiftDatabase, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository) {
+    let modelContainer: ModelContainer
+    let modelExecutor: ModelExecutor
+    
+    init(container: ModelContainer, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository) {
         
-        self.swiftDatabase = swiftDatabase
         self.trackDownloadedTranslationsRepository = trackDownloadedTranslationsRepository
+        
+        self.modelContainer = container
+        self.modelExecutor = DefaultSerialModelExecutor(modelContext: ModelContext(container))
     }
     
-    func syncResources(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable, shouldRemoveDataThatNoLongerExists: Bool) throws -> ResourcesCacheSyncResult {
-        
-        let swiftDatabase: SwiftDatabase = self.swiftDatabase
-        
-        let context = swiftDatabase.openContext()
+    func syncResources(
+        resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable,
+        shouldRemoveDataThatNoLongerExists: Bool
+    ) throws -> ResourcesCacheSyncResult {
+                
+        let swiftDataRead = SwiftDataRead()
         
         var newObjectsToStore: [any IdentifiableSwiftDataObject] = Array()
         
@@ -45,7 +50,7 @@ class SwiftResourcesCacheSync {
             
             let allResources: [SwiftResource]
             do {
-                allResources = try swiftDatabase.read.objects(context: context, query: nil)
+                allResources = try swiftDataRead.objects(context: modelContext, query: nil)
             }
             catch _ {
                 allResources = Array()
@@ -85,7 +90,7 @@ class SwiftResourcesCacheSync {
             
             let allTranslations: [SwiftTranslation]
             do {
-                allTranslations = try swiftDatabase.read.objects(context: context, query: nil)
+                allTranslations = try swiftDataRead.objects(context: modelContext, query: nil)
             }
             catch _ {
                 allTranslations = Array()
@@ -109,7 +114,7 @@ class SwiftResourcesCacheSync {
                 
                 if let languageId = newTranslation.language?.id {
                     do {
-                        translation.language = try swiftDatabase.read.object(context: context, id: languageId)
+                        translation.language = try swiftDataRead.object(context: modelContext, id: languageId)
                     }
                     catch _ {
                         
@@ -139,7 +144,7 @@ class SwiftResourcesCacheSync {
             
             let allAttachments: [SwiftAttachment]
             do {
-                allAttachments = try swiftDatabase.read.objects(context: context, query: nil)
+                allAttachments = try swiftDataRead.objects(context: modelContext, query: nil)
             }
             catch _ {
                 allAttachments = Array()
@@ -239,7 +244,11 @@ class SwiftResourcesCacheSync {
         let translationIdsToRemove: Set<String> = Set(existingTranslationsMinusNewlyAddedTranslations.map({$0.id}))
         let downloadedTranslationsToRemove: [SwiftDownloadedTranslation]
         do {
-            downloadedTranslationsToRemove = try swiftDatabase.read.objects(context: context, ids: translationIdsToRemove, sortBy: nil)
+            downloadedTranslationsToRemove = try swiftDataRead.objects(
+                context: modelContext,
+                ids: translationIdsToRemove,
+                sortBy: nil
+            )
         }
         catch _ {
             downloadedTranslationsToRemove = Array()
@@ -258,21 +267,11 @@ class SwiftResourcesCacheSync {
         objectsToRemove.append(contentsOf: existingAttachmentsMinusNewlyAddedAttachments)
         objectsToRemove.append(contentsOf: downloadedTranslationsToRemove)
         
-        if objectsToRemove.count > 0 {
-            for object in objectsToRemove {
-                context.delete(object)
-            }
-        }
+        modelContext.deleteObjects(objects: objectsToRemove)
         
-        if newObjectsToStore.count > 0 {
-            for object in newObjectsToStore {
-                context.insert(object)
-            }
-        }
+        modelContext.insertObjects(objects: newObjectsToStore)
         
-        if context.hasChanges {
-            try context.save()
-        }
+        try modelContext.saveIfHasChanges()
         
         let syncResult = ResourcesCacheSyncResult(
             resourcesRemoved: resourcesRemoved,

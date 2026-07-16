@@ -13,21 +13,15 @@ import Combine
 import RepositorySync
 
 struct StoreInitialAppLanguageUseCaseTests {
-    
+
     struct TestArgument {
-    
+
         let appLanguage: LanguageCodeDomainModel?
         let deviceLanguage: LanguageCodeDomainModel
         let expectedValue: String
     }
     
-    private let testsDiContainer: TestsDiContainer
-    
-    init() throws {
-        
-        testsDiContainer = try TestsDiContainer()
-    }
-    
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: App is launched.
@@ -58,7 +52,9 @@ struct StoreInitialAppLanguageUseCaseTests {
             AppLanguageCodable(languageCode: "lv", languageDirection: .leftToRight, languageScriptCode: nil)
         ]
         
-        let appLanguagesSync: AppLanguagesRepositorySyncInterface = try await getAppLanguagesRepositorySync(appLanguages: appLanguages)
+        let testsDiContainer = try getTestsDiContainer()
+        
+        let appLanguagesSync: AppLanguagesRepositorySyncInterface = try await getAppLanguagesRepositorySync(testsDiContainer: testsDiContainer, appLanguages: appLanguages)
         
         let userAppLanguageRepository = testsDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository()
         
@@ -103,6 +99,7 @@ struct StoreInitialAppLanguageUseCaseTests {
         #expect(resultRef == argument.expectedValue)
     }
     
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: App is launched.
@@ -133,7 +130,9 @@ struct StoreInitialAppLanguageUseCaseTests {
             AppLanguageCodable(languageCode: "lv", languageDirection: .leftToRight, languageScriptCode: nil)
         ]
         
-        let appLanguagesSync: AppLanguagesRepositorySyncInterface = try await getAppLanguagesRepositorySync(appLanguages: appLanguages)
+        let testsDiContainer = try getTestsDiContainer()
+        
+        let appLanguagesSync: AppLanguagesRepositorySyncInterface = try await getAppLanguagesRepositorySync(testsDiContainer: testsDiContainer, appLanguages: appLanguages)
         
         let userAppLanguageRepository = testsDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository()
                                 
@@ -180,6 +179,7 @@ struct StoreInitialAppLanguageUseCaseTests {
         #expect(resultRef == argument.expectedValue)
     }
     
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: App is launched.
@@ -205,7 +205,9 @@ struct StoreInitialAppLanguageUseCaseTests {
             AppLanguageCodable(languageCode: "lv", languageDirection: .leftToRight, languageScriptCode: nil)
         ]
         
-        let appLanguagesSync: AppLanguagesRepositorySyncInterface = try await getAppLanguagesRepositorySync(appLanguages: appLanguages)
+        let testsDiContainer = try getTestsDiContainer()
+        
+        let appLanguagesSync: AppLanguagesRepositorySyncInterface = try await getAppLanguagesRepositorySync(testsDiContainer: testsDiContainer, appLanguages: appLanguages)
         
         let userAppLanguageRepository = testsDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository()
         
@@ -252,10 +254,22 @@ struct StoreInitialAppLanguageUseCaseTests {
 }
 
 extension StoreInitialAppLanguageUseCaseTests {
+
+    @available(iOS 17.4, *)
+    private func getTestsDiContainer() throws -> TestsDiContainer {
+        return TestsDiContainer(
+            testsAppConfig: TestsAppConfig(
+                swiftDatabase: SwiftDatabase(container: try SwiftDataProductionContainer.createInMemoryContainer())
+            )
+        )
+    }
     
-    @MainActor
-    private func getAppLanguagesRepositorySync(appLanguages: [AppLanguageCodable]) async throws -> FakeAppLanguagesRepositorySync {
-        
+    @available(iOS 17.4, *)
+    private func getAppLanguagesRepositorySync(
+        testsDiContainer: TestsDiContainer,
+        appLanguages: [AppLanguageCodable]
+    ) async throws -> FakeAppLanguagesRepositorySync {
+                
         return try await FakeAppLanguagesRepositorySync(
             persistence: testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesPersistence(),
             appLanguages: appLanguages

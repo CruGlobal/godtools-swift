@@ -34,6 +34,7 @@ enum SwiftTranslationV1 {
         
         @Relationship(deleteRule: .nullify) var resource: SwiftResource?
         @Relationship(deleteRule: .nullify) var language: SwiftLanguage?
+        @Relationship(deleteRule: .cascade) var sha256File: SwiftSHA256File?
         
         init() {
             
@@ -124,7 +125,7 @@ extension Array where Element == SwiftTranslation {
     
     func filterByLanguageCode(languageCode: BCP47LanguageIdentifier) -> [SwiftTranslation] {
         return filter {
-            $0.language?.code == languageCode
+            $0.language?.code.lowercased() == languageCode.lowercased()
         }
     }
     

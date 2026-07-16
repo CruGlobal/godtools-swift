@@ -2,8 +2,8 @@
 //  ResourcesCacheTests.swift
 //  godtools
 //
-//  Created by Levi Eggert on 11/7/25.
-//  Copyright © 2025 Cru. All rights reserved.
+//  Created by Levi Eggert on 7/14/26.
+//  Copyright © 2026 Cru. All rights reserved.
 //
 
 import Testing
@@ -15,362 +15,455 @@ import RepositorySync
 
 struct ResourcesCacheTests {
 
-    private let englishLanguageId: Int = 0
-    private let spanishLanguageId: Int = 1
-    
-    @Test()
-    func getLessonCount() async throws {
-        
-        let expectedLessonCount: Int = 7
-        
-        let cache = try getCache()
-        
-        #expect(try cache.getLessonsCount(filterByLanguageId: nil) == expectedLessonCount)
+    private static let metatoolId: String = "metatool_0"
+
+    enum PersistenceType: CaseIterable {
+        case realm
+        case swiftData
     }
-    
-    @Test()
-    func getLessons() async throws {
-        
-        let expectedLessonIds: [String] = [
-            getLessonId(id: 0),
-            getLessonId(id: 1),
-            getLessonId(id: 2),
-            getLessonId(id: 3),
-            getLessonId(id: 6),
-            getLessonId(id: 7),
-            getLessonId(id: 8)
-        ]
-              
-        let cache = try getCache()
-                
-        let lessons: [ResourceDataModel] = try await cache.getLessons(filterByLanguageId: nil, sorted: false)
-                
-        #expect(lessons.map {$0.id}.sorted() == expectedLessonIds)
+
+    struct ResourceFixture {
+
+        let id: String
+        let abbreviation: String
+        let resourceType: ResourceType
+        let category: String
+        let defaultOrder: Int
+        let isHidden: Bool
+        let isSpotlight: Bool
+        let metatoolId: String?
+        let languageCodes: [LanguageCodeDomainModel]
+
+        init(
+            id: String,
+            abbreviation: String,
+            resourceType: ResourceType,
+            category: String = "",
+            defaultOrder: Int,
+            isHidden: Bool = false,
+            isSpotlight: Bool = false,
+            metatoolId: String? = nil,
+            languageCodes: [LanguageCodeDomainModel]
+        ) {
+
+            self.id = id
+            self.abbreviation = abbreviation
+            self.resourceType = resourceType
+            self.category = category
+            self.defaultOrder = defaultOrder
+            self.isHidden = isHidden
+            self.isSpotlight = isSpotlight
+            self.metatoolId = metatoolId
+            self.languageCodes = languageCodes
+        }
     }
-    
-    @Test()
-    func getLessonsByLanguageId() async throws {
-        
-        let expectedLessonIds: [String] = [
-            getLessonId(id: 2),
-            getLessonId(id: 6)
-        ]
-        
-        let cache = try getCache()
-        
+
+    struct LessonsByLanguageArgument {
+
+        let languageCode: LanguageCodeDomainModel?
+        let expectedLessonIds: [String]
+    }
+
+    // MARK: - Resources
+
+    @available(iOS 17.4, *)
+    @Test(arguments: PersistenceType.allCases)
+    func getResources(persistenceType: PersistenceType) async throws {
+
+        let cache = try getCache(persistenceType: persistenceType)
+
+        let resources: [ResourceDataModel] = try await cache.getResources(sorted: false)
+
+        #expect(resources.count == getResourceFixtures().count)
+    }
+
+    @available(iOS 17.4, *)
+    @Test(arguments: PersistenceType.allCases)
+    func getResourcesSortedByDefaultOrder(persistenceType: PersistenceType) async throws {
+
+        let cache = try getCache(persistenceType: persistenceType)
+
+        let resources: [ResourceDataModel] = try await cache.getResources(sorted: true)
+
+        let expectedResourceIds: [String] = getResourceFixtures()
+            .sorted { $0.defaultOrder < $1.defaultOrder }
+            .map { $0.id }
+
+        #expect(resources.map { $0.id } == expectedResourceIds)
+    }
+
+    @available(iOS 17.4, *)
+    @Test(arguments: PersistenceType.allCases)
+    func getResourceByAbbreviationExists(persistenceType: PersistenceType) async throws {
+
+        let cache = try getCache(persistenceType: persistenceType)
+
+        let resource: ResourceDataModel? = try cache.getResource(abbreviation: "kgp")
+
+        #expect(resource?.id == "tract_0")
+    }
+
+    @available(iOS 17.4, *)
+    @Test(arguments: PersistenceType.allCases)
+    func getResourceByAbbreviationIsNil(persistenceType: PersistenceType) async throws {
+
+        let cache = try getCache(persistenceType: persistenceType)
+
+        let resource: ResourceDataModel? = try cache.getResource(abbreviation: "abbreviation_does_not_exist")
+
+        #expect(resource == nil)
+    }
+
+    @available(iOS 17.4, *)
+    @Test(arguments: PersistenceType.allCases)
+    func getResourceVariantsExcludesHiddenVariants(persistenceType: PersistenceType) async throws {
+
+        let cache = try getCache(persistenceType: persistenceType)
+
+        let variants: [ResourceDataModel] = try await cache.getResourceVariants(resourceId: Self.metatoolId)
+
+        #expect(variants.map { $0.id }.sorted() == ["variant_0", "variant_1"])
+    }
+
+    @available(iOS 17.4, *)
+    @Test(arguments: PersistenceType.allCases)
+    func getResourceVariantsIsEmptyWhenResourceIsNotAMetatool(persistenceType: PersistenceType) async throws {
+
+        let cache = try getCache(persistenceType: persistenceType)
+
+        let variants: [ResourceDataModel] = try await cache.getResourceVariants(resourceId: "tract_0")
+
+        #expect(variants.isEmpty)
+    }
+
+    // MARK: - Lessons
+
+    @available(iOS 17.4, *)
+    @Test(arguments: PersistenceType.allCases, [
+        LessonsByLanguageArgument(languageCode: nil, expectedLessonIds: ["lesson_0", "lesson_1", "lesson_3", "lesson_4"]),
+        LessonsByLanguageArgument(languageCode: .english, expectedLessonIds: ["lesson_0", "lesson_1", "lesson_3"]),
+        LessonsByLanguageArgument(languageCode: .spanish, expectedLessonIds: ["lesson_1", "lesson_3"]),
+        LessonsByLanguageArgument(languageCode: .vietnamese, expectedLessonIds: ["lesson_4"])
+    ])
+    func getLessonsExcludesHiddenLessons(persistenceType: PersistenceType, argument: LessonsByLanguageArgument) async throws {
+
+        let cache = try getCache(persistenceType: persistenceType)
+
         let lessons: [ResourceDataModel] = try await cache.getLessons(
-            filterByLanguageId: getLanguageId(id: spanishLanguageId),
+            filterByLanguageId: argument.languageCode.map { getLanguageId(languageCode: $0) },
             sorted: false
         )
-                
-        #expect(lessons.map {$0.id}.sorted() == expectedLessonIds)
-    }
-    
-    @Test()
-    func getFeaturedLessons() async throws {
-        
-        let expectedLessonIds: [String] = [
-            getLessonId(id: 6),
-            getLessonId(id: 7),
-            getLessonId(id: 8)
-        ]
-                
-        let cache = try getCache()
-                
-        let lessons: [ResourceDataModel] = try await cache.getFeaturedLessons(sorted: false)
 
-        #expect(lessons.map {$0.id}.sorted() == expectedLessonIds)
+        #expect(lessons.map { $0.id }.sorted() == argument.expectedLessonIds)
     }
-    
-    @Test()
-    func getLessonsSupportedLanguageIds() async throws {
-        
-        let expectedLanguageIds: [String] = [
-            getLanguageId(id: englishLanguageId),
-            getLanguageId(id: spanishLanguageId)
-        ]
-        
-        let cache = try getCache()
-        
-        let realmLessonLanguageIds = try cache.getLessonsSupportedLanguageIds()
-        
-        #expect(realmLessonLanguageIds.sorted() == expectedLanguageIds.sorted())
+
+    @available(iOS 17.4, *)
+    @Test(arguments: PersistenceType.allCases, [
+        LessonsByLanguageArgument(languageCode: nil, expectedLessonIds: ["lesson_0", "lesson_1", "lesson_3", "lesson_4"]),
+        LessonsByLanguageArgument(languageCode: .english, expectedLessonIds: ["lesson_0", "lesson_1", "lesson_3"]),
+        LessonsByLanguageArgument(languageCode: .spanish, expectedLessonIds: ["lesson_1", "lesson_3"]),
+        LessonsByLanguageArgument(languageCode: .vietnamese, expectedLessonIds: ["lesson_4"])
+    ])
+    func getLessonsCount(persistenceType: PersistenceType, argument: LessonsByLanguageArgument) async throws {
+
+        let cache = try getCache(persistenceType: persistenceType)
+
+        let lessonsCount: Int = try cache.getLessonsCount(
+            filterByLanguageId: argument.languageCode.map { getLanguageId(languageCode: $0) }
+        )
+
+        #expect(lessonsCount == argument.expectedLessonIds.count)
+    }
+
+    @available(iOS 17.4, *)
+    @Test(arguments: PersistenceType.allCases)
+    func getLessonsSortedByDefaultOrder(persistenceType: PersistenceType) async throws {
+
+        let cache = try getCache(persistenceType: persistenceType)
+
+        let lessons: [ResourceDataModel] = try await cache.getLessons(filterByLanguageId: nil, sorted: true)
+
+        #expect(lessons.map { $0.id } == ["lesson_0", "lesson_1", "lesson_3", "lesson_4"])
+    }
+
+    @available(iOS 17.4, *)
+    @Test(arguments: PersistenceType.allCases)
+    func getFeaturedLessons(persistenceType: PersistenceType) async throws {
+
+        let cache = try getCache(persistenceType: persistenceType)
+
+        let featuredLessons: [ResourceDataModel] = try await cache.getFeaturedLessons(sorted: true)
+
+        #expect(featuredLessons.map { $0.id } == ["lesson_3", "lesson_4"])
+    }
+
+    @available(iOS 17.4, *)
+    @Test(arguments: PersistenceType.allCases)
+    func getLessonsSupportedLanguageIds(persistenceType: PersistenceType) async throws {
+
+        let cache = try getCache(persistenceType: persistenceType)
+
+        let languageIds: [String] = try cache.getLessonsSupportedLanguageIds()
+
+        let expectedLanguageIds: Set<String> = Set(
+            [LanguageCodeDomainModel.english, .spanish, .vietnamese].map { getLanguageId(languageCode: $0) }
+        )
+
+        #expect(Set(languageIds) == expectedLanguageIds)
+    }
+
+    // MARK: - Spotlight Tools
+
+    @available(iOS 17.4, *)
+    @Test(arguments: PersistenceType.allCases)
+    func getSpotlightToolsExcludesLessonsAndHiddenTools(persistenceType: PersistenceType) async throws {
+
+        let cache = try getCache(persistenceType: persistenceType)
+
+        let spotlightTools: [ResourceDataModel] = try cache.getSpotlightTools(sortByDefaultOrder: true)
+
+        #expect(spotlightTools.map { $0.id } == ["tract_0", "tract_2", "article_0"])
+    }
+
+    @available(iOS 17.4, *)
+    @Test(arguments: PersistenceType.allCases)
+    func getSpotlightToolsUnsorted(persistenceType: PersistenceType) async throws {
+
+        let cache = try getCache(persistenceType: persistenceType)
+
+        let spotlightTools: [ResourceDataModel] = try cache.getSpotlightTools(sortByDefaultOrder: false)
+
+        #expect(spotlightTools.map { $0.id }.sorted() == ["article_0", "tract_0", "tract_2"])
+    }
+
+    // MARK: - All Tools List
+
+    @available(iOS 17.4, *)
+    @Test(arguments: PersistenceType.allCases)
+    func getAllToolsListExcludesLessonsMetatoolsAndHiddenTools(persistenceType: PersistenceType) async throws {
+
+        let cache = try getCache(persistenceType: persistenceType)
+
+        let tools: [ResourceDataModel] = try cache.getAllToolsList(filterByCategory: nil, filterByLanguageId: nil, sortByDefaultOrder: true)
+
+        #expect(tools.map { $0.id } == ["tract_0", "tract_1", "tract_2", "article_0", "variant_0", "variant_1"])
+    }
+
+    @available(iOS 17.4, *)
+    @Test(arguments: PersistenceType.allCases)
+    func getAllToolsListFilteredByCategoryAndLanguage(persistenceType: PersistenceType) async throws {
+
+        let cache = try getCache(persistenceType: persistenceType)
+
+        let gospelToolsCount: Int = try cache.getAllToolsListCount(filterByCategory: "gospel", filterByLanguageId: nil)
+
+        let spanishGospelToolsCount: Int = try cache.getAllToolsListCount(
+            filterByCategory: "gospel",
+            filterByLanguageId: getLanguageId(languageCode: .spanish)
+        )
+
+        #expect(gospelToolsCount == 5)
+        #expect(spanishGospelToolsCount == 1)
+    }
+
+    @available(iOS 17.4, *)
+    @Test(arguments: PersistenceType.allCases)
+    func getAllToolCategoryIds(persistenceType: PersistenceType) async throws {
+
+        let cache = try getCache(persistenceType: persistenceType)
+
+        let categoryIds: [String] = try cache.getAllToolCategoryIds(filteredByLanguageId: nil)
+
+        #expect(Set(categoryIds) == ["gospel", "conversation_starter"])
+    }
+
+    @available(iOS 17.4, *)
+    @Test(arguments: PersistenceType.allCases)
+    func getAllToolLanguageIds(persistenceType: PersistenceType) async throws {
+
+        let cache = try getCache(persistenceType: persistenceType)
+
+        let allLanguageIds: [String] = try cache.getAllToolLanguageIds(filteredByCategoryId: nil)
+
+        let conversationStarterLanguageIds: [String] = try cache.getAllToolLanguageIds(filteredByCategoryId: "conversation_starter")
+
+        let expectedAllLanguageIds: Set<String> = Set(
+            [LanguageCodeDomainModel.english, .spanish, .vietnamese].map { getLanguageId(languageCode: $0) }
+        )
+
+        let expectedConversationStarterLanguageIds: Set<String> = Set(
+            [LanguageCodeDomainModel.english, .vietnamese].map { getLanguageId(languageCode: $0) }
+        )
+
+        #expect(Set(allLanguageIds) == expectedAllLanguageIds)
+        #expect(Set(conversationStarterLanguageIds) == expectedConversationStarterLanguageIds)
     }
 }
 
+// MARK: - Test Helpers
+
 extension ResourcesCacheTests {
-    
-    private func getCache() throws -> ResourcesCache {
-        
-        let testsDiContainer = try TestsDiContainer(
-            addRealmObjects: getRealmResources()
-        )
-        
-        let realmDatabase: RealmDatabase = testsDiContainer.core.dataLayer.getSharedRealmDatabase()
-        
-        let persistence = RealmRepositorySyncPersistence(
-            database: realmDatabase,
-            mapping: RealmResourceMapping()
-        )
-        
-        let trackDownloadedTranslationsRepository = TrackDownloadedTranslationsRepository(
-            cache: TrackDownloadedTranslationsCache(
-                persistence: RealmRepositorySyncPersistence(
-                    database: realmDatabase,
-                    mapping: RealmDownloadedTranslationMapping()
-                )
+
+    @available(iOS 17.4, *)
+    private func getCache(persistenceType: PersistenceType) throws -> ResourcesCache {
+
+        let realmDatabase: RealmDatabase
+        let persistence: any Persistence<ResourceDataModel, ResourceCodable>
+
+        switch persistenceType {
+
+        case .realm:
+            realmDatabase = try FakeRealmDatabase.createRealmDatabase(addRealmObjects: getRealmDatabaseObjects())
+            persistence = RealmRepositorySyncPersistence(
+                database: realmDatabase,
+                mapping: RealmResourceMapping()
             )
-        )
-        
+
+        case .swiftData:
+            realmDatabase = try FakeRealmDatabase.createRealmDatabase()
+            persistence = try getSwiftPersistence()
+        }
+
         return ResourcesCache(
             persistence: persistence,
             realmDatabase: realmDatabase,
             realmDataWrite: RealmDataWrite(config: realmDatabase.databaseConfig.config),
-            trackDownloadedTranslationsRepository: trackDownloadedTranslationsRepository
-        )
-    }
-    
-    private func getLessonId(id: Int) -> String {
-        return "lesson_" + "\(id)"
-    }
-    
-    private func getTractId(id: Int) -> String {
-        return "tract_" + "\(id)"
-    }
-    
-    private func getLanguageId(id: Int) -> String {
-        return "language_" + "\(id)"
-    }
-    
-    private func getLanguageCodable(language: LanguageCodeDomainModel, name: String, id: String) -> LanguageCodable {
-        return LanguageCodable.random(
-            id: id,
-            code: language.rawValue,
-            name: name,
-            forceLanguageName: false
+            trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository(
+                cache: TrackDownloadedTranslationsCache(
+                    persistence: RealmRepositorySyncPersistence(
+                        database: realmDatabase,
+                        mapping: RealmDownloadedTranslationMapping()
+                    )
+                )
+            )
         )
     }
 
-    private func getEnglishLanguage() -> LanguageCodable {
-        return getLanguageCodable(language: .english, name: "english", id: getLanguageId(id: 0))
+    @available(iOS 17.4, *)
+    private func getSwiftPersistence() throws -> SwiftRepositorySyncPersistence<ResourceDataModel, ResourceCodable, SwiftResource> {
+
+        let container = try SwiftDataContainer.createInMemoryContainer(schema: Schema(versionedSchema: LatestProductionSwiftDataSchema.self))
+
+        let database = SwiftDatabase(container: container)
+
+        let context: ModelContext = database.openContext()
+
+        context.insertObjects(objects: getSwiftDatabaseObjects())
+
+        try context.saveIfHasChanges()
+
+        return SwiftRepositorySyncPersistence(
+            database: database,
+            mapping: SwiftResourceMapping()
+        )
     }
 
-    private func getSpanishLanguage() -> LanguageCodable {
-        return getLanguageCodable(language: .spanish, name: "spanish", id: getLanguageId(id: spanishLanguageId))
+    private func getLanguageId(languageCode: LanguageCodeDomainModel) -> String {
+        return "language_" + languageCode.rawValue
     }
 
-    private func getVietnameseLanguage() -> LanguageCodable {
-        return getLanguageCodable(language: .vietnamese, name: "vietnamese", id: getLanguageId(id: 2))
+    private func getLanguageCodables() -> [LanguageCodable] {
+
+        return [LanguageCodeDomainModel.english, .spanish, .vietnamese].map { languageCode in
+
+            LanguageCodable.random(
+                id: getLanguageId(languageCode: languageCode),
+                code: languageCode.rawValue,
+                forceLanguageName: false
+            )
+        }
     }
 
-    private func getCzechLanguage() -> LanguageCodable {
-        return getLanguageCodable(language: .czech, name: "czech", id: getLanguageId(id: 3))
+    private func getResourceCodable(fixture: ResourceFixture) -> ResourceCodable {
+
+        return ResourceCodable.random(
+            id: fixture.id,
+            abbreviation: fixture.abbreviation,
+            attrCategory: fixture.category,
+            attrDefaultOrder: fixture.defaultOrder,
+            attrSpotlight: fixture.isSpotlight,
+            isHidden: fixture.isHidden,
+            metatoolId: fixture.metatoolId,
+            resourceType: fixture.resourceType.rawValue
+        )
     }
 
-    private func getLanguage(language: LanguageCodeDomainModel) -> LanguageCodable {
-        switch language {
-        case .english:
-            return getEnglishLanguage()
-        case .spanish:
-            return getSpanishLanguage()
-        case .vietnamese:
-            return getVietnameseLanguage()
-        case .czech:
-            return getCzechLanguage()
-        default:
-            assertionFailure("Language not supported: \(language)")
-            return getEnglishLanguage()
+    private func getResourceFixtures() -> [ResourceFixture] {
+
+        return [
+            ResourceFixture(id: "lesson_0", abbreviation: "lesson_0", resourceType: .lesson, defaultOrder: 0, languageCodes: [.english]),
+            ResourceFixture(id: "lesson_1", abbreviation: "lesson_1", resourceType: .lesson, defaultOrder: 1, languageCodes: [.english, .spanish]),
+            ResourceFixture(id: "lesson_2", abbreviation: "lesson_2", resourceType: .lesson, defaultOrder: 2, isHidden: true, languageCodes: [.english]),
+            ResourceFixture(id: "lesson_3", abbreviation: "lesson_3", resourceType: .lesson, defaultOrder: 3, isSpotlight: true, languageCodes: [.english, .spanish]),
+            ResourceFixture(id: "lesson_4", abbreviation: "lesson_4", resourceType: .lesson, defaultOrder: 4, isSpotlight: true, languageCodes: [.vietnamese]),
+
+            ResourceFixture(id: "tract_0", abbreviation: "kgp", resourceType: .tract, category: "gospel", defaultOrder: 10, isSpotlight: true, languageCodes: [.english, .spanish]),
+            ResourceFixture(id: "tract_1", abbreviation: "fourlaws", resourceType: .tract, category: "gospel", defaultOrder: 11, languageCodes: [.english]),
+            ResourceFixture(id: "tract_2", abbreviation: "teachme", resourceType: .tract, category: "conversation_starter", defaultOrder: 12, isSpotlight: true, languageCodes: [.english, .vietnamese]),
+            ResourceFixture(id: "tract_3", abbreviation: "hidden_tract", resourceType: .tract, category: "gospel", defaultOrder: 13, isHidden: true, isSpotlight: true, languageCodes: [.english]),
+            ResourceFixture(id: "article_0", abbreviation: "article", resourceType: .article, category: "gospel", defaultOrder: 14, isSpotlight: true, languageCodes: [.english]),
+
+            ResourceFixture(id: Self.metatoolId, abbreviation: "metatool", resourceType: .metaTool, defaultOrder: 20, languageCodes: [.english]),
+            ResourceFixture(id: "variant_0", abbreviation: "variant_0", resourceType: .tract, category: "gospel", defaultOrder: 21, metatoolId: Self.metatoolId, languageCodes: [.english]),
+            ResourceFixture(id: "variant_1", abbreviation: "variant_1", resourceType: .tract, category: "gospel", defaultOrder: 22, metatoolId: Self.metatoolId, languageCodes: [.english]),
+            ResourceFixture(id: "variant_2", abbreviation: "variant_2", resourceType: .tract, category: "gospel", defaultOrder: 23, isHidden: true, metatoolId: Self.metatoolId, languageCodes: [.english])
+        ]
+    }
+
+    private func getRealmDatabaseObjects() -> [IdentifiableRealmObject] {
+
+        var languagesByCode: [String: RealmLanguage] = Dictionary()
+
+        for languageCodable in getLanguageCodables() {
+            languagesByCode[languageCodable.code] = RealmLanguage.createNewFrom(model: languageCodable.toModel())
+        }
+
+        let resources: [RealmResource] = getResourceFixtures().map { fixture in
+
+            let resource = RealmResource.createNewFrom(
+                model: getResourceCodable(fixture: fixture).toModel()
+            )
+
+            for languageCode in fixture.languageCodes {
+
+                guard let language = languagesByCode[languageCode.rawValue] else {
+                    continue
+                }
+
+                resource.addLanguage(language: language)
+            }
+
+            return resource
+        }
+
+        return Array(languagesByCode.values) + resources
+    }
+
+    @available(iOS 17.4, *)
+    private func getSwiftDatabaseObjects() -> [SwiftResource] {
+
+        var languagesByCode: [String: SwiftLanguage] = Dictionary()
+
+        for languageCodable in getLanguageCodables() {
+            languagesByCode[languageCodable.code] = SwiftLanguage.createNewFrom(model: languageCodable.toModel())
+        }
+
+        return getResourceFixtures().map { fixture in
+
+            let resource = SwiftResource.createNewFrom(
+                model: getResourceCodable(fixture: fixture).toModel()
+            )
+
+            for languageCode in fixture.languageCodes {
+
+                guard let language = languagesByCode[languageCode.rawValue] else {
+                    continue
+                }
+
+                resource.addLanguage(language: language)
+            }
+
+            return resource
         }
     }
 }
-
-// MARK: - RealmDatabase
-
-extension ResourcesCacheTests {
-    
-    private func getRealmLanguage(language: LanguageCodeDomainModel) -> RealmLanguage {
-        return RealmLanguage.createNewFrom(
-            model: getLanguage(language: language).toModel()
-        )
-    }
-    
-    private func getRealmLessons() -> [RealmResource] {
-        
-        let english = getRealmLanguage(language: .english)
-        let spanish = getRealmLanguage(language: .spanish)
-        
-        let lesson_0 = RealmResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 0)).toModel())
-        lesson_0.addLanguage(language: english)
-        
-        let lesson_1 = RealmResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 1)).toModel())
-        lesson_1.addLanguage(language: english)
-        
-        let lesson_2 = RealmResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 2)).toModel())
-        lesson_2.addLanguage(language: english)
-        lesson_2.addLanguage(language: spanish)
-        
-        let lesson_3 = RealmResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 3)).toModel())
-        lesson_3.addLanguage(language: english)
-                
-        // hidden
-        let lesson_4 = RealmResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 4), isHidden: true).toModel())
-        lesson_4.addLanguage(language: english)
-        lesson_4.addLanguage(language: spanish)
-        
-        let lesson_5 = RealmResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 5), isHidden: true).toModel())
-        lesson_5.addLanguage(language: english)
-        
-        // featured
-        let lesson_6 = RealmResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 6), attrSpotlight: true).toModel())
-        lesson_6.addLanguage(language: english)
-        lesson_6.addLanguage(language: spanish)
-        
-        let lesson_7 = RealmResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 7), attrSpotlight: true).toModel())
-        lesson_7.addLanguage(language: english)
-        
-        let lesson_8 = RealmResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 8), attrSpotlight: true).toModel())
-        lesson_8.addLanguage(language: english)
-        
-        return [lesson_0, lesson_1, lesson_2, lesson_3, lesson_4, lesson_5, lesson_6, lesson_7, lesson_8]
-    }
-    
-    private func getRealmTracts() -> [RealmResource] {
-        
-        let english = getRealmLanguage(language: .english)
-        let vietnamese = getRealmLanguage(language: .vietnamese)
-        let czech = getRealmLanguage(language: .czech)
-        let spanish = getRealmLanguage(language: .spanish)
-        
-        let tract_0 = RealmResource.createNewFrom(model: FakeResource.createResource(resourceType: .tract, id: getTractId(id: 0)).toModel())
-        tract_0.addLanguage(language: english)
-        tract_0.addLanguage(language: czech)
-        tract_0.addLanguage(language: vietnamese)
-        tract_0.addLanguage(language: spanish)
-        
-        let tract_1 = RealmResource.createNewFrom(model: FakeResource.createResource(resourceType: .tract, id: getTractId(id: 1)).toModel())
-        tract_1.addLanguage(language: english)
-        tract_1.addLanguage(language: vietnamese)
-        
-        let tract_2 = RealmResource.createNewFrom(model: FakeResource.createResource(resourceType: .tract, id: getTractId(id: 2)).toModel())
-        tract_2.addLanguage(language: english)
-        tract_2.addLanguage(language: vietnamese)
-        
-        let tract_3 = RealmResource.createNewFrom(model: FakeResource.createResource(resourceType: .tract, id: getTractId(id: 3)).toModel())
-        tract_3.addLanguage(language: english)
-        tract_3.addLanguage(language: czech)
-        
-        let tract_4 = RealmResource.createNewFrom(model: FakeResource.createResource(resourceType: .tract, id: getTractId(id: 4)).toModel())
-        tract_4.addLanguage(language: english)
-        tract_4.addLanguage(language: czech)
-        tract_4.addLanguage(language: spanish)
-        
-        let tract_5 = RealmResource.createNewFrom(model: FakeResource.createResource(resourceType: .tract, id: getTractId(id: 5)).toModel())
-        tract_5.addLanguage(language: english)
-        tract_5.addLanguage(language: spanish)
-    
-        return [tract_0, tract_1, tract_2, tract_3, tract_4, tract_5]
-    }
-    
-    private func getRealmResources() -> [RealmResource] {
-        
-        return getRealmLessons() + getRealmTracts()
-    }
-}
-
-// MARK: - SwiftDatabase
-
-extension ResourcesCacheTests {
-    
-    @available(iOS 17.4, *)
-    private func getSwiftLanguage(language: LanguageCodeDomainModel) -> SwiftLanguage {
-        return SwiftLanguage.createNewFrom(
-            model: getLanguage(language: language).toModel()
-        )
-    }
-    
-    @available(iOS 17.4, *)
-    private func getLessons() -> [SwiftResource] {
-        
-        let english = getSwiftLanguage(language: .english)
-        let spanish = getSwiftLanguage(language: .spanish)
-        
-        let lesson_0 = SwiftResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 0)).toModel())
-        lesson_0.addLanguage(language: english)
-        
-        let lesson_1 = SwiftResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 1)).toModel())
-        lesson_1.addLanguage(language: english)
-        
-        let lesson_2 = SwiftResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 2)).toModel())
-        lesson_2.addLanguage(language: english)
-        lesson_2.addLanguage(language: spanish)
-        
-        let lesson_3 = SwiftResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 3)).toModel())
-        lesson_3.addLanguage(language: english)
-                
-        // hidden
-        let lesson_4 = SwiftResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 4), isHidden: true).toModel())
-        lesson_4.addLanguage(language: english)
-        lesson_4.addLanguage(language: spanish)
-        
-        let lesson_5 = SwiftResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 5), isHidden: true).toModel())
-        lesson_5.addLanguage(language: english)
-        
-        // featured
-        let lesson_6 = SwiftResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 6), attrSpotlight: true).toModel())
-        lesson_6.addLanguage(language: english)
-        lesson_6.addLanguage(language: spanish)
-        
-        let lesson_7 = SwiftResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 7), attrSpotlight: true).toModel())
-        lesson_7.addLanguage(language: english)
-        
-        let lesson_8 = SwiftResource.createNewFrom(model: FakeResource.createResource(resourceType: .lesson, id: getLessonId(id: 8), attrSpotlight: true).toModel())
-        lesson_8.addLanguage(language: english)
-        
-        return [lesson_0, lesson_1, lesson_2, lesson_3, lesson_4, lesson_5, lesson_6, lesson_7, lesson_8]
-    }
-    
-    @available(iOS 17.4, *)
-    private func getTracts() -> [SwiftResource] {
-        
-        let english = getSwiftLanguage(language: .english)
-        let vietnamese = getSwiftLanguage(language: .vietnamese)
-        let czech = getSwiftLanguage(language: .czech)
-        let spanish = getSwiftLanguage(language: .spanish)
-        
-        let tract_0 = SwiftResource.createNewFrom(model: FakeResource.createResource(resourceType: .tract, id: getTractId(id: 0)).toModel())
-        tract_0.addLanguage(language: english)
-        tract_0.addLanguage(language: czech)
-        tract_0.addLanguage(language: vietnamese)
-        tract_0.addLanguage(language: spanish)
-        
-        let tract_1 = SwiftResource.createNewFrom(model: FakeResource.createResource(resourceType: .tract, id: getTractId(id: 1)).toModel())
-        tract_1.addLanguage(language: english)
-        tract_1.addLanguage(language: vietnamese)
-        
-        let tract_2 = SwiftResource.createNewFrom(model: FakeResource.createResource(resourceType: .tract, id: getTractId(id: 2)).toModel())
-        tract_2.addLanguage(language: english)
-        tract_2.addLanguage(language: vietnamese)
-        
-        let tract_3 = SwiftResource.createNewFrom(model: FakeResource.createResource(resourceType: .tract, id: getTractId(id: 3)).toModel())
-        tract_3.addLanguage(language: english)
-        tract_3.addLanguage(language: czech)
-        
-        let tract_4 = SwiftResource.createNewFrom(model: FakeResource.createResource(resourceType: .tract, id: getTractId(id: 4)).toModel())
-        tract_4.addLanguage(language: english)
-        tract_4.addLanguage(language: czech)
-        tract_4.addLanguage(language: spanish)
-        
-        let tract_5 = SwiftResource.createNewFrom(model: FakeResource.createResource(resourceType: .tract, id: getTractId(id: 5)).toModel())
-        tract_5.addLanguage(language: english)
-        tract_5.addLanguage(language: spanish)
-    
-        return [tract_0, tract_1, tract_2, tract_3, tract_4, tract_5]
-    }
-    
-    @available(iOS 17.4, *)
-    private func getResources() -> [SwiftResource] {
-        
-        return getLessons() + getTracts()
-    }
-}
-
