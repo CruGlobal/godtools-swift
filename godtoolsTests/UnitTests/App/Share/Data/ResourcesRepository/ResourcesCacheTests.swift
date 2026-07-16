@@ -348,13 +348,9 @@ extension ResourcesCacheTests {
 
         let context: ModelContext = database.openContext()
 
-        for resource in getSwiftDatabaseObjects() {
-            context.insert(resource)
-        }
+        context.insertObjects(objects: getSwiftDatabaseObjects())
 
-        if context.hasChanges {
-            try context.save()
-        }
+        try context.saveIfHasChanges()
 
         return SwiftRepositorySyncPersistence(
             database: database,

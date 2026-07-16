@@ -90,13 +90,9 @@ extension GetTranslatedToolNameTests {
 
         let context: ModelContext = swiftDatabase.openContext()
 
-        for object in getSwiftDatabaseObjects() {
-            context.insert(object)
-        }
+        context.insertObjects(objects: getSwiftDatabaseObjects())
 
-        if context.hasChanges {
-            try context.save()
-        }
+        try context.saveIfHasChanges()
 
         let testsDiContainer = TestsDiContainer(
             testsAppConfig: testsAppConfig
