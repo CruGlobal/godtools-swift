@@ -96,14 +96,14 @@ class MenuFlowTests: BaseFlowTests {
         assertIfScreenDoesNotExist(screenAccessibility: .askAQuestion)
     }
     
-//    func testNavigationToLeaveAReview() {
-//        
-//        launchAppToMenu()
-//
-//        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .leaveAReview)
-//
-//        assertIfScreenDoesNotExist(screenAccessibility: .leaveAReview)
-//    }
+    func testNavigationToLeaveAReview() {
+        
+        launchAppToMenu()
+
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .leaveAReview)
+
+        // Leave a Review opens Safari so won't add an assert for screen. ~Levi
+    }
     
     func testNavigationToShareAStoryWithUs() {
         
@@ -114,14 +114,14 @@ class MenuFlowTests: BaseFlowTests {
         assertIfScreenDoesNotExist(screenAccessibility: .shareAStoryWithUs)
     }
     
-//    func testNavigationToShareGodTools() {
-//        
-//        launchAppToMenu()
-//
-//        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .shareGodTools)
-//
-//        assertIfScreenDoesNotExist(screenAccessibility: .shareGodTools)
-//    }
+    func testNavigationToShareGodTools() {
+        
+        launchAppToMenu()
+
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .shareGodTools)
+
+        assertIfScreenDoesNotExist(screenAccessibility: .shareGodTools)
+    }
     
     func testNavigationToTermsOfUse() {
         

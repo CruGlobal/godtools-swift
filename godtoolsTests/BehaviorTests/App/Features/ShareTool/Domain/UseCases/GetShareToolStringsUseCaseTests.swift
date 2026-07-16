@@ -8,6 +8,7 @@
 
 import Testing
 @testable import godtools
+import RepositorySync
 
 struct GetShareToolStringsUseCaseTests {
 
@@ -18,6 +19,7 @@ struct GetShareToolStringsUseCaseTests {
     private let unknownToolId: String = "unknown-tool"
     private let unknownToolLanguageId: String = "unknown-language"
 
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: User is sharing a tool but a share url cannot be generated for the tool.
@@ -47,11 +49,12 @@ struct GetShareToolStringsUseCaseTests {
 
 extension GetShareToolStringsUseCaseTests {
 
+    @available(iOS 17.4, *)
     private func getUseCase() throws -> GetShareToolStringsUseCase {
 
         let testsDiContainer = try TestsDiContainer(
             testsAppConfig: TestsAppConfig(
-                realmDatabase: FakeRealmDatabase.createRealmDatabase()
+                swiftDatabase: SwiftDatabase(container: SwiftDataProductionContainer.createInMemoryContainer())
             )
         )
 

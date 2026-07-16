@@ -19,6 +19,7 @@ struct ToggleToolFavoritedUseCaseTests {
         let expectedUpdatedIdsAtPositions: [String: Int]
     }
     
+    @available(iOS 17.4, *)
     @Test(
        """
        Given: A user has any amount of tools favorited
@@ -63,19 +64,18 @@ struct ToggleToolFavoritedUseCaseTests {
 
 extension ToggleToolFavoritedUseCaseTests {
     
-    private func getPersistence(addObjects: [FavoritedResourceDataModel]) async throws -> RealmRepositorySyncPersistence<FavoritedResourceDataModel, FavoritedResourceDataModel, RealmFavoritedResource> {
-        
-        let databaseConfig = try RealmDatabaseConfig.createInMemoryConfig()
-        
-        let database = RealmDatabase(databaseConfig: databaseConfig)
-        
-        let persistence = RealmRepositorySyncPersistence(
+    @available(iOS 17.4, *)
+    private func getPersistence(addObjects: [FavoritedResourceDataModel]) async throws -> SwiftRepositorySyncPersistence<FavoritedResourceDataModel, FavoritedResourceDataModel, SwiftFavoritedResource> {
+
+        let database = SwiftDatabase(container: try SwiftDataProductionContainer.createInMemoryContainer())
+
+        let persistence = SwiftRepositorySyncPersistence(
             database: database,
-            mapping: RealmFavoritedResourceMapping()
+            mapping: SwiftFavoritedResourceMapping()
         )
-        
+
         _ = try await persistence.writeObjects(externalObjects: addObjects)
-        
+
         return persistence
     }
     

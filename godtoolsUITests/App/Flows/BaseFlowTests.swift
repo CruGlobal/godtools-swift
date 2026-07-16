@@ -117,8 +117,19 @@ extension BaseFlowTests {
     }
     
     func assertIfButtonDoesNotExistElseTap(buttonAccessibility: AccessibilityStrings.Button, buttonQueryType: ButtonQueryType = BaseFlowTests.defaultButtonQueryType) {
-        
+
         assertIfButtonDoesNotExist(buttonId: buttonAccessibility.id, buttonQueryType: buttonQueryType, shouldTapButton: true)
+    }
+
+    func assertIfButtonExists(buttonAccessibility: AccessibilityStrings.Button, buttonQueryType: ButtonQueryType = BaseFlowTests.defaultButtonQueryType) {
+
+        guard let button = queryButton(buttonId: buttonAccessibility.id, buttonQueryType: buttonQueryType) else {
+            return
+        }
+
+        let buttonDoesNotExist: Bool = button.waitForNonExistence(timeout: Self.defaultWaitForButtonExistence)
+
+        XCTAssertTrue(buttonDoesNotExist, "Expected button \"\(buttonAccessibility.id)\" to not exist.")
     }
     
     func tapWhileExists(buttonAccessibility: AccessibilityStrings.Button, buttonQueryType: ButtonQueryType = BaseFlowTests.defaultButtonQueryType, maxTapCount: Int = 10) {

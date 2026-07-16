@@ -13,16 +13,17 @@ import Combine
 import RepositorySync
 
 struct SetAppLanguageUseCaseTests {
-    
+
     private let testsDiContainer: TestsDiContainer
     private let languageCodes: [LanguageCodeDomainModel] = [.afrikaans, .arabic, .chinese, .czech, .english, .french, .hebrew, .latvian, .portuguese, .russian, .spanish, .vietnamese]
     private let allLanguages: [LanguageCodable]
-    
+
+    @available(iOS 17.4, *)
     init() async throws {
-        
-        testsDiContainer = try TestsDiContainer(
+
+        testsDiContainer = TestsDiContainer(
             testsAppConfig: TestsAppConfig(
-                realmDatabase: FakeRealmDatabase.createRealmDatabase()
+                swiftDatabase: SwiftDatabase(container: try SwiftDataProductionContainer.createInMemoryContainer())
             )
         )
         
@@ -33,6 +34,7 @@ struct SetAppLanguageUseCaseTests {
         try await testsDiContainer.core.dataLayer.getLanguagesPersistence().writeObjects(externalObjects: allLanguages)
     }
         
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: User is viewing the language settings

@@ -2,355 +2,265 @@
 //  TrackDownloadedTranslationsCacheTests.swift
 //  godtools
 //
-//  Created by Levi Eggert on 12/3/25.
-//  Copyright © 2025 Cru. All rights reserved.
+//  Created by Levi Eggert on 7/16/26.
+//  Copyright © 2026 Cru. All rights reserved.
 //
 
 import Testing
 @testable import godtools
 import Foundation
-import RealmSwift
-import SwiftData
 import RepositorySync
-
-/*
+import SwiftData
 
 struct TrackDownloadedTranslationsCacheTests {
-    
+
     private static let resourceAId: String = "resource_a"
     private static let resourceBId: String = "resource_b"
     private static let languageAId: String = "language_a"
     private static let languageBId: String = "language_b"
     private static let languageCId: String = "language_c"
-    
-    struct LatestDownloadedTranslationArgument {
-        
+
+    enum PersistenceType: CaseIterable {
+        case realm
+        case swiftData
+    }
+
+    struct LatestDownloadedTranslationsArgument {
+
         let resourceId: String
         let languageId: String
         let expectedIds: [String]
     }
-    
-    @Test(
-        "",
-        arguments: [
-            LatestDownloadedTranslationArgument(
-                resourceId: Self.resourceAId,
-                languageId: Self.languageAId,
-                expectedIds: ["a_a_25", "a_a_12", "a_a_8", "a_a_5", "a_a_1", "a_a_0"]
-            ),
-            LatestDownloadedTranslationArgument(
-                resourceId: Self.resourceAId,
-                languageId: Self.languageBId,
-                expectedIds: ["a_b_20", "a_b_19", "a_b_10", "a_b_2"]
-            ),
-            LatestDownloadedTranslationArgument(
-                resourceId: Self.resourceAId,
-                languageId: Self.languageCId,
-                expectedIds: ["a_c_51", "a_c_50"]
-            )
-        ]
-    )
-    func realmGetLatestDownloadedTranslationsByResourceIdAndLanguageId(argument: LatestDownloadedTranslationArgument) async throws {
-        
-        let trackDownloadedTranslationsCache = try getTrackDownloadedTranslationsCache(
-            swiftPersistenceIsEnabled: false
-        )
-        
-        let translations: [DownloadedTranslationDataModel] = trackDownloadedTranslationsCache.getLatestDownloadedTranslations(
-            resourceId: argument.resourceId,
-            languageId: argument.languageId
-        )
-        
-        let ids: [String] = translations.map { $0.id }
-        
-        #expect(ids.count == argument.expectedIds.count)
-        #expect(ids == argument.expectedIds)
-    }
-    /*
-    @Test(
-        "",
-        arguments: [
-            LatestDownloadedTranslationArgument(
-                resourceId: Self.resourceAId,
-                languageId: Self.languageAId,
-                expectedIds: ["a_a_25", "a_a_12", "a_a_8", "a_a_5", "a_a_1", "a_a_0"]
-            ),
-            LatestDownloadedTranslationArgument(
-                resourceId: Self.resourceAId,
-                languageId: Self.languageBId,
-                expectedIds: ["a_b_20", "a_b_19", "a_b_10", "a_b_2"]
-            ),
-            LatestDownloadedTranslationArgument(
-                resourceId: Self.resourceAId,
-                languageId: Self.languageCId,
-                expectedIds: ["a_c_51", "a_c_50"]
-            )
-        ]
-    )
-    func getLatestDownloadedTranslationsByResourceIdAndLanguageId(argument: LatestDownloadedTranslationArgument) async {
-        
-        let trackDownloadedTranslationsCache = getTrackDownloadedTranslationsCache(
-            swiftPersistenceIsEnabled: true
-        )
-        
-        let translations: [DownloadedTranslationDataModel] = trackDownloadedTranslationsCache.getLatestDownloadedTranslations(
-            resourceId: argument.resourceId,
-            languageId: argument.languageId
-        )
-        
-        let ids: [String] = translations.map { $0.id }
-        
-        #expect(ids.count == argument.expectedIds.count)
-        #expect(ids == argument.expectedIds)
-    }*/
-    
-    @Test(
-        "",
-        arguments: [
-            LatestDownloadedTranslationArgument(
-                resourceId: Self.resourceAId,
-                languageId: Self.languageAId,
-                expectedIds: ["a_a_25"]
-            ),
-            LatestDownloadedTranslationArgument(
-                resourceId: Self.resourceAId,
-                languageId: Self.languageBId,
-                expectedIds: ["a_b_20"]
-            ),
-            LatestDownloadedTranslationArgument(
-                resourceId: Self.resourceAId,
-                languageId: Self.languageCId,
-                expectedIds: ["a_c_51"]
-            )
-        ]
-    )
-    func realmGetLatestDownloadedTranslationByResourceIdAndLanguageId(argument: LatestDownloadedTranslationArgument) async throws {
-        
-        let trackDownloadedTranslationsCache = try getTrackDownloadedTranslationsCache(
-            swiftPersistenceIsEnabled: false
-        )
-        
-        let translation: DownloadedTranslationDataModel = try #require(trackDownloadedTranslationsCache.getLatestDownloadedTranslation(
-            resourceId: argument.resourceId,
-            languageId: argument.languageId
-        ))
-                
-        #expect(translation.id == argument.expectedIds.first)
-    }
-    /*
-    @Test(
-        "",
-        arguments: [
-            LatestDownloadedTranslationArgument(
-                resourceId: Self.resourceAId,
-                languageId: Self.languageAId,
-                expectedIds: ["a_a_25"]
-            ),
-            LatestDownloadedTranslationArgument(
-                resourceId: Self.resourceAId,
-                languageId: Self.languageBId,
-                expectedIds: ["a_b_20"]
-            ),
-            LatestDownloadedTranslationArgument(
-                resourceId: Self.resourceAId,
-                languageId: Self.languageCId,
-                expectedIds: ["a_c_51"]
-            )
-        ]
-    )
-    func getLatestDownloadedTranslationByResourceIdAndLanguageId(argument: LatestDownloadedTranslationArgument) async throws {
-        
-        let trackDownloadedTranslationsCache = getTrackDownloadedTranslationsCache(
-            swiftPersistenceIsEnabled: true
-        )
-        
-        let translation: DownloadedTranslationDataModel = try #require(trackDownloadedTranslationsCache.getLatestDownloadedTranslation(
-            resourceId: argument.resourceId,
-            languageId: argument.languageId
-        ))
-                
-        #expect(translation.id == argument.expectedIds.first)
-    }*/
-}
 
-extension TrackDownloadedTranslationsCacheTests {
-    
-    private func getTrackDownloadedTranslationsCache(swiftPersistenceIsEnabled: Bool) throws -> TrackDownloadedTranslationsCache {
-    
-        if #available(iOS 17.4, *), swiftPersistenceIsEnabled {
-            TempSharedSwiftDatabase.shared.setDatabase(
-                swiftDatabase: try getSwiftDatabase()
-            )
+    // MARK: - Query
+
+    @available(iOS 17.4, *)
+    @Test(arguments: PersistenceType.allCases, [
+        LatestDownloadedTranslationsArgument(
+            resourceId: Self.resourceAId,
+            languageId: Self.languageAId,
+            expectedIds: ["a_a_25", "a_a_12", "a_a_8", "a_a_5", "a_a_1", "a_a_0"]
+        ),
+        LatestDownloadedTranslationsArgument(
+            resourceId: Self.resourceAId,
+            languageId: Self.languageBId,
+            expectedIds: ["a_b_20", "a_b_19", "a_b_10", "a_b_2"]
+        ),
+        LatestDownloadedTranslationsArgument(
+            resourceId: Self.resourceBId,
+            languageId: Self.languageAId,
+            expectedIds: ["b_a_7", "b_a_3"]
+        ),
+        LatestDownloadedTranslationsArgument(
+            resourceId: Self.resourceBId,
+            languageId: Self.languageCId,
+            expectedIds: []
+        )
+    ])
+    func getLatestDownloadedTranslationsSortedByLatestVersion(persistenceType: PersistenceType, argument: LatestDownloadedTranslationsArgument) async throws {
+
+        let cache = try await getCache(persistenceType: persistenceType)
+
+        let downloadedTranslations: [DownloadedTranslationDataModel] = try await cache.getLatestDownloadedTranslations(
+            resourceId: argument.resourceId,
+            languageId: argument.languageId
+        )
+
+        #expect(downloadedTranslations.map { $0.id } == argument.expectedIds)
+    }
+
+    @available(iOS 17.4, *)
+    @Test(arguments: PersistenceType.allCases)
+    func getLatestDownloadedTranslationExists(persistenceType: PersistenceType) async throws {
+
+        let cache = try await getCache(persistenceType: persistenceType)
+
+        let downloadedTranslation: DownloadedTranslationDataModel? = try cache.getLatestDownloadedTranslation(
+            resourceId: Self.resourceAId,
+            languageId: Self.languageAId
+        )
+
+        #expect(downloadedTranslation?.id == "a_a_25")
+        #expect(downloadedTranslation?.version == 25)
+    }
+
+    @available(iOS 17.4, *)
+    @Test(arguments: PersistenceType.allCases)
+    func getLatestDownloadedTranslationIsNil(persistenceType: PersistenceType) async throws {
+
+        let cache = try await getCache(persistenceType: persistenceType)
+
+        let downloadedTranslation: DownloadedTranslationDataModel? = try cache.getLatestDownloadedTranslation(
+            resourceId: Self.resourceBId,
+            languageId: Self.languageCId
+        )
+
+        #expect(downloadedTranslation == nil)
+    }
+
+    // MARK: - Track Downloads
+
+    @available(iOS 17.4, *)
+    @Test(arguments: PersistenceType.allCases)
+    func trackTranslationDownloadedPersistsDownloadedTranslation(persistenceType: PersistenceType) async throws {
+
+        let cache = try await getCache(persistenceType: persistenceType)
+
+        let translation: TranslationDataModel = TranslationCodable.random(
+            id: "b_c_30",
+            language: LanguageCodable.random(id: Self.languageCId, code: LanguageCodeDomainModel.english.rawValue),
+            resource: ResourceCodable.random(id: Self.resourceBId),
+            version: 30
+        ).toModel()
+
+        let trackedTranslations: [DownloadedTranslationDataModel] = try await cache.trackTranslationDownloaded(translation: translation)
+
+        let downloadedTranslation: DownloadedTranslationDataModel? = try cache.getLatestDownloadedTranslation(
+            resourceId: Self.resourceBId,
+            languageId: Self.languageCId
+        )
+
+        #expect(trackedTranslations.map { $0.id } == ["b_c_30"])
+        #expect(downloadedTranslation?.id == "b_c_30")
+        #expect(downloadedTranslation?.translationId == "b_c_30")
+        #expect(downloadedTranslation?.resourceId == Self.resourceBId)
+        #expect(downloadedTranslation?.languageId == Self.languageCId)
+        #expect(downloadedTranslation?.version == 30)
+        #expect(downloadedTranslation?.manifestAndRelatedFilesPersistedToDevice == true)
+    }
+
+    @available(iOS 17.4, *)
+    @Test(arguments: PersistenceType.allCases)
+    func trackTranslationDownloadedTracksLatestVersion(persistenceType: PersistenceType) async throws {
+
+        let cache = try await getCache(persistenceType: persistenceType)
+
+        let translation: TranslationDataModel = TranslationCodable.random(
+            id: "a_a_26",
+            language: LanguageCodable.random(id: Self.languageAId, code: LanguageCodeDomainModel.english.rawValue),
+            resource: ResourceCodable.random(id: Self.resourceAId),
+            version: 26
+        ).toModel()
+
+        _ = try await cache.trackTranslationDownloaded(translation: translation)
+
+        let downloadedTranslation: DownloadedTranslationDataModel? = try cache.getLatestDownloadedTranslation(
+            resourceId: Self.resourceAId,
+            languageId: Self.languageAId
+        )
+
+        #expect(downloadedTranslation?.id == "a_a_26")
+        #expect(downloadedTranslation?.version == 26)
+    }
+
+    @available(iOS 17.4, *)
+    @Test(arguments: PersistenceType.allCases)
+    func trackTranslationDownloadedThrowsWhenResourceIsMissing(persistenceType: PersistenceType) async throws {
+
+        let cache = try await getCache(persistenceType: persistenceType)
+
+        let translation: TranslationDataModel = TranslationCodable.random(
+            language: LanguageCodable.random(id: Self.languageAId, code: LanguageCodeDomainModel.english.rawValue),
+            resource: nil
+        ).toModel()
+
+        await #expect(throws: (any Error).self) {
+            _ = try await cache.trackTranslationDownloaded(translation: translation)
         }
-        
+    }
+
+    @available(iOS 17.4, *)
+    @Test(arguments: PersistenceType.allCases)
+    func trackTranslationDownloadedThrowsWhenLanguageIsMissing(persistenceType: PersistenceType) async throws {
+
+        let cache = try await getCache(persistenceType: persistenceType)
+
+        let translation: TranslationDataModel = TranslationCodable.random(
+            language: nil,
+            resource: ResourceCodable.random(id: Self.resourceAId)
+        ).toModel()
+
+        await #expect(throws: (any Error).self) {
+            _ = try await cache.trackTranslationDownloaded(translation: translation)
+        }
+    }
+}
+
+// MARK: - Test Helpers
+
+extension TrackDownloadedTranslationsCacheTests {
+
+    @available(iOS 17.4, *)
+    private func getCache(persistenceType: PersistenceType) async throws -> TrackDownloadedTranslationsCache {
+
+        let persistence: any Persistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel>
+
+        switch persistenceType {
+
+        case .realm:
+            persistence = try getRealmPersistence()
+
+        case .swiftData:
+            persistence = try getSwiftPersistence()
+        }
+
+        try await persistence.writeObjects(
+            externalObjects: getDownloadedTranslations()
+        )
+
         return TrackDownloadedTranslationsCache(
-            realmDatabase: getLegacyRealmDatabase(),
-            swiftPersistenceIsEnabled: swiftPersistenceIsEnabled
+            persistence: persistence
+        )
+    }
+
+    private func getRealmPersistence() throws -> RealmRepositorySyncPersistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel, RealmDownloadedTranslation> {
+
+        return RealmRepositorySyncPersistence(
+            database: try FakeRealmDatabase.createRealmDatabase(),
+            mapping: RealmDownloadedTranslationMapping()
+        )
+    }
+
+    @available(iOS 17.4, *)
+    private func getSwiftPersistence() throws -> SwiftRepositorySyncPersistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel, SwiftDownloadedTranslation> {
+
+        let container = try SwiftDataContainer.createInMemoryContainer(schema: Schema(versionedSchema: LatestProductionSwiftDataSchema.self))
+
+        return SwiftRepositorySyncPersistence(
+            database: SwiftDatabase(container: container),
+            mapping: SwiftDownloadedTranslationMapping()
+        )
+    }
+
+    private func getDownloadedTranslations() -> [DownloadedTranslationDataModel] {
+
+        return [
+            getDownloadedTranslation(id: "a_a_5", resourceId: Self.resourceAId, languageId: Self.languageAId, version: 5),
+            getDownloadedTranslation(id: "a_a_25", resourceId: Self.resourceAId, languageId: Self.languageAId, version: 25),
+            getDownloadedTranslation(id: "a_a_0", resourceId: Self.resourceAId, languageId: Self.languageAId, version: 0),
+            getDownloadedTranslation(id: "a_a_12", resourceId: Self.resourceAId, languageId: Self.languageAId, version: 12),
+            getDownloadedTranslation(id: "a_a_1", resourceId: Self.resourceAId, languageId: Self.languageAId, version: 1),
+            getDownloadedTranslation(id: "a_a_8", resourceId: Self.resourceAId, languageId: Self.languageAId, version: 8),
+
+            getDownloadedTranslation(id: "a_b_19", resourceId: Self.resourceAId, languageId: Self.languageBId, version: 19),
+            getDownloadedTranslation(id: "a_b_2", resourceId: Self.resourceAId, languageId: Self.languageBId, version: 2),
+            getDownloadedTranslation(id: "a_b_20", resourceId: Self.resourceAId, languageId: Self.languageBId, version: 20),
+            getDownloadedTranslation(id: "a_b_10", resourceId: Self.resourceAId, languageId: Self.languageBId, version: 10),
+
+            getDownloadedTranslation(id: "b_a_3", resourceId: Self.resourceBId, languageId: Self.languageAId, version: 3),
+            getDownloadedTranslation(id: "b_a_7", resourceId: Self.resourceBId, languageId: Self.languageAId, version: 7)
+        ]
+    }
+
+    private func getDownloadedTranslation(id: String, resourceId: String, languageId: String, version: Int) -> DownloadedTranslationDataModel {
+
+        return DownloadedTranslationDataModel(
+            id: id,
+            languageId: languageId,
+            manifestAndRelatedFilesPersistedToDevice: true,
+            resourceId: resourceId,
+            translationId: id,
+            version: version
         )
     }
 }
-
-// MARK: - RealmDatabase
-
-extension TrackDownloadedTranslationsCacheTests {
-    
-    private func getRealmDatabaseObjects() -> [Object] {
-        return getMockTrackDownloadedTranslations()
-            .map {
-                RealmDownloadedTranslation.createNewFrom(model: $0)
-            }
-    }
-    
-    private func getLegacyRealmDatabase() -> LegacyRealmDatabase {
-        return TestsInMemoryRealmDatabase(
-            addObjectsToDatabase: getRealmDatabaseObjects()
-        )
-    }
-}
-
-// MARK: - SwiftDatabase
-
-extension TrackDownloadedTranslationsCacheTests {
-    
-    @available(iOS 17.4, *)
-    private func getSwiftDatabaseObjects() -> [any IdentifiableSwiftDataObject] {
-        return getMockTrackDownloadedTranslations()
-            .map {
-                SwiftDownloadedTranslation.createNewFrom(model: $0)
-            }
-    }
-    
-    @available(iOS 17.4, *)
-    private func getSwiftDatabase() throws -> SwiftDatabase {
-        return try TestsInMemorySwiftDatabase().createDatabase(addObjectsToDatabase: getSwiftDatabaseObjects())
-    }
-}
-
-// MARK: - Mock Data
-
-extension TrackDownloadedTranslationsCacheTests {
-    
-    private func getMockTrackDownloadedTranslations() -> [FakeDownloadedTranslation] {
-        
-        let resourcesA: [FakeDownloadedTranslation] = [
-            FakeDownloadedTranslation(
-                resourceId: Self.resourceAId,
-                languageId: Self.languageAId,
-                version: 0,
-                id: "a_a_0"
-            ),
-            FakeDownloadedTranslation(
-                resourceId: Self.resourceAId,
-                languageId: Self.languageAId,
-                version: 1,
-                id: "a_a_1"
-            ),
-            FakeDownloadedTranslation(
-                resourceId: Self.resourceAId,
-                languageId: Self.languageAId,
-                version: 5,
-                id: "a_a_5"
-            ),
-            FakeDownloadedTranslation(
-                resourceId: Self.resourceAId,
-                languageId: Self.languageAId,
-                version: 8,
-                id: "a_a_8"
-            ),
-            FakeDownloadedTranslation(
-                resourceId: Self.resourceAId,
-                languageId: Self.languageAId,
-                version: 12,
-                id: "a_a_12"
-            ),
-            FakeDownloadedTranslation(
-                resourceId: Self.resourceAId,
-                languageId: Self.languageAId,
-                version: 25,
-                id: "a_a_25"
-            ),
-            FakeDownloadedTranslation(
-                resourceId: Self.resourceAId,
-                languageId: Self.languageBId,
-                version: 20,
-                id: "a_b_20"
-            ),
-            FakeDownloadedTranslation(
-                resourceId: Self.resourceAId,
-                languageId: Self.languageBId,
-                version: 19,
-                id: "a_b_19"
-            ),
-            FakeDownloadedTranslation(
-                resourceId: Self.resourceAId,
-                languageId: Self.languageBId,
-                version: 2,
-                id: "a_b_2"
-            ),
-            FakeDownloadedTranslation(
-                resourceId: Self.resourceAId,
-                languageId: Self.languageBId,
-                version: 10,
-                id: "a_b_10"
-            ),
-            FakeDownloadedTranslation(
-                resourceId: Self.resourceAId,
-                languageId: Self.languageCId,
-                version: 50,
-                id: "a_c_50"
-            ),
-            FakeDownloadedTranslation(
-                resourceId: Self.resourceAId,
-                languageId: Self.languageCId,
-                version: 51,
-                id: "a_c_51"
-            )
-        ]
-        
-        let resourcesB: [FakeDownloadedTranslation] = [
-            FakeDownloadedTranslation(
-                resourceId: Self.resourceBId,
-                languageId: Self.languageAId,
-                version: 44
-            ),
-            FakeDownloadedTranslation(
-                resourceId: Self.resourceBId,
-                languageId: Self.languageAId,
-                version: 1
-            ),
-            FakeDownloadedTranslation(
-                resourceId: Self.resourceBId,
-                languageId: Self.languageAId,
-                version: 10
-            ),
-            FakeDownloadedTranslation(
-                resourceId: Self.resourceBId,
-                languageId: Self.languageAId,
-                version: 8
-            ),
-            FakeDownloadedTranslation(
-                resourceId: Self.resourceBId,
-                languageId: Self.languageAId,
-                version: 22
-            ),
-            FakeDownloadedTranslation(
-                resourceId: Self.resourceBId,
-                languageId: Self.languageAId,
-                version: 0
-            ),
-            FakeDownloadedTranslation(
-                resourceId: Self.resourceBId,
-                languageId: Self.languageCId,
-                version: 1
-            ),
-            FakeDownloadedTranslation(
-                resourceId: Self.resourceBId,
-                languageId: Self.languageCId,
-                version: 30
-            )
-        ]
-        
-        return resourcesA + resourcesB
-    }
-}
-*/

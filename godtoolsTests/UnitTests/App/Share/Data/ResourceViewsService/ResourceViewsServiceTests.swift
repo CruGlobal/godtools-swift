@@ -14,6 +14,7 @@ import RepositorySync
 
 struct ResourceViewsServiceTests {
         
+    @available(iOS 17.4, *)
     @Test()
     func postedResourceViewsWithErrorArePersisted() async throws {
                 
@@ -36,6 +37,7 @@ struct ResourceViewsServiceTests {
         #expect(count == 1)
     }
     
+    @available(iOS 17.4, *)
     @Test()
     func postedResourceViewsWithBadHttpStatusCodeArePersisted() async throws {
         
@@ -53,6 +55,7 @@ struct ResourceViewsServiceTests {
         #expect(count == 1)
     }
     
+    @available(iOS 17.4, *)
     @Test()
     func postedResourceViewsWithSuccessHttpStatusCodeAreNotPersisted() async throws {
         
@@ -70,6 +73,7 @@ struct ResourceViewsServiceTests {
         #expect(count == 0)
     }
     
+    @available(iOS 17.4, *)
     @Test()
     func postingFailedResourceViewsIfNeededAreRemovedFromTheLocalDatabase() async throws {
         
@@ -98,19 +102,18 @@ struct ResourceViewsServiceTests {
 
 extension ResourceViewsServiceTests {
         
-    private func getPersistence(addObjects: [ResourceViewDataModel]) async throws -> RealmRepositorySyncPersistence<ResourceViewDataModel, ResourceViewDataModel, RealmResourceView> {
-        
-        let databaseConfig = try RealmDatabaseConfig.createInMemoryConfig()
-        
-        let database = RealmDatabase(databaseConfig: databaseConfig)
-        
-        let persistence = RealmRepositorySyncPersistence(
+    @available(iOS 17.4, *)
+    private func getPersistence(addObjects: [ResourceViewDataModel]) async throws -> SwiftRepositorySyncPersistence<ResourceViewDataModel, ResourceViewDataModel, SwiftResourceView> {
+
+        let database = SwiftDatabase(container: try SwiftDataProductionContainer.createInMemoryContainer())
+
+        let persistence = SwiftRepositorySyncPersistence(
             database: database,
-            mapping: RealmResourceViewMapping()
+            mapping: SwiftResourceViewMapping()
         )
-        
+
         _ = try await persistence.writeObjects(externalObjects: addObjects)
-        
+
         return persistence
     }
     

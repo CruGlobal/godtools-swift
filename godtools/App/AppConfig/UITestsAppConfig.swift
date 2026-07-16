@@ -75,14 +75,9 @@ final class UITestsAppConfig: AppConfigInterface {
     
     @available(iOS 17.4, *)
     func getSwiftDatabase() throws -> SwiftDatabase? {
-        
-        // TODO: Return database once SwiftDatabase can be enabled. ~Levi
         return nil
-        
 //        return SwiftDatabase(
-//            container: try SwiftDataContainer.createInMemoryContainer(
-//                schema: Schema(versionedSchema: LatestProductionSwiftDataSchema.self)
-//            )
+//            container: try SwiftDataProductionContainer.createInMemoryContainer()
 //        )
     }
     

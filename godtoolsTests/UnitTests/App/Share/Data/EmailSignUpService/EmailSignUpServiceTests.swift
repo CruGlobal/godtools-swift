@@ -15,6 +15,7 @@ import SwiftData
 
 struct EmailSignUpServiceTests {
     
+    @available(iOS 17.4, *)
     @Test()
     func postNewEmailSignUpWithSuccessHttpStatusCodeIsPersisted() async throws {
         
@@ -34,6 +35,7 @@ struct EmailSignUpServiceTests {
         #expect(count == 1)
     }
     
+    @available(iOS 17.4, *)
     @Test()
     func postNewEmailSignUpWithBadHttpStatusCodeIsNotPersisted() async throws {
         
@@ -56,13 +58,12 @@ struct EmailSignUpServiceTests {
 
 extension EmailSignUpServiceTests {
     
+    @available(iOS 17.4, *)
     private func getPersistence() throws -> any Persistence<EmailSignUpDataModel, EmailSignUpDataModel> {
-        
-        let databaseConfig = try RealmDatabaseConfig.createInMemoryConfig()
-        
-        return RealmRepositorySyncPersistence(
-            database: RealmDatabase(databaseConfig: databaseConfig),
-            mapping: RealmEmailSignUpMapping()
+
+        return SwiftRepositorySyncPersistence(
+            database: SwiftDatabase(container: try SwiftDataProductionContainer.createInMemoryContainer()),
+            mapping: SwiftEmailSignUpMapping()
         )
     }
     

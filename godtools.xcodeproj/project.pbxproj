@@ -164,9 +164,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				App/Flows/Dashboard/DashboardFlowTests.swift,
-				App/Flows/LanguageSettings/LanguageSettingsFlowTests.swift,
 				App/Flows/LearnToShareTool/LearnToShareToolFlowTests.swift,
-				App/Flows/Menu/MenuFlowTests.swift,
 				App/Flows/ToolScreenShare/ToolScreenShareFlowTests.swift,
 				Info.plist,
 			);

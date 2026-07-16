@@ -47,20 +47,57 @@ class TutorialFlow: GTFlow {
         }
 
         switch appStep {
-                       
+
+        case .continueTappedFromTutorial:
+
+            guard let tutorialView = self.tutorialView else {
+                return
+            }
+
+            let lastPage: Int = tutorialView.getPageCount() - 1
+            let currentPage: Int = tutorialView.getCurrentPageIndex()
+            let reachedEnd: Bool = currentPage >= lastPage
+
+            if reachedEnd {
+                navigate(step: AppFlowStep.startUsingGodToolsTappedFromTutorial)
+            }
+            else {
+                tutorialView.setCurrentPage(page: currentPage + 1)
+            }
+
         case .closeTappedFromTutorial:
             completeFlow(state: .closed)
-            
+
         case .startUsingGodToolsTappedFromTutorial:
             completeFlow(state: .closed)
-            
+
         default:
             break
         }
     }
-    
+
     private func completeFlow(state: CompletedState) {
         parent?.stepEmitter.emit(step: AppFlowStep.tutorialFlowCompleted(state: state))
+    }
+}
+
+// MARK: -
+
+extension TutorialFlow {
+
+    private var tutorialView: TutorialView? {
+        return tutorialViewController?.rootView
+    }
+
+    private var tutorialViewController: AppHostingController<TutorialView>? {
+
+        for viewController in navigationController.viewControllers {
+            if let hosting = viewController as? AppHostingController<TutorialView> {
+                return hosting
+            }
+        }
+
+        return nil
     }
 }
 

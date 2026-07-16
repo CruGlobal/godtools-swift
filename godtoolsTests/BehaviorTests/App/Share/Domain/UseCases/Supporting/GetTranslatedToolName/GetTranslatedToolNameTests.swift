@@ -8,22 +8,25 @@
 
 import Testing
 @testable import godtools
+import Foundation
+import SwiftData
 import RepositorySync
 
 struct GetTranslatedToolNameTests {
-    
+
     struct TestArgument {
         let translateInLanguage: String
         let expectedToolName: String
     }
-    
+
     private static let attrDefaultLocale: String = LanguageCodeDomainModel.spanish.rawValue
     private static let toolNameInEnglish: String = "Tract Zero"
     private static let toolNameInSpanish: String = "Tratado Zeri"
     private static let toolNameInVietnamese: String = "Đường Zeri"
-    
+
     private let toolId: String = "0"
-    
+
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: User viewing a tool.
@@ -37,17 +40,18 @@ struct GetTranslatedToolNameTests {
         ]
     )
     func testToolNameIsTranslated(argument: TestArgument) throws {
-        
+
         let getTranslatedToolName = try getTranslatedToolName()
-        
+
         let translatedToolName: String = getTranslatedToolName.getToolName(
             toolId: toolId,
             translateInLanguage: argument.translateInLanguage
         )
-                            
+
         #expect(translatedToolName == argument.expectedToolName)
     }
-    
+
+    @available(iOS 17.4, *)
     @Test(
         """
         Given: User viewing a tool.
@@ -61,77 +65,73 @@ struct GetTranslatedToolNameTests {
         ]
     )
     func testToolNameIsTranslatedInDefaultLocale(argument: TestArgument) throws {
-                
+
         let getTranslatedToolName = try getTranslatedToolName()
-        
+
         let translatedToolName: String = getTranslatedToolName.getToolName(
             toolId: toolId,
             translateInLanguage: argument.translateInLanguage
         )
-                            
+
         #expect(translatedToolName == argument.expectedToolName)
     }
 }
 
 extension GetTranslatedToolNameTests {
-    
+
+    @available(iOS 17.4, *)
     private func getTranslatedToolName() throws -> GetTranslatedToolName {
+
+        let swiftDatabase = SwiftDatabase(container: try SwiftDataProductionContainer.createInMemoryContainer())
         
-        let testsDiContainer = try TestsDiContainer(
-            testsAppConfig: TestsAppConfig(
-                realmDatabase: FakeRealmDatabase.createRealmDatabase(addRealmObjects: getRealmObjects())
-            )
+        let testsAppConfig = TestsAppConfig(
+            swiftDatabase: swiftDatabase
         )
-        
+
+        let context: ModelContext = swiftDatabase.openContext()
+
+        context.insertObjects(objects: getSwiftDatabaseObjects())
+
+        try context.saveIfHasChanges()
+
+        let testsDiContainer = TestsDiContainer(
+            testsAppConfig: testsAppConfig
+        )
+
         return GetTranslatedToolName(
             resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),
             translationsRepository: testsDiContainer.core.dataLayer.getTranslationsRepository()
         )
     }
-    
-    private func getRealmObjects() -> [IdentifiableRealmObject] {
-        
-        let englishLanguage = getRealmLanguage(languageCode: .english)
-        let spanishLanguage: RealmLanguage = getRealmLanguage(languageCode: .spanish)
-        let vietnameseLanguage: RealmLanguage =  getRealmLanguage(languageCode: .vietnamese)
-        
-        let allLanguages: [RealmLanguage] = [
-            englishLanguage,
-            spanishLanguage,
-            vietnameseLanguage
-        ]
-        
-        let tracts: [RealmResource] = [
-            FakeRealmResource.createTract(
-                addLanguages: [.english, .spanish, .vietnamese],
-                fromLanguages: allLanguages,
+
+    @available(iOS 17.4, *)
+    private func getSwiftDatabaseObjects() -> [SwiftResource] {
+
+        let englishLanguage: SwiftLanguage = getSwiftLanguage(languageCode: .english)
+        let spanishLanguage: SwiftLanguage = getSwiftLanguage(languageCode: .spanish)
+        let vietnameseLanguage: SwiftLanguage = getSwiftLanguage(languageCode: .vietnamese)
+
+        let tract: SwiftResource = SwiftResource.createNewFrom(
+            model: ResourceCodable.random(
                 id: toolId,
-                attrDefaultLocale: Self.attrDefaultLocale
-            )
-        ]
-        
-        let tract0EnglishTranslation: RealmTranslation = getRealmTranslation(
-            translatedName: Self.toolNameInEnglish
+                attrDefaultLocale: Self.attrDefaultLocale,
+                resourceType: ResourceType.tract.rawValue
+            ).toModel()
         )
-        let tract0SpanishTranslation: RealmTranslation = getRealmTranslation(
-            translatedName: Self.toolNameInSpanish
-        )
-        let tract0VietnameseTranslation: RealmTranslation = getRealmTranslation(
-            translatedName: Self.toolNameInVietnamese
-        )
-        
-        tract0EnglishTranslation.language = englishLanguage
-        tract0SpanishTranslation.language = spanishLanguage
-        tract0VietnameseTranslation.language = vietnameseLanguage
-        
-        tracts[0].addLatestTranslation(translation: tract0EnglishTranslation)
-        tracts[0].addLatestTranslation(translation: tract0SpanishTranslation)
-        tracts[0].addLatestTranslation(translation: tract0VietnameseTranslation)
-        
-        return allLanguages + tracts
+
+        for language in [englishLanguage, spanishLanguage, vietnameseLanguage] {
+            tract.addLanguage(language: language)
+        }
+
+        tract.addLatestTranslation(translation: getSwiftTranslation(translatedName: Self.toolNameInEnglish, language: englishLanguage))
+        tract.addLatestTranslation(translation: getSwiftTranslation(translatedName: Self.toolNameInSpanish, language: spanishLanguage))
+        tract.addLatestTranslation(translation: getSwiftTranslation(translatedName: Self.toolNameInVietnamese, language: vietnameseLanguage))
+
+        return [tract]
     }
-    
-    private func getRealmLanguage(languageCode: LanguageCodeDomainModel) -> RealmLanguage {
+
+    @available(iOS 17.4, *)
+    private func getSwiftLanguage(languageCode: LanguageCodeDomainModel) -> SwiftLanguage {
 
         let language = LanguageCodable.random(
             id: languageCode.rawValue,
@@ -140,13 +140,18 @@ extension GetTranslatedToolNameTests {
             forceLanguageName: false
         )
 
-        return RealmLanguage.createNewFrom(model: language.toModel())
+        return SwiftLanguage.createNewFrom(model: language.toModel())
     }
 
-    private func getRealmTranslation(translatedName: String) -> RealmTranslation {
+    @available(iOS 17.4, *)
+    private func getSwiftTranslation(translatedName: String, language: SwiftLanguage) -> SwiftTranslation {
 
-        let translation = TranslationCodable.random(translatedName: translatedName)
+        let translation = SwiftTranslation.createNewFrom(
+            model: TranslationCodable.random(translatedName: translatedName).toModel()
+        )
 
-        return RealmTranslation.createNewFrom(model: translation.toModel())
+        translation.language = language
+
+        return translation
     }
 }

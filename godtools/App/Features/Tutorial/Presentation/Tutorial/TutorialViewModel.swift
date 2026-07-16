@@ -198,14 +198,7 @@ extension TutorialViewModel {
     }
     
     func continueTapped() {
-        
-        let isOnLastPage: Bool = getIsOnLastPage(tutorialPages: tutorialPages)
-        
-        if isOnLastPage {
-            stepEmitter.emit(step: AppFlowStep.startUsingGodToolsTappedFromTutorial)
-        }
-        else {
-            currentPage += 1
-        }
+
+        stepEmitter.emit(step: AppFlowStep.continueTappedFromTutorial)
     }
 }
