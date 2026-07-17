@@ -89,14 +89,7 @@ final class TestsAppConfig: AppConfigInterface {
     
     @available(iOS 17.4, *)
     func getSwiftDatabase() throws -> SwiftDatabase? {
-
-        if let existingSwiftDatabase = swiftDatabase as? SwiftDatabase {
-            return existingSwiftDatabase
-        }
-        
-        return SwiftDatabase(
-            container: try SwiftDataProductionContainer.createInMemoryContainer()
-        )
+        return swiftDatabase as? SwiftDatabase
     }
     
     func getTractRemoteShareConnectionUrl() -> String {
