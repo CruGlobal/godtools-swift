@@ -15,7 +15,7 @@ final class RealmProductionConfig {
     static let diskFileName: String = "godtools_realm"
     static let schemaVersion: UInt64 = 44
     
-    func createConfig() throws -> RealmDatabaseConfig {
+    static func createConfig() throws -> RealmDatabaseConfig {
         
         let migrationBlock = { @Sendable (migration: Migration, oldSchemaVersion: UInt64) in
             
