@@ -114,33 +114,19 @@ extension DownloadedLanguagesCacheTests {
 
         let downloadedLanguagesToStore: [DownloadedLanguageDataModel] = downloadedLanguages ?? getDownloadedLanguages()
 
-        let realmDatabase = try FakeRealmDatabase.createRealmDatabase(
-            addRealmObjects: getRealmDatabaseObjects(downloadedLanguages: downloadedLanguagesToStore)
-        )
-
         let testsAppConfig: TestsAppConfig
 
         switch persistenceType {
         case .realm:
             testsAppConfig = TestsAppConfig(
-                realmDatabase: realmDatabase
+                realmDatabase: try FakeRealmDatabase.createRealmDatabase(addRealmObjects: getRealmDatabaseObjects(downloadedLanguages: downloadedLanguagesToStore)),
+                swiftDatabase: nil
             )
 
         case .swiftData:
-
-            let container = try SwiftDataContainer.createInMemoryContainer(schema: Schema(versionedSchema: LatestProductionSwiftDataSchema.self))
-
-            let database = SwiftDatabase(container: container)
-
-            let context: ModelContext = database.openContext()
-
-            context.insertObjects(objects: getSwiftDatabaseObjects(downloadedLanguages: downloadedLanguagesToStore))
-
-            try context.saveIfHasChanges()
-
             testsAppConfig = TestsAppConfig(
-                realmDatabase: realmDatabase,
-                swiftDatabase: database
+                realmDatabase: nil,
+                swiftDatabase: try FakeSwiftDatabase.createSwiftDatabase(addObjects: getSwiftDatabaseObjects(downloadedLanguages: downloadedLanguagesToStore))
             )
         }
 

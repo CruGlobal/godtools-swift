@@ -70,31 +70,19 @@ extension LanguagesCacheTests {
     @available(iOS 17.4, *)
     private func getCache(persistenceType: PersistenceType) throws -> LanguagesCache {
 
-        let realmDatabase = try FakeRealmDatabase.createRealmDatabase(addRealmObjects: getRealmDatabaseObjects())
-
         let testsAppConfig: TestsAppConfig
 
         switch persistenceType {
         case .realm:
             testsAppConfig = TestsAppConfig(
-                realmDatabase: realmDatabase
+                realmDatabase: try FakeRealmDatabase.createRealmDatabase(addRealmObjects: getRealmDatabaseObjects()),
+                swiftDatabase: nil
             )
 
         case .swiftData:
-
-            let container = try SwiftDataContainer.createInMemoryContainer(schema: Schema(versionedSchema: LatestProductionSwiftDataSchema.self))
-
-            let database = SwiftDatabase(container: container)
-
-            let context: ModelContext = database.openContext()
-
-            context.insertObjects(objects: getSwiftDatabaseObjects())
-
-            try context.saveIfHasChanges()
-
             testsAppConfig = TestsAppConfig(
-                realmDatabase: realmDatabase,
-                swiftDatabase: database
+                realmDatabase: nil,
+                swiftDatabase: try FakeSwiftDatabase.createSwiftDatabase(addObjects: getSwiftDatabaseObjects())
             )
         }
 

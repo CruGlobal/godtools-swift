@@ -173,33 +173,19 @@ extension FavoritedResourcesCacheTests {
     @available(iOS 17.4, *)
     private func getCache(persistenceType: PersistenceType, initialResources: [String: Int]) throws -> FavoritedResourcesCache {
 
-        let realmDatabase: RealmDatabase = try FakeRealmDatabase.createRealmDatabase(
-            addRealmObjects: getRealmDatabaseObjects(resources: initialResources)
-        )
-
         let testsAppConfig: TestsAppConfig
 
         switch persistenceType {
         case .realm:
             testsAppConfig = TestsAppConfig(
-                realmDatabase: realmDatabase
+                realmDatabase: try FakeRealmDatabase.createRealmDatabase(addRealmObjects: getRealmDatabaseObjects(resources: initialResources)),
+                swiftDatabase: nil
             )
 
         case .swiftData:
-
-            let container = try SwiftDataContainer.createInMemoryContainer(schema: Schema(versionedSchema: LatestProductionSwiftDataSchema.self))
-
-            let database = SwiftDatabase(container: container)
-
-            let context: ModelContext = database.openContext()
-
-            context.insertObjects(objects: getSwiftDatabaseObjects(resources: initialResources))
-
-            try context.saveIfHasChanges()
-
             testsAppConfig = TestsAppConfig(
-                realmDatabase: realmDatabase,
-                swiftDatabase: database
+                realmDatabase: nil,
+                swiftDatabase: try FakeSwiftDatabase.createSwiftDatabase(addObjects: getSwiftDatabaseObjects(resources: initialResources))
             )
         }
 

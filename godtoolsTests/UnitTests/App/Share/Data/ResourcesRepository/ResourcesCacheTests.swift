@@ -317,20 +317,10 @@ extension ResourcesCacheTests {
             )
             
         case .swiftData:
-           
-            let container = try SwiftDataContainer.createInMemoryContainer(schema: Schema(versionedSchema: LatestProductionSwiftDataSchema.self))
 
-            let database = SwiftDatabase(container: container)
-
-            let context: ModelContext = database.openContext()
-
-            context.insertObjects(objects: getSwiftDatabaseObjects())
-
-            try context.saveIfHasChanges()
-            
             testsAppConfig = TestsAppConfig(
                 realmDatabase: nil,
-                swiftDatabase: database
+                swiftDatabase: try FakeSwiftDatabase.createSwiftDatabase(addObjects: getSwiftDatabaseObjects())
             )
         }
         
