@@ -54,11 +54,16 @@ struct GodToolsApp: App {
             
             deepLinkUrl = Self.processUITestsDeepLink()
             
-            Self.appDiContainer
-                .core
-                .dataLayer
-                .getUITestsInitialDataLoader()
-                .loadData()
+            let uiTestsDataLoader: UITestsInitialDataLoader = Self.appDiContainer.core.dataLayer.getUITestsInitialDataLoader()
+            
+            Task {
+                do {
+                    try await uiTestsDataLoader.loadData()
+                }
+                catch let error {
+                    assertionFailure("\n UITestsInitialDataLoader failed with error: \(error.localizedDescription)")
+                }
+            }
         }
         else {
             
