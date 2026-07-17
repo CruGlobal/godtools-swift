@@ -20,7 +20,8 @@ final class AppDataLayerDependencies {
     private let sharedInMemoryDataCache: InMemoryDataCache = InMemoryDataCache()
     private let sharedRealmDatabaseConfig: RealmDatabaseConfig
     private let sharedRealmDatabase: RealmDatabase
-    
+    private var sharedSwiftDatabase: Any? // TODO: Once RealmSwift is removed, change Any? to SwiftDatabase.
+
     private lazy var sharedUserCountersSync: UserCountersSync = {
         
         let syncInvalidator = SyncInvalidator(
@@ -626,8 +627,15 @@ final class AppDataLayerDependencies {
     
     @available(iOS 17.4, *)
     func getSharedSwiftDatabase() -> SwiftDatabase? {
+
+        if let database = sharedSwiftDatabase as? SwiftDatabase {
+            return database
+        }
+
         do {
-            return try getAppConfig().getSwiftDatabase()
+            let database: SwiftDatabase? = try getAppConfig().getSwiftDatabase()
+            sharedSwiftDatabase = database
+            return database
         }
         catch _ {
             assertionFailure("Failed to get swift database.")
