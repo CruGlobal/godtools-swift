@@ -132,8 +132,8 @@ final class GodToolsAppConfig: AppConfigInterface {
     @available(iOS 17.4, *)
     func getSwiftDatabase() throws -> SwiftDatabase? {
         
-        // TODO: Remove optional SwiftDatabase? once enabled. ~Levi
-        // TODO: Return database once SwiftDatabase can be enabled. ~Levi
+        // TODO: Return a SwiftDatabase instance once ready to enable SwiftData. ~Levi
+        // TODO: Optional can be removed once RealmSwift is completed removed and no longer supported. ~Levi
         return nil
         
         /*
