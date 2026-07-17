@@ -9,16 +9,10 @@
 import Testing
 @testable import godtools
 import Foundation
-import RealmSwift
 import SwiftData
 import RepositorySync
 
 struct FavoritedResourcesCacheTests {
-
-    enum PersistenceType: CaseIterable {
-        case realm
-        case swiftData
-    }
 
     struct StoreTestArgument {
         let initialResources: [String: Int]
@@ -43,11 +37,10 @@ struct FavoritedResourcesCacheTests {
     // MARK: - Get Favorited Resources
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases)
-    func getFavoritedResourcesSortedByPosition(persistenceType: PersistenceType) async throws {
+    @Test
+    func getFavoritedResourcesSortedByPosition() async throws {
 
         let cache = try getCache(
-            persistenceType: persistenceType,
             initialResources: ["C": 2, "A": 0, "B": 1]
         )
 
@@ -61,16 +54,14 @@ struct FavoritedResourcesCacheTests {
     @available(iOS 17.4, *)
     @Test(
         "Tools should be added to favorites and all resource positions updated in reverse order that they were added.",
-        arguments: PersistenceType.allCases,
-        [
+        arguments: [
             StoreTestArgument(initialResources: ["A": 0, "B": 1], resourceIdsToAdd: ["C", "D", "E"], expectedUpdatedIdsAtPositions: ["C": 0, "D": 1, "E": 2, "A": 3, "B": 4]),
             StoreTestArgument(initialResources: [:], resourceIdsToAdd: ["A", "B", "C"], expectedUpdatedIdsAtPositions: ["A": 0, "B": 1, "C": 2])
         ]
     )
-    func storeFavoritedResources(persistenceType: PersistenceType, argument: StoreTestArgument) async throws {
+    func storeFavoritedResources(argument: StoreTestArgument) async throws {
 
         let cache = try getCache(
-            persistenceType: persistenceType,
             initialResources: argument.initialResources
         )
 
@@ -93,8 +84,7 @@ struct FavoritedResourcesCacheTests {
     @available(iOS 17.4, *)
     @Test(
         "Deleting a favorited tool should remove it from favorites and update positions of remaining resources.",
-        arguments: PersistenceType.allCases,
-        [
+        arguments: [
             DeleteTestArgument(initialResources: ["A": 0, "B": 1, "C": 2], resourceIdToDelete: "A", expectedUpdatedIdsAtPositions: ["B": 0, "C": 1]),
             DeleteTestArgument(initialResources: ["A": 0, "B": 1, "C": 2], resourceIdToDelete: "B", expectedUpdatedIdsAtPositions: ["A": 0, "C": 1]),
             DeleteTestArgument(initialResources: ["A": 0, "B": 1, "C": 2], resourceIdToDelete: "C", expectedUpdatedIdsAtPositions: ["A": 0, "B": 1]),
@@ -102,10 +92,9 @@ struct FavoritedResourcesCacheTests {
             DeleteTestArgument(initialResources: ["A": 0], resourceIdToDelete: "B", expectedUpdatedIdsAtPositions: ["A": 0])
         ]
     )
-    func deleteFavoritedResource(persistenceType: PersistenceType, argument: DeleteTestArgument) async throws {
+    func deleteFavoritedResource(argument: DeleteTestArgument) async throws {
 
         let cache = try getCache(
-            persistenceType: persistenceType,
             initialResources: argument.initialResources
         )
 
@@ -130,8 +119,7 @@ struct FavoritedResourcesCacheTests {
     @available(iOS 17.4, *)
     @Test(
         "Reordering a favorited tool should move the tool to the new position, and update the surrounding tools positions accordingly.",
-        arguments: PersistenceType.allCases,
-        [
+        arguments: [
             ReorderTestArgument(initialResources: ["A": 0, "B": 1, "C": 2], resourceIdToReorder: "A", originalPosition: 0, newPosition: 2, expectedUpdatedIdsAtPositions: ["B": 0, "C": 1, "A": 2]),
             ReorderTestArgument(initialResources: ["H": 0, "I": 1, "J": 2, "K": 3], resourceIdToReorder: "K", originalPosition: 3, newPosition: 0, expectedUpdatedIdsAtPositions: ["K": 0, "H": 1, "I": 2, "J": 3]),
             ReorderTestArgument(initialResources: ["Q": 0, "R": 1, "S": 2, "T": 3], resourceIdToReorder: "R", originalPosition: 1, newPosition: 2, expectedUpdatedIdsAtPositions: ["Q": 0, "S": 1, "R": 2, "T": 3]),
@@ -140,10 +128,9 @@ struct FavoritedResourcesCacheTests {
             ReorderTestArgument(initialResources: ["D": 0, "E": 1, "F": 2, "G": 3, "H": 4], resourceIdToReorder: "D", originalPosition: 0, newPosition: 4, expectedUpdatedIdsAtPositions: ["E": 0, "F": 1, "G": 2, "H": 3, "D": 4])
         ]
     )
-    func reorderFavoritedResources(persistenceType: PersistenceType, argument: ReorderTestArgument) async throws {
+    func reorderFavoritedResources(argument: ReorderTestArgument) async throws {
 
         let cache = try getCache(
-            persistenceType: persistenceType,
             initialResources: argument.initialResources
         )
 
@@ -171,31 +158,15 @@ struct FavoritedResourcesCacheTests {
 extension FavoritedResourcesCacheTests {
 
     @available(iOS 17.4, *)
-    private func getCache(persistenceType: PersistenceType, initialResources: [String: Int]) throws -> FavoritedResourcesCache {
+    private func getCache(initialResources: [String: Int]) throws -> FavoritedResourcesCache {
 
-        let testsAppConfig: TestsAppConfig
-
-        switch persistenceType {
-        case .realm:
-            testsAppConfig = TestsAppConfig(
-                realmDatabase: try FakeRealmDatabase.createRealmDatabase(addRealmObjects: getRealmDatabaseObjects(resources: initialResources)),
-                swiftDatabase: nil
-            )
-
-        case .swiftData:
-            testsAppConfig = TestsAppConfig(
-                realmDatabase: nil,
-                swiftDatabase: try FakeSwiftDatabase.createSwiftDatabase(addObjects: getSwiftDatabaseObjects(resources: initialResources))
-            )
-        }
+        let testsAppConfig = TestsAppConfig(
+            swiftDatabase: try FakeSwiftDatabase.createSwiftDatabase(addObjects: getSwiftDatabaseObjects(resources: initialResources))
+        )
 
         let testsDiContainer = TestsDiContainer(testsAppConfig: testsAppConfig)
 
         return testsDiContainer.core.dataLayer.getFavoritedResourcesCache()
-    }
-
-    private func getRealmDatabaseObjects(resources: [String: Int]) -> [IdentifiableRealmObject] {
-        return createFavoritedResources(resources: resources).map { RealmFavoritedResource.createNewFrom(model: $0) }
     }
 
     @available(iOS 17.4, *)

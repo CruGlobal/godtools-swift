@@ -9,22 +9,16 @@
 import Testing
 @testable import godtools
 import Foundation
-import RealmSwift
 import RepositorySync
 import SwiftData
 
 struct LanguagesCacheTests {
 
-    enum PersistenceType: CaseIterable {
-        case realm
-        case swiftData
-    }
-
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases)
-    func getLanguageByCodeExists(persistenceType: PersistenceType) async throws {
+    @Test
+    func getLanguageByCodeExists() async throws {
 
-        let cache = try getCache(persistenceType: persistenceType)
+        let cache = try getCache()
 
         let language: LanguageDataModel? = try cache.getLanguageByCode(code: LanguageCodeDomainModel.english.rawValue)
 
@@ -32,10 +26,10 @@ struct LanguagesCacheTests {
     }
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases)
-    func getLanguageByCodeIsNil(persistenceType: PersistenceType) async throws {
+    @Test
+    func getLanguageByCodeIsNil() async throws {
 
-        let cache = try getCache(persistenceType: persistenceType)
+        let cache = try getCache()
 
         let language: LanguageDataModel? = try cache.getLanguageByCode(code: "no_language_code")
 
@@ -43,10 +37,10 @@ struct LanguagesCacheTests {
     }
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases)
-    func getLanguagesByCodes(persistenceType: PersistenceType) async throws {
+    @Test
+    func getLanguagesByCodes() async throws {
 
-        let cache = try getCache(persistenceType: persistenceType)
+        let cache = try getCache()
 
         let languageCodes = [
             LanguageCodeDomainModel.russian,
@@ -68,31 +62,15 @@ struct LanguagesCacheTests {
 extension LanguagesCacheTests {
 
     @available(iOS 17.4, *)
-    private func getCache(persistenceType: PersistenceType) throws -> LanguagesCache {
+    private func getCache() throws -> LanguagesCache {
 
-        let testsAppConfig: TestsAppConfig
-
-        switch persistenceType {
-        case .realm:
-            testsAppConfig = TestsAppConfig(
-                realmDatabase: try FakeRealmDatabase.createRealmDatabase(addRealmObjects: getRealmDatabaseObjects()),
-                swiftDatabase: nil
-            )
-
-        case .swiftData:
-            testsAppConfig = TestsAppConfig(
-                realmDatabase: nil,
-                swiftDatabase: try FakeSwiftDatabase.createSwiftDatabase(addObjects: getSwiftDatabaseObjects())
-            )
-        }
+        let testsAppConfig = TestsAppConfig(
+            swiftDatabase: try FakeSwiftDatabase.createSwiftDatabase(addObjects: getSwiftDatabaseObjects())
+        )
 
         let testsDiContainer = TestsDiContainer(testsAppConfig: testsAppConfig)
 
         return testsDiContainer.core.dataLayer.getLanguagesCache()
-    }
-
-    private func getRealmDatabaseObjects() -> [IdentifiableRealmObject] {
-        return getLanguages().map { RealmLanguage.createNewFrom(model: $0.toModel()) }
     }
 
     @available(iOS 17.4, *)

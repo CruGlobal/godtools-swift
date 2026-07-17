@@ -14,11 +14,10 @@ import SwiftData
 
 final class TestsAppConfig: AppConfigInterface {
     
-    private let realmDatabase: RealmDatabase?
+    // TODO: Change Any? to SwiftDatabase when RealmSwift is removed. ~Levi
     private let swiftDatabase: Any?
 
-    init(realmDatabase: RealmDatabase? = nil, swiftDatabase: Any? = nil) {
-        self.realmDatabase = realmDatabase
+    init(swiftDatabase: Any? = nil) {
         self.swiftDatabase = swiftDatabase
     }
     
@@ -79,12 +78,9 @@ final class TestsAppConfig: AppConfigInterface {
     }
     
     func getRealmDatabase() throws -> RealmDatabase {
-        guard let realmDatabase = realmDatabase else {
-            return RealmDatabase(
-                databaseConfig: try RealmDatabaseConfig.createInMemoryConfig()
-            )
-        }
-        return realmDatabase
+        return RealmDatabase(
+            databaseConfig: try RealmDatabaseConfig.createInMemoryConfig()
+        )
     }
     
     @available(iOS 17.4, *)
