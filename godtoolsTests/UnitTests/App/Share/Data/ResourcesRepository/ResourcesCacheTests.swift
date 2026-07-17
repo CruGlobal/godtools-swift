@@ -306,56 +306,37 @@ extension ResourcesCacheTests {
 
     @available(iOS 17.4, *)
     private func getCache(persistenceType: PersistenceType) throws -> ResourcesCache {
-
-        let realmDatabase: RealmDatabase
-        let persistence: any Persistence<ResourceDataModel, ResourceCodable>
-
+                
+        let testsAppConfig: TestsAppConfig
+        
         switch persistenceType {
-
         case .realm:
-            realmDatabase = try FakeRealmDatabase.createRealmDatabase(addRealmObjects: getRealmDatabaseObjects())
-            persistence = RealmRepositorySyncPersistence(
-                database: realmDatabase,
-                mapping: RealmResourceMapping()
+            testsAppConfig = TestsAppConfig(
+                realmDatabase: try FakeRealmDatabase.createRealmDatabase(addRealmObjects: getRealmDatabaseObjects()),
+                swiftDatabase: nil
             )
-
+            
         case .swiftData:
-            realmDatabase = try FakeRealmDatabase.createRealmDatabase()
-            persistence = try getSwiftPersistence()
-        }
+           
+            let container = try SwiftDataContainer.createInMemoryContainer(schema: Schema(versionedSchema: LatestProductionSwiftDataSchema.self))
 
-        return ResourcesCache(
-            persistence: persistence,
-            realmDatabase: realmDatabase,
-            realmDataWrite: RealmDataWrite(config: realmDatabase.databaseConfig.config),
-            trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository(
-                cache: TrackDownloadedTranslationsCache(
-                    persistence: RealmRepositorySyncPersistence(
-                        database: realmDatabase,
-                        mapping: RealmDownloadedTranslationMapping()
-                    )
-                )
+            let database = SwiftDatabase(container: container)
+
+            let context: ModelContext = database.openContext()
+
+            context.insertObjects(objects: getSwiftDatabaseObjects())
+
+            try context.saveIfHasChanges()
+            
+            testsAppConfig = TestsAppConfig(
+                realmDatabase: nil,
+                swiftDatabase: database
             )
-        )
-    }
-
-    @available(iOS 17.4, *)
-    private func getSwiftPersistence() throws -> SwiftRepositorySyncPersistence<ResourceDataModel, ResourceCodable, SwiftResource> {
-
-        let container = try SwiftDataContainer.createInMemoryContainer(schema: Schema(versionedSchema: LatestProductionSwiftDataSchema.self))
-
-        let database = SwiftDatabase(container: container)
-
-        let context: ModelContext = database.openContext()
-
-        context.insertObjects(objects: getSwiftDatabaseObjects())
-
-        try context.saveIfHasChanges()
-
-        return SwiftRepositorySyncPersistence(
-            database: database,
-            mapping: SwiftResourceMapping()
-        )
+        }
+        
+        let testsDiContainer = TestsDiContainer(testsAppConfig: testsAppConfig)
+        
+        return testsDiContainer.core.dataLayer.getResourcesCache()
     }
 
     private func getLanguageId(languageCode: LanguageCodeDomainModel) -> String {
