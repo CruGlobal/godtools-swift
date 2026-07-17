@@ -174,55 +174,41 @@ extension TranslationsCacheTests {
     @available(iOS 17.4, *)
     private func getCache(persistenceType: PersistenceType) throws -> TranslationsCache {
 
-        let persistence: any Persistence<TranslationDataModel, TranslationCodable>
-
-        switch persistenceType {
-
-        case .realm:
-            persistence = try getRealmPersistence()
-
-        case .swiftData:
-            persistence = try getSwiftPersistence()
-        }
-
-        return TranslationsCache(
-            persistence: persistence
-        )
-    }
-
-    private func getRealmPersistence() throws -> RealmRepositorySyncPersistence<TranslationDataModel, TranslationCodable, RealmTranslation> {
-
-        let database: RealmDatabase = try FakeRealmDatabase.createRealmDatabase(
+        let realmDatabase: RealmDatabase = try FakeRealmDatabase.createRealmDatabase(
             addRealmObjects: getRealmDatabaseObjects()
         )
 
-        return RealmRepositorySyncPersistence(
-            database: database,
-            mapping: RealmTranslationMapping()
-        )
-    }
+        let testsAppConfig: TestsAppConfig
 
-    @available(iOS 17.4, *)
-    private func getSwiftPersistence() throws -> SwiftRepositorySyncPersistence<TranslationDataModel, TranslationCodable, SwiftTranslation> {
+        switch persistenceType {
+        case .realm:
+            testsAppConfig = TestsAppConfig(
+                realmDatabase: realmDatabase
+            )
 
-        let container = try SwiftDataContainer.createInMemoryContainer(schema: Schema(versionedSchema: LatestProductionSwiftDataSchema.self))
+        case .swiftData:
 
-        let database = SwiftDatabase(container: container)
+            let container = try SwiftDataContainer.createInMemoryContainer(schema: Schema(versionedSchema: LatestProductionSwiftDataSchema.self))
 
-        let context: ModelContext = database.openContext()
+            let database = SwiftDatabase(container: container)
 
-        for object in getSwiftDatabaseObjects() {
-            context.insert(object)
+            let context: ModelContext = database.openContext()
+
+            for object in getSwiftDatabaseObjects() {
+                context.insert(object)
+            }
+
+            try context.saveIfHasChanges()
+
+            testsAppConfig = TestsAppConfig(
+                realmDatabase: realmDatabase,
+                swiftDatabase: database
+            )
         }
 
-        if context.hasChanges {
-            try context.save()
-        }
+        let testsDiContainer = TestsDiContainer(testsAppConfig: testsAppConfig)
 
-        return SwiftRepositorySyncPersistence(
-            database: database,
-            mapping: SwiftTranslationMapping()
-        )
+        return testsDiContainer.core.dataLayer.getTranslationsCache()
     }
 
     private func getLanguage(id: String, languageCode: LanguageCodeDomainModel, name: String) -> LanguageDataModel {

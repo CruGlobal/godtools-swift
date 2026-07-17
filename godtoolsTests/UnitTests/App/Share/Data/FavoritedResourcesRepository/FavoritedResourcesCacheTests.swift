@@ -46,7 +46,7 @@ struct FavoritedResourcesCacheTests {
     @Test(arguments: PersistenceType.allCases)
     func getFavoritedResourcesSortedByPosition(persistenceType: PersistenceType) async throws {
 
-        let cache = try await getCache(
+        let cache = try getCache(
             persistenceType: persistenceType,
             initialResources: ["C": 2, "A": 0, "B": 1]
         )
@@ -69,7 +69,7 @@ struct FavoritedResourcesCacheTests {
     )
     func storeFavoritedResources(persistenceType: PersistenceType, argument: StoreTestArgument) async throws {
 
-        let cache = try await getCache(
+        let cache = try getCache(
             persistenceType: persistenceType,
             initialResources: argument.initialResources
         )
@@ -104,7 +104,7 @@ struct FavoritedResourcesCacheTests {
     )
     func deleteFavoritedResource(persistenceType: PersistenceType, argument: DeleteTestArgument) async throws {
 
-        let cache = try await getCache(
+        let cache = try getCache(
             persistenceType: persistenceType,
             initialResources: argument.initialResources
         )
@@ -142,7 +142,7 @@ struct FavoritedResourcesCacheTests {
     )
     func reorderFavoritedResources(persistenceType: PersistenceType, argument: ReorderTestArgument) async throws {
 
-        let cache = try await getCache(
+        let cache = try getCache(
             persistenceType: persistenceType,
             initialResources: argument.initialResources
         )
@@ -171,33 +171,50 @@ struct FavoritedResourcesCacheTests {
 extension FavoritedResourcesCacheTests {
 
     @available(iOS 17.4, *)
-    private func getCache(persistenceType: PersistenceType, initialResources: [String: Int]) async throws -> FavoritedResourcesCache {
+    private func getCache(persistenceType: PersistenceType, initialResources: [String: Int]) throws -> FavoritedResourcesCache {
 
-        let persistence: any Persistence<FavoritedResourceDataModel, FavoritedResourceDataModel>
+        let realmDatabase: RealmDatabase = try FakeRealmDatabase.createRealmDatabase(
+            addRealmObjects: getRealmDatabaseObjects(resources: initialResources)
+        )
+
+        let testsAppConfig: TestsAppConfig
 
         switch persistenceType {
-
         case .realm:
-            let realmDatabase: RealmDatabase = try FakeRealmDatabase.createRealmDatabase()
-            persistence = RealmRepositorySyncPersistence(
-                database: realmDatabase,
-                mapping: RealmFavoritedResourceMapping()
+            testsAppConfig = TestsAppConfig(
+                realmDatabase: realmDatabase
             )
 
         case .swiftData:
+
             let container = try SwiftDataContainer.createInMemoryContainer(schema: Schema(versionedSchema: LatestProductionSwiftDataSchema.self))
+
             let database = SwiftDatabase(container: container)
-            persistence = SwiftRepositorySyncPersistence(
-                database: database,
-                mapping: SwiftFavoritedResourceMapping()
+
+            let context: ModelContext = database.openContext()
+
+            context.insertObjects(objects: getSwiftDatabaseObjects(resources: initialResources))
+
+            try context.saveIfHasChanges()
+
+            testsAppConfig = TestsAppConfig(
+                realmDatabase: realmDatabase,
+                swiftDatabase: database
             )
         }
 
-        _ = try await persistence.writeObjects(
-            externalObjects: createFavoritedResources(resources: initialResources)
-        )
+        let testsDiContainer = TestsDiContainer(testsAppConfig: testsAppConfig)
 
-        return FavoritedResourcesCache(persistence: persistence)
+        return testsDiContainer.core.dataLayer.getFavoritedResourcesCache()
+    }
+
+    private func getRealmDatabaseObjects(resources: [String: Int]) -> [IdentifiableRealmObject] {
+        return createFavoritedResources(resources: resources).map { RealmFavoritedResource.createNewFrom(model: $0) }
+    }
+
+    @available(iOS 17.4, *)
+    private func getSwiftDatabaseObjects(resources: [String: Int]) -> [SwiftFavoritedResource] {
+        return createFavoritedResources(resources: resources).map { SwiftFavoritedResource.createNewFrom(model: $0) }
     }
 
     private func createFavoritedResources(resources: [String: Int]) -> [FavoritedResourceDataModel] {

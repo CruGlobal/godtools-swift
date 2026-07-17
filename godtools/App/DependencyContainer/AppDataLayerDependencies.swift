@@ -298,10 +298,14 @@ final class AppDataLayerDependencies {
         return persistence
     }
     
+    func getFavoritedResourcesCache() -> FavoritedResourcesCache {
+        return FavoritedResourcesCache(persistence: getFavoritedResourcesPersistence())
+    }
+
     func getFavoritedResourcesRepository() -> FavoritedResourcesRepository {
-        
+
         return FavoritedResourcesRepository(
-            cache: FavoritedResourcesCache(persistence: getFavoritedResourcesPersistence())
+            cache: getFavoritedResourcesCache()
         )
     }
     
@@ -360,6 +364,10 @@ final class AppDataLayerDependencies {
         return InfoPlist()
     }
     
+    func getLanguagesCache() -> LanguagesCache {
+        return LanguagesCache(persistence: getLanguagesPersistence())
+    }
+
     func getLanguagesPersistence() -> any Persistence<LanguageDataModel, LanguageCodable> {
         
         let persistence: any Persistence<LanguageDataModel, LanguageCodable>
@@ -390,8 +398,8 @@ final class AppDataLayerDependencies {
             requestSender: getRequestSender()
         )
         
-        let cache = LanguagesCache(persistence: getLanguagesPersistence())
-                
+        let cache = getLanguagesCache()
+
         return LanguagesRepository(
             api: api,
             jsonFileCache: LanguagesJsonFileCache(jsonServices: JsonServices()),
@@ -668,53 +676,61 @@ final class AppDataLayerDependencies {
         )
     }
     
-    func getTrackDownloadedTranslationsRepository() -> TrackDownloadedTranslationsRepository {
-                
+    func getTrackDownloadedTranslationsCache() -> TrackDownloadedTranslationsCache {
+
         let persistence: any Persistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel>
-        
+
         if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
-            
+
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
                 mapping: SwiftDownloadedTranslationMapping()
             )
         }
         else {
-            
+
             persistence = RealmRepositorySyncPersistence(
                 database: getSharedRealmDatabase(),
                 mapping: RealmDownloadedTranslationMapping()
             )
         }
-        
-        let cache = TrackDownloadedTranslationsCache(
+
+        return TrackDownloadedTranslationsCache(
             persistence: persistence
         )
-        
+    }
+
+    func getTrackDownloadedTranslationsRepository() -> TrackDownloadedTranslationsRepository {
+
         return TrackDownloadedTranslationsRepository(
-            cache: cache
+            cache: getTrackDownloadedTranslationsCache()
         )
     }
     
-    func getTranslationsRepository() -> TranslationsRepository {
-                
+    func getTranslationsCache() -> TranslationsCache {
+
         let persistence: any Persistence<TranslationDataModel, TranslationCodable>
-        
+
         if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
-            
+
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
                 mapping: SwiftTranslationMapping()
             )
         }
         else {
-            
+
             persistence = RealmRepositorySyncPersistence(
                 database: getSharedRealmDatabase(),
                 mapping: RealmTranslationMapping()
             )
         }
-        
+
+        return TranslationsCache(persistence: persistence)
+    }
+
+    func getTranslationsRepository() -> TranslationsRepository {
+
         let api = MobileContentTranslationsApi(
             config: getAppConfig(),
             urlSessionPriority: getSharedUrlSessionPriority(),
@@ -727,8 +743,8 @@ final class AppDataLayerDependencies {
             requestSender: getRequestSender()
         )
         
-        let cache = TranslationsCache(persistence: persistence)
-        
+        let cache = getTranslationsCache()
+
         return TranslationsRepository(
             api: api,
             cdn: cdn,

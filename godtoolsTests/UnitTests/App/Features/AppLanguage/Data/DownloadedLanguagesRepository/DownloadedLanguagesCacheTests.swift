@@ -9,6 +9,7 @@
 import Testing
 @testable import godtools
 import Foundation
+import RealmSwift
 import RepositorySync
 import SwiftData
 
@@ -40,7 +41,7 @@ struct DownloadedLanguagesCacheTests {
     ])
     func getDownloadedLanguagesByDownloadComplete(persistenceType: PersistenceType, argument: DownloadedLanguagesByDownloadCompleteArgument) async throws {
 
-        let cache = try await getCache(persistenceType: persistenceType)
+        let cache = try getCache(persistenceType: persistenceType)
 
         let downloadedLanguages: [DownloadedLanguageDataModel] = try await cache.getDownloadedLanguagesByDownloadComplete(
             downloadComplete: argument.downloadComplete
@@ -55,7 +56,7 @@ struct DownloadedLanguagesCacheTests {
     @Test(arguments: PersistenceType.allCases)
     func getDownloadedLanguagesByDownloadCompleteIsEmpty(persistenceType: PersistenceType) async throws {
 
-        let cache = try await getCache(persistenceType: persistenceType, downloadedLanguages: [])
+        let cache = try getCache(persistenceType: persistenceType, downloadedLanguages: [])
 
         let downloadedLanguages: [DownloadedLanguageDataModel] = try await cache.getDownloadedLanguagesByDownloadComplete(
             downloadComplete: true
@@ -70,7 +71,7 @@ struct DownloadedLanguagesCacheTests {
     @Test(arguments: PersistenceType.allCases)
     func deleteDownloadedLanguageRemovesLanguage(persistenceType: PersistenceType) async throws {
 
-        let cache = try await getCache(persistenceType: persistenceType)
+        let cache = try getCache(persistenceType: persistenceType)
 
         try await cache.deleteDownloadedLanguage(languageId: "c")
 
@@ -87,7 +88,7 @@ struct DownloadedLanguagesCacheTests {
     @Test(arguments: PersistenceType.allCases)
     func deleteDownloadedLanguageKeepsOtherLanguages(persistenceType: PersistenceType) async throws {
 
-        let cache = try await getCache(persistenceType: persistenceType)
+        let cache = try getCache(persistenceType: persistenceType)
 
         try await cache.deleteDownloadedLanguage(languageId: "b")
 
@@ -109,45 +110,52 @@ struct DownloadedLanguagesCacheTests {
 extension DownloadedLanguagesCacheTests {
 
     @available(iOS 17.4, *)
-    private func getCache(persistenceType: PersistenceType, downloadedLanguages: [DownloadedLanguageDataModel]? = nil) async throws -> DownloadedLanguagesCache {
+    private func getCache(persistenceType: PersistenceType, downloadedLanguages: [DownloadedLanguageDataModel]? = nil) throws -> DownloadedLanguagesCache {
 
-        let persistence: any Persistence<DownloadedLanguageDataModel, DownloadedLanguageDataModel>
+        let downloadedLanguagesToStore: [DownloadedLanguageDataModel] = downloadedLanguages ?? getDownloadedLanguages()
+
+        let realmDatabase = try FakeRealmDatabase.createRealmDatabase(
+            addRealmObjects: getRealmDatabaseObjects(downloadedLanguages: downloadedLanguagesToStore)
+        )
+
+        let testsAppConfig: TestsAppConfig
 
         switch persistenceType {
-
         case .realm:
-            persistence = try getRealmPersistence()
+            testsAppConfig = TestsAppConfig(
+                realmDatabase: realmDatabase
+            )
 
         case .swiftData:
-            persistence = try getSwiftPersistence()
+
+            let container = try SwiftDataContainer.createInMemoryContainer(schema: Schema(versionedSchema: LatestProductionSwiftDataSchema.self))
+
+            let database = SwiftDatabase(container: container)
+
+            let context: ModelContext = database.openContext()
+
+            context.insertObjects(objects: getSwiftDatabaseObjects(downloadedLanguages: downloadedLanguagesToStore))
+
+            try context.saveIfHasChanges()
+
+            testsAppConfig = TestsAppConfig(
+                realmDatabase: realmDatabase,
+                swiftDatabase: database
+            )
         }
 
-        try await persistence.writeObjects(
-            externalObjects: downloadedLanguages ?? getDownloadedLanguages()
-        )
+        let testsDiContainer = TestsDiContainer(testsAppConfig: testsAppConfig)
 
-        return DownloadedLanguagesCache(
-            persistence: persistence
-        )
+        return testsDiContainer.feature.appLanguage.dataLayer.getDownloadedLanguagesCache()
     }
 
-    private func getRealmPersistence() throws -> RealmRepositorySyncPersistence<DownloadedLanguageDataModel, DownloadedLanguageDataModel, RealmDownloadedLanguage> {
-
-        return RealmRepositorySyncPersistence(
-            database: try FakeRealmDatabase.createRealmDatabase(),
-            mapping: RealmDownloadedLanguageMapping()
-        )
+    private func getRealmDatabaseObjects(downloadedLanguages: [DownloadedLanguageDataModel]) -> [IdentifiableRealmObject] {
+        return downloadedLanguages.map { RealmDownloadedLanguage.createNewFrom(model: $0) }
     }
 
     @available(iOS 17.4, *)
-    private func getSwiftPersistence() throws -> SwiftRepositorySyncPersistence<DownloadedLanguageDataModel, DownloadedLanguageDataModel, SwiftDownloadedLanguage> {
-
-        let container = try SwiftDataContainer.createInMemoryContainer(schema: Schema(versionedSchema: LatestProductionSwiftDataSchema.self))
-
-        return SwiftRepositorySyncPersistence(
-            database: SwiftDatabase(container: container),
-            mapping: SwiftDownloadedLanguageMapping()
-        )
+    private func getSwiftDatabaseObjects(downloadedLanguages: [DownloadedLanguageDataModel]) -> [SwiftDownloadedLanguage] {
+        return downloadedLanguages.map { SwiftDownloadedLanguage.createNewFrom(model: $0) }
     }
 
     private func getDownloadedLanguages() -> [DownloadedLanguageDataModel] {
