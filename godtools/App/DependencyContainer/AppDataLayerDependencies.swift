@@ -18,9 +18,8 @@ final class AppDataLayerDependencies {
     private let sharedUrlSessionPriority: URLSessionPriority = URLSessionPriority()
     private let sharedAnalytics: AnalyticsContainer
     private let sharedInMemoryDataCache: InMemoryDataCache = InMemoryDataCache()
-    private let sharedRealmDatabaseConfig: RealmDatabaseConfig
     private let sharedRealmDatabase: RealmDatabase
-    private var sharedSwiftDatabase: Any? // TODO: Once RealmSwift is removed, change Any? to SwiftDatabase.
+    private let sharedSwiftDatabase: Any? // TODO: Once RealmSwift is removed, change Any? to SwiftDatabase.
 
     private lazy var sharedUserCountersSync: UserCountersSync = {
         
@@ -47,14 +46,23 @@ final class AppDataLayerDependencies {
         )
         
         do {
-            sharedRealmDatabaseConfig = try appConfig.getRealmDatabaseConfig()
+            sharedRealmDatabase = try appConfig.getRealmDatabase()
         }
         catch let error {
             assertionFailure(error.localizedDescription)
-            sharedRealmDatabaseConfig = try! RealmDatabaseConfig.createInMemoryConfig()
+            sharedRealmDatabase = RealmDatabase(databaseConfig: try! RealmDatabaseConfig.createInMemoryConfig())
         }
         
-        sharedRealmDatabase = RealmDatabase(databaseConfig: sharedRealmDatabaseConfig)
+        if #available(iOS 17.4, *) {
+            do {
+                sharedSwiftDatabase = try appConfig.getSwiftDatabase()
+            }
+            catch let error {
+                sharedSwiftDatabase = nil
+            }
+        } else {
+            sharedSwiftDatabase = nil
+        }
     }
     
     private static func getFirebaseAnalytics(appConfig: AppConfigInterface) -> FirebaseAnalyticsInterface {
@@ -474,7 +482,7 @@ final class AppDataLayerDependencies {
     }
     
     private func getRealmDataWrite() -> RealmDataWrite {
-        return RealmDataWrite(config: getSharedRealmDatabaseConfig().config)
+        return RealmDataWrite(config: getSharedRealmDatabase().config)
     }
     
     func getRemoteConfigRepository() -> RemoteConfigRepository {
@@ -617,30 +625,13 @@ final class AppDataLayerDependencies {
         return sharedUrlSessionPriority
     }
     
-    func getSharedRealmDatabaseConfig() -> RealmDatabaseConfig {
-        return sharedRealmDatabaseConfig
-    }
-    
     func getSharedRealmDatabase() -> RealmDatabase {
         return sharedRealmDatabase
     }
     
     @available(iOS 17.4, *)
     func getSharedSwiftDatabase() -> SwiftDatabase? {
-
-        if let database = sharedSwiftDatabase as? SwiftDatabase {
-            return database
-        }
-
-        do {
-            let database: SwiftDatabase? = try getAppConfig().getSwiftDatabase()
-            sharedSwiftDatabase = database
-            return database
-        }
-        catch _ {
-            assertionFailure("Failed to get swift database.")
-            return nil
-        }
+        return sharedSwiftDatabase as? SwiftDatabase
     }
     
     func getStringWithLocaleCount() -> StringWithLocaleCountInterface {

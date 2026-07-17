@@ -15,7 +15,6 @@ import SwiftData
 final class TestsAppConfig: AppConfigInterface {
     
     private let realmDatabase: RealmDatabase?
-    
     private let swiftDatabase: Any?
 
     init(realmDatabase: RealmDatabase? = nil, swiftDatabase: Any? = nil) {
@@ -79,12 +78,13 @@ final class TestsAppConfig: AppConfigInterface {
         return "\(scheme)://mobile-content-api.cru.org"
     }
     
-    func getRealmDatabaseConfig() throws -> RealmDatabaseConfig {
-        if let databaseConfig = realmDatabase?.databaseConfig {
-            return databaseConfig
+    func getRealmDatabase() throws -> RealmDatabase {
+        guard let realmDatabase = realmDatabase else {
+            return RealmDatabase(
+                databaseConfig: try RealmDatabaseConfig.createInMemoryConfig()
+            )
         }
-        
-        return try RealmDatabaseConfig.createInMemoryConfig()
+        return realmDatabase
     }
     
     @available(iOS 17.4, *)

@@ -69,8 +69,10 @@ final class UITestsAppConfig: AppConfigInterface {
         return GodToolsAppConfig.getMobileContentCDNBaseUrl(environment: environment)
     }
     
-    func getRealmDatabaseConfig() throws -> RealmDatabaseConfig {
-        return try UITestsRealmDatabase.getRealmDatabaseConfig()
+    func getRealmDatabase() throws -> RealmDatabase {
+        return RealmDatabase(
+            databaseConfig: try RealmDatabaseConfig.createInMemoryConfig()
+        )
     }
     
     @available(iOS 17.4, *)

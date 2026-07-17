@@ -26,7 +26,7 @@ protocol AppConfigInterface: Sendable {
     func getGoogleAuthenticationConfiguration() -> GoogleAuthenticationConfiguration?
     func getMobileContentApiBaseUrl() -> String
     func getMobileContentCDNBaseUrl() -> String
-    func getRealmDatabaseConfig() throws -> RealmDatabaseConfig
+    func getRealmDatabase() throws -> RealmDatabase
     @available(iOS 17.4, *)
     func getSwiftDatabase() throws -> SwiftDatabase?
     func getTractRemoteShareConnectionUrl() -> String

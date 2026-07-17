@@ -117,16 +117,20 @@ final class GodToolsAppConfig: AppConfigInterface {
         return Self.getMobileContentCDNBaseUrl(environment: environment)
     }
     
-    func getRealmDatabaseConfig() throws -> RealmDatabaseConfig {
-                
+    func getRealmDatabase() throws -> RealmDatabase {
+           
+        let config: RealmDatabaseConfig
+    
         switch appBuild.environment {
         
         case .staging:
-            return try RealmStagingConfig().createConfig()
+            config = try RealmStagingConfig.createConfig()
         
         case .production:
-            return try RealmProductionConfig().createConfig()
+            config = try RealmProductionConfig.createConfig()
         }
+        
+        return RealmDatabase(databaseConfig: config)
     }
     
     @available(iOS 17.4, *)
