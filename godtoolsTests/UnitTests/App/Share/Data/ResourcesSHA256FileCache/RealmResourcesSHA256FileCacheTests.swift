@@ -40,7 +40,7 @@ final class RealmResourcesSHA256FileCacheTests {
 
     deinit {
         try? fileCache.removeRootDirectory()
-        try? Realm.deleteFiles(for: realmDatabase.databaseConfig.config)
+        _ = try? Realm.deleteFiles(for: realmDatabase.databaseConfig.config)
     }
 
     // MARK: - Store Attachment File
@@ -86,6 +86,40 @@ final class RealmResourcesSHA256FileCacheTests {
 
         #expect(sha256File.attachments.map { $0.id } == [Self.attachmentId])
         #expect(sha256File.translations.isEmpty)
+    }
+
+    @Test
+    func storingAnAttachmentFileThatIsAlreadyRelatedToTheAttachmentPreservesOtherRelationships() async throws {
+
+        try seed(realmObjects: [createAttachment(id: Self.attachmentId), createTranslation(id: Self.translationId)])
+
+        let subject = getSubject()
+
+        let fileName: String = "shared_sha.bin"
+
+        _ = try await subject.storeTranslationFile(
+            translationId: Self.translationId,
+            fileName: fileName,
+            fileData: try #require("data".data(using: .utf8))
+        )
+
+        _ = try await subject.storeAttachmentFile(
+            attachmentId: Self.attachmentId,
+            fileName: fileName,
+            fileData: try #require("data".data(using: .utf8))
+        )
+
+        _ = try await subject.storeAttachmentFile(
+            attachmentId: Self.attachmentId,
+            fileName: fileName,
+            fileData: try #require("data".data(using: .utf8))
+        )
+
+        let realm: Realm = try openRefreshedRealm()
+        let sha256File: RealmSHA256File = try #require(realm.object(ofType: RealmSHA256File.self, forPrimaryKey: fileName))
+
+        #expect(sha256File.attachments.map { $0.id } == [Self.attachmentId])
+        #expect(sha256File.translations.map { $0.id } == [Self.translationId])
     }
 
     @Test
@@ -145,6 +179,67 @@ final class RealmResourcesSHA256FileCacheTests {
 
         #expect(sha256File.translations.map { $0.id } == [Self.translationId])
         #expect(sha256File.attachments.isEmpty)
+    }
+
+    @Test
+    func storeMultipleTranslationFilesForSameTranslationCreatesRelationships() async throws {
+
+        try seed(realmObjects: [createTranslation(id: Self.translationId)])
+
+        let subject = getSubject()
+
+        _ = try await subject.storeTranslationFile(
+            translationId: Self.translationId,
+            fileName: "translation_manifest.xml",
+            fileData: try #require("manifest".data(using: .utf8))
+        )
+
+        _ = try await subject.storeTranslationFile(
+            translationId: Self.translationId,
+            fileName: "translation_page_1.xml",
+            fileData: try #require("page 1".data(using: .utf8))
+        )
+
+        let realm: Realm = try openRefreshedRealm()
+        let manifestFile: RealmSHA256File = try #require(realm.object(ofType: RealmSHA256File.self, forPrimaryKey: "translation_manifest.xml"))
+        let pageFile: RealmSHA256File = try #require(realm.object(ofType: RealmSHA256File.self, forPrimaryKey: "translation_page_1.xml"))
+
+        #expect(manifestFile.translations.map { $0.id } == [Self.translationId])
+        #expect(pageFile.translations.map { $0.id } == [Self.translationId])
+    }
+
+    @Test
+    func storingATranslationFileThatIsAlreadyRelatedToTheTranslationPreservesOtherRelationships() async throws {
+
+        try seed(realmObjects: [createTranslation(id: Self.translationId), createAttachment(id: Self.attachmentId)])
+
+        let subject = getSubject()
+
+        let fileName: String = "shared_sha.bin"
+
+        _ = try await subject.storeAttachmentFile(
+            attachmentId: Self.attachmentId,
+            fileName: fileName,
+            fileData: try #require("data".data(using: .utf8))
+        )
+
+        _ = try await subject.storeTranslationFile(
+            translationId: Self.translationId,
+            fileName: fileName,
+            fileData: try #require("data".data(using: .utf8))
+        )
+
+        _ = try await subject.storeTranslationFile(
+            translationId: Self.translationId,
+            fileName: fileName,
+            fileData: try #require("data".data(using: .utf8))
+        )
+
+        let realm: Realm = try openRefreshedRealm()
+        let sha256File: RealmSHA256File = try #require(realm.object(ofType: RealmSHA256File.self, forPrimaryKey: fileName))
+
+        #expect(sha256File.translations.map { $0.id } == [Self.translationId])
+        #expect(sha256File.attachments.map { $0.id } == [Self.attachmentId])
     }
 
     @Test

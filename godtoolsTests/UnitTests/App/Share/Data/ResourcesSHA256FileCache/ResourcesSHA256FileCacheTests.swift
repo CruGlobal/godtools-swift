@@ -88,6 +88,42 @@ final class ResourcesSHA256FileCacheTests {
 
     @available(iOS 17.4, *)
     @Test
+    func storingAnAttachmentFileThatIsAlreadyRelatedToTheAttachmentPreservesOtherRelationships() async throws {
+
+        let container: ModelContainer = try createContainer()
+
+        try seed(container: container, objects: [createAttachment(id: Self.attachmentId), createTranslation(id: Self.translationId)])
+
+        let subject = getSubject(container: container)
+
+        let fileName: String = "shared_sha.bin"
+
+        _ = try await subject.storeTranslationFile(
+            translationId: Self.translationId,
+            fileName: fileName,
+            fileData: try #require("data".data(using: .utf8))
+        )
+
+        _ = try await subject.storeAttachmentFile(
+            attachmentId: Self.attachmentId,
+            fileName: fileName,
+            fileData: try #require("data".data(using: .utf8))
+        )
+
+        _ = try await subject.storeAttachmentFile(
+            attachmentId: Self.attachmentId,
+            fileName: fileName,
+            fileData: try #require("data".data(using: .utf8))
+        )
+
+        let sha256File: SwiftSHA256File = try #require(fetchSHA256File(container: container, sha256WithPathExtension: fileName))
+
+        #expect(sha256File.attachments.map { $0.id } == [Self.attachmentId])
+        #expect(sha256File.translations.map { $0.id } == [Self.translationId])
+    }
+
+    @available(iOS 17.4, *)
+    @Test
     func storeAttachmentFileThrowsWhenAttachmentDoesNotExistInDatabase() async throws {
 
         let container: ModelContainer = try createContainer()
@@ -151,6 +187,103 @@ final class ResourcesSHA256FileCacheTests {
 
         #expect(sha256File.translations.map { $0.id } == [Self.translationId])
         #expect(sha256File.attachments.isEmpty)
+    }
+
+    @available(iOS 17.4, *)
+    @Test
+    func storeMultipleTranslationFilesForSameTranslationCreatesRelationships() async throws {
+
+        let container: ModelContainer = try createContainer()
+
+        try seed(container: container, objects: [createTranslation(id: Self.translationId)])
+
+        let subject = getSubject(container: container)
+
+        _ = try await subject.storeTranslationFile(
+            translationId: Self.translationId,
+            fileName: "translation_manifest.xml",
+            fileData: try #require("manifest".data(using: .utf8))
+        )
+
+        _ = try await subject.storeTranslationFile(
+            translationId: Self.translationId,
+            fileName: "translation_page_1.xml",
+            fileData: try #require("page 1".data(using: .utf8))
+        )
+
+        let manifestFile: SwiftSHA256File = try #require(fetchSHA256File(container: container, sha256WithPathExtension: "translation_manifest.xml"))
+        let pageFile: SwiftSHA256File = try #require(fetchSHA256File(container: container, sha256WithPathExtension: "translation_page_1.xml"))
+
+        #expect(manifestFile.translations.map { $0.id } == [Self.translationId])
+        #expect(pageFile.translations.map { $0.id } == [Self.translationId])
+    }
+
+    @available(iOS 17.4, *)
+    @Test
+    func storingTheSameFileForMultipleTranslationsRelatesAllTranslationsToTheFile() async throws {
+
+        let container: ModelContainer = try createContainer()
+
+        let firstTranslationId: String = "translation_1"
+        let secondTranslationId: String = "translation_2"
+
+        try seed(container: container, objects: [createTranslation(id: firstTranslationId), createTranslation(id: secondTranslationId)])
+
+        let subject = getSubject(container: container)
+
+        let fileName: String = "shared_sha.xml"
+
+        _ = try await subject.storeTranslationFile(
+            translationId: firstTranslationId,
+            fileName: fileName,
+            fileData: try #require("data".data(using: .utf8))
+        )
+
+        _ = try await subject.storeTranslationFile(
+            translationId: secondTranslationId,
+            fileName: fileName,
+            fileData: try #require("data".data(using: .utf8))
+        )
+
+        let sha256File: SwiftSHA256File = try #require(fetchSHA256File(container: container, sha256WithPathExtension: fileName))
+
+        #expect(Set(sha256File.translations.map { $0.id }) == [firstTranslationId, secondTranslationId])
+    }
+
+    @available(iOS 17.4, *)
+    @Test
+    func storingATranslationFileThatIsAlreadyRelatedToTheTranslationPreservesOtherRelationships() async throws {
+
+        let container: ModelContainer = try createContainer()
+
+        try seed(container: container, objects: [createTranslation(id: Self.translationId), createAttachment(id: Self.attachmentId)])
+
+        let subject = getSubject(container: container)
+
+        let fileName: String = "shared_sha.bin"
+
+        _ = try await subject.storeAttachmentFile(
+            attachmentId: Self.attachmentId,
+            fileName: fileName,
+            fileData: try #require("data".data(using: .utf8))
+        )
+
+        _ = try await subject.storeTranslationFile(
+            translationId: Self.translationId,
+            fileName: fileName,
+            fileData: try #require("data".data(using: .utf8))
+        )
+
+        _ = try await subject.storeTranslationFile(
+            translationId: Self.translationId,
+            fileName: fileName,
+            fileData: try #require("data".data(using: .utf8))
+        )
+
+        let sha256File: SwiftSHA256File = try #require(fetchSHA256File(container: container, sha256WithPathExtension: fileName))
+
+        #expect(sha256File.translations.map { $0.id } == [Self.translationId])
+        #expect(sha256File.attachments.map { $0.id } == [Self.attachmentId])
     }
 
     @available(iOS 17.4, *)
