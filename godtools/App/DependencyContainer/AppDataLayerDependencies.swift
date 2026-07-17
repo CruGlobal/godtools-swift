@@ -478,6 +478,33 @@ final class AppDataLayerDependencies {
         return sharedAppConfig.urlRequestsEnabled ? RequestSender() : DoesNotSendUrlRequestSender()
     }
     
+    func getResourcesCache() -> ResourcesCache {
+        
+        return ResourcesCache(
+            persistence: getResourcesPersistence(),
+            realmDatabase: getSharedRealmDatabase(),
+            realmDataWrite: getRealmDataWrite(),
+            resourcesCacheSync: getResourcesCacheSync()
+        )
+    }
+    
+    func getResourcesCacheSync() -> ResourcesCacheSyncInterface {
+        
+        if #available(iOS 17.4, *), let swiftDatabase = getSharedSwiftDatabase() {
+            
+            return SwiftResourcesCacheSync(
+                container: swiftDatabase.container.modelContainer,
+                trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository()
+            )
+        }
+        
+        return RealmResourcesCacheSync(
+            realmDatabase: getSharedRealmDatabase(),
+            realmDataWrite: getRealmDataWrite(),
+            trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository()
+        )
+    }
+    
     func getResourcesFileCache() -> ResourcesFileCache {
         return ResourcesFileCache()
     }
@@ -525,17 +552,10 @@ final class AppDataLayerDependencies {
             requestSender: getRequestSender()
         )
         
-        let cache = ResourcesCache(
-            persistence: getResourcesPersistence(),
-            realmDatabase: getSharedRealmDatabase(),
-            realmDataWrite: getRealmDataWrite(),
-            trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository()
-        )
-        
         return ResourcesRepository(
             api: api,
             jsonFileCache: ResourcesJsonFileCache(jsonServices: JsonServices()),
-            cache: cache,
+            cache: getResourcesCache(),
             attachmentsRepository: getAttachmentsRepository(),
             languagesRepository: getLanguagesRepository(),
             syncInvalidatorPersistence: getUserDefaultsCache(),
@@ -728,8 +748,11 @@ final class AppDataLayerDependencies {
     }
     
     func getUITestsInitialDataLoader() -> UITestsInitialDataLoader {
+        
         return UITestsInitialDataLoader(
-            realmDatabase: getSharedRealmDatabase(),
+            resourcesCacheSync: getResourcesCacheSync(),
+            languagesPersistence: getLanguagesPersistence(),
+            favoritedResourcesPersistence: getFavoritedResourcesPersistence(),
             resourcesFileCache: getResourcesSHA256FileCache()
         )
     }

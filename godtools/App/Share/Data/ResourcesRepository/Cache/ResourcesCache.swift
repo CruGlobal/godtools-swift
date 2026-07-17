@@ -15,7 +15,7 @@ final class ResourcesCache {
     
     private let realmDatabase: RealmDatabase
     private let realmDataWrite: RealmDataWrite
-    private let trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
+    private let resourcesCacheSync: ResourcesCacheSyncInterface
     
     let persistence: any Persistence<ResourceDataModel, ResourceCodable>
     
@@ -23,13 +23,13 @@ final class ResourcesCache {
         persistence: any Persistence<ResourceDataModel, ResourceCodable>,
         realmDatabase: RealmDatabase,
         realmDataWrite: RealmDataWrite,
-        trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
+        resourcesCacheSync: ResourcesCacheSyncInterface
     ) {
         
         self.persistence = persistence
         self.realmDatabase = realmDatabase
         self.realmDataWrite = realmDataWrite
-        self.trackDownloadedTranslationsRepository = trackDownloadedTranslationsRepository
+        self.resourcesCacheSync = resourcesCacheSync
     }
 
     @available(iOS 17.4, *)
@@ -51,35 +51,16 @@ final class ResourcesCache {
 
 extension ResourcesCache {
     
-    func syncResources(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable, shouldRemoveDataThatNoLongerExists: Bool) async throws -> ResourcesCacheSyncResult {
+    func syncResources(
+        resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable,
+        shouldRemoveDataThatNoLongerExists: Bool
+    ) async throws -> ResourcesCacheSyncResult {
         
-        if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
-            
-            return try await SwiftResourcesCacheSync(
-                container: swiftPersistence.database.container.modelContainer,
-                trackDownloadedTranslationsRepository: trackDownloadedTranslationsRepository
-            )
+        return try await resourcesCacheSync
             .syncResources(
                 resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
                 shouldRemoveDataThatNoLongerExists: shouldRemoveDataThatNoLongerExists
             )
-        }
-        else if let realmPersistence = getRealmPersistence() {
-            
-            return try await RealmResourcesCacheSync(
-                realmDatabase: realmDatabase,
-                realmDataWrite: realmDataWrite,
-                trackDownloadedTranslationsRepository: trackDownloadedTranslationsRepository
-            )
-            .syncResources(
-                resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
-                shouldRemoveDataThatNoLongerExists: shouldRemoveDataThatNoLongerExists
-            )
-        }
-        else {
-            
-            return ResourcesCacheSyncResult.emptyResult()
-        }
     }
 }
 

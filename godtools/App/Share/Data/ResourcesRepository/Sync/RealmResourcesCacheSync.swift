@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import RepositorySync
 
-final class RealmResourcesCacheSync {
+final class RealmResourcesCacheSync: ResourcesCacheSyncInterface {
     
     typealias SHA256PlusPathExtension = String
     typealias ResourceId = String
@@ -31,7 +31,10 @@ final class RealmResourcesCacheSync {
         self.trackDownloadedTranslationsRepository = trackDownloadedTranslationsRepository
     }
     
-    func syncResources(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable, shouldRemoveDataThatNoLongerExists: Bool) async throws -> ResourcesCacheSyncResult {
+    func syncResources(
+        resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable,
+        shouldRemoveDataThatNoLongerExists: Bool
+    ) async throws -> ResourcesCacheSyncResult {
         
         return try await withCheckedThrowingContinuation { continuation in
             syncResourcesWithCompletion(resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments, shouldRemoveDataThatNoLongerExists: shouldRemoveDataThatNoLongerExists, completion: { (result: Result<ResourcesCacheSyncResult, Error>) in
@@ -48,7 +51,11 @@ final class RealmResourcesCacheSync {
         }
     }
     
-    private func syncResourcesWithCompletion(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable, shouldRemoveDataThatNoLongerExists: Bool, completion: @escaping ((_ result: Result<ResourcesCacheSyncResult, Error>) -> Void)) {
+    private func syncResourcesWithCompletion(
+        resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable,
+        shouldRemoveDataThatNoLongerExists: Bool,
+        completion: @escaping ((_ result: Result<ResourcesCacheSyncResult, Error>) -> Void)
+    ) {
      
         realmDataWrite.serialAsync(asyncClosure: { [weak self] (result: Result<Realm, Error>) in
             

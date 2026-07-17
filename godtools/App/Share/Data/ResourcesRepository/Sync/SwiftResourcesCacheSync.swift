@@ -11,7 +11,7 @@ import SwiftData
 import RepositorySync
 
 @available(iOS 17.4, *)
-actor SwiftResourcesCacheSync: ModelActor {
+actor SwiftResourcesCacheSync: ResourcesCacheSyncInterface, ModelActor {
     
     typealias SHA256PlusPathExtension = String
     typealias ResourceId = String
