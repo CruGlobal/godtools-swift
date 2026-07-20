@@ -31,6 +31,10 @@ struct ToolDetailsTool {
         self.selectedLanguageIndex = selectedLanguageIndex
     }
     
+    static var emptyValue: ToolDetailsTool {
+        return ToolDetailsTool(appLanguage: "", toolId: "", primaryLanguage: nil, parallelLanguage: nil, selectedLanguageIndex: nil)
+    }
+    
     func copy(
         toolId: String? = nil
     ) -> ToolDetailsTool {
