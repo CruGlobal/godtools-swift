@@ -15,14 +15,18 @@ struct GodToolsApp: App {
         case uiTests
     }
     
+    private static let appBuild: AppBuildInterface = AppBuild(
+        buildConfiguration: InfoPlist().getAppBuildConfiguration(),
+        uiTestsLaunchEnvironment: UITestsLaunchEnvironment()
+    )
     private static let appDeepLinkingService: DeepLinkingService = appDiContainer.core.dataLayer.getDeepLinkingService()
-    private static let appDiContainer = AppDiContainer(appConfig: appConfig)
+    private static let appDiContainer = AppDiContainer(appBuild: appBuild, appConfig: appConfig)
     private static let uiTestsLaunchEnvironment: UITestsLaunchEnvironment = UITestsLaunchEnvironment()
     
     private static let appConfig: AppConfigInterface = {
         switch appLaunchType {
         case .godtools:
-            return GodToolsAppConfig()
+            return GodToolsAppConfig(environment: Self.appBuild.environment)
         case .uiTests:
             return UITestsAppConfig()
         }
@@ -82,7 +86,7 @@ struct GodToolsApp: App {
             Self.appDiContainer.core.dataLayer.getFirebaseConfiguration().configure()
         }
         
-        if Self.appConfig.buildConfig == .analyticsLogging {
+        if Self.appBuild.configuration == .analyticsLogging {
             Self.appDiContainer.core.dataLayer.getFirebaseDebugArguments().enable()
         }
         
@@ -94,7 +98,7 @@ struct GodToolsApp: App {
             deepLinkUrl: deepLinkUrl
         )
         
-        if Self.appConfig.buildConfig == .release {
+        if Self.appBuild.configuration == .release {
             GodToolsParserLogger.shared.start(
                 errorReporting: Self.appDiContainer.core.dataLayer.getErrorReporting(),
                 firebaseErrorReporting: Self.appDiContainer.core.dataLayer.getFirebaseNonFatalErrorReporting()
@@ -105,7 +109,7 @@ struct GodToolsApp: App {
             Self.appDiContainer.core.dataLayer.getAnalytics().firebaseAnalytics.configure()
         }
         
-        if Self.appConfig.buildConfig != .analyticsLogging {
+        if Self.appBuild.configuration != .analyticsLogging {
             DisableGoogleTagManagerLogging.hideGTMLogsInfo()
             DisableGoogleTagManagerLogging.hideGTMLogsWarning()
         }

@@ -15,35 +15,23 @@ final class GodToolsAppConfig: AppConfigInterface {
     private static let mobileContentCDNProduction: String = "https://mobilecontent.cru.org"
     private static let mobileContentCDNStaging: String = "https://mobilecontent-stage.cru.org"
     
-    private let appBuild: AppBuild
+    private let environment: AppEnvironment
+            
+    init(environment: AppEnvironment) {
         
-    init() {
-        
-        appBuild = AppBuild(buildConfiguration: InfoPlist().getAppBuildConfiguration())
+        self.environment = environment
     }
     
     var analyticsEnabled: Bool {
         return true
     }
     
-    var buildConfig: AppBuildConfiguration {
-        return appBuild.configuration
-    }
-    
     var dynalinkClientApiKey: String? {
         return "8322c64ccf9c49fbd6f2a15ec0e20301"
     }
     
-    var environment: AppEnvironment {
-        return appBuild.environment
-    }
-    
     var firebaseEnabled: Bool {
         return true
-    }
-    
-    var isDebug: Bool {
-        return appBuild.isDebug
     }
     
     func getAppleAppId() -> String {
@@ -93,7 +81,7 @@ final class GodToolsAppConfig: AppConfigInterface {
     
     func getFirebaseGoogleServiceFileName() -> String {
         
-        switch appBuild.environment {
+        switch environment {
         
         case .staging:
             return "GoogleService-Info-Debug"
@@ -133,7 +121,7 @@ final class GodToolsAppConfig: AppConfigInterface {
            
         let config: RealmDatabaseConfig
     
-        switch appBuild.environment {
+        switch environment {
         
         case .staging:
             config = try RealmStagingConfig.createConfig()
@@ -155,7 +143,7 @@ final class GodToolsAppConfig: AppConfigInterface {
         /*
         let database: SwiftDatabase
         
-        switch appBuild.environment {
+        switch environment {
        
         case .staging:
             database = SwiftDatabase(

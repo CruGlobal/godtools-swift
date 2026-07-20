@@ -44,7 +44,7 @@ final class MenuViewModel: ObservableObject {
         logOutUserUseCase: LogOutUserUseCase,
         trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
         trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase,
-        appConfig: AppConfigInterface
+        appBuild: AppBuildInterface
     ) {
         
         self.stepEmitter = stepEmitter
@@ -57,7 +57,7 @@ final class MenuViewModel: ObservableObject {
         self.logOutUserUseCase = logOutUserUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
-        self.hidesDebugSection = !appConfig.isDebug
+        self.hidesDebugSection = !appBuild.isDebug
         
         didSetAppLanguage(appLanguage: appLanguage)
         

@@ -6,7 +6,7 @@
 //  Copyright © 2025 Cru. All rights reserved.
 //
 
-class UITestsLaunchEnvironment: LaunchEnvironmentReader {
+final class UITestsLaunchEnvironment: LaunchEnvironmentReader {
     
     static let environmentName: String = "UITests"
     

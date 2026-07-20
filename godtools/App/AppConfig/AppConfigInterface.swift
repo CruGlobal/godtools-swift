@@ -13,11 +13,8 @@ import RepositorySync
 protocol AppConfigInterface: Sendable {
     
     var analyticsEnabled: Bool { get }
-    var buildConfig: AppBuildConfiguration { get }
     var dynalinkClientApiKey: String? { get }
-    var environment: AppEnvironment { get }
     var firebaseEnabled: Bool { get }
-    var isDebug: Bool { get }
     var isOptInNotificationModalEnabled: Bool { get }
     var urlRequestsEnabled: Bool { get }
     var shouldSyncInitialLanguages: Bool { get }

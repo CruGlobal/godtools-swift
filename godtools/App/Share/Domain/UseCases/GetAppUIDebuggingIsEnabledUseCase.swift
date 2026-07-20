@@ -10,16 +10,16 @@ import Foundation
 
 final class GetAppUIDebuggingIsEnabledUseCase {
     
-    private let appConfig: AppConfigInterface
+    private let appBuild: AppBuildInterface
     
-    init(appConfig: AppConfigInterface) {
+    init(appBuild: AppBuildInterface) {
         
-        self.appConfig = appConfig
+        self.appBuild = appBuild
     }
     
     func execute() -> Bool {
         
-        let isEnabled: Bool = appConfig.isDebug
+        let isEnabled: Bool = appBuild.isDebug
         
         return isEnabled
     }

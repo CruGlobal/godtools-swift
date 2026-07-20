@@ -14,6 +14,7 @@ import RepositorySync
 
 final class AppDataLayerDependencies {
         
+    private let sharedAppBuild: AppBuildInterface
     private let sharedAppConfig: AppConfigInterface
     private let sharedUrlSessionPriority: URLSessionPriority = URLSessionPriority()
     private let sharedAnalytics: AnalyticsContainer
@@ -37,12 +38,13 @@ final class AppDataLayerDependencies {
         )
     }()
     
-    init(appConfig: AppConfigInterface) {
+    init(appBuild: AppBuildInterface, appConfig: AppConfigInterface) {
         
+        sharedAppBuild = appBuild
         sharedAppConfig = appConfig
         
         sharedAnalytics = AnalyticsContainer(
-            firebaseAnalytics: Self.getFirebaseAnalytics(appConfig: appConfig)
+            firebaseAnalytics: Self.getFirebaseAnalytics(appBuild: appBuild, appConfig: appConfig)
         )
         
         do {
@@ -65,7 +67,7 @@ final class AppDataLayerDependencies {
         }
     }
     
-    private static func getFirebaseAnalytics(appConfig: AppConfigInterface) -> FirebaseAnalyticsInterface {
+    private static func getFirebaseAnalytics(appBuild: AppBuildInterface, appConfig: AppConfigInterface) -> FirebaseAnalyticsInterface {
         
         let firebaseAnalyticsEnabled: Bool = appConfig.analyticsEnabled && appConfig.firebaseEnabled
         
@@ -74,8 +76,8 @@ final class AppDataLayerDependencies {
         }
         
         return FirebaseAnalytics(
-            isDebug: appConfig.isDebug,
-            loggingEnabled: appConfig.buildConfig == .analyticsLogging
+            isDebug: appBuild.isDebug,
+            loggingEnabled: appBuild.configuration == .analyticsLogging
         )
     }
     
@@ -83,6 +85,10 @@ final class AppDataLayerDependencies {
     
     func getAnalytics() -> AnalyticsContainer {
         return sharedAnalytics
+    }
+    
+    func getAppBuild() -> AppBuildInterface {
+        return sharedAppBuild
     }
     
     func getAppConfig() -> AppConfigInterface {
