@@ -52,9 +52,9 @@ extension GetShareToolStringsUseCaseTests {
     @available(iOS 17.4, *)
     private func getUseCase() throws -> GetShareToolStringsUseCase {
 
-        let testsDiContainer = try TestsDiContainer(
+        let testsDiContainer = TestsDiContainer(
             testsAppConfig: TestsAppConfig(
-                swiftDatabase: SwiftDatabase(container: SwiftDataProductionContainer.createInMemoryContainer())
+                swiftDatabase: SwiftDatabase(container: try SwiftDataProductionContainer.createInMemoryContainer())
             )
         )
 
