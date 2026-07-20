@@ -153,7 +153,9 @@ final class AppFlow: RootFlow {
                 
                 removeLaunchScreenImageView(animated: false, delay: 0)
                 
-                let onboardingTutorialIsAvailable: Bool = appDiContainer.feature.onboarding.domainLayer.getOnboardingTutorialIsAvailableUseCase().execute()
+                let isUiTests: Bool = appDiContainer.core.dataLayer.getAppBuild().target == .uiTests
+                let onboardingTutorialIsAvailable: Bool = !isUiTests &&
+                appDiContainer.feature.onboarding.domainLayer.getOnboardingTutorialIsAvailableUseCase().execute()
                 let launchCount: Int = launchCountRepository.getLaunchCount()
                 let hasPossibleDeferredDeepLinkInPasteboardForDynalink: Bool = UIPasteboard.general.hasURLs
                 let shouldOpenPasteboardForDeferredDeepLink: Bool = launchCount == 1 && hasPossibleDeferredDeepLinkInPasteboardForDynalink
