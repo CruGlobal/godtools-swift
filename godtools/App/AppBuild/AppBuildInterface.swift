@@ -13,6 +13,5 @@ protocol AppBuildInterface: Sendable {
     var configuration: AppBuildConfiguration { get }
     var environment: AppEnvironment { get }
     var isDebug: Bool { get }
-    var isTestsTarget: Bool { get }
-    var isUiTestsTarget: Bool { get }
+    var target: BuildTarget { get }
 }

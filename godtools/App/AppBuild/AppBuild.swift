@@ -9,14 +9,13 @@
 import Foundation
 
 final class AppBuild: AppBuildInterface {
-
-    private let uiTestsLaunchEnvironment: UITestsLaunchEnvironment
     
     let configuration: AppBuildConfiguration
     let environment: AppEnvironment
     let isDebug: Bool
+    let target: BuildTarget = .godtools
 
-    init(buildConfiguration: AppBuildConfiguration?, uiTestsLaunchEnvironment: UITestsLaunchEnvironment) {
+    init(buildConfiguration: AppBuildConfiguration?) {
 
         // RELEASE and DEBUG flags need to be set under Build Settings > Other Swift Flags.  Add -DDEBUG for debug builds and -DRELEASE for release builds.
        
@@ -53,15 +52,5 @@ final class AppBuild: AppBuildInterface {
         case .release:
             environment = .production
         }
-        
-        self.uiTestsLaunchEnvironment = uiTestsLaunchEnvironment
-    }
-    
-    var isTestsTarget: Bool {
-        return NSClassFromString("XCTest") != nil
-    }
-    
-    var isUiTestsTarget: Bool {
-        return uiTestsLaunchEnvironment.getIsUITests() ?? false
     }
 }

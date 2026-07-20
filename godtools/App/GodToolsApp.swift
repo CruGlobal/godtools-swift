@@ -15,13 +15,20 @@ struct GodToolsApp: App {
         case uiTests
     }
     
-    private static let appBuild: AppBuildInterface = AppBuild(
-        buildConfiguration: InfoPlist().getAppBuildConfiguration(),
-        uiTestsLaunchEnvironment: UITestsLaunchEnvironment()
-    )
     private static let appDeepLinkingService: DeepLinkingService = appDiContainer.core.dataLayer.getDeepLinkingService()
     private static let appDiContainer = AppDiContainer(appBuild: appBuild, appConfig: appConfig)
     private static let uiTestsLaunchEnvironment: UITestsLaunchEnvironment = UITestsLaunchEnvironment()
+    
+    private static let appBuild: AppBuildInterface = {
+        switch appLaunchType {
+        case .godtools:
+            return AppBuild(
+                buildConfiguration: InfoPlist().getAppBuildConfiguration()
+            )
+        case .uiTests:
+            return UITestsBuild()
+        }
+    }()
     
     private static let appConfig: AppConfigInterface = {
         switch appLaunchType {
