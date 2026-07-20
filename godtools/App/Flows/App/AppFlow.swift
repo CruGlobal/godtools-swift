@@ -449,14 +449,17 @@ extension AppFlow {
     private func navigateToDeepLink(deepLink: ParsedDeepLinkType) {
                 
         switch deepLink {
-        
-        case .tool(let toolDeepLink):
-
-            dashboardFlow.navigateToToolFromDeepLink(
-                appLanguage: appLanguage,
-                toolDeepLink: toolDeepLink
-            )
             
+        case .allToolsList:
+            break
+            
+        case .appLanguagesList:
+            pushFlow(
+                flow: ChooseAppLanguageFlow(
+                    appDiContainer: appDiContainer
+                )
+            )
+        
         case .articleAemUri(let aemUri):
             
             let aemCacheObject: ArticleAemCacheObject? = appDiContainer.core.dataLayer.getArticleAemRepository()
@@ -482,12 +485,21 @@ extension AppFlow {
                 )
             }
             
+        case .dashboard:
+            break
+            
+        case .favoritedToolsList:
+            break
+            
         case .languageSettings:
             pushFlow(
                 flow: LanguageSettingsFlow(
                     appDiContainer: appDiContainer
                 )
             )
+            
+        case .lessonsList:
+            break
             
         case .localizationSettings:
             pushFlow(
@@ -496,25 +508,6 @@ extension AppFlow {
                     shouldStoreCountryWhenSelected: true
                 )
             )
-            
-        case .appLanguagesList:
-            pushFlow(
-                flow: ChooseAppLanguageFlow(
-                    appDiContainer: appDiContainer
-                )
-            )
-            
-        case .lessonsList:
-            break
-            
-        case .favoritedToolsList:
-            break
-            
-        case .allToolsList:
-            break
-            
-        case .dashboard:
-            break
             
         case .menu:
             
@@ -534,6 +527,16 @@ extension AppFlow {
             }
                         
             navigateToOnboarding()
+            
+        case .tool(let toolDeepLink):
+
+            dashboardFlow.navigateToToolFromDeepLink(
+                appLanguage: appLanguage,
+                toolDeepLink: toolDeepLink
+            )
+            
+        case .toolDetails(let toolId):
+            dashboardFlow.navigateToToolDetails(toolId: toolId)
             
         case .tutorial:
             presentFlow(
