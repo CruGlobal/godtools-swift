@@ -53,6 +53,14 @@ final class GodToolsAppConfig: AppConfigInterface {
     var urlRequestsEnabled: Bool {
         return true
     }
+    
+    var shouldSyncInitialLanguages: Bool {
+        return true
+    }
+    
+    var shouldSyncInitialResources: Bool {
+        return true
+    }
         
     func getFacebookConfiguration() -> FacebookConfiguration? {
         

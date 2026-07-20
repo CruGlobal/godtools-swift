@@ -52,6 +52,14 @@ final class TestsAppConfig: AppConfigInterface {
     var urlRequestsEnabled: Bool {
         return false
     }
+    
+    var shouldSyncInitialLanguages: Bool {
+        return false
+    }
+    
+    var shouldSyncInitialResources: Bool {
+        return false
+    }
         
     func getFacebookConfiguration() -> FacebookConfiguration? {
         return nil

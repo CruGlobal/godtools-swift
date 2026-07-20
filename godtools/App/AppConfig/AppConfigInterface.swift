@@ -19,6 +19,8 @@ protocol AppConfigInterface: Sendable {
     var firebaseEnabled: Bool { get }
     var isDebug: Bool { get }
     var urlRequestsEnabled: Bool { get }
+    var shouldSyncInitialLanguages: Bool { get }
+    var shouldSyncInitialResources: Bool { get }
     
     func getAppleAppId() -> String
     func getFacebookConfiguration() -> FacebookConfiguration?

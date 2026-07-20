@@ -45,6 +45,14 @@ final class UITestsAppConfig: AppConfigInterface {
         return false
     }
     
+    var shouldSyncInitialLanguages: Bool {
+        return false
+    }
+    
+    var shouldSyncInitialResources: Bool {
+        return false
+    }
+    
     func getAppleAppId() -> String {
         return ""
     }

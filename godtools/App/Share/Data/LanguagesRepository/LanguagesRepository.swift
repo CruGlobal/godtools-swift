@@ -16,12 +16,14 @@ final class LanguagesRepository {
     private let api: LanguagesApiInterface
     private let jsonFileCache: LanguagesJsonFileCache
     private let cache: LanguagesCache
+    private let config: AppConfigInterface
     
-    init(api: LanguagesApiInterface, jsonFileCache: LanguagesJsonFileCache, cache: LanguagesCache) {
+    init(api: LanguagesApiInterface, jsonFileCache: LanguagesJsonFileCache, cache: LanguagesCache, config: AppConfigInterface) {
         
         self.api = api
         self.jsonFileCache = jsonFileCache
         self.cache = cache
+        self.config = config
     }
     
     @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Error> {
@@ -68,6 +70,10 @@ extension LanguagesRepository {
     
     func syncLanguagesFromRemote(requestPriority: RequestPriority) async throws -> [LanguageDataModel] {
         
+        guard config.shouldSyncInitialLanguages else {
+            return Array()
+        }
+        
         let languages: [LanguageCodable] = try await api.getLanguages(requestPriority: requestPriority)
         
         return try await cache.persistence.writeObjects(
@@ -78,6 +84,10 @@ extension LanguagesRepository {
     }
     
     func syncLanguagesFromJsonFileCache() async throws -> [LanguageDataModel] {
+        
+        guard config.shouldSyncInitialLanguages else {
+            return Array()
+        }
         
         let languages: [LanguageCodable] = try jsonFileCache.getLanguages()
         
