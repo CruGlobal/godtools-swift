@@ -54,7 +54,15 @@ struct GodToolsApp: App {
             
             deepLinkUrl = Self.processUITestsDeepLink()
             
-            let uiTestsDataLoader: UITestsInitialDataLoader = Self.appDiContainer.core.dataLayer.getUITestsInitialDataLoader()
+            let dataLayer: AppDataLayerDependencies = Self.appDiContainer.core.dataLayer
+            
+            let uiTestsDataLoader = UITestsInitialDataLoader(
+                resourcesCacheSync: dataLayer.getResourcesCacheSync(),
+                languagesPersistence: dataLayer.getLanguagesPersistence(),
+                favoritedResourcesPersistence: dataLayer.getFavoritedResourcesPersistence(),
+                resourcesFileCache: dataLayer.getResourcesSHA256FileCache(),
+                appLanguagesPersistence: Self.appDiContainer.feature.appLanguage.dataLayer.getAppLanguagesPersistence()
+            )
             
             Task {
                 do {

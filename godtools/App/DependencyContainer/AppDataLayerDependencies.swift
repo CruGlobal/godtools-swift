@@ -412,7 +412,8 @@ final class AppDataLayerDependencies {
         return LanguagesRepository(
             api: api,
             jsonFileCache: LanguagesJsonFileCache(jsonServices: JsonServices()),
-            cache: cache
+            cache: cache,
+            config: getAppConfig()
         )
     }
     
@@ -576,7 +577,8 @@ final class AppDataLayerDependencies {
             attachmentsRepository: getAttachmentsRepository(),
             languagesRepository: getLanguagesRepository(),
             syncInvalidatorPersistence: getUserDefaultsCache(),
-            userDefaultsCache: getUserDefaultsCache()
+            userDefaultsCache: getUserDefaultsCache(),
+            config: getAppConfig()
         )
     }
     
@@ -762,16 +764,6 @@ final class AppDataLayerDependencies {
         )
     }
     
-    func getUITestsInitialDataLoader() -> UITestsInitialDataLoader {
-        
-        return UITestsInitialDataLoader(
-            resourcesCacheSync: getResourcesCacheSync(),
-            languagesPersistence: getLanguagesPersistence(),
-            favoritedResourcesPersistence: getFavoritedResourcesPersistence(),
-            resourcesFileCache: getResourcesSHA256FileCache()
-        )
-    }
-
     func getUserAuthentication() -> UserAuthentication {
                 
         var authenticationProviders: [AuthenticationProviderType: AuthenticationProviderInterface] = Dictionary()
