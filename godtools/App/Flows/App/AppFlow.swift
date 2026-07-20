@@ -72,7 +72,7 @@ final class AppFlow: RootFlow {
         rootController.view.frame = UIScreen.main.bounds
         rootController.view.backgroundColor = .clear
         rootController.addChildController(child: appNavigationController)
-        appNavigationController.view.backgroundColor = .white
+        appNavigationController.view.backgroundColor = UIColor.red//.white
         
         super.init(
             initialView: nil,
@@ -153,19 +153,18 @@ final class AppFlow: RootFlow {
                 
                 removeLaunchScreenImageView(animated: false, delay: 0)
                 
+                let onboardingTutorialIsAvailable: Bool = appDiContainer.feature.onboarding.domainLayer.getOnboardingTutorialIsAvailableUseCase().execute()
+                let launchCount: Int = launchCountRepository.getLaunchCount()
+                let hasPossibleDeferredDeepLinkInPasteboardForDynalink: Bool = UIPasteboard.general.hasURLs
+                let shouldOpenPasteboardForDeferredDeepLink: Bool = launchCount == 1 && hasPossibleDeferredDeepLinkInPasteboardForDynalink
+                
+                if !onboardingTutorialIsAvailable {
+                    pushFlow(flow: dashboardFlow, animated: false)
+                }
+                
                 Task {
                     
-                    let onboardingTutorialIsAvailable: Bool = appDiContainer.feature.onboarding.domainLayer.getOnboardingTutorialIsAvailableUseCase().execute()
                     let deferredDeepLink: ParsedDeepLinkType? = await appDiContainer.feature.deferredDeepLink.domainLayer.getDeferredDeepLinkUseCase().execute() // NOTE: I noticed the call to check for deferred deep link will take a second or 2. ~Levi
-                                        
-                    if !onboardingTutorialIsAvailable {
-                        pushFlow(flow: dashboardFlow, animated: false)
-                    }
-                    
-                    let launchCount: Int = launchCountRepository.getLaunchCount()
-                    let hasPossibleDeferredDeepLinkInPasteboardForDynalink: Bool = UIPasteboard.general.hasURLs
-                    
-                    let shouldOpenPasteboardForDeferredDeepLink: Bool = launchCount == 1 && hasPossibleDeferredDeepLinkInPasteboardForDynalink
                     
                     if let deepLink = deferredDeepLink {
                         
