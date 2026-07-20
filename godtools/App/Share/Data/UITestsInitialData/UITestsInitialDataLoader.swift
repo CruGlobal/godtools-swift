@@ -12,8 +12,8 @@ import SwiftData
 
 final class UITestsInitialDataLoader {
     
-    private static let tmtsTract: String = "ui_test_resource_1"
-    private static let fslTract: String = "ui_test_resource_2"
+    private static let tmtsTractId: String = "ui_test_resource_1"
+    private static let fslTractId: String = "ui_test_resource_2"
     private static let tmtsEnTranslation: String = "tmts_en_translation"
     private static let tmtsManifest: String = "tmts_manifest"
     private static let fslEnTranslation: String = "fsl_en_translation"
@@ -23,21 +23,26 @@ final class UITestsInitialDataLoader {
     private let languagesPersistence: any Persistence<LanguageDataModel, LanguageCodable>
     private let favoritedResourcesPersistence: any Persistence<FavoritedResourceDataModel, FavoritedResourceDataModel>
     private let resourcesFileCache: ResourcesSHA256FileCacheInterface
+    private let appLanguagesPersistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>
     
     init(
         resourcesCacheSync: ResourcesCacheSyncInterface,
         languagesPersistence: any Persistence<LanguageDataModel, LanguageCodable>,
         favoritedResourcesPersistence: any Persistence<FavoritedResourceDataModel, FavoritedResourceDataModel>,
-        resourcesFileCache: ResourcesSHA256FileCacheInterface
+        resourcesFileCache: ResourcesSHA256FileCacheInterface,
+        appLanguagesPersistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>
     ) {
         
         self.resourcesCacheSync = resourcesCacheSync
         self.languagesPersistence = languagesPersistence
         self.favoritedResourcesPersistence = favoritedResourcesPersistence
         self.resourcesFileCache = resourcesFileCache
+        self.appLanguagesPersistence = appLanguagesPersistence
     }
     
     func loadData() async throws {
+        
+        try await appLanguagesPersistence.writeObjects(externalObjects: Self.getAppLanguages())
         
         _ = try await languagesPersistence.writeObjects(
             externalObjects: [Self.getEnglishLanguage()],
@@ -85,7 +90,7 @@ final class UITestsInitialDataLoader {
     private static func getTeachMeToShareTool() -> ResourceCodable {
         
         return ResourceCodable(
-            id: tmtsTract,
+            id: tmtsTractId,
             abbreviation: "teachmetoshare",
             attrCategory: "training",
             attrSpotlight: true,
@@ -100,7 +105,7 @@ final class UITestsInitialDataLoader {
     private static func getFourSpiritualLawsTool() -> ResourceCodable {
         
         return ResourceCodable(
-            id: fslTract,
+            id: fslTractId,
             abbreviation: "fourlaws",
             attrCategory: "gospel",
             attrSpotlight: false,
@@ -120,6 +125,7 @@ final class UITestsInitialDataLoader {
             language: getEnglishLanguage(),
             manifestName: tmtsManifest,
             resource: getTeachMeToShareTool(),
+            translatedName: AccessibilityStrings.Button.ToolName.teachMeToShare.rawValue,
             version: 1
         )
     }
@@ -132,6 +138,7 @@ final class UITestsInitialDataLoader {
             language: getEnglishLanguage(),
             manifestName: fslManifest,
             resource: getFourSpiritualLawsTool(),
+            translatedName: AccessibilityStrings.Button.ToolName.fourSpiritualLaws.rawValue,
             version: 1
         )
     }
@@ -149,7 +156,14 @@ final class UITestsInitialDataLoader {
     private static func getFavoritedResources() -> [FavoritedResourceDataModel] {
         
         return [
-            FavoritedResourceDataModel(id: fslTract, createdAt: Date(), position: 0)
+            FavoritedResourceDataModel(id: fslTractId, createdAt: Date(), position: 0)
+        ]
+    }
+    
+    private static func getAppLanguages() -> [AppLanguageCodable] {
+        
+        return [
+            AppLanguageCodable(languageCode: "en", languageDirection: .leftToRight, languageScriptCode: nil)
         ]
     }
 }
