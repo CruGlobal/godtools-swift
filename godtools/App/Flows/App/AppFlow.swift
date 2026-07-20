@@ -617,6 +617,10 @@ extension AppFlow {
     
     private func getShouldPromptForOptInNotification() async throws -> Bool {
         
+        guard appDiContainer.core.dataLayer.getAppConfig().isOptInNotificationModalEnabled else {
+            return false
+        }
+        
         return try await appDiContainer.feature.optInNotification.domainLayer
             .getShouldPromptForOptInNotificationUseCase()
             .execute()

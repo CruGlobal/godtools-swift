@@ -49,6 +49,10 @@ final class TestsAppConfig: AppConfigInterface {
         return ""
     }
     
+    var isOptInNotificationModalEnabled: Bool {
+        return false
+    }
+    
     var urlRequestsEnabled: Bool {
         return false
     }

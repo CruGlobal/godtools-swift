@@ -50,6 +50,10 @@ final class GodToolsAppConfig: AppConfigInterface {
         return "542773210"
     }
     
+    var isOptInNotificationModalEnabled: Bool {
+        return true
+    }
+    
     var urlRequestsEnabled: Bool {
         return true
     }

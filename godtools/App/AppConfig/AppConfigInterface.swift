@@ -18,6 +18,7 @@ protocol AppConfigInterface: Sendable {
     var environment: AppEnvironment { get }
     var firebaseEnabled: Bool { get }
     var isDebug: Bool { get }
+    var isOptInNotificationModalEnabled: Bool { get }
     var urlRequestsEnabled: Bool { get }
     var shouldSyncInitialLanguages: Bool { get }
     var shouldSyncInitialResources: Bool { get }
