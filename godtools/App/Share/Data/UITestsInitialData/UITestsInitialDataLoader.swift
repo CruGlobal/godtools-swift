@@ -63,7 +63,11 @@ final class UITestsInitialDataLoader {
     private func loadTranslationManifests() async throws {
         
         guard let tmtsManifestData = PreviewAssets.tmtsManifest.data, let tmtsTractData = PreviewAssets.tmtsTract.data else {
-            throw NSError.errorWithDescription(description: "UITestsInitialDataLoader: Failed to get manifest from preview assets.")
+            throw NSError.errorWithDescription(description: "UITestsInitialDataLoader: Failed to get tmts manifest from preview assets.")
+        }
+        
+        guard let fslManifestData = PreviewAssets.fslManifest.data, let fslTractData = PreviewAssets.fslTract.data else {
+            throw NSError.errorWithDescription(description: "UITestsInitialDataLoader: Failed to get fsl manifest from preview assets.")
         }
                 
         _ = try await resourcesFileCache.storeTranslationFile(
@@ -75,6 +79,17 @@ final class UITestsInitialDataLoader {
         _ =  try await resourcesFileCache.storeTranslationZipFile(
             translationId: Self.tmtsEnTranslation,
             zipFileData: tmtsTractData
+        )
+        
+        _ = try await resourcesFileCache.storeTranslationFile(
+            translationId: Self.fslEnTranslation,
+            fileName: Self.fslManifest,
+            fileData: fslManifestData
+        )
+        
+        _ =  try await resourcesFileCache.storeTranslationZipFile(
+            translationId: Self.fslEnTranslation,
+            zipFileData: fslTractData
         )
     }
     
