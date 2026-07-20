@@ -29,12 +29,14 @@ final class ToolDetailsViewModel: ObservableObject {
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     
+    private var _tool = ToolDetailsTool.emptyValue
+    
     private var tool: ToolDetailsTool {
         set {
-            self.tool = newValue
+            _tool = newValue
         }
         get {
-            return self.tool.copy(toolId: toolId)
+            return _tool.copy(toolId: toolId)
         }
     }
     private var segmentTypes: [ToolDetailsSegmentType] = Array()
