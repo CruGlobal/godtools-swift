@@ -13,8 +13,6 @@ class LearnToShareToolFlowTests: BaseFlowTests {
     
     private func launchAppToToolDetails() {
         
-        // TODO: It would be nice to deeplink straight into tool details.  Noticing this test is flaky when trying to tap a tool to open tool details. ~Levi
-        
         super.launchApp(
             flowDeepLinkUrl: DeepLinkUrl.getToolDetails(toolId: "ui_test_resource_1"),
             checkInitialScreenExists: .toolDetails
