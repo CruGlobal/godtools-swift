@@ -28,10 +28,15 @@ final class ToolDetailsViewModel: ObservableObject {
     private let inMemoryDataCache: InMemoryDataCache
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
-    private let primaryLanguage: AppLanguageDomainModel
-    private let parallelLanguage: AppLanguageDomainModel?
-    private let selectedLanguageIndex: Int?
     
+    private var tool: ToolDetailsTool {
+        set {
+            self.tool = newValue
+        }
+        get {
+            return self.tool.copy(toolId: toolId)
+        }
+    }
     private var segmentTypes: [ToolDetailsSegmentType] = Array()
     private var cancellables: Set<AnyCancellable> = Set()
         
@@ -56,10 +61,7 @@ final class ToolDetailsViewModel: ObservableObject {
     
     init(
         stepEmitter: FlowStepEmitter,
-        toolId: String,
-        primaryLanguage: AppLanguageDomainModel,
-        parallelLanguage: AppLanguageDomainModel?,
-        selectedLanguageIndex: Int?,
+        tool: ToolDetailsTool,
         getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
         getToolDetailsStringsUseCase: GetToolDetailsStringsUseCase,
         getToolDetailsUseCase: GetToolDetailsUseCase,
@@ -71,15 +73,9 @@ final class ToolDetailsViewModel: ObservableObject {
         trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
         trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     ) {
-        
-        let primaryLanguage: AppLanguageDomainModel = primaryLanguage
-        let parallelLanguage: AppLanguageDomainModel? = parallelLanguage != primaryLanguage ? parallelLanguage : nil
-        
+                
         self.stepEmitter = stepEmitter
-        self.toolId = toolId
-        self.primaryLanguage = primaryLanguage
-        self.parallelLanguage = parallelLanguage
-        self.selectedLanguageIndex = selectedLanguageIndex
+        self.toolId = tool.toolId
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getToolDetailsStringsUseCase = getToolDetailsStringsUseCase
         self.getToolDetailsUseCase = getToolDetailsUseCase
@@ -90,6 +86,7 @@ final class ToolDetailsViewModel: ObservableObject {
         self.inMemoryDataCache = inMemoryDataCache
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
+        self.tool = tool
         
         getCurrentAppLanguageUseCase
             .execute()
@@ -145,8 +142,8 @@ final class ToolDetailsViewModel: ObservableObject {
                         .execute(
                             toolId: toolId,
                             appLanguage: appLanguage,
-                            toolPrimaryLanguage: primaryLanguage,
-                            toolParallelLanguage: parallelLanguage
+                            toolPrimaryLanguage: tool.primaryLanguage,
+                            toolParallelLanguage: tool.parallelLanguage
                         )
                 },
                 Just(strings)
@@ -214,8 +211,8 @@ final class ToolDetailsViewModel: ObservableObject {
                     await getToolDetailsLearnToShareToolIsAvailableUseCase
                         .execute(
                             toolId: toolId,
-                            primaryLanguage: primaryLanguage,
-                            parallelLanguage: parallelLanguage
+                            primaryLanguage: tool.primaryLanguage,
+                            parallelLanguage: tool.parallelLanguage
                         )
                 }
             }
@@ -296,12 +293,20 @@ extension ToolDetailsViewModel {
             ]
         )
         
-        stepEmitter.emit(step: AppFlowStep.openToolTappedFromToolDetails(toolId: toolId, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex))
+        stepEmitter.emit(
+            step: AppFlowStep.openToolTappedFromToolDetails(
+                tool: tool
+            )
+        )
     }
     
     func learnToShareToolTapped() {
         
-        stepEmitter.emit(step: AppFlowStep.learnToShareToolTappedFromToolDetails(toolId: toolId, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex))
+        stepEmitter.emit(
+            step: AppFlowStep.learnToShareToolTappedFromToolDetails(
+                tool: tool
+            )
+        )
     }
     
     func toggleFavorited() {

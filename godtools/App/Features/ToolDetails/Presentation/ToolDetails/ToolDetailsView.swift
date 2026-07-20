@@ -108,12 +108,17 @@ struct ToolDetailsView_Preview: PreviewProvider {
         
         let appDiContainer = AppDiContainer.createUITestsDiContainer()
                 
-        let viewModel = ToolDetailsViewModel(
-            stepEmitter: PreviewFlowStepEmitter.emitter,
+        let tool = ToolDetailsTool(
+            appLanguage: LanguageCodeDomainModel.english.rawValue,
             toolId: "1",
             primaryLanguage: LanguageCodeDomainModel.english.rawValue,
             parallelLanguage: nil,
-            selectedLanguageIndex: nil,
+            selectedLanguageIndex: nil
+        )
+        
+        let viewModel = ToolDetailsViewModel(
+            stepEmitter: PreviewFlowStepEmitter.emitter,
+            tool: tool,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getToolDetailsStringsUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsStringsUseCase(),
             getToolDetailsUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsUseCase(),
