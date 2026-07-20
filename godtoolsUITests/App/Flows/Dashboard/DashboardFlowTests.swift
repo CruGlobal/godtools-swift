@@ -10,11 +10,18 @@ import Foundation
 import XCTest
 
 class DashboardFlowTests: BaseFlowTests {
+    
+    private func launchAppToDashboardLessons() {
+        launchApp(
+            flowDeepLinkUrl: DeepLinkUrl.getDashboardLessons(),
+            checkInitialScreenExists: .dashboardLessons
+        )
+    }
         
     private func launchAppToDashboardFavorites() {
         
         super.launchApp(
-            flowDeepLinkUrl: "godtools://org.cru.godtools/dashboard/favorites",
+            flowDeepLinkUrl: DeepLinkUrl.getDashboardFavorites(),
             checkInitialScreenExists: .dashboardFavorites
         )
     }
@@ -22,7 +29,7 @@ class DashboardFlowTests: BaseFlowTests {
     private func launchAppToDashboardTools() {
         
         super.launchApp(
-            flowDeepLinkUrl: "godtools://org.cru.godtools/dashboard/tools",
+            flowDeepLinkUrl: DeepLinkUrl.getDashboardTools(),
             checkInitialScreenExists: .dashboardTools
         )
     }
@@ -70,32 +77,54 @@ extension DashboardFlowTests {
     
     func testLessonsTabTappedNavigatesToLessons() {
                 
-        launchApp(
-            flowDeepLinkUrl: "godtools://org.cru.godtools/dashboard/favorites",
-            checkInitialScreenExists: .dashboardFavorites
-        )
+        launchAppToDashboardFavorites()
                 
         tabToLessons()
     }
     
     func testFavoritesTabTappedNavigatesToFavorites() {
         
-        launchApp(
-            flowDeepLinkUrl: "godtools://org.cru.godtools/dashboard/tools",
-            checkInitialScreenExists: .dashboardTools
-        )
+        launchAppToDashboardTools()
                         
         tabToFavorites()
     }
     
     func testToolsTabTappedNavigatesToTools() {
         
-        launchApp(
-            flowDeepLinkUrl: "godtools://org.cru.godtools/dashboard/favorites",
-            checkInitialScreenExists: .dashboardFavorites
-        )
+        launchAppToDashboardFavorites()
                 
         tabToTools()
+    }
+}
+
+// MARK: - Lessons
+
+extension DashboardFlowTests {
+    
+    func testInitialScreenIsDashboardLessons() {
+    
+        launchApp(
+            flowDeepLinkUrl: DeepLinkUrl.getDashboardLessons(),
+            checkInitialScreenExists: .dashboardLessons
+        )
+    }
+    
+    func testLessonsPersonalizationTabTabsToAllLessonsAndPersonalization() {
+        
+        launchAppToDashboardLessons()
+        
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .allLessons)
+                
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .personalizedLessons)
+    }
+    
+    func testTappingLessonsLanguageFilterOpensLessonsLanguageFiltersList() {
+        
+        launchAppToDashboardLessons()
+                
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .lessonsLanguageFilter)
+                
+        assertIfScreenDoesNotExist(screenAccessibility: .lessonsLanguageFilters)
     }
 }
 
@@ -148,7 +177,7 @@ extension DashboardFlowTests {
         launchAppToDashboardTools()
                 
         assertIfButtonDoesNotExistElseTap(buttonAccessibility: .toolsLanguageFilter)
-        
+                
         assertIfScreenDoesNotExist(screenAccessibility: .toolsLanguageFilters)
     }
     
