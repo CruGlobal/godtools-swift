@@ -72,7 +72,7 @@ final class AppFlow: RootFlow {
         rootController.view.frame = UIScreen.main.bounds
         rootController.view.backgroundColor = .clear
         rootController.addChildController(child: appNavigationController)
-        appNavigationController.view.backgroundColor = UIColor.red//.white
+        appNavigationController.view.backgroundColor = .white
         
         super.init(
             initialView: nil,
