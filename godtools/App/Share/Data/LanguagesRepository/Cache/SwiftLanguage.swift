@@ -27,7 +27,7 @@ enum SwiftLanguageV1 {
         
         @Attribute(.unique) var id: String = ""
         
-        @Relationship(deleteRule: .noAction, inverse: \SwiftResource.languages) var resources: [SwiftResource] = Array<SwiftResource>()
+        @Relationship(deleteRule: .nullify, inverse: \SwiftResource.languages) var resources: [SwiftResource] = Array<SwiftResource>()
                         
         init() {
             

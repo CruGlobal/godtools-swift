@@ -49,9 +49,9 @@ enum SwiftResourceV1 {
 
         @Relationship(deleteRule: .nullify) var defaultVariant: SwiftResource?
         @Relationship(deleteRule: .nullify) var metatool: SwiftResource?
-        @Relationship(deleteRule: .cascade) var languages: [SwiftLanguage] = Array<SwiftLanguage>()
-        @Relationship(deleteRule: .cascade) var latestTranslations: [SwiftTranslation] = Array<SwiftTranslation>()
-        @Relationship(deleteRule: .cascade) var variants: [SwiftResource] = Array<SwiftResource>()
+        @Relationship(deleteRule: .nullify) var languages: [SwiftLanguage] = Array<SwiftLanguage>()
+        @Relationship(deleteRule: .nullify) var latestTranslations: [SwiftTranslation] = Array<SwiftTranslation>()
+        @Relationship(deleteRule: .nullify) var variants: [SwiftResource] = Array<SwiftResource>()
             
         init() {
             
