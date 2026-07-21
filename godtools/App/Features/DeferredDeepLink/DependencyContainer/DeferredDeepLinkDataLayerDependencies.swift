@@ -20,12 +20,7 @@ final class DeferredDeepLinkDataLayerDependencies {
         return ConfigureDynalink()
     }
     
-    func getDynalinkDeferredDeepLink() -> DeferredDeepLinkInterface {
-        
-        if coreDataLayer.getAppBuild().target == .uiTests {
-            return NoDeferredDeepLink()
-        }
-        
+    func getDynalinkDeferredDeepLink() -> DynalinkDeferredDeepLink {
         return DynalinkDeferredDeepLink(
             errorReporting: coreDataLayer.getErrorReporting()
         )

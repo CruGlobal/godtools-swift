@@ -8,15 +8,15 @@
 
 import Foundation
 
-final class GetDeferredDeepLinkUseCase {
+final class GetDeferredDeepLinkUseCase: GetDeferredDeepLinkUseCaseInterface {
     
     private let deepLinkService: DeepLinkingService
-    private let dynalinkDeferredDeepLink: DeferredDeepLinkInterface
+    private let dynalinkDeferredDeepLink: DynalinkDeferredDeepLink
     private let launchCountRepository: LaunchCountRepositoryInterface
     
     init(
         deepLinkService: DeepLinkingService,
-        dynalinkDeferredDeepLink: DeferredDeepLinkInterface,
+        dynalinkDeferredDeepLink: DynalinkDeferredDeepLink,
         launchCountRepository: LaunchCountRepositoryInterface
     ) {
         
