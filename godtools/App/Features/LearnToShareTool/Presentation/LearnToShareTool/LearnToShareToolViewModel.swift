@@ -70,12 +70,17 @@ final class LearnToShareToolViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        Publishers.CombineLatest(
+        Publishers.CombineLatest3(
             $strings.dropFirst(),
-            $currentPage
+            $currentPage,
+            $learnToShareToolItems.dropFirst()
         )
         .receive(on: DispatchQueue.main)
-        .sink { [weak self] (strings: LearnToShareToolStringsDomainModel, currentPage: Int) in
+        .sink { [weak self] (
+            strings: LearnToShareToolStringsDomainModel,
+            currentPage: Int,
+            learnToShareToolItems: [LearnToShareToolItemDomainModel]
+        ) in
             
             guard let weakSelf = self else {
                 return
