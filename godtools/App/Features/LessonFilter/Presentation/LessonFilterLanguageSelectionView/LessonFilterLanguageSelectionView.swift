@@ -20,6 +20,8 @@ struct LessonFilterLanguageSelectionView: View {
         
         VStack(spacing: 0) {
             
+            AccessibilityScreenElementView(screenAccessibility: .lessonsLanguageFilters)
+            
             SearchBarView(searchText: $viewModel.searchText, strings: viewModel.searchBarStrings)
             
             List {

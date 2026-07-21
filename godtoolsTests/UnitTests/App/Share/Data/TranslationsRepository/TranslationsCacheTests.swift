@@ -9,7 +9,6 @@
 import Testing
 @testable import godtools
 import Foundation
-import RealmSwift
 import SwiftData
 import RepositorySync
 
@@ -19,11 +18,6 @@ struct TranslationsCacheTests {
     private static let englishLanguageId: String = "0"
     private static let spanishLanguageId: String = "1"
     private static let vietnameseLanguageId: String = "2"
-
-    enum PersistenceType: CaseIterable {
-        case realm
-        case swiftData
-    }
 
     struct TestArgument {
 
@@ -66,10 +60,10 @@ struct TranslationsCacheTests {
     }
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases)
-    func getEnglishTranslation(persistenceType: PersistenceType) async throws {
+    @Test
+    func getEnglishTranslation() async throws {
 
-        let translationsCache = try getCache(persistenceType: persistenceType)
+        let translationsCache = try getCache()
 
         let translationId: String = "e0"
 
@@ -81,14 +75,14 @@ struct TranslationsCacheTests {
     }
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases, [
+    @Test(arguments: [
         TestArgument(expectedVersion: 12, languageId: englishLanguageId),
         TestArgument(expectedVersion: 122, languageId: spanishLanguageId),
         TestArgument(expectedVersion: 20, languageId: vietnameseLanguageId)
     ])
-    func getLatestTranslationByLanguageId(persistenceType: PersistenceType, argument: TestArgument) async throws {
+    func getLatestTranslationByLanguageId(argument: TestArgument) async throws {
 
-        let translationsCache = try getCache(persistenceType: persistenceType)
+        let translationsCache = try getCache()
 
         let languageId: String = try #require(argument.languageId)
 
@@ -101,14 +95,14 @@ struct TranslationsCacheTests {
     }
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases, [
+    @Test(arguments: [
         LanguageCodeArgument(expectedVersion: 12, languageCode: LanguageCodeDomainModel.english.rawValue),
         LanguageCodeArgument(expectedVersion: 122, languageCode: LanguageCodeDomainModel.spanish.rawValue),
         LanguageCodeArgument(expectedVersion: 20, languageCode: LanguageCodeDomainModel.vietnamese.rawValue)
     ])
-    func getLatestTranslationByLanguageCode(persistenceType: PersistenceType, argument: LanguageCodeArgument) async throws {
+    func getLatestTranslationByLanguageCode(argument: LanguageCodeArgument) async throws {
 
-        let translationsCache = try getCache(persistenceType: persistenceType)
+        let translationsCache = try getCache()
 
         let translation = try translationsCache.getLatestTranslation(
             resourceId: argument.resourceId,
@@ -119,13 +113,13 @@ struct TranslationsCacheTests {
     }
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases, [
+    @Test(arguments: [
         LanguageCodeArgument(expectedVersion: 12, languageCode: "EN"),
         LanguageCodeArgument(expectedVersion: 122, languageCode: "Es")
     ])
-    func getLatestTranslationByLanguageCodeIgnoresCase(persistenceType: PersistenceType, argument: LanguageCodeArgument) async throws {
+    func getLatestTranslationByLanguageCodeIgnoresCase(argument: LanguageCodeArgument) async throws {
 
-        let translationsCache = try getCache(persistenceType: persistenceType)
+        let translationsCache = try getCache()
 
         let translation = try translationsCache.getLatestTranslation(
             resourceId: argument.resourceId,
@@ -136,13 +130,13 @@ struct TranslationsCacheTests {
     }
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases, [
+    @Test(arguments: [
         MissingTranslationArgument(languageId: englishLanguageId, resourceId: "resource_does_not_exist"),
         MissingTranslationArgument(languageId: "language_does_not_exist")
     ])
-    func getLatestTranslationByLanguageIdIsNil(persistenceType: PersistenceType, argument: MissingTranslationArgument) async throws {
+    func getLatestTranslationByLanguageIdIsNil(argument: MissingTranslationArgument) async throws {
 
-        let translationsCache = try getCache(persistenceType: persistenceType)
+        let translationsCache = try getCache()
 
         let translation = try translationsCache.getLatestTranslation(
             resourceId: argument.resourceId,
@@ -153,10 +147,10 @@ struct TranslationsCacheTests {
     }
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases)
-    func getLatestTranslationByLanguageCodeIsNil(persistenceType: PersistenceType) async throws {
+    @Test
+    func getLatestTranslationByLanguageCodeIsNil() async throws {
 
-        let translationsCache = try getCache(persistenceType: persistenceType)
+        let translationsCache = try getCache()
 
         let translation = try translationsCache.getLatestTranslation(
             resourceId: Self.resourceId,
@@ -172,57 +166,15 @@ struct TranslationsCacheTests {
 extension TranslationsCacheTests {
 
     @available(iOS 17.4, *)
-    private func getCache(persistenceType: PersistenceType) throws -> TranslationsCache {
+    private func getCache() throws -> TranslationsCache {
 
-        let persistence: any Persistence<TranslationDataModel, TranslationCodable>
-
-        switch persistenceType {
-
-        case .realm:
-            persistence = try getRealmPersistence()
-
-        case .swiftData:
-            persistence = try getSwiftPersistence()
-        }
-
-        return TranslationsCache(
-            persistence: persistence
-        )
-    }
-
-    private func getRealmPersistence() throws -> RealmRepositorySyncPersistence<TranslationDataModel, TranslationCodable, RealmTranslation> {
-
-        let database: RealmDatabase = try FakeRealmDatabase.createRealmDatabase(
-            addRealmObjects: getRealmDatabaseObjects()
+        let testsAppConfig = TestsAppConfig(
+            swiftDatabase: try FakeSwiftDatabase.createSwiftDatabase(addObjects: getSwiftDatabaseObjects())
         )
 
-        return RealmRepositorySyncPersistence(
-            database: database,
-            mapping: RealmTranslationMapping()
-        )
-    }
+        let testsDiContainer = TestsDiContainer(testsAppConfig: testsAppConfig)
 
-    @available(iOS 17.4, *)
-    private func getSwiftPersistence() throws -> SwiftRepositorySyncPersistence<TranslationDataModel, TranslationCodable, SwiftTranslation> {
-
-        let container = try SwiftDataContainer.createInMemoryContainer(schema: Schema(versionedSchema: LatestProductionSwiftDataSchema.self))
-
-        let database = SwiftDatabase(container: container)
-
-        let context: ModelContext = database.openContext()
-
-        for object in getSwiftDatabaseObjects() {
-            context.insert(object)
-        }
-
-        if context.hasChanges {
-            try context.save()
-        }
-
-        return SwiftRepositorySyncPersistence(
-            database: database,
-            mapping: SwiftTranslationMapping()
-        )
+        return testsDiContainer.core.dataLayer.getTranslationsCache()
     }
 
     private func getLanguage(id: String, languageCode: LanguageCodeDomainModel, name: String) -> LanguageDataModel {
@@ -283,40 +235,8 @@ extension TranslationsCacheTests {
         ]
     }
 
-    private func getRealmDatabaseObjects() -> [IdentifiableRealmObject] {
-
-        let english = RealmLanguage.createNewFrom(model: getEnglishLanguage())
-        let spanish = RealmLanguage.createNewFrom(model: getSpanishLanguage())
-        let vietnamese = RealmLanguage.createNewFrom(model: getVietnameseLanguage())
-
-        let resource: RealmResource = FakeRealmResource.createTract(
-            addLanguages: [.english, .spanish, .vietnamese],
-            fromLanguages: [english, spanish, vietnamese],
-            id: Self.resourceId
-        )
-
-        let translationsByLanguage: [(language: RealmLanguage, translations: [TranslationDataModel])] = [
-            (english, getEnglishTranslations()),
-            (spanish, getSpanishTranslations()),
-            (vietnamese, getVietnameseTranslations())
-        ]
-
-        for (language, translationModels) in translationsByLanguage {
-
-            for translationModel in translationModels {
-
-                let translation = RealmTranslation.createNewFrom(model: translationModel)
-                translation.language = language
-                translation.resource = resource
-                resource.addLatestTranslation(translation: translation)
-            }
-        }
-
-        return [resource]
-    }
-
     @available(iOS 17.4, *)
-    private func getSwiftDatabaseObjects() -> [any IdentifiableSwiftDataObject] {
+    private func getSwiftDatabaseObjects() -> [SwiftResource] {
 
         let english = SwiftLanguage.createNewFrom(model: getEnglishLanguage())
         let spanish = SwiftLanguage.createNewFrom(model: getSpanishLanguage())

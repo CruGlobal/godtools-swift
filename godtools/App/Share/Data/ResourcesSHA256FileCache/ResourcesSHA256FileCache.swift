@@ -85,25 +85,24 @@ actor ResourcesSHA256FileCache: ResourcesSHA256FileCacheInterface, ModelActor {
             )
         }
         
-        let sha256File: SwiftSHA256File
-        
         let existing: SwiftSHA256File? = try swiftDataRead.object(context: modelContext, id: filenameWithPathExtension)
-        
-        if let existing = existing, !existing.attachments.contains(attachment) {
-            
-            sha256File = existing
+
+        if let existing = existing {
+
+            if !existing.attachments.contains(attachment) {
+                existing.attachments.append(attachment)
+            }
         }
         else {
-            
-            sha256File = SwiftSHA256File()
+
+            let sha256File = SwiftSHA256File()
             sha256File.id = filenameWithPathExtension
             sha256File.sha256WithPathExtension = filenameWithPathExtension
+            sha256File.attachments.append(attachment)
+
+            modelContext.insert(sha256File)
         }
-        
-        sha256File.attachments.append(attachment)
-        
-        modelContext.insert(sha256File)
-        
+
         try modelContext.saveIfHasChanges()
         
         let deleteResourcesFilesResult = try deleteUnusedResourceFiles()
@@ -165,25 +164,27 @@ actor ResourcesSHA256FileCache: ResourcesSHA256FileCacheInterface, ModelActor {
                 continue
             }
             
-            let sha256File: SwiftSHA256File
-            
             let existing: SwiftSHA256File? = try swiftDataRead.object(context: modelContext, id: filenameWithPathExtension)
-            
-            if let existing = existing, !existing.translations.contains(translation) {
-                
-                sha256File = existing
+
+            if let existing = existing {
+
+                guard !existing.translations.contains(translation) else {
+                    continue
+                }
+
+                existing.translations.append(translation)
             }
             else {
-                
-                sha256File = SwiftSHA256File()
+
+                let sha256File = SwiftSHA256File()
+                sha256File.id = filenameWithPathExtension
                 sha256File.sha256WithPathExtension = filenameWithPathExtension
+                sha256File.translations.append(translation)
+
+                updateSha256Files.append(sha256File)
             }
-            
-            sha256File.translations.append(translation)
-            
-            updateSha256Files.append(sha256File)
         }
-        
+
         modelContext.insertObjects(objects: updateSha256Files)
         
         try modelContext.saveIfHasChanges()

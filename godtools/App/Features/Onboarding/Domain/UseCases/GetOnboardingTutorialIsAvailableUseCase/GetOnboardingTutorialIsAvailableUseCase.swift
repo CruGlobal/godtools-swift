@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import Combine
 
-final class GetOnboardingTutorialIsAvailableUseCase {
+final class GetOnboardingTutorialIsAvailableUseCase: GetOnboardingTutorialIsAvailableUseCaseInterface {
     
     private let getOnboardingTutorialIsAvailable: GetOnboardingTutorialIsAvailable
     

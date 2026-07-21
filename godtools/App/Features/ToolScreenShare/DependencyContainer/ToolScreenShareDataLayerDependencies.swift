@@ -56,7 +56,7 @@ final class ToolScreenShareDataLayerDependencies {
         
         let webSocket: WebSocketInterface = getNewWebSocketForScreenShare()
         
-        let loggingEnabled: Bool = coreDataLayer.getAppConfig().isDebug
+        let loggingEnabled: Bool = coreDataLayer.getAppBuild().isDebug
         
         return TractRemoteSharePublisher(
             webSocket: webSocket,
@@ -69,7 +69,7 @@ final class ToolScreenShareDataLayerDependencies {
         
         let webSocket: WebSocketInterface = getNewWebSocketForScreenShare()
         
-        let loggingEnabled: Bool = coreDataLayer.getAppConfig().isDebug
+        let loggingEnabled: Bool = coreDataLayer.getAppBuild().isDebug
         
         return TractRemoteShareSubscriber(
             webSocket: webSocket,

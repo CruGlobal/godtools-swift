@@ -11,6 +11,8 @@ import UIKit
 
 enum PreviewAssets: String {
     
+    case fslTract = "fsl_tract"
+    case fslManifest = "fsl_manifest"
     case tmtsTract = "tmts_tract"
     case tmtsManifest = "tmts_manifest"
     

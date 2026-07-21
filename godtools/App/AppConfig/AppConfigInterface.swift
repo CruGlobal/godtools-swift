@@ -13,12 +13,12 @@ import RepositorySync
 protocol AppConfigInterface: Sendable {
     
     var analyticsEnabled: Bool { get }
-    var buildConfig: AppBuildConfiguration { get }
     var dynalinkClientApiKey: String? { get }
-    var environment: AppEnvironment { get }
     var firebaseEnabled: Bool { get }
-    var isDebug: Bool { get }
+    var isOptInNotificationModalEnabled: Bool { get }
     var urlRequestsEnabled: Bool { get }
+    var shouldSyncInitialLanguages: Bool { get }
+    var shouldSyncInitialResources: Bool { get }
     
     func getAppleAppId() -> String
     func getFacebookConfiguration() -> FacebookConfiguration?
@@ -26,7 +26,7 @@ protocol AppConfigInterface: Sendable {
     func getGoogleAuthenticationConfiguration() -> GoogleAuthenticationConfiguration?
     func getMobileContentApiBaseUrl() -> String
     func getMobileContentCDNBaseUrl() -> String
-    func getRealmDatabaseConfig() throws -> RealmDatabaseConfig
+    func getRealmDatabase() throws -> RealmDatabase
     @available(iOS 17.4, *)
     func getSwiftDatabase() throws -> SwiftDatabase?
     func getTractRemoteShareConnectionUrl() -> String

@@ -41,7 +41,19 @@ final class UITestsAppConfig: AppConfigInterface {
         return false
     }
     
+    var isOptInNotificationModalEnabled: Bool {
+        return false
+    }
+    
     var urlRequestsEnabled: Bool {
+        return false
+    }
+    
+    var shouldSyncInitialLanguages: Bool {
+        return false
+    }
+    
+    var shouldSyncInitialResources: Bool {
         return false
     }
     
@@ -69,16 +81,17 @@ final class UITestsAppConfig: AppConfigInterface {
         return GodToolsAppConfig.getMobileContentCDNBaseUrl(environment: environment)
     }
     
-    func getRealmDatabaseConfig() throws -> RealmDatabaseConfig {
-        return try UITestsRealmDatabase.getRealmDatabaseConfig()
+    func getRealmDatabase() throws -> RealmDatabase {
+        return RealmDatabase(
+            databaseConfig: try RealmDatabaseConfig.createInMemoryConfig()
+        )
     }
     
     @available(iOS 17.4, *)
     func getSwiftDatabase() throws -> SwiftDatabase? {
-        return nil
-//        return SwiftDatabase(
-//            container: try SwiftDataProductionContainer.createInMemoryContainer()
-//        )
+        return SwiftDatabase(
+            container: try SwiftDataProductionContainer.createInMemoryContainer()
+        )
     }
     
     func getTractRemoteShareConnectionUrl() -> String {

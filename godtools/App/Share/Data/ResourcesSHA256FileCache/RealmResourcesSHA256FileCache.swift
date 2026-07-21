@@ -108,17 +108,19 @@ final class RealmResourcesSHA256FileCache: ResourcesSHA256FileCacheInterface {
                 do {
                     
                     try realm.write {
-                        
-                        if let existingRealmSHA256File = realm.object(ofType: RealmSHA256File.self, forPrimaryKey: filenameWithPathExtension), !existingRealmSHA256File.attachments.contains(realmAttachment) {
-                            
-                            existingRealmSHA256File.attachments.append(realmAttachment)
+
+                        if let existingRealmSHA256File = realm.object(ofType: RealmSHA256File.self, forPrimaryKey: filenameWithPathExtension) {
+
+                            if !existingRealmSHA256File.attachments.contains(realmAttachment) {
+                                existingRealmSHA256File.attachments.append(realmAttachment)
+                            }
                         }
                         else {
-                            
+
                             let newRealmSHA256File: RealmSHA256File = RealmSHA256File()
                             newRealmSHA256File.sha256WithPathExtension = filenameWithPathExtension
                             newRealmSHA256File.attachments.append(realmAttachment)
-                            
+
                             realm.add(newRealmSHA256File, update: .all)
                         }
                     }
@@ -239,19 +241,23 @@ final class RealmResourcesSHA256FileCache: ResourcesSHA256FileCacheInterface {
             }
             
             let sha256File: RealmSHA256File
-            
-            if let existingRealmSHA256File = realm.object(ofType: RealmSHA256File.self, forPrimaryKey: filenameWithPathExtension), !existingRealmSHA256File.translations.contains(realmTranslation) {
-                
+
+            if let existingRealmSHA256File = realm.object(ofType: RealmSHA256File.self, forPrimaryKey: filenameWithPathExtension) {
+
+                guard !existingRealmSHA256File.translations.contains(realmTranslation) else {
+                    continue
+                }
+
                 sha256File = existingRealmSHA256File.copy()
             }
             else {
-                
+
                 sha256File = RealmSHA256File()
                 sha256File.sha256WithPathExtension = filenameWithPathExtension
             }
-            
+
             sha256File.translations.append(realmTranslation)
-            
+
             updateSha256Files.append(sha256File)
         }
         

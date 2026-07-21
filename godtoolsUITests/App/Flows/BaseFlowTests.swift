@@ -212,4 +212,34 @@ extension BaseFlowTests {
             return app.queryDescendants(id: buttonId)
         }
     }
+    
+    func swipeUpUntilButtonExists(buttonId: String, buttonQueryType: ButtonQueryType, maxSwipes: Int = 10) -> XCUIElement? {
+        
+        var button: XCUIElement?
+        var swipeCount: Int = 0
+        
+        while button == nil && swipeCount < maxSwipes {
+            
+            if let searchButton = queryButton(buttonId: buttonId, buttonQueryType: buttonQueryType) {
+                
+                _ = searchButton.waitForExistence(timeout: 1)
+                
+                button = searchButton
+                
+                swipeUp()
+                swipeCount += 1
+            }
+            else {
+                
+                swipeUp()
+                swipeCount += 1
+            }
+        }
+        
+        return button
+    }
+    
+    func swipeUp() {
+        app.swipeUp()
+    }
 }

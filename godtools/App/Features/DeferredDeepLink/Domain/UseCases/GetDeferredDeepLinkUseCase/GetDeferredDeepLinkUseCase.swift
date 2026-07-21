@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetDeferredDeepLinkUseCase {
+final class GetDeferredDeepLinkUseCase: GetDeferredDeepLinkUseCaseInterface {
     
     private let deepLinkService: DeepLinkingService
     private let dynalinkDeferredDeepLink: DynalinkDeferredDeepLink

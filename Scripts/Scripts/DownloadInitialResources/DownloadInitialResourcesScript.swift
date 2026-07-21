@@ -11,10 +11,18 @@ import Combine
 
 @main
 enum DownloadInitialResourcesScript {
+    
+    private static let uiTestsLaunchEnvironment: UITestsLaunchEnvironment = UITestsLaunchEnvironment()
              
     private static var runScriptCancellable: AnyCancellable?
     
     static func main() {
+        
+        let isUITests: Bool = uiTestsLaunchEnvironment.getIsUITests() ?? false
+        
+        guard !isUITests else {
+            return
+        }
           
         let apiBaseUrl: String = "https://mobile-content-api.cru.org"
         let session: URLSession = getIgnoreCacheSession()

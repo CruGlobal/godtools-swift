@@ -8,11 +8,12 @@
 
 import Foundation
 
-final class AppBuild: Sendable {
-
+final class AppBuild: AppBuildInterface {
+    
     let configuration: AppBuildConfiguration
     let environment: AppEnvironment
     let isDebug: Bool
+    let target: BuildTarget = .godtools
 
     init(buildConfiguration: AppBuildConfiguration?) {
 
@@ -51,9 +52,5 @@ final class AppBuild: Sendable {
         case .release:
             environment = .production
         }
-    }
-    
-    var isTestsTarget: Bool {
-        return NSClassFromString("XCTest") != nil
     }
 }

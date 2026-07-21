@@ -13,10 +13,11 @@ class AppDiContainer {
     let core: AppCoreDiContainer
     let feature: AppFeatureDiContainer
     
-    init(appConfig: AppConfigInterface) {
+    init(appBuild: AppBuildInterface, appConfig: AppConfigInterface) {
                 
         // core
         let dataLayer = AppDataLayerDependencies(
+            appBuild: appBuild,
             appConfig: appConfig
         )
         
@@ -172,7 +173,7 @@ class AppDiContainer {
     }
     
     static func createUITestsDiContainer() -> AppDiContainer {
-        return AppDiContainer(appConfig: UITestsAppConfig())
+        return AppDiContainer(appBuild: UITestsBuild(), appConfig: UITestsAppConfig())
     }
     
     func getUrlOpener() -> UrlOpenerInterface {

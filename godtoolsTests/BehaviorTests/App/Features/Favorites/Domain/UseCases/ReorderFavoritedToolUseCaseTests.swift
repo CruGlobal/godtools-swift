@@ -68,9 +68,9 @@ extension ReorderFavoritedToolUseCaseTests {
     @available(iOS 17.4, *)
     private func getTestsDiContainer(addResources: [String: Int]) async throws -> TestsDiContainer {
 
-        let testsDiContainer = try TestsDiContainer(
+        let testsDiContainer = TestsDiContainer(
             testsAppConfig: TestsAppConfig(
-                swiftDatabase: SwiftDatabase(container: SwiftDataProductionContainer.createInMemoryContainer())
+                swiftDatabase: SwiftDatabase(container: try SwiftDataProductionContainer.createInMemoryContainer())
             )
         )
         

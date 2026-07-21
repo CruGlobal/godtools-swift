@@ -224,7 +224,7 @@ extension GetLessonFilterLanguagesUseCaseTests {
 
         try context.saveIfHasChanges()
 
-        let testsDiContainer = try TestsDiContainer(
+        let testsDiContainer = TestsDiContainer(
             testsAppConfig: TestsAppConfig(
                 swiftDatabase: swiftDatabase
             )
