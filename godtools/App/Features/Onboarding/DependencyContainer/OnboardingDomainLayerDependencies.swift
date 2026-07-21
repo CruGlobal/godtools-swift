@@ -26,7 +26,12 @@ final class OnboardingDomainLayerDependencies {
         )
     }
     
-    func getOnboardingTutorialIsAvailableUseCase() -> GetOnboardingTutorialIsAvailableUseCase {
+    func getOnboardingTutorialIsAvailableUseCase() -> GetOnboardingTutorialIsAvailableUseCaseInterface {
+        
+        guard core.dataLayer.getAppBuild().target != .uiTests else {
+            return UITestsGetOnboardingTutorialIsAvailableUseCase()
+        }
+        
         return GetOnboardingTutorialIsAvailableUseCase(
             getOnboardingTutorialIsAvailable: getOnboardingTutorialIsAvailable()
         )

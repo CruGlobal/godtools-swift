@@ -19,7 +19,12 @@ final class LearnToShareToolDomainLayerDependencies {
         self.dataLayer = dataLayer
     }
     
-    func getLearnToShareToolTutorialIsAvailableUseCase() -> LearnToShareToolTutorialIsAvailableUseCase {
+    func getLearnToShareToolTutorialIsAvailableUseCase() -> LearnToShareToolTutorialIsAvailableUseCaseInterface {
+        
+        guard core.dataLayer.getAppBuild().target != .uiTests else {
+            return UITestsLearnToShareToolTutorialIsAvailableUseCase()
+        }
+        
         return LearnToShareToolTutorialIsAvailableUseCase(
             toolTrainingTipsOnboardingViewsRepository: dataLayer.getToolTrainingTipsOnboardingViewsRepository(),
             getTranslatedToolName: core.domainLayer.supporting.getTranslatedToolName()
