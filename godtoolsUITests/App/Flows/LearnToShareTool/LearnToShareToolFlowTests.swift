@@ -38,9 +38,6 @@ class LearnToShareToolFlowTests: BaseFlowTests {
         navigateToLearnToShareFromToolsDetails()
     }
     
-    // TODO: Need to fix navigation to tract for FSL. ~Levi
-    
-    /*
     func testTappingCloseLearnToShareNavigatesToTheTool() {
         
         launchAppToToolDetails()
@@ -63,5 +60,5 @@ class LearnToShareToolFlowTests: BaseFlowTests {
         assertIfButtonDoesNotExistElseTap(buttonAccessibility: .startTraining)
                 
         assertIfScreenDoesNotExist(screenAccessibility: .tract)
-    }*/
+    }
 }
