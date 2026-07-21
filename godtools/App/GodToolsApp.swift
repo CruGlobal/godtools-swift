@@ -43,12 +43,11 @@ struct GodToolsApp: App {
     private let toolShortcutLinksViewModel: ToolShortcutLinksViewModel
     
     static var appLaunchType: AppLaunchType {
-        return .uiTests
-//        let isUITests: Bool = uiTestsLaunchEnvironment.getIsUITests() ?? false
-//        if isUITests {
-//            return .uiTests
-//        }
-//        return .godtools
+        let isUITests: Bool = uiTestsLaunchEnvironment.getIsUITests() ?? false
+        if isUITests {
+            return .uiTests
+        }
+        return .godtools
     }
     
     @Environment(\.scenePhase) private var scenePhase
