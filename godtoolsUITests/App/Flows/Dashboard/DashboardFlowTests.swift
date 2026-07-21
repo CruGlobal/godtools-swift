@@ -199,13 +199,17 @@ extension DashboardFlowTests {
         
         launchAppToDashboardTools()
         
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .allTools)
+        
         let toolId: String = AccessibilityStrings.Button.getToolButtonAccessibility(
             toolButton: .tool,
             toolName: .fourSpiritualLaws
         )
         
-        assertIfButtonDoesNotExistElseTap(buttonId: toolId, buttonQueryType: .searchDescendants)
+        let button = swipeUpUntilButtonExists(buttonId: toolId, buttonQueryType: .searchDescendants)
         
-        assertIfScreenDoesNotExist(screenAccessibility: .toolDetails)
+        assertIfButtonDoesNotExist(button: button)
+        
+        button?.tap()
     }
 }
