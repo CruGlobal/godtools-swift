@@ -9,25 +9,30 @@
 import Foundation
 
 struct ArticleAemData: Sendable {
-    
-    private let htmlExtension: String = "html"
-    private let internalWebUrl: String
-    
+        
     let id: String
     let aemUri: String
     let articleJcrContent: ArticleJcrContent?
+    let webUrl: String
+    let error: Error?
     let updatedAt: Date
     
-    init(id: String, aemUri: String, articleJcrContent: ArticleJcrContent?, webUrl: String, updatedAt: Date) {
+    init(
+        id: String,
+        aemUri: String,
+        articleJcrContent: ArticleJcrContent?,
+        webUrl: String,
+        error: Error?,
+        updatedAt: Date
+    ) {
+        
+        let htmlExtension: String = "html"
         
         self.id = id
         self.aemUri = aemUri
         self.articleJcrContent = articleJcrContent
-        self.internalWebUrl = webUrl
+        self.webUrl = webUrl.replacingOccurrences(of: "/.\(htmlExtension)", with: ".\(htmlExtension)")
+        self.error = error
         self.updatedAt = updatedAt
-    }
-    
-    var webUrl: String {
-        return internalWebUrl.replacingOccurrences(of: "/.\(htmlExtension)", with: ".\(htmlExtension)")        
     }
 }
