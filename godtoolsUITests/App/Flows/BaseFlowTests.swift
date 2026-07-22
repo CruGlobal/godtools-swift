@@ -81,7 +81,11 @@ extension BaseFlowTests {
         }
     }
     
-    func assertIfScreenDoesNotExist(screenAccessibility: AccessibilityStrings.Screen, shouldWaitForExistence: Bool = true) {
+    func assertIfScreenDoesNotExist(
+        screenAccessibility: AccessibilityStrings.Screen,
+        shouldWaitForExistence: Bool = true,
+        waitForExistenceTimeout: TimeInterval? = nil
+    ) {
         
         // NOTE:
         //  I needed to place screen accessibility id's on an element within the screen view hierarchy rather than
@@ -93,7 +97,10 @@ extension BaseFlowTests {
         // ~Levi
         
         if shouldWaitForExistence {
-            XCTAssertTrue(app.staticTexts[screenAccessibility.id].waitForExistence(timeout: Self.defaultWaitForScreenExistence))
+            XCTAssertTrue(
+                app.staticTexts[screenAccessibility.id]
+                    .waitForExistence(timeout: waitForExistenceTimeout ?? Self.defaultWaitForScreenExistence)
+            )
         }
         else {
             XCTAssertTrue(app.staticTexts[screenAccessibility.id].exists)
