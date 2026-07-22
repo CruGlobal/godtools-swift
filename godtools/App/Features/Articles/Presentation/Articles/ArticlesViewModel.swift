@@ -65,6 +65,7 @@ final class ArticlesViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .execute()
+            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         downloadArticlesObservable
