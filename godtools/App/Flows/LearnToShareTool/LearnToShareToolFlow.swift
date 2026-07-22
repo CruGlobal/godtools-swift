@@ -11,21 +11,14 @@ import SwiftUI
 
 final class LearnToShareToolFlow: GTFlow {
             
-    private let toolPrimaryLanguage: AppLanguageDomainModel
-    private let toolParallelLanguage: AppLanguageDomainModel?
-    private let toolSelectedLanguageIndex: Int?
-        
+    private let tool: ToolDetailsTool
+    
     init(
         appDiContainer: AppDiContainer,
-        toolId: String,
-        toolPrimaryLanguage: AppLanguageDomainModel,
-        toolParallelLanguage: AppLanguageDomainModel?,
-        toolSelectedLanguageIndex: Int?
+        tool: ToolDetailsTool
     ) {
         
-        self.toolPrimaryLanguage = toolPrimaryLanguage
-        self.toolParallelLanguage = toolParallelLanguage
-        self.toolSelectedLanguageIndex = toolSelectedLanguageIndex
+        self.tool = tool
         
         let stepEmitter = FlowStepEmitter()
         
@@ -34,10 +27,7 @@ final class LearnToShareToolFlow: GTFlow {
             initialView: Self.getLearnToShareToolView(
                 appDiContainer: appDiContainer,
                 stepEmitter: stepEmitter,
-                toolId: toolId,
-                toolPrimaryLanguage: toolPrimaryLanguage,
-                toolParallelLanguage: toolParallelLanguage,
-                toolSelectedLanguageIndex: toolSelectedLanguageIndex
+                tool: tool
             ),
             stepEmitter: stepEmitter,
             navigationController: AppNavigationController(
@@ -63,11 +53,15 @@ final class LearnToShareToolFlow: GTFlow {
 
         switch appStep {
             
-        case .startTrainingTappedFromLearnToShareTool(let toolId, let primaryLanguage, let parallelLanguage, let selectedLanguageIndex):
-            parent?.stepEmitter.emit(step: AppFlowStep.startTrainingTappedFromLearnToShareTool(toolId: toolId, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex))
+        case .startTrainingTappedFromLearnToShareTool(let tool):
+            parent?.stepEmitter.emit(
+                step: AppFlowStep.startTrainingTappedFromLearnToShareTool(tool: tool)
+            )
             
-        case .closeTappedFromLearnToShareTool(let toolId, let primaryLanguage, let parallelLanguage, let selectedLanguageIndex):
-            parent?.stepEmitter.emit(step: AppFlowStep.closeTappedFromLearnToShareTool(toolId: toolId, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex))
+        case .closeTappedFromLearnToShareTool(let tool):
+            parent?.stepEmitter.emit(
+                step: AppFlowStep.closeTappedFromLearnToShareTool(tool: tool)
+            )
             
         default:
             break
@@ -80,18 +74,12 @@ extension LearnToShareToolFlow {
     private static func getLearnToShareToolView(
         appDiContainer: AppDiContainer,
         stepEmitter: FlowStepEmitter,
-        toolId: String,
-        toolPrimaryLanguage: AppLanguageDomainModel,
-        toolParallelLanguage: AppLanguageDomainModel?,
-        toolSelectedLanguageIndex: Int?
+        tool: ToolDetailsTool,
     ) -> UIViewController {
         
         let viewModel = LearnToShareToolViewModel(
             stepEmitter: stepEmitter,
-            toolId: toolId,
-            toolPrimaryLanguage: toolPrimaryLanguage,
-            toolParallelLanguage: toolParallelLanguage,
-            toolSelectedLanguageIndex: toolSelectedLanguageIndex,
+            tool: tool,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getLearnToShareToolStringsUseCase: appDiContainer.feature.learnToShareTool.domainLayer.getLearnToShareToolStringsUseCase(),
             getLearnToShareToolTutorialUseCase: appDiContainer.feature.learnToShareTool.domainLayer.getLearnToShareToolTutorialUseCase()

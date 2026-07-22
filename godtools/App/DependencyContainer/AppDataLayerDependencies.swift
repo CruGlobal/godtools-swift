@@ -14,13 +14,14 @@ import RepositorySync
 
 final class AppDataLayerDependencies {
         
+    private let sharedAppBuild: AppBuildInterface
     private let sharedAppConfig: AppConfigInterface
     private let sharedUrlSessionPriority: URLSessionPriority = URLSessionPriority()
     private let sharedAnalytics: AnalyticsContainer
     private let sharedInMemoryDataCache: InMemoryDataCache = InMemoryDataCache()
-    private let sharedRealmDatabaseConfig: RealmDatabaseConfig
     private let sharedRealmDatabase: RealmDatabase
-    
+    private let sharedSwiftDatabase: Any? // TODO: Once RealmSwift is removed, change Any? to SwiftDatabase.
+
     private lazy var sharedUserCountersSync: UserCountersSync = {
         
         let syncInvalidator = SyncInvalidator(
@@ -37,26 +38,36 @@ final class AppDataLayerDependencies {
         )
     }()
     
-    init(appConfig: AppConfigInterface) {
+    init(appBuild: AppBuildInterface, appConfig: AppConfigInterface) {
         
+        sharedAppBuild = appBuild
         sharedAppConfig = appConfig
         
         sharedAnalytics = AnalyticsContainer(
-            firebaseAnalytics: Self.getFirebaseAnalytics(appConfig: appConfig)
+            firebaseAnalytics: Self.getFirebaseAnalytics(appBuild: appBuild, appConfig: appConfig)
         )
         
         do {
-            sharedRealmDatabaseConfig = try appConfig.getRealmDatabaseConfig()
+            sharedRealmDatabase = try appConfig.getRealmDatabase()
         }
         catch let error {
             assertionFailure(error.localizedDescription)
-            sharedRealmDatabaseConfig = try! RealmDatabaseConfig.createInMemoryConfig()
+            sharedRealmDatabase = RealmDatabase(databaseConfig: try! RealmDatabaseConfig.createInMemoryConfig())
         }
         
-        sharedRealmDatabase = RealmDatabase(databaseConfig: sharedRealmDatabaseConfig)
+        if #available(iOS 17.4, *) {
+            do {
+                sharedSwiftDatabase = try appConfig.getSwiftDatabase()
+            }
+            catch let error {
+                sharedSwiftDatabase = nil
+            }
+        } else {
+            sharedSwiftDatabase = nil
+        }
     }
     
-    private static func getFirebaseAnalytics(appConfig: AppConfigInterface) -> FirebaseAnalyticsInterface {
+    private static func getFirebaseAnalytics(appBuild: AppBuildInterface, appConfig: AppConfigInterface) -> FirebaseAnalyticsInterface {
         
         let firebaseAnalyticsEnabled: Bool = appConfig.analyticsEnabled && appConfig.firebaseEnabled
         
@@ -65,8 +76,8 @@ final class AppDataLayerDependencies {
         }
         
         return FirebaseAnalytics(
-            isDebug: appConfig.isDebug,
-            loggingEnabled: appConfig.buildConfig == .analyticsLogging
+            isDebug: appBuild.isDebug,
+            loggingEnabled: appBuild.configuration == .analyticsLogging
         )
     }
     
@@ -74,6 +85,10 @@ final class AppDataLayerDependencies {
     
     func getAnalytics() -> AnalyticsContainer {
         return sharedAnalytics
+    }
+    
+    func getAppBuild() -> AppBuildInterface {
+        return sharedAppBuild
     }
     
     func getAppConfig() -> AppConfigInterface {
@@ -298,10 +313,14 @@ final class AppDataLayerDependencies {
         return persistence
     }
     
+    func getFavoritedResourcesCache() -> FavoritedResourcesCache {
+        return FavoritedResourcesCache(persistence: getFavoritedResourcesPersistence())
+    }
+
     func getFavoritedResourcesRepository() -> FavoritedResourcesRepository {
-        
+
         return FavoritedResourcesRepository(
-            cache: FavoritedResourcesCache(persistence: getFavoritedResourcesPersistence())
+            cache: getFavoritedResourcesCache()
         )
     }
     
@@ -360,6 +379,10 @@ final class AppDataLayerDependencies {
         return InfoPlist()
     }
     
+    func getLanguagesCache() -> LanguagesCache {
+        return LanguagesCache(persistence: getLanguagesPersistence())
+    }
+
     func getLanguagesPersistence() -> any Persistence<LanguageDataModel, LanguageCodable> {
         
         let persistence: any Persistence<LanguageDataModel, LanguageCodable>
@@ -390,12 +413,13 @@ final class AppDataLayerDependencies {
             requestSender: getRequestSender()
         )
         
-        let cache = LanguagesCache(persistence: getLanguagesPersistence())
-                
+        let cache = getLanguagesCache()
+
         return LanguagesRepository(
             api: api,
             jsonFileCache: LanguagesJsonFileCache(jsonServices: JsonServices()),
-            cache: cache
+            cache: cache,
+            config: getAppConfig()
         )
     }
     
@@ -465,7 +489,7 @@ final class AppDataLayerDependencies {
     }
     
     private func getRealmDataWrite() -> RealmDataWrite {
-        return RealmDataWrite(config: getSharedRealmDatabaseConfig().config)
+        return RealmDataWrite(config: getSharedRealmDatabase().config)
     }
     
     func getRemoteConfigRepository() -> RemoteConfigRepository {
@@ -476,6 +500,33 @@ final class AppDataLayerDependencies {
     
     func getRequestSender() -> RequestSenderInterface {
         return sharedAppConfig.urlRequestsEnabled ? RequestSender() : DoesNotSendUrlRequestSender()
+    }
+    
+    func getResourcesCache() -> ResourcesCache {
+        
+        return ResourcesCache(
+            persistence: getResourcesPersistence(),
+            realmDatabase: getSharedRealmDatabase(),
+            realmDataWrite: getRealmDataWrite(),
+            resourcesCacheSync: getResourcesCacheSync()
+        )
+    }
+    
+    func getResourcesCacheSync() -> ResourcesCacheSyncInterface {
+        
+        if #available(iOS 17.4, *), let swiftDatabase = getSharedSwiftDatabase() {
+            
+            return SwiftResourcesCacheSync(
+                container: swiftDatabase.container.modelContainer,
+                trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository()
+            )
+        }
+        
+        return RealmResourcesCacheSync(
+            realmDatabase: getSharedRealmDatabase(),
+            realmDataWrite: getRealmDataWrite(),
+            trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository()
+        )
     }
     
     func getResourcesFileCache() -> ResourcesFileCache {
@@ -525,21 +576,15 @@ final class AppDataLayerDependencies {
             requestSender: getRequestSender()
         )
         
-        let cache = ResourcesCache(
-            persistence: getResourcesPersistence(),
-            realmDatabase: getSharedRealmDatabase(),
-            realmDataWrite: getRealmDataWrite(),
-            trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository()
-        )
-        
         return ResourcesRepository(
             api: api,
             jsonFileCache: ResourcesJsonFileCache(jsonServices: JsonServices()),
-            cache: cache,
+            cache: getResourcesCache(),
             attachmentsRepository: getAttachmentsRepository(),
             languagesRepository: getLanguagesRepository(),
             syncInvalidatorPersistence: getUserDefaultsCache(),
-            userDefaultsCache: getUserDefaultsCache()
+            userDefaultsCache: getUserDefaultsCache(),
+            config: getAppConfig()
         )
     }
     
@@ -588,23 +633,13 @@ final class AppDataLayerDependencies {
         return sharedUrlSessionPriority
     }
     
-    func getSharedRealmDatabaseConfig() -> RealmDatabaseConfig {
-        return sharedRealmDatabaseConfig
-    }
-    
     func getSharedRealmDatabase() -> RealmDatabase {
         return sharedRealmDatabase
     }
     
     @available(iOS 17.4, *)
     func getSharedSwiftDatabase() -> SwiftDatabase? {
-        do {
-            return try getAppConfig().getSwiftDatabase()
-        }
-        catch _ {
-            assertionFailure("Failed to get swift database.")
-            return nil
-        }
+        return sharedSwiftDatabase as? SwiftDatabase
     }
     
     func getStringWithLocaleCount() -> StringWithLocaleCountInterface {
@@ -648,53 +683,61 @@ final class AppDataLayerDependencies {
         )
     }
     
-    func getTrackDownloadedTranslationsRepository() -> TrackDownloadedTranslationsRepository {
-                
+    func getTrackDownloadedTranslationsCache() -> TrackDownloadedTranslationsCache {
+
         let persistence: any Persistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel>
-        
+
         if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
-            
+
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
                 mapping: SwiftDownloadedTranslationMapping()
             )
         }
         else {
-            
+
             persistence = RealmRepositorySyncPersistence(
                 database: getSharedRealmDatabase(),
                 mapping: RealmDownloadedTranslationMapping()
             )
         }
-        
-        let cache = TrackDownloadedTranslationsCache(
+
+        return TrackDownloadedTranslationsCache(
             persistence: persistence
         )
-        
+    }
+
+    func getTrackDownloadedTranslationsRepository() -> TrackDownloadedTranslationsRepository {
+
         return TrackDownloadedTranslationsRepository(
-            cache: cache
+            cache: getTrackDownloadedTranslationsCache()
         )
     }
     
-    func getTranslationsRepository() -> TranslationsRepository {
-                
+    func getTranslationsCache() -> TranslationsCache {
+
         let persistence: any Persistence<TranslationDataModel, TranslationCodable>
-        
+
         if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
-            
+
             persistence = SwiftRepositorySyncPersistence(
                 database: database,
                 mapping: SwiftTranslationMapping()
             )
         }
         else {
-            
+
             persistence = RealmRepositorySyncPersistence(
                 database: getSharedRealmDatabase(),
                 mapping: RealmTranslationMapping()
             )
         }
-        
+
+        return TranslationsCache(persistence: persistence)
+    }
+
+    func getTranslationsRepository() -> TranslationsRepository {
+
         let api = MobileContentTranslationsApi(
             config: getAppConfig(),
             urlSessionPriority: getSharedUrlSessionPriority(),
@@ -707,8 +750,8 @@ final class AppDataLayerDependencies {
             requestSender: getRequestSender()
         )
         
-        let cache = TranslationsCache(persistence: persistence)
-        
+        let cache = getTranslationsCache()
+
         return TranslationsRepository(
             api: api,
             cdn: cdn,
@@ -727,13 +770,6 @@ final class AppDataLayerDependencies {
         )
     }
     
-    func getUITestsInitialDataLoader() -> UITestsInitialDataLoader {
-        return UITestsInitialDataLoader(
-            realmDatabase: getSharedRealmDatabase(),
-            resourcesFileCache: getResourcesSHA256FileCache()
-        )
-    }
-
     func getUserAuthentication() -> UserAuthentication {
                 
         var authenticationProviders: [AuthenticationProviderType: AuthenticationProviderInterface] = Dictionary()

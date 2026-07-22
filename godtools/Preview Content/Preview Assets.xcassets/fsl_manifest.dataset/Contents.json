@@ -1,0 +1,13 @@
+{
+  "data" : [
+    {
+      "filename" : "fsl_manifest.xml",
+      "idiom" : "universal",
+      "universal-type-identifier" : "public.xml"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

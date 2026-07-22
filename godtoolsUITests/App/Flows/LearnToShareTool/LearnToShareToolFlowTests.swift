@@ -14,20 +14,9 @@ class LearnToShareToolFlowTests: BaseFlowTests {
     private func launchAppToToolDetails() {
         
         super.launchApp(
-            flowDeepLinkUrl: "godtools://org.cru.godtools/dashboard/tools",
-            checkInitialScreenExists: .dashboardTools
+            flowDeepLinkUrl: DeepLinkUrl.getToolDetails(toolId: "ui_test_resource_2"),
+            checkInitialScreenExists: .toolDetails
         )
-        
-        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .allTools)
-        
-        let toolId: String = AccessibilityStrings.Button.getToolButtonAccessibility(
-            toolButton: .tool,
-            toolName: .fourSpiritualLaws
-        )
-        
-        assertIfButtonDoesNotExistElseTap(buttonId: toolId, buttonQueryType: .searchDescendants)
-        
-        assertIfScreenDoesNotExist(screenAccessibility: .toolDetails)
     }
 
     private func navigateToLearnToShareFromToolsDetails() {
@@ -54,7 +43,7 @@ class LearnToShareToolFlowTests: BaseFlowTests {
         launchAppToToolDetails()
         
         navigateToLearnToShareFromToolsDetails()
-        
+                
         assertIfButtonDoesNotExistElseTap(buttonAccessibility: .close)
         
         assertIfScreenDoesNotExist(screenAccessibility: .tract)
@@ -69,7 +58,7 @@ class LearnToShareToolFlowTests: BaseFlowTests {
         tapWhileExists(buttonAccessibility: .continueForward)
         
         assertIfButtonDoesNotExistElseTap(buttonAccessibility: .startTraining)
-        
+                
         assertIfScreenDoesNotExist(screenAccessibility: .tract)
     }
 }

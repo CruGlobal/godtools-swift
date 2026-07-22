@@ -22,10 +22,10 @@ enum SwiftDownloadedTranslationV1 {
         var languageId: String = ""
         var manifestAndRelatedFilesPersistedToDevice: Bool = false
         var resourceId: String = ""
+        var translationId: String = ""
         var version: Int = -1
         
         @Attribute(.unique) var id: String = ""
-        @Attribute(.unique) var translationId: String = ""
         
         init() {
             

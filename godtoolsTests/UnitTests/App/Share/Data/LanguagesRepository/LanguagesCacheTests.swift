@@ -14,16 +14,11 @@ import SwiftData
 
 struct LanguagesCacheTests {
 
-    enum PersistenceType: CaseIterable {
-        case realm
-        case swiftData
-    }
-
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases)
-    func getLanguageByCodeExists(persistenceType: PersistenceType) async throws {
+    @Test
+    func getLanguageByCodeExists() async throws {
 
-        let cache = try await getCache(persistenceType: persistenceType)
+        let cache = try getCache()
 
         let language: LanguageDataModel? = try cache.getLanguageByCode(code: LanguageCodeDomainModel.english.rawValue)
 
@@ -31,10 +26,10 @@ struct LanguagesCacheTests {
     }
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases)
-    func getLanguageByCodeIsNil(persistenceType: PersistenceType) async throws {
+    @Test
+    func getLanguageByCodeIsNil() async throws {
 
-        let cache = try await getCache(persistenceType: persistenceType)
+        let cache = try getCache()
 
         let language: LanguageDataModel? = try cache.getLanguageByCode(code: "no_language_code")
 
@@ -42,10 +37,10 @@ struct LanguagesCacheTests {
     }
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases)
-    func getLanguagesByCodes(persistenceType: PersistenceType) async throws {
+    @Test
+    func getLanguagesByCodes() async throws {
 
-        let cache = try await getCache(persistenceType: persistenceType)
+        let cache = try getCache()
 
         let languageCodes = [
             LanguageCodeDomainModel.russian,
@@ -67,45 +62,20 @@ struct LanguagesCacheTests {
 extension LanguagesCacheTests {
 
     @available(iOS 17.4, *)
-    private func getCache(persistenceType: PersistenceType) async throws -> LanguagesCache {
+    private func getCache() throws -> LanguagesCache {
 
-        let persistence: any Persistence<LanguageDataModel, LanguageCodable>
-
-        switch persistenceType {
-
-        case .realm:
-            persistence = try getRealmPersistence()
-
-        case .swiftData:
-            persistence = try getSwiftPersistence()
-        }
-
-        try await persistence.writeObjects(
-            externalObjects: getLanguages()
+        let testsAppConfig = TestsAppConfig(
+            swiftDatabase: try FakeSwiftDatabase.createSwiftDatabase(addObjects: getSwiftDatabaseObjects())
         )
 
-        return LanguagesCache(
-            persistence: persistence
-        )
-    }
+        let testsDiContainer = TestsDiContainer(testsAppConfig: testsAppConfig)
 
-    private func getRealmPersistence() throws -> RealmRepositorySyncPersistence<LanguageDataModel, LanguageCodable, RealmLanguage> {
-
-        return RealmRepositorySyncPersistence(
-            database: try FakeRealmDatabase.createRealmDatabase(),
-            mapping: RealmLanguageMapping()
-        )
+        return testsDiContainer.core.dataLayer.getLanguagesCache()
     }
 
     @available(iOS 17.4, *)
-    private func getSwiftPersistence() throws -> SwiftRepositorySyncPersistence<LanguageDataModel, LanguageCodable, SwiftLanguage> {
-
-        let container = try SwiftDataContainer.createInMemoryContainer(schema: Schema(versionedSchema: LatestProductionSwiftDataSchema.self))
-
-        return SwiftRepositorySyncPersistence(
-            database: SwiftDatabase(container: container),
-            mapping: SwiftLanguageMapping()
-        )
+    private func getSwiftDatabaseObjects() -> [SwiftLanguage] {
+        return getLanguages().map { SwiftLanguage.createNewFrom(model: $0.toModel()) }
     }
 
     private func getLanguages() -> [LanguageCodable] {

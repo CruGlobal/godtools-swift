@@ -107,9 +107,9 @@ extension GetLanguageSettingsStringsUseCaseTests {
     @available(iOS 17.4, *)
     private func getUseCase() async throws -> GetLanguageSettingsStringsUseCase {
 
-        let testsDiContainer = try TestsDiContainer(
+        let testsDiContainer = TestsDiContainer(
             testsAppConfig: TestsAppConfig(
-                swiftDatabase: SwiftDatabase(container: SwiftDataProductionContainer.createInMemoryContainer())
+                swiftDatabase: SwiftDatabase(container: try SwiftDataProductionContainer.createInMemoryContainer())
             )
         )
 

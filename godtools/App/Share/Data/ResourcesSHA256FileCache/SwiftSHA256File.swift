@@ -22,8 +22,8 @@ enum SwiftSHA256FileV1 {
         @Attribute(.unique) var id: String = ""
         @Attribute(.unique) var sha256WithPathExtension: String = ""
         
-        @Relationship(deleteRule: .noAction, inverse: \SwiftAttachment.sha256File) var attachments: [SwiftAttachment] = Array<SwiftAttachment>()
-        @Relationship(deleteRule: .noAction, inverse: \SwiftTranslation.sha256File) var translations: [SwiftTranslation] = Array<SwiftTranslation>()
+        @Relationship(deleteRule: .noAction, inverse: \SwiftAttachment.sha256Files) var attachments: [SwiftAttachment] = Array<SwiftAttachment>()
+        @Relationship(deleteRule: .noAction, inverse: \SwiftTranslation.sha256Files) var translations: [SwiftTranslation] = Array<SwiftTranslation>()
         
         init() {
             

@@ -108,14 +108,7 @@ final class DashboardFlow: GTFlow {
             navigationController.pushViewController(getAllFavoriteTools(), animated: true)
             
         case .toolDetailsTappedFromFavorites(let tool):
-            
-            let toolDetails = getToolDetails(
-                toolId: tool.dataModelId,
-                parallelLanguage: nil,
-                selectedLanguageIndex: nil
-            )
-            
-            navigationController.pushViewController(toolDetails, animated: true)
+            navigateToToolDetails(toolId: tool.dataModelId)
         
         case .openToolTappedFromFavorites(let tool):
             navigateToToolWithToolLanguageSettingsAppliedForFavoritedTool(
@@ -146,14 +139,7 @@ final class DashboardFlow: GTFlow {
             navigationController.popViewController(animated: true)
             
         case .toolDetailsTappedFromAllYourFavoriteTools(let tool):
-
-            let toolDetails = getToolDetails(
-                toolId: tool.dataModelId,
-                parallelLanguage: nil,
-                selectedLanguageIndex: nil
-            )
-            
-            navigationController.pushViewController(toolDetails, animated: true)
+            navigateToToolDetails(toolId: tool.dataModelId)
         
         case .openTutorialTappedFromTools:
             presentFlow(
@@ -213,14 +199,12 @@ final class DashboardFlow: GTFlow {
             else {
                 toolFilterLanguageDataModel = nil
             }
-                        
-            let toolDetails = getToolDetails(
+            
+            navigateToToolDetails(
                 toolId: spotlightTool.dataModelId,
                 parallelLanguage: toolFilterLanguageDataModel?.localeId,
                 selectedLanguageIndex: 1
             )
-            
-            navigationController.pushViewController(toolDetails, animated: true)
                         
         case .toolTappedFromTools(let tool, let toolFilterLanguage):
             
@@ -259,15 +243,13 @@ final class DashboardFlow: GTFlow {
                 parallelLanguage = toolFilterLanguageDataModel?.localeId
             }
             
-            let toolDetails = getToolDetails(
+            navigateToToolDetails(
                 toolId: tool.dataModelId,
+                primaryLanguage: primaryLanguage,
                 parallelLanguage: parallelLanguage,
-                selectedLanguageIndex: 1,
-                primaryLanguage: primaryLanguage
+                selectedLanguageIndex: 1
             )
             
-            navigationController.pushViewController(toolDetails, animated: true)
-
         case .changeLocalizationSettingsTappedFromTools:
             pushFlow(
                 flow: LocalizationSettingsFlow(
@@ -276,18 +258,27 @@ final class DashboardFlow: GTFlow {
                 )
             )
             
-        case .openToolTappedFromToolDetails(let toolId, let primaryLanguage, let parallelLanguage, let selectedLanguageIndex):
+        case .openToolTappedFromToolDetails(let tool):
             
             if dashboardTabObserver.value == .favorites {
                 
                 navigateToToolWithToolLanguageSettingsAppliedForFavoritedTool(
-                    toolDataModelId: toolId, trainingTipsEnabled: false,
+                    toolDataModelId: tool.toolId,
+                    trainingTipsEnabled: false,
                     toolOpenedFrom: .dashboardFavoritesFavoritedTool
                 )
             }
             else {
                 
-                navigateToTool(toolDataModelId: toolId, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex, trainingTipsEnabled: false, toolOpenedFrom: .dashboardTools, persistToolLanguageSettings: nil)
+                navigateToTool(
+                    toolDataModelId: tool.toolId,
+                    primaryLanguage: tool.primaryLanguage,
+                    parallelLanguage: tool.parallelLanguage,
+                    selectedLanguageIndex: tool.selectedLanguageIndex,
+                    trainingTipsEnabled: false,
+                    toolOpenedFrom: .dashboardTools,
+                    persistToolLanguageSettings: nil
+                )
             }
             
         case .backTappedFromToolDetails:
@@ -296,23 +287,38 @@ final class DashboardFlow: GTFlow {
         case .urlLinkTappedFromToolDetails(let urlLinkTapped):
             navigateToURL(linkTapped: urlLinkTapped, appLanguage: appLanguage)
             
-        case .learnToShareToolTappedFromToolDetails(let toolId, let primaryLanguage, let parallelLanguage, let selectedLanguageIndex):
+        case .learnToShareToolTappedFromToolDetails(let tool):
             navigateToLearnToShareTool(
-                toolId: toolId,
-                primaryLanguage: primaryLanguage,
-                parallelLanguage: parallelLanguage,
-                selectedLanguageIndex: selectedLanguageIndex,
+                tool: tool,
                 toolOpenedFrom: .learnToShare
             )
             
-        case .startTrainingTappedFromLearnToShareTool(let toolId, let primaryLanguage, let parallelLanguage, let selectedLanguageIndex):
+        case .startTrainingTappedFromLearnToShareTool(let tool):
             dismissFlow(completion: { [weak self] in
-                self?.navigateToTool(toolDataModelId: toolId, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex, trainingTipsEnabled: true, toolOpenedFrom: .learnToShare, persistToolLanguageSettings: nil)
+                
+                self?.navigateToTool(
+                    toolDataModelId: tool.toolId,
+                    primaryLanguage: tool.primaryLanguage,
+                    parallelLanguage: tool.parallelLanguage,
+                    selectedLanguageIndex: tool.selectedLanguageIndex,
+                    trainingTipsEnabled: true,
+                    toolOpenedFrom: .learnToShare,
+                    persistToolLanguageSettings: nil
+                )
             })
             
-        case .closeTappedFromLearnToShareTool(let toolId, let primaryLanguage, let parallelLanguage, let selectedLanguageIndex):
+        case .closeTappedFromLearnToShareTool(let tool):
             dismissFlow(completion: { [weak self] in
-                self?.navigateToTool(toolDataModelId: toolId, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex, trainingTipsEnabled: true, toolOpenedFrom: .learnToShare, persistToolLanguageSettings: nil)
+                
+                self?.navigateToTool(
+                    toolDataModelId: tool.toolId,
+                    primaryLanguage: tool.primaryLanguage,
+                    parallelLanguage: tool.parallelLanguage,
+                    selectedLanguageIndex: tool.selectedLanguageIndex,
+                    trainingTipsEnabled: true,
+                    toolOpenedFrom: .learnToShare,
+                    persistToolLanguageSettings: nil
+                )
             })
                         
         case .closeTappedFromLessonEvaluation:
@@ -873,19 +879,32 @@ extension DashboardFlow {
 
 extension DashboardFlow {
     
-    private func getToolDetails(
+    func navigateToToolDetails(
         toolId: String,
-        parallelLanguage: AppLanguageDomainModel?,
-        selectedLanguageIndex: Int?,
-        primaryLanguage: AppLanguageDomainModel? = nil
-    ) -> UIViewController {
+        primaryLanguage: AppLanguageDomainModel? = nil,
+        parallelLanguage: AppLanguageDomainModel? = nil,
+        selectedLanguageIndex: Int? = nil,
+        animated: Bool = true
+    ) {
+        
+        let tool = ToolDetailsTool(
+            appLanguage: appLanguage,
+            toolId: toolId,
+            primaryLanguage: primaryLanguage,
+            parallelLanguage: parallelLanguage,
+            selectedLanguageIndex: selectedLanguageIndex
+        )
+        
+        let toolDetails = getToolDetails(tool: tool)
+        
+        navigationController.pushViewController(toolDetails, animated: animated)
+    }
+    
+    private func getToolDetails(tool: ToolDetailsTool) -> UIViewController {
         
         let viewModel = ToolDetailsViewModel(
             stepEmitter: stepEmitter,
-            toolId: toolId,
-            primaryLanguage: primaryLanguage ?? appLanguage,
-            parallelLanguage: parallelLanguage,
-            selectedLanguageIndex: selectedLanguageIndex,
+            tool: tool,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getToolDetailsStringsUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsStringsUseCase(),
             getToolDetailsUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsUseCase(),
@@ -925,10 +944,7 @@ extension DashboardFlow {
 extension DashboardFlow {
     
     private func navigateToLearnToShareTool(
-        toolId: String,
-        primaryLanguage: AppLanguageDomainModel,
-        parallelLanguage: AppLanguageDomainModel?,
-        selectedLanguageIndex: Int?,
+        tool: ToolDetailsTool,
         toolOpenedFrom: ToolOpenedFrom
     ) {
         
@@ -937,7 +953,10 @@ extension DashboardFlow {
             .learnToShareTool
             .domainLayer
             .getLearnToShareToolTutorialIsAvailableUseCase()
-            .execute(appLanguage: primaryLanguage, toolId: toolId)
+            .execute(
+                appLanguage: tool.primaryLanguage,
+                toolId: tool.toolId
+            )
                 
         if learnToShareTutorialIsAvailable {
             
@@ -946,25 +965,25 @@ extension DashboardFlow {
                 .learnToShareTool
                 .domainLayer
                 .getViewedLearnToShareToolTutorialUseCase()
-                .execute(appLanguage: primaryLanguage, toolId: toolId)
+                .execute(
+                    appLanguage: tool.primaryLanguage,
+                    toolId: tool.toolId
+                )
             
             presentFlow(
                 flow: LearnToShareToolFlow(
                     appDiContainer: appDiContainer,
-                    toolId: toolId,
-                    toolPrimaryLanguage: primaryLanguage,
-                    toolParallelLanguage: parallelLanguage,
-                    toolSelectedLanguageIndex: selectedLanguageIndex
+                    tool: tool
                 )
             )
         }
         else {
             
             navigateToTool(
-                toolDataModelId: toolId,
-                primaryLanguage: primaryLanguage,
-                parallelLanguage: parallelLanguage,
-                selectedLanguageIndex: selectedLanguageIndex,
+                toolDataModelId: tool.toolId,
+                primaryLanguage: tool.primaryLanguage,
+                parallelLanguage: tool.parallelLanguage,
+                selectedLanguageIndex: tool.selectedLanguageIndex,
                 trainingTipsEnabled: true,
                 toolOpenedFrom: toolOpenedFrom,
                 persistToolLanguageSettings: nil

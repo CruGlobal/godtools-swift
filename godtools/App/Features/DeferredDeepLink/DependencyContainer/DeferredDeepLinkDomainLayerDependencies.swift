@@ -25,7 +25,12 @@ final class DeferredDeepLinkDomainLayerDependencies {
         )
     }
     
-    func getDeferredDeepLinkUseCase() -> GetDeferredDeepLinkUseCase {
+    func getDeferredDeepLinkUseCase() -> GetDeferredDeepLinkUseCaseInterface {
+        
+        guard core.dataLayer.getAppBuild().target != .uiTests else {
+            return UITestsGetDeferredDeepLinkUseCase()
+        }
+        
         return GetDeferredDeepLinkUseCase(
             deepLinkService: core.dataLayer.getDeepLinkingService(),
             dynalinkDeferredDeepLink: dataLayer.getDynalinkDeferredDeepLink(),

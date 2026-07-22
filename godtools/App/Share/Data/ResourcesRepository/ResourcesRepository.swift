@@ -23,6 +23,7 @@ final class ResourcesRepository {
     private let languagesRepository: LanguagesRepository
     private let syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface
     private let userDefaultsCache: UserDefaultsCacheInterface
+    private let config: AppConfigInterface
     
     init(
         api: ResourcesApiInterface,
@@ -31,7 +32,8 @@ final class ResourcesRepository {
         attachmentsRepository: AttachmentsRepository,
         languagesRepository: LanguagesRepository,
         syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface,
-        userDefaultsCache: UserDefaultsCacheInterface
+        userDefaultsCache: UserDefaultsCacheInterface,
+        config: AppConfigInterface
     ) {
         
         self.api = api
@@ -41,6 +43,7 @@ final class ResourcesRepository {
         self.languagesRepository = languagesRepository
         self.syncInvalidatorPersistence = syncInvalidatorPersistence
         self.userDefaultsCache = userDefaultsCache
+        self.config = config
     }
     
     @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Error> {
@@ -155,6 +158,10 @@ extension ResourcesRepository {
     
     func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments(requestPriority: RequestPriority, forceFetchFromRemote: Bool) async throws -> ResourcesCacheSyncResult {
         
+        guard config.shouldSyncInitialResources else {
+            return ResourcesCacheSyncResult.emptyResult()
+        }
+        
         _ = try await syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFile()
         
         return try await syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote(
@@ -164,6 +171,10 @@ extension ResourcesRepository {
     }
     
     func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFile() async throws -> ResourcesCacheSyncResult? {
+        
+        guard config.shouldSyncInitialResources else {
+            return nil
+        }
         
         guard !syncedResourcesFromJson else {
             return nil
@@ -182,6 +193,10 @@ extension ResourcesRepository {
     }
     
     private func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote(requestPriority: RequestPriority, forceFetchFromRemote: Bool) async throws -> ResourcesCacheSyncResult {
+        
+        guard config.shouldSyncInitialResources else {
+            return ResourcesCacheSyncResult.emptyResult()
+        }
         
         let syncInvalidator = SyncInvalidator(
             id: Self.syncInvalidatorIdForResourcesPlustLatestTranslationsAndAttachments,

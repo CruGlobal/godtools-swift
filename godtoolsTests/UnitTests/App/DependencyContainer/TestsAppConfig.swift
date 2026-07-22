@@ -14,12 +14,10 @@ import SwiftData
 
 final class TestsAppConfig: AppConfigInterface {
     
-    private let realmDatabase: RealmDatabase?
-    
+    // TODO: Change Any? to SwiftDatabase when RealmSwift is removed. ~Levi
     private let swiftDatabase: Any?
 
-    init(realmDatabase: RealmDatabase? = nil, swiftDatabase: Any? = nil) {
-        self.realmDatabase = realmDatabase
+    init(swiftDatabase: Any? = nil) {
         self.swiftDatabase = swiftDatabase
     }
     
@@ -51,7 +49,19 @@ final class TestsAppConfig: AppConfigInterface {
         return ""
     }
     
+    var isOptInNotificationModalEnabled: Bool {
+        return false
+    }
+    
     var urlRequestsEnabled: Bool {
+        return false
+    }
+    
+    var shouldSyncInitialLanguages: Bool {
+        return false
+    }
+    
+    var shouldSyncInitialResources: Bool {
         return false
     }
         
@@ -79,24 +89,15 @@ final class TestsAppConfig: AppConfigInterface {
         return "\(scheme)://mobile-content-api.cru.org"
     }
     
-    func getRealmDatabaseConfig() throws -> RealmDatabaseConfig {
-        if let databaseConfig = realmDatabase?.databaseConfig {
-            return databaseConfig
-        }
-        
-        return try RealmDatabaseConfig.createInMemoryConfig()
+    func getRealmDatabase() throws -> RealmDatabase {
+        return RealmDatabase(
+            databaseConfig: try RealmDatabaseConfig.createInMemoryConfig()
+        )
     }
     
     @available(iOS 17.4, *)
     func getSwiftDatabase() throws -> SwiftDatabase? {
-
-        if let existingSwiftDatabase = swiftDatabase as? SwiftDatabase {
-            return existingSwiftDatabase
-        }
-        
-        return SwiftDatabase(
-            container: try SwiftDataProductionContainer.createInMemoryContainer()
-        )
+        return swiftDatabase as? SwiftDatabase
     }
     
     func getTractRemoteShareConnectionUrl() -> String {

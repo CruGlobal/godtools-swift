@@ -9,18 +9,12 @@
 import Testing
 @testable import godtools
 import Foundation
-import RealmSwift
 import SwiftData
 import RepositorySync
 
 struct ResourcesCacheTests {
 
     private static let metatoolId: String = "metatool_0"
-
-    enum PersistenceType: CaseIterable {
-        case realm
-        case swiftData
-    }
 
     struct ResourceFixture {
 
@@ -67,10 +61,10 @@ struct ResourcesCacheTests {
     // MARK: - Resources
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases)
-    func getResources(persistenceType: PersistenceType) async throws {
+    @Test
+    func getResources() async throws {
 
-        let cache = try getCache(persistenceType: persistenceType)
+        let cache = try getCache()
 
         let resources: [ResourceDataModel] = try await cache.getResources(sorted: false)
 
@@ -78,10 +72,10 @@ struct ResourcesCacheTests {
     }
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases)
-    func getResourcesSortedByDefaultOrder(persistenceType: PersistenceType) async throws {
+    @Test
+    func getResourcesSortedByDefaultOrder() async throws {
 
-        let cache = try getCache(persistenceType: persistenceType)
+        let cache = try getCache()
 
         let resources: [ResourceDataModel] = try await cache.getResources(sorted: true)
 
@@ -93,10 +87,10 @@ struct ResourcesCacheTests {
     }
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases)
-    func getResourceByAbbreviationExists(persistenceType: PersistenceType) async throws {
+    @Test
+    func getResourceByAbbreviationExists() async throws {
 
-        let cache = try getCache(persistenceType: persistenceType)
+        let cache = try getCache()
 
         let resource: ResourceDataModel? = try cache.getResource(abbreviation: "kgp")
 
@@ -104,10 +98,10 @@ struct ResourcesCacheTests {
     }
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases)
-    func getResourceByAbbreviationIsNil(persistenceType: PersistenceType) async throws {
+    @Test
+    func getResourceByAbbreviationIsNil() async throws {
 
-        let cache = try getCache(persistenceType: persistenceType)
+        let cache = try getCache()
 
         let resource: ResourceDataModel? = try cache.getResource(abbreviation: "abbreviation_does_not_exist")
 
@@ -115,10 +109,10 @@ struct ResourcesCacheTests {
     }
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases)
-    func getResourceVariantsExcludesHiddenVariants(persistenceType: PersistenceType) async throws {
+    @Test
+    func getResourceVariantsExcludesHiddenVariants() async throws {
 
-        let cache = try getCache(persistenceType: persistenceType)
+        let cache = try getCache()
 
         let variants: [ResourceDataModel] = try await cache.getResourceVariants(resourceId: Self.metatoolId)
 
@@ -126,10 +120,10 @@ struct ResourcesCacheTests {
     }
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases)
-    func getResourceVariantsIsEmptyWhenResourceIsNotAMetatool(persistenceType: PersistenceType) async throws {
+    @Test
+    func getResourceVariantsIsEmptyWhenResourceIsNotAMetatool() async throws {
 
-        let cache = try getCache(persistenceType: persistenceType)
+        let cache = try getCache()
 
         let variants: [ResourceDataModel] = try await cache.getResourceVariants(resourceId: "tract_0")
 
@@ -139,15 +133,15 @@ struct ResourcesCacheTests {
     // MARK: - Lessons
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases, [
+    @Test(arguments: [
         LessonsByLanguageArgument(languageCode: nil, expectedLessonIds: ["lesson_0", "lesson_1", "lesson_3", "lesson_4"]),
         LessonsByLanguageArgument(languageCode: .english, expectedLessonIds: ["lesson_0", "lesson_1", "lesson_3"]),
         LessonsByLanguageArgument(languageCode: .spanish, expectedLessonIds: ["lesson_1", "lesson_3"]),
         LessonsByLanguageArgument(languageCode: .vietnamese, expectedLessonIds: ["lesson_4"])
     ])
-    func getLessonsExcludesHiddenLessons(persistenceType: PersistenceType, argument: LessonsByLanguageArgument) async throws {
+    func getLessonsExcludesHiddenLessons(argument: LessonsByLanguageArgument) async throws {
 
-        let cache = try getCache(persistenceType: persistenceType)
+        let cache = try getCache()
 
         let lessons: [ResourceDataModel] = try await cache.getLessons(
             filterByLanguageId: argument.languageCode.map { getLanguageId(languageCode: $0) },
@@ -158,15 +152,15 @@ struct ResourcesCacheTests {
     }
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases, [
+    @Test(arguments: [
         LessonsByLanguageArgument(languageCode: nil, expectedLessonIds: ["lesson_0", "lesson_1", "lesson_3", "lesson_4"]),
         LessonsByLanguageArgument(languageCode: .english, expectedLessonIds: ["lesson_0", "lesson_1", "lesson_3"]),
         LessonsByLanguageArgument(languageCode: .spanish, expectedLessonIds: ["lesson_1", "lesson_3"]),
         LessonsByLanguageArgument(languageCode: .vietnamese, expectedLessonIds: ["lesson_4"])
     ])
-    func getLessonsCount(persistenceType: PersistenceType, argument: LessonsByLanguageArgument) async throws {
+    func getLessonsCount(argument: LessonsByLanguageArgument) async throws {
 
-        let cache = try getCache(persistenceType: persistenceType)
+        let cache = try getCache()
 
         let lessonsCount: Int = try cache.getLessonsCount(
             filterByLanguageId: argument.languageCode.map { getLanguageId(languageCode: $0) }
@@ -176,10 +170,10 @@ struct ResourcesCacheTests {
     }
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases)
-    func getLessonsSortedByDefaultOrder(persistenceType: PersistenceType) async throws {
+    @Test
+    func getLessonsSortedByDefaultOrder() async throws {
 
-        let cache = try getCache(persistenceType: persistenceType)
+        let cache = try getCache()
 
         let lessons: [ResourceDataModel] = try await cache.getLessons(filterByLanguageId: nil, sorted: true)
 
@@ -187,10 +181,10 @@ struct ResourcesCacheTests {
     }
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases)
-    func getFeaturedLessons(persistenceType: PersistenceType) async throws {
+    @Test
+    func getFeaturedLessons() async throws {
 
-        let cache = try getCache(persistenceType: persistenceType)
+        let cache = try getCache()
 
         let featuredLessons: [ResourceDataModel] = try await cache.getFeaturedLessons(sorted: true)
 
@@ -198,10 +192,10 @@ struct ResourcesCacheTests {
     }
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases)
-    func getLessonsSupportedLanguageIds(persistenceType: PersistenceType) async throws {
+    @Test
+    func getLessonsSupportedLanguageIds() async throws {
 
-        let cache = try getCache(persistenceType: persistenceType)
+        let cache = try getCache()
 
         let languageIds: [String] = try cache.getLessonsSupportedLanguageIds()
 
@@ -215,10 +209,10 @@ struct ResourcesCacheTests {
     // MARK: - Spotlight Tools
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases)
-    func getSpotlightToolsExcludesLessonsAndHiddenTools(persistenceType: PersistenceType) async throws {
+    @Test
+    func getSpotlightToolsExcludesLessonsAndHiddenTools() async throws {
 
-        let cache = try getCache(persistenceType: persistenceType)
+        let cache = try getCache()
 
         let spotlightTools: [ResourceDataModel] = try cache.getSpotlightTools(sortByDefaultOrder: true)
 
@@ -226,10 +220,10 @@ struct ResourcesCacheTests {
     }
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases)
-    func getSpotlightToolsUnsorted(persistenceType: PersistenceType) async throws {
+    @Test
+    func getSpotlightToolsUnsorted() async throws {
 
-        let cache = try getCache(persistenceType: persistenceType)
+        let cache = try getCache()
 
         let spotlightTools: [ResourceDataModel] = try cache.getSpotlightTools(sortByDefaultOrder: false)
 
@@ -239,10 +233,10 @@ struct ResourcesCacheTests {
     // MARK: - All Tools List
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases)
-    func getAllToolsListExcludesLessonsMetatoolsAndHiddenTools(persistenceType: PersistenceType) async throws {
+    @Test
+    func getAllToolsListExcludesLessonsMetatoolsAndHiddenTools() async throws {
 
-        let cache = try getCache(persistenceType: persistenceType)
+        let cache = try getCache()
 
         let tools: [ResourceDataModel] = try cache.getAllToolsList(filterByCategory: nil, filterByLanguageId: nil, sortByDefaultOrder: true)
 
@@ -250,10 +244,10 @@ struct ResourcesCacheTests {
     }
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases)
-    func getAllToolsListFilteredByCategoryAndLanguage(persistenceType: PersistenceType) async throws {
+    @Test
+    func getAllToolsListFilteredByCategoryAndLanguage() async throws {
 
-        let cache = try getCache(persistenceType: persistenceType)
+        let cache = try getCache()
 
         let gospelToolsCount: Int = try cache.getAllToolsListCount(filterByCategory: "gospel", filterByLanguageId: nil)
 
@@ -267,10 +261,10 @@ struct ResourcesCacheTests {
     }
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases)
-    func getAllToolCategoryIds(persistenceType: PersistenceType) async throws {
+    @Test
+    func getAllToolCategoryIds() async throws {
 
-        let cache = try getCache(persistenceType: persistenceType)
+        let cache = try getCache()
 
         let categoryIds: [String] = try cache.getAllToolCategoryIds(filteredByLanguageId: nil)
 
@@ -278,10 +272,10 @@ struct ResourcesCacheTests {
     }
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases)
-    func getAllToolLanguageIds(persistenceType: PersistenceType) async throws {
+    @Test
+    func getAllToolLanguageIds() async throws {
 
-        let cache = try getCache(persistenceType: persistenceType)
+        let cache = try getCache()
 
         let allLanguageIds: [String] = try cache.getAllToolLanguageIds(filteredByCategoryId: nil)
 
@@ -305,57 +299,15 @@ struct ResourcesCacheTests {
 extension ResourcesCacheTests {
 
     @available(iOS 17.4, *)
-    private func getCache(persistenceType: PersistenceType) throws -> ResourcesCache {
+    private func getCache() throws -> ResourcesCache {
 
-        let realmDatabase: RealmDatabase
-        let persistence: any Persistence<ResourceDataModel, ResourceCodable>
-
-        switch persistenceType {
-
-        case .realm:
-            realmDatabase = try FakeRealmDatabase.createRealmDatabase(addRealmObjects: getRealmDatabaseObjects())
-            persistence = RealmRepositorySyncPersistence(
-                database: realmDatabase,
-                mapping: RealmResourceMapping()
-            )
-
-        case .swiftData:
-            realmDatabase = try FakeRealmDatabase.createRealmDatabase()
-            persistence = try getSwiftPersistence()
-        }
-
-        return ResourcesCache(
-            persistence: persistence,
-            realmDatabase: realmDatabase,
-            realmDataWrite: RealmDataWrite(config: realmDatabase.databaseConfig.config),
-            trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository(
-                cache: TrackDownloadedTranslationsCache(
-                    persistence: RealmRepositorySyncPersistence(
-                        database: realmDatabase,
-                        mapping: RealmDownloadedTranslationMapping()
-                    )
-                )
-            )
+        let testsAppConfig = TestsAppConfig(
+            swiftDatabase: try FakeSwiftDatabase.createSwiftDatabase(addObjects: getSwiftDatabaseObjects())
         )
-    }
 
-    @available(iOS 17.4, *)
-    private func getSwiftPersistence() throws -> SwiftRepositorySyncPersistence<ResourceDataModel, ResourceCodable, SwiftResource> {
+        let testsDiContainer = TestsDiContainer(testsAppConfig: testsAppConfig)
 
-        let container = try SwiftDataContainer.createInMemoryContainer(schema: Schema(versionedSchema: LatestProductionSwiftDataSchema.self))
-
-        let database = SwiftDatabase(container: container)
-
-        let context: ModelContext = database.openContext()
-
-        context.insertObjects(objects: getSwiftDatabaseObjects())
-
-        try context.saveIfHasChanges()
-
-        return SwiftRepositorySyncPersistence(
-            database: database,
-            mapping: SwiftResourceMapping()
-        )
+        return testsDiContainer.core.dataLayer.getResourcesCache()
     }
 
     private func getLanguageId(languageCode: LanguageCodeDomainModel) -> String {
@@ -408,35 +360,6 @@ extension ResourcesCacheTests {
             ResourceFixture(id: "variant_1", abbreviation: "variant_1", resourceType: .tract, category: "gospel", defaultOrder: 22, metatoolId: Self.metatoolId, languageCodes: [.english]),
             ResourceFixture(id: "variant_2", abbreviation: "variant_2", resourceType: .tract, category: "gospel", defaultOrder: 23, isHidden: true, metatoolId: Self.metatoolId, languageCodes: [.english])
         ]
-    }
-
-    private func getRealmDatabaseObjects() -> [IdentifiableRealmObject] {
-
-        var languagesByCode: [String: RealmLanguage] = Dictionary()
-
-        for languageCodable in getLanguageCodables() {
-            languagesByCode[languageCodable.code] = RealmLanguage.createNewFrom(model: languageCodable.toModel())
-        }
-
-        let resources: [RealmResource] = getResourceFixtures().map { fixture in
-
-            let resource = RealmResource.createNewFrom(
-                model: getResourceCodable(fixture: fixture).toModel()
-            )
-
-            for languageCode in fixture.languageCodes {
-
-                guard let language = languagesByCode[languageCode.rawValue] else {
-                    continue
-                }
-
-                resource.addLanguage(language: language)
-            }
-
-            return resource
-        }
-
-        return Array(languagesByCode.values) + resources
     }
 
     @available(iOS 17.4, *)

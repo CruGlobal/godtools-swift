@@ -83,13 +83,13 @@ enum AppFlowStep: FlowStep {
     
     // toolDetails
     case backTappedFromToolDetails
-    case openToolTappedFromToolDetails(toolId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?)
-    case learnToShareToolTappedFromToolDetails(toolId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?)
+    case openToolTappedFromToolDetails(tool: ToolDetailsTool)
+    case learnToShareToolTappedFromToolDetails(tool: ToolDetailsTool)
     case urlLinkTappedFromToolDetails(urlLinkTapped: URLLinkTappedParams)
     
     // learnToShareTool
-    case closeTappedFromLearnToShareTool(toolId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?)
-    case startTrainingTappedFromLearnToShareTool(toolId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?)
+    case closeTappedFromLearnToShareTool(tool: ToolDetailsTool)
+    case startTrainingTappedFromLearnToShareTool(tool: ToolDetailsTool)
             
     // tool
     case homeTappedFromTool(isScreenSharing: Bool)

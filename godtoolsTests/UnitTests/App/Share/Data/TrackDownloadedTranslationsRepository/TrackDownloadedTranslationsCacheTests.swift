@@ -20,11 +20,6 @@ struct TrackDownloadedTranslationsCacheTests {
     private static let languageBId: String = "language_b"
     private static let languageCId: String = "language_c"
 
-    enum PersistenceType: CaseIterable {
-        case realm
-        case swiftData
-    }
-
     struct LatestDownloadedTranslationsArgument {
 
         let resourceId: String
@@ -35,7 +30,7 @@ struct TrackDownloadedTranslationsCacheTests {
     // MARK: - Query
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases, [
+    @Test(arguments: [
         LatestDownloadedTranslationsArgument(
             resourceId: Self.resourceAId,
             languageId: Self.languageAId,
@@ -57,9 +52,9 @@ struct TrackDownloadedTranslationsCacheTests {
             expectedIds: []
         )
     ])
-    func getLatestDownloadedTranslationsSortedByLatestVersion(persistenceType: PersistenceType, argument: LatestDownloadedTranslationsArgument) async throws {
+    func getLatestDownloadedTranslationsSortedByLatestVersion(argument: LatestDownloadedTranslationsArgument) async throws {
 
-        let cache = try await getCache(persistenceType: persistenceType)
+        let cache = try getCache()
 
         let downloadedTranslations: [DownloadedTranslationDataModel] = try await cache.getLatestDownloadedTranslations(
             resourceId: argument.resourceId,
@@ -70,10 +65,10 @@ struct TrackDownloadedTranslationsCacheTests {
     }
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases)
-    func getLatestDownloadedTranslationExists(persistenceType: PersistenceType) async throws {
+    @Test
+    func getLatestDownloadedTranslationExists() async throws {
 
-        let cache = try await getCache(persistenceType: persistenceType)
+        let cache = try getCache()
 
         let downloadedTranslation: DownloadedTranslationDataModel? = try cache.getLatestDownloadedTranslation(
             resourceId: Self.resourceAId,
@@ -85,10 +80,10 @@ struct TrackDownloadedTranslationsCacheTests {
     }
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases)
-    func getLatestDownloadedTranslationIsNil(persistenceType: PersistenceType) async throws {
+    @Test
+    func getLatestDownloadedTranslationIsNil() async throws {
 
-        let cache = try await getCache(persistenceType: persistenceType)
+        let cache = try getCache()
 
         let downloadedTranslation: DownloadedTranslationDataModel? = try cache.getLatestDownloadedTranslation(
             resourceId: Self.resourceBId,
@@ -101,10 +96,10 @@ struct TrackDownloadedTranslationsCacheTests {
     // MARK: - Track Downloads
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases)
-    func trackTranslationDownloadedPersistsDownloadedTranslation(persistenceType: PersistenceType) async throws {
+    @Test
+    func trackTranslationDownloadedPersistsDownloadedTranslation() async throws {
 
-        let cache = try await getCache(persistenceType: persistenceType)
+        let cache = try getCache()
 
         let translation: TranslationDataModel = TranslationCodable.random(
             id: "b_c_30",
@@ -130,10 +125,10 @@ struct TrackDownloadedTranslationsCacheTests {
     }
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases)
-    func trackTranslationDownloadedTracksLatestVersion(persistenceType: PersistenceType) async throws {
+    @Test
+    func trackTranslationDownloadedTracksLatestVersion() async throws {
 
-        let cache = try await getCache(persistenceType: persistenceType)
+        let cache = try getCache()
 
         let translation: TranslationDataModel = TranslationCodable.random(
             id: "a_a_26",
@@ -154,10 +149,10 @@ struct TrackDownloadedTranslationsCacheTests {
     }
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases)
-    func trackTranslationDownloadedThrowsWhenResourceIsMissing(persistenceType: PersistenceType) async throws {
+    @Test
+    func trackTranslationDownloadedThrowsWhenResourceIsMissing() async throws {
 
-        let cache = try await getCache(persistenceType: persistenceType)
+        let cache = try getCache()
 
         let translation: TranslationDataModel = TranslationCodable.random(
             language: LanguageCodable.random(id: Self.languageAId, code: LanguageCodeDomainModel.english.rawValue),
@@ -170,10 +165,10 @@ struct TrackDownloadedTranslationsCacheTests {
     }
 
     @available(iOS 17.4, *)
-    @Test(arguments: PersistenceType.allCases)
-    func trackTranslationDownloadedThrowsWhenLanguageIsMissing(persistenceType: PersistenceType) async throws {
+    @Test
+    func trackTranslationDownloadedThrowsWhenLanguageIsMissing() async throws {
 
-        let cache = try await getCache(persistenceType: persistenceType)
+        let cache = try getCache()
 
         let translation: TranslationDataModel = TranslationCodable.random(
             language: nil,
@@ -191,45 +186,20 @@ struct TrackDownloadedTranslationsCacheTests {
 extension TrackDownloadedTranslationsCacheTests {
 
     @available(iOS 17.4, *)
-    private func getCache(persistenceType: PersistenceType) async throws -> TrackDownloadedTranslationsCache {
+    private func getCache() throws -> TrackDownloadedTranslationsCache {
 
-        let persistence: any Persistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel>
-
-        switch persistenceType {
-
-        case .realm:
-            persistence = try getRealmPersistence()
-
-        case .swiftData:
-            persistence = try getSwiftPersistence()
-        }
-
-        try await persistence.writeObjects(
-            externalObjects: getDownloadedTranslations()
+        let testsAppConfig = TestsAppConfig(
+            swiftDatabase: try FakeSwiftDatabase.createSwiftDatabase(addObjects: getSwiftDatabaseObjects())
         )
 
-        return TrackDownloadedTranslationsCache(
-            persistence: persistence
-        )
-    }
+        let testsDiContainer = TestsDiContainer(testsAppConfig: testsAppConfig)
 
-    private func getRealmPersistence() throws -> RealmRepositorySyncPersistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel, RealmDownloadedTranslation> {
-
-        return RealmRepositorySyncPersistence(
-            database: try FakeRealmDatabase.createRealmDatabase(),
-            mapping: RealmDownloadedTranslationMapping()
-        )
+        return testsDiContainer.core.dataLayer.getTrackDownloadedTranslationsCache()
     }
 
     @available(iOS 17.4, *)
-    private func getSwiftPersistence() throws -> SwiftRepositorySyncPersistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel, SwiftDownloadedTranslation> {
-
-        let container = try SwiftDataContainer.createInMemoryContainer(schema: Schema(versionedSchema: LatestProductionSwiftDataSchema.self))
-
-        return SwiftRepositorySyncPersistence(
-            database: SwiftDatabase(container: container),
-            mapping: SwiftDownloadedTranslationMapping()
-        )
+    private func getSwiftDatabaseObjects() -> [SwiftDownloadedTranslation] {
+        return getDownloadedTranslations().map { SwiftDownloadedTranslation.createNewFrom(model: $0) }
     }
 
     private func getDownloadedTranslations() -> [DownloadedTranslationDataModel] {

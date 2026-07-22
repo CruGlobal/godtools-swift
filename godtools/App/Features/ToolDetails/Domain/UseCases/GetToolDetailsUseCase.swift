@@ -34,7 +34,12 @@ final class GetToolDetailsUseCase {
         self.favoritedResourcesRepository = favoritedResourcesRepository
     }
     
-    func execute(toolId: String, appLanguage: BCP47LanguageIdentifier, toolPrimaryLanguage: BCP47LanguageIdentifier, toolParallelLanguage: BCP47LanguageIdentifier?) async throws -> ToolDetailsDomainModel {
+    func execute(
+        toolId: String,
+        appLanguage: BCP47LanguageIdentifier,
+        toolPrimaryLanguage: BCP47LanguageIdentifier,
+        toolParallelLanguage: BCP47LanguageIdentifier?
+    ) async throws -> ToolDetailsDomainModel {
         
         let toolDataModel: ResourceDataModel? = resourcesRepository.getResourceById(id: toolId)
         

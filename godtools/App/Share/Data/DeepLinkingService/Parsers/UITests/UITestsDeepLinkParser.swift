@@ -40,6 +40,10 @@ final class UITestsDeepLinkParser: DeepLinkUrlParserInterface {
             
             return .appLanguagesList
         }
+        else if screenPath == "tooldetails", let toolId = queryParameters["tool_id"] as? String {
+            
+            return .toolDetails(toolId: toolId)
+        }
         else if screenPath == "tutorial" {
             
             return .tutorial

@@ -15,42 +15,42 @@ final class GodToolsAppConfig: AppConfigInterface {
     private static let mobileContentCDNProduction: String = "https://mobilecontent.cru.org"
     private static let mobileContentCDNStaging: String = "https://mobilecontent-stage.cru.org"
     
-    private let appBuild: AppBuild
+    private let environment: AppEnvironment
+            
+    init(environment: AppEnvironment) {
         
-    init() {
-        
-        appBuild = AppBuild(buildConfiguration: InfoPlist().getAppBuildConfiguration())
+        self.environment = environment
     }
     
     var analyticsEnabled: Bool {
         return true
     }
     
-    var buildConfig: AppBuildConfiguration {
-        return appBuild.configuration
-    }
-    
     var dynalinkClientApiKey: String? {
         return "8322c64ccf9c49fbd6f2a15ec0e20301"
-    }
-    
-    var environment: AppEnvironment {
-        return appBuild.environment
     }
     
     var firebaseEnabled: Bool {
         return true
     }
     
-    var isDebug: Bool {
-        return appBuild.isDebug
-    }
-    
     func getAppleAppId() -> String {
         return "542773210"
     }
     
+    var isOptInNotificationModalEnabled: Bool {
+        return true
+    }
+    
     var urlRequestsEnabled: Bool {
+        return true
+    }
+    
+    var shouldSyncInitialLanguages: Bool {
+        return true
+    }
+    
+    var shouldSyncInitialResources: Bool {
         return true
     }
         
@@ -81,7 +81,7 @@ final class GodToolsAppConfig: AppConfigInterface {
     
     func getFirebaseGoogleServiceFileName() -> String {
         
-        switch appBuild.environment {
+        switch environment {
         
         case .staging:
             return "GoogleService-Info-Debug"
@@ -117,29 +117,33 @@ final class GodToolsAppConfig: AppConfigInterface {
         return Self.getMobileContentCDNBaseUrl(environment: environment)
     }
     
-    func getRealmDatabaseConfig() throws -> RealmDatabaseConfig {
-                
-        switch appBuild.environment {
+    func getRealmDatabase() throws -> RealmDatabase {
+           
+        let config: RealmDatabaseConfig
+    
+        switch environment {
         
         case .staging:
-            return try RealmStagingConfig().createConfig()
+            config = try RealmStagingConfig.createConfig()
         
         case .production:
-            return try RealmProductionConfig().createConfig()
+            config = try RealmProductionConfig.createConfig()
         }
+        
+        return RealmDatabase(databaseConfig: config)
     }
     
     @available(iOS 17.4, *)
     func getSwiftDatabase() throws -> SwiftDatabase? {
         
-        // TODO: Remove optional SwiftDatabase? once enabled. ~Levi
-        // TODO: Return database once SwiftDatabase can be enabled. ~Levi
+        // TODO: Return a SwiftDatabase instance once ready to enable SwiftData. ~Levi
+        // TODO: Optional can be removed once RealmSwift is completed removed and no longer supported. ~Levi
         return nil
         
         /*
         let database: SwiftDatabase
         
-        switch appBuild.environment {
+        switch environment {
        
         case .staging:
             database = SwiftDatabase(

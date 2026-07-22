@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class LearnToShareToolTutorialIsAvailableUseCase {
+final class LearnToShareToolTutorialIsAvailableUseCase: LearnToShareToolTutorialIsAvailableUseCaseInterface {
     
     private let toolTrainingTipsOnboardingViewsRepository: ToolTrainingTipsOnboardingViewsRepository
     private let getTranslatedToolName: GetTranslatedToolName

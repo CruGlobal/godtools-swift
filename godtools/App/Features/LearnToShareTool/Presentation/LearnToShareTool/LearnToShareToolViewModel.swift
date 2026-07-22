@@ -13,10 +13,7 @@ import Combine
 final class LearnToShareToolViewModel: ObservableObject {
     
     private let stepEmitter: FlowStepEmitter
-    private let toolId: String
-    private let toolPrimaryLanguage: AppLanguageDomainModel
-    private let toolParallelLanguage: AppLanguageDomainModel?
-    private let toolSelectedLanguageIndex: Int?
+    private let tool: ToolDetailsTool
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getLearnToShareToolStringsUseCase: GetLearnToShareToolStringsUseCase
     private let getLearnToShareToolTutorialUseCase: GetLearnToShareToolTutorialUseCase
@@ -35,20 +32,14 @@ final class LearnToShareToolViewModel: ObservableObject {
     
     init(
         stepEmitter: FlowStepEmitter,
-        toolId: String,
-        toolPrimaryLanguage: AppLanguageDomainModel,
-        toolParallelLanguage: AppLanguageDomainModel?,
-        toolSelectedLanguageIndex: Int?,
+        tool: ToolDetailsTool,
         getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
         getLearnToShareToolStringsUseCase: GetLearnToShareToolStringsUseCase,
         getLearnToShareToolTutorialUseCase: GetLearnToShareToolTutorialUseCase
     ) {
         
         self.stepEmitter = stepEmitter
-        self.toolId = toolId
-        self.toolPrimaryLanguage = toolPrimaryLanguage
-        self.toolParallelLanguage = toolParallelLanguage
-        self.toolSelectedLanguageIndex = toolSelectedLanguageIndex
+        self.tool = tool
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getLearnToShareToolStringsUseCase = getLearnToShareToolStringsUseCase
         self.getLearnToShareToolTutorialUseCase = getLearnToShareToolTutorialUseCase
@@ -79,12 +70,17 @@ final class LearnToShareToolViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        Publishers.CombineLatest(
+        Publishers.CombineLatest3(
             $strings.dropFirst(),
-            $currentPage
+            $currentPage,
+            $learnToShareToolItems.dropFirst()
         )
         .receive(on: DispatchQueue.main)
-        .sink { [weak self] (strings: LearnToShareToolStringsDomainModel, currentPage: Int) in
+        .sink { [weak self] (
+            strings: LearnToShareToolStringsDomainModel,
+            currentPage: Int,
+            learnToShareToolItems: [LearnToShareToolItemDomainModel]
+        ) in
             
             guard let weakSelf = self else {
                 return
@@ -150,13 +146,17 @@ extension LearnToShareToolViewModel {
     }
     
     @objc func closeTapped() {
-        stepEmitter.emit(step: AppFlowStep.closeTappedFromLearnToShareTool(toolId: toolId, primaryLanguage: toolPrimaryLanguage, parallelLanguage: toolParallelLanguage, selectedLanguageIndex: toolSelectedLanguageIndex))
+        stepEmitter.emit(
+            step: AppFlowStep.closeTappedFromLearnToShareTool(tool: tool)
+        )
     }
     
     func continueTapped() {
         
         if isOnLastPage {
-            stepEmitter.emit(step: AppFlowStep.startTrainingTappedFromLearnToShareTool(toolId: toolId, primaryLanguage: toolPrimaryLanguage, parallelLanguage: toolParallelLanguage, selectedLanguageIndex: toolSelectedLanguageIndex))
+            stepEmitter.emit(
+                step: AppFlowStep.startTrainingTappedFromLearnToShareTool(tool: tool)
+            )
         }
         else {
             currentPage += 1

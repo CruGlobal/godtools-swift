@@ -11,8 +11,11 @@ import Foundation
 
 class TestsDiContainer: AppDiContainer {
     
-    init(testsAppConfig: TestsAppConfig) {
+    init(
+        testsAppConfig: TestsAppConfig,
+        appBuild: AppBuildInterface = TestsBuild()
+    ) {
    
-        super.init(appConfig: testsAppConfig)
+        super.init(appBuild: appBuild, appConfig: testsAppConfig)
     }
 }

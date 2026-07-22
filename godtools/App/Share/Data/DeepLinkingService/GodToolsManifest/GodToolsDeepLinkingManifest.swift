@@ -96,7 +96,7 @@ final class GodToolsDeepLinkingManifest: DeepLinkingManifestInterface {
             ),
             DeepLinkingParserManifestUrl(
                 scheme: Self.schemeGodTools,
-                hosts: [Self.hostGodTools, Self.hostDynalinks],
+                hosts: [Self.hostGodTools],
                 path: "ui_tests",
                 parserClass: UITestsDeepLinkParser.self
             )

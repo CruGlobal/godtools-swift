@@ -153,19 +153,18 @@ final class AppFlow: RootFlow {
                 
                 removeLaunchScreenImageView(animated: false, delay: 0)
                 
+                let onboardingTutorialIsAvailable: Bool = appDiContainer.feature.onboarding.domainLayer.getOnboardingTutorialIsAvailableUseCase().execute()
+                let launchCount: Int = launchCountRepository.getLaunchCount()
+                let hasPossibleDeferredDeepLinkInPasteboardForDynalink: Bool = UIPasteboard.general.hasURLs
+                let shouldOpenPasteboardForDeferredDeepLink: Bool = launchCount == 1 && hasPossibleDeferredDeepLinkInPasteboardForDynalink
+                
+                if !onboardingTutorialIsAvailable {
+                    pushFlow(flow: dashboardFlow, animated: false)
+                }
+                
                 Task {
                     
-                    let onboardingTutorialIsAvailable: Bool = appDiContainer.feature.onboarding.domainLayer.getOnboardingTutorialIsAvailableUseCase().execute()
                     let deferredDeepLink: ParsedDeepLinkType? = await appDiContainer.feature.deferredDeepLink.domainLayer.getDeferredDeepLinkUseCase().execute() // NOTE: I noticed the call to check for deferred deep link will take a second or 2. ~Levi
-                                        
-                    if !onboardingTutorialIsAvailable {
-                        pushFlow(flow: dashboardFlow, animated: false)
-                    }
-                    
-                    let launchCount: Int = launchCountRepository.getLaunchCount()
-                    let hasPossibleDeferredDeepLinkInPasteboardForDynalink: Bool = UIPasteboard.general.hasURLs
-                    
-                    let shouldOpenPasteboardForDeferredDeepLink: Bool = launchCount == 1 && hasPossibleDeferredDeepLinkInPasteboardForDynalink
                     
                     if let deepLink = deferredDeepLink {
                         
@@ -449,14 +448,17 @@ extension AppFlow {
     private func navigateToDeepLink(deepLink: ParsedDeepLinkType) {
                 
         switch deepLink {
-        
-        case .tool(let toolDeepLink):
-
-            dashboardFlow.navigateToToolFromDeepLink(
-                appLanguage: appLanguage,
-                toolDeepLink: toolDeepLink
-            )
             
+        case .allToolsList:
+            break
+            
+        case .appLanguagesList:
+            pushFlow(
+                flow: ChooseAppLanguageFlow(
+                    appDiContainer: appDiContainer
+                )
+            )
+        
         case .articleAemUri(let aemUri):
             
             let aemCacheObject: ArticleAemCacheObject? = appDiContainer.core.dataLayer.getArticleAemRepository()
@@ -482,12 +484,21 @@ extension AppFlow {
                 )
             }
             
+        case .dashboard:
+            break
+            
+        case .favoritedToolsList:
+            break
+            
         case .languageSettings:
             pushFlow(
                 flow: LanguageSettingsFlow(
                     appDiContainer: appDiContainer
                 )
             )
+            
+        case .lessonsList:
+            break
             
         case .localizationSettings:
             pushFlow(
@@ -496,25 +507,6 @@ extension AppFlow {
                     shouldStoreCountryWhenSelected: true
                 )
             )
-            
-        case .appLanguagesList:
-            pushFlow(
-                flow: ChooseAppLanguageFlow(
-                    appDiContainer: appDiContainer
-                )
-            )
-            
-        case .lessonsList:
-            break
-            
-        case .favoritedToolsList:
-            break
-            
-        case .allToolsList:
-            break
-            
-        case .dashboard:
-            break
             
         case .menu:
             
@@ -534,6 +526,16 @@ extension AppFlow {
             }
                         
             navigateToOnboarding()
+            
+        case .tool(let toolDeepLink):
+
+            dashboardFlow.navigateToToolFromDeepLink(
+                appLanguage: appLanguage,
+                toolDeepLink: toolDeepLink
+            )
+            
+        case .toolDetails(let toolId):
+            dashboardFlow.navigateToToolDetails(toolId: toolId)
             
         case .tutorial:
             presentFlow(
@@ -613,6 +615,10 @@ extension AppFlow {
     }
     
     private func getShouldPromptForOptInNotification() async throws -> Bool {
+        
+        guard appDiContainer.core.dataLayer.getAppConfig().isOptInNotificationModalEnabled else {
+            return false
+        }
         
         return try await appDiContainer.feature.optInNotification.domainLayer
             .getShouldPromptForOptInNotificationUseCase()
