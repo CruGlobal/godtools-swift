@@ -21,7 +21,7 @@ extension ToolSettingsFlow {
         
         let showTutorialPages: ShowToolScreenShareTutorialPages
         
-        if toolScreenShareTutorialViewed.hasBeenViewed || toolSettingsObserver.tractRemoteSharePublisher.webSocketIsConnected {
+        if toolScreenShareTutorialViewed || toolSettingsObserver.tractRemoteSharePublisher.webSocketIsConnected {
             showTutorialPages = .lastPageWithQRCodeOption
         }
         else {
