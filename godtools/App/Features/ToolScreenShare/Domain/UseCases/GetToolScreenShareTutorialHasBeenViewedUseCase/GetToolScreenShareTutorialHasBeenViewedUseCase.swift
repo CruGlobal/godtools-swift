@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetToolScreenShareTutorialHasBeenViewedUseCase {
+final class GetToolScreenShareTutorialHasBeenViewedUseCase: GetToolScreenShareTutorialHasBeenViewedUseCaseInterface {
     
     private let tutorialViewsRepository: ToolScreenShareTutorialViewsRepository
     
@@ -17,12 +17,14 @@ final class GetToolScreenShareTutorialHasBeenViewedUseCase {
         self.tutorialViewsRepository = tutorialViewsRepository
     }
     
-    func execute(toolId: String) -> ToolScreenShareTutorialViewedDomainModel {
+    func execute(toolId: String) -> Bool {
         
         let toolScreenShare: ToolScreenShareTutorialViewDataModel? = tutorialViewsRepository.getToolScreenShareTutorialView(id: toolId)
         
         let numberOfViews: Int = toolScreenShare?.numberOfViews ?? 0
         
-        return ToolScreenShareTutorialViewedDomainModel(numberOfViews: numberOfViews)
+        let hasBeenViewed: Bool = numberOfViews >= 3
+        
+        return hasBeenViewed
     }
 }

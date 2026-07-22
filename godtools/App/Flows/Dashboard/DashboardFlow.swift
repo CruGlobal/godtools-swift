@@ -43,6 +43,7 @@ final class DashboardFlow: GTFlow {
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()
             .execute()
+            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
     }
     

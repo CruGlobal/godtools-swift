@@ -9,7 +9,7 @@
 import Foundation
 import XCTest
 
-class ChooseAppLanguageFlowTests: BaseFlowTests {
+final class ChooseAppLanguageFlowTests: BaseFlowTests {
         
     private func launchApp() {
         
