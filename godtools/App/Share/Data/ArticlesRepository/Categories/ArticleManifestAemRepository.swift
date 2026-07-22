@@ -38,7 +38,14 @@ final class ArticleManifestAemRepository: ArticleAemRepository {
         return try await categoryArticlesCache.getCategoryArticles(categoryId: categoryId, languageCode: languageCode)
     }
     
-    func downloadAndCacheManifestAemUris(manifest: Manifest, translationId: String, languageCode: String, downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority, forceFetchFromRemote: Bool = false) async throws -> ArticleAemDownload {
+    func downloadAndCacheManifestAemUris(
+        manifest: Manifest,
+        translationId: String,
+        languageCode: String,
+        downloadCachePolicy: ArticleAemDownloaderCachePolicy,
+        requestPriority: RequestPriority,
+        forceFetchFromRemote: Bool = false
+    ) async throws -> ArticleAemDownload {
         
         let syncInvalidator = SyncInvalidator(
             id: getSyncInvalidatorId(translationId: translationId),

@@ -93,7 +93,10 @@ extension ArticleAemCache {
         )
     }
     
-    func storeAemDataObjects(aemDataObjects: [ArticleAemData], requestPriority: RequestPriority) async throws -> ArticleWebArchiverArchive {
+    func storeAemDataObjects(
+        aemDataObjects: [ArticleAemData],
+        requestPriority: RequestPriority
+    ) async throws -> ArticleWebArchiverArchive {
      
         let realm: Realm = try realmDatabase.openRealm()
         
