@@ -9,7 +9,7 @@
 import Foundation
 import XCTest
 
-class ToolScreenShareFlowTests: BaseFlowTests {
+final class ToolScreenShareFlowTests: BaseFlowTests {
     
     private func launchAppToToolScreenShare() {
         

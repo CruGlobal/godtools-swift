@@ -76,6 +76,7 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
         
         getCurrentAppLanguageUseCase
             .execute()
+            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         Publishers.CombineLatest(

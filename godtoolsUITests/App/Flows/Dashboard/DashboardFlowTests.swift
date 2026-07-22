@@ -9,7 +9,7 @@
 import Foundation
 import XCTest
 
-class DashboardFlowTests: BaseFlowTests {
+final class DashboardFlowTests: BaseFlowTests {
     
     private func launchAppToDashboardLessons() {
         launchApp(

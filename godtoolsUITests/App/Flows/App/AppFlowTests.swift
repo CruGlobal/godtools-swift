@@ -9,6 +9,6 @@
 import Foundation
 import XCTest
 
-class AppFlowTests: BaseFlowTests {
+final class AppFlowTests: BaseFlowTests {
         
 }

@@ -43,7 +43,12 @@ final class ToolScreenShareDomainLayerDependencies {
         )
     }
     
-    func getToolScreenShareTutorialHasBeenViewedUseCase() -> GetToolScreenShareTutorialHasBeenViewedUseCase {
+    func getToolScreenShareTutorialHasBeenViewedUseCase() -> GetToolScreenShareTutorialHasBeenViewedUseCaseInterface {
+        
+        guard core.dataLayer.getAppBuild().target != .uiTests else {
+            return UITestsGetToolScreenShareTutorialHasBeenViewedUseCase()
+        }
+        
         return GetToolScreenShareTutorialHasBeenViewedUseCase(
             tutorialViewsRepository: dataLayer.getToolScreenShareTutorialViewsRepository()
         )

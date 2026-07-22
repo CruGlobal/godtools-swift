@@ -55,6 +55,7 @@ final class OptInNotificationFlow: GTFlow {
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()
             .execute()
+            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         appDiContainer.feature.optInNotification.dataLayer

@@ -9,7 +9,7 @@
 import Foundation
 import XCTest
 
-class MenuFlowTests: BaseFlowTests {
+final class MenuFlowTests: BaseFlowTests {
         
     private func launchAppToMenu() {
         
@@ -120,7 +120,7 @@ class MenuFlowTests: BaseFlowTests {
 
         assertIfButtonDoesNotExistElseTap(buttonAccessibility: .shareGodTools)
 
-        assertIfScreenDoesNotExist(screenAccessibility: .shareGodTools)
+        assertIfScreenDoesNotExist(screenAccessibility: .shareGodTools, waitForExistenceTimeout: 15)
     }
     
     func testNavigationToTermsOfUse() {

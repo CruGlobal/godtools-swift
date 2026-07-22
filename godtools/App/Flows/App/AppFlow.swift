@@ -106,6 +106,7 @@ final class AppFlow: RootFlow {
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()
             .execute()
+            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         appLaunchObserver
