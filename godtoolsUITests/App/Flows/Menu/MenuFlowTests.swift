@@ -9,7 +9,7 @@
 import Foundation
 import XCTest
 
-class MenuFlowTests: BaseFlowTests {
+final class MenuFlowTests: BaseFlowTests {
         
     private func launchAppToMenu() {
         

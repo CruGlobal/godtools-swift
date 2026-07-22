@@ -9,7 +9,7 @@
 import Foundation
 import XCTest
 
-class OnboardingFlowTests: BaseFlowTests {
+final class OnboardingFlowTests: BaseFlowTests {
         
     private func launchAppToOnboardingTutorial(appLanguageCode: String? = nil) {
         

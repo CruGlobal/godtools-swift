@@ -9,7 +9,7 @@
 import Foundation
 import XCTest
 
-class LearnToShareToolFlowTests: BaseFlowTests {
+final class LearnToShareToolFlowTests: BaseFlowTests {
     
     private func launchAppToToolDetails() {
         
