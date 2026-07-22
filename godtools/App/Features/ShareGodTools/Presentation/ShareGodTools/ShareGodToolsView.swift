@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ShareGodToolsView: UIActivityViewController {
+final class ShareGodToolsView: UIActivityViewController {
     
     private let viewModel: ShareGodToolsViewModel
     
