@@ -10,18 +10,24 @@ import SwiftUI
 
 struct ArticlesErrorMessageView: View {
     
+    private let geometry: GeometryProxy
+    private let horizontalPadding: CGFloat
     private let title: String
     private let message: String
     private let actionTitle: String
     private let actionTapped: (() -> Void)?
     
     init(
+        geometry: GeometryProxy,
+        horizontalPadding: CGFloat,
         title: String,
         message: String,
         actionTitle: String,
         actionTapped: (() -> Void)?
     ) {
         
+        self.geometry = geometry
+        self.horizontalPadding = horizontalPadding
         self.title = title
         self.message = message
         self.actionTitle = actionTitle
@@ -42,6 +48,7 @@ struct ArticlesErrorMessageView: View {
             
             CustomButton(
                 attributes: CustomButtonAttributes(
+                    width: geometry.size.width - (horizontalPadding * 2),
                     height: 50,
                     color: ColorPalette.gtBlue.color
                 ),
@@ -60,5 +67,6 @@ struct ArticlesErrorMessageView: View {
             )
             .padding([.top], 50)
         }
+        .padding([.horizontal], horizontalPadding)
     }
 }

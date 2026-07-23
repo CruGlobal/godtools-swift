@@ -24,37 +24,41 @@ struct ArticlesView: View {
                 .opacity(viewModel.isLoading ? 1 : 0)
                 .animation(.easeOut(duration: 0.2), value: viewModel.isLoading)
             
-            PullToRefreshScrollView(showsIndicators: false) {
+            if !viewModel.articles.isEmpty {
                 
-                LazyVStack(alignment: .leading, spacing: 0) {
-                    ForEach(viewModel.articles) { article in
-                        
-                        ArticleItemView(
-                            article: article,
-                            tappedClosure: {
-                                
-                                viewModel.articleTapped(article: article)
-                            }
-                        )
+                PullToRefreshScrollView(showsIndicators: false) {
+                    
+                    LazyVStack(alignment: .leading, spacing: 0) {
+                        ForEach(viewModel.articles) { article in
+                            
+                            ArticleItemView(
+                                article: article,
+                                tappedClosure: {
+                                    
+                                    viewModel.articleTapped(article: article)
+                                }
+                            )
+                        }
                     }
+                } refreshHandler: {
+                    
+                    viewModel.pullToRefresh()
                 }
-            } refreshHandler: {
-                
-                viewModel.pullToRefresh()
             }
             
             if let articlesError = viewModel.articlesError {
+                
                 ArticlesErrorMessageView(
+                    geometry: geometry,
+                    horizontalPadding: 30,
                     title: articlesError.title,
                     message: articlesError.message,
                     actionTitle: articlesError.downloadActionTitle,
                     actionTapped: {
-                        
                         viewModel.downloadArticlesTapped()
                     }
                 )
                 .padding([.top], 64)
-                .padding([.horizontal], 30)
             }
         }
         .navigationTitle(viewModel.navTitle)
