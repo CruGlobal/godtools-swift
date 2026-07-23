@@ -24,7 +24,8 @@ final class LoadingArticleViewModel: ObservableObject {
         aemUri: String,
         appLanguage: AppLanguageDomainModel,
         articleAemRepository: ArticleAemRepository,
-        localizationServices: LocalizationServicesInterface
+        localizationServices: LocalizationServicesInterface,
+        getDownloadArticlesErrorMessage: GetDownloadArticlesErrorMessage
     ) {
         
         self.stepEmitter = stepEmitter
@@ -66,8 +67,8 @@ final class LoadingArticleViewModel: ObservableObject {
                     key: LocalizableStringKeys.error.key
                 )
                 
-                let errorMessage: String = DownloadArticlesErrorViewModel(appLanguage: appLanguage, localizationServices: localizationServices, error: downloadError).message
-                
+                let errorMessage: String = getDownloadArticlesErrorMessage.getErrorMessage(appLanguage: appLanguage, error: downloadError)
+                                
                 let alertMessage = AlertMessage(title: errorTitle, message: errorMessage)
                 
                 stepEmitter.emit(step: AppFlowStep.didFailToDownloadArticleFromLoadingArticle(alertMessage: alertMessage))

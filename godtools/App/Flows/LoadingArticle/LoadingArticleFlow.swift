@@ -69,7 +69,8 @@ extension LoadingArticleFlow {
             aemUri: aemUri,
             appLanguage: appLanguage,
             articleAemRepository: appDiContainer.core.dataLayer.getArticleAemRepository(),
-            localizationServices: appDiContainer.core.dataLayer.getLocalizationServices()
+            localizationServices: appDiContainer.core.dataLayer.getLocalizationServices(),
+            getDownloadArticlesErrorMessage: appDiContainer.feature.articles.domainLayer.getDownloadArticlesErrorMessage()
         )
         
         let view = LoadingArticleView(
