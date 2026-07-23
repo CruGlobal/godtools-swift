@@ -22,6 +22,10 @@ open class ArticleAemRepository: NSObject {
         super.init()
     }
     
+    func getArticleAemDataObjects() async throws -> [ArticleAemData] {
+        return try await cache.getArticleAemDataObjects()
+    }
+    
     func getAemCacheObject(aemUri: String) -> ArticleAemCacheObject? {
         do {
             return try cache.getAemCacheObject(aemUri: aemUri)

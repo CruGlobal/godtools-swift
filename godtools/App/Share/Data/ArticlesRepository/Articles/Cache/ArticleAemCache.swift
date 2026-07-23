@@ -51,6 +51,10 @@ final class ArticleAemCache {
 
 extension ArticleAemCache {
     
+    func getArticleAemDataObjects() async throws -> [ArticleAemData] {
+        return try await persistence.getDataModels()
+    }
+    
     func getAemCacheObject(aemUri: String) throws -> ArticleAemCacheObject? {
         
         let realm: Realm = try realmDatabase.openRealm()
