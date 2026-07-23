@@ -145,30 +145,26 @@ final class AppDataLayerDependencies {
     
     func getArticleManifestAemRepository() -> ArticleManifestAemRepository {
         
-        let persistence: any Persistence<CategoryArticleDataModel, CategoryArticleDataModel>
+        let categoryArticlesCache: CategoryArticlesCacheInterface
         
         if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
             
-            persistence = SwiftRepositorySyncPersistence(
-                database: database,
-                mapping: SwiftCategoryArticleMapping()
-            )
+            categoryArticlesCache = CategoryArticlesCache(container: database.container.modelContainer)
         }
         else {
             
-            persistence = RealmRepositorySyncPersistence(
+            let persistence = RealmRepositorySyncPersistence(
                 database: getSharedRealmDatabase(),
                 mapping: RealmCategoryArticleMapping()
             )
+            
+            categoryArticlesCache = RealmCategoryArticlesCache(persistence: persistence, realmDataWrite: getRealmDataWrite())
         }
         
         return ArticleManifestAemRepository(
             downloader: getArticleAemDownloader(),
             cache: getArticleAemCache(),
-            categoryArticlesCache: CategoryArticlesCache(
-                persistence: persistence,
-                realmDataWrite: getRealmDataWrite()
-            ),
+            categoryArticlesCache: categoryArticlesCache,
             syncInvalidatorPersistence: getUserDefaultsCache()
         )
     }

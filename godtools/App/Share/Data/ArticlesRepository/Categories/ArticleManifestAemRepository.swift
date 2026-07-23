@@ -12,13 +12,13 @@ import RequestOperation
 
 final class ArticleManifestAemRepository: ArticleAemRepository {
     
-    private let categoryArticlesCache: CategoryArticlesCache
+    private let categoryArticlesCache: CategoryArticlesCacheInterface
     private let syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface
         
     init(
         downloader: ArticleAemDownloader,
         cache: ArticleAemCache,
-        categoryArticlesCache: CategoryArticlesCache,
+        categoryArticlesCache: CategoryArticlesCacheInterface,
         syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface
     ) {
         
