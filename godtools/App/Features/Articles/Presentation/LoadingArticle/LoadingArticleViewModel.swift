@@ -38,7 +38,7 @@ final class LoadingArticleViewModel: ObservableObject {
             
             do {
                 
-                let download = try await articleAemRepository
+                let download: ArticleAemDownload = try await articleAemRepository
                     .downloadAndCache(
                         aemUris: [aemUri],
                         downloadCachePolicy: .fetchFromCacheUpToNextHour,

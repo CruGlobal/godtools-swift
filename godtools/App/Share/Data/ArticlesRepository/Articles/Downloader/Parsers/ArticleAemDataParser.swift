@@ -50,24 +50,29 @@ final class ArticleAemDataParser {
         return htmlUrlString
     }
     
-    func parse(aemUrl: URL, aemJson: [String: Any]) throws -> ArticleAemData {
+    func parse(aemUrl: URL, aemJson: [String: Any]) -> ArticleAemData {
                      
         let variation: String
         let variationJson: [String: Any]
+        let error: Error?
         
         if let preferredVariation = getPreferredVariation(aemUrl: aemUrl, aemJson: aemJson) {
             
             variation = preferredVariation
             
-            guard let variationJsonDictionary = aemJson[preferredVariation] as? [String: Any] else {
-                throw NSError.errorWithDescription(description: "Failed to parse aem import json result because json for the preferred variation does not exist.\n variation: \(variation)")
+            if let variationJsonDictionary = aemJson[preferredVariation] as? [String: Any] {
+                variationJson = variationJsonDictionary
+                error = nil
             }
-            
-            variationJson = variationJsonDictionary
+            else {
+                variationJson = Dictionary()
+                error = NSError.errorWithDescription(description: "Failed to parse aem import json result because json for the preferred variation does not exist.\n variation: \(variation)")
+            }
         }
         else {
             variation = ""
             variationJson = aemJson
+            error = nil
         }
                                 
         let articleJcrContent: ArticleJcrContent? = articleJcrContentParser.parse(aemUri: aemUrl.absoluteString, jsonDictionary: variationJson)
@@ -75,10 +80,11 @@ final class ArticleAemDataParser {
         let aemWebUrl: String = convertAemUrlToHtmlUrlWithVaration(aemUrl: aemUrl, variation: variation)
         
         return ArticleAemData(
-            id: aemUrl.absoluteString,
             aemUri: aemUrl.absoluteString,
             articleJcrContent: articleJcrContent,
             webUrl: aemWebUrl,
+            error: error,
+            errorMessage: nil,
             updatedAt: Date()
         )   
     }

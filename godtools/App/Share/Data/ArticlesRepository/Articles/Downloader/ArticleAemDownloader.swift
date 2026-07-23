@@ -21,62 +21,41 @@ final class ArticleAemDownloader: ArticleAemDownloaderInterface {
         self.requestSender = requestSender
     }
     
-    func download(aemUris: [String], downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority) async throws -> ArticleAemDownload {
+    func download(
+        aemUris: [String],
+        downloadCachePolicy: ArticleAemDownloaderCachePolicy,
+        requestPriority: RequestPriority
+    ) async -> [ArticleAemData] {
         
-        let results: [DownloadArticleAemResult] = try await downloadAemUris(
+        return await downloadAemUris(
             aemUris: aemUris,
             downloadCachePolicy: downloadCachePolicy,
             requestPriority: requestPriority
         )
-        
-        var aemDataObjects: [ArticleAemData] = Array()
-        var errors: [Error] = Array()
-        
-        for result in results {
-            
-            if let aemDataObject = result.data {
-                aemDataObjects.append(aemDataObject)
-            }
-            
-            if let error = result.error {
-                errors.append(error)
-            }
-        }
-        
-        return ArticleAemDownload(
-            aemDataObjects: aemDataObjects,
-            errors: errors
-        )
     }
     
-    private func downloadAemUris(aemUris: [String], downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority) async throws -> [DownloadArticleAemResult] {
+    private func downloadAemUris(
+        aemUris: [String],
+        downloadCachePolicy: ArticleAemDownloaderCachePolicy,
+        requestPriority: RequestPriority
+    ) async -> [ArticleAemData] {
         
-        try await withThrowingTaskGroup(of: DownloadArticleAemResult.self) { group in
+        await withTaskGroup(of: ArticleAemData.self) { group in
             
             for aemUri in aemUris {
                 group.addTask {
-                    do {
-                        let aemData: ArticleAemData = try await self.downloadAemUri(
-                            aemUri: aemUri,
-                            downloadCachePolicy: downloadCachePolicy,
-                            requestPriority: requestPriority
-                        )
-                        return DownloadArticleAemResult(data: aemData, error: nil)
-                    }
-                    catch let error {
-                        
-                        if error.isUrlErrorNotConnectedToInternetCode || error.isUrlErrorCancelledCode {
-                            throw error
-                        }
-                        
-                        return DownloadArticleAemResult(data: nil, error: error)
-                    }
+                    let aemData: ArticleAemData = await self.downloadAemUri(
+                        aemUri: aemUri,
+                        downloadCachePolicy: downloadCachePolicy,
+                        requestPriority: requestPriority
+                    )
+                    return aemData
                 }
             }
             
-            var results: [DownloadArticleAemResult] = Array()
+            var results: [ArticleAemData] = Array()
             
-            for try await result in group {
+            for await result in group {
                 results.append(result)
             }
             
@@ -84,10 +63,17 @@ final class ArticleAemDownloader: ArticleAemDownloaderInterface {
         }
     }
     
-    private func downloadAemUri(aemUri: String, downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority) async throws -> ArticleAemData {
+    private func downloadAemUri(
+        aemUri: String,
+        downloadCachePolicy: ArticleAemDownloaderCachePolicy,
+        requestPriority: RequestPriority
+    ) async -> ArticleAemData {
         
         guard let aemUrl = URL(string: aemUri) else {
-            throw NSError.errorWithDescription(description: "Failed to create aem url from string.")
+            return ArticleAemData.createWithError(
+                aemUri: aemUri,
+                error: NSError.errorWithDescription(description: "Failed to create aem url from string.")
+            )
         }
         
         let cacheTimeInterval: TimeInterval = downloadCachePolicy.getCacheTimeInterval()
@@ -95,7 +81,10 @@ final class ArticleAemDownloader: ArticleAemDownloaderInterface {
         let urlJsonString: String = aemUri + "." + String(maxAemJsonTreeLevels) + ".json?_=\(cacheTimeInterval)"
         
         guard let urlJson: URL = URL(string: urlJsonString) else {
-            throw NSError.errorWithDescription(description: "Failed to create json url from string.")
+            return ArticleAemData.createWithError(
+                aemUri: aemUri,
+                error: NSError.errorWithDescription(description: "Failed to create json url from string.")
+            )
         }
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
@@ -106,27 +95,53 @@ final class ArticleAemDownloader: ArticleAemDownloaderInterface {
             timeoutInterval: urlSession.configuration.timeoutIntervalForRequest
         )
         
-        let response: RequestDataResponse = try await requestSender.sendDataTask(
-            urlRequest: urlRequest,
-            urlSession: urlSession
-        )
+        let response: RequestDataResponse
+        
+        do {
+            response = try await requestSender.sendDataTask(
+                urlRequest: urlRequest,
+                urlSession: urlSession
+            )
+        }
+        catch let responseError {
+            return ArticleAemData.createWithError(
+                aemUri: aemUri,
+                error: responseError
+            )
+        }
         
         let httpStatusCode: Int = response.urlResponse.httpStatusCode ?? -1
         let isSuccessHttpStatusCode: Bool = response.urlResponse.isSuccessHttpStatusCode
         
         guard isSuccessHttpStatusCode else {
-            throw NSError.errorWithDescription(description: "The request failed with a status code: \(httpStatusCode)")
+            return ArticleAemData.createWithError(
+                aemUri: aemUri,
+                error: NSError.errorWithDescription(description: "The request failed with a status code: \(httpStatusCode)")
+            )
         }
         
-        let json: Any = try JSONSerialization.jsonObject(with: response.data, options: [])
+        let json: Any
+        
+        do {
+            json = try JSONSerialization.jsonObject(with: response.data, options: [])
+        }
+        catch let jsonError {
+            return ArticleAemData.createWithError(
+                aemUri: aemUri,
+                error: jsonError
+            )
+        }
         
         guard let jsonDictionary = json as? [String: Any], !jsonDictionary.isEmpty else {
-            throw NSError.errorWithDescription(description: "Failed to parse jsonData because data does not exist.")
+            return ArticleAemData.createWithError(
+                aemUri: aemUri,
+                error: NSError.errorWithDescription(description: "Failed to parse jsonData because data does not exist.")
+            )
         }
         
         let aemDataParser = ArticleAemDataParser()
         
-        return try aemDataParser.parse(
+        return aemDataParser.parse(
             aemUrl: aemUrl,
             aemJson: jsonDictionary
         )

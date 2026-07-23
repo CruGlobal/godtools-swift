@@ -13,26 +13,38 @@ struct ArticleAemData: Sendable {
     let id: String
     let aemUri: String
     let articleJcrContent: ArticleJcrContent?
-    let webUrl: String
+    let webUrl: String?
     let error: Error?
+    let errorMessage: String?
     let updatedAt: Date
     
     init(
-        id: String,
         aemUri: String,
         articleJcrContent: ArticleJcrContent?,
-        webUrl: String,
+        webUrl: String?,
         error: Error?,
+        errorMessage: String?,
         updatedAt: Date
     ) {
         
         let htmlExtension: String = "html"
         
-        self.id = id
+        self.id = aemUri
         self.aemUri = aemUri
         self.articleJcrContent = articleJcrContent
-        self.webUrl = webUrl.replacingOccurrences(of: "/.\(htmlExtension)", with: ".\(htmlExtension)")
         self.error = error
+        self.errorMessage = error?.localizedDescription ?? errorMessage
         self.updatedAt = updatedAt
+        
+        if let webUrl = webUrl, !webUrl.isEmpty {
+            self.webUrl = webUrl.replacingOccurrences(of: "/.\(htmlExtension)", with: ".\(htmlExtension)")
+        }
+        else {
+            self.webUrl = nil
+        }
+    }
+    
+    static func createWithError(aemUri: String, error: Error, updatedAt: Date = Date()) -> ArticleAemData {
+        return ArticleAemData(aemUri: aemUri, articleJcrContent: nil, webUrl: nil, error: error, errorMessage: nil, updatedAt: updatedAt)
     }
 }

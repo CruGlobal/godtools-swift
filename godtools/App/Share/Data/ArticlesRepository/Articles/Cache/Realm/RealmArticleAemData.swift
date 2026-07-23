@@ -19,6 +19,7 @@ class RealmArticleAemData: Object, IdentifiableRealmObject {
         }
     }
     @objc dynamic var articleJcrContent: RealmArticleJcrContent?
+    @objc dynamic var errorMessage: String?
     @objc dynamic var webUrl: String = ""
     @objc dynamic var webArchiveFilename: String = ""
     @objc dynamic var updatedAt: Date = Date()
@@ -38,7 +39,8 @@ extension RealmArticleAemData {
             articleJcrContent = RealmArticleJcrContent.createNewFrom(model: articleJcrContentModel)
         }
         
-        webUrl = model.webUrl
+        errorMessage = model.errorMessage
+        webUrl = model.webUrl ?? ""
         updatedAt = model.updatedAt
     }
     
@@ -51,10 +53,11 @@ extension RealmArticleAemData {
     
     func toModel() -> ArticleAemData {
         return ArticleAemData(
-            id: id,
             aemUri: aemUri,
             articleJcrContent: articleJcrContent?.toModel(),
             webUrl: webUrl,
+            error: nil,
+            errorMessage: errorMessage,
             updatedAt: updatedAt
         )
     }

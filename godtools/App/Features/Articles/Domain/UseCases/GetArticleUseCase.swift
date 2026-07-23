@@ -38,7 +38,7 @@ final class GetArticleUseCase {
     
     private func getHttpsUrl(aemCacheObject: ArticleAemCacheObject) -> ArticleUrlDomainModel? {
         
-        guard let webUrl = URL(string: aemCacheObject.aemData.webUrl) else {
+        guard let webUrlString = aemCacheObject.aemData.webUrl, let webUrl = URL(string: webUrlString) else {
             return nil
         }
         
