@@ -99,32 +99,18 @@ final class AppDataLayerDependencies {
         return sharedAppConfig.firebaseEnabled ? FirebaseInAppMessaging.shared : DisabledInAppMessaging()
     }
     
-    private func getArticleAemCache() -> ArticleAemCache {
+    private func getArticleAemCache() -> RealmArticleAemCache {
         
-        let persistence: any Persistence<ArticleAemData, ArticleAemData>
-        
-        if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
-            
-            persistence = SwiftRepositorySyncPersistence(
-                database: database,
-                mapping: SwiftArticleAemDataMapping()
-            )
-        }
-        else {
-            
-            persistence = RealmRepositorySyncPersistence(
+        return RealmArticleAemCache(
+            webArchiveFileCache: getArticleAemWebArchiveFileCache(),
+            persistence: RealmRepositorySyncPersistence(
                 database: getSharedRealmDatabase(),
                 mapping: RealmArticleAemDataMapping()
-            )
-        }
-        
-        return ArticleAemCache(
-            persistence: persistence,
+            ),
             articleWebArchiver: ArticleWebArchiver(
                 urlSessionPriority: getSharedUrlSessionPriority(),
                 requestSender: getRequestSender()
             ),
-            realmDatabase: getSharedRealmDatabase(),
             realmDataWrite: getRealmDataWrite()
         )
     }
@@ -141,6 +127,10 @@ final class AppDataLayerDependencies {
             downloader: getArticleAemDownloader(),
             cache: getArticleAemCache()
         )
+    }
+    
+    private func getArticleAemWebArchiveFileCache() -> ArticleAemWebArchiveFileCache {
+        return ArticleAemWebArchiveFileCache()
     }
     
     func getArticleManifestAemRepository() -> ArticleManifestAemRepository {

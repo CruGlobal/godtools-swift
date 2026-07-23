@@ -11,10 +11,10 @@ import RequestOperation
 
 open class ArticleAemRepository: NSObject {
     
-    private let cache: ArticleAemCache
+    private let cache: RealmArticleAemCache
     private let downloader: ArticleAemDownloaderInterface
     
-    init(downloader: ArticleAemDownloader, cache: ArticleAemCache) {
+    init(downloader: ArticleAemDownloader, cache: RealmArticleAemCache) {
         
         self.downloader = downloader
         self.cache = cache
