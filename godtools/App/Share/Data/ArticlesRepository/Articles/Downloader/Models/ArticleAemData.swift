@@ -16,6 +16,8 @@ struct ArticleAemData: Sendable {
     let webUrl: String?
     let error: Error?
     let errorMessage: String?
+    let errorCode: Int?
+    let httpStatusCode: Int?
     let updatedAt: Date
     
     init(
@@ -24,6 +26,8 @@ struct ArticleAemData: Sendable {
         webUrl: String?,
         error: Error?,
         errorMessage: String?,
+        errorCode: Int?,
+        httpStatusCode: Int?,
         updatedAt: Date
     ) {
         
@@ -34,6 +38,8 @@ struct ArticleAemData: Sendable {
         self.articleJcrContent = articleJcrContent
         self.error = error
         self.errorMessage = error?.localizedDescription ?? errorMessage
+        self.errorCode = error?.code ?? errorCode
+        self.httpStatusCode = httpStatusCode
         self.updatedAt = updatedAt
         
         if let webUrl = webUrl, !webUrl.isEmpty {
@@ -44,7 +50,22 @@ struct ArticleAemData: Sendable {
         }
     }
     
-    static func createWithError(aemUri: String, error: Error, updatedAt: Date = Date()) -> ArticleAemData {
-        return ArticleAemData(aemUri: aemUri, articleJcrContent: nil, webUrl: nil, error: error, errorMessage: nil, updatedAt: updatedAt)
+    static func createWithError(
+        aemUri: String,
+        error: Error,
+        httpStatusCode: Int?,
+        updatedAt: Date = Date()
+    ) -> ArticleAemData {
+        
+        return ArticleAemData(
+            aemUri: aemUri,
+            articleJcrContent: nil,
+            webUrl: nil,
+            error: error,
+            errorMessage: nil,
+            errorCode: error.code,
+            httpStatusCode: httpStatusCode,
+            updatedAt: updatedAt
+        )
     }
 }

@@ -72,7 +72,8 @@ final class ArticleAemDownloader: ArticleAemDownloaderInterface {
         guard let aemUrl = URL(string: aemUri) else {
             return ArticleAemData.createWithError(
                 aemUri: aemUri,
-                error: NSError.errorWithDescription(description: "Failed to create aem url from string.")
+                error: NSError.errorWithDescription(description: "Failed to create aem url from string."),
+                httpStatusCode: nil
             )
         }
         
@@ -83,7 +84,8 @@ final class ArticleAemDownloader: ArticleAemDownloaderInterface {
         guard let urlJson: URL = URL(string: urlJsonString) else {
             return ArticleAemData.createWithError(
                 aemUri: aemUri,
-                error: NSError.errorWithDescription(description: "Failed to create json url from string.")
+                error: NSError.errorWithDescription(description: "Failed to create json url from string."),
+                httpStatusCode: nil
             )
         }
         
@@ -106,9 +108,18 @@ final class ArticleAemDownloader: ArticleAemDownloaderInterface {
         catch let responseError {
             return ArticleAemData.createWithError(
                 aemUri: aemUri,
-                error: responseError
+                error: responseError,
+                httpStatusCode: nil
             )
         }
+        
+        // TODO: Remove this return. ~Levi
+        return ArticleAemData.createWithError(
+            aemUri: aemUri,
+            error: NSError.errorWithDescription(description: "The request failed with a status code: \(500)"),
+            httpStatusCode: 500
+        )
+        // END TODO
         
         let httpStatusCode: Int = response.urlResponse.httpStatusCode ?? -1
         let isSuccessHttpStatusCode: Bool = response.urlResponse.isSuccessHttpStatusCode
@@ -116,7 +127,8 @@ final class ArticleAemDownloader: ArticleAemDownloaderInterface {
         guard isSuccessHttpStatusCode else {
             return ArticleAemData.createWithError(
                 aemUri: aemUri,
-                error: NSError.errorWithDescription(description: "The request failed with a status code: \(httpStatusCode)")
+                error: NSError.errorWithDescription(description: "The request failed with a status code: \(httpStatusCode)"),
+                httpStatusCode: httpStatusCode
             )
         }
         
@@ -128,14 +140,16 @@ final class ArticleAemDownloader: ArticleAemDownloaderInterface {
         catch let jsonError {
             return ArticleAemData.createWithError(
                 aemUri: aemUri,
-                error: jsonError
+                error: jsonError,
+                httpStatusCode: nil
             )
         }
         
         guard let jsonDictionary = json as? [String: Any], !jsonDictionary.isEmpty else {
             return ArticleAemData.createWithError(
                 aemUri: aemUri,
-                error: NSError.errorWithDescription(description: "Failed to parse jsonData because data does not exist.")
+                error: NSError.errorWithDescription(description: "Failed to parse jsonData because data does not exist."),
+                httpStatusCode: nil
             )
         }
         

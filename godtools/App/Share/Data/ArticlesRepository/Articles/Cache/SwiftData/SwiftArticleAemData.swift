@@ -19,7 +19,9 @@ enum SwiftArticleAemDataV1 {
     @Model
     class SwiftArticleAemData: IdentifiableSwiftDataObject {
         
+        var errorCode: Int? = nil
         var errorMessage: String? = nil
+        var httpStatusCode: Int? = nil
         var webUrl: String = ""
         var webArchiveFilename: String = ""
         var updatedAt: Date = Date()
@@ -78,6 +80,8 @@ extension SwiftArticleAemData {
             webUrl: webUrl,
             error: nil,
             errorMessage: errorMessage,
+            errorCode: errorCode,
+            httpStatusCode: httpStatusCode,
             updatedAt: updatedAt
         )
     }

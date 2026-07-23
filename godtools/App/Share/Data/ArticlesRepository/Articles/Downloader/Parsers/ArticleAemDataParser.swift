@@ -85,6 +85,8 @@ final class ArticleAemDataParser {
             webUrl: aemWebUrl,
             error: error,
             errorMessage: nil,
+            errorCode: nil,
+            httpStatusCode: nil,
             updatedAt: Date()
         )   
     }

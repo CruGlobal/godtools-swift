@@ -19,7 +19,9 @@ class RealmArticleAemData: Object, IdentifiableRealmObject {
         }
     }
     @objc dynamic var articleJcrContent: RealmArticleJcrContent?
+    @objc dynamic var errorCode: Int = 0
     @objc dynamic var errorMessage: String?
+    @objc dynamic var httpStatusCode: Int = 0
     @objc dynamic var webUrl: String = ""
     @objc dynamic var webArchiveFilename: String = ""
     @objc dynamic var updatedAt: Date = Date()
@@ -58,6 +60,8 @@ extension RealmArticleAemData {
             webUrl: webUrl,
             error: nil,
             errorMessage: errorMessage,
+            errorCode: errorCode,
+            httpStatusCode: httpStatusCode,
             updatedAt: updatedAt
         )
     }
