@@ -31,7 +31,7 @@ class RealmCategoryArticle: Object, IdentifiableRealmObject {
 
 extension RealmCategoryArticle {
     
-    func mapFrom(model: CategoryArticleModel) {
+    func mapFrom(model: CategoryArticleDataModel) {
         
         id = model.id
         aemTag = model.aemTag
@@ -42,14 +42,14 @@ extension RealmCategoryArticle {
         aemUris.append(objectsIn: model.aemUris)
     }
     
-    static func createNewFrom(model: CategoryArticleModel) -> RealmCategoryArticle {
+    static func createNewFrom(model: CategoryArticleDataModel) -> RealmCategoryArticle {
         let object = RealmCategoryArticle()
         object.mapFrom(model: model)
         return object
     }
    
-    func toModel() -> CategoryArticleModel {
-        return CategoryArticleModel(
+    func toModel() -> CategoryArticleDataModel {
+        return CategoryArticleDataModel(
             id: id,
             aemTag: aemTag,
             aemUris: Array(aemUris),

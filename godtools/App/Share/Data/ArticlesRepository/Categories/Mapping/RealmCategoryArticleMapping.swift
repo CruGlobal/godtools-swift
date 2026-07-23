@@ -11,15 +11,15 @@ import RepositorySync
 
 final class RealmCategoryArticleMapping: Mapping {
     
-    func toDataModel(externalObject: CategoryArticleModel) -> CategoryArticleModel? {
+    func toDataModel(externalObject: CategoryArticleDataModel) -> CategoryArticleDataModel? {
         return externalObject
     }
     
-    func toDataModel(persistObject: RealmCategoryArticle) -> CategoryArticleModel? {
+    func toDataModel(persistObject: RealmCategoryArticle) -> CategoryArticleDataModel? {
         return persistObject.toModel()
     }
     
-    func toPersistObject(externalObject: CategoryArticleModel) -> RealmCategoryArticle? {
+    func toPersistObject(externalObject: CategoryArticleDataModel) -> RealmCategoryArticle? {
         return RealmCategoryArticle.createNewFrom(model: externalObject)
     }
 }

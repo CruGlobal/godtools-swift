@@ -145,7 +145,7 @@ final class AppDataLayerDependencies {
     
     func getArticleManifestAemRepository() -> ArticleManifestAemRepository {
         
-        let persistence: any Persistence<CategoryArticleModel, CategoryArticleModel>
+        let persistence: any Persistence<CategoryArticleDataModel, CategoryArticleDataModel>
         
         if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
             

@@ -22,7 +22,7 @@ final class GetArticlesUseCase {
         languageCode: BCP47LanguageIdentifier
     ) async throws -> [ArticleListItemDomainModel] {
         
-        let categoryArticles: [CategoryArticleModel] = try await articlesRepsoitory.getCategoryArticles(
+        let categoryArticles: [CategoryArticleDataModel] = try await articlesRepsoitory.getCategoryArticles(
             categoryId: category.id,
             languageCode: languageCode
         )

@@ -33,7 +33,7 @@ final class ArticleManifestAemRepository: ArticleAemRepository {
         return prefix + translationId
     }
     
-    func getCategoryArticles(categoryId: String, languageCode: String) async throws -> [CategoryArticleModel] {
+    func getCategoryArticles(categoryId: String, languageCode: String) async throws -> [CategoryArticleDataModel] {
         
         return try await categoryArticlesCache.getCategoryArticles(categoryId: categoryId, languageCode: languageCode)
     }
