@@ -203,4 +203,9 @@ extension ArticlesViewModel {
         
         downloadArticlesObservable.downloadArticles(downloadCachePolicy: .ignoreCache, forceFetchFromRemote: true)
     }
+    
+    func pullToRefresh() {
+                
+        downloadArticlesObservable.downloadArticles(downloadCachePolicy: .ignoreCache, forceFetchFromRemote: true)
+    }
 }

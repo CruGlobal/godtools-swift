@@ -24,7 +24,8 @@ struct ArticlesView: View {
                 .opacity(viewModel.isLoading ? 1 : 0)
                 .animation(.easeOut(duration: 0.2), value: viewModel.isLoading)
             
-            ScrollView(.vertical) {
+            PullToRefreshScrollView(showsIndicators: false) {
+                
                 LazyVStack(alignment: .leading, spacing: 0) {
                     ForEach(viewModel.articles) { article in
                         
@@ -37,6 +38,9 @@ struct ArticlesView: View {
                         )
                     }
                 }
+            } refreshHandler: {
+                
+                viewModel.pullToRefresh()
             }
             
             if let articlesError = viewModel.articlesError {
