@@ -11,5 +11,5 @@ import RequestOperation
 
 protocol ArticleWebArchiverInterface: Sendable {
     
-    func archive(webArchiveUrls: [WebArchiveUrl], requestPriority: RequestPriority) async -> ArticleWebArchiverArchive
+    func archive(webArchiveUrls: [WebArchiveUrl], requestPriority: RequestPriority) async -> [ArticleWebArchiveData]
 }

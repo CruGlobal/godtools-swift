@@ -48,7 +48,7 @@ extension SwiftCategoryArticle {
         }
     }
     
-    func mapFrom(model: CategoryArticleModel) {
+    func mapFrom(model: CategoryArticleDataModel) {
         
         id = model.id
         aemTag = model.aemTag
@@ -58,14 +58,14 @@ extension SwiftCategoryArticle {
         aemUris = model.aemUris
     }
     
-    static func createNewFrom(model: CategoryArticleModel) -> SwiftCategoryArticle {
+    static func createNewFrom(model: CategoryArticleDataModel) -> SwiftCategoryArticle {
         let object = SwiftCategoryArticle()
         object.mapFrom(model: model)
         return object
     }
    
-    func toModel() -> CategoryArticleModel {
-        return CategoryArticleModel(
+    func toModel() -> CategoryArticleDataModel {
+        return CategoryArticleDataModel(
             id: id,
             aemTag: aemTag,
             aemUris: Array(aemUris),

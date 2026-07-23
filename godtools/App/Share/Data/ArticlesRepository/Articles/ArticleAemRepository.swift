@@ -22,6 +22,10 @@ open class ArticleAemRepository: NSObject {
         super.init()
     }
     
+    func getArticleAemDataObjects() async throws -> [ArticleAemData] {
+        return try await cache.getArticleAemDataObjects()
+    }
+    
     func getAemCacheObject(aemUri: String) -> ArticleAemCacheObject? {
         do {
             return try cache.getAemCacheObject(aemUri: aemUri)
@@ -52,18 +56,18 @@ open class ArticleAemRepository: NSObject {
             aemUrisNeedingUpdate = aemUris
         }
         
-        let download: ArticleAemDownload = try await downloader.download(
+        let aemDataObjects: [ArticleAemData] = await downloader.download(
             aemUris: aemUrisNeedingUpdate,
             downloadCachePolicy: downloadCachePolicy,
             requestPriority: requestPriority
         )
-        
-        let webArchive = try await cache.storeAemDataObjects(
-            aemDataObjects: download.aemDataObjects,
+                
+        let webArchiveErrors: [Error] = try await cache.storeAemDataObjects(
+            aemDataObjects: aemDataObjects,
             requestPriority: requestPriority
-        )
+        ).compactMap { $0.error }
         
-        return download.copyByAppendingErrors(errors: webArchive.errors)
+        return ArticleAemDownload(aemDataObjects: aemDataObjects, webArchiveErrors: webArchiveErrors)
     }
     
     private func filterAemUrisByLastUpdate(aemUris: [String]) -> [String] {

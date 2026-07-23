@@ -170,6 +170,7 @@ extension ArticleFlow {
             downloadArticlesObservable: downloadArticlesObservable,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getArticlesUseCase: appDiContainer.feature.articles.domainLayer.getArticlesUseCase(),
+            getDownloadArticlesErrorMessage: appDiContainer.feature.articles.domainLayer.getDownloadArticlesErrorMessage(),
             localizationServices: appDiContainer.core.dataLayer.getLocalizationServices(),
             trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase()
         )

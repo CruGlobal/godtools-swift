@@ -14,9 +14,9 @@ final class CategoryArticlesCache {
     
     private let realmDataWrite: RealmDataWrite
     
-    let persistence: any Persistence<CategoryArticleModel, CategoryArticleModel>
+    let persistence: any Persistence<CategoryArticleDataModel, CategoryArticleDataModel>
     
-    init(persistence: any Persistence<CategoryArticleModel, CategoryArticleModel>, realmDataWrite: RealmDataWrite) {
+    init(persistence: any Persistence<CategoryArticleDataModel, CategoryArticleDataModel>, realmDataWrite: RealmDataWrite) {
                 
         self.persistence = persistence
         self.realmDataWrite = realmDataWrite
@@ -28,12 +28,12 @@ final class CategoryArticlesCache {
     }
     
     @available(iOS 17.4, *)
-    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<CategoryArticleModel, CategoryArticleModel, SwiftCategoryArticle>? {
-        return persistence as? SwiftRepositorySyncPersistence<CategoryArticleModel, CategoryArticleModel, SwiftCategoryArticle>
+    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<CategoryArticleDataModel, CategoryArticleDataModel, SwiftCategoryArticle>? {
+        return persistence as? SwiftRepositorySyncPersistence<CategoryArticleDataModel, CategoryArticleDataModel, SwiftCategoryArticle>
     }
     
-    private func getRealmPersistence() -> RealmRepositorySyncPersistence<CategoryArticleModel, CategoryArticleModel, RealmCategoryArticle>? {
-        return persistence as? RealmRepositorySyncPersistence<CategoryArticleModel, CategoryArticleModel, RealmCategoryArticle>
+    private func getRealmPersistence() -> RealmRepositorySyncPersistence<CategoryArticleDataModel, CategoryArticleDataModel, RealmCategoryArticle>? {
+        return persistence as? RealmRepositorySyncPersistence<CategoryArticleDataModel, CategoryArticleDataModel, RealmCategoryArticle>
     }
 }
 
@@ -59,7 +59,7 @@ extension CategoryArticlesCache {
 
 extension CategoryArticlesCache {
     
-    func getCategoryArticles(categoryId: String, languageCode: String) async throws -> [CategoryArticleModel] {
+    func getCategoryArticles(categoryId: String, languageCode: String) async throws -> [CategoryArticleDataModel] {
         
         if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
             
@@ -85,7 +85,7 @@ extension CategoryArticlesCache {
         return Array()
     }
     
-    func storeAemDataObjectsForCategories(categories: [ArticleCategory], languageCode: String, aemDataObjects: [ArticleAemData]) async -> [Error] {
+    func storeAemDataObjectsForCategories(categories: [ManifestCategory], languageCode: String, aemDataObjects: [ArticleAemData]) async -> [Error] {
         
         return await withCheckedContinuation { continuation in
             
@@ -96,7 +96,7 @@ extension CategoryArticlesCache {
         }
     }
     
-    private func storeAemDataObjectsForCategoriesWithCompletion(categories: [ArticleCategory], languageCode: String, aemDataObjects: [ArticleAemData], completion: @escaping ((_ errors: [Error]) -> Void)) {
+    private func storeAemDataObjectsForCategoriesWithCompletion(categories: [ManifestCategory], languageCode: String, aemDataObjects: [ArticleAemData], completion: @escaping ((_ errors: [Error]) -> Void)) {
         
         realmDataWrite.serialAsync { result in
             
@@ -114,7 +114,7 @@ extension CategoryArticlesCache {
                                    
                     for aemTag in category.aemTags {
                         
-                        let categoryArticleUUID = CategoryArticleUUID(categoryId: category.id, languageCode: languageCode, aemTag: aemTag)
+                        let categoryArticleUUID = CategoryArticleDataModel.UUID(categoryId: category.id, languageCode: languageCode, aemTag: aemTag)
                         
                         let aemUris: List<String>
                         

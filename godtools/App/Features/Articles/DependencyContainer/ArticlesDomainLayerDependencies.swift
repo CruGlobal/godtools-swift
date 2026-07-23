@@ -29,7 +29,9 @@ final class ArticlesDomainLayerDependencies {
     
     func getArticlesUseCase() -> GetArticlesUseCase {
         return GetArticlesUseCase(
-            articlesRepsoitory: core.dataLayer.getArticleManifestAemRepository()
+            articlesRepsoitory: core.dataLayer.getArticleManifestAemRepository(),
+            localizationServices: core.dataLayer.getLocalizationServices(),
+            getDownloadArticlesErrorMessage: getDownloadArticlesErrorMessage()
         )
     }
     
@@ -37,6 +39,10 @@ final class ArticlesDomainLayerDependencies {
         return GetArticleUseCase(
             articleRepository: core.dataLayer.getArticleAemRepository()
         )
+    }
+    
+    func getDownloadArticlesErrorMessage() -> GetDownloadArticlesErrorMessage {
+        return GetDownloadArticlesErrorMessage(localizationServices: core.dataLayer.getLocalizationServices())
     }
     
     func getPullToRefreshArticlesUseCase() -> PullToRefreshArticlesUseCase {

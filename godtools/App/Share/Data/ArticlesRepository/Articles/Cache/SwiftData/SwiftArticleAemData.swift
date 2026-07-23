@@ -19,6 +19,9 @@ enum SwiftArticleAemDataV1 {
     @Model
     class SwiftArticleAemData: IdentifiableSwiftDataObject {
         
+        var errorCode: Int? = nil
+        var errorMessage: String? = nil
+        var httpStatusCode: Int? = nil
         var webUrl: String = ""
         var webArchiveFilename: String = ""
         var updatedAt: Date = Date()
@@ -58,7 +61,8 @@ extension SwiftArticleAemData {
             articleJcrContent = SwiftArticleJrcContent.createNewFrom(model: articleJcrContentModel)
         }
         
-        webUrl = model.webUrl
+        errorMessage = model.errorMessage
+        webUrl = model.webUrl ?? ""
         updatedAt = model.updatedAt
     }
     
@@ -71,10 +75,13 @@ extension SwiftArticleAemData {
     
     func toModel() -> ArticleAemData {
         return ArticleAemData(
-            id: id,
             aemUri: aemUri,
             articleJcrContent: articleJcrContent?.toModel(),
             webUrl: webUrl,
+            error: nil,
+            errorMessage: errorMessage,
+            errorCode: errorCode,
+            httpStatusCode: httpStatusCode,
             updatedAt: updatedAt
         )
     }

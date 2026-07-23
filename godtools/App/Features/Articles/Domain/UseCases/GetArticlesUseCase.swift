@@ -11,15 +11,27 @@ import Foundation
 final class GetArticlesUseCase {
     
     private let articlesRepsoitory: ArticleManifestAemRepository
+    private let localizationServices: LocalizationServicesInterface
+    private let getDownloadArticlesErrorMessage: GetDownloadArticlesErrorMessage
     
-    init(articlesRepsoitory: ArticleManifestAemRepository) {
+    init(
+        articlesRepsoitory: ArticleManifestAemRepository,
+        localizationServices: LocalizationServicesInterface,
+        getDownloadArticlesErrorMessage: GetDownloadArticlesErrorMessage
+    ) {
         
         self.articlesRepsoitory = articlesRepsoitory
+        self.localizationServices = localizationServices
+        self.getDownloadArticlesErrorMessage = getDownloadArticlesErrorMessage
     }
     
-    func execute(category: ArticleCategoryDomainModel, languageCode: BCP47LanguageIdentifier) async throws -> [ArticleListItemDomainModel] {
+    func execute(
+        appLanguage: AppLanguageDomainModel,
+        category: ArticleCategoryDomainModel,
+        languageCode: BCP47LanguageIdentifier
+    ) async throws -> ArticlesDomainModel {
         
-        let categoryArticles: [CategoryArticleModel] = try await articlesRepsoitory.getCategoryArticles(
+        let categoryArticles: [CategoryArticleDataModel] = try await articlesRepsoitory.getCategoryArticles(
             categoryId: category.id,
             languageCode: languageCode
         )
@@ -56,6 +68,38 @@ final class GetArticlesUseCase {
             )
         }
         
-        return articles
+        guard !articles.isEmpty else {
+            
+            let title: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.downloadError.key)
+            let downloadActionTitle: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.articlesRetryDownloadButtonTitle.key)
+            
+            let aemDataObjects: [ArticleAemData] = try await articlesRepsoitory.getArticleAemDataObjects()
+            let error: Error? = aemDataObjects.compactMap { $0.error }.first
+            let message: String
+            
+            if let error = error {
+                message = getDownloadArticlesErrorMessage.getErrorMessage(appLanguage: appLanguage, error: error)
+            }
+            else {
+                message = localizationServices.stringForLocaleElseEnglish(
+                    localeIdentifier: appLanguage,
+                    key: LocalizableStringKeys.downloadError.key
+                )
+            }
+            
+            return ArticlesDomainModel(
+                articleListItems: [],
+                error: ArticlesErrorDomainModel(
+                    title: title,
+                    message: message,
+                    downloadActionTitle: downloadActionTitle
+                )
+            )
+        }
+        
+        return ArticlesDomainModel(
+            articleListItems: articles,
+            error: nil
+        )
     }
 }

@@ -35,6 +35,7 @@ final class ArticlesViewModel: ObservableObject {
     
     @Published private(set) var isLoading: Bool = true
     @Published private(set) var articles: [ArticleListItemDomainModel] = Array()
+    @Published private(set) var downloadArticlesError: ArticlesErrorDomainModel?
     @Published private(set) var articlesError: ArticlesErrorDomainModel?
     
     init(
@@ -46,6 +47,7 @@ final class ArticlesViewModel: ObservableObject {
         downloadArticlesObservable: DownloadManifestArticlesObservable,
         getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
         getArticlesUseCase: GetArticlesUseCase,
+        getDownloadArticlesErrorMessage: GetDownloadArticlesErrorMessage,
         localizationServices: LocalizationServicesInterface,
         trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     ) {
@@ -82,7 +84,11 @@ final class ArticlesViewModel: ObservableObject {
             downloadArticlesObservable.$downloadResult,
             $articles.dropFirst()
         )
-        .map { (appLanguage: AppLanguageDomainModel, downloadResult: Result<Void, Error>?, articles: [ArticleListItemDomainModel]) in
+        .map { (
+            appLanguage: AppLanguageDomainModel,
+            downloadResult: Result<Void, Error>?,
+            articles: [ArticleListItemDomainModel]
+        ) in
             
             let downloadError: Error?
             
@@ -102,14 +108,8 @@ final class ArticlesViewModel: ObservableObject {
             
             if let downloadError = downloadError, noArticles {
                 
-                let downloadArticlesErrorViewModel = DownloadArticlesErrorViewModel(
-                    appLanguage: appLanguage,
-                    localizationServices: localizationServices,
-                    error: downloadError
-                )
-                
                 let title: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.downloadError.key)
-                let message: String = downloadArticlesErrorViewModel.message
+                let message: String = getDownloadArticlesErrorMessage.getErrorMessage(appLanguage: appLanguage, error: downloadError)
                 let downloadActionTitle: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.articlesRetryDownloadButtonTitle.key)
                 
                 return ArticlesErrorDomainModel(
@@ -126,7 +126,7 @@ final class ArticlesViewModel: ObservableObject {
         .receive(on: DispatchQueue.main)
         .sink { [weak self] (error: ArticlesErrorDomainModel?) in
             
-            self?.articlesError = error
+            self?.downloadArticlesError = error
         }
         .store(in: &cancellables)
         
@@ -165,10 +165,14 @@ final class ArticlesViewModel: ObservableObject {
         
         getArticlesTask = Task {
             
-            articles = try await getArticlesUseCase.execute(
+            let articlesDomainModel: ArticlesDomainModel = try await getArticlesUseCase.execute(
+                appLanguage: appLanguage,
                 category: category,
                 languageCode: language.localeId
             )
+            
+            articles = articlesDomainModel.articleListItems
+            articlesError = articlesDomainModel.error
         }
     }
 }
@@ -201,6 +205,11 @@ extension ArticlesViewModel {
     
     func downloadArticlesTapped() {
         
+        downloadArticlesObservable.downloadArticles(downloadCachePolicy: .ignoreCache, forceFetchFromRemote: true)
+    }
+    
+    func pullToRefresh() {
+                
         downloadArticlesObservable.downloadArticles(downloadCachePolicy: .ignoreCache, forceFetchFromRemote: true)
     }
 }
