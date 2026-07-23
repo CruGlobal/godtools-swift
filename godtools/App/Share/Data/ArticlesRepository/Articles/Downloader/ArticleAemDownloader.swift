@@ -113,14 +113,6 @@ final class ArticleAemDownloader: ArticleAemDownloaderInterface {
             )
         }
         
-        // TODO: Remove this return. ~Levi
-        return ArticleAemData.createWithError(
-            aemUri: aemUri,
-            error: NSError.errorWithDescription(description: "The request failed with a status code: \(500)"),
-            httpStatusCode: 500
-        )
-        // END TODO
-        
         let httpStatusCode: Int = response.urlResponse.httpStatusCode ?? -1
         let isSuccessHttpStatusCode: Bool = response.urlResponse.isSuccessHttpStatusCode
         
