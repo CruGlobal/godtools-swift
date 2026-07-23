@@ -17,7 +17,10 @@ final class GetArticlesUseCase {
         self.articlesRepsoitory = articlesRepsoitory
     }
     
-    func execute(category: ArticleCategoryDomainModel, languageCode: BCP47LanguageIdentifier) async throws -> [ArticleListItemDomainModel] {
+    func execute(
+        category: ArticleCategoryDomainModel,
+        languageCode: BCP47LanguageIdentifier
+    ) async throws -> [ArticleListItemDomainModel] {
         
         let categoryArticles: [CategoryArticleModel] = try await articlesRepsoitory.getCategoryArticles(
             categoryId: category.id,
