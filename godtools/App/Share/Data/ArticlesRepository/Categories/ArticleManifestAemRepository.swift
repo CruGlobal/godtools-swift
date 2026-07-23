@@ -57,7 +57,7 @@ final class ArticleManifestAemRepository: ArticleAemRepository {
             return ArticleAemDownload.emptyValue
         }
         
-        let aemUris: [String] = manifest.aemImports.map({$0.absoluteString})
+        let aemUris: [String] = manifest.aemImports.map { $0.absoluteString }
         
         let download: ArticleAemDownload = try await super.downloadAndCache(
             aemUris: aemUris,
@@ -83,7 +83,7 @@ final class ArticleManifestAemRepository: ArticleAemRepository {
             aemDataObjects: download.aemDataObjects
         )
         
-        if !download.networkFailed {
+        if download.errors.isEmpty {
             syncInvalidator.didSync()
         }
         
