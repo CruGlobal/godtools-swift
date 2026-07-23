@@ -65,12 +65,17 @@ final class ArticleManifestAemRepository: ArticleAemRepository {
             requestPriority: requestPriority
         )
         
-        let categories: [ArticleCategory] = manifest.categories.map({
-            ArticleCategory(
-                aemTags: Array($0.aemTags),
-                id: $0.id ?? ""
+        let categories: [ManifestCategory] = manifest.categories.compactMap {
+            
+            guard let id = $0.id else {
+                return nil
+            }
+            
+            return ManifestCategory(
+                id: id,
+                aemTags: $0.aemTags
             )
-        })
+        }
         
         _ = await categoryArticlesCache.storeAemDataObjectsForCategories(
             categories: categories,

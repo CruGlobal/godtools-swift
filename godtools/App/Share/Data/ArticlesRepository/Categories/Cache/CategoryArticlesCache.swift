@@ -85,7 +85,7 @@ extension CategoryArticlesCache {
         return Array()
     }
     
-    func storeAemDataObjectsForCategories(categories: [ArticleCategory], languageCode: String, aemDataObjects: [ArticleAemData]) async -> [Error] {
+    func storeAemDataObjectsForCategories(categories: [ManifestCategory], languageCode: String, aemDataObjects: [ArticleAemData]) async -> [Error] {
         
         return await withCheckedContinuation { continuation in
             
@@ -96,7 +96,7 @@ extension CategoryArticlesCache {
         }
     }
     
-    private func storeAemDataObjectsForCategoriesWithCompletion(categories: [ArticleCategory], languageCode: String, aemDataObjects: [ArticleAemData], completion: @escaping ((_ errors: [Error]) -> Void)) {
+    private func storeAemDataObjectsForCategoriesWithCompletion(categories: [ManifestCategory], languageCode: String, aemDataObjects: [ArticleAemData], completion: @escaping ((_ errors: [Error]) -> Void)) {
         
         realmDataWrite.serialAsync { result in
             
