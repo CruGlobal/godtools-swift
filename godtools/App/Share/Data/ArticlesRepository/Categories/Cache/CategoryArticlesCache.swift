@@ -47,7 +47,89 @@ actor CategoryArticlesCache: CategoryArticlesCacheInterface, ModelActor {
         languageCode: String,
         aemDataObjects: [ArticleAemData]
     ) async -> [Error] {
-        
-        return Array()
+
+        typealias AemTag = String
+
+        var errors: [Error] = Array()
+
+        let swiftDataRead = SwiftDataRead()
+
+        var categoryArticlesByAemTag: [AemTag: SwiftCategoryArticle] = Dictionary()
+        var categoryArticlesToStore: [SwiftCategoryArticle] = Array()
+
+        for category in categories {
+
+            for aemTag in category.aemTags {
+
+                let categoryArticleUUID = CategoryArticleDataModel.UUID(categoryId: category.id, languageCode: languageCode, aemTag: aemTag)
+
+                let existingAemUris: [String]
+
+                do {
+                    let existingCategoryArticle: SwiftCategoryArticle? = try swiftDataRead.object(context: modelContext, id: categoryArticleUUID.uuidString)
+                    existingAemUris = existingCategoryArticle?.aemUris ?? Array()
+                }
+                catch let error {
+                    errors.append(error)
+                    existingAemUris = Array()
+                }
+
+                let categoryArticle = SwiftCategoryArticle()
+
+                categoryArticle.aemTag = aemTag
+                categoryArticle.aemUris = existingAemUris
+                categoryArticle.categoryId = category.id
+                categoryArticle.languageCode = languageCode
+                categoryArticle.uuid = categoryArticleUUID.uuidString
+                categoryArticle.id = categoryArticleUUID.uuidString
+
+                categoryArticlesToStore.append(categoryArticle)
+
+                categoryArticlesByAemTag[aemTag] = categoryArticle
+            }
+        }
+
+        modelContext.insertObjects(objects: categoryArticlesToStore)
+
+        do {
+            try modelContext.saveIfHasChanges()
+        }
+        catch let error {
+            errors.append(error)
+        }
+
+        for aemData in aemDataObjects {
+
+            let jcrAemTags: [String] = aemData.articleJcrContent?.tags ?? []
+
+            for jcrAemTag in jcrAemTags {
+
+                for category in categories {
+
+                    guard category.aemTags.contains(jcrAemTag) else {
+                        continue
+                    }
+
+                    guard let categoryArticle = categoryArticlesByAemTag[jcrAemTag] else {
+                        continue
+                    }
+
+                    guard !categoryArticle.aemUris.contains(aemData.aemUri) else {
+                        continue
+                    }
+
+                    categoryArticle.aemUris.append(aemData.aemUri)
+                }
+            }
+        }
+
+        do {
+            try modelContext.saveIfHasChanges()
+        }
+        catch let error {
+            errors.append(error)
+        }
+
+        return errors
     }
 }
