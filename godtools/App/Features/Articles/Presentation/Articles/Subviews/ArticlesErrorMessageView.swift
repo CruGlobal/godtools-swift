@@ -12,36 +12,30 @@ struct ArticlesErrorMessageView: View {
     
     private let geometry: GeometryProxy
     private let horizontalPadding: CGFloat
-    private let title: String
-    private let message: String
-    private let actionTitle: String
+    private let error: ArticlesErrorDomainModel
     private let actionTapped: (() -> Void)?
     
     init(
         geometry: GeometryProxy,
         horizontalPadding: CGFloat,
-        title: String,
-        message: String,
-        actionTitle: String,
+        error: ArticlesErrorDomainModel,
         actionTapped: (() -> Void)?
     ) {
         
         self.geometry = geometry
         self.horizontalPadding = horizontalPadding
-        self.title = title
-        self.message = message
-        self.actionTitle = actionTitle
+        self.error = error
         self.actionTapped = actionTapped
     }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             
-            Text(title)
+            Text(error.title)
                 .foregroundColor(Color.black)
                 .font(FontLibrary.sfProTextSemibold.font(size: 18))
             
-            Text(message)
+            Text(error.message)
                 .foregroundColor(Color.black)
                 .font(FontLibrary.sfProTextRegular.font(size: 18))
                 .padding([.top], 8)
@@ -57,7 +51,7 @@ struct ArticlesErrorMessageView: View {
                     
                 },
                 nonHighlightContent: {
-                    Text(actionTitle)
+                    Text(error.downloadActionTitle)
                         .foregroundColor(Color.white)
                         .font(Font.system(size: 18))
                 },

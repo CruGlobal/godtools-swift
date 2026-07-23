@@ -24,7 +24,21 @@ struct ArticlesView: View {
                 .opacity(viewModel.isLoading ? 1 : 0)
                 .animation(.easeOut(duration: 0.2), value: viewModel.isLoading)
             
-            if !viewModel.articles.isEmpty {
+            let articlesError: ArticlesErrorDomainModel? = viewModel.articlesError ?? viewModel.downloadArticlesError
+            
+            if let articlesError = articlesError {
+                
+                ArticlesErrorMessageView(
+                    geometry: geometry,
+                    horizontalPadding: 30,
+                    error: articlesError,
+                    actionTapped: {
+                        viewModel.downloadArticlesTapped()
+                    }
+                )
+                .padding([.top], 64)
+            }
+            else {
                 
                 PullToRefreshScrollView(showsIndicators: false) {
                     
@@ -44,21 +58,6 @@ struct ArticlesView: View {
                     
                     viewModel.pullToRefresh()
                 }
-            }
-            
-            if let articlesError = viewModel.articlesError {
-                
-                ArticlesErrorMessageView(
-                    geometry: geometry,
-                    horizontalPadding: 30,
-                    title: articlesError.title,
-                    message: articlesError.message,
-                    actionTitle: articlesError.downloadActionTitle,
-                    actionTapped: {
-                        viewModel.downloadArticlesTapped()
-                    }
-                )
-                .padding([.top], 64)
             }
         }
         .navigationTitle(viewModel.navTitle)
