@@ -11,14 +11,21 @@ import WebKit
 
 final class ReloadableWebViewCoordinator: NSObject {
     
-    private let didFinishClosure: ((_ webView: WKWebView, _ navigation: WKNavigation) -> Void)?
-    private let didFailClosure: ((_ webView: WKWebView, _ navigation: WKNavigation, _ error: Error) -> Void)?
+    private let didFinishClosure: ((_ coordinator: ReloadableWebViewCoordinator, _ webView: WKWebView, _ navigation: WKNavigation) -> Void)?
+    private let didFailClosure: ((_ coordinator: ReloadableWebViewCoordinator, _ webView: WKWebView, _ navigation: WKNavigation, _ error: Error) -> Void)?
+    
+    let requestUrl: URL
+    let fallbackFileUrl: URL?
     
     init(
-        didFinishClosure: ((_ webView: WKWebView, _ navigation: WKNavigation) -> Void)?,
-        didFailClosure: ((_ webView: WKWebView, _ navigation: WKNavigation, _ error: Error) -> Void)?
+        requestUrl: URL,
+        fallbackFileUrl: URL?,
+        didFinishClosure: ((_ coordinator: ReloadableWebViewCoordinator, _ webView: WKWebView, _ navigation: WKNavigation) -> Void)?,
+        didFailClosure: ((_ coordinator: ReloadableWebViewCoordinator, _ webView: WKWebView, _ navigation: WKNavigation, _ error: Error) -> Void)?
     ) {
               
+        self.requestUrl = requestUrl
+        self.fallbackFileUrl = fallbackFileUrl
         self.didFinishClosure = didFinishClosure
         self.didFailClosure = didFailClosure
     }
@@ -30,11 +37,11 @@ extension ReloadableWebViewCoordinator: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation) {
                 
-        didFinishClosure?(webView, navigation)
+        didFinishClosure?(self, webView, navigation)
     }
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation, withError error: Error) {
                      
-        didFailClosure?(webView, navigation, error)
+        didFailClosure?(self, webView, navigation, error)
     }
 }
