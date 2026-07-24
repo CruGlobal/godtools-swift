@@ -32,7 +32,7 @@ final class ReloadableWebViewCoordinator: NSObject {
             stopLoading()
         }
         
-        guard self.requestUrl != nil else {
+        guard self.requestUrl == nil else {
             return
         }
                 
