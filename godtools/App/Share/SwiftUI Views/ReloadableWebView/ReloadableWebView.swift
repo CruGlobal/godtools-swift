@@ -1,5 +1,5 @@
 //
-//  ReloadableWebViewRepresentable.swift
+//  ReloadableWebView.swift
 //  godtools
 //
 //  Created by Levi Eggert on 7/24/26.
@@ -11,17 +11,17 @@ import UIKit
 import SwiftUI
 import WebKit
 
-struct ReloadableWebViewRepresentable: UIViewRepresentable {
+struct ReloadableWebView: UIViewRepresentable {
         
     private let requestUrl: URL
     private let fallbackFileUrl: URL?
-    private let didFailClosure: ((_ error: Error) -> Void)?
+    private let completion: ((_ error: Error?) -> Void)?
     
-    init(requestUrl: URL, fallbackFileUrl: URL?, didFailClosure: ((_ error: Error) -> Void)?) {
+    init(requestUrl: URL, fallbackFileUrl: URL?, completion: ((_ error: Error?) -> Void)?) {
                 
         self.requestUrl = requestUrl
         self.fallbackFileUrl = fallbackFileUrl
-        self.didFailClosure = didFailClosure
+        self.completion = completion
     }
     
     func makeCoordinator() -> ReloadableWebViewCoordinator {
@@ -33,6 +33,7 @@ struct ReloadableWebViewRepresentable: UIViewRepresentable {
                 
         let webView = WKWebView(frame: UIScreen.main.bounds)
         
+        webView.alpha = 0
         webView.scrollView.showsVerticalScrollIndicator = true
         webView.scrollView.showsHorizontalScrollIndicator = false
         
@@ -45,12 +46,12 @@ struct ReloadableWebViewRepresentable: UIViewRepresentable {
             webView: uiView,
             requestUrl: requestUrl,
             fallbackFileUrl: fallbackFileUrl,
-            didFailClosure: didFailClosure
+            completion: completion
         )
     }
     
     static func dismantleUIView(_ uiView: WKWebView, coordinator: ReloadableWebViewCoordinator) {
 
-        coordinator.stopLoading(webView: uiView)
+        coordinator.stopLoading()
     }
 }

@@ -12,40 +12,30 @@ import UIKit
 
 @MainActor
 final class ReloadableWebViewCoordinator: NSObject {
-        
+    
     private var currentWebView: WKWebView?
     private var requestUrl: URL?
     private var fallbackFileUrl: URL?
-    private var didFailClosure: ((_ error: Error) -> Void)?
+    private var completion: ((_ error: Error?) -> Void)?
+    
     
     func loadUrl(
         webView: WKWebView,
         requestUrl: URL,
         fallbackFileUrl: URL?,
-        didFailClosure: ((_ error: Error) -> Void)?
+        completion: ((_ error: Error?) -> Void)?
     ) {
         
-        guard requestUrl != self.requestUrl else {
-            return
-        }
+        let isLoading: Bool = self.requestUrl != nil
         
-        if let webView = currentWebView {
-            
-            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
-                webView.alpha = 0
-            }
-            
-            stopLoading(webView: webView)
-        }
-        else {
-            
-            webView.alpha = 0
+        guard !isLoading else {
+            return
         }
         
         self.currentWebView = webView
         self.requestUrl = requestUrl
         self.fallbackFileUrl = fallbackFileUrl
-        self.didFailClosure = didFailClosure
+        self.completion = completion
         
         webView.navigationDelegate = self
         
@@ -56,13 +46,24 @@ final class ReloadableWebViewCoordinator: NSObject {
         )
     }
     
-    func stopLoading(webView: WKWebView) {
+    func stopLoading() {
         
-        currentWebView = nil
+        self.requestUrl = nil
+        self.fallbackFileUrl = nil
+        self.completion = nil
         
-        webView.uiDelegate = nil
-        webView.navigationDelegate = nil
-        webView.stopLoading()
+        currentWebView?.uiDelegate = nil
+        currentWebView?.navigationDelegate = nil
+        currentWebView?.stopLoading()
+        
+        self.currentWebView = nil
+    }
+    
+    private func didFinishLoading(error: Error?) {
+        
+        completion?(error)
+        
+        stopLoading()
     }
 }
 
@@ -75,6 +76,8 @@ extension ReloadableWebViewCoordinator: WKNavigationDelegate {
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
             webView.alpha = 1
         }
+
+        didFinishLoading(error: nil)
     }
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation, withError error: Error) {
@@ -84,14 +87,11 @@ extension ReloadableWebViewCoordinator: WKNavigationDelegate {
                         
         if notConnectedToNetwork, let fallbackFileUrl = fallbackFileUrl {
             
-            webView.loadFileURL(
-                fallbackFileUrl,
-                allowingReadAccessTo: fallbackFileUrl
-            )
+            webView.loadFileURL(fallbackFileUrl, allowingReadAccessTo: fallbackFileUrl)
         }
         else {
             
-            didFailClosure?(error)
+            didFinishLoading(error: error)
         }
     }
 }

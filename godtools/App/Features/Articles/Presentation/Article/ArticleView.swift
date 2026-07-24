@@ -24,10 +24,10 @@ struct ArticleView: View {
             
             if let requestUrl = viewModel.loadingArticle?.httpsUrl?.url {
                 
-                ReloadableWebViewRepresentable(
+                ReloadableWebView(
                     requestUrl: requestUrl,
                     fallbackFileUrl: viewModel.loadingArticle?.archiveUrl?.url,
-                    didFailClosure: { (error: Error) in
+                    completion: { (error: Error?) in
                         
                     }
                 )
