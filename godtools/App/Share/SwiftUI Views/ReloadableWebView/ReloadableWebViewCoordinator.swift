@@ -16,8 +16,8 @@ final class ReloadableWebViewCoordinator: NSObject {
     private var currentWebView: WKWebView?
     private var requestUrl: URL?
     private var fallbackFileUrl: URL?
+    private var didAttemptFallbackFileUrl: Bool = false
     private var completion: ((_ error: Error?) -> Void)?
-    
     
     func loadUrl(
         webView: WKWebView,
@@ -25,17 +25,23 @@ final class ReloadableWebViewCoordinator: NSObject {
         fallbackFileUrl: URL?,
         completion: ((_ error: Error?) -> Void)?
     ) {
+                
+        let didChangeRequestUrl: Bool = self.requestUrl != requestUrl
         
-        let isLoading: Bool = self.requestUrl != nil
-        
-        guard !isLoading else {
-            return
+        if didChangeRequestUrl {
+            stopLoading()
         }
         
+        guard self.requestUrl != nil else {
+            return
+        }
+                
         self.currentWebView = webView
         self.requestUrl = requestUrl
         self.fallbackFileUrl = fallbackFileUrl
         self.completion = completion
+        
+        didAttemptFallbackFileUrl = false
         
         webView.navigationDelegate = self
         
@@ -62,8 +68,6 @@ final class ReloadableWebViewCoordinator: NSObject {
     private func didFinishLoading(error: Error?) {
         
         completion?(error)
-        
-        stopLoading()
     }
 }
 
@@ -85,7 +89,9 @@ extension ReloadableWebViewCoordinator: WKNavigationDelegate {
         let errorCode: Int = (error as NSError).code
         let notConnectedToNetwork: Bool = errorCode == Int(CFNetworkErrors.cfurlErrorNotConnectedToInternet.rawValue)
                         
-        if notConnectedToNetwork, let fallbackFileUrl = fallbackFileUrl {
+        if notConnectedToNetwork, let fallbackFileUrl = fallbackFileUrl, !didAttemptFallbackFileUrl {
+            
+            didAttemptFallbackFileUrl = true
             
             webView.loadFileURL(fallbackFileUrl, allowingReadAccessTo: fallbackFileUrl)
         }
