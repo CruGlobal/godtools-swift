@@ -217,100 +217,52 @@ extension ArticleFlow {
         article: ArticleDomainModel
     ) -> UIViewController {
         
-        let loadSwiftUIArticleView: Bool = true
-                
-        if loadSwiftUIArticleView {
-            
-            let viewModel = ArticleViewModel(
-                stepEmitter: stepEmitter,
-                flowType: .tool(resource: resource),
-                articleId: articleId,
-                article: article,
-                incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase(),
-                getAppUIDebuggingIsEnabledUseCase: appDiContainer.core.domainLayer.getAppUIDebuggingIsEnabledUseCase(),
-                trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase()
+        let viewModel = ArticleViewModel(
+            stepEmitter: stepEmitter,
+            flowType: .tool(resource: resource),
+            articleId: articleId,
+            article: article,
+            incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase(),
+            getAppUIDebuggingIsEnabledUseCase: appDiContainer.core.domainLayer.getAppUIDebuggingIsEnabledUseCase(),
+            trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase()
+        )
+        
+        let backButton = AppBackBarItem(
+            target: viewModel,
+            action: #selector(viewModel.backTapped)
+        )
+        
+        let shareButton = AppShareBarItem(
+            color: nil,
+            target: viewModel,
+            action: #selector(viewModel.sharedTapped),
+            accessibilityIdentifier: nil,
+            hidesBarItemPublisher: viewModel.$hidesShareButton.eraseToAnyPublisher()
+        )
+        
+        let debugButton = AppDebugBarItem(
+            color: nil,
+            target: viewModel,
+            action: #selector(viewModel.debugTapped),
+            accessibilityIdentifier: nil,
+            hidesBarItemPublisher: viewModel.$hidesDebugButton.eraseToAnyPublisher()
+        )
+        
+        let view = ArticleView(
+            viewModel: viewModel
+        )
+        
+        let hostingView = AppHostingController<ArticleView>(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                appearance: nil,
+                backButton: backButton,
+                leadingItems: [],
+                trailingItems: [debugButton, shareButton]
             )
-            
-            let backButton = AppBackBarItem(
-                target: viewModel,
-                action: #selector(viewModel.backTapped)
-            )
-            
-            let shareButton = AppShareBarItem(
-                color: nil,
-                target: viewModel,
-                action: #selector(viewModel.sharedTapped),
-                accessibilityIdentifier: nil,
-                hidesBarItemPublisher: viewModel.$hidesShareButton.eraseToAnyPublisher()
-            )
-            
-            let debugButton = AppDebugBarItem(
-                color: nil,
-                target: viewModel,
-                action: #selector(viewModel.debugTapped),
-                accessibilityIdentifier: nil,
-                hidesBarItemPublisher: viewModel.$hidesDebugButton.eraseToAnyPublisher()
-            )
-            
-            let view = ArticleView(
-                viewModel: viewModel
-            )
-            
-            let hostingView = AppHostingController<ArticleView>(
-                rootView: view,
-                navigationBar: AppNavigationBar(
-                    appearance: nil,
-                    backButton: backButton,
-                    leadingItems: [],
-                    trailingItems: [debugButton, shareButton]
-                )
-            )
-            
-            return hostingView
-        }
-        else {
-            
-            let viewModel = ArticleWebViewModel(
-                stepEmitter: stepEmitter,
-                flowType: .tool(resource: resource),
-                articleId: articleId,
-                article: article,
-                incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase(),
-                getAppUIDebuggingIsEnabledUseCase: appDiContainer.core.domainLayer.getAppUIDebuggingIsEnabledUseCase(),
-                trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase()
-            )
-            
-            let backButton = AppBackBarItem(
-                target: viewModel,
-                action: #selector(viewModel.backTapped)
-            )
-            
-            let shareButton = AppShareBarItem(
-                color: nil,
-                target: viewModel,
-                action: #selector(viewModel.sharedTapped),
-                accessibilityIdentifier: nil,
-                hidesBarItemPublisher: viewModel.$hidesShareButton.eraseToAnyPublisher()
-            )
-            
-            let debugButton = AppDebugBarItem(
-                color: nil,
-                target: viewModel,
-                action: #selector(viewModel.debugTapped),
-                accessibilityIdentifier: nil,
-                hidesBarItemPublisher: viewModel.$hidesDebugButton.eraseToAnyPublisher()
-            )
-            
-            return ArticleWebView(
-                viewModel: viewModel,
-                navigationBar: AppNavigationBar(
-                    appearance: nil,
-                    backButton: backButton,
-                    leadingItems: [],
-                    trailingItems: [debugButton, shareButton]
-                )
-            )
-        }
+        )
+        
+        return hostingView
     }
     
     private func getArticleDebugView(articleUrl: ArticleUrlDomainModel) -> UIViewController {
