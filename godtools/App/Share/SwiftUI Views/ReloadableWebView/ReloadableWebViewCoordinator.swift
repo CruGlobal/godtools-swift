@@ -8,6 +8,7 @@
 
 import Foundation
 import WebKit
+import UIKit
 
 @MainActor
 final class ReloadableWebViewCoordinator: NSObject {
@@ -26,9 +27,9 @@ final class ReloadableWebViewCoordinator: NSObject {
             stopLoading(webView: webView)
         }
         
+        self.currentWebView = webView
         self.requestUrl = requestUrl
         self.fallbackFileUrl = fallbackFileUrl
-        currentWebView = webView
         
         webView.navigationDelegate = self
         
@@ -40,6 +41,8 @@ final class ReloadableWebViewCoordinator: NSObject {
     }
     
     func stopLoading(webView: WKWebView) {
+        
+        currentWebView = nil
         
         webView.uiDelegate = nil
         webView.navigationDelegate = nil

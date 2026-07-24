@@ -42,4 +42,9 @@ struct ReloadableWebViewRepresentable: UIViewRepresentable {
          
         context.coordinator.loadUrl(webView: uiView, requestUrl: requestUrl, fallbackFileUrl: fallbackFileUrl)
     }
+    
+    static func dismantleUIView(_ uiView: WKWebView, coordinator: ReloadableWebViewCoordinator) {
+
+        coordinator.stopLoading(webView: uiView)
+    }
 }
