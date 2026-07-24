@@ -99,7 +99,16 @@ final class AppDataLayerDependencies {
         return sharedAppConfig.firebaseEnabled ? FirebaseInAppMessaging.shared : DisabledInAppMessaging()
     }
     
-    private func getArticleAemCache() -> RealmArticleAemCache {
+    private func getArticleAemCache() -> ArticleAemCacheInterface {
+        
+        if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
+            
+            return ArticleAemCache(
+                container: database.container.modelContainer,
+                webArchiveFileCache: getArticleAemWebArchiveFileCache(),
+                articleWebArchiver: getArticleWebArchiver()
+            )
+        }
         
         return RealmArticleAemCache(
             webArchiveFileCache: getArticleAemWebArchiveFileCache(),
@@ -107,10 +116,7 @@ final class AppDataLayerDependencies {
                 database: getSharedRealmDatabase(),
                 mapping: RealmArticleAemDataMapping()
             ),
-            articleWebArchiver: ArticleWebArchiver(
-                urlSessionPriority: getSharedUrlSessionPriority(),
-                requestSender: getRequestSender()
-            ),
+            articleWebArchiver: getArticleWebArchiver(),
             realmDataWrite: getRealmDataWrite()
         )
     }
@@ -156,6 +162,13 @@ final class AppDataLayerDependencies {
             cache: getArticleAemCache(),
             categoryArticlesCache: categoryArticlesCache,
             syncInvalidatorPersistence: getUserDefaultsCache()
+        )
+    }
+    
+    private func getArticleWebArchiver() -> ArticleWebArchiver {
+        return ArticleWebArchiver(
+            urlSessionPriority: getSharedUrlSessionPriority(),
+            requestSender: getRequestSender()
         )
     }
     

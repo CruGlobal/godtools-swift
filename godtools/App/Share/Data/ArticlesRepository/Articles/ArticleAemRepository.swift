@@ -11,10 +11,10 @@ import RequestOperation
 
 open class ArticleAemRepository: NSObject {
     
-    private let cache: RealmArticleAemCache
+    private let cache: ArticleAemCacheInterface
     private let downloader: ArticleAemDownloaderInterface
     
-    init(downloader: ArticleAemDownloader, cache: RealmArticleAemCache) {
+    init(downloader: ArticleAemDownloader, cache: ArticleAemCacheInterface) {
         
         self.downloader = downloader
         self.cache = cache
@@ -26,18 +26,12 @@ open class ArticleAemRepository: NSObject {
         return try await cache.getArticleAemDataObjects()
     }
     
-    func getAemCacheObject(aemUri: String) -> ArticleAemCacheObject? {
-        do {
-            return try cache.getAemCacheObject(aemUri: aemUri)
-        }
-        catch _ {
-            return nil
-        }
+    func getAemCacheObject(aemUri: String) async throws -> ArticleAemCacheObject? {
+        return try await cache.getAemCacheObject(aemUri: aemUri)
     }
     
-    func getAemCacheObjects(aemUris: [String]) throws -> [ArticleAemCacheObject] {
-        
-        return try cache.getAemCacheObjects(aemUris: aemUris)
+    func getAemCacheObjects(aemUris: [String]) async throws -> [ArticleAemCacheObject] {
+        return try await cache.getAemCacheObjects(aemUris: aemUris)
     }
     
     func downloadAndCache(
@@ -51,7 +45,7 @@ open class ArticleAemRepository: NSObject {
         switch downloadCachePolicy {
             
         case .fetchFromCacheUpToNextHour:
-            aemUrisNeedingUpdate = filterAemUrisByLastUpdate(aemUris: aemUris)
+            aemUrisNeedingUpdate = try await filterAemUrisByLastUpdate(aemUris: aemUris)
         case .ignoreCache:
             aemUrisNeedingUpdate = aemUris
         }
@@ -70,7 +64,7 @@ open class ArticleAemRepository: NSObject {
         return ArticleAemDownload(aemDataObjects: aemDataObjects, webArchiveErrors: webArchiveErrors)
     }
     
-    private func filterAemUrisByLastUpdate(aemUris: [String]) -> [String] {
+    private func filterAemUrisByLastUpdate(aemUris: [String]) async throws -> [String] {
         
         var aemUrisNeedingUpdate: [String] = Array()
         
@@ -82,7 +76,7 @@ open class ArticleAemRepository: NSObject {
             
             do {
                 
-                if let aemCacheObject = try cache.getAemCacheObject(aemUri: aemUri) {
+                if let aemCacheObject = try await cache.getAemCacheObject(aemUri: aemUri) {
                     
                     let lastUpdatedAt: Date = aemCacheObject.aemData.updatedAt
                     let secondsSinceLastUpdate: Double = Date().timeIntervalSince(lastUpdatedAt)

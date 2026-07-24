@@ -462,27 +462,31 @@ extension AppFlow {
         
         case .articleAemUri(let aemUri):
             
-            let aemCacheObject: ArticleAemCacheObject? = appDiContainer.core.dataLayer.getArticleAemRepository()
-                .getAemCacheObject(aemUri: aemUri)
+            let articleAemRepository: ArticleAemRepository = appDiContainer.core.dataLayer.getArticleAemRepository()
             
-            if let aemCacheObject = aemCacheObject {
+            Task {
                 
-                pushFlow(
-                    flow: ArticleDeepLinkFlow(
-                        appDiContainer: appDiContainer,
-                        aemUri: aemCacheObject.aemUri
-                    )
-                )
-            }
-            else {
+                let aemCacheObject: ArticleAemCacheObject? = try await articleAemRepository.getAemCacheObject(aemUri: aemUri)
                 
-                presentFlow(
-                    flow: LoadingArticleFlow(
-                        appDiContainer: appDiContainer,
-                        appLanguage: appLanguage,
-                        aemUri: aemUri
+                if let aemCacheObject = aemCacheObject {
+                    
+                    pushFlow(
+                        flow: ArticleDeepLinkFlow(
+                            appDiContainer: appDiContainer,
+                            aemUri: aemCacheObject.aemUri
+                        )
                     )
-                )
+                }
+                else {
+                    
+                    presentFlow(
+                        flow: LoadingArticleFlow(
+                            appDiContainer: appDiContainer,
+                            appLanguage: appLanguage,
+                            aemUri: aemUri
+                        )
+                    )
+                }
             }
             
         case .dashboard:

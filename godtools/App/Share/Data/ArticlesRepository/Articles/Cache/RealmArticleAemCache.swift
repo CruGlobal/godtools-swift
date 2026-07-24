@@ -11,7 +11,7 @@ import RealmSwift
 import RequestOperation
 import RepositorySync
 
-final class RealmArticleAemCache {
+final class RealmArticleAemCache: ArticleAemCacheInterface {
     
     typealias AemUri = String
     

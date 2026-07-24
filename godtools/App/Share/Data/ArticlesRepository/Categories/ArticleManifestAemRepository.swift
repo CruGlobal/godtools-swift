@@ -17,7 +17,7 @@ final class ArticleManifestAemRepository: ArticleAemRepository {
         
     init(
         downloader: ArticleAemDownloader,
-        cache: RealmArticleAemCache,
+        cache: ArticleAemCacheInterface,
         categoryArticlesCache: CategoryArticlesCacheInterface,
         syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface
     ) {

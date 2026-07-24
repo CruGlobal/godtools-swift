@@ -46,7 +46,7 @@ final class GetArticlesUseCase {
         
         let aemUris: [String] = uniqueAemUris.sorted()
         
-        let aemCacheObjects: [ArticleAemCacheObject] = try articlesRepsoitory.getAemCacheObjects(
+        let aemCacheObjects: [ArticleAemCacheObject] = try await articlesRepsoitory.getAemCacheObjects(
             aemUris: aemUris
         )
         
