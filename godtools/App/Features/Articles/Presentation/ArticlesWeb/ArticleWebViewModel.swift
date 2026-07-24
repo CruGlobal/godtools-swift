@@ -17,8 +17,8 @@ final class ArticleWebViewModel: NSObject, ObservableObject {
     
     private let stepEmitter: FlowStepEmitter
     private let articleId: String
+    private let article: ArticleDomainModel
     private let flowType: ArticleWebViewModelFlowType
-    private let getArticleUseCase: GetArticleUseCase
     private let incrementUserCounterUseCase: IncrementUserCounterUseCase
     private let getAppUIDebuggingIsEnabledUseCase: GetAppUIDebuggingIsEnabledUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
@@ -29,7 +29,6 @@ final class ArticleWebViewModel: NSObject, ObservableObject {
     private var displayArticleTimer: Timer?
     private var cancellables = Set<AnyCancellable>()
         
-    let article: ArticleDomainModel
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
     let viewState: ObservableValue<ArticleWebViewState> = ObservableValue(value: .loadingArticle)
         
@@ -40,7 +39,7 @@ final class ArticleWebViewModel: NSObject, ObservableObject {
         stepEmitter: FlowStepEmitter,
         flowType: ArticleWebViewModelFlowType,
         articleId: String,
-        getArticleUseCase: GetArticleUseCase,
+        article: ArticleDomainModel,
         incrementUserCounterUseCase: IncrementUserCounterUseCase,
         getAppUIDebuggingIsEnabledUseCase: GetAppUIDebuggingIsEnabledUseCase,
         trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
@@ -49,16 +48,13 @@ final class ArticleWebViewModel: NSObject, ObservableObject {
         self.stepEmitter = stepEmitter
         self.flowType = flowType
         self.articleId = articleId
-        self.getArticleUseCase = getArticleUseCase
+        self.article = article
         self.incrementUserCounterUseCase = incrementUserCounterUseCase
         self.getAppUIDebuggingIsEnabledUseCase = getAppUIDebuggingIsEnabledUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         
-        article = getArticleUseCase
-            .execute(articleId: articleId)
-        
         super.init()
-                
+    
         navTitle.accept(value: article.title)
               
         hidesShareButton = !article.isShareable
