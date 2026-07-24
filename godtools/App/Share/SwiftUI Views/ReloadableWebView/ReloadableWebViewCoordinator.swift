@@ -12,24 +12,40 @@ import UIKit
 
 @MainActor
 final class ReloadableWebViewCoordinator: NSObject {
-    
+        
     private var currentWebView: WKWebView?
     private var requestUrl: URL?
     private var fallbackFileUrl: URL?
+    private var didFailClosure: ((_ error: Error) -> Void)?
     
-    func loadUrl(webView: WKWebView, requestUrl: URL, fallbackFileUrl: URL?) {
+    func loadUrl(
+        webView: WKWebView,
+        requestUrl: URL,
+        fallbackFileUrl: URL?,
+        didFailClosure: ((_ error: Error) -> Void)?
+    ) {
         
         guard requestUrl != self.requestUrl else {
             return
         }
         
         if let webView = currentWebView {
+            
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
+                webView.alpha = 0
+            }
+            
             stopLoading(webView: webView)
+        }
+        else {
+            
+            webView.alpha = 0
         }
         
         self.currentWebView = webView
         self.requestUrl = requestUrl
         self.fallbackFileUrl = fallbackFileUrl
+        self.didFailClosure = didFailClosure
         
         webView.navigationDelegate = self
         
@@ -75,8 +91,7 @@ extension ReloadableWebViewCoordinator: WKNavigationDelegate {
         }
         else {
             
-            //let errorTitle: String = "Load Article Error"
-            //let errorMessage: String = error.localizedDescription
+            didFailClosure?(error)
         }
     }
 }

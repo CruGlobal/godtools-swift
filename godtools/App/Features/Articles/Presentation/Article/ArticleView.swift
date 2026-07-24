@@ -26,7 +26,10 @@ struct ArticleView: View {
                 
                 ReloadableWebViewRepresentable(
                     requestUrl: requestUrl,
-                    fallbackFileUrl: viewModel.loadingArticle?.archiveUrl?.url
+                    fallbackFileUrl: viewModel.loadingArticle?.archiveUrl?.url,
+                    didFailClosure: { (error: Error) in
+                        
+                    }
                 )
                 .frame(width: geometry.size.width, height: geometry.size.height)
             }

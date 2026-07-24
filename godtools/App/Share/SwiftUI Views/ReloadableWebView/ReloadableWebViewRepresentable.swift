@@ -15,11 +15,13 @@ struct ReloadableWebViewRepresentable: UIViewRepresentable {
         
     private let requestUrl: URL
     private let fallbackFileUrl: URL?
+    private let didFailClosure: ((_ error: Error) -> Void)?
     
-    init(requestUrl: URL, fallbackFileUrl: URL?) {
+    init(requestUrl: URL, fallbackFileUrl: URL?, didFailClosure: ((_ error: Error) -> Void)?) {
                 
         self.requestUrl = requestUrl
         self.fallbackFileUrl = fallbackFileUrl
+        self.didFailClosure = didFailClosure
     }
     
     func makeCoordinator() -> ReloadableWebViewCoordinator {
@@ -31,7 +33,6 @@ struct ReloadableWebViewRepresentable: UIViewRepresentable {
                 
         let webView = WKWebView(frame: UIScreen.main.bounds)
         
-        webView.alpha = 0
         webView.scrollView.showsVerticalScrollIndicator = true
         webView.scrollView.showsHorizontalScrollIndicator = false
         
@@ -40,7 +41,12 @@ struct ReloadableWebViewRepresentable: UIViewRepresentable {
     
     func updateUIView(_ uiView: WKWebView, context: Context) {
          
-        context.coordinator.loadUrl(webView: uiView, requestUrl: requestUrl, fallbackFileUrl: fallbackFileUrl)
+        context.coordinator.loadUrl(
+            webView: uiView,
+            requestUrl: requestUrl,
+            fallbackFileUrl: fallbackFileUrl,
+            didFailClosure: didFailClosure
+        )
     }
     
     static func dismantleUIView(_ uiView: WKWebView, coordinator: ReloadableWebViewCoordinator) {
