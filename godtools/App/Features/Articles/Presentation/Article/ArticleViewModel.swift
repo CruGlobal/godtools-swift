@@ -23,9 +23,9 @@ final class ArticleViewModel: ObservableObject {
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let displayArticleAfterNumberOfSeconds: TimeInterval = 2
     
+    private var loadedUrl: URL?
     private var cancellables = Set<AnyCancellable>()
     
-    @Published private(set) var loadingArticle: ArticleDomainModel?
     @Published private(set) var navTitle: String = ""
     @Published private(set) var hidesShareButton: Bool = false
     @Published private(set) var hidesDebugButton: Bool = true
@@ -57,6 +57,14 @@ final class ArticleViewModel: ObservableObject {
         print("x deinit: \(type(of: self))")
     }
     
+    var requestUrl: URL? {
+        return article.httpsUrl?.url
+    }
+    
+    var fallbackFileUrl: URL? {
+        return article.archiveUrl?.url
+    }
+    
     private var analyticsScreenName: String {
         return "Article : \(article.title)"
     }
@@ -79,6 +87,22 @@ final class ArticleViewModel: ObservableObject {
     private var analyticsSiteSubSection: String {
         return "article"
     }
+    
+    private var articleUrl: ArticleUrlDomainModel? {
+        
+        guard let loadedUrl = self.loadedUrl else {
+            return nil
+        }
+        
+        if let httpsArticle = article.httpsUrl, loadedUrl == httpsArticle.url {
+            return httpsArticle
+        }
+        else if let archiveArticle = article.archiveUrl, loadedUrl == archiveArticle.url {
+            return archiveArticle
+        }
+        
+        return nil
+    }
 }
 
 // MARK: - Inputs
@@ -86,17 +110,16 @@ final class ArticleViewModel: ObservableObject {
 extension ArticleViewModel {
     
     @objc func backTapped() {
-        
         stepEmitter.emit(step: AppFlowStep.backTappedFromArticle)
     }
     
     @objc func debugTapped() {
         
-//        guard let articleUrl = loadingArticle else {
-//            return
-//        }
-//        
-//        stepEmitter.emit(step: AppFlowStep.debugTappedFromArticle(articleUrl: articleUrl))
+        guard let articleUrl = self.articleUrl else {
+            return
+        }
+                
+        stepEmitter.emit(step: AppFlowStep.debugTappedFromArticle(articleUrl: articleUrl))
     }
     
     @objc func sharedTapped() {
@@ -104,10 +127,6 @@ extension ArticleViewModel {
     }
     
     func pageViewed() {
-        
-        if loadingArticle == nil {
-            loadingArticle = article
-        }
         
         trackScreenViewAnalyticsUseCase.trackScreen(
             screenName: analyticsScreenName,
@@ -129,5 +148,10 @@ extension ArticleViewModel {
                 
             }
             .store(in: &Self.backgroundCancellables)
+    }
+    
+    func didLoadArticle(url: URL?, error: Error?) {
+        
+        loadedUrl = url
     }
 }

@@ -22,13 +22,14 @@ struct ArticleView: View {
             
             CenteredCircularProgressView(progressColor: .black)
             
-            if let requestUrl = viewModel.loadingArticle?.httpsUrl?.url {
+            if let requestUrl = viewModel.requestUrl {
                 
                 ReloadableWebView(
                     requestUrl: requestUrl,
-                    fallbackFileUrl: viewModel.loadingArticle?.archiveUrl?.url,
-                    completion: { (error: Error?) in
+                    fallbackFileUrl: viewModel.fallbackFileUrl,
+                    completion: { (url: URL?, error: Error?) in
                         
+                        viewModel.didLoadArticle(url: url, error: error)
                     }
                 )
                 .frame(width: geometry.size.width, height: geometry.size.height)

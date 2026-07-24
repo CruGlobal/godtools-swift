@@ -16,14 +16,15 @@ final class ReloadableWebViewCoordinator: NSObject {
     private var currentWebView: WKWebView?
     private var requestUrl: URL?
     private var fallbackFileUrl: URL?
+    private var loadingUrl: URL?
     private var didAttemptFallbackFileUrl: Bool = false
-    private var completion: ((_ error: Error?) -> Void)?
+    private var completion: ((_ url: URL?, _ error: Error?) -> Void)?
     
     func loadUrl(
         webView: WKWebView,
         requestUrl: URL,
         fallbackFileUrl: URL?,
-        completion: ((_ error: Error?) -> Void)?
+        completion: ((_ url: URL?, _ error: Error?) -> Void)?
     ) {
                 
         let didChangeRequestUrl: Bool = self.requestUrl != requestUrl
@@ -41,6 +42,8 @@ final class ReloadableWebViewCoordinator: NSObject {
         self.fallbackFileUrl = fallbackFileUrl
         self.completion = completion
         
+        loadingUrl = requestUrl
+        
         didAttemptFallbackFileUrl = false
         
         webView.navigationDelegate = self
@@ -54,20 +57,20 @@ final class ReloadableWebViewCoordinator: NSObject {
     
     func stopLoading() {
         
-        self.requestUrl = nil
-        self.fallbackFileUrl = nil
-        self.completion = nil
+        requestUrl = nil
+        fallbackFileUrl = nil
+        loadingUrl = nil
+        completion = nil
         
         currentWebView?.uiDelegate = nil
         currentWebView?.navigationDelegate = nil
         currentWebView?.stopLoading()
-        
-        self.currentWebView = nil
+        currentWebView = nil
     }
     
-    private func didFinishLoading(error: Error?) {
+    private func didFinishLoading(url: URL?, error: Error?) {
         
-        completion?(error)
+        completion?(url, error)
     }
 }
 
@@ -81,7 +84,7 @@ extension ReloadableWebViewCoordinator: WKNavigationDelegate {
             webView.alpha = 1
         }
 
-        didFinishLoading(error: nil)
+        didFinishLoading(url: loadingUrl, error: nil)
     }
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation, withError error: Error) {
@@ -91,13 +94,15 @@ extension ReloadableWebViewCoordinator: WKNavigationDelegate {
                         
         if notConnectedToNetwork, let fallbackFileUrl = fallbackFileUrl, !didAttemptFallbackFileUrl {
             
+            loadingUrl = fallbackFileUrl
+            
             didAttemptFallbackFileUrl = true
             
             webView.loadFileURL(fallbackFileUrl, allowingReadAccessTo: fallbackFileUrl)
         }
         else {
             
-            didFinishLoading(error: error)
+            didFinishLoading(url: loadingUrl, error: error)
         }
     }
 }

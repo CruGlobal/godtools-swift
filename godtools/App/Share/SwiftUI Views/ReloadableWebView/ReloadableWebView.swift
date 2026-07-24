@@ -15,9 +15,9 @@ struct ReloadableWebView: UIViewRepresentable {
         
     private let requestUrl: URL
     private let fallbackFileUrl: URL?
-    private let completion: ((_ error: Error?) -> Void)?
+    private let completion: ((_ url: URL?, _ error: Error?) -> Void)?
     
-    init(requestUrl: URL, fallbackFileUrl: URL?, completion: ((_ error: Error?) -> Void)?) {
+    init(requestUrl: URL, fallbackFileUrl: URL?, completion: ((_ url: URL?, _ error: Error?) -> Void)?) {
                 
         self.requestUrl = requestUrl
         self.fallbackFileUrl = fallbackFileUrl
