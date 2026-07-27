@@ -95,6 +95,10 @@ final class ToolsViewModel: ObservableObject {
         
         showsFavoritingToolBanner = !favoritingToolMessageCache.favoritingToolMessageDisabled
         
+        if !GodToolsApp.showsPersonalization {
+            selectedToggle = .all
+        }
+        
         getCurrentAppLanguageUseCase
             .execute()
             .receive(on: DispatchQueue.main)
@@ -332,6 +336,11 @@ final class ToolsViewModel: ObservableObject {
     }
     
     private static func getPersonalizedToggleOptions(strings: ToolsStringsDomainModel) -> [PersonalizationToggleOption] {
+        
+        if !GodToolsApp.showsPersonalization {
+            
+            return [PersonalizationToggleOption(title: strings.allToolsToggleTitle, selection: .all, buttonAccessibility: .allTools)]
+        }
         
         return [
             PersonalizationToggleOption(title: strings.personalizedToolToggleTitle, selection: .personalized, buttonAccessibility: .personalizedTools),

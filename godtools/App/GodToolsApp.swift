@@ -50,6 +50,11 @@ struct GodToolsApp: App {
         return .godtools
     }
     
+    // TODO: Remove this flag once personalization is fully released. ~Levi
+    static var showsPersonalization: Bool {
+        return appConfig.showsPersonalization
+    }
+    
     @Environment(\.scenePhase) private var scenePhase
     
     @UIApplicationDelegateAdaptor private var appDelegate: GodToolsAppDelegate

@@ -16,6 +16,8 @@ final class TestsAppConfig: AppConfigInterface {
     
     // TODO: Change Any? to SwiftDatabase when RealmSwift is removed. ~Levi
     private let swiftDatabase: Any?
+    
+    let showsPersonalization: Bool = true
 
     init(swiftDatabase: Any? = nil) {
         self.swiftDatabase = swiftDatabase
