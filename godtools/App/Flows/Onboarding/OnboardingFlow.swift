@@ -122,6 +122,10 @@ final class OnboardingFlow: GTFlow {
             let currentPage: Int = onboardingTutorialView.getCurrentPageIndex()
             let reachedEnd = currentPage >= lastPage
             
+            if !GodToolsApp.showsPersonalization {
+                didPromptForAppLanguage = true
+            }
+            
             if reachedEnd {
                 
                 navigate(step: AppFlowStep.endTutorialFromOnboardingTutorial)

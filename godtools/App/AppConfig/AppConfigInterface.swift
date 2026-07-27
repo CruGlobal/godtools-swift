@@ -16,9 +16,10 @@ protocol AppConfigInterface: Sendable {
     var dynalinkClientApiKey: String? { get }
     var firebaseEnabled: Bool { get }
     var isOptInNotificationModalEnabled: Bool { get }
-    var urlRequestsEnabled: Bool { get }
     var shouldSyncInitialLanguages: Bool { get }
     var shouldSyncInitialResources: Bool { get }
+    var showsPersonalization: Bool { get }
+    var urlRequestsEnabled: Bool { get }
     
     func getAppleAppId() -> String
     func getFacebookConfiguration() -> FacebookConfiguration?

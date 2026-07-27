@@ -16,6 +16,8 @@ final class GodToolsAppConfig: AppConfigInterface {
     private static let mobileContentCDNStaging: String = "https://mobilecontent-stage.cru.org"
     
     private let environment: AppEnvironment
+    
+    let showsPersonalization: Bool = false
             
     init(environment: AppEnvironment) {
         
