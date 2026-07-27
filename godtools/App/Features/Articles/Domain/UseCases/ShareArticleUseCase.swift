@@ -17,9 +17,9 @@ final class ShareArticleUseCase {
         self.articleRepository = articleRepository
     }
     
-    func execute(articleId: String) -> ShareArticleDomainModel {
+    func execute(articleId: String) async throws -> ShareArticleDomainModel {
         
-        let aemCacheObject: ArticleAemCacheObject? = articleRepository.getAemCacheObject(aemUri: articleId)
+        let aemCacheObject: ArticleAemCacheObject? = try await articleRepository.getAemCacheObject(aemUri: articleId)
         
         guard let aemCacheObject = aemCacheObject else {
             return ShareArticleDomainModel.emptyValue

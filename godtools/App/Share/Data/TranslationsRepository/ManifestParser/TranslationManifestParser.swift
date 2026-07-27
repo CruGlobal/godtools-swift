@@ -68,7 +68,7 @@ class TranslationManifestParser {
         
         do {
             
-            let exists = try resourcesFileCache.getFileExists(location: location)
+            let exists = try resourcesFileCache.cache.getFileExists(location: location)
             
             guard exists else {
                 completion(.failure(NSError.errorWithDescription(description: "Could not find translation manifest file in file cache.")))

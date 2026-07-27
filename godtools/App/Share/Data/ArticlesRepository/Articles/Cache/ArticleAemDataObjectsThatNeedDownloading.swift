@@ -10,7 +10,9 @@ import Foundation
 
 struct ArticleAemDataObjectsThatNeedDownloading: Sendable {
     
-    let aemDataDictionary: [ArticleAemCache.AemUri: ArticleAemData]
+    typealias AemUri = String
+    
+    let aemDataDictionary: [AemUri: ArticleAemData]
     let webArchiveUrls: [WebArchiveUrl]
     
     static var emptyValue: ArticleAemDataObjectsThatNeedDownloading {

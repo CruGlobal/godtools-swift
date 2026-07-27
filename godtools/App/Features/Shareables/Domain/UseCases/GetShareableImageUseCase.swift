@@ -25,7 +25,7 @@ final class GetShareableImageUseCase {
         
         let fileCacheLocation = FileCacheLocation(relativeUrlString: shareable.imageName)
         
-        let imageData: Data? = try resourcesFileCache.getData(location: fileCacheLocation)
+        let imageData: Data? = try resourcesFileCache.cache.getData(location: fileCacheLocation)
        
         guard let imageData = imageData else {
             return nil

@@ -18,22 +18,22 @@ final class ResourcesSHA256FileCacheTests {
     private static let attachmentId: String = "attachment_1"
     private static let translationId: String = "translation_1"
 
-    private let fileCache: ResourcesFileCache
+    private let resourcesFileCache: ResourcesFileCache
 
     init() throws {
         
         let fileManager = FileManager.default
 
-        fileCache = ResourcesFileCache(
+        resourcesFileCache = ResourcesFileCache(
             rootDirectory: FileCache.createTempDirectoryWithDirectoryName(directoryName: "tests_resources_sha256_files", fileManager: fileManager),
             fileManager: fileManager
         )
         
-        try? fileCache.removeRootDirectory()
+        try? resourcesFileCache.cache.removeRootDirectory()
     }
 
     deinit {
-        try? fileCache.removeRootDirectory()
+        try? resourcesFileCache.cache.removeRootDirectory()
     }
 
     // MARK: - Store Attachment File
@@ -330,7 +330,7 @@ final class ResourcesSHA256FileCacheTests {
 
         let orphanLocation = FileCacheLocation(relativeUrlString: "orphan_sha.png")
 
-        _ = try fileCache.storeFile(
+        _ = try resourcesFileCache.cache.storeFile(
             location: orphanLocation,
             data: try #require("orphan data".data(using: .utf8))
         )
@@ -406,7 +406,7 @@ extension ResourcesSHA256FileCacheTests {
 
         return ResourcesSHA256FileCache(
             container: container,
-            fileCache: fileCache
+            resourcesFileCache: resourcesFileCache
         )
     }
 

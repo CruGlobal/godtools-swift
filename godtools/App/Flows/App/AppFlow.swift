@@ -268,9 +268,7 @@ final class AppFlow: RootFlow {
             switch state {
             
             case .downloadSuccess(let aemUri):
-                pushFlow(
-                    flow: ArticleDeepLinkFlow(appDiContainer: appDiContainer, aemUri: aemUri)
-                )
+                pushArticleDeepLinkFlow(aemUri: aemUri)
                 
                 dismissFlow()
             
@@ -462,27 +460,26 @@ extension AppFlow {
         
         case .articleAemUri(let aemUri):
             
-            let aemCacheObject: ArticleAemCacheObject? = appDiContainer.core.dataLayer.getArticleAemRepository()
-                .getAemCacheObject(aemUri: aemUri)
+            let articleAemRepository: ArticleAemRepository = appDiContainer.core.dataLayer.getArticleAemRepository()
             
-            if let aemCacheObject = aemCacheObject {
+            Task {
                 
-                pushFlow(
-                    flow: ArticleDeepLinkFlow(
-                        appDiContainer: appDiContainer,
-                        aemUri: aemCacheObject.aemUri
-                    )
-                )
-            }
-            else {
+                let aemCacheObject: ArticleAemCacheObject? = try await articleAemRepository.getAemCacheObject(aemUri: aemUri)
                 
-                presentFlow(
-                    flow: LoadingArticleFlow(
-                        appDiContainer: appDiContainer,
-                        appLanguage: appLanguage,
-                        aemUri: aemUri
+                if let aemCacheObject = aemCacheObject {
+                    
+                    pushArticleDeepLinkFlow(aemUri: aemCacheObject.aemUri)
+                }
+                else {
+                    
+                    presentFlow(
+                        flow: LoadingArticleFlow(
+                            appDiContainer: appDiContainer,
+                            appLanguage: appLanguage,
+                            aemUri: aemUri
+                        )
                     )
-                )
+                }
             }
             
         case .dashboard:
@@ -565,6 +562,24 @@ extension AppFlow {
         hostingController.modalPresentationStyle = .fullScreen
         
         return hostingController
+    }
+    
+    private func pushArticleDeepLinkFlow(aemUri: String) {
+        
+        Task {
+            
+            let getArticleUseCase = appDiContainer.feature.articles.domainLayer.getArticleUseCase()
+            
+            let article = try await getArticleUseCase.execute(articleId: aemUri)
+                        
+            pushFlow(
+                flow: ArticleDeepLinkFlow(
+                    appDiContainer: appDiContainer,
+                    aemUri: aemUri,
+                    article: article
+                )
+            )
+        }
     }
 }
 

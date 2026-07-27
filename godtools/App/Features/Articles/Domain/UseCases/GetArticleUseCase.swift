@@ -17,9 +17,9 @@ final class GetArticleUseCase {
         self.articleRepository = articleRepository
     }
     
-    func execute(articleId: String) -> ArticleDomainModel {
+    func execute(articleId: String) async throws -> ArticleDomainModel {
         
-        let aemCacheObject: ArticleAemCacheObject? = articleRepository.getAemCacheObject(aemUri: articleId)
+        let aemCacheObject: ArticleAemCacheObject? = try await articleRepository.getAemCacheObject(aemUri: articleId)
         
         guard let aemCacheObject = aemCacheObject else {
             

@@ -99,32 +99,24 @@ final class AppDataLayerDependencies {
         return sharedAppConfig.firebaseEnabled ? FirebaseInAppMessaging.shared : DisabledInAppMessaging()
     }
     
-    private func getArticleAemCache() -> ArticleAemCache {
-        
-        let persistence: any Persistence<ArticleAemData, ArticleAemData>
+    private func getArticleAemCache() -> ArticleAemCacheInterface {
         
         if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
             
-            persistence = SwiftRepositorySyncPersistence(
-                database: database,
-                mapping: SwiftArticleAemDataMapping()
-            )
-        }
-        else {
-            
-            persistence = RealmRepositorySyncPersistence(
-                database: getSharedRealmDatabase(),
-                mapping: RealmArticleAemDataMapping()
+            return ArticleAemCache(
+                container: database.container.modelContainer,
+                webArchiveFileCache: getArticleAemWebArchiveFileCache(),
+                articleWebArchiver: getArticleWebArchiver()
             )
         }
         
-        return ArticleAemCache(
-            persistence: persistence,
-            articleWebArchiver: ArticleWebArchiver(
-                urlSessionPriority: getSharedUrlSessionPriority(),
-                requestSender: getRequestSender()
+        return RealmArticleAemCache(
+            webArchiveFileCache: getArticleAemWebArchiveFileCache(),
+            persistence: RealmRepositorySyncPersistence(
+                database: getSharedRealmDatabase(),
+                mapping: RealmArticleAemDataMapping()
             ),
-            realmDatabase: getSharedRealmDatabase(),
+            articleWebArchiver: getArticleWebArchiver(),
             realmDataWrite: getRealmDataWrite()
         )
     }
@@ -143,33 +135,40 @@ final class AppDataLayerDependencies {
         )
     }
     
+    private func getArticleAemWebArchiveFileCache() -> ArticleAemWebArchiveFileCache {
+        return ArticleAemWebArchiveFileCache()
+    }
+    
     func getArticleManifestAemRepository() -> ArticleManifestAemRepository {
         
-        let persistence: any Persistence<CategoryArticleDataModel, CategoryArticleDataModel>
+        let categoryArticlesCache: CategoryArticlesCacheInterface
         
         if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
             
-            persistence = SwiftRepositorySyncPersistence(
-                database: database,
-                mapping: SwiftCategoryArticleMapping()
-            )
+            categoryArticlesCache = CategoryArticlesCache(container: database.container.modelContainer)
         }
         else {
             
-            persistence = RealmRepositorySyncPersistence(
+            let persistence = RealmRepositorySyncPersistence(
                 database: getSharedRealmDatabase(),
                 mapping: RealmCategoryArticleMapping()
             )
+            
+            categoryArticlesCache = RealmCategoryArticlesCache(persistence: persistence, realmDataWrite: getRealmDataWrite())
         }
         
         return ArticleManifestAemRepository(
             downloader: getArticleAemDownloader(),
             cache: getArticleAemCache(),
-            categoryArticlesCache: CategoryArticlesCache(
-                persistence: persistence,
-                realmDataWrite: getRealmDataWrite()
-            ),
+            categoryArticlesCache: categoryArticlesCache,
             syncInvalidatorPersistence: getUserDefaultsCache()
+        )
+    }
+    
+    private func getArticleWebArchiver() -> ArticleWebArchiver {
+        return ArticleWebArchiver(
+            urlSessionPriority: getSharedUrlSessionPriority(),
+            requestSender: getRequestSender()
         )
     }
     
@@ -536,11 +535,14 @@ final class AppDataLayerDependencies {
     func getResourcesSHA256FileCache() -> ResourcesSHA256FileCacheInterface {
                 
         if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
-            return ResourcesSHA256FileCache(container: database.container.modelContainer, fileCache: getResourcesFileCache())
+            return ResourcesSHA256FileCache(
+                container: database.container.modelContainer,
+                resourcesFileCache: getResourcesFileCache()
+            )
         }
         
         return RealmResourcesSHA256FileCache(
-            fileCache: getResourcesFileCache(),
+            resourcesFileCache: getResourcesFileCache(),
             realmDatabase: getSharedRealmDatabase(),
             realmDataWrite: getRealmDataWrite()
         )
