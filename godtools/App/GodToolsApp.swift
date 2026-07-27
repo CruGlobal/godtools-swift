@@ -71,7 +71,7 @@ struct GodToolsApp: App {
                 resourcesCacheSync: dataLayer.getResourcesCacheSync(),
                 languagesPersistence: dataLayer.getLanguagesPersistence(),
                 favoritedResourcesPersistence: dataLayer.getFavoritedResourcesPersistence(),
-                resourcesFileCache: dataLayer.getResourcesSHA256FileCache(),
+                resourcesSHA256FileCache: dataLayer.getResourcesSHA256FileCache(),
                 appLanguagesPersistence: Self.appDiContainer.feature.appLanguage.dataLayer.getAppLanguagesPersistence()
             )
             

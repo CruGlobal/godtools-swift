@@ -15,37 +15,37 @@ import UIKit
 @available(iOS 17.4, *)
 actor ResourcesSHA256FileCache: ResourcesSHA256FileCacheInterface, ModelActor {
         
-    private let fileCache: ResourcesFileCache
+    private let resourcesFileCache: ResourcesFileCache
     
     let modelContainer: ModelContainer
     let modelExecutor: ModelExecutor
     
-    init(container: ModelContainer, fileCache: ResourcesFileCache) {
+    init(container: ModelContainer, resourcesFileCache: ResourcesFileCache) {
         
-        self.fileCache = fileCache
+        self.resourcesFileCache = resourcesFileCache
         
         self.modelContainer = container
         self.modelExecutor = DefaultSerialModelExecutor(modelContext: ModelContext(container))
     }
     
     func getFileExists(location: FileCacheLocation) async throws -> Bool {
-        return try fileCache.getFileExists(location: location)
+        return try resourcesFileCache.cache.getFileExists(location: location)
     }
     
     func getFile(location: FileCacheLocation) async throws -> URL {
-        return try fileCache.getFile(location: location)
+        return try resourcesFileCache.cache.getFile(location: location)
     }
     
     func getData(location: FileCacheLocation) async throws -> Data? {
-        return try fileCache.getData(location: location)
+        return try resourcesFileCache.cache.getData(location: location)
     }
     
     func getUIImage(location: FileCacheLocation) async throws -> UIImage? {
-        return try fileCache.getUIImage(location: location)
+        return try resourcesFileCache.cache.getUIImage(location: location)
     }
     
     func getImage(location: FileCacheLocation) async throws -> Image? {
-        return try fileCache.getImage(location: location)
+        return try resourcesFileCache.cache.getImage(location: location)
     }
         
     // MARK: - Attachment Files
@@ -54,7 +54,7 @@ actor ResourcesSHA256FileCache: ResourcesSHA256FileCacheInterface, ModelActor {
         
         let fileCacheLocation: FileCacheLocation = FileCacheLocation(relativeUrlString: fileName)
         
-        _ = try fileCache.storeFile(location: fileCacheLocation, data: fileData)
+        _ = try resourcesFileCache.cache.storeFile(location: fileCacheLocation, data: fileData)
         
         _ = try createStoredFileRelationshipsToAttachment(
             attachmentId: attachmentId,
@@ -119,7 +119,7 @@ actor ResourcesSHA256FileCache: ResourcesSHA256FileCacheInterface, ModelActor {
                 
         let fileCacheLocation: FileCacheLocation = FileCacheLocation(relativeUrlString: fileName)
         
-        _ = try fileCache.storeFile(location: fileCacheLocation, data: fileData)
+        _ = try resourcesFileCache.cache.storeFile(location: fileCacheLocation, data: fileData)
         
         _ = try createStoredFileRelationshipsToTranslation(
             translationId: translationId,
@@ -131,7 +131,7 @@ actor ResourcesSHA256FileCache: ResourcesSHA256FileCacheInterface, ModelActor {
     
     func storeTranslationZipFile(translationId: String, zipFileData: Data) async throws -> [FileCacheLocation] {
         
-        let fileCacheLocations: [FileCacheLocation] = try fileCache.decompressZipFileAndStoreFileContents(zipFileData: zipFileData)
+        let fileCacheLocations: [FileCacheLocation] = try resourcesFileCache.cache.decompressZipFileAndStoreFileContents(zipFileData: zipFileData)
         
         _ = try createStoredFileRelationshipsToTranslation(
             translationId: translationId,
@@ -222,7 +222,7 @@ actor ResourcesSHA256FileCache: ResourcesSHA256FileCacheInterface, ModelActor {
             
             filesToRemove.append(location)
             
-            try fileCache.removeFile(location: location)
+            try resourcesFileCache.cache.removeFile(location: location)
         }
         
         modelContext.deleteObjects(objects: sha256FilesToDelete)

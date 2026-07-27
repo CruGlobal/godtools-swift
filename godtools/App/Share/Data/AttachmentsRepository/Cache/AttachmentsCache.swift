@@ -65,7 +65,7 @@ extension AttachmentsCache {
         }
         else {
             
-            imageData = try resourcesFileCache.getData(location: fileCacheLocation)
+            imageData = try resourcesFileCache.cache.getData(location: fileCacheLocation)
         }
         
         let storedAttachment: StoredAttachmentDataModel?

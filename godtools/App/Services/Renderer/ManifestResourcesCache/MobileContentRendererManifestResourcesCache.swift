@@ -42,7 +42,7 @@ final class MobileContentRendererManifestResourcesCache {
             throw error
         }
         
-        return try resourcesFileCache.getFile(location: location)
+        return try resourcesFileCache.cache.getFile(location: location)
     }
     
     func getUIImage(resource: Resource) throws -> UIImage? {
@@ -51,7 +51,7 @@ final class MobileContentRendererManifestResourcesCache {
             return nil
         }
         
-        return try resourcesFileCache.getUIImage(location: location)
+        return try resourcesFileCache.cache.getUIImage(location: location)
     }
     
     func getUIImageNonThrowing(resource: Resource) -> UIImage? {
@@ -61,7 +61,7 @@ final class MobileContentRendererManifestResourcesCache {
         }
         
         do {
-            return try resourcesFileCache.getUIImage(location: location)
+            return try resourcesFileCache.cache.getUIImage(location: location)
         }
         catch _ {
             print("\n WARNING: Failed to get resource image: \(location.filenameWithPathExtension ?? "")")
@@ -76,7 +76,7 @@ final class MobileContentRendererManifestResourcesCache {
         }
         
         do {
-            return try resourcesFileCache.getImage(location: location)
+            return try resourcesFileCache.cache.getImage(location: location)
         }
         catch _ {
             return nil

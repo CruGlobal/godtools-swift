@@ -535,11 +535,14 @@ final class AppDataLayerDependencies {
     func getResourcesSHA256FileCache() -> ResourcesSHA256FileCacheInterface {
                 
         if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
-            return ResourcesSHA256FileCache(container: database.container.modelContainer, fileCache: getResourcesFileCache())
+            return ResourcesSHA256FileCache(
+                container: database.container.modelContainer,
+                resourcesFileCache: getResourcesFileCache()
+            )
         }
         
         return RealmResourcesSHA256FileCache(
-            fileCache: getResourcesFileCache(),
+            resourcesFileCache: getResourcesFileCache(),
             realmDatabase: getSharedRealmDatabase(),
             realmDataWrite: getRealmDataWrite()
         )
