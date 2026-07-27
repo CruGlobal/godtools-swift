@@ -54,7 +54,7 @@ final class GetDownloadableLanguagesListUseCase {
         .eraseToAnyPublisher()
     }
     
-    func asyncExecute(appLanguage: AppLanguageDomainModel) async throws -> [DownloadableLanguageListItemDomainModel] {
+    private func asyncExecute(appLanguage: AppLanguageDomainModel) async throws -> [DownloadableLanguageListItemDomainModel] {
         
         let languages: [LanguageDataModel] = try await languagesRepository.getLanguages()
         
