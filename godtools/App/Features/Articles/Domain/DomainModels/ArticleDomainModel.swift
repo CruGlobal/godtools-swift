@@ -15,4 +15,5 @@ struct ArticleDomainModel: Sendable, Identifiable {
     let httpsUrl: ArticleUrlDomainModel?
     let archiveUrl: ArticleUrlDomainModel?
     let isShareable: Bool
+    let errorMessage: String?
 }

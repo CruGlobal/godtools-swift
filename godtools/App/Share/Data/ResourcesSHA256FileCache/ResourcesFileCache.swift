@@ -8,15 +8,19 @@
 
 import Foundation
 
-final class ResourcesFileCache: FileCache {
+final class ResourcesFileCache {
     
     private static let rootDirectory: String = "godtools_resources_files"
     
+    let cache: FileCache
+    
     init() {
-        super.init(rootDirectoryName: Self.rootDirectory)
+        
+        cache = FileCache(rootDirectoryName: Self.rootDirectory)
     }
     
-    override init(rootDirectory: URL, fileManager: FileManager = FileManager.default) {
-        super.init(rootDirectory: rootDirectory, fileManager: fileManager)
+    init(rootDirectory: URL, fileManager: FileManager = FileManager.default) {
+        
+        cache = FileCache(rootDirectory: rootDirectory, fileManager: fileManager)
     }
 }

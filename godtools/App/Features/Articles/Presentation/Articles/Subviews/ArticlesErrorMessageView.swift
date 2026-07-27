@@ -10,38 +10,39 @@ import SwiftUI
 
 struct ArticlesErrorMessageView: View {
     
-    private let title: String
-    private let message: String
-    private let actionTitle: String
+    private let geometry: GeometryProxy
+    private let horizontalPadding: CGFloat
+    private let error: ArticlesErrorDomainModel
     private let actionTapped: (() -> Void)?
     
     init(
-        title: String,
-        message: String,
-        actionTitle: String,
+        geometry: GeometryProxy,
+        horizontalPadding: CGFloat,
+        error: ArticlesErrorDomainModel,
         actionTapped: (() -> Void)?
     ) {
         
-        self.title = title
-        self.message = message
-        self.actionTitle = actionTitle
+        self.geometry = geometry
+        self.horizontalPadding = horizontalPadding
+        self.error = error
         self.actionTapped = actionTapped
     }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             
-            Text(title)
+            Text(error.title)
                 .foregroundColor(Color.black)
                 .font(FontLibrary.sfProTextSemibold.font(size: 18))
             
-            Text(message)
+            Text(error.message)
                 .foregroundColor(Color.black)
                 .font(FontLibrary.sfProTextRegular.font(size: 18))
                 .padding([.top], 8)
             
             CustomButton(
                 attributes: CustomButtonAttributes(
+                    width: geometry.size.width - (horizontalPadding * 2),
                     height: 50,
                     color: ColorPalette.gtBlue.color
                 ),
@@ -50,7 +51,7 @@ struct ArticlesErrorMessageView: View {
                     
                 },
                 nonHighlightContent: {
-                    Text(actionTitle)
+                    Text(error.downloadActionTitle)
                         .foregroundColor(Color.white)
                         .font(Font.system(size: 18))
                 },
@@ -60,5 +61,6 @@ struct ArticlesErrorMessageView: View {
             )
             .padding([.top], 50)
         }
+        .padding([.horizontal], horizontalPadding)
     }
 }

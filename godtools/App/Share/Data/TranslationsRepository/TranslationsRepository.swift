@@ -410,7 +410,7 @@ extension TranslationsRepository {
         
         let fileCacheLocation = FileCacheLocation(relativeUrlString: fileName)
         
-        let fileExists: Bool = try resourcesFileCache.getFileExists(location: fileCacheLocation)
+        let fileExists: Bool = try resourcesFileCache.cache.getFileExists(location: fileCacheLocation)
         
         guard fileExists else {
             throw NSError.errorWithDescription(description: "Failed to get translation file.  File does not exist in the cache.")

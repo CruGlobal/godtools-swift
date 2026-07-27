@@ -13,7 +13,7 @@ import RepositorySync
 final class RealmProductionConfig {
     
     static let diskFileName: String = "godtools_realm"
-    static let schemaVersion: UInt64 = 44
+    static let schemaVersion: UInt64 = 45
     
     static func createConfig() throws -> RealmDatabaseConfig {
         

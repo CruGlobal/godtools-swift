@@ -12,15 +12,15 @@ import RepositorySync
 @available(iOS 17.4, *)
 final class SwiftCategoryArticleMapping: Mapping {
     
-    func toDataModel(externalObject: CategoryArticleModel) -> CategoryArticleModel? {
+    func toDataModel(externalObject: CategoryArticleDataModel) -> CategoryArticleDataModel? {
         return externalObject
     }
     
-    func toDataModel(persistObject: SwiftCategoryArticle) -> CategoryArticleModel? {
+    func toDataModel(persistObject: SwiftCategoryArticle) -> CategoryArticleDataModel? {
         return persistObject.toModel()
     }
     
-    func toPersistObject(externalObject: CategoryArticleModel) -> SwiftCategoryArticle? {
+    func toPersistObject(externalObject: CategoryArticleDataModel) -> SwiftCategoryArticle? {
         return SwiftCategoryArticle.createNewFrom(model: externalObject)
     }
 }

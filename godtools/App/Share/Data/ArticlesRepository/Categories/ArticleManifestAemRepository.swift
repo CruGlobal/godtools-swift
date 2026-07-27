@@ -12,13 +12,13 @@ import RequestOperation
 
 final class ArticleManifestAemRepository: ArticleAemRepository {
     
-    private let categoryArticlesCache: CategoryArticlesCache
+    private let categoryArticlesCache: CategoryArticlesCacheInterface
     private let syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface
         
     init(
         downloader: ArticleAemDownloader,
-        cache: ArticleAemCache,
-        categoryArticlesCache: CategoryArticlesCache,
+        cache: ArticleAemCacheInterface,
+        categoryArticlesCache: CategoryArticlesCacheInterface,
         syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface
     ) {
         
@@ -33,12 +33,19 @@ final class ArticleManifestAemRepository: ArticleAemRepository {
         return prefix + translationId
     }
     
-    func getCategoryArticles(categoryId: String, languageCode: String) async throws -> [CategoryArticleModel] {
+    func getCategoryArticles(categoryId: String, languageCode: String) async throws -> [CategoryArticleDataModel] {
         
         return try await categoryArticlesCache.getCategoryArticles(categoryId: categoryId, languageCode: languageCode)
     }
     
-    func downloadAndCacheManifestAemUris(manifest: Manifest, translationId: String, languageCode: String, downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority, forceFetchFromRemote: Bool = false) async throws -> ArticleAemDownload {
+    func downloadAndCacheManifestAemUris(
+        manifest: Manifest,
+        translationId: String,
+        languageCode: String,
+        downloadCachePolicy: ArticleAemDownloaderCachePolicy,
+        requestPriority: RequestPriority,
+        forceFetchFromRemote: Bool = false
+    ) async throws -> ArticleAemDownload {
         
         let syncInvalidator = SyncInvalidator(
             id: getSyncInvalidatorId(translationId: translationId),
@@ -50,7 +57,7 @@ final class ArticleManifestAemRepository: ArticleAemRepository {
             return ArticleAemDownload.emptyValue
         }
         
-        let aemUris: [String] = manifest.aemImports.map({$0.absoluteString})
+        let aemUris: [String] = manifest.aemImports.map { $0.absoluteString }
         
         let download: ArticleAemDownload = try await super.downloadAndCache(
             aemUris: aemUris,
@@ -58,12 +65,17 @@ final class ArticleManifestAemRepository: ArticleAemRepository {
             requestPriority: requestPriority
         )
         
-        let categories: [ArticleCategory] = manifest.categories.map({
-            ArticleCategory(
-                aemTags: Array($0.aemTags),
-                id: $0.id ?? ""
+        let categories: [ManifestCategory] = manifest.categories.compactMap {
+            
+            guard let id = $0.id else {
+                return nil
+            }
+            
+            return ManifestCategory(
+                id: id,
+                aemTags: $0.aemTags
             )
-        })
+        }
         
         _ = await categoryArticlesCache.storeAemDataObjectsForCategories(
             categories: categories,
@@ -71,7 +83,7 @@ final class ArticleManifestAemRepository: ArticleAemRepository {
             aemDataObjects: download.aemDataObjects
         )
         
-        if !download.networkFailed {
+        if download.errors.isEmpty {
             syncInvalidator.didSync()
         }
         

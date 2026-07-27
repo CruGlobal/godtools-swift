@@ -22,21 +22,21 @@ final class UITestsInitialDataLoader {
     private let resourcesCacheSync: ResourcesCacheSyncInterface
     private let languagesPersistence: any Persistence<LanguageDataModel, LanguageCodable>
     private let favoritedResourcesPersistence: any Persistence<FavoritedResourceDataModel, FavoritedResourceDataModel>
-    private let resourcesFileCache: ResourcesSHA256FileCacheInterface
+    private let resourcesSHA256FileCache: ResourcesSHA256FileCacheInterface
     private let appLanguagesPersistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>
     
     init(
         resourcesCacheSync: ResourcesCacheSyncInterface,
         languagesPersistence: any Persistence<LanguageDataModel, LanguageCodable>,
         favoritedResourcesPersistence: any Persistence<FavoritedResourceDataModel, FavoritedResourceDataModel>,
-        resourcesFileCache: ResourcesSHA256FileCacheInterface,
+        resourcesSHA256FileCache: ResourcesSHA256FileCacheInterface,
         appLanguagesPersistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>
     ) {
         
         self.resourcesCacheSync = resourcesCacheSync
         self.languagesPersistence = languagesPersistence
         self.favoritedResourcesPersistence = favoritedResourcesPersistence
-        self.resourcesFileCache = resourcesFileCache
+        self.resourcesSHA256FileCache = resourcesSHA256FileCache
         self.appLanguagesPersistence = appLanguagesPersistence
     }
     
@@ -70,24 +70,24 @@ final class UITestsInitialDataLoader {
             throw NSError.errorWithDescription(description: "UITestsInitialDataLoader: Failed to get fsl manifest from preview assets.")
         }
                 
-        _ = try await resourcesFileCache.storeTranslationFile(
+        _ = try await resourcesSHA256FileCache.storeTranslationFile(
             translationId: Self.tmtsEnTranslation,
             fileName: Self.tmtsManifest,
             fileData: tmtsManifestData
         )
         
-        _ =  try await resourcesFileCache.storeTranslationZipFile(
+        _ =  try await resourcesSHA256FileCache.storeTranslationZipFile(
             translationId: Self.tmtsEnTranslation,
             zipFileData: tmtsTractData
         )
         
-        _ = try await resourcesFileCache.storeTranslationFile(
+        _ = try await resourcesSHA256FileCache.storeTranslationFile(
             translationId: Self.fslEnTranslation,
             fileName: Self.fslManifest,
             fileData: fslManifestData
         )
         
-        _ =  try await resourcesFileCache.storeTranslationZipFile(
+        _ =  try await resourcesSHA256FileCache.storeTranslationZipFile(
             translationId: Self.fslEnTranslation,
             zipFileData: fslTractData
         )

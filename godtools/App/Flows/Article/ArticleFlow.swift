@@ -73,26 +73,41 @@ final class ArticleFlow: GTFlow {
                         
         case .articleTappedFromArticles(let resource, let articleId):
             
-            let view = getArticle(resource: resource, articleId: articleId)
-            
-            navigationController.pushViewController(view, animated: true)
+            Task {
+                
+                let getArticleUseCase = appDiContainer.feature.articles.domainLayer.getArticleUseCase()
+                
+                let article = try await getArticleUseCase.execute(articleId: articleId)
+                
+                let view = getArticleView(resource: resource, articleId: articleId, article: article)
+                
+                navigationController.pushViewController(view, animated: true)
+            }
             
         case .backTappedFromArticle:
             navigationController.popViewController(animated: true)
             
         case .sharedTappedFromArticle(let articleId):
             
-            let viewModel = ShareArticleViewModel(
-                stepEmitter: stepEmitter,
-                articleId: articleId,
-                shareArticleUseCase: appDiContainer.feature.articles.domainLayer.getShareArticleUseCase(),
-                trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-                trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase()
-            )
-            
-            let view = ShareArticleView(viewModel: viewModel)
-            
-            presentView(view: view.controller, animated: true)
+            Task {
+                
+                let shareArticleUseCase = appDiContainer.feature.articles.domainLayer.getShareArticleUseCase()
+                
+                let shareArticle = try await shareArticleUseCase.execute(
+                    articleId: articleId
+                )
+             
+                let viewModel = ShareArticleViewModel(
+                    stepEmitter: stepEmitter,
+                    shareArticle: shareArticle,
+                    trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+                    trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase()
+                )
+                
+                let view = ShareArticleView(viewModel: viewModel)
+                
+                presentView(view: view.controller, animated: true)
+            }
             
         case .dismissedShareArticleActivityViewController:
             completeFlow(state: .articleShared)
@@ -170,6 +185,7 @@ extension ArticleFlow {
             downloadArticlesObservable: downloadArticlesObservable,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getArticlesUseCase: appDiContainer.feature.articles.domainLayer.getArticlesUseCase(),
+            getDownloadArticlesErrorMessage: appDiContainer.feature.articles.domainLayer.getDownloadArticlesErrorMessage(),
             localizationServices: appDiContainer.core.dataLayer.getLocalizationServices(),
             trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase()
         )
@@ -195,16 +211,23 @@ extension ArticleFlow {
         return hostingView
     }
     
-    private func getArticle(resource: ResourceDataModel, articleId: String) -> UIViewController {
+    private func getArticleView(
+        resource: ResourceDataModel,
+        articleId: String,
+        article: ArticleDomainModel
+    ) -> UIViewController {
         
-        let viewModel = ArticleWebViewModel(
+        let viewModel = ArticleViewModel(
             stepEmitter: stepEmitter,
             flowType: .tool(resource: resource),
             articleId: articleId,
-            getArticleUseCase: appDiContainer.feature.articles.domainLayer.getArticleUseCase(),
+            article: article,
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase(),
             getAppUIDebuggingIsEnabledUseCase: appDiContainer.core.domainLayer.getAppUIDebuggingIsEnabledUseCase(),
-            trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase()
+            trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+            getDownloadArticlesErrorMessage: appDiContainer.feature.articles.domainLayer.getDownloadArticlesErrorMessage(),
+            localizationServices: appDiContainer.core.dataLayer.getLocalizationServices()
         )
         
         let backButton = AppBackBarItem(
@@ -228,8 +251,12 @@ extension ArticleFlow {
             hidesBarItemPublisher: viewModel.$hidesDebugButton.eraseToAnyPublisher()
         )
         
-        let view = ArticleWebView(
-            viewModel: viewModel,
+        let view = ArticleView(
+            viewModel: viewModel
+        )
+        
+        let hostingView = AppHostingController<ArticleView>(
+            rootView: view,
             navigationBar: AppNavigationBar(
                 appearance: nil,
                 backButton: backButton,
@@ -238,7 +265,7 @@ extension ArticleFlow {
             )
         )
         
-        return view
+        return hostingView
     }
     
     private func getArticleDebugView(articleUrl: ArticleUrlDomainModel) -> UIViewController {

@@ -14,7 +14,7 @@ final class ArticleDeepLinkFlow: GTFlow {
         case closed
     }
                         
-    init(appDiContainer: AppDiContainer, aemUri: String) {
+    init(appDiContainer: AppDiContainer, aemUri: String, article: ArticleDomainModel) {
         
         let stepEmitter = FlowStepEmitter()
         
@@ -23,7 +23,8 @@ final class ArticleDeepLinkFlow: GTFlow {
             initialView: Self.getArticleWebView(
                 appDiContainer: appDiContainer,
                 stepEmitter: stepEmitter,
-                articleId: aemUri
+                articleId: aemUri,
+                article: article
             ),
             stepEmitter: stepEmitter
         )
@@ -52,16 +53,24 @@ final class ArticleDeepLinkFlow: GTFlow {
 
 extension ArticleDeepLinkFlow {
     
-    private static func getArticleWebView(appDiContainer: AppDiContainer, stepEmitter: FlowStepEmitter, articleId: String) -> UIViewController {
+    private static func getArticleWebView(
+        appDiContainer: AppDiContainer,
+        stepEmitter: FlowStepEmitter,
+        articleId: String,
+        article: ArticleDomainModel
+    ) -> UIViewController {
         
-        let viewModel = ArticleWebViewModel(
+        let viewModel = ArticleViewModel(
             stepEmitter: stepEmitter,
             flowType: .deeplink,
             articleId: articleId,
-            getArticleUseCase: appDiContainer.feature.articles.domainLayer.getArticleUseCase(),
+            article: article,
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase(),
             getAppUIDebuggingIsEnabledUseCase: appDiContainer.core.domainLayer.getAppUIDebuggingIsEnabledUseCase(),
-            trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase()
+            trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+            getDownloadArticlesErrorMessage: appDiContainer.feature.articles.domainLayer.getDownloadArticlesErrorMessage(),
+            localizationServices: appDiContainer.core.dataLayer.getLocalizationServices()
         )
         
         let backButton = AppBackBarItem(
@@ -69,8 +78,12 @@ extension ArticleDeepLinkFlow {
             action: #selector(viewModel.backTapped)
         )
     
-        let view = ArticleWebView(
-            viewModel: viewModel,
+        let view = ArticleView(
+            viewModel: viewModel
+        )
+        
+        let hostingView = AppHostingController<ArticleView>(
+            rootView: view,
             navigationBar: AppNavigationBar(
                 appearance: nil,
                 backButton: backButton,
@@ -79,6 +92,6 @@ extension ArticleDeepLinkFlow {
             )
         )
         
-        return view
+        return hostingView
     }
 }

@@ -50,6 +50,11 @@ struct GodToolsApp: App {
         return .godtools
     }
     
+    // TODO: Remove this flag once personalization is fully released. ~Levi
+    static var showsPersonalization: Bool {
+        return appConfig.showsPersonalization
+    }
+    
     @Environment(\.scenePhase) private var scenePhase
     
     @UIApplicationDelegateAdaptor private var appDelegate: GodToolsAppDelegate
@@ -71,7 +76,7 @@ struct GodToolsApp: App {
                 resourcesCacheSync: dataLayer.getResourcesCacheSync(),
                 languagesPersistence: dataLayer.getLanguagesPersistence(),
                 favoritedResourcesPersistence: dataLayer.getFavoritedResourcesPersistence(),
-                resourcesFileCache: dataLayer.getResourcesSHA256FileCache(),
+                resourcesSHA256FileCache: dataLayer.getResourcesSHA256FileCache(),
                 appLanguagesPersistence: Self.appDiContainer.feature.appLanguage.dataLayer.getAppLanguagesPersistence()
             )
             

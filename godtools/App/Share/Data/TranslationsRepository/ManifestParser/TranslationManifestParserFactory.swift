@@ -26,7 +26,7 @@ final class TranslationManifestParserFactory: IosXmlPullParserFactory {
         
         do {
         
-            let data: Data? = try resourcesFileCache.getData(location: location)
+            let data: Data? = try resourcesFileCache.cache.getData(location: location)
             
             return data
         }

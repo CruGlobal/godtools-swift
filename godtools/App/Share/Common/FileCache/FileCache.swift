@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 import UIKit
 
-open class FileCache: FileCacheInterface {
+final class FileCache: FileCacheInterface {
     
     let fileManager: FileManager
     let rootDirectory: URL

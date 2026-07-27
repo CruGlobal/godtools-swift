@@ -12,8 +12,6 @@ import Foundation
 final class ShareArticleViewModel {
     
     private let stepEmitter: FlowStepEmitter
-    private let articleId: String
-    private let shareArticleUseCase: ShareArticleUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     
@@ -21,19 +19,15 @@ final class ShareArticleViewModel {
         
     init(
         stepEmitter: FlowStepEmitter,
-        articleId: String,
-        shareArticleUseCase: ShareArticleUseCase,
+        shareArticle: ShareArticleDomainModel,
         trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
         trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     ) {
         
         self.stepEmitter = stepEmitter
-        self.articleId = articleId
-        self.shareArticleUseCase = shareArticleUseCase
+        self.shareArticle = shareArticle
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
-                
-        shareArticle = shareArticleUseCase.execute(articleId: articleId)
     }
     
     deinit {

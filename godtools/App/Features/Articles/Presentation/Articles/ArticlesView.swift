@@ -24,33 +24,40 @@ struct ArticlesView: View {
                 .opacity(viewModel.isLoading ? 1 : 0)
                 .animation(.easeOut(duration: 0.2), value: viewModel.isLoading)
             
-            ScrollView(.vertical) {
-                LazyVStack(alignment: .leading, spacing: 0) {
-                    ForEach(viewModel.articles) { article in
-                        
-                        ArticleItemView(
-                            article: article,
-                            tappedClosure: {
-                                
-                                viewModel.articleTapped(article: article)
-                            }
-                        )
-                    }
-                }
-            }
+            let articlesError: ArticlesErrorDomainModel? = viewModel.articlesError ?? viewModel.downloadArticlesError
             
-            if let articlesError = viewModel.articlesError {
+            if let articlesError = articlesError {
+                
                 ArticlesErrorMessageView(
-                    title: articlesError.title,
-                    message: articlesError.message,
-                    actionTitle: articlesError.downloadActionTitle,
+                    geometry: geometry,
+                    horizontalPadding: 30,
+                    error: articlesError,
                     actionTapped: {
-                        
                         viewModel.downloadArticlesTapped()
                     }
                 )
                 .padding([.top], 64)
-                .padding([.horizontal], 30)
+            }
+            else {
+                
+                PullToRefreshScrollView(showsIndicators: false) {
+                    
+                    LazyVStack(alignment: .leading, spacing: 0) {
+                        ForEach(viewModel.articles) { article in
+                            
+                            ArticleItemView(
+                                article: article,
+                                tappedClosure: {
+                                    
+                                    viewModel.articleTapped(article: article)
+                                }
+                            )
+                        }
+                    }
+                } refreshHandler: {
+                    
+                    viewModel.pullToRefresh()
+                }
             }
         }
         .navigationTitle(viewModel.navTitle)

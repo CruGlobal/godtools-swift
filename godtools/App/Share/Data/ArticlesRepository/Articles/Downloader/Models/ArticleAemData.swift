@@ -9,25 +9,63 @@
 import Foundation
 
 struct ArticleAemData: Sendable {
-    
-    private let htmlExtension: String = "html"
-    private let internalWebUrl: String
-    
+        
     let id: String
     let aemUri: String
     let articleJcrContent: ArticleJcrContent?
+    let webUrl: String?
+    let error: Error?
+    let errorMessage: String?
+    let errorCode: Int?
+    let httpStatusCode: Int?
     let updatedAt: Date
     
-    init(id: String, aemUri: String, articleJcrContent: ArticleJcrContent?, webUrl: String, updatedAt: Date) {
+    init(
+        aemUri: String,
+        articleJcrContent: ArticleJcrContent?,
+        webUrl: String?,
+        error: Error?,
+        errorMessage: String?,
+        errorCode: Int?,
+        httpStatusCode: Int?,
+        updatedAt: Date
+    ) {
         
-        self.id = id
+        let htmlExtension: String = "html"
+        
+        self.id = aemUri
         self.aemUri = aemUri
         self.articleJcrContent = articleJcrContent
-        self.internalWebUrl = webUrl
+        self.error = error
+        self.errorMessage = error?.localizedDescription ?? errorMessage
+        self.errorCode = error?.code ?? errorCode
+        self.httpStatusCode = httpStatusCode
         self.updatedAt = updatedAt
+        
+        if let webUrl = webUrl, !webUrl.isEmpty {
+            self.webUrl = webUrl.replacingOccurrences(of: "/.\(htmlExtension)", with: ".\(htmlExtension)")
+        }
+        else {
+            self.webUrl = nil
+        }
     }
     
-    var webUrl: String {
-        return internalWebUrl.replacingOccurrences(of: "/.\(htmlExtension)", with: ".\(htmlExtension)")        
+    static func createWithError(
+        aemUri: String,
+        error: Error,
+        httpStatusCode: Int?,
+        updatedAt: Date = Date()
+    ) -> ArticleAemData {
+        
+        return ArticleAemData(
+            aemUri: aemUri,
+            articleJcrContent: nil,
+            webUrl: nil,
+            error: error,
+            errorMessage: nil,
+            errorCode: error.code,
+            httpStatusCode: httpStatusCode,
+            updatedAt: updatedAt
+        )
     }
 }

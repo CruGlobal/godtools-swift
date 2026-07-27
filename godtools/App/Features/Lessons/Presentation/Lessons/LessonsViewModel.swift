@@ -70,6 +70,10 @@ final class LessonsViewModel: ObservableObject {
         self.getToolBannerUseCase = getToolBannerUseCase
         self.inMemoryDataCache = inMemoryDataCache
         
+        if !GodToolsApp.showsPersonalization {
+            selectedToggle = .all
+        }
+        
         getCurrentAppLanguageUseCase
             .execute()
             .receive(on: DispatchQueue.main)
@@ -251,6 +255,10 @@ final class LessonsViewModel: ObservableObject {
     }
     
     private static func getPersonalizedToggleOptions(strings: LessonsStringsDomainModel) -> [PersonalizationToggleOption] {
+        
+        if !GodToolsApp.showsPersonalization {
+            return [PersonalizationToggleOption(title: strings.allLessonsToggleTitle, selection: .all, buttonAccessibility: .allLessons)]
+        }
         
         return [
             PersonalizationToggleOption(title: strings.personalizedToolToggleTitle, selection: .personalized, buttonAccessibility: .personalizedLessons),
