@@ -12,32 +12,46 @@ import Combine
 @MainActor
 final class ArticleViewModel: ObservableObject {
     
+    enum FlowType {
+        case deeplink
+        case tool(resource: ResourceDataModel)
+    }
+    
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     
     private let stepEmitter: FlowStepEmitter
-    private let flowType: ArticleWebViewModelFlowType
+    private let flowType: FlowType
     private let articleId: String
     private let article: ArticleDomainModel
     private let incrementUserCounterUseCase: IncrementUserCounterUseCase
     private let getAppUIDebuggingIsEnabledUseCase: GetAppUIDebuggingIsEnabledUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
+    private let getDownloadArticlesErrorMessage: GetDownloadArticlesErrorMessage
+    private let localizationServices: LocalizationServicesInterface
     private let displayArticleAfterNumberOfSeconds: TimeInterval = 2
     
-    private var loadedUrl: URL?
+    private var loadedArticleUrl: URL?
     private var cancellables = Set<AnyCancellable>()
+    
+    @Published private var appLanguage = AppLanguageDomainModel.english
     
     @Published private(set) var navTitle: String = ""
     @Published private(set) var hidesShareButton: Bool = false
     @Published private(set) var hidesDebugButton: Bool = true
+    @Published private(set) var loadArticleRequestUrl: URL?
+    @Published private(set) var loadArticleError: ArticlesErrorDomainModel?
     
     init(
         stepEmitter: FlowStepEmitter,
-        flowType: ArticleWebViewModelFlowType,
+        flowType: FlowType,
         articleId: String,
         article: ArticleDomainModel,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
         incrementUserCounterUseCase: IncrementUserCounterUseCase,
         getAppUIDebuggingIsEnabledUseCase: GetAppUIDebuggingIsEnabledUseCase,
-        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
+        trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
+        getDownloadArticlesErrorMessage: GetDownloadArticlesErrorMessage,
+        localizationServices: LocalizationServicesInterface
     ) {
         
         self.stepEmitter = stepEmitter
@@ -47,18 +61,23 @@ final class ArticleViewModel: ObservableObject {
         self.incrementUserCounterUseCase = incrementUserCounterUseCase
         self.getAppUIDebuggingIsEnabledUseCase = getAppUIDebuggingIsEnabledUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
+        self.localizationServices = localizationServices
+        self.getDownloadArticlesErrorMessage = getDownloadArticlesErrorMessage
+        
+        getCurrentAppLanguageUseCase
+            .execute()
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$appLanguage)
         
         navTitle = article.title
         hidesShareButton = !article.isShareable
         hidesDebugButton = !getAppUIDebuggingIsEnabledUseCase.execute()
+        
+        downloadArticle()
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
-    }
-    
-    var requestUrl: URL? {
-        return article.httpsUrl?.url
     }
     
     var fallbackFileUrl: URL? {
@@ -90,18 +109,42 @@ final class ArticleViewModel: ObservableObject {
     
     private var articleUrl: ArticleUrlDomainModel? {
         
-        guard let loadedUrl = self.loadedUrl else {
+        guard let loadedArticleUrl = self.loadedArticleUrl else {
             return nil
         }
         
-        if let httpsArticle = article.httpsUrl, loadedUrl == httpsArticle.url {
+        if let httpsArticle = article.httpsUrl, loadedArticleUrl == httpsArticle.url {
             return httpsArticle
         }
-        else if let archiveArticle = article.archiveUrl, loadedUrl == archiveArticle.url {
+        else if let archiveArticle = article.archiveUrl, loadedArticleUrl == archiveArticle.url {
             return archiveArticle
         }
         
         return nil
+    }
+    
+    private func getArticleErrorMessage(error: Error) -> ArticlesErrorDomainModel {
+        
+        let title: String = localizationServices.stringForLocaleElseEnglish(
+            localeIdentifier: appLanguage,
+            key: LocalizableStringKeys.downloadError.key
+        )
+        
+        let message: String = getDownloadArticlesErrorMessage.getErrorMessage(appLanguage: appLanguage, error: error)
+        
+        let downloadActionTitle: String = localizationServices.stringForLocaleElseEnglish(
+            localeIdentifier: appLanguage,
+            key: LocalizableStringKeys.articlesRetryDownloadButtonTitle.key
+        )
+        
+        return ArticlesErrorDomainModel(title: title, message: message, downloadActionTitle: downloadActionTitle)
+    }
+    
+    private func downloadArticle() {
+        
+        loadArticleRequestUrl = nil
+        loadArticleError = nil
+        loadArticleRequestUrl = article.httpsUrl?.url
     }
 }
 
@@ -150,8 +193,20 @@ extension ArticleViewModel {
             .store(in: &Self.backgroundCancellables)
     }
     
+    func downloadArticleTapped() {
+        
+        downloadArticle()
+    }
+    
     func didLoadArticle(url: URL?, error: Error?) {
         
-        loadedUrl = url
+        loadedArticleUrl = url
+        
+        if let error = error {
+            loadArticleError = getArticleErrorMessage(error: error)
+        }
+        else {
+            loadArticleError = nil
+        }
     }
 }

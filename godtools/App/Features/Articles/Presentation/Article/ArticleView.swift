@@ -22,7 +22,19 @@ struct ArticleView: View {
             
             CenteredCircularProgressView(progressColor: .black)
             
-            if let requestUrl = viewModel.requestUrl {
+            if let loadArticleError = viewModel.loadArticleError {
+                
+                ArticlesErrorMessageView(
+                    geometry: geometry,
+                    horizontalPadding: 30,
+                    error: loadArticleError,
+                    actionTapped: {
+                        viewModel.downloadArticleTapped()
+                    }
+                )
+                .padding([.top], 64)
+            }
+            else if let requestUrl = viewModel.loadArticleRequestUrl {
                 
                 ReloadableWebView(
                     requestUrl: requestUrl,
