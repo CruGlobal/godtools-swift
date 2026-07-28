@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import RepositorySync
 
-final class FailedResourceViewsCache {
+final class FailedResourceViewsCache: Sendable {
     
     let persistence: any Persistence<ResourceViewDataModel, ResourceViewDataModel>
     
@@ -28,9 +28,7 @@ final class FailedResourceViewsCache {
         var updateResourceViews: [ResourceViewDataModel] = Array()
         
         for resourceView in resourceViews {
-            
-            let updateResourceView: ResourceViewDataModel
-            
+                        
             let quantity: Int
             
             if let existingResourceView = try persistence.getDataModel(id: resourceView.id) {

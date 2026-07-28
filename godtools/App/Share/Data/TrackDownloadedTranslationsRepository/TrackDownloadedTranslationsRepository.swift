@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class TrackDownloadedTranslationsRepository {
+final class TrackDownloadedTranslationsRepository: Sendable {
     
     private let cache: TrackDownloadedTranslationsCache
     

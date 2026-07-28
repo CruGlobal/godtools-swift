@@ -10,7 +10,7 @@ import Foundation
 import RepositorySync
 import RealmSwift
 
-final class ToolDownloaderCache {
+final class ToolDownloaderCache: Sendable {
 
     let persistence: any Persistence<ToolDownloadDataModel, ToolDownloadDataModel>
 

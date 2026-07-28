@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import RepositorySync
 
-final class GlobalAnalyticsCache {
+final class GlobalAnalyticsCache: Sendable {
     
     let persistence: any Persistence<GlobalAnalyticsDataModel, MobileContentGlobalAnalyticsCodable>
     

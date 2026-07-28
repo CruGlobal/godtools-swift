@@ -9,11 +9,12 @@ import Foundation
 
 final class InfoPlist: InfoPlistInterface {
 
-    let info: [String: Any]
-
     init() {
 
-        info = Bundle.main.infoDictionary ?? [:]
+    }
+    
+    var info: [String: Any] {
+        return Bundle.main.infoDictionary ?? [:]
     }
 
     var displayName: String? {

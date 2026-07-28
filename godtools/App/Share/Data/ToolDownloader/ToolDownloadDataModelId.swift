@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ToolDownloadDataModelId {
+struct ToolDownloadDataModelId: Sendable {
     
     let value: String
     

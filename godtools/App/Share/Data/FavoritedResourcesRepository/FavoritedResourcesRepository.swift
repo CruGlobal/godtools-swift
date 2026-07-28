@@ -10,7 +10,7 @@ import Foundation
 import RepositorySync
 import Combine
 
-final class FavoritedResourcesRepository {
+final class FavoritedResourcesRepository: Sendable {
     
     private let cache: FavoritedResourcesCache
     

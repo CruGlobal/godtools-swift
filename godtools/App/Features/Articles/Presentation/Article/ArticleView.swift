@@ -20,8 +20,6 @@ struct ArticleView: View {
     var body: some View {
         GeometryReader { geometry in
             
-            CenteredCircularProgressView(progressColor: .black)
-            
             if let loadArticleError = viewModel.loadArticleError {
                 
                 ArticlesErrorMessageView(
@@ -35,6 +33,8 @@ struct ArticleView: View {
                 .padding([.top], 64)
             }
             else if let requestUrl = viewModel.loadArticleRequestUrl {
+                
+                CenteredCircularProgressView(progressColor: .black)
                 
                 ReloadableWebView(
                     requestUrl: requestUrl,

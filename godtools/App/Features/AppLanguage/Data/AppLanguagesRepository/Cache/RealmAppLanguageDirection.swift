@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-enum RealmAppLanguageDirection: String, PersistableEnum {
+enum RealmAppLanguageDirection: String, PersistableEnum, Sendable {
     case leftToRight
     case rightToLeft
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum SwiftAppLanguageDirection: Codable {
+enum SwiftAppLanguageDirection: Codable, Sendable {
     case leftToRight
     case rightToLeft
 }

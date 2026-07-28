@@ -29,12 +29,12 @@ final class GetGlobalActivityThisWeekUseCase {
     @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[GlobalActivityDomainModel], Error> {
         
         return globalAnalyticsRepository
-            .getGlobalAnalyticsChangedPublisher(
-                requestPriority: .high
-            )
-            .map { (dataModel: GlobalAnalyticsDataModel?) in
+            .observeCollectionChangesPublisher()
+            .map { (globalAnalyticsChanged: Void) in
                 
-                guard let dataModel = dataModel else {
+                let globalAnalytics: GlobalAnalyticsDataModel? = self.globalAnalyticsRepository.getGlobalAnalytics()
+                
+                guard let dataModel = globalAnalytics else {
                     return Array()
                 }
                 

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TrainingTipId {
+struct TrainingTipId: Sendable {
     
     let value: String
     let trainingTipId: String

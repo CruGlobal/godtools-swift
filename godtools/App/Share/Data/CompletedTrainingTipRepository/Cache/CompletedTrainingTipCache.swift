@@ -9,7 +9,7 @@
 import Foundation
 import RepositorySync
 
-final class CompletedTrainingTipCache {
+final class CompletedTrainingTipCache: Sendable {
     
     let persistence: any Persistence<CompletedTrainingTipDataModel, CompletedTrainingTipDataModel>
     
