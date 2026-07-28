@@ -68,24 +68,22 @@ final class GetArticlesUseCase {
             )
         }
         
-        guard !articles.isEmpty else {
+        if articles.isEmpty, let error = try await getFirstArticleError() {
             
-            let title: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.downloadError.key)
-            let downloadActionTitle: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.articlesRetryDownloadButtonTitle.key)
+            let title: String = localizationServices.stringForLocaleElseEnglish(
+                localeIdentifier: appLanguage,
+                key: LocalizableStringKeys.downloadError.key
+            )
             
-            let aemDataObjects: [ArticleAemData] = try await articlesRepsoitory.getArticleAemDataObjects()
-            let error: Error? = aemDataObjects.compactMap { $0.error }.first
-            let message: String
+            let downloadActionTitle: String = localizationServices.stringForLocaleElseEnglish(
+                localeIdentifier: appLanguage,
+                key: LocalizableStringKeys.articlesRetryDownloadButtonTitle.key
+            )
             
-            if let error = error {
-                message = getDownloadArticlesErrorMessage.getErrorMessage(appLanguage: appLanguage, error: error)
-            }
-            else {
-                message = localizationServices.stringForLocaleElseEnglish(
-                    localeIdentifier: appLanguage,
-                    key: LocalizableStringKeys.downloadError.key
-                )
-            }
+            let message: String = getDownloadArticlesErrorMessage.getErrorMessage(
+                appLanguage: appLanguage,
+                error: error
+            )
             
             return ArticlesDomainModel(
                 articleListItems: [],
@@ -101,5 +99,13 @@ final class GetArticlesUseCase {
             articleListItems: articles,
             error: nil
         )
+    }
+    
+    private func getFirstArticleError() async throws -> Error? {
+        
+        let aemDataObjects: [ArticleAemData] = try await articlesRepsoitory.getArticleAemDataObjects()
+        let error: Error? = aemDataObjects.compactMap { $0.error }.first
+        
+        return error
     }
 }
