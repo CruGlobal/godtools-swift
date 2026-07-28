@@ -75,10 +75,6 @@ final class ResourcesRepository {
         return try await cache.persistence.getDataModels(getOption: .objectsByIds(ids: Set(ids)))
     }
     
-    func getCachedResourcesByFilter(filter: ResourcesFilter) throws -> [ResourceDataModel] {
-        return try cache.getResourcesByFilter(filter: filter)
-    }
-    
     func getFeaturedLessons(sorted: Bool = false) async throws -> [ResourceDataModel] {
         return try await self.cache.getFeaturedLessons(sorted: sorted)
     }
@@ -109,6 +105,22 @@ final class ResourcesRepository {
         catch _ {
             return Array()
         }
+    }
+    
+    func getResources(
+        languageCode: BCP47LanguageIdentifier,
+        resourceTypes: [ResourceType]
+    ) throws -> [ResourceDataModel] {
+        
+        return try cache.getResources(languageCode: languageCode, resourceTypes: resourceTypes)
+    }
+    
+    func getNumberOfResourcesAvailable(
+        languageCode: BCP47LanguageIdentifier,
+        resourceTypes: [ResourceType]
+    ) throws -> Int {
+        
+        return try cache.getNumberOfResourcesAvailable(languageCode: languageCode, resourceTypes: resourceTypes)
     }
 }
 

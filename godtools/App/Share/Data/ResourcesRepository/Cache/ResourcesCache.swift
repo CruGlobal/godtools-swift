@@ -428,13 +428,44 @@ extension ResourcesCache {
         
         return Array()
     }
+    
+    func getResources(
+        languageCode: BCP47LanguageIdentifier,
+        resourceTypes: [ResourceType]
+    ) throws -> [ResourceDataModel] {
+        
+        // TODO: Create SwiftData implementation. ~Levi
+        
+        let filter = ResourcesFilter(
+            languageModelCode: languageCode,
+            resourceTypes: resourceTypes
+        )
+        
+        return try getResourcesByFilter(filter: filter)
+    }
+    
+    func getNumberOfResourcesAvailable(
+        languageCode: BCP47LanguageIdentifier,
+        resourceTypes: [ResourceType]
+    ) throws -> Int {
+        
+        // TODO: Create SwiftData implementation. ~Levi
+        
+        let filter = ResourcesFilter(
+            category: nil,
+            languageModelCode: languageCode,
+            resourceTypes: ResourceType.toolTypes
+        )
+        
+        return try getResourcesByFilter(filter: filter).count
+    }
 }
 
 // MARK: - Resources By Filter
 
 extension ResourcesCache {
     
-    func getResourcesByFilter(filter: ResourcesFilter) throws -> [ResourceDataModel] {
+    private func getResourcesByFilter(filter: ResourcesFilter) throws -> [ResourceDataModel] {
         
         guard let realmPersistence = getRealmPersistence() else {
             return Array()
