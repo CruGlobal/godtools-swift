@@ -202,11 +202,12 @@ extension GetAppLanguagesListUseCaseTests {
             persistence: persistence,
             appLanguages: appLanguages
         )
+        
+        try await appLanguagesSync.sync()
 
         let appLanguagesRepository = AppLanguagesRepository(
             api: AppLanguagesApi(),
-            cache: AppLanguagesCache(persistence: persistence),
-            sync: appLanguagesSync
+            cache: AppLanguagesCache(persistence: persistence)
         )
 
         let getTranslatedLanguageName = GetTranslatedLanguageName(

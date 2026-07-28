@@ -18,6 +18,10 @@ final class AppLanguageDataLayerDependencies {
         self.coreDataLayer = coreDataLayer
     }
     
+    private func getAppLanguagesApi() -> AppLanguagesApi {
+        return AppLanguagesApi()
+    }
+    
     func getAppLanguagesPersistence() -> any Persistence<AppLanguageDataModel, AppLanguageCodable> {
         
         let persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable>
@@ -39,12 +43,17 @@ final class AppLanguageDataLayerDependencies {
         
         return persistence
     }
-        
-    func getAppLanguagesRepository(sync: AppLanguagesRepositorySyncInterface? = nil) -> AppLanguagesRepository {
-        
-        let persistence: any Persistence<AppLanguageDataModel, AppLanguageCodable> = getAppLanguagesPersistence()
-        
-        let api = AppLanguagesApi()
+    func getAppLanguagesRepository() -> AppLanguagesRepository {
+                        
+        return AppLanguagesRepository(
+            api: getAppLanguagesApi(),
+            cache: AppLanguagesCache(
+                persistence: getAppLanguagesPersistence()
+            )
+        )
+    }
+    
+    func getAppLanguagesRepositorySync() -> AppLanguagesRepositorySyncInterface {
         
         let syncInvalidator = SyncInvalidator(
             id: String(describing: AppLanguagesRepositorySync.self),
@@ -52,18 +61,10 @@ final class AppLanguageDataLayerDependencies {
             persistence: coreDataLayer.getUserDefaultsCache()
         )
         
-        let sync: AppLanguagesRepositorySyncInterface = sync ?? AppLanguagesRepositorySync(
-            api: AppLanguagesApi(),
-            persistence: persistence,
+        return AppLanguagesRepositorySync(
+            api: getAppLanguagesApi(),
+            persistence: getAppLanguagesPersistence(),
             syncInvalidator: syncInvalidator
-        )
-        
-        return AppLanguagesRepository(
-            api: api,
-            cache: AppLanguagesCache(
-                persistence: persistence
-            ),
-            sync: sync
         )
     }
     
