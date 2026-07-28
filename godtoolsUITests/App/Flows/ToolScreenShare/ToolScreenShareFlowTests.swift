@@ -14,7 +14,7 @@ final class ToolScreenShareFlowTests: BaseFlowTests {
     private func launchAppToToolScreenShare() {
         
         super.launchApp(
-            flowDeepLinkUrl: "godtools://org.cru.godtools/tool/tract/teachmetoshare/en",
+            flowDeepLinkUrl: DeepLinkUrl.getTract(abbreviation: "teachmetoshare"),
             checkInitialScreenExists: .tract
         )
         

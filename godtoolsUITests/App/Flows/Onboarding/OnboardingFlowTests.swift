@@ -16,7 +16,7 @@ final class OnboardingFlowTests: BaseFlowTests {
         let languageCode: String = appLanguageCode ?? LanguageCodeDomainModel.english.value
                 
         super.launchApp(
-            flowDeepLinkUrl: "godtools://org.cru.godtools/ui_tests/onboarding" + "?" + "appLanguageCode=" + languageCode,
+            flowDeepLinkUrl: DeepLinkUrl.getOnboarding(appLanguageCode: languageCode),
             checkInitialScreenExists: .onboardingTutorial
         )
     }
