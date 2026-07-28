@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol SyncInvalidatorInterface {
+public protocol SyncInvalidatorInterface: Sendable {
     
     var shouldSync: Bool { get }
     

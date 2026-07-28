@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol SyncInvalidatorPersistenceInterface {
+public protocol SyncInvalidatorPersistenceInterface: Sendable {
     
     func getDate(id: String) -> Date?
     func saveDate(id: String, date: Date?)
