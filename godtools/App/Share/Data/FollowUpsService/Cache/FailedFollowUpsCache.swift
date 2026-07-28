@@ -9,7 +9,7 @@
 import Foundation
 import RepositorySync
 
-final class FailedFollowUpsCache {
+final class FailedFollowUpsCache: Sendable {
     
     let persistence: any Persistence<FollowUpDataModel, FollowUpDataModel>
     

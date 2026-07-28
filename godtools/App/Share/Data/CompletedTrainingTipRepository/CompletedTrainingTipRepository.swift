@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class CompletedTrainingTipRepository {
+final class CompletedTrainingTipRepository: Sendable {
     
     private let cache: CompletedTrainingTipCache
     

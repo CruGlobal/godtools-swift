@@ -9,7 +9,7 @@
 import Foundation
 import RequestOperation
 
-final class FollowUpsService {
+final class FollowUpsService: Sendable {
     
     private let api: FollowUpsApiInterface
     private let cache: FailedFollowUpsCache

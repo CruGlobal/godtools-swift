@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol InfoPlistInterface {
+protocol InfoPlistInterface: Sendable {
 
     var displayName: String? { get }
     var appVersion: String? { get }

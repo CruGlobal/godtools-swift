@@ -9,7 +9,7 @@
 import Foundation
 import RequestOperation
 
-final class EmailSignUpService {
+final class EmailSignUpService: Sendable {
     
     private let api: EmailSignUpApiInterface
     private let cache: EmailSignUpsCache
