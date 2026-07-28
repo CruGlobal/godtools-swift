@@ -130,6 +130,35 @@ extension ResourcesCache {
         }
     }
     
+    @available(iOS 17.4, *)
+    private func getResourcesByLanguageCodePredicate(languageCode: BCP47LanguageIdentifier, resourceTypes: [ResourceType]) -> Predicate<SwiftResource> {
+
+        let filterByResourceTypes: [String] = resourceTypes.map { $0.rawValue }
+
+        let containsLanguagePredicate = #Predicate<SwiftResource> { resource in
+
+            resource.languages.contains { language in
+                language.code == languageCode
+            }
+        }
+
+        let isResourceTypePredicate = #Predicate<SwiftResource> { resource in
+
+            if !filterByResourceTypes.isEmpty {
+                return filterByResourceTypes.contains(resource.resourceType)
+            }
+            else {
+                return true
+            }
+        }
+
+        return #Predicate<SwiftResource> { object in
+            notHiddenPredicate.evaluate(object) &&
+            isResourceTypePredicate.evaluate(object) &&
+            containsLanguagePredicate.evaluate(object)
+        }
+    }
+
     private func getLessonsNSPredicate(filterByLanguageId: String?) -> NSPredicate {
         
         var filterByAttributes: [NSPredicate] = Array()
@@ -429,35 +458,67 @@ extension ResourcesCache {
         return Array()
     }
     
+    @available(iOS 17.4, *)
+    private func getResourcesByLanguageCodeSwiftQuery(languageCode: BCP47LanguageIdentifier, resourceTypes: [ResourceType]) -> SwiftDatabaseQuery<SwiftResource> {
+        return SwiftDatabaseQuery.filter(
+            filter: getResourcesByLanguageCodePredicate(languageCode: languageCode, resourceTypes: resourceTypes)
+        )
+    }
+
     func getResources(
         languageCode: BCP47LanguageIdentifier,
         resourceTypes: [ResourceType]
     ) throws -> [ResourceDataModel] {
-        
-        // TODO: Create SwiftData implementation. ~Levi
-        
-        let filter = ResourcesFilter(
-            languageModelCode: languageCode,
-            resourceTypes: resourceTypes
-        )
-        
-        return try getResourcesByFilter(filter: filter)
+
+        if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
+
+            let query = getResourcesByLanguageCodeSwiftQuery(languageCode: languageCode, resourceTypes: resourceTypes)
+
+            let resources: [SwiftResource] = try swiftPersistence.database.read.objects(
+                context: swiftPersistence.database.openContext(),
+                query: query
+            )
+
+            return resources
+                .map {
+                    $0.toModel()
+                }
+        }
+        else {
+                
+            let filter = ResourcesFilter(
+                languageModelCode: languageCode,
+                resourceTypes: resourceTypes
+            )
+
+            return try getResourcesByFilter(filter: filter)
+        }
     }
-    
+
     func getNumberOfResourcesAvailable(
         languageCode: BCP47LanguageIdentifier,
         resourceTypes: [ResourceType]
     ) throws -> Int {
-        
-        // TODO: Create SwiftData implementation. ~Levi
-        
-        let filter = ResourcesFilter(
-            category: nil,
-            languageModelCode: languageCode,
-            resourceTypes: ResourceType.toolTypes
-        )
-        
-        return try getResourcesByFilter(filter: filter).count
+
+        if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
+
+            let query = getResourcesByLanguageCodeSwiftQuery(languageCode: languageCode, resourceTypes: resourceTypes)
+
+            return try swiftPersistence.database.read.objectCount(
+                context: swiftPersistence.database.openContext(),
+                query: query
+            )
+        }
+        else {
+            
+            let filter = ResourcesFilter(
+                category: nil,
+                languageModelCode: languageCode,
+                resourceTypes: resourceTypes
+            )
+
+            return try getResourcesByFilter(filter: filter).count
+        }
     }
 }
 
