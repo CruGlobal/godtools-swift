@@ -14,7 +14,7 @@ class TutorialFlowTests: BaseFlowTests {
     private func launchApp() {
 
         super.launchApp(
-            flowDeepLinkUrl: "godtools://org.cru.godtools/ui_tests/tutorial",
+            flowDeepLinkUrl: DeepLinkUrl.getTutorial(),
             checkInitialScreenExists: .tutorial
         )
     }

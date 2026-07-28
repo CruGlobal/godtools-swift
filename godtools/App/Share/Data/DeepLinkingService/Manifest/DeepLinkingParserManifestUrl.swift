@@ -8,7 +8,7 @@
 
 import Foundation
 
-class DeepLinkingParserManifestUrl: DeepLinkingParserManifestInterface {
+final class DeepLinkingParserManifestUrl: DeepLinkingParserManifestInterface {
     
     let scheme: String
     let hosts: [String]

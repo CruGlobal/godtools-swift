@@ -58,6 +58,51 @@ struct ResourcesCacheTests {
         let expectedLessonIds: [String]
     }
 
+    struct ResourcesByLanguageCodeArgument {
+
+        let languageCode: LanguageCodeDomainModel
+        let resourceTypes: [ResourceType]
+        let expectedResourceIds: [String]
+    }
+
+    private static let resourcesByLanguageCodeArguments: [ResourcesByLanguageCodeArgument] = [
+        ResourcesByLanguageCodeArgument(
+            languageCode: .english,
+            resourceTypes: ResourceType.toolTypes,
+            expectedResourceIds: ["article_0", "tract_0", "tract_1", "tract_2", "variant_0", "variant_1"]
+        ),
+        ResourcesByLanguageCodeArgument(
+            languageCode: .spanish,
+            resourceTypes: ResourceType.toolTypes,
+            expectedResourceIds: ["tract_0"]
+        ),
+        ResourcesByLanguageCodeArgument(
+            languageCode: .vietnamese,
+            resourceTypes: ResourceType.toolTypes,
+            expectedResourceIds: ["tract_2"]
+        ),
+        ResourcesByLanguageCodeArgument(
+            languageCode: .russian,
+            resourceTypes: ResourceType.toolTypes,
+            expectedResourceIds: []
+        ),
+        ResourcesByLanguageCodeArgument(
+            languageCode: .english,
+            resourceTypes: [.lesson],
+            expectedResourceIds: ["lesson_0", "lesson_1", "lesson_3"]
+        ),
+        ResourcesByLanguageCodeArgument(
+            languageCode: .english,
+            resourceTypes: [.metaTool],
+            expectedResourceIds: [Self.metatoolId]
+        ),
+        ResourcesByLanguageCodeArgument(
+            languageCode: .vietnamese,
+            resourceTypes: [],
+            expectedResourceIds: ["lesson_4", "tract_2"]
+        )
+    ]
+
     // MARK: - Resources
 
     @available(iOS 17.4, *)
@@ -128,6 +173,36 @@ struct ResourcesCacheTests {
         let variants: [ResourceDataModel] = try await cache.getResourceVariants(resourceId: "tract_0")
 
         #expect(variants.isEmpty)
+    }
+
+    // MARK: - Resources By Language Code
+
+    @available(iOS 17.4, *)
+    @Test(arguments: ResourcesCacheTests.resourcesByLanguageCodeArguments)
+    func getResourcesByLanguageCodeAndResourceTypes(argument: ResourcesByLanguageCodeArgument) async throws {
+
+        let cache = try getCache()
+
+        let resources: [ResourceDataModel] = try cache.getResources(
+            languageCode: argument.languageCode.rawValue,
+            resourceTypes: argument.resourceTypes
+        )
+
+        #expect(resources.map { $0.id }.sorted() == argument.expectedResourceIds)
+    }
+
+    @available(iOS 17.4, *)
+    @Test(arguments: ResourcesCacheTests.resourcesByLanguageCodeArguments)
+    func getNumberOfResourcesAvailableByLanguageCodeAndResourceTypes(argument: ResourcesByLanguageCodeArgument) async throws {
+
+        let cache = try getCache()
+
+        let numberOfResourcesAvailable: Int = try cache.getNumberOfResourcesAvailable(
+            languageCode: argument.languageCode.rawValue,
+            resourceTypes: argument.resourceTypes
+        )
+
+        #expect(numberOfResourcesAvailable == argument.expectedResourceIds.count)
     }
 
     // MARK: - Lessons

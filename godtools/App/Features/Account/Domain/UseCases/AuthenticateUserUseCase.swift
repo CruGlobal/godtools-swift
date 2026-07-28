@@ -26,7 +26,11 @@ final class AuthenticateUserUseCase {
         self.firebaseAnalytics = firebaseAnalytics
     }
     
-    @MainActor func execute(authType: AuthenticateUserAuthTypeDomainModel, authPlatform: AuthenticateUserAuthPlatformDomainModel, authPolicy: AuthenticateUserAuthPolicyDomainModel) async throws {
+    @MainActor func execute(
+        authType: AuthenticateUserAuthTypeDomainModel,
+        authPlatform: AuthenticateUserAuthPlatformDomainModel,
+        authPolicy: AuthenticateUserAuthPolicyDomainModel
+    ) async throws {
         
         _ = try await authenticateByAuthType(
             authType: authType,
@@ -42,7 +46,11 @@ final class AuthenticateUserUseCase {
         }
     }
     
-    @MainActor private func authenticateByAuthType(authType: AuthenticateUserAuthTypeDomainModel, authPlatform: AuthenticateUserAuthPlatformDomainModel, authPolicy: AuthenticateUserAuthPolicyDomainModel) async throws -> MobileContentAuthTokenDataModel {
+    @MainActor private func authenticateByAuthType(
+        authType: AuthenticateUserAuthTypeDomainModel,
+        authPlatform: AuthenticateUserAuthPlatformDomainModel,
+        authPolicy: AuthenticateUserAuthPolicyDomainModel
+    ) async throws -> MobileContentAuthTokenDataModel {
                                 
         switch authPolicy {
             
@@ -60,7 +68,11 @@ final class AuthenticateUserUseCase {
         }
     }
     
-    @MainActor private func signIn(fromViewController: UIViewController, authType: AuthenticateUserAuthTypeDomainModel, authPlatform: AuthenticateUserAuthPlatformDomainModel) async throws -> MobileContentAuthTokenDataModel {
+    @MainActor private func signIn(
+        fromViewController: UIViewController,
+        authType: AuthenticateUserAuthTypeDomainModel,
+        authPlatform: AuthenticateUserAuthPlatformDomainModel
+    ) async throws -> MobileContentAuthTokenDataModel {
                 
         let result: Result<MobileContentAuthTokenDataModel, MobileContentApiError> = try await self.userAuthentication.signIn(
             provider: authPlatform.toProvider(),
@@ -107,7 +119,10 @@ final class AuthenticateUserUseCase {
         }
     }
     
-    private func setAnalyticsUserProperties(authUser: AuthUserDomainModel, authPlatform: AuthenticateUserAuthPlatformDomainModel) {
+    private func setAnalyticsUserProperties(
+        authUser: AuthUserDomainModel,
+        authPlatform: AuthenticateUserAuthPlatformDomainModel
+    ) {
         
         let loginProvider: String
         

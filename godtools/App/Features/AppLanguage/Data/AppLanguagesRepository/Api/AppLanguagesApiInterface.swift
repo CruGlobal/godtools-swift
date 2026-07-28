@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol AppLanguagesApiInterface {
+protocol AppLanguagesApiInterface: Sendable {
     
     func getAppLanguages() async throws -> [AppLanguageCodable]
 }

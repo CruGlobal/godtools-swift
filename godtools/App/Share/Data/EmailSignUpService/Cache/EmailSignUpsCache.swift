@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import RepositorySync
 
-final class EmailSignUpsCache {
+final class EmailSignUpsCache: Sendable {
     
     let persistence: any Persistence<EmailSignUpDataModel, EmailSignUpDataModel>
     

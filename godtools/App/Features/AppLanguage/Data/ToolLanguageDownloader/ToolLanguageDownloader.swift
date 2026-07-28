@@ -28,17 +28,16 @@ final class ToolLanguageDownloader {
         self.toolDownloader = toolDownloader
         self.downloadedLanguagesRepository = downloadedLanguagesRepository
     }
-
+    
     func getToolsToDownloadForLanguage(languageId: String) throws -> [DownloadToolData] {
         
         guard let language = languagesRepository.getLanguageById(id: languageId) else {
             return Array()
         }
         
-        let includeToolTypes: [ResourceType] = ResourceType.toolTypes + [.lesson]
-        
-        let tools: [ResourceDataModel] = try resourcesRepository.getCachedResourcesByFilter(
-            filter: ResourcesFilter(category: nil, languageModelCode: language.code, resourceTypes: includeToolTypes)
+        let tools: [ResourceDataModel] = try resourcesRepository.getResources(
+            languageCode: language.code,
+            resourceTypes: ResourceType.toolTypes + [.lesson]
         )
         
         return tools.map{

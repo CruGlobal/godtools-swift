@@ -14,7 +14,7 @@ final class MenuFlowTests: BaseFlowTests {
     private func launchAppToMenu() {
         
         super.launchApp(
-            flowDeepLinkUrl: "godtools://org.cru.godtools/ui_tests/menu",
+            flowDeepLinkUrl: DeepLinkUrl.getMenu(),
             checkInitialScreenExists: .menu
         )
     }

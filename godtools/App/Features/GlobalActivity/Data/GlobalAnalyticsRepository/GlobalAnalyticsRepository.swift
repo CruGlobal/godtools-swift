@@ -10,64 +10,38 @@ import Foundation
 import Combine
 import RequestOperation
 
-final class GlobalAnalyticsRepository {
+final class GlobalAnalyticsRepository: Sendable {
     
     static let sharedGlobalAnalyticsId: String = "1"
         
     private let api: GlobalAnalyticsApiInterface
     private let cache: GlobalAnalyticsCache
-    
-    private var cancellables: Set<AnyCancellable> = Set()
-    
-    init(api: MobileContentGlobalAnalyticsApi, cache: GlobalAnalyticsCache) {
+        
+    init(api: GlobalAnalyticsApiInterface, cache: GlobalAnalyticsCache) {
         
         self.api = api
         self.cache = cache
     }
     
-    @MainActor func getGlobalAnalyticsChangedPublisher(requestPriority: RequestPriority) -> AnyPublisher<GlobalAnalyticsDataModel?, Error> {
-                
-        AnyPublisher() {
-            return try await self.syncGlobalAnalyticsFromRemote(
-                requestPriority: requestPriority
-            )
-        }
-        .sink { value in
-            
-        } receiveValue: { value in
-                            
-        }
-        .store(in: &cancellables)
-        
+    @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Error> {
+                        
         return cache
             .persistence
             .observeCollectionChangesPublisher()
-            .tryMap {
-                return try self.cache
-                    .persistence
-                    .getDataModel(
-                        id: Self.sharedGlobalAnalyticsId
-                    )
-            }
             .eraseToAnyPublisher()
     }
     
-    private func syncGlobalAnalyticsFromRemote(requestPriority: RequestPriority) async throws -> GlobalAnalyticsDataModel? {
+    func getGlobalAnalytics() -> GlobalAnalyticsDataModel? {
         
-        let globalAnalyticsCodable: MobileContentGlobalAnalyticsCodable? = try await api.getGlobalAnalytics(requestPriority: requestPriority)
-        
-        guard let globalAnalyticsCodable = globalAnalyticsCodable else {
+        do {
+            return try self.cache
+                .persistence
+                .getDataModel(
+                    id: Self.sharedGlobalAnalyticsId
+                )
+        }
+        catch _ {
             return nil
         }
-        
-        let sharedGlobalAnalytics = globalAnalyticsCodable.copy(id: Self.sharedGlobalAnalyticsId)
-        
-        _ = try await cache.persistence.writeObjects(
-            externalObjects: [sharedGlobalAnalytics],
-            writeOption: nil,
-            getOption: nil
-        )
-        
-        return sharedGlobalAnalytics.toModel()
     }
 }

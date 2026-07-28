@@ -9,7 +9,7 @@
 import Foundation
 import FirebaseCore
 
-final class FirebaseConfiguration {
+final class FirebaseConfiguration: Sendable {
     
     private let config: AppConfigInterface
         

@@ -9,7 +9,7 @@
 import Foundation
 import RequestOperation
 
-final class ResourceViewsService {
+final class ResourceViewsService: Sendable {
     
     private let api: ResourceViewsApiInterface
     private let cache: FailedResourceViewsCache

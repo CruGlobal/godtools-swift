@@ -56,13 +56,13 @@ struct StoreInitialAppLanguageUseCaseTests {
         
         let appLanguagesSync: AppLanguagesRepositorySyncInterface = try await getAppLanguagesRepositorySync(testsDiContainer: testsDiContainer, appLanguages: appLanguages)
         
+        try await appLanguagesSync.sync()
+        
         let userAppLanguageRepository = testsDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository()
         
         try await userAppLanguageRepository.deleteLanguage()
                         
-        let appLanguagesRepository: AppLanguagesRepository = testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesRepository(
-            sync: appLanguagesSync
-        )
+        let appLanguagesRepository: AppLanguagesRepository = testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesRepository()
         
         let storeInitialAppLanguage = StoreInitialAppLanguageUseCase(
             deviceSystemLanguage: FakeDeviceSystemLanguage(deviceLocale: Locale(identifier: argument.deviceLanguage.rawValue)),
@@ -134,11 +134,11 @@ struct StoreInitialAppLanguageUseCaseTests {
         
         let appLanguagesSync: AppLanguagesRepositorySyncInterface = try await getAppLanguagesRepositorySync(testsDiContainer: testsDiContainer, appLanguages: appLanguages)
         
+        try await appLanguagesSync.sync()
+        
         let userAppLanguageRepository = testsDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository()
                                 
-        let appLanguagesRepository: AppLanguagesRepository = testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesRepository(
-            sync: appLanguagesSync
-        )
+        let appLanguagesRepository: AppLanguagesRepository = testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesRepository()
         
         let storeInitialAppLanguage = StoreInitialAppLanguageUseCase(
             deviceSystemLanguage: FakeDeviceSystemLanguage(deviceLocale: Locale(identifier: argument.deviceLanguage.rawValue)),
@@ -209,13 +209,13 @@ struct StoreInitialAppLanguageUseCaseTests {
         
         let appLanguagesSync: AppLanguagesRepositorySyncInterface = try await getAppLanguagesRepositorySync(testsDiContainer: testsDiContainer, appLanguages: appLanguages)
         
+        try await appLanguagesSync.sync()
+        
         let userAppLanguageRepository = testsDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository()
         
         try await userAppLanguageRepository.deleteLanguage()
                                 
-        let appLanguagesRepository: AppLanguagesRepository = testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesRepository(
-            sync: appLanguagesSync
-        )
+        let appLanguagesRepository: AppLanguagesRepository = testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesRepository()
         
         let storeInitialAppLanguage = StoreInitialAppLanguageUseCase(
             deviceSystemLanguage: FakeDeviceSystemLanguage(deviceLocale: Locale(identifier: argument.deviceLanguage.rawValue)),

@@ -325,6 +325,7 @@ extension AppFlow {
     
     private func loadInitialData() {
         
+        let appLanguagesRepositorySync: AppLanguagesRepositorySyncInterface = appDiContainer.feature.appLanguage.dataLayer.getAppLanguagesRepositorySync()
         let resourcesRepository: ResourcesRepository = appDiContainer.core.dataLayer.getResourcesRepository()
         let toolLanguageDownloader: ToolLanguageDownloader = appDiContainer.feature.appLanguage.dataLayer.getToolLanguageDownloader()
         let followUpsService: FollowUpsService = appDiContainer.core.dataLayer.getFollowUpsService()
@@ -332,6 +333,8 @@ extension AppFlow {
         let remoteConfigRepository: RemoteConfigRepository = appDiContainer.core.dataLayer.getRemoteConfigRepository()
         
         Task {
+            
+            try await appLanguagesRepositorySync.sync()
             
             _ = try await resourcesRepository
                 .syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments(

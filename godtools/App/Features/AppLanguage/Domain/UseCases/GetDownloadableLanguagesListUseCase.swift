@@ -54,14 +54,14 @@ final class GetDownloadableLanguagesListUseCase {
         .eraseToAnyPublisher()
     }
     
-    func asyncExecute(appLanguage: AppLanguageDomainModel) async throws -> [DownloadableLanguageListItemDomainModel] {
+    private func asyncExecute(appLanguage: AppLanguageDomainModel) async throws -> [DownloadableLanguageListItemDomainModel] {
         
         let languages: [LanguageDataModel] = try await languagesRepository.getLanguages()
         
         return try languages
             .compactMap { language in
                 
-                let numberToolsAvailable = try getNumberToolsAvailable(for: language.code)
+                let numberToolsAvailable = try getNumberOfToolsAvailable(languageCode: language.code)
                 if numberToolsAvailable == 0 {
                     return nil
                 }
@@ -96,15 +96,12 @@ final class GetDownloadableLanguagesListUseCase {
 
 extension GetDownloadableLanguagesListUseCase {
     
-    private func getNumberToolsAvailable(for languageCode: BCP47LanguageIdentifier) throws -> Int {
+    private func getNumberOfToolsAvailable(languageCode: BCP47LanguageIdentifier) throws -> Int {
         
-        let filter = ResourcesFilter(
-            category: nil,
-            languageModelCode: languageCode,
+        return try resourcesRepository.getNumberOfResourcesAvailable(
+            languageCode: languageCode,
             resourceTypes: ResourceType.toolTypes
         )
-        
-        return try resourcesRepository.getCachedResourcesByFilter(filter: filter).count
     }
     
     private func getToolsAvailableText(numberOfTools: Int, translatedIn translationLanguage: AppLanguageDomainModel) -> String {

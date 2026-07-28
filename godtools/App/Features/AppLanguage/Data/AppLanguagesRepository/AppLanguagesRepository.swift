@@ -10,29 +10,19 @@ import Foundation
 import Combine
 import RepositorySync
 
-final class AppLanguagesRepository {
+final class AppLanguagesRepository: Sendable {
         
     private let api: AppLanguagesApiInterface
     private let cache: AppLanguagesCache
-    private let sync: AppLanguagesRepositorySyncInterface
-    
-    private var syncTask: Task<Void, Error>?
-        
-    init(api: AppLanguagesApiInterface, cache: AppLanguagesCache, sync: AppLanguagesRepositorySyncInterface) {
+            
+    init(api: AppLanguagesApiInterface, cache: AppLanguagesCache) {
         
         self.api = api
         self.cache = cache
-        self.sync = sync
-    }
-    
-    deinit {
-        syncTask?.cancel()
     }
     
     @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Error> {
-        
-        syncAppLanguages()
-        
+                
         return cache
             .persistence
             .observeCollectionChangesPublisher()
@@ -48,9 +38,7 @@ final class AppLanguagesRepository {
     }
     
     func getLanguage(id: String) -> AppLanguageDataModel? {
-        
-        syncAppLanguages()
-        
+                
         do {
             return try cache.persistence.getDataModel(id: id)
         }
@@ -60,23 +48,7 @@ final class AppLanguagesRepository {
     }
     
     func getLanguages() async throws -> [AppLanguageDataModel] {
-        
-        syncAppLanguages()
-        
+                
         return try await cache.persistence.getDataModels(getOption: .allObjects)
-    }
-    
-    private func syncAppLanguages() {
-        
-        guard syncTask == nil else {
-            return
-        }
-        
-        syncTask = Task { [weak self] in
-            
-            try await self?.sync.sync()
-            
-            self?.syncTask = nil
-        }
     }
 }

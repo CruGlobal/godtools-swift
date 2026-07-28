@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class DisableGoogleTagManagerLogging {
+final class DisableGoogleTagManagerLogging: Sendable {
     
     static func hideGTMLogsInfo() {
         let tagClass: AnyClass? = NSClassFromString("TAGLogger")

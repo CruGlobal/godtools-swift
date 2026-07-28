@@ -18,12 +18,14 @@ final class AccountViewModel: ObservableObject {
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase
     private let getUserActivityUseCase: GetUserActivityUseCase
+    private let globalAnalyticsSync: GlobalAnalyticsSync
     private let getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let getAccountStringsUseCase: GetAccountStringsUseCase
     private let getGlobalActivityEnabledUseCase: GetGlobalActivityEnabledUseCase
     private let didPullToRefreshAccountUseCase: DidPullToRefreshAccountUseCase
     
+    private var syncGlobalAnalyticsTask: Task<Void, Error>?
     private var cancellables: Set<AnyCancellable> = Set()
         
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
@@ -42,6 +44,7 @@ final class AccountViewModel: ObservableObject {
         getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
         getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase,
         getUserActivityUseCase: GetUserActivityUseCase,
+        globalAnalyticsSync: GlobalAnalyticsSync,
         getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase,
         trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
         getAccountStringsUseCase: GetAccountStringsUseCase,
@@ -52,6 +55,7 @@ final class AccountViewModel: ObservableObject {
         self.stepEmitter = stepEmitter
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getUserAccountDetailsUseCase = getUserAccountDetailsUseCase
+        self.globalAnalyticsSync = globalAnalyticsSync
         self.getGlobalActivityThisWeekUseCase = getGlobalActivityThisWeekUseCase
         self.getUserActivityUseCase = getUserActivityUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
@@ -130,6 +134,8 @@ final class AccountViewModel: ObservableObject {
     
     deinit {
         print("x deinit: \(type(of: self))")
+        
+        syncGlobalAnalyticsTask?.cancel()
     }
     
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
@@ -148,6 +154,15 @@ final class AccountViewModel: ObservableObject {
             contentLanguage: nil,
             contentLanguageSecondary: nil
         )
+    }
+    
+    private func syncGlobalAnalytics() {
+        
+        syncGlobalAnalyticsTask?.cancel()
+        
+        syncGlobalAnalyticsTask = Task {
+            try await globalAnalyticsSync.sync(requestPriority: .high)
+        }
     }
 }
 

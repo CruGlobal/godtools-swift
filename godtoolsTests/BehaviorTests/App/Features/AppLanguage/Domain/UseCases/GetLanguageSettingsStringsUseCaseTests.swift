@@ -122,12 +122,13 @@ extension GetLanguageSettingsStringsUseCaseTests {
             appLanguages: appLanguages
         )
         
+        try await appLanguagesSync.sync()
+        
         let api = AppLanguagesApi()
         
         let appLanguagesRepository = AppLanguagesRepository(
             api: api,
-            cache: AppLanguagesCache(persistence: persistence),
-            sync: appLanguagesSync
+            cache: AppLanguagesCache(persistence: persistence)
         )
         
         let localizableStrings: [FakeLocalizationServices.LocaleId: [FakeLocalizationServices.StringKey: String]] = [

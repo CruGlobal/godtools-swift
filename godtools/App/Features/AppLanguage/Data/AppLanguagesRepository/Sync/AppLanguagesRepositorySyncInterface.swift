@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-protocol AppLanguagesRepositorySyncInterface {
+protocol AppLanguagesRepositorySyncInterface: Sendable {
     
     func sync() async throws
 }

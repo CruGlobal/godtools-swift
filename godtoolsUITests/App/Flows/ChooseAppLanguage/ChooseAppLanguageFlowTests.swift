@@ -14,7 +14,7 @@ final class ChooseAppLanguageFlowTests: BaseFlowTests {
     private func launchApp() {
         
         super.launchApp(
-            flowDeepLinkUrl: "godtools://org.cru.godtools/ui_tests/settings/app_languages",
+            flowDeepLinkUrl: DeepLinkUrl.getSettingsAppLanguages(),
             checkInitialScreenExists: .appLanguages
         )
     }

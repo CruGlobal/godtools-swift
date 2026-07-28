@@ -18,7 +18,22 @@ final class GlobalActivityDataLayerDependencies {
         self.coreDataLayer = coreDataLayer
     }
     
-    func getGlobalAnalyticsRepository() -> GlobalAnalyticsRepository {
+    private func getGlobalAnalyticsApi() -> GlobalAnalyticsApiInterface {
+        return MobileContentGlobalAnalyticsApi(
+            baseUrl: coreDataLayer.getAppConfig().getMobileContentApiBaseUrl(),
+            urlSessionPriority: coreDataLayer.getSharedUrlSessionPriority(),
+            requestSender: coreDataLayer.getRequestSender()
+        )
+    }
+    
+    private func getGlobalAnalyticsCache() -> GlobalAnalyticsCache {
+        
+        return GlobalAnalyticsCache(
+            persistence: getGlobalAnalyticsPersistence()
+        )
+    }
+    
+    private func getGlobalAnalyticsPersistence() -> any Persistence<GlobalAnalyticsDataModel, MobileContentGlobalAnalyticsCodable> {
         
         let persistence: any Persistence<GlobalAnalyticsDataModel, MobileContentGlobalAnalyticsCodable>
         
@@ -37,15 +52,14 @@ final class GlobalActivityDataLayerDependencies {
             )
         }
         
-        return GlobalAnalyticsRepository(
-            api: MobileContentGlobalAnalyticsApi(
-                baseUrl: coreDataLayer.getAppConfig().getMobileContentApiBaseUrl(),
-                urlSessionPriority: coreDataLayer.getSharedUrlSessionPriority(),
-                requestSender: coreDataLayer.getRequestSender()
-            ),
-            cache: GlobalAnalyticsCache(
-                persistence: persistence
-            )
-        )
+        return persistence
+    }
+    
+    func getGlobalAnalyticsRepository() -> GlobalAnalyticsRepository {
+        return GlobalAnalyticsRepository(api: getGlobalAnalyticsApi(), cache: getGlobalAnalyticsCache())
+    }
+    
+    func getGlobalAnalyticsSync() -> GlobalAnalyticsSync {
+        return GlobalAnalyticsSync(api: getGlobalAnalyticsApi(), cache: getGlobalAnalyticsCache())
     }
 }

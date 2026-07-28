@@ -14,7 +14,7 @@ final class LocalizationSettingsFlowTests: BaseFlowTests {
     private func launchApp() {
         
         super.launchApp(
-            flowDeepLinkUrl: "godtools://org.cru.godtools/ui_tests/settings/localization",
+            flowDeepLinkUrl: DeepLinkUrl.getSettingsLocalization(),
             checkInitialScreenExists: .localizationSettings
         )
     }

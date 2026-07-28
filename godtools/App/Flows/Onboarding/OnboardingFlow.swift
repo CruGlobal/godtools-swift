@@ -75,6 +75,15 @@ final class OnboardingFlow: GTFlow {
                 popFlow()
             
             case .userChoseAppLanguage( _):
+                
+                guard GodToolsApp.showsPersonalization else {
+                    removeAllFlows()
+                    if let tutorialVC = onboardingTutorialViewController {
+                        navigationController.popToViewController(tutorialVC, animated: true)
+                    }
+                    return
+                }
+                
                 pushFlow(
                     flow: LocalizationSettingsFlow(
                         appDiContainer: appDiContainer,
