@@ -13,47 +13,33 @@ import RepositorySync
 
 final class PersonalizedToolsRepository {
     
-    private static var isSyncing: Bool = false
-
     private let api: PersonalizedToolsApiInterface
     private let cache: PersonalizedToolsCache
-    private let syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface
     private let resourcesRepository: ResourcesRepository
-
-    private var syncPersonalizedToolsTask: Task<Void, Error>?
+    private let sync: PersonalizedToolsSync
     
     init(
         api: PersonalizedToolsApiInterface,
         cache: PersonalizedToolsCache,
-        syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface,
-        resourcesRepository: ResourcesRepository
+        resourcesRepository: ResourcesRepository,
+        sync: PersonalizedToolsSync
     ) {
 
         self.api = api
         self.cache = cache
-        self.syncInvalidatorPersistence = syncInvalidatorPersistence
         self.resourcesRepository = resourcesRepository
-    }
-    
-    deinit {
-        syncPersonalizedToolsTask?.cancel()
-    }
-    
-    private func getSyncInvalidator(id: PersonalizedToolsId) -> SyncInvalidator {
-
-        let id: String = "\(String(describing: PersonalizedToolsRepository.self)).syncPersonalizedTools.\(id.value)"
-
-        return SyncInvalidator(
-            id: id,
-            timeInterval: .hours(hour: 8),
-            persistence: syncInvalidatorPersistence
-        )
+        self.sync = sync
     }
 
-    @MainActor func getPersonalizedToolsChanged(requestPriority: RequestPriority, country: String?, language: String, forceNewSync: Bool = false) -> AnyPublisher<Void, Error> {
-
-        syncPersonalizedToolsTask = Task {
-            _ = try await syncPersonalizedTools(
+    @MainActor func getPersonalizedToolsChanged(
+        requestPriority: RequestPriority,
+        country: String?,
+        language: String,
+        forceNewSync: Bool = false
+    ) -> AnyPublisher<Void, Error> {
+        
+        Task {
+            try await sync.syncPersonalizedTools(
                 requestPriority: requestPriority,
                 country: country,
                 language: language,
@@ -119,75 +105,5 @@ extension PersonalizedToolsRepository {
         let resourceTypeRawValues = Set(resourceTypes.map { $0.rawValue })
 
         return resources.filter { resourceTypeRawValues.contains($0.resourceType) }
-    }
-}
-
-// MARK: - Sync
-
-extension PersonalizedToolsRepository {
-
-    func syncPersonalizedTools(requestPriority: RequestPriority, country: String?, language: String, forceNewSync: Bool = false) async throws -> [ResourceDataModel] {
-
-        let type = PersonalizedToolsType(country: country, language: language)
-
-        let personalizedToolId = try PersonalizedToolsId(type: type)
-
-        let syncInvalidator: SyncInvalidator = getSyncInvalidator(
-            id: personalizedToolId
-        )
-
-        let shouldSync: Bool = (syncInvalidator.shouldSync || forceNewSync) && !Self.isSyncing
-
-        guard shouldSync else {
-
-            switch type {
-
-            case .allRanked(let country, let language):
-                return try await getPersistedAllRankedTools(country: country, language: language)
-
-            case .defaultOrder(let language):
-                return try await getPersistedDefaultOrderTools(language: language)
-            }
-        }
-        
-        Self.isSyncing = true
-
-        let resourceCodables: [ResourceCodable]
-
-        switch type {
-
-        case .allRanked(let country, let language):
-            resourceCodables = try await api.getAllRankedResources(
-                requestPriority: requestPriority,
-                country: country,
-                language: language,
-                resourceTypes: nil
-            )
-
-        case .defaultOrder(let language):
-            resourceCodables = try await api.getDefaultOrderResources(
-                requestPriority: requestPriority,
-                language: language,
-                resourceTypes: nil
-            )
-        }
-
-        let personalizedTools = try PersonalizedToolsDataModel.createFromCountry(
-            country: country,
-            language: language,
-            resourceIds: resourceCodables.map { $0.id }
-        )
-
-        _ = try await cache.persistence.writeObjects(
-            externalObjects: [personalizedTools],
-            writeOption: nil,
-            getOption: nil
-        )
-
-        syncInvalidator.didSync()
-        
-        Self.isSyncing = false
-
-        return try await getPersistedResources(personalizedTools: personalizedTools, resourceTypes: nil)
     }
 }

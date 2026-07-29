@@ -22,9 +22,17 @@ final class PersonalizedToolsDataLayerDependencies {
         
         return LocalizationSettingsCountriesRepository()
     }
-
-    func getPersonalizedToolsRepository() -> PersonalizedToolsRepository {
-
+    
+    private func getPersonalizedToolsApi() -> PersonalizedToolsApi {
+        return PersonalizedToolsApi(
+            config: coreDataLayer.getAppConfig(),
+            urlSessionPriority: coreDataLayer.getSharedUrlSessionPriority(),
+            requestSender: coreDataLayer.getRequestSender()
+        )
+    }
+    
+    private func getPersonalizedToolsCache() -> PersonalizedToolsCache {
+     
         let persistence: any Persistence<PersonalizedToolsDataModel, PersonalizedToolsDataModel>
 
         if #available(iOS 17.4, *), let database = coreDataLayer.getSharedSwiftDatabase() {
@@ -42,21 +50,26 @@ final class PersonalizedToolsDataLayerDependencies {
             )
         }
 
-        let api = PersonalizedToolsApi(
-            config: coreDataLayer.getAppConfig(),
-            urlSessionPriority: coreDataLayer.getSharedUrlSessionPriority(),
-            requestSender: coreDataLayer.getRequestSender()
-        )
-
-        let cache = PersonalizedToolsCache(
+        return PersonalizedToolsCache(
             persistence: persistence
         )
+    }
+
+    func getPersonalizedToolsRepository() -> PersonalizedToolsRepository {
 
         return PersonalizedToolsRepository(
-            api: api,
-            cache: cache,
-            syncInvalidatorPersistence: coreDataLayer.getUserDefaultsCache(),
-            resourcesRepository: coreDataLayer.getResourcesRepository()
+            api: getPersonalizedToolsApi(),
+            cache: getPersonalizedToolsCache(),
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            sync: getPersonalizedToolsSync()
+        )
+    }
+    
+    func getPersonalizedToolsSync() -> PersonalizedToolsSync {
+        return PersonalizedToolsSync(
+            api: getPersonalizedToolsApi(),
+            cache: getPersonalizedToolsCache(),
+            syncInvalidatorPersistence: coreDataLayer.getUserDefaultsCache()
         )
     }
 
