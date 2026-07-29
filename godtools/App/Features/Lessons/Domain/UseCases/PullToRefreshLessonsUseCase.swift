@@ -12,17 +12,17 @@ import RequestOperation
 final class PullToRefreshLessonsUseCase {
     
     private let resourcesRepository: ResourcesRepository
-    private let personalizedToolsRepository: PersonalizedToolsRepository
+    private let personalizedToolsSync: PersonalizedToolsSync
     private let getLanguageElseAppLanguage: GetLanguageElseAppLanguage
 
     init(
         resourcesRepository: ResourcesRepository,
-        personalizedToolsRepository: PersonalizedToolsRepository,
+        personalizedToolsSync: PersonalizedToolsSync,
         getLanguageElseAppLanguage: GetLanguageElseAppLanguage
     ) {
 
         self.resourcesRepository = resourcesRepository
-        self.personalizedToolsRepository = personalizedToolsRepository
+        self.personalizedToolsSync = personalizedToolsSync
         self.getLanguageElseAppLanguage = getLanguageElseAppLanguage
     }
     
@@ -58,7 +58,7 @@ final class PullToRefreshLessonsUseCase {
             return nil
         }()
         
-        _ = try await personalizedToolsRepository
+        _ = try await personalizedToolsSync
             .syncPersonalizedTools(
                 requestPriority: requestPriority,
                 country: countryIsoRegionCode,

@@ -44,7 +44,7 @@ final class ToolsDomainLayerDependencies {
     func getPullToRefreshToolsUseCase() -> PullToRefreshToolsUseCase {
         return PullToRefreshToolsUseCase(
             resourcesRepository: core.dataLayer.getResourcesRepository(),
-            personalizedToolsRepository: personalizedToolsDataLayer.getPersonalizedToolsRepository(),
+            personalizedToolsSync: personalizedToolsDataLayer.getPersonalizedToolsSync(),
             getLanguageElseAppLanguage: core.domainLayer.supporting.getLanguageElseAppLanguage()
         )
     }
