@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol RemoteConfigRemoteDatabaseInterface {
+protocol RemoteConfigRemoteDatabaseInterface: Actor {
     
     func syncFromRemoteDatabase() async throws
     func getRemoteConfig() -> RemoteConfigDataModel?

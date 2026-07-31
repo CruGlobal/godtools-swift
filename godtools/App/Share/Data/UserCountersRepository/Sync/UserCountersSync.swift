@@ -40,7 +40,7 @@ final class UserCountersSync {
     
     func sync(requestPriority: RequestPriority, forceSync: Bool = false) async throws {
         
-        let shouldSync: Bool = syncInvalidator.shouldSync || forceSync
+        let shouldSync: Bool = await syncInvalidator.shouldSync || forceSync
         
         guard !isSyncing && shouldSync else {
             return
@@ -60,7 +60,7 @@ final class UserCountersSync {
                 getOption: nil
             )
             
-            syncInvalidator.didSync()
+            await syncInvalidator.didSync()
             
             isSyncing = false
         }

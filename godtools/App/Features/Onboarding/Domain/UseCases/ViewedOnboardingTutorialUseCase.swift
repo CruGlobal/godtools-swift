@@ -17,9 +17,9 @@ final class ViewedOnboardingTutorialUseCase {
         self.onboardingTutorialViewedRepository = onboardingTutorialViewedRepository
     }
     
-    func execute() {
+    func execute() async {
         
-        onboardingTutorialViewedRepository
+        await onboardingTutorialViewedRepository
             .storeOnboardingTutorialViewed(viewed: true)
     }
 }

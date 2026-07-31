@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class LessonSwipeTutorialViewedRepository {
+final class LessonSwipeTutorialViewedRepository: Sendable {
     
     private let cache: LessonSwipeTutorialViewedUserDefaultsCache
     
@@ -17,11 +17,11 @@ final class LessonSwipeTutorialViewedRepository {
         self.cache = cache
     }
     
-    func getLessonSwipeTutorialViewed() -> Bool {
-        return cache.getLessonSwipeTutorialViewed()
+    func getLessonSwipeTutorialViewed() async -> Bool {
+        return await cache.getLessonSwipeTutorialViewed()
     }
     
-    func storeLessonSwipeTutorialViewed(viewed: Bool) {
-        cache.storeLessonSwipeTutorialViewed(viewed: viewed)
+    func storeLessonSwipeTutorialViewed(viewed: Bool) async {
+        await cache.storeLessonSwipeTutorialViewed(viewed: viewed)
     }
 }

@@ -17,9 +17,9 @@ final class GetOnboardingTutorialIsAvailableUseCase: GetOnboardingTutorialIsAvai
         self.getOnboardingTutorialIsAvailable = getOnboardingTutorialIsAvailable
     }
     
-    func execute() -> Bool {
+    func execute() async -> Bool {
         
-        let isAvailable: Bool = getOnboardingTutorialIsAvailable.getIsAvailable()
+        let isAvailable: Bool = await getOnboardingTutorialIsAvailable.getIsAvailable()
         
         return isAvailable
     }

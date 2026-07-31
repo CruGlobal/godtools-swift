@@ -10,11 +10,11 @@ import Foundation
 import GodToolsShared
 import Combine
 
-class TractPageCardsViewModel: MobileContentViewModel, ObservableObject {
+final class TractPageCardsViewModel: MobileContentViewModel, ObservableObject {
     
     private let cards: [TractPage.Card]
     private let cardJumpService: CardJumpService
-    private let isShowingCardJump: Bool
+    private let isLiveShareStreaming: Bool
     
     private var cancellables: Set<AnyCancellable> = Set()
         
@@ -30,32 +30,25 @@ class TractPageCardsViewModel: MobileContentViewModel, ObservableObject {
         self.cards = cards
         self.cardJumpService = cardJumpService
         
-        let isLiveShareStreaming: Bool = (renderedPageContext.userInfo?[TractViewModel.isLiveShareStreamingKey] as? Bool) ?? false
-        
-        isShowingCardJump = !cardJumpService.didShowCardJump && !isLiveShareStreaming
-        
-        super.init(baseModels: cards, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
+        isLiveShareStreaming = (renderedPageContext.userInfo?[TractViewModel.isLiveShareStreamingKey] as? Bool) ?? false
                 
-        showsCardJump = isShowingCardJump
+        super.init(baseModels: cards, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
         
-        if isShowingCardJump {
-         
-            cardJumpService.didSaveCardJumpPublisher
-                .prefix(1)
-                .sink { [weak self] _ in
-                    self?.showsCardJump = false
-                }
-                .store(in: &cancellables)
+        Task {
+            
+            let didShowCardJump: Bool = await cardJumpService.didShowCardJump
+            
+            showsCardJump = !didShowCardJump && !isLiveShareStreaming
         }
     }
     
     private func saveDidShowCardJump() {
         
-        guard isShowingCardJump else {
-            return
-        }
+        showsCardJump = false
         
-        cardJumpService.saveDidShowCardJump()
+        Task {
+            await cardJumpService.saveDidShowCardJump()
+        }
     }
 }
 

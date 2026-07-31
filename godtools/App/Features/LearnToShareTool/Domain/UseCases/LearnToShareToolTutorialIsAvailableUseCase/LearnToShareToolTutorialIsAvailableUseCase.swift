@@ -22,11 +22,14 @@ final class LearnToShareToolTutorialIsAvailableUseCase: LearnToShareToolTutorial
         self.getTranslatedToolName = getTranslatedToolName
     }
     
-    func execute(appLanguage: AppLanguageDomainModel, toolId: String) -> Bool {
+    func execute(appLanguage: AppLanguageDomainModel, toolId: String) async -> Bool {
         
         let toolName: String = getTranslatedToolName.getToolName(toolId: toolId, translateInLanguage: appLanguage)
         
-        let numberOfViews: Int = toolTrainingTipsOnboardingViewsRepository.getNumberOfToolTrainingTipViews(toolId: toolId, toolName: toolName)
+        let numberOfViews: Int = await toolTrainingTipsOnboardingViewsRepository.getNumberOfToolTrainingTipViews(
+            toolId: toolId,
+            toolName: toolName
+        )
         
         let reachedMaximumViews: Bool = numberOfViews >= 3
         

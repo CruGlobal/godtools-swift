@@ -129,7 +129,10 @@ final class AccountViewModel: ObservableObject {
             })
             .store(in: &cancellables)
         
-        globalActivityIsEnabled = getGlobalActivityEnabledUseCase.execute()
+        Task {
+            
+            globalActivityIsEnabled = await getGlobalActivityEnabledUseCase.execute()
+        }
     }
     
     deinit {

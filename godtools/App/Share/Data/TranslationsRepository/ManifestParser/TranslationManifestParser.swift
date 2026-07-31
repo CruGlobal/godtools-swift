@@ -19,8 +19,8 @@ class TranslationManifestParser {
         type: TranslationManifestParserType,
         infoPlist: InfoPlistInterface,
         resourcesFileCache: ResourcesFileCache,
-        remoteConfigRepository: RemoteConfigRepository
-    ) -> TranslationManifestParser {
+        manifestParserFeatures: ManifestParserFeatures
+    ) async -> TranslationManifestParser {
         
         switch type {
                 
@@ -29,10 +29,12 @@ class TranslationManifestParser {
             return TranslationManifestParser(parserConfig: parserConfig, resourcesFileCache: resourcesFileCache)
         
         case .renderer:
+            let features: Set<String> = await manifestParserFeatures.getSupportedFeatures()
+            
             return ParseTranslationManifestForRenderer(
                 infoPlist: infoPlist,
                 resourcesFileCache: resourcesFileCache,
-                remoteConfigRepository: remoteConfigRepository
+                features: features
             )
         }
     }

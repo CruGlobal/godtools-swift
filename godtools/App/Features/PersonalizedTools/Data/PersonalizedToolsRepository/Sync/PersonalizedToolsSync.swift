@@ -53,8 +53,8 @@ final class PersonalizedToolsSync {
         let syncInvalidator: SyncInvalidator = getSyncInvalidator(
             id: personalizedToolId
         )
-
-        let shouldSync: Bool = (syncInvalidator.shouldSync || forceNewSync) && !isSyncing
+        
+        let shouldSync: Bool = (await syncInvalidator.shouldSync || forceNewSync) && !isSyncing
 
         guard shouldSync else {
             return
@@ -90,7 +90,7 @@ final class PersonalizedToolsSync {
 
         _ = try await cache.persistence.writeObjects(externalObjects: [personalizedTools])
 
-        syncInvalidator.didSync()
+        await syncInvalidator.didSync()
         
         isSyncing = false
     }
