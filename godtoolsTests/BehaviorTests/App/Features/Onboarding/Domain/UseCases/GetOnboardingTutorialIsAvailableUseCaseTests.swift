@@ -20,12 +20,12 @@ struct GetOnboardingTutorialIsAvailableUseCaseTests {
     )
     func onboardingTutorialIsAvailableOnFirstAppLaunch() async {
                 
-        let getOnboardingIsAvailable = getOnboardingTutorialIsAvailableUseCase(
+        let getOnboardingIsAvailable = await getOnboardingTutorialIsAvailableUseCase(
             launchCount: 1,
             tutorialViewed: false
         )
         
-        let isAvailable: Bool = getOnboardingIsAvailable.execute()
+        let isAvailable: Bool = await getOnboardingIsAvailable.execute()
         
         #expect(isAvailable == true)
     }
@@ -39,12 +39,12 @@ struct GetOnboardingTutorialIsAvailableUseCaseTests {
     )
     func onboardingTutorialShouldNotBeAvailableOnSecondAppLaunchAndAlreadyViewed() async {
                 
-        let getOnboardingIsAvailable = getOnboardingTutorialIsAvailableUseCase(
+        let getOnboardingIsAvailable = await getOnboardingTutorialIsAvailableUseCase(
             launchCount: 2,
             tutorialViewed: true
         )
         
-        let isAvailable: Bool = getOnboardingIsAvailable.execute()
+        let isAvailable: Bool = await getOnboardingIsAvailable.execute()
         
         #expect(isAvailable == false)
     }
@@ -58,12 +58,12 @@ struct GetOnboardingTutorialIsAvailableUseCaseTests {
     )
     func onboardingTutorialShouldNotBeAvailableOnSecondAppLaunchAndNotViewed() async {
                 
-        let getOnboardingIsAvailable = getOnboardingTutorialIsAvailableUseCase(
+        let getOnboardingIsAvailable = await getOnboardingTutorialIsAvailableUseCase(
             launchCount: 2,
             tutorialViewed: false
         )
         
-        let isAvailable: Bool = getOnboardingIsAvailable.execute()
+        let isAvailable: Bool = await getOnboardingIsAvailable.execute()
         
         #expect(isAvailable == false)
     }
@@ -71,11 +71,11 @@ struct GetOnboardingTutorialIsAvailableUseCaseTests {
 
 extension GetOnboardingTutorialIsAvailableUseCaseTests {
     
-    private func getOnboardingTutorialIsAvailableUseCase(launchCount: Int, tutorialViewed: Bool) -> GetOnboardingTutorialIsAvailableUseCase {
+    private func getOnboardingTutorialIsAvailableUseCase(launchCount: Int, tutorialViewed: Bool) async -> GetOnboardingTutorialIsAvailableUseCase {
         
         let cache = OnboardingTutorialViewedCache(userDefaultsCache: InMemUserDefaultsCache())
         
-        cache.storeOnboardingTutorialViewed(viewed: tutorialViewed)
+        await cache.storeOnboardingTutorialViewed(viewed: tutorialViewed)
         
         let getOnboardingTutorialIsAvailable = GetOnboardingTutorialIsAvailable(
             launchCountRepository: FakeLaunchCountRepository(launchCount: launchCount),
