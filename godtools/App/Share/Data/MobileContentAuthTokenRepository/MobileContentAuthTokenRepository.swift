@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class MobileContentAuthTokenRepository {
+final class MobileContentAuthTokenRepository: Sendable {
     
     private let api: AuthTokenApiInterface
     private let cache: AuthTokenCacheInterface

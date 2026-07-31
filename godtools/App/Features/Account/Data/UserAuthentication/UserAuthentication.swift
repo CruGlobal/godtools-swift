@@ -54,9 +54,9 @@ final class UserAuthentication {
             .eraseToAnyPublisher()
     }
     
-    private func getLastAuthenticatedProvider() -> AuthenticationProviderInterface? {
+    private func getLastAuthenticatedProvider() async -> AuthenticationProviderInterface? {
         
-        guard let lastAuthenticatedProvider = lastAuthenticatedProviderCache.getLastAuthenticatedProvider() else {
+        guard let lastAuthenticatedProvider = await lastAuthenticatedProviderCache.getLastAuthenticatedProvider() else {
             return nil
         }
         
@@ -73,13 +73,13 @@ final class UserAuthentication {
         return provider
     }
     
-    func getLastAuthenticatedProviderType() -> AuthenticationProviderType? {
-        return lastAuthenticatedProviderCache.getLastAuthenticatedProvider()
+    func getLastAuthenticatedProviderType() async -> AuthenticationProviderType? {
+        return await lastAuthenticatedProviderCache.getLastAuthenticatedProvider()
     }
     
     func renewToken() async throws -> Result<MobileContentAuthTokenDataModel, MobileContentApiError> {
         
-        guard let lastAuthenticatedProviderType = getLastAuthenticatedProviderType() else {
+        guard let lastAuthenticatedProviderType = await getLastAuthenticatedProviderType() else {
             let error: Error = NSError.errorWithDescription(description: "Last authenticated provider does not exist.")
             throw error
         }
@@ -113,26 +113,36 @@ final class UserAuthentication {
     
     func getAuthUser() async throws -> AuthUserDomainModel? {
         
-        guard let lastAuthProvider = getLastAuthenticatedProvider() else {
+        guard let lastAuthProvider = await getLastAuthenticatedProvider() else {
             return nil
         }
         
         return try await lastAuthProvider.providerGetAuthUser()
     }
     
-    @MainActor func signIn(provider: AuthenticationProviderType, createUser: Bool, fromViewController: UIViewController) async throws -> Result<MobileContentAuthTokenDataModel, MobileContentApiError> {
+    @MainActor func signIn(
+        provider: AuthenticationProviderType,
+        createUser: Bool, fromViewController: UIViewController
+    ) async throws -> Result<MobileContentAuthTokenDataModel, MobileContentApiError> {
         
         let authProvider: AuthenticationProviderInterface = try getAuthenticationProvider(provider: provider)
         
-        let response: AuthenticationProviderResponse = try await authProvider.providerAuthenticate(presentingViewController: fromViewController)
+        let response: AuthenticationProviderResponse = try await authProvider.providerAuthenticate(
+            presentingViewController: fromViewController
+        )
         
-        let token: MobileContentAuthProviderToken = try getMobileContentAuthProviderToken(authProviderResponse: response)
+        let token: MobileContentAuthProviderToken = try getMobileContentAuthProviderToken(
+            authProviderResponse: response
+        )
         
         do {
             
-            let result = try await mobileContentAuthTokenRepository.fetchRemoteAuthToken(providerToken: token, createUser: createUser)
+            let result = try await mobileContentAuthTokenRepository.fetchRemoteAuthToken(
+                providerToken: token,
+                createUser: createUser
+            )
             
-            lastAuthenticatedProviderCache.store(provider: provider)
+            await lastAuthenticatedProviderCache.store(provider: provider)
             
             return result
         }
@@ -150,7 +160,7 @@ final class UserAuthentication {
             provider.providerSignOut()
         }
         
-        lastAuthenticatedProviderCache.deleteLastAuthenticatedProvider()
+        await lastAuthenticatedProviderCache.deleteLastAuthenticatedProvider()
         
         try await mobileContentAuthTokenRepository.deleteCachedAuthToken()
     }
@@ -181,7 +191,9 @@ final class UserAuthentication {
         return appleAuthProviderResponse
     }
     
-    private func getMobileContentAuthProviderToken(authProviderResponse: AuthenticationProviderResponse) throws -> MobileContentAuthProviderToken {
+    private func getMobileContentAuthProviderToken(
+        authProviderResponse: AuthenticationProviderResponse
+    ) throws -> MobileContentAuthProviderToken {
         
         switch authProviderResponse.providerType {
             
