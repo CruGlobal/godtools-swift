@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class LastAuthenticatedProviderCache {
+final class LastAuthenticatedProviderCache: Sendable {
     
     private static let lastAuthenticatedProviderCacheKey: String = "LastAuthenticatedProviderCache.lastAuthenticatedProviderCacheKey"
     
@@ -19,28 +19,28 @@ final class LastAuthenticatedProviderCache {
         self.userDefaultsCache = userDefaultsCache
     }
 
-    func getLastAuthenticatedProvider() -> AuthenticationProviderType? {
-        
-        guard let rawValue = userDefaultsCache.getValue(key: LastAuthenticatedProviderCache.lastAuthenticatedProviderCacheKey) as? String else {
+    func getLastAuthenticatedProvider() async -> AuthenticationProviderType? {
+
+        guard let rawValue = await userDefaultsCache.getString(key: LastAuthenticatedProviderCache.lastAuthenticatedProviderCacheKey) else {
             return nil
         }
-        
+
         guard let provider = AuthenticationProviderType(rawValue: rawValue) else {
             return nil
         }
-        
+
         return provider
     }
-    
-    func store(provider: AuthenticationProviderType) {
-        
-        userDefaultsCache.cache(value: provider.rawValue, forKey: LastAuthenticatedProviderCache.lastAuthenticatedProviderCacheKey)
-        userDefaultsCache.commitChanges()
+
+    func store(provider: AuthenticationProviderType) async {
+
+        await userDefaultsCache.storeString(value: provider.rawValue, forKey: LastAuthenticatedProviderCache.lastAuthenticatedProviderCacheKey)
+        await userDefaultsCache.commitChanges()
     }
-    
-    func deleteLastAuthenticatedProvider() {
-        
-        userDefaultsCache.cache(value: nil, forKey: LastAuthenticatedProviderCache.lastAuthenticatedProviderCacheKey)
-        userDefaultsCache.commitChanges()
+
+    func deleteLastAuthenticatedProvider() async {
+
+        await userDefaultsCache.storeString(value: nil, forKey: LastAuthenticatedProviderCache.lastAuthenticatedProviderCacheKey)
+        await userDefaultsCache.commitChanges()
     }
 }

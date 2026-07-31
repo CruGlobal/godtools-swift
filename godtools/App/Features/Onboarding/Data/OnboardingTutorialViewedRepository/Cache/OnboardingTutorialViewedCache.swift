@@ -20,16 +20,16 @@ final class OnboardingTutorialViewedCache: Sendable {
     
     func getOnboardingTutorialViewed() async -> Bool {
        
-        guard let viewed = await userDefaultsCache.getValue(key: onboardingTutorialViewedCacheKey) as? Bool else {
+        guard let viewed = await userDefaultsCache.getBool(key: onboardingTutorialViewedCacheKey) else {
             return false
         }
-        
+
         return viewed
     }
-    
+
     func storeOnboardingTutorialViewed(viewed: Bool) async {
-        
-        await userDefaultsCache.cache(value: viewed, forKey: onboardingTutorialViewedCacheKey)
+
+        await userDefaultsCache.storeBool(value: viewed, forKey: onboardingTutorialViewedCacheKey)
         await userDefaultsCache.commitChanges()
     }
 }
