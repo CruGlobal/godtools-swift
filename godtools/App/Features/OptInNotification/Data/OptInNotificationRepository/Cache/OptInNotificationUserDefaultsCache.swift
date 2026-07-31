@@ -8,16 +8,15 @@
 
 import Foundation
 
-final class OptInNotificationUserDefaultsCache {
+final class OptInNotificationUserDefaultsCache: Sendable {
 
     enum Key: String, CaseIterable {
         case lastPrompted = "lastPromptedOptInNotification"
         case promptedCount = "optInNotificationPromptCount"
     }
-    
-    static let dateFormat: String = "MM/dd/yyyy"
 
-    static let dateFormatter: DateFormatter = {
+    private static let dateFormat: String = "MM/dd/yyyy"
+    private static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = OptInNotificationUserDefaultsCache.dateFormat
         return formatter
@@ -30,23 +29,23 @@ final class OptInNotificationUserDefaultsCache {
         self.userDefaultsCache = userDefaultsCache
     }
     
-    func deleteAllData() {
-        
+    func deleteAllData() async {
+
         let allKeys: [Key] = Key.allCases
-        
+
         for key in allKeys {
-            
-            userDefaultsCache.deleteValue(
+
+            await userDefaultsCache.deleteValue(
                 key: key.rawValue
             )
         }
-        
-        userDefaultsCache.commitChanges()
+
+        await userDefaultsCache.commitChanges()
     }
 
-    func getLastPrompted() -> Date? {
-       
-        guard let lastPrompted = userDefaultsCache.getValue(key: Key.lastPrompted.rawValue) as? String else {
+    func getLastPrompted() async -> Date? {
+
+        guard let lastPrompted = await userDefaultsCache.getString(key: Key.lastPrompted.rawValue) else {
             return nil
         }
 
@@ -58,33 +57,33 @@ final class OptInNotificationUserDefaultsCache {
         return lastPromptedDate
     }
 
-    func getPromptCount() -> Int {
-        
-        guard let promptCount = userDefaultsCache.getValue(key: Key.promptedCount.rawValue) as? Int else {
+    func getPromptCount() async -> Int {
+
+        guard let promptCount = await userDefaultsCache.getInt(key: Key.promptedCount.rawValue) else {
             return 0
         }
 
         return promptCount
     }
 
-    func recordPrompt() {
+    func recordPrompt() async {
 
-        let currentPromptCount = getPromptCount()
+        let currentPromptCount = await getPromptCount()
         let updatedPromptCount = currentPromptCount + 1
 
         let todaysDate: Date = Date()
         let stringDate: String = Self.dateFormatter.string(from: todaysDate)
-        
-        userDefaultsCache.cache(
+
+        await userDefaultsCache.storeString(
             value: stringDate,
             forKey: Key.lastPrompted.rawValue
         )
 
-        userDefaultsCache.cache(
+        await userDefaultsCache.storeInt(
             value: updatedPromptCount,
             forKey: Key.promptedCount.rawValue
         )
 
-        userDefaultsCache.commitChanges()
+        await userDefaultsCache.commitChanges()
     }
 }
