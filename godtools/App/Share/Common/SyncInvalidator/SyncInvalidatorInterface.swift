@@ -10,8 +10,8 @@ import Foundation
 
 public protocol SyncInvalidatorInterface: Sendable {
     
-    var shouldSync: Bool { get }
+    var shouldSync: Bool { get async }
     
-    func didSync()
-    func resetSync()
+    func didSync() async
+    func resetSync() async
 }
