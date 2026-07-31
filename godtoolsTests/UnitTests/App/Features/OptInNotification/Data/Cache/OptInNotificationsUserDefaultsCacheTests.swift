@@ -7,10 +7,10 @@
 //
 
 import Foundation
-import XCTest
+import Testing
 @testable import godtools
 
-class OptInNotificationUserDefaultsCacheTests: XCTestCase {
+struct OptInNotificationUserDefaultsCacheTests {
 
     private static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -18,23 +18,20 @@ class OptInNotificationUserDefaultsCacheTests: XCTestCase {
         return formatter
     }()
 
-    private let cache: OptInNotificationUserDefaultsCache = OptInNotificationUserDefaultsCache(userDefaultsCache: SharedUserDefaultsCache())
+    @Test(
+        """
+        Given: The opt in notification prompt has never been recorded.
+        When: A prompt is recorded.
+        Then: The prompt count should be 1 and the last prompted date should be today.
+        """
+    )
+    func firstRecordedPromptStoresPromptCountAndLastPromptedDate() async {
 
-    override func setUp() async throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-        await cache.deleteAllData()
-    }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testFirstRecordPromptValuesAreCorrect() async {
+        let cache: OptInNotificationUserDefaultsCache = getCache()
 
         await cache.recordPrompt()
 
-        let todaysDate: Date = Date()
-        let todaysStringDate: String = Self.dateFormatter.string(from: todaysDate)
+        let todaysStringDate: String = Self.dateFormatter.string(from: Date())
 
         let lastPromptedStringDate: String?
 
@@ -47,36 +44,62 @@ class OptInNotificationUserDefaultsCacheTests: XCTestCase {
 
         let promptCount: Int = await cache.getPromptCount()
 
-        XCTAssertTrue(promptCount == 1)
-        XCTAssertTrue(todaysStringDate == lastPromptedStringDate)
+        #expect(promptCount == 1)
+        #expect(todaysStringDate == lastPromptedStringDate)
     }
 
-    func testSecondRecordPromptCountIsCorrect() async {
+    @Test(
+        """
+        Given: The opt in notification prompt has been recorded once.
+        When: A second prompt is recorded.
+        Then: The prompt count should be 2.
+        """
+    )
+    func secondRecordedPromptIncrementsPromptCount() async {
+
+        let cache: OptInNotificationUserDefaultsCache = getCache()
 
         await cache.recordPrompt()
         await cache.recordPrompt()
 
         let promptCount: Int = await cache.getPromptCount()
 
-        XCTAssertTrue(promptCount == 2)
+        #expect(promptCount == 2)
     }
 
-    func testAllDataIsDeleted() async {
+    @Test(
+        """
+        Given: The opt in notification prompt has been recorded.
+        When: All data is deleted.
+        Then: The prompt count should be 0 and the last prompted date should be nil.
+        """
+    )
+    func deletingAllDataRemovesPromptCountAndLastPromptedDate() async {
+
+        let cache: OptInNotificationUserDefaultsCache = getCache()
 
         await cache.recordPrompt()
 
         let promptCountAfterRecordingPrompt: Int = await cache.getPromptCount()
         let lastPromptedAfterRecordingPrompt: Date? = await cache.getLastPrompted()
 
-        XCTAssertNotNil(promptCountAfterRecordingPrompt)
-        XCTAssertNotNil(lastPromptedAfterRecordingPrompt)
+        #expect(promptCountAfterRecordingPrompt == 1)
+        #expect(lastPromptedAfterRecordingPrompt != nil)
 
         await cache.deleteAllData()
 
         let promptCountAfterDeletingAllData: Int = await cache.getPromptCount()
         let lastPromptedAfterDeletingAllData: Date? = await cache.getLastPrompted()
 
-        XCTAssertTrue(promptCountAfterDeletingAllData == 0)
-        XCTAssertNil(lastPromptedAfterDeletingAllData)
+        #expect(promptCountAfterDeletingAllData == 0)
+        #expect(lastPromptedAfterDeletingAllData == nil)
+    }
+}
+
+extension OptInNotificationUserDefaultsCacheTests {
+
+    private func getCache() -> OptInNotificationUserDefaultsCache {
+
+        return OptInNotificationUserDefaultsCache(userDefaultsCache: InMemUserDefaultsCache())
     }
 }
