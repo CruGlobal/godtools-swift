@@ -27,16 +27,16 @@ final class ShouldPromptForOptInNotificationUseCase {
     
     func execute() async throws -> Bool {
         
-        let onboardingTutorialIsAvailable: Bool = getOnboardingTutorialIsAvailable.getIsAvailable()
+        let onboardingTutorialIsAvailable: Bool = await getOnboardingTutorialIsAvailable.getIsAvailable()
         
-        let promptCount: Int = optInNotificationRepository.getPromptCount()
+        let promptCount: Int = await optInNotificationRepository.getPromptCount()
         let isFirstPromptAttempt: Bool = promptCount == 0
         
-        let lastPrompted: Date = optInNotificationRepository.getLastPrompted() ?? Date.distantPast
+        let lastPrompted: Date = await optInNotificationRepository.getLastPrompted() ?? Date.distantPast
         
-        let remoteTimeDate = optInNotificationRepository.getRemoteTimeInterval()
-        let remotePromptLimit = optInNotificationRepository.getRemotePromptLimit()
-        let remoteFeatureEnabled = optInNotificationRepository.getRemoteFeatureEnabled()
+        let remoteTimeDate = await optInNotificationRepository.getRemoteTimeInterval()
+        let remotePromptLimit = await optInNotificationRepository.getRemotePromptLimit()
+        let remoteFeatureEnabled = await optInNotificationRepository.getRemoteFeatureEnabled()
         
         let notificationStatus: PermissionStatusDomainModel = try await getNotificationStatus.getStatus()
         

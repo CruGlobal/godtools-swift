@@ -52,8 +52,10 @@ final class ArticleManifestAemRepository: ArticleAemRepository {
             timeInterval: .days(day: 5),
             persistence: syncInvalidatorPersistence
         )
+        
+        let shouldSync: Bool = await syncInvalidator.shouldSync
                 
-        guard syncInvalidator.shouldSync || forceFetchFromRemote else {
+        guard shouldSync || forceFetchFromRemote else {
             return ArticleAemDownload.emptyValue
         }
         
@@ -84,7 +86,7 @@ final class ArticleManifestAemRepository: ArticleAemRepository {
         )
         
         if download.errors.isEmpty {
-            syncInvalidator.didSync()
+            await syncInvalidator.didSync()
         }
         
         return download

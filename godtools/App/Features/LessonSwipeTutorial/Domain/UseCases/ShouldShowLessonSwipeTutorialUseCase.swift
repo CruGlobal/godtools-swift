@@ -16,9 +16,9 @@ final class ShouldShowLessonSwipeTutorialUseCase {
         self.lessonSwipeTutorialViewedRepo = lessonSwipeTutorialViewedRepo
     }
     
-    func execute() -> Bool {
+    func execute() async -> Bool {
         
-        let swipeTutorialViewed = lessonSwipeTutorialViewedRepo.getLessonSwipeTutorialViewed()
+        let swipeTutorialViewed = await lessonSwipeTutorialViewedRepo.getLessonSwipeTutorialViewed()
         
         return !swipeTutorialViewed
     }

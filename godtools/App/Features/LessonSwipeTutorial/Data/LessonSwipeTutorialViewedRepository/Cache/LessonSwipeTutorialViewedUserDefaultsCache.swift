@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class LessonSwipeTutorialViewedUserDefaultsCache {
+final class LessonSwipeTutorialViewedUserDefaultsCache: Sendable {
     
     private let userDefaultsCache: UserDefaultsCacheInterface
     private let lessonSwipeTutorialViewedKey: String = "lessonSwipeTutorialViewed"
@@ -17,13 +17,16 @@ final class LessonSwipeTutorialViewedUserDefaultsCache {
         self.userDefaultsCache = userDefaultsCache
     }
     
-    func getLessonSwipeTutorialViewed() -> Bool {
-        return userDefaultsCache.getValue(key: lessonSwipeTutorialViewedKey) as? Bool ?? false
+    func getLessonSwipeTutorialViewed() async -> Bool {
+
+        let viewed: Bool? = await userDefaultsCache.getBool(key: lessonSwipeTutorialViewedKey)
+
+        return viewed ?? false
     }
-    
-    func storeLessonSwipeTutorialViewed(viewed: Bool) {
-        
-        userDefaultsCache.cache(value: viewed, forKey: lessonSwipeTutorialViewedKey)
-        userDefaultsCache.commitChanges()
+
+    func storeLessonSwipeTutorialViewed(viewed: Bool) async {
+
+        await userDefaultsCache.storeBool(value: viewed, forKey: lessonSwipeTutorialViewedKey)
+        await userDefaultsCache.commitChanges()
     }
 }

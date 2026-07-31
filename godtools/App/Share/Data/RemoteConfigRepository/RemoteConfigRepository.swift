@@ -9,7 +9,7 @@
 
 import Foundation
 
-final class RemoteConfigRepository {
+final class RemoteConfigRepository: Sendable {
         
     private let remoteDatabase: RemoteConfigRemoteDatabaseInterface
     
@@ -23,8 +23,8 @@ final class RemoteConfigRepository {
         try await remoteDatabase.syncFromRemoteDatabase()
     }
 
-    func getRemoteConfig() -> RemoteConfigDataModel? {
+    func getRemoteConfig() async -> RemoteConfigDataModel? {
         
-        return remoteDatabase.getRemoteConfig()
+        return await remoteDatabase.getRemoteConfig()
     }
 }

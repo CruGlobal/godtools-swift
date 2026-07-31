@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CardJumpUserDefaultsCache {
+final class CardJumpUserDefaultsCache: Sendable {
     
     private let userDefaultsCache: UserDefaultsCacheInterface
     
@@ -22,14 +22,14 @@ class CardJumpUserDefaultsCache {
     }
     
     var didShowCardJump: Bool {
-        if let value = userDefaultsCache.getValue(key: didShowCardJumpKey) as? Bool {
-            return value
+        get async {
+            let value: Bool? = await userDefaultsCache.getBool(key: didShowCardJumpKey)
+            return value ?? false
         }
-        return false
     }
     
-    func cacheDidShowCardJump() {
-        userDefaultsCache.cache(value: true, forKey: didShowCardJumpKey)
-        userDefaultsCache.commitChanges()
+    func cacheDidShowCardJump() async {
+        await userDefaultsCache.storeBool(value: true, forKey: didShowCardJumpKey)
+        await userDefaultsCache.commitChanges()
     }
 }

@@ -8,12 +8,12 @@
 
 import Foundation
 
-protocol OptInNotificationRepositoryInterface {
+protocol OptInNotificationRepositoryInterface: Sendable {
     
-    func getRemoteFeatureEnabled() -> Bool
-    func getRemoteTimeInterval() -> Date
-    func getRemotePromptLimit() -> Int
-    func getLastPrompted() -> Date?
-    func getPromptCount() -> Int
-    func recordPrompt()
+    func getRemoteFeatureEnabled() async -> Bool
+    func getRemoteTimeInterval() async -> Date
+    func getRemotePromptLimit() async -> Int
+    func getLastPrompted() async -> Date?
+    func getPromptCount() async -> Int
+    func recordPrompt() async
 }

@@ -19,15 +19,17 @@ final class OptInNotificationRepository: OptInNotificationRepositoryInterface {
     }
     
     private var remoteConfigData: RemoteConfigDataModel? {
-        remoteConfigRepository.getRemoteConfig()
+        get async {
+            await remoteConfigRepository.getRemoteConfig()
+        }
     }
     
-    func getRemoteFeatureEnabled() -> Bool {
-        return remoteConfigData?.optInNotificationEnabled ?? true
+    func getRemoteFeatureEnabled() async -> Bool {
+        return await remoteConfigData?.optInNotificationEnabled ?? true
     }
     
-    func getRemoteTimeInterval() -> Date {
-        let days =  remoteConfigData?.optInNotificationTimeInterval ?? 41
+    func getRemoteTimeInterval() async -> Date {
+        let days =  await remoteConfigData?.optInNotificationTimeInterval ?? 41
         
         let seconds = TimeInterval(days * 24 * 60 * 60)
         let date = Date().addingTimeInterval(-seconds)
@@ -35,19 +37,19 @@ final class OptInNotificationRepository: OptInNotificationRepositoryInterface {
         return date
     }
     
-    func getRemotePromptLimit() -> Int {
-        return remoteConfigData?.optInNotificationPromptLimit ?? 5
+    func getRemotePromptLimit() async -> Int {
+        return await remoteConfigData?.optInNotificationPromptLimit ?? 5
     }
     
-    func getLastPrompted() -> Date? {
-        return cache.getLastPrompted()
+    func getLastPrompted() async -> Date? {
+        return await cache.getLastPrompted()
     }
     
-    func getPromptCount() -> Int {
-        cache.getPromptCount()
+    func getPromptCount() async -> Int {
+        await cache.getPromptCount()
     }
     
-    func recordPrompt() {
-        cache.recordPrompt()
+    func recordPrompt() async {
+        await cache.recordPrompt()
     }
 }

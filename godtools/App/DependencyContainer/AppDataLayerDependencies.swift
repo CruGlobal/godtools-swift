@@ -433,6 +433,10 @@ final class AppDataLayerDependencies {
         )
     }
     
+    private func getManifestParserFeatures() -> ManifestParserFeatures {
+        return ManifestParserFeatures(remoteConfigRepository: getRemoteConfigRepository())
+    }
+    
     func getMobileContentAuthTokenKeychainAccessor() -> MobileContentAuthTokenKeychainAccessor {
         return MobileContentAuthTokenKeychainAccessor()
     }
@@ -762,7 +766,7 @@ final class AppDataLayerDependencies {
             resourcesFileCache: getResourcesFileCache(),
             resourcesSHA256FileCache: getResourcesSHA256FileCache(),
             trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository(),
-            remoteConfigRepository: getRemoteConfigRepository()
+            manifestParserFeatures: getManifestParserFeatures()
         )
     }
     

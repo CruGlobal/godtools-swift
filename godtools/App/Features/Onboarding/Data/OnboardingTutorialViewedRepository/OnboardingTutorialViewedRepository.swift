@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class OnboardingTutorialViewedRepository {
+final class OnboardingTutorialViewedRepository: Sendable {
     
     private let cache: OnboardingTutorialViewedCache
     
@@ -17,13 +17,13 @@ final class OnboardingTutorialViewedRepository {
         self.cache = cache
     }
     
-    func getOnboardingTutorialViewed() -> Bool {
+    func getOnboardingTutorialViewed() async -> Bool {
        
-        return cache.getOnboardingTutorialViewed()
+        return await cache.getOnboardingTutorialViewed()
     }
     
-    func storeOnboardingTutorialViewed(viewed: Bool) {
+    func storeOnboardingTutorialViewed(viewed: Bool) async {
         
-        cache.storeOnboardingTutorialViewed(viewed: viewed)
+        await cache.storeOnboardingTutorialViewed(viewed: viewed)
     }
 }

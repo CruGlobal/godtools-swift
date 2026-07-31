@@ -17,7 +17,7 @@ struct SyncInvalidatorTests {
         
         let syncInvalidator: SyncInvalidator = getSyncInvalidator(timeInterval: .minutes(minute: 60))
                 
-        #expect(syncInvalidator.shouldSync == true)
+        #expect(await syncInvalidator.shouldSync == true)
     }
     
     @Test()
@@ -25,13 +25,13 @@ struct SyncInvalidatorTests {
         
         let syncInvalidator: SyncInvalidator = getSyncInvalidator(timeInterval: .minutes(minute: 60))
     
-        syncInvalidator.didSync()
+        await syncInvalidator.didSync()
         
-        #expect(syncInvalidator.shouldSync == false)
+        #expect(await syncInvalidator.shouldSync == false)
         
-        syncInvalidator.resetSync()
+        await syncInvalidator.resetSync()
         
-        #expect(syncInvalidator.shouldSync == true)
+        #expect(await syncInvalidator.shouldSync == true)
     }
     
     @Test()
@@ -44,9 +44,9 @@ struct SyncInvalidatorTests {
                 
         let syncInvalidator: SyncInvalidator = getSyncInvalidator(timeInterval: .minutes(minute: 60))
         
-        syncInvalidator.didSync(lastSyncDate: thirtyMinutesAgo)
+        await syncInvalidator.didSync(lastSyncDate: thirtyMinutesAgo)
         
-        #expect(syncInvalidator.shouldSync == false)
+        #expect(await syncInvalidator.shouldSync == false)
     }
     
     @Test()
@@ -59,9 +59,9 @@ struct SyncInvalidatorTests {
                 
         let syncInvalidator: SyncInvalidator = getSyncInvalidator(timeInterval: .minutes(minute: 60))
         
-        syncInvalidator.didSync(lastSyncDate: oneHourAndThirtyMinutesAgo)
+        await syncInvalidator.didSync(lastSyncDate: oneHourAndThirtyMinutesAgo)
         
-        #expect(syncInvalidator.shouldSync == true)
+        #expect(await syncInvalidator.shouldSync == true)
     }
     
     @Test()
@@ -74,9 +74,9 @@ struct SyncInvalidatorTests {
                 
         let syncInvalidator: SyncInvalidator = getSyncInvalidator(timeInterval: .minutes(minute: 60))
         
-        syncInvalidator.didSync(lastSyncDate: oneHourAndThirtyMinutesAgo)
+        await syncInvalidator.didSync(lastSyncDate: oneHourAndThirtyMinutesAgo)
         
-        #expect(syncInvalidator.shouldSync == true)
+        #expect(await syncInvalidator.shouldSync == true)
     }
     
     @Test()
@@ -89,9 +89,9 @@ struct SyncInvalidatorTests {
                 
         let syncInvalidator: SyncInvalidator = getSyncInvalidator(timeInterval: .hours(hour: 4))
         
-        syncInvalidator.didSync(lastSyncDate: twoHoursAgo)
+        await syncInvalidator.didSync(lastSyncDate: twoHoursAgo)
         
-        #expect(syncInvalidator.shouldSync == false)
+        #expect(await syncInvalidator.shouldSync == false)
     }
     
     @Test()
@@ -104,9 +104,9 @@ struct SyncInvalidatorTests {
                 
         let syncInvalidator: SyncInvalidator = getSyncInvalidator(timeInterval: .hours(hour: 4))
         
-        syncInvalidator.didSync(lastSyncDate: fourHoursAgo)
+        await syncInvalidator.didSync(lastSyncDate: fourHoursAgo)
         
-        #expect(syncInvalidator.shouldSync == true)
+        #expect(await syncInvalidator.shouldSync == true)
     }
     
     @Test()
@@ -119,9 +119,9 @@ struct SyncInvalidatorTests {
                 
         let syncInvalidator: SyncInvalidator = getSyncInvalidator(timeInterval: .hours(hour: 4))
         
-        syncInvalidator.didSync(lastSyncDate: fiveHoursAgo)
+        await syncInvalidator.didSync(lastSyncDate: fiveHoursAgo)
         
-        #expect(syncInvalidator.shouldSync == true)
+        #expect(await syncInvalidator.shouldSync == true)
     }
     
     @Test()
@@ -134,9 +134,9 @@ struct SyncInvalidatorTests {
                 
         let syncInvalidator: SyncInvalidator = getSyncInvalidator(timeInterval: .days(day: 5))
         
-        syncInvalidator.didSync(lastSyncDate: twoDaysAgo)
+        await syncInvalidator.didSync(lastSyncDate: twoDaysAgo)
         
-        #expect(syncInvalidator.shouldSync == false)
+        #expect(await syncInvalidator.shouldSync == false)
     }
     
     @Test()
@@ -149,9 +149,9 @@ struct SyncInvalidatorTests {
                 
         let syncInvalidator: SyncInvalidator = getSyncInvalidator(timeInterval: .days(day: 5))
         
-        syncInvalidator.didSync(lastSyncDate: fiveDaysAgo)
+        await syncInvalidator.didSync(lastSyncDate: fiveDaysAgo)
         
-        #expect(syncInvalidator.shouldSync == true)
+        #expect(await syncInvalidator.shouldSync == true)
     }
     
     @Test()
@@ -164,9 +164,9 @@ struct SyncInvalidatorTests {
                 
         let syncInvalidator: SyncInvalidator = getSyncInvalidator(timeInterval: .days(day: 5))
         
-        syncInvalidator.didSync(lastSyncDate: sixDaysAgo)
+        await syncInvalidator.didSync(lastSyncDate: sixDaysAgo)
         
-        #expect(syncInvalidator.shouldSync == true)
+        #expect(await syncInvalidator.shouldSync == true)
     }
     
     @Test()
@@ -189,11 +189,11 @@ struct SyncInvalidatorTests {
             to: Date()
         ))
                 
-        syncInvalidator_1.didSync(lastSyncDate: twoHoursAgo)
+        await syncInvalidator_1.didSync(lastSyncDate: twoHoursAgo)
         
-        #expect(syncInvalidator_1.shouldSync == false)
+        #expect(await syncInvalidator_1.shouldSync == false)
         
-        #expect(syncInvalidator_2.shouldSync == true)
+        #expect(await syncInvalidator_2.shouldSync == true)
     }
 }
 

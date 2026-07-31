@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol MobileContentAuthTokenKeychainAccessorInterface {
+protocol MobileContentAuthTokenKeychainAccessorInterface: Sendable {
     
     func saveMobileContentAuthToken(authTokenCodable: MobileContentAuthTokenCodable) throws
     func deleteMobileContentAuthTokenAndUserId(userId: String)

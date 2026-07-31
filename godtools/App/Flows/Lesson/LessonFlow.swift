@@ -153,21 +153,22 @@ final class LessonFlow: GTFlow {
     
     private func showSwipeTutorialIfNeeded() {
         
-        let shouldShow: Bool = appDiContainer.feature.lessonSwipeTutorial.domainlayer
-            .getShouldShowLessonSwipeTutorialUseCase()
-            .execute()
-        
-        if shouldShow {
+        Task {
             
-            Task {
-                
-                try await Task.sleep(nanoseconds: 800)
-                
-                presentView(
-                    view: getLessonSwipeTutorial(),
-                    animated: true
-                )
+            let shouldShow: Bool = await appDiContainer.feature.lessonSwipeTutorial.domainlayer
+                .getShouldShowLessonSwipeTutorialUseCase()
+                .execute()
+            
+            guard shouldShow else {
+                return
             }
+            
+            try await Task.sleep(nanoseconds: 800)
+            
+            presentView(
+                view: getLessonSwipeTutorial(),
+                animated: true
+            )
         }
     }
     

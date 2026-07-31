@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class FavoritingToolMessageCache {
+final class FavoritingToolMessageCache: Sendable {
     
     private let userDefaultsCache: UserDefaultsCacheInterface
         
@@ -22,15 +22,15 @@ final class FavoritingToolMessageCache {
     }
     
     var favoritingToolMessageDisabled: Bool {
-        if let disabledValue = userDefaultsCache.getValue(key: disabledKey) as? Bool {
-            return disabledValue
+        get async {
+            let disabled: Bool? = await userDefaultsCache.getBool(key: disabledKey)
+            return disabled ?? false
         }
-        return false
     }
     
-    func disableFavoritingToolMessage() {
+    func disableFavoritingToolMessage() async {
         
-        userDefaultsCache.cache(value: true, forKey: disabledKey)
-        userDefaultsCache.commitChanges()
+        await userDefaultsCache.storeBool(value: true, forKey: disabledKey)
+        await userDefaultsCache.commitChanges()
     }
 }

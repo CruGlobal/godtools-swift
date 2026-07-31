@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class DisabledRemoteConfigDatabase: RemoteConfigRemoteDatabaseInterface {
+actor DisabledRemoteConfigDatabase: RemoteConfigRemoteDatabaseInterface {
     
     init() {
         
