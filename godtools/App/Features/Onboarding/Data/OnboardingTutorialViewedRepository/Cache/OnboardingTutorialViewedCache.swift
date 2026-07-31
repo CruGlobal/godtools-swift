@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class OnboardingTutorialViewedCache {
+final class OnboardingTutorialViewedCache: Sendable {
         
     private let userDefaultsCache: UserDefaultsCacheInterface
     private let onboardingTutorialViewedCacheKey: String = "keyOnboardingTutorialViewed"
@@ -18,18 +18,18 @@ final class OnboardingTutorialViewedCache {
         self.userDefaultsCache = userDefaultsCache
     }
     
-    func getOnboardingTutorialViewed() -> Bool {
+    func getOnboardingTutorialViewed() async -> Bool {
        
-        guard let viewed = userDefaultsCache.getValue(key: onboardingTutorialViewedCacheKey) as? Bool else {
+        guard let viewed = await userDefaultsCache.getValue(key: onboardingTutorialViewedCacheKey) as? Bool else {
             return false
         }
         
         return viewed
     }
     
-    func storeOnboardingTutorialViewed(viewed: Bool) {
+    func storeOnboardingTutorialViewed(viewed: Bool) async {
         
-        userDefaultsCache.cache(value: viewed, forKey: onboardingTutorialViewedCacheKey)
-        userDefaultsCache.commitChanges()
+        await userDefaultsCache.cache(value: viewed, forKey: onboardingTutorialViewedCacheKey)
+        await userDefaultsCache.commitChanges()
     }
 }

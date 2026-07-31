@@ -7,30 +7,23 @@
 //
 
 import Foundation
-import Combine
 
-class CardJumpService {
+final class CardJumpService: Sendable {
     
     private let cardJumpCache: CardJumpUserDefaultsCache
-    
-    private let didSaveCardJumpShownSubject: PassthroughSubject<Void, Never> = PassthroughSubject()
-    
+        
     init(cardJumpCache: CardJumpUserDefaultsCache) {
         
         self.cardJumpCache = cardJumpCache
     }
     
-    var didSaveCardJumpPublisher: AnyPublisher<Void, Never> {
-        return didSaveCardJumpShownSubject
-            .eraseToAnyPublisher()
-    }
-    
     var didShowCardJump: Bool {
-        return cardJumpCache.didShowCardJump
+        get async {
+            return await cardJumpCache.didShowCardJump
+        }
     }
     
-    func saveDidShowCardJump() {
-        cardJumpCache.cacheDidShowCardJump()
-        didSaveCardJumpShownSubject.send(Void())
+    func saveDidShowCardJump() async {
+        await cardJumpCache.cacheDidShowCardJump()
     }
 }
