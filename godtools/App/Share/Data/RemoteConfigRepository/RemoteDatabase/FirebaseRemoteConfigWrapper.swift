@@ -9,7 +9,7 @@
 import Foundation
 import FirebaseRemoteConfig
 
-final class FirebaseRemoteConfigWrapper: RemoteConfigRemoteDatabaseInterface {
+actor FirebaseRemoteConfigWrapper: RemoteConfigRemoteDatabaseInterface {
     
     private let remoteConfig: RemoteConfig = RemoteConfig.remoteConfig()
     

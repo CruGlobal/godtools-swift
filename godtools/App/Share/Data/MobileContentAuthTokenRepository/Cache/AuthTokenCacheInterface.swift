@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-protocol AuthTokenCacheInterface {
+protocol AuthTokenCacheInterface: Sendable {
     
     func getUserId() -> String?
     func getCachedAuthToken() throws -> CachedAuthToken?

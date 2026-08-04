@@ -30,50 +30,52 @@ public final class SyncInvalidator: SyncInvalidatorInterface {
     }
     
     public var shouldSync: Bool {
-        
-        let shouldSync: Bool
-        
-        if let lastSync = getLastSyncDate() {
+        get async {
             
-            let elapsedTimeInSeconds: TimeInterval = Date().timeIntervalSince(lastSync)
-            let elapsedTimeInMinutes: TimeInterval = elapsedTimeInSeconds / 60
-            let elapsedTimeInHours: TimeInterval = elapsedTimeInMinutes / 60
-            let elapsedTimeInDays: TimeInterval = elapsedTimeInHours / 24
+            let shouldSync: Bool
             
-            switch timeInterval {
-            case .minutes(let minute):
-                shouldSync = elapsedTimeInMinutes >= minute
-            case .hours(let hour):
-                shouldSync = elapsedTimeInHours >= hour
-            case .days(let day):
-                shouldSync = elapsedTimeInDays >= day
+            if let lastSync = await getLastSyncDate() {
+                
+                let elapsedTimeInSeconds: TimeInterval = Date().timeIntervalSince(lastSync)
+                let elapsedTimeInMinutes: TimeInterval = elapsedTimeInSeconds / 60
+                let elapsedTimeInHours: TimeInterval = elapsedTimeInMinutes / 60
+                let elapsedTimeInDays: TimeInterval = elapsedTimeInHours / 24
+                
+                switch timeInterval {
+                case .minutes(let minute):
+                    shouldSync = elapsedTimeInMinutes >= minute
+                case .hours(let hour):
+                    shouldSync = elapsedTimeInHours >= hour
+                case .days(let day):
+                    shouldSync = elapsedTimeInDays >= day
+                }
             }
-        }
-        else {
+            else {
+                
+                shouldSync = true
+            }
             
-            shouldSync = true
+            return shouldSync
         }
-        
-        return shouldSync
     }
     
-    public func didSync() {
-        didSync(lastSyncDate: Date())
+    public func didSync() async {
+        await didSync(lastSyncDate: Date())
     }
     
-    public func didSync(lastSyncDate: Date) {
-        storeLastSyncDate(date: lastSyncDate)
+    public func didSync(lastSyncDate: Date) async {
+        await storeLastSyncDate(date: lastSyncDate)
     }
     
-    public func resetSync() {
-        persistence.deleteDate(id: keyLastSyncDate)
+    public func resetSync() async {
+        await persistence.deleteDate(id: keyLastSyncDate)
     }
     
-    private func getLastSyncDate() -> Date? {
-        return persistence.getDate(id: keyLastSyncDate)
+    private func getLastSyncDate() async -> Date? {
+        return await persistence.getDate(id: keyLastSyncDate)
     }
     
-    private func storeLastSyncDate(date: Date) {
-        persistence.saveDate(id: keyLastSyncDate, date: date)
+    private func storeLastSyncDate(date: Date) async {
+        await persistence.saveDate(id: keyLastSyncDate, date: date)
     }
 }

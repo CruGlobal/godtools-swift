@@ -9,5 +9,5 @@
 import Foundation
 
 protocol GetOnboardingTutorialIsAvailableUseCaseInterface {
-    func execute() -> Bool
+    func execute() async -> Bool
 }

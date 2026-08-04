@@ -18,6 +18,6 @@ final class TrackViewedLessonSwipeTutorialUseCase {
     
     func execute() async {
         
-        lessonSwipeTutorialViewedRepository.storeLessonSwipeTutorialViewed(viewed: true)
+        await lessonSwipeTutorialViewedRepository.storeLessonSwipeTutorialViewed(viewed: true)
     }
 }

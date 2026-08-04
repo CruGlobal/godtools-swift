@@ -29,7 +29,7 @@ final class AppLanguagesRepositorySync: AppLanguagesRepositorySyncInterface {
     
     func sync() async throws {
         
-        guard syncInvalidator.shouldSync else {
+        guard await syncInvalidator.shouldSync else {
             return
         }
         
@@ -42,6 +42,6 @@ final class AppLanguagesRepositorySync: AppLanguagesRepositorySyncInterface {
                 getOption: nil
             )
         
-        syncInvalidator.didSync()
+        await syncInvalidator.didSync()
     }
 }

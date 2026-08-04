@@ -8,11 +8,17 @@
 
 import Foundation
 
-protocol UserDefaultsCacheInterface: SyncInvalidatorPersistenceInterface {
+protocol UserDefaultsCacheInterface: Actor, SyncInvalidatorPersistenceInterface {
     
+    func getBool(key: String) -> Bool?
+    func storeBool(value: Bool?, forKey: String)
+    func getDate(key: String) -> Date?
+    func storeDate(value: Date?, forKey: String)
+    func getInt(key: String) -> Int?
+    func storeInt(value: Int?, forKey: String)
+    func getString(key: String) -> String?
+    func storeString(value: String?, forKey: String)
     func deleteValue(key: String)
-    func getValue(key: String) -> Any?
-    func cache(value: Any?, forKey: String)
     func commitChanges()
 }
 
@@ -21,11 +27,11 @@ protocol UserDefaultsCacheInterface: SyncInvalidatorPersistenceInterface {
 extension UserDefaultsCacheInterface {
     
     func getDate(id: String) -> Date? {
-        return getValue(key: id) as? Date
+        return getDate(key: id)
     }
     
     func saveDate(id: String, date: Date?) {
-        cache(value: date, forKey: id)
+        storeDate(value: date, forKey: id)
         commitChanges()
     }
     

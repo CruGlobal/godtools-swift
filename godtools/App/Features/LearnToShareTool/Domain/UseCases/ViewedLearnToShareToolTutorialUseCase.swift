@@ -22,11 +22,11 @@ final class ViewedLearnToShareToolTutorialUseCase {
         self.getTranslatedToolName = getTranslatedToolName
     }
     
-    func execute(appLanguage: AppLanguageDomainModel, toolId: String) {
+    func execute(appLanguage: AppLanguageDomainModel, toolId: String) async {
         
         let toolName: String = getTranslatedToolName.getToolName(toolId: toolId, translateInLanguage: appLanguage)
         
-        toolTrainingTipsOnboardingViewsRepository.storeToolTrainingTipViewed(
+        await toolTrainingTipsOnboardingViewsRepository.storeToolTrainingTipViewed(
             toolId: toolId,
             toolName: toolName
         )

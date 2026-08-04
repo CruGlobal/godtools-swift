@@ -10,5 +10,5 @@ import Foundation
 
 protocol LearnToShareToolTutorialIsAvailableUseCaseInterface {
     
-    func execute(appLanguage: AppLanguageDomainModel, toolId: String) -> Bool
+    func execute(appLanguage: AppLanguageDomainModel, toolId: String) async -> Bool
 }

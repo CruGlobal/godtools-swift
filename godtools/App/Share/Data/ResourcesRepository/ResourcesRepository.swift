@@ -160,12 +160,15 @@ extension ResourcesRepository {
 extension ResourcesRepository {
     
     private var syncedResourcesFromJson: Bool {
-        return userDefaultsCache.getValue(key: Self.syncedResourcesFromJsonCacheKey) as? Bool ?? false
+        get async {
+            let synced: Bool? = await userDefaultsCache.getBool(key: Self.syncedResourcesFromJsonCacheKey)
+            return synced ?? false
+        }
     }
-    
-    private func markDidSyncResourcesFromJson() {
-        self.userDefaultsCache.cache(value: true, forKey: Self.syncedResourcesFromJsonCacheKey)
-        self.userDefaultsCache.commitChanges()
+
+    private func markDidSyncResourcesFromJson() async {
+        await self.userDefaultsCache.storeBool(value: true, forKey: Self.syncedResourcesFromJsonCacheKey)
+        await self.userDefaultsCache.commitChanges()
     }
     
     func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments(requestPriority: RequestPriority, forceFetchFromRemote: Bool) async throws -> ResourcesCacheSyncResult {
@@ -188,6 +191,8 @@ extension ResourcesRepository {
             return nil
         }
         
+        let syncedResourcesFromJson: Bool = await syncedResourcesFromJson
+        
         guard !syncedResourcesFromJson else {
             return nil
         }
@@ -199,7 +204,7 @@ extension ResourcesRepository {
             shouldRemoveDataThatNoLongerExists: true
         )
         
-        markDidSyncResourcesFromJson()
+        await markDidSyncResourcesFromJson()
         
         return result
     }
@@ -216,7 +221,9 @@ extension ResourcesRepository {
             persistence: syncInvalidatorPersistence
         )
         
-        let shouldFetchFromRemote: Bool = forceFetchFromRemote || syncInvalidator.shouldSync
+        let shouldSync: Bool = await syncInvalidator.shouldSync
+        
+        let shouldFetchFromRemote: Bool = forceFetchFromRemote || shouldSync
 
         guard shouldFetchFromRemote else {
             return ResourcesCacheSyncResult.emptyResult()
@@ -233,7 +240,7 @@ extension ResourcesRepository {
             shouldRemoveDataThatNoLongerExists: true
         )
         
-        syncInvalidator.didSync()
+        await syncInvalidator.didSync()
         
         return cacheResult
     }

@@ -17,9 +17,9 @@ final class GetGlobalActivityEnabledUseCase {
         self.remoteConfigRepository = remoteConfigRepository
     }
     
-    func execute() -> Bool {
+    func execute() async -> Bool {
         
-        return remoteConfigRepository
+        return await remoteConfigRepository
             .getRemoteConfig()?
             .globalActivityIsEnabled ?? false
     }

@@ -58,9 +58,12 @@ final class OptInNotificationFlow: GTFlow {
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
-        appDiContainer.feature.optInNotification.dataLayer
-            .getOptInNotificationRepository()
-            .recordPrompt()
+        Task {
+            
+            await appDiContainer.feature.optInNotification.dataLayer
+                .getOptInNotificationRepository()
+                .recordPrompt()
+        }
     }
     
     override func navigate(step: FlowStep) {

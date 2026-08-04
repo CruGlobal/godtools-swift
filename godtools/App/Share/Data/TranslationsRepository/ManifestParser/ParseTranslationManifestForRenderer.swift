@@ -10,11 +10,11 @@ import Foundation
 import GodToolsShared
 
 final class ParseTranslationManifestForRenderer: TranslationManifestParser {
-         
+                 
     init(
         infoPlist: InfoPlistInterface,
         resourcesFileCache: ResourcesFileCache,
-        remoteConfigRepository: RemoteConfigRepository
+        features: Set<String>
     ) {
             
         let appVersion: String? = infoPlist.appVersion
@@ -26,32 +26,12 @@ final class ParseTranslationManifestForRenderer: TranslationManifestParser {
         let parserConfig = ParserConfig()
             .withParsePages(enabled: true)
             .withParseTips(enabled: true)
-            .withSupportedFeatures(features: Set(Self.getSupportedFeatures(remoteConfigRepository: remoteConfigRepository)))
+            .withSupportedFeatures(features: features)
             .withAppVersion(deviceType: .ios, version: appVersion)
         
         super.init(
             parserConfig: parserConfig,
             resourcesFileCache: resourcesFileCache
         )
-    }
-    
-    private static func getSupportedFeatures(remoteConfigRepository: RemoteConfigRepository) -> [String] {
-        
-        let defaultFeatures: [String] = [
-            ParserConfig.companion.FEATURE_ANIMATION,
-            ParserConfig.companion.FEATURE_CONTENT_CARD,
-            ParserConfig.companion.FEATURE_FLOW,
-            ParserConfig.companion.FEATURE_MULTISELECT
-        ]
-        
-        var optionalFeatures: [String] = Array()
-        
-        let remoteConfigData: RemoteConfigDataModel? = remoteConfigRepository.getRemoteConfig()
-        
-        if let pageCollectionIsEnabled = remoteConfigData?.toolContentFeaturePageCollectionPageEnabled, pageCollectionIsEnabled {
-            optionalFeatures.append(ParserConfig.companion.FEATURE_PAGE_COLLECTION)
-        }
-        
-        return defaultFeatures + optionalFeatures
     }
 }

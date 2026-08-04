@@ -22,10 +22,10 @@ final class GetOnboardingTutorialIsAvailable {
         self.onboardingTutorialViewedRepository = onboardingTutorialViewedRepository
     }
     
-    func getIsAvailable() -> Bool {
+    func getIsAvailable() async -> Bool {
         
         let launchCount: Int = launchCountRepository.getLaunchCount()
-        let tutorialViewed: Bool = onboardingTutorialViewedRepository.getOnboardingTutorialViewed()
+        let tutorialViewed: Bool = await onboardingTutorialViewedRepository.getOnboardingTutorialViewed()
         
         let isAvailable = launchCount == 1 && !tutorialViewed
         

@@ -20,7 +20,7 @@ final class TranslationsRepository {
     private let resourcesFileCache: ResourcesFileCache
     private let resourcesSHA256FileCache: ResourcesSHA256FileCacheInterface
     private let trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
-    private let remoteConfigRepository: RemoteConfigRepository
+    private let manifestParserFeatures: ManifestParserFeatures
     
     init(
         api: TranslationsApiInterface,
@@ -30,7 +30,7 @@ final class TranslationsRepository {
         resourcesFileCache: ResourcesFileCache,
         resourcesSHA256FileCache: ResourcesSHA256FileCacheInterface,
         trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository,
-        remoteConfigRepository: RemoteConfigRepository
+        manifestParserFeatures: ManifestParserFeatures
     ) {
         
         self.api = api
@@ -40,7 +40,7 @@ final class TranslationsRepository {
         self.resourcesFileCache = resourcesFileCache
         self.resourcesSHA256FileCache = resourcesSHA256FileCache
         self.trackDownloadedTranslationsRepository = trackDownloadedTranslationsRepository
-        self.remoteConfigRepository = remoteConfigRepository
+        self.manifestParserFeatures = manifestParserFeatures
     }
 
     func getLatestTranslation(resourceId: String, languageId: String) -> TranslationDataModel? {
@@ -88,11 +88,11 @@ extension TranslationsRepository {
     
     func getTranslationManifestFromCache(translation: TranslationDataModel, manifestParserType: TranslationManifestParserType, includeRelatedFiles: Bool) async throws -> TranslationManifestFileDataModel {
         
-        let manifestParser = TranslationManifestParser.getManifestParser(
+        let manifestParser = await TranslationManifestParser.getManifestParser(
             type: manifestParserType,
             infoPlist: infoPlist,
             resourcesFileCache: resourcesFileCache,
-            remoteConfigRepository: remoteConfigRepository
+            manifestParserFeatures: manifestParserFeatures
         )
         
         let manifest = try await manifestParser.parse(manifestName: translation.manifestName)
@@ -245,11 +245,11 @@ extension TranslationsRepository {
                 requestPriority: requestPriority
             )
             
-            let manifestParser = TranslationManifestParser.getManifestParser(
+            let manifestParser = await TranslationManifestParser.getManifestParser(
                 type: manifestParserType,
                 infoPlist: infoPlist,
                 resourcesFileCache: resourcesFileCache,
-                remoteConfigRepository: remoteConfigRepository
+                manifestParserFeatures: manifestParserFeatures
             )
             
             let manifest = try await manifestParser.parse(manifestName: translation.manifestName)
@@ -354,11 +354,11 @@ extension TranslationsRepository {
                 requestPriority: requestPriority
             )
             
-            let manifestParser = TranslationManifestParser.getManifestParser(
+            let manifestParser = await TranslationManifestParser.getManifestParser(
                 type: .manifestOnly,
                 infoPlist: infoPlist,
                 resourcesFileCache: resourcesFileCache,
-                remoteConfigRepository: remoteConfigRepository
+                manifestParserFeatures: manifestParserFeatures
             )
             
             let manifest: Manifest = try await manifestParser.parse(manifestName: translation.manifestName)

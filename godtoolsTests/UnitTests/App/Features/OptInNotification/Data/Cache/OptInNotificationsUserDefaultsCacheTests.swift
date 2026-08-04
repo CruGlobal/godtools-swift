@@ -7,60 +7,99 @@
 //
 
 import Foundation
-import XCTest
+import Testing
 @testable import godtools
 
-class OptInNotificationUserDefaultsCacheTests: XCTestCase {
-    
-    private let cache: OptInNotificationUserDefaultsCache = OptInNotificationUserDefaultsCache(userDefaultsCache: SharedUserDefaultsCache())
-    
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-        cache.deleteAllData()
-    }
+struct OptInNotificationUserDefaultsCacheTests {
 
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-    
-    func testFirstRecordPromptValuesAreCorrect() {
-        
-        cache.recordPrompt()
-        
-        let todaysDate: Date = Date()
-        let todaysStringDate: String = OptInNotificationUserDefaultsCache.dateFormatter.string(from: todaysDate)
-        
+    private static let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM/dd/yyyy"
+        return formatter
+    }()
+
+    @Test(
+        """
+        Given: The opt in notification prompt has never been recorded.
+        When: A prompt is recorded.
+        Then: The prompt count should be 1 and the last prompted date should be today.
+        """
+    )
+    func firstRecordedPromptStoresPromptCountAndLastPromptedDate() async {
+
+        let cache: OptInNotificationUserDefaultsCache = getCache()
+
+        await cache.recordPrompt()
+
+        let todaysStringDate: String = Self.dateFormatter.string(from: Date())
+
         let lastPromptedStringDate: String?
-        
-        if let lastPromptedDate = cache.getLastPrompted() {
-            lastPromptedStringDate = OptInNotificationUserDefaultsCache.dateFormatter.string(from: lastPromptedDate)
+
+        if let lastPromptedDate = await cache.getLastPrompted() {
+            lastPromptedStringDate = Self.dateFormatter.string(from: lastPromptedDate)
         }
         else {
             lastPromptedStringDate = nil
         }
-        
-        XCTAssertTrue(cache.getPromptCount() == 1)
-        XCTAssertTrue(todaysStringDate == lastPromptedStringDate)
-    }
-    
-    func testSecondRecordPromptCountIsCorrect() {
-        
-        cache.recordPrompt()
-        cache.recordPrompt()
 
-        XCTAssertTrue(cache.getPromptCount() == 2)
+        let promptCount: Int = await cache.getPromptCount()
+
+        #expect(promptCount == 1)
+        #expect(todaysStringDate == lastPromptedStringDate)
     }
-    
-    func testAllDataIsDeleted() {
-        
-        cache.recordPrompt()
-        
-        XCTAssertNotNil(cache.getPromptCount())
-        XCTAssertNotNil(cache.getLastPrompted())
-        
-        cache.deleteAllData()
-        
-        XCTAssertTrue(cache.getPromptCount() == 0)
-        XCTAssertNil(cache.getLastPrompted())
+
+    @Test(
+        """
+        Given: The opt in notification prompt has been recorded once.
+        When: A second prompt is recorded.
+        Then: The prompt count should be 2.
+        """
+    )
+    func secondRecordedPromptIncrementsPromptCount() async {
+
+        let cache: OptInNotificationUserDefaultsCache = getCache()
+
+        await cache.recordPrompt()
+        await cache.recordPrompt()
+
+        let promptCount: Int = await cache.getPromptCount()
+
+        #expect(promptCount == 2)
+    }
+
+    @Test(
+        """
+        Given: The opt in notification prompt has been recorded.
+        When: All data is deleted.
+        Then: The prompt count should be 0 and the last prompted date should be nil.
+        """
+    )
+    func deletingAllDataRemovesPromptCountAndLastPromptedDate() async {
+
+        let cache: OptInNotificationUserDefaultsCache = getCache()
+
+        await cache.recordPrompt()
+
+        let promptCountAfterRecordingPrompt: Int = await cache.getPromptCount()
+        let lastPromptedAfterRecordingPrompt: Date? = await cache.getLastPrompted()
+
+        #expect(promptCountAfterRecordingPrompt == 1)
+        #expect(lastPromptedAfterRecordingPrompt != nil)
+
+        await cache.deleteAllData()
+
+        let promptCountAfterDeletingAllData: Int = await cache.getPromptCount()
+        let lastPromptedAfterDeletingAllData: Date? = await cache.getLastPrompted()
+
+        #expect(promptCountAfterDeletingAllData == 0)
+        #expect(lastPromptedAfterDeletingAllData == nil)
+    }
+}
+
+extension OptInNotificationUserDefaultsCacheTests {
+
+    private func getCache() -> OptInNotificationUserDefaultsCache {
+
+        return OptInNotificationUserDefaultsCache(userDefaultsCache: InMemUserDefaultsCache())
     }
 }

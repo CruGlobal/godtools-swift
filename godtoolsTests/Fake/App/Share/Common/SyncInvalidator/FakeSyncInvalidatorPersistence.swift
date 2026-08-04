@@ -9,7 +9,7 @@
 import Foundation
 @testable import godtools
 
-class FakeSyncInvalidatorPersistence: SyncInvalidatorPersistenceInterface {
+actor FakeSyncInvalidatorPersistence: SyncInvalidatorPersistenceInterface {
    
     private var storedDates: [String: Date] = Dictionary()
     

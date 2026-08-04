@@ -289,7 +289,7 @@ final class DashboardFlow: GTFlow {
             navigateToURL(linkTapped: urlLinkTapped, appLanguage: appLanguage)
             
         case .learnToShareToolTappedFromToolDetails(let tool):
-            navigateToLearnToShareTool(
+            navigateToLearnToShareToolElseTool(
                 tool: tool,
                 toolOpenedFrom: .learnToShare
             )
@@ -944,51 +944,54 @@ extension DashboardFlow {
 
 extension DashboardFlow {
     
-    private func navigateToLearnToShareTool(
+    private func navigateToLearnToShareToolElseTool(
         tool: ToolDetailsTool,
         toolOpenedFrom: ToolOpenedFrom
     ) {
         
-        let learnToShareTutorialIsAvailable: Bool = appDiContainer
-            .feature
-            .learnToShareTool
-            .domainLayer
-            .getLearnToShareToolTutorialIsAvailableUseCase()
-            .execute(
-                appLanguage: tool.primaryLanguage,
-                toolId: tool.toolId
-            )
-                
-        if learnToShareTutorialIsAvailable {
+        Task {
             
-            appDiContainer
+            let learnToShareTutorialIsAvailable: Bool = await appDiContainer
                 .feature
                 .learnToShareTool
                 .domainLayer
-                .getViewedLearnToShareToolTutorialUseCase()
+                .getLearnToShareToolTutorialIsAvailableUseCase()
                 .execute(
                     appLanguage: tool.primaryLanguage,
                     toolId: tool.toolId
                 )
-            
-            presentFlow(
-                flow: LearnToShareToolFlow(
-                    appDiContainer: appDiContainer,
-                    tool: tool
+                    
+            if learnToShareTutorialIsAvailable {
+                
+                presentFlow(
+                    flow: LearnToShareToolFlow(
+                        appDiContainer: appDiContainer,
+                        tool: tool
+                    )
                 )
-            )
-        }
-        else {
-            
-            navigateToTool(
-                toolDataModelId: tool.toolId,
-                primaryLanguage: tool.primaryLanguage,
-                parallelLanguage: tool.parallelLanguage,
-                selectedLanguageIndex: tool.selectedLanguageIndex,
-                trainingTipsEnabled: true,
-                toolOpenedFrom: toolOpenedFrom,
-                persistToolLanguageSettings: nil
-            )
+                
+                await appDiContainer
+                    .feature
+                    .learnToShareTool
+                    .domainLayer
+                    .getViewedLearnToShareToolTutorialUseCase()
+                    .execute(
+                        appLanguage: tool.primaryLanguage,
+                        toolId: tool.toolId
+                    )
+            }
+            else {
+                
+                navigateToTool(
+                    toolDataModelId: tool.toolId,
+                    primaryLanguage: tool.primaryLanguage,
+                    parallelLanguage: tool.parallelLanguage,
+                    selectedLanguageIndex: tool.selectedLanguageIndex,
+                    trainingTipsEnabled: true,
+                    toolOpenedFrom: toolOpenedFrom,
+                    persistToolLanguageSettings: nil
+                )
+            }
         }
     }
 }

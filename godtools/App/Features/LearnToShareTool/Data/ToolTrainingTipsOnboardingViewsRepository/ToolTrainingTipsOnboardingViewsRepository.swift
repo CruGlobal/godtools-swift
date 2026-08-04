@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class ToolTrainingTipsOnboardingViewsRepository {
+final class ToolTrainingTipsOnboardingViewsRepository: Sendable {
     
     private let cache: ToolTrainingTipsOnboardingViewsCache
     
@@ -17,13 +17,13 @@ final class ToolTrainingTipsOnboardingViewsRepository {
         self.cache = cache
     }
     
-    func getNumberOfToolTrainingTipViews(toolId: String, toolName: String) -> Int {
+    func getNumberOfToolTrainingTipViews(toolId: String, toolName: String) async -> Int {
         
-        return cache.getNumberOfToolTrainingTipViews(toolId: toolId, toolName: toolName)
+        return await cache.getNumberOfToolTrainingTipViews(toolId: toolId, toolName: toolName)
     }
     
-    func storeToolTrainingTipViewed(toolId: String, toolName: String) {
+    func storeToolTrainingTipViewed(toolId: String, toolName: String) async {
         
-        cache.storeToolTrainingTipViewed(toolId: toolId, toolName: toolName)
+        await cache.storeToolTrainingTipViewed(toolId: toolId, toolName: toolName)
     }
 }

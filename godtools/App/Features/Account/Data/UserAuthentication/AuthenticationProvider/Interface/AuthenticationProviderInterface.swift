@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol AuthenticationProviderInterface {
+protocol AuthenticationProviderInterface: Sendable {
     
     @MainActor func providerAuthenticate(presentingViewController: UIViewController) async throws -> AuthenticationProviderResponse
     func providerRenewToken() async throws -> AuthenticationProviderResponse

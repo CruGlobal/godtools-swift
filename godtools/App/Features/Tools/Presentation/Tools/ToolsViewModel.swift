@@ -93,7 +93,12 @@ final class ToolsViewModel: ObservableObject {
         self.getToolBannerUseCase = getToolBannerUseCase
         self.inMemoryDataCache = inMemoryDataCache
         
-        showsFavoritingToolBanner = !favoritingToolMessageCache.favoritingToolMessageDisabled
+        Task {
+            
+            let favoritingToolMessageDisabled: Bool = await favoritingToolMessageCache.favoritingToolMessageDisabled
+            
+            showsFavoritingToolBanner = !favoritingToolMessageDisabled
+        }
         
         if !GodToolsApp.showsPersonalization {
             selectedToggle = .all
@@ -377,7 +382,9 @@ extension ToolsViewModel {
             showsFavoritingToolBanner = false
         }
         
-        favoritingToolMessageCache.disableFavoritingToolMessage()
+        Task {
+            await favoritingToolMessageCache.disableFavoritingToolMessage()
+        }
     }
     
     func getSpotlightToolViewModel(spotlightTool: SpotlightToolListItemDomainModel) -> ToolCardViewModel {
