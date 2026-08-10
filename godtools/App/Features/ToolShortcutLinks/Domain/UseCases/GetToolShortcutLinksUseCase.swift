@@ -10,7 +10,10 @@ import Foundation
 import Combine
 
 final class GetToolShortcutLinksUseCase {
-    
+
+    private static let appDeepLinkBaseUrlString: String = "godtools://knowgod.com"
+    private static let toolDeepLinkPageNumber: Int = 0
+
     private let favoritedResourcesRepository: FavoritedResourcesRepository
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
@@ -57,12 +60,13 @@ final class GetToolShortcutLinksUseCase {
             .prefix(self.maxNumberOfToolShortcutLinks)
             .compactMap { (favoritedResource: FavoritedResourceDataModel) in
                 
-                guard let resource = resourcesRepository.getResourceById(id: favoritedResource.id) else {
+                guard let resource = resourcesRepository.getResourceById(id: favoritedResource.id),
+                      let appDeepLinkUrl = self.getToolUrlDeepLink(resource: resource, appLanguage: appLanguage) else {
                     return nil
                 }
-                
+
                 return ToolShortcutLinkDomainModel(
-                    appDeepLinkUrl: self.getToolUrlDeepLink(resource: resource, appLanguage: appLanguage),
+                    appDeepLinkUrl: appDeepLinkUrl,
                     title: self.getToolName(resource: resource, appLanguage: appLanguage)
                 )
             }
@@ -70,9 +74,17 @@ final class GetToolShortcutLinksUseCase {
         return toolShortcutLinks
     }
     
-    private func getToolUrlDeepLink(resource: ResourceDataModel, appLanguage: AppLanguageDomainModel) -> String {
-        
-        return "godtools://knowgod.com/" + appLanguage + "/" + resource.abbreviation + "/0"
+    private func getToolUrlDeepLink(resource: ResourceDataModel, appLanguage: AppLanguageDomainModel) -> String? {
+
+        guard let baseUrl = URL(string: Self.appDeepLinkBaseUrlString) else {
+            return nil
+        }
+
+        return baseUrl
+            .appending(path: appLanguage)
+            .appending(path: resource.abbreviation)
+            .appending(path: String(Self.toolDeepLinkPageNumber))
+            .absoluteString
     }
     
     private func getToolName(resource: ResourceDataModel, appLanguage: AppLanguageDomainModel) -> String {
