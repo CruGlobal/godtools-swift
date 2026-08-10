@@ -29,33 +29,39 @@ final class GetShareToolUrl {
     
     private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository
-        
+
     init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository) {
-        
+
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository
     }
-    
-    func getUrl(toolId: String, toolLanguageId: String, pageNumber: Int) -> String? {
-                
-        let resourceType = resourcesRepository.getResourceById(id: toolId)?.resourceTypeEnum ?? .unknown
 
-        guard let resource = resourcesRepository.getResourceById(id: toolId),
+    func getUrl(toolId: String, toolLanguageId: String, pageNumber: Int) -> String? {
+
+        let baseUrl: URL? = URL(string: "https://knowgod.com")
+        
+        guard let baseUrl = baseUrl,
+              let resource = resourcesRepository.getResourceById(id: toolId),
               let toolLanguage = languagesRepository.getLanguageById(id: toolLanguageId) else {
-            
+
             return nil
         }
-        
-        let path = ShareToolURLPath(resourceType: resourceType)
-        
-        var toolUrl: String = "https://knowgod.com/\(toolLanguage.code)/\(path.rawValue)/\(resource.abbreviation)"
+
+        let path = ShareToolURLPath(resourceType: resource.resourceTypeEnum)
+
+        var toolUrl: URL = baseUrl
+            .appending(path: toolLanguage.code)
+            .appending(path: path.rawValue)
+            .appending(path: resource.abbreviation)
 
         if pageNumber > 0 {
-            toolUrl = toolUrl.appending("/").appending("\(pageNumber)")
+            toolUrl = toolUrl.appending(path: String(pageNumber))
         }
         
-        toolUrl = toolUrl.replacingOccurrences(of: " ", with: "").appending("?icid=gtshare ")
-                
-        return toolUrl
+        let shareCampaignQueryItem: URLQueryItem = URLQueryItem(name: "icid", value: "gtshare")
+
+        toolUrl = toolUrl.appending(queryItems: [shareCampaignQueryItem])
+
+        return toolUrl.absoluteString
     }
 }
