@@ -180,7 +180,7 @@ class AppDiContainer {
         return OpenUrlWithSwiftUI() // TODO: GT-2466 Return OpenUrlWithUIKit() once supporting FBSDK 17.3+ ~Levi
     }
     
-    @MainActor func getMobileContentRenderer(
+    func getMobileContentRenderer(
         type: MobileContentRendererPageViewFactoriesType,
         navigation: MobileContentRendererNavigation,
         appLanguage: AppLanguageDomainModel,
@@ -212,7 +212,7 @@ class AppDiContainer {
         return MobileContentRendererEventAnalyticsTracking(firebaseAnalytics: core.dataLayer.getAnalytics().firebaseAnalytics)
     }
     
-    @MainActor func getMobileContentRendererNavigation(appLanguage: AppLanguageDomainModel) -> MobileContentRendererNavigation {
+    func getMobileContentRendererNavigation(appLanguage: AppLanguageDomainModel) -> MobileContentRendererNavigation {
         
         return MobileContentRendererNavigation(
             appDiContainer: self,
