@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class OptInNotificationDomainLayerDependencies {
 
     private let core: AppCoreDiContainer

@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class MenuDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies

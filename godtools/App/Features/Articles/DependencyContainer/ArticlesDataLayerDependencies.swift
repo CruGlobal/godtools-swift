@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class ArticlesDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies

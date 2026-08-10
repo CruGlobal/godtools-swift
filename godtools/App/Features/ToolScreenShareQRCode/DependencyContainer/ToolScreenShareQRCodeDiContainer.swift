@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class ToolScreenShareQRCodeDiContainer {
     
     let dataLayer: ToolScreenShareQRCodeDataLayerDependencies

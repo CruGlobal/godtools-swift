@@ -9,6 +9,7 @@
 import Foundation
 import RepositorySync
 
+@MainActor
 final class AccountDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies

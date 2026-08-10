@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class ArticlesDomainLayerDependencies {
     
     private let core: AppCoreDiContainer

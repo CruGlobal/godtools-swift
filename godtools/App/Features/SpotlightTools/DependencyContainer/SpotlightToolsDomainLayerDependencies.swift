@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class SpotlightToolsDomainLayerDependencies {
     
     private let core: AppCoreDiContainer

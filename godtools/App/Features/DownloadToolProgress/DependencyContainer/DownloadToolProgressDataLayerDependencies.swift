@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class DownloadToolProgressDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies

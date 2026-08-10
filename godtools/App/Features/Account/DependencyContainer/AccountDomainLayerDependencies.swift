@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class AccountDomainLayerDependencies {
     
     private let core: AppCoreDiContainer

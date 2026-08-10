@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class ShareToolDomainLayerDependencies {
     
     private let core: AppCoreDiContainer

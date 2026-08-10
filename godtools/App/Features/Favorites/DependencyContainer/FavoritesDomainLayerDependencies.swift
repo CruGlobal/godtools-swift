@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class FavoritesDomainLayerDependencies {
     
     private let core: AppCoreDiContainer

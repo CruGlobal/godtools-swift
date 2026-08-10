@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class DownloadToolProgressDomainLayerDependencies {
     
     private let core: AppCoreDiContainer

@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class OnboardingDiContainer {
         
     let dataLayer: OnboardingDataLayerDependencies

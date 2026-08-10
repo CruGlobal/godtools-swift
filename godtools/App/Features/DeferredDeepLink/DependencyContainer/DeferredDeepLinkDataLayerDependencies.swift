@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class DeferredDeepLinkDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies

@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class ShareGodToolsDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies

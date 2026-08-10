@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class ToolShortcutLinksDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies

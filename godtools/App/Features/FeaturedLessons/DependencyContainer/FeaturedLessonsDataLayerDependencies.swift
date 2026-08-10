@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class FeaturedLessonsDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies

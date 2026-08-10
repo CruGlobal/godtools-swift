@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class ShareablesDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies

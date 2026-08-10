@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class DownloadToolProgressDiContainer {
     
     let dataLayer: DownloadToolProgressDataLayerDependencies

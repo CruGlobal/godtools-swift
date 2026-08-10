@@ -12,6 +12,7 @@ import SocialAuthentication
 import LocalizationServices
 import RepositorySync
 
+@MainActor
 final class AppDataLayerDependencies {
         
     private let sharedAppBuild: AppBuildInterface

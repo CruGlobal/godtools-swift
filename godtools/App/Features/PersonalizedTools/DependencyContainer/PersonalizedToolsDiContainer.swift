@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class PersonalizedToolsDiContainer {
 
     private let dataLayer: PersonalizedToolsDataLayerDependencies

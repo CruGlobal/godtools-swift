@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class MenuDiContainer {
     
     let dataLayer: MenuDataLayerDependencies

@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class LessonSwipeTutorialDomainLayerDependencies {
     
     private let core: AppCoreDiContainer

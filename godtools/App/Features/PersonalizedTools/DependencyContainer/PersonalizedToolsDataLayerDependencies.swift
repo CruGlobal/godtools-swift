@@ -9,6 +9,7 @@
 import Foundation
 import RepositorySync
 
+@MainActor
 final class PersonalizedToolsDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies

@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class LessonSwipeTutorialDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies

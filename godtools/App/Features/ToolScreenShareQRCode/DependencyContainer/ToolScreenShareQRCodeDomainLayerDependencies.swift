@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class ToolScreenShareQRCodeDomainLayerDependencies {
     
     private let core: AppCoreDiContainer

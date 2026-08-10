@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class FeaturedLessonsDomainLayerDependencies {
     
     private let core: AppCoreDiContainer

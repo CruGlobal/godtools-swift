@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class DeferredDeepLinkDomainLayerDependencies {
     
     private let core: AppCoreDiContainer

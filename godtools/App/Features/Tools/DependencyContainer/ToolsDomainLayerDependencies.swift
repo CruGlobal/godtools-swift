@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class ToolsDomainLayerDependencies {
 
     private let core: AppCoreDiContainer

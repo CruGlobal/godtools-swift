@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class DashboardDiContainer {
     
     let dataLayer: DashboardDataLayerDependencies

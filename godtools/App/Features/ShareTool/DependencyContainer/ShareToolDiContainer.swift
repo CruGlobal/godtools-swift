@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class ShareToolDiContainer {
         
     private let dataLayer: ShareToolDataLayerDependencies

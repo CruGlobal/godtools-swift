@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class SpotlightToolsDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies

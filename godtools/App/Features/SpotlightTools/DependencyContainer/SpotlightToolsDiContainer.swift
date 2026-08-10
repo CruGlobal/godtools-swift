@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class SpotlightToolsDiContainer {
     
     let dataLayer: SpotlightToolsDataLayerDependencies

@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class ToolsDiContainer {
 
     private let dataLayer: ToolsDataLayerDependencies

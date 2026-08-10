@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class ToolScreenShareQRCodeDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies

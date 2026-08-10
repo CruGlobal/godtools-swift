@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class DashboardDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies

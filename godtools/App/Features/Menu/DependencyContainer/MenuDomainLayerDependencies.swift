@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class MenuDomainLayerDependencies {
     
     private let core: AppCoreDiContainer

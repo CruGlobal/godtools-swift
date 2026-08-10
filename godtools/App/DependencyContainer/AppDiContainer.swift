@@ -8,6 +8,7 @@
 
 import UIKit
 
+@MainActor
 final class AppDiContainer {
     
     let core: AppCoreDiContainer

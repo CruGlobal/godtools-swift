@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class LessonFilterDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies

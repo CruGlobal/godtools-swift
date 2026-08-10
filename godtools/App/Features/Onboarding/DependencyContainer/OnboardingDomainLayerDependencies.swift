@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class OnboardingDomainLayerDependencies {
     
     private let core: AppCoreDiContainer

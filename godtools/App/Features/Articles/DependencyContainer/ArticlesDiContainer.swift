@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class ArticlesDiContainer {
         
     private let dataLayer: ArticlesDataLayerDependencies

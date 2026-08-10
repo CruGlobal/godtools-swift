@@ -8,6 +8,7 @@
 
 import Foundation
 
+@MainActor
 final class ToolShortcutLinksDomainLayerDependencies {
     
     private let core: AppCoreDiContainer

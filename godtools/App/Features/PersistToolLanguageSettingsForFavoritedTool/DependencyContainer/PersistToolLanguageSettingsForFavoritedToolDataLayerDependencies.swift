@@ -9,6 +9,7 @@
 import Foundation
 import RepositorySync
 
+@MainActor
 final class PersistToolLanguageSettingsForFavoritedToolDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
