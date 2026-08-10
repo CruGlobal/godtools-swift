@@ -157,7 +157,7 @@ final class UserAuthentication {
         let allProviders: [AuthenticationProviderInterface] = Array(authenticationProviders.values)
         
         for provider in allProviders {
-            provider.providerSignOut()
+            await provider.providerSignOut()
         }
         
         await lastAuthenticatedProviderCache.deleteLastAuthenticatedProvider()

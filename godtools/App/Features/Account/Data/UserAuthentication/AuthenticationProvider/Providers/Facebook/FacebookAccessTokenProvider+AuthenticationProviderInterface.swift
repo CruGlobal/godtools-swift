@@ -56,9 +56,9 @@ extension FacebookAccessTokenProvider: AuthenticationProviderInterface {
         return try getResponseForPersistedData()
     }
     
-    func providerSignOut() {
+    func providerSignOut() async {
         
-        signOut()
+        await signOut()
     }
     
     func providerGetAuthUser() async throws -> AuthUserDomainModel? {

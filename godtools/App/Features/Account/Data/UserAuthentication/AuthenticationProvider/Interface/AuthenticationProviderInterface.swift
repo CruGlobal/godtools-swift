@@ -13,6 +13,6 @@ protocol AuthenticationProviderInterface: Sendable {
     
     @MainActor func providerAuthenticate(presentingViewController: UIViewController) async throws -> AuthenticationProviderResponse
     func providerRenewToken() async throws -> AuthenticationProviderResponse
-    func providerSignOut()
+    func providerSignOut() async
     func providerGetAuthUser() async throws -> AuthUserDomainModel?
 }

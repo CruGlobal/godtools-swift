@@ -780,9 +780,7 @@ final class AppDataLayerDependencies {
                 
         var authenticationProviders: [AuthenticationProviderType: AuthenticationProviderInterface] = Dictionary()
         
-        authenticationProviders[.apple] = AppleAuthentication(
-            appleUserPersistentStore: AppleUserPersistentStore()
-        )
+        authenticationProviders[.apple] = AppleAuthentication()
         
         authenticationProviders[.facebook] = FacebookLimitedLogin(
             configuration: FacebookLimitedLoginConfiguration(permissions: ["email"])
