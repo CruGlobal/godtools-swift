@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AppDiContainer {
+final class AppDiContainer {
     
     let core: AppCoreDiContainer
     let feature: AppFeatureDiContainer
