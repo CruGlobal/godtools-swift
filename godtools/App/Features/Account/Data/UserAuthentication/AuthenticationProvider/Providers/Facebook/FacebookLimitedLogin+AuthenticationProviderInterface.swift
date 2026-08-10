@@ -53,9 +53,9 @@ extension FacebookLimitedLogin: AuthenticationProviderInterface {
         return response
     }
     
-    func providerSignOut() {
+    func providerSignOut() async {
         
-        signOut()
+        await signOut()
     }
     
     func providerGetAuthUser() async throws -> AuthUserDomainModel? {
