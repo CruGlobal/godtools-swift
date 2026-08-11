@@ -57,14 +57,14 @@ extension AppleAuthentication: AuthenticationProviderInterface {
         throw error
     }
     
-    func providerSignOut() {
+    func providerSignOut() async {
         
-        _ = signOut()
+        _ = await signOut()
     }
     
     func providerGetAuthUser() async throws -> AuthUserDomainModel? {
         
-        let appleUserProfile: AppleUserProfile = getCurrentUserProfile()
+        let appleUserProfile: AppleUserProfile = await getCurrentUserProfile()
         
         return appleUserProfile.toAuthUserDomainModel()
     }

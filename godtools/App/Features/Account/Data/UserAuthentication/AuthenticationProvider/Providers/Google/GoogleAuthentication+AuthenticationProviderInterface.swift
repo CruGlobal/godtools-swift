@@ -143,7 +143,7 @@ extension GoogleAuthentication: AuthenticationProviderInterface {
         return try getResponseForPersistedData()
     }
     
-    func providerSignOut() {
+    func providerSignOut() async {
         
         signOut()
     }

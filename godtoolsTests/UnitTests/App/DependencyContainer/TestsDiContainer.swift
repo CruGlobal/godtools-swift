@@ -9,13 +9,23 @@
 import Foundation
 @testable import godtools
 
-class TestsDiContainer: AppDiContainer {
-    
+class TestsDiContainer {
+
+    private let appDiContainer: AppDiContainer
+
     init(
         testsAppConfig: TestsAppConfig,
         appBuild: AppBuildInterface = TestsBuild()
     ) {
-   
-        super.init(appBuild: appBuild, appConfig: testsAppConfig)
+
+        appDiContainer = AppDiContainer(appBuild: appBuild, appConfig: testsAppConfig)
+    }
+
+    var core: AppCoreDiContainer {
+        return appDiContainer.core
+    }
+
+    var feature: AppFeatureDiContainer {
+        return appDiContainer.feature
     }
 }
