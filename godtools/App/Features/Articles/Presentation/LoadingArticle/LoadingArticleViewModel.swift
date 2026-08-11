@@ -17,8 +17,8 @@ final class LoadingArticleViewModel: ObservableObject {
     
     private var downloadArticleTask: Task<Void, Error>?
         
-    let message: String
-    
+    @Published private(set) var message: String = ""
+
     init(
         stepEmitter: FlowStepEmitter,
         aemUri: String,
@@ -31,9 +31,16 @@ final class LoadingArticleViewModel: ObservableObject {
         self.stepEmitter = stepEmitter
         self.articleAemRepository = articleAemRepository
         self.appLanguage = appLanguage
-        self.message = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.downloadInProgress.key)
-        
-        downloadArticleTask = Task { [weak self] in
+
+        Task {
+
+            message = await localizationServices.stringForLocaleElseEnglish(
+                localeIdentifier: appLanguage,
+                key: LocalizableStringKeys.downloadInProgress.key
+            )
+        }
+
+        downloadArticleTask = Task {
             
             let downloadError: Error?
             
@@ -62,12 +69,12 @@ final class LoadingArticleViewModel: ObservableObject {
             
             if let downloadError = downloadError {
                 
-                let errorTitle: String = localizationServices.stringForLocaleElseEnglish(
+                let errorTitle: String = await localizationServices.stringForLocaleElseEnglish(
                     localeIdentifier: appLanguage,
                     key: LocalizableStringKeys.error.key
                 )
                 
-                let errorMessage: String = getDownloadArticlesErrorMessage.getErrorMessage(appLanguage: appLanguage, error: downloadError)
+                let errorMessage: String = await getDownloadArticlesErrorMessage.getErrorMessage(appLanguage: appLanguage, error: downloadError)
                                 
                 let alertMessage = AlertMessage(title: errorTitle, message: errorMessage)
                 

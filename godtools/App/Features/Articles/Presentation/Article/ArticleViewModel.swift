@@ -123,16 +123,19 @@ final class ArticleViewModel: ObservableObject {
         return nil
     }
     
-    private func getArticleErrorMessage(error: Error) -> ArticlesErrorDomainModel {
+    private func getArticleErrorMessage(error: Error) async -> ArticlesErrorDomainModel {
         
-        let title: String = localizationServices.stringForLocaleElseEnglish(
+        let title: String = await localizationServices.stringForLocaleElseEnglish(
             localeIdentifier: appLanguage,
             key: LocalizableStringKeys.downloadError.key
         )
         
-        let message: String = getDownloadArticlesErrorMessage.getErrorMessage(appLanguage: appLanguage, error: error)
+        let message: String = await getDownloadArticlesErrorMessage.getErrorMessage(
+            appLanguage: appLanguage,
+            error: error
+        )
         
-        let downloadActionTitle: String = localizationServices.stringForLocaleElseEnglish(
+        let downloadActionTitle: String = await localizationServices.stringForLocaleElseEnglish(
             localeIdentifier: appLanguage,
             key: LocalizableStringKeys.articlesRetryDownloadButtonTitle.key
         )
@@ -199,11 +202,15 @@ extension ArticleViewModel {
     }
     
     func didLoadArticle(url: URL?, error: Error?) {
-        
+
         loadedArticleUrl = url
-        
+
         if let error = error {
-            loadArticleError = getArticleErrorMessage(error: error)
+
+            Task {
+
+                loadArticleError = await getArticleErrorMessage(error: error)
+            }
         }
         else {
             loadArticleError = nil
