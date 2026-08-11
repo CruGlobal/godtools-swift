@@ -9,25 +9,25 @@
 import Foundation
 import LocalizationServices
 
-protocol LocalizationServicesInterface {
+protocol LocalizationServicesInterface: Sendable {
     
-    func stringForEnglish(key: String) -> String
-    func stringForSystemElseEnglish(key: String) -> String
-    func stringForLocaleElseEnglish(localeIdentifier: String?, key: String) -> String
-    func stringForLocaleElseSystemElseEnglish(localeIdentifier: String?, key: String) -> String
-    func stringForFirstLocaleElseEnglish(localeIdentifiers: [String], key: String) -> String
+    func stringForEnglish(key: String) async -> String
+    func stringForSystemElseEnglish(key: String) async -> String
+    func stringForLocaleElseEnglish(localeIdentifier: String?, key: String) async -> String
+    func stringForLocaleElseSystemElseEnglish(localeIdentifier: String?, key: String) async -> String
+    func stringForFirstLocaleElseEnglish(localeIdentifiers: [String], key: String) async -> String
 }
 
 extension LocalizationServices: LocalizationServicesInterface {
     
-    func stringForFirstLocaleElseEnglish(localeIdentifiers: [String], key: String) -> String {
+    func stringForFirstLocaleElseEnglish(localeIdentifiers: [String], key: String) async -> String {
         
         for localeId in localeIdentifiers {
-            if let string = stringForLocale(localeIdentifier: localeId, key: key) {
+            if let string = await stringForLocale(localeIdentifier: localeId, key: key) {
                 return string
             }
         }
         
-        return stringForEnglish(key: key)
+        return await stringForEnglish(key: key)
     }
 }
