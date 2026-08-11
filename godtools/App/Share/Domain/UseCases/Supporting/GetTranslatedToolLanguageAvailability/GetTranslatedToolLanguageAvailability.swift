@@ -35,36 +35,67 @@ final class GetTranslatedToolLanguageAvailability {
         return ToolLanguageAvailabilityDomainModel(availabilityString: "", isAvailable: false)
     }
     
-    func getTranslatedLanguageAvailability(toolId: String, language: LanguageDataModel, translateInLanguage: AppLanguageDomainModel) -> ToolLanguageAvailabilityDomainModel {
+    func getTranslatedLanguageAvailability(
+        toolId: String,
+        language: LanguageDataModel,
+        translateInLanguage: AppLanguageDomainModel
+    ) async -> ToolLanguageAvailabilityDomainModel {
         
         guard let resource = resourcesRepository.getResourceById(id: toolId) else {
             return failedToDetermineLanguageAvailability
         }
         
-        return getTranslatedLanguageAvailability(resource: resource, language: language, translateInLanguage: translateInLanguage)
+        return await getTranslatedLanguageAvailability(
+            resource: resource,
+            language: language,
+            translateInLanguage: translateInLanguage
+        )
     }
     
-    func getTranslatedLanguageAvailability(resource: ResourceDataModel, language: AppLanguageDomainModel, translateInLanguage: AppLanguageDomainModel) -> ToolLanguageAvailabilityDomainModel {
+    func getTranslatedLanguageAvailability(
+        resource: ResourceDataModel,
+        language: AppLanguageDomainModel,
+        translateInLanguage: AppLanguageDomainModel
+    ) async -> ToolLanguageAvailabilityDomainModel {
         
         guard let languageModel = languagesRepository.getLanguageByCode(code: language) else {
             return failedToDetermineLanguageAvailability
         }
         
-        return getTranslatedLanguageAvailability(resource: resource, language: languageModel, translateInLanguage: translateInLanguage)
+        return await getTranslatedLanguageAvailability(
+            resource: resource,
+            language: languageModel,
+            translateInLanguage: translateInLanguage
+        )
     }
     
-    func getTranslatedLanguageAvailability(resource: ResourceDataModel, language: LanguageDataModel, translateInLanguage: AppLanguageDomainModel) -> ToolLanguageAvailabilityDomainModel {
+    func getTranslatedLanguageAvailability(
+        resource: ResourceDataModel,
+        language: LanguageDataModel,
+        translateInLanguage: AppLanguageDomainModel
+    ) async -> ToolLanguageAvailabilityDomainModel {
         
         guard let translateInLanguageModel = languagesRepository.getLanguageByCode(code: translateInLanguage) else {
             return failedToDetermineLanguageAvailability
         }
         
-        return getTranslatedLanguageAvailability(resource: resource, language: language, translateInLanguage: translateInLanguageModel)
+        return await getTranslatedLanguageAvailability(
+            resource: resource,
+            language: language,
+            translateInLanguage: translateInLanguageModel
+        )
     }
     
-    func getTranslatedLanguageAvailability(resource: ResourceDataModel, language: LanguageDataModel, translateInLanguage: LanguageDataModel) -> ToolLanguageAvailabilityDomainModel {
+    func getTranslatedLanguageAvailability(
+        resource: ResourceDataModel,
+        language: LanguageDataModel,
+        translateInLanguage: LanguageDataModel
+    ) async -> ToolLanguageAvailabilityDomainModel {
         
-        let translatedLanguageName: String = getTranslatedLanguageName.getLanguageName(language: language, translatedInLanguage: translateInLanguage.code)
+        let translatedLanguageName: String = await getTranslatedLanguageName.getLanguageName(
+            language: language,
+            translatedInLanguage: translateInLanguage.code
+        )
         
         let resourceSupportsLanguage: Bool = resource.supportsLanguage(languageId: language.id)
         
@@ -76,9 +107,16 @@ final class GetTranslatedToolLanguageAvailability {
         }
         else {
             
-            let languageNotAvailable: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage.code, key: Self.localizedKeyLanguageNotAvailable)
+            let languageNotAvailable: String = await localizationServices.stringForLocaleElseEnglish(
+                localeIdentifier: translateInLanguage.code,
+                key: Self.localizedKeyLanguageNotAvailable
+            )
             
-            availabilityString = String(format: languageNotAvailable, locale: Locale(identifier: translateInLanguage.code), translatedLanguageName)
+            availabilityString = String(
+                format: languageNotAvailable,
+                locale: Locale(identifier: translateInLanguage.code),
+                translatedLanguageName
+            )
         }
         
         return ToolLanguageAvailabilityDomainModel(

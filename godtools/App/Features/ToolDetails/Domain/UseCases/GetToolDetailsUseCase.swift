@@ -60,7 +60,7 @@ final class GetToolDetailsUseCase {
         }
         
         let numberOfViewsString: String = String(
-            format: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.totalViews.key).capitalized,
+            format: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.totalViews.key).capitalized,
             locale: Locale(identifier: appLanguage),
             toolDataModel.totalViews
         )
@@ -86,7 +86,7 @@ final class GetToolDetailsUseCase {
             name: translation.translatedName,
             numberOfViews: numberOfViewsString,
             versions: toolVersions,
-            versionsDescription: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.toolDetailsVersionsMessage.key)
+            versionsDescription: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.toolDetailsVersionsMessage.key)
         )
         
         return toolDetails
@@ -96,8 +96,13 @@ final class GetToolDetailsUseCase {
         
         let languagesDataModels: [LanguageDataModel] = try await languagesRepository.getLanguagesByIds(ids: languageIds)
         
-        let languageNamesTranslatedInToolLanguage: [String] = languagesDataModels.map { (languageDataModel: LanguageDataModel) in
-            getTranslatedLanguageName.getLanguageName(language: languageDataModel, translatedInLanguage: translateInLanguage)
+        var languageNamesTranslatedInToolLanguage: [String] = Array()
+
+        for languageDataModel in languagesDataModels {
+
+            languageNamesTranslatedInToolLanguage.append(
+                await getTranslatedLanguageName.getLanguageName(language: languageDataModel, translatedInLanguage: translateInLanguage)
+            )
         }
         
         let languagesAvailable: String = languageNamesTranslatedInToolLanguage.map({$0}).sorted(by: { $0 < $1 }).joined(separator: ", ")
@@ -114,12 +119,12 @@ final class GetToolDetailsUseCase {
         let resourceVariants: [ResourceDataModel] = try await resourcesRepository
             .getResourceVariants(resourceId: metaToolId)
         
-        let toolPrimaryLanguageName: String = getTranslatedLanguageName.getLanguageName(language: toolPrimaryLanguage, translatedInLanguage: translateInLanguage)
+        let toolPrimaryLanguageName: String = await getTranslatedLanguageName.getLanguageName(language: toolPrimaryLanguage, translatedInLanguage: translateInLanguage)
         
         let toolParallelLanguageName: String?
         
         if let toolParallelLanguage = toolParallelLanguage {
-            toolParallelLanguageName = getTranslatedLanguageName.getLanguageName(language: toolParallelLanguage, translatedInLanguage: translateInLanguage)
+            toolParallelLanguageName = await getTranslatedLanguageName.getLanguageName(language: toolParallelLanguage, translatedInLanguage: translateInLanguage)
         }
         else {
             toolParallelLanguageName = nil
@@ -154,7 +159,7 @@ final class GetToolDetailsUseCase {
                 dataModelId: resourceVariant.id,
                 description: description,
                 name: name,
-                numberOfLanguages: getNumberOfLanguages(translateInLanguage: translateInLanguage, numberOfLanguages: resourceVariant.languageIds.count),
+                numberOfLanguages: await getNumberOfLanguages(translateInLanguage: translateInLanguage, numberOfLanguages: resourceVariant.languageIds.count),
                 toolLanguageName: toolPrimaryLanguageName,
                 toolLanguageNameIsSupported: getToolSupportsLanguage(resource: resourceVariant, language: toolPrimaryLanguage),
                 toolParallelLanguageName: toolParallelLanguageName,
@@ -167,9 +172,9 @@ final class GetToolDetailsUseCase {
         return toolVersions
     }
     
-    private func getNumberOfLanguages(translateInLanguage: BCP47LanguageIdentifier, numberOfLanguages: Int) -> String {
+    private func getNumberOfLanguages(translateInLanguage: BCP47LanguageIdentifier, numberOfLanguages: Int) async -> String {
         
-        let localizedNumberOfLanguages = localizationServices.stringForLocaleElseSystemElseEnglish(
+        let localizedNumberOfLanguages = await localizationServices.stringForLocaleElseSystemElseEnglish(
             localeIdentifier: translateInLanguage,
             key: LocalizableStringDictKeys.toolDetailsToolVersionNumberOfLanguages.key
         )

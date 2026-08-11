@@ -45,14 +45,13 @@ class AppInterfaceStringNavBarItemController: NavBarItemController {
         
         getCurrentAppLanguageUseCase.execute()
             .map { (appLanguage: AppLanguageDomainModel) in
-                
-                let interfaceString: String = localizationServices.stringForLocaleElseEnglish(
-                    localeIdentifier: appLanguage,
-                    key: localizedStringKey
-                )
-                
-                return Just(interfaceString)
-                    .eraseToAnyPublisher()
+
+                return AnyPublisher() {
+                    return await localizationServices.stringForLocaleElseEnglish(
+                        localeIdentifier: appLanguage,
+                        key: localizedStringKey
+                    )
+                }
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)

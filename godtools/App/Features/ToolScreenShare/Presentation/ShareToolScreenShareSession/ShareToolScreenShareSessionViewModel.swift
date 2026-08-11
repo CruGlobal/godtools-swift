@@ -23,18 +23,16 @@ final class ShareToolScreenShareSessionViewModel {
         stepEmitter: FlowStepEmitter,
         appLanguage: AppLanguageDomainModel,
         shareUrl: String,
-        getShareToolScreenShareSessionStringsUseCase: GetShareToolScreenShareSessionStringsUseCase,
+        strings: ShareToolScreenShareSessionStringsDomainModel,
         trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     ) {
             
         self.stepEmitter = stepEmitter
         self.appLanguage = appLanguage
         self.shareUrl = shareUrl
+        self.strings = strings
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
-        
-        strings = getShareToolScreenShareSessionStringsUseCase
-            .execute(appLanguage: appLanguage)
-        
+                
         self.shareMessage = String.localizedStringWithFormat(strings.shareMessage, shareUrl)
     }
     
