@@ -30,18 +30,21 @@ extension GTFlow {
         message: String,
         acceptTapped: (() -> Void)? = nil
     ) {
-        
+
         let localizationServices: LocalizationServicesInterface = appDiContainer.core.dataLayer.getLocalizationServices()
-                
-        let view = AlertMessageView(
-            title: title,
-            message: message,
-            acceptTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.ok.key),
-            cancelTitle: nil,
-            acceptTapped: acceptTapped,
-            cancelTapped: nil
-        )
-        
-        presentView(view: view.controller, animated: true, completion: nil)
+
+        Task {
+
+            let view = AlertMessageView(
+                title: title,
+                message: message,
+                acceptTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.ok.key),
+                cancelTitle: nil,
+                acceptTapped: acceptTapped,
+                cancelTapped: nil
+            )
+
+            presentView(view: view.controller, animated: true, completion: nil)
+        }
     }
 }

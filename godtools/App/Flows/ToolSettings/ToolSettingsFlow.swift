@@ -72,21 +72,24 @@ class ToolSettingsFlow: GTFlow {
             
             let toolAbbreviation: String = appDiContainer.core.dataLayer.getResourcesRepository().getResourceById(id: toolSettingsObserver.toolId)?.abbreviation ?? ""
             
-            let shareToolFlow = ShareToolFlow(
-                appDiContainer: appDiContainer,
-                toolId: toolSettingsObserver.toolId,
-                toolLanguageId: toolSettingsObserver.languages.selectedLanguageId,
-                pageNumber: toolSettingsObserver.pageNumber,
-                appLanguage: appLanguage,
-                toolAnalyticsAbbreviation: toolAbbreviation
-            )
-            
-            dismissInitialView(animated: true, completion: { [weak self] in
-                
-                self?.presentFlow(
-                    flow: shareToolFlow
+            Task {
+
+                let shareToolFlow = await ShareToolFlow(
+                    appDiContainer: appDiContainer,
+                    toolId: toolSettingsObserver.toolId,
+                    toolLanguageId: toolSettingsObserver.languages.selectedLanguageId,
+                    pageNumber: toolSettingsObserver.pageNumber,
+                    appLanguage: appLanguage,
+                    toolAnalyticsAbbreviation: toolAbbreviation
                 )
-            })
+
+                dismissInitialView(animated: true, completion: { [weak self] in
+
+                    self?.presentFlow(
+                        flow: shareToolFlow
+                    )
+                })
+            }
             
         case .shareToolFlowCompleted( _):
             
@@ -197,7 +200,7 @@ class ToolSettingsFlow: GTFlow {
                 switch createSessionTrigger {
                     
                 case .generateQRCodeTappedFromScreenShareTutorial:
-                   
+                    
                     toggleInitialView(
                         view: getToolScreenShareQRCodeView(shareUrl: remoteShareUrl),
                         animated: true
@@ -205,13 +208,21 @@ class ToolSettingsFlow: GTFlow {
                     
                 case .shareLinkTappedFromScreenShareTutorial:
                     
-                    toggleInitialView(
-                        view: getShareToolScreenShareSessionView(
-                            appLanguage: appLanguage,
-                            shareUrl: remoteShareUrl
-                        ),
-                        animated: true
-                    )
+                    Task {
+                        
+                        let strings = await appDiContainer.feature.toolScreenShare.domainLayer.getShareToolScreenShareSessionStringsUseCase().execute(
+                            appLanguage: appLanguage
+                        )
+                        
+                        toggleInitialView(
+                            view: getShareToolScreenShareSessionView(
+                                appLanguage: appLanguage,
+                                shareUrl: remoteShareUrl,
+                                strings: strings
+                            ),
+                            animated: true
+                        )
+                    }
                 }
                 
             case .failure(let error):
@@ -219,11 +230,14 @@ class ToolSettingsFlow: GTFlow {
                 switch error {
                 
                 case .timedOut:
-                   
-                    presentView(
-                        view: getCreatingToolScreenShareSessionTimedOutView(appLanguage: appLanguage),
-                        animated: true
-                    )
+
+                    Task {
+
+                        presentView(
+                            view: await getCreatingToolScreenShareSessionTimedOutView(appLanguage: appLanguage),
+                            animated: true
+                        )
+                    }
                 }
             }
             

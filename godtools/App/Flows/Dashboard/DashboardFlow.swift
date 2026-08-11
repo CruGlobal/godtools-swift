@@ -1003,9 +1003,9 @@ extension DashboardFlow {
     private func getConfirmRemoveToolFromFavoritesAlertView(
         toolId: String,
         didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?
-    ) -> UIViewController {
-        
-        let viewModel = ConfirmRemoveToolFromFavoritesAlertViewModel(
+    ) async -> UIViewController {
+
+        let viewModel = await ConfirmRemoveToolFromFavoritesAlertViewModel(
             toolId: toolId,
             appLanguage: appLanguage,
             getConfirmRemoveToolFromFavoritesStringsUseCase: appDiContainer.feature.favorites.domainLayer.getConfirmRemoveToolFromFavoritesStringsUseCase(),
@@ -1019,12 +1019,15 @@ extension DashboardFlow {
     }
     
     private func presentConfirmRemoveToolFromFavoritesAlertView(toolId: String, didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?, animated: Bool) {
-        
-        let view = getConfirmRemoveToolFromFavoritesAlertView(
-            toolId: toolId,
-            didConfirmToolRemovalSubject: didConfirmToolRemovalSubject
-        )
-        
-        presentView(view: view, animated: animated)
+
+        Task {
+
+            let view = await getConfirmRemoveToolFromFavoritesAlertView(
+                toolId: toolId,
+                didConfirmToolRemovalSubject: didConfirmToolRemovalSubject
+            )
+
+            presentView(view: view, animated: animated)
+        }
     }
 }

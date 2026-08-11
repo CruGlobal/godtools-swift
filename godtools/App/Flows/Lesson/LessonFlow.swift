@@ -114,16 +114,20 @@ final class LessonFlow: GTFlow {
             trackSwipeTutorialViewed()
             
         case .shareLessonTappedFromLesson(let pageNumber, let languageId):
-            presentFlow(
-                flow: ShareToolFlow(
-                    appDiContainer: appDiContainer,
-                    toolId: lesson.id,
-                    toolLanguageId: languageId,
-                    pageNumber: pageNumber,
-                    appLanguage: appLanguage,
-                    toolAnalyticsAbbreviation: lesson.abbreviation
+
+            Task {
+
+                presentFlow(
+                    flow: await ShareToolFlow(
+                        appDiContainer: appDiContainer,
+                        toolId: lesson.id,
+                        toolLanguageId: languageId,
+                        pageNumber: pageNumber,
+                        appLanguage: appLanguage,
+                        toolAnalyticsAbbreviation: lesson.abbreviation
+                    )
                 )
-            )
+            }
             
         case .shareToolFlowCompleted( _):
             dismissFlow()
