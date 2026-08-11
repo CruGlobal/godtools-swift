@@ -17,18 +17,18 @@ final class GetFavoritesStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> FavoritesStringsDomainModel {
+    func execute(appLanguage: AppLanguageDomainModel) async -> FavoritesStringsDomainModel {
         
         let strings = FavoritesStringsDomainModel(
-            tutorialMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.openTutorialShowTutorialLabelText.key),
-            openTutorialActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.openTutorialOpenTutorialButtonTitle.key),
-            welcomeTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.favoritesPageTitle.key),
-            featuredLessonsTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.favoritesFavoriteLessonsTitle.key),
-            favoriteToolsTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.favoritesFavoriteToolsTitle.key),
-            viewAllFavoritesActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.favoritesFavoriteToolsViewAll.key),
-            noFavoritedToolsTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.favoritesNoToolsTitle.key),
-            noFavoritedToolsDescription: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.favoritesNoToolsDescription.key),
-            noFavoritedToolsActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.favoritesNoToolsButton.key)
+            tutorialMessage: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.openTutorialShowTutorialLabelText.key),
+            openTutorialActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.openTutorialOpenTutorialButtonTitle.key),
+            welcomeTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.favoritesPageTitle.key),
+            featuredLessonsTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.favoritesFavoriteLessonsTitle.key),
+            favoriteToolsTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.favoritesFavoriteToolsTitle.key),
+            viewAllFavoritesActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.favoritesFavoriteToolsViewAll.key),
+            noFavoritedToolsTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.favoritesNoToolsTitle.key),
+            noFavoritedToolsDescription: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.favoritesNoToolsDescription.key),
+            noFavoritedToolsActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.favoritesNoToolsButton.key)
         )
 
         return strings

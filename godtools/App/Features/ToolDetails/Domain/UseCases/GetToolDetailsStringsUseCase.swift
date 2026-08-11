@@ -17,21 +17,21 @@ final class GetToolDetailsStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: String) -> ToolDetailsStringsDomainModel {
+    func execute(appLanguage: String) async -> ToolDetailsStringsDomainModel {
                         
         let localeId: String = appLanguage
         
         let strings = ToolDetailsStringsDomainModel(
-            aboutActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolDetailsAboutTitle.key),
-            addToFavoritesActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.addToFavorites.key),
-            bibleReferencesTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolDetailsBibleReferencesTitle.key),
-            conversationStartersTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolDetailsConversationStartersTitle.key),
-            languagesAvailableTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsLanguagesAvailableTitle.key),
-            learnToShareThisToolActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolDetailsLearnToShareToolButtonTitle.key),
-            openToolActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolinfoOpentool.key),
-            outlineTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolDetailsOutlineTitle.key),
-            removeFromFavoritesActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.removeFromFavorites.key),
-            versionsActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolDetailsVersionsTitle.key)
+            aboutActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolDetailsAboutTitle.key),
+            addToFavoritesActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.addToFavorites.key),
+            bibleReferencesTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolDetailsBibleReferencesTitle.key),
+            conversationStartersTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolDetailsConversationStartersTitle.key),
+            languagesAvailableTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsLanguagesAvailableTitle.key),
+            learnToShareThisToolActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolDetailsLearnToShareToolButtonTitle.key),
+            openToolActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolinfoOpentool.key),
+            outlineTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolDetailsOutlineTitle.key),
+            removeFromFavoritesActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.removeFromFavorites.key),
+            versionsActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolDetailsVersionsTitle.key)
         )
         
         return strings

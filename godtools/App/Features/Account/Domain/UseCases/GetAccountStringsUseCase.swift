@@ -18,25 +18,25 @@ final class GetAccountStringsUseCase {
         self.dateService = dateService
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AccountStringsDomainModel {
+    func execute(appLanguage: AppLanguageDomainModel) async -> AccountStringsDomainModel {
         
         let localeId: String = appLanguage.localeId
         
         let strings = AccountStringsDomainModel(
-            navTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.accountNavTitle.key),
-            activityButtonTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.accountActivityTitle.key),
-            myActivitySectionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.accountActivitySectionTitle.key),
-            badgesSectionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.accountBadgesSectionTitle.key),
-            globalActivityButtonTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.accountGlobalActivityTitle.key),
-            globalAnalyticsTitle: getGlobalAnalyticsTitle(localeId: localeId)
+            navTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.accountNavTitle.key),
+            activityButtonTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.accountActivityTitle.key),
+            myActivitySectionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.accountActivitySectionTitle.key),
+            badgesSectionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.accountBadgesSectionTitle.key),
+            globalActivityButtonTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.accountGlobalActivityTitle.key),
+            globalAnalyticsTitle: await getGlobalAnalyticsTitle(localeId: localeId)
         )
         
         return strings
     }
     
-    private func getGlobalAnalyticsTitle(localeId: BCP47LanguageIdentifier) -> String {
+    private func getGlobalAnalyticsTitle(localeId: BCP47LanguageIdentifier) async -> String {
     
-        let localizedGlobalActivityTitle = localizationServices.stringForLocaleElseEnglish(
+        let localizedGlobalActivityTitle = await localizationServices.stringForLocaleElseEnglish(
             localeIdentifier: localeId,
             key: LocalizableStringKeys.accountActivityGlobalAnalyticsHeaderTitle.key
         )

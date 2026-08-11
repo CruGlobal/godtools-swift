@@ -19,11 +19,11 @@ final class GetShareToolStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(toolId: String, toolLanguageId: String, pageNumber: Int, appLanguage: AppLanguageDomainModel) -> ShareToolStringsDomainModel {
+    func execute(toolId: String, toolLanguageId: String, pageNumber: Int, appLanguage: AppLanguageDomainModel) async -> ShareToolStringsDomainModel {
         
-        let qrCodeActionTitle: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.toolScreenShareQrCodeTitle.key)
+        let qrCodeActionTitle: String = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.toolScreenShareQrCodeTitle.key)
         
-        let shareMessage = getShareMessage(
+        let shareMessage = await getShareMessage(
             toolId: toolId,
             toolLanguageId: toolLanguageId,
             pageNumber: pageNumber,
@@ -38,11 +38,11 @@ final class GetShareToolStringsUseCase {
         return strings
     }
     
-    private func getShareMessage(toolId: String, toolLanguageId: String, pageNumber: Int, appLanguage: AppLanguageDomainModel) -> String {
+    private func getShareMessage(toolId: String, toolLanguageId: String, pageNumber: Int, appLanguage: AppLanguageDomainModel) async -> String {
         
         let toolUrl: String? = getShareToolUrl.getUrl(toolId: toolId, toolLanguageId: toolLanguageId, pageNumber: pageNumber)
         
-        let localizedShareToolMessage: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.tractShareMessage.key)
+        let localizedShareToolMessage: String = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.tractShareMessage.key)
         
         guard let toolUrl = toolUrl else {
             

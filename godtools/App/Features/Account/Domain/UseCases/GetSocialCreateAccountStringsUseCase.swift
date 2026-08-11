@@ -17,16 +17,16 @@ final class GetSocialCreateAccountStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> SocialCreateAccountStringsDomainModel {
+    func execute(appLanguage: AppLanguageDomainModel) async -> SocialCreateAccountStringsDomainModel {
         
         let localeId: String = appLanguage
         
         let strings = SocialCreateAccountStringsDomainModel(
-            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.createAccountTitle.key),
-            subtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.createAccountSubtitle.key),
-            createWithAppleActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.signInApple.key),
-            createWithFacebookActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.signInFacebook.key),
-            createWithGoogleActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.signInGoogle.key)
+            title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.createAccountTitle.key),
+            subtitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.createAccountSubtitle.key),
+            createWithAppleActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.signInApple.key),
+            createWithFacebookActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.signInFacebook.key),
+            createWithGoogleActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.signInGoogle.key)
         )
         
         return strings

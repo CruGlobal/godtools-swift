@@ -17,7 +17,7 @@ final class GetDownloadArticlesErrorMessage {
         self.localizationServices = localizationServices
     }
     
-    func getErrorMessage(appLanguage: AppLanguageDomainModel, error: Error) -> String {
+    func getErrorMessage(appLanguage: AppLanguageDomainModel, error: Error) async -> String {
         
         if error.isUrlErrorCancelledCode {
             
@@ -25,14 +25,14 @@ final class GetDownloadArticlesErrorMessage {
         }
         else if error.isUrlErrorNotConnectedToInternetCode {
             
-            return localizationServices.stringForLocaleElseEnglish(
+            return await localizationServices.stringForLocaleElseEnglish(
                 localeIdentifier: appLanguage,
                 key: LocalizableStringKeys.noInternet.key
             )
         }
         else {
             
-            return localizationServices.stringForLocaleElseEnglish(
+            return await localizationServices.stringForLocaleElseEnglish(
                 localeIdentifier: appLanguage,
                 key: LocalizableStringKeys.downloadError.key
             )

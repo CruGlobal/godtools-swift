@@ -17,14 +17,14 @@ final class GetCreatingToolScreenShareSessionTimedOutStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> CreatingToolScreenShareSessionTimedOutStringsDomainModel {
+    func execute(appLanguage: AppLanguageDomainModel) async -> CreatingToolScreenShareSessionTimedOutStringsDomainModel {
         
         let localeId: String = appLanguage
                 
         let strings = CreatingToolScreenShareSessionTimedOutStringsDomainModel(
             title: "Timed Out",
             message: "Timed out creating the session for tool screen share.",
-            acceptActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.ok.key))
+            acceptActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.ok.key))
         )
         
         return strings

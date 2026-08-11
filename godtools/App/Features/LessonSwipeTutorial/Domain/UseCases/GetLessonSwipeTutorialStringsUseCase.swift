@@ -16,13 +16,13 @@ final class GetLessonSwipeTutorialStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(translateInLanguage: AppLanguageDomainModel) -> LessonSwipeTutorialStringsDomainModel {
+    func execute(translateInLanguage: AppLanguageDomainModel) async -> LessonSwipeTutorialStringsDomainModel {
         
         let localeId: String = translateInLanguage.localeId
         
         let strings = LessonSwipeTutorialStringsDomainModel(
-            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsSwipeTutorialTitle.key),
-            closeButtonText: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsSwipeTutorialButtonText.key)
+            title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsSwipeTutorialTitle.key),
+            closeButtonText: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsSwipeTutorialButtonText.key)
         )
         
         return strings

@@ -25,13 +25,13 @@ final class GetLanguageSettingsStringsUseCase {
         self.appLanguagesRepository = appLanguagesRepository
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> LanguageSettingsStringsDomainModel {
+    func execute(appLanguage: AppLanguageDomainModel) async -> LanguageSettingsStringsDomainModel {
         
         let localeId: String = appLanguage
         
         let numberOfAppLanguages: Int = appLanguagesRepository.numberOfAppLanguages
         
-        let localizedNumberOfLanguagesAvailable = localizationServices.stringForLocaleElseSystemElseEnglish(
+        let localizedNumberOfLanguagesAvailable = await localizationServices.stringForLocaleElseSystemElseEnglish(
             localeIdentifier: appLanguage,
             key: LocalizableStringDictKeys.languageSettingsAppLanguageNumberAvailable.key
         )
@@ -43,14 +43,14 @@ final class GetLanguageSettingsStringsUseCase {
         )
         
         return LanguageSettingsStringsDomainModel(
-            navTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsNavTitle.key),
-            appInterfaceLanguageTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsAppInterfaceTitle.key),
+            navTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsNavTitle.key),
+            appInterfaceLanguageTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsAppInterfaceTitle.key),
             numberOfAppLanguagesAvailable: numberOfAppLanguagesInterfaceString,
-            setAppLanguageMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsAppInterfaceMessage.key),
-            chooseAppLanguageButtonTitle: getTranslatedLanguageName.getLanguageName(language: appLanguage, translatedInLanguage: appLanguage),
-            toolLanguagesAvailableOfflineTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsToolLanguagesAvailableOfflineTitle.key),
-            downloadToolsForOfflineMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsToolLanguagesAvailableOfflineMessage.key),
-            editDownloadedLanguagesButtonTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsToolLanguagesAvailableOfflineEditDownloadedLanguagesButtonTitle.key)
+            setAppLanguageMessage: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsAppInterfaceMessage.key),
+            chooseAppLanguageButtonTitle: await getTranslatedLanguageName.getLanguageName(language: appLanguage, translatedInLanguage: appLanguage),
+            toolLanguagesAvailableOfflineTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsToolLanguagesAvailableOfflineTitle.key),
+            downloadToolsForOfflineMessage: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsToolLanguagesAvailableOfflineMessage.key),
+            editDownloadedLanguagesButtonTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsToolLanguagesAvailableOfflineEditDownloadedLanguagesButtonTitle.key)
         )
     }
 }

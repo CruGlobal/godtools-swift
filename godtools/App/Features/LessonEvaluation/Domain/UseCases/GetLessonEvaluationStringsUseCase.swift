@@ -17,17 +17,17 @@ final class GetLessonEvaluationStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> LessonEvaluationStringsDomainModel {
+    func execute(appLanguage: AppLanguageDomainModel) async -> LessonEvaluationStringsDomainModel {
         
         let localeId: String = appLanguage
         
         let strings = LessonEvaluationStringsDomainModel(
-            title: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonEvaluationTitle.key),
-            wasThisHelpful: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonEvaluationWasThisHelpful.key),
-            yesActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.yes.key),
-            noActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.no.key),
-            shareFaithReadiness: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonEvaluationShareFaith.key),
-            sendFeedbackActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonEvaluationSendButtonTitle.key)
+            title: await localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonEvaluationTitle.key),
+            wasThisHelpful: await localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonEvaluationWasThisHelpful.key),
+            yesActionTitle: await localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.yes.key),
+            noActionTitle: await localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.no.key),
+            shareFaithReadiness: await localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonEvaluationShareFaith.key),
+            sendFeedbackActionTitle: await localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonEvaluationSendButtonTitle.key)
         )
         
         return strings

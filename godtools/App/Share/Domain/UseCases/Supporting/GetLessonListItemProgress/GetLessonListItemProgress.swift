@@ -30,7 +30,10 @@ final class GetLessonListItemProgress {
         self.getTranslatedPercentage = getTranslatedPercentage
     }
     
-    func getLessonProgress(lesson: ResourceDataModel, appLanguage: AppLanguageDomainModel) throws -> LessonListItemProgressDomainModel {
+    func getLessonProgress(
+        lesson: ResourceDataModel,
+        appLanguage: AppLanguageDomainModel
+    ) async throws -> LessonListItemProgressDomainModel {
         
         let lessonId: String = lesson.id
         let lessonCompletionUserCounterId: String = UserCounterNames.shared.LESSON_COMPLETION(tool: lesson.abbreviation)
@@ -40,14 +43,14 @@ final class GetLessonListItemProgress {
         
         if try userCountersRepository.getCachedCounter(id: lessonCompletionUserCounterId) != nil || lessonProgressIsComplete {
             
-            let completeString = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage.localeId, key: LocalizableStringKeys.lessonsLessonCompleted.key)
+            let completeString = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage.localeId, key: LocalizableStringKeys.lessonsLessonCompleted.key)
             return .complete(completeString: completeString)
         }
         else if let lessonProgress = lessonProgress {
             
             let progress: Double = lessonProgress.progress
             
-            let formatString = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage.localeId, key: LocalizableStringKeys.lessonsCompletionProgress.key)
+            let formatString = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage.localeId, key: LocalizableStringKeys.lessonsCompletionProgress.key)
             let percentageString = getTranslatedPercentage.getTranslatedPercentage(percentValue: progress, translateInLanguage: appLanguage)
             
             let progressString = String(
