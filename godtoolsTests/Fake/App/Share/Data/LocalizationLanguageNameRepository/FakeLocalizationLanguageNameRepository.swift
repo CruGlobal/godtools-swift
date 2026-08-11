@@ -9,7 +9,7 @@
 import Foundation
 @testable import godtools
 
-class FakeLocalizationLanguageNameRepository: LocalizationLanguageNameInterface {
+final class FakeLocalizationLanguageNameRepository: LocalizationLanguageNameInterface {
     
     private let localizationServices: FakeLocalizationServices
     
@@ -18,8 +18,11 @@ class FakeLocalizationLanguageNameRepository: LocalizationLanguageNameInterface 
         self.localizationServices = localizationServices
     }
     
-    func getLanguageName(languageId: BCP47LanguageIdentifier, translatedInLanguage: BCP47LanguageIdentifier) -> String? {
+    func getLanguageName(
+        languageId: BCP47LanguageIdentifier,
+        translatedInLanguage: BCP47LanguageIdentifier
+    ) async -> String? {
         
-        return localizationServices.stringForLocaleElseEnglish(localeIdentifier: translatedInLanguage, key: languageId)
+        return await localizationServices.stringForLocaleElseEnglish(localeIdentifier: translatedInLanguage, key: languageId)
     }
 }
