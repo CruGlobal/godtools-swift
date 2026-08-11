@@ -30,7 +30,7 @@ struct GetLessonSwipeTutorialStringsUseCaseTests {
 
         let useCase = getUseCase()
 
-        let strings: LessonSwipeTutorialStringsDomainModel = useCase.execute(translateInLanguage: argument.translateInLanguage)
+        let strings: LessonSwipeTutorialStringsDomainModel = await useCase.execute(translateInLanguage: argument.translateInLanguage)
 
         #expect(strings.title == "\(argument.translateInLanguage):\(LocalizableStringKeys.lessonsSwipeTutorialTitle.key)")
         #expect(strings.closeButtonText == "\(argument.translateInLanguage):\(LocalizableStringKeys.lessonsSwipeTutorialButtonText.key)")

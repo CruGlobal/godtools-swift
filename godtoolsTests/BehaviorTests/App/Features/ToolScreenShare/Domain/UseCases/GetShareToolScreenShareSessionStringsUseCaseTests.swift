@@ -30,7 +30,7 @@ struct GetShareToolScreenShareSessionStringsUseCaseTests {
 
         let useCase = getUseCase()
 
-        let strings: ShareToolScreenShareSessionStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
+        let strings: ShareToolScreenShareSessionStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.shareMessage == "\(argument.appLanguage):\(LocalizableStringKeys.shareToolRemoteLinkMessage.key)")
         #expect(strings.qrCodeActionTitle == "\(argument.appLanguage):\(LocalizableStringKeys.toolScreenShareQrCodeTitle.key)")

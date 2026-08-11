@@ -30,7 +30,7 @@ struct GetSearchBarStringsUseCaseTests {
 
         let useCase = getUseCase()
 
-        let strings: SearchBarStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
+        let strings: SearchBarStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.cancel == "\(argument.appLanguage):\(LocalizableStringKeys.cancel.key)")
     }

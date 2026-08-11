@@ -30,7 +30,7 @@ struct GetToolsStringsUseCaseTests {
 
         let useCase = getUseCase()
 
-        let strings: ToolsStringsDomainModel = useCase.execute(translateInLanguage: argument.translateInLanguage)
+        let strings: ToolsStringsDomainModel = await useCase.execute(translateInLanguage: argument.translateInLanguage)
 
         #expect(strings.favoritingToolBannerMessage == "\(argument.translateInLanguage):\(LocalizableStringKeys.toolOfflineFavoriteMessage.key)")
         #expect(strings.toolSpotlightTitle == "\(argument.translateInLanguage):\(LocalizableStringKeys.toolsSpotlightTitle.key)")

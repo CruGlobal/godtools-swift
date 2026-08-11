@@ -30,7 +30,7 @@ struct GetToolSettingsStringsUseCaseTests {
 
         let useCase = getUseCase()
 
-        let strings: ToolSettingsStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
+        let strings: ToolSettingsStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.chooseParallelLanguageActionTitle == "\(argument.appLanguage):\(LocalizableStringKeys.toolSettingsChooseLanguageNoParallelLanguageTitle.key)")
         #expect(strings.title == "\(argument.appLanguage):\(LocalizableStringKeys.toolSettingsTitle.key)")

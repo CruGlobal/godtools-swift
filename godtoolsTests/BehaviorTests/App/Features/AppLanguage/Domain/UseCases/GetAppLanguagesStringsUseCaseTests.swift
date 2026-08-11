@@ -30,7 +30,7 @@ struct GetAppLanguagesStringsUseCaseTests {
 
         let useCase = getUseCase()
 
-        let strings: AppLanguagesStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
+        let strings: AppLanguagesStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.navTitle == "\(argument.appLanguage):\(LocalizableStringKeys.languageSettingsAppLanguageTitle.key)")
     }

@@ -30,7 +30,7 @@ struct GetShareToolQRCodeStringsUseCaseTests {
 
         let useCase = getUseCase()
 
-        let strings: ShareToolQRCodeStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
+        let strings: ShareToolQRCodeStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.message == "\(argument.appLanguage):\(LocalizableStringKeys.shareToolQrCodeMessage.key)")
         #expect(strings.closeActionTitle == "\(argument.appLanguage):\(LocalizableStringKeys.toolScreenShareQrCodeCloseButtonTitle.key)")

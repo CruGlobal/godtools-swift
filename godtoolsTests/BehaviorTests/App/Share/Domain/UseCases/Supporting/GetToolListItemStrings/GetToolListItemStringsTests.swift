@@ -31,7 +31,7 @@ struct GetToolListItemStringsTests {
             localizationServices: getLocalizationServices()
         )
         
-        let strings = getToolListItemStrings
+        let strings = await getToolListItemStrings
             .getStrings(appLanguage: LanguageCodeDomainModel.spanish.rawValue)
         
         #expect(strings.openToolActionTitle == openToolInSpanish)

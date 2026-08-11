@@ -24,7 +24,7 @@ struct GetLanguageSettingsStringsUseCaseTests {
         
         let useCase = try await getUseCase()
         
-        let strings = useCase
+        let strings = await useCase
             .execute(appLanguage: LanguageCodeDomainModel.spanish.rawValue)
                           
         #expect(strings.navTitle == "Ajustes de idioma")
@@ -62,7 +62,7 @@ struct GetLanguageSettingsStringsUseCaseTests {
         
         let useCase = try await getUseCase()
         
-        let strings = useCase
+        let strings = await useCase
             .execute(appLanguage: argument.appLanguage.rawValue)
         
         #expect(strings.chooseAppLanguageButtonTitle == argument.expectedValue)
@@ -80,7 +80,7 @@ struct GetLanguageSettingsStringsUseCaseTests {
                 
         let useCase = try await getUseCase()
         
-        let strings = useCase
+        let strings = await useCase
             .execute(appLanguage: LanguageCodeDomainModel.english.rawValue)
 
         let expectedValue: String = "\(getAppLanguages().count) Languages available"

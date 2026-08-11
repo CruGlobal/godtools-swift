@@ -30,7 +30,7 @@ struct GetCreatingToolScreenShareSessionStringsUseCaseTests {
 
         let useCase = getUseCase()
 
-        let strings: CreatingToolScreenShareSessionStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
+        let strings: CreatingToolScreenShareSessionStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.creatingSessionMessage == "\(argument.appLanguage):\(LocalizableStringKeys.loadToolRemoteSessionMessage.key)")
     }

@@ -30,7 +30,7 @@ struct GetSocialCreateAccountStringsUseCaseTests {
 
         let useCase = getUseCase()
 
-        let strings: SocialCreateAccountStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
+        let strings: SocialCreateAccountStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.title == "\(argument.appLanguage):\(LocalizableStringKeys.createAccountTitle.key)")
         #expect(strings.subtitle == "\(argument.appLanguage):\(LocalizableStringKeys.createAccountSubtitle.key)")

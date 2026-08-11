@@ -30,7 +30,7 @@ struct GetDeleteAccountProgressStringsUseCaseTests {
 
         let useCase = getUseCase()
 
-        let strings: DeleteAccountProgressStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
+        let strings: DeleteAccountProgressStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.title == "\(argument.appLanguage):\(LocalizableStringKeys.deleteAccountProgressTitle.key)")
     }

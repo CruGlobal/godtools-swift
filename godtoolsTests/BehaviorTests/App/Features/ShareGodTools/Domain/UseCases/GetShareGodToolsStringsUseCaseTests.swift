@@ -30,7 +30,7 @@ struct GetShareGodToolsStringsUseCaseTests {
 
         let useCase = getUseCase()
 
-        let strings: ShareGodToolsStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
+        let strings: ShareGodToolsStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.shareMessage == "\(argument.appLanguage):\(LocalizableStringKeys.shareGodToolsShareSheetText.key)")
     }
