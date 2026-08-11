@@ -9,7 +9,7 @@
 import Foundation
 @testable import godtools
 
-class FakeDeviceSystemLanguage: DeviceSystemLanguageInterface {
+final class FakeDeviceSystemLanguage: DeviceSystemLanguageInterface {
     
     private let deviceLocale: Locale
     

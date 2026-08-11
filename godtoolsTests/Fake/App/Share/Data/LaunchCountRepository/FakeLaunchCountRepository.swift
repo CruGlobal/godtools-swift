@@ -10,7 +10,7 @@ import Foundation
 @testable import godtools
 import Combine
 
-class FakeLaunchCountRepository: LaunchCountRepositoryInterface {
+final class FakeLaunchCountRepository: LaunchCountRepositoryInterface {
     
     private let launchCount: Int
     

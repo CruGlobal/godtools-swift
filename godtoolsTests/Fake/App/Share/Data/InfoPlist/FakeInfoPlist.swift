@@ -9,7 +9,7 @@
 import Foundation
 @testable import godtools
 
-class FakeInfoPlist: InfoPlistInterface {
+final class FakeInfoPlist: InfoPlistInterface {
 
     let displayName: String?
     let appVersion: String?

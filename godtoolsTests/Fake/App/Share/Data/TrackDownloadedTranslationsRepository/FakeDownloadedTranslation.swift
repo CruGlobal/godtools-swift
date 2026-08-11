@@ -9,7 +9,7 @@
 import Foundation
 @testable import godtools
 
-class FakeDownloadedTranslation {
+final class FakeDownloadedTranslation {
     
     var id: String = ""
     var languageId: String = ""

@@ -9,7 +9,7 @@
 import Foundation
 @testable import godtools
 
-class FakeLocaleLanguageName: LocaleLanguageNameInterface {
+final class FakeLocaleLanguageName: LocaleLanguageNameInterface {
     
     typealias LanguageCode = String
     typealias TranslateInLocaleId = String
