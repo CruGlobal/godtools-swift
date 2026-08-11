@@ -107,8 +107,11 @@ final class LearnToShareToolViewModel: ObservableObject {
 
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
 
-        strings = getLearnToShareToolStringsUseCase
-            .execute(appLanguage: appLanguage)
+        Task {
+
+            strings = await getLearnToShareToolStringsUseCase
+                .execute(appLanguage: appLanguage)
+        }
     }
 
     private var isOnFirstPage: Bool {

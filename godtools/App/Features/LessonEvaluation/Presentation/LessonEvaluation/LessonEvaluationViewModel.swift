@@ -79,15 +79,21 @@ final class LessonEvaluationViewModel: ObservableObject {
     }
     
     private func didSetApplanguage(appLanguage: AppLanguageDomainModel) {
-        
-        strings = getLessonEvaluationStringsUseCase
-            .execute(appLanguage: appLanguage)
+
+        Task {
+
+            strings = await getLessonEvaluationStringsUseCase
+                .execute(appLanguage: appLanguage)
+        }
     }
     
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel, readyToShareFaithScaleValue: Int) {
-        
-        readyToShareFaithScale = didChangeScaleForSpiritualConversationReadinessUseCase
-            .execute(scale: readyToShareFaithScaleValue, appLanguage: appLanguage)
+
+        Task {
+
+            readyToShareFaithScale = await didChangeScaleForSpiritualConversationReadinessUseCase
+                .execute(scale: readyToShareFaithScaleValue, appLanguage: appLanguage)
+        }
     }
 }
 

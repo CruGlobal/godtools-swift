@@ -86,9 +86,7 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
         .receive(on: DispatchQueue.main)
         .sink { [weak self] (languages: [LanguageDataModel], appLanguage: AppLanguageDomainModel) in
             
-            self?.languageNames = languages.map({ (language: LanguageDataModel) in
-                getTranslatedLanguageName.getLanguageName(language: language, translatedInLanguage: appLanguage)
-            })
+            self?.didSetLanguages(languages: languages, appLanguage: appLanguage)
         }
         .store(in: &cancellables)
               
@@ -104,6 +102,26 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
             .store(in: &cancellables)
         
         countLanguageUsage(localeId: currentPageRenderer.value.language.localeId)
+    }
+    
+    private func didSetLanguages(languages: [LanguageDataModel], appLanguage: AppLanguageDomainModel) {
+        
+        Task {
+            
+            var languageNames: [String] = Array()
+            
+            for language in languages {
+                
+                let name = await getTranslatedLanguageName.getLanguageName(
+                    language: language,
+                    translatedInLanguage: appLanguage
+                )
+                
+                languageNames.append(name)
+            }
+            
+            self.languageNames = languageNames
+        }
     }
     
     var resource: ResourceDataModel {

@@ -77,14 +77,17 @@ final class AppLanguagesViewModel: ObservableObject {
     }
     
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
-        
-        searchBarStrings = getSearchBarStringsUseCase
-            .execute(appLanguage: appLanguage)
-        
-        strings = getAppLanguagesStringsUseCase
-            .execute(appLanguage: appLanguage)
-        
-        refreshAppLanguagesList(appLanguage: appLanguage)
+
+        Task {
+
+            searchBarStrings = await getSearchBarStringsUseCase
+                .execute(appLanguage: appLanguage)
+
+            strings = await getAppLanguagesStringsUseCase
+                .execute(appLanguage: appLanguage)
+
+            refreshAppLanguagesList(appLanguage: appLanguage)
+        }
     }
     
     private func refreshAppLanguagesList(appLanguage: AppLanguageDomainModel) {

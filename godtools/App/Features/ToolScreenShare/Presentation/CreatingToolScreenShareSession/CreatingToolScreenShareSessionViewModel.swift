@@ -85,8 +85,11 @@ final class CreatingToolScreenShareSessionViewModel: ObservableObject {
 
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
 
-        strings = getCreatingToolScreenShareSessionStringsUseCase
-            .execute(appLanguage: appLanguage)
+        Task {
+
+            strings = await getCreatingToolScreenShareSessionStringsUseCase
+                .execute(appLanguage: appLanguage)
+        }
     }
 
     private func didCreateNewSubscriberChannelForPublish(result: Result<WebSocketChannel, TractRemoteSharePublisherError>) {

@@ -59,22 +59,25 @@ final class OptInNotificationViewModel: ObservableObject {
     }
     
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
-        
-        let strings = getOptInNotificationStringsUseCase
-            .execute(appLanguage: appLanguage)
-        
-        let actionTitle: String
-        
-        switch notificationPromptType {
-        case .allow:
-            actionTitle = strings.allowNotificationsActionTitle
-        case .settings:
-            actionTitle = strings.notificationSettingsActionTitle
+
+        Task {
+
+            let strings = await getOptInNotificationStringsUseCase
+                .execute(appLanguage: appLanguage)
+
+            let actionTitle: String
+
+            switch notificationPromptType {
+            case .allow:
+                actionTitle = strings.allowNotificationsActionTitle
+            case .settings:
+                actionTitle = strings.notificationSettingsActionTitle
+            }
+
+            self.strings = strings
+
+            notificationsActionTitle = actionTitle
         }
-        
-        self.strings = strings
-        
-        notificationsActionTitle = actionTitle
     }
 }
 

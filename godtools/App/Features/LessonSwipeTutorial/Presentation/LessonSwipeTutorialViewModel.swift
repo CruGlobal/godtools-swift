@@ -44,8 +44,11 @@ final class LessonSwipeTutorialViewModel: ObservableObject {
 
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
 
-        strings = getStringsUseCase
-            .execute(translateInLanguage: appLanguage)
+        Task {
+
+            strings = await getStringsUseCase
+                .execute(translateInLanguage: appLanguage)
+        }
     }
 }
 

@@ -229,8 +229,11 @@ final class ToolDetailsViewModel: ObservableObject {
 
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
 
-        strings = getToolDetailsStringsUseCase
-            .execute(appLanguage: appLanguage)
+        Task {
+
+            strings = await getToolDetailsStringsUseCase
+                .execute(appLanguage: appLanguage)
+        }
     }
 
     private func getAnalyticsScreenName(analyticsToolAbbreviation: String) -> String {
