@@ -35,7 +35,11 @@ final class GetPersonalizedLessonsUseCase {
         self.localizationServices = localizationServices
     }
 
-    @MainActor func execute(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<PersonalizedLessonsDomainModel, Error> {
+    @MainActor func execute(
+        appLanguage: AppLanguageDomainModel,
+        country: LocalizationSettingsCountryDomainModel?,
+        filterLessonsByLanguage: LessonFilterLanguageDomainModel?
+    ) -> AnyPublisher<PersonalizedLessonsDomainModel, Error> {
 
         let languageCode: String = getLanguageElseAppLanguage.getLanguageCode(languageId: filterLessonsByLanguage?.languageId, appLanguage: appLanguage)
 
@@ -81,30 +85,33 @@ final class GetPersonalizedLessonsUseCase {
                     )
             }
         })
-        .tryMap { (resources: [ResourceDataModel]) in
+        .flatMap { (resources: [ResourceDataModel]) -> AnyPublisher<PersonalizedLessonsDomainModel, Error> in
 
-            let lessons = try self.getLessonsListItems.mapLessonsToListItems(
-                lessons: resources,
-                appLanguage: appLanguage,
-                filterLessonsByLanguage: filterLessonsByLanguage
-            )
-            
-            let showsPersonalizationUnavailable: Bool = !hasCountry && lessons.isEmpty
-            let unavailableStrings: PersonalizedLessonsUnavailableDomainModel? = showsPersonalizationUnavailable ? self.getLessonsUnavailable(appLanguage: appLanguage) : nil
+            return AnyPublisher() {
 
-            return PersonalizedLessonsDomainModel(
-                lessons: lessons,
-                unavailableStrings: unavailableStrings
-            )
+                let lessons = try await self.getLessonsListItems.mapLessonsToListItems(
+                    lessons: resources,
+                    appLanguage: appLanguage,
+                    filterLessonsByLanguage: filterLessonsByLanguage
+                )
+
+                let showsPersonalizationUnavailable: Bool = !hasCountry && lessons.isEmpty
+                let unavailableStrings: PersonalizedLessonsUnavailableDomainModel? = showsPersonalizationUnavailable ? await self.getLessonsUnavailable(appLanguage: appLanguage) : nil
+
+                return PersonalizedLessonsDomainModel(
+                    lessons: lessons,
+                    unavailableStrings: unavailableStrings
+                )
+            }
         }
         .eraseToAnyPublisher()
     }
     
-    private func getLessonsUnavailable(appLanguage: AppLanguageDomainModel) -> PersonalizedLessonsUnavailableDomainModel {
+    private func getLessonsUnavailable(appLanguage: AppLanguageDomainModel) async -> PersonalizedLessonsUnavailableDomainModel {
 
         return PersonalizedLessonsUnavailableDomainModel(
-            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.lessonsPersonalizationUnavailableTitle.key),
-            message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.lessonsPersonalizationUnavailableMessage.key)
+            title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.lessonsPersonalizationUnavailableTitle.key),
+            message: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.lessonsPersonalizationUnavailableMessage.key)
         )
     }
 }

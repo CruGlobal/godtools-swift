@@ -26,7 +26,10 @@ final class GetAllLessonsUseCase {
         self.getLessonsListItems = getLessonsListItems
     }
     
-    @MainActor func execute(appLanguage: AppLanguageDomainModel, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<[LessonListItemDomainModel], Error> {
+    @MainActor func execute(
+        appLanguage: AppLanguageDomainModel,
+        filterLessonsByLanguage: LessonFilterLanguageDomainModel?
+    ) -> AnyPublisher<[LessonListItemDomainModel], Error> {
 
         return Publishers.CombineLatest(
             resourcesRepository
@@ -45,12 +48,18 @@ final class GetAllLessonsUseCase {
 
     }
     
-    private func asyncExecute(appLanguage: AppLanguageDomainModel, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) async throws -> [LessonListItemDomainModel] {
+    private func asyncExecute(
+        appLanguage: AppLanguageDomainModel,
+        filterLessonsByLanguage: LessonFilterLanguageDomainModel?
+    ) async throws -> [LessonListItemDomainModel] {
         
         let lessons: [ResourceDataModel] = try await resourcesRepository
-            .getLessons(filterByLanguageId: filterLessonsByLanguage?.languageId, sorted: true)
+            .getLessons(
+                filterByLanguageId: filterLessonsByLanguage?.languageId,
+                sorted: true
+            )
         
-        return try getLessonsListItems.mapLessonsToListItems(
+        return try await getLessonsListItems.mapLessonsToListItems(
             lessons: lessons,
             appLanguage: appLanguage,
             filterLessonsByLanguage: filterLessonsByLanguage

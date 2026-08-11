@@ -46,18 +46,20 @@ final class GetLessonFilterLanguagesUseCase {
         
         let languages: [LanguageDataModel] = try await languagesRepository.getLanguagesByIds(ids: languageIds)
         
-        let domainModels: [LessonFilterLanguageDomainModel] = languages.compactMap { (language: LanguageDataModel) in
-            
-            let domainModel: LessonFilterLanguageDomainModel = self.getLessonFilterLangauge.mapLanguageToLessonFilterLanguageDomainModel(
+        var domainModels: [LessonFilterLanguageDomainModel] = Array()
+
+        for language in languages {
+
+            let domainModel: LessonFilterLanguageDomainModel = await self.getLessonFilterLangauge.mapLanguageToLessonFilterLanguageDomainModel(
                 language: language,
                 translatedInAppLanguage: appLanguage
             )
-            
+
             guard domainModel.lessonsAvailableCount > 0 else {
-                return nil
+                continue
             }
-            
-            return domainModel
+
+            domainModels.append(domainModel)
         }
         
         return domainModels
