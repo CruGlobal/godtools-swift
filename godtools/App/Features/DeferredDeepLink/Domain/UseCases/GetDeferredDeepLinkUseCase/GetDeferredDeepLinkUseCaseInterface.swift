@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol GetDeferredDeepLinkUseCaseInterface {
+protocol GetDeferredDeepLinkUseCaseInterface: Sendable {
     
     func execute() async -> ParsedDeepLinkType?
 }

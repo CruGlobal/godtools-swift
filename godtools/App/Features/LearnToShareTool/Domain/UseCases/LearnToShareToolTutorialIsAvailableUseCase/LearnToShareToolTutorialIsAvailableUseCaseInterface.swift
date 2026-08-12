@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol LearnToShareToolTutorialIsAvailableUseCaseInterface {
+protocol LearnToShareToolTutorialIsAvailableUseCaseInterface: Sendable {
     
     func execute(appLanguage: AppLanguageDomainModel, toolId: String) async -> Bool
 }
