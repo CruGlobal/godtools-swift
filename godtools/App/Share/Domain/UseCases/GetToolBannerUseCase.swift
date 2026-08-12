@@ -20,7 +20,7 @@ final class GetToolBannerUseCase: Sendable {
     
     func execute(attachmentId: String) async throws -> Data? {
         
-        if let cachedImageData = attachmentsRepository.getAttachment(id: attachmentId)?.getImageData() {
+        if let cachedImageData = await attachmentsRepository.getAttachment(id: attachmentId)?.getImageData() {
             return cachedImageData
         }
         

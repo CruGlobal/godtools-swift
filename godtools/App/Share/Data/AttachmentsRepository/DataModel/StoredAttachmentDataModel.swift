@@ -14,10 +14,10 @@ struct StoredAttachmentDataModel: Sendable {
     let diskFileUrl: URL?
     let fileCacheLocation: FileCacheLocation
     
-    init(data: Data, fileCacheLocation: FileCacheLocation, resourcesFileCache: ResourcesFileCache) throws {
+    init(data: Data, fileCacheLocation: FileCacheLocation, resourcesFileCache: ResourcesFileCache) async throws {
         
         self.data = data
-        self.diskFileUrl = try resourcesFileCache.cache.getFile(location: fileCacheLocation)
+        self.diskFileUrl = try await resourcesFileCache.cache.getFile(location: fileCacheLocation)
         self.fileCacheLocation = fileCacheLocation
     }
 }

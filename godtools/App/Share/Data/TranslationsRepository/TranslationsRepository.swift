@@ -207,7 +207,11 @@ extension TranslationsRepository {
         return maintainTranslationDownloadOrder
     }
     
-    private func getTranslationManifestRelatedFilesFromCacheElseRemote(translation: TranslationDataModel, manifest: Manifest, requestPriority: RequestPriority) async throws -> [FileCacheLocation] {
+    private func getTranslationManifestRelatedFilesFromCacheElseRemote(
+        translation: TranslationDataModel,
+        manifest: Manifest,
+        requestPriority: RequestPriority
+    ) async throws -> [FileCacheLocation] {
         
         try await withThrowingTaskGroup(of: FileCacheLocation.self) { group in
             

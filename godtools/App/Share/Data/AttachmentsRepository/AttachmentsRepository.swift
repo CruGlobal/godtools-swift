@@ -11,7 +11,7 @@ import RequestOperation
 import RepositorySync
 import Combine
 
-final class AttachmentsRepository {
+final class AttachmentsRepository: Sendable {
         
     private let api: AttachmentsApiInterface
     private let cache: AttachmentsCache
@@ -28,10 +28,10 @@ final class AttachmentsRepository {
             .observeCollectionChangesPublisher()
     }
     
-    func getAttachment(id: String) -> AttachmentDataModel? {
+    func getAttachment(id: String) async -> AttachmentDataModel? {
         
         do {
-            return try cache.getAttachment(id: id)
+            return try await cache.getAttachment(id: id)
         }
         catch _ {
             return nil
@@ -41,9 +41,12 @@ final class AttachmentsRepository {
 
 extension AttachmentsRepository {
     
-    func getAttachmentFromCacheElseRemote(id: String, requestPriority: RequestPriority) async throws -> AttachmentDataModel? {
+    func getAttachmentFromCacheElseRemote(
+        id: String,
+        requestPriority: RequestPriority
+    ) async throws -> AttachmentDataModel? {
         
-        let cachedAttachment: AttachmentDataModel? = try cache.getAttachment(id: id)
+        let cachedAttachment: AttachmentDataModel? = try await cache.getAttachment(id: id)
         
         guard let cachedAttachment = cachedAttachment else {
             return nil
@@ -65,7 +68,7 @@ extension AttachmentsRepository {
     
     private func getAttachmentFromCacheElseRemote(attachment: AttachmentDataModel, requestPriority: RequestPriority) async throws -> AttachmentDataModel {
         
-        let cachedAttachment: AttachmentDataModel? = try cache.getAttachment(id: attachment.id)
+        let cachedAttachment: AttachmentDataModel? = try await cache.getAttachment(id: attachment.id)
         
         if let cachedAttachment = cachedAttachment, cachedAttachment.storedAttachment?.data != nil {
             return cachedAttachment

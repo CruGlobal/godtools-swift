@@ -1,5 +1,5 @@
 {
-  "originHash" : "792d1a87cd00458f7d6f0bdb3cc77a90992c81bbb90dc04fdb78f89d3531f34c",
+  "originHash" : "81a45069d0a856c314f98ff2697ad36e86356a401e564a71fbbd65d951bb0672",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -69,7 +69,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/CruGlobal/godtools-shared-swift.git",
       "state" : {
-        "revision" : "26d93fc5290486672ebe402e8695b628fa5e4303"
+        "branch" : "PR1226",
+        "revision" : "29a21a910d309928caa6622fdac17a91e695354c"
       }
     },
     {

@@ -9,7 +9,7 @@
 import Foundation
 import Lottie
 
-class AnimatedViewModel {
+final class AnimatedViewModel: Sendable {
     
     let animationData: LottieAnimation?
     let autoPlay: Bool

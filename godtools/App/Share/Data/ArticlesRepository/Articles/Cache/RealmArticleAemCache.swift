@@ -40,30 +40,53 @@ extension RealmArticleAemCache {
         return try await persistence.getDataModels()
     }
     
-    func getAemCacheObject(aemUri: String) throws -> ArticleAemCacheObject? {
+    func getAemCacheObject(aemUri: String) async throws -> ArticleAemCacheObject? {
         
         let realm: Realm = try persistence.database.openRealm()
         
-        return try getAemCacheObject(aemUri: aemUri, realm: realm)
+        return try await getAemCacheObject(aemUri: aemUri, realm: realm)
     }
     
-    func getAemCacheObjects(aemUris: [String]) throws -> [ArticleAemCacheObject] {
+    func getAemCacheObjects(aemUris: [String]) async throws -> [ArticleAemCacheObject] {
         
         let realm: Realm = try persistence.database.openRealm()
         
-        return try getAemCacheObjects(aemUris: aemUris, realm: realm)
+        return try await getAemCacheObjects(aemUris: aemUris, realm: realm)
     }
     
-    private func getAemCacheObjects(aemUris: [String], realm: Realm) throws -> [ArticleAemCacheObject] {
+    private func getAemCacheObjects(aemUris: [String], realm: Realm) async throws -> [ArticleAemCacheObject] {
         
-        let cachedObjects: [ArticleAemCacheObject] = try aemUris.compactMap { (aemUri: String) in
-            try getAemCacheObject(aemUri: aemUri, realm: realm)
+        try await withThrowingTaskGroup(of: ArticleAemCacheObject?.self) { group in
+            
+            for aemUri in aemUris {
+                
+                group.addTask {
+                    
+                    let aemCacheObject: ArticleAemCacheObject? = try await self.getAemCacheObject(
+                        aemUri: aemUri,
+                        realm: realm
+                    )
+                    
+                    return aemCacheObject
+                }
+            }
+            
+            var aemCacheObjects: [ArticleAemCacheObject] = Array()
+            
+            for try await object in group {
+                
+                guard let object = object else {
+                    continue
+                }
+                
+                aemCacheObjects.append(object)
+            }
+            
+            return aemCacheObjects
         }
-        
-        return cachedObjects
     }
 
-    private func getAemCacheObject(aemUri: String, realm: Realm) throws -> ArticleAemCacheObject? {
+    private func getAemCacheObject(aemUri: String, realm: Realm) async throws -> ArticleAemCacheObject? {
         
         guard let realmAemData = realm.object(ofType: RealmArticleAemData.self, forPrimaryKey: aemUri) else {
             return nil
@@ -71,7 +94,7 @@ extension RealmArticleAemCache {
         
         let articleAemWebArchive = ArticleAemWebArchive(filename: realmAemData.webArchiveFilename)
         
-        let url: URL = try webArchiveFileCache.fileCache.getFile(location: articleAemWebArchive.location)
+        let url: URL = try await webArchiveFileCache.fileCache.getFile(location: articleAemWebArchive.location)
         
         let aemData = realmAemData.toModel()
         
@@ -89,7 +112,7 @@ extension RealmArticleAemCache {
      
         let realm: Realm = try persistence.database.openRealm()
         
-        let aemDataObjectsThatNeedDownloading: ArticleAemDataObjectsThatNeedDownloading = try filterAemDataObjectsThatNeedDownloaded(
+        let aemDataObjectsThatNeedDownloading: ArticleAemDataObjectsThatNeedDownloading = try await filterAemDataObjectsThatNeedDownloaded(
             aemDataObjects: aemDataObjects,
             realm: realm
         )
@@ -121,7 +144,10 @@ extension RealmArticleAemCache {
         return webArchives
     }
     
-    private func filterAemDataObjectsThatNeedDownloaded(aemDataObjects: [ArticleAemData], realm: Realm) throws -> ArticleAemDataObjectsThatNeedDownloading {
+    private func filterAemDataObjectsThatNeedDownloaded(
+        aemDataObjects: [ArticleAemData],
+        realm: Realm
+    ) async throws -> ArticleAemDataObjectsThatNeedDownloading {
                 
         var aemDataDictionary: [AemUri: ArticleAemData] = Dictionary()
         var webArchiveUrls: [WebArchiveUrl] = Array()
@@ -135,7 +161,7 @@ extension RealmArticleAemCache {
             let dataIsNotCached: Bool
             let uuidChanged: Bool
             
-            if let aemCacheObject = try getAemCacheObject(aemUri: aemData.aemUri, realm: realm),
+            if let aemCacheObject = try await getAemCacheObject(aemUri: aemData.aemUri, realm: realm),
                let cachedUUID = aemCacheObject.aemData.articleJcrContent?.uuid,
                let uuid = aemData.articleJcrContent?.uuid, !cachedUUID.isEmpty, !uuid.isEmpty {
                 
@@ -183,7 +209,10 @@ extension RealmArticleAemCache {
         }
     }
     
-    private func storeAemCacheArchivedObjectsWithCompletion(aemCacheArchivedObjects: [ArticleAemCacheArchivedObject], completion: @escaping ((_ errors: [Error]) -> Void)) {
+    private func storeAemCacheArchivedObjectsWithCompletion(
+        aemCacheArchivedObjects: [ArticleAemCacheArchivedObject],
+        completion: @escaping ((_ errors: [Error]) -> Void)
+    ) {
         
         realmDataWrite.serialAsync { result in
             
@@ -209,9 +238,12 @@ extension RealmArticleAemCache {
                             
                             webArchiveFilename = existingRealmData.webArchiveFilename
                             
-                            try self.removeWebArchivePlistData(
-                                webArchiveFilename: webArchiveFilename
-                            )
+                            Task { [weak self] in
+                                
+                                await self?.removeWebArchivePlistData(
+                                    webArchiveFilename: webArchiveFilename
+                                )
+                            }
                         }
                         else {
                             
@@ -221,10 +253,13 @@ extension RealmArticleAemCache {
                         realmDataToStore.mapFrom(model: archivedObject.aemData)
                         realmDataToStore.webArchiveFilename = webArchiveFilename
                         
-                        try self.storeWebArchivePlistData(
-                            webArchiveFilename: webArchiveFilename,
-                            webArchivePlistData: archivedObject.webArchivePlistData
-                        )
+                        Task { [weak self] in
+                            
+                            await self?.storeWebArchivePlistData(
+                                webArchiveFilename: webArchiveFilename,
+                                webArchivePlistData: archivedObject.webArchivePlistData
+                            )
+                        }
                         
                         realmDataObjectsToStore.append(realmDataToStore)
                     }
@@ -249,18 +284,32 @@ extension RealmArticleAemCache {
         }//end serialAsync
     }
     
-    private func storeWebArchivePlistData(webArchiveFilename: String, webArchivePlistData: Data) throws {
+    private func storeWebArchivePlistData(webArchiveFilename: String, webArchivePlistData: Data) async {
         
-        _ = try webArchiveFileCache.fileCache.storeFile(
-            location: ArticleAemWebArchive(filename: webArchiveFilename).location,
-            data: webArchivePlistData
-        )
+        do {
+            
+            _ = try await webArchiveFileCache.fileCache.storeFile(
+                location: ArticleAemWebArchive(filename: webArchiveFilename).location,
+                data: webArchivePlistData
+            )
+        }
+        catch _ {
+            
+        }
+        
+        
     }
     
-    private func removeWebArchivePlistData(webArchiveFilename: String) throws {
+    private func removeWebArchivePlistData(webArchiveFilename: String) async {
         
-        try webArchiveFileCache.fileCache.removeFile(
-            location: ArticleAemWebArchive(filename: webArchiveFilename).location
-        )
+        do {
+            
+            try await webArchiveFileCache.fileCache.removeFile(
+                location: ArticleAemWebArchive(filename: webArchiveFilename).location
+            )
+        }
+        catch _ {
+            
+        }
     }
 }

@@ -24,7 +24,11 @@ final class MobileContentBackgroundImageView: UIImageView {
         super.init(frame: .zero)
     }
     
-    func configure(viewModel: MobileContentBackgroundImageViewModel, parentView: UIView, insertBackgroundAtIndex: Int?) {
+    func configure(
+        viewModel: MobileContentBackgroundImageViewModel,
+        parentView: UIView,
+        insertBackgroundAtIndex: Int?
+    ) {
         
         guard self.viewModel == nil else {
             return
@@ -41,7 +45,10 @@ final class MobileContentBackgroundImageView: UIImageView {
         
         backgroundColor = .clear
         contentMode = .scaleToFill
-        image = viewModel.backgroundImage
+        
+        Task {
+            image = await viewModel.backgroundImage
+        }
         
         renderForBoundsChangeIfNeeded(parentView: parentView)
     }
@@ -63,6 +70,12 @@ final class MobileContentBackgroundImageView: UIImageView {
     }
     
     func renderForBoundsChangeIfNeeded(parentView: UIView) {
+        Task {
+            await asyncRenderForBoundsChangeIfNeeded(parentView: parentView)
+        }
+    }
+    
+    private func asyncRenderForBoundsChangeIfNeeded(parentView: UIView) async {
              
         let parentBounds: CGRect = parentView.bounds
         
@@ -74,7 +87,7 @@ final class MobileContentBackgroundImageView: UIImageView {
             return
         }
         
-        guard let backgroundImageFrame = viewModel.renderBackgroundImageFrame(container: parentBounds) else {
+        guard let backgroundImageFrame = await viewModel.renderBackgroundImageFrame(container: parentBounds) else {
             return
         }
         
