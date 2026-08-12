@@ -9,7 +9,7 @@
 import Foundation
 import RepositorySync
 
-final class LanguagesCache {
+final class LanguagesCache: Sendable {
         
     let persistence: any Persistence<LanguageDataModel, LanguageCodable>
     

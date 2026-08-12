@@ -8,7 +8,7 @@
 
 import Foundation
 
-class GetLanguageElseAppLanguage {
+final class GetLanguageElseAppLanguage: Sendable {
     
     private let languagesRepository: LanguagesRepository
     

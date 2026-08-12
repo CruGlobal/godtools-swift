@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol LocaleLanguageScriptNameInterface {
+protocol LocaleLanguageScriptNameInterface: Sendable {
     
     func getScriptName(forScriptCode: String, translatedInLanguageId: BCP47LanguageIdentifier?) -> String?
 }

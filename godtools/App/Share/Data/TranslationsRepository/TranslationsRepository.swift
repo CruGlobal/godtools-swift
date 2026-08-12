@@ -11,7 +11,7 @@ import GodToolsShared
 import RequestOperation
 import RepositorySync
 
-final class TranslationsRepository {
+final class TranslationsRepository: Sendable {
     
     private let api: TranslationsApiInterface
     private let cdn: TranslationsCdnInterface

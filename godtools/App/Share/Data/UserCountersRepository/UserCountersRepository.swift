@@ -11,7 +11,7 @@ import Combine
 import RequestOperation
 import RepositorySync
 
-final class UserCountersRepository {
+final class UserCountersRepository: Sendable {
     
     private let localActivityCounterCache: LocalActivityCounterCache
     private let cache: UserCountersCache

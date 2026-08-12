@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-final class GetToolBannerUseCase {
+final class GetToolBannerUseCase: Sendable {
     
     private let attachmentsRepository: AttachmentsRepository
     

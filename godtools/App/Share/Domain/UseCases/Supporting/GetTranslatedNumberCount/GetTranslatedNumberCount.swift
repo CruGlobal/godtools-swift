@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetTranslatedNumberCount {
+final class GetTranslatedNumberCount: Sendable {
     
     private static let sharedNumberFormatter: NumberFormatter = NumberFormatter()
     

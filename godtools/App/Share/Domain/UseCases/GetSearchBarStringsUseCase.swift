@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetSearchBarStringsUseCase {
+final class GetSearchBarStringsUseCase: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
     
