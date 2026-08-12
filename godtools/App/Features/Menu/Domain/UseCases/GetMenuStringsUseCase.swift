@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetMenuStringsUseCase {
+final class GetMenuStringsUseCase: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
     private let infoPlist: InfoPlistInterface

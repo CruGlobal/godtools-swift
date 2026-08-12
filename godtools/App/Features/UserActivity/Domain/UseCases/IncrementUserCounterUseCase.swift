@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import GodToolsShared
 
-final class IncrementUserCounterUseCase {
+final class IncrementUserCounterUseCase: Sendable {
     
     enum UserCounterInteraction {
         case articleOpen(uri: String)

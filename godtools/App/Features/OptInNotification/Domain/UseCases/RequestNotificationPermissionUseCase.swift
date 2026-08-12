@@ -9,7 +9,7 @@
 import Foundation
 import UserNotifications
 
-final class RequestNotificationPermissionUseCase {
+final class RequestNotificationPermissionUseCase: Sendable {
 
     init() {
         

@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetInterfaceLayoutDirectionUseCase {
+final class GetInterfaceLayoutDirectionUseCase: Sendable {
     
     private let appLanguagesRepository: AppLanguagesRepository
     

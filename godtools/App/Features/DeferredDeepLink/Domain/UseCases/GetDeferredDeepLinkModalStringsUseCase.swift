@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetDeferredDeepLinkModalStringsUseCase {
+final class GetDeferredDeepLinkModalStringsUseCase: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
 

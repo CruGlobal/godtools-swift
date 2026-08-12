@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetConfirmAppLanguageStringsUseCase {
+final class GetConfirmAppLanguageStringsUseCase: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
     private let getTranslatedLanguageName: GetTranslatedLanguageName

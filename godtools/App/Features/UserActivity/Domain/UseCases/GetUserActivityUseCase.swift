@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import GodToolsShared
 
-final class GetUserActivityUseCase {
+final class GetUserActivityUseCase: Sendable {
     
     private let getUserActivityBadge: GetUserActivityBadge
     private let getUserActivityStats: GetUserActivityStats

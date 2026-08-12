@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetLessonSwipeTutorialStringsUseCase {
+final class GetLessonSwipeTutorialStringsUseCase: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
     

@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class GetToolIsFavoritedUseCase {
+final class GetToolIsFavoritedUseCase: Sendable {
     
     private let favoritedResourcesRepository: FavoritedResourcesRepository
     

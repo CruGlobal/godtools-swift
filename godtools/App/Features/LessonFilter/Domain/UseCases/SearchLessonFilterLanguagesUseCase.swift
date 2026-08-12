@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class SearchLessonFilterLanguagesUseCase {
+final class SearchLessonFilterLanguagesUseCase: Sendable {
     
     private let stringSearcher: StringSearcher
     

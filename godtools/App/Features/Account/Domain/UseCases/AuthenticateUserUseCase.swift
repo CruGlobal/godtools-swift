@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-final class AuthenticateUserUseCase {
+final class AuthenticateUserUseCase: Sendable {
         
     private let userAuthentication: UserAuthentication
     private let emailSignUpService: EmailSignUpService

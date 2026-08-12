@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class GetToolShortcutLinksUseCase {
+final class GetToolShortcutLinksUseCase: Sendable {
 
     private static let appDeepLinkBaseUrlString: String = "godtools://knowgod.com"
     private static let toolDeepLinkPageNumber: Int = 0

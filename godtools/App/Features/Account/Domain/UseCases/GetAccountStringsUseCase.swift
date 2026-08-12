@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetAccountStringsUseCase {
+final class GetAccountStringsUseCase: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
     private let dateService: DateServiceInterface

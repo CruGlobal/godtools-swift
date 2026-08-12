@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetConfirmRemoveToolFromFavoritesStringsUseCase {
+final class GetConfirmRemoveToolFromFavoritesStringsUseCase: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
     private let getTranslatedToolName: GetTranslatedToolName

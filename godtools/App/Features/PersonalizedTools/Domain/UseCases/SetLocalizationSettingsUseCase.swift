@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class SetLocalizationSettingsUseCase {
+final class SetLocalizationSettingsUseCase: Sendable {
 
     private let userLocalizationSettingsRepository: UserLocalizationSettingsRepository
 

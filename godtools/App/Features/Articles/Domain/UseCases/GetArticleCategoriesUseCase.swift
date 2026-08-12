@@ -10,7 +10,7 @@ import Foundation
 import GodToolsShared
 import SwiftUI
 
-final class GetArticleCategoriesUseCase {
+final class GetArticleCategoriesUseCase: Sendable {
     
     private let manifestResourcesCache: MobileContentRendererManifestResourcesCache
     

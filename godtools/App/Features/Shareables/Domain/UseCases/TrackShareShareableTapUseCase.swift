@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class TrackShareShareableTapUseCase {
+final class TrackShareShareableTapUseCase: Sendable {
     
     private let trackActionAnalytics: TrackActionAnalytics
     private let resourcesRepository: ResourcesRepository

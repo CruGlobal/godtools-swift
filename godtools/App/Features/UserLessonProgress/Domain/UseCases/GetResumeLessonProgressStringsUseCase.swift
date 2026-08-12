@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetResumeLessonProgressStringsUseCase {
+final class GetResumeLessonProgressStringsUseCase: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
     

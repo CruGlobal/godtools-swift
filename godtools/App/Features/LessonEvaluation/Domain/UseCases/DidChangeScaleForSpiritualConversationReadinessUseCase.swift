@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class DidChangeScaleForSpiritualConversationReadinessUseCase {
+final class DidChangeScaleForSpiritualConversationReadinessUseCase: Sendable {
     
     private static let minScaleValue: Int = 1
     private static let maxScaleValue: Int = 10

@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetShareableImageUseCase {
+final class GetShareableImageUseCase: Sendable {
     
     private let resourcesFileCache: ResourcesFileCache
     

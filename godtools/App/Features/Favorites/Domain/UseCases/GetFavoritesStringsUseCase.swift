@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetFavoritesStringsUseCase {
+final class GetFavoritesStringsUseCase: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
     

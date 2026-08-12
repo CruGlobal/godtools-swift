@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetTutorialStringsUseCase {
+final class GetTutorialStringsUseCase: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
     

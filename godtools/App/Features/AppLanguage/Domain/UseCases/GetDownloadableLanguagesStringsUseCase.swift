@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetDownloadableLanguagesStringsUseCase {
+final class GetDownloadableLanguagesStringsUseCase: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
     

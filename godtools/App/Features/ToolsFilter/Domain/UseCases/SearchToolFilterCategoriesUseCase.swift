@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class SearchToolFilterCategoriesUseCase {
+final class SearchToolFilterCategoriesUseCase: Sendable {
     
     private let stringSearcher: StringSearcher
     

@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class GetDownloadableLanguagesListUseCase {
+final class GetDownloadableLanguagesListUseCase: Sendable {
     
     private let languagesRepository: LanguagesRepository
     private let downloadedLanguagesRepository: DownloadedLanguagesRepository

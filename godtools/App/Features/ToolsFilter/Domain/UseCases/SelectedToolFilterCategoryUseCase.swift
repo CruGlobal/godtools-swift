@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class SelectedToolFilterCategoryUseCase {
+final class SelectedToolFilterCategoryUseCase: Sendable {
     
     private let userToolFiltersRepository: UserToolFiltersRepository
     

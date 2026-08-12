@@ -9,7 +9,7 @@
 import Foundation
 import GodToolsShared
 
-final class PullToRefreshArticlesUseCase {
+final class PullToRefreshArticlesUseCase: Sendable {
     
     private let articleManifestAemRepository: ArticleManifestAemRepository
     

@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class DidPullToRefreshAccountUseCase {
+final class DidPullToRefreshAccountUseCase: Sendable {
     
     private let userCountersSync: UserCountersSync
     

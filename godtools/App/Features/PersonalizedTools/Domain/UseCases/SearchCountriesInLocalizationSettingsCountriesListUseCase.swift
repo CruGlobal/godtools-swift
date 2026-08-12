@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class SearchCountriesInLocalizationSettingsCountriesListUseCase {
+final class SearchCountriesInLocalizationSettingsCountriesListUseCase: Sendable {
 
     private let stringSearcher: StringSearcher
 

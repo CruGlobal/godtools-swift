@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetLessonFilterLanguagesStringsUseCase {
+final class GetLessonFilterLanguagesStringsUseCase: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
     

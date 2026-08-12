@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class ViewedLearnToShareToolTutorialUseCase {
+final class ViewedLearnToShareToolTutorialUseCase: Sendable {
     
     private let toolTrainingTipsOnboardingViewsRepository: ToolTrainingTipsOnboardingViewsRepository
     private let getTranslatedToolName: GetTranslatedToolName

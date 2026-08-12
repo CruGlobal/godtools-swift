@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetLocalizationSettingsCountryListUseCase {
+final class GetLocalizationSettingsCountryListUseCase: Sendable {
 
     private let countriesRepository: LocalizationSettingsCountriesRepositoryInterface
     private let localizationServices: LocalizationServicesInterface
