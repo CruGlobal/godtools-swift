@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 import UIKit
 
-protocol FileCacheInterface {
+protocol FileCacheInterface: Actor {
     
     var rootDirectory: URL { get }
     
