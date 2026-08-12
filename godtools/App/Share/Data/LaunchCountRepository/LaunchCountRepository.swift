@@ -8,75 +8,28 @@
 
 import Foundation
 import Combine
-import UIKit
 
 final class LaunchCountRepository: LaunchCountRepositoryInterface {
-    
-    static let shared: LaunchCountRepository = LaunchCountRepository()
-    
-    private let cache: LaunchCountCache = LaunchCountCache()
-    
-    private var incrementLaunchCountNeeded: Bool = true
-    
-    private init() {
-                
-        NotificationCenter.default.addObserver(self, selector: #selector(handleUIApplicationLifeCycleNotification(notification:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
+
+    private let cache: LaunchCountCacheInterface
+
+    init(cache: LaunchCountCacheInterface) {
+
+        self.cache = cache
     }
-    
-    private func incrementLaunchCountForAppLaunchIfNeeded() {
-        
-        guard incrementLaunchCountNeeded else {
-            return
-        }
-        
-        incrementLaunchCountNeeded = false
-        
-        let launchCount: Int = cache.getLaunchCountValue()
-        
-        guard launchCount < Int.max else {
-            return
-        }
-        
-        let newLaunchCount: Int = launchCount + 1
-        
-        cache.storeLaunchCount(launchCount: newLaunchCount)
-    }
-    
-    func getLaunchCount() -> Int {
-        
-        incrementLaunchCountForAppLaunchIfNeeded()
-        
-        return cache.getLaunchCountValue()
-    }
-    
-    func getLaunchCountPublisher() -> AnyPublisher<Int, Never> {
-        
-        incrementLaunchCountForAppLaunchIfNeeded()
-        
-        return Just(cache.getLaunchCountValue())
-            .eraseToAnyPublisher()
-    }
-    
-    func getLaunchCountChangedPublisher() -> AnyPublisher<Int, Never> {
-        
-        incrementLaunchCountForAppLaunchIfNeeded()
-        
+
+    @MainActor func getLaunchCountChangedPublisher() -> AnyPublisher<Int, Never> {
+
         return cache.getLaunchCountChangedPublisher()
     }
-    
-    func resetLaunchCount() {
-        cache.resetLaunchCount()
+
+    func getLaunchCount() -> Int {
+
+        return cache.getLaunchCount()
     }
     
-    @objc private func handleUIApplicationLifeCycleNotification(notification: Notification) {
+    func storeLaunchCount(count: Int) async throws {
         
-        if notification.name == UIApplication.didBecomeActiveNotification {
-            
-            incrementLaunchCountForAppLaunchIfNeeded()
-        }
-        else if notification.name == UIApplication.didEnterBackgroundNotification {
-            
-            incrementLaunchCountNeeded = true
-        }
+        try await cache.storeLaunchCount(count: count)
     }
 }
