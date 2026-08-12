@@ -26,23 +26,23 @@ final class RealmResourcesSHA256FileCache: ResourcesSHA256FileCacheInterface {
     }
     
     func getFileExists(location: FileCacheLocation) async throws -> Bool {
-        return try resourcesFileCache.cache.getFileExists(location: location)
+        return try await resourcesFileCache.cache.getFileExists(location: location)
     }
     
     func getFile(location: FileCacheLocation) async throws -> URL {
-        return try resourcesFileCache.cache.getFile(location: location)
+        return try await resourcesFileCache.cache.getFile(location: location)
     }
     
     func getData(location: FileCacheLocation) async throws -> Data? {
-        return try resourcesFileCache.cache.getData(location: location)
+        return try await resourcesFileCache.cache.getData(location: location)
     }
     
     func getUIImage(location: FileCacheLocation) async throws -> UIImage? {
-        return try resourcesFileCache.cache.getUIImage(location: location)
+        return try await resourcesFileCache.cache.getUIImage(location: location)
     }
     
     func getImage(location: FileCacheLocation) async throws -> Image? {
-        return try resourcesFileCache.cache.getImage(location: location)
+        return try await resourcesFileCache.cache.getImage(location: location)
     }
         
     // MARK: - Attachment Files
@@ -51,7 +51,7 @@ final class RealmResourcesSHA256FileCache: ResourcesSHA256FileCacheInterface {
         
         let fileCacheLocation: FileCacheLocation = FileCacheLocation(relativeUrlString: fileName)
         
-        _ = try resourcesFileCache.cache.storeFile(location: fileCacheLocation, data: fileData)
+        _ = try await resourcesFileCache.cache.storeFile(location: fileCacheLocation, data: fileData)
         
         _ = try await createStoredFileRelationshipsToAttachment(
             attachmentId: attachmentId,
@@ -148,7 +148,7 @@ final class RealmResourcesSHA256FileCache: ResourcesSHA256FileCacheInterface {
                 
         let fileCacheLocation: FileCacheLocation = FileCacheLocation(relativeUrlString: fileName)
         
-        _ = try resourcesFileCache.cache.storeFile(location: fileCacheLocation, data: fileData)
+        _ = try await resourcesFileCache.cache.storeFile(location: fileCacheLocation, data: fileData)
         
         _ = try await createStoredFileRelationshipsToTranslation(
             translationId: translationId,
@@ -160,7 +160,7 @@ final class RealmResourcesSHA256FileCache: ResourcesSHA256FileCacheInterface {
     
     func storeTranslationZipFile(translationId: String, zipFileData: Data) async throws -> [FileCacheLocation] {
         
-        let fileCacheLocations: [FileCacheLocation] = try resourcesFileCache.cache.decompressZipFileAndStoreFileContents(zipFileData: zipFileData)
+        let fileCacheLocations: [FileCacheLocation] = try await resourcesFileCache.cache.decompressZipFileAndStoreFileContents(zipFileData: zipFileData)
         
         _ = try await createStoredFileRelationshipsToTranslation(
             translationId: translationId,
