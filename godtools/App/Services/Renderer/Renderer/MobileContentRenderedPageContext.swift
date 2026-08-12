@@ -17,7 +17,7 @@ class MobileContentRenderedPageContext {
     let parentPageParams: MobileContentParentPageParams?
     let safeArea: UIEdgeInsets
     let manifest: Manifest
-    let resourcesCache: MobileContentRendererManifestResourcesCache
+    let resourcesFileCache: ResourcesFileCache
     let resource: ResourceDataModel
     let appLanguage: AppLanguageDomainModel
     let language: LanguageDataModel
@@ -41,7 +41,7 @@ class MobileContentRenderedPageContext {
         window: UIViewController,
         safeArea: UIEdgeInsets,
         manifest: Manifest,
-        resourcesCache: MobileContentRendererManifestResourcesCache,
+        resourcesFileCache: ResourcesFileCache,
         resource: ResourceDataModel,
         appLanguage: AppLanguageDomainModel,
         language: LanguageDataModel,
@@ -62,7 +62,7 @@ class MobileContentRenderedPageContext {
         self.weakWindow = window
         self.safeArea = safeArea
         self.manifest = manifest
-        self.resourcesCache = resourcesCache
+        self.resourcesFileCache = resourcesFileCache
         self.resource = resource
         self.appLanguage = appLanguage
         self.language = language

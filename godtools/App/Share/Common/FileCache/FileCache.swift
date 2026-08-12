@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 import UIKit
 
-actor FileCache: FileCacheInterface {
+actor FileCache {
     
     let fileManager: FileManager
     let rootDirectory: URL
@@ -149,6 +149,16 @@ actor FileCache: FileCacheInterface {
         return UIImage(data: data)
     }
     
+    func getUIImageNonThrowing(location: FileCacheLocation) -> UIImage? {
+        
+        do {
+            return try getUIImage(location: location)
+        }
+        catch _ {
+            return nil
+        }
+    }
+    
     func getImage(location: FileCacheLocation) throws -> Image? {
         
         guard let uiImage = try getUIImage(location: location) else {
@@ -156,6 +166,16 @@ actor FileCache: FileCacheInterface {
         }
         
         return Image(uiImage: uiImage)
+    }
+    
+    func getImageNonThrowing(location: FileCacheLocation) -> Image? {
+        
+        do {
+            return try getImage(location: location)
+        }
+        catch _ {
+            return nil
+        }
     }
     
     func storeFile(location: FileCacheLocation, data: Data) throws -> URL {

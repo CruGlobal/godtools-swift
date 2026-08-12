@@ -56,7 +56,7 @@ final class ArticleCategoriesViewModel: ObservableObject {
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         
-        categories = getArticleCategoriesUseCase.execute(manifest: manifest)
+        loadCategories()
     }
     
     deinit {
@@ -74,6 +74,14 @@ final class ArticleCategoriesViewModel: ObservableObject {
     
     private var analyticsSiteSubSection: String {
         return ""
+    }
+    
+    private func loadCategories() {
+        
+        Task {
+            
+            categories = await getArticleCategoriesUseCase.execute(manifest: manifest)
+        }
     }
 }
 

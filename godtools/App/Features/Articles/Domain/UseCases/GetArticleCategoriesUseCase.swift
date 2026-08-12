@@ -12,37 +12,43 @@ import SwiftUI
 
 final class GetArticleCategoriesUseCase: Sendable {
     
-    private let manifestResourcesCache: MobileContentRendererManifestResourcesCache
+    private let resourcesFileCache: ResourcesFileCache
     
-    init(manifestResourcesCache: MobileContentRendererManifestResourcesCache) {
+    init(resourcesFileCache: ResourcesFileCache) {
         
-        self.manifestResourcesCache = manifestResourcesCache
+        self.resourcesFileCache = resourcesFileCache
     }
     
-    func execute(manifest: Manifest) -> [ArticleCategoryDomainModel] {
+    func execute(manifest: Manifest) async -> [ArticleCategoryDomainModel] {
         
-        let categories: [ArticleCategoryDomainModel] = manifest.categories.compactMap {
+        var articleCategories: [ArticleCategoryDomainModel] = Array()
+        
+        for category in manifest.categories {
             
-            guard let id = $0.id, let label = $0.label?.text else {
-                return nil
+            guard let id = category.id, let label = category.label?.text else {
+                continue
             }
             
-            return ArticleCategoryDomainModel(
+            let image: SwiftUI.Image? = await getImage(category: category)
+            
+            let articleCategory = ArticleCategoryDomainModel(
                 id: id,
                 title: label,
-                image: getImage(category: $0)
+                image: image
             )
+            
+            articleCategories.append(articleCategory)
         }
         
-        return categories
+        return articleCategories
     }
     
-    private func getImage(category: GodToolsShared.Category) -> SwiftUI.Image? {
+    private func getImage(category: GodToolsShared.Category) async -> SwiftUI.Image? {
         
-        guard let bannerResource = category.banner else {
+        guard let bannerResource = category.banner, let fileLocation = bannerResource.toSHA256FileLocation() else {
             return nil
         }
         
-        return manifestResourcesCache.getImageNonThrowing(resource: bannerResource)
+        return await resourcesFileCache.cache.getImageNonThrowing(location: fileLocation)
     }
 }

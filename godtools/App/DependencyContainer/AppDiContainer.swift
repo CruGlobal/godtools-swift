@@ -197,7 +197,7 @@ final class AppDiContainer {
             appLanguage: appLanguage,
             toolTranslations: toolTranslations,
             pageViewFactories: pageViewFactories,
-            manifestResourcesCache: core.dataLayer.getMobileContentRendererManifestResourcesCache()
+            resourcesFileCache: core.dataLayer.getResourcesFileCache()
         )
     }
     

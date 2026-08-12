@@ -8,30 +8,37 @@
 
 import UIKit
 
-class MobileContentBackgroundImageViewModel {
+@MainActor
+final class MobileContentBackgroundImageViewModel {
     
     private let backgroundImageModel: BackgroundImageModel
-    private let manifestResourcesCache: MobileContentRendererManifestResourcesCache
+    private let resourcesFileCache: ResourcesFileCache
     private let languageDirection: LanguageDirectionDomainModel
     private let backgroundImageRenderer: MobileContentBackgroundImageRenderer = MobileContentBackgroundImageRenderer()
-        
-    let backgroundImage: UIImage?
-    
+            
     init(
         backgroundImageModel: BackgroundImageModel,
-        manifestResourcesCache: MobileContentRendererManifestResourcesCache,
+        resourcesFileCache: ResourcesFileCache,
         languageDirection: LanguageDirectionDomainModel
     ) {
         
         self.backgroundImageModel = backgroundImageModel
-        self.manifestResourcesCache = manifestResourcesCache
+        self.resourcesFileCache = resourcesFileCache
         self.languageDirection = languageDirection
-        
-        if let backgroundImage = manifestResourcesCache.getUIImageNonThrowing(resource: backgroundImageModel.backgroundImageResource) {
-            self.backgroundImage = backgroundImage
-        }
-        else {
-            self.backgroundImage = nil
+    }
+    
+    var backgroundImage: UIImage? {
+        get async {
+            
+            if let fileLocation = backgroundImageModel.backgroundImageResource.toSHA256FileLocation(),
+                let backgroundImage = await resourcesFileCache.cache.getUIImageNonThrowing(location: fileLocation) {
+                
+                return backgroundImage
+            }
+            else {
+                
+                return nil
+            }
         }
     }
     
@@ -57,13 +64,16 @@ class MobileContentBackgroundImageViewModel {
         )
     }
     
-    func renderBackgroundImageFrame(container: CGRect) -> CGRect? {
+    func renderBackgroundImageFrame(container: CGRect) async -> CGRect? {
         
-        guard let backgroundImage = self.backgroundImage else {
+        guard let backgroundImage = await self.backgroundImage else {
             return nil
         }
         
-        let backgroundImageFrame: CGRect? = getRenderPositionForBackgroundImage(container: container, backgroundImage: backgroundImage)
+        let backgroundImageFrame: CGRect? = getRenderPositionForBackgroundImage(
+            container: container,
+            backgroundImage: backgroundImage
+        )
         
         return backgroundImageFrame
     }

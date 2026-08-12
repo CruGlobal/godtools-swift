@@ -22,7 +22,7 @@ final class ArticlesDomainLayerDependencies {
     func getArticleCategoriesUseCase() -> GetArticleCategoriesUseCase {
         
         return GetArticleCategoriesUseCase(
-            manifestResourcesCache: core.dataLayer.getMobileContentRendererManifestResourcesCache(),
+            resourcesFileCache: core.dataLayer.getResourcesFileCache(),
 
         )
     }

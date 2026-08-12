@@ -41,15 +41,18 @@ class MobileContentTextViewModel: MobileContentViewModel {
     
     var startImage: UIImage? {
         
-        guard let resource = textModel.startImage else {
-            return nil
+        get async {
+            
+            guard let resource = textModel.startImage else {
+                return nil
+            }
+            
+            guard let resourceImage = await renderedPageContext.resourcesCache.getUIImageNonThrowing(resource: resource) else {
+                return nil
+            }
+            
+            return resourceImage
         }
-        
-        guard let resourceImage = renderedPageContext.resourcesCache.getUIImageNonThrowing(resource: resource) else {
-            return nil
-        }
-        
-        return resourceImage
     }
     
     var startImageSize: CGSize {
@@ -84,15 +87,18 @@ class MobileContentTextViewModel: MobileContentViewModel {
     
     var endImage: UIImage? {
         
-        guard let resource = textModel.endImage else {
-            return nil
+        get async {
+            
+            guard let resource = textModel.endImage else {
+                return nil
+            }
+            
+            guard let resourceImage = await renderedPageContext.resourcesCache.getUIImageNonThrowing(resource: resource) else {
+                return nil
+            }
+            
+            return resourceImage
         }
-        
-        guard let resourceImage = renderedPageContext.resourcesCache.getUIImageNonThrowing(resource: resource) else {
-            return nil
-        }
-        
-        return resourceImage
     }
     
     var endImageSize: CGSize {

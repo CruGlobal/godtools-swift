@@ -519,12 +519,6 @@ final class AppDataLayerDependencies {
         )
     }
     
-    func getMobileContentRendererManifestResourcesCache() -> MobileContentRendererManifestResourcesCache {
-        return MobileContentRendererManifestResourcesCache(
-            resourcesFileCache: getResourcesFileCache()
-        )
-    }
-    
     private func getRealmDataWrite() -> RealmDataWrite {
         return RealmDataWrite(config: getSharedRealmDatabase().config)
     }
