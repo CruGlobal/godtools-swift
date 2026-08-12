@@ -68,14 +68,17 @@ final class ReviewShareShareableViewModel: ObservableObject {
     
     private func loadShareableImage() {
         
-        do {
-            
-            let shareableImage = try getShareableImageUseCase.execute(shareable: shareable)
-            
-            didRefreshShareableImage(shareableImage: shareableImage)
-        }
-        catch _ {
-            
+        Task {
+                
+            do {
+                
+                let shareableImage = try await getShareableImageUseCase.execute(shareable: shareable)
+                
+                didRefreshShareableImage(shareableImage: shareableImage)
+            }
+            catch _ {
+                
+            }
         }
     }
     

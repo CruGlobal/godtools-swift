@@ -17,7 +17,7 @@ final class GetShareableImageUseCase: Sendable {
         self.resourcesFileCache = resourcesFileCache
     }
     
-    func execute(shareable: ShareableDomainModel) throws -> ShareableImageDomainModel? {
+    func execute(shareable: ShareableDomainModel) async throws -> ShareableImageDomainModel? {
         
         guard !shareable.imageName.isEmpty else {
             throw NSError.errorWithDescription(description: "Failed to get shareable image.  Image name is empty.")
@@ -25,10 +25,13 @@ final class GetShareableImageUseCase: Sendable {
         
         let fileCacheLocation = FileCacheLocation(relativeUrlString: shareable.imageName)
         
-        let imageData: Data? = try resourcesFileCache.cache.getData(location: fileCacheLocation)
+        let imageData: Data?
        
-        guard let imageData = imageData else {
-            return nil
+        do {
+            imageData = try await resourcesFileCache.cache.getData(location: fileCacheLocation)
+        }
+        catch let error {
+            imageData = nil
         }
         
         return ShareableImageDomainModel(

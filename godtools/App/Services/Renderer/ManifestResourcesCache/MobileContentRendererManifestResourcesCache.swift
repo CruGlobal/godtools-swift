@@ -11,7 +11,7 @@ import SwiftUI
 import UIKit
 import GodToolsShared
 
-final class MobileContentRendererManifestResourcesCache {
+final class MobileContentRendererManifestResourcesCache: Sendable {
     
     private let resourcesFileCache: ResourcesFileCache
         
@@ -29,7 +29,7 @@ final class MobileContentRendererManifestResourcesCache {
         return FileCacheLocation(relativeUrlString: localName)
     }
     
-    func getFile(resource: Resource) throws -> URL {
+    func getFile(resource: Resource) async throws -> URL {
         
         guard let location = getSHA256FileLocation(resource: resource) else {
             
@@ -42,26 +42,26 @@ final class MobileContentRendererManifestResourcesCache {
             throw error
         }
         
-        return try resourcesFileCache.cache.getFile(location: location)
+        return try await resourcesFileCache.cache.getFile(location: location)
     }
     
-    func getUIImage(resource: Resource) throws -> UIImage? {
+    func getUIImage(resource: Resource) async throws -> UIImage? {
         
         guard let location = getSHA256FileLocation(resource: resource) else {
             return nil
         }
         
-        return try resourcesFileCache.cache.getUIImage(location: location)
+        return try await resourcesFileCache.cache.getUIImage(location: location)
     }
     
-    func getUIImageNonThrowing(resource: Resource) -> UIImage? {
+    func getUIImageNonThrowing(resource: Resource) async -> UIImage? {
         
         guard let location = getSHA256FileLocation(resource: resource) else {
             return nil
         }
         
         do {
-            return try resourcesFileCache.cache.getUIImage(location: location)
+            return try await resourcesFileCache.cache.getUIImage(location: location)
         }
         catch _ {
             print("\n WARNING: Failed to get resource image: \(location.filenameWithPathExtension ?? "")")
@@ -69,14 +69,14 @@ final class MobileContentRendererManifestResourcesCache {
         }
     }
     
-    func getImageNonThrowing(resource: Resource) -> SwiftUI.Image? {
+    func getImageNonThrowing(resource: Resource) async -> SwiftUI.Image? {
         
         guard let location = getSHA256FileLocation(resource: resource) else {
             return nil
         }
         
         do {
-            return try resourcesFileCache.cache.getImage(location: location)
+            return try await resourcesFileCache.cache.getImage(location: location)
         }
         catch _ {
             return nil
