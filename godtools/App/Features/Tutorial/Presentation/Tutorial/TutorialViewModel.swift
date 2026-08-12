@@ -89,10 +89,13 @@ final class TutorialViewModel: ObservableObject {
     }
     
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
-        
-        strings = getTutorialStringsUseCase.execute(appLanguage: appLanguage)
-        
-        tutorialPages = getTutorialUseCase.execute(appLanguage: appLanguage).pages
+
+        Task {
+
+            strings = await getTutorialStringsUseCase.execute(appLanguage: appLanguage)
+
+            tutorialPages = await getTutorialUseCase.execute(appLanguage: appLanguage).pages
+        }
     }
     
     private func getAnalyticsScreenName(tutorialItemIndex: Int) -> String {

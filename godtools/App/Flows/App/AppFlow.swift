@@ -279,17 +279,20 @@ final class AppFlow: RootFlow {
                 let appLanguage: AppLanguageDomainModel = self.appLanguage
                 
                 dismissFlow(completion: { [weak self] in
-                    
-                    let view = AlertMessageView(
-                        title: alertMessage.title,
-                        message: alertMessage.message,
-                        acceptTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.ok.key),
-                        cancelTitle: nil,
-                        acceptTapped: nil,
-                        cancelTapped: nil
-                    )
-                    
-                    self?.presentView(view: view.controller, animated: true)
+
+                    Task {
+
+                        let view = AlertMessageView(
+                            title: alertMessage.title,
+                            message: alertMessage.message,
+                            acceptTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.ok.key),
+                            cancelTitle: nil,
+                            acceptTapped: nil,
+                            cancelTapped: nil
+                        )
+
+                        self?.presentView(view: view.controller, animated: true)
+                    }
                 })
             }
             

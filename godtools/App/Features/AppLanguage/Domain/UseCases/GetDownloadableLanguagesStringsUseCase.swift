@@ -17,12 +17,12 @@ final class GetDownloadableLanguagesStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> DownloadableLanguagesStringsDomainModel {
+    func execute(appLanguage: AppLanguageDomainModel) async -> DownloadableLanguagesStringsDomainModel {
         
         let localeId: String = appLanguage
         
         let strings = DownloadableLanguagesStringsDomainModel(
-            navTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsDownloadableLanguagesTitle.key)
+            navTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsDownloadableLanguagesTitle.key)
         )
         
         return strings

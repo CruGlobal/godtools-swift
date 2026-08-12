@@ -17,12 +17,12 @@ final class GetShareToolScreenShareSessionStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> ShareToolScreenShareSessionStringsDomainModel {
+    func execute(appLanguage: AppLanguageDomainModel) async -> ShareToolScreenShareSessionStringsDomainModel {
         
         let localeId: String = appLanguage
         
-        let shareMessage: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.shareToolRemoteLinkMessage.key)
-        let qrCodeActionTitle: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolScreenShareQrCodeTitle.key)
+        let shareMessage: String = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.shareToolRemoteLinkMessage.key)
+        let qrCodeActionTitle: String = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolScreenShareQrCodeTitle.key)
         
         let strings = ShareToolScreenShareSessionStringsDomainModel(
             shareMessage: shareMessage,

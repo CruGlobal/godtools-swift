@@ -72,9 +72,12 @@ final class LanguageSettingsViewModel: ObservableObject {
     }
     
     private func didSetApplanguage(appLanguage: AppLanguageDomainModel) {
-        
-        strings = getLanguageSettingsStringsUseCase
-            .execute(appLanguage: appLanguage)
+
+        Task {
+
+            strings = await getLanguageSettingsStringsUseCase
+                .execute(appLanguage: appLanguage)
+        }
     }
 }
 

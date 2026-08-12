@@ -30,7 +30,7 @@ struct GetFavoritesStringsUseCaseTests {
 
         let useCase = getUseCase()
 
-        let strings: FavoritesStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
+        let strings: FavoritesStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.tutorialMessage == "\(argument.appLanguage):\(LocalizableStringKeys.openTutorialShowTutorialLabelText.key)")
         #expect(strings.openTutorialActionTitle == "\(argument.appLanguage):\(LocalizableStringKeys.openTutorialOpenTutorialButtonTitle.key)")

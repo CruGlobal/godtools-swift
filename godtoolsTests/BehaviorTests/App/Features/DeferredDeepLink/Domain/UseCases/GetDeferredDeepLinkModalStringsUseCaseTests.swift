@@ -30,7 +30,7 @@ struct GetDeferredDeepLinkModalStringsUseCaseTests {
 
         let useCase = getUseCase()
 
-        let strings: DeferredDeepLinkModalStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
+        let strings: DeferredDeepLinkModalStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.title == "\(argument.appLanguage):\(LocalizableStringKeys.deferredDeepLinkModalTitle.key)")
         #expect(strings.message == "\(argument.appLanguage):\(LocalizableStringKeys.deferredDeepLinkModalMessage.key)")

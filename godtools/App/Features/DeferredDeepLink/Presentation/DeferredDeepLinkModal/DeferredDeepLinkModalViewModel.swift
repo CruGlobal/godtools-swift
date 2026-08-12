@@ -55,8 +55,11 @@ final class DeferredDeepLinkModalViewModel: ObservableObject {
 
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
 
-        strings = getDeferredDeepLinkModalStringsUseCase
-            .execute(appLanguage: appLanguage)
+        Task {
+
+            strings = await getDeferredDeepLinkModalStringsUseCase
+                .execute(appLanguage: appLanguage)
+        }
     }
 }
 

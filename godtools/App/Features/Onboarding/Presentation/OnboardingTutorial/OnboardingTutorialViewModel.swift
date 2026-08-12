@@ -93,8 +93,11 @@ final class OnboardingTutorialViewModel: ObservableObject {
     }
     
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
-        
-        strings = getOnboardingTutorialStringsUseCase.execute(appLanguage: appLanguage)
+
+        Task {
+
+            strings = await getOnboardingTutorialStringsUseCase.execute(appLanguage: appLanguage)
+        }
     }
     
     private func updateShowsChooseLanguageButtonState(page: Int) {

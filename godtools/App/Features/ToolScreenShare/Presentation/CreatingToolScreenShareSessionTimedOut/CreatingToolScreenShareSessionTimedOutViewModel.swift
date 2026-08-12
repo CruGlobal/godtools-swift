@@ -26,12 +26,12 @@ final class CreatingToolScreenShareSessionTimedOutViewModel {
         stepEmitter: FlowStepEmitter,
         appLanguage: AppLanguageDomainModel,
         getCreatingToolScreenShareSessionTimedOutStringsUseCase: GetCreatingToolScreenShareSessionTimedOutStringsUseCase
-    ) {
+    ) async {
         
         self.stepEmitter = stepEmitter
         self.appLanguage = appLanguage
         
-        let strings = getCreatingToolScreenShareSessionTimedOutStringsUseCase
+        let strings = await getCreatingToolScreenShareSessionTimedOutStringsUseCase
             .execute(appLanguage: appLanguage)
                 
         title = strings.title

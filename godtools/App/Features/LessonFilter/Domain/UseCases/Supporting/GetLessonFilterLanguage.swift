@@ -31,32 +31,32 @@ final class GetLessonFilterLanguage {
         self.stringWithLocaleCount = stringWithLocaleCount
     }
     
-    func getLessonLanguageFilterFromLanguageCode(languageCode: String, translatedInAppLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel? {
+    func getLessonLanguageFilterFromLanguageCode(languageCode: String, translatedInAppLanguage: AppLanguageDomainModel) async -> LessonFilterLanguageDomainModel? {
         
         guard let language = languagesRepository.getLanguageByCode(code: languageCode) else {
             return nil
         }
         
-        return mapLanguageToLessonFilterLanguageDomainModel(language: language, translatedInAppLanguage: translatedInAppLanguage)
+        return await mapLanguageToLessonFilterLanguageDomainModel(language: language, translatedInAppLanguage: translatedInAppLanguage)
     }
     
-    func getLessonLanguageFilterFromLanguageId(languageId: String, translatedInAppLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel? {
+    func getLessonLanguageFilterFromLanguageId(languageId: String, translatedInAppLanguage: AppLanguageDomainModel) async -> LessonFilterLanguageDomainModel? {
         
         guard let language = languagesRepository.getLanguageById(id: languageId) else {
             return nil
         }
         
-        return mapLanguageToLessonFilterLanguageDomainModel(language: language, translatedInAppLanguage: translatedInAppLanguage)
+        return await mapLanguageToLessonFilterLanguageDomainModel(language: language, translatedInAppLanguage: translatedInAppLanguage)
     }
     
-    func mapLanguageToLessonFilterLanguageDomainModel(language: LanguageDataModel, translatedInAppLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel {
+    func mapLanguageToLessonFilterLanguageDomainModel(language: LanguageDataModel, translatedInAppLanguage: AppLanguageDomainModel) async -> LessonFilterLanguageDomainModel {
         
         let lessonsAvailableCount: Int = resourcesRepository.getLessonsCount(filterByLanguageId: language.id)
 
-        let languageNameTranslatedInLanguage = getTranslatedLanguageName.getLanguageName(language: language.code, translatedInLanguage: language.code)
-        let languageNameTranslatedInAppLanguage = getTranslatedLanguageName.getLanguageName(language: language.code, translatedInLanguage: translatedInAppLanguage)
+        let languageNameTranslatedInLanguage = await getTranslatedLanguageName.getLanguageName(language: language.code, translatedInLanguage: language.code)
+        let languageNameTranslatedInAppLanguage = await getTranslatedLanguageName.getLanguageName(language: language.code, translatedInLanguage: translatedInAppLanguage)
         
-        let lessonsAvailableText: String = getLessonsAvailableText(lessonsAvailableCount: lessonsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
+        let lessonsAvailableText: String = await getLessonsAvailableText(lessonsAvailableCount: lessonsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
         
         return LessonFilterLanguageDomainModel(
             languageId: language.id,
@@ -67,9 +67,9 @@ final class GetLessonFilterLanguage {
         )
     }
     
-    private func getLessonsAvailableText(lessonsAvailableCount: Int, translatedInAppLanguage: AppLanguageDomainModel) -> String {
+    private func getLessonsAvailableText(lessonsAvailableCount: Int, translatedInAppLanguage: AppLanguageDomainModel) async -> String {
         
-        let formatString = localizationServices.stringForLocaleElseSystemElseEnglish(
+        let formatString = await localizationServices.stringForLocaleElseSystemElseEnglish(
             localeIdentifier: translatedInAppLanguage.localeId,
             key: LocalizableStringKeys.lessonsFilterLessonsAvailable.key
         )

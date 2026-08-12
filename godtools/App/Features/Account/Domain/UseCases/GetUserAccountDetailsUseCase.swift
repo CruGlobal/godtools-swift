@@ -21,39 +21,49 @@ final class GetUserAccountDetailsUseCase {
         self.localizationServices = localizationServices
     }
     
-    @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<UserAccountDetailsDomainModel, Error> {
-        
+    @MainActor func execute(
+        appLanguage: AppLanguageDomainModel
+    ) -> AnyPublisher<UserAccountDetailsDomainModel, Error> {
+
         userDetailsRepository
             .getAuthUserDetailsChangedPublisher(
                 requestPriority: .high
             )
             .receive(on: DispatchQueue.global())
-            .tryMap { (changedUserDetails: UserDetailsDataModel?) in
-                
-                let cachedAuthUserDetails: UserDetailsDataModel? = try self.userDetailsRepository.getAuthUserDetails()
-                
-                guard let cachedAuthUserDetails = cachedAuthUserDetails else {
-                    return UserAccountDetailsDomainModel.emptyValue
+            .flatMap { (changedUserDetails: UserDetailsDataModel?) -> AnyPublisher<UserAccountDetailsDomainModel, Error> in
+
+                return AnyPublisher() {
+
+                    return try await self.asyncExecute(appLanguage: appLanguage)
                 }
-                
-                let accountDetails: UserAccountDetailsDomainModel = self.mapUserDetails(
-                    userDetails: cachedAuthUserDetails,
-                    translatedInAppLanguage: appLanguage
-                )
-                
-                return accountDetails
             }
             .eraseToAnyPublisher()
+    }
+    
+    private func asyncExecute(appLanguage: AppLanguageDomainModel) async throws -> UserAccountDetailsDomainModel {
+        
+        let cachedAuthUserDetails: UserDetailsDataModel? = try userDetailsRepository.getAuthUserDetails()
+
+        guard let cachedAuthUserDetails = cachedAuthUserDetails else {
+            return UserAccountDetailsDomainModel.emptyValue
+        }
+
+        let accountDetails: UserAccountDetailsDomainModel = await mapUserDetails(
+            userDetails: cachedAuthUserDetails,
+            translatedInAppLanguage: appLanguage
+        )
+
+        return accountDetails
     }
 }
 
 extension GetUserAccountDetailsUseCase {
     
-    private func mapUserDetails(userDetails: UserDetailsDataModel, translatedInAppLanguage: AppLanguageDomainModel) -> UserAccountDetailsDomainModel {
+    private func mapUserDetails(userDetails: UserDetailsDataModel, translatedInAppLanguage: AppLanguageDomainModel) async -> UserAccountDetailsDomainModel {
         
         return UserAccountDetailsDomainModel(
             name: getName(userDetails: userDetails),
-            joinedOnString: getJoinedOnDate(userDetails: userDetails, translatedInAppLanguage: translatedInAppLanguage)
+            joinedOnString: await getJoinedOnDate(userDetails: userDetails, translatedInAppLanguage: translatedInAppLanguage)
         )
     }
     
@@ -72,7 +82,7 @@ extension GetUserAccountDetailsUseCase {
         return ""
     }
     
-    private func getJoinedOnDate(userDetails: UserDetailsDataModel, translatedInAppLanguage: AppLanguageDomainModel) -> String {
+    private func getJoinedOnDate(userDetails: UserDetailsDataModel, translatedInAppLanguage: AppLanguageDomainModel) async -> String {
         
         guard let createdAtDate = userDetails.createdAt else {
             return ""
@@ -85,7 +95,7 @@ extension GetUserAccountDetailsUseCase {
         
         let formattedCreatedAtDateString: String = dateFormatter.string(from: createdAtDate)
         
-        let localizedJoinedOn: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: translatedInAppLanguage.localeId, key: LocalizableStringKeys.accountJoinedOn.key)
+        let localizedJoinedOn: String = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: translatedInAppLanguage.localeId, key: LocalizableStringKeys.accountJoinedOn.key)
         
         let joinedOnString: String = String.localizedStringWithFormat(localizedJoinedOn, formattedCreatedAtDateString)
         

@@ -17,12 +17,12 @@ final class GetCreatingToolScreenShareSessionStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> CreatingToolScreenShareSessionStringsDomainModel {
+    func execute(appLanguage: AppLanguageDomainModel) async -> CreatingToolScreenShareSessionStringsDomainModel {
         
         let localeId: String = appLanguage
         
         let strings = CreatingToolScreenShareSessionStringsDomainModel(
-            creatingSessionMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.loadToolRemoteSessionMessage.key)
+            creatingSessionMessage: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.loadToolRemoteSessionMessage.key)
         )
         
         return strings

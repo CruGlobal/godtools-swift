@@ -25,7 +25,13 @@ final class GetToolSettingsToolLanguagesListUseCase {
         self.getTranslatedLanguageName = getTranslatedLanguageName
     }
     
-    func execute(listType: ToolSettingsToolLanguagesListTypeDomainModel, primaryLanguageId: String, parallelLanguageId: String?, toolId: String, appLanguage: AppLanguageDomainModel) async throws -> [ToolSettingsToolLanguageDomainModel] {
+    func execute(
+        listType: ToolSettingsToolLanguagesListTypeDomainModel,
+        primaryLanguageId: String,
+        parallelLanguageId: String?,
+        toolId: String,
+        appLanguage: AppLanguageDomainModel
+    ) async throws -> [ToolSettingsToolLanguageDomainModel] {
         
         var filterOutLanguageIds: [String] = Array()
         
@@ -51,18 +57,22 @@ final class GetToolSettingsToolLanguagesListUseCase {
         }
         
         let languages: [LanguageDataModel] = try await languagesRepository.getLanguagesByIds(ids: languageIds)
-                    
-        let toolSettingsToolLanguages: [ToolSettingsToolLanguageDomainModel] = languages.map { (language: LanguageDataModel) in
+        
+        var toolSettingsToolLanguages: [ToolSettingsToolLanguageDomainModel] = Array()
+        
+        for language in languages {
             
-            let languageName: String = self.getTranslatedLanguageName.getLanguageName(
+            let languageName: String = await self.getTranslatedLanguageName.getLanguageName(
                 language: language,
                 translatedInLanguage: appLanguage
             )
             
-            return ToolSettingsToolLanguageDomainModel(
+            let toolLanguage = ToolSettingsToolLanguageDomainModel(
                 dataModelId: language.id,
                 languageName: languageName
             )
+            
+            toolSettingsToolLanguages.append(toolLanguage)
         }
         
         return toolSettingsToolLanguages

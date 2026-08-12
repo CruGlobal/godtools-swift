@@ -54,9 +54,12 @@ final class DeleteAccountProgressViewModel: ObservableObject {
     }
     
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
-        
-        strings = getDeleteAccountProgressStringsUseCase
-            .execute(appLanguage: appLanguage)
+
+        Task {
+
+            strings = await getDeleteAccountProgressStringsUseCase
+                .execute(appLanguage: appLanguage)
+        }
     }
     
     private func deleteAccount() {

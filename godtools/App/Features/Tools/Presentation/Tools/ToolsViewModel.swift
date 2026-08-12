@@ -258,12 +258,15 @@ final class ToolsViewModel: ObservableObject {
 
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
 
-        let strings = getToolsStringsUseCase
-            .execute(translateInLanguage: appLanguage)
+        Task {
 
-        self.strings = strings
+            let strings = await getToolsStringsUseCase
+                .execute(translateInLanguage: appLanguage)
 
-        toggleOptions = Self.getPersonalizedToggleOptions(strings: strings)
+            self.strings = strings
+
+            toggleOptions = Self.getPersonalizedToggleOptions(strings: strings)
+        }
     }
     
     private var analyticsScreenName: String {

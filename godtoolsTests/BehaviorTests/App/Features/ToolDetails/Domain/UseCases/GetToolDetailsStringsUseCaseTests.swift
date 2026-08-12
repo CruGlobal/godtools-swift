@@ -30,7 +30,7 @@ struct GetToolDetailsStringsUseCaseTests {
 
         let useCase = getUseCase()
 
-        let strings: ToolDetailsStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
+        let strings: ToolDetailsStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.aboutActionTitle == "\(argument.appLanguage):\(LocalizableStringKeys.toolDetailsAboutTitle.key)")
         #expect(strings.addToFavoritesActionTitle == "\(argument.appLanguage):\(LocalizableStringKeys.addToFavorites.key)")

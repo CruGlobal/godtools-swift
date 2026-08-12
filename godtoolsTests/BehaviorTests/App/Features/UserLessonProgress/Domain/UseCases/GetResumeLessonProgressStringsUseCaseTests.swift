@@ -30,7 +30,7 @@ struct GetResumeLessonProgressStringsUseCaseTests {
 
         let useCase = getUseCase()
 
-        let strings: ResumeLessonProgressStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
+        let strings: ResumeLessonProgressStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.title == "\(argument.appLanguage):\(LocalizableStringKeys.lessonsResumeLessonModalTitle.key)")
         #expect(strings.subtitle == "\(argument.appLanguage):\(LocalizableStringKeys.lessonsResumeLessonModalSubtitle.key)")

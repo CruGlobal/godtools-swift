@@ -10,13 +10,20 @@ import Foundation
 
 struct ShareAStoryWithUsWebContent: WebContentType {
     
-    let navTitle: String
+    let appLanguage: AppLanguageDomainModel
+    let navTitleLocalizedKey: String = LocalizableStringKeys.shareAStoryWithUs.key
     let url: URL? = URL(string: "https://godtoolsapp.com/share-story/")
     let analyticsScreenName: String = "Share Story"
     let analyticsSiteSection: String = "menu"
+    let localizationServices: LocalizationServicesInterface
     
-    init(localizationServices: LocalizationServicesInterface) {
+    private(set) var navTitle: String = ""
+    
+    init(appLanguage: AppLanguageDomainModel, localizationServices: LocalizationServicesInterface) async {
         
-        navTitle = localizationServices.stringForSystemElseEnglish(key: LocalizableStringKeys.shareAStoryWithUs.key)
+        self.appLanguage = appLanguage
+        self.localizationServices = localizationServices
+        
+        self.navTitle = await getLocalizedNavTitle()
     }
 }

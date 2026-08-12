@@ -17,13 +17,13 @@ final class GetShareToolQRCodeStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> ShareToolQRCodeStringsDomainModel {
+    func execute(appLanguage: AppLanguageDomainModel) async -> ShareToolQRCodeStringsDomainModel {
         
         let localeId: String = appLanguage
         
         let strings = ShareToolQRCodeStringsDomainModel(
-            message: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.shareToolQrCodeMessage.key),
-            closeActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolScreenShareQrCodeCloseButtonTitle.key)
+            message: await localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.shareToolQrCodeMessage.key),
+            closeActionTitle: await localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolScreenShareQrCodeCloseButtonTitle.key)
         )
         
         return strings

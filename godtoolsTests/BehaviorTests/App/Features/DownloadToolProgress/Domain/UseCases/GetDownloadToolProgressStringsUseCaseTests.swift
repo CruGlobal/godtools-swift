@@ -31,7 +31,7 @@ struct GetDownloadToolProgressStringsUseCaseTests {
         
         let useCase = try await getUseCase()
         
-        let strings = useCase
+        let strings = await useCase
             .execute(
                 toolId: favoritedToolId,
                 appLanguage: LanguageCodeDomainModel.english.value
@@ -52,7 +52,7 @@ struct GetDownloadToolProgressStringsUseCaseTests {
         
         let useCase = try await getUseCase()
         
-        let strings = useCase
+        let strings = await useCase
             .execute(
                 toolId: unFavoritedToolId,
                 appLanguage: LanguageCodeDomainModel.english.value
@@ -73,7 +73,7 @@ struct GetDownloadToolProgressStringsUseCaseTests {
         
         let useCase = try await getUseCase()
         
-        let strings = useCase
+        let strings = await useCase
             .execute(
                 toolId: unFavoritableToolId,
                 appLanguage: LanguageCodeDomainModel.english.value

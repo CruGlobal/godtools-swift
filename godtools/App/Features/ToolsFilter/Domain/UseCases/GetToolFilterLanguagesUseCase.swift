@@ -47,26 +47,28 @@ final class GetToolFilterLanguagesUseCase {
         
         let filteredByCategoryId: String? = filteredByCategory.filterId
         
-        let anyLanguage = getToolFilterLanguage.createAnyLanguageDomainModel(
+        let anyLanguage = await getToolFilterLanguage.createAnyLanguageDomainModel(
             translatedInAppLanguage: appLanguage,
             filteredByCategoryId: filteredByCategoryId
         )
-        
+
         let languages: [LanguageDataModel] = try await languagesRepository.getLanguagesByIds(ids: languageIds)
-        
-        let domainModels: [ToolFilterLanguageDomainModel] = languages.compactMap { (language: LanguageDataModel) in
-            
-            let domainModel: ToolFilterLanguageDomainModel = getToolFilterLanguage.createLanguageFilterDomainModel(
+
+        var domainModels: [ToolFilterLanguageDomainModel] = Array()
+
+        for language in languages {
+
+            let domainModel: ToolFilterLanguageDomainModel = await getToolFilterLanguage.createLanguageFilterDomainModel(
                 language: language,
                 translatedInAppLanguage: appLanguage,
                 filteredByCategoryId: filteredByCategoryId
             )
-            
+
             guard domainModel.numberOfToolsAvailable > 0 else {
-                return nil
+                continue
             }
-            
-            return domainModel
+
+            domainModels.append(domainModel)
         }
         
         let sortedDomainModels: [ToolFilterLanguageDomainModel] = domainModels

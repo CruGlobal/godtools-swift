@@ -67,28 +67,31 @@ final class SocialSignInViewModel: ObservableObject {
 
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
 
-        switch authenticationType {
-        case .createAccount:
+        Task {
 
-            let strings = getSocialCreateAccountStringsUseCase
-                .execute(appLanguage: appLanguage)
+            switch authenticationType {
+            case .createAccount:
 
-            title = strings.title
-            subtitle = strings.subtitle
-            signInWithAppleButtonTitle = strings.createWithAppleActionTitle
-            signInWithFacebookButtonTitle = strings.createWithFacebookActionTitle
-            signInWithGoogleButtonTitle = strings.createWithGoogleActionTitle
+                let strings = await getSocialCreateAccountStringsUseCase
+                    .execute(appLanguage: appLanguage)
 
-        case .login:
+                title = strings.title
+                subtitle = strings.subtitle
+                signInWithAppleButtonTitle = strings.createWithAppleActionTitle
+                signInWithFacebookButtonTitle = strings.createWithFacebookActionTitle
+                signInWithGoogleButtonTitle = strings.createWithGoogleActionTitle
 
-            let strings = getSocialSignInStringsUseCase
-                .execute(appLanguage: appLanguage)
+            case .login:
 
-            title = strings.title
-            subtitle = strings.subtitle
-            signInWithAppleButtonTitle = strings.signInWithAppleActionTitle
-            signInWithFacebookButtonTitle = strings.signInWithFacebookActionTitle
-            signInWithGoogleButtonTitle = strings.signInWithGoogleActionTitle
+                let strings = await getSocialSignInStringsUseCase
+                    .execute(appLanguage: appLanguage)
+
+                title = strings.title
+                subtitle = strings.subtitle
+                signInWithAppleButtonTitle = strings.signInWithAppleActionTitle
+                signInWithFacebookButtonTitle = strings.signInWithFacebookActionTitle
+                signInWithGoogleButtonTitle = strings.signInWithGoogleActionTitle
+            }
         }
     }
 

@@ -39,7 +39,7 @@ struct GetOnboardingTutorialStringsUseCaseTests {
 
         let useCase = getUseCase()
 
-        let strings: OnboardingTutorialStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
+        let strings: OnboardingTutorialStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.chooseAppLanguageButtonTitle == "\(argument.appLanguage):\(LocalizableStringKeys.onboardingTutorialChooseLanguageButtonTitle.key)")
         #expect(strings.beginTutorialButtonTitle == "\(argument.appLanguage):\(LocalizableStringKeys.onboardingTutorialBeginButtonTitle.key)")

@@ -17,7 +17,6 @@ final class ConfirmRemoveToolFromFavoritesAlertViewModel {
     private let toolId: String
     private let appLanguage: AppLanguageDomainModel
     private let strings: ConfirmRemoveToolFromFavoritesStringsDomainModel
-    private let getConfirmRemoveToolFromFavoritesStringsUseCase: GetConfirmRemoveToolFromFavoritesStringsUseCase
     private let removeFavoritedToolUseCase: RemoveFavoritedToolUseCase
     private let didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?
     
@@ -29,19 +28,16 @@ final class ConfirmRemoveToolFromFavoritesAlertViewModel {
     init(
         toolId: String,
         appLanguage: AppLanguageDomainModel,
-        getConfirmRemoveToolFromFavoritesStringsUseCase: GetConfirmRemoveToolFromFavoritesStringsUseCase,
+        strings: ConfirmRemoveToolFromFavoritesStringsDomainModel,
         removeFavoritedToolUseCase: RemoveFavoritedToolUseCase,
         didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?
     ) {
-        
+
         self.toolId = toolId
         self.appLanguage = appLanguage
-        self.getConfirmRemoveToolFromFavoritesStringsUseCase = getConfirmRemoveToolFromFavoritesStringsUseCase
+        self.strings = strings
         self.removeFavoritedToolUseCase = removeFavoritedToolUseCase
         self.didConfirmToolRemovalSubject = didConfirmToolRemovalSubject
-        
-        strings = getConfirmRemoveToolFromFavoritesStringsUseCase
-            .execute(toolId: toolId, appLanguage: appLanguage)
         
         title = strings.title
         message = strings.message

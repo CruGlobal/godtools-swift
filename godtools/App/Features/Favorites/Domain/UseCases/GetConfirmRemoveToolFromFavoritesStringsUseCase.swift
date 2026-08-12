@@ -19,13 +19,13 @@ final class GetConfirmRemoveToolFromFavoritesStringsUseCase {
         self.getTranslatedToolName = getTranslatedToolName
     }
     
-    func execute(toolId: String, appLanguage: AppLanguageDomainModel) -> ConfirmRemoveToolFromFavoritesStringsDomainModel {
+    func execute(toolId: String, appLanguage: AppLanguageDomainModel) async -> ConfirmRemoveToolFromFavoritesStringsDomainModel {
         
         let strings = ConfirmRemoveToolFromFavoritesStringsDomainModel(
-            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.removeFromFavoritesTitle.key),
-            message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.removeFromFavoritesMessage.key).replacingOccurrences(of: "%@", with: getTranslatedToolName.getToolName(toolId: toolId, translateInLanguage: appLanguage)),
-            confirmRemoveActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.yes.key),
-            cancelRemoveActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.no.key)
+            title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.removeFromFavoritesTitle.key),
+            message: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.removeFromFavoritesMessage.key).replacingOccurrences(of: "%@", with: getTranslatedToolName.getToolName(toolId: toolId, translateInLanguage: appLanguage)),
+            confirmRemoveActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.yes.key),
+            cancelRemoveActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.no.key)
         )
         
         return strings

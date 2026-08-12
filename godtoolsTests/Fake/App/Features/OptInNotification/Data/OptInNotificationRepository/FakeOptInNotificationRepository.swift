@@ -9,7 +9,7 @@
 import Foundation
 @testable import godtools
 
-class FakeOptInNotificationRepository: OptInNotificationRepositoryInterface {
+final class FakeOptInNotificationRepository: OptInNotificationRepositoryInterface {
     
     private let lastPromptedDate: Date?
     private let promptCount: Int

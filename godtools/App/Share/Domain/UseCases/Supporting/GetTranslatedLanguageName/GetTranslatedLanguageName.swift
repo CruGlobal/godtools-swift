@@ -28,7 +28,10 @@ final class GetTranslatedLanguageName {
         self.localeScriptName = localeScriptName
     }
     
-    func getLanguageName(language: TranslatableLanguage, translatedInLanguage: BCP47LanguageIdentifier) -> String {
+    func getLanguageName(
+        language: TranslatableLanguage,
+        translatedInLanguage: BCP47LanguageIdentifier
+    ) async -> String {
         
         if language.forceLanguageName {
             return language.fallbackName
@@ -38,7 +41,7 @@ final class GetTranslatedLanguageName {
             return language.fallbackName
         }
         
-        if let localizedName = localizationLanguageName.getLanguageName(languageId: language.localeId, translatedInLanguage: translatedInLanguage), !localizedName.isEmpty {
+        if let localizedName = await localizationLanguageName.getLanguageName(languageId: language.localeId, translatedInLanguage: translatedInLanguage), !localizedName.isEmpty {
             
             return localizedName
         }
@@ -50,7 +53,10 @@ final class GetTranslatedLanguageName {
         return language.fallbackName
     }
     
-    private func getLanguageNameFromLocale(language: TranslatableLanguage, translatedInLanguage: BCP47LanguageIdentifier) -> String? {
+    private func getLanguageNameFromLocale(
+        language: TranslatableLanguage,
+        translatedInLanguage: BCP47LanguageIdentifier
+    ) -> String? {
             
         let languageName: String?
         

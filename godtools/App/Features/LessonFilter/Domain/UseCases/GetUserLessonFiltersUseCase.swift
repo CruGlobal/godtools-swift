@@ -32,23 +32,15 @@ final class GetUserLessonFiltersUseCase {
             languagesRepository.observeCollectionChangesPublisher(),
             userLessonFiltersRepository.observeCollectionChangesPublisher()
         )
-        .map { (languagesChanged: Void, lessonFiltersChanged: Void) in
-            
-            let languageId: String? = self.userLessonFiltersRepository.getUserLessonLanguageFilter()?.languageId
-            
-            if let languageId = languageId,
-               let languageFilter = self.getLessonFilterLanguage.getLessonLanguageFilterFromLanguageId(languageId: languageId, translatedInAppLanguage: appLanguage) {
+        .flatMap { (languagesChanged: Void, lessonFiltersChanged: Void) -> AnyPublisher<LessonFilterLanguageDomainModel?, Error> in
+
+            return AnyPublisher() {
                 
-                return languageFilter
+                return await self.asyncExecute(appLanguage: appLanguage)
             }
-            
-            return self.getLessonFilterLanguage.getLessonLanguageFilterFromLanguageCode(
-                languageCode: appLanguage,
-                translatedInAppLanguage: appLanguage
-            )
         }
         .map { (languageFilter: LessonFilterLanguageDomainModel?) in
-            
+
             let userFilters = UserLessonFiltersDomainModel(
                 languageFilter: languageFilter
             )
@@ -56,5 +48,21 @@ final class GetUserLessonFiltersUseCase {
             return userFilters
         }
         .eraseToAnyPublisher()
+    }
+    
+    private func asyncExecute(appLanguage: AppLanguageDomainModel) async -> LessonFilterLanguageDomainModel? {
+        
+        let languageId: String? = userLessonFiltersRepository.getUserLessonLanguageFilter()?.languageId
+
+        if let languageId = languageId,
+           let languageFilter = await getLessonFilterLanguage.getLessonLanguageFilterFromLanguageId(languageId: languageId, translatedInAppLanguage: appLanguage) {
+
+            return languageFilter
+        }
+
+        return await getLessonFilterLanguage.getLessonLanguageFilterFromLanguageCode(
+            languageCode: appLanguage,
+            translatedInAppLanguage: appLanguage
+        )
     }
 }

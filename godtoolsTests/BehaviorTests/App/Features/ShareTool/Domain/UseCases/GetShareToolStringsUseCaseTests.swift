@@ -35,7 +35,7 @@ struct GetShareToolStringsUseCaseTests {
 
         let useCase = try getUseCase()
 
-        let strings: ShareToolStringsDomainModel = useCase.execute(
+        let strings: ShareToolStringsDomainModel = await useCase.execute(
             toolId: unknownToolId,
             toolLanguageId: unknownToolLanguageId,
             pageNumber: 0,

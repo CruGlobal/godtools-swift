@@ -16,12 +16,12 @@ final class GetToolFilterLanguagesStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> ToolFilterLanguagesStringsDomainModel {
+    func execute(appLanguage: AppLanguageDomainModel) async -> ToolFilterLanguagesStringsDomainModel {
         
         let localeId: String = appLanguage.localeId
         
         let strings = ToolFilterLanguagesStringsDomainModel(
-            navTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolsFilterLanguageNavTitle.key)
+            navTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolsFilterLanguageNavTitle.key)
         )
         
         return strings

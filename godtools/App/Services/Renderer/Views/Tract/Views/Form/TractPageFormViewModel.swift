@@ -91,29 +91,38 @@ class TractPageFormViewModel: MobileContentFormViewModel {
     }
     
     private func notifiyFollowUpsMissingFieldsError(missingFieldsNames: [String]) {
-        
+
         let appLanguage: AppLanguageDomainModel = renderedPageContext.appLanguage
-        
-        let errorTitle: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.error.key)
-        var errorMessage: String = ""
-        
-        for index in 0 ..< missingFieldsNames.count {
-            let name: String = missingFieldsNames[index]
+
+        Task {
+
+            let errorTitle: String = await localizationServices.stringForLocaleElseEnglish(
+                localeIdentifier: appLanguage,
+                key: LocalizableStringKeys.error.key
+            )
             
-            if index > 0 {
-                errorMessage += "\n"
+            var errorMessage: String = ""
+
+            for index in 0 ..< missingFieldsNames.count {
+                
+                let name: String = missingFieldsNames[index]
+
+                if index > 0 {
+                    errorMessage += "\n"
+                }
+
+                errorMessage += String(format: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.requiredMissingField.key), name.localizedCapitalized)
             }
             
-            errorMessage += String(format: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.requiredMissingField.key), name.localizedCapitalized)
+            let acceptTitle = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.ok.key)
+
+            let errorViewModel = MobileContentErrorViewModel(
+                title: errorTitle,
+                message: errorMessage,
+                acceptTitle: acceptTitle
+            )
+
+            error.accept(value: errorViewModel)
         }
-        
-        let errorViewModel = MobileContentErrorViewModel(
-            appLanguage: appLanguage,
-            title: errorTitle,
-            message: errorMessage,
-            localizationServices: localizationServices
-        )
-        
-        error.accept(value: errorViewModel)
     }
 }

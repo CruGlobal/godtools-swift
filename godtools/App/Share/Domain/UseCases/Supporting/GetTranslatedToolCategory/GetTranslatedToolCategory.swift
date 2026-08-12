@@ -21,20 +21,23 @@ final class GetTranslatedToolCategory {
         self.resourcesRepository = resourcesRepository
     }
     
-    func getTranslatedCategory(toolId: String, translateInLanguage: BCP47LanguageIdentifier) -> String {
+    func getTranslatedCategory(toolId: String, translateInLanguage: BCP47LanguageIdentifier) async -> String {
         
         guard let resource = resourcesRepository.getResourceById(id: toolId) else {
             return ""
         }
         
-        return getTranslatedCategory(resource: resource, translateInLanguage: translateInLanguage)
+        return await getTranslatedCategory(resource: resource, translateInLanguage: translateInLanguage)
     }
     
-    func getTranslatedCategory(resource: ResourceDataModel, translateInLanguage: BCP47LanguageIdentifier) -> String {
+    func getTranslatedCategory(
+        resource: ResourceDataModel,
+        translateInLanguage: BCP47LanguageIdentifier
+    ) async -> String {
         
         let localeId = translateInLanguage.localeId
 
-        let category: String = localizationServices.stringForLocaleElseEnglish(
+        let category: String = await localizationServices.stringForLocaleElseEnglish(
             localeIdentifier: localeId,
             key: "\(Self.localizedKeyPrefix)\(resource.attrCategory)"
         )

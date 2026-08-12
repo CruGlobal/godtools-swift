@@ -167,13 +167,17 @@ class TractPageCardView: MobileContentView, NibBased {
         cardPositionLabel.font = viewModel.cardPositionLabelFont
         cardPositionLabel.isHidden = viewModel.hidesCardPositionLabel
         
-        previousButton.setTitle(viewModel.previousButtonTitle, for: .normal)
         previousButton.setTitleColor(viewModel.previousButtonTitleColor, for: .normal)
         previousButton.isHidden = viewModel.hidesPreviousButton
-        
-        nextButton.setTitle(viewModel.nextButtonTitle, for: .normal)
+
         nextButton.setTitleColor(viewModel.nextButtonTitleColor, for: .normal)
         nextButton.isHidden = viewModel.hidesNextButton
+
+        Task {
+
+            self.previousButton.setTitle(await viewModel.previousButtonTitle, for: .normal)
+            self.nextButton.setTitle(await viewModel.nextButtonTitle, for: .normal)
+        }
     }
     
     private func relayoutBottomGradient() {

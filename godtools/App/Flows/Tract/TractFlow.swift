@@ -202,24 +202,27 @@ class TractFlow: GTFlow {
     }
     
     private func backTappedFromTool(isScreenSharing: Bool) {
-        
+
         if isScreenSharing {
-            
+
             let localizationServices: LocalizationServicesInterface = appDiContainer.core.dataLayer.getLocalizationServices()
-                            
-            let view = AlertMessageView(
-                title: "",
-                message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.exitTractRemoteShareSessionMessage.key),
-                acceptTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.yes.key).uppercased(),
-                cancelTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.no.key).uppercased(),
-                acceptTapped: { [weak self] in
-                    
-                    self?.navigate(step: AppFlowStep.acceptTappedFromExitToolRemoteShare)
-                },
-                cancelTapped: nil
-            )
-            
-            presentView(view: view.controller, animated: true)
+
+            Task {
+
+                let view = AlertMessageView(
+                    title: "",
+                    message: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.exitTractRemoteShareSessionMessage.key),
+                    acceptTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.yes.key).uppercased(),
+                    cancelTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.no.key).uppercased(),
+                    acceptTapped: { [weak self] in
+
+                        self?.navigate(step: AppFlowStep.acceptTappedFromExitToolRemoteShare)
+                    },
+                    cancelTapped: nil
+                )
+
+                presentView(view: view.controller, animated: true)
+            }
         }
         else {
             completeFlow(state: .userClosedTract)

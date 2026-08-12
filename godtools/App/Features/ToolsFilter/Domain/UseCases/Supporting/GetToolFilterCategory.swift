@@ -25,61 +25,65 @@ final class GetToolFilterCategory {
         self.stringWithLocaleCount = stringWithLocaleCount
     }
     
-    func getAnyCategoryFilter(translatedInAppLanguage: AppLanguageDomainModel) -> ToolFilterCategoryDomainModel {
+    func getAnyCategoryFilter(translatedInAppLanguage: AppLanguageDomainModel) async -> ToolFilterCategoryDomainModel {
         
-        return createAnyCategoryDomainModel(translatedInAppLanguage: translatedInAppLanguage, filteredByLanguageId: nil)
+        return await createAnyCategoryDomainModel(translatedInAppLanguage: translatedInAppLanguage, filteredByLanguageId: nil)
     }
     
-    func getCategoryFilter(categoryId: String, translatedInAppLanguage: AppLanguageDomainModel) -> ToolFilterCategoryDomainModel {
+    func getCategoryFilter(categoryId: String, translatedInAppLanguage: AppLanguageDomainModel) async -> ToolFilterCategoryDomainModel {
         
-        return createCategoryDomainModel(categoryId: categoryId, translatedInAppLanguage: translatedInAppLanguage, filteredByLanguageId: nil)
+        return await createCategoryDomainModel(categoryId: categoryId, translatedInAppLanguage: translatedInAppLanguage, filteredByLanguageId: nil)
     }
     
-    func createCategoryFilters(from ids: [String], translatedInAppLanguage: AppLanguageDomainModel, filteredByLanguageId: String?) -> [ToolFilterCategoryDomainModel] {
+    func createCategoryFilters(from ids: [String], translatedInAppLanguage: AppLanguageDomainModel, filteredByLanguageId: String?) async -> [ToolFilterCategoryDomainModel] {
         
-        let anyCategory = createAnyCategoryDomainModel(translatedInAppLanguage: translatedInAppLanguage, filteredByLanguageId: filteredByLanguageId)
+        let anyCategory = await createAnyCategoryDomainModel(translatedInAppLanguage: translatedInAppLanguage, filteredByLanguageId: filteredByLanguageId)
         
-        let categories: [ToolFilterCategoryDomainModel] = ids.compactMap { categoryId in
-            
+        var categories: [ToolFilterCategoryDomainModel] = Array()
+
+        for categoryId in ids {
+
             let toolsAvailableCount: Int = getToolsAvailableCount(categoryId: categoryId, filteredByLanguageId: filteredByLanguageId)
-            
+
             guard toolsAvailableCount > 0 else {
-                return nil
+                continue
             }
-            
-            return self.createCategoryDomainModel(
-                categoryId: categoryId,
-                translatedInAppLanguage: translatedInAppLanguage,
-                filteredByLanguageId: filteredByLanguageId
+
+            categories.append(
+                await self.createCategoryDomainModel(
+                    categoryId: categoryId,
+                    translatedInAppLanguage: translatedInAppLanguage,
+                    filteredByLanguageId: filteredByLanguageId
+                )
             )
         }
-        
+
         return [anyCategory] + categories
     }
 }
 
 extension GetToolFilterCategory {
     
-    private func createAnyCategoryDomainModel(translatedInAppLanguage: AppLanguageDomainModel, filteredByLanguageId: String?) -> ToolFilterCategoryDomainModel {
+    private func createAnyCategoryDomainModel(translatedInAppLanguage: AppLanguageDomainModel, filteredByLanguageId: String?) async -> ToolFilterCategoryDomainModel {
         
-        let title: String = localizationServices.stringForLocaleElseSystemElseEnglish(
+        let title: String = await localizationServices.stringForLocaleElseSystemElseEnglish(
             localeIdentifier: translatedInAppLanguage.localeId,
             key: LocalizableStringKeys.toolsFilterAnyCategory.key
         )
     
         let toolsAvailableCount: Int = getToolsAvailableCount(categoryId: nil, filteredByLanguageId: filteredByLanguageId)
-        let toolsAvailable: String = getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
+        let toolsAvailable: String = await getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
         
         return ToolFilterCategoryDomainModel.createAnyCategory(title: title, toolsAvailable: toolsAvailable)
     }
     
-    private func createCategoryDomainModel(categoryId: String, translatedInAppLanguage: AppLanguageDomainModel, filteredByLanguageId: String?) -> ToolFilterCategoryDomainModel {
+    private func createCategoryDomainModel(categoryId: String, translatedInAppLanguage: AppLanguageDomainModel, filteredByLanguageId: String?) async -> ToolFilterCategoryDomainModel {
         
         let toolsAvailableCount: Int = getToolsAvailableCount(categoryId: categoryId, filteredByLanguageId: filteredByLanguageId)
         
-        let translatedName: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: translatedInAppLanguage.localeId, key: "tool_category_\(categoryId)")
+        let translatedName: String = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: translatedInAppLanguage.localeId, key: "tool_category_\(categoryId)")
         
-        let toolsAvailable: String = getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
+        let toolsAvailable: String = await getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
         
         return ToolFilterCategoryDomainModel.createCategory(
             id: categoryId,
@@ -93,9 +97,9 @@ extension GetToolFilterCategory {
         return resourcesRepository.getAllToolsListCount(filterByCategory: categoryId, filterByLanguageId: filteredByLanguageId)
     }
     
-    private func getToolsAvailableText(toolsAvailableCount: Int, translatedInAppLanguage: AppLanguageDomainModel) -> String {
+    private func getToolsAvailableText(toolsAvailableCount: Int, translatedInAppLanguage: AppLanguageDomainModel) async -> String {
         
-        let formatString = localizationServices.stringForLocaleElseSystemElseEnglish(
+        let formatString = await localizationServices.stringForLocaleElseSystemElseEnglish(
             localeIdentifier: translatedInAppLanguage.localeId,
             key: LocalizableStringKeys.toolsFilterToolsAvailable.key
         )

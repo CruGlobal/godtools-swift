@@ -36,7 +36,7 @@ struct GetAccountStringsUseCaseTests {
 
         let useCase = getUseCase()
 
-        let strings: AccountStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
+        let strings: AccountStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.navTitle == "\(argument.appLanguage):\(LocalizableStringKeys.accountNavTitle.key)")
         #expect(strings.activityButtonTitle == "\(argument.appLanguage):\(LocalizableStringKeys.accountActivityTitle.key)")
@@ -62,7 +62,7 @@ struct GetAccountStringsUseCaseTests {
         
         let useCase = getUseCase(dateService: dateService)
 
-        let strings: AccountStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
+        let strings: AccountStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
 
         let year: Int = dateService.getCurrentYear(options: CalendarOptions.defaultOptions) ?? 0
 

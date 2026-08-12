@@ -142,9 +142,12 @@ final class AccountViewModel: ObservableObject {
     }
     
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
-        
-        strings = getAccountStringsUseCase
-            .execute(appLanguage: appLanguage)
+
+        Task {
+
+            strings = await getAccountStringsUseCase
+                .execute(appLanguage: appLanguage)
+        }
     }
     
     private func trackSectionViewedAnalytics(screenName: String) {

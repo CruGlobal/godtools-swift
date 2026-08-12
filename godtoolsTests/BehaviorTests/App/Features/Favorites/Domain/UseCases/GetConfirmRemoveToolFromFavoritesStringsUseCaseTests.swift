@@ -39,7 +39,7 @@ struct GetConfirmRemoveToolFromFavoritesStringsUseCaseTests {
 
         let useCase = try getUseCase()
 
-        let strings: ConfirmRemoveToolFromFavoritesStringsDomainModel = useCase.execute(
+        let strings: ConfirmRemoveToolFromFavoritesStringsDomainModel = await useCase.execute(
             toolId: Self.toolId,
             appLanguage: argument.appLanguage
         )

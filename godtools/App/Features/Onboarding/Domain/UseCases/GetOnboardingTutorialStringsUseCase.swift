@@ -17,23 +17,23 @@ final class GetOnboardingTutorialStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> OnboardingTutorialStringsDomainModel {
+    func execute(appLanguage: AppLanguageDomainModel) async -> OnboardingTutorialStringsDomainModel {
         
         let localeId: String = appLanguage
         
         let strings = OnboardingTutorialStringsDomainModel(
-            chooseAppLanguageButtonTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorialChooseLanguageButtonTitle.key),
-            beginTutorialButtonTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorialBeginButtonTitle.key),
-            nextTutorialPageButtonTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorialNextButtonTitle.key),
-            endTutorialButtonTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorialGetStartedButtonTitle.key),
-            readyForEveryConversationTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorial0Title.key),
-            readyForEveryConversationVideoLinkTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorial0VideoLinkTitle.key),
-            prepareForMomentsThatMatterTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorial2Title.key),
-            prepareForMomentsThatMatterMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorial2Message.key),
-            talkWithGodAboutAnyoneTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorial1Title.key),
-            talkWithGodAboutAnyoneMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorial1Message.key),
-            helpSomeoneDiscoverJesusTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorial3Title.key),
-            helpSomeoneDiscoverJesusMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorial3Message.key)
+            chooseAppLanguageButtonTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorialChooseLanguageButtonTitle.key),
+            beginTutorialButtonTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorialBeginButtonTitle.key),
+            nextTutorialPageButtonTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorialNextButtonTitle.key),
+            endTutorialButtonTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorialGetStartedButtonTitle.key),
+            readyForEveryConversationTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorial0Title.key),
+            readyForEveryConversationVideoLinkTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorial0VideoLinkTitle.key),
+            prepareForMomentsThatMatterTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorial2Title.key),
+            prepareForMomentsThatMatterMessage: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorial2Message.key),
+            talkWithGodAboutAnyoneTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorial1Title.key),
+            talkWithGodAboutAnyoneMessage: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorial1Message.key),
+            helpSomeoneDiscoverJesusTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorial3Title.key),
+            helpSomeoneDiscoverJesusMessage: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorial3Message.key)
         )
         
         return strings

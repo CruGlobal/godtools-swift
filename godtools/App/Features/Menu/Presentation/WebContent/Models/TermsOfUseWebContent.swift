@@ -10,13 +10,20 @@ import Foundation
 
 struct TermsOfUseWebContent: WebContentType {
     
-    let navTitle: String
+    let appLanguage: AppLanguageDomainModel
+    let navTitleLocalizedKey: String = LocalizableStringKeys.termsOfUse.key
     let url: URL? = URL(string: "https://godtoolsapp.com/terms-of-use/")
     let analyticsScreenName: String = "Terms of Use"
     let analyticsSiteSection: String = "menu"
+    let localizationServices: LocalizationServicesInterface
     
-    init(localizationServices: LocalizationServicesInterface) {
+    private(set) var navTitle: String = ""
+    
+    init(appLanguage: AppLanguageDomainModel, localizationServices: LocalizationServicesInterface) async {
         
-        navTitle = localizationServices.stringForSystemElseEnglish(key: LocalizableStringKeys.termsOfUse.key)
+        self.appLanguage = appLanguage
+        self.localizationServices = localizationServices
+        
+        self.navTitle = await getLocalizedNavTitle()
     }
 }

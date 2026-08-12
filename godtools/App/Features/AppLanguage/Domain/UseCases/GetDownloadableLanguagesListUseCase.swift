@@ -58,37 +58,42 @@ final class GetDownloadableLanguagesListUseCase {
         
         let languages: [LanguageDataModel] = try await languagesRepository.getLanguages()
         
-        return try languages
-            .compactMap { language in
-                
-                let numberToolsAvailable = try getNumberOfToolsAvailable(languageCode: language.code)
-                if numberToolsAvailable == 0 {
-                    return nil
-                }
-                
-                let languageNameInOwnLanguage = getTranslatedLanguageName.getLanguageName(
-                    language: language,
-                    translatedInLanguage: language.code
-                )
-                let languageNameInAppLanguage = getTranslatedLanguageName.getLanguageName(
-                    language: language,
-                    translatedInLanguage: appLanguage
-                )
-                
-                let toolsAvailableText = getToolsAvailableText(numberOfTools: numberToolsAvailable, translatedIn: appLanguage)
-                
-                let downloadStatus = try getDownloadStatus(for: language.id)
-                
-                return DownloadableLanguageListItemDomainModel(
+        var downloadableLanguages: [DownloadableLanguageListItemDomainModel] = Array()
+
+        for language in languages {
+
+            let numberToolsAvailable = try getNumberOfToolsAvailable(languageCode: language.code)
+            if numberToolsAvailable == 0 {
+                continue
+            }
+
+            let languageNameInOwnLanguage = await getTranslatedLanguageName.getLanguageName(
+                language: language,
+                translatedInLanguage: language.code
+            )
+            let languageNameInAppLanguage = await getTranslatedLanguageName.getLanguageName(
+                language: language,
+                translatedInLanguage: appLanguage
+            )
+
+            let toolsAvailableText = await getToolsAvailableText(numberOfTools: numberToolsAvailable, translatedIn: appLanguage)
+
+            let downloadStatus = try getDownloadStatus(for: language.id)
+
+            downloadableLanguages.append(
+                DownloadableLanguageListItemDomainModel(
                     languageId: language.id,
                     languageNameInOwnLanguage: languageNameInOwnLanguage,
                     languageNameInAppLanguage: languageNameInAppLanguage,
                     toolsAvailableText: toolsAvailableText,
                     downloadStatus: downloadStatus
                 )
-            }
+            )
+        }
+
+        return downloadableLanguages
             .sorted { language1, language2 in
-                
+
                 return getSortOrder(language1: language1, language2: language2)
             }
     }
@@ -104,11 +109,11 @@ extension GetDownloadableLanguagesListUseCase {
         )
     }
     
-    private func getToolsAvailableText(numberOfTools: Int, translatedIn translationLanguage: AppLanguageDomainModel) -> String {
+    private func getToolsAvailableText(numberOfTools: Int, translatedIn translationLanguage: AppLanguageDomainModel) async -> String {
         
         let localeId = translationLanguage
         
-        let formatString = localizationServices.stringForLocaleElseSystemElseEnglish(
+        let formatString = await localizationServices.stringForLocaleElseSystemElseEnglish(
             localeIdentifier: localeId,
             key: LocalizableStringKeys.toolsFilterToolsAvailable.key
         )

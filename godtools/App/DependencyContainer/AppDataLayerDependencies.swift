@@ -59,7 +59,7 @@ final class AppDataLayerDependencies {
             do {
                 sharedSwiftDatabase = try appConfig.getSwiftDatabase()
             }
-            catch let error {
+            catch _ {
                 sharedSwiftDatabase = nil
             }
         } else {

@@ -124,12 +124,15 @@ final class MenuViewModel: ObservableObject {
     }
     
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
-        
-        strings = getMenuStringsUseCase
-            .execute(appLanguage: appLanguage)
-        
-        showsTutorialOption = getTutorialIsAvailableUseCase
-            .execute(appLanguage: appLanguage)
+
+        Task {
+
+            strings = await getMenuStringsUseCase
+                .execute(appLanguage: appLanguage)
+
+            showsTutorialOption = getTutorialIsAvailableUseCase
+                .execute(appLanguage: appLanguage)
+        }
     }
 }
 

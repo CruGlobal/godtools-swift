@@ -8,7 +8,10 @@
 
 import Foundation
 
-protocol LocalizationLanguageNameInterface {
+protocol LocalizationLanguageNameInterface: Sendable {
     
-    func getLanguageName(languageId: BCP47LanguageIdentifier, translatedInLanguage: BCP47LanguageIdentifier) -> String?
+    func getLanguageName(
+        languageId: BCP47LanguageIdentifier,
+        translatedInLanguage: BCP47LanguageIdentifier
+    ) async -> String?
 }

@@ -108,8 +108,11 @@ final class AllYourFavoriteToolsViewModel: ObservableObject {
 
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
 
-        strings = getAllYourFavoritedToolsStringsUseCase
-            .execute(appLanguage: appLanguage)
+        Task {
+
+            strings = await getAllYourFavoritedToolsStringsUseCase
+                .execute(appLanguage: appLanguage)
+        }
     }
 
     private var analyticsScreenName: String {

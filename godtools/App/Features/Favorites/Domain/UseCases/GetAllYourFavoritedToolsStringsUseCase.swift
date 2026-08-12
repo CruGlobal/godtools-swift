@@ -17,10 +17,10 @@ final class GetAllYourFavoritedToolsStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> AllYourFavoritedToolsStringsDomainModel {
+    func execute(appLanguage: AppLanguageDomainModel) async -> AllYourFavoritedToolsStringsDomainModel {
         
         let strings = AllYourFavoritedToolsStringsDomainModel(
-            sectionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.favoritesFavoriteToolsTitle.key)
+            sectionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.favoritesFavoriteToolsTitle.key)
         )
 
         return strings

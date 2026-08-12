@@ -42,14 +42,15 @@ final class GetUserActivityUseCase {
                     .getCachedCountersPublisher()
                     .eraseToAnyPublisher()
             }
-            .map { (counters: [UserCounterDataModel]) in
-                                
-                let userActivityDomainModel: UserActivityDomainModel = self.getUserActivityDomainModel(
-                    userCounters: counters,
-                    translatedInAppLanguage: appLanguage
-                )
-                
-                return userActivityDomainModel
+            .flatMap { (counters: [UserCounterDataModel]) -> AnyPublisher<UserActivityDomainModel, Error> in
+
+                return AnyPublisher() {
+
+                    return await self.getUserActivityDomainModel(
+                        userCounters: counters,
+                        translatedInAppLanguage: appLanguage
+                    )
+                }
             }
             .eraseToAnyPublisher()
     }
@@ -72,17 +73,28 @@ final class GetUserActivityUseCase {
         return userCounterDomainModels
     }
     
-    private func getUserActivityDomainModel(userCounters: [UserCounterDataModel], translatedInAppLanguage: AppLanguageDomainModel) -> UserActivityDomainModel {
-        
+    private func getUserActivityDomainModel(
+        userCounters: [UserCounterDataModel],
+        translatedInAppLanguage: AppLanguageDomainModel
+    ) async -> UserActivityDomainModel {
+
         let domainModels: [UserCounterDomainModel] = getAllUserCounterDomainModels(userCounters: userCounters)
-        
+
         let userCounterDictionary = buildUserCounterDictionary(from: domainModels)
-        
+
         let userActivity = UserActivity(counters: userCounterDictionary)
-        
-        let badges = userActivity.badges.map { self.getUserActivityBadge.getBadge(from: $0, translatedInAppLanguage: translatedInAppLanguage) }
-        let stats = getUserActivityStats.getStats(from: userActivity, translatedInAppLanguage: translatedInAppLanguage)
-        
+
+        var badges: [UserActivityBadgeDomainModel] = Array()
+
+        for badge in userActivity.badges {
+
+            badges.append(
+                await self.getUserActivityBadge.getBadge(from: badge, translatedInAppLanguage: translatedInAppLanguage)
+            )
+        }
+
+        let stats = await getUserActivityStats.getStats(from: userActivity, translatedInAppLanguage: translatedInAppLanguage)
+
         return UserActivityDomainModel(badges: badges, stats: stats)
     }
     

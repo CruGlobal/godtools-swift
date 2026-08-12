@@ -10,7 +10,9 @@ import Foundation
 
 final class LocalizationLanguageName: LocalizationLanguageNameInterface {
     
-    private static let supportedLanguageIds: [BCP47LanguageIdentifier] = ["fa", "fil", "fil-x-taglish", "sid"] // NOTE: If this list grows too large it could impact performance where UI lists of language names are displayed since it would require opening a bundle for every language in this list. ~Levi
+    // NOTE: If this list grows too large it could impact performance where UI lists of language names are displayed since
+    // it would require opening a bundle for every language in this list. ~Levi
+    private static let supportedLanguageIds: [BCP47LanguageIdentifier] = ["fa", "fil", "fil-x-taglish", "sid"]
     
     private let localizationServices: LocalizationServicesInterface
     
@@ -19,7 +21,10 @@ final class LocalizationLanguageName: LocalizationLanguageNameInterface {
         self.localizationServices = localizationServices
     }
     
-    func getLanguageName(languageId: BCP47LanguageIdentifier, translatedInLanguage: BCP47LanguageIdentifier) -> String? {
+    func getLanguageName(
+        languageId: BCP47LanguageIdentifier,
+        translatedInLanguage: BCP47LanguageIdentifier
+    ) async -> String? {
         
         guard LocalizationLanguageName.supportedLanguageIds.contains(languageId) else {
             return nil
@@ -27,7 +32,10 @@ final class LocalizationLanguageName: LocalizationLanguageNameInterface {
         
         let localizedKey: String = "language_name_" + languageId
         
-        let localizedName: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: translatedInLanguage, key: localizedKey)
+        let localizedName: String = await localizationServices.stringForLocaleElseEnglish(
+            localeIdentifier: translatedInLanguage,
+            key: localizedKey
+        )
         
         if localizedName.isEmpty || localizedName == localizedKey {
             return nil

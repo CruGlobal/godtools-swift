@@ -17,7 +17,7 @@ final class GetTutorialStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> TutorialStringsDomainModel {
+    func execute(appLanguage: AppLanguageDomainModel) async -> TutorialStringsDomainModel {
         
         let localeId: String = appLanguage
         
@@ -31,8 +31,8 @@ final class GetTutorialStringsUseCase {
         }
         
         let strings = TutorialStringsDomainModel(
-            nextTutorialPageActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.tutorialContinueButtonTitleContinue.key),
-            completeTutorialActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: completeTutorialActionLocalizedStringKey)
+            nextTutorialPageActionTitle: await localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.tutorialContinueButtonTitleContinue.key),
+            completeTutorialActionTitle: await localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: completeTutorialActionLocalizedStringKey)
         )
         
         return strings

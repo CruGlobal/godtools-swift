@@ -30,7 +30,7 @@ struct GetDashboardStringsUseCaseTests {
 
         let useCase = getUseCase()
 
-        let strings: DashboardStringsDomainModel = useCase.execute(translateInLanguage: argument.translateInLanguage)
+        let strings: DashboardStringsDomainModel = await useCase.execute(translateInLanguage: argument.translateInLanguage)
 
         #expect(strings.lessonsActionTitle == "\(argument.translateInLanguage):\(LocalizableStringKeys.toolMenuItemLessons.key)")
         #expect(strings.favoritesActionTitle == "\(argument.translateInLanguage):\(LocalizableStringKeys.myTools.key)")

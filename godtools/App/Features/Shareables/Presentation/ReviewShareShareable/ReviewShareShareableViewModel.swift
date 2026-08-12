@@ -93,10 +93,13 @@ final class ReviewShareShareableViewModel: ObservableObject {
 
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
 
-        strings = getReviewShareShareableStringsUseCase
-            .execute(
-                appLanguage: appLanguage
-            )
+        Task {
+
+            strings = await getReviewShareShareableStringsUseCase
+                .execute(
+                    appLanguage: appLanguage
+                )
+        }
     }
 
     private func trackShareImageTappedAnalytics() {
