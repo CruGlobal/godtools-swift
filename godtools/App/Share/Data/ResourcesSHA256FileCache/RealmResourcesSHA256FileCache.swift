@@ -61,7 +61,10 @@ final class RealmResourcesSHA256FileCache: ResourcesSHA256FileCacheInterface {
         return fileCacheLocation
     }
 
-    private func createStoredFileRelationshipsToAttachment(attachmentId: String, location: FileCacheLocation) async throws -> StoreResourcesFilesResult {
+    private func createStoredFileRelationshipsToAttachment(
+        attachmentId: String,
+        location: FileCacheLocation
+    ) async throws -> StoreResourcesFilesResult {
         
         return try await withCheckedThrowingContinuation { continuation in
             
@@ -81,7 +84,11 @@ final class RealmResourcesSHA256FileCache: ResourcesSHA256FileCacheInterface {
         }
     }
     
-    private func realmCreateStoredFileRelationshipsToAttachmentWithCompletion(attachmentId: String, location: FileCacheLocation, completion: @escaping ((_ result: Result<StoreResourcesFilesResult, Error>) -> Void)) {
+    private func realmCreateStoredFileRelationshipsToAttachmentWithCompletion(
+        attachmentId: String,
+        location: FileCacheLocation,
+        completion: @escaping ((_ result: Result<StoreResourcesFilesResult, Error>) -> Void)
+    ) {
         
         realmDataWrite.serialAsync { result in
             
@@ -190,7 +197,11 @@ final class RealmResourcesSHA256FileCache: ResourcesSHA256FileCacheInterface {
         }
     }
     
-    private func realmCreateStoredFileRelationshipsToTranslationWithCompletion(translationId: String, fileCacheLocations: [FileCacheLocation], completion: @escaping ((_ result: Result<StoreResourcesFilesResult, Error>) -> Void)) {
+    private func realmCreateStoredFileRelationshipsToTranslationWithCompletion(
+        translationId: String,
+        fileCacheLocations: [FileCacheLocation],
+        completion: @escaping ((_ result: Result<StoreResourcesFilesResult, Error>) -> Void)
+    ) {
         
         realmDataWrite.serialAsync { result in
             
@@ -218,7 +229,11 @@ final class RealmResourcesSHA256FileCache: ResourcesSHA256FileCacheInterface {
         }
     }
     
-    private func realmCreateStoredFileRelationshipsToTranslation(realm: Realm, translationId: String, fileCacheLocations: [FileCacheLocation]) throws -> StoreResourcesFilesResult {
+    private func realmCreateStoredFileRelationshipsToTranslation(
+        realm: Realm,
+        translationId: String,
+        fileCacheLocations: [FileCacheLocation]
+    ) throws -> StoreResourcesFilesResult {
             
         guard let realmTranslation = realm.object(ofType: RealmTranslation.self, forPrimaryKey: translationId) else {
             
@@ -271,7 +286,7 @@ final class RealmResourcesSHA256FileCache: ResourcesSHA256FileCacheInterface {
         
         let storeResourcesFilesResult = StoreResourcesFilesResult(
             storedFiles: fileCacheLocations,
-            deleteResourcesFilesResult: try self.realmDeleteUnusedResourceFiles(realm: realm)
+            deleteResourcesFilesResult: try realmDeleteUnusedResourceFiles(realm: realm)
         )
         
         return storeResourcesFilesResult
@@ -294,8 +309,10 @@ extension RealmResourcesSHA256FileCache {
             let location: FileCacheLocation = FileCacheLocation(relativeUrlString: file.sha256WithPathExtension)
             
             filesToRemove.append(location)
-            
-            try resourcesFileCache.cache.removeFile(location: location)
+
+            Task {
+                try await resourcesFileCache.cache.removeFile(location: location)
+            }
         }
         
         try realm.write {

@@ -44,21 +44,28 @@ actor ArticleAemCache: ArticleAemCacheInterface, ModelActor {
 
     func getAemCacheObject(aemUri: String) async throws -> ArticleAemCacheObject? {
 
-        return try getAemCacheObject(aemUri: aemUri, swiftDataRead: SwiftDataRead())
+        return try await getAemCacheObject(aemUri: aemUri, swiftDataRead: SwiftDataRead())
     }
 
     func getAemCacheObjects(aemUris: [String]) async throws -> [ArticleAemCacheObject] {
 
         let swiftDataRead = SwiftDataRead()
 
-        let cachedObjects: [ArticleAemCacheObject] = try aemUris.compactMap { (aemUri: String) in
-            try getAemCacheObject(aemUri: aemUri, swiftDataRead: swiftDataRead)
+        var cachedObjects: [ArticleAemCacheObject] = Array()
+
+        for aemUri in aemUris {
+
+            guard let cachedObject = try await getAemCacheObject(aemUri: aemUri, swiftDataRead: swiftDataRead) else {
+                continue
+            }
+
+            cachedObjects.append(cachedObject)
         }
 
         return cachedObjects
     }
 
-    private func getAemCacheObject(aemUri: String, swiftDataRead: SwiftDataRead) throws -> ArticleAemCacheObject? {
+    private func getAemCacheObject(aemUri: String, swiftDataRead: SwiftDataRead) async throws -> ArticleAemCacheObject? {
 
         let aemDataObject: SwiftArticleAemData? = try swiftDataRead.object(context: modelContext, id: aemUri)
 
@@ -68,7 +75,7 @@ actor ArticleAemCache: ArticleAemCacheInterface, ModelActor {
 
         let articleAemWebArchive = ArticleAemWebArchive(filename: aemDataObject.webArchiveFilename)
 
-        let url: URL = try webArchiveFileCache.fileCache.getFile(location: articleAemWebArchive.location)
+        let url: URL = try await webArchiveFileCache.fileCache.getFile(location: articleAemWebArchive.location)
 
         let aemData: ArticleAemData = aemDataObject.toModel()
 
@@ -84,7 +91,7 @@ actor ArticleAemCache: ArticleAemCacheInterface, ModelActor {
         requestPriority: RequestPriority
     ) async throws -> [ArticleWebArchiveData] {
 
-        let aemDataObjectsThatNeedDownloading: ArticleAemDataObjectsThatNeedDownloading = try filterAemDataObjectsThatNeedDownloaded(
+        let aemDataObjectsThatNeedDownloading: ArticleAemDataObjectsThatNeedDownloading = try await filterAemDataObjectsThatNeedDownloaded(
             aemDataObjects: aemDataObjects
         )
 
@@ -110,12 +117,12 @@ actor ArticleAemCache: ArticleAemCacheInterface, ModelActor {
             aemCacheArchivedObjects.append(archivedObject)
         }
 
-        try storeAemCacheArchivedObjects(aemCacheArchivedObjects: aemCacheArchivedObjects)
+        try await storeAemCacheArchivedObjects(aemCacheArchivedObjects: aemCacheArchivedObjects)
 
         return webArchives
     }
 
-    private func filterAemDataObjectsThatNeedDownloaded(aemDataObjects: [ArticleAemData]) throws -> ArticleAemDataObjectsThatNeedDownloading {
+    private func filterAemDataObjectsThatNeedDownloaded(aemDataObjects: [ArticleAemData]) async throws -> ArticleAemDataObjectsThatNeedDownloading {
 
         let swiftDataRead = SwiftDataRead()
 
@@ -131,7 +138,7 @@ actor ArticleAemCache: ArticleAemCacheInterface, ModelActor {
             let dataIsNotCached: Bool
             let uuidChanged: Bool
 
-            if let aemCacheObject = try getAemCacheObject(aemUri: aemData.aemUri, swiftDataRead: swiftDataRead),
+            if let aemCacheObject = try await getAemCacheObject(aemUri: aemData.aemUri, swiftDataRead: swiftDataRead),
                let cachedUUID = aemCacheObject.aemData.articleJcrContent?.uuid,
                let uuid = aemData.articleJcrContent?.uuid, !cachedUUID.isEmpty, !uuid.isEmpty {
 
@@ -163,7 +170,7 @@ actor ArticleAemCache: ArticleAemCacheInterface, ModelActor {
         )
     }
 
-    private func storeAemCacheArchivedObjects(aemCacheArchivedObjects: [ArticleAemCacheArchivedObject]) throws {
+    private func storeAemCacheArchivedObjects(aemCacheArchivedObjects: [ArticleAemCacheArchivedObject]) async throws {
 
         let swiftDataRead = SwiftDataRead()
 
@@ -181,7 +188,7 @@ actor ArticleAemCache: ArticleAemCacheInterface, ModelActor {
 
                 webArchiveFilename = existingAemDataObject.webArchiveFilename
 
-                try removeWebArchivePlistData(
+                try await removeWebArchivePlistData(
                     webArchiveFilename: webArchiveFilename
                 )
             }
@@ -193,7 +200,7 @@ actor ArticleAemCache: ArticleAemCacheInterface, ModelActor {
             aemDataObjectToStore.mapFrom(model: aemData)
             aemDataObjectToStore.webArchiveFilename = webArchiveFilename
 
-            try storeWebArchivePlistData(
+            try await storeWebArchivePlistData(
                 webArchiveFilename: webArchiveFilename,
                 webArchivePlistData: archivedObject.webArchivePlistData
             )
@@ -206,17 +213,17 @@ actor ArticleAemCache: ArticleAemCacheInterface, ModelActor {
         try modelContext.saveIfHasChanges()
     }
 
-    private func storeWebArchivePlistData(webArchiveFilename: String, webArchivePlistData: Data) throws {
+    private func storeWebArchivePlistData(webArchiveFilename: String, webArchivePlistData: Data) async throws {
 
-        _ = try webArchiveFileCache.fileCache.storeFile(
+        _ = try await webArchiveFileCache.fileCache.storeFile(
             location: ArticleAemWebArchive(filename: webArchiveFilename).location,
             data: webArchivePlistData
         )
     }
 
-    private func removeWebArchivePlistData(webArchiveFilename: String) throws {
+    private func removeWebArchivePlistData(webArchiveFilename: String) async throws {
 
-        try webArchiveFileCache.fileCache.removeFile(
+        try await webArchiveFileCache.fileCache.removeFile(
             location: ArticleAemWebArchive(filename: webArchiveFilename).location
         )
     }

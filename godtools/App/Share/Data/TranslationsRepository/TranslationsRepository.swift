@@ -110,7 +110,7 @@ extension TranslationsRepository {
         
         for manifestFile in manifest.relatedFiles {
             
-            let fileCacheLocation = try getTranslationFileFromCache(
+            let fileCacheLocation = try await getTranslationFileFromCache(
                 translation: translation,
                 file: .manifestFile(manifestFile: manifestFile)
             )
@@ -389,7 +389,7 @@ extension TranslationsRepository {
         
         do {
             
-            return try getTranslationFileFromCache(
+            return try await getTranslationFileFromCache(
                 translation: translation,
                 file: file
             )
@@ -404,13 +404,13 @@ extension TranslationsRepository {
         }
     }
     
-    private func getTranslationFileFromCache(translation: TranslationDataModel, file: TranslationFile) throws -> FileCacheLocation {
+    private func getTranslationFileFromCache(translation: TranslationDataModel, file: TranslationFile) async throws -> FileCacheLocation {
         
         let fileName = try file.fileName
         
         let fileCacheLocation = FileCacheLocation(relativeUrlString: fileName)
         
-        let fileExists: Bool = try resourcesFileCache.cache.getFileExists(location: fileCacheLocation)
+        let fileExists: Bool = try await resourcesFileCache.cache.getFileExists(location: fileCacheLocation)
         
         guard fileExists else {
             throw NSError.errorWithDescription(description: "Failed to get translation file.  File does not exist in the cache.")

@@ -56,7 +56,7 @@ actor ResourcesSHA256FileCache: ResourcesSHA256FileCacheInterface, ModelActor {
         
         _ = try await resourcesFileCache.cache.storeFile(location: fileCacheLocation, data: fileData)
         
-        _ = try createStoredFileRelationshipsToAttachment(
+        _ = try await createStoredFileRelationshipsToAttachment(
             attachmentId: attachmentId,
             location: fileCacheLocation
         )
@@ -67,7 +67,7 @@ actor ResourcesSHA256FileCache: ResourcesSHA256FileCacheInterface, ModelActor {
     private func createStoredFileRelationshipsToAttachment(
         attachmentId: String,
         location: FileCacheLocation
-    ) throws -> StoreResourcesFilesResult {
+    ) async throws -> StoreResourcesFilesResult {
         
         guard let filenameWithPathExtension = location.filenameWithPathExtension else {
             throw NSError.errorWithDescription(
@@ -105,7 +105,7 @@ actor ResourcesSHA256FileCache: ResourcesSHA256FileCacheInterface, ModelActor {
 
         try modelContext.saveIfHasChanges()
         
-        let deleteResourcesFilesResult = try deleteUnusedResourceFiles()
+        let deleteResourcesFilesResult = try await deleteUnusedResourceFiles()
         
         return StoreResourcesFilesResult(
             storedFiles: [location],
@@ -121,7 +121,7 @@ actor ResourcesSHA256FileCache: ResourcesSHA256FileCacheInterface, ModelActor {
         
         _ = try await resourcesFileCache.cache.storeFile(location: fileCacheLocation, data: fileData)
         
-        _ = try createStoredFileRelationshipsToTranslation(
+        _ = try await createStoredFileRelationshipsToTranslation(
             translationId: translationId,
             fileCacheLocations: [fileCacheLocation]
         )
@@ -133,7 +133,7 @@ actor ResourcesSHA256FileCache: ResourcesSHA256FileCacheInterface, ModelActor {
         
         let fileCacheLocations: [FileCacheLocation] = try await resourcesFileCache.cache.decompressZipFileAndStoreFileContents(zipFileData: zipFileData)
         
-        _ = try createStoredFileRelationshipsToTranslation(
+        _ = try await createStoredFileRelationshipsToTranslation(
             translationId: translationId,
             fileCacheLocations: fileCacheLocations
         )
@@ -144,7 +144,7 @@ actor ResourcesSHA256FileCache: ResourcesSHA256FileCacheInterface, ModelActor {
     private func createStoredFileRelationshipsToTranslation(
         translationId: String,
         fileCacheLocations: [FileCacheLocation]
-    ) throws -> StoreResourcesFilesResult {
+    ) async throws -> StoreResourcesFilesResult {
         
         let swiftDataRead = SwiftDataRead()
         
@@ -189,7 +189,7 @@ actor ResourcesSHA256FileCache: ResourcesSHA256FileCacheInterface, ModelActor {
         
         try modelContext.saveIfHasChanges()
         
-        let deleteResourcesFilesResult = try deleteUnusedResourceFiles()
+        let deleteResourcesFilesResult = try await deleteUnusedResourceFiles()
         
         let storeResourcesFilesResult = StoreResourcesFilesResult(
             storedFiles: fileCacheLocations,
@@ -201,7 +201,7 @@ actor ResourcesSHA256FileCache: ResourcesSHA256FileCacheInterface, ModelActor {
     
     // MARK: - Delete Unused Files
     
-    private func deleteUnusedResourceFiles() throws -> DeleteResourcesFilesResult {
+    private func deleteUnusedResourceFiles() async throws -> DeleteResourcesFilesResult {
         
         let swiftDataRead = SwiftDataRead()
         
@@ -222,7 +222,7 @@ actor ResourcesSHA256FileCache: ResourcesSHA256FileCacheInterface, ModelActor {
             
             filesToRemove.append(location)
             
-            try resourcesFileCache.cache.removeFile(location: location)
+            try await resourcesFileCache.cache.removeFile(location: location)
         }
         
         modelContext.deleteObjects(objects: sha256FilesToDelete)
