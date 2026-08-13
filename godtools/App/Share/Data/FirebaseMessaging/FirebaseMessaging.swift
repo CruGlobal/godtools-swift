@@ -8,9 +8,8 @@
 
 import Foundation
 import FirebaseMessaging
-import Combine
 
-final class FirebaseMessaging {
+final class FirebaseMessaging: Sendable {
     
     static let shared: FirebaseMessaging = FirebaseMessaging()
     
@@ -18,38 +17,9 @@ final class FirebaseMessaging {
         
     }
     
-    func getDeviceToken(completion: @escaping ((_ result: Result<String, Error>) -> Void)) {
-
-        Messaging.messaging().token { (token: String?, error: Error?) in
-            
-            if let error = error {
-                completion(.failure(error))
-            }
-            else if let validToken = token, !validToken.isEmpty {
-                completion(.success(validToken))
-            }
-            else {
-                let error: Error = NSError.errorWithDescription(description: "Firebase device token is empty.")
-                completion(.failure(error))
-            }
-        }
-    }
-    
-    func getDeviceTokenPublisher() -> AnyPublisher<String, Error> {
+    func getDeviceToken() async throws -> String {
         
-        return Future() { promise in
-            
-            self.getDeviceToken { (result: Result<String, Error>) in
-                
-                switch result {
-                case .success(let token):
-                    promise(.success(token))
-                case .failure(let error):
-                    promise(.failure(error))
-                }
-            }
-        }
-        .eraseToAnyPublisher()
+        return try await Messaging.messaging().token()
     }
 }
 
