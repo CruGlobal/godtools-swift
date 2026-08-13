@@ -17,8 +17,8 @@ final class TrackActionAnalyticsUseCase: Sendable {
         self.analytics = analytics
     }
     
-    func trackAction(properties: AnalyticsProperties, actionName: String, data: [String: Any]?) {
+    func trackAction(properties: AnalyticsProperties, actionName: String, data: [String: Any]?) async {
         
-        analytics.trackAction(properties: properties, actionName: actionName, data: data)
+        await analytics.trackAction(properties: properties, actionName: actionName, data: data)
     }
 }

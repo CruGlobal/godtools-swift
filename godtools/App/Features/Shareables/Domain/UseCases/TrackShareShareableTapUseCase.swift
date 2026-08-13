@@ -37,6 +37,6 @@ final class TrackShareShareableTapUseCase: Sendable {
             data: [AnalyticsConstants.Keys.shareableId: shareableId]
         )
         
-        trackActionAnalytics.trackAction(trackAction: action)
+        await trackActionAnalytics.trackAction(trackAction: action)
     }
 }

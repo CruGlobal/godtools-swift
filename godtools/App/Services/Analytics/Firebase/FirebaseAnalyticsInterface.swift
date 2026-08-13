@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol FirebaseAnalyticsInterface: MobileContentRendererAnalyticsSystem {
+protocol FirebaseAnalyticsInterface: Actor, MobileContentRendererAnalyticsSystem {
     
     func configure()
     func setLoggedInStateUserProperties(isLoggedIn: Bool, loggedInUserProperties: FirebaseAnalyticsLoggedInUserProperties?)

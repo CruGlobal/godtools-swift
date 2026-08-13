@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TrackActionAnalytics {
+final class TrackActionAnalytics: Sendable {
     
     private let firebaseAnalytics: FirebaseAnalyticsInterface
     
@@ -17,9 +17,9 @@ class TrackActionAnalytics {
         self.firebaseAnalytics = firebaseAnalytics
     }
     
-    func trackAction(trackAction: TrackActionModel) {
+    func trackAction(trackAction: TrackActionModel) async {
                 
-        firebaseAnalytics.trackAction(
+        await firebaseAnalytics.trackAction(
             properties: trackAction.properties,
             actionName: trackAction.actionName,
             data: trackAction.data

@@ -38,13 +38,13 @@ final class AppDataLayerDependencies {
         )
     }()
     
-    init(appBuild: AppBuildInterface, appConfig: AppConfigInterface) {
+    init(appBuild: AppBuildInterface, appConfig: AppConfigInterface, firebaseAnalytics: FirebaseAnalyticsInterface) {
         
         sharedAppBuild = appBuild
         sharedAppConfig = appConfig
         
         sharedAnalytics = AnalyticsContainer(
-            firebaseAnalytics: Self.getFirebaseAnalytics(appBuild: appBuild, appConfig: appConfig)
+            firebaseAnalytics: firebaseAnalytics
         )
         
         do {
@@ -65,20 +65,6 @@ final class AppDataLayerDependencies {
         } else {
             sharedSwiftDatabase = nil
         }
-    }
-    
-    private static func getFirebaseAnalytics(appBuild: AppBuildInterface, appConfig: AppConfigInterface) -> FirebaseAnalyticsInterface {
-        
-        let firebaseAnalyticsEnabled: Bool = appConfig.analyticsEnabled && appConfig.firebaseEnabled
-        
-        guard firebaseAnalyticsEnabled else {
-            return DisabledFirebaseAnalytics()
-        }
-        
-        return FirebaseAnalytics(
-            isDebug: appBuild.isDebug,
-            loggingEnabled: appBuild.configuration == .analyticsLogging
-        )
     }
     
     // MARK: - Data Layer Classes

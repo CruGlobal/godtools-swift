@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AnalyticsContainer {
+final class AnalyticsContainer: Sendable {
      
     // analytics systems
     let firebaseAnalytics: FirebaseAnalyticsInterface
@@ -23,23 +23,23 @@ class AnalyticsContainer {
         self.firebaseAnalytics = firebaseAnalytics
     }
     
-    func trackScreenView(properties: AnalyticsProperties) {
+    func trackScreenView(properties: AnalyticsProperties) async {
         
-        firebaseAnalytics.trackScreenView(properties: properties)
+        await firebaseAnalytics.trackScreenView(properties: properties)
     }
     
-    func trackAction(properties: AnalyticsProperties, actionName: String, data: [String: Any]?) {
+    func trackAction(properties: AnalyticsProperties, actionName: String, data: [String: Any]?) async {
         
-        firebaseAnalytics.trackAction(
+        await firebaseAnalytics.trackAction(
             properties: properties,
             actionName: actionName,
             data: data
         )
     }
     
-    func trackExitLink(properties: AnalyticsProperties, url: URL) {
+    func trackExitLink(properties: AnalyticsProperties, url: URL) async {
         
-        firebaseAnalytics.trackExitLink(
+        await firebaseAnalytics.trackExitLink(
             properties: properties,
             url: url.absoluteString
         )

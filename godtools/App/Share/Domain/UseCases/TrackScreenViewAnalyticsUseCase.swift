@@ -17,8 +17,8 @@ final class TrackScreenViewAnalyticsUseCase: Sendable {
         self.analytics = analytics
     }
     
-    func trackScreen(properties: AnalyticsProperties) {
+    func trackScreen(properties: AnalyticsProperties) async {
 
-        analytics.trackScreenView(properties: properties)
+        await analytics.trackScreenView(properties: properties)
     }
 }

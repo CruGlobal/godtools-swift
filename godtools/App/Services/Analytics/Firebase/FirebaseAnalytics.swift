@@ -10,7 +10,7 @@ import Foundation
 import FirebaseAnalytics
 import FirebaseCore
 
-class FirebaseAnalytics: FirebaseAnalyticsInterface {
+actor FirebaseAnalytics: FirebaseAnalyticsInterface {
     
     private let isDebug: Bool
     private let loggingEnabled: Bool
@@ -90,35 +90,29 @@ class FirebaseAnalytics: FirebaseAnalyticsInterface {
 
     private func internalTrackEvent(properties: AnalyticsProperties, previousScreenName: String, eventName: String, data: [String: Any]?) {
 
-        DispatchQueue.global().async { [weak self] in
-
-            guard let firebaseAnalytics = self else {
-                return
+        let baseParameters: [String: Any] = createBaseProperties(
+            properties: properties,
+            previousScreenName: previousScreenName
+        )
+        
+        var parameters: [String: Any] = baseParameters
+        
+        if let data = data {
+            for (key, value) in data where parameters[key] == nil {
+                parameters[key] = value
             }
-
-            let baseParameters: [String: Any] = firebaseAnalytics.createBaseProperties(
-                properties: properties,
-                previousScreenName: previousScreenName
-            )
-            
-            var parameters: [String: Any] = baseParameters
-            
-            if let data = data {
-                for (key, value) in data where parameters[key] == nil {
-                    parameters[key] = value
-                }
-            }
-            
-            let transformedEventName: String = firebaseAnalytics.transformStringForFirebase(string: eventName).lowercased()
-            let transformedData: [String: Any]? = firebaseAnalytics.transformDataForFirebase(data: parameters)
-            
-            Analytics.logEvent(transformedEventName, parameters: transformedData)
-            
-            firebaseAnalytics.log(method: "trackEvent()", label: "name", labelValue: transformedEventName, data: transformedData)
         }
+        
+        let transformedEventName: String = transformStringForFirebase(string: eventName).lowercased()
+        let transformedData: [String: Any]? = transformDataForFirebase(data: parameters)
+        
+        Analytics.logEvent(transformedEventName, parameters: transformedData)
+        
+        log(method: "trackEvent()", label: "name", labelValue: transformedEventName, data: transformedData)
     }
     
     private func transformDataForFirebase(data: [String: Any]?) -> [String: Any]? {
+        
         guard let attributesData = data else {
             return nil
         }

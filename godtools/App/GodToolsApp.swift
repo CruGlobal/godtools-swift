@@ -16,7 +16,7 @@ struct GodToolsApp: App {
     }
     
     private static let appDeepLinkingService: DeepLinkingService = appDiContainer.core.dataLayer.getDeepLinkingService()
-    private static let appDiContainer = AppDiContainer(appBuild: appBuild, appConfig: appConfig)
+    private static let appDiContainer = AppDiContainer(appBuild: appBuild, appConfig: appConfig, firebaseAnalytics: firebaseAnalytics)
     private static let uiTestsLaunchEnvironment: UITestsLaunchEnvironment = UITestsLaunchEnvironment()
     
     private static let appBuild: AppBuildInterface = {
@@ -37,6 +37,20 @@ struct GodToolsApp: App {
         case .uiTests:
             return UITestsAppConfig()
         }
+    }()
+    
+    private static let firebaseAnalytics: FirebaseAnalyticsInterface = {
+        
+        let firebaseAnalyticsEnabled: Bool = appConfig.analyticsEnabled && appConfig.firebaseEnabled
+        
+        guard firebaseAnalyticsEnabled else {
+            return DisabledFirebaseAnalytics()
+        }
+        
+        return FirebaseAnalytics(
+            isDebug: appBuild.isDebug,
+            loggingEnabled: appBuild.configuration == .analyticsLogging
+        )
     }()
     
     private static let parserLogger: GodToolsParserLogger = {
@@ -121,7 +135,7 @@ struct GodToolsApp: App {
         }
         
         if Self.appConfig.firebaseEnabled {
-            Self.appDiContainer.core.dataLayer.getAnalytics().firebaseAnalytics.configure()
+            Self.firebaseAnalytics.configure()
         }
         
         if Self.appBuild.configuration != .analyticsLogging {

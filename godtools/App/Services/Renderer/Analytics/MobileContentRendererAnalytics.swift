@@ -9,7 +9,7 @@
 import Foundation
 import GodToolsShared
 
-class MobileContentRendererAnalytics {
+final class MobileContentRendererAnalytics: Sendable {
     
     private let analyticsSystems: [AnalyticsEvent.System: MobileContentRendererAnalyticsSystem]
         
@@ -23,16 +23,23 @@ class MobileContentRendererAnalytics {
         self.analyticsSystems = analyticsSystems
     }
         
-    func trackEvents(events: [AnalyticsEvent], renderedPageContext: MobileContentRenderedPageContext) {
+    func trackEvents(events: [AnalyticsEvent], renderedPageContext: MobileContentRenderedPageContext) async {
         
         for event in events {
-            if !event.shouldTrigger(state: renderedPageContext.rendererState) { continue }
-            trackEvent(event: event, renderedPageContext: renderedPageContext)
+            
+            let shouldTrigger: Bool = event.shouldTrigger(state: renderedPageContext.rendererState)
+            
+            guard shouldTrigger else {
+                continue
+            }
+            
+            await trackEvent(event: event, renderedPageContext: renderedPageContext)
+            
             event.recordTriggered(state: renderedPageContext.rendererState)
         }
     }
     
-    private func trackEvent(event: AnalyticsEvent, renderedPageContext: MobileContentRenderedPageContext) {
+    private func trackEvent(event: AnalyticsEvent, renderedPageContext: MobileContentRenderedPageContext) async {
         
         let action = event.action
         guard !action.isEmpty else {
@@ -52,7 +59,7 @@ class MobileContentRendererAnalytics {
             let pageNumber = renderedPageContext.pageModel.position
             let screenName = resourceAbbreviation + "-" + String(pageNumber)
             
-            analyticsSystem.trackMobileContentAction(
+            await analyticsSystem.trackMobileContentAction(
                 screenName: screenName,
                 siteSection: resourceAbbreviation,
                 appLanguage: renderedPageContext.appLanguage,

@@ -42,7 +42,7 @@ final class EvaluateLessonUseCase: Sendable {
             lessonEvaluated: true
         )
 
-        lessonFeedbackAnalytics.trackLessonFeedback(
+        await lessonFeedbackAnalytics.trackLessonFeedback(
             lesson: lessonResource,
             feedback: feedback,
             contentLanguage: lessonLanguage

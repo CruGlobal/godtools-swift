@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol MobileContentRendererAnalyticsSystem {
+protocol MobileContentRendererAnalyticsSystem: Actor {
     
     func trackMobileContentAction(
         screenName: String,
