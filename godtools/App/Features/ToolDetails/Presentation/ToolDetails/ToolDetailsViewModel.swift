@@ -253,14 +253,15 @@ final class ToolDetailsViewModel: ObservableObject {
     private func trackToolVersionTappedAnalytics(toolVersion: ToolVersionDomainModel) {
         
         trackActionAnalyticsUseCase.trackAction(
-            screenName: getAnalyticsScreenName(analyticsToolAbbreviation: toolVersion.analyticsToolAbbreviation),
+            properties: AnalyticsProperties(
+                screenName: getAnalyticsScreenName(analyticsToolAbbreviation: toolVersion.analyticsToolAbbreviation),
+                siteSection: "",
+                siteSubSection: "",
+                appLanguage: nil,
+                contentLanguage: nil,
+                secondaryContentLanguage: nil
+            ),
             actionName: AnalyticsConstants.ActionNames.openDetails,
-            siteSection: "",
-            siteSubSection: "",
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil,
-            url: nil,
             data: [
                 AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.versions,
                 AnalyticsConstants.Keys.tool: toolVersion.analyticsToolAbbreviation
@@ -286,14 +287,15 @@ extension ToolDetailsViewModel {
     func openToolTapped() {
         
         trackActionAnalyticsUseCase.trackAction(
-            screenName: getAnalyticsScreenName(analyticsToolAbbreviation: analyticsToolAbbreviation),
+            properties: AnalyticsProperties(
+                screenName: getAnalyticsScreenName(analyticsToolAbbreviation: analyticsToolAbbreviation),
+                siteSection: getAnalyticsSiteSection(analyticsToolAbbreviation: analyticsToolAbbreviation),
+                siteSubSection: analyticsSiteSubSection,
+                appLanguage: nil,
+                contentLanguage: nil,
+                secondaryContentLanguage: nil
+            ),
             actionName: AnalyticsConstants.ActionNames.toolOpened,
-            siteSection: getAnalyticsSiteSection(analyticsToolAbbreviation: analyticsToolAbbreviation),
-            siteSubSection: analyticsSiteSubSection,
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil,
-            url: nil,
             data: [
                 AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.toolDetails,
                 AnalyticsConstants.Keys.tool: analyticsToolAbbreviation

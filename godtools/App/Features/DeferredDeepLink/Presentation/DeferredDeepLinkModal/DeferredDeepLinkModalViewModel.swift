@@ -79,14 +79,15 @@ extension DeferredDeepLinkModalViewModel {
         else {
             
             trackActionAnalyticsUseCase.trackAction(
-                screenName: "Deferred DeepLink",
+                properties: AnalyticsProperties(
+                    screenName: "Deferred DeepLink",
+                    siteSection: "",
+                    siteSubSection: "",
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                ),
                 actionName: AnalyticsConstants.ActionNames.deeplinkError,
-                siteSection: "",
-                siteSubSection: "",
-                appLanguage: nil,
-                contentLanguage: nil,
-                contentLanguageSecondary: nil,
-                url: nil,
                 data: nil)
   
             return

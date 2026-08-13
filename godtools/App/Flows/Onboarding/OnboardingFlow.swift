@@ -146,14 +146,15 @@ final class OnboardingFlow: GTFlow {
                     )
                     
                     appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase().trackAction(
-                        screenName: pageAnalytics.screenName,
+                        properties: AnalyticsProperties(
+                            screenName: pageAnalytics.screenName,
+                            siteSection: pageAnalytics.siteSection,
+                            siteSubSection: pageAnalytics.siteSubsection,
+                            appLanguage: nil,
+                            contentLanguage: pageAnalytics.contentLanguage,
+                            secondaryContentLanguage: pageAnalytics.contentLanguageSecondary
+                        ),
                         actionName: "Onboarding Start",
-                        siteSection: pageAnalytics.siteSection,
-                        siteSubSection: pageAnalytics.siteSubsection,
-                        appLanguage: nil,
-                        contentLanguage: pageAnalytics.contentLanguage,
-                        contentLanguageSecondary: pageAnalytics.contentLanguageSecondary,
-                        url: nil,
                         data: [AnalyticsConstants.Keys.onboardingStart: 1]
                     )
                 }

@@ -195,14 +195,15 @@ final class TractViewModel: MobileContentRendererViewModel {
         ]
         
         trackActionAnalyticsUseCase.trackAction(
-            screenName: analyticsScreenName,
+            properties: AnalyticsProperties(
+                screenName: analyticsScreenName,
+                siteSection: analyticsSiteSection,
+                siteSubSection: "",
+                appLanguage: nil,
+                contentLanguage: primaryLanguage.localeId,
+                secondaryContentLanguage: parallelLanguage?.localeId
+            ),
             actionName: AnalyticsConstants.ActionNames.parallelLanguageToggled,
-            siteSection: analyticsSiteSection,
-            siteSubSection: "",
-            appLanguage: nil,
-            contentLanguage: primaryLanguage.localeId,
-            contentLanguageSecondary: parallelLanguage?.localeId,
-            url: nil,
             data: trackTappedLanguageData
         )
     }
@@ -287,14 +288,15 @@ extension TractViewModel {
         
         trackActionAnalyticsUseCase
             .trackAction(
-                screenName: analyticsScreenName,
+                properties: AnalyticsProperties(
+                    screenName: analyticsScreenName,
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: "",
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                ),
                 actionName: "Tool Settings",
-                siteSection: analyticsSiteSection,
-                siteSubSection: "",
-                appLanguage: nil,
-                contentLanguage: nil,
-                contentLanguageSecondary: nil,
-                url: nil,
                 data: [ToolAnalyticsActionNames.shared.ACTION_SETTINGS: 1]
             )
         
@@ -361,14 +363,15 @@ extension TractViewModel {
     private func trackShareScreenOpened() {
         
         trackActionAnalyticsUseCase.trackAction(
-            screenName: analyticsScreenName,
+            properties: AnalyticsProperties(
+                screenName: analyticsScreenName,
+                siteSection: analyticsSiteSection,
+                siteSubSection: "",
+                appLanguage: nil,
+                contentLanguage: nil,
+                secondaryContentLanguage: nil
+            ),
             actionName: AnalyticsConstants.ActionNames.shareScreenOpened,
-            siteSection: analyticsSiteSection,
-            siteSubSection: "",
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil,
-            url: nil,
             data: [
                 AnalyticsConstants.Keys.shareScreenOpenedCountKey: 1
             ]

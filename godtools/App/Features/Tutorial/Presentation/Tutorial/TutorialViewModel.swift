@@ -143,14 +143,15 @@ final class TutorialViewModel: ObservableObject {
         )
         
         trackActionAnalyticsUseCase.trackAction(
-            screenName: analyticsScreenName,
+            properties: AnalyticsProperties(
+                screenName: analyticsScreenName,
+                siteSection: analyticsSiteSection,
+                siteSubSection: analyticsSiteSubSection,
+                appLanguage: nil,
+                contentLanguage: nil,
+                secondaryContentLanguage: nil
+            ),
             actionName: analyticsScreenName,
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil,
-            url: nil,
             data: nil
         )
     }

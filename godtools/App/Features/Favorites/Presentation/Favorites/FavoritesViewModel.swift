@@ -172,14 +172,15 @@ final class FavoritesViewModel: ObservableObject {
         )
             
         trackActionAnalyticsUseCase.trackAction(
-            screenName: "",
+            properties: AnalyticsProperties(
+                screenName: "",
+                siteSection: "",
+                siteSubSection: "",
+                appLanguage: nil,
+                contentLanguage: nil,
+                secondaryContentLanguage: nil
+            ),
             actionName: AnalyticsConstants.ActionNames.viewedMyToolsAction,
-            siteSection: "",
-            siteSubSection: "",
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil,
-            url: nil,
             data: nil
         )
     }
@@ -187,14 +188,15 @@ final class FavoritesViewModel: ObservableObject {
     private func trackFeaturedLessonTappedAnalytics(featuredLesson: FeaturedLessonDomainModel) {
        
         trackActionAnalyticsUseCase.trackAction(
-            screenName: analyticsScreenName,
+            properties: AnalyticsProperties(
+                screenName: analyticsScreenName,
+                siteSection: "",
+                siteSubSection: "",
+                appLanguage: nil,
+                contentLanguage: nil,
+                secondaryContentLanguage: nil
+            ),
             actionName: AnalyticsConstants.ActionNames.lessonOpenTapped,
-            siteSection: "",
-            siteSubSection: "",
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil,
-            url: nil,
             data: [
                 AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.featured,
                 AnalyticsConstants.Keys.tool: featuredLesson.analyticsToolName
@@ -205,14 +207,15 @@ final class FavoritesViewModel: ObservableObject {
     private func trackOpenFavoritedToolButtonAnalytics(tool: YourFavoritedToolDomainModel) {
         
         trackActionAnalyticsUseCase.trackAction(
-            screenName: analyticsScreenName,
+            properties: AnalyticsProperties(
+                screenName: analyticsScreenName,
+                siteSection: "",
+                siteSubSection: "",
+                appLanguage: nil,
+                contentLanguage: nil,
+                secondaryContentLanguage: nil
+            ),
             actionName: AnalyticsConstants.ActionNames.toolOpened,
-            siteSection: "",
-            siteSubSection: "",
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil,
-            url: nil,
             data: [
                 AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.favoriteTools,
                 AnalyticsConstants.Keys.tool: tool.analyticsToolAbbreviation
@@ -223,14 +226,15 @@ final class FavoritesViewModel: ObservableObject {
     private func trackFavoritedToolDetailsButtonAnalytics(tool: YourFavoritedToolDomainModel) {
        
         trackActionAnalyticsUseCase.trackAction(
-            screenName: analyticsScreenName,
+            properties: AnalyticsProperties(
+                screenName: analyticsScreenName,
+                siteSection: "",
+                siteSubSection: "",
+                appLanguage: nil,
+                contentLanguage: nil,
+                secondaryContentLanguage: nil
+            ),
             actionName: AnalyticsConstants.ActionNames.openDetails,
-            siteSection: "",
-            siteSubSection: "",
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil,
-            url: nil,
             data: [
                 AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.favoriteTools,
                 AnalyticsConstants.Keys.tool: tool.analyticsToolAbbreviation
@@ -277,14 +281,15 @@ extension FavoritesViewModel {
         disableOpenTutorialBanner()
         
         trackActionAnalyticsUseCase.trackAction(
-            screenName: "home",
+            properties: AnalyticsProperties(
+                screenName: "home",
+                siteSection: "",
+                siteSubSection: "",
+                appLanguage: nil,
+                contentLanguage: nil,
+                secondaryContentLanguage: nil
+            ),
             actionName: AnalyticsConstants.ActionNames.tutorialHomeDismiss,
-            siteSection: "",
-            siteSubSection: "",
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil,
-            url: nil,
             data: [AnalyticsConstants.Keys.tutorialDismissed: 1]
         )
     }

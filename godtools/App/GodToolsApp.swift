@@ -268,14 +268,15 @@ extension GodToolsApp {
             let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase()
             
             trackActionAnalyticsUseCase.trackAction(
-                screenName: "",
+                properties: AnalyticsProperties(
+                    screenName: "",
+                    siteSection: "",
+                    siteSubSection: "",
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                ),
                 actionName: AnalyticsConstants.ActionNames.toolOpenedShortcut,
-                siteSection: "",
-                siteSubSection: "",
-                appLanguage: nil,
-                contentLanguage: nil,
-                contentLanguageSecondary: nil,
-                url: nil,
                 data: [
                     AnalyticsConstants.Keys.toolOpenedShortcutCountKey: 1
                 ]

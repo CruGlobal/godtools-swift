@@ -293,14 +293,15 @@ final class ToolsViewModel: ObservableObject {
         }
         
         trackActionAnalyticsUseCase.trackAction(
-            screenName: analyticsScreenName,
+            properties: AnalyticsProperties(
+                screenName: analyticsScreenName,
+                siteSection: "",
+                siteSubSection: "",
+                appLanguage: nil,
+                contentLanguage: nil,
+                secondaryContentLanguage: nil
+            ),
             actionName: AnalyticsConstants.ActionNames.openDetails,
-            siteSection: "",
-            siteSubSection: "",
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil,
-            url: nil,
             data: [
                 AnalyticsConstants.Keys.source: source,
                 AnalyticsConstants.Keys.tool: tool.analyticsToolAbbreviation
@@ -322,14 +323,15 @@ final class ToolsViewModel: ObservableObject {
         )
         
         trackActionAnalyticsUseCase.trackAction(
-            screenName: analyticsScreenName,
+            properties: AnalyticsProperties(
+                screenName: analyticsScreenName,
+                siteSection: analyticsSiteSection,
+                siteSubSection: analyticsSiteSubSection,
+                appLanguage: nil,
+                contentLanguage: nil,
+                secondaryContentLanguage: nil
+            ),
             actionName: AnalyticsConstants.ActionNames.viewedToolsAction,
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil,
-            url: nil,
             data: nil
         )
     }

@@ -82,14 +82,15 @@ extension ShareToolViewModel {
         )
             
         trackActionAnalyticsUseCase.trackAction(
-            screenName: analyticsScreenName,
+            properties: AnalyticsProperties(
+                screenName: analyticsScreenName,
+                siteSection: analyticsSiteSection,
+                siteSubSection: analyticsSiteSubSection,
+                appLanguage: nil,
+                contentLanguage: nil,
+                secondaryContentLanguage: nil
+            ),
             actionName: AnalyticsConstants.ActionNames.shareIconEngaged,
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil,
-            url: nil,
             data: [
                 AnalyticsConstants.Keys.shareAction: 1
             ]

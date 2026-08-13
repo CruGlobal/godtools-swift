@@ -229,14 +229,15 @@ final class LessonsViewModel: ObservableObject {
         )
         
         trackActionAnalyticsUseCase.trackAction(
-            screenName: "",
+            properties: AnalyticsProperties(
+                screenName: "",
+                siteSection: "",
+                siteSubSection: "",
+                appLanguage: nil,
+                contentLanguage: nil,
+                secondaryContentLanguage: nil
+            ),
             actionName: AnalyticsConstants.ActionNames.viewedLessonsAction,
-            siteSection: "",
-            siteSubSection: "",
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil,
-            url: nil,
             data: nil
         )
     }
@@ -244,14 +245,15 @@ final class LessonsViewModel: ObservableObject {
     private func trackLessonTappedAnalytics(lessonListItem: LessonListItemDomainModel) {
         
         trackActionAnalyticsUseCase.trackAction(
-            screenName: analyticsScreenName,
+            properties: AnalyticsProperties(
+                screenName: analyticsScreenName,
+                siteSection: "",
+                siteSubSection: "",
+                appLanguage: nil,
+                contentLanguage: nil,
+                secondaryContentLanguage: nil
+            ),
             actionName: AnalyticsConstants.ActionNames.lessonOpenTapped,
-            siteSection: "",
-            siteSubSection: "",
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil,
-            url: nil,
             data: [
                 AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.lessons,
                 AnalyticsConstants.Keys.tool: lessonListItem.analyticsToolName
