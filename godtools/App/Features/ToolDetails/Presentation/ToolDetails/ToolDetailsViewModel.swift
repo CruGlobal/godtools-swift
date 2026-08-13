@@ -254,7 +254,7 @@ final class ToolDetailsViewModel: ObservableObject {
 
         Task {
             
-            await trackScreenViewAnalyticsUseCase.trackScreen(properties: analyticsProperties)
+            await trackScreenViewAnalyticsUseCase.execute(properties: analyticsProperties)
         }
     }
     

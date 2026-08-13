@@ -49,7 +49,7 @@ final class ShareArticleViewModel {
     func pageViewed() {
         
         Task {
-            await trackScreenViewAnalyticsUseCase.trackScreen(
+            await trackScreenViewAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: analyticsScreenName,
                     siteSection: analyticsSiteSection,

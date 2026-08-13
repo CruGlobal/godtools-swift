@@ -144,7 +144,7 @@ final class OnboardingTutorialViewModel: ObservableObject {
             
             Task {
                 
-                await trackScreenViewAnalyticsUseCase.trackScreen(
+                await trackScreenViewAnalyticsUseCase.execute(
                     properties: properties
                 )
             }

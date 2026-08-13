@@ -130,7 +130,7 @@ final class AllYourFavoriteToolsViewModel: ObservableObject {
     private func trackPageView() {
         
         Task {
-            await trackScreenViewAnalyticsUseCase.trackScreen(
+            await trackScreenViewAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: analyticsScreenName,
                     siteSection: analyticsSiteSection,

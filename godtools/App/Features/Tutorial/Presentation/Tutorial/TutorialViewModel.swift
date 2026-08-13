@@ -132,7 +132,7 @@ final class TutorialViewModel: ObservableObject {
         let analyticsSiteSubSection = analyticsSiteSubsection
         
         Task {
-            await trackScreenViewAnalyticsUseCase.trackScreen(
+            await trackScreenViewAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: analyticsScreenName,
                     siteSection: analyticsSiteSection,

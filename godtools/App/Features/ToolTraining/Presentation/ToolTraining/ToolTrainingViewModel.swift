@@ -239,7 +239,7 @@ extension ToolTrainingViewModel {
         setPage(page: page, animated: true)
         
         Task {
-            await trackScreenViewAnalyticsUseCase.trackScreen(
+            await trackScreenViewAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: getTipPageAnalyticsScreenName(tipPage: page),
                     siteSection: analyticsSiteSection,

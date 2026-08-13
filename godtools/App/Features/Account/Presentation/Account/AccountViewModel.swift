@@ -153,7 +153,7 @@ final class AccountViewModel: ObservableObject {
     private func trackSectionViewedAnalytics(screenName: String) {
                  
         Task {
-            await trackScreenViewAnalyticsUseCase.trackScreen(
+            await trackScreenViewAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: screenName,
                     siteSection: "account",

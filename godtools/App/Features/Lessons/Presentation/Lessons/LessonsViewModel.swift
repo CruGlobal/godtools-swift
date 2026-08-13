@@ -218,7 +218,7 @@ final class LessonsViewModel: ObservableObject {
     private func trackPageViewed() {
         
         Task {
-            await trackScreenViewAnalyticsUseCase.trackScreen(
+            await trackScreenViewAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: analyticsScreenName,
                     siteSection: analyticsSiteSection,

@@ -103,7 +103,7 @@ extension LanguageSettingsViewModel {
     func pageViewed() {
         
         Task {
-            await trackScreenViewAnalyticsUseCase.trackScreen(
+            await trackScreenViewAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: "Language Settings",
                     siteSection: "menu",

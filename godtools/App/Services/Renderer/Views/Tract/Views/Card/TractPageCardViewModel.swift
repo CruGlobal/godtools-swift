@@ -211,7 +211,7 @@ extension TractPageCardViewModel {
         super.viewDidAppear(visibleAnalyticsEvents: visibleAnalyticsEventsObjects)
                        
         Task {
-            await trackScreenViewAnalyticsUseCase.trackScreen(
+            await trackScreenViewAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: analyticsScreenName,
                     siteSection: analyticsSiteSection,

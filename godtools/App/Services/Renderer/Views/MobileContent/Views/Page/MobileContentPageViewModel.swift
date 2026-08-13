@@ -126,7 +126,7 @@ class MobileContentPageViewModel: MobileContentViewModel {
     func trackScreenAnalytics() {
         
         Task {
-            await trackScreenViewAnalyticsUseCase.trackScreen(
+            await trackScreenViewAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: analyticsScreenName,
                     siteSection: analyticsSiteSection,

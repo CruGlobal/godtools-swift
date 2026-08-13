@@ -143,7 +143,7 @@ extension MenuViewModel {
     func pageViewed() {
         
         Task {
-            await trackScreenViewAnalyticsUseCase.trackScreen(
+            await trackScreenViewAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: getMenuAnalyticsScreenName(),
                     siteSection: analyticsSiteSection,
@@ -225,7 +225,7 @@ extension MenuViewModel {
         stepEmitter.emit(step: AppFlowStep.shareAStoryWithUsTappedFromMenu)
         
         Task {
-            await trackScreenViewAnalyticsUseCase.trackScreen(
+            await trackScreenViewAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: getShareStoryAnalyticsScreenName(),
                     siteSection: analyticsSiteSection,
@@ -258,7 +258,7 @@ extension MenuViewModel {
         }
         
         Task {
-            await trackScreenViewAnalyticsUseCase.trackScreen(
+            await trackScreenViewAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: getShareAppAnalyticsScreenName(),
                     siteSection: analyticsSiteSection,
