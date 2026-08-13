@@ -11,7 +11,7 @@ import SwiftData
 import RepositorySync
 
 @available(iOS 17.4, *)
-final class SwiftDataStagingContainer {
+final class SwiftDataStagingContainer: Sendable {
     
     static let configName: String = "godtools_swiftdata_staging"
     

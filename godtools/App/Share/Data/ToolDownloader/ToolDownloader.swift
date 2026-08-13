@@ -10,7 +10,7 @@ import Foundation
 import RequestOperation
 import Combine
 
-final class ToolDownloader {
+final class ToolDownloader: Sendable {
     
     private let cache: ToolDownloaderCache
     private let languagesRepository: LanguagesRepository
