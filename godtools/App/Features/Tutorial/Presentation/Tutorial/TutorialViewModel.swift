@@ -189,13 +189,17 @@ extension TutorialViewModel {
         if !youTubeVideoTracked {
             
             trackedAnalyticsForYouTubeVideoIds.append(videoId)
-            
+                        
             tutorialVideoAnalytics.trackVideoPlayed(
                 videoId: videoId,
-                screenName: getAnalyticsScreenName(tutorialItemIndex: tutorialPageIndex),
-                appLanguage: appLanguage,
-                contentLanguage: nil,
-                secondaryContentLanguage: nil
+                properties: AnalyticsProperties(
+                    screenName: getAnalyticsScreenName(tutorialItemIndex: tutorialPageIndex),
+                    siteSection: "",
+                    siteSubSection: "",
+                    appLanguage: appLanguage,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                )
             )
         }
     }

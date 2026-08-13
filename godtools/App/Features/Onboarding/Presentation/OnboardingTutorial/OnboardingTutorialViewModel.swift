@@ -252,10 +252,14 @@ extension OnboardingTutorialViewModel {
         
         trackTutorialVideoAnalytics.trackVideoPlayed(
             videoId: readyForEveryConversationYoutubeVideoId,
-            screenName: pageAnalytics.screenName,
-            appLanguage: appLanguage,
-            contentLanguage: pageAnalytics.contentLanguage,
-            secondaryContentLanguage: pageAnalytics.contentLanguageSecondary
+            properties: AnalyticsProperties(
+                screenName: pageAnalytics.screenName,
+                siteSection: "",
+                siteSubSection: "",
+                appLanguage: appLanguage,
+                contentLanguage: pageAnalytics.contentLanguage,
+                secondaryContentLanguage: pageAnalytics.contentLanguageSecondary
+            )
         )
     }
 }
