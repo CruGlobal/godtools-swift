@@ -195,7 +195,7 @@ final class TractViewModel: MobileContentRendererViewModel {
         ]
         
         Task {
-            await trackActionAnalyticsUseCase.trackAction(
+            await trackActionAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: analyticsScreenName,
                     siteSection: analyticsSiteSection,
@@ -290,7 +290,7 @@ extension TractViewModel {
         
         Task {
             await trackActionAnalyticsUseCase
-                .trackAction(
+                .execute(
                     properties: AnalyticsProperties(
                         screenName: analyticsScreenName,
                         siteSection: analyticsSiteSection,
@@ -367,7 +367,7 @@ extension TractViewModel {
     private func trackShareScreenOpened() {
         
         Task {
-            await trackActionAnalyticsUseCase.trackAction(
+            await trackActionAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: analyticsScreenName,
                     siteSection: analyticsSiteSection,

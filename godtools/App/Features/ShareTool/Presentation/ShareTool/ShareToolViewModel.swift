@@ -84,7 +84,7 @@ extension ShareToolViewModel {
         }
             
         Task {
-            await trackActionAnalyticsUseCase.trackAction(
+            await trackActionAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: analyticsScreenName,
                     siteSection: analyticsSiteSection,

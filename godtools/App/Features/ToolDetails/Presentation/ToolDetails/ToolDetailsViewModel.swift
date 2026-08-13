@@ -261,7 +261,7 @@ final class ToolDetailsViewModel: ObservableObject {
     private func trackToolVersionTappedAnalytics(toolVersion: ToolVersionDomainModel) {
         
         Task {
-            await trackActionAnalyticsUseCase.trackAction(
+            await trackActionAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: getAnalyticsScreenName(analyticsToolAbbreviation: toolVersion.analyticsToolAbbreviation),
                     siteSection: "",
@@ -297,7 +297,7 @@ extension ToolDetailsViewModel {
     func openToolTapped() {
         
         Task {
-            await trackActionAnalyticsUseCase.trackAction(
+            await trackActionAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: getAnalyticsScreenName(analyticsToolAbbreviation: analyticsToolAbbreviation),
                     siteSection: getAnalyticsSiteSection(analyticsToolAbbreviation: analyticsToolAbbreviation),

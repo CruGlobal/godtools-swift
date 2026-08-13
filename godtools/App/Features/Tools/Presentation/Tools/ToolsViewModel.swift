@@ -293,7 +293,7 @@ final class ToolsViewModel: ObservableObject {
         }
         
         Task {
-            await trackActionAnalyticsUseCase.trackAction(
+            await trackActionAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: analyticsScreenName,
                     siteSection: "",
@@ -327,7 +327,7 @@ final class ToolsViewModel: ObservableObject {
         }
         
         Task {
-            await trackActionAnalyticsUseCase.trackAction(
+            await trackActionAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: analyticsScreenName,
                     siteSection: analyticsSiteSection,

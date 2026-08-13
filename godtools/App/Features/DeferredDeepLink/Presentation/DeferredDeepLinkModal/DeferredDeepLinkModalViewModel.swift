@@ -79,7 +79,7 @@ extension DeferredDeepLinkModalViewModel {
         else {
             
             Task {
-                await trackActionAnalyticsUseCase.trackAction(
+                await trackActionAnalyticsUseCase.execute(
                     properties: AnalyticsProperties(
                         screenName: "Deferred DeepLink",
                         siteSection: "",

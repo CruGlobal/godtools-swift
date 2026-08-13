@@ -174,7 +174,7 @@ final class FavoritesViewModel: ObservableObject {
         }
             
         Task {
-            await trackActionAnalyticsUseCase.trackAction(
+            await trackActionAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: "",
                     siteSection: "",
@@ -192,7 +192,7 @@ final class FavoritesViewModel: ObservableObject {
     private func trackFeaturedLessonTappedAnalytics(featuredLesson: FeaturedLessonDomainModel) {
        
         Task {
-            await trackActionAnalyticsUseCase.trackAction(
+            await trackActionAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: analyticsScreenName,
                     siteSection: "",
@@ -213,7 +213,7 @@ final class FavoritesViewModel: ObservableObject {
     private func trackOpenFavoritedToolButtonAnalytics(tool: YourFavoritedToolDomainModel) {
         
         Task {
-            await trackActionAnalyticsUseCase.trackAction(
+            await trackActionAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: analyticsScreenName,
                     siteSection: "",
@@ -234,7 +234,7 @@ final class FavoritesViewModel: ObservableObject {
     private func trackFavoritedToolDetailsButtonAnalytics(tool: YourFavoritedToolDomainModel) {
        
         Task {
-            await trackActionAnalyticsUseCase.trackAction(
+            await trackActionAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: analyticsScreenName,
                     siteSection: "",
@@ -291,7 +291,7 @@ extension FavoritesViewModel {
         disableOpenTutorialBanner()
         
         Task {
-            await trackActionAnalyticsUseCase.trackAction(
+            await trackActionAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: "home",
                     siteSection: "",

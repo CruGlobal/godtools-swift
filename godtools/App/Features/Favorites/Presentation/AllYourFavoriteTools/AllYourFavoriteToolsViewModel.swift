@@ -146,7 +146,7 @@ final class AllYourFavoriteToolsViewModel: ObservableObject {
     private func trackOpenFavoritedToolButtonAnalytics(tool: YourFavoritedToolDomainModel) {
        
         Task {
-            await trackActionAnalyticsUseCase.trackAction(
+            await trackActionAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: analyticsScreenName,
                     siteSection: "",
@@ -167,7 +167,7 @@ final class AllYourFavoriteToolsViewModel: ObservableObject {
     private func trackFavoritedToolDetailsButtonAnalytics(tool: YourFavoritedToolDomainModel) {
         
         Task {
-            await trackActionAnalyticsUseCase.trackAction(
+            await trackActionAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: analyticsScreenName,
                     siteSection: "",

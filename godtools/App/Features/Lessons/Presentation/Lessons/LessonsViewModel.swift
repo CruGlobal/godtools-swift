@@ -231,7 +231,7 @@ final class LessonsViewModel: ObservableObject {
         }
         
         Task {
-            await trackActionAnalyticsUseCase.trackAction(
+            await trackActionAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: "",
                     siteSection: "",
@@ -249,7 +249,7 @@ final class LessonsViewModel: ObservableObject {
     private func trackLessonTappedAnalytics(lessonListItem: LessonListItemDomainModel) {
         
         Task {
-            await trackActionAnalyticsUseCase.trackAction(
+            await trackActionAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: analyticsScreenName,
                     siteSection: "",

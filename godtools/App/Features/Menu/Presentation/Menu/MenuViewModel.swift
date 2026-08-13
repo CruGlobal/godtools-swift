@@ -243,7 +243,7 @@ extension MenuViewModel {
         stepEmitter.emit(step: AppFlowStep.shareGodToolsTappedFromMenu)
         
         Task {
-            await trackActionAnalyticsUseCase.trackAction(
+            await trackActionAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: getShareAppAnalyticsScreenName(),
                     siteSection: analyticsSiteSection,

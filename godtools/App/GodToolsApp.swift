@@ -297,7 +297,7 @@ extension GodToolsApp {
         
         Task {
          
-            await trackActionAnalyticsUseCase.trackAction(
+            await trackActionAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: "",
                     siteSection: "",

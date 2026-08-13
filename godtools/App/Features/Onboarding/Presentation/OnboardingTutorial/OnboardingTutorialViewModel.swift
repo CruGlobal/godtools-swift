@@ -226,7 +226,7 @@ extension OnboardingTutorialViewModel {
         let properties = getOnboardingTutorialPageAnalyticsProperties(page: pages[currentPage])
         
         Task {
-            await trackActionAnalyticsUseCase.trackAction(
+            await trackActionAnalyticsUseCase.execute(
                 properties: properties,
                 actionName: AnalyticsConstants.ActionNames.onboardingSkip,
                 data: [AnalyticsConstants.Keys.onboardingSkip: 1]

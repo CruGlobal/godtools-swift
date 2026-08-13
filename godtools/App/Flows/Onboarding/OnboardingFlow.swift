@@ -149,7 +149,7 @@ final class OnboardingFlow: GTFlow {
                     
                     Task {
                         
-                        await trackActionAnalytics.trackAction(
+                        await trackActionAnalytics.execute(
                             properties: properties,
                             actionName: AnalyticsConstants.ActionNames.onboardingStart,
                             data: [AnalyticsConstants.Keys.onboardingStart: 1]
