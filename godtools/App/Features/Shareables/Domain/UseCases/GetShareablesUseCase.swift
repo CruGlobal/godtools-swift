@@ -9,7 +9,7 @@
 import Foundation
 import GodToolsShared
 
-final class GetShareablesUseCase {
+final class GetShareablesUseCase: Sendable {
     
     private let translationsRepository: TranslationsRepository
     

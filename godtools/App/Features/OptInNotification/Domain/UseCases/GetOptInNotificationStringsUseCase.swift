@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetOptInNotificationStringsUseCase {
+final class GetOptInNotificationStringsUseCase: Sendable {
 
     private let localizationServices: LocalizationServicesInterface
 

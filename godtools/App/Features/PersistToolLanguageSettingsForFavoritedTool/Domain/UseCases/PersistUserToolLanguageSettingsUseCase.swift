@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class PersistToolLanguageSettingsForFavoritedToolUseCase {
+final class PersistToolLanguageSettingsForFavoritedToolUseCase: Sendable {
     
     private let userToolSettingsRepository: UserToolSettingsRepository
     

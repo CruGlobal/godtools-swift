@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetReviewShareShareableStringsUseCase {
+final class GetReviewShareShareableStringsUseCase: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
     

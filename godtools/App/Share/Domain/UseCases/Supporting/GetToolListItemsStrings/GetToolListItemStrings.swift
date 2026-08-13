@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetToolListItemStrings {
+final class GetToolListItemStrings: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
     

@@ -17,6 +17,7 @@ class MobileContentButtonViewModel: MobileContentViewModel {
     private let fontSize: CGFloat = 18
     private let fontWeight: UIFont.Weight = .regular
     
+    private var buttonIcon: MobileContentButtonIcon?
     private var visibilityFlowWatcher: FlowWatcher?
     
     let mobileContentAnalytics: MobileContentRendererAnalytics
@@ -26,7 +27,6 @@ class MobileContentButtonViewModel: MobileContentViewModel {
     let titleAlignment: NSTextAlignment
     let borderColor: UIColor?
     let visibilityState: ObservableValue<MobileContentViewVisibilityState> = ObservableValue(value: .visible)
-    let icon: MobileContentButtonIcon?
     
     init(
         buttonModel: Button,
@@ -73,18 +73,6 @@ class MobileContentButtonViewModel: MobileContentViewModel {
             borderColor = defaultBorderColor
         }
                 
-        if let resource = buttonModel.icon, let image = renderedPageContext.resourcesCache.getUIImageNonThrowing(resource: resource)  {
-            
-            let iconSize = min(Int(buttonModel.iconSize), maxAllowedIconSize)
-                    
-            let scaledImage = image.scalePreservingAspectRatio(targetSize: CGSize(width: iconSize, height: iconSize))
-            
-            self.icon = MobileContentButtonIcon(size: buttonModel.iconSize, gravity: buttonModel.iconGravity, image: scaledImage)
-        } else {
-            
-            self.icon = nil
-        }
-        
         super.init(baseModel: buttonModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
         
         visibilityFlowWatcher = buttonModel.watchVisibility(ctx: renderedPageContext.rendererState, block: { [weak self] (invisible: KotlinBoolean, gone: KotlinBoolean) in
@@ -129,5 +117,33 @@ class MobileContentButtonViewModel: MobileContentViewModel {
             return nil
         }
         return 1
+    }
+    
+    func getButtonIcon() async -> MobileContentButtonIcon? {
+        
+        if let buttonIcon = self.buttonIcon {
+            return buttonIcon
+        }
+        
+        guard let resource = buttonModel.icon,
+              let location = resource.toSHA256FileLocation(),
+              let image = await renderedPageContext.resourcesFileCache.cache.getUIImageNonThrowing(location: location) else {
+            
+            return nil
+        }
+                
+        let iconSize = min(Int(buttonModel.iconSize), maxAllowedIconSize)
+                
+        let scaledImage = image.scalePreservingAspectRatio(targetSize: CGSize(width: iconSize, height: iconSize))
+        
+        let buttonIcon = MobileContentButtonIcon(
+            size: buttonModel.iconSize,
+            gravity: buttonModel.iconGravity,
+            image: scaledImage
+        )
+        
+        self.buttonIcon = buttonIcon
+        
+        return buttonIcon
     }
 }

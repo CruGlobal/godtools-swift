@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetTranslatedLanguageName {
+final class GetTranslatedLanguageName: Sendable {
     
     private let localizationLanguageName: LocalizationLanguageNameInterface
     private let localeLanguageName: LocaleLanguageNameInterface

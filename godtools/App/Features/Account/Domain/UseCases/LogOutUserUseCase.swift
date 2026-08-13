@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class LogOutUserUseCase {
+final class LogOutUserUseCase: Sendable {
     
     private let userAuthentication: UserAuthentication
     private let firebaseAnalytics: FirebaseAnalyticsInterface

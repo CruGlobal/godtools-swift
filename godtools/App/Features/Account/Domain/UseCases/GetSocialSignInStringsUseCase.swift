@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetSocialSignInStringsUseCase {
+final class GetSocialSignInStringsUseCase: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
     

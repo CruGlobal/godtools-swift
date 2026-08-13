@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class AttachmentsBundleCache {
+final class AttachmentsBundleCache: Sendable {
     
     private let bundle: Bundle = Bundle.main
     

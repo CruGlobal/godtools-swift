@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetAppLanguagesListUseCase {
+final class GetAppLanguagesListUseCase: Sendable {
     
     private let appLanguagesRepository: AppLanguagesRepository
     private let getTranslatedLanguageName: GetTranslatedLanguageName

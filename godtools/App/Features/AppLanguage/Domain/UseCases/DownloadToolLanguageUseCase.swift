@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class DownloadToolLanguageUseCase {
+final class DownloadToolLanguageUseCase: Sendable {
     
     private let toolLanguageDownloader: ToolLanguageDownloader
     

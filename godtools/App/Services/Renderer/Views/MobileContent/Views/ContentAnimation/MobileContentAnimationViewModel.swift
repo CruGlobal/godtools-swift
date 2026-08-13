@@ -9,14 +9,15 @@
 import Foundation
 import GodToolsShared
 
-class MobileContentAnimationViewModel: MobileContentViewModel {
+final class MobileContentAnimationViewModel: MobileContentViewModel {
             
     private let animationModel: Animation
     
-    let mobileContentAnalytics: MobileContentRendererAnalytics
-    let animatedViewModel: AnimatedViewModel?
+    private(set) var animatedViewModel: AnimatedViewModel?
     
-    @Published private(set) var playbackState: MobileContentAnimationPlaybackState
+    let mobileContentAnalytics: MobileContentRendererAnalytics
+    
+    @Published private(set) var playbackState: MobileContentAnimationPlaybackState = .stop
     
     init(
         animationModel: Animation,
@@ -27,11 +28,24 @@ class MobileContentAnimationViewModel: MobileContentViewModel {
         self.animationModel = animationModel
         self.mobileContentAnalytics = mobileContentAnalytics
                 
-        if let resource = animationModel.resource {
+        super.init(
+            baseModel: animationModel,
+            renderedPageContext: renderedPageContext,
+            mobileContentAnalytics: mobileContentAnalytics
+        )
+        
+        Task {
+            await loadAnimation()
+        }
+    }
+    
+    private func loadAnimation() async {
+        
+        if let resource = animationModel.resource, let location = resource.toSHA256FileLocation() {
             
             do {
                 
-                let fileUrl = try renderedPageContext.resourcesCache.getFile(resource: resource)
+                let fileUrl = try await renderedPageContext.resourcesFileCache.cache.getFile(location: location)
                 
                 animatedViewModel = AnimatedViewModel(
                     animationDataResource: .deviceFileManagerfilepathJsonFile(filepath: fileUrl.path),
@@ -50,8 +64,6 @@ class MobileContentAnimationViewModel: MobileContentViewModel {
             animatedViewModel = nil
             playbackState = .stop
         }
-        
-        super.init(baseModel: animationModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
 }
 

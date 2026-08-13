@@ -201,7 +201,7 @@ extension TractPageCardViewModel {
         
         return MobileContentBackgroundImageViewModel(
             backgroundImageModel: backgroundImageModel,
-            manifestResourcesCache: renderedPageContext.resourcesCache,
+            resourcesFileCache: renderedPageContext.resourcesFileCache,
             languageDirection: renderedPageContext.language.languageDirectionDomainModel
         )
     }

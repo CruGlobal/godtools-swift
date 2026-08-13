@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetToolSettingsToolLanguagesListUseCase {
+final class GetToolSettingsToolLanguagesListUseCase: Sendable {
     
     private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository

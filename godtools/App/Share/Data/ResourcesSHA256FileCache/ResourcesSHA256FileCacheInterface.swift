@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 import UIKit
 
-protocol ResourcesSHA256FileCacheInterface {
+protocol ResourcesSHA256FileCacheInterface: Sendable {
         
     func getFileExists(location: FileCacheLocation) async throws -> Bool
     func getFile(location: FileCacheLocation) async throws -> URL

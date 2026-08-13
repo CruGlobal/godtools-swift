@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetLocalizationSettingsStringsUseCase {
+final class GetLocalizationSettingsStringsUseCase: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
     

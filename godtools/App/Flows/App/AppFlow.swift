@@ -25,7 +25,9 @@ final class AppFlow: RootFlow {
     private let appMessaging: AppMessagingInterface
     private let appLaunchObserver: AppLaunchObserver = AppLaunchObserver()
     private let launchCountRepository: LaunchCountRepositoryInterface
+    private let launchCountTracker: LaunchCountTracker
     private let dashboardFlow: DashboardFlow
+    private let swiftDataMigration: SwiftDataMigration
     
     private var launchScreenImageView: UIView?
     private var appLaunchedFromDeepLink: ParsedDeepLinkType?
@@ -57,6 +59,8 @@ final class AppFlow: RootFlow {
         self.deepLinkingService = appDeepLinkingService
         self.appMessaging = appDiContainer.core.dataLayer.getAppMessaging()
         self.launchCountRepository = appDiContainer.core.dataLayer.getLaunchCountRepository()
+        self.launchCountTracker = appDiContainer.core.dataLayer.getLaunchCountTracker()
+        self.swiftDataMigration = appDiContainer.core.dataLayer.getSwiftDataMigration()
         
         dashboardFlow = DashboardFlow(
             appDiContainer: appDiContainer,
@@ -154,11 +158,15 @@ final class AppFlow: RootFlow {
                 
                 removeLaunchScreenImageView(animated: false, delay: 0)
                 
-                let launchCount: Int = launchCountRepository.getLaunchCount()
-                let hasPossibleDeferredDeepLinkInPasteboardForDynalink: Bool = UIPasteboard.general.hasURLs
-                let shouldOpenPasteboardForDeferredDeepLink: Bool = launchCount == 1 && hasPossibleDeferredDeepLinkInPasteboardForDynalink
-                
                 Task {
+                    
+                    await swiftDataMigration.migrate()
+                    
+                    await launchCountTracker.incrementLaunchCountIfNeeded()
+                    
+                    let launchCount: Int = launchCountRepository.getLaunchCount()
+                    let hasPossibleDeferredDeepLinkInPasteboardForDynalink: Bool = UIPasteboard.general.hasURLs
+                    let shouldOpenPasteboardForDeferredDeepLink: Bool = launchCount == 1 && hasPossibleDeferredDeepLinkInPasteboardForDynalink
                     
                     let onboardingTutorialIsAvailable: Bool = await appDiContainer.feature.onboarding.domainLayer.getOnboardingTutorialIsAvailableUseCase().execute()
                     

@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetLanguageSettingsStringsUseCase {
+final class GetLanguageSettingsStringsUseCase: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
     private let getTranslatedLanguageName: GetTranslatedLanguageName

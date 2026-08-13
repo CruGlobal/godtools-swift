@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class GetOptInOnboardingBannerEnabledUseCase {
+final class GetOptInOnboardingBannerEnabledUseCase: Sendable {
     
     private let getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase
     private let optInOnboardingBannerEnabledRepository: OptInOnboardingBannerEnabledRepository

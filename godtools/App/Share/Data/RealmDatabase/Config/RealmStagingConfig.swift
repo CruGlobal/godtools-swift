@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import RepositorySync
 
-final class RealmStagingConfig {
+final class RealmStagingConfig: Sendable {
     
     static let diskFileName: String = "godtools_realm_staging"
     

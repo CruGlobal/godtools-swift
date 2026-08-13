@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum MobileContentAnimationPlaybackState {
+enum MobileContentAnimationPlaybackState: Sendable {
     case pause
     case play
     case stop

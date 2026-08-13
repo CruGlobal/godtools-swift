@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetTranslatedToolCategory {
+final class GetTranslatedToolCategory: Sendable {
     
     static let localizedKeyPrefix: String = "tool_category_"
     

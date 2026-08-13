@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class ToolDownloaderGetDataToDownload {
+final class ToolDownloaderGetDataToDownload: Sendable {
     
     private let resourcesRepository: ResourcesRepository
     private let attachmentsRepository: AttachmentsRepository
@@ -25,7 +25,7 @@ final class ToolDownloaderGetDataToDownload {
         self.translationsRepository = translationsRepository
     }
     
-    func getData(tools: [DownloadToolData]) -> ToolDownloaderDataToDownload {
+    func getData(tools: [DownloadToolData]) async -> ToolDownloaderDataToDownload {
         
         var nonArticleTranslations: [TranslationDataModel] = Array()
         var articleTranslations: [TranslationDataModel] = Array()
@@ -40,15 +40,15 @@ final class ToolDownloaderGetDataToDownload {
                 
                 isArticle = resource.resourceTypeEnum == .article
                 
-                if let resourceBanner = attachmentsRepository.getAttachment(id: resource.attrBanner) {
+                if let resourceBanner = await attachmentsRepository.getAttachment(id: resource.attrBanner) {
                     attachments.append(resourceBanner)
                 }
                 
-                if let resourceBannerAbout = attachmentsRepository.getAttachment(id: resource.attrBannerAbout) {
+                if let resourceBannerAbout = await attachmentsRepository.getAttachment(id: resource.attrBannerAbout) {
                     attachments.append(resourceBannerAbout)
                 }
                 
-                if let resourceAboutBannerAnimation = attachmentsRepository.getAttachment(id: resource.attrAboutBannerAnimation) {
+                if let resourceAboutBannerAnimation = await attachmentsRepository.getAttachment(id: resource.attrAboutBannerAnimation) {
                     attachments.append(resourceAboutBannerAnimation)
                 }
             }

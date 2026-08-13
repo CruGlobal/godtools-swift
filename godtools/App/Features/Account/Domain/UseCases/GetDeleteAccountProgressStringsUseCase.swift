@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetDeleteAccountProgressStringsUseCase {
+final class GetDeleteAccountProgressStringsUseCase: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
     

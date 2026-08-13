@@ -422,8 +422,42 @@ final class AppDataLayerDependencies {
         )
     }
     
+    func getLaunchCountCache() -> LaunchCountCache {
+        return LaunchCountCache(persistence: getLaunchCountPersistence())
+    }
+
+    func getLaunchCountPersistence() -> any Persistence<LaunchCountDataModel, LaunchCountDataModel> {
+
+        let persistence: any Persistence<LaunchCountDataModel, LaunchCountDataModel>
+
+        if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
+
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                mapping: SwiftLaunchCountMapping()
+            )
+        }
+        else {
+
+            persistence = RealmRepositorySyncPersistence(
+                database: getSharedRealmDatabase(),
+                mapping: RealmLaunchCountMapping()
+            )
+        }
+
+        return persistence
+    }
+
     func getLaunchCountRepository() -> LaunchCountRepositoryInterface {
-        return LaunchCountRepository.shared
+        return LaunchCountRepository(
+            cache: getLaunchCountCache()
+        )
+    }
+    
+    @MainActor func getLaunchCountTracker() -> LaunchCountTracker {
+        return LaunchCountTracker(
+            launchCountRepository: getLaunchCountRepository()
+        )
     }
     
     func getLocalizationServices() -> LocalizationServicesInterface {
@@ -482,12 +516,6 @@ final class AppDataLayerDependencies {
             requestSender: getRequestSender(),
             mobileContentAuthTokenRepository: getMobileContentAuthTokenRepository(),
             userAuthentication: getUserAuthentication()
-        )
-    }
-    
-    func getMobileContentRendererManifestResourcesCache() -> MobileContentRendererManifestResourcesCache {
-        return MobileContentRendererManifestResourcesCache(
-            resourcesFileCache: getResourcesFileCache()
         )
     }
     
@@ -650,6 +678,12 @@ final class AppDataLayerDependencies {
     
     func getStringWithLocaleCount() -> StringWithLocaleCountInterface {
         return StringWithLocaleCount()
+    }
+    
+    func getSwiftDataMigration() -> SwiftDataMigration {
+        return SwiftDataMigration(
+            launchCountRepository: getLaunchCountRepository()
+        )
     }
     
     func getToolDownloader() -> ToolDownloader {

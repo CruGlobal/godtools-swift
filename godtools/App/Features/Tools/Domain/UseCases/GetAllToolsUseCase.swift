@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class GetAllToolsUseCase {
+final class GetAllToolsUseCase: Sendable {
     
     private let resourcesRepository: ResourcesRepository
     private let getToolsListItems: GetToolsListItems

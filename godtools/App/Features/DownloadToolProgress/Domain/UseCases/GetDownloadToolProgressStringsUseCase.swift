@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetDownloadToolProgressStringsUseCase {
+final class GetDownloadToolProgressStringsUseCase: Sendable {
     
     private let resourcesRepository: ResourcesRepository
     private let localizationServices: LocalizationServicesInterface

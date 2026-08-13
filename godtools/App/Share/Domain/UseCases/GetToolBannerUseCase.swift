@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-final class GetToolBannerUseCase {
+final class GetToolBannerUseCase: Sendable {
     
     private let attachmentsRepository: AttachmentsRepository
     
@@ -20,7 +20,7 @@ final class GetToolBannerUseCase {
     
     func execute(attachmentId: String) async throws -> Data? {
         
-        if let cachedImageData = attachmentsRepository.getAttachment(id: attachmentId)?.getImageData() {
+        if let cachedImageData = await attachmentsRepository.getAttachment(id: attachmentId)?.getImageData() {
             return cachedImageData
         }
         

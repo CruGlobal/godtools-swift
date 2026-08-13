@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetDashboardStringsUseCase {
+final class GetDashboardStringsUseCase: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
     

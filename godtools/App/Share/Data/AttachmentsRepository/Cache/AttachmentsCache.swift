@@ -9,7 +9,7 @@
 import Foundation
 import RepositorySync
 
-final class AttachmentsCache {
+final class AttachmentsCache: Sendable {
     
     private let resourcesFileCache: ResourcesFileCache
     private let resourcesSHA256FileCache: ResourcesSHA256FileCacheInterface
@@ -47,7 +47,7 @@ final class AttachmentsCache {
 
 extension AttachmentsCache {
     
-    func getAttachment(id: String) throws -> AttachmentDataModel? {
+    func getAttachment(id: String) async throws -> AttachmentDataModel? {
                     
         guard let cachedAttachment = try persistence.getDataModel(id: id) else {
             return nil
@@ -65,14 +65,14 @@ extension AttachmentsCache {
         }
         else {
             
-            imageData = try resourcesFileCache.cache.getData(location: fileCacheLocation)
+            imageData = try await resourcesFileCache.cache.getData(location: fileCacheLocation)
         }
         
         let storedAttachment: StoredAttachmentDataModel?
         
         if let imageData = imageData {
             
-            storedAttachment = try StoredAttachmentDataModel(
+            storedAttachment = try await StoredAttachmentDataModel(
                 data: imageData,
                 fileCacheLocation: fileCacheLocation,
                 resourcesFileCache: resourcesFileCache
@@ -94,7 +94,7 @@ extension AttachmentsCache {
             fileData: data
         )
         
-        return try StoredAttachmentDataModel(
+        return try await StoredAttachmentDataModel(
             data: data,
             fileCacheLocation: location,
             resourcesFileCache: resourcesFileCache

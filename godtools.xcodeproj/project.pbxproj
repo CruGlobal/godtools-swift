@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		451176F4302D04D000D64195 /* GodToolsShared in Frameworks */ = {isa = PBXBuildFile; productRef = 451176F3302D04D000D64195 /* GodToolsShared */; };
 		452556442C383C3F00AA0046 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 452556432C383C3F00AA0046 /* RealmSwift */; };
 		452556452C383C3F00AA0046 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 452556432C383C3F00AA0046 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4548320B2F0C4EFC00CF9CF0 /* RepositorySync in Frameworks */ = {isa = PBXBuildFile; productRef = 4548320A2F0C4EFC00CF9CF0 /* RepositorySync */; };
@@ -15,9 +16,6 @@
 		4581EAA32BFBE194008115FF /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4581EAA22BFBE194008115FF /* RealmSwift */; };
 		4581EAA52BFBE257008115FF /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4581EAA42BFBE257008115FF /* RealmSwift */; };
 		4581EAA72BFBE2B9008115FF /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 4581EAA22BFBE194008115FF /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		4593DEFE2EABFD45004E1C8D /* GodToolsShared in Frameworks */ = {isa = PBXBuildFile; productRef = 4593DEFD2EABFD45004E1C8D /* GodToolsShared */; };
-		4593DF002EABFD93004E1C8D /* GodToolsShared in Frameworks */ = {isa = PBXBuildFile; productRef = 4593DEFF2EABFD93004E1C8D /* GodToolsShared */; };
-		4593DF022EABFD9C004E1C8D /* GodToolsShared in Frameworks */ = {isa = PBXBuildFile; productRef = 4593DF012EABFD9C004E1C8D /* GodToolsShared */; };
 		459C56D225FF954F00F15967 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		459C56D325FF954F00F15967 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		45A416062A9943D50030E2C7 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 45A416052A9943D50030E2C7 /* Lottie */; };
@@ -306,7 +304,6 @@
 			files = (
 				45AF5BF82DBBF87E0059FF55 /* FirebaseMessaging in Frameworks */,
 				45A4161D2A9943E20030E2C7 /* AdSupport.framework in Frameworks */,
-				4593DF022EABFD9C004E1C8D /* GodToolsShared in Frameworks */,
 				45DF96592D386D5400C6AE68 /* FirebaseInAppMessaging-Beta in Frameworks */,
 				45A416182A9943D50030E2C7 /* SocialAuthentication in Frameworks */,
 				452556442C383C3F00AA0046 /* RealmSwift in Frameworks */,
@@ -332,7 +329,6 @@
 				4F2500621F0C1E8D00364FBC /* AdSupport.framework in Frameworks */,
 				4581EAA32BFBE194008115FF /* RealmSwift in Frameworks */,
 				45CF09702784B910007F13D3 /* RequestOperation in Frameworks */,
-				4593DEFE2EABFD45004E1C8D /* GodToolsShared in Frameworks */,
 				45C15DF92F6C78F1006B9020 /* DynalinksSDK in Frameworks */,
 				4557A2122FBC91A600BD9598 /* SwiftData.framework in Frameworks */,
 				45DF96512D386C1C00C6AE68 /* FirebaseRemoteConfig in Frameworks */,
@@ -340,6 +336,7 @@
 				45B0F6A72DBBCC300011FF1D /* FirebaseMessaging in Frameworks */,
 				D4997E0E28D4CED800205B4C /* YouTubeiOSPlayerHelper in Frameworks */,
 				4548320B2F0C4EFC00CF9CF0 /* RepositorySync in Frameworks */,
+				451176F4302D04D000D64195 /* GodToolsShared in Frameworks */,
 				45E39EDC27457E0C006A59E4 /* Lottie in Frameworks */,
 				45DF964B2D386C1C00C6AE68 /* FirebaseCrashlytics in Frameworks */,
 				45D48C8629F81324004E92B1 /* SocialAuthentication in Frameworks */,
@@ -352,7 +349,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				45F671932C33440E0017C8C2 /* LocalizationServices in Frameworks */,
-				4593DF002EABFD93004E1C8D /* GodToolsShared in Frameworks */,
 				4581EAA52BFBE257008115FF /* RealmSwift in Frameworks */,
 				4548320D2F0C4F0900CF9CF0 /* RepositorySync in Frameworks */,
 			);
@@ -481,7 +477,6 @@
 				45DF96582D386D5400C6AE68 /* FirebaseInAppMessaging-Beta */,
 				45DF965A2D386D5800C6AE68 /* FirebaseRemoteConfig */,
 				45AF5BF72DBBF87E0059FF55 /* FirebaseMessaging */,
-				4593DF012EABFD9C004E1C8D /* GodToolsShared */,
 			);
 			productName = godtoolsUITests;
 			productReference = 4F12296C20852BE3008842CC /* godtoolsUITests.xctest */;
@@ -523,10 +518,10 @@
 				45DF964E2D386C1C00C6AE68 /* FirebaseInAppMessaging-Beta */,
 				45DF96502D386C1C00C6AE68 /* FirebaseRemoteConfig */,
 				45B0F6A62DBBCC300011FF1D /* FirebaseMessaging */,
-				4593DEFD2EABFD45004E1C8D /* GodToolsShared */,
 				4548320A2F0C4EFC00CF9CF0 /* RepositorySync */,
 				45C15DF82F6C78F1006B9020 /* DynalinksSDK */,
 				45C832D82FF3E97D0056C475 /* GoogleTagManager */,
+				451176F3302D04D000D64195 /* GodToolsShared */,
 			);
 			productName = godtools;
 			productReference = 4F5732891EA69CF00082035C /* godtools.app */;
@@ -553,7 +548,6 @@
 			packageProductDependencies = (
 				4581EAA42BFBE257008115FF /* RealmSwift */,
 				45F671922C33440E0017C8C2 /* LocalizationServices */,
-				4593DEFF2EABFD93004E1C8D /* GodToolsShared */,
 				4548320C2F0C4F0900CF9CF0 /* RepositorySync */,
 			);
 			productName = godtoolsTests;
@@ -688,10 +682,10 @@
 				4581EAA12BFBE194008115FF /* XCRemoteSwiftPackageReference "realm-swift" */,
 				45F6718F2C3343ED0017C8C2 /* XCRemoteSwiftPackageReference "localization-services-ios" */,
 				45DF96472D386C1C00C6AE68 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				4593DEFC2EABFD45004E1C8D /* XCRemoteSwiftPackageReference "godtools-shared-swift" */,
 				454832092F0C4EFC00CF9CF0 /* XCRemoteSwiftPackageReference "repository-sync-ios" */,
 				45C15DF72F6C78F1006B9020 /* XCRemoteSwiftPackageReference "dynalinks-ios-sdk" */,
 				45C832D72FF3E97D0056C475 /* XCRemoteSwiftPackageReference "google-tag-manager-ios-sdk" */,
+				451176F2302D04D000D64195 /* XCRemoteSwiftPackageReference "godtools-shared-swift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4F57328A1EA69CF00082035C /* Products */;
@@ -2179,6 +2173,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		451176F2302D04D000D64195 /* XCRemoteSwiftPackageReference "godtools-shared-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CruGlobal/godtools-shared-swift.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		454832092F0C4EFC00CF9CF0 /* XCRemoteSwiftPackageReference "repository-sync-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CruGlobal/repository-sync-ios";
@@ -2193,14 +2195,6 @@
 			requirement = {
 				kind = upToNextMinorVersion;
 				minimumVersion = 20.0.4;
-			};
-		};
-		4593DEFC2EABFD45004E1C8D /* XCRemoteSwiftPackageReference "godtools-shared-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/CruGlobal/godtools-shared-swift.git";
-			requirement = {
-				kind = revision;
-				revision = 26d93fc5290486672ebe402e8695b628fa5e4303;
 			};
 		};
 		45C15DF72F6C78F1006B9020 /* XCRemoteSwiftPackageReference "dynalinks-ios-sdk" */ = {
@@ -2286,6 +2280,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		451176F3302D04D000D64195 /* GodToolsShared */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 451176F2302D04D000D64195 /* XCRemoteSwiftPackageReference "godtools-shared-swift" */;
+			productName = GodToolsShared;
+		};
 		452556432C383C3F00AA0046 /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4581EAA12BFBE194008115FF /* XCRemoteSwiftPackageReference "realm-swift" */;
@@ -2310,21 +2309,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4581EAA12BFBE194008115FF /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
-		};
-		4593DEFD2EABFD45004E1C8D /* GodToolsShared */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4593DEFC2EABFD45004E1C8D /* XCRemoteSwiftPackageReference "godtools-shared-swift" */;
-			productName = GodToolsShared;
-		};
-		4593DEFF2EABFD93004E1C8D /* GodToolsShared */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4593DEFC2EABFD45004E1C8D /* XCRemoteSwiftPackageReference "godtools-shared-swift" */;
-			productName = GodToolsShared;
-		};
-		4593DF012EABFD9C004E1C8D /* GodToolsShared */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4593DEFC2EABFD45004E1C8D /* XCRemoteSwiftPackageReference "godtools-shared-swift" */;
-			productName = GodToolsShared;
 		};
 		45A416052A9943D50030E2C7 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;

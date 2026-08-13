@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetTrainingTipCompletedUseCase {
+final class GetTrainingTipCompletedUseCase: Sendable {
     
     private let repository: CompletedTrainingTipRepository
         

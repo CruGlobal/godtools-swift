@@ -29,6 +29,8 @@ final class ArticleCategoriesViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = Set()
     private var pullToRefreshArticlesTask: Task<Void, Error>?
     private var pageViewCount: Int = 0
+    
+    private var getCategoriesTask: Task<Void, Error>?
         
     @Published private(set) var categories: [ArticleCategoryDomainModel] = Array()
     
@@ -56,12 +58,13 @@ final class ArticleCategoriesViewModel: ObservableObject {
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         
-        categories = getArticleCategoriesUseCase.execute(manifest: manifest)
+        loadCategories()
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
         pullToRefreshArticlesTask?.cancel()
+        getCategoriesTask?.cancel()
     }
     
     private var analyticsScreenName: String {
@@ -74,6 +77,16 @@ final class ArticleCategoriesViewModel: ObservableObject {
     
     private var analyticsSiteSubSection: String {
         return ""
+    }
+    
+    private func loadCategories() {
+        
+        getCategoriesTask?.cancel()
+        
+        getCategoriesTask = Task {
+            
+            categories = await getArticleCategoriesUseCase.execute(categories: manifest.sendableCategories)
+        }
     }
 }
 

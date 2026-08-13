@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class StoreInitialAppLanguageUseCase {
+final class StoreInitialAppLanguageUseCase: Sendable {
     
     private let deviceSystemLanguage: DeviceSystemLanguageInterface
     private let userAppLanguageRepository: UserAppLanguageRepository

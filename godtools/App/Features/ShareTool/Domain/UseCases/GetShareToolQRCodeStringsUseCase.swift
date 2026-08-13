@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetShareToolQRCodeStringsUseCase {
+final class GetShareToolQRCodeStringsUseCase: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
     

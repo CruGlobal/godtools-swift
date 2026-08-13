@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class GetSpotlightToolsUseCase {
+final class GetSpotlightToolsUseCase: Sendable {
         
     private let resourcesRepository: ResourcesRepository
     private let favoritedResourcesRepository: FavoritedResourcesRepository

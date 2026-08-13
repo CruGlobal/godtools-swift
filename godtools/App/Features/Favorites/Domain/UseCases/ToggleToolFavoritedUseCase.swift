@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class ToggleToolFavoritedUseCase {
+final class ToggleToolFavoritedUseCase: Sendable {
     
     private let favoritedResourcesRepository: FavoritedResourcesRepository
     

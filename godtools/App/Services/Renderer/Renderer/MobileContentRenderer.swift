@@ -14,7 +14,7 @@ class MobileContentRenderer {
             
     private let sharedState: State
     private let pageViewFactories: MobileContentRendererPageViewFactories
-    private let manifestResourcesCache: MobileContentRendererManifestResourcesCache
+    private let resourcesFileCache: ResourcesFileCache
     
     let navigation: MobileContentRendererNavigation
     let resource: ResourceDataModel
@@ -27,7 +27,7 @@ class MobileContentRenderer {
         appLanguage: AppLanguageDomainModel,
         toolTranslations: ToolTranslationsDomainModel,
         pageViewFactories: MobileContentRendererPageViewFactories,
-        manifestResourcesCache: MobileContentRendererManifestResourcesCache
+        resourcesFileCache: ResourcesFileCache
     ) {
         
         let sharedState: State = State()
@@ -46,7 +46,7 @@ class MobileContentRenderer {
                 languageTranslationManifest: languageTranslationManifest,
                 pageViewFactories: pageViewFactories,
                 navigation: navigation,
-                manifestResourcesCache: manifestResourcesCache
+                resourcesFileCache: resourcesFileCache
             )
             
             pageRenderers.append(pageRenderer)
@@ -54,7 +54,7 @@ class MobileContentRenderer {
         
         self.sharedState = sharedState
         self.pageViewFactories = pageViewFactories
-        self.manifestResourcesCache = manifestResourcesCache
+        self.resourcesFileCache = resourcesFileCache
         self.navigation = navigation
         self.resource = resource
         self.appLanguage = appLanguage
@@ -73,7 +73,7 @@ class MobileContentRenderer {
             appLanguage: appLanguage,
             toolTranslations: toolTranslations,
             pageViewFactories: pageViewFactories,
-            manifestResourcesCache: manifestResourcesCache
+            resourcesFileCache: resourcesFileCache
         )
     }
 }

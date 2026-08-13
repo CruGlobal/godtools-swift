@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import RequestOperation
 
-final class GetUserAccountDetailsUseCase {
+final class GetUserAccountDetailsUseCase: Sendable {
     
     private let userDetailsRepository: UserDetailsRepository
     private let localizationServices: LocalizationServicesInterface

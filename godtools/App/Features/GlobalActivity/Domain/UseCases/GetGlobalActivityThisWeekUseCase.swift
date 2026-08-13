@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class GetGlobalActivityThisWeekUseCase {
+final class GetGlobalActivityThisWeekUseCase: Sendable {
     
     private let globalAnalyticsRepository: GlobalAnalyticsRepository
     private let localizationServices: LocalizationServicesInterface

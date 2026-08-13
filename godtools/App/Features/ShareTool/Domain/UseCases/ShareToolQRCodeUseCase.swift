@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class ShareToolQRCodeUseCase {
+final class ShareToolQRCodeUseCase: Sendable {
     
     private let getShareToolUrl: GetShareToolUrl
     

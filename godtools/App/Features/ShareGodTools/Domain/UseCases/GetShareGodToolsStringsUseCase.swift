@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetShareGodToolsStringsUseCase {
+final class GetShareGodToolsStringsUseCase: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
     

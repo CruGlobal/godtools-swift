@@ -52,50 +52,20 @@ class TranslationManifestParser {
     
     func parse(manifestName: String) async throws -> Manifest {
         
-        return try await withCheckedThrowingContinuation { continuation in
-            parseWithCompletion(manifestName: manifestName) { result in
-                switch result {
-                case .success(let manifest):
-                    continuation.resume(returning: manifest)
-                case .failure(let error):
-                    continuation.resume(throwing: error)
-                }
-            }
-        }
-    }
-    
-    private func parseWithCompletion(manifestName: String, completion: @escaping ((_ result: Result<Manifest, Error>) -> Void)) {
-                
         let location: FileCacheLocation = FileCacheLocation(relativeUrlString: manifestName)
         
-        do {
-            
-            let exists = try resourcesFileCache.cache.getFileExists(location: location)
-            
-            guard exists else {
-                completion(.failure(NSError.errorWithDescription(description: "Could not find translation manifest file in file cache.")))
-                return
-            }
-        }
-        catch let error {
-            completion(.failure(error))
-            return
+        let exists = try await resourcesFileCache.cache.getFileExists(location: location)
+        
+        guard exists else {
+            throw NSError.errorWithDescription(description: "Could not find translation manifest file in file cache.")
         }
         
-        DispatchQueue.main.async {
-            
-            self.parser.parseManifest(fileName: manifestName, config: self.parserConfig) { (parserResult: ParserResult?, error: Error?) in
-                    
-                if let resultData = parserResult as? ParserResult.Data {
-                    completion(.success(resultData.manifest))
-                }
-                else if let resultError = parserResult as? ParserResult.Error, let kotlinException = resultError.error {
-                    completion(.failure(NSError.errorWithDescription(description: "Failed to parse tool manifest, found kotlin exception \(kotlinException)")))
-                }
-                else {
-                    completion(.failure(NSError.errorWithDescription(description: "Failed to parse tool manifest.")))
-                }
-            }
+        let parserResult: ParserResult = try await parser.parseManifest(fileName: manifestName, config: parserConfig)
+        
+        guard let resultData = parserResult as? ParserResult.Data else {
+            throw NSError.errorWithDescription(description: "Failed to parse tool manifest.")
         }
+        
+        return resultData.manifest
     }
 }

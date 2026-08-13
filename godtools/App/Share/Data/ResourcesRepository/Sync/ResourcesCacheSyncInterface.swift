@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ResourcesCacheSyncInterface {
+protocol ResourcesCacheSyncInterface: Sendable {
     
     func syncResources(
         resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable,

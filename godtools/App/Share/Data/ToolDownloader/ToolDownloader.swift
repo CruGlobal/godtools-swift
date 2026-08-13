@@ -119,7 +119,7 @@ extension ToolDownloader {
     
     private func downloadTool(tool: DownloadToolData, requestPriority: RequestPriority) async throws -> ToolDownloadDataModel {
                 
-        let downloadData: ToolDownloaderDataToDownload = getToolDataToDownload.getData(tools: [tool])
+        let downloadData: ToolDownloaderDataToDownload = await getToolDataToDownload.getData(tools: [tool])
         
         let totalNumberOfDownloads: Int = downloadData.nonArticleTranslations.count + downloadData.attachments.count + downloadData.articleTranslations.count
         

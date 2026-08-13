@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetLearnToShareToolTutorialUseCase {
+final class GetLearnToShareToolTutorialUseCase: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
     

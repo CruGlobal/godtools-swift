@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class GetPersonalizedLessonsUseCase {
+final class GetPersonalizedLessonsUseCase: Sendable {
 
     private let resourcesRepository: ResourcesRepository
     private let personalizedToolsRepository: PersonalizedToolsRepository

@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ResourcesFilterVariant {
+enum ResourcesFilterVariant: Sendable {
     case isNotVariant
     case isVariant
     case isDefaultVariant

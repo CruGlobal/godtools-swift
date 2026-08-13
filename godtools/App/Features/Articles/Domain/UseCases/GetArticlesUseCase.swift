@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetArticlesUseCase {
+final class GetArticlesUseCase: Sendable {
     
     private let articlesRepsoitory: ArticleManifestAemRepository
     private let localizationServices: LocalizationServicesInterface

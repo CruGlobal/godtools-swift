@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetToolsListItems {
+final class GetToolsListItems: Sendable {
  
     private let favoritedResourcesRepository: FavoritedResourcesRepository
     private let languagesRepository: LanguagesRepository

@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class EvaluateLessonUseCase {
+final class EvaluateLessonUseCase: Sendable {
     
     private let resourcesRepository: ResourcesRepository
     private let lessonEvaluationRepository: LessonEvaluationRepository

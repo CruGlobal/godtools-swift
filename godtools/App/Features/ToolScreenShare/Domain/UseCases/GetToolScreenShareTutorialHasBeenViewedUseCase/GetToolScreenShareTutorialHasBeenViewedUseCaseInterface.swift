@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol GetToolScreenShareTutorialHasBeenViewedUseCaseInterface {
+protocol GetToolScreenShareTutorialHasBeenViewedUseCaseInterface: Sendable {
     
     func execute(toolId: String) -> Bool
 }

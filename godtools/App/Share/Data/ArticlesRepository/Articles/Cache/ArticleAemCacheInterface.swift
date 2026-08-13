@@ -9,7 +9,7 @@
 import Foundation
 import RequestOperation
 
-protocol ArticleAemCacheInterface {
+protocol ArticleAemCacheInterface: Sendable {
 
     func getArticleAemDataObjects() async throws -> [ArticleAemData]
     func getAemCacheObject(aemUri: String) async throws -> ArticleAemCacheObject?
