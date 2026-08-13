@@ -10,29 +10,15 @@ import Foundation
 
 final class TrackActionAnalyticsUseCase: Sendable {
     
-    private let trackActionAnalytics: TrackActionAnalyticsInterface
+    private let analytics: AnalyticsContainer
     
-    init(trackActionAnalytics: TrackActionAnalyticsInterface) {
+    init(analytics: AnalyticsContainer) {
         
-        self.trackActionAnalytics = trackActionAnalytics
+        self.analytics = analytics
     }
     
-    func trackAction(screenName: String, actionName: String, siteSection: String, siteSubSection: String, appLanguage: String?, contentLanguage: String?, contentLanguageSecondary: String?, url: String?, data: [String: Any]?) {
+    func trackAction(properties: AnalyticsProperties, actionName: String, data: [String: Any]?) {
         
-        let properties = TrackActionAnalyticsPropertiesDomainModel(
-            screenName: screenName,
-            actionName: actionName,
-            siteSection: siteSection,
-            siteSubSection: siteSubSection,
-            appLanguage: appLanguage,
-            contentLanguage: contentLanguage,
-            contentLanguageSecondary: contentLanguageSecondary,
-            url: url,
-            data: data
-        )
-        
-        trackActionAnalytics.trackAction(
-            properties: properties
-        )
+        analytics.trackAction(properties: properties, actionName: actionName, data: data)
     }
 }

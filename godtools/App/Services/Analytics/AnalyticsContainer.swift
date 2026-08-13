@@ -27,4 +27,13 @@ class AnalyticsContainer {
         
         firebaseAnalytics.trackScreenView(properties: properties)
     }
+    
+    func trackAction(properties: AnalyticsProperties, actionName: String, data: [String: Any]?) {
+        
+        firebaseAnalytics.trackAction(
+            properties: properties,
+            actionName: actionName,
+            data: data
+        )
+    }
 }

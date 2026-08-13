@@ -54,7 +54,7 @@ final class AppDomainLayerDependencies {
     
     func getTrackActionAnalyticsUseCase() -> TrackActionAnalyticsUseCase {
         return TrackActionAnalyticsUseCase(
-            trackActionAnalytics: dataLayer.getAnalytics()
+            analytics: dataLayer.getAnalytics()
         )
     }
     
