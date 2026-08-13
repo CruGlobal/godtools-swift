@@ -9,14 +9,15 @@
 import Foundation
 import Combine
 
-final class DeepLinkingService {
+@MainActor
+final class DeepLinkingService: Sendable {
     
     private let manifest: DeepLinkingManifestInterface
     private let lastParsedDeepLinkSubject: PassthroughSubject<ParsedDeepLinkType?, Never> = PassthroughSubject()
     
     private var lastProcessedDeepLink: ProcessedDeepLink?
     
-    init(manifest: DeepLinkingManifestInterface) {
+    nonisolated init(manifest: DeepLinkingManifestInterface) {
         
         self.manifest = manifest
     }
@@ -25,7 +26,7 @@ final class DeepLinkingService {
         return lastParsedDeepLinkSubject.eraseToAnyPublisher()
     }
     
-    func parseDeepLink(incomingDeepLink: IncomingDeepLinkType) -> ParsedDeepLinkType? {
+    nonisolated func parseDeepLink(incomingDeepLink: IncomingDeepLinkType) -> ParsedDeepLinkType? {
        
         for parserManifest in manifest.parserManifests {
             
@@ -60,7 +61,6 @@ final class DeepLinkingService {
         return nil
     }
      
-    @MainActor
     func parseDeepLinkAndNotify(incomingDeepLink: IncomingDeepLinkType) -> Bool {
         
         guard let parsedDeepLink = parseDeepLink(incomingDeepLink: incomingDeepLink) else {
