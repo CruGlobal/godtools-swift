@@ -50,19 +50,30 @@ actor ArticleAemCache: ArticleAemCacheInterface, ModelActor {
     func getAemCacheObjects(aemUris: [String]) async throws -> [ArticleAemCacheObject] {
 
         let swiftDataRead = SwiftDataRead()
-
-        var cachedObjects: [ArticleAemCacheObject] = Array()
-
-        for aemUri in aemUris {
-
-            guard let cachedObject = try await getAemCacheObject(aemUri: aemUri, swiftDataRead: swiftDataRead) else {
-                continue
+        
+        return try await withThrowingTaskGroup(of: ArticleAemCacheObject?.self) { group in
+            
+            for aemUri in aemUris {
+                
+                group.addTask {
+                    
+                    return try await self.getAemCacheObject(aemUri: aemUri, swiftDataRead: swiftDataRead)
+                }
+            }
+            
+            var cachedObjects: [ArticleAemCacheObject] = Array()
+            
+            for try await article in group {
+                
+                guard let article = article else {
+                    continue
+                }
+                
+                cachedObjects.append(article)
             }
 
-            cachedObjects.append(cachedObject)
+            return cachedObjects
         }
-
-        return cachedObjects
     }
 
     private func getAemCacheObject(aemUri: String, swiftDataRead: SwiftDataRead) async throws -> ArticleAemCacheObject? {
