@@ -105,15 +105,17 @@ extension MobileContentCardCollectionPageViewModel {
     
     func cardDidAppear(card: Int) {
         
-        trackScreenViewAnalyticsUseCase.trackScreen(
-            properties: AnalyticsProperties(
-                screenName: getCardAnalyticsScreenName(card: card),
-                siteSection: analyticsSiteSection,
-                siteSubSection: analyticsSiteSubSection,
-                appLanguage: renderedPageContext.appLanguage,
-                contentLanguage: renderedPageContext.rendererLanguages.primaryLanguage.localeId,
-                secondaryContentLanguage: renderedPageContext.rendererLanguages.parallelLanguage?.localeId
+        Task {
+            await trackScreenViewAnalyticsUseCase.trackScreen(
+                properties: AnalyticsProperties(
+                    screenName: getCardAnalyticsScreenName(card: card),
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: analyticsSiteSubSection,
+                    appLanguage: renderedPageContext.appLanguage,
+                    contentLanguage: renderedPageContext.rendererLanguages.primaryLanguage.localeId,
+                    secondaryContentLanguage: renderedPageContext.rendererLanguages.parallelLanguage?.localeId
+                )
             )
-        )
+        }
     }
 }

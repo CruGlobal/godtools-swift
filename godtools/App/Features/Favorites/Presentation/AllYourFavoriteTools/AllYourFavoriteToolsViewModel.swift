@@ -129,16 +129,18 @@ final class AllYourFavoriteToolsViewModel: ObservableObject {
     
     private func trackPageView() {
         
-        trackScreenViewAnalyticsUseCase.trackScreen(
-            properties: AnalyticsProperties(
-                screenName: analyticsScreenName,
-                siteSection: analyticsSiteSection,
-                siteSubSection: analyticsSiteSubSection,
-                appLanguage: nil,
-                contentLanguage: nil,
-                secondaryContentLanguage: nil
+        Task {
+            await trackScreenViewAnalyticsUseCase.trackScreen(
+                properties: AnalyticsProperties(
+                    screenName: analyticsScreenName,
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: analyticsSiteSubSection,
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                )
             )
-        )
+        }
     }
     
     private func trackOpenFavoritedToolButtonAnalytics(tool: YourFavoritedToolDomainModel) {

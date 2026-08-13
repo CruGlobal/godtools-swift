@@ -142,16 +142,18 @@ extension MenuViewModel {
     
     func pageViewed() {
         
-        trackScreenViewAnalyticsUseCase.trackScreen(
-            properties: AnalyticsProperties(
-                screenName: getMenuAnalyticsScreenName(),
-                siteSection: analyticsSiteSection,
-                siteSubSection: analyticsSiteSubSection,
-                appLanguage: nil,
-                contentLanguage: nil,
-                secondaryContentLanguage: nil
+        Task {
+            await trackScreenViewAnalyticsUseCase.trackScreen(
+                properties: AnalyticsProperties(
+                    screenName: getMenuAnalyticsScreenName(),
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: analyticsSiteSubSection,
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                )
             )
-        )
+        }
     }
     
     @objc func doneTapped() {
@@ -222,16 +224,18 @@ extension MenuViewModel {
         
         stepEmitter.emit(step: AppFlowStep.shareAStoryWithUsTappedFromMenu)
         
-        trackScreenViewAnalyticsUseCase.trackScreen(
-            properties: AnalyticsProperties(
-                screenName: getShareStoryAnalyticsScreenName(),
-                siteSection: analyticsSiteSection,
-                siteSubSection: analyticsSiteSubSection,
-                appLanguage: nil,
-                contentLanguage: nil,
-                secondaryContentLanguage: nil
+        Task {
+            await trackScreenViewAnalyticsUseCase.trackScreen(
+                properties: AnalyticsProperties(
+                    screenName: getShareStoryAnalyticsScreenName(),
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: analyticsSiteSubSection,
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                )
             )
-        )
+        }
     }
     
     func shareGodToolsTapped() {
@@ -251,16 +255,18 @@ extension MenuViewModel {
             data: [AnalyticsConstants.Keys.shareAction: 1]
         )
         
-        trackScreenViewAnalyticsUseCase.trackScreen(
-            properties: AnalyticsProperties(
-                screenName: getShareAppAnalyticsScreenName(),
-                siteSection: analyticsSiteSection,
-                siteSubSection: analyticsSiteSubSection,
-                appLanguage: nil,
-                contentLanguage: nil,
-                secondaryContentLanguage: nil
+        Task {
+            await trackScreenViewAnalyticsUseCase.trackScreen(
+                properties: AnalyticsProperties(
+                    screenName: getShareAppAnalyticsScreenName(),
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: analyticsSiteSubSection,
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                )
             )
-        )
+        }
     }
     
     func termsOfUseTapped() {

@@ -217,16 +217,18 @@ final class LessonsViewModel: ObservableObject {
     
     private func trackPageViewed() {
         
-        trackScreenViewAnalyticsUseCase.trackScreen(
-            properties: AnalyticsProperties(
-                screenName: analyticsScreenName,
-                siteSection: analyticsSiteSection,
-                siteSubSection: analyticsSiteSubSection,
-                appLanguage: nil,
-                contentLanguage: nil,
-                secondaryContentLanguage: nil
+        Task {
+            await trackScreenViewAnalyticsUseCase.trackScreen(
+                properties: AnalyticsProperties(
+                    screenName: analyticsScreenName,
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: analyticsSiteSubSection,
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                )
             )
-        )
+        }
         
         trackActionAnalyticsUseCase.trackAction(
             properties: AnalyticsProperties(

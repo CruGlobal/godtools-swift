@@ -113,16 +113,7 @@ final class ToolDetailsViewModel: ObservableObject {
             
             weakSelf.didViewPage = nil
             
-            trackScreenViewAnalyticsUseCase.trackScreen(
-                properties: AnalyticsProperties(
-                    screenName: weakSelf.getAnalyticsScreenName(analyticsToolAbbreviation: analyticsToolAbbreviation),
-                    siteSection: weakSelf.getAnalyticsScreenName(analyticsToolAbbreviation: analyticsToolAbbreviation),
-                    siteSubSection: weakSelf.analyticsSiteSubSection,
-                    appLanguage: nil,
-                    contentLanguage: nil,
-                    secondaryContentLanguage: nil
-                )
-            )
+            weakSelf.trackPageView(analyticsToolAbbreviation: analyticsToolAbbreviation)
             
             return Just(())
                 .eraseToAnyPublisher()
@@ -248,6 +239,23 @@ final class ToolDetailsViewModel: ObservableObject {
     
     private var analyticsSiteSubSection: String {
         return "tool-info"
+    }
+    
+    private func trackPageView(analyticsToolAbbreviation: String) {
+        
+        let analyticsProperties = AnalyticsProperties(
+            screenName: getAnalyticsScreenName(analyticsToolAbbreviation: analyticsToolAbbreviation),
+            siteSection: getAnalyticsScreenName(analyticsToolAbbreviation: analyticsToolAbbreviation),
+            siteSubSection: analyticsSiteSubSection,
+            appLanguage: nil,
+            contentLanguage: nil,
+            secondaryContentLanguage: nil
+        )
+
+        Task {
+            
+            await trackScreenViewAnalyticsUseCase.trackScreen(properties: analyticsProperties)
+        }
     }
     
     private func trackToolVersionTappedAnalytics(toolVersion: ToolVersionDomainModel) {

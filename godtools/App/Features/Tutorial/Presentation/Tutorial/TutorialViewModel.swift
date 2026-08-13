@@ -131,16 +131,18 @@ final class TutorialViewModel: ObservableObject {
         let analyticsSiteSection = analyticsSiteSection
         let analyticsSiteSubSection = analyticsSiteSubsection
         
-        trackScreenViewAnalyticsUseCase.trackScreen(
-            properties: AnalyticsProperties(
-                screenName: analyticsScreenName,
-                siteSection: analyticsSiteSection,
-                siteSubSection: analyticsSiteSubSection,
-                appLanguage: nil,
-                contentLanguage: nil,
-                secondaryContentLanguage: nil
+        Task {
+            await trackScreenViewAnalyticsUseCase.trackScreen(
+                properties: AnalyticsProperties(
+                    screenName: analyticsScreenName,
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: analyticsSiteSubSection,
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                )
             )
-        )
+        }
         
         trackActionAnalyticsUseCase.trackAction(
             properties: AnalyticsProperties(

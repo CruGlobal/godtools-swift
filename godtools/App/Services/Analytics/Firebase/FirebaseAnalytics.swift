@@ -63,6 +63,7 @@ actor FirebaseAnalytics: FirebaseAnalyticsInterface {
             eventName: AnalyticsEventScreenView,
             data: nil
         )
+        
         previousTrackedScreenName = properties.screenName
     }
 
