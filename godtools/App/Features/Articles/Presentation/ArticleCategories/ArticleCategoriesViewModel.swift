@@ -81,6 +81,8 @@ final class ArticleCategoriesViewModel: ObservableObject {
     
     private func loadCategories() {
         
+        getCategoriesTask?.cancel()
+        
         getCategoriesTask = Task {
             
             categories = await getArticleCategoriesUseCase.execute(categories: manifest.sendableCategories)
