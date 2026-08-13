@@ -158,10 +158,9 @@ final class AppDataLayerDependencies {
         }
         
         return ArticleManifestAemRepository(
-            downloader: getArticleAemDownloader(),
-            cache: getArticleAemCache(),
             categoryArticlesCache: categoryArticlesCache,
-            syncInvalidatorPersistence: getUserDefaultsCache()
+            syncInvalidatorPersistence: getUserDefaultsCache(),
+            articleAemRepository: getArticleAemRepository()
         )
     }
     

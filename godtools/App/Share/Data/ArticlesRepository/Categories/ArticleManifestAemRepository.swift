@@ -10,22 +10,21 @@ import Foundation
 import GodToolsShared
 import RequestOperation
 
-final class ArticleManifestAemRepository: ArticleAemRepository {
+final class ArticleManifestAemRepository: ArticleManifestAemRepositoryInterface {
     
     private let categoryArticlesCache: CategoryArticlesCacheInterface
     private let syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface
+    private let articleAemRepository: ArticleAemRepository
         
     init(
-        downloader: ArticleAemDownloader,
-        cache: ArticleAemCacheInterface,
         categoryArticlesCache: CategoryArticlesCacheInterface,
-        syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface
+        syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface,
+        articleAemRepository: ArticleAemRepository
     ) {
         
         self.categoryArticlesCache = categoryArticlesCache
         self.syncInvalidatorPersistence = syncInvalidatorPersistence
-        
-        super.init(downloader: downloader, cache: cache)
+        self.articleAemRepository = articleAemRepository
     }
     
     private func getSyncInvalidatorId(translationId: String) -> String {
@@ -36,6 +35,21 @@ final class ArticleManifestAemRepository: ArticleAemRepository {
     func getCategoryArticles(categoryId: String, languageCode: String) async throws -> [CategoryArticleDataModel] {
         
         return try await categoryArticlesCache.getCategoryArticles(categoryId: categoryId, languageCode: languageCode)
+    }
+    
+    func getArticleAemDataObjects() async throws -> [ArticleAemData] {
+        
+        return try await articleAemRepository.getArticleAemDataObjects()
+    }
+    
+    func getAemCacheObject(aemUri: String) async throws -> ArticleAemCacheObject? {
+        
+        return try await articleAemRepository.getAemCacheObject(aemUri: aemUri)
+    }
+    
+    func getAemCacheObjects(aemUris: [String]) async throws -> [ArticleAemCacheObject] {
+        
+        return try await articleAemRepository.getAemCacheObjects(aemUris: aemUris)
     }
     
     func downloadAndCacheManifestAemUris(
@@ -61,7 +75,7 @@ final class ArticleManifestAemRepository: ArticleAemRepository {
         
         let aemUris: [String] = manifest.aemImports.map { $0.absoluteString }
         
-        let download: ArticleAemDownload = try await super.downloadAndCache(
+        let download: ArticleAemDownload = try await articleAemRepository.downloadAndCache(
             aemUris: aemUris,
             downloadCachePolicy: downloadCachePolicy,
             requestPriority: requestPriority

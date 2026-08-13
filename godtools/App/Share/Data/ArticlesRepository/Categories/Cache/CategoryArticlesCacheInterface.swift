@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol CategoryArticlesCacheInterface {
+protocol CategoryArticlesCacheInterface: Sendable {
     
     func getCategoryArticles(categoryId: String, languageCode: String) async throws -> [CategoryArticleDataModel]
     
