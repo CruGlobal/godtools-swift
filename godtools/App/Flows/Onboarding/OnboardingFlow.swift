@@ -154,7 +154,7 @@ final class OnboardingFlow: GTFlow {
                             contentLanguage: pageAnalytics.contentLanguage,
                             secondaryContentLanguage: pageAnalytics.contentLanguageSecondary
                         ),
-                        actionName: "Onboarding Start",
+                        actionName: AnalyticsConstants.ActionNames.onboardingStart,
                         data: [AnalyticsConstants.Keys.onboardingStart: 1]
                     )
                 }

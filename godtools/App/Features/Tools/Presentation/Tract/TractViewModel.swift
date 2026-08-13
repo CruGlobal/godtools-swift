@@ -296,7 +296,7 @@ extension TractViewModel {
                     contentLanguage: nil,
                     secondaryContentLanguage: nil
                 ),
-                actionName: "Tool Settings",
+                actionName: AnalyticsConstants.ActionNames.toolSettings,
                 data: [ToolAnalyticsActionNames.shared.ACTION_SETTINGS: 1]
             )
         

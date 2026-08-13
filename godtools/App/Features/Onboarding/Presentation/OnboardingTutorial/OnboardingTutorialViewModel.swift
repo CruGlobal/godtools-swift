@@ -237,7 +237,7 @@ extension OnboardingTutorialViewModel {
                 contentLanguage: pageAnalytics.contentLanguage,
                 secondaryContentLanguage: pageAnalytics.contentLanguageSecondary
             ),
-            actionName: "Onboarding Skip",
+            actionName: AnalyticsConstants.ActionNames.onboardingSkip,
             data: [AnalyticsConstants.Keys.onboardingSkip: 1]
         )
     }
