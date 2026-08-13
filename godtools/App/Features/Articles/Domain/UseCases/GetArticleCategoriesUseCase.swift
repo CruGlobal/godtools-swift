@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import GodToolsShared
 import SwiftUI
 
 final class GetArticleCategoriesUseCase: Sendable {
@@ -19,33 +18,49 @@ final class GetArticleCategoriesUseCase: Sendable {
         self.resourcesFileCache = resourcesFileCache
     }
     
-    func execute(manifest: Manifest) async -> [ArticleCategoryDomainModel] {
+    func execute(categories: [SendableCategory]) async -> [ArticleCategoryDomainModel] {
         
-        var articleCategories: [ArticleCategoryDomainModel] = Array()
-        
-        for category in manifest.categories {
-            
-            guard let id = category.id, let label = category.label?.text else {
-                continue
-            }
-            
-            let image: SwiftUI.Image? = await getImage(category: category)
-            
-            let articleCategory = ArticleCategoryDomainModel(
-                id: id,
-                title: label,
-                image: image
-            )
-            
-            articleCategories.append(articleCategory)
-        }
-        
-        return articleCategories
+        return await getArticleCategories(categories: categories)
     }
     
-    private func getImage(category: GodToolsShared.Category) async -> SwiftUI.Image? {
+    private func getArticleCategories(categories: [SendableCategory]) async -> [ArticleCategoryDomainModel] {
         
-        guard let bannerResource = category.banner, let fileLocation = bannerResource.toSHA256FileLocation() else {
+        await withTaskGroup(of: ArticleCategoryDomainModel?.self) { group in
+            
+            for category in categories {
+                
+                group.addTask {
+                    
+                    guard let id = category.id, let labelText = category.labelText else {
+                        return nil
+                    }
+                    
+                    let image = await self.getImage(category: category)
+                    
+                    return ArticleCategoryDomainModel(
+                        id: id,
+                        title: labelText,
+                        image: image
+                    )
+                }
+            }
+            
+            var articleCategories: [ArticleCategoryDomainModel] = Array()
+            
+            for await category in group {
+                guard let category = category else {
+                    continue
+                }
+                articleCategories.append(category)
+            }
+            
+            return articleCategories
+        }
+    }
+    
+    private func getImage(category: SendableCategory) async -> SwiftUI.Image? {
+        
+        guard let fileLocation = category.bannerLocation else {
             return nil
         }
         
