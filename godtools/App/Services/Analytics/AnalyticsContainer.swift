@@ -22,4 +22,9 @@ class AnalyticsContainer {
 
         self.firebaseAnalytics = firebaseAnalytics
     }
+    
+    func trackScreenView(properties: AnalyticsProperties) {
+        
+        firebaseAnalytics.trackScreenView(properties: properties)
+    }
 }

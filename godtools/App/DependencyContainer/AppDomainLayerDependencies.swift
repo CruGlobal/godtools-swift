@@ -66,7 +66,7 @@ final class AppDomainLayerDependencies {
     
     func getTrackScreenViewAnalyticsUseCase() -> TrackScreenViewAnalyticsUseCase {
         return TrackScreenViewAnalyticsUseCase(
-            trackScreenViewAnalytics: dataLayer.getAnalytics()
+            analytics: dataLayer.getAnalytics()
         )
     }
     
