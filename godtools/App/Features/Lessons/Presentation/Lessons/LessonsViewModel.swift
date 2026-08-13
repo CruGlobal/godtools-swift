@@ -230,37 +230,41 @@ final class LessonsViewModel: ObservableObject {
             )
         }
         
-        trackActionAnalyticsUseCase.trackAction(
-            properties: AnalyticsProperties(
-                screenName: "",
-                siteSection: "",
-                siteSubSection: "",
-                appLanguage: nil,
-                contentLanguage: nil,
-                secondaryContentLanguage: nil
-            ),
-            actionName: AnalyticsConstants.ActionNames.viewedLessonsAction,
-            data: nil
-        )
+        Task {
+            await trackActionAnalyticsUseCase.trackAction(
+                properties: AnalyticsProperties(
+                    screenName: "",
+                    siteSection: "",
+                    siteSubSection: "",
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                ),
+                actionName: AnalyticsConstants.ActionNames.viewedLessonsAction,
+                data: nil
+            )
+        }
     }
     
     private func trackLessonTappedAnalytics(lessonListItem: LessonListItemDomainModel) {
         
-        trackActionAnalyticsUseCase.trackAction(
-            properties: AnalyticsProperties(
-                screenName: analyticsScreenName,
-                siteSection: "",
-                siteSubSection: "",
-                appLanguage: nil,
-                contentLanguage: nil,
-                secondaryContentLanguage: nil
-            ),
-            actionName: AnalyticsConstants.ActionNames.lessonOpenTapped,
-            data: [
-                AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.lessons,
-                AnalyticsConstants.Keys.tool: lessonListItem.analyticsToolName
-            ]
-        )
+        Task {
+            await trackActionAnalyticsUseCase.trackAction(
+                properties: AnalyticsProperties(
+                    screenName: analyticsScreenName,
+                    siteSection: "",
+                    siteSubSection: "",
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                ),
+                actionName: AnalyticsConstants.ActionNames.lessonOpenTapped,
+                data: [
+                    AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.lessons,
+                    AnalyticsConstants.Keys.tool: lessonListItem.analyticsToolName
+                ]
+            )
+        }
     }
     
     private static func getPersonalizedToggleOptions(strings: LessonsStringsDomainModel) -> [PersonalizationToggleOption] {

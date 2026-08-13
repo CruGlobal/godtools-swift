@@ -260,21 +260,23 @@ final class ToolDetailsViewModel: ObservableObject {
     
     private func trackToolVersionTappedAnalytics(toolVersion: ToolVersionDomainModel) {
         
-        trackActionAnalyticsUseCase.trackAction(
-            properties: AnalyticsProperties(
-                screenName: getAnalyticsScreenName(analyticsToolAbbreviation: toolVersion.analyticsToolAbbreviation),
-                siteSection: "",
-                siteSubSection: "",
-                appLanguage: nil,
-                contentLanguage: nil,
-                secondaryContentLanguage: nil
-            ),
-            actionName: AnalyticsConstants.ActionNames.openDetails,
-            data: [
-                AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.versions,
-                AnalyticsConstants.Keys.tool: toolVersion.analyticsToolAbbreviation
-            ]
-        )
+        Task {
+            await trackActionAnalyticsUseCase.trackAction(
+                properties: AnalyticsProperties(
+                    screenName: getAnalyticsScreenName(analyticsToolAbbreviation: toolVersion.analyticsToolAbbreviation),
+                    siteSection: "",
+                    siteSubSection: "",
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                ),
+                actionName: AnalyticsConstants.ActionNames.openDetails,
+                data: [
+                    AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.versions,
+                    AnalyticsConstants.Keys.tool: toolVersion.analyticsToolAbbreviation
+                ]
+            )
+        }
     }
 }
 
@@ -294,21 +296,23 @@ extension ToolDetailsViewModel {
     
     func openToolTapped() {
         
-        trackActionAnalyticsUseCase.trackAction(
-            properties: AnalyticsProperties(
-                screenName: getAnalyticsScreenName(analyticsToolAbbreviation: analyticsToolAbbreviation),
-                siteSection: getAnalyticsSiteSection(analyticsToolAbbreviation: analyticsToolAbbreviation),
-                siteSubSection: analyticsSiteSubSection,
-                appLanguage: nil,
-                contentLanguage: nil,
-                secondaryContentLanguage: nil
-            ),
-            actionName: AnalyticsConstants.ActionNames.toolOpened,
-            data: [
-                AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.toolDetails,
-                AnalyticsConstants.Keys.tool: analyticsToolAbbreviation
-            ]
-        )
+        Task {
+            await trackActionAnalyticsUseCase.trackAction(
+                properties: AnalyticsProperties(
+                    screenName: getAnalyticsScreenName(analyticsToolAbbreviation: analyticsToolAbbreviation),
+                    siteSection: getAnalyticsSiteSection(analyticsToolAbbreviation: analyticsToolAbbreviation),
+                    siteSubSection: analyticsSiteSubSection,
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                ),
+                actionName: AnalyticsConstants.ActionNames.toolOpened,
+                data: [
+                    AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.toolDetails,
+                    AnalyticsConstants.Keys.tool: analyticsToolAbbreviation
+                ]
+            )
+        }
         
         stepEmitter.emit(
             step: AppFlowStep.openToolTappedFromToolDetails(

@@ -173,75 +173,83 @@ final class FavoritesViewModel: ObservableObject {
             )
         }
             
-        trackActionAnalyticsUseCase.trackAction(
-            properties: AnalyticsProperties(
-                screenName: "",
-                siteSection: "",
-                siteSubSection: "",
-                appLanguage: nil,
-                contentLanguage: nil,
-                secondaryContentLanguage: nil
-            ),
-            actionName: AnalyticsConstants.ActionNames.viewedMyToolsAction,
-            data: nil
-        )
+        Task {
+            await trackActionAnalyticsUseCase.trackAction(
+                properties: AnalyticsProperties(
+                    screenName: "",
+                    siteSection: "",
+                    siteSubSection: "",
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                ),
+                actionName: AnalyticsConstants.ActionNames.viewedMyToolsAction,
+                data: nil
+            )
+        }
     }
     
     private func trackFeaturedLessonTappedAnalytics(featuredLesson: FeaturedLessonDomainModel) {
        
-        trackActionAnalyticsUseCase.trackAction(
-            properties: AnalyticsProperties(
-                screenName: analyticsScreenName,
-                siteSection: "",
-                siteSubSection: "",
-                appLanguage: nil,
-                contentLanguage: nil,
-                secondaryContentLanguage: nil
-            ),
-            actionName: AnalyticsConstants.ActionNames.lessonOpenTapped,
-            data: [
-                AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.featured,
-                AnalyticsConstants.Keys.tool: featuredLesson.analyticsToolName
-            ]
-        )
+        Task {
+            await trackActionAnalyticsUseCase.trackAction(
+                properties: AnalyticsProperties(
+                    screenName: analyticsScreenName,
+                    siteSection: "",
+                    siteSubSection: "",
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                ),
+                actionName: AnalyticsConstants.ActionNames.lessonOpenTapped,
+                data: [
+                    AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.featured,
+                    AnalyticsConstants.Keys.tool: featuredLesson.analyticsToolName
+                ]
+            )
+        }
     }
     
     private func trackOpenFavoritedToolButtonAnalytics(tool: YourFavoritedToolDomainModel) {
         
-        trackActionAnalyticsUseCase.trackAction(
-            properties: AnalyticsProperties(
-                screenName: analyticsScreenName,
-                siteSection: "",
-                siteSubSection: "",
-                appLanguage: nil,
-                contentLanguage: nil,
-                secondaryContentLanguage: nil
-            ),
-            actionName: AnalyticsConstants.ActionNames.toolOpened,
-            data: [
-                AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.favoriteTools,
-                AnalyticsConstants.Keys.tool: tool.analyticsToolAbbreviation
-            ]
-        )
+        Task {
+            await trackActionAnalyticsUseCase.trackAction(
+                properties: AnalyticsProperties(
+                    screenName: analyticsScreenName,
+                    siteSection: "",
+                    siteSubSection: "",
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                ),
+                actionName: AnalyticsConstants.ActionNames.toolOpened,
+                data: [
+                    AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.favoriteTools,
+                    AnalyticsConstants.Keys.tool: tool.analyticsToolAbbreviation
+                ]
+            )
+        }
     }
     
     private func trackFavoritedToolDetailsButtonAnalytics(tool: YourFavoritedToolDomainModel) {
        
-        trackActionAnalyticsUseCase.trackAction(
-            properties: AnalyticsProperties(
-                screenName: analyticsScreenName,
-                siteSection: "",
-                siteSubSection: "",
-                appLanguage: nil,
-                contentLanguage: nil,
-                secondaryContentLanguage: nil
-            ),
-            actionName: AnalyticsConstants.ActionNames.openDetails,
-            data: [
-                AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.favoriteTools,
-                AnalyticsConstants.Keys.tool: tool.analyticsToolAbbreviation
-            ]
-        )
+        Task {
+            await trackActionAnalyticsUseCase.trackAction(
+                properties: AnalyticsProperties(
+                    screenName: analyticsScreenName,
+                    siteSection: "",
+                    siteSubSection: "",
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                ),
+                actionName: AnalyticsConstants.ActionNames.openDetails,
+                data: [
+                    AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.favoriteTools,
+                    AnalyticsConstants.Keys.tool: tool.analyticsToolAbbreviation
+                ]
+            )
+        }
     }
     
     private func disableOpenTutorialBanner() {
@@ -282,18 +290,20 @@ extension FavoritesViewModel {
         
         disableOpenTutorialBanner()
         
-        trackActionAnalyticsUseCase.trackAction(
-            properties: AnalyticsProperties(
-                screenName: "home",
-                siteSection: "",
-                siteSubSection: "",
-                appLanguage: nil,
-                contentLanguage: nil,
-                secondaryContentLanguage: nil
-            ),
-            actionName: AnalyticsConstants.ActionNames.tutorialHomeDismiss,
-            data: [AnalyticsConstants.Keys.tutorialDismissed: 1]
-        )
+        Task {
+            await trackActionAnalyticsUseCase.trackAction(
+                properties: AnalyticsProperties(
+                    screenName: "home",
+                    siteSection: "",
+                    siteSubSection: "",
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                ),
+                actionName: AnalyticsConstants.ActionNames.tutorialHomeDismiss,
+                data: [AnalyticsConstants.Keys.tutorialDismissed: 1]
+            )
+        }
     }
     
     func openTutorialBannerTapped() {

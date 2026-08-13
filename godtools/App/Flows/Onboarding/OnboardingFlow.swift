@@ -141,22 +141,20 @@ final class OnboardingFlow: GTFlow {
                 
                 if let page = page {
                     
-                    let pageAnalytics: OnboardingTutorialPageAnalyticsProperties = onboardingTutorialView.getOnboardingTutorialPageAnalyticsProperties(
+                    let trackActionAnalytics = appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase()
+                    
+                    let properties = onboardingTutorialView.getOnboardingTutorialPageAnalyticsProperties(
                         page: page
                     )
                     
-                    appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase().trackAction(
-                        properties: AnalyticsProperties(
-                            screenName: pageAnalytics.screenName,
-                            siteSection: pageAnalytics.siteSection,
-                            siteSubSection: pageAnalytics.siteSubsection,
-                            appLanguage: nil,
-                            contentLanguage: pageAnalytics.contentLanguage,
-                            secondaryContentLanguage: pageAnalytics.contentLanguageSecondary
-                        ),
-                        actionName: AnalyticsConstants.ActionNames.onboardingStart,
-                        data: [AnalyticsConstants.Keys.onboardingStart: 1]
-                    )
+                    Task {
+                        
+                        await trackActionAnalytics.trackAction(
+                            properties: properties,
+                            actionName: AnalyticsConstants.ActionNames.onboardingStart,
+                            data: [AnalyticsConstants.Keys.onboardingStart: 1]
+                        )
+                    }
                 }
             }
             else if !reachedEnd && !didPromptForAppLanguage {

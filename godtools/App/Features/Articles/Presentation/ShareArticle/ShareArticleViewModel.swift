@@ -64,18 +64,20 @@ final class ShareArticleViewModel {
     
     func articleShared() {
                 
-        trackActionAnalyticsUseCase.trackAction(
-            properties: AnalyticsProperties(
-                screenName: analyticsScreenName,
-                siteSection: analyticsSiteSection,
-                siteSubSection: analyticsSiteSubSection,
-                appLanguage: nil,
-                contentLanguage: nil,
-                secondaryContentLanguage: nil
-            ),
-            actionName: AnalyticsConstants.ActionNames.shareIconEngaged,
-            data: [AnalyticsConstants.Keys.shareAction: 1]
-        )
+        Task {
+            await trackActionAnalyticsUseCase.trackAction(
+                properties: AnalyticsProperties(
+                    screenName: analyticsScreenName,
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: analyticsSiteSubSection,
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                ),
+                actionName: AnalyticsConstants.ActionNames.shareIconEngaged,
+                data: [AnalyticsConstants.Keys.shareAction: 1]
+            )
+        }
     }
     
     func activityViewDismissed() {

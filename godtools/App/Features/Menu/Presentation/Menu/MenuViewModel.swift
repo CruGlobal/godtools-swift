@@ -242,18 +242,20 @@ extension MenuViewModel {
         
         stepEmitter.emit(step: AppFlowStep.shareGodToolsTappedFromMenu)
         
-        trackActionAnalyticsUseCase.trackAction(
-            properties: AnalyticsProperties(
-                screenName: getShareAppAnalyticsScreenName(),
-                siteSection: analyticsSiteSection,
-                siteSubSection: analyticsSiteSubSection,
-                appLanguage: nil,
-                contentLanguage: nil,
-                secondaryContentLanguage: nil
-            ),
-            actionName: AnalyticsConstants.ActionNames.shareIconEngaged,
-            data: [AnalyticsConstants.Keys.shareAction: 1]
-        )
+        Task {
+            await trackActionAnalyticsUseCase.trackAction(
+                properties: AnalyticsProperties(
+                    screenName: getShareAppAnalyticsScreenName(),
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: analyticsSiteSubSection,
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                ),
+                actionName: AnalyticsConstants.ActionNames.shareIconEngaged,
+                data: [AnalyticsConstants.Keys.shareAction: 1]
+            )
+        }
         
         Task {
             await trackScreenViewAnalyticsUseCase.trackScreen(

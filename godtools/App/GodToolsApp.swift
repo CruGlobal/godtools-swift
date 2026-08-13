@@ -279,9 +279,25 @@ extension GodToolsApp {
         
         if let toolDeepLinkUrlString = ToolShortcutLinksViewModel.getToolDeepLinkUrl(shortcutItem: shortcutItem), let toolDeepLinkUrl = URL(string: toolDeepLinkUrlString) {
             
-            let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase()
+            trackShortcutItemAction()
             
-            trackActionAnalyticsUseCase.trackAction(
+            successfullyHandledQuickAction = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: toolDeepLinkUrl)))
+        }
+        else {
+            
+            successfullyHandledQuickAction = false
+        }
+
+        return successfullyHandledQuickAction
+    }
+    
+    private static func trackShortcutItemAction() {
+        
+        let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase()
+        
+        Task {
+         
+            await trackActionAnalyticsUseCase.trackAction(
                 properties: AnalyticsProperties(
                     screenName: "",
                     siteSection: "",
@@ -295,15 +311,7 @@ extension GodToolsApp {
                     AnalyticsConstants.Keys.toolOpenedShortcutCountKey: 1
                 ]
             )
-            
-            successfullyHandledQuickAction = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: toolDeepLinkUrl)))
         }
-        else {
-            
-            successfullyHandledQuickAction = false
-        }
-
-        return successfullyHandledQuickAction
     }
 }
 

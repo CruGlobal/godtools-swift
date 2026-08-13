@@ -9,7 +9,7 @@
 import Foundation
 import GodToolsShared
 
-class MobileContentRendererAnalyticsEvent: NSObject {
+final class MobileContentRendererAnalyticsEvent: NSObject {
     
     private let renderedPageContext: MobileContentRenderedPageContext
     

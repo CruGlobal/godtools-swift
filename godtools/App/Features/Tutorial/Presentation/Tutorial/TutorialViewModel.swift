@@ -144,18 +144,20 @@ final class TutorialViewModel: ObservableObject {
             )
         }
         
-        trackActionAnalyticsUseCase.trackAction(
-            properties: AnalyticsProperties(
-                screenName: analyticsScreenName,
-                siteSection: analyticsSiteSection,
-                siteSubSection: analyticsSiteSubSection,
-                appLanguage: nil,
-                contentLanguage: nil,
-                secondaryContentLanguage: nil
-            ),
-            actionName: analyticsScreenName,
-            data: nil
-        )
+        Task {
+            await trackActionAnalyticsUseCase.trackAction(
+                properties: AnalyticsProperties(
+                    screenName: analyticsScreenName,
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: analyticsSiteSubSection,
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                ),
+                actionName: analyticsScreenName,
+                data: nil
+            )
+        }
     }
     
     private func refreshContinueTitle(strings: TutorialStringsDomainModel, tutorialPages: [TutorialPageDomainModel]) {
@@ -195,17 +197,20 @@ extension TutorialViewModel {
             
             trackedAnalyticsForYouTubeVideoIds.append(videoId)
                         
-            tutorialVideoAnalytics.trackVideoPlayed(
-                videoId: videoId,
-                properties: AnalyticsProperties(
-                    screenName: getAnalyticsScreenName(tutorialItemIndex: tutorialPageIndex),
-                    siteSection: "",
-                    siteSubSection: "",
-                    appLanguage: appLanguage,
-                    contentLanguage: nil,
-                    secondaryContentLanguage: nil
+            Task {
+                
+                await tutorialVideoAnalytics.trackVideoPlayed(
+                    videoId: videoId,
+                    properties: AnalyticsProperties(
+                        screenName: getAnalyticsScreenName(tutorialItemIndex: tutorialPageIndex),
+                        siteSection: "",
+                        siteSubSection: "",
+                        appLanguage: appLanguage,
+                        contentLanguage: nil,
+                        secondaryContentLanguage: nil
+                    )
                 )
-            )
+            }
         }
     }
     

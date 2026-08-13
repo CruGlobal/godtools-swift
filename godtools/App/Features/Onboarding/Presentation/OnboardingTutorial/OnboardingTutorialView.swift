@@ -145,7 +145,7 @@ extension OnboardingTutorialView {
         return viewModel.currentPage
     }
     
-    func getOnboardingTutorialPageAnalyticsProperties(page: OnboardingTutorialPage) -> OnboardingTutorialPageAnalyticsProperties {
+    func getOnboardingTutorialPageAnalyticsProperties(page: OnboardingTutorialPage) -> AnalyticsProperties {
         return viewModel.getOnboardingTutorialPageAnalyticsProperties(page: page)
     }
     

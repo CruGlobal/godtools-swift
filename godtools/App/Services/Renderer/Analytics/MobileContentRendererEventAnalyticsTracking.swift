@@ -9,7 +9,7 @@
 import Foundation
 import GodToolsShared
 
-class MobileContentRendererEventAnalyticsTracking {
+final class MobileContentRendererEventAnalyticsTracking: Sendable {
     
     private static let actionContentEvent: String = "content_event"
     private static let paramEventId: String = "event_id"
@@ -21,7 +21,12 @@ class MobileContentRendererEventAnalyticsTracking {
         self.firebaseAnalytics = firebaseAnalytics
     }
     
-    func trackContentEvent(eventId: EventId, resource: ResourceDataModel, appLanguage: String?, languages: MobileContentRendererLanguages) {
+    func trackContentEvent(
+        eventId: EventId,
+        resource: ResourceDataModel,
+        appLanguage: String?,
+        languages: MobileContentRendererLanguages
+    ) async {
         
         let data: [String: Any] = [
             MobileContentRendererEventAnalyticsTracking.paramEventId: eventId.description()
@@ -36,7 +41,7 @@ class MobileContentRendererEventAnalyticsTracking {
             secondaryContentLanguage: languages.parallelLanguage?.localeId
         )
         
-        firebaseAnalytics.trackAction(
+        await firebaseAnalytics.trackAction(
             properties: properties,
             actionName: MobileContentRendererEventAnalyticsTracking.actionContentEvent,
             data: data

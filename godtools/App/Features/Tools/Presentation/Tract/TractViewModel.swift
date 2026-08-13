@@ -194,18 +194,20 @@ final class TractViewModel: MobileContentRendererViewModel {
             AnalyticsConstants.ActionNames.parallelLanguageToggled: tappedLanguage.id == parallelLanguage?.id
         ]
         
-        trackActionAnalyticsUseCase.trackAction(
-            properties: AnalyticsProperties(
-                screenName: analyticsScreenName,
-                siteSection: analyticsSiteSection,
-                siteSubSection: "",
-                appLanguage: nil,
-                contentLanguage: primaryLanguage.localeId,
-                secondaryContentLanguage: parallelLanguage?.localeId
-            ),
-            actionName: AnalyticsConstants.ActionNames.parallelLanguageToggled,
-            data: trackTappedLanguageData
-        )
+        Task {
+            await trackActionAnalyticsUseCase.trackAction(
+                properties: AnalyticsProperties(
+                    screenName: analyticsScreenName,
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: "",
+                    appLanguage: nil,
+                    contentLanguage: primaryLanguage.localeId,
+                    secondaryContentLanguage: parallelLanguage?.localeId
+                ),
+                actionName: AnalyticsConstants.ActionNames.parallelLanguageToggled,
+                data: trackTappedLanguageData
+            )
+        }
     }
     
     override func createToolSettingsObserver(with toolSettingsLanguages: ToolSettingsLanguages) -> TractToolSettingsObserver {
@@ -286,19 +288,21 @@ extension TractViewModel {
         
         let toolSettingsObserver = setUpToolSettingsObserver()
         
-        trackActionAnalyticsUseCase
-            .trackAction(
-                properties: AnalyticsProperties(
-                    screenName: analyticsScreenName,
-                    siteSection: analyticsSiteSection,
-                    siteSubSection: "",
-                    appLanguage: nil,
-                    contentLanguage: nil,
-                    secondaryContentLanguage: nil
-                ),
-                actionName: AnalyticsConstants.ActionNames.toolSettings,
-                data: [ToolAnalyticsActionNames.shared.ACTION_SETTINGS: 1]
-            )
+        Task {
+            await trackActionAnalyticsUseCase
+                .trackAction(
+                    properties: AnalyticsProperties(
+                        screenName: analyticsScreenName,
+                        siteSection: analyticsSiteSection,
+                        siteSubSection: "",
+                        appLanguage: nil,
+                        contentLanguage: nil,
+                        secondaryContentLanguage: nil
+                    ),
+                    actionName: AnalyticsConstants.ActionNames.toolSettings,
+                    data: [ToolAnalyticsActionNames.shared.ACTION_SETTINGS: 1]
+                )
+        }
         
         stepEmitter.emit(step: AppFlowStep.toolSettingsTappedFromTool(toolSettingsObserver: toolSettingsObserver, toolSettingsDidCloseClosure: toolSettingsDidCloseClosure))
     }
@@ -362,20 +366,22 @@ extension TractViewModel {
     
     private func trackShareScreenOpened() {
         
-        trackActionAnalyticsUseCase.trackAction(
-            properties: AnalyticsProperties(
-                screenName: analyticsScreenName,
-                siteSection: analyticsSiteSection,
-                siteSubSection: "",
-                appLanguage: nil,
-                contentLanguage: nil,
-                secondaryContentLanguage: nil
-            ),
-            actionName: AnalyticsConstants.ActionNames.shareScreenOpened,
-            data: [
-                AnalyticsConstants.Keys.shareScreenOpenedCountKey: 1
-            ]
-        )
+        Task {
+            await trackActionAnalyticsUseCase.trackAction(
+                properties: AnalyticsProperties(
+                    screenName: analyticsScreenName,
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: "",
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                ),
+                actionName: AnalyticsConstants.ActionNames.shareScreenOpened,
+                data: [
+                    AnalyticsConstants.Keys.shareScreenOpenedCountKey: 1
+                ]
+            )
+        }
     }
     
     private func subscribeToLiveShareStreamIfNeeded() {

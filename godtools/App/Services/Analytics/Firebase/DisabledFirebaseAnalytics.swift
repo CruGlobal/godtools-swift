@@ -8,7 +8,7 @@
 
 import Foundation
 
-class DisabledFirebaseAnalytics: FirebaseAnalyticsInterface {
+actor DisabledFirebaseAnalytics: FirebaseAnalyticsInterface {
     
     func configure() {
         

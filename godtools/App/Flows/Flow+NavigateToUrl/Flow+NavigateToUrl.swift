@@ -12,17 +12,22 @@ extension GTFlow {
     
     func navigateToURL(linkTapped: URLLinkTappedParams, appLanguage: String?) {
         
-        appDiContainer.core.domainLayer.getTrackExitLinkAnalyticsUseCase().trackExitLinkAnalytics(
-            properties: AnalyticsProperties(
-                screenName: linkTapped.screenName,
-                siteSection: linkTapped.siteSection,
-                siteSubSection: linkTapped.siteSubSection,
-                appLanguage: appLanguage,
-                contentLanguage: linkTapped.contentLanguage,
-                secondaryContentLanguage: linkTapped.contentLanguageSecondary
-            ),
-            url: linkTapped.url
-        )
+        let trackExitLinkAnalytics = appDiContainer.core.domainLayer.getTrackExitLinkAnalyticsUseCase()
+        
+        Task {
+            
+            await trackExitLinkAnalytics.exeute(
+                properties: AnalyticsProperties(
+                    screenName: linkTapped.screenName,
+                    siteSection: linkTapped.siteSection,
+                    siteSubSection: linkTapped.siteSubSection,
+                    appLanguage: appLanguage,
+                    contentLanguage: linkTapped.contentLanguage,
+                    secondaryContentLanguage: linkTapped.contentLanguageSecondary
+                ),
+                url: linkTapped.url
+            )
+        }
             
         appDiContainer.getUrlOpener().open(url: linkTapped.url)
     }
