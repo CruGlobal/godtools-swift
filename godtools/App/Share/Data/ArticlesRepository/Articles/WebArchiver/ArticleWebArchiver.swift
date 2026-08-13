@@ -27,9 +27,7 @@ final class ArticleWebArchiver: ArticleWebArchiverInterface {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
                 
-        var archives: [ArticleWebArchiveData] = Array()
-        
-        await withTaskGroup(of: ArticleWebArchiveData.self) { group in
+        return await withTaskGroup(of: ArticleWebArchiveData.self) { group in
             
             for webArchiveUrl in webArchiveUrls {
                 group.addTask {
@@ -41,12 +39,14 @@ final class ArticleWebArchiver: ArticleWebArchiverInterface {
                 }
             }
             
+            var archives: [ArticleWebArchiveData] = Array()
+            
             for await webArchiveData in group {
                 archives.append(webArchiveData)
             }
+            
+            return archives
         }
-        
-        return archives
     }
         
     private func archiveUrl(webArchiveUrl: WebArchiveUrl, urlSession: URLSession) async -> ArticleWebArchiveData {
@@ -132,8 +132,6 @@ final class ArticleWebArchiver: ArticleWebArchiverInterface {
     
     private func requestHtmlDocumentResources(resourceUrls: [String], urlSession: URLSession) async -> [HTMLDocumentResource] {
         
-        var resources: [HTMLDocumentResource] = Array()
-        
         await withTaskGroup(of: HTMLDocumentResource.self) { group in
             
             for urlString in resourceUrls {
@@ -156,12 +154,14 @@ final class ArticleWebArchiver: ArticleWebArchiverInterface {
                 }
             }
             
+            var resources: [HTMLDocumentResource] = Array()
+            
             for await result in group {
                 resources.append(result)
             }
+            
+            return resources
         }
-        
-        return resources
     }
     
     private func requestHtmlDocumentResource(url: URL, urlSession: URLSession) async throws -> WebArchiveResource {
