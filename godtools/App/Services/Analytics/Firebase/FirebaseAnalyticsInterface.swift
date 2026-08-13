@@ -12,7 +12,7 @@ protocol FirebaseAnalyticsInterface: MobileContentRendererAnalyticsSystem {
     
     func configure()
     func setLoggedInStateUserProperties(isLoggedIn: Bool, loggedInUserProperties: FirebaseAnalyticsLoggedInUserProperties?)
-    func trackScreenView(screenName: String, siteSection: String, siteSubSection: String, appLanguage: String?, contentLanguage: String?, secondaryContentLanguage: String?)
-    func trackAction(screenName: String, siteSection: String, siteSubSection: String, appLanguage: String?, contentLanguage: String?, secondaryContentLanguage: String?, actionName: String, data: [String: Any]?)
-    func trackExitLink(screenName: String, siteSection: String, siteSubSection: String, appLanguage: String?, contentLanguage: String?, secondaryContentLanguage: String?, url: String)
+    func trackScreenView(properties: AnalyticsProperties)
+    func trackAction(properties: AnalyticsProperties, actionName: String, data: [String: Any]?)
+    func trackExitLink(properties: AnalyticsProperties, url: String)
 }
