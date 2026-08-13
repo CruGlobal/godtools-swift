@@ -10,27 +10,18 @@ import Foundation
 
 final class TrackExitLinkAnalyticsUseCase: Sendable {
     
-    private let trackExitLinkAnalytics: TrackExitLinkAnalyticsInterface
-    
-    init(trackExitLinkAnalytics: TrackExitLinkAnalyticsInterface) {
+    private let analytics: AnalyticsContainer
         
-        self.trackExitLinkAnalytics = trackExitLinkAnalytics
+    init(analytics: AnalyticsContainer) {
+        
+        self.analytics = analytics
     }
     
-    func trackExitLinkAnalytics(screenName: String, siteSection: String, siteSubSection: String, appLanguage: String?, contentLanguage: String?, contentLanguageSecondary: String?, url: URL) {
+    func trackExitLinkAnalytics(properties: AnalyticsProperties, url: URL) {
         
-        let properties = TrackExitLinkAnalyticsPropertiesDomainModel(
-            screenName: screenName,
-            siteSection: siteSection,
-            siteSubSection: siteSubSection,
-            appLanguage: appLanguage,
-            contentLanguage: contentLanguage,
-            contentLanguageSecondary: contentLanguageSecondary,
+        analytics.trackExitLink(
+            properties: properties,
             url: url
-        )
-        
-        trackExitLinkAnalytics.trackExitLink(
-            properties: properties
         )
     }
 }

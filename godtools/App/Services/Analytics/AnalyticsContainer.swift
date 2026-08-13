@@ -36,4 +36,12 @@ class AnalyticsContainer {
             data: data
         )
     }
+    
+    func trackExitLink(properties: AnalyticsProperties, url: URL) {
+        
+        firebaseAnalytics.trackExitLink(
+            properties: properties,
+            url: url.absoluteString
+        )
+    }
 }

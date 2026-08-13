@@ -11,7 +11,7 @@ import Foundation
 final class TrackActionAnalyticsUseCase: Sendable {
     
     private let analytics: AnalyticsContainer
-    
+        
     init(analytics: AnalyticsContainer) {
         
         self.analytics = analytics
