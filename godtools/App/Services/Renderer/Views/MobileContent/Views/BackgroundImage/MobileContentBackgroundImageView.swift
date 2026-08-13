@@ -47,10 +47,10 @@ final class MobileContentBackgroundImageView: UIImageView {
         contentMode = .scaleToFill
         
         Task {
-            image = await viewModel.backgroundImage
+            let backgroundImage: UIImage? = await viewModel.getBackgroundImage()
+            image = backgroundImage
+            renderForBoundsChangeIfNeeded(parentView: parentView)
         }
-        
-        renderForBoundsChangeIfNeeded(parentView: parentView)
     }
     
     override func layoutSubviews() {
@@ -70,24 +70,22 @@ final class MobileContentBackgroundImageView: UIImageView {
     }
     
     func renderForBoundsChangeIfNeeded(parentView: UIView) {
-        Task {
-            await asyncRenderForBoundsChangeIfNeeded(parentView: parentView)
-        }
-    }
-    
-    private func asyncRenderForBoundsChangeIfNeeded(parentView: UIView) async {
-             
+        
         let parentBounds: CGRect = parentView.bounds
         
         guard let viewModel = self.viewModel else {
             return
         }
         
-        guard !parentBounds.equalTo(lastRenderedParentBounds)  else{
+        guard let backgroundImage = image else {
             return
         }
         
-        guard let backgroundImageFrame = await viewModel.renderBackgroundImageFrame(container: parentBounds) else {
+        guard !parentBounds.equalTo(lastRenderedParentBounds) else {
+            return
+        }
+        
+        guard let backgroundImageFrame = viewModel.renderBackgroundImageFrame(backgroundImage: backgroundImage, container: parentBounds) else {
             return
         }
         

@@ -15,6 +15,8 @@ final class MobileContentBackgroundImageViewModel {
     private let resourcesFileCache: ResourcesFileCache
     private let languageDirection: LanguageDirectionDomainModel
     private let backgroundImageRenderer: MobileContentBackgroundImageRenderer = MobileContentBackgroundImageRenderer()
+    
+    private var backgroundImage: UIImage?
             
     init(
         backgroundImageModel: BackgroundImageModel,
@@ -27,19 +29,21 @@ final class MobileContentBackgroundImageViewModel {
         self.languageDirection = languageDirection
     }
     
-    var backgroundImage: UIImage? {
-        get async {
-            
-            if let fileLocation = backgroundImageModel.backgroundImageResource.toSHA256FileLocation(),
-                let backgroundImage = await resourcesFileCache.cache.getUIImageNonThrowing(location: fileLocation) {
-                
-                return backgroundImage
-            }
-            else {
-                
-                return nil
-            }
+    func getBackgroundImage() async -> UIImage? {
+        
+        if let backgroundImage = backgroundImage {
+            return backgroundImage
         }
+        
+        guard let fileLocation = backgroundImageModel.backgroundImageResource.toSHA256FileLocation() else {
+            return nil
+        }
+        
+        let backgroundImage = await resourcesFileCache.cache.getUIImageNonThrowing(location: fileLocation)
+        
+        self.backgroundImage = backgroundImage
+        
+        return backgroundImage
     }
     
     func getRenderPositionForBackgroundImage(container: CGRect, backgroundImage: UIImage) -> CGRect? {
@@ -64,11 +68,7 @@ final class MobileContentBackgroundImageViewModel {
         )
     }
     
-    func renderBackgroundImageFrame(container: CGRect) async -> CGRect? {
-        
-        guard let backgroundImage = await self.backgroundImage else {
-            return nil
-        }
+    func renderBackgroundImageFrame(backgroundImage: UIImage, container: CGRect) -> CGRect? {
         
         let backgroundImageFrame: CGRect? = getRenderPositionForBackgroundImage(
             container: container,
