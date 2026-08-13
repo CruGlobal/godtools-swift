@@ -16,7 +16,7 @@ extension GTFlow {
         
         Task {
             
-            await trackExitLinkAnalytics.exeute(
+            await trackExitLinkAnalytics.execute(
                 properties: AnalyticsProperties(
                     screenName: linkTapped.screenName,
                     siteSection: linkTapped.siteSection,

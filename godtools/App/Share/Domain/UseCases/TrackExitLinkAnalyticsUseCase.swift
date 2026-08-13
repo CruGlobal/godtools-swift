@@ -17,7 +17,7 @@ final class TrackExitLinkAnalyticsUseCase: Sendable {
         self.analytics = analytics
     }
     
-    func exeute(properties: AnalyticsProperties, url: URL) async {
+    func execute(properties: AnalyticsProperties, url: URL) async {
         
         await analytics.trackExitLink(
             properties: properties,
