@@ -18,12 +18,12 @@ final class GetArticleCategoriesUseCase: Sendable {
         self.resourcesFileCache = resourcesFileCache
     }
     
-    func execute(categories: [SendableCategory]) async -> [ArticleCategoryDomainModel] {
+    func execute(categories: [Category]) async -> [ArticleCategoryDomainModel] {
         
         return await getArticleCategories(categories: categories)
     }
     
-    private func getArticleCategories(categories: [SendableCategory]) async -> [ArticleCategoryDomainModel] {
+    private func getArticleCategories(categories: [Category]) async -> [ArticleCategoryDomainModel] {
         
         await withTaskGroup(of: ArticleCategoryDomainModel?.self) { group in
             
@@ -58,7 +58,7 @@ final class GetArticleCategoriesUseCase: Sendable {
         }
     }
     
-    private func getImage(category: SendableCategory) async -> SwiftUI.Image? {
+    private func getImage(category: Category) async -> SwiftUI.Image? {
         
         guard let fileLocation = category.bannerLocation else {
             return nil

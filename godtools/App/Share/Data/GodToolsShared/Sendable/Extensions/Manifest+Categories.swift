@@ -11,7 +11,7 @@ import GodToolsShared
 
 extension GodToolsShared.Manifest {
     
-    var sendableCategories: [SendableCategory] {
+    var sendableCategories: [Category] {
         return categories.map {
             $0.toSendable()
         }
