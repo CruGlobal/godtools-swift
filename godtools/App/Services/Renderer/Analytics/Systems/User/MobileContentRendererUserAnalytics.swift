@@ -29,8 +29,16 @@ extension MobileContentRendererUserAnalytics: MobileContentRendererAnalyticsSyst
     
     private static let lessonCompletionsActionPrefix = "lesson_completions"
     
-    func trackMobileContentAction(context: MobileContentRenderedPageContext, screenName: String, siteSection: String, action: String, data: [String: Any]?) {
-
+    func trackMobileContentAction(
+        screenName: String,
+        siteSection: String,
+        appLanguage: AppLanguageDomainModel,
+        contentLanguage: BCP47LanguageIdentifier,
+        secondaryContentLanguage: BCP47LanguageIdentifier?,
+        action: String,
+        data: [String: Any]?
+    ) {
+        
         guard action.hasPrefix(MobileContentRendererUserAnalytics.lessonCompletionsActionPrefix) else {
             return
         }

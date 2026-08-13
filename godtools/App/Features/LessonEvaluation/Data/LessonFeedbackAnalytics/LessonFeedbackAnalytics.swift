@@ -49,13 +49,17 @@ final class LessonFeedbackAnalytics {
         data[LessonFeedbackAnalytics.propertyReadiness] = String(feedback.readinessScaleValue)
         data[LessonFeedbackAnalytics.propertyPageReached] = String(feedback.pageIndexReached)
         
-        firebaseAnalytics.trackAction(
+        let properties = AnalyticsProperties(
             screenName: "",
             siteSection: lesson.abbreviation,
             siteSubSection: "",
             appLanguage: nil,
             contentLanguage: contentLanguage,
-            secondaryContentLanguage: nil,
+            secondaryContentLanguage: nil
+        )
+        
+        firebaseAnalytics.trackAction(
+            properties: properties,
             actionName: LessonFeedbackAnalytics.trackLessonFeedbackActionName,
             data: data
         )

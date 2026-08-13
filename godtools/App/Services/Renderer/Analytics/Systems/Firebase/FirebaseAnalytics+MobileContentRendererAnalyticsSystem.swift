@@ -10,17 +10,25 @@ import Foundation
 
 extension FirebaseAnalytics: MobileContentRendererAnalyticsSystem {
     
-    func trackMobileContentAction(context: MobileContentRenderedPageContext, screenName: String, siteSection: String, action: String, data: [String: Any]?) {
+    func trackMobileContentAction(
+        screenName: String,
+        siteSection: String,
+        appLanguage: AppLanguageDomainModel,
+        contentLanguage: BCP47LanguageIdentifier,
+        secondaryContentLanguage: BCP47LanguageIdentifier?,
+        action: String,
+        data: [String: Any]?
+    ) {
         
-        trackAction(
+        let properties = AnalyticsProperties(
             screenName: screenName,
             siteSection: siteSection,
             siteSubSection: "",
-            appLanguage: context.appLanguage,
-            contentLanguage: context.rendererLanguages.primaryLanguage.localeId,
-            secondaryContentLanguage: context.rendererLanguages.parallelLanguage?.localeId,
-            actionName: action,
-            data: data
+            appLanguage: appLanguage,
+            contentLanguage: contentLanguage,
+            secondaryContentLanguage: secondaryContentLanguage
         )
+        
+        trackAction(properties: properties, actionName: action, data: data)
     }
 }

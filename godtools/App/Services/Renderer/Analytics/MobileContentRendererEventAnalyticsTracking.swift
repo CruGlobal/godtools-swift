@@ -27,13 +27,17 @@ class MobileContentRendererEventAnalyticsTracking {
             MobileContentRendererEventAnalyticsTracking.paramEventId: eventId.description()
         ]
         
-        firebaseAnalytics.trackAction(
+        let properties = AnalyticsProperties(
             screenName: "",
             siteSection: resource.abbreviation,
             siteSubSection: "",
             appLanguage: appLanguage,
             contentLanguage: languages.primaryLanguage.localeId,
-            secondaryContentLanguage: languages.parallelLanguage?.localeId,
+            secondaryContentLanguage: languages.parallelLanguage?.localeId
+        )
+        
+        firebaseAnalytics.trackAction(
+            properties: properties,
             actionName: MobileContentRendererEventAnalyticsTracking.actionContentEvent,
             data: data
         )

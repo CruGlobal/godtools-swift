@@ -10,5 +10,13 @@ import Foundation
 
 protocol MobileContentRendererAnalyticsSystem {
     
-    func trackMobileContentAction(context: MobileContentRenderedPageContext, screenName: String, siteSection: String, action: String, data: [String: Any]?)
+    func trackMobileContentAction(
+        screenName: String,
+        siteSection: String,
+        appLanguage: AppLanguageDomainModel,
+        contentLanguage: BCP47LanguageIdentifier,
+        secondaryContentLanguage: BCP47LanguageIdentifier?,
+        action: String,
+        data: [String: Any]?
+    )
 }
