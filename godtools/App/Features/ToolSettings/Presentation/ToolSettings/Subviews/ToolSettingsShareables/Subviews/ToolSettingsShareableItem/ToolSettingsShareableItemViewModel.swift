@@ -16,6 +16,8 @@ final class ToolSettingsShareableItemViewModel: ObservableObject {
     
     private let shareable: ShareableDomainModel
     private let getShareableImageUseCase: GetShareableImageUseCase
+    
+    private var getShareableImageTask: Task<Void, Error>?
             
     @Published private(set) var imageData: OptionalImageData?
     @Published private(set) var title: String = ""
@@ -31,7 +33,9 @@ final class ToolSettingsShareableItemViewModel: ObservableObject {
     
     private func loadShareableImage() {
         
-        Task {
+        getShareableImageTask?.cancel()
+        
+        getShareableImageTask = Task {
             
             do {
                 
