@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct CalendarOptions {
+struct CalendarOptions: Sendable {
     
     let calendar: Calendar
     let localeId: String?

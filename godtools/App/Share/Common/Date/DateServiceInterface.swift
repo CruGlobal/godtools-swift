@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol DateServiceInterface {
+protocol DateServiceInterface: Sendable {
     
     func getCurrentYear(options: CalendarOptions) -> Int?
 }

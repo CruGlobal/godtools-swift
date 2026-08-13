@@ -9,7 +9,7 @@
 import Foundation
 import RequestOperation
 
-protocol UserCountersApiInterface {
+protocol UserCountersApiInterface: Sendable {
     
     func fetchUserCounters(requestPriority: RequestPriority) async throws -> [UserCounterCodable]
     func incrementUserCounter(id: String, increment: Int, requestPriority: RequestPriority) async throws -> UserCounterCodable

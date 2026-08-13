@@ -10,15 +10,13 @@ import Foundation
 import RequestOperation
 import Combine
 
-final class UserCountersSync {
+final class UserCountersSync: Sendable {
     
     private let api: UserCountersApiInterface
     private let cache: UserCountersCache
     private let localActivityCounterCache: LocalActivityCounterCache
     private let syncInvalidator: SyncInvalidator
-    
-    private(set) var isSyncing: Bool = false
-    
+        
     init(
         api: UserCountersApiInterface,
         cache: UserCountersCache,
@@ -42,36 +40,21 @@ final class UserCountersSync {
         
         let shouldSync: Bool = await syncInvalidator.shouldSync || forceSync
         
-        guard !isSyncing && shouldSync else {
+        guard shouldSync else {
             return
         }
+                
+        _ = try await pushLocalActivityCountersToRemote(requestPriority: requestPriority)
         
-        isSyncing = true
+        let remoteCounters: [UserCounterCodable] = try await api.fetchUserCounters(requestPriority: requestPriority)
         
-        do {
-            
-            _ = try await pushLocalActivityCountersToRemote(requestPriority: requestPriority)
-            
-            let remoteCounters: [UserCounterCodable] = try await api.fetchUserCounters(requestPriority: requestPriority)
-            
-            _ = try await cache.persistence.writeObjects(
-                externalObjects: remoteCounters,
-                writeOption: .deleteObjectsNotInExternal,
-                getOption: nil
-            )
-            
-            await syncInvalidator.didSync()
-            
-            isSyncing = false
-        }
-        catch let error {
-            
-            isSyncing = false
-            
-            print(error)
-            
-            throw error
-        }
+        _ = try await cache.persistence.writeObjects(
+            externalObjects: remoteCounters,
+            writeOption: .deleteObjectsNotInExternal,
+            getOption: nil
+        )
+        
+        await syncInvalidator.didSync()
     }
     
     private func pushLocalActivityCountersToRemote(requestPriority: RequestPriority) async throws -> [UserCounterCodable] {

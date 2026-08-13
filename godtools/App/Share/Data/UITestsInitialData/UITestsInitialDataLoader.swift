@@ -10,7 +10,7 @@ import Foundation
 import RepositorySync
 import SwiftData
 
-final class UITestsInitialDataLoader {
+final class UITestsInitialDataLoader: Sendable {
     
     private static let tmtsTractId: String = "ui_test_resource_1"
     private static let fslTractId: String = "ui_test_resource_2"

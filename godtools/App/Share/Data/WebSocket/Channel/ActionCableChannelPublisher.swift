@@ -9,7 +9,7 @@
 import UIKit
 import Combine
 
-class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherInterface {
+final class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherInterface {
     
     private let webSocket: WebSocketInterface
     private let didCreateChannelSubject: PassthroughSubject<WebSocketChannel, Never> = PassthroughSubject()

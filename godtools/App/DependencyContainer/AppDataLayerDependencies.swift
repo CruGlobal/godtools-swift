@@ -158,10 +158,9 @@ final class AppDataLayerDependencies {
         }
         
         return ArticleManifestAemRepository(
-            downloader: getArticleAemDownloader(),
-            cache: getArticleAemCache(),
             categoryArticlesCache: categoryArticlesCache,
-            syncInvalidatorPersistence: getUserDefaultsCache()
+            syncInvalidatorPersistence: getUserDefaultsCache(),
+            articleAemRepository: getArticleAemRepository()
         )
     }
     
@@ -371,6 +370,13 @@ final class AppDataLayerDependencies {
         return FollowUpsService(
             api: api,
             cache: cache
+        )
+    }
+    
+    func getGodToolsParserLogger() -> GodToolsParserLogger {
+        return GodToolsParserLogger(
+            errorReporting: getErrorReporting(),
+            firebaseErrorReporting: getFirebaseNonFatalErrorReporting()
         )
     }
     

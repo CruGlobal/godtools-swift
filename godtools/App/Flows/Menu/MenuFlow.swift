@@ -12,9 +12,7 @@ import SwiftUI
 import Combine
 
 final class MenuFlow: GTFlow {
-            
-    private var cancellables: Set<AnyCancellable> = Set()
-    
+                
     @Published private var appLanguage: AppLanguageDomainModel
                 
     init(appDiContainer: AppDiContainer, appLanguage: AppLanguageDomainModel, initialNavigationStep: AppFlowStep? = nil) {
@@ -734,26 +732,22 @@ extension MenuFlow {
     
     private func copyFirebaseDeviceTokenToClipboard() {
         
-        appDiContainer.core.dataLayer.getSharedFirebaseMessaging()
-            .getDeviceTokenPublisher()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] completion in
+        Task {
+            
+            do {
                 
-                switch completion {
-                case .finished:
-                    break
-                case .failure(let error):
-                    self?.presentFirebaseDeviceTokenCopyError(error: error)
-                }
-                
-            } receiveValue: { [weak self] (token: String) in
+                let token: String = try await appDiContainer.core.dataLayer.getSharedFirebaseMessaging().getDeviceToken()
                 
                 let pasteBoard = UIPasteboard.general
                 pasteBoard.string = token
                 
-                self?.presentFirebaseDeviceTokenCopied(token: token)
+                presentFirebaseDeviceTokenCopied(token: token)
             }
-            .store(in: &cancellables)
+            catch let error {
+                
+                presentFirebaseDeviceTokenCopyError(error: error)
+            }
+        }
     }
     
     private func presentFirebaseDeviceTokenCopied(token: String) {

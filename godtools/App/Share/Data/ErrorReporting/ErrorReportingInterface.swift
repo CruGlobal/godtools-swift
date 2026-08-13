@@ -6,7 +6,7 @@
 //  Copyright © 2026 Cru. All rights reserved.
 //
 
-protocol ErrorReportingInterface {
+protocol ErrorReportingInterface: Sendable {
     
     func reportError(error: Error)
 }

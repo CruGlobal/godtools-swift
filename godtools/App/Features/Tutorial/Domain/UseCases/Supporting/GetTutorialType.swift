@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetTutorialType {
+final class GetTutorialType: Sendable {
     
     init() {
         

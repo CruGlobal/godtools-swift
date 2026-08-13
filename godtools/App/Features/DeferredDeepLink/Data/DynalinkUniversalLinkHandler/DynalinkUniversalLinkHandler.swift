@@ -9,7 +9,7 @@
 import Foundation
 import DynalinksSDK
 
-final class DynalinkUniversalLinkHandler {
+final class DynalinkUniversalLinkHandler: Sendable {
     
     private let errorReporting: ErrorReportingInterface
     

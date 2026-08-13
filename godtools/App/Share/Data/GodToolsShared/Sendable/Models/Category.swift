@@ -1,5 +1,5 @@
 //
-//  SendableCategory.swift
+//  Category.swift
 //  godtools
 //
 //  Created by Levi Eggert on 8/13/26.
@@ -11,8 +11,8 @@ import GodToolsShared
 
 extension GodToolsShared.Category {
     
-    func toSendable() -> SendableCategory {
-        return SendableCategory(
+    func toSendable() -> Category {
+        return Category(
             id: self.id,
             labelText: self.label?.text,
             bannerLocation: self.banner?.toSHA256FileLocation()
@@ -20,7 +20,7 @@ extension GodToolsShared.Category {
     }
 }
 
-struct SendableCategory: Sendable {
+struct Category: Sendable {
     
     let id: String?
     let labelText: String?
