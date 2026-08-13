@@ -20,12 +20,7 @@ class TrackActionAnalytics {
     func trackAction(trackAction: TrackActionModel) {
                 
         firebaseAnalytics.trackAction(
-            screenName: trackAction.screenName,
-            siteSection: trackAction.siteSection,
-            siteSubSection: trackAction.siteSubSection,
-            appLanguage: trackAction.appLanguage,
-            contentLanguage: trackAction.contentLanguage,
-            secondaryContentLanguage: trackAction.secondaryContentLanguage,
+            properties: trackAction.properties,
             actionName: trackAction.actionName,
             data: trackAction.data
         )
