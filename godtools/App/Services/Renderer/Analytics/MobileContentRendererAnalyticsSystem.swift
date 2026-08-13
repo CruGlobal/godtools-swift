@@ -18,5 +18,5 @@ protocol MobileContentRendererAnalyticsSystem: Actor {
         secondaryContentLanguage: BCP47LanguageIdentifier?,
         action: String,
         data: [String: Any]?
-    )
+    ) async throws
 }

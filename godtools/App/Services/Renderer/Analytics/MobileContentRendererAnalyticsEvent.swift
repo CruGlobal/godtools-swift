@@ -63,10 +63,19 @@ final class MobileContentRendererAnalyticsEvent: NSObject {
     private func trackEvent() {
         
         stopDelayTimer()
-        
-        mobileContentAnalytics?.trackEvents(events: [analyticsEvent], renderedPageContext: renderedPageContext)
-        
+                
         endTrigger()
+        
+        if let mobileContentAnalytics = mobileContentAnalytics {
+            
+            Task {
+                
+                try await mobileContentAnalytics.trackEvents(
+                    events: [analyticsEvent],
+                    renderedPageContext: renderedPageContext
+                )
+            }
+        }
     }
     
     func cancel() {

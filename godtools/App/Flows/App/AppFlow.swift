@@ -391,17 +391,10 @@ extension AppFlow {
         
         let incrementUserCounterUseCase = appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase()
         
-        incrementUserCounterUseCase
-            .execute(
-                interaction: .sessionLaunch
-            )
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                
-            } receiveValue: { _ in
-
-            }
-            .store(in: &cancellables)
+        Task {
+            
+            _ = try await incrementUserCounterUseCase.execute(interaction: .sessionLaunch)
+        }
     }
     
     private static func getNewLaunchScreenImageView() -> UIView {

@@ -11,9 +11,7 @@ import Combine
 
 @MainActor
 final class CreatingToolScreenShareSessionViewModel: ObservableObject {
-    
-    private static var backgroundCancellables: Set<AnyCancellable> = Set()
-        
+            
     private let stepEmitter: FlowStepEmitter
     private let toolId: String
     private let createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger
@@ -123,16 +121,9 @@ extension CreatingToolScreenShareSessionViewModel {
     
     func pageViewed() {
         
-        incrementUserCounterUseCase
-            .execute(
-                interaction: .screenShare(tool: toolId)
-            )
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                
-            } receiveValue: { _ in
-                
-            }
-            .store(in: &Self.backgroundCancellables)
+        Task {
+            
+            _ = try await incrementUserCounterUseCase.execute(interaction: .screenShare(tool: toolId))
+        }
     }
 }

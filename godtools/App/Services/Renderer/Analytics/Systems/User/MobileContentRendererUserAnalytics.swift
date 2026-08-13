@@ -9,14 +9,11 @@
 import Foundation
 import Combine
 
-class MobileContentRendererUserAnalytics {
-    
-    private static var backgroundCancellables: Set<AnyCancellable> = Set()
-    
+actor MobileContentRendererUserAnalytics {
+        
     private let incrementUserCounterUseCase: IncrementUserCounterUseCase
     private let maxAllowedLessonCompletionIncrementsPerSession: Int = 1
     
-    private var cancellables = Set<AnyCancellable>()
     private var trackLessonCompletionsCount: Int = 0
     
     init(incrementUserCounterUseCase: IncrementUserCounterUseCase) {
@@ -37,7 +34,7 @@ extension MobileContentRendererUserAnalytics: MobileContentRendererAnalyticsSyst
         secondaryContentLanguage: BCP47LanguageIdentifier?,
         action: String,
         data: [String: Any]?
-    ) {
+    ) async throws {
         
         guard action.hasPrefix(MobileContentRendererUserAnalytics.lessonCompletionsActionPrefix) else {
             return
@@ -45,16 +42,7 @@ extension MobileContentRendererUserAnalytics: MobileContentRendererAnalyticsSyst
         
         if trackLessonCompletionsCount < maxAllowedLessonCompletionIncrementsPerSession || maxAllowedLessonCompletionIncrementsPerSession == 0 {
                         
-            incrementUserCounterUseCase
-                .execute(
-                    interaction: .lessonCompletion(mobileContentAction: action)
-                )
-                .sink { _ in
-                    
-                } receiveValue: { _ in
-                    
-                }
-                .store(in: &Self.backgroundCancellables)
+            _ = try await incrementUserCounterUseCase.execute(interaction: .lessonCompletion(mobileContentAction: action))
         }
         
         trackLessonCompletionsCount += 1

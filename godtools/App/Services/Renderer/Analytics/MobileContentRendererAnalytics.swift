@@ -23,7 +23,7 @@ final class MobileContentRendererAnalytics: Sendable {
         self.analyticsSystems = analyticsSystems
     }
         
-    func trackEvents(events: [AnalyticsEvent], renderedPageContext: MobileContentRenderedPageContext) async {
+    func trackEvents(events: [AnalyticsEvent], renderedPageContext: MobileContentRenderedPageContext) async throws {
         
         for event in events {
             
@@ -33,13 +33,13 @@ final class MobileContentRendererAnalytics: Sendable {
                 continue
             }
             
-            await trackEvent(event: event, renderedPageContext: renderedPageContext)
+            try await trackEvent(event: event, renderedPageContext: renderedPageContext)
             
             event.recordTriggered(state: renderedPageContext.rendererState)
         }
     }
     
-    private func trackEvent(event: AnalyticsEvent, renderedPageContext: MobileContentRenderedPageContext) async {
+    private func trackEvent(event: AnalyticsEvent, renderedPageContext: MobileContentRenderedPageContext) async throws {
         
         let action = event.action
         guard !action.isEmpty else {
@@ -59,7 +59,7 @@ final class MobileContentRendererAnalytics: Sendable {
             let pageNumber = renderedPageContext.pageModel.position
             let screenName = resourceAbbreviation + "-" + String(pageNumber)
             
-            await analyticsSystem.trackMobileContentAction(
+            try await analyticsSystem.trackMobileContentAction(
                 screenName: screenName,
                 siteSection: resourceAbbreviation,
                 appLanguage: renderedPageContext.appLanguage,

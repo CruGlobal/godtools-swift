@@ -16,9 +16,7 @@ final class ArticleViewModel: ObservableObject {
         case deeplink
         case tool(resource: ResourceDataModel)
     }
-    
-    private static var backgroundCancellables: Set<AnyCancellable> = Set()
-    
+        
     private let stepEmitter: FlowStepEmitter
     private let flowType: FlowType
     private let articleId: String
@@ -187,17 +185,10 @@ extension ArticleViewModel {
             )
         }
         
-        incrementUserCounterUseCase
-            .execute(
-                interaction: .articleOpen(uri: articleId)
-            )
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                
-            } receiveValue: { _ in
-                
-            }
-            .store(in: &Self.backgroundCancellables)
+        Task {
+            
+            _ = try await incrementUserCounterUseCase.execute(interaction: .articleOpen(uri: articleId))
+        }
     }
     
     func downloadArticleTapped() {

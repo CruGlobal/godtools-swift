@@ -11,9 +11,7 @@ import Combine
 
 @MainActor
 final class ShareToolViewModel {
-        
-    private static var backgroundCancellables: Set<AnyCancellable> = Set()
-    
+            
     private let stepEmitter: FlowStepEmitter
     private let toolId: String
     private let toolAnalyticsAbbreviation: String
@@ -84,6 +82,7 @@ extension ShareToolViewModel {
         }
             
         Task {
+            
             await trackActionAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: analyticsScreenName,
@@ -100,14 +99,10 @@ extension ShareToolViewModel {
             )
         }
         
-        incrementUserCounterUseCase.execute(interaction: .linkShared)
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                
-            } receiveValue: { _ in
-
-            }
-            .store(in: &Self.backgroundCancellables)
+        Task {
+            
+            _ = try await incrementUserCounterUseCase.execute(interaction: .linkShared)
+        }
     }
     
     func qrCodeTapped() {

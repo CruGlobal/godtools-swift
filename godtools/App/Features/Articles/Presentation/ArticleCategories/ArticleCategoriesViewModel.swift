@@ -12,9 +12,7 @@ import GodToolsShared
 
 @MainActor
 final class ArticleCategoriesViewModel: ObservableObject {
-    
-    private static var backgroundCancellables: Set<AnyCancellable> = Set()
-    
+        
     private let stepEmitter: FlowStepEmitter
     private let resource: ResourceDataModel
     private let language: LanguageDataModel
@@ -102,17 +100,10 @@ extension ArticleCategoriesViewModel {
         
         if pageViewCount == 0 {
             
-            incrementUserCounterUseCase
-                .execute(
-                    interaction: .toolOpen(tool: resource.id)
-                )
-                .receive(on: DispatchQueue.main)
-                .sink { _ in
-                    
-                } receiveValue: { _ in
-                    
-                }
-                .store(in: &Self.backgroundCancellables)
+            Task {
+                
+                _ = try await incrementUserCounterUseCase.execute(interaction: .toolOpen(tool: resource.id))
+            }
         }
         
         Task {
