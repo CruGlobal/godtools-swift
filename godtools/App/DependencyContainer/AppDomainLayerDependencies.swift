@@ -60,7 +60,7 @@ final class AppDomainLayerDependencies {
     
     func getTrackExitLinkAnalyticsUseCase() -> TrackExitLinkAnalyticsUseCase {
         return TrackExitLinkAnalyticsUseCase(
-            trackExitLinkAnalytics: dataLayer.getAnalytics()
+            analytics: dataLayer.getAnalytics()
         )
     }
     
