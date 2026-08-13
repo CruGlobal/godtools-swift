@@ -175,12 +175,14 @@ extension ArticleViewModel {
     func pageViewed() {
         
         trackScreenViewAnalyticsUseCase.trackScreen(
-            screenName: analyticsScreenName,
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil
+            properties: AnalyticsProperties(
+                screenName: analyticsScreenName,
+                siteSection: analyticsSiteSection,
+                siteSubSection: analyticsSiteSubSection,
+                appLanguage: nil,
+                contentLanguage: nil,
+                secondaryContentLanguage: nil
+            )
         )
         
         incrementUserCounterUseCase

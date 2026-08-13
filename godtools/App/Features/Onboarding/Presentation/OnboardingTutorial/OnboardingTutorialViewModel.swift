@@ -143,12 +143,14 @@ final class OnboardingTutorialViewModel: ObservableObject {
             let pageAnalytics: OnboardingTutorialPageAnalyticsProperties = getOnboardingTutorialPageAnalyticsProperties(page: pages[page])
             
             trackScreenViewAnalyticsUseCase.trackScreen(
-                screenName: pageAnalytics.screenName,
-                siteSection: pageAnalytics.siteSection,
-                siteSubSection: pageAnalytics.siteSubsection,
-                appLanguage: nil,
-                contentLanguage: pageAnalytics.contentLanguage,
-                contentLanguageSecondary: pageAnalytics.contentLanguageSecondary
+                properties: AnalyticsProperties(
+                    screenName: pageAnalytics.screenName,
+                    siteSection: pageAnalytics.siteSection,
+                    siteSubSection: pageAnalytics.siteSubsection,
+                    appLanguage: nil,
+                    contentLanguage: pageAnalytics.contentLanguage,
+                    secondaryContentLanguage: pageAnalytics.contentLanguageSecondary
+                )
             )
         }
         else {

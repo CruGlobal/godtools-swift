@@ -143,12 +143,14 @@ extension MenuViewModel {
     func pageViewed() {
         
         trackScreenViewAnalyticsUseCase.trackScreen(
-            screenName: getMenuAnalyticsScreenName(),
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil
+            properties: AnalyticsProperties(
+                screenName: getMenuAnalyticsScreenName(),
+                siteSection: analyticsSiteSection,
+                siteSubSection: analyticsSiteSubSection,
+                appLanguage: nil,
+                contentLanguage: nil,
+                secondaryContentLanguage: nil
+            )
         )
     }
     
@@ -221,12 +223,14 @@ extension MenuViewModel {
         stepEmitter.emit(step: AppFlowStep.shareAStoryWithUsTappedFromMenu)
         
         trackScreenViewAnalyticsUseCase.trackScreen(
-            screenName: getShareStoryAnalyticsScreenName(),
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil
+            properties: AnalyticsProperties(
+                screenName: getShareStoryAnalyticsScreenName(),
+                siteSection: analyticsSiteSection,
+                siteSubSection: analyticsSiteSubSection,
+                appLanguage: nil,
+                contentLanguage: nil,
+                secondaryContentLanguage: nil
+            )
         )
     }
     
@@ -247,12 +251,14 @@ extension MenuViewModel {
         )
         
         trackScreenViewAnalyticsUseCase.trackScreen(
-            screenName: getShareAppAnalyticsScreenName(),
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil
+            properties: AnalyticsProperties(
+                screenName: getShareAppAnalyticsScreenName(),
+                siteSection: analyticsSiteSection,
+                siteSubSection: analyticsSiteSubSection,
+                appLanguage: nil,
+                contentLanguage: nil,
+                secondaryContentLanguage: nil
+            )
         )
     }
     

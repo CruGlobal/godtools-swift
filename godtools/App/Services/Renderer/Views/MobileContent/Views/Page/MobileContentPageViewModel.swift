@@ -126,12 +126,14 @@ class MobileContentPageViewModel: MobileContentViewModel {
     func trackScreenAnalytics() {
         
         trackScreenViewAnalyticsUseCase.trackScreen(
-            screenName: analyticsScreenName,
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            appLanguage: renderedPageContext.appLanguage,
-            contentLanguage: renderedPageContext.rendererLanguages.primaryLanguage.localeId,
-            contentLanguageSecondary: renderedPageContext.rendererLanguages.parallelLanguage?.localeId
+            properties: AnalyticsProperties(
+                screenName: analyticsScreenName,
+                siteSection: analyticsSiteSection,
+                siteSubSection: analyticsSiteSubSection,
+                appLanguage: renderedPageContext.appLanguage,
+                contentLanguage: renderedPageContext.rendererLanguages.primaryLanguage.localeId,
+                secondaryContentLanguage: renderedPageContext.rendererLanguages.parallelLanguage?.localeId
+            )
         )
     }
 }

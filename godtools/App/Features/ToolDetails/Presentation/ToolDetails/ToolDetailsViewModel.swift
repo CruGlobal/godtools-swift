@@ -114,12 +114,14 @@ final class ToolDetailsViewModel: ObservableObject {
             weakSelf.didViewPage = nil
             
             trackScreenViewAnalyticsUseCase.trackScreen(
-                screenName: weakSelf.getAnalyticsScreenName(analyticsToolAbbreviation: analyticsToolAbbreviation),
-                siteSection: weakSelf.getAnalyticsScreenName(analyticsToolAbbreviation: analyticsToolAbbreviation),
-                siteSubSection: weakSelf.analyticsSiteSubSection,
-                appLanguage: nil,
-                contentLanguage: nil,
-                contentLanguageSecondary: nil
+                properties: AnalyticsProperties(
+                    screenName: weakSelf.getAnalyticsScreenName(analyticsToolAbbreviation: analyticsToolAbbreviation),
+                    siteSection: weakSelf.getAnalyticsScreenName(analyticsToolAbbreviation: analyticsToolAbbreviation),
+                    siteSubSection: weakSelf.analyticsSiteSubSection,
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                )
             )
             
             return Just(())
