@@ -38,6 +38,10 @@ struct GodToolsApp: App {
             return UITestsAppConfig()
         }
     }()
+    
+    private static let parserLogger: GodToolsParserLogger = {
+        appDiContainer.core.dataLayer.getGodToolsParserLogger()
+    }()
 
     private let appFlow: AppFlow
     private let toolShortcutLinksViewModel: ToolShortcutLinksViewModel
@@ -111,10 +115,9 @@ struct GodToolsApp: App {
         )
         
         if Self.appBuild.configuration == .release {
-            GodToolsParserLogger.shared.start(
-                errorReporting: Self.appDiContainer.core.dataLayer.getErrorReporting(),
-                firebaseErrorReporting: Self.appDiContainer.core.dataLayer.getFirebaseNonFatalErrorReporting()
-            )
+            Task {
+                await Self.parserLogger.start()
+            }
         }
         
         if Self.appConfig.firebaseEnabled {

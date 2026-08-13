@@ -10,23 +10,20 @@ import Foundation
 import GodToolsShared
 import FirebaseCrashlytics
 
-final class GodToolsParserLogger {
+actor GodToolsParserLogger: Sendable {
     
-    private var errorReporting: ErrorReportingInterface?
-    private var firebaseErrorReporting: FirebaseNonFatalErrorReporting?
-    
-    static let shared: GodToolsParserLogger = GodToolsParserLogger()
+    private let errorReporting: ErrorReportingInterface
+    private let firebaseErrorReporting: FirebaseNonFatalErrorReporting
     
     private var isStarted: Bool = false
-    
-    private init() {
-        
-    }
-    
-    func start(errorReporting: ErrorReportingInterface, firebaseErrorReporting: FirebaseNonFatalErrorReporting) {
+            
+    init(errorReporting: ErrorReportingInterface, firebaseErrorReporting: FirebaseNonFatalErrorReporting) {
         
         self.errorReporting = errorReporting
         self.firebaseErrorReporting = firebaseErrorReporting
+    }
+    
+    func start() {
         
         guard !isStarted else {
             return
@@ -36,14 +33,16 @@ final class GodToolsParserLogger {
                 
         LoggingKt.enableCustomLogging { [weak self] (logLevel: LogLevel, tag: String?, throwable: KotlinThrowable?, message: String?) in
 
+            let error: Error? = throwable?.asError()
+            
             DispatchQueue.global().async { [weak self] in
 
                 if let tag = tag, let message = message {
-                    self?.firebaseErrorReporting?.log(tag: tag, message: message)
+                    self?.firebaseErrorReporting.log(tag: tag, message: message)
                 }
 
-                if let error = throwable?.asError() {
-                    self?.errorReporting?.reportError(error: error)
+                if let error = error {
+                    self?.errorReporting.reportError(error: error)
                 }
             }
         }

@@ -373,6 +373,13 @@ final class AppDataLayerDependencies {
         )
     }
     
+    func getGodToolsParserLogger() -> GodToolsParserLogger {
+        return GodToolsParserLogger(
+            errorReporting: getErrorReporting(),
+            firebaseErrorReporting: getFirebaseNonFatalErrorReporting()
+        )
+    }
+    
     func getInfoPlist() -> InfoPlistInterface {
         return InfoPlist()
     }
