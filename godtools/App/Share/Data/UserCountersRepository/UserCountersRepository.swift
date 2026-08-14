@@ -11,7 +11,7 @@ import Combine
 import RequestOperation
 import RepositorySync
 
-final class UserCountersRepository {
+final class UserCountersRepository: Sendable {
     
     private let localActivityCounterCache: LocalActivityCounterCache
     private let cache: UserCountersCache
@@ -32,18 +32,14 @@ final class UserCountersRepository {
         return try cache.getCounter(id: id)
     }
     
-    func getCachedCountersPublisher() -> AnyPublisher<[UserCounterDataModel], Error> {
+    func getCachedCounters() async throws -> [UserCounterDataModel] {
         
-        return AnyPublisher() {
-            return try await self.cache.mergeLocalCountersWithCachedCounters()
-        }
+        return try await self.cache.mergeLocalCountersWithCachedCounters()
     }
     
-    func incrementCounterPublisher(id: String) -> AnyPublisher<LocalActivityCountDataModel, Error> {
+    func incrementCounter(id: String) async throws -> LocalActivityCountDataModel {
         
-        return AnyPublisher() {
-            try await self.localActivityCounterCache.incrementCounter(id: id)
-        }
+        return try await self.localActivityCounterCache.incrementCounter(id: id)
     }
     
     func deleteCounters() async throws {

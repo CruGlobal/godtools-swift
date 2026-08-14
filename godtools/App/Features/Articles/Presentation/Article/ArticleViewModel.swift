@@ -16,9 +16,7 @@ final class ArticleViewModel: ObservableObject {
         case deeplink
         case tool(resource: ResourceDataModel)
     }
-    
-    private static var backgroundCancellables: Set<AnyCancellable> = Set()
-    
+        
     private let stepEmitter: FlowStepEmitter
     private let flowType: FlowType
     private let articleId: String
@@ -123,16 +121,19 @@ final class ArticleViewModel: ObservableObject {
         return nil
     }
     
-    private func getArticleErrorMessage(error: Error) -> ArticlesErrorDomainModel {
+    private func getArticleErrorMessage(error: Error) async -> ArticlesErrorDomainModel {
         
-        let title: String = localizationServices.stringForLocaleElseEnglish(
+        let title: String = await localizationServices.stringForLocaleElseEnglish(
             localeIdentifier: appLanguage,
             key: LocalizableStringKeys.downloadError.key
         )
         
-        let message: String = getDownloadArticlesErrorMessage.getErrorMessage(appLanguage: appLanguage, error: error)
+        let message: String = await getDownloadArticlesErrorMessage.getErrorMessage(
+            appLanguage: appLanguage,
+            error: error
+        )
         
-        let downloadActionTitle: String = localizationServices.stringForLocaleElseEnglish(
+        let downloadActionTitle: String = await localizationServices.stringForLocaleElseEnglish(
             localeIdentifier: appLanguage,
             key: LocalizableStringKeys.articlesRetryDownloadButtonTitle.key
         )
@@ -171,26 +172,23 @@ extension ArticleViewModel {
     
     func pageViewed() {
         
-        trackScreenViewAnalyticsUseCase.trackScreen(
-            screenName: analyticsScreenName,
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil
-        )
-        
-        incrementUserCounterUseCase
-            .execute(
-                interaction: .articleOpen(uri: articleId)
+        Task {
+            await trackScreenViewAnalyticsUseCase.execute(
+                properties: AnalyticsProperties(
+                    screenName: analyticsScreenName,
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: analyticsSiteSubSection,
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                )
             )
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                
-            } receiveValue: { _ in
-                
-            }
-            .store(in: &Self.backgroundCancellables)
+        }
+        
+        Task {
+            
+            _ = try await incrementUserCounterUseCase.execute(interaction: .articleOpen(uri: articleId))
+        }
     }
     
     func downloadArticleTapped() {
@@ -199,11 +197,15 @@ extension ArticleViewModel {
     }
     
     func didLoadArticle(url: URL?, error: Error?) {
-        
+
         loadedArticleUrl = url
-        
+
         if let error = error {
-            loadArticleError = getArticleErrorMessage(error: error)
+
+            Task {
+
+                loadArticleError = await getArticleErrorMessage(error: error)
+            }
         }
         else {
             loadArticleError = nil

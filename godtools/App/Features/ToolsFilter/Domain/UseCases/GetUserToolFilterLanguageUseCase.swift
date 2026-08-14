@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class GetUserToolFilterLanguageUseCase {
+final class GetUserToolFilterLanguageUseCase: Sendable {
     
     private let userToolFiltersRepository: UserToolFiltersRepository
     private let getToolFilterLanguage: GetToolFilterLanguage
@@ -20,23 +20,35 @@ final class GetUserToolFilterLanguageUseCase {
         self.getToolFilterLanguage = getToolFilterLanguage
     }
     
-    @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolFilterLanguageDomainModel, Never> {
+    @MainActor func execute(
+        appLanguage: AppLanguageDomainModel
+    ) -> AnyPublisher<ToolFilterLanguageDomainModel, Never> {
         
         return userToolFiltersRepository
             .getUserToolLanguageFilterChangedPublisher()
             .receive(on: DispatchQueue.global())
-            .map {
+            .flatMap {
                 
-                let languageId: String? = self.userToolFiltersRepository.getUserToolLanguageFilter()?.languageId
-                
-                if let languageId = languageId,
-                   let languageFilter = self.getToolFilterLanguage.getLanguageFilter(languageId: languageId, translatedInAppLanguage: appLanguage) {
-                    
-                    return languageFilter
+                return AnyPublisher() {
+                    return await self.asyncExecute(appLanguage: appLanguage)
                 }
-                
-                return self.getToolFilterLanguage.getAnyLanguageFilter(translatedInAppLanguage: appLanguage)
             }
             .eraseToAnyPublisher()
+    }
+    
+    private func asyncExecute(appLanguage: AppLanguageDomainModel) async -> ToolFilterLanguageDomainModel {
+        
+        let languageId: String? = userToolFiltersRepository.getUserToolLanguageFilter()?.languageId
+        
+        if let languageId = languageId,
+            let languageFilter = await getToolFilterLanguage.getLanguageFilter(
+                languageId: languageId,
+                translatedInAppLanguage: appLanguage
+            ) {
+            
+            return languageFilter
+        }
+        
+        return await getToolFilterLanguage.getAnyLanguageFilter(translatedInAppLanguage: appLanguage)
     }
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class ToolSettingsDiContainer {
+final class ToolSettingsDiContainer: Sendable {
     
     private let dataLayer: ToolSettingsDataLayerDependencies
     

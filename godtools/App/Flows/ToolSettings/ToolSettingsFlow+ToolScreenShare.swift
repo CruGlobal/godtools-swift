@@ -148,13 +148,17 @@ extension ToolSettingsFlow {
         return modal
     }
     
-    func getShareToolScreenShareSessionView(appLanguage: AppLanguageDomainModel, shareUrl: String) -> UIViewController {
+    func getShareToolScreenShareSessionView(
+        appLanguage: AppLanguageDomainModel,
+        shareUrl: String,
+        strings: ShareToolScreenShareSessionStringsDomainModel
+    ) -> UIViewController {
                 
         let viewModel = ShareToolScreenShareSessionViewModel(
             stepEmitter: stepEmitter,
             appLanguage: appLanguage,
             shareUrl: shareUrl,
-            getShareToolScreenShareSessionStringsUseCase: appDiContainer.feature.toolScreenShare.domainLayer.getShareToolScreenShareSessionStringsUseCase(),
+            strings: strings,
             trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase()
         )
         
@@ -192,9 +196,9 @@ extension ToolSettingsFlow {
         return overlayNavigationController
     }
     
-    func getCreatingToolScreenShareSessionTimedOutView(appLanguage: AppLanguageDomainModel) -> UIViewController {
+    func getCreatingToolScreenShareSessionTimedOutView(appLanguage: AppLanguageDomainModel) async -> UIViewController {
         
-        let viewModel = CreatingToolScreenShareSessionTimedOutViewModel(
+        let viewModel = await CreatingToolScreenShareSessionTimedOutViewModel(
             stepEmitter: stepEmitter,
             appLanguage: appLanguage,
             getCreatingToolScreenShareSessionTimedOutStringsUseCase: appDiContainer.feature.toolScreenShare.domainLayer.getCreatingToolScreenShareSessionTimedOutStringsUseCase()

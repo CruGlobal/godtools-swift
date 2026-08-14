@@ -9,7 +9,7 @@
 import Foundation
 @testable import godtools
 
-class FakeStringWithLocaleCount: StringWithLocaleCountInterface {
+final class FakeStringWithLocaleCount: StringWithLocaleCountInterface {
     
     init() {
         

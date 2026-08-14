@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetShareGodToolsStringsUseCase {
+final class GetShareGodToolsStringsUseCase: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
     
@@ -17,10 +17,10 @@ final class GetShareGodToolsStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> ShareGodToolsStringsDomainModel {
+    func execute(appLanguage: AppLanguageDomainModel) async -> ShareGodToolsStringsDomainModel {
                 
         let strings = ShareGodToolsStringsDomainModel(
-            shareMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.shareGodToolsShareSheetText.key)
+            shareMessage: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.shareGodToolsShareSheetText.key)
         )
         
         return strings

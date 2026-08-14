@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class SetAppLanguageUseCase {
+final class SetAppLanguageUseCase: Sendable {
     
     private let userAppLanguageRepository: UserAppLanguageRepository
     private let userLessonFiltersRepository: UserLessonFiltersRepository

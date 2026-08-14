@@ -27,7 +27,7 @@ final class ShareToolFlow: GTFlow {
         pageNumber: Int,
         appLanguage: AppLanguageDomainModel,
         toolAnalyticsAbbreviation: String
-    ) {
+    ) async {
         
         self.toolId = toolId
         self.toolLanguageId = toolLanguageId
@@ -36,7 +36,7 @@ final class ShareToolFlow: GTFlow {
         
         let getShareToolStringsUseCase = appDiContainer.feature.shareTool.domainLayer.getShareToolStringsUseCase()
         
-        let strings = getShareToolStringsUseCase
+        let strings = await getShareToolStringsUseCase
             .execute(
                 toolId: toolId,
                 toolLanguageId: toolLanguageId,

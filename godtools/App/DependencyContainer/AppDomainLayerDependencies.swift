@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class AppDomainLayerDependencies {
+final class AppDomainLayerDependencies: Sendable {
         
     private let dataLayer: AppDataLayerDependencies
     
@@ -54,19 +54,19 @@ final class AppDomainLayerDependencies {
     
     func getTrackActionAnalyticsUseCase() -> TrackActionAnalyticsUseCase {
         return TrackActionAnalyticsUseCase(
-            trackActionAnalytics: dataLayer.getAnalytics()
+            analytics: dataLayer.getAnalytics()
         )
     }
     
     func getTrackExitLinkAnalyticsUseCase() -> TrackExitLinkAnalyticsUseCase {
         return TrackExitLinkAnalyticsUseCase(
-            trackExitLinkAnalytics: dataLayer.getAnalytics()
+            analytics: dataLayer.getAnalytics()
         )
     }
     
     func getTrackScreenViewAnalyticsUseCase() -> TrackScreenViewAnalyticsUseCase {
         return TrackScreenViewAnalyticsUseCase(
-            trackScreenViewAnalytics: dataLayer.getAnalytics()
+            analytics: dataLayer.getAnalytics()
         )
     }
     

@@ -10,13 +10,20 @@ import Foundation
 
 struct PrivacyPolicyWebContent: WebContentType {
     
-    let navTitle: String
+    let appLanguage: AppLanguageDomainModel
+    let navTitleLocalizedKey: String = LocalizableStringKeys.privacyPolicy.key
     let url: URL? = URL(string: "https://www.cru.org/about/privacy.html")
     let analyticsScreenName: String = "Privacy Policy"
     let analyticsSiteSection: String = "menu"
+    let localizationServices: LocalizationServicesInterface
     
-    init(localizationServices: LocalizationServicesInterface) {
+    private(set) var navTitle: String = ""
+    
+    init(appLanguage: AppLanguageDomainModel, localizationServices: LocalizationServicesInterface) async {
         
-        navTitle = localizationServices.stringForSystemElseEnglish(key: LocalizableStringKeys.privacyPolicy.key)
+        self.appLanguage = appLanguage
+        self.localizationServices = localizationServices
+        
+        self.navTitle = await getLocalizedNavTitle()
     }
 }

@@ -26,7 +26,7 @@ struct GetCreatingToolScreenShareSessionTimedOutStringsUseCaseTests {
 
         let useCase = getUseCase()
 
-        let strings: CreatingToolScreenShareSessionTimedOutStringsDomainModel = useCase.execute(appLanguage: appLanguage)
+        let strings: CreatingToolScreenShareSessionTimedOutStringsDomainModel = await useCase.execute(appLanguage: appLanguage)
 
         #expect(strings.title == "Timed Out")
         #expect(strings.message == "Timed out creating the session for tool screen share.")

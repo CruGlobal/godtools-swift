@@ -73,15 +73,18 @@ final class DashboardViewModel: ObservableObject {
 
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
 
-        let strings = getDashboardStringsUseCase
-            .execute(translateInLanguage: appLanguage)
+        Task {
 
-        lessonsButtonTitle = strings.lessonsActionTitle
-        favoritesButtonTitle = strings.favoritesActionTitle
-        toolsButtonTitle = strings.toolsActionTitle
+            let strings = await getDashboardStringsUseCase
+                .execute(translateInLanguage: appLanguage)
 
-        reloadTabs() // NOTE: Needed since button title interface strings aren't connected to the View. ~Levi
-        setStartingTabIfNeeded(startingTab: startingTab, tabs: tabs)
+            lessonsButtonTitle = strings.lessonsActionTitle
+            favoritesButtonTitle = strings.favoritesActionTitle
+            toolsButtonTitle = strings.toolsActionTitle
+
+            reloadTabs() // NOTE: Needed since button title interface strings aren't connected to the View. ~Levi
+            setStartingTabIfNeeded(startingTab: startingTab, tabs: tabs)
+        }
     }
 
     private func reloadTabs() {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class ShareArticleUseCase {
+final class ShareArticleUseCase: Sendable {
     
     private let articleRepository: ArticleAemRepository
     

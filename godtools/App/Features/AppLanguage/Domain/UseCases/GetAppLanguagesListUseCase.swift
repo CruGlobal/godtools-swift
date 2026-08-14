@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetAppLanguagesListUseCase {
+final class GetAppLanguagesListUseCase: Sendable {
     
     private let appLanguagesRepository: AppLanguagesRepository
     private let getTranslatedLanguageName: GetTranslatedLanguageName
@@ -23,21 +23,27 @@ final class GetAppLanguagesListUseCase {
         
         let languages: [AppLanguageDataModel] = try await appLanguagesRepository.getLanguages()
         
-        let appLanguagesList: [AppLanguageListItemDomainModel] = languages.map { (languageDataModel: AppLanguageDataModel) in
-                                                    
-            let languageNameTranslatedInOwnLanguage: String = self.getTranslatedLanguageName.getLanguageName(language: languageDataModel, translatedInLanguage: languageDataModel.languageId)
-            let languageNameTranslatedInCurrentAppLanguage: String = self.getTranslatedLanguageName.getLanguageName(language: languageDataModel, translatedInLanguage: appLanguage)
-            
-            return AppLanguageListItemDomainModel(
-                language: languageDataModel.languageId,
-                languageNameTranslatedInOwnLanguage: languageNameTranslatedInOwnLanguage,
-                languageNameTranslatedInCurrentAppLanguage: languageNameTranslatedInCurrentAppLanguage
+        var appLanguages: [AppLanguageListItemDomainModel] = Array()
+
+        for languageDataModel in languages {
+
+            let languageNameTranslatedInOwnLanguage: String = await self.getTranslatedLanguageName.getLanguageName(language: languageDataModel, translatedInLanguage: languageDataModel.languageId)
+            let languageNameTranslatedInCurrentAppLanguage: String = await self.getTranslatedLanguageName.getLanguageName(language: languageDataModel, translatedInLanguage: appLanguage)
+
+            appLanguages.append(
+                AppLanguageListItemDomainModel(
+                    language: languageDataModel.languageId,
+                    languageNameTranslatedInOwnLanguage: languageNameTranslatedInOwnLanguage,
+                    languageNameTranslatedInCurrentAppLanguage: languageNameTranslatedInCurrentAppLanguage
+                )
             )
         }
-        .sorted { (thisAppLanguage: AppLanguageListItemDomainModel, thatAppLanguage: AppLanguageListItemDomainModel) in
-            return thisAppLanguage.languageNameTranslatedInCurrentAppLanguage < thatAppLanguage.languageNameTranslatedInCurrentAppLanguage
-        }
-        
+
+        let appLanguagesList: [AppLanguageListItemDomainModel] = appLanguages
+            .sorted { (thisAppLanguage: AppLanguageListItemDomainModel, thatAppLanguage: AppLanguageListItemDomainModel) in
+                return thisAppLanguage.languageNameTranslatedInCurrentAppLanguage < thatAppLanguage.languageNameTranslatedInCurrentAppLanguage
+            }
+
         return appLanguagesList
     }
 }

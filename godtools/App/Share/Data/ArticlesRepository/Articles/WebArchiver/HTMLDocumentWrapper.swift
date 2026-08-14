@@ -14,7 +14,7 @@ import libxml2
 // Will fix by implementing change from open PR (https://github.com/cezheng/Fuzi/pull/131).
 // TODO: GT-2492 Once merged we can remove this wrapper. ~Levi
 
-class HTMLDocumentWrapper {
+final class HTMLDocumentWrapper {
     
     let htmlDocument: HTMLDocument
     

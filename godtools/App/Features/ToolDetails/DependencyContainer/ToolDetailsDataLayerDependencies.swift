@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class ToolDetailsDataLayerDependencies {
+final class ToolDetailsDataLayerDependencies: Sendable {
     
     private let coreDataLayer: AppDataLayerDependencies
     

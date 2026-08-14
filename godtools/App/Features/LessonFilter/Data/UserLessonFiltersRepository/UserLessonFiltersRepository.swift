@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class UserLessonFiltersRepository {
+final class UserLessonFiltersRepository: Sendable {
     
     static let userFilterId = "userLessonLanguageFilter"
     

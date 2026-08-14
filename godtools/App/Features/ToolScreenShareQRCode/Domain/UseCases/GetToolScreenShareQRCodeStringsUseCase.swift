@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetToolScreenShareQRCodeStringsUseCase {
+final class GetToolScreenShareQRCodeStringsUseCase: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
     
@@ -16,13 +16,13 @@ final class GetToolScreenShareQRCodeStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> ToolScreenShareQRCodeStringsDomainModel {
+    func execute(appLanguage: AppLanguageDomainModel) async -> ToolScreenShareQRCodeStringsDomainModel {
         
         let localeId: String = appLanguage
         
         let strings = ToolScreenShareQRCodeStringsDomainModel(
-            qrCodeDescription: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolScreenShareQrCodeDescription.key),
-            closeButtonTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolScreenShareQrCodeCloseButtonTitle.key)
+            qrCodeDescription: await localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolScreenShareQrCodeDescription.key),
+            closeButtonTitle: await localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolScreenShareQrCodeCloseButtonTitle.key)
         )
         
         return strings

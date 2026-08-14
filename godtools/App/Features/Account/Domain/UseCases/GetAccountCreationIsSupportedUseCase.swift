@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetAccountCreationIsSupportedUseCase {
+final class GetAccountCreationIsSupportedUseCase: Sendable {
     
     private let supportedLanguageCodes: [String]
         

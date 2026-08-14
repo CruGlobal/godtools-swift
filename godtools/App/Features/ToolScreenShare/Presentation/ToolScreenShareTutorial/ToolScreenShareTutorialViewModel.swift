@@ -54,19 +54,9 @@ final class ToolScreenShareTutorialViewModel: ObservableObject {
         getCurrentAppLanguageUseCase
             .execute()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$appLanguage)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                
-                getToolScreenShareTutorialStringsUseCase
-                    .execute(appLanguage: appLanguage)
-            }
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (strings: ToolScreenShareTutorialStringsDomainModel) in
-                
-                self?.strings = strings
+            .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
+                self?.appLanguage = appLanguage
+                self?.didSetAppLanguage(appLanguage: appLanguage)
             }
             .store(in: &cancellables)
         
@@ -138,6 +128,15 @@ final class ToolScreenShareTutorialViewModel: ObservableObject {
     
     private func getIsOnLastPage(tutorialPages: [ToolScreenShareTutorialPageDomainModel]) -> Bool {
         return currentPage >= tutorialPages.count - 1
+    }
+    
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+        
+        Task {
+            
+            strings = await getToolScreenShareTutorialStringsUseCase
+                .execute(appLanguage: appLanguage)
+        }
     }
     
     private func markToolScreenShareTutorialViewed() {

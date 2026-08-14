@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class EvaluateLessonUseCase {
+final class EvaluateLessonUseCase: Sendable {
     
     private let resourcesRepository: ResourcesRepository
     private let lessonEvaluationRepository: LessonEvaluationRepository
@@ -42,7 +42,7 @@ final class EvaluateLessonUseCase {
             lessonEvaluated: true
         )
 
-        lessonFeedbackAnalytics.trackLessonFeedback(
+        await lessonFeedbackAnalytics.trackLessonFeedback(
             lesson: lessonResource,
             feedback: feedback,
             contentLanguage: lessonLanguage

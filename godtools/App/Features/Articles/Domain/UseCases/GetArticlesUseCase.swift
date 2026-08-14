@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetArticlesUseCase {
+final class GetArticlesUseCase: Sendable {
     
     private let articlesRepsoitory: ArticleManifestAemRepository
     private let localizationServices: LocalizationServicesInterface
@@ -70,17 +70,17 @@ final class GetArticlesUseCase {
         
         if articles.isEmpty, let error = try await getFirstArticleError() {
             
-            let title: String = localizationServices.stringForLocaleElseEnglish(
+            let title: String = await localizationServices.stringForLocaleElseEnglish(
                 localeIdentifier: appLanguage,
                 key: LocalizableStringKeys.downloadError.key
             )
             
-            let downloadActionTitle: String = localizationServices.stringForLocaleElseEnglish(
+            let downloadActionTitle: String = await localizationServices.stringForLocaleElseEnglish(
                 localeIdentifier: appLanguage,
                 key: LocalizableStringKeys.articlesRetryDownloadButtonTitle.key
             )
             
-            let message: String = getDownloadArticlesErrorMessage.getErrorMessage(
+            let message: String = await getDownloadArticlesErrorMessage.getErrorMessage(
                 appLanguage: appLanguage,
                 error: error
             )

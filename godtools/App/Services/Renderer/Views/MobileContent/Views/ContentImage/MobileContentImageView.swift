@@ -22,7 +22,6 @@ class MobileContentImageView: MobileContentView {
         super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
         
         setupLayout()
-        setupBinding()
     }
     
     required init?(coder: NSCoder) {
@@ -31,15 +30,16 @@ class MobileContentImageView: MobileContentView {
     
     private func setupLayout() {
         
-    }
-    
-    private func setupBinding() {
-        
-        if let image = viewModel.image {
-            addImage(image: image, contentViewWidth: viewModel.imageWidth)
-        }
-        else {
-            addEmptySpace()
+        Task {
+            
+            let image: UIImage? = await viewModel.getImage()
+            
+            if let image = image {
+                addImage(image: image, contentViewWidth: viewModel.imageWidth)
+            }
+            else {
+                addEmptySpace()
+            }
         }
     }
     
@@ -51,7 +51,7 @@ class MobileContentImageView: MobileContentView {
             return .constrainedToChildren
         }
         
-        guard let imageSize = viewModel.image?.size else {
+        guard let imageSize = viewModel.imageSize else {
             return .constrainedToChildren
         }
         

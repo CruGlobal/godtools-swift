@@ -10,7 +10,7 @@ import Foundation
 import FirebaseAnalytics
 import FirebaseCore
 
-class FirebaseAnalytics: FirebaseAnalyticsInterface {
+actor FirebaseAnalytics: FirebaseAnalyticsInterface {
     
     private let isDebug: Bool
     private let loggingEnabled: Bool
@@ -44,7 +44,7 @@ class FirebaseAnalytics: FirebaseAnalyticsInterface {
         log(method: "configure()", label: nil, labelValue: nil, data: nil)
     }
     
-    func setLoggedInStateUserProperties(isLoggedIn: Bool, loggedInUserProperties: FirebaseAnalyticsLoggedInUserProperties?) {
+     func setLoggedInStateUserProperties(isLoggedIn: Bool, loggedInUserProperties: FirebaseAnalyticsLoggedInUserProperties?) {
         
         let userId: String? = loggedInUserProperties?.grMasterPersonId ?? loggedInUserProperties?.ssoguid
         
@@ -55,46 +55,32 @@ class FirebaseAnalytics: FirebaseAnalyticsInterface {
         setUserProperty(key: AnalyticsConstants.Keys.ssoguid, value: isLoggedIn ? loggedInUserProperties?.ssoguid : nil)
     }
     
-    func trackScreenView(screenName: String, siteSection: String, siteSubSection: String, appLanguage: String?, contentLanguage: String?, secondaryContentLanguage: String?) {
-        
+    func trackScreenView(properties: AnalyticsProperties) {
+
         internalTrackEvent(
-            screenName: screenName,
-            siteSection: siteSection,
-            siteSubSection: siteSubSection,
-            appLanguage: appLanguage,
-            contentLanguage: contentLanguage,
-            secondaryContentLanguage: secondaryContentLanguage,
+            properties: properties,
             previousScreenName: previousTrackedScreenName,
             eventName: AnalyticsEventScreenView,
             data: nil
         )
-        previousTrackedScreenName = screenName
-    }
-    
-    func trackAction(screenName: String, siteSection: String, siteSubSection: String, appLanguage: String?, contentLanguage: String?, secondaryContentLanguage: String?, actionName: String, data: [String: Any]?) {
         
+        previousTrackedScreenName = properties.screenName
+    }
+
+    func trackAction(properties: AnalyticsProperties, actionName: String, data: [String: Any]?) {
+
         internalTrackEvent(
-            screenName: screenName,
-            siteSection: siteSection,
-            siteSubSection: siteSubSection,
-            appLanguage: appLanguage,
-            contentLanguage: contentLanguage,
-            secondaryContentLanguage: secondaryContentLanguage,
+            properties: properties,
             previousScreenName: previousTrackedScreenName,
             eventName: actionName,
             data: data
         )
     }
-    
-    func trackExitLink(screenName: String, siteSection: String, siteSubSection: String, appLanguage: String?, contentLanguage: String?, secondaryContentLanguage: String?, url: String) {
-        
+
+    func trackExitLink(properties: AnalyticsProperties, url: String) {
+
         internalTrackEvent(
-            screenName: screenName,
-            siteSection: siteSection,
-            siteSubSection: siteSubSection,
-            appLanguage: appLanguage,
-            contentLanguage: contentLanguage,
-            secondaryContentLanguage: secondaryContentLanguage,
+            properties: properties,
             previousScreenName: previousTrackedScreenName,
             eventName: AnalyticsConstants.Values.exitLink,
             data: [
@@ -102,43 +88,32 @@ class FirebaseAnalytics: FirebaseAnalyticsInterface {
             ]
         )
     }
+
+    private func internalTrackEvent(properties: AnalyticsProperties, previousScreenName: String, eventName: String, data: [String: Any]?) {
+
+        let baseParameters: [String: Any] = createBaseProperties(
+            properties: properties,
+            previousScreenName: previousScreenName
+        )
         
-    private func internalTrackEvent(screenName: String?, siteSection: String?, siteSubSection: String?, appLanguage: String?, contentLanguage: String?, secondaryContentLanguage: String?, previousScreenName: String, eventName: String, data: [String: Any]?) {
-                
-        DispatchQueue.global().async { [weak self] in
-            
-            guard let firebaseAnalytics = self else {
-                return
+        var parameters: [String: Any] = baseParameters
+        
+        if let data = data {
+            for (key, value) in data where parameters[key] == nil {
+                parameters[key] = value
             }
-            
-            let baseParameters: [String: Any] = firebaseAnalytics.createBaseProperties(
-                screenName: screenName,
-                siteSection: siteSection,
-                siteSubSection: siteSubSection,
-                appLanguage: appLanguage,
-                contentLanguage: contentLanguage,
-                secondaryContentLanguage: secondaryContentLanguage,
-                previousScreenName: previousScreenName
-            )
-            
-            var parameters: [String: Any] = baseParameters
-            
-            if let data = data {
-                for (key, value) in data where parameters[key] == nil {
-                    parameters[key] = value
-                }
-            }
-            
-            let transformedEventName: String = firebaseAnalytics.transformStringForFirebase(string: eventName).lowercased()
-            let transformedData: [String: Any]? = firebaseAnalytics.transformDataForFirebase(data: parameters)
-            
-            Analytics.logEvent(transformedEventName, parameters: transformedData)
-            
-            firebaseAnalytics.log(method: "trackEvent()", label: "name", labelValue: transformedEventName, data: transformedData)
         }
+        
+        let transformedEventName: String = transformStringForFirebase(string: eventName).lowercased()
+        let transformedData: [String: Any]? = transformDataForFirebase(data: parameters)
+        
+        Analytics.logEvent(transformedEventName, parameters: transformedData)
+        
+        log(method: "trackEvent()", label: "name", labelValue: transformedEventName, data: transformedData)
     }
     
     private func transformDataForFirebase(data: [String: Any]?) -> [String: Any]? {
+        
         guard let attributesData = data else {
             return nil
         }
@@ -166,20 +141,20 @@ class FirebaseAnalytics: FirebaseAnalyticsInterface {
         )
     }
     
-    private func createBaseProperties(screenName: String?, siteSection: String?, siteSubSection: String?, appLanguage: String?, contentLanguage: String?, secondaryContentLanguage: String?, previousScreenName: String?) -> [String: String] {
-        
-        var properties: [String: String] = [:]
-                
-        properties[AnalyticsConstants.Keys.appName] = AnalyticsConstants.Values.godTools
-        properties[AnalyticsConstants.Keys.appLanguage] = appLanguage
-        properties[AnalyticsConstants.Keys.contentLanguage] = contentLanguage
-        properties[AnalyticsConstants.Keys.contentLanguageSecondary] = secondaryContentLanguage
-        properties[AnalyticsConstants.Keys.previousScreenName] = previousScreenName
-        properties[AnalyticsConstants.Keys.screenNameFirebase] = screenName
-        properties[AnalyticsConstants.Keys.siteSection] = siteSection
-        properties[AnalyticsConstants.Keys.siteSubSection] = siteSubSection
-        
-        return properties
+    private func createBaseProperties(properties: AnalyticsProperties, previousScreenName: String?) -> [String: String] {
+
+        var baseProperties: [String: String] = [:]
+
+        baseProperties[AnalyticsConstants.Keys.appName] = AnalyticsConstants.Values.godTools
+        baseProperties[AnalyticsConstants.Keys.appLanguage] = properties.appLanguage
+        baseProperties[AnalyticsConstants.Keys.contentLanguage] = properties.contentLanguage
+        baseProperties[AnalyticsConstants.Keys.contentLanguageSecondary] = properties.secondaryContentLanguage
+        baseProperties[AnalyticsConstants.Keys.previousScreenName] = previousScreenName
+        baseProperties[AnalyticsConstants.Keys.screenNameFirebase] = properties.screenName
+        baseProperties[AnalyticsConstants.Keys.siteSection] = properties.siteSection
+        baseProperties[AnalyticsConstants.Keys.siteSubSection] = properties.siteSubSection
+
+        return baseProperties
     }
     
     private func log(method: String, label: String?, labelValue: String?, data: [String: Any]?) {

@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class GetCurrentAppLanguageUseCase {
+final class GetCurrentAppLanguageUseCase: Sendable {
     
     private let userAppLanguageRepository: UserAppLanguageRepository
     

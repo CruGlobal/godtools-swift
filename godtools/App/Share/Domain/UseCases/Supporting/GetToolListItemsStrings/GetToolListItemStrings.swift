@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetToolListItemStrings {
+final class GetToolListItemStrings: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
     
@@ -17,11 +17,11 @@ final class GetToolListItemStrings {
         self.localizationServices = localizationServices
     }
     
-    func getStrings(appLanguage: AppLanguageDomainModel) -> ToolListItemStringsDomainModel {
+    func getStrings(appLanguage: AppLanguageDomainModel) async -> ToolListItemStringsDomainModel {
         
         let strings = ToolListItemStringsDomainModel(
-            openToolActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.open.key),
-            openToolDetailsActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.favoritesFavoriteLessonsDetails.key)
+            openToolActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.open.key),
+            openToolDetailsActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.favoritesFavoriteLessonsDetails.key)
         )
         
         return strings

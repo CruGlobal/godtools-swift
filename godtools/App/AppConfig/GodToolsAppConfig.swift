@@ -17,7 +17,7 @@ final class GodToolsAppConfig: AppConfigInterface {
     
     private let environment: AppEnvironment
     
-    let showsPersonalization: Bool = true
+    let showsPersonalization: Bool = false
             
     init(environment: AppEnvironment) {
         

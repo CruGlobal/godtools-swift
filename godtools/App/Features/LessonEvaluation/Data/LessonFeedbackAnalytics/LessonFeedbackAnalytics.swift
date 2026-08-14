@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class LessonFeedbackAnalytics {
+final class LessonFeedbackAnalytics: Sendable {
     
     private static let trackLessonFeedbackActionName: String = "lesson_feedback"
     private static let propertyHelpful: String = "helpful"
@@ -28,7 +28,7 @@ final class LessonFeedbackAnalytics {
         lesson: ResourceDataModel,
         feedback: TrackLessonFeedbackDomainModel,
         contentLanguage: AppLanguageDomainModel
-    ) {
+    ) async {
             
         var data: [String: String] = Dictionary()
         
@@ -49,13 +49,17 @@ final class LessonFeedbackAnalytics {
         data[LessonFeedbackAnalytics.propertyReadiness] = String(feedback.readinessScaleValue)
         data[LessonFeedbackAnalytics.propertyPageReached] = String(feedback.pageIndexReached)
         
-        firebaseAnalytics.trackAction(
+        let properties = AnalyticsProperties(
             screenName: "",
             siteSection: lesson.abbreviation,
             siteSubSection: "",
             appLanguage: nil,
             contentLanguage: contentLanguage,
-            secondaryContentLanguage: nil,
+            secondaryContentLanguage: nil
+        )
+        
+        await firebaseAnalytics.trackAction(
+            properties: properties,
             actionName: LessonFeedbackAnalytics.trackLessonFeedbackActionName,
             data: data
         )

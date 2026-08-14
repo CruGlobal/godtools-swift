@@ -10,13 +10,20 @@ import Foundation
 
 struct ReportABugWebContent: WebContentType {
     
-    let navTitle: String
+    let appLanguage: AppLanguageDomainModel
+    let navTitleLocalizedKey: String = LocalizableStringKeys.menuReportABug.key
     let url: URL? = URL(string: "https://godtoolsapp.com/report-bug/")
     let analyticsScreenName: String = "Report A Bug"
     let analyticsSiteSection: String = "menu"
+    let localizationServices: LocalizationServicesInterface
     
-    init(localizationServices: LocalizationServicesInterface) {
+    private(set) var navTitle: String = ""
+    
+    init(appLanguage: AppLanguageDomainModel, localizationServices: LocalizationServicesInterface) async {
         
-        navTitle = localizationServices.stringForSystemElseEnglish(key: LocalizableStringKeys.menuReportABug.key)
+        self.appLanguage = appLanguage
+        self.localizationServices = localizationServices
+        
+        self.navTitle = await getLocalizedNavTitle()
     }
 }

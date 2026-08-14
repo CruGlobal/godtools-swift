@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class DeleteAccountUseCase {
+final class DeleteAccountUseCase: Sendable {
     
     private let userAuthentication: UserAuthentication
     private let userDetailsRepository: UserDetailsRepository

@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class LogOutUserUseCase {
+final class LogOutUserUseCase: Sendable {
     
     private let userAuthentication: UserAuthentication
     private let firebaseAnalytics: FirebaseAnalyticsInterface
@@ -31,14 +31,14 @@ final class LogOutUserUseCase {
         
         try await userAuthentication.signOut()
         
-        setAnalyticsUserProperties()
+        await setAnalyticsUserProperties()
         
         return true
     }
     
-    private func setAnalyticsUserProperties() {
+    private func setAnalyticsUserProperties() async {
         
-        firebaseAnalytics.setLoggedInStateUserProperties(
+        await firebaseAnalytics.setLoggedInStateUserProperties(
             isLoggedIn: false,
             loggedInUserProperties: nil
         )

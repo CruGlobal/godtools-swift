@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetResumeLessonProgressStringsUseCase {
+final class GetResumeLessonProgressStringsUseCase: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
     
@@ -16,15 +16,15 @@ final class GetResumeLessonProgressStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> ResumeLessonProgressStringsDomainModel {
+    func execute(appLanguage: AppLanguageDomainModel) async -> ResumeLessonProgressStringsDomainModel {
         
         let localeId: String = appLanguage.localeId
         
         let strings = ResumeLessonProgressStringsDomainModel(
-            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsResumeLessonModalTitle.key),
-            subtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsResumeLessonModalSubtitle.key),
-            startOverButtonText: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsResumeLessonModalStartOverButton.key),
-            continueButtonText: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsResumeLessonModalContinueButton.key)
+            title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsResumeLessonModalTitle.key),
+            subtitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsResumeLessonModalSubtitle.key),
+            startOverButtonText: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsResumeLessonModalStartOverButton.key),
+            continueButtonText: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsResumeLessonModalContinueButton.key)
         )
         
         return strings

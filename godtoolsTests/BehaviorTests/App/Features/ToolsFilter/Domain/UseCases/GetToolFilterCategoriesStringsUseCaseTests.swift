@@ -30,7 +30,7 @@ struct GetToolFilterCategoriesStringsUseCaseTests {
 
         let useCase = getUseCase()
 
-        let strings: ToolFilterCategoriesStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
+        let strings: ToolFilterCategoriesStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.navTitle == "\(argument.appLanguage):\(LocalizableStringKeys.toolsFilterCategoryNavTitle.key)")
     }

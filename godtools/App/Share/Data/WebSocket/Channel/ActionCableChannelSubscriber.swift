@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberInterface {
+final class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberInterface {
     
     private let webSocket: WebSocketInterface
     private let didSubscribeSubject: PassthroughSubject<WebSocketChannel, Never> = PassthroughSubject()

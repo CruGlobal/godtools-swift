@@ -11,7 +11,7 @@ import RequestOperation
 import RepositorySync
 import Combine
 
-final class LanguagesRepository {
+final class LanguagesRepository: Sendable {
     
     private let api: LanguagesApiInterface
     private let jsonFileCache: LanguagesJsonFileCache

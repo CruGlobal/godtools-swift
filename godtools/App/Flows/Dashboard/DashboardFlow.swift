@@ -1002,13 +1002,14 @@ extension DashboardFlow {
     
     private func getConfirmRemoveToolFromFavoritesAlertView(
         toolId: String,
+        strings: ConfirmRemoveToolFromFavoritesStringsDomainModel,
         didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?
     ) -> UIViewController {
-        
+
         let viewModel = ConfirmRemoveToolFromFavoritesAlertViewModel(
             toolId: toolId,
             appLanguage: appLanguage,
-            getConfirmRemoveToolFromFavoritesStringsUseCase: appDiContainer.feature.favorites.domainLayer.getConfirmRemoveToolFromFavoritesStringsUseCase(),
+            strings: strings,
             removeFavoritedToolUseCase: appDiContainer.feature.favorites.domainLayer.getRemoveFavoritedToolUseCase(),
             didConfirmToolRemovalSubject: didConfirmToolRemovalSubject
         )
@@ -1018,13 +1019,24 @@ extension DashboardFlow {
         return view.controller
     }
     
-    private func presentConfirmRemoveToolFromFavoritesAlertView(toolId: String, didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?, animated: Bool) {
-        
-        let view = getConfirmRemoveToolFromFavoritesAlertView(
-            toolId: toolId,
-            didConfirmToolRemovalSubject: didConfirmToolRemovalSubject
-        )
-        
-        presentView(view: view, animated: animated)
+    private func presentConfirmRemoveToolFromFavoritesAlertView(
+        toolId: String,
+        didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?,
+        animated: Bool
+    ) {
+
+        Task {
+            
+            let strings = await appDiContainer.feature.favorites.domainLayer.getConfirmRemoveToolFromFavoritesStringsUseCase()
+                .execute(toolId: toolId, appLanguage: appLanguage)
+
+            let view = getConfirmRemoveToolFromFavoritesAlertView(
+                toolId: toolId,
+                strings: strings,
+                didConfirmToolRemovalSubject: didConfirmToolRemovalSubject
+            )
+
+            presentView(view: view, animated: animated)
+        }
     }
 }

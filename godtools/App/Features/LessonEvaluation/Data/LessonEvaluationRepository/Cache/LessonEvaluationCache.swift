@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import RepositorySync
 
-final class LessonEvaluationCache {
+final class LessonEvaluationCache: Sendable {
     
     let persistence: any Persistence<LessonEvaluationDataModel, LessonEvaluationDataModel>
     

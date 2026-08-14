@@ -9,7 +9,7 @@
 import Foundation
 import UserNotifications
 
-final class CheckNotificationStatusUseCase {
+final class CheckNotificationStatusUseCase: Sendable {
    
     private let getNotificationStatus: GetNotificationStatus
     

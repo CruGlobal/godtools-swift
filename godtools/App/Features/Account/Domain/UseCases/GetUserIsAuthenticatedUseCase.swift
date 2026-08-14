@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class GetUserIsAuthenticatedUseCase {
+final class GetUserIsAuthenticatedUseCase: Sendable {
     
     private let userAuthentication: UserAuthentication
     

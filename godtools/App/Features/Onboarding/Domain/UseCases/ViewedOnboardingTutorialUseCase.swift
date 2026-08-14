@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class ViewedOnboardingTutorialUseCase {
+final class ViewedOnboardingTutorialUseCase: Sendable {
     
     private let onboardingTutorialViewedRepository: OnboardingTutorialViewedRepository
     

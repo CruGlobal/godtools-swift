@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class DeferredDeepLinkDiContainer {
+final class DeferredDeepLinkDiContainer: Sendable {
     
     let dataLayer: DeferredDeepLinkDataLayerDependencies
     let domainLayer: DeferredDeepLinkDomainLayerDependencies

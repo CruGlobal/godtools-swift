@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ResourcesCacheSyncResult {
+struct ResourcesCacheSyncResult: Sendable {
     
     let resourcesRemoved: [ResourceDataModel]
     let translationsRemoved: [TranslationDataModel]

@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class GetFeaturedLessonsUseCase {
+final class GetFeaturedLessonsUseCase: Sendable {
     
     private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository
@@ -60,41 +60,45 @@ final class GetFeaturedLessonsUseCase {
         let featuredLessonsDataModels: [ResourceDataModel] = try await resourcesRepository
             .getFeaturedLessons(sorted: true)
         
-        let featuredLessons: [FeaturedLessonDomainModel] = try featuredLessonsDataModels.map { (resource: ResourceDataModel) in
+        var featuredLessons: [FeaturedLessonDomainModel] = Array()
+
+        for resource in featuredLessonsDataModels {
 
             let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel
-            
+
             if let language = appLanguageModel {
-                toolLanguageAvailability = self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: resource, language: language, translateInLanguage: language)
+                toolLanguageAvailability = await self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: resource, language: language, translateInLanguage: language)
             }
             else {
                 toolLanguageAvailability = ToolLanguageAvailabilityDomainModel(availabilityString: "", isAvailable: false)
             }
-            
-            let lessonProgress = try self.getLessonListItemProgress.getLessonProgress(
+
+            let lessonProgress = try await self.getLessonListItemProgress.getLessonProgress(
                 lesson: resource,
                 appLanguage: appLanguage
             )
-            
+
             let nameLanguageDirection: LanguageDirectionDomainModel
-            
+
             if let filterLanguageModel = appLanguageModel {
                 nameLanguageDirection = filterLanguageModel.languageDirectionDomainModel
             } else {
                 nameLanguageDirection = .leftToRight
             }
-            
-            return FeaturedLessonDomainModel(
-                analyticsToolName: resource.abbreviation,
-                availabilityInAppLanguage: toolLanguageAvailability,
-                bannerImageId: resource.attrBanner,
-                dataModelId: resource.id,
-                name: self.getTranslatedToolName.getToolName(resource: resource, translateInLanguage: appLanguage),
-                nameLanguageDirection: nameLanguageDirection,
-                lessonProgress: lessonProgress
+
+            featuredLessons.append(
+                FeaturedLessonDomainModel(
+                    analyticsToolName: resource.abbreviation,
+                    availabilityInAppLanguage: toolLanguageAvailability,
+                    bannerImageId: resource.attrBanner,
+                    dataModelId: resource.id,
+                    name: self.getTranslatedToolName.getToolName(resource: resource, translateInLanguage: appLanguage),
+                    nameLanguageDirection: nameLanguageDirection,
+                    lessonProgress: lessonProgress
+                )
             )
         }
-        
+
         return featuredLessons
     }
 }

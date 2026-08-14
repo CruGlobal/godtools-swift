@@ -11,7 +11,7 @@ import Combine
 import RequestOperation
 
 @MainActor
-class AppBackgroundState {
+final class AppBackgroundState {
     
     static let shared: AppBackgroundState = AppBackgroundState()
         
@@ -61,11 +61,13 @@ class AppBackgroundState {
         
         syncUserCounters(
             userIsAuthenticatedUseCase: appDiContainer.feature.account.domainLayer.getUserIsAuthenticatedUseCase(),
-            userCountersSync: appDiContainer.core.dataLayer.getSharedUserCountersSync()
+            userCountersSync: appDiContainer.core.dataLayer.getUserCountersSync()
         )
     }
     
-    private func syncLatestToolsForFavoritedTools(downloadLatestToolsForFavoritedToolsUseCase: DownloadLatestToolsForFavoritedToolsUseCase) {
+    private func syncLatestToolsForFavoritedTools(
+        downloadLatestToolsForFavoritedToolsUseCase: DownloadLatestToolsForFavoritedToolsUseCase
+    ) {
         
         $appLanguage
             .dropFirst()
@@ -84,7 +86,11 @@ class AppBackgroundState {
             .store(in: &cancellables)
     }
     
-    private func syncInitialFavoritedTools(resourcesRepository: ResourcesRepository, launchCountRepository: LaunchCountRepositoryInterface, storeInitialFavoritedToolsUseCase: StoreInitialFavoritedToolsUseCase) {
+    private func syncInitialFavoritedTools(
+        resourcesRepository: ResourcesRepository,
+        launchCountRepository: LaunchCountRepositoryInterface,
+        storeInitialFavoritedToolsUseCase: StoreInitialFavoritedToolsUseCase
+    ) {
         
         Publishers.CombineLatest(
             resourcesRepository.observeCollectionChangesPublisher().prepend(Void()),
@@ -113,7 +119,10 @@ class AppBackgroundState {
         .store(in: &cancellables)
     }
     
-    private func syncUserCounters(userIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase, userCountersSync: UserCountersSync) {
+    private func syncUserCounters(
+        userIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase,
+        userCountersSync: UserCountersSync
+    ) {
                        
         userIsAuthenticatedUseCase
             .execute()

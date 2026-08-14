@@ -22,7 +22,7 @@ struct GetTutorialStringsUseCaseTests {
 
         let useCase = getUseCase()
 
-        let strings: TutorialStringsDomainModel = useCase.execute(appLanguage: LanguageCodeDomainModel.english.value)
+        let strings: TutorialStringsDomainModel = await useCase.execute(appLanguage: LanguageCodeDomainModel.english.value)
 
         #expect(strings.nextTutorialPageActionTitle == "en:\(LocalizableStringKeys.tutorialContinueButtonTitleContinue.key)")
         #expect(strings.completeTutorialActionTitle == "en:\(LocalizableStringKeys.tutorialContinueButtonTitleCloseTutorial.key)")
@@ -39,7 +39,7 @@ struct GetTutorialStringsUseCaseTests {
 
         let useCase = getUseCase()
 
-        let strings: TutorialStringsDomainModel = useCase.execute(appLanguage: LanguageCodeDomainModel.spanish.value)
+        let strings: TutorialStringsDomainModel = await useCase.execute(appLanguage: LanguageCodeDomainModel.spanish.value)
 
         #expect(strings.nextTutorialPageActionTitle == "es:\(LocalizableStringKeys.tutorialContinueButtonTitleContinue.key)")
         #expect(strings.completeTutorialActionTitle == "es:\(LocalizableStringKeys.tutorialContinueButtonTitleStartUsingGodTools.key)")

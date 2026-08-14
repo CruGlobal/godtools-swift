@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class ShareGodToolsDiContainer {
+final class ShareGodToolsDiContainer: Sendable {
     
     let dataLayer: ShareGodToolsDataLayerDependencies
     let domainLayer: ShareGodToolsDomainLayerDependencies

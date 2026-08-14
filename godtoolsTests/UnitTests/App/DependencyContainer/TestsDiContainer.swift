@@ -9,7 +9,7 @@
 import Foundation
 @testable import godtools
 
-class TestsDiContainer {
+final class TestsDiContainer: Sendable {
 
     private let appDiContainer: AppDiContainer
 
@@ -18,7 +18,11 @@ class TestsDiContainer {
         appBuild: AppBuildInterface = TestsBuild()
     ) {
 
-        appDiContainer = AppDiContainer(appBuild: appBuild, appConfig: testsAppConfig)
+        appDiContainer = AppDiContainer(
+            appBuild: appBuild,
+            appConfig: testsAppConfig,
+            firebaseAnalytics: DisabledFirebaseAnalytics()
+        )
     }
 
     var core: AppCoreDiContainer {

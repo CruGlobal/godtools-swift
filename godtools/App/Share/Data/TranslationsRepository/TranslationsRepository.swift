@@ -11,7 +11,7 @@ import GodToolsShared
 import RequestOperation
 import RepositorySync
 
-final class TranslationsRepository {
+final class TranslationsRepository: Sendable {
     
     private let api: TranslationsApiInterface
     private let cdn: TranslationsCdnInterface
@@ -110,7 +110,7 @@ extension TranslationsRepository {
         
         for manifestFile in manifest.relatedFiles {
             
-            let fileCacheLocation = try getTranslationFileFromCache(
+            let fileCacheLocation = try await getTranslationFileFromCache(
                 translation: translation,
                 file: .manifestFile(manifestFile: manifestFile)
             )
@@ -207,7 +207,11 @@ extension TranslationsRepository {
         return maintainTranslationDownloadOrder
     }
     
-    private func getTranslationManifestRelatedFilesFromCacheElseRemote(translation: TranslationDataModel, manifest: Manifest, requestPriority: RequestPriority) async throws -> [FileCacheLocation] {
+    private func getTranslationManifestRelatedFilesFromCacheElseRemote(
+        translation: TranslationDataModel,
+        manifest: Manifest,
+        requestPriority: RequestPriority
+    ) async throws -> [FileCacheLocation] {
         
         try await withThrowingTaskGroup(of: FileCacheLocation.self) { group in
             
@@ -389,7 +393,7 @@ extension TranslationsRepository {
         
         do {
             
-            return try getTranslationFileFromCache(
+            return try await getTranslationFileFromCache(
                 translation: translation,
                 file: file
             )
@@ -404,13 +408,13 @@ extension TranslationsRepository {
         }
     }
     
-    private func getTranslationFileFromCache(translation: TranslationDataModel, file: TranslationFile) throws -> FileCacheLocation {
+    private func getTranslationFileFromCache(translation: TranslationDataModel, file: TranslationFile) async throws -> FileCacheLocation {
         
         let fileName = try file.fileName
         
         let fileCacheLocation = FileCacheLocation(relativeUrlString: fileName)
         
-        let fileExists: Bool = try resourcesFileCache.cache.getFileExists(location: fileCacheLocation)
+        let fileExists: Bool = try await resourcesFileCache.cache.getFileExists(location: fileCacheLocation)
         
         guard fileExists else {
             throw NSError.errorWithDescription(description: "Failed to get translation file.  File does not exist in the cache.")

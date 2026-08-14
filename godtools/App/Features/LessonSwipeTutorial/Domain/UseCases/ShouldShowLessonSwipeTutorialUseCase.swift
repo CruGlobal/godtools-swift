@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class ShouldShowLessonSwipeTutorialUseCase {
+final class ShouldShowLessonSwipeTutorialUseCase: Sendable {
 
     private let lessonSwipeTutorialViewedRepo: LessonSwipeTutorialViewedRepository
     

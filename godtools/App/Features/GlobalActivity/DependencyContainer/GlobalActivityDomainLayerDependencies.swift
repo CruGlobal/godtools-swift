@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GlobalActivityDomainLayerDependencies {
+final class GlobalActivityDomainLayerDependencies: Sendable {
     
     private let core: AppCoreDiContainer
     private let dataLayer: GlobalActivityDataLayerDependencies

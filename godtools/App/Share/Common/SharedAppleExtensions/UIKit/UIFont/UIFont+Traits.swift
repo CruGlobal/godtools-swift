@@ -19,10 +19,6 @@ extension UIFont {
         return with(.traitItalic)
     }
 
-    var boldItalic: UIFont {
-        return with([.traitBold, .traitItalic])
-    }
-    
     func with(_ traits: UIFontDescriptor.SymbolicTraits...) -> UIFont {
         
         guard let descriptor = fontDescriptor.withSymbolicTraits(UIFontDescriptor.SymbolicTraits(traits).union(fontDescriptor.symbolicTraits)) else {

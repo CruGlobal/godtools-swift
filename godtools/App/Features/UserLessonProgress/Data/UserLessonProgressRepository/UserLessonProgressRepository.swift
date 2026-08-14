@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class UserLessonProgressRepository {
+final class UserLessonProgressRepository: Sendable {
     
     private let cache: UserLessonProgressCache
     

@@ -30,7 +30,7 @@ struct GetOptInNotificationStringsUseCaseTests {
 
         let useCase = getUseCase()
 
-        let strings: OptInNotificationStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
+        let strings: OptInNotificationStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.title == "\(argument.appLanguage):\(LocalizableStringKeys.optInNotificationTitle.key)")
         #expect(strings.body == "\(argument.appLanguage):\(LocalizableStringKeys.optInNotificationBody.key)")

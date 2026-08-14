@@ -9,7 +9,7 @@
 import Foundation
 import RequestOperation
 
-final class LanguagesJsonFileCache {
+final class LanguagesJsonFileCache: Sendable {
     
     private let jsonServices: JsonServices
     

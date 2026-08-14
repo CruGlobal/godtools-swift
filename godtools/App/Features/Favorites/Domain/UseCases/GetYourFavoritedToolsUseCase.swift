@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class GetYourFavoritedToolsUseCase {
+final class GetYourFavoritedToolsUseCase: Sendable {
     
     private let favoritedResourcesRepository: FavoritedResourcesRepository
     private let resourcesRepository: ResourcesRepository
@@ -33,9 +33,7 @@ final class GetYourFavoritedToolsUseCase {
     }
     
     @MainActor func execute(appLanguage: AppLanguageDomainModel, maxCount: Int?) -> AnyPublisher<[YourFavoritedToolDomainModel], Error> {
-        
-        let strings: ToolListItemStringsDomainModel = getToolListItemStrings.getStrings(appLanguage: appLanguage)
-        
+
         return Publishers.CombineLatest(
             resourcesRepository
                 .observeCollectionChangesPublisher(),
@@ -44,40 +42,49 @@ final class GetYourFavoritedToolsUseCase {
         )
         .receive(on: DispatchQueue.global())
         .flatMap { (resourcesChanged: Void, favoritedResourcesChanged: Void) -> AnyPublisher<[YourFavoritedToolDomainModel], Error> in
-            
+
             return AnyPublisher() {
-                try await self.asyncExecute(appLanguage: appLanguage, maxCount: maxCount, strings: strings)
+                try await self.asyncExecute(appLanguage: appLanguage, maxCount: maxCount)
             }
         }
         .eraseToAnyPublisher()
     }
-    
-    private func asyncExecute(appLanguage: AppLanguageDomainModel, maxCount: Int?, strings: ToolListItemStringsDomainModel) async throws -> [YourFavoritedToolDomainModel] {
-        
+
+    private func asyncExecute(
+        appLanguage: AppLanguageDomainModel,
+        maxCount: Int?
+    ) async throws -> [YourFavoritedToolDomainModel] {
+
+        let strings: ToolListItemStringsDomainModel = await getToolListItemStrings.getStrings(appLanguage: appLanguage)
+
         let favoritedResources: [FavoritedResourceDataModel] = try await favoritedResourcesRepository.getFavoritedResourcesSortedByPosition()
-        
-        let numberOfFavoritedTools: Int = try self.favoritedResourcesRepository.getObjectCount()
-        
+
+        let numberOfFavoritedTools: Int = try favoritedResourcesRepository.getObjectCount()
+
         let prefixedFavoritedResources: [ResourceDataModel] = favoritedResources
             .prefix(maxCount ?? numberOfFavoritedTools)
             .compactMap {
-                self.resourcesRepository.getResourceById(id: $0.id)
+                resourcesRepository.getResourceById(id: $0.id)
             }
-        
-        let yourFavoritedTools: [YourFavoritedToolDomainModel] = prefixedFavoritedResources
-            .map {
+
+        var yourFavoritedTools: [YourFavoritedToolDomainModel] = Array()
+
+        for resource in prefixedFavoritedResources {
+
+            yourFavoritedTools.append(
                 YourFavoritedToolDomainModel(
                     strings: strings,
-                    analyticsToolAbbreviation: $0.abbreviation,
-                    dataModelId: $0.id,
-                    bannerImageId: $0.attrBanner,
-                    name: self.getTranslatedToolName.getToolName(resource: $0, translateInLanguage: appLanguage),
-                    category: self.getTranslatedToolCategory.getTranslatedCategory(resource: $0, translateInLanguage: appLanguage),
+                    analyticsToolAbbreviation: resource.abbreviation,
+                    dataModelId: resource.id,
+                    bannerImageId: resource.attrBanner,
+                    name: getTranslatedToolName.getToolName(resource: resource, translateInLanguage: appLanguage),
+                    category: await getTranslatedToolCategory.getTranslatedCategory(resource: resource, translateInLanguage: appLanguage),
                     isFavorited: true,
                     languageAvailability: nil
                 )
-            }
-        
+            )
+        }
+
         return yourFavoritedTools
     }
 }

@@ -8,17 +8,18 @@
 
 import UIKit
 
-final class AppDiContainer {
+final class AppDiContainer: Sendable {
     
     let core: AppCoreDiContainer
     let feature: AppFeatureDiContainer
     
-    init(appBuild: AppBuildInterface, appConfig: AppConfigInterface) {
+    init(appBuild: AppBuildInterface, appConfig: AppConfigInterface, firebaseAnalytics: FirebaseAnalyticsInterface) {
                 
         // core
         let dataLayer = AppDataLayerDependencies(
             appBuild: appBuild,
-            appConfig: appConfig
+            appConfig: appConfig,
+            firebaseAnalytics: firebaseAnalytics
         )
         
         let domainLayer = AppDomainLayerDependencies(
@@ -173,7 +174,11 @@ final class AppDiContainer {
     }
     
     static func createUITestsDiContainer() -> AppDiContainer {
-        return AppDiContainer(appBuild: UITestsBuild(), appConfig: UITestsAppConfig())
+        return AppDiContainer(
+            appBuild: UITestsBuild(),
+            appConfig: UITestsAppConfig(),
+            firebaseAnalytics: DisabledFirebaseAnalytics()
+        )
     }
     
     func getUrlOpener() -> UrlOpenerInterface {
@@ -197,7 +202,7 @@ final class AppDiContainer {
             appLanguage: appLanguage,
             toolTranslations: toolTranslations,
             pageViewFactories: pageViewFactories,
-            manifestResourcesCache: core.dataLayer.getMobileContentRendererManifestResourcesCache()
+            resourcesFileCache: core.dataLayer.getResourcesFileCache()
         )
     }
     

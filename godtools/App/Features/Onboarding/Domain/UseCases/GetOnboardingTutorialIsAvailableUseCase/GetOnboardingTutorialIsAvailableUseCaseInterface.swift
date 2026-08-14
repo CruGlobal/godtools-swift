@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol GetOnboardingTutorialIsAvailableUseCaseInterface {
+protocol GetOnboardingTutorialIsAvailableUseCaseInterface: Sendable {
     func execute() async -> Bool
 }

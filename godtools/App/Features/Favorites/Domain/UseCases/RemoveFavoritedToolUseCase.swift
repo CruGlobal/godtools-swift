@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class RemoveFavoritedToolUseCase {
+final class RemoveFavoritedToolUseCase: Sendable {
     
     private let favoritedResourcesRepository: FavoritedResourcesRepository
     

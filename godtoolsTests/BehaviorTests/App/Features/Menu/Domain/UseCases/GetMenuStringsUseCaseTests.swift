@@ -25,7 +25,7 @@ struct GetMenuStringsUseCaseTests {
 
         let useCase = getUseCase()
 
-        let menuStrings: MenuStringsDomainModel = useCase.execute(appLanguage: englishAppLanguage)
+        let menuStrings: MenuStringsDomainModel = await useCase.execute(appLanguage: englishAppLanguage)
 
         #expect(menuStrings.title == "en:\(LocalizableStringKeys.settings.key)")
         #expect(menuStrings.getStartedTitle == "en:\(LocalizableStringKeys.menuGetStarted.key)")
@@ -64,7 +64,7 @@ struct GetMenuStringsUseCaseTests {
 
         let useCase = getUseCase()
 
-        let menuStrings: MenuStringsDomainModel = useCase.execute(appLanguage: spanishAppLanguage)
+        let menuStrings: MenuStringsDomainModel = await useCase.execute(appLanguage: spanishAppLanguage)
 
         #expect(menuStrings.title == "es:\(LocalizableStringKeys.settings.key)")
         #expect(menuStrings.getStartedTitle == "es:\(LocalizableStringKeys.menuGetStarted.key)")
@@ -99,7 +99,7 @@ struct GetMenuStringsUseCaseTests {
             bundleVersion: argument.bundleVersion
         )
 
-        let menuStrings: MenuStringsDomainModel = useCase.execute(appLanguage: englishAppLanguage)
+        let menuStrings: MenuStringsDomainModel = await useCase.execute(appLanguage: englishAppLanguage)
 
         #expect(menuStrings.version == argument.expectedVersion)
     }

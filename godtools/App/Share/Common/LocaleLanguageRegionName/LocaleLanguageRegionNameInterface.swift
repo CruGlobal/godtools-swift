@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol LocaleLanguageRegionNameInterface {
+protocol LocaleLanguageRegionNameInterface: Sendable {
     
     func getRegionName(forRegionCode: String, translatedInLanguageId: BCP47LanguageIdentifier?) -> String?
 }

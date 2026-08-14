@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class GetAllToolsUseCase {
+final class GetAllToolsUseCase: Sendable {
     
     private let resourcesRepository: ResourcesRepository
     private let getToolsListItems: GetToolsListItems
@@ -20,28 +20,36 @@ final class GetAllToolsUseCase {
         self.getToolsListItems = getToolsListItems
     }
     
-    @MainActor func execute(appLanguage: AppLanguageDomainModel, languageIdForAvailabilityText: String?, filterToolsByCategory: ToolFilterCategoryDomainModel, filterToolsByLanguage: ToolFilterLanguageDomainModel) -> AnyPublisher<[ToolListItemDomainModel], Error> {
+    @MainActor func execute(
+        appLanguage: AppLanguageDomainModel,
+        languageIdForAvailabilityText: String?,
+        filterToolsByCategory: ToolFilterCategoryDomainModel,
+        filterToolsByLanguage: ToolFilterLanguageDomainModel
+    ) -> AnyPublisher<[ToolListItemDomainModel], Error> {
         
         return resourcesRepository
             .observeCollectionChangesPublisher()
             .receive(on: DispatchQueue.global())
             .prepend(Void())
-            .map { _ in
-            
-                let tools: [ResourceDataModel] = self.resourcesRepository.getAllToolsList(
-                    filterByCategory: filterToolsByCategory.filterId,
-                    filterByLanguageId: filterToolsByLanguage.filterId,
-                    sortByDefaultOrder: true
-                )
+            .flatMap { (resourcesChanged: Void) -> AnyPublisher<[ToolListItemDomainModel], Error> in
 
-                let toolListItems = self.getToolsListItems
-                    .mapToolsToListItems(
-                        tools: tools,
-                        appLanguage: appLanguage,
-                        languageIdForAvailabilityText: languageIdForAvailabilityText
+                return AnyPublisher() {
+
+                    let tools: [ResourceDataModel] = self.resourcesRepository.getAllToolsList(
+                        filterByCategory: filterToolsByCategory.filterId,
+                        filterByLanguageId: filterToolsByLanguage.filterId,
+                        sortByDefaultOrder: true
                     )
-                
-                return toolListItems
+
+                    let toolListItems = await self.getToolsListItems
+                        .mapToolsToListItems(
+                            tools: tools,
+                            appLanguage: appLanguage,
+                            languageIdForAvailabilityText: languageIdForAvailabilityText
+                        )
+
+                    return toolListItems
+                }
             }
             .eraseToAnyPublisher()
     }

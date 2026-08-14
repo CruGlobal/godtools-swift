@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class StoreInitialFavoritedToolsUseCase {
+final class StoreInitialFavoritedToolsUseCase: Sendable {
     
     private let favoritedResourcesRepository: FavoritedResourcesRepository
     

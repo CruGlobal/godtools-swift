@@ -11,7 +11,7 @@ import RealmSwift
 import SwiftData
 import RepositorySync
 
-final class LocalActivityCounterCache {
+final class LocalActivityCounterCache: Sendable {
     
     let persistence: any Persistence<LocalActivityCountDataModel, LocalActivityCountDataModel>
     

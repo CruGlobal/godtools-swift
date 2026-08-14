@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class ResourcesJsonFileCache {
+final class ResourcesJsonFileCache: Sendable {
     
     private let jsonServices: JsonServices
     

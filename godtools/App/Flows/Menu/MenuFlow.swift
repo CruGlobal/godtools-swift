@@ -12,9 +12,7 @@ import SwiftUI
 import Combine
 
 final class MenuFlow: GTFlow {
-            
-    private var cancellables: Set<AnyCancellable> = Set()
-    
+                
     @Published private var appLanguage: AppLanguageDomainModel
                 
     init(appDiContainer: AppDiContainer, appLanguage: AppLanguageDomainModel, initialNavigationStep: AppFlowStep? = nil) {
@@ -139,48 +137,60 @@ final class MenuFlow: GTFlow {
             navigationController.popViewController(animated: true)
 
         case .shareGodToolsTappedFromMenu:
-            
-            presentView(
-                view: getShareGodToolsView(),
-                animated: true
-            )
+
+            Task {
+
+                presentView(
+                    view: await getShareGodToolsView(),
+                    animated: true
+                )
+            }
             
         case .dismissedShareGodToolsActivityViewController:
             // NOTE: Nothing to do here since UIActivityViewController dismisses itself. ~Levi
             break
             
         case .sendFeedbackTappedFromMenu:
-            let sendFeedbackWebContent = SendFeedbackWebContent(localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
-            
-            pushWebContentView(
-                webContent: sendFeedbackWebContent,
-                screenAccessibility: .sendFeedback,
-                backTappedFromWebContentStep: AppFlowStep.backTappedFromSendFeedback
-            )
+            Task {
+
+                let sendFeedbackWebContent = await SendFeedbackWebContent(appLanguage: appLanguage, localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
+
+                pushWebContentView(
+                    webContent: sendFeedbackWebContent,
+                    screenAccessibility: .sendFeedback,
+                    backTappedFromWebContentStep: AppFlowStep.backTappedFromSendFeedback
+                )
+            }
             
         case .backTappedFromSendFeedback:
             navigationController.popViewController(animated: true)
             
         case .reportABugTappedFromMenu:
-            let reportABugWebContent = ReportABugWebContent(localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
-            
-            pushWebContentView(
-                webContent: reportABugWebContent,
-                screenAccessibility: .reportABug,
-                backTappedFromWebContentStep: AppFlowStep.backTappedFromReportABug
-            )
+            Task {
+
+                let reportABugWebContent = await ReportABugWebContent(appLanguage: appLanguage, localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
+
+                pushWebContentView(
+                    webContent: reportABugWebContent,
+                    screenAccessibility: .reportABug,
+                    backTappedFromWebContentStep: AppFlowStep.backTappedFromReportABug
+                )
+            }
             
         case .backTappedFromReportABug:
             navigationController.popViewController(animated: true)
             
         case .askAQuestionTappedFromMenu:
-            let askAQuestionWebContent = AskAQuestionWebContent(localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
-            
-            pushWebContentView(
-                webContent: askAQuestionWebContent,
-                screenAccessibility: .askAQuestion,
-                backTappedFromWebContentStep: AppFlowStep.backTappedFromAskAQuestion
-            )
+            Task {
+
+                let askAQuestionWebContent = await AskAQuestionWebContent(appLanguage: appLanguage, localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
+
+                pushWebContentView(
+                    webContent: askAQuestionWebContent,
+                    screenAccessibility: .askAQuestion,
+                    backTappedFromWebContentStep: AppFlowStep.backTappedFromAskAQuestion
+                )
+            }
             
         case .backTappedFromAskAQuestion:
             navigationController.popViewController(animated: true)
@@ -207,52 +217,64 @@ final class MenuFlow: GTFlow {
             navigateToURL(linkTapped: linkTapped, appLanguage: appLanguage)
             
         case .shareAStoryWithUsTappedFromMenu:
-            let shareStoryWebContent = ShareAStoryWithUsWebContent(localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
-            
-            pushWebContentView(
-                webContent: shareStoryWebContent,
-                screenAccessibility: .shareAStoryWithUs,
-                backTappedFromWebContentStep: AppFlowStep.backTappedFromShareAStoryWithUs
-            )
+            Task {
+
+                let shareStoryWebContent = await ShareAStoryWithUsWebContent(appLanguage: appLanguage, localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
+
+                pushWebContentView(
+                    webContent: shareStoryWebContent,
+                    screenAccessibility: .shareAStoryWithUs,
+                    backTappedFromWebContentStep: AppFlowStep.backTappedFromShareAStoryWithUs
+                )
+            }
             
         case .backTappedFromShareAStoryWithUs:
             navigationController.popViewController(animated: true)
             
         case .termsOfUseTappedFromMenu:
             
-            let termsOfUserWebContent = TermsOfUseWebContent(localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
-            
-            pushWebContentView(
-                webContent: termsOfUserWebContent,
-                screenAccessibility: .termsOfUse,
-                backTappedFromWebContentStep: AppFlowStep.backTappedFromTermsOfUse
-            )
+            Task {
+
+                let termsOfUserWebContent = await TermsOfUseWebContent(appLanguage: appLanguage, localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
+
+                pushWebContentView(
+                    webContent: termsOfUserWebContent,
+                    screenAccessibility: .termsOfUse,
+                    backTappedFromWebContentStep: AppFlowStep.backTappedFromTermsOfUse
+                )
+            }
             
         case .backTappedFromTermsOfUse:
             navigationController.popViewController(animated: true)
             
         case .privacyPolicyTappedFromMenu:
             
-            let privacyPolicyWebContent = PrivacyPolicyWebContent(localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
-            
-            pushWebContentView(
-                webContent: privacyPolicyWebContent,
-                screenAccessibility: .privacyPolicy,
-                backTappedFromWebContentStep: AppFlowStep.backTappedFromPrivacyPolicy
-            )
+            Task {
+
+                let privacyPolicyWebContent = await PrivacyPolicyWebContent(appLanguage: appLanguage, localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
+
+                pushWebContentView(
+                    webContent: privacyPolicyWebContent,
+                    screenAccessibility: .privacyPolicy,
+                    backTappedFromWebContentStep: AppFlowStep.backTappedFromPrivacyPolicy
+                )
+            }
             
         case .backTappedFromPrivacyPolicy:
             navigationController.popViewController(animated: true)
             
         case .copyrightInfoTappedFromMenu:
             
-            let copyrightInfoWebContent = CopyrightInfoWebContent(localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
-            
-            pushWebContentView(
-                webContent: copyrightInfoWebContent,
-                screenAccessibility: .copyrightInfo,
-                backTappedFromWebContentStep: AppFlowStep.backTappedFromCopyrightInfo
-            )
+            Task {
+
+                let copyrightInfoWebContent = await CopyrightInfoWebContent(appLanguage: appLanguage, localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
+
+                pushWebContentView(
+                    webContent: copyrightInfoWebContent,
+                    screenAccessibility: .copyrightInfo,
+                    backTappedFromWebContentStep: AppFlowStep.backTappedFromCopyrightInfo
+                )
+            }
             
         case .backTappedFromCopyrightInfo:
             navigationController.popViewController(animated: true)
@@ -269,16 +291,19 @@ final class MenuFlow: GTFlow {
             
         case .deleteAccountTappedFromDeleteAccount:
             
-            let confirmDeleteAccountView = getConfirmDeleteAccountView()
-            
-            dismissView(animated: true, completion: { [weak self] in
-             
-                self?.presentView(
-                    view: confirmDeleteAccountView,
-                    animated: true
-                )
-            })
-       
+            Task {
+
+                let confirmDeleteAccountView = await getConfirmDeleteAccountView()
+
+                dismissView(animated: true, completion: { [weak self] in
+
+                    self?.presentView(
+                        view: confirmDeleteAccountView,
+                        animated: true
+                    )
+                })
+            }
+
         case .deleteAccountTappedFromConfirmDeleteAccount:
             
             presentView(
@@ -295,11 +320,14 @@ final class MenuFlow: GTFlow {
             let appLanguage: AppLanguageDomainModel = self.appLanguage
             
             dismissView(animated: true, completion: { [weak self] in
-                
-                let title: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.accountDeletedAlertTitle.key)
-                let message: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.accountDeletedAlertMessage.key)
-                
-                self?.presentAlert(appLanguage: appLanguage, title: title, message: message)
+
+                Task {
+
+                    let title: String = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.accountDeletedAlertTitle.key)
+                    let message: String = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.accountDeletedAlertMessage.key)
+
+                    self?.presentAlert(appLanguage: appLanguage, title: title, message: message)
+                }
             })
             
         case .didFinishAccountDeletionWithErrorFromDeleteAccountProgress(let error):
@@ -326,9 +354,9 @@ final class MenuFlow: GTFlow {
 
 extension MenuFlow {
     
-    private func getShareGodToolsView() -> UIViewController {
+    private func getShareGodToolsView() async -> UIViewController {
 
-        let viewModel = ShareGodToolsViewModel(
+        let viewModel = await ShareGodToolsViewModel(
             stepEmitter: stepEmitter,
             appLanguage: appLanguage,
             getShareGodToolsStringsUseCase: appDiContainer.feature.shareGodTools.domainLayer.getShareGodToolsStringsUseCase()
@@ -465,10 +493,15 @@ extension MenuFlow {
             return
         }
 
-        presentAlertMessage(appLanguage: appLanguage, alertMessage: self.getAuthErrorAlertMessage(authError: authError))
+        Task {
+
+            let alertMessage: AlertMessage = await self.getAuthErrorAlertMessage(authError: authError)
+
+            self.presentAlertMessage(appLanguage: self.appLanguage, alertMessage: alertMessage)
+        }
     }
     
-    private func getAuthErrorAlertMessage(authError: AuthErrorDomainModel) -> AlertMessage {
+    private func getAuthErrorAlertMessage(authError: AuthErrorDomainModel) async -> AlertMessage {
         
         let localizationServices: LocalizationServicesInterface = appDiContainer.core.dataLayer.getLocalizationServices()
         let appLanguageLocaleId = appLanguage.localeId
@@ -477,10 +510,10 @@ extension MenuFlow {
         
         switch authError {
         case .accountAlreadyExists:
-            message = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageLocaleId, key: LocalizableStringKeys.authErrorUserAccountAlreadyExistsMessage.key)
+            message = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageLocaleId, key: LocalizableStringKeys.authErrorUserAccountAlreadyExistsMessage.key)
             
         case .accountNotFound:
-            message = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageLocaleId, key: LocalizableStringKeys.authErrorUserAccountNotFoundMessage.key)
+            message = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageLocaleId, key: LocalizableStringKeys.authErrorUserAccountNotFoundMessage.key)
             
         case .other(let error):
             message = error.localizedDescription
@@ -581,19 +614,19 @@ extension MenuFlow {
         return modal
     }
     
-    private func getConfirmDeleteAccountView() -> UIViewController {
+    private func getConfirmDeleteAccountView() async -> UIViewController {
         
         let localizationServices: LocalizationServicesInterface = appDiContainer.core.dataLayer.getLocalizationServices()
         
         let viewController = UIAlertController(
-            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.confirmDeleteAccountTitle.key),
+            title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.confirmDeleteAccountTitle.key),
             message: "",
             preferredStyle: .actionSheet
         )
         
         viewController.addAction(
             UIAlertAction(
-                title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.confirmDeleteAccountConfirmButtonTitle.key),
+                title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.confirmDeleteAccountConfirmButtonTitle.key),
                 style: .destructive,
                 handler: { [weak self] (action: UIAlertAction) in
                     
@@ -604,7 +637,7 @@ extension MenuFlow {
         
         viewController.addAction(
             UIAlertAction(
-                title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.cancel.key),
+                title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.cancel.key),
                 style: .cancel,
                 handler: { (action: UIAlertAction) in
                 }
@@ -699,26 +732,22 @@ extension MenuFlow {
     
     private func copyFirebaseDeviceTokenToClipboard() {
         
-        appDiContainer.core.dataLayer.getSharedFirebaseMessaging()
-            .getDeviceTokenPublisher()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] completion in
+        Task {
+            
+            do {
                 
-                switch completion {
-                case .finished:
-                    break
-                case .failure(let error):
-                    self?.presentFirebaseDeviceTokenCopyError(error: error)
-                }
-                
-            } receiveValue: { [weak self] (token: String) in
+                let token: String = try await appDiContainer.core.dataLayer.getSharedFirebaseMessaging().getDeviceToken()
                 
                 let pasteBoard = UIPasteboard.general
                 pasteBoard.string = token
                 
-                self?.presentFirebaseDeviceTokenCopied(token: token)
+                presentFirebaseDeviceTokenCopied(token: token)
             }
-            .store(in: &cancellables)
+            catch let error {
+                
+                presentFirebaseDeviceTokenCopyError(error: error)
+            }
+        }
     }
     
     private func presentFirebaseDeviceTokenCopied(token: String) {

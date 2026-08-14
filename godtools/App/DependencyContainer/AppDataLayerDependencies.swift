@@ -12,7 +12,7 @@ import SocialAuthentication
 import LocalizationServices
 import RepositorySync
 
-final class AppDataLayerDependencies {
+final class AppDataLayerDependencies: Sendable {
         
     private let sharedAppBuild: AppBuildInterface
     private let sharedAppConfig: AppConfigInterface
@@ -21,30 +21,14 @@ final class AppDataLayerDependencies {
     private let sharedInMemoryDataCache: InMemoryDataCache = InMemoryDataCache()
     private let sharedRealmDatabase: RealmDatabase
     private let sharedSwiftDatabase: Any? // TODO: Once RealmSwift is removed, change Any? to SwiftDatabase.
-
-    private lazy var sharedUserCountersSync: UserCountersSync = {
-        
-        let syncInvalidator = SyncInvalidator(
-            id:  "UserCountersSync.sync",
-            timeInterval: .hours(hour: 2),
-            persistence: getUserDefaultsCache()
-        )
-        
-        return UserCountersSync(
-            api: getUserCountersApi(),
-            cache: getUserCountersCache(),
-            localActivityCounterCache: getLocalActivityCounterCache(),
-            syncInvalidator: syncInvalidator
-        )
-    }()
     
-    init(appBuild: AppBuildInterface, appConfig: AppConfigInterface) {
+    init(appBuild: AppBuildInterface, appConfig: AppConfigInterface, firebaseAnalytics: FirebaseAnalyticsInterface) {
         
         sharedAppBuild = appBuild
         sharedAppConfig = appConfig
         
         sharedAnalytics = AnalyticsContainer(
-            firebaseAnalytics: Self.getFirebaseAnalytics(appBuild: appBuild, appConfig: appConfig)
+            firebaseAnalytics: firebaseAnalytics
         )
         
         do {
@@ -59,26 +43,12 @@ final class AppDataLayerDependencies {
             do {
                 sharedSwiftDatabase = try appConfig.getSwiftDatabase()
             }
-            catch let error {
+            catch _ {
                 sharedSwiftDatabase = nil
             }
         } else {
             sharedSwiftDatabase = nil
         }
-    }
-    
-    private static func getFirebaseAnalytics(appBuild: AppBuildInterface, appConfig: AppConfigInterface) -> FirebaseAnalyticsInterface {
-        
-        let firebaseAnalyticsEnabled: Bool = appConfig.analyticsEnabled && appConfig.firebaseEnabled
-        
-        guard firebaseAnalyticsEnabled else {
-            return DisabledFirebaseAnalytics()
-        }
-        
-        return FirebaseAnalytics(
-            isDebug: appBuild.isDebug,
-            loggingEnabled: appBuild.configuration == .analyticsLogging
-        )
     }
     
     // MARK: - Data Layer Classes
@@ -158,10 +128,9 @@ final class AppDataLayerDependencies {
         }
         
         return ArticleManifestAemRepository(
-            downloader: getArticleAemDownloader(),
-            cache: getArticleAemCache(),
             categoryArticlesCache: categoryArticlesCache,
-            syncInvalidatorPersistence: getUserDefaultsCache()
+            syncInvalidatorPersistence: getUserDefaultsCache(),
+            articleAemRepository: getArticleAemRepository()
         )
     }
     
@@ -374,6 +343,13 @@ final class AppDataLayerDependencies {
         )
     }
     
+    func getGodToolsParserLogger() -> GodToolsParserLogger {
+        return GodToolsParserLogger(
+            errorReporting: getErrorReporting(),
+            firebaseErrorReporting: getFirebaseNonFatalErrorReporting()
+        )
+    }
+    
     func getInfoPlist() -> InfoPlistInterface {
         return InfoPlist()
     }
@@ -422,8 +398,42 @@ final class AppDataLayerDependencies {
         )
     }
     
+    func getLaunchCountCache() -> LaunchCountCache {
+        return LaunchCountCache(persistence: getLaunchCountPersistence())
+    }
+
+    func getLaunchCountPersistence() -> any Persistence<LaunchCountDataModel, LaunchCountDataModel> {
+
+        let persistence: any Persistence<LaunchCountDataModel, LaunchCountDataModel>
+
+        if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
+
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                mapping: SwiftLaunchCountMapping()
+            )
+        }
+        else {
+
+            persistence = RealmRepositorySyncPersistence(
+                database: getSharedRealmDatabase(),
+                mapping: RealmLaunchCountMapping()
+            )
+        }
+
+        return persistence
+    }
+
     func getLaunchCountRepository() -> LaunchCountRepositoryInterface {
-        return LaunchCountRepository.shared
+        return LaunchCountRepository(
+            cache: getLaunchCountCache()
+        )
+    }
+    
+    @MainActor func getLaunchCountTracker() -> LaunchCountTracker {
+        return LaunchCountTracker(
+            launchCountRepository: getLaunchCountRepository()
+        )
     }
     
     func getLocalizationServices() -> LocalizationServicesInterface {
@@ -482,12 +492,6 @@ final class AppDataLayerDependencies {
             requestSender: getRequestSender(),
             mobileContentAuthTokenRepository: getMobileContentAuthTokenRepository(),
             userAuthentication: getUserAuthentication()
-        )
-    }
-    
-    func getMobileContentRendererManifestResourcesCache() -> MobileContentRendererManifestResourcesCache {
-        return MobileContentRendererManifestResourcesCache(
-            resourcesFileCache: getResourcesFileCache()
         )
     }
     
@@ -650,6 +654,12 @@ final class AppDataLayerDependencies {
     
     func getStringWithLocaleCount() -> StringWithLocaleCountInterface {
         return StringWithLocaleCount()
+    }
+    
+    func getSwiftDataMigration() -> SwiftDataMigration {
+        return SwiftDataMigration(
+            launchCountRepository: getLaunchCountRepository()
+        )
     }
     
     func getToolDownloader() -> ToolDownloader {
@@ -886,8 +896,20 @@ extension AppDataLayerDependencies {
         return LocalActivityCounterCache(persistence: persistence)
     }
     
-    func getSharedUserCountersSync() -> UserCountersSync {
-        return sharedUserCountersSync
+    func getUserCountersSync() -> UserCountersSync {
+        
+        let syncInvalidator = SyncInvalidator(
+            id:  "UserCountersSync.sync",
+            timeInterval: .hours(hour: 2),
+            persistence: getUserDefaultsCache()
+        )
+        
+        return UserCountersSync(
+            api: getUserCountersApi(),
+            cache: getUserCountersCache(),
+            localActivityCounterCache: getLocalActivityCounterCache(),
+            syncInvalidator: syncInvalidator
+        )
     }
     
     private func getUserCountersApi() -> UserCountersApi {

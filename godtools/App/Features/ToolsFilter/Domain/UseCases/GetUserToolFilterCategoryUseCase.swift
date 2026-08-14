@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class GetUserToolFilterCategoryUseCase {
+final class GetUserToolFilterCategoryUseCase: Sendable {
     
     private let userToolFiltersRepository: UserToolFiltersRepository
     private let getToolFilterCategory: GetToolFilterCategory
@@ -20,22 +20,33 @@ final class GetUserToolFilterCategoryUseCase {
         self.getToolFilterCategory = getToolFilterCategory
     }
     
-    @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolFilterCategoryDomainModel, Never> {
+    @MainActor func execute(
+        appLanguage: AppLanguageDomainModel
+    ) -> AnyPublisher<ToolFilterCategoryDomainModel, Never> {
         
         return userToolFiltersRepository
             .getUserToolCategoryFilterChangedPublisher()
             .receive(on: DispatchQueue.global())
-            .map {
-                
-                let categoryId: String? = self.userToolFiltersRepository.getUserToolCategoryFilter()?.categoryId
-                
-                if let categoryId = categoryId {
-                    return self.getToolFilterCategory.getCategoryFilter(categoryId: categoryId, translatedInAppLanguage: appLanguage)
+            .flatMap {
+                return AnyPublisher() {
+                    return await self.asyncExecute(appLanguage: appLanguage)
                 }
-                
-                return self.getToolFilterCategory.getAnyCategoryFilter(translatedInAppLanguage: appLanguage)
-                
             }
             .eraseToAnyPublisher()
+    }
+    
+    private func asyncExecute(appLanguage: AppLanguageDomainModel) async -> ToolFilterCategoryDomainModel {
+        
+        let categoryId: String? = userToolFiltersRepository.getUserToolCategoryFilter()?.categoryId
+        
+        if let categoryId = categoryId {
+            
+            return await getToolFilterCategory.getCategoryFilter(
+                categoryId: categoryId,
+                translatedInAppLanguage: appLanguage
+            )
+        }
+        
+        return await getToolFilterCategory.getAnyCategoryFilter(translatedInAppLanguage: appLanguage)
     }
 }

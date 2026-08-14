@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetOptInNotificationStringsUseCase {
+final class GetOptInNotificationStringsUseCase: Sendable {
 
     private let localizationServices: LocalizationServicesInterface
 
@@ -17,20 +17,20 @@ final class GetOptInNotificationStringsUseCase {
         self.localizationServices = localizationServices
     }
 
-    func execute(appLanguage: AppLanguageDomainModel) -> OptInNotificationStringsDomainModel {
+    func execute(appLanguage: AppLanguageDomainModel) async -> OptInNotificationStringsDomainModel {
         
         let strings = OptInNotificationStringsDomainModel(
-            title: localizationServices.stringForLocaleElseEnglish(
+            title: await localizationServices.stringForLocaleElseEnglish(
                 localeIdentifier: appLanguage, key: LocalizableStringKeys.optInNotificationTitle.key),
-            body: localizationServices.stringForLocaleElseEnglish(
+            body: await localizationServices.stringForLocaleElseEnglish(
                 localeIdentifier: appLanguage, key: LocalizableStringKeys.optInNotificationBody.key),
             allowNotificationsActionTitle:
-                localizationServices.stringForLocaleElseEnglish(
+                await localizationServices.stringForLocaleElseEnglish(
                     localeIdentifier: appLanguage, key: LocalizableStringKeys.optInNotificationAllowNotifications.key),
-            notificationSettingsActionTitle: localizationServices.stringForLocaleElseEnglish(
+            notificationSettingsActionTitle: await localizationServices.stringForLocaleElseEnglish(
                 localeIdentifier: appLanguage, key: LocalizableStringKeys.optInNotificationNotificationSettings.key),
             maybeLaterActionTitle:
-                localizationServices.stringForLocaleElseEnglish(
+                await localizationServices.stringForLocaleElseEnglish(
                     localeIdentifier: appLanguage, key: LocalizableStringKeys.optInNotificationMaybeLater.key)
         )
         

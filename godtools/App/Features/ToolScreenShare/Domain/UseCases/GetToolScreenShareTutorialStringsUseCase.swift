@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetToolScreenShareTutorialStringsUseCase {
+final class GetToolScreenShareTutorialStringsUseCase: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
         
@@ -17,14 +17,14 @@ final class GetToolScreenShareTutorialStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> ToolScreenShareTutorialStringsDomainModel {
+    func execute(appLanguage: AppLanguageDomainModel) async -> ToolScreenShareTutorialStringsDomainModel {
         
         let localeId: String = appLanguage
         
         let strings = ToolScreenShareTutorialStringsDomainModel(
-            generateQRCodeActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.screenShareTutorialGenerateQRCodeButtonTitle.key),
-            nextTutorialPageActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.tutorialContinueButtonTitleContinue.key),
-            shareLinkActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.shareLink.key)
+            generateQRCodeActionTitle: await localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.screenShareTutorialGenerateQRCodeButtonTitle.key),
+            nextTutorialPageActionTitle: await localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.tutorialContinueButtonTitleContinue.key),
+            shareLinkActionTitle: await localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.shareLink.key)
         )
         
         return strings

@@ -23,18 +23,16 @@ final class ShareToolScreenShareSessionViewModel {
         stepEmitter: FlowStepEmitter,
         appLanguage: AppLanguageDomainModel,
         shareUrl: String,
-        getShareToolScreenShareSessionStringsUseCase: GetShareToolScreenShareSessionStringsUseCase,
+        strings: ShareToolScreenShareSessionStringsDomainModel,
         trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     ) {
             
         self.stepEmitter = stepEmitter
         self.appLanguage = appLanguage
         self.shareUrl = shareUrl
+        self.strings = strings
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
-        
-        strings = getShareToolScreenShareSessionStringsUseCase
-            .execute(appLanguage: appLanguage)
-        
+                
         self.shareMessage = String.localizedStringWithFormat(strings.shareMessage, shareUrl)
     }
     
@@ -49,19 +47,22 @@ extension ShareToolScreenShareSessionViewModel {
     
     func pageViewed() {
         
-        trackActionAnalyticsUseCase.trackAction(
-            screenName: "",
-            actionName: AnalyticsConstants.ActionNames.shareScreenEngaged,
-            siteSection: "",
-            siteSubSection: "",
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil,
-            url: nil,
-            data: [
-                AnalyticsConstants.Keys.shareScreenEngagedCountKey: 1
-            ]
-        )
+        Task {
+            await trackActionAnalyticsUseCase.execute(
+                properties: AnalyticsProperties(
+                    screenName: "",
+                    siteSection: "",
+                    siteSubSection: "",
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                ),
+                actionName: AnalyticsConstants.ActionNames.shareScreenEngaged,
+                data: [
+                    AnalyticsConstants.Keys.shareScreenEngagedCountKey: 1
+                ]
+            )
+        }
     }
     
     func qrCodeTapped() {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class ArticleAemWebArchiveFileCache {
+final class ArticleAemWebArchiveFileCache: Sendable {
     
     private static let rootDirectoryName: String = "articles"
     
@@ -18,22 +18,25 @@ final class ArticleAemWebArchiveFileCache {
         
         fileCache = FileCache(rootDirectoryName: ArticleAemWebArchiveFileCache.rootDirectoryName)
                         
-        do {
-            try deleteLegacyArticlesDirectory()
-        }
-        catch _ {
+        Task {
+            
+            do {
+                try await deleteLegacyArticlesDirectory()
+            }
+            catch _ {
 
+            }
         }
     }
     
-    private func deleteLegacyArticlesDirectory() throws {
+    private func deleteLegacyArticlesDirectory() async throws {
                 
         let legacyDirectoryName: String = "articles_webarchives"
         
-        let documentsDirectory = try fileCache.getUserDocumentsDirectory()
+        let documentsDirectory = try await fileCache.getUserDocumentsDirectory()
         
         let legacyDirectory: URL = documentsDirectory.appendingPathComponent(legacyDirectoryName)
         
-        _ = try fileCache.removeItem(url: legacyDirectory)
+        _ = try await fileCache.removeItem(url: legacyDirectory)
     }
 }

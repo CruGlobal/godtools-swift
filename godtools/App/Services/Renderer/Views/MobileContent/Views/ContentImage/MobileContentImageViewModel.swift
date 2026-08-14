@@ -6,16 +6,19 @@
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
+import Foundation
 import UIKit
 import GodToolsShared
-import RealmSwift
 
-class MobileContentImageViewModel: MobileContentViewModel {
+final class MobileContentImageViewModel: MobileContentViewModel {
     
     private let imageModel: Image
+    
+    private var image: UIImage?
+    
+    private(set) var imageSize: CGSize?
 
     let mobileContentAnalytics: MobileContentRendererAnalytics
-    let image: UIImage?
     let imageWidth: MobileContentViewWidth
     
     init(
@@ -28,13 +31,28 @@ class MobileContentImageViewModel: MobileContentViewModel {
         self.mobileContentAnalytics = mobileContentAnalytics
         self.imageWidth = MobileContentViewWidth(dimension: imageModel.width)
              
-        if let resource = imageModel.resource, let cachedImage = renderedPageContext.resourcesCache.getUIImageNonThrowing(resource: resource) {
-            image = cachedImage
-        }
-        else {
-            image = nil
+        super.init(
+            baseModel: imageModel,
+            renderedPageContext: renderedPageContext,
+            mobileContentAnalytics: mobileContentAnalytics
+        )
+    }
+    
+    func getImage() async -> UIImage? {
+        
+        if let image = self.image {
+            return image
         }
         
-        super.init(baseModel: imageModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
+        guard let resource = imageModel.resource, let location = resource.toSHA256FileLocation() else {
+            return nil
+        }
+        
+        let image: UIImage? = await renderedPageContext.resourcesFileCache.cache.getUIImageNonThrowing(location: location)
+        
+        self.image = image
+        imageSize = image?.size
+        
+        return image
     }
 }

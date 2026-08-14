@@ -11,7 +11,7 @@ import RealmSwift
 import SwiftData
 import RepositorySync
 
-final class ResourcesCache {
+final class ResourcesCache: Sendable {
     
     private let realmDatabase: RealmDatabase
     private let realmDataWrite: RealmDataWrite

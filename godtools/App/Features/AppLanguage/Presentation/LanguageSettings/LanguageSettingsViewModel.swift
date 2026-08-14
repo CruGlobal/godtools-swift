@@ -72,9 +72,12 @@ final class LanguageSettingsViewModel: ObservableObject {
     }
     
     private func didSetApplanguage(appLanguage: AppLanguageDomainModel) {
-        
-        strings = getLanguageSettingsStringsUseCase
-            .execute(appLanguage: appLanguage)
+
+        Task {
+
+            strings = await getLanguageSettingsStringsUseCase
+                .execute(appLanguage: appLanguage)
+        }
     }
 }
 
@@ -99,13 +102,17 @@ extension LanguageSettingsViewModel {
     
     func pageViewed() {
         
-        trackScreenViewAnalyticsUseCase.trackScreen(
-            screenName: "Language Settings",
-            siteSection: "menu",
-            siteSubSection: "",
-            appLanguage: appLanguage,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil
-        )
+        Task {
+            await trackScreenViewAnalyticsUseCase.execute(
+                properties: AnalyticsProperties(
+                    screenName: "Language Settings",
+                    siteSection: "menu",
+                    siteSubSection: "",
+                    appLanguage: appLanguage,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                )
+            )
+        }
     }
 }

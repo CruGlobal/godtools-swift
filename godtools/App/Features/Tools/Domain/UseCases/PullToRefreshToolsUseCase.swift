@@ -9,7 +9,7 @@
 import Foundation
 import RequestOperation
 
-final class PullToRefreshToolsUseCase {
+final class PullToRefreshToolsUseCase: Sendable {
 
     private let resourcesRepository: ResourcesRepository
     private let personalizedToolsSync: PersonalizedToolsSync

@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class LessonFilterDiContainer {
+final class LessonFilterDiContainer: Sendable {
     
     let dataLayer: LessonFilterDataLayerDependencies
     let domainLayer: LessonFilterDomainLayerDependencies

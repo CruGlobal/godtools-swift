@@ -24,6 +24,7 @@ final class ReviewShareShareableViewModel: ObservableObject {
    
     private var imageToShare: UIImage?
     private var cancellables: Set<AnyCancellable> = Set()
+    private var getShareableImageTask: Task<Void, Error>?
         
     @Published private var appLanguage = AppLanguageDomainModel.english
     
@@ -64,18 +65,24 @@ final class ReviewShareShareableViewModel: ObservableObject {
     
     deinit {
         print("x deinit: \(type(of: self))")
+        getShareableImageTask?.cancel()
     }
     
     private func loadShareableImage() {
         
-        do {
-            
-            let shareableImage = try getShareableImageUseCase.execute(shareable: shareable)
-            
-            didRefreshShareableImage(shareableImage: shareableImage)
-        }
-        catch _ {
-            
+        getShareableImageTask?.cancel()
+        
+        getShareableImageTask = Task {
+                
+            do {
+                
+                let shareableImage = try await getShareableImageUseCase.execute(shareable: shareable)
+                
+                didRefreshShareableImage(shareableImage: shareableImage)
+            }
+            catch _ {
+                
+            }
         }
     }
     
@@ -93,10 +100,13 @@ final class ReviewShareShareableViewModel: ObservableObject {
 
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
 
-        strings = getReviewShareShareableStringsUseCase
-            .execute(
-                appLanguage: appLanguage
-            )
+        Task {
+
+            strings = await getReviewShareShareableStringsUseCase
+                .execute(
+                    appLanguage: appLanguage
+                )
+        }
     }
 
     private func trackShareImageTappedAnalytics() {

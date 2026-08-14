@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetToolDetailsMediaUseCase {
+final class GetToolDetailsMediaUseCase: Sendable {
     
     private let resourcesRepository: ResourcesRepository
     private let attachmentsRepository: AttachmentsRepository

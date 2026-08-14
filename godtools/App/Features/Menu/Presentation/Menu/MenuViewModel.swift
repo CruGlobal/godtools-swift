@@ -124,12 +124,15 @@ final class MenuViewModel: ObservableObject {
     }
     
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
-        
-        strings = getMenuStringsUseCase
-            .execute(appLanguage: appLanguage)
-        
-        showsTutorialOption = getTutorialIsAvailableUseCase
-            .execute(appLanguage: appLanguage)
+
+        Task {
+
+            strings = await getMenuStringsUseCase
+                .execute(appLanguage: appLanguage)
+
+            showsTutorialOption = getTutorialIsAvailableUseCase
+                .execute(appLanguage: appLanguage)
+        }
     }
 }
 
@@ -139,14 +142,18 @@ extension MenuViewModel {
     
     func pageViewed() {
         
-        trackScreenViewAnalyticsUseCase.trackScreen(
-            screenName: getMenuAnalyticsScreenName(),
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil
-        )
+        Task {
+            await trackScreenViewAnalyticsUseCase.execute(
+                properties: AnalyticsProperties(
+                    screenName: getMenuAnalyticsScreenName(),
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: analyticsSiteSubSection,
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                )
+            )
+        }
     }
     
     @objc func doneTapped() {
@@ -217,40 +224,51 @@ extension MenuViewModel {
         
         stepEmitter.emit(step: AppFlowStep.shareAStoryWithUsTappedFromMenu)
         
-        trackScreenViewAnalyticsUseCase.trackScreen(
-            screenName: getShareStoryAnalyticsScreenName(),
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil
-        )
+        Task {
+            await trackScreenViewAnalyticsUseCase.execute(
+                properties: AnalyticsProperties(
+                    screenName: getShareStoryAnalyticsScreenName(),
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: analyticsSiteSubSection,
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                )
+            )
+        }
     }
     
     func shareGodToolsTapped() {
         
         stepEmitter.emit(step: AppFlowStep.shareGodToolsTappedFromMenu)
         
-        trackActionAnalyticsUseCase.trackAction(
-            screenName: getShareAppAnalyticsScreenName(),
-            actionName: AnalyticsConstants.ActionNames.shareIconEngaged,
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil,
-            url: nil,
-            data: [AnalyticsConstants.Keys.shareAction: 1]
-        )
+        Task {
+            await trackActionAnalyticsUseCase.execute(
+                properties: AnalyticsProperties(
+                    screenName: getShareAppAnalyticsScreenName(),
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: analyticsSiteSubSection,
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                ),
+                actionName: AnalyticsConstants.ActionNames.shareIconEngaged,
+                data: [AnalyticsConstants.Keys.shareAction: 1]
+            )
+        }
         
-        trackScreenViewAnalyticsUseCase.trackScreen(
-            screenName: getShareAppAnalyticsScreenName(),
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil
-        )
+        Task {
+            await trackScreenViewAnalyticsUseCase.execute(
+                properties: AnalyticsProperties(
+                    screenName: getShareAppAnalyticsScreenName(),
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: analyticsSiteSubSection,
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                )
+            )
+        }
     }
     
     func termsOfUseTapped() {

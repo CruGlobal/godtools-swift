@@ -100,17 +100,20 @@ final class ToolTrainingViewModel: NSObject {
     }
     
     private func setPage(page: Int, animated: Bool) {
-        
+
         self.page = page
-        
-        let continueTitle: String
-        if page < (numberOfTipPages.value - 1) {
-            continueTitle = localizationServices.stringForLocaleElseEnglish(localeIdentifier: renderedPageContext.language.localeId, key: LocalizableStringKeys.cardNextButtonTitle.key)
+
+        Task {
+
+            let continueTitle: String
+            if page < (numberOfTipPages.value - 1) {
+                continueTitle = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: renderedPageContext.language.localeId, key: LocalizableStringKeys.cardNextButtonTitle.key)
+            }
+            else {
+                continueTitle = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: renderedPageContext.language.localeId, key: LocalizableStringKeys.close.key)
+            }
+            continueButtonTitle.accept(value: continueTitle)
         }
-        else {
-            continueTitle = localizationServices.stringForLocaleElseEnglish(localeIdentifier: renderedPageContext.language.localeId, key: LocalizableStringKeys.close.key)
-        }
-        continueButtonTitle.accept(value: continueTitle)
 
         if numberOfTipPages.value > 0 {
             let trainingProgress: CGFloat = CGFloat(page + 1) / CGFloat(numberOfTipPages.value)
@@ -151,11 +154,18 @@ final class ToolTrainingViewModel: NSObject {
             localizedTipTitle = ""
         }
         
-        let tipTitle: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: renderedPageContext.language.localeId, key: localizedTipTitle)
-        
         trainingTipBackgroundImage.accept(value: UIImage(named: tipBackgroundImageName))
         trainingTipForegroundImage.accept(value: UIImage(named: tipImageName))
-        title.accept(value: tipTitle)
+
+        Task {
+
+            let tipTitle: String = await localizationServices.stringForLocaleElseEnglish(
+                localeIdentifier: renderedPageContext.language.localeId,
+                key: localizedTipTitle
+            )
+
+            title.accept(value: tipTitle)
+        }
     }
 }
 
@@ -228,13 +238,17 @@ extension ToolTrainingViewModel {
        
         setPage(page: page, animated: true)
         
-        trackScreenViewAnalyticsUseCase.trackScreen(
-            screenName: getTipPageAnalyticsScreenName(tipPage: page),
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil
-        )
+        Task {
+            await trackScreenViewAnalyticsUseCase.execute(
+                properties: AnalyticsProperties(
+                    screenName: getTipPageAnalyticsScreenName(tipPage: page),
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: analyticsSiteSubSection,
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                )
+            )
+        }
     }
 }

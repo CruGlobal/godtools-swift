@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class RemoveDownloadedToolLanguageUseCase {
+final class RemoveDownloadedToolLanguageUseCase: Sendable {
     
     private let downloadedLanguagesRepository: DownloadedLanguagesRepository
     

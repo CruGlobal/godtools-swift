@@ -8,7 +8,7 @@
 
 import Foundation
 
-class DisabledFirebaseAnalytics: FirebaseAnalyticsInterface {
+actor DisabledFirebaseAnalytics: FirebaseAnalyticsInterface {
     
     func configure() {
         
@@ -18,22 +18,30 @@ class DisabledFirebaseAnalytics: FirebaseAnalyticsInterface {
         
     }
     
-    func trackScreenView(screenName: String, siteSection: String, siteSubSection: String, appLanguage: String?, contentLanguage: String?, secondaryContentLanguage: String?) {
-        
+    func trackScreenView(properties: AnalyticsProperties) {
+
     }
-    
-    func trackAction(screenName: String, siteSection: String, siteSubSection: String, appLanguage: String?, contentLanguage: String?, secondaryContentLanguage: String?, actionName: String, data: [String: Any]?) {
-        
+
+    func trackAction(properties: AnalyticsProperties, actionName: String, data: [String: Any]?) {
+
     }
-    
-    func trackExitLink(screenName: String, siteSection: String, siteSubSection: String, appLanguage: String?, contentLanguage: String?, secondaryContentLanguage: String?, url: String) {
-        
+
+    func trackExitLink(properties: AnalyticsProperties, url: String) {
+
     }
 }
 
 extension DisabledFirebaseAnalytics: MobileContentRendererAnalyticsSystem {
     
-    func trackMobileContentAction(context: MobileContentRenderedPageContext, screenName: String, siteSection: String, action: String, data: [String: Any]?) {
+    func trackMobileContentAction(
+        screenName: String,
+        siteSection: String,
+        appLanguage: AppLanguageDomainModel,
+        contentLanguage: BCP47LanguageIdentifier,
+        secondaryContentLanguage: BCP47LanguageIdentifier?,
+        action: String,
+        data: [String: Any]?
+    ) {
         
     }
 }

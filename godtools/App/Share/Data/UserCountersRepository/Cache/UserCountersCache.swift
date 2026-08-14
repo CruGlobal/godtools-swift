@@ -11,7 +11,7 @@ import RepositorySync
 import RealmSwift
 import SwiftData
 
-final class UserCountersCache {
+final class UserCountersCache: Sendable {
     
     private let localActivityCounterCache: LocalActivityCounterCache
     

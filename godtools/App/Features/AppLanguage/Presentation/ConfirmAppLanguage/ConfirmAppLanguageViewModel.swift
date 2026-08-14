@@ -53,8 +53,11 @@ final class ConfirmAppLanguageViewModel: ObservableObject {
 
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
 
-        strings = getConfirmAppLanguageStringsUseCase
-            .execute(appLanguage: appLanguage, selectedLanguage: selectedLanguage.language)
+        Task {
+
+            strings = await getConfirmAppLanguageStringsUseCase
+                .execute(appLanguage: appLanguage, selectedLanguage: selectedLanguage.language)
+        }
     }
 }
 

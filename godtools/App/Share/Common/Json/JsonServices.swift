@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class JsonServices {
+final class JsonServices: Sendable {
     
     private let bundle: Bundle
     

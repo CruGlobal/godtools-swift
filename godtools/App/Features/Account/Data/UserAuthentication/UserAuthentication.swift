@@ -10,7 +10,7 @@ import UIKit
 import Combine
 import SocialAuthentication
 
-final class UserAuthentication {
+final class UserAuthentication: Sendable {
         
     private let authenticationProviders: [AuthenticationProviderType: AuthenticationProviderInterface]
     private let lastAuthenticatedProviderCache: LastAuthenticatedProviderCache

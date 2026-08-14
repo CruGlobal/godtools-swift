@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class ArticlesDomainLayerDependencies {
+final class ArticlesDomainLayerDependencies: Sendable {
     
     private let core: AppCoreDiContainer
     private let dataLayer: ArticlesDataLayerDependencies
@@ -22,7 +22,7 @@ final class ArticlesDomainLayerDependencies {
     func getArticleCategoriesUseCase() -> GetArticleCategoriesUseCase {
         
         return GetArticleCategoriesUseCase(
-            manifestResourcesCache: core.dataLayer.getMobileContentRendererManifestResourcesCache(),
+            resourcesFileCache: core.dataLayer.getResourcesFileCache(),
 
         )
     }

@@ -93,8 +93,11 @@ final class OnboardingTutorialViewModel: ObservableObject {
     }
     
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
-        
-        strings = getOnboardingTutorialStringsUseCase.execute(appLanguage: appLanguage)
+
+        Task {
+
+            strings = await getOnboardingTutorialStringsUseCase.execute(appLanguage: appLanguage)
+        }
     }
     
     private func updateShowsChooseLanguageButtonState(page: Int) {
@@ -137,16 +140,14 @@ final class OnboardingTutorialViewModel: ObservableObject {
         
         if page >= 0 && page < pages.count {
          
-            let pageAnalytics: OnboardingTutorialPageAnalyticsProperties = getOnboardingTutorialPageAnalyticsProperties(page: pages[page])
+            let properties = getOnboardingTutorialPageAnalyticsProperties(page: pages[page])
             
-            trackScreenViewAnalyticsUseCase.trackScreen(
-                screenName: pageAnalytics.screenName,
-                siteSection: pageAnalytics.siteSection,
-                siteSubSection: pageAnalytics.siteSubsection,
-                appLanguage: nil,
-                contentLanguage: pageAnalytics.contentLanguage,
-                contentLanguageSecondary: pageAnalytics.contentLanguageSecondary
-            )
+            Task {
+                
+                await trackScreenViewAnalyticsUseCase.execute(
+                    properties: properties
+                )
+            }
         }
         else {
             
@@ -158,17 +159,18 @@ final class OnboardingTutorialViewModel: ObservableObject {
         return pages[safe: index]
     }
     
-    func getOnboardingTutorialPageAnalyticsProperties(page: OnboardingTutorialPage) -> OnboardingTutorialPageAnalyticsProperties {
+    func getOnboardingTutorialPageAnalyticsProperties(page: OnboardingTutorialPage) -> AnalyticsProperties {
         
         let pageOffset: Int = 2
         let pageIndex: Int = pages.firstIndex(of: page) ?? -1
         
-        return OnboardingTutorialPageAnalyticsProperties(
+        return AnalyticsProperties(
             screenName: "onboarding" + "-" + String(pageIndex + pageOffset),
             siteSection: "onboarding",
-            siteSubsection: "",
+            siteSubSection: "",
+            appLanguage: appLanguage,
             contentLanguage: nil,
-            contentLanguageSecondary: nil
+            secondaryContentLanguage: nil
         )
     }
     
@@ -221,19 +223,15 @@ extension OnboardingTutorialViewModel {
         
         stepEmitter.emit(step: AppFlowStep.skipTappedFromOnboardingTutorial)
         
-        let pageAnalytics: OnboardingTutorialPageAnalyticsProperties = getOnboardingTutorialPageAnalyticsProperties(page: pages[currentPage])
+        let properties = getOnboardingTutorialPageAnalyticsProperties(page: pages[currentPage])
         
-        trackActionAnalyticsUseCase.trackAction(
-            screenName: pageAnalytics.screenName,
-            actionName: "Onboarding Skip",
-            siteSection: pageAnalytics.siteSection,
-            siteSubSection: pageAnalytics.siteSubsection,
-            appLanguage: nil,
-            contentLanguage: pageAnalytics.contentLanguage,
-            contentLanguageSecondary: pageAnalytics.contentLanguageSecondary,
-            url: nil,
-            data: [AnalyticsConstants.Keys.onboardingSkip: 1]
-        )
+        Task {
+            await trackActionAnalyticsUseCase.execute(
+                properties: properties,
+                actionName: AnalyticsConstants.ActionNames.onboardingSkip,
+                data: [AnalyticsConstants.Keys.onboardingSkip: 1]
+            )
+        }
     }
     
     func continueTapped() {
@@ -245,14 +243,14 @@ extension OnboardingTutorialViewModel {
         
         stepEmitter.emit(step: AppFlowStep.videoButtonTappedFromOnboardingTutorial(youtubeVideoId: readyForEveryConversationYoutubeVideoId))
         
-        let pageAnalytics: OnboardingTutorialPageAnalyticsProperties = getOnboardingTutorialPageAnalyticsProperties(page: .readyForEveryConversation)
+        let properties = getOnboardingTutorialPageAnalyticsProperties(page: .readyForEveryConversation)
         
-        trackTutorialVideoAnalytics.trackVideoPlayed(
-            videoId: readyForEveryConversationYoutubeVideoId,
-            screenName: pageAnalytics.screenName,
-            appLanguage: appLanguage,
-            contentLanguage: pageAnalytics.contentLanguage,
-            secondaryContentLanguage: pageAnalytics.contentLanguageSecondary
-        )
+        Task {
+            
+            await trackTutorialVideoAnalytics.trackVideoPlayed(
+                videoId: readyForEveryConversationYoutubeVideoId,
+                properties: properties
+            )
+        }
     }
 }

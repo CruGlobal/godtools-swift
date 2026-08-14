@@ -126,12 +126,15 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
     }
     
     private func didSetApplanguage(appLanguage: AppLanguageDomainModel) {
-        
-        searchBarStrings = getSearchBarStringsUseCase
-            .execute(appLanguage: appLanguage)
-        
-        strings = getToolFilterCategoriesStringsUseCase
-            .execute(appLanguage: appLanguage)
+
+        Task {
+
+            searchBarStrings = await getSearchBarStringsUseCase
+                .execute(appLanguage: appLanguage)
+
+            strings = await getToolFilterCategoriesStringsUseCase
+                .execute(appLanguage: appLanguage)
+        }
     }
 }
 

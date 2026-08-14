@@ -108,8 +108,11 @@ final class AllYourFavoriteToolsViewModel: ObservableObject {
 
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
 
-        strings = getAllYourFavoritedToolsStringsUseCase
-            .execute(appLanguage: appLanguage)
+        Task {
+
+            strings = await getAllYourFavoritedToolsStringsUseCase
+                .execute(appLanguage: appLanguage)
+        }
     }
 
     private var analyticsScreenName: String {
@@ -126,50 +129,60 @@ final class AllYourFavoriteToolsViewModel: ObservableObject {
     
     private func trackPageView() {
         
-        trackScreenViewAnalyticsUseCase.trackScreen(
-            screenName: analyticsScreenName,
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil
-        )
+        Task {
+            await trackScreenViewAnalyticsUseCase.execute(
+                properties: AnalyticsProperties(
+                    screenName: analyticsScreenName,
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: analyticsSiteSubSection,
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                )
+            )
+        }
     }
     
     private func trackOpenFavoritedToolButtonAnalytics(tool: YourFavoritedToolDomainModel) {
        
-        trackActionAnalyticsUseCase.trackAction(
-            screenName: analyticsScreenName,
-            actionName: AnalyticsConstants.ActionNames.toolOpened,
-            siteSection: "",
-            siteSubSection: "",
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil,
-            url: nil,
-            data: [
-                AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.favoriteTools,
-                AnalyticsConstants.Keys.tool: tool.analyticsToolAbbreviation
-            ]
-        )
+        Task {
+            await trackActionAnalyticsUseCase.execute(
+                properties: AnalyticsProperties(
+                    screenName: analyticsScreenName,
+                    siteSection: "",
+                    siteSubSection: "",
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                ),
+                actionName: AnalyticsConstants.ActionNames.toolOpened,
+                data: [
+                    AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.favoriteTools,
+                    AnalyticsConstants.Keys.tool: tool.analyticsToolAbbreviation
+                ]
+            )
+        }
     }
     
     private func trackFavoritedToolDetailsButtonAnalytics(tool: YourFavoritedToolDomainModel) {
         
-        trackActionAnalyticsUseCase.trackAction(
-            screenName: analyticsScreenName,
-            actionName: AnalyticsConstants.ActionNames.openDetails,
-            siteSection: "",
-            siteSubSection: "",
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil,
-            url: nil,
-            data: [
-                AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.favoriteTools,
-                AnalyticsConstants.Keys.tool: tool.analyticsToolAbbreviation
-            ]
-        )
+        Task {
+            await trackActionAnalyticsUseCase.execute(
+                properties: AnalyticsProperties(
+                    screenName: analyticsScreenName,
+                    siteSection: "",
+                    siteSubSection: "",
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                ),
+                actionName: AnalyticsConstants.ActionNames.openDetails,
+                data: [
+                    AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.favoriteTools,
+                    AnalyticsConstants.Keys.tool: tool.analyticsToolAbbreviation
+                ]
+            )
+        }
     }
     
     private func closePage() {

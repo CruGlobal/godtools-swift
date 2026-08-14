@@ -9,7 +9,7 @@
 import Foundation
 import UserNotifications
 
-final class GetNotificationStatus {
+final class GetNotificationStatus: Sendable {
     
     init() {
         

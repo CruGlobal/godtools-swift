@@ -9,7 +9,7 @@
 import Foundation
 @testable import godtools
 
-class FakeLocaleLanguageScriptName: LocaleLanguageScriptNameInterface {
+final class FakeLocaleLanguageScriptName: LocaleLanguageScriptNameInterface {
     
     typealias ScriptCode = String
     typealias TranslateInLocaleId = String

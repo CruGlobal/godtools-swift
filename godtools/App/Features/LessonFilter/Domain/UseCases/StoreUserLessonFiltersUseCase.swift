@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class StoreUserLessonFiltersUseCase {
+final class StoreUserLessonFiltersUseCase: Sendable {
     
     private let userLessonFiltersRepository: UserLessonFiltersRepository
     

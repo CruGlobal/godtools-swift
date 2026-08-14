@@ -30,7 +30,7 @@ struct GetReviewShareShareableStringsUseCaseTests {
 
         let useCase = getUseCase()
 
-        let strings: ReviewShareShareableStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
+        let strings: ReviewShareShareableStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.shareActionTitle == "\(argument.appLanguage):\(LocalizableStringKeys.toolSettingsShareImagePreviewShareImageButtonTitle.key)")
     }

@@ -8,31 +8,17 @@
 
 import Foundation
 
-final class TrackActionAnalyticsUseCase {
+final class TrackActionAnalyticsUseCase: Sendable {
     
-    private let trackActionAnalytics: TrackActionAnalyticsInterface
-    
-    init(trackActionAnalytics: TrackActionAnalyticsInterface) {
+    private let analytics: AnalyticsContainer
         
-        self.trackActionAnalytics = trackActionAnalytics
+    init(analytics: AnalyticsContainer) {
+        
+        self.analytics = analytics
     }
     
-    func trackAction(screenName: String, actionName: String, siteSection: String, siteSubSection: String, appLanguage: String?, contentLanguage: String?, contentLanguageSecondary: String?, url: String?, data: [String: Any]?) {
+    func execute(properties: AnalyticsProperties, actionName: String, data: [String: Any]?) async {
         
-        let properties = TrackActionAnalyticsPropertiesDomainModel(
-            screenName: screenName,
-            actionName: actionName,
-            siteSection: siteSection,
-            siteSubSection: siteSubSection,
-            appLanguage: appLanguage,
-            contentLanguage: contentLanguage,
-            contentLanguageSecondary: contentLanguageSecondary,
-            url: url,
-            data: data
-        )
-        
-        trackActionAnalytics.trackAction(
-            properties: properties
-        )
+        await analytics.trackAction(properties: properties, actionName: actionName, data: data)
     }
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetLessonsListItems {
+final class GetLessonsListItems: Sendable {
     
     private let languagesRepository: LanguagesRepository
     private let getTranslatedToolName: GetTranslatedToolName
@@ -28,10 +28,16 @@ final class GetLessonsListItems {
         self.getLessonListItemProgress = getLessonListItemProgress
     }
     
-    func mapLessonsToListItems(lessons: [ResourceDataModel], appLanguage: AppLanguageDomainModel, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) throws -> [LessonListItemDomainModel] {
+    func mapLessonsToListItems(
+        lessons: [ResourceDataModel],
+        appLanguage: AppLanguageDomainModel,
+        filterLessonsByLanguage: LessonFilterLanguageDomainModel?
+    ) async throws -> [LessonListItemDomainModel] {
+        
+        var lessonList: [LessonListItemDomainModel] = Array()
 
-        return try lessons.map { resource in
-
+        for resource in lessons {
+            
             let filterLanguageModel: LanguageDataModel?
             if let filterLanguageId = filterLessonsByLanguage?.languageId {
                 filterLanguageModel = languagesRepository.getLanguageById(id: filterLanguageId)
@@ -39,7 +45,7 @@ final class GetLessonsListItems {
                 filterLanguageModel = nil
             }
 
-            let toolLanguageAvailability = getToolLanguageAvailability(
+            let toolLanguageAvailability = await getToolLanguageAvailability(
                 appLanguage: appLanguage,
                 filterLanguageModel: filterLanguageModel,
                 resource: resource
@@ -50,7 +56,7 @@ final class GetLessonsListItems {
                 translateInLanguage: filterLanguageModel?.code ?? appLanguage
             )
 
-            let lessonProgress = try getLessonListItemProgress.getLessonProgress(
+            let lessonProgress = try await getLessonListItemProgress.getLessonProgress(
                 lesson: resource,
                 appLanguage: appLanguage
             )
@@ -62,7 +68,7 @@ final class GetLessonsListItems {
                 nameLanguageDirection = .leftToRight
             }
 
-            return LessonListItemDomainModel(
+            let item = LessonListItemDomainModel(
                 analyticsToolName: resource.abbreviation,
                 availabilityInAppLanguage: toolLanguageAvailability,
                 bannerImageId: resource.attrBanner,
@@ -71,10 +77,18 @@ final class GetLessonsListItems {
                 nameLanguageDirection: nameLanguageDirection,
                 lessonProgress: lessonProgress
             )
+            
+            lessonList.append(item)
         }
+        
+        return lessonList
     }
     
-    private func getToolLanguageAvailability(appLanguage: AppLanguageDomainModel, filterLanguageModel: LanguageDataModel?, resource: ResourceDataModel) -> ToolLanguageAvailabilityDomainModel {
+    private func getToolLanguageAvailability(
+        appLanguage: AppLanguageDomainModel,
+        filterLanguageModel: LanguageDataModel?,
+        resource: ResourceDataModel
+    ) async -> ToolLanguageAvailabilityDomainModel {
 
         if let appLanguageModel = languagesRepository.getLanguageByCode(code: appLanguage) {
             
@@ -86,7 +100,11 @@ final class GetLessonsListItems {
                 language = appLanguageModel
             }
             
-            return self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: resource, language: language, translateInLanguage: appLanguageModel)
+            return await getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(
+                resource: resource,
+                language: language,
+                translateInLanguage: appLanguageModel
+            )
         }
         else {
             return ToolLanguageAvailabilityDomainModel(availabilityString: "", isAvailable: false)

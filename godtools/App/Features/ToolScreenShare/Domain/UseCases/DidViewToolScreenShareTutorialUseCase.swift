@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class DidViewToolScreenShareTutorialUseCase {
+final class DidViewToolScreenShareTutorialUseCase: Sendable {
     
     private let tutorialViewsRepository: ToolScreenShareTutorialViewsRepository
     

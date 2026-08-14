@@ -89,10 +89,13 @@ final class TutorialViewModel: ObservableObject {
     }
     
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
-        
-        strings = getTutorialStringsUseCase.execute(appLanguage: appLanguage)
-        
-        tutorialPages = getTutorialUseCase.execute(appLanguage: appLanguage).pages
+
+        Task {
+
+            strings = await getTutorialStringsUseCase.execute(appLanguage: appLanguage)
+
+            tutorialPages = await getTutorialUseCase.execute(appLanguage: appLanguage).pages
+        }
     }
     
     private func getAnalyticsScreenName(tutorialItemIndex: Int) -> String {
@@ -128,26 +131,33 @@ final class TutorialViewModel: ObservableObject {
         let analyticsSiteSection = analyticsSiteSection
         let analyticsSiteSubSection = analyticsSiteSubsection
         
-        trackScreenViewAnalyticsUseCase.trackScreen(
-            screenName: analyticsScreenName,
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil
-        )
+        Task {
+            await trackScreenViewAnalyticsUseCase.execute(
+                properties: AnalyticsProperties(
+                    screenName: analyticsScreenName,
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: analyticsSiteSubSection,
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                )
+            )
+        }
         
-        trackActionAnalyticsUseCase.trackAction(
-            screenName: analyticsScreenName,
-            actionName: analyticsScreenName,
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil,
-            url: nil,
-            data: nil
-        )
+        Task {
+            await trackActionAnalyticsUseCase.execute(
+                properties: AnalyticsProperties(
+                    screenName: analyticsScreenName,
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: analyticsSiteSubSection,
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                ),
+                actionName: analyticsScreenName,
+                data: nil
+            )
+        }
     }
     
     private func refreshContinueTitle(strings: TutorialStringsDomainModel, tutorialPages: [TutorialPageDomainModel]) {
@@ -186,14 +196,21 @@ extension TutorialViewModel {
         if !youTubeVideoTracked {
             
             trackedAnalyticsForYouTubeVideoIds.append(videoId)
-            
-            tutorialVideoAnalytics.trackVideoPlayed(
-                videoId: videoId,
-                screenName: getAnalyticsScreenName(tutorialItemIndex: tutorialPageIndex),
-                appLanguage: appLanguage,
-                contentLanguage: nil,
-                secondaryContentLanguage: nil
-            )
+                        
+            Task {
+                
+                await tutorialVideoAnalytics.trackVideoPlayed(
+                    videoId: videoId,
+                    properties: AnalyticsProperties(
+                        screenName: getAnalyticsScreenName(tutorialItemIndex: tutorialPageIndex),
+                        siteSection: "",
+                        siteSubSection: "",
+                        appLanguage: appLanguage,
+                        contentLanguage: nil,
+                        secondaryContentLanguage: nil
+                    )
+                )
+            }
         }
     }
     

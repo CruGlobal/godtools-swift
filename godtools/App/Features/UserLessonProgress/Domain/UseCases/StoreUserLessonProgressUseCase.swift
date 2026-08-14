@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class StoreUserLessonProgressUseCase {
+final class StoreUserLessonProgressUseCase: Sendable {
     
     private let lessonProgressRepository: UserLessonProgressRepository
     

@@ -124,12 +124,15 @@ final class LessonFilterLanguageSelectionViewModel: ObservableObject {
     }
     
     private func didSetApplanguage(appLanguage: AppLanguageDomainModel) {
-        
-        searchBarStrings = getSearchBarStringsUseCase
-            .execute(appLanguage: appLanguage)
-        
-        strings = getLessonFilterLanguagesStringsUseCase
-            .execute(appLanguage: appLanguage)
+
+        Task {
+
+            searchBarStrings = await getSearchBarStringsUseCase
+                .execute(appLanguage: appLanguage)
+
+            strings = await getLessonFilterLanguagesStringsUseCase
+                .execute(appLanguage: appLanguage)
+        }
     }
 }
 

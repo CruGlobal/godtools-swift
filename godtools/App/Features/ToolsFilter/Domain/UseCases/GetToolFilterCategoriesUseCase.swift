@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class GetToolFilterCategoriesUseCase {
+final class GetToolFilterCategoriesUseCase: Sendable {
     
     private let resourcesRepository: ResourcesRepository
     private let getToolFilterCategory: GetToolFilterCategory
@@ -25,18 +25,19 @@ final class GetToolFilterCategoriesUseCase {
         return resourcesRepository
             .observeCollectionChangesPublisher()
             .receive(on: DispatchQueue.global())
-            .flatMap { _ in
-                
-                let categoryIds = self.resourcesRepository
-                    .getAllToolCategoryIds(filteredByLanguageId: filteredByLanguage.filterId)
-                
-                let categories = self.getToolFilterCategory.createCategoryFilters(
-                    from: categoryIds,
-                    translatedInAppLanguage: appLanguage,
-                    filteredByLanguageId: filteredByLanguage.filterId
-                )
-                
-                return Just(categories)
+            .flatMap { (resourcesChanged: Void) -> AnyPublisher<[ToolFilterCategoryDomainModel], Error> in
+
+                return AnyPublisher() {
+
+                    let categoryIds = self.resourcesRepository
+                        .getAllToolCategoryIds(filteredByLanguageId: filteredByLanguage.filterId)
+
+                    return await self.getToolFilterCategory.createCategoryFilters(
+                        from: categoryIds,
+                        translatedInAppLanguage: appLanguage,
+                        filteredByLanguageId: filteredByLanguage.filterId
+                    )
+                }
             }
             .eraseToAnyPublisher()
     }

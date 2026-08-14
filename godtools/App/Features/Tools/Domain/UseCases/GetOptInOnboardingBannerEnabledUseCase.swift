@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class GetOptInOnboardingBannerEnabledUseCase {
+final class GetOptInOnboardingBannerEnabledUseCase: Sendable {
     
     private let getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase
     private let optInOnboardingBannerEnabledRepository: OptInOnboardingBannerEnabledRepository
@@ -23,12 +23,13 @@ final class GetOptInOnboardingBannerEnabledUseCase {
         self.optInOnboardingBannerEnabledRepository = optInOnboardingBannerEnabledRepository
     }
         
-    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<Bool, Never> {
+    @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<Bool, Never> {
         
         let tutorialAvailable: Bool = getTutorialIsAvailableUseCase.execute(appLanguage: appLanguage)
         
         return optInOnboardingBannerEnabledRepository
             .getEnabledPublisher()
+            .receive(on: DispatchQueue.global())
             .map { (bannerEnabled: Bool) in
                 
                 return tutorialAvailable && bannerEnabled

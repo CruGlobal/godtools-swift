@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class ShouldPromptForOptInNotificationUseCase {
+final class ShouldPromptForOptInNotificationUseCase: Sendable {
     
     private let getOnboardingTutorialIsAvailable: GetOnboardingTutorialIsAvailable
     private let optInNotificationRepository: OptInNotificationRepositoryInterface

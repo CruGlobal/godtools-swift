@@ -111,7 +111,7 @@ class MobileContentPageViewModel: MobileContentViewModel {
         
         return MobileContentBackgroundImageViewModel(
             backgroundImageModel: backgroundImageModel,
-            manifestResourcesCache: renderedPageContext.resourcesCache,
+            resourcesFileCache: renderedPageContext.resourcesFileCache,
             languageDirection: renderedPageContext.language.languageDirectionDomainModel
         )
     }
@@ -125,14 +125,18 @@ class MobileContentPageViewModel: MobileContentViewModel {
     
     func trackScreenAnalytics() {
         
-        trackScreenViewAnalyticsUseCase.trackScreen(
-            screenName: analyticsScreenName,
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            appLanguage: renderedPageContext.appLanguage,
-            contentLanguage: renderedPageContext.rendererLanguages.primaryLanguage.localeId,
-            contentLanguageSecondary: renderedPageContext.rendererLanguages.parallelLanguage?.localeId
-        )
+        Task {
+            await trackScreenViewAnalyticsUseCase.execute(
+                properties: AnalyticsProperties(
+                    screenName: analyticsScreenName,
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: analyticsSiteSubSection,
+                    appLanguage: renderedPageContext.appLanguage,
+                    contentLanguage: renderedPageContext.rendererLanguages.primaryLanguage.localeId,
+                    secondaryContentLanguage: renderedPageContext.rendererLanguages.parallelLanguage?.localeId
+                )
+            )
+        }
     }
 }
 

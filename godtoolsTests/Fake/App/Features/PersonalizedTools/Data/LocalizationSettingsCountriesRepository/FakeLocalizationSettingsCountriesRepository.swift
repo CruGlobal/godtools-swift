@@ -9,7 +9,7 @@
 import Foundation
 @testable import godtools
 
-class FakeLocalizationSettingsCountriesRepository: LocalizationSettingsCountriesRepositoryInterface {
+final class FakeLocalizationSettingsCountriesRepository: LocalizationSettingsCountriesRepositoryInterface {
 
     private let countries: [LocalizationSettingsCountryDataModel]
 

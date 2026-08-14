@@ -58,7 +58,13 @@ extension MobileContentMultiSelectOptionViewModel {
     func multiSelectOptionTapped() {
         
         multiSelectOptionModel.toggleSelected(ctx: renderedPageContext.rendererState)
-                                
-        mobileContentAnalytics.trackEvents(events: multiSelectOptionModel.getAnalyticsEvents(type: .clicked), renderedPageContext: renderedPageContext)
+                
+        Task {
+                
+            try await mobileContentAnalytics.trackEvents(
+                events: multiSelectOptionModel.getAnalyticsEvents(type: .clicked),
+                renderedPageContext: renderedPageContext
+            )
+        }
     }
 }

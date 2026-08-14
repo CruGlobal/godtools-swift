@@ -12,9 +12,7 @@ import GodToolsShared
 
 @MainActor
 final class ArticleCategoriesViewModel: ObservableObject {
-    
-    private static var backgroundCancellables: Set<AnyCancellable> = Set()
-    
+        
     private let stepEmitter: FlowStepEmitter
     private let resource: ResourceDataModel
     private let language: LanguageDataModel
@@ -29,6 +27,8 @@ final class ArticleCategoriesViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = Set()
     private var pullToRefreshArticlesTask: Task<Void, Error>?
     private var pageViewCount: Int = 0
+    
+    private var getCategoriesTask: Task<Void, Error>?
         
     @Published private(set) var categories: [ArticleCategoryDomainModel] = Array()
     
@@ -56,12 +56,13 @@ final class ArticleCategoriesViewModel: ObservableObject {
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         
-        categories = getArticleCategoriesUseCase.execute(manifest: manifest)
+        loadCategories()
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
         pullToRefreshArticlesTask?.cancel()
+        getCategoriesTask?.cancel()
     }
     
     private var analyticsScreenName: String {
@@ -74,6 +75,16 @@ final class ArticleCategoriesViewModel: ObservableObject {
     
     private var analyticsSiteSubSection: String {
         return ""
+    }
+    
+    private func loadCategories() {
+        
+        getCategoriesTask?.cancel()
+        
+        getCategoriesTask = Task {
+            
+            categories = await getArticleCategoriesUseCase.execute(categories: manifest.sendableCategories)
+        }
     }
 }
 
@@ -89,27 +100,24 @@ extension ArticleCategoriesViewModel {
         
         if pageViewCount == 0 {
             
-            incrementUserCounterUseCase
-                .execute(
-                    interaction: .toolOpen(tool: resource.id)
-                )
-                .receive(on: DispatchQueue.main)
-                .sink { _ in
-                    
-                } receiveValue: { _ in
-                    
-                }
-                .store(in: &Self.backgroundCancellables)
+            Task {
+                
+                _ = try await incrementUserCounterUseCase.execute(interaction: .toolOpen(tool: resource.id))
+            }
         }
         
-        trackScreenViewAnalyticsUseCase.trackScreen(
-            screenName: analyticsScreenName,
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil
-        )
+        Task {
+            await trackScreenViewAnalyticsUseCase.execute(
+                properties: AnalyticsProperties(
+                    screenName: analyticsScreenName,
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: analyticsSiteSubSection,
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                )
+            )
+        }
                 
         pageViewCount += 1
     }

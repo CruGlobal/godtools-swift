@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import RepositorySync
 
-final class UserLessonFiltersCache {
+final class UserLessonFiltersCache: Sendable {
     
     let persistence: any Persistence<UserLessonLanguageFilterDataModel, UserLessonLanguageFilterDataModel>
     

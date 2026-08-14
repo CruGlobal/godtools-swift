@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetLessonFilterLanguagesStringsUseCase {
+final class GetLessonFilterLanguagesStringsUseCase: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
     
@@ -16,12 +16,12 @@ final class GetLessonFilterLanguagesStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> LessonFilterLanguagesStringsDomainModel {
+    func execute(appLanguage: AppLanguageDomainModel) async -> LessonFilterLanguagesStringsDomainModel {
         
         let localeId = appLanguage.localeId
         
         let strings = LessonFilterLanguagesStringsDomainModel(
-            navTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsFilterLanguageNavTitle.key)
+            navTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsFilterLanguageNavTitle.key)
         )
         
         return strings

@@ -8,31 +8,42 @@
 
 import UIKit
 
-class MobileContentBackgroundImageViewModel {
+@MainActor
+final class MobileContentBackgroundImageViewModel {
     
     private let backgroundImageModel: BackgroundImageModel
-    private let manifestResourcesCache: MobileContentRendererManifestResourcesCache
+    private let resourcesFileCache: ResourcesFileCache
     private let languageDirection: LanguageDirectionDomainModel
     private let backgroundImageRenderer: MobileContentBackgroundImageRenderer = MobileContentBackgroundImageRenderer()
-        
-    let backgroundImage: UIImage?
     
+    private var backgroundImage: UIImage?
+            
     init(
         backgroundImageModel: BackgroundImageModel,
-        manifestResourcesCache: MobileContentRendererManifestResourcesCache,
+        resourcesFileCache: ResourcesFileCache,
         languageDirection: LanguageDirectionDomainModel
     ) {
         
         self.backgroundImageModel = backgroundImageModel
-        self.manifestResourcesCache = manifestResourcesCache
+        self.resourcesFileCache = resourcesFileCache
         self.languageDirection = languageDirection
+    }
+    
+    func getBackgroundImage() async -> UIImage? {
         
-        if let backgroundImage = manifestResourcesCache.getUIImageNonThrowing(resource: backgroundImageModel.backgroundImageResource) {
-            self.backgroundImage = backgroundImage
+        if let backgroundImage = backgroundImage {
+            return backgroundImage
         }
-        else {
-            self.backgroundImage = nil
+        
+        guard let fileLocation = backgroundImageModel.backgroundImageResource.toSHA256FileLocation() else {
+            return nil
         }
+        
+        let backgroundImage = await resourcesFileCache.cache.getUIImageNonThrowing(location: fileLocation)
+        
+        self.backgroundImage = backgroundImage
+        
+        return backgroundImage
     }
     
     func getRenderPositionForBackgroundImage(container: CGRect, backgroundImage: UIImage) -> CGRect? {
@@ -57,13 +68,12 @@ class MobileContentBackgroundImageViewModel {
         )
     }
     
-    func renderBackgroundImageFrame(container: CGRect) -> CGRect? {
+    func renderBackgroundImageFrame(backgroundImage: UIImage, container: CGRect) -> CGRect? {
         
-        guard let backgroundImage = self.backgroundImage else {
-            return nil
-        }
-        
-        let backgroundImageFrame: CGRect? = getRenderPositionForBackgroundImage(container: container, backgroundImage: backgroundImage)
+        let backgroundImageFrame: CGRect? = getRenderPositionForBackgroundImage(
+            container: container,
+            backgroundImage: backgroundImage
+        )
         
         return backgroundImageFrame
     }

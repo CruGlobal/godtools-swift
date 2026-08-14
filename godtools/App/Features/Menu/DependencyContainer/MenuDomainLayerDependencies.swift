@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class MenuDomainLayerDependencies {
+final class MenuDomainLayerDependencies: Sendable {
     
     private let core: AppCoreDiContainer
     private let dataLayer: MenuDataLayerDependencies

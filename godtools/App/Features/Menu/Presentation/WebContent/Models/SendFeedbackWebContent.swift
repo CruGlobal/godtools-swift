@@ -10,13 +10,20 @@ import Foundation
 
 struct SendFeedbackWebContent: WebContentType {
     
-    let navTitle: String
+    let appLanguage: AppLanguageDomainModel
+    let navTitleLocalizedKey: String = LocalizableStringKeys.menuSendFeedback.key
     let url: URL? = URL(string: "https://godtoolsapp.com/send-feedback/")
     let analyticsScreenName: String = "Send Feedback"
     let analyticsSiteSection: String = "menu"
+    let localizationServices: LocalizationServicesInterface
     
-    init(localizationServices: LocalizationServicesInterface) {
+    private(set) var navTitle: String = ""
+    
+    init(appLanguage: AppLanguageDomainModel, localizationServices: LocalizationServicesInterface) async {
         
-        navTitle = localizationServices.stringForSystemElseEnglish(key: LocalizableStringKeys.menuSendFeedback.key)
+        self.appLanguage = appLanguage
+        self.localizationServices = localizationServices
+        
+        self.navTitle = await getLocalizedNavTitle()
     }
 }

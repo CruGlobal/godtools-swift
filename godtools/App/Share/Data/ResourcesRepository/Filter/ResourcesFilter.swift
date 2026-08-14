@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ResourcesFilter {
+struct ResourcesFilter: Sendable {
     
     let category: String?
     let languageModelId: String?

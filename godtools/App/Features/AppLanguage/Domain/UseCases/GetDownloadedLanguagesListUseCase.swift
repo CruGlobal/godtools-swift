@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class GetDownloadedLanguagesListUseCase {
+final class GetDownloadedLanguagesListUseCase: Sendable {
     
     private let languagesRepository: LanguagesRepository
     private let downloadedLanguagesRepository: DownloadedLanguagesRepository
@@ -56,25 +56,29 @@ final class GetDownloadedLanguagesListUseCase {
             ids: downloadedLanguageIds
         )
         
-        let languagesList: [DownloadedLanguageListItemDomainModel] = languages.map { (language: LanguageDataModel) in
-            
-            let languageNameInOwnLanguage = getTranslatedLanguageName.getLanguageName(
+        var languagesList: [DownloadedLanguageListItemDomainModel] = Array()
+
+        for language in languages {
+
+            let languageNameInOwnLanguage = await getTranslatedLanguageName.getLanguageName(
                 language: language,
                 translatedInLanguage: language.code
             )
-            let languageNameInAppLanguage = getTranslatedLanguageName.getLanguageName(
+            let languageNameInAppLanguage = await getTranslatedLanguageName.getLanguageName(
                 language: language,
                 translatedInLanguage: appLanguage
             )
-            
-            return DownloadedLanguageListItemDomainModel(
-                languageId: language.id,
-                languageCode: language.code,
-                languageNameInOwnLanguage: languageNameInOwnLanguage,
-                languageNameInAppLanguage: languageNameInAppLanguage
+
+            languagesList.append(
+                DownloadedLanguageListItemDomainModel(
+                    languageId: language.id,
+                    languageCode: language.code,
+                    languageNameInOwnLanguage: languageNameInOwnLanguage,
+                    languageNameInAppLanguage: languageNameInAppLanguage
+                )
             )
         }
-        
+
         return languagesList
     }
 }

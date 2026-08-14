@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetLearnToShareToolStringsUseCase {
+final class GetLearnToShareToolStringsUseCase: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
     
@@ -17,13 +17,13 @@ final class GetLearnToShareToolStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> LearnToShareToolStringsDomainModel {
+    func execute(appLanguage: AppLanguageDomainModel) async -> LearnToShareToolStringsDomainModel {
         
         let localeId: String = appLanguage
         
         let strings = LearnToShareToolStringsDomainModel(
-            nextTutorialItemActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.tutorialContinueButtonTitleContinue.key),
-            startTrainingActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.startTraining.key)
+            nextTutorialItemActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.tutorialContinueButtonTitleContinue.key),
+            startTrainingActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.startTraining.key)
         )
         
         return strings

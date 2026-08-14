@@ -30,7 +30,7 @@ struct GetSocialSignInStringsUseCaseTests {
 
         let useCase = getUseCase()
 
-        let strings: SocialSignInStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
+        let strings: SocialSignInStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.title == "\(argument.appLanguage):\(LocalizableStringKeys.signInTitle.key)")
         #expect(strings.subtitle == "\(argument.appLanguage):\(LocalizableStringKeys.signInSubtitle.key)")

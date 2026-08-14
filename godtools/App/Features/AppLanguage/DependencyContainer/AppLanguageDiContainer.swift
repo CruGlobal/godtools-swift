@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class AppLanguageDiContainer {
+final class AppLanguageDiContainer: Sendable {
     
     let dataLayer: AppLanguageDataLayerDependencies
     let domainLayer: AppLanguageDomainLayerDependencies

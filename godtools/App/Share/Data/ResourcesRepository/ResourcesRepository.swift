@@ -11,7 +11,7 @@ import Combine
 import RequestOperation
 import RepositorySync
 
-final class ResourcesRepository {
+final class ResourcesRepository: Sendable {
             
     private static let syncInvalidatorIdForResourcesPlustLatestTranslationsAndAttachments: String = "resourcesPlusLatestTranslationAttachments.syncInvalidator.id"
     private static let syncedResourcesFromJsonCacheKey: String = "ResourcesRepository.synced.resources.json"

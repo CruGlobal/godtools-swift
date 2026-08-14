@@ -36,9 +36,13 @@ class MobileContentButtonView: MobileContentView {
         super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
         
         currentFrameWidth = frame.size.width
-        setupLayout()
-        addSubviewsAndConstraints(buttonView: buttonView, buttonTitle: buttonTitle, buttonImageView: buttonImageView)
-        setupBinding()
+        
+        Task {
+            
+            await setupLayout()
+            await addSubviewsAndConstraints(buttonView: buttonView, buttonTitle: buttonTitle, buttonImageView: buttonImageView)
+            setupBinding()
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -51,7 +55,7 @@ class MobileContentButtonView: MobileContentView {
         layoutButtonViewWidthIfNeeded()
     }
     
-    private func setupLayout() {
+    private func setupLayout() async {
                 
         backgroundColor = .clear
                         
@@ -74,9 +78,12 @@ class MobileContentButtonView: MobileContentView {
         buttonTitle.textColor = viewModel.titleColor
         
         // buttonImageView
-        if let buttonIcon = viewModel.icon {
+        let buttonIcon = await viewModel.getButtonIcon()
+        
+        if let buttonIcon = buttonIcon {
             
-            let buttonImageView: UIImageView = UIImageView(image: buttonIcon.image)
+            let buttonImageView: UIImageView = UIImageView()
+            buttonImageView.image = buttonIcon.image
             buttonImageView.isUserInteractionEnabled = false
             buttonImageView.backgroundColor = .clear
             
@@ -91,7 +98,11 @@ class MobileContentButtonView: MobileContentView {
         }
     }
     
-    private func addSubviewsAndConstraints(buttonView: UIView, buttonTitle: UILabel, buttonImageView: UIImageView?) {
+    private func addSubviewsAndConstraints(
+        buttonView: UIView,
+        buttonTitle: UILabel,
+        buttonImageView: UIImageView?
+    ) async {
         
         translatesAutoresizingMaskIntoConstraints = false
         
@@ -120,7 +131,10 @@ class MobileContentButtonView: MobileContentView {
         let buttonHorizontalPadding: CGFloat = viewModel.titleAlignment == .center ? 0 : buttonTitleImagePaddingToEdge
         let buttonTitleTextAlignment: NSTextAlignment
         
-        if let buttonImageView = buttonImageView, let buttonIcon = viewModel.icon, let buttonIconSize = getButtonIconSize() {
+        if let buttonImageView = buttonImageView,
+           let buttonIcon = await viewModel.getButtonIcon() {
+            
+            let buttonIconSize = getButtonIconSize(buttonIcon: buttonIcon)
             
             buttonTitleTextAlignment = .center
             
@@ -241,11 +255,7 @@ class MobileContentButtonView: MobileContentView {
         return buttonViewWidth
     }
     
-    private func getButtonIconSize() -> CGSize? {
-        
-        guard let buttonIcon = viewModel.icon else {
-            return nil
-        }
+    private func getButtonIconSize(buttonIcon: MobileContentButtonIcon) -> CGSize {
         
         let buttonIconWidth: CGFloat = CGFloat(buttonIcon.size)
         let buttonIconHeight: CGFloat = CGFloat(buttonIcon.size)

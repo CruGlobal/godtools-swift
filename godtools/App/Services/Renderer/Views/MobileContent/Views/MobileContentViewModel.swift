@@ -89,10 +89,13 @@ extension MobileContentViewModel {
     
     func viewTapped() {
                 
-        mobileContentAnalytics.trackEvents(
-            events: getClickableAnalyticsEvents(),
-            renderedPageContext: renderedPageContext
-        )
+        Task {
+            
+            try await mobileContentAnalytics.trackEvents(
+                events: getClickableAnalyticsEvents(),
+                renderedPageContext: renderedPageContext
+            )
+        }
     }
     
     func getIsClickable() -> Bool {

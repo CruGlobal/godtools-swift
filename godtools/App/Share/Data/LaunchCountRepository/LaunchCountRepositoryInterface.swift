@@ -9,9 +9,10 @@
 import Foundation
 import Combine
 
-protocol LaunchCountRepositoryInterface {
+protocol LaunchCountRepositoryInterface: Sendable {
+    
+    @MainActor func getLaunchCountChangedPublisher() -> AnyPublisher<Int, Never>
     
     func getLaunchCount() -> Int
-    func getLaunchCountPublisher() -> AnyPublisher<Int, Never>
-    func getLaunchCountChangedPublisher() -> AnyPublisher<Int, Never>
+    func storeLaunchCount(count: Int) async throws
 }

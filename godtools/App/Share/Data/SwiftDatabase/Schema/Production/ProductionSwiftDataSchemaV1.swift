@@ -29,6 +29,7 @@ enum ProductionSwiftDataSchemaV1: VersionedSchema {
             SwiftFollowUpV1.SwiftFollowUp.self,
             SwiftGlobalAnalyticsV1.SwiftGlobalAnalytics.self,
             SwiftLanguageV1.SwiftLanguage.self,
+            SwiftLaunchCountV1.SwiftLaunchCount.self,
             SwiftLessonEvaluationV1.SwiftLessonEvaluation.self,
             SwiftLocalActivityCountV1.SwiftLocalActivityCount.self,
             SwiftMobileContentAuthTokenV1.SwiftMobileContentAuthToken.self,

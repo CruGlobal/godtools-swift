@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetLessonsStringsUseCase {
+final class GetLessonsStringsUseCase: Sendable {
 
     private let localizationServices: LocalizationServicesInterface
     
@@ -17,20 +17,20 @@ final class GetLessonsStringsUseCase {
         self.localizationServices = localizationServices
     }
 
-    func execute(translateInLanguage: AppLanguageDomainModel) -> LessonsStringsDomainModel {
+    func execute(translateInLanguage: AppLanguageDomainModel) async -> LessonsStringsDomainModel {
 
         let localeId: String = translateInLanguage
         
         let strings = LessonsStringsDomainModel(
-            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsPageTitle.key),
-            subtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsPageSubtitle.key),
-            languageFilterTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsLanguageFilterTitle.key),
-            personalizedToolToggleTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.dashboardPersonalizedToolTogglePersonalizedTitle.key),
-            allLessonsToggleTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.dashboardPersonalizedToolToggleAllLessonsTitle.key),
-            personalizedLessonExplanationTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.dashboardPersonalizedLessonFooterTitle.key),
-            personalizedLessonExplanationSubtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.dashboardPersonalizedLessonFooterSubtitle.key),
-            changeLocalizationSettingsAction: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.dashboardPersonalizedToolFooterButtonTitle.key),
-            viewAllLessonsAction: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsPersonalizationUnavailableViewAllLessons.key)
+            title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsPageTitle.key),
+            subtitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsPageSubtitle.key),
+            languageFilterTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsLanguageFilterTitle.key),
+            personalizedToolToggleTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.dashboardPersonalizedToolTogglePersonalizedTitle.key),
+            allLessonsToggleTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.dashboardPersonalizedToolToggleAllLessonsTitle.key),
+            personalizedLessonExplanationTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.dashboardPersonalizedLessonFooterTitle.key),
+            personalizedLessonExplanationSubtitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.dashboardPersonalizedLessonFooterSubtitle.key),
+            changeLocalizationSettingsAction: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.dashboardPersonalizedToolFooterButtonTitle.key),
+            viewAllLessonsAction: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsPersonalizationUnavailableViewAllLessons.key)
         )
         
         return strings

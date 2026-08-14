@@ -30,7 +30,7 @@ struct GetDeleteAccountStringsUseCaseTests {
 
         let useCase = getUseCase()
 
-        let strings: DeleteAccountStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
+        let strings: DeleteAccountStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.title == "\(argument.appLanguage):\(LocalizableStringKeys.deleteAccountTitle.key)")
         #expect(strings.subtitle == "\(argument.appLanguage):\(LocalizableStringKeys.deleteAccountSubtitle.key)")

@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class ReorderFavoritedToolUseCase {
+final class ReorderFavoritedToolUseCase: Sendable {
     
     private let favoritedResourcesRepository: FavoritedResourcesRepository
     

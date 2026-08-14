@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import GodToolsShared
 
-final class GetUserActivityUseCase {
+final class GetUserActivityUseCase: Sendable {
     
     private let getUserActivityBadge: GetUserActivityBadge
     private let getUserActivityStats: GetUserActivityStats
@@ -35,23 +35,49 @@ final class GetUserActivityUseCase {
         return userCounterRepository
             .observeCollectionChangesPublisher()
             .receive(on: DispatchQueue.global())
-            .flatMap { (countersChanged: Void) in
+            .flatMap { (countersChanged: Void) -> AnyPublisher<UserActivityDomainModel, Error> in
                 
-                return self
-                    .userCounterRepository
-                    .getCachedCountersPublisher()
-                    .eraseToAnyPublisher()
-            }
-            .map { (counters: [UserCounterDataModel]) in
-                                
-                let userActivityDomainModel: UserActivityDomainModel = self.getUserActivityDomainModel(
-                    userCounters: counters,
-                    translatedInAppLanguage: appLanguage
-                )
-                
-                return userActivityDomainModel
+                return AnyPublisher() {
+                    
+                    return try await self.asyncExecute(appLanguage: appLanguage)
+                }
             }
             .eraseToAnyPublisher()
+    }
+    
+    private func asyncExecute(appLanguage: AppLanguageDomainModel) async throws -> UserActivityDomainModel {
+        
+        let counters: [UserCounterDataModel] = try await userCounterRepository.getCachedCounters()
+        
+        return await getUserActivityDomainModel(
+            userCounters: counters,
+            translatedInAppLanguage: appLanguage
+        )
+    }
+    
+    private func getUserActivityDomainModel(
+        userCounters: [UserCounterDataModel],
+        translatedInAppLanguage: AppLanguageDomainModel
+    ) async -> UserActivityDomainModel {
+
+        let domainModels: [UserCounterDomainModel] = getAllUserCounterDomainModels(userCounters: userCounters)
+
+        let userCounterDictionary = buildUserCounterDictionary(from: domainModels)
+
+        let userActivity = UserActivity(counters: userCounterDictionary)
+
+        var badges: [UserActivityBadgeDomainModel] = Array()
+
+        for badge in userActivity.badges {
+
+            badges.append(
+                await getUserActivityBadge.getBadge(from: badge, translatedInAppLanguage: translatedInAppLanguage)
+            )
+        }
+
+        let stats = await getUserActivityStats.getStats(from: userActivity, translatedInAppLanguage: translatedInAppLanguage)
+
+        return UserActivityDomainModel(badges: badges, stats: stats)
     }
     
     private func getAllUserCounterDomainModels(userCounters: [UserCounterDataModel]) -> [UserCounterDomainModel] {
@@ -70,20 +96,6 @@ final class GetUserActivityUseCase {
         userCounterDomainModels.append(trainingTipsCounter)
         
         return userCounterDomainModels
-    }
-    
-    private func getUserActivityDomainModel(userCounters: [UserCounterDataModel], translatedInAppLanguage: AppLanguageDomainModel) -> UserActivityDomainModel {
-        
-        let domainModels: [UserCounterDomainModel] = getAllUserCounterDomainModels(userCounters: userCounters)
-        
-        let userCounterDictionary = buildUserCounterDictionary(from: domainModels)
-        
-        let userActivity = UserActivity(counters: userCounterDictionary)
-        
-        let badges = userActivity.badges.map { self.getUserActivityBadge.getBadge(from: $0, translatedInAppLanguage: translatedInAppLanguage) }
-        let stats = getUserActivityStats.getStats(from: userActivity, translatedInAppLanguage: translatedInAppLanguage)
-        
-        return UserActivityDomainModel(badges: badges, stats: stats)
     }
     
     private func buildUserCounterDictionary(from counters: [UserCounterDomainModel]) -> [String: KotlinInt] {

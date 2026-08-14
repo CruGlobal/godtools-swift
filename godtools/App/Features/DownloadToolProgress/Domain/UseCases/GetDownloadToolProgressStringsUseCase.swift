@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetDownloadToolProgressStringsUseCase {
+final class GetDownloadToolProgressStringsUseCase: Sendable {
     
     private let resourcesRepository: ResourcesRepository
     private let localizationServices: LocalizationServicesInterface
@@ -25,7 +25,7 @@ final class GetDownloadToolProgressStringsUseCase {
         self.favoritedResourcesRepository = favoritedResourcesRepository
     }
     
-    func execute(toolId: String?, appLanguage: AppLanguageDomainModel) -> DownloadToolProgressStringsDomainModel {
+    func execute(toolId: String?, appLanguage: AppLanguageDomainModel) async -> DownloadToolProgressStringsDomainModel {
                         
         let localeId: String = appLanguage
         
@@ -51,10 +51,10 @@ final class GetDownloadToolProgressStringsUseCase {
         let downloadMessage: String
         
         if toolCanBeFavorited && !toolIsFavorited {
-            downloadMessage = localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.loadingUnfavoritedTool.key)
+            downloadMessage = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.loadingUnfavoritedTool.key)
         }
         else {
-            downloadMessage = localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.loadingFavoritedTool.key)
+            downloadMessage = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.loadingFavoritedTool.key)
         }
         
         let strings = DownloadToolProgressStringsDomainModel(

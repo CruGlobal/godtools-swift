@@ -190,12 +190,15 @@ final class LessonsViewModel: ObservableObject {
 
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
 
-        let strings = getLessonsStringsUseCase
-            .execute(translateInLanguage: appLanguage)
+        Task {
 
-        self.strings = strings
+            let strings = await getLessonsStringsUseCase
+                .execute(translateInLanguage: appLanguage)
 
-        toggleOptions = Self.getPersonalizedToggleOptions(strings: strings)
+            self.strings = strings
+
+            toggleOptions = Self.getPersonalizedToggleOptions(strings: strings)
+        }
     }
 
     // MARK: - Analytics
@@ -214,44 +217,54 @@ final class LessonsViewModel: ObservableObject {
     
     private func trackPageViewed() {
         
-        trackScreenViewAnalyticsUseCase.trackScreen(
-            screenName: analyticsScreenName,
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil
-        )
+        Task {
+            await trackScreenViewAnalyticsUseCase.execute(
+                properties: AnalyticsProperties(
+                    screenName: analyticsScreenName,
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: analyticsSiteSubSection,
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                )
+            )
+        }
         
-        trackActionAnalyticsUseCase.trackAction(
-            screenName: "",
-            actionName: AnalyticsConstants.ActionNames.viewedLessonsAction,
-            siteSection: "",
-            siteSubSection: "",
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil,
-            url: nil,
-            data: nil
-        )
+        Task {
+            await trackActionAnalyticsUseCase.execute(
+                properties: AnalyticsProperties(
+                    screenName: "",
+                    siteSection: "",
+                    siteSubSection: "",
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                ),
+                actionName: AnalyticsConstants.ActionNames.viewedLessonsAction,
+                data: nil
+            )
+        }
     }
     
     private func trackLessonTappedAnalytics(lessonListItem: LessonListItemDomainModel) {
         
-        trackActionAnalyticsUseCase.trackAction(
-            screenName: analyticsScreenName,
-            actionName: AnalyticsConstants.ActionNames.lessonOpenTapped,
-            siteSection: "",
-            siteSubSection: "",
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil,
-            url: nil,
-            data: [
-                AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.lessons,
-                AnalyticsConstants.Keys.tool: lessonListItem.analyticsToolName
-            ]
-        )
+        Task {
+            await trackActionAnalyticsUseCase.execute(
+                properties: AnalyticsProperties(
+                    screenName: analyticsScreenName,
+                    siteSection: "",
+                    siteSubSection: "",
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                ),
+                actionName: AnalyticsConstants.ActionNames.lessonOpenTapped,
+                data: [
+                    AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.lessons,
+                    AnalyticsConstants.Keys.tool: lessonListItem.analyticsToolName
+                ]
+            )
+        }
     }
     
     private static func getPersonalizedToggleOptions(strings: LessonsStringsDomainModel) -> [PersonalizationToggleOption] {

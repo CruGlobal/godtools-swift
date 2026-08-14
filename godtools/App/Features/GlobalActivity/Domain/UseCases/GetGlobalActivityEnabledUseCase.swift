@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetGlobalActivityEnabledUseCase {
+final class GetGlobalActivityEnabledUseCase: Sendable {
     
     private let remoteConfigRepository: RemoteConfigRepository
     

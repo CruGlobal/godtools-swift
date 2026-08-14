@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetReviewShareShareableStringsUseCase {
+final class GetReviewShareShareableStringsUseCase: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
     
@@ -17,12 +17,12 @@ final class GetReviewShareShareableStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> ReviewShareShareableStringsDomainModel {
+    func execute(appLanguage: AppLanguageDomainModel) async -> ReviewShareShareableStringsDomainModel {
         
         let localeId: String = appLanguage
         
         let strings = ReviewShareShareableStringsDomainModel(
-            shareActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsShareImagePreviewShareImageButtonTitle.key)
+            shareActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsShareImagePreviewShareImageButtonTitle.key)
         )
         
         return strings

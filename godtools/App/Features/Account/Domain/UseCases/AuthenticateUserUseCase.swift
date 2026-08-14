@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-final class AuthenticateUserUseCase {
+final class AuthenticateUserUseCase: Sendable {
         
     private let userAuthentication: UserAuthentication
     private let emailSignUpService: EmailSignUpService
@@ -41,8 +41,9 @@ final class AuthenticateUserUseCase {
         let authUser: AuthUserDomainModel? = try await self.userAuthentication.getAuthUser()
         
         if let authUser = authUser {
-            self.postEmailSignUp(authUser: authUser)
-            self.setAnalyticsUserProperties(authUser: authUser, authPlatform: authPlatform)
+            
+            try await postEmailSignUp(authUser: authUser)
+            await setAnalyticsUserProperties(authUser: authUser, authPlatform: authPlatform)
         }
     }
     
@@ -102,7 +103,7 @@ final class AuthenticateUserUseCase {
         }
     }
     
-    private func postEmailSignUp(authUser: AuthUserDomainModel) {
+    private func postEmailSignUp(authUser: AuthUserDomainModel) async throws {
         
         let emailSignUp = EmailSignUp(
             email: authUser.email,
@@ -111,18 +112,16 @@ final class AuthenticateUserUseCase {
             isRegistered: false
         )
         
-        Task {
-            try await emailSignUpService.postNewEmailSignUp(
-                emailSignUp: emailSignUp,
-                requestPriority: .medium
-            )
-        }
+        try await emailSignUpService.postNewEmailSignUp(
+            emailSignUp: emailSignUp,
+            requestPriority: .medium
+        )
     }
     
     private func setAnalyticsUserProperties(
         authUser: AuthUserDomainModel,
         authPlatform: AuthenticateUserAuthPlatformDomainModel
-    ) {
+    ) async {
         
         let loginProvider: String
         
@@ -135,7 +134,7 @@ final class AuthenticateUserUseCase {
             loginProvider = AnalyticsConstants.UserProperties.loginProviderGoogle
         }
         
-        firebaseAnalytics.setLoggedInStateUserProperties(
+        await firebaseAnalytics.setLoggedInStateUserProperties(
             isLoggedIn: true,
             loggedInUserProperties: FirebaseAnalyticsLoggedInUserProperties(
                 grMasterPersonId: authUser.grMasterPersonId,

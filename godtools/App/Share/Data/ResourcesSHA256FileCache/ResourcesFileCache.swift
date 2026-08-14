@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class ResourcesFileCache {
+final class ResourcesFileCache: Sendable {
     
     private static let rootDirectory: String = "godtools_resources_files"
     

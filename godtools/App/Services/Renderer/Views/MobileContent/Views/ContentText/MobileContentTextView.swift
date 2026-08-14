@@ -133,12 +133,9 @@ class MobileContentTextView: MobileContentView, NibBased {
         
         case .loadFromNib:
             
-            if let startImage = viewModel.startImage {
-                startImageView.image = startImage
-            }
-            
-            if let endImage = viewModel.endImage {
-                endImageView.image = endImage
+            Task {
+                startImageView.image = await viewModel.startImage
+                endImageView.image = await viewModel.endImage
             }
             
             updateLayoutConstraints(

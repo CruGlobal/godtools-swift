@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetToolDetailsLearnToShareToolIsAvailableUseCase {
+final class GetToolDetailsLearnToShareToolIsAvailableUseCase: Sendable {
     
     private let translationsRepository: TranslationsRepository
     

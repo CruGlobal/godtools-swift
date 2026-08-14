@@ -30,7 +30,7 @@ struct GetLessonEvaluationStringsUseCaseTests {
 
         let useCase = getUseCase()
 
-        let strings: LessonEvaluationStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
+        let strings: LessonEvaluationStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.title == "\(argument.appLanguage):\(LocalizableStringKeys.lessonEvaluationTitle.key)")
         #expect(strings.wasThisHelpful == "\(argument.appLanguage):\(LocalizableStringKeys.lessonEvaluationWasThisHelpful.key)")

@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetToolSettingsStringsUseCase {
+final class GetToolSettingsStringsUseCase: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
     
@@ -17,20 +17,20 @@ final class GetToolSettingsStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> ToolSettingsStringsDomainModel {
+    func execute(appLanguage: AppLanguageDomainModel) async -> ToolSettingsStringsDomainModel {
         
         let localeId: String = appLanguage
         
         let strings = ToolSettingsStringsDomainModel(
-            chooseParallelLanguageActionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsChooseLanguageNoParallelLanguageTitle.key),
-            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsTitle.key),
-            shareLinkTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsOptionShareLinkTitle.key),
-            screenShareTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsOptionScreenShareTitle.key),
-            toolOptionEnableTrainingTips: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsOptionTrainingTipsShowTitle.key),
-            toolOptionDisableTrainingTips: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsOptionTrainingTipsHideTitle.key),
-            chooseLanguageTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsChooseLanguageTitle.key),
-            chooseLanguageMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsChooseLanguageToggleMessage.key),
-            shareablesTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsShareablesTitle.key)
+            chooseParallelLanguageActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsChooseLanguageNoParallelLanguageTitle.key),
+            title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsTitle.key),
+            shareLinkTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsOptionShareLinkTitle.key),
+            screenShareTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsOptionScreenShareTitle.key),
+            toolOptionEnableTrainingTips: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsOptionTrainingTipsShowTitle.key),
+            toolOptionDisableTrainingTips: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsOptionTrainingTipsHideTitle.key),
+            chooseLanguageTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsChooseLanguageTitle.key),
+            chooseLanguageMessage: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsChooseLanguageToggleMessage.key),
+            shareablesTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsShareablesTitle.key)
         )
         
         return strings

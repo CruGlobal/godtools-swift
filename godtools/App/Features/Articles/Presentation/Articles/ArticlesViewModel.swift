@@ -89,40 +89,44 @@ final class ArticlesViewModel: ObservableObject {
             downloadResult: Result<Void, Error>?,
             articles: [ArticleListItemDomainModel]
         ) in
-            
-            let downloadError: Error?
-            
-            if let downloadResult = downloadResult {
-                switch downloadResult {
-                case .success( _):
+
+            return AnyPublisher() {
+
+                let downloadError: Error?
+
+                if let downloadResult = downloadResult {
+                    switch downloadResult {
+                    case .success( _):
+                        downloadError = nil
+                    case .failure(let error):
+                        downloadError = error
+                    }
+                }
+                else {
                     downloadError = nil
-                case .failure(let error):
-                    downloadError = error
+                }
+
+                let noArticles: Bool = articles.isEmpty
+
+                if let downloadError = downloadError, noArticles {
+
+                    let title: String = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.downloadError.key)
+                    let message: String = await getDownloadArticlesErrorMessage.getErrorMessage(appLanguage: appLanguage, error: downloadError)
+                    let downloadActionTitle: String = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.articlesRetryDownloadButtonTitle.key)
+
+                    return ArticlesErrorDomainModel(
+                        title: title,
+                        message: message,
+                        downloadActionTitle: downloadActionTitle
+                    )
+                }
+                else {
+
+                    return nil
                 }
             }
-            else {
-                downloadError = nil
-            }
-            
-            let noArticles: Bool = articles.isEmpty
-            
-            if let downloadError = downloadError, noArticles {
-                
-                let title: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.downloadError.key)
-                let message: String = getDownloadArticlesErrorMessage.getErrorMessage(appLanguage: appLanguage, error: downloadError)
-                let downloadActionTitle: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.articlesRetryDownloadButtonTitle.key)
-                
-                return ArticlesErrorDomainModel(
-                    title: title,
-                    message: message,
-                    downloadActionTitle: downloadActionTitle
-                )
-            }
-            else {
-                
-                return nil
-            }
         }
+        .switchToLatest()
         .receive(on: DispatchQueue.main)
         .sink { [weak self] (error: ArticlesErrorDomainModel?) in
             
@@ -188,14 +192,18 @@ extension ArticlesViewModel {
     
     func pageViewed() {
         
-        trackScreenViewAnalyticsUseCase.trackScreen(
-            screenName: analyticsScreenName,
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            appLanguage: appLanguage,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil
-        )
+        Task {
+            await trackScreenViewAnalyticsUseCase.execute(
+                properties: AnalyticsProperties(
+                    screenName: analyticsScreenName,
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: analyticsSiteSubSection,
+                    appLanguage: appLanguage,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                )
+            )
+        }
     }
     
     func articleTapped(article: ArticleListItemDomainModel) {

@@ -11,7 +11,7 @@ import Combine
 import RequestOperation
 import RepositorySync
 
-final class UserDetailsRepository {
+final class UserDetailsRepository: Sendable {
     
     private let api: UserDetailsApiInterface
     private let cache: UserDetailsCache

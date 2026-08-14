@@ -10,7 +10,7 @@ import Foundation
 @testable import godtools
 import Combine
 
-class FakeLaunchCountRepository: LaunchCountRepositoryInterface {
+final class FakeLaunchCountRepository: LaunchCountRepositoryInterface {
     
     private let launchCount: Int
     
@@ -19,19 +19,17 @@ class FakeLaunchCountRepository: LaunchCountRepositoryInterface {
         self.launchCount = launchCount
     }
     
-    func getLaunchCount() -> Int {
-        return launchCount
-    }
-    
-    func getLaunchCountPublisher() -> AnyPublisher<Int, Never> {
-                
-        return Just(launchCount)
-            .eraseToAnyPublisher()
-    }
-    
     func getLaunchCountChangedPublisher() -> AnyPublisher<Int, Never> {
         
         return Just(launchCount)
             .eraseToAnyPublisher()
+    }
+    
+    func getLaunchCount() -> Int {
+        return launchCount
+    }
+    
+    func storeLaunchCount(count: Int) async throws {
+        
     }
 }

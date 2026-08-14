@@ -68,7 +68,7 @@ struct GetTranslatedLanguageNameTests {
         Then: Use the fallback name.
         """
     )
-    func emptyTranslateInLanguageUsesFallback() {
+    func emptyTranslateInLanguageUsesFallback() async {
         
         let translateInLanguage: BCP47LanguageIdentifier = ""
         
@@ -83,7 +83,7 @@ struct GetTranslatedLanguageNameTests {
             scriptCode: nil
         )
         
-        let translation: String? = Self.getTranslatedLanguageName.getLanguageName(
+        let translation: String? = await Self.getTranslatedLanguageName.getLanguageName(
             language: russianLanguage,
             translatedInLanguage: translateInLanguage
         )
@@ -98,7 +98,7 @@ struct GetTranslatedLanguageNameTests {
         Then: Translate the russian language name using the fallbackName.
         """
     )
-    func usesFallbackInsteadOfAppBundleAndLocale() {
+    func usesFallbackInsteadOfAppBundleAndLocale() async {
        
         let russianFallbackName: String = "Russian Fallback Name"
         
@@ -111,7 +111,7 @@ struct GetTranslatedLanguageNameTests {
             scriptCode: nil
         )
         
-        let translation: String? = Self.getTranslatedLanguageName.getLanguageName(
+        let translation: String? = await Self.getTranslatedLanguageName.getLanguageName(
             language: russianLanguage,
             translatedInLanguage: LanguageCodeDomainModel.spanish.rawValue
         )
@@ -131,7 +131,7 @@ struct GetTranslatedLanguageNameTests {
         Then: Translate the french language name using the app bundle's string phrases.
         """
     )
-    func usesAppBundlesStringPhrases() {
+    func usesAppBundlesStringPhrases() async {
         
         let fallbackName: String = "French Fallback Name"
         
@@ -144,7 +144,7 @@ struct GetTranslatedLanguageNameTests {
             scriptCode: nil
         )
         
-        let translation: String? = Self.getTranslatedLanguageName.getLanguageName(
+        let translation: String? = await Self.getTranslatedLanguageName.getLanguageName(
             language: frenchLanguage,
             translatedInLanguage: LanguageCodeDomainModel.spanish.rawValue
         )
@@ -162,7 +162,7 @@ struct GetTranslatedLanguageNameTests {
         Then: Then translate the french language name using Locale.
         """
     )
-    func usesLocale() {
+    func usesLocale() async {
         
         let fallbackName: String = "French Fallback Name"
         
@@ -175,7 +175,7 @@ struct GetTranslatedLanguageNameTests {
             scriptCode: nil
         )
         
-        let translation: String? = Self.getTranslatedLanguageName.getLanguageName(
+        let translation: String? = await Self.getTranslatedLanguageName.getLanguageName(
             language: frenchLanguage,
             translatedInLanguage: LanguageCodeDomainModel.czech.rawValue
         )
@@ -193,7 +193,7 @@ struct GetTranslatedLanguageNameTests {
         Then: Then translate the french language using the fallbackName.
         """
     )
-    func usesFallback() {
+    func usesFallback() async {
         
         let fallbackName: String = "French Fallback Name"
         
@@ -209,7 +209,7 @@ struct GetTranslatedLanguageNameTests {
         let translationFromAppBundle: String? = Self.localizableStrings[LanguageCodeDomainModel.arabic.value]?[LanguageCodeDomainModel.french.value]
         let translationFromLocale: String? = Self.languageNames[LanguageCodeDomainModel.french.value]?[LanguageCodeDomainModel.arabic.value]
         
-        let translation: String? = Self.getTranslatedLanguageName.getLanguageName(
+        let translation: String? = await Self.getTranslatedLanguageName.getLanguageName(
             language: frenchLanguage,
             translatedInLanguage: LanguageCodeDomainModel.arabic.rawValue
         )

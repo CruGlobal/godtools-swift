@@ -11,7 +11,7 @@ import Combine
 import GodToolsShared
 import RequestOperation
 
-final class DownloadToolUseCase {
+final class DownloadToolUseCase: Sendable {
     
     enum DownloadType {
         case cache

@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetLocalizationSettingsCountryListUseCase {
+final class GetLocalizationSettingsCountryListUseCase: Sendable {
 
     private let countriesRepository: LocalizationSettingsCountriesRepositoryInterface
     private let localizationServices: LocalizationServicesInterface
@@ -37,7 +37,7 @@ final class GetLocalizationSettingsCountryListUseCase {
         
         guard !showsPreferNotToSay else {
             
-            let preferNotToSay = createPreferNotToSayOption(
+            let preferNotToSay = await createPreferNotToSayOption(
                 appLanguage: appLanguage
             )
             
@@ -47,9 +47,9 @@ final class GetLocalizationSettingsCountryListUseCase {
         return countryListItems
     }
 
-    private func createPreferNotToSayOption(appLanguage: AppLanguageDomainModel) -> LocalizationSettingsCountryListItem {
+    private func createPreferNotToSayOption(appLanguage: AppLanguageDomainModel) async -> LocalizationSettingsCountryListItem {
 
-        let preferNotToSayText = localizationServices.stringForLocaleElseEnglish(
+        let preferNotToSayText = await localizationServices.stringForLocaleElseEnglish(
             localeIdentifier: appLanguage,
             key: "localizationSettings.preferNotToSay"
         )

@@ -12,9 +12,7 @@ import Combine
 
 @MainActor
 class MobileContentRendererViewModel: MobileContentPagesViewModel {
-    
-    private static var backgroundCancellables: Set<AnyCancellable> = Set()
-    
+        
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
     private let mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking
@@ -86,9 +84,7 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
         .receive(on: DispatchQueue.main)
         .sink { [weak self] (languages: [LanguageDataModel], appLanguage: AppLanguageDomainModel) in
             
-            self?.languageNames = languages.map({ (language: LanguageDataModel) in
-                getTranslatedLanguageName.getLanguageName(language: language, translatedInLanguage: appLanguage)
-            })
+            self?.didSetLanguages(languages: languages, appLanguage: appLanguage)
         }
         .store(in: &cancellables)
               
@@ -104,6 +100,26 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
             .store(in: &cancellables)
         
         countLanguageUsage(localeId: currentPageRenderer.value.language.localeId)
+    }
+    
+    private func didSetLanguages(languages: [LanguageDataModel], appLanguage: AppLanguageDomainModel) {
+        
+        Task {
+            
+            var languageNames: [String] = Array()
+            
+            for language in languages {
+                
+                let name = await getTranslatedLanguageName.getLanguageName(
+                    language: language,
+                    translatedInLanguage: appLanguage
+                )
+                
+                languageNames.append(name)
+            }
+            
+            self.languageNames = languageNames
+        }
     }
     
     var resource: ResourceDataModel {
@@ -787,12 +803,15 @@ extension MobileContentRendererViewModel {
     
     private func trackContentEvent(eventId: EventId) {
                 
-        mobileContentEventAnalytics.trackContentEvent(
-            eventId: eventId,
-            resource: resource,
-            appLanguage: renderer.value.appLanguage,
-            languages: renderer.value.languages
-        )
+        Task {
+            
+            await mobileContentEventAnalytics.trackContentEvent(
+                eventId: eventId,
+                resource: resource,
+                appLanguage: renderer.value.appLanguage,
+                languages: renderer.value.languages
+            )
+        }
     }
     
     private func countLanguageUsageIfLanguageChanged(updatedLanguage: LanguageDataModel) {
@@ -814,25 +833,12 @@ extension MobileContentRendererViewModel {
         
         let locale = Locale(identifier: localeId)
         
-        incrementUserCounterUseCase
-            .execute(
-                interaction: .languageUsed(locale: locale)
-            )
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] completion in
-                
-                switch completion {
-                case .finished:
-                    self?.trackLanguageUsageCountedThisSession(localeId: localeId)
-                    
-                case .failure:
-                    break
-                }
-                
-            } receiveValue: { _ in
-                
-            }
-            .store(in: &Self.backgroundCancellables)
+        Task {
+            
+            _ = try await incrementUserCounterUseCase.execute(interaction: .languageUsed(locale: locale))
+            
+            trackLanguageUsageCountedThisSession(localeId: localeId)
+        }
     }
     
     private func languageUsageAlreadyCountedThisSession(localeId: String) -> Bool {
@@ -857,17 +863,10 @@ extension MobileContentRendererViewModel {
             return
         }
         
-        incrementUserCounterUseCase
-            .execute(
-                interaction: toolOpenInteraction
-            )
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                
-            } receiveValue: { _ in
-                
-            }
-            .store(in: &Self.backgroundCancellables)
+        Task {
+            
+            _ = try await incrementUserCounterUseCase.execute(interaction: toolOpenInteraction)
+        }
     }
     
     private func trackLanguageUsageCountedThisSession(localeId: String) {

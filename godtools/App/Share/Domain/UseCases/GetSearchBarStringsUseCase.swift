@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetSearchBarStringsUseCase {
+final class GetSearchBarStringsUseCase: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
     
@@ -17,12 +17,12 @@ final class GetSearchBarStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) -> SearchBarStringsDomainModel {
+    func execute(appLanguage: AppLanguageDomainModel) async -> SearchBarStringsDomainModel {
         
         let localeId: String = appLanguage
         
         let strings = SearchBarStringsDomainModel(
-            cancel: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.cancel.key)
+            cancel: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.cancel.key)
         )
         
         return strings

@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetAppUIDebuggingIsEnabledUseCase {
+final class GetAppUIDebuggingIsEnabledUseCase: Sendable {
     
     private let appBuild: AppBuildInterface
     

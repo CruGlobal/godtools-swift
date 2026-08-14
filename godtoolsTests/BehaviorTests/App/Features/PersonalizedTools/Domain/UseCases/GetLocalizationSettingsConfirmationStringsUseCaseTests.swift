@@ -31,7 +31,7 @@ struct GetLocalizationSettingsConfirmationStringsUseCaseTests {
             )
         )
 
-        let strings: LocalizationSettingsConfirmationStringsDomainModel = useCase.execute(
+        let strings: LocalizationSettingsConfirmationStringsDomainModel = await useCase.execute(
             appLanguage: LanguageCodeDomainModel.english.value,
             selectedCountry: selectedCountry
         )
@@ -59,7 +59,7 @@ struct GetLocalizationSettingsConfirmationStringsUseCaseTests {
             LocalizationSettingsPreferNotToSayDomainModel(preferNotToSayText: "Prefer not to say")
         )
 
-        let strings: LocalizationSettingsConfirmationStringsDomainModel = useCase.execute(
+        let strings: LocalizationSettingsConfirmationStringsDomainModel = await useCase.execute(
             appLanguage: LanguageCodeDomainModel.english.value,
             selectedCountry: selectedCountry
         )

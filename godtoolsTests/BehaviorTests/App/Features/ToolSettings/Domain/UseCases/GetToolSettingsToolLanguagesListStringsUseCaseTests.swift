@@ -30,7 +30,7 @@ struct GetToolSettingsToolLanguagesListStringsUseCaseTests {
 
         let useCase = getUseCase()
 
-        let strings: ToolSettingsToolLanguagesListStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
+        let strings: ToolSettingsToolLanguagesListStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.deleteParallelLanguageActionTitle == "\(argument.appLanguage):\(LocalizableStringKeys.toolSettingsLanguagesListDeleteLanguageTitle.key)")
     }

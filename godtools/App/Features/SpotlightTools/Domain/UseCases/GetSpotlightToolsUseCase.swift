@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class GetSpotlightToolsUseCase {
+final class GetSpotlightToolsUseCase: Sendable {
         
     private let resourcesRepository: ResourcesRepository
     private let favoritedResourcesRepository: FavoritedResourcesRepository
@@ -38,48 +38,76 @@ final class GetSpotlightToolsUseCase {
         self.getTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability
     }
     
-    @MainActor func execute(appLanguage: AppLanguageDomainModel, languageIdForAvailabilityText: String?) -> AnyPublisher<[SpotlightToolListItemDomainModel], Error> {
-        
-        let languageForAvailabilityTextModel: LanguageDataModel? = getLanguage(id: languageIdForAvailabilityText)
-        
-        let strings: ToolListItemStringsDomainModel = getToolListItemStrings.getStrings(appLanguage: appLanguage)
+    @MainActor func execute(
+        appLanguage: AppLanguageDomainModel,
+        languageIdForAvailabilityText: String?
+    ) -> AnyPublisher<[SpotlightToolListItemDomainModel], Error> {
         
         return resourcesRepository
             .observeCollectionChangesPublisher()
             .receive(on: DispatchQueue.global())
             .flatMap({ (resourcesChanged: Void) -> AnyPublisher<[SpotlightToolListItemDomainModel], Never> in
-            
-                let spotlightToolResources: [ResourceDataModel] = self.resourcesRepository.getSpotlightTools(sortByDefaultOrder: true)
-                
-                let spotlightTools: [SpotlightToolListItemDomainModel] = spotlightToolResources
-                    .map({
-                        
-                        let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel
-                        
-                        if let language = languageForAvailabilityTextModel {
-                            
-                            toolLanguageAvailability = self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: $0, language: language, translateInLanguage: appLanguage)
-                        }
-                        else {
-                            toolLanguageAvailability = ToolLanguageAvailabilityDomainModel(availabilityString: "", isAvailable: false)
-                        }
-                        
-                        return SpotlightToolListItemDomainModel(
-                            strings: strings,
-                            analyticsToolAbbreviation: $0.abbreviation,
-                            dataModelId: $0.id,
-                            bannerImageId: $0.attrBanner,
-                            name: self.getTranslatedToolName.getToolName(resource: $0, translateInLanguage: appLanguage),
-                            category: self.getTranslatedToolCategory.getTranslatedCategory(resource: $0, translateInLanguage: appLanguage),
-                            isFavorited: self.favoritedResourcesRepository.getResourceIsFavorited(id: $0.id),
-                            languageAvailability: toolLanguageAvailability
-                        )
-                    })
-                
-                return Just(spotlightTools)
-                    .eraseToAnyPublisher()
+
+                return AnyPublisher() {
+                    return await self.asyncExecute(
+                        appLanguage: appLanguage,
+                        languageIdForAvailabilityText: languageIdForAvailabilityText
+                    )
+                }
             })
             .eraseToAnyPublisher()
+    }
+    
+    private func asyncExecute(
+        appLanguage: AppLanguageDomainModel,
+        languageIdForAvailabilityText: String?
+    ) async -> [SpotlightToolListItemDomainModel] {
+        
+        let languageForAvailabilityTextModel: LanguageDataModel? = getLanguage(id: languageIdForAvailabilityText)
+        
+        let strings: ToolListItemStringsDomainModel = await getToolListItemStrings.getStrings(appLanguage: appLanguage)
+
+        let spotlightToolResources: [ResourceDataModel] = resourcesRepository.getSpotlightTools(
+            sortByDefaultOrder: true
+        )
+
+        var spotlightTools: [SpotlightToolListItemDomainModel] = Array()
+
+        for resource in spotlightToolResources {
+
+            let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel
+
+            if let language = languageForAvailabilityTextModel {
+
+                toolLanguageAvailability = await getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(
+                    resource: resource,
+                    language: language,
+                    translateInLanguage: appLanguage
+                )
+            }
+            else {
+                
+                toolLanguageAvailability = ToolLanguageAvailabilityDomainModel(
+                    availabilityString: "",
+                    isAvailable: false
+                )
+            }
+
+            spotlightTools.append(
+                SpotlightToolListItemDomainModel(
+                    strings: strings,
+                    analyticsToolAbbreviation: resource.abbreviation,
+                    dataModelId: resource.id,
+                    bannerImageId: resource.attrBanner,
+                    name: getTranslatedToolName.getToolName(resource: resource, translateInLanguage: appLanguage),
+                    category: await getTranslatedToolCategory.getTranslatedCategory(resource: resource, translateInLanguage: appLanguage),
+                    isFavorited: favoritedResourcesRepository.getResourceIsFavorited(id: resource.id),
+                    languageAvailability: toolLanguageAvailability
+                )
+            )
+        }
+
+        return spotlightTools
     }
     
     private func getLanguage(id: String?) -> LanguageDataModel? {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetOnboardingTutorialIsAvailable {
+final class GetOnboardingTutorialIsAvailable: Sendable {
     
     private let launchCountRepository: LaunchCountRepositoryInterface
     private let onboardingTutorialViewedRepository: OnboardingTutorialViewedRepository

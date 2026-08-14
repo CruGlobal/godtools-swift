@@ -9,7 +9,7 @@
 import Foundation
 import RequestOperation
 
-open class ArticleAemRepository: NSObject {
+final class ArticleAemRepository: ArticleAemRepositoryInterface {
     
     private let cache: ArticleAemCacheInterface
     private let downloader: ArticleAemDownloaderInterface
@@ -18,8 +18,6 @@ open class ArticleAemRepository: NSObject {
         
         self.downloader = downloader
         self.cache = cache
-        
-        super.init()
     }
     
     func getArticleAemDataObjects() async throws -> [ArticleAemData] {
