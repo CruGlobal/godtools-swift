@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class LessonEvaluationDiContainer {
+final class LessonEvaluationDiContainer: Sendable {
     
     let dataLayer: LessonEvaluationDataLayerDependencies
     let domainLayer: LessonEvaluationDomainLayerDependencies

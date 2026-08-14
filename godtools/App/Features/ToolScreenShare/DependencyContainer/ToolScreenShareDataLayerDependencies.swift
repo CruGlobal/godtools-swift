@@ -9,7 +9,7 @@
 import Foundation
 import RepositorySync
 
-final class ToolScreenShareDataLayerDependencies {
+final class ToolScreenShareDataLayerDependencies: Sendable {
     
     private let coreDataLayer: AppDataLayerDependencies
     

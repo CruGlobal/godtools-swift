@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class OnboardingDiContainer {
+final class OnboardingDiContainer: Sendable {
         
     let dataLayer: OnboardingDataLayerDependencies
     let domainLayer: OnboardingDomainLayerDependencies

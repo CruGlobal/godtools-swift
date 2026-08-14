@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class LessonSwipeTutorialDomainLayerDependencies {
+final class LessonSwipeTutorialDomainLayerDependencies: Sendable {
     
     private let core: AppCoreDiContainer
     private let dataLayer: LessonSwipeTutorialDataLayerDependencies

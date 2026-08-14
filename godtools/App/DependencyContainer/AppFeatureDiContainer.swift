@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class AppFeatureDiContainer {
+final class AppFeatureDiContainer: Sendable {
     
     let account: AccountDiContainer
     let appLanguage: AppLanguageDiContainer

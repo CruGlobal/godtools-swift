@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class MenuDataLayerDependencies {
+final class MenuDataLayerDependencies: Sendable {
     
     private let coreDataLayer: AppDataLayerDependencies
     

@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class UserLessonProgressDomainLayerDependencies {
+final class UserLessonProgressDomainLayerDependencies: Sendable {
     
     private let core: AppCoreDiContainer
     private let dataLayer: UserLessonProgressDataLayerDependencies

@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class OnboardingDataLayerDependencies {
+final class OnboardingDataLayerDependencies: Sendable {
     
     private let coreDataLayer: AppDataLayerDependencies
     

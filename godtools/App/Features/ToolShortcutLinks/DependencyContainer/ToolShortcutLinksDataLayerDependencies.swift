@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class ToolShortcutLinksDataLayerDependencies {
+final class ToolShortcutLinksDataLayerDependencies: Sendable {
     
     private let coreDataLayer: AppDataLayerDependencies
     

@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class PersonalizedToolsDiContainer {
+final class PersonalizedToolsDiContainer: Sendable {
 
     private let dataLayer: PersonalizedToolsDataLayerDependencies
 

@@ -9,7 +9,7 @@
 import Foundation
 import RepositorySync
 
-final class AppLanguageDataLayerDependencies {
+final class AppLanguageDataLayerDependencies: Sendable {
     
     private let coreDataLayer: AppDataLayerDependencies
     

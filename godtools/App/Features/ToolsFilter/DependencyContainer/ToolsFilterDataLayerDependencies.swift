@@ -9,7 +9,7 @@
 import Foundation
 import RepositorySync
 
-final class ToolsFilterDataLayerDependencies {
+final class ToolsFilterDataLayerDependencies: Sendable {
     
     private let coreDataLayer: AppDataLayerDependencies
     

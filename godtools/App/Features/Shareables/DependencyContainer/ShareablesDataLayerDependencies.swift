@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class ShareablesDataLayerDependencies {
+final class ShareablesDataLayerDependencies: Sendable {
     
     private let coreDataLayer: AppDataLayerDependencies
     
