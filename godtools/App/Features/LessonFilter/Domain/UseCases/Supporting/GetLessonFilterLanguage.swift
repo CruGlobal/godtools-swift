@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetLessonFilterLanguage {
+final class GetLessonFilterLanguage: Sendable {
     
     private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository

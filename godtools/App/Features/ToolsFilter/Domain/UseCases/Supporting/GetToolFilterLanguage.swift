@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class GetToolFilterLanguage {
+final class GetToolFilterLanguage: Sendable {
     
     private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository

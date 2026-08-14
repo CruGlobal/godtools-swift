@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetShareToolUrl {
+final class GetShareToolUrl: Sendable {
     
     enum ShareToolURLPath: String {
         case tract = "tool/v1"
