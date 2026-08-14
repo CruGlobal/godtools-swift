@@ -135,7 +135,9 @@ struct GodToolsApp: App {
         }
         
         if Self.appConfig.firebaseEnabled {
-            Self.firebaseAnalytics.configure()
+            Task {
+                await Self.firebaseAnalytics.configure()
+            }
         }
         
         if Self.appBuild.configuration != .analyticsLogging {

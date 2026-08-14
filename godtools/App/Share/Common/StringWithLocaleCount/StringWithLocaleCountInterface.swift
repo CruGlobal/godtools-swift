@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol StringWithLocaleCountInterface {
+protocol StringWithLocaleCountInterface: Sendable {
  
     func getString(format: String, locale: Locale, count: Int) -> String
 }

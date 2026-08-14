@@ -10,7 +10,7 @@ import Foundation
 import GodToolsShared
 import SwiftUI
 
-final class GetUserActivityStats {
+final class GetUserActivityStats: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
     private let getTranslatedNumberCount: GetTranslatedNumberCount

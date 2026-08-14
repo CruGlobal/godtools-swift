@@ -44,7 +44,7 @@ actor FirebaseAnalytics: FirebaseAnalyticsInterface {
         log(method: "configure()", label: nil, labelValue: nil, data: nil)
     }
     
-    func setLoggedInStateUserProperties(isLoggedIn: Bool, loggedInUserProperties: FirebaseAnalyticsLoggedInUserProperties?) {
+     func setLoggedInStateUserProperties(isLoggedIn: Bool, loggedInUserProperties: FirebaseAnalyticsLoggedInUserProperties?) {
         
         let userId: String? = loggedInUserProperties?.grMasterPersonId ?? loggedInUserProperties?.ssoguid
         
