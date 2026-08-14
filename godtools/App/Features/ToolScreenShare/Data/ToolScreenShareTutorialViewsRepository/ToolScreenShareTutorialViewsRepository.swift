@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class ToolScreenShareTutorialViewsRepository {
+final class ToolScreenShareTutorialViewsRepository: Sendable {
     
     private let cache: ToolScreenShareTutorialViewsCache
     

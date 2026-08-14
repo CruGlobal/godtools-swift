@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetToolFilterCategory {
+final class GetToolFilterCategory: Sendable {
     
     private let resourcesRepository: ResourcesRepository
     private let localizationServices: LocalizationServicesInterface

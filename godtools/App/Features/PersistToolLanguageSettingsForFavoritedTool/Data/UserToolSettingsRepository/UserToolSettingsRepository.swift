@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class UserToolSettingsRepository {
+final class UserToolSettingsRepository: Sendable {
     
     private let cache: UserToolSettingsCache
     

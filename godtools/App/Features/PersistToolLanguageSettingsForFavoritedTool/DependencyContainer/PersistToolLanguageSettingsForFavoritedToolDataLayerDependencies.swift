@@ -9,7 +9,7 @@
 import Foundation
 import RepositorySync
 
-final class PersistToolLanguageSettingsForFavoritedToolDataLayerDependencies {
+final class PersistToolLanguageSettingsForFavoritedToolDataLayerDependencies: Sendable {
     
     private let coreDataLayer: AppDataLayerDependencies
     

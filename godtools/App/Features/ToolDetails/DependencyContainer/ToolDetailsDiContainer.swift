@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class ToolDetailsDiContainer {
+final class ToolDetailsDiContainer: Sendable {
     
     let dataLayer: ToolDetailsDataLayerDependencies
     let domainLayer: ToolDetailsDomainLayerDependencies

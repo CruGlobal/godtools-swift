@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class ToolShortcutLinksDomainLayerDependencies {
+final class ToolShortcutLinksDomainLayerDependencies: Sendable {
     
     private let core: AppCoreDiContainer
     private let dataLayer: ToolShortcutLinksDataLayerDependencies

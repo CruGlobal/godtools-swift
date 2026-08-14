@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class UserToolFiltersRepository {
+final class UserToolFiltersRepository: Sendable {
     
     private static let userToolCategoryFilterId = "userToolCategoryFilter"
     private static let userToolLanguageFilterId = "userToolLanguageFilter"

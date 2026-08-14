@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class DownloadedLanguagesRepository {
+final class DownloadedLanguagesRepository: Sendable {
     
     private let cache: DownloadedLanguagesCache
     

@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class DownloadToolProgressDomainLayerDependencies {
+final class DownloadToolProgressDomainLayerDependencies: Sendable {
     
     private let core: AppCoreDiContainer
     private let dataLayer: DownloadToolProgressDataLayerDependencies

@@ -9,7 +9,7 @@
 import Foundation
 import RepositorySync
 
-final class UserActivityDataLayerDependencies {
+final class UserActivityDataLayerDependencies: Sendable {
     
     private let coreDataLayer: AppDataLayerDependencies
     

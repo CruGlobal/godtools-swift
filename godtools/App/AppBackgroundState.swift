@@ -61,7 +61,7 @@ final class AppBackgroundState {
         
         syncUserCounters(
             userIsAuthenticatedUseCase: appDiContainer.feature.account.domainLayer.getUserIsAuthenticatedUseCase(),
-            userCountersSync: appDiContainer.core.dataLayer.getSharedUserCountersSync()
+            userCountersSync: appDiContainer.core.dataLayer.getUserCountersSync()
         )
     }
     

@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class AppDiContainer {
+final class AppDiContainer: Sendable {
     
     let core: AppCoreDiContainer
     let feature: AppFeatureDiContainer

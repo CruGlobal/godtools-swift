@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetDownloadArticlesErrorMessage {
+final class GetDownloadArticlesErrorMessage: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
     

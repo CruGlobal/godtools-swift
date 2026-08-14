@@ -9,14 +9,12 @@
 import Foundation
 import RequestOperation
 
-final class PersonalizedToolsSync {
+final class PersonalizedToolsSync: Sendable {
     
     private let api: PersonalizedToolsApiInterface
     private let cache: PersonalizedToolsCache
     private let syncInvalidatorPersistence: SyncInvalidatorPersistenceInterface
-    
-    private var isSyncing: Bool = false
-        
+            
     init(
         api: PersonalizedToolsApiInterface,
         cache: PersonalizedToolsCache,
@@ -54,14 +52,12 @@ final class PersonalizedToolsSync {
             id: personalizedToolId
         )
         
-        let shouldSync: Bool = (await syncInvalidator.shouldSync || forceNewSync) && !isSyncing
+        let shouldSync: Bool = await syncInvalidator.shouldSync || forceNewSync
 
         guard shouldSync else {
             return
         }
-        
-        isSyncing = true
-        
+                
         let resourceCodables: [ResourceCodable]
 
         switch type {
@@ -91,7 +87,5 @@ final class PersonalizedToolsSync {
         _ = try await cache.persistence.writeObjects(externalObjects: [personalizedTools])
 
         await syncInvalidator.didSync()
-        
-        isSyncing = false
     }
 }

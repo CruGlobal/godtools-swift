@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class ShareToolDomainLayerDependencies {
+final class ShareToolDomainLayerDependencies: Sendable {
     
     private let core: AppCoreDiContainer
     private let dataLayer: ShareToolDataLayerDependencies

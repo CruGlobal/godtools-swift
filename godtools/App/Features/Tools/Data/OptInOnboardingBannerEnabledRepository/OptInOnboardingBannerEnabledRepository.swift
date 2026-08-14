@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class OptInOnboardingBannerEnabledRepository {
+final class OptInOnboardingBannerEnabledRepository: Sendable {
         
     private let cache: OptInOnboardingBannerEnabledCache
     
@@ -18,7 +18,7 @@ final class OptInOnboardingBannerEnabledRepository {
         self.cache = cache
     }
     
-    func getEnabledPublisher() -> AnyPublisher<Bool, Never> {
+    @MainActor func getEnabledPublisher() -> AnyPublisher<Bool, Never> {
 
         return cache.getEnabledPublisher()
     }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class SpotlightToolsDataLayerDependencies {
+final class SpotlightToolsDataLayerDependencies: Sendable {
     
     private let coreDataLayer: AppDataLayerDependencies
     

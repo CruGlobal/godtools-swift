@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class LessonsDomainLayerDependencies {
+final class LessonsDomainLayerDependencies: Sendable {
     
     private let core: AppCoreDiContainer
     private let dataLayer: LessonsDataLayerDependencies

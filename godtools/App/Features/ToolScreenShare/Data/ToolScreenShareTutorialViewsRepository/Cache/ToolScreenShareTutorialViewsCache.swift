@@ -11,7 +11,7 @@ import RealmSwift
 import SwiftData
 import RepositorySync
 
-final class ToolScreenShareTutorialViewsCache {
+final class ToolScreenShareTutorialViewsCache: Sendable {
     
     let persistence: any Persistence<ToolScreenShareTutorialViewDataModel, ToolScreenShareTutorialViewDataModel>
     

@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class OptInNotificationDataLayerDependencies {
+final class OptInNotificationDataLayerDependencies: Sendable {
 
     private let coreDataLayer: AppDataLayerDependencies
 

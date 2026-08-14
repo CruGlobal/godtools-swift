@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class ToolScreenShareQRCodeDomainLayerDependencies {
+final class ToolScreenShareQRCodeDomainLayerDependencies: Sendable {
     
     private let core: AppCoreDiContainer
     private let dataLayer: ToolScreenShareQRCodeDataLayerDependencies

@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class FavoritesDiContainer {
+final class FavoritesDiContainer: Sendable {
     
     let dataLayer: FavoritesDataLayerDependencies
     let domainLayer: FavoritesDomainLayerDependencies

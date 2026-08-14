@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class FeaturedLessonsDiContainer {
+final class FeaturedLessonsDiContainer: Sendable {
     
     let dataLayer: FeaturedLessonsDataLayerDependencies
     let domainLayer: FeaturedLessonsDomainLayerDependencies

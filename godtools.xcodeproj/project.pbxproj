@@ -186,13 +186,6 @@
 			);
 			target = 4F5732881EA69CF00082035C /* godtools */;
 		};
-		45F7F28A2E54980400F854AE /* Exceptions for "godtools" folder in "godtoolsTests" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				App/Share/Common/Oberservables/PassthroughValue.swift,
-			);
-			target = 684328F01EB7CF66005E9131 /* godtoolsTests */;
-		};
 		45F7F28B2E54980400F854AE /* Exceptions for "godtools" folder in "godtoolsUITests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -253,7 +246,6 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				45F7F2892E54980400F854AE /* Exceptions for "godtools" folder in "godtools" target */,
-				45F7F28A2E54980400F854AE /* Exceptions for "godtools" folder in "godtoolsTests" target */,
 				45F7F28B2E54980400F854AE /* Exceptions for "godtools" folder in "godtoolsUITests" target */,
 			);
 			path = godtools;

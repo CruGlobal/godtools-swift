@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class ToolScreenShareDomainLayerDependencies {
+final class ToolScreenShareDomainLayerDependencies: Sendable {
     
     private let core: AppCoreDiContainer
     private let dataLayer: ToolScreenShareDataLayerDependencies

@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class ArticlesDiContainer {
+final class ArticlesDiContainer: Sendable {
         
     private let dataLayer: ArticlesDataLayerDependencies
     

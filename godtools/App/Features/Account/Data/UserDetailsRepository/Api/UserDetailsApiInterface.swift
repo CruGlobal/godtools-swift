@@ -9,7 +9,7 @@
 import Foundation
 import RequestOperation
 
-protocol UserDetailsApiInterface {
+protocol UserDetailsApiInterface: Sendable {
     
     func fetchUserDetails(requestPriority: RequestPriority) async throws -> MobileContentApiUsersMeCodable
     func deleteAuthUserDetails(requestPriority: RequestPriority) async throws
