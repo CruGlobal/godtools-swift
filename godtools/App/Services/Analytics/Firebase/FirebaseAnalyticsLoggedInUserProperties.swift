@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct FirebaseAnalyticsLoggedInUserProperties {
+struct FirebaseAnalyticsLoggedInUserProperties: Sendable {
     
     let grMasterPersonId: String?
     let loginProvider: String?

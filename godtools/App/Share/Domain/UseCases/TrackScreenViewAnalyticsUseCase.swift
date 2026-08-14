@@ -10,30 +10,15 @@ import Foundation
 
 final class TrackScreenViewAnalyticsUseCase: Sendable {
     
-    private let trackScreenViewAnalytics: TrackScreenViewAnalyticsInterface
-    
-    private var lastTrackedScreenName: String = ""
-    
-    init(trackScreenViewAnalytics: TrackScreenViewAnalyticsInterface) {
+    private let analytics: AnalyticsContainer
         
-        self.trackScreenViewAnalytics = trackScreenViewAnalytics
+    init(analytics: AnalyticsContainer) {
+        
+        self.analytics = analytics
     }
     
-    func trackScreen(screenName: String, siteSection: String, siteSubSection: String, appLanguage: String?, contentLanguage: String?, contentLanguageSecondary: String?) {
-        
-        let properties = TrackScreenViewAnalyticsPropertiesDomainModel(
-            previousScreenName: lastTrackedScreenName,
-            screenName: screenName,
-            siteSection: siteSection,
-            siteSubSection: siteSubSection,
-            appLanguage: appLanguage,
-            contentLanguage: contentLanguage,
-            contentLanguageSecondary: contentLanguageSecondary,
-            data: nil
-        )
-        
-        trackScreenViewAnalytics.trackScreenView(properties: properties)
-        
-        lastTrackedScreenName = screenName
+    func execute(properties: AnalyticsProperties) async {
+
+        await analytics.trackScreenView(properties: properties)
     }
 }

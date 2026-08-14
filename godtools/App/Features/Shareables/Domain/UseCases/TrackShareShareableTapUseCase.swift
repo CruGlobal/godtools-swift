@@ -24,17 +24,19 @@ final class TrackShareShareableTapUseCase: Sendable {
         let resource: ResourceDataModel? = resourcesRepository.getResourceById(id: toolId)
         
         let action = TrackActionModel(
-            screenName: "",
+            properties: AnalyticsProperties(
+                screenName: "",
+                siteSection: resource?.abbreviation ?? "",
+                siteSubSection: "",
+                appLanguage: nil,
+                contentLanguage: nil,
+                secondaryContentLanguage: nil
+            ),
             actionName: AnalyticsConstants.ActionNames.shareShareable,
-            siteSection: resource?.abbreviation ?? "",
-            siteSubSection: "",
-            appLanguage: nil,
-            contentLanguage: nil,
-            secondaryContentLanguage: nil,
             url: nil,
             data: [AnalyticsConstants.Keys.shareableId: shareableId]
         )
         
-        trackActionAnalytics.trackAction(trackAction: action)
+        await trackActionAnalytics.trackAction(trackAction: action)
     }
 }

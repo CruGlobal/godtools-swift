@@ -9,7 +9,7 @@
 import Foundation
 import GodToolsShared
 
-class MobileContentRendererAnalyticsEvent: NSObject {
+final class MobileContentRendererAnalyticsEvent: NSObject {
     
     private let renderedPageContext: MobileContentRenderedPageContext
     
@@ -63,10 +63,19 @@ class MobileContentRendererAnalyticsEvent: NSObject {
     private func trackEvent() {
         
         stopDelayTimer()
-        
-        mobileContentAnalytics?.trackEvents(events: [analyticsEvent], renderedPageContext: renderedPageContext)
-        
+                
         endTrigger()
+        
+        if let mobileContentAnalytics = mobileContentAnalytics {
+            
+            Task {
+                
+                try await mobileContentAnalytics.trackEvents(
+                    events: [analyticsEvent],
+                    renderedPageContext: renderedPageContext
+                )
+            }
+        }
     }
     
     func cancel() {

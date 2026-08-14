@@ -16,7 +16,7 @@ struct GodToolsApp: App {
     }
     
     private static let appDeepLinkingService: DeepLinkingService = appDiContainer.core.dataLayer.getDeepLinkingService()
-    private static let appDiContainer = AppDiContainer(appBuild: appBuild, appConfig: appConfig)
+    private static let appDiContainer = AppDiContainer(appBuild: appBuild, appConfig: appConfig, firebaseAnalytics: firebaseAnalytics)
     private static let uiTestsLaunchEnvironment: UITestsLaunchEnvironment = UITestsLaunchEnvironment()
     
     private static let appBuild: AppBuildInterface = {
@@ -37,6 +37,20 @@ struct GodToolsApp: App {
         case .uiTests:
             return UITestsAppConfig()
         }
+    }()
+    
+    private static let firebaseAnalytics: FirebaseAnalyticsInterface = {
+        
+        let firebaseAnalyticsEnabled: Bool = appConfig.analyticsEnabled && appConfig.firebaseEnabled
+        
+        guard firebaseAnalyticsEnabled else {
+            return DisabledFirebaseAnalytics()
+        }
+        
+        return FirebaseAnalytics(
+            isDebug: appBuild.isDebug,
+            loggingEnabled: appBuild.configuration == .analyticsLogging
+        )
     }()
     
     private static let parserLogger: GodToolsParserLogger = {
@@ -121,7 +135,9 @@ struct GodToolsApp: App {
         }
         
         if Self.appConfig.firebaseEnabled {
-            Self.appDiContainer.core.dataLayer.getAnalytics().firebaseAnalytics.configure()
+            Task {
+                await Self.firebaseAnalytics.configure()
+            }
         }
         
         if Self.appBuild.configuration != .analyticsLogging {
@@ -265,21 +281,7 @@ extension GodToolsApp {
         
         if let toolDeepLinkUrlString = ToolShortcutLinksViewModel.getToolDeepLinkUrl(shortcutItem: shortcutItem), let toolDeepLinkUrl = URL(string: toolDeepLinkUrlString) {
             
-            let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase()
-            
-            trackActionAnalyticsUseCase.trackAction(
-                screenName: "",
-                actionName: AnalyticsConstants.ActionNames.toolOpenedShortcut,
-                siteSection: "",
-                siteSubSection: "",
-                appLanguage: nil,
-                contentLanguage: nil,
-                contentLanguageSecondary: nil,
-                url: nil,
-                data: [
-                    AnalyticsConstants.Keys.toolOpenedShortcutCountKey: 1
-                ]
-            )
+            trackShortcutItemAction()
             
             successfullyHandledQuickAction = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: toolDeepLinkUrl)))
         }
@@ -289,6 +291,29 @@ extension GodToolsApp {
         }
 
         return successfullyHandledQuickAction
+    }
+    
+    private static func trackShortcutItemAction() {
+        
+        let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase()
+        
+        Task {
+         
+            await trackActionAnalyticsUseCase.execute(
+                properties: AnalyticsProperties(
+                    screenName: "",
+                    siteSection: "",
+                    siteSubSection: "",
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                ),
+                actionName: AnalyticsConstants.ActionNames.toolOpenedShortcut,
+                data: [
+                    AnalyticsConstants.Keys.toolOpenedShortcutCountKey: 1
+                ]
+            )
+        }
     }
 }
 

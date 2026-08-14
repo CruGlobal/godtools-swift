@@ -31,14 +31,14 @@ final class LogOutUserUseCase: Sendable {
         
         try await userAuthentication.signOut()
         
-        setAnalyticsUserProperties()
+        await setAnalyticsUserProperties()
         
         return true
     }
     
-    private func setAnalyticsUserProperties() {
+    private func setAnalyticsUserProperties() async {
         
-        firebaseAnalytics.setLoggedInStateUserProperties(
+        await firebaseAnalytics.setLoggedInStateUserProperties(
             isLoggedIn: false,
             loggedInUserProperties: nil
         )

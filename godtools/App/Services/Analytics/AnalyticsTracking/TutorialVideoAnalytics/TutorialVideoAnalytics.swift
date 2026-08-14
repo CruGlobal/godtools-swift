@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TutorialVideoAnalytics {
+final class TutorialVideoAnalytics: Sendable {
     
     private let trackActionAnalytics: TrackActionAnalytics
     
@@ -17,20 +17,15 @@ class TutorialVideoAnalytics {
         self.trackActionAnalytics = trackActionAnalytics
     }
     
-    func trackVideoPlayed(videoId: String, screenName: String, appLanguage: String?, contentLanguage: String?, secondaryContentLanguage: String?) {
-            
+    func trackVideoPlayed(videoId: String, properties: AnalyticsProperties) async {
+
         let trackAction = TrackActionModel(
-            screenName: screenName,
+            properties: properties,
             actionName: AnalyticsConstants.ActionNames.tutorialVideo,
-            siteSection: "",
-            siteSubSection: "",
-            appLanguage: appLanguage,
-            contentLanguage: contentLanguage,
-            secondaryContentLanguage: secondaryContentLanguage,
             url: nil,
             data: [AnalyticsConstants.Keys.tutorialVideo: 1, AnalyticsConstants.Keys.tutorialVideoId: videoId]
         )
         
-        trackActionAnalytics.trackAction(trackAction: trackAction)
+        await trackActionAnalytics.trackAction(trackAction: trackAction)
     }
 }

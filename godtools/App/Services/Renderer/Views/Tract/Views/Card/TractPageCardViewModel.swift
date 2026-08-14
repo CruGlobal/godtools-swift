@@ -210,14 +210,18 @@ extension TractPageCardViewModel {
         
         super.viewDidAppear(visibleAnalyticsEvents: visibleAnalyticsEventsObjects)
                        
-        trackScreenViewAnalyticsUseCase.trackScreen(
-            screenName: analyticsScreenName,
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            appLanguage: renderedPageContext.appLanguage,
-            contentLanguage: renderedPageContext.rendererLanguages.primaryLanguage.localeId,
-            contentLanguageSecondary: renderedPageContext.rendererLanguages.parallelLanguage?.localeId
-        )
+        Task {
+            await trackScreenViewAnalyticsUseCase.execute(
+                properties: AnalyticsProperties(
+                    screenName: analyticsScreenName,
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: analyticsSiteSubSection,
+                    appLanguage: renderedPageContext.appLanguage,
+                    contentLanguage: renderedPageContext.rendererLanguages.primaryLanguage.localeId,
+                    secondaryContentLanguage: renderedPageContext.rendererLanguages.parallelLanguage?.localeId
+                )
+            )
+        }
     }
     
     func cardDidDisappear() {

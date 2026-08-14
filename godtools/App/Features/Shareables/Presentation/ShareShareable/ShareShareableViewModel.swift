@@ -11,9 +11,7 @@ import Combine
 
 @MainActor
 final class ShareShareableViewModel {
-        
-    private static var backgroundCancellables: Set<AnyCancellable> = Set()
-    
+            
     private let stepEmitter: FlowStepEmitter
     private let incrementUserCounterUseCase: IncrementUserCounterUseCase
    
@@ -43,17 +41,10 @@ extension ShareShareableViewModel {
     
     func pageViewed() {
         
-        incrementUserCounterUseCase
-            .execute(
-                interaction: .imageShared
-            )
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                
-            } receiveValue: { _ in
-                
-            }
-            .store(in: &Self.backgroundCancellables)
+        Task {
+            
+            _ = try await incrementUserCounterUseCase.execute(interaction: .imageShared)
+        }
     }
     
     func activityViewDismissed() {

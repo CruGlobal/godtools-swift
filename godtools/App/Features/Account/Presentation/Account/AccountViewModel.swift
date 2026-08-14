@@ -152,14 +152,18 @@ final class AccountViewModel: ObservableObject {
     
     private func trackSectionViewedAnalytics(screenName: String) {
                  
-        trackScreenViewAnalyticsUseCase.trackScreen(
-            screenName: screenName,
-            siteSection: "account",
-            siteSubSection: "",
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil
-        )
+        Task {
+            await trackScreenViewAnalyticsUseCase.execute(
+                properties: AnalyticsProperties(
+                    screenName: screenName,
+                    siteSection: "account",
+                    siteSubSection: "",
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                )
+            )
+        }
     }
     
     private func syncGlobalAnalytics() {

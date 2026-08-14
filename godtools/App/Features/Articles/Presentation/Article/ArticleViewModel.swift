@@ -16,9 +16,7 @@ final class ArticleViewModel: ObservableObject {
         case deeplink
         case tool(resource: ResourceDataModel)
     }
-    
-    private static var backgroundCancellables: Set<AnyCancellable> = Set()
-    
+        
     private let stepEmitter: FlowStepEmitter
     private let flowType: FlowType
     private let articleId: String
@@ -174,26 +172,23 @@ extension ArticleViewModel {
     
     func pageViewed() {
         
-        trackScreenViewAnalyticsUseCase.trackScreen(
-            screenName: analyticsScreenName,
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil
-        )
-        
-        incrementUserCounterUseCase
-            .execute(
-                interaction: .articleOpen(uri: articleId)
+        Task {
+            await trackScreenViewAnalyticsUseCase.execute(
+                properties: AnalyticsProperties(
+                    screenName: analyticsScreenName,
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: analyticsSiteSubSection,
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                )
             )
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                
-            } receiveValue: { _ in
-                
-            }
-            .store(in: &Self.backgroundCancellables)
+        }
+        
+        Task {
+            
+            _ = try await incrementUserCounterUseCase.execute(interaction: .articleOpen(uri: articleId))
+        }
     }
     
     func downloadArticleTapped() {

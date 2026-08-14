@@ -34,33 +34,22 @@ final class IncrementUserCounterUseCase: Sendable {
         self.userCountersRepository = userCountersRepository
     }
     
-    func execute(interaction: UserCounterInteraction) -> AnyPublisher<UserCounterDomainModel, Error> {
+    func execute(interaction: UserCounterInteraction) async throws -> UserCounterDomainModel {
             
         guard let userCounterId = getUserCounterId(for: interaction) else {
-            
-            return Fail(error: UserCounterError.invalidUserCounterId)
-                .eraseToAnyPublisher()
+            throw UserCounterError.invalidUserCounterId
         }
         
-        return userCountersRepository
-            .incrementCounterPublisher(
-                id: userCounterId
-            )
-            .tryMap { (localCounter: LocalActivityCountDataModel) in
-                    
-                return try self.userCountersRepository
-                    .getCachedCounter(
-                        id: userCounterId
-                    )
-            }
-            .map { (dataModel: UserCounterDataModel?) in
-                                
-                return UserCounterDomainModel(
-                    id: userCounterId,
-                    count: dataModel?.count ?? 0
-                )
-            }
-            .eraseToAnyPublisher()
+        _ = try await userCountersRepository.incrementCounter(
+            id: userCounterId
+        )
+        
+        let dataModel: UserCounterDataModel? = try userCountersRepository.getCachedCounter(id: userCounterId)
+        
+        return UserCounterDomainModel(
+            id: userCounterId,
+            count: dataModel?.count ?? 0
+        )
     }
     
     private func getUserCounterId(for interaction: UserCounterInteraction) -> String? {

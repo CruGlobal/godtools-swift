@@ -10,7 +10,7 @@ import Foundation
 import GodToolsShared
 import SwiftUI
 
-final class GetUserActivityBadge {
+final class GetUserActivityBadge: Sendable {
     
     private let localizationServices: LocalizationServicesInterface
     private let stringWithLocaleCount: StringWithLocaleCountInterface

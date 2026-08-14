@@ -238,13 +238,17 @@ extension ToolTrainingViewModel {
        
         setPage(page: page, animated: true)
         
-        trackScreenViewAnalyticsUseCase.trackScreen(
-            screenName: getTipPageAnalyticsScreenName(tipPage: page),
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil
-        )
+        Task {
+            await trackScreenViewAnalyticsUseCase.execute(
+                properties: AnalyticsProperties(
+                    screenName: getTipPageAnalyticsScreenName(tipPage: page),
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: analyticsSiteSubSection,
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                )
+            )
+        }
     }
 }

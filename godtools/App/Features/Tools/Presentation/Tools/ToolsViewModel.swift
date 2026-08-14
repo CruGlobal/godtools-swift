@@ -292,44 +292,54 @@ final class ToolsViewModel: ObservableObject {
             source = AnalyticsConstants.Sources.allTools
         }
         
-        trackActionAnalyticsUseCase.trackAction(
-            screenName: analyticsScreenName,
-            actionName: AnalyticsConstants.ActionNames.openDetails,
-            siteSection: "",
-            siteSubSection: "",
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil,
-            url: nil,
-            data: [
-                AnalyticsConstants.Keys.source: source,
-                AnalyticsConstants.Keys.tool: tool.analyticsToolAbbreviation
-            ]
-        )
+        Task {
+            await trackActionAnalyticsUseCase.execute(
+                properties: AnalyticsProperties(
+                    screenName: analyticsScreenName,
+                    siteSection: "",
+                    siteSubSection: "",
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                ),
+                actionName: AnalyticsConstants.ActionNames.openDetails,
+                data: [
+                    AnalyticsConstants.Keys.source: source,
+                    AnalyticsConstants.Keys.tool: tool.analyticsToolAbbreviation
+                ]
+            )
+        }
     }
     
     private func trackPageView() {
         
-        trackScreenViewAnalyticsUseCase.trackScreen(
-            screenName: analyticsScreenName,
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil
-        )
+        Task {
+            await trackScreenViewAnalyticsUseCase.execute(
+                properties: AnalyticsProperties(
+                    screenName: analyticsScreenName,
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: analyticsSiteSubSection,
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                )
+            )
+        }
         
-        trackActionAnalyticsUseCase.trackAction(
-            screenName: analyticsScreenName,
-            actionName: AnalyticsConstants.ActionNames.viewedToolsAction,
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil,
-            url: nil,
-            data: nil
-        )
+        Task {
+            await trackActionAnalyticsUseCase.execute(
+                properties: AnalyticsProperties(
+                    screenName: analyticsScreenName,
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: analyticsSiteSubSection,
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                ),
+                actionName: AnalyticsConstants.ActionNames.viewedToolsAction,
+                data: nil
+            )
+        }
     }
     
     private func toggleToolIsFavorited(toolId: String) {

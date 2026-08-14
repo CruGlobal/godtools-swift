@@ -11,9 +11,7 @@ import Combine
 
 @MainActor
 final class ShareToolViewModel {
-        
-    private static var backgroundCancellables: Set<AnyCancellable> = Set()
-    
+            
     private let stepEmitter: FlowStepEmitter
     private let toolId: String
     private let toolAnalyticsAbbreviation: String
@@ -70,37 +68,41 @@ extension ShareToolViewModel {
     
     func pageViewed() {
         
-        trackScreenViewAnalyticsUseCase.trackScreen(
-            screenName: analyticsScreenName,
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil
-        )
+        Task {
+            await trackScreenViewAnalyticsUseCase.execute(
+                properties: AnalyticsProperties(
+                    screenName: analyticsScreenName,
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: analyticsSiteSubSection,
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                )
+            )
+        }
             
-        trackActionAnalyticsUseCase.trackAction(
-            screenName: analyticsScreenName,
-            actionName: AnalyticsConstants.ActionNames.shareIconEngaged,
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil,
-            url: nil,
-            data: [
-                AnalyticsConstants.Keys.shareAction: 1
-            ]
-        )
+        Task {
+            
+            await trackActionAnalyticsUseCase.execute(
+                properties: AnalyticsProperties(
+                    screenName: analyticsScreenName,
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: analyticsSiteSubSection,
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                ),
+                actionName: AnalyticsConstants.ActionNames.shareIconEngaged,
+                data: [
+                    AnalyticsConstants.Keys.shareAction: 1
+                ]
+            )
+        }
         
-        incrementUserCounterUseCase.execute(interaction: .linkShared)
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                
-            } receiveValue: { _ in
-
-            }
-            .store(in: &Self.backgroundCancellables)
+        Task {
+            
+            _ = try await incrementUserCounterUseCase.execute(interaction: .linkShared)
+        }
     }
     
     func qrCodeTapped() {

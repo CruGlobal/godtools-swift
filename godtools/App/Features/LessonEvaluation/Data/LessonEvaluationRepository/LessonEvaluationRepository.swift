@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class LessonEvaluationRepository {
+final class LessonEvaluationRepository: Sendable {
     
     private let cache: LessonEvaluationCache
     

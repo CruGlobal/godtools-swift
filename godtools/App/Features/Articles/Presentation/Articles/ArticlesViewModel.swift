@@ -192,14 +192,18 @@ extension ArticlesViewModel {
     
     func pageViewed() {
         
-        trackScreenViewAnalyticsUseCase.trackScreen(
-            screenName: analyticsScreenName,
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            appLanguage: appLanguage,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil
-        )
+        Task {
+            await trackScreenViewAnalyticsUseCase.execute(
+                properties: AnalyticsProperties(
+                    screenName: analyticsScreenName,
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: analyticsSiteSubSection,
+                    appLanguage: appLanguage,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                )
+            )
+        }
     }
     
     func articleTapped(article: ArticleListItemDomainModel) {

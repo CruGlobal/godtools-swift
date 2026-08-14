@@ -47,19 +47,22 @@ extension ShareToolScreenShareSessionViewModel {
     
     func pageViewed() {
         
-        trackActionAnalyticsUseCase.trackAction(
-            screenName: "",
-            actionName: AnalyticsConstants.ActionNames.shareScreenEngaged,
-            siteSection: "",
-            siteSubSection: "",
-            appLanguage: nil,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil,
-            url: nil,
-            data: [
-                AnalyticsConstants.Keys.shareScreenEngagedCountKey: 1
-            ]
-        )
+        Task {
+            await trackActionAnalyticsUseCase.execute(
+                properties: AnalyticsProperties(
+                    screenName: "",
+                    siteSection: "",
+                    siteSubSection: "",
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    secondaryContentLanguage: nil
+                ),
+                actionName: AnalyticsConstants.ActionNames.shareScreenEngaged,
+                data: [
+                    AnalyticsConstants.Keys.shareScreenEngagedCountKey: 1
+                ]
+            )
+        }
     }
     
     func qrCodeTapped() {

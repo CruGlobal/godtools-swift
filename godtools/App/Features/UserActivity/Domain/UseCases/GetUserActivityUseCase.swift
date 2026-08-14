@@ -35,42 +35,24 @@ final class GetUserActivityUseCase: Sendable {
         return userCounterRepository
             .observeCollectionChangesPublisher()
             .receive(on: DispatchQueue.global())
-            .flatMap { (countersChanged: Void) in
+            .flatMap { (countersChanged: Void) -> AnyPublisher<UserActivityDomainModel, Error> in
                 
-                return self
-                    .userCounterRepository
-                    .getCachedCountersPublisher()
-                    .eraseToAnyPublisher()
-            }
-            .flatMap { (counters: [UserCounterDataModel]) -> AnyPublisher<UserActivityDomainModel, Error> in
-
                 return AnyPublisher() {
-
-                    return await self.getUserActivityDomainModel(
-                        userCounters: counters,
-                        translatedInAppLanguage: appLanguage
-                    )
+                    
+                    return try await self.asyncExecute(appLanguage: appLanguage)
                 }
             }
             .eraseToAnyPublisher()
     }
     
-    private func getAllUserCounterDomainModels(userCounters: [UserCounterDataModel]) -> [UserCounterDomainModel] {
+    private func asyncExecute(appLanguage: AppLanguageDomainModel) async throws -> UserActivityDomainModel {
         
-        var userCounterDomainModels = userCounters.map {
-            UserCounterDomainModel(id: $0.id, count: $0.count)
-        }
+        let counters: [UserCounterDataModel] = try await userCounterRepository.getCachedCounters()
         
-        let numberTipsCompleted = completedTrainingTipRepository.getNumberOfCompletedTrainingTips()
-        
-        let trainingTipsCounter = UserCounterDomainModel(
-            id: UserCounterNames.shared.TIPS_COMPLETED,
-            count: numberTipsCompleted
+        return await getUserActivityDomainModel(
+            userCounters: counters,
+            translatedInAppLanguage: appLanguage
         )
-        
-        userCounterDomainModels.append(trainingTipsCounter)
-        
-        return userCounterDomainModels
     }
     
     private func getUserActivityDomainModel(
@@ -89,13 +71,31 @@ final class GetUserActivityUseCase: Sendable {
         for badge in userActivity.badges {
 
             badges.append(
-                await self.getUserActivityBadge.getBadge(from: badge, translatedInAppLanguage: translatedInAppLanguage)
+                await getUserActivityBadge.getBadge(from: badge, translatedInAppLanguage: translatedInAppLanguage)
             )
         }
 
         let stats = await getUserActivityStats.getStats(from: userActivity, translatedInAppLanguage: translatedInAppLanguage)
 
         return UserActivityDomainModel(badges: badges, stats: stats)
+    }
+    
+    private func getAllUserCounterDomainModels(userCounters: [UserCounterDataModel]) -> [UserCounterDomainModel] {
+        
+        var userCounterDomainModels = userCounters.map {
+            UserCounterDomainModel(id: $0.id, count: $0.count)
+        }
+        
+        let numberTipsCompleted = completedTrainingTipRepository.getNumberOfCompletedTrainingTips()
+        
+        let trainingTipsCounter = UserCounterDomainModel(
+            id: UserCounterNames.shared.TIPS_COMPLETED,
+            count: numberTipsCompleted
+        )
+        
+        userCounterDomainModels.append(trainingTipsCounter)
+        
+        return userCounterDomainModels
     }
     
     private func buildUserCounterDictionary(from counters: [UserCounterDomainModel]) -> [String: KotlinInt] {

@@ -9,14 +9,9 @@
 import Foundation
 
 struct TrackActionModel {
-    
-    let screenName: String
+
+    let properties: AnalyticsProperties
     let actionName: String
-    let siteSection: String
-    let siteSubSection: String
-    let appLanguage: String?
-    let contentLanguage: String?
-    let secondaryContentLanguage: String?
     let url: String?
     let data: [String: Any]?
 }
