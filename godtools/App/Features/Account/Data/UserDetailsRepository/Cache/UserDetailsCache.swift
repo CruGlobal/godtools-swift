@@ -10,7 +10,7 @@ import Foundation
 import RepositorySync
 import Combine
 
-final class UserDetailsCache {
+final class UserDetailsCache: Sendable {
         
     let persistence: any Persistence<UserDetailsDataModel, MobileContentApiUsersMeCodable>
     

@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol LocalizationSettingsCountriesRepositoryInterface {
+protocol LocalizationSettingsCountriesRepositoryInterface: Sendable {
 
     func getCountries(appLanguage: AppLanguageDomainModel) -> [LocalizationSettingsCountryDataModel]
 }

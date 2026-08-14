@@ -11,7 +11,7 @@ import Combine
 import RequestOperation
 import RepositorySync
 
-final class PersonalizedToolsRepository {
+final class PersonalizedToolsRepository: Sendable {
     
     private let api: PersonalizedToolsApiInterface
     private let cache: PersonalizedToolsCache

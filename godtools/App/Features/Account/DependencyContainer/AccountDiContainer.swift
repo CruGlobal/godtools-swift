@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class AccountDiContainer {
+final class AccountDiContainer: Sendable {
     
     let dataLayer: AccountDataLayerDependencies
     let domainLayer: AccountDomainLayerDependencies

@@ -10,7 +10,7 @@ import Foundation
 import RepositorySync
 import RealmSwift
 
-final class UserLocalizationSettingsCache {
+final class UserLocalizationSettingsCache: Sendable {
         
     let persistence: any Persistence<UserLocalizationSettingsDataModel, UserLocalizationSettingsDataModel>
     

@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import RepositorySync
 
-final class UserToolSettingsCache {
+final class UserToolSettingsCache: Sendable {
     
     let persistence: any Persistence<UserToolSettingsDataModel, UserToolSettingsDataModel>
     

@@ -12,7 +12,7 @@ import SocialAuthentication
 import LocalizationServices
 import RepositorySync
 
-final class AppDataLayerDependencies {
+final class AppDataLayerDependencies: Sendable {
         
     private let sharedAppBuild: AppBuildInterface
     private let sharedAppConfig: AppConfigInterface
@@ -21,22 +21,6 @@ final class AppDataLayerDependencies {
     private let sharedInMemoryDataCache: InMemoryDataCache = InMemoryDataCache()
     private let sharedRealmDatabase: RealmDatabase
     private let sharedSwiftDatabase: Any? // TODO: Once RealmSwift is removed, change Any? to SwiftDatabase.
-
-    private lazy var sharedUserCountersSync: UserCountersSync = {
-        
-        let syncInvalidator = SyncInvalidator(
-            id:  "UserCountersSync.sync",
-            timeInterval: .hours(hour: 2),
-            persistence: getUserDefaultsCache()
-        )
-        
-        return UserCountersSync(
-            api: getUserCountersApi(),
-            cache: getUserCountersCache(),
-            localActivityCounterCache: getLocalActivityCounterCache(),
-            syncInvalidator: syncInvalidator
-        )
-    }()
     
     init(appBuild: AppBuildInterface, appConfig: AppConfigInterface, firebaseAnalytics: FirebaseAnalyticsInterface) {
         
@@ -912,8 +896,20 @@ extension AppDataLayerDependencies {
         return LocalActivityCounterCache(persistence: persistence)
     }
     
-    func getSharedUserCountersSync() -> UserCountersSync {
-        return sharedUserCountersSync
+    func getUserCountersSync() -> UserCountersSync {
+        
+        let syncInvalidator = SyncInvalidator(
+            id:  "UserCountersSync.sync",
+            timeInterval: .hours(hour: 2),
+            persistence: getUserDefaultsCache()
+        )
+        
+        return UserCountersSync(
+            api: getUserCountersApi(),
+            cache: getUserCountersCache(),
+            localActivityCounterCache: getLocalActivityCounterCache(),
+            syncInvalidator: syncInvalidator
+        )
     }
     
     private func getUserCountersApi() -> UserCountersApi {

@@ -9,7 +9,7 @@
 import Foundation
 import RequestOperation
 
-final class PersonalizedToolsSync {
+actor PersonalizedToolsSync {
     
     private let api: PersonalizedToolsApiInterface
     private let cache: PersonalizedToolsCache

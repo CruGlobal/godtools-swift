@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class AccountDomainLayerDependencies {
+final class AccountDomainLayerDependencies: Sendable {
     
     private let core: AppCoreDiContainer
     private let dataLayer: AccountDataLayerDependencies
@@ -59,7 +59,7 @@ final class AccountDomainLayerDependencies {
     
     func getDidPullToRefreshAccountUseCase() -> DidPullToRefreshAccountUseCase {
         return DidPullToRefreshAccountUseCase(
-            userCountersSync: core.dataLayer.getSharedUserCountersSync()
+            userCountersSync: core.dataLayer.getUserCountersSync()
         )
     }
     

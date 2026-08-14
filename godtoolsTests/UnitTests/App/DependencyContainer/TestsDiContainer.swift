@@ -9,7 +9,7 @@
 import Foundation
 @testable import godtools
 
-class TestsDiContainer {
+final class TestsDiContainer: Sendable {
 
     private let appDiContainer: AppDiContainer
 
