@@ -11,9 +11,11 @@ import Combine
 
 final class OptInOnboardingBannerEnabledCache: Sendable {
     
-    private let userDefaults: UserDefaults = UserDefaults.standard
+    private var userDefaults: UserDefaults {
+        return UserDefaults.standard
+    }
     
-    func getEnabledPublisher() -> AnyPublisher<Bool, Never> {
+    @MainActor func getEnabledPublisher() -> AnyPublisher<Bool, Never> {
         
         return userDefaults.publisher(for: \.enabled)
             .eraseToAnyPublisher()

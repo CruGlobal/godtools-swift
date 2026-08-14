@@ -18,7 +18,7 @@ final class OptInOnboardingBannerEnabledRepository: Sendable {
         self.cache = cache
     }
     
-    func getEnabledPublisher() -> AnyPublisher<Bool, Never> {
+    @MainActor func getEnabledPublisher() -> AnyPublisher<Bool, Never> {
 
         return cache.getEnabledPublisher()
     }
