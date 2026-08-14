@@ -31,7 +31,12 @@ final class URLSessionWebSocket: NSObject, WebSocketInterface {
     }
     
     deinit {
-        stopKeepAliveTimer()
+        
+        let webSocket = self
+        
+        Task { @MainActor in
+            webSocket.disconnect()
+        }
     }
     
     private func keepSocketAlive() {
@@ -64,7 +69,7 @@ final class URLSessionWebSocket: NSObject, WebSocketInterface {
     
     func connect() {
 
-        guard connectionState != .connected && connectionState != .connected else {
+        guard connectionState != .connected && connectionState != .connecting else {
             return
         }
         

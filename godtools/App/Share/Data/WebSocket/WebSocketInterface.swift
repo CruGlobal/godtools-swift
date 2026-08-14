@@ -9,6 +9,7 @@
 import Foundation
 import Combine
 
+@MainActor
 protocol WebSocketInterface {
         
     var didConnectPublisher: AnyPublisher<Void, Never> { get }
