@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum WebSocketConnectionState {
+enum WebSocketConnectionState: Sendable {
     case connected
     case connecting
     case disconnected
