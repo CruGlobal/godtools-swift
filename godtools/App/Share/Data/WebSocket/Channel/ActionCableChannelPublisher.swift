@@ -85,19 +85,15 @@ final class ActionCableChannelPublisher: Sendable {
             
             await webSocket.connect()
             
-            handleDidConnectToWebsocket()
+            await handleDidConnectToWebsocket()
         }
         else if connectionState == .connected {
             
-            handleDidConnectToWebsocket()
+            await handleDidConnectToWebsocket()
         }
     }
     
-    func sendMessage(data: String) {
-        
-        // TODO: Fix. ~Levi
-        
-        /*
+    func sendMessage(data: String) async {
         
         let stringMessage: String
             
@@ -116,15 +112,11 @@ final class ActionCableChannelPublisher: Sendable {
             stringMessage = ""
         }
                                                 
-        webSocket.write(string: stringMessage)*/
+        await webSocket.write(string: stringMessage)
     }
     
-    private func handleDidConnectToWebsocket() {
+    private func handleDidConnectToWebsocket() async {
                
-        // TODO: Fix. ~Levi
-        
-        /*
-        
         if loggingEnabled {
             print("\n ActionCableChannelPublisher: handleDidConnectToWebsocket()")
         }
@@ -137,17 +129,17 @@ final class ActionCableChannelPublisher: Sendable {
         let message: [String: Any] = ["command": "subscribe", "identifier": stringChannel]
         
         publishChannel = WebSocketChannel(id: stringChannel)
-
+        
         do {
             
             let data = try JSONSerialization.data(withJSONObject: message)
             if let dataString = String(data: data, encoding: .utf8){
-                webSocket.write(string: dataString)
+                await webSocket.write(string: dataString)
             }
             
         } catch let error {
             assertionFailure(error.localizedDescription)
-        }*/
+        }
     }
     
     private func handleDidReceiveText(text: String) {
@@ -201,10 +193,11 @@ extension ActionCableChannelPublisher {
     
     @objc private func appWillResignActive() {
         
-        // TODO: Fix. ~Levi
-        /*
         appResignedActive = true
-        webSocket.disconnect()*/
+        
+        Task {
+            await webSocket.disconnect()
+        }
     }
     
     @objc private func appDidBecomeActive() {
@@ -220,7 +213,6 @@ extension ActionCableChannelPublisher {
         }
         
         Task {
-            
             await createChannel(channel: channel)
         }
     }
