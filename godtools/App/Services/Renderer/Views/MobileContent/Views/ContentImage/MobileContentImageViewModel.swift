@@ -38,7 +38,7 @@ final class MobileContentImageViewModel: MobileContentViewModel {
         )
     }
     
-    func getImage() async -> UIImage? {
+    func getImage() -> UIImage? {
         
         if let image = self.image {
             return image
@@ -48,7 +48,7 @@ final class MobileContentImageViewModel: MobileContentViewModel {
             return nil
         }
         
-        let image: UIImage? = await renderedPageContext.resourcesFileCache.cache.getUIImageNonThrowing(location: location)
+        let image: UIImage? = renderedPageContext.resourcesFileCache.getUIImageNonThrowing(location: location)
         
         self.image = image
         imageSize = image?.size

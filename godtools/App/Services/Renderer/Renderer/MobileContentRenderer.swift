@@ -14,7 +14,7 @@ class MobileContentRenderer {
             
     private let sharedState: State
     private let pageViewFactories: MobileContentRendererPageViewFactories
-    private let resourcesFileCache: ResourcesFileCache
+    private let resourcesFileCache: MobileContentRendererFileCache
     
     let navigation: MobileContentRendererNavigation
     let resource: ResourceDataModel
@@ -27,7 +27,7 @@ class MobileContentRenderer {
         appLanguage: AppLanguageDomainModel,
         toolTranslations: ToolTranslationsDomainModel,
         pageViewFactories: MobileContentRendererPageViewFactories,
-        resourcesFileCache: ResourcesFileCache
+        resourcesFileCache: MobileContentRendererFileCache
     ) {
         
         let sharedState: State = State()
