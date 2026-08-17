@@ -23,14 +23,6 @@ final class FakeLocalizationLanguageNameRepository: LocalizationLanguageNameInte
         translatedInLanguage: BCP47LanguageIdentifier
     ) async -> String? {
         
-        let strings: [String: String] = localizationServices.stringsForKeys(
-            keys: [
-                languageId
-            ],
-            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: translatedInLanguage),
-            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
-        )
-
-        return strings[languageId] ?? ""
+        return localizationServices.stringForLocale(localeIdentifier: translatedInLanguage, key: languageId)
     }
 }

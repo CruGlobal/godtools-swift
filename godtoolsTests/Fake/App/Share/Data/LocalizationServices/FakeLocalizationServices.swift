@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import LocalizationServices
 @testable import godtools
 
 final class FakeLocalizationServices: LocalizationServicesInterface {
@@ -128,21 +129,51 @@ final class FakeLocalizationServices: LocalizationServicesInterface {
         }
     }
     
+    func stringsForKeys(keys: [String], fetchOrder: [StringLocation], shouldFallbackToKey: Bool) -> [String: String] {
+
+        var strings: [String: String] = Dictionary()
+
+        for key in keys {
+
+            var string: String?
+
+            for stringLocation in fetchOrder {
+
+                switch stringLocation {
+
+                case .english:
+                    string = localizableStrings[Self.english.rawValue]?[key]
+
+                case .locale(let identifier):
+                    string = localizableStrings[identifier]?[key]
+
+                case .system:
+                    string = nil
+                }
+
+                if string != nil {
+                    break
+                }
+            }
+
+            if let string = string {
+                strings[key] = string
+            }
+            else if shouldFallbackToKey {
+                strings[key] = key
+            }
+        }
+
+        return strings
+    }
+
     func stringForEnglishElseKey(key: String) -> String {
-        
+
         return localizableStrings[Self.english.rawValue]?[key] ?? key
     }
-    
-    private func stringForLocale(localeIdentifier: String?, key: String) -> String? {
-        
-        guard let localeIdentifier = localeIdentifier else {
-            return ""
-        }
-        
-        guard let localizedStrings = localizableStrings[localeIdentifier] else {
-            return ""
-        }
-        
-        return localizedStrings[key]
+
+    func stringForLocale(localeIdentifier: String, key: String) -> String? {
+
+        return localizableStrings[localeIdentifier]?[key]
     }
 }
