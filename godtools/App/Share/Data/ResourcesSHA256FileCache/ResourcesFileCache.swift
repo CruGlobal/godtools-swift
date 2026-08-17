@@ -19,8 +19,8 @@ final class ResourcesFileCache: Sendable {
         cache = FileCache(rootDirectoryName: Self.rootDirectory)
     }
     
-    init(rootDirectory: URL, fileManager: FileManager = FileManager.default) {
-        
-        cache = FileCache(rootDirectory: rootDirectory, fileManager: fileManager)
+    init(rootDirectory: URL) {
+
+        cache = FileCache(rootDirectory: rootDirectory)
     }
 }
