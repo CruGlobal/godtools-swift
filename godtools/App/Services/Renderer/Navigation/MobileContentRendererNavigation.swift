@@ -210,7 +210,7 @@ protocol MobileContentRendererNavigationDelegate: AnyObject {
             languageTranslationManifest: languageTranslationManifest,
             pageViewFactories: pageViewFactories,
             navigation: navigation,
-            resourcesFileCache: appDiContainer.core.dataLayer.getResourcesFileCache()
+            resourcesFileCache: MobileContentRendererFileCache()
         )
                            
         let viewModel = ToolTrainingViewModel(

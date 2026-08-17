@@ -21,7 +21,7 @@ class MobileContentPageRenderer {
     let manifest: Manifest
     let language: LanguageDataModel
     let translation: TranslationDataModel
-    let resourcesFileCache: ResourcesFileCache
+    let resourcesFileCache: MobileContentRendererFileCache
     let viewRenderer: MobileContentViewRenderer
     let pagesViewDataCache: MobileContentPageRendererPagesViewDataCache = MobileContentPageRendererPagesViewDataCache()
     
@@ -33,7 +33,7 @@ class MobileContentPageRenderer {
         languageTranslationManifest: MobileContentRendererLanguageTranslationManifest,
         pageViewFactories: MobileContentRendererPageViewFactories,
         navigation: MobileContentRendererNavigation,
-        resourcesFileCache: ResourcesFileCache
+        resourcesFileCache: MobileContentRendererFileCache
     ) {
         
         self.sharedState = sharedState
@@ -90,7 +90,7 @@ class MobileContentPageRenderer {
     
     // MARK: - Page Renderering
     
-    private func getRenderedPageContext(pageModel: Page, page: Int, numberOfPages: Int, parentPageParams: MobileContentParentPageParams?, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, resourcesFileCache: ResourcesFileCache, resource: ResourceDataModel, language: LanguageDataModel, translation: TranslationDataModel, viewRenderer: MobileContentViewRenderer, rendererLanguages: MobileContentRendererLanguages, sharedState: State, trainingTipsEnabled: Bool, userInfo: [String: Any]?) -> MobileContentRenderedPageContext {
+    private func getRenderedPageContext(pageModel: Page, page: Int, numberOfPages: Int, parentPageParams: MobileContentParentPageParams?, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, resourcesFileCache: MobileContentRendererFileCache, resource: ResourceDataModel, language: LanguageDataModel, translation: TranslationDataModel, viewRenderer: MobileContentViewRenderer, rendererLanguages: MobileContentRendererLanguages, sharedState: State, trainingTipsEnabled: Bool, userInfo: [String: Any]?) -> MobileContentRenderedPageContext {
         
         let renderedPageContext = MobileContentRenderedPageContext(
             pageModel: pageModel,

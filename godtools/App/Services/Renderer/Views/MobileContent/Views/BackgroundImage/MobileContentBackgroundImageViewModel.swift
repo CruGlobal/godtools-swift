@@ -12,7 +12,7 @@ import UIKit
 final class MobileContentBackgroundImageViewModel {
     
     private let backgroundImageModel: BackgroundImageModel
-    private let resourcesFileCache: ResourcesFileCache
+    private let resourcesFileCache: MobileContentRendererFileCache
     private let languageDirection: LanguageDirectionDomainModel
     private let backgroundImageRenderer: MobileContentBackgroundImageRenderer = MobileContentBackgroundImageRenderer()
     
@@ -20,7 +20,7 @@ final class MobileContentBackgroundImageViewModel {
             
     init(
         backgroundImageModel: BackgroundImageModel,
-        resourcesFileCache: ResourcesFileCache,
+        resourcesFileCache: MobileContentRendererFileCache,
         languageDirection: LanguageDirectionDomainModel
     ) {
         
@@ -29,7 +29,7 @@ final class MobileContentBackgroundImageViewModel {
         self.languageDirection = languageDirection
     }
     
-    func getBackgroundImage() async -> UIImage? {
+    func getBackgroundImage() -> UIImage? {
         
         if let backgroundImage = backgroundImage {
             return backgroundImage
@@ -39,7 +39,7 @@ final class MobileContentBackgroundImageViewModel {
             return nil
         }
         
-        let backgroundImage = await resourcesFileCache.cache.getUIImageNonThrowing(location: fileLocation)
+        let backgroundImage = resourcesFileCache.getUIImageNonThrowing(location: fileLocation)
         
         self.backgroundImage = backgroundImage
         

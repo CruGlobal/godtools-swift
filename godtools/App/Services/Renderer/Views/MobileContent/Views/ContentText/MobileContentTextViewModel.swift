@@ -40,19 +40,16 @@ final class MobileContentTextViewModel: MobileContentViewModel {
     }
     
     var startImage: UIImage? {
-        
-        get async {
-            
-            guard let resource = textModel.startImage, let location = resource.toSHA256FileLocation() else {
-                return nil
-            }
-            
-            guard let resourceImage = await renderedPageContext.resourcesFileCache.cache.getUIImageNonThrowing(location: location) else {
-                return nil
-            }
-            
-            return resourceImage
+
+        guard let resource = textModel.startImage, let location = resource.toSHA256FileLocation() else {
+            return nil
         }
+
+        guard let resourceImage = renderedPageContext.resourcesFileCache.getUIImageNonThrowing(location: location) else {
+            return nil
+        }
+
+        return resourceImage
     }
     
     var startImageSize: CGSize {
@@ -86,19 +83,16 @@ final class MobileContentTextViewModel: MobileContentViewModel {
     }
     
     var endImage: UIImage? {
-        
-        get async {
-            
-            guard let resource = textModel.endImage, let location = resource.toSHA256FileLocation() else {
-                return nil
-            }
-            
-            guard let resourceImage = await renderedPageContext.resourcesFileCache.cache.getUIImageNonThrowing(location: location) else {
-                return nil
-            }
-            
-            return resourceImage
+
+        guard let resource = textModel.endImage, let location = resource.toSHA256FileLocation() else {
+            return nil
         }
+
+        guard let resourceImage = renderedPageContext.resourcesFileCache.getUIImageNonThrowing(location: location) else {
+            return nil
+        }
+
+        return resourceImage
     }
     
     var endImageSize: CGSize {

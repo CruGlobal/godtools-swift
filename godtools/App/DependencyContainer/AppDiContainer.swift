@@ -202,7 +202,7 @@ final class AppDiContainer: Sendable {
             appLanguage: appLanguage,
             toolTranslations: toolTranslations,
             pageViewFactories: pageViewFactories,
-            resourcesFileCache: core.dataLayer.getResourcesFileCache()
+            resourcesFileCache: core.dataLayer.getMobileContentRendererFileCache()
         )
     }
     
