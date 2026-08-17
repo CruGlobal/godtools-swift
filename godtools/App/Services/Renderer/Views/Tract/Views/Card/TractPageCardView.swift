@@ -173,11 +173,8 @@ class TractPageCardView: MobileContentView, NibBased {
         nextButton.setTitleColor(viewModel.nextButtonTitleColor, for: .normal)
         nextButton.isHidden = viewModel.hidesNextButton
 
-        Task {
-
-            self.previousButton.setTitle(await viewModel.previousButtonTitle, for: .normal)
-            self.nextButton.setTitle(await viewModel.nextButtonTitle, for: .normal)
-        }
+        previousButton.setTitle(viewModel.previousButtonTitle, for: .normal)
+        nextButton.setTitle(viewModel.nextButtonTitle, for: .normal)
     }
     
     private func relayoutBottomGradient() {

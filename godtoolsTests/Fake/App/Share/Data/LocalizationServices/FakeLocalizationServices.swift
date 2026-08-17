@@ -140,17 +140,6 @@ final class FakeLocalizationServices: LocalizationServicesInterface {
         
         return localizedStrings[key]
     }
-    
-    func stringForFirstLocaleElseEnglish(localeIdentifiers: [String], key: String) async -> String {
-
-        for localeId in localeIdentifiers {
-            if let string = stringForLocale(localeIdentifier: localeId, key: key) {
-                return string
-            }
-        }
-
-        return await stringForEnglish(key: key)
-    }
 
     func stringForEnglish(key: String) async -> String {
 
