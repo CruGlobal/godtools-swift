@@ -16,17 +16,18 @@ actor FileCache {
     let rootDirectory: URL
     let errorDomain: String
     
-    init(rootDirectory: URL, fileManager: FileManager = FileManager.default) {
-        
-        self.fileManager = fileManager
+    init(rootDirectory: URL) {
+
+        self.fileManager = FileManager.default
         self.rootDirectory = rootDirectory
         self.errorDomain = "\(type(of: self))"
     }
-    
-    init(rootDirectoryName: String, fileManager: FileManager = FileManager.default) {
-        
+
+    init(rootDirectoryName: String) {
+
+        let fileManager = FileManager()
         let rootDirectory: URL
-        
+
         do {
             
             rootDirectory = try Self.getUserDocumentsDirectory(fileManager: fileManager)

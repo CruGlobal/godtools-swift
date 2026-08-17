@@ -34,18 +34,16 @@ final class MobileContentAnimationViewModel: MobileContentViewModel {
             mobileContentAnalytics: mobileContentAnalytics
         )
         
-        Task {
-            await loadAnimation()
-        }
+        loadAnimation()
     }
-    
-    private func loadAnimation() async {
+
+    private func loadAnimation() {
         
         if let resource = animationModel.resource, let location = resource.toSHA256FileLocation() {
             
             do {
                 
-                let fileUrl = try await renderedPageContext.resourcesFileCache.cache.getFile(location: location)
+                let fileUrl = try renderedPageContext.resourcesFileCache.getFile(location: location)
                 
                 animatedViewModel = AnimatedViewModel(
                     animationDataResource: .deviceFileManagerfilepathJsonFile(filepath: fileUrl.path),

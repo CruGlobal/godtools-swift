@@ -119,7 +119,7 @@ class MobileContentButtonViewModel: MobileContentViewModel {
         return 1
     }
     
-    func getButtonIcon() async -> MobileContentButtonIcon? {
+    func getButtonIcon() -> MobileContentButtonIcon? {
         
         if let buttonIcon = self.buttonIcon {
             return buttonIcon
@@ -127,7 +127,7 @@ class MobileContentButtonViewModel: MobileContentViewModel {
         
         guard let resource = buttonModel.icon,
               let location = resource.toSHA256FileLocation(),
-              let image = await renderedPageContext.resourcesFileCache.cache.getUIImageNonThrowing(location: location) else {
+              let image = renderedPageContext.resourcesFileCache.getUIImageNonThrowing(location: location) else {
             
             return nil
         }

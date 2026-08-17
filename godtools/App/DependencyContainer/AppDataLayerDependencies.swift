@@ -501,6 +501,10 @@ final class AppDataLayerDependencies: Sendable {
         )
     }
     
+    func getMobileContentRendererFileCache() -> MobileContentRendererFileCache {
+        return MobileContentRendererFileCache()
+    }
+    
     private func getRealmDataWrite() -> RealmDataWrite {
         return RealmDataWrite(config: getSharedRealmDatabase().config)
     }

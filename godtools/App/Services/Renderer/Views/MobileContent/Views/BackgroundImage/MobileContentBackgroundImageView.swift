@@ -46,11 +46,9 @@ final class MobileContentBackgroundImageView: UIImageView {
         backgroundColor = .clear
         contentMode = .scaleToFill
         
-        Task {
-            let backgroundImage: UIImage? = await viewModel.getBackgroundImage()
-            image = backgroundImage
-            renderForBoundsChangeIfNeeded(parentView: parentView)
-        }
+        image = viewModel.getBackgroundImage()
+
+        renderForBoundsChangeIfNeeded(parentView: parentView)
     }
     
     override func layoutSubviews() {
