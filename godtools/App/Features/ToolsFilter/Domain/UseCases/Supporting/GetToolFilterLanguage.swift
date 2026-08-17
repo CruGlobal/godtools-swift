@@ -69,10 +69,17 @@ extension GetToolFilterLanguage {
     
     func createAnyLanguageDomainModel(translatedInAppLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) -> ToolFilterLanguageDomainModel {
         
-        let languageNameTranslatedInAppLanguage: String = localizationServices.stringForLocaleElseEnglishElseKey(
-            localeIdentifier: translatedInAppLanguage.localeId,
-            key: LocalizableStringKeys.toolsFilterAnyLanguage.key
+        let languageNameTranslatedInAppLanguageKey: String = LocalizableStringKeys.toolsFilterAnyLanguage.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                languageNameTranslatedInAppLanguageKey
+            ],
+            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: translatedInAppLanguage.localeId),
+            shouldFallbackToKey: localizationServices.defaultFallbackToKey
         )
+
+        let languageNameTranslatedInAppLanguage: String = strings[languageNameTranslatedInAppLanguageKey] ?? ""
         
         let toolsAvailableCount: Int = getToolsAvailableCount(languageId: nil, filteredByCategoryId: filteredByCategoryId)
         let toolsAvailable: String = getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
@@ -91,10 +98,17 @@ extension GetToolFilterLanguage {
     
     private func getToolsAvailableText(toolsAvailableCount: Int, translatedInAppLanguage: AppLanguageDomainModel) -> String {
         
-        let formatString = localizationServices.stringForLocaleElseEnglishElseKey(
-            localeIdentifier: translatedInAppLanguage.localeId,
-            key: LocalizableStringKeys.toolsFilterToolsAvailable.key
+        let formatStringKey: String = LocalizableStringKeys.toolsFilterToolsAvailable.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                formatStringKey
+            ],
+            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: translatedInAppLanguage.localeId),
+            shouldFallbackToKey: localizationServices.defaultFallbackToKey
         )
+
+        let formatString: String = strings[formatStringKey] ?? ""
         
         let localizedString: String = stringWithLocaleCount.getString(format: formatString, locale: Locale(identifier: translatedInAppLanguage), count: toolsAvailableCount)
         

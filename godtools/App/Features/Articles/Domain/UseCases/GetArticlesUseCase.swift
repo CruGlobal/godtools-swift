@@ -70,15 +70,20 @@ final class GetArticlesUseCase: Sendable {
         
         if articles.isEmpty, let error = try await getFirstArticleError() {
             
-            let title: String = localizationServices.stringForLocaleElseEnglishElseKey(
-                localeIdentifier: appLanguage,
-                key: LocalizableStringKeys.downloadError.key
+            let titleKey: String = LocalizableStringKeys.downloadError.key
+            let downloadActionTitleKey: String = LocalizableStringKeys.articlesRetryDownloadButtonTitle.key
+
+            let strings: [String: String] = localizationServices.stringsForKeys(
+                keys: [
+                    titleKey,
+                    downloadActionTitleKey
+                ],
+                fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: appLanguage),
+                shouldFallbackToKey: localizationServices.defaultFallbackToKey
             )
-            
-            let downloadActionTitle: String = localizationServices.stringForLocaleElseEnglishElseKey(
-                localeIdentifier: appLanguage,
-                key: LocalizableStringKeys.articlesRetryDownloadButtonTitle.key
-            )
+
+            let title: String = strings[titleKey] ?? ""
+            let downloadActionTitle: String = strings[downloadActionTitleKey] ?? ""
             
             let message: String = getDownloadArticlesErrorMessage.getErrorMessage(
                 appLanguage: appLanguage,

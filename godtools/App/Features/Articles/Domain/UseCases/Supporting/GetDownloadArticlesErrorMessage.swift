@@ -23,19 +23,26 @@ final class GetDownloadArticlesErrorMessage: Sendable {
             
             return "The request was cancelled"
         }
-        else if error.isUrlErrorNotConnectedToInternetCode {
+
+        let noInternetKey: String = LocalizableStringKeys.noInternet.key
+        let downloadErrorKey: String = LocalizableStringKeys.downloadError.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                noInternetKey,
+                downloadErrorKey
+            ],
+            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+        )
+
+        if error.isUrlErrorNotConnectedToInternetCode {
             
-            return localizationServices.stringForLocaleElseEnglishElseKey(
-                localeIdentifier: appLanguage,
-                key: LocalizableStringKeys.noInternet.key
-            )
+            return strings[noInternetKey] ?? ""
         }
         else {
             
-            return localizationServices.stringForLocaleElseEnglishElseKey(
-                localeIdentifier: appLanguage,
-                key: LocalizableStringKeys.downloadError.key
-            )
+            return strings[downloadErrorKey] ?? ""
         }
     }
 }

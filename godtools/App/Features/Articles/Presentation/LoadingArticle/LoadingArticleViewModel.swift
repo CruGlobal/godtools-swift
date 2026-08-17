@@ -32,10 +32,17 @@ final class LoadingArticleViewModel: ObservableObject {
         self.articleAemRepository = articleAemRepository
         self.appLanguage = appLanguage
 
-        message = localizationServices.stringForLocaleElseEnglishElseKey(
-            localeIdentifier: appLanguage,
-            key: LocalizableStringKeys.downloadInProgress.key
+        let messageKey: String = LocalizableStringKeys.downloadInProgress.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                messageKey
+            ],
+            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: localizationServices.defaultFallbackToKey
         )
+
+        message = strings[messageKey] ?? ""
 
         downloadArticleTask = Task {
             
@@ -66,10 +73,17 @@ final class LoadingArticleViewModel: ObservableObject {
             
             if let downloadError = downloadError {
                 
-                let errorTitle: String = localizationServices.stringForLocaleElseEnglishElseKey(
-                    localeIdentifier: appLanguage,
-                    key: LocalizableStringKeys.error.key
+                let errorTitleKey: String = LocalizableStringKeys.error.key
+
+                let strings: [String: String] = localizationServices.stringsForKeys(
+                    keys: [
+                        errorTitleKey
+                    ],
+                    fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: appLanguage),
+                    shouldFallbackToKey: localizationServices.defaultFallbackToKey
                 )
+
+                let errorTitle: String = strings[errorTitleKey] ?? ""
                 
                 let errorMessage: String = getDownloadArticlesErrorMessage.getErrorMessage(appLanguage: appLanguage, error: downloadError)
                                 

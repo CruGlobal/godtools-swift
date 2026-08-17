@@ -20,28 +20,48 @@ final class GetLearnToShareToolTutorialUseCase: Sendable {
     func execute(appLanguage: AppLanguageDomainModel) -> [LearnToShareToolItemDomainModel] {
         
         let localeId: String = appLanguage
-        
+
+        let learnToShareTitleKey: String = LocalizableStringKeys.learnToShareToolLearnToShareTitle.key
+        let learnToShareMessageKey: String = LocalizableStringKeys.learnToShareToolLearnToShareMessage.key
+        let tipsLightTheWayTitleKey: String = LocalizableStringKeys.learnToShareToolTipsLightTheWayTitle.key
+        let tipsLightTheWayMessageKey: String = LocalizableStringKeys.learnToShareToolTipsLightTheWayMessage.key
+        let lightUpTheTipsTitleKey: String = LocalizableStringKeys.learnToShareToolLightUpTheTipsTitle.key
+        let lightUpTheTipsMessageKey: String = LocalizableStringKeys.learnToShareToolLightUpTheTipsMessage.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                learnToShareTitleKey,
+                learnToShareMessageKey,
+                tipsLightTheWayTitleKey,
+                tipsLightTheWayMessageKey,
+                lightUpTheTipsTitleKey,
+                lightUpTheTipsMessageKey
+            ],
+            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: localeId),
+            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+        )
+
         let items = [
             LearnToShareToolItemDomainModel(
                 imageName: nil,
                 animationName: "learn_to_share_tool_with_anyone",
-                title: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: localeId, key: LocalizableStringKeys.learnToShareToolLearnToShareTitle.key),
-                message: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: localeId, key: LocalizableStringKeys.learnToShareToolLearnToShareMessage.key)
+                title: strings[learnToShareTitleKey] ?? "",
+                message: strings[learnToShareMessageKey] ?? ""
             ),
             LearnToShareToolItemDomainModel(
                 imageName: nil,
                 animationName: "training_tip_callout",
-                title: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: localeId, key: LocalizableStringKeys.learnToShareToolTipsLightTheWayTitle.key),
-                message: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: localeId, key: LocalizableStringKeys.learnToShareToolTipsLightTheWayMessage.key)
+                title: strings[tipsLightTheWayTitleKey] ?? "",
+                message: strings[tipsLightTheWayMessageKey] ?? ""
             ),
             LearnToShareToolItemDomainModel(
                 imageName: nil,
                 animationName: "training_tip_tips",
-                title: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: localeId, key: LocalizableStringKeys.learnToShareToolLightUpTheTipsTitle.key),
-                message: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: localeId, key: LocalizableStringKeys.learnToShareToolLightUpTheTipsMessage.key)
+                title: strings[lightUpTheTipsTitleKey] ?? "",
+                message: strings[lightUpTheTipsMessageKey] ?? ""
             )
         ]
-        
+
         return items
     }
 }

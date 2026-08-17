@@ -19,16 +19,19 @@ protocol LocalizationServicesInterface: Sendable {
     
     func stringForEnglishElseKey(key: String) -> String
     func stringForLocale(localeIdentifier: String, key: String) -> String?
-    func stringForLocaleElseEnglishElseKey(localeIdentifier: String, key: String) -> String
+}
+
+extension LocalizationServicesInterface {
+
+    var defaultFallbackToKey: Bool {
+        return true
+    }
+
+    func getDefaultFetchOrder(localeIdentifier: String) -> [StringLocation] {
+        return [.locale(identifier: localeIdentifier), .english]
+    }
 }
 
 extension LocalizationServices: LocalizationServicesInterface {
 
-    static var defaultFallbackToKey: Bool {
-        return true
-    }
-    
-    static func getDefaultFetchOrder(localeIdentifier: String) -> [StringLocation] {
-        return [.locale(identifier: localeIdentifier), .english]
-    }
 }

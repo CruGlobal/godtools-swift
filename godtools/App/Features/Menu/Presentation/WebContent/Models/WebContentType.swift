@@ -23,9 +23,14 @@ extension WebContentType {
    
     func getLocalizedNavTitle() -> String {
         
-        return localizationServices.stringForLocaleElseEnglishElseKey(
-            localeIdentifier: appLanguage,
-            key: navTitleLocalizedKey
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                navTitleLocalizedKey
+            ],
+            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: localizationServices.defaultFallbackToKey
         )
+
+        return strings[navTitleLocalizedKey] ?? ""
     }
 }

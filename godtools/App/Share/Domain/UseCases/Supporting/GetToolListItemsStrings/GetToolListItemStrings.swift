@@ -19,11 +19,21 @@ final class GetToolListItemStrings: Sendable {
     
     func getStrings(appLanguage: AppLanguageDomainModel) -> ToolListItemStringsDomainModel {
         
-        let strings = ToolListItemStringsDomainModel(
-            openToolActionTitle: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.open.key),
-            openToolDetailsActionTitle: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.favoritesFavoriteLessonsDetails.key)
+        let openToolActionTitleKey: String = LocalizableStringKeys.open.key
+        let openToolDetailsActionTitleKey: String = LocalizableStringKeys.favoritesFavoriteLessonsDetails.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                openToolActionTitleKey,
+                openToolDetailsActionTitleKey
+            ],
+            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: localizationServices.defaultFallbackToKey
         )
-        
-        return strings
+
+        return ToolListItemStringsDomainModel(
+            openToolActionTitle: strings[openToolActionTitleKey] ?? "",
+            openToolDetailsActionTitle: strings[openToolDetailsActionTitleKey] ?? ""
+        )
     }
 }

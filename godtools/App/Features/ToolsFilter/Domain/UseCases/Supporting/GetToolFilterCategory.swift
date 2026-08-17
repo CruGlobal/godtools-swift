@@ -66,10 +66,17 @@ extension GetToolFilterCategory {
     
     private func createAnyCategoryDomainModel(translatedInAppLanguage: AppLanguageDomainModel, filteredByLanguageId: String?) -> ToolFilterCategoryDomainModel {
         
-        let title: String = localizationServices.stringForLocaleElseEnglishElseKey(
-            localeIdentifier: translatedInAppLanguage.localeId,
-            key: LocalizableStringKeys.toolsFilterAnyCategory.key
+        let titleKey: String = LocalizableStringKeys.toolsFilterAnyCategory.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                titleKey
+            ],
+            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: translatedInAppLanguage.localeId),
+            shouldFallbackToKey: localizationServices.defaultFallbackToKey
         )
+
+        let title: String = strings[titleKey] ?? ""
     
         let toolsAvailableCount: Int = getToolsAvailableCount(categoryId: nil, filteredByLanguageId: filteredByLanguageId)
         let toolsAvailable: String = getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
@@ -81,10 +88,17 @@ extension GetToolFilterCategory {
         
         let toolsAvailableCount: Int = getToolsAvailableCount(categoryId: categoryId, filteredByLanguageId: filteredByLanguageId)
         
-        let translatedName: String = localizationServices.stringForLocaleElseEnglishElseKey(
-            localeIdentifier: translatedInAppLanguage.localeId,
-            key: "tool_category_\(categoryId)"
+        let translatedNameKey: String = "tool_category_\(categoryId)"
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                translatedNameKey
+            ],
+            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: translatedInAppLanguage.localeId),
+            shouldFallbackToKey: localizationServices.defaultFallbackToKey
         )
+
+        let translatedName: String = strings[translatedNameKey] ?? ""
         
         let toolsAvailable: String = getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
         
@@ -102,10 +116,17 @@ extension GetToolFilterCategory {
     
     private func getToolsAvailableText(toolsAvailableCount: Int, translatedInAppLanguage: AppLanguageDomainModel) -> String {
         
-        let formatString = localizationServices.stringForLocaleElseEnglishElseKey(
-            localeIdentifier: translatedInAppLanguage.localeId,
-            key: LocalizableStringKeys.toolsFilterToolsAvailable.key
+        let formatStringKey: String = LocalizableStringKeys.toolsFilterToolsAvailable.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                formatStringKey
+            ],
+            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: translatedInAppLanguage.localeId),
+            shouldFallbackToKey: localizationServices.defaultFallbackToKey
         )
+
+        let formatString: String = strings[formatStringKey] ?? ""
         
         return stringWithLocaleCount.getString(
             format: formatString,

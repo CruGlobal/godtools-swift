@@ -80,10 +80,17 @@ final class GetUserActivityBadge: Sendable {
 
         }
         
-        let formatString = localizationServices.stringForLocaleElseEnglishElseKey(
-            localeIdentifier: translatedInAppLanguage.localeId,
-            key: stringLocalizationKey
+        let formatStringKey: String = stringLocalizationKey
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                formatStringKey
+            ],
+            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: translatedInAppLanguage.localeId),
+            shouldFallbackToKey: localizationServices.defaultFallbackToKey
         )
+
+        let formatString: String = strings[formatStringKey] ?? ""
         
         let badgeText: String = stringWithLocaleCount.getString(format: formatString, locale: Locale(identifier: translatedInAppLanguage), count: progressTarget)
                 

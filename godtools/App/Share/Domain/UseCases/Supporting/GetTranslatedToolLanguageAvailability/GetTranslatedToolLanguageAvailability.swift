@@ -107,10 +107,17 @@ final class GetTranslatedToolLanguageAvailability: Sendable {
         }
         else {
             
-            let languageNotAvailable: String = localizationServices.stringForLocaleElseEnglishElseKey(
-                localeIdentifier: translateInLanguage.code,
-                key: Self.localizedKeyLanguageNotAvailable
+            let languageNotAvailableKey: String = Self.localizedKeyLanguageNotAvailable
+
+            let strings: [String: String] = localizationServices.stringsForKeys(
+                keys: [
+                    languageNotAvailableKey
+                ],
+                fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: translateInLanguage.code),
+                shouldFallbackToKey: localizationServices.defaultFallbackToKey
             )
+
+            let languageNotAvailable: String = strings[languageNotAvailableKey] ?? ""
             
             availabilityString = String(
                 format: languageNotAvailable,

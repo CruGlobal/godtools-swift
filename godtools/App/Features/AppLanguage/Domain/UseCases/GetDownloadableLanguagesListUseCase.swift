@@ -113,10 +113,17 @@ extension GetDownloadableLanguagesListUseCase {
         
         let localeId = translationLanguage
         
-        let formatString = localizationServices.stringForLocaleElseEnglishElseKey(
-            localeIdentifier: localeId,
-            key: LocalizableStringKeys.toolsFilterToolsAvailable.key
+        let formatStringKey: String = LocalizableStringKeys.toolsFilterToolsAvailable.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                formatStringKey
+            ],
+            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: localeId),
+            shouldFallbackToKey: localizationServices.defaultFallbackToKey
         )
+
+        let formatString: String = strings[formatStringKey] ?? ""
         
         return stringWithLocaleCount.getString(format: formatString, locale: Locale(identifier: localeId), count: numberOfTools)
     }

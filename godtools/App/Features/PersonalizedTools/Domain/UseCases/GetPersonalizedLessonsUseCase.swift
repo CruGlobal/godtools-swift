@@ -109,9 +109,21 @@ final class GetPersonalizedLessonsUseCase: Sendable {
     
     private func getLessonsUnavailable(appLanguage: AppLanguageDomainModel) -> PersonalizedLessonsUnavailableDomainModel {
 
+        let titleKey: String = LocalizableStringKeys.lessonsPersonalizationUnavailableTitle.key
+        let messageKey: String = LocalizableStringKeys.lessonsPersonalizationUnavailableMessage.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                titleKey,
+                messageKey
+            ],
+            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+        )
+
         return PersonalizedLessonsUnavailableDomainModel(
-            title: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.lessonsPersonalizationUnavailableTitle.key),
-            message: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.lessonsPersonalizationUnavailableMessage.key)
+            title: strings[titleKey] ?? "",
+            message: strings[messageKey] ?? ""
         )
     }
 }

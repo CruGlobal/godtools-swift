@@ -94,10 +94,21 @@ class TractPageFormViewModel: MobileContentFormViewModel {
 
         let appLanguage: AppLanguageDomainModel = renderedPageContext.appLanguage
 
-        let errorTitle: String = localizationServices.stringForLocaleElseEnglishElseKey(
-            localeIdentifier: appLanguage,
-            key: LocalizableStringKeys.error.key
+        let errorTitleKey: String = LocalizableStringKeys.error.key
+        let requiredMissingFieldKey: String = LocalizableStringKeys.requiredMissingField.key
+        let acceptTitleKey: String = LocalizableStringKeys.ok.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                errorTitleKey,
+                requiredMissingFieldKey,
+                acceptTitleKey
+            ],
+            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: localizationServices.defaultFallbackToKey
         )
+
+        let errorTitle: String = strings[errorTitleKey] ?? ""
             
         var errorMessage: String = ""
 
@@ -109,10 +120,10 @@ class TractPageFormViewModel: MobileContentFormViewModel {
                 errorMessage += "\n"
             }
 
-            errorMessage += String(format: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.requiredMissingField.key), name.localizedCapitalized)
+            errorMessage += String(format: strings[requiredMissingFieldKey] ?? "", name.localizedCapitalized)
         }
             
-        let acceptTitle = localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.ok.key)
+        let acceptTitle: String = strings[acceptTitleKey] ?? ""
 
         let errorViewModel = MobileContentErrorViewModel(
             title: errorTitle,

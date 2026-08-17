@@ -87,7 +87,17 @@ extension GetUserAccountDetailsUseCase {
         
         let formattedCreatedAtDateString: String = dateFormatter.string(from: createdAtDate)
         
-        let localizedJoinedOn: String = localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: translatedInAppLanguage.localeId, key: LocalizableStringKeys.accountJoinedOn.key)
+        let localizedJoinedOnKey: String = LocalizableStringKeys.accountJoinedOn.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                localizedJoinedOnKey
+            ],
+            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: translatedInAppLanguage.localeId),
+            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+        )
+
+        let localizedJoinedOn: String = strings[localizedJoinedOnKey] ?? ""
         
         let joinedOnString: String = String.localizedStringWithFormat(localizedJoinedOn, formattedCreatedAtDateString)
         

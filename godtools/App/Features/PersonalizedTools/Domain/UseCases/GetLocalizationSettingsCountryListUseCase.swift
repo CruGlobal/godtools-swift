@@ -49,10 +49,17 @@ final class GetLocalizationSettingsCountryListUseCase: Sendable {
 
     private func createPreferNotToSayOption(appLanguage: AppLanguageDomainModel) -> LocalizationSettingsCountryListItem {
 
-        let preferNotToSayText = localizationServices.stringForLocaleElseEnglishElseKey(
-            localeIdentifier: appLanguage,
-            key: "localizationSettings.preferNotToSay"
+        let preferNotToSayTextKey: String = "localizationSettings.preferNotToSay"
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                preferNotToSayTextKey
+            ],
+            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: localizationServices.defaultFallbackToKey
         )
+
+        let preferNotToSayText: String = strings[preferNotToSayTextKey] ?? ""
 
         return .preferNotToSay(LocalizationSettingsPreferNotToSayDomainModel(
             preferNotToSayText: preferNotToSayText

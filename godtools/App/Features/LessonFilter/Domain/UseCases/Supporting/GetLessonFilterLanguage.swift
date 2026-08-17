@@ -69,10 +69,17 @@ final class GetLessonFilterLanguage: Sendable {
     
     private func getLessonsAvailableText(lessonsAvailableCount: Int, translatedInAppLanguage: AppLanguageDomainModel) -> String {
         
-        let formatString = localizationServices.stringForLocaleElseEnglishElseKey(
-            localeIdentifier: translatedInAppLanguage.localeId,
-            key: LocalizableStringKeys.lessonsFilterLessonsAvailable.key
+        let formatStringKey: String = LocalizableStringKeys.lessonsFilterLessonsAvailable.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                formatStringKey
+            ],
+            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: translatedInAppLanguage.localeId),
+            shouldFallbackToKey: localizationServices.defaultFallbackToKey
         )
+
+        let formatString: String = strings[formatStringKey] ?? ""
         
         return stringWithLocaleCount.getString(format: formatString, locale: Locale(identifier: translatedInAppLanguage), count: lessonsAvailableCount)
     }

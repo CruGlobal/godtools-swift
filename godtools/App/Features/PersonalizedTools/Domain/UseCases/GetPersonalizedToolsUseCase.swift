@@ -100,9 +100,21 @@ final class GetPersonalizedToolsUseCase: Sendable {
 
     private func getToolsUnavailable(appLanguage: AppLanguageDomainModel) -> PersonalizedToolsUnavailableDomainModel {
 
+        let titleKey: String = LocalizableStringKeys.toolsPersonalizationUnavailableTitle.key
+        let messageKey: String = LocalizableStringKeys.toolsPersonalizationUnavailableMessage.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                titleKey,
+                messageKey
+            ],
+            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+        )
+
         return PersonalizedToolsUnavailableDomainModel(
-            title: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.toolsPersonalizationUnavailableTitle.key),
-            message: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.toolsPersonalizationUnavailableMessage.key)
+            title: strings[titleKey] ?? "",
+            message: strings[messageKey] ?? ""
         )
     }
 }

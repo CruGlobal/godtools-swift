@@ -59,8 +59,20 @@ final class GetToolDetailsUseCase: Sendable {
             return ToolDetailsDomainModel.emptyValue
         }
         
+        let totalViewsKey: String = LocalizableStringKeys.totalViews.key
+        let versionsDescriptionKey: String = LocalizableStringKeys.toolDetailsVersionsMessage.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                totalViewsKey,
+                versionsDescriptionKey
+            ],
+            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+        )
+
         let numberOfViewsString: String = String(
-            format: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.totalViews.key).capitalized,
+            format: (strings[totalViewsKey] ?? "").capitalized,
             locale: Locale(identifier: appLanguage),
             toolDataModel.totalViews
         )
@@ -86,7 +98,7 @@ final class GetToolDetailsUseCase: Sendable {
             name: translation.translatedName,
             numberOfViews: numberOfViewsString,
             versions: toolVersions,
-            versionsDescription: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.toolDetailsVersionsMessage.key)
+            versionsDescription: strings[versionsDescriptionKey] ?? ""
         )
         
         return toolDetails
@@ -179,10 +191,17 @@ final class GetToolDetailsUseCase: Sendable {
     
     private func getNumberOfLanguages(translateInLanguage: BCP47LanguageIdentifier, numberOfLanguages: Int) -> String {
         
-        let localizedNumberOfLanguages = localizationServices.stringForLocaleElseEnglishElseKey(
-            localeIdentifier: translateInLanguage,
-            key: LocalizableStringDictKeys.toolDetailsToolVersionNumberOfLanguages.key
+        let localizedNumberOfLanguagesKey: String = LocalizableStringDictKeys.toolDetailsToolVersionNumberOfLanguages.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                localizedNumberOfLanguagesKey
+            ],
+            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: translateInLanguage),
+            shouldFallbackToKey: localizationServices.defaultFallbackToKey
         )
+
+        let localizedNumberOfLanguages: String = strings[localizedNumberOfLanguagesKey] ?? ""
         
         let stringLocaleFormat = String(
             format: localizedNumberOfLanguages,

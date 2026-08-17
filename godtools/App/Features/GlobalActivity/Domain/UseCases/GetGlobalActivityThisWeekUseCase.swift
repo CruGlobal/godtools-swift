@@ -47,24 +47,40 @@ final class GetGlobalActivityThisWeekUseCase: Sendable {
 
         let localeId = appLanguage
 
+        let usersTitleKey: String = LocalizableStringKeys.accountActivityGlobalAnalyticsUsersTitle.key
+        let gospelPresentationTitleKey: String = LocalizableStringKeys.accountActivityGlobalAnalyticsGospelPresentationTitle.key
+        let launchesTitleKey: String = LocalizableStringKeys.accountActivityGlobalAnalyticsLaunchesTitle.key
+        let countriesTitleKey: String = LocalizableStringKeys.accountActivityGlobalAnalyticsCountriesTitle.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                usersTitleKey,
+                gospelPresentationTitleKey,
+                launchesTitleKey,
+                countriesTitleKey
+            ],
+            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: localeId),
+            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+        )
+
         let usersAnalytics = GlobalActivityDomainModel(
             count: getTranslatedNumberCount.getTranslatedCount(count: dataModel.users, translateInLanguage: appLanguage),
-            label: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: localeId, key: LocalizableStringKeys.accountActivityGlobalAnalyticsUsersTitle.key)
+            label: strings[usersTitleKey] ?? ""
         )
 
         let gospelPresentationAnalytics = GlobalActivityDomainModel(
             count: getTranslatedNumberCount.getTranslatedCount(count: dataModel.gospelPresentations, translateInLanguage: appLanguage),
-            label: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: localeId, key: LocalizableStringKeys.accountActivityGlobalAnalyticsGospelPresentationTitle.key)
+            label: strings[gospelPresentationTitleKey] ?? ""
         )
 
         let launchesAnalytics = GlobalActivityDomainModel(
             count: getTranslatedNumberCount.getTranslatedCount(count: dataModel.launches, translateInLanguage: appLanguage),
-            label: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: localeId, key: LocalizableStringKeys.accountActivityGlobalAnalyticsLaunchesTitle.key)
+            label: strings[launchesTitleKey] ?? ""
         )
 
         let countriesAnalytics = GlobalActivityDomainModel(
             count: getTranslatedNumberCount.getTranslatedCount(count: dataModel.countries, translateInLanguage: appLanguage),
-            label: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: localeId, key: LocalizableStringKeys.accountActivityGlobalAnalyticsCountriesTitle.key)
+            label: strings[countriesTitleKey] ?? ""
         )
 
         let activityThisWeek: [GlobalActivityDomainModel] = [usersAnalytics, gospelPresentationAnalytics, launchesAnalytics, countriesAnalytics]

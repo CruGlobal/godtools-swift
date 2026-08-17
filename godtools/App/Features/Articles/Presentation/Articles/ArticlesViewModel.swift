@@ -110,9 +110,21 @@ final class ArticlesViewModel: ObservableObject {
 
                 if let downloadError = downloadError, noArticles {
 
-                    let title: String = localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.downloadError.key)
+                    let titleKey: String = LocalizableStringKeys.downloadError.key
+                    let downloadActionTitleKey: String = LocalizableStringKeys.articlesRetryDownloadButtonTitle.key
+
+                    let strings: [String: String] = localizationServices.stringsForKeys(
+                        keys: [
+                            titleKey,
+                            downloadActionTitleKey
+                        ],
+                        fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: appLanguage),
+                        shouldFallbackToKey: localizationServices.defaultFallbackToKey
+                    )
+
+                    let title: String = strings[titleKey] ?? ""
+                    let downloadActionTitle: String = strings[downloadActionTitleKey] ?? ""
                     let message: String = getDownloadArticlesErrorMessage.getErrorMessage(appLanguage: appLanguage, error: downloadError)
-                    let downloadActionTitle: String = localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.articlesRetryDownloadButtonTitle.key)
 
                     return ArticlesErrorDomainModel(
                         title: title,

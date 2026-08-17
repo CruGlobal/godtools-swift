@@ -76,10 +76,17 @@ final class GetUserActivityStats: Sendable {
     
     private func getUserActivityText(stringKey: String, activityCount: Int32, translatedInAppLanguage: AppLanguageDomainModel) -> String {
         
-        let formatString = localizationServices.stringForLocaleElseEnglishElseKey(
-            localeIdentifier: translatedInAppLanguage.localeId,
-            key: stringKey
+        let formatStringKey: String = stringKey
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                formatStringKey
+            ],
+            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: translatedInAppLanguage.localeId),
+            shouldFallbackToKey: localizationServices.defaultFallbackToKey
         )
+
+        let formatString: String = strings[formatStringKey] ?? ""
         
         let activityText: String = stringWithLocaleCount.getString(format: formatString, locale: Locale(identifier: translatedInAppLanguage), count: Int(activityCount))
         

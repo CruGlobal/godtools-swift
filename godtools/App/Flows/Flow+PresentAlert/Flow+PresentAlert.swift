@@ -33,10 +33,20 @@ extension GTFlow {
 
         let localizationServices: LocalizationServicesInterface = appDiContainer.core.dataLayer.getLocalizationServices()
 
+        let acceptTitleKey: String = LocalizableStringKeys.ok.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                acceptTitleKey
+            ],
+            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+        )
+
         let view = AlertMessageView(
             title: title,
             message: message,
-            acceptTitle: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.ok.key),
+            acceptTitle: strings[acceptTitleKey] ?? "",
             cancelTitle: nil,
             acceptTapped: acceptTapped,
             cancelTapped: nil
