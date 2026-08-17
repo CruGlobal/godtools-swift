@@ -1025,18 +1025,15 @@ extension DashboardFlow {
         animated: Bool
     ) {
 
-        Task {
-            
-            let strings = await appDiContainer.feature.favorites.domainLayer.getConfirmRemoveToolFromFavoritesStringsUseCase()
-                .execute(toolId: toolId, appLanguage: appLanguage)
+        let strings = appDiContainer.feature.favorites.domainLayer.getConfirmRemoveToolFromFavoritesStringsUseCase()
+            .execute(toolId: toolId, appLanguage: appLanguage)
 
-            let view = getConfirmRemoveToolFromFavoritesAlertView(
-                toolId: toolId,
-                strings: strings,
-                didConfirmToolRemovalSubject: didConfirmToolRemovalSubject
-            )
+        let view = getConfirmRemoveToolFromFavoritesAlertView(
+            toolId: toolId,
+            strings: strings,
+            didConfirmToolRemovalSubject: didConfirmToolRemovalSubject
+        )
 
-            presentView(view: view, animated: animated)
-        }
+        presentView(view: view, animated: animated)
     }
 }

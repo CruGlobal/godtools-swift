@@ -52,10 +52,8 @@ final class ToolScreenShareQRCodeViewModel: ObservableObject {
     
     private func didSetApplanguage(appLanguage: AppLanguageDomainModel) {
         
-        Task {
-            strings = await getToolScreenShareQRCodeStringsUseCase
-                .execute(appLanguage: appLanguage)
-        }
+        strings = getToolScreenShareQRCodeStringsUseCase
+            .execute(appLanguage: appLanguage)
     }
 }
 

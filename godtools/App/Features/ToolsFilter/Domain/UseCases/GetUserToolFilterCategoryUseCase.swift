@@ -27,26 +27,24 @@ final class GetUserToolFilterCategoryUseCase: Sendable {
         return userToolFiltersRepository
             .getUserToolCategoryFilterChangedPublisher()
             .receive(on: DispatchQueue.global())
-            .flatMap {
-                return AnyPublisher() {
-                    return await self.asyncExecute(appLanguage: appLanguage)
-                }
+            .map {
+                return self.getToolFilterCategory(appLanguage: appLanguage)
             }
             .eraseToAnyPublisher()
     }
     
-    private func asyncExecute(appLanguage: AppLanguageDomainModel) async -> ToolFilterCategoryDomainModel {
+    private func getToolFilterCategory(appLanguage: AppLanguageDomainModel) -> ToolFilterCategoryDomainModel {
         
         let categoryId: String? = userToolFiltersRepository.getUserToolCategoryFilter()?.categoryId
         
         if let categoryId = categoryId {
             
-            return await getToolFilterCategory.getCategoryFilter(
+            return getToolFilterCategory.getCategoryFilter(
                 categoryId: categoryId,
                 translatedInAppLanguage: appLanguage
             )
         }
         
-        return await getToolFilterCategory.getAnyCategoryFilter(translatedInAppLanguage: appLanguage)
+        return getToolFilterCategory.getAnyCategoryFilter(translatedInAppLanguage: appLanguage)
     }
 }

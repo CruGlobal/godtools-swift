@@ -16,15 +16,23 @@ final class GetToolScreenShareQRCodeStringsUseCase: Sendable {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) async -> ToolScreenShareQRCodeStringsDomainModel {
-        
-        let localeId: String = appLanguage
-        
-        let strings = ToolScreenShareQRCodeStringsDomainModel(
-            qrCodeDescription: await localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolScreenShareQrCodeDescription.key),
-            closeButtonTitle: await localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolScreenShareQrCodeCloseButtonTitle.key)
+    func execute(appLanguage: AppLanguageDomainModel) -> ToolScreenShareQRCodeStringsDomainModel {
+
+        let qrCodeDescriptionKey: String = LocalizableStringKeys.toolScreenShareQrCodeDescription.key
+        let closeButtonTitleKey: String = LocalizableStringKeys.toolScreenShareQrCodeCloseButtonTitle.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                qrCodeDescriptionKey,
+                closeButtonTitleKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
-        
-        return strings
+
+        return ToolScreenShareQRCodeStringsDomainModel(
+            qrCodeDescription: strings[qrCodeDescriptionKey] ?? "",
+            closeButtonTitle: strings[closeButtonTitleKey] ?? ""
+        )
     }
 }

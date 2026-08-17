@@ -17,12 +17,20 @@ final class GetShareGodToolsStringsUseCase: Sendable {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) async -> ShareGodToolsStringsDomainModel {
-                
-        let strings = ShareGodToolsStringsDomainModel(
-            shareMessage: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.shareGodToolsShareSheetText.key)
+    func execute(appLanguage: AppLanguageDomainModel) -> ShareGodToolsStringsDomainModel {
+
+        let shareMessageKey: String = LocalizableStringKeys.shareGodToolsShareSheetText.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                shareMessageKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
-        
-        return strings
+
+        return ShareGodToolsStringsDomainModel(
+            shareMessage: strings[shareMessageKey] ?? ""
+        )
     }
 }

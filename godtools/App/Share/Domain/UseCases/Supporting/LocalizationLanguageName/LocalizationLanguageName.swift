@@ -32,10 +32,17 @@ final class LocalizationLanguageName: LocalizationLanguageNameInterface {
         
         let localizedKey: String = "language_name_" + languageId
         
-        let localizedName: String = await localizationServices.stringForLocaleElseEnglish(
-            localeIdentifier: translatedInLanguage,
-            key: localizedKey
+        let localizedNameKey: String = localizedKey
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                localizedNameKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: translatedInLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
+
+        let localizedName: String = strings[localizedNameKey] ?? ""
         
         if localizedName.isEmpty || localizedName == localizedKey {
             return nil

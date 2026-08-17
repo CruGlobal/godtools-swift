@@ -16,15 +16,23 @@ final class GetDeferredDeepLinkModalStringsUseCase: Sendable {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) async -> DeferredDeepLinkModalStringsDomainModel {
-        
-        let localeIdentifier = appLanguage
-        
-        let strings = DeferredDeepLinkModalStringsDomainModel(
-            title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeIdentifier, key: LocalizableStringKeys.deferredDeepLinkModalTitle.key),
-            message: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeIdentifier, key: LocalizableStringKeys.deferredDeepLinkModalMessage.key)
+    func execute(appLanguage: AppLanguageDomainModel) -> DeferredDeepLinkModalStringsDomainModel {
+
+        let titleKey: String = LocalizableStringKeys.deferredDeepLinkModalTitle.key
+        let messageKey: String = LocalizableStringKeys.deferredDeepLinkModalMessage.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                titleKey,
+                messageKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
-        
-        return strings
+
+        return DeferredDeepLinkModalStringsDomainModel(
+            title: strings[titleKey] ?? "",
+            message: strings[messageKey] ?? ""
+        )
     }
 }

@@ -190,15 +190,12 @@ final class LessonsViewModel: ObservableObject {
 
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
 
-        Task {
+        let strings = getLessonsStringsUseCase
+            .execute(translateInLanguage: appLanguage)
 
-            let strings = await getLessonsStringsUseCase
-                .execute(translateInLanguage: appLanguage)
+        self.strings = strings
 
-            self.strings = strings
-
-            toggleOptions = Self.getPersonalizedToggleOptions(strings: strings)
-        }
+        toggleOptions = Self.getPersonalizedToggleOptions(strings: strings)
     }
 
     // MARK: - Analytics

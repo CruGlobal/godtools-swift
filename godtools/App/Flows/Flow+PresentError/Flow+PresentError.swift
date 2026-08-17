@@ -20,51 +20,46 @@ extension GTFlow {
 
         let localizationServices: LocalizationServicesInterface = appDiContainer.core.dataLayer.getLocalizationServices()
 
-        Task {
+        let noInternetTitleKey: String = LocalizableStringKeys.noInternetTitle.key
+        let noInternetKey: String = LocalizableStringKeys.noInternet.key
+        let networkConnectionLostKey: String = LocalizableStringKeys.networkConnectionLost.key
+        let errorKey: String = LocalizableStringKeys.error.key
 
-            let title: String
-            let message: String
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                noInternetTitleKey,
+                noInternetKey,
+                networkConnectionLostKey,
+                errorKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
+        )
 
-            if error.isUrlErrorNotConnectedToInternetCode {
+        let title: String
+        let message: String
 
-                title = await localizationServices.stringForLocaleElseEnglish(
-                    localeIdentifier: appLanguage,
-                    key: LocalizableStringKeys.noInternetTitle.key
-                )
+        if error.isUrlErrorNotConnectedToInternetCode {
 
-                message = await localizationServices.stringForLocaleElseEnglish(
-                    localeIdentifier: appLanguage,
-                    key: LocalizableStringKeys.noInternet.key
-                )
-            }
-            else if error.isNetworkConnectionLost {
-
-                title = await localizationServices.stringForLocaleElseEnglish(
-                    localeIdentifier: appLanguage,
-                    key: LocalizableStringKeys.noInternetTitle.key
-                )
-
-                message = await localizationServices.stringForLocaleElseEnglish(
-                    localeIdentifier: appLanguage,
-                    key: LocalizableStringKeys.networkConnectionLost.key
-                )
-            }
-            else {
-
-                title = await localizationServices.stringForLocaleElseEnglish(
-                    localeIdentifier: appLanguage,
-                    key: LocalizableStringKeys.error.key
-                )
-
-                message = error.localizedDescription + "\n error code: \(error.code)"
-            }
-
-            presentAlert(
-                appLanguage: appLanguage,
-                title: title,
-                message: message,
-                acceptTapped: acceptTapped
-            )
+            title = strings[noInternetTitleKey] ?? ""
+            message = strings[noInternetKey] ?? ""
         }
+        else if error.isNetworkConnectionLost {
+
+            title = strings[noInternetTitleKey] ?? ""
+            message = strings[networkConnectionLostKey] ?? ""
+        }
+        else {
+
+            title = strings[errorKey] ?? ""
+            message = error.localizedDescription + "\n error code: \(error.code)"
+        }
+
+        presentAlert(
+            appLanguage: appLanguage,
+            title: title,
+            message: message,
+            acceptTapped: acceptTapped
+        )
     }
 }

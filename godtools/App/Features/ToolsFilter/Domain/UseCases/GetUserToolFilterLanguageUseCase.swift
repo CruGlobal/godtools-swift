@@ -49,6 +49,6 @@ final class GetUserToolFilterLanguageUseCase: Sendable {
             return languageFilter
         }
         
-        return await getToolFilterLanguage.getAnyLanguageFilter(translatedInAppLanguage: appLanguage)
+        return getToolFilterLanguage.getAnyLanguageFilter(translatedInAppLanguage: appLanguage)
     }
 }

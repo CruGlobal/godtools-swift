@@ -43,10 +43,17 @@ final class GetLessonListItemProgress: Sendable {
         
         if try userCountersRepository.getCachedCounter(id: lessonCompletionUserCounterId) != nil || lessonProgressIsComplete {
             
-            let completeString = await localizationServices.stringForLocaleElseEnglish(
-                localeIdentifier: appLanguage.localeId,
-                key: LocalizableStringKeys.lessonsLessonCompleted.key
+            let completeStringKey: String = LocalizableStringKeys.lessonsLessonCompleted.key
+
+            let strings: [String: String] = localizationServices.stringsForKeys(
+                keys: [
+                    completeStringKey
+                ],
+                fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage.localeId),
+                shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
             )
+
+            let completeString: String = strings[completeStringKey] ?? ""
             
             return .complete(completeString: completeString)
         }
@@ -54,10 +61,17 @@ final class GetLessonListItemProgress: Sendable {
             
             let progress: Double = lessonProgress.progress
             
-            let formatString = await localizationServices.stringForLocaleElseEnglish(
-                localeIdentifier: appLanguage.localeId,
-                key: LocalizableStringKeys.lessonsCompletionProgress.key
+            let formatStringKey: String = LocalizableStringKeys.lessonsCompletionProgress.key
+
+            let strings: [String: String] = localizationServices.stringsForKeys(
+                keys: [
+                    formatStringKey
+                ],
+                fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage.localeId),
+                shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
             )
+
+            let formatString: String = strings[formatStringKey] ?? ""
             
             let percentageString = getTranslatedPercentage.getTranslatedPercentage(
                 percentValue: progress,

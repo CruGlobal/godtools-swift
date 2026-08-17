@@ -26,11 +26,11 @@ struct GetLearnToShareToolStringsUseCaseTests {
             TestArgument(appLanguage: LanguageCodeDomainModel.spanish.value)
         ]
     )
-    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) async {
+    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) {
 
         let useCase = getUseCase()
 
-        let strings: LearnToShareToolStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
+        let strings: LearnToShareToolStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.nextTutorialItemActionTitle == "\(argument.appLanguage):\(LocalizableStringKeys.tutorialContinueButtonTitleContinue.key)")
         #expect(strings.startTrainingActionTitle == "\(argument.appLanguage):\(LocalizableStringKeys.startTraining.key)")

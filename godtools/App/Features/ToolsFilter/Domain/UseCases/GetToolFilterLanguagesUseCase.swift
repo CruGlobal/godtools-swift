@@ -47,7 +47,7 @@ final class GetToolFilterLanguagesUseCase: Sendable {
         
         let filteredByCategoryId: String? = filteredByCategory.filterId
         
-        let anyLanguage = await getToolFilterLanguage.createAnyLanguageDomainModel(
+        let anyLanguage = getToolFilterLanguage.createAnyLanguageDomainModel(
             translatedInAppLanguage: appLanguage,
             filteredByCategoryId: filteredByCategoryId
         )

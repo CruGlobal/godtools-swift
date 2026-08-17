@@ -26,11 +26,11 @@ struct GetShareToolQRCodeStringsUseCaseTests {
             TestArgument(appLanguage: LanguageCodeDomainModel.spanish.value)
         ]
     )
-    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) async {
+    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) {
 
         let useCase = getUseCase()
 
-        let strings: ShareToolQRCodeStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
+        let strings: ShareToolQRCodeStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.message == "\(argument.appLanguage):\(LocalizableStringKeys.shareToolQrCodeMessage.key)")
         #expect(strings.closeActionTitle == "\(argument.appLanguage):\(LocalizableStringKeys.toolScreenShareQrCodeCloseButtonTitle.key)")

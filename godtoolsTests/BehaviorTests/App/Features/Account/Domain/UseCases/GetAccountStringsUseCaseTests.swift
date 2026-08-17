@@ -32,11 +32,11 @@ struct GetAccountStringsUseCaseTests {
             TestArgument(appLanguage: LanguageCodeDomainModel.spanish.value)
         ]
     )
-    func accountStringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) async {
+    func accountStringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) {
 
         let useCase = getUseCase()
 
-        let strings: AccountStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
+        let strings: AccountStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.navTitle == "\(argument.appLanguage):\(LocalizableStringKeys.accountNavTitle.key)")
         #expect(strings.activityButtonTitle == "\(argument.appLanguage):\(LocalizableStringKeys.accountActivityTitle.key)")
@@ -56,13 +56,13 @@ struct GetAccountStringsUseCaseTests {
             TestArgument(appLanguage: LanguageCodeDomainModel.spanish.value)
         ]
     )
-    func globalAnalyticsTitleIsPrefixedWithTheCurrentYear(argument: TestArgument) async {
+    func globalAnalyticsTitleIsPrefixedWithTheCurrentYear(argument: TestArgument) {
 
         let dateService: DateServiceInterface = FakeDateService()
         
         let useCase = getUseCase(dateService: dateService)
 
-        let strings: AccountStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
+        let strings: AccountStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
 
         let year: Int = dateService.getCurrentYear(options: CalendarOptions.defaultOptions) ?? 0
 

@@ -48,13 +48,10 @@ final class ResumeLessonProgressModalViewModel: ObservableObject {
 
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
 
-        Task {
-
-            strings = await getResumeLessonProgressStringsUseCase
-                .execute(
-                    appLanguage: appLanguage
-                )
-        }
+        strings = getResumeLessonProgressStringsUseCase
+            .execute(
+                appLanguage: appLanguage
+            )
     }
 
     // MARK: - Inputs

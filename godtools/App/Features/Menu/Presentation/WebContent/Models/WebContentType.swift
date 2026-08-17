@@ -21,11 +21,16 @@ protocol WebContentType: Sendable {
 
 extension WebContentType {
    
-    func getLocalizedNavTitle() async -> String {
+    func getLocalizedNavTitle() -> String {
         
-        return await localizationServices.stringForLocaleElseEnglish(
-            localeIdentifier: appLanguage,
-            key: navTitleLocalizedKey
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                navTitleLocalizedKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
+
+        return strings[navTitleLocalizedKey] ?? ""
     }
 }

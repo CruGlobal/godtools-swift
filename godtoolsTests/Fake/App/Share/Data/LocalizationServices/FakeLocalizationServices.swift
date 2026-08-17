@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import LocalizationServices
 @testable import godtools
 
 final class FakeLocalizationServices: LocalizationServicesInterface {
@@ -128,55 +129,51 @@ final class FakeLocalizationServices: LocalizationServicesInterface {
         }
     }
     
-    private func stringForLocale(localeIdentifier: String?, key: String) -> String? {
-        
-        guard let localeIdentifier = localeIdentifier else {
-            return ""
-        }
-        
-        guard let localizedStrings = localizableStrings[localeIdentifier] else {
-            return ""
-        }
-        
-        return localizedStrings[key]
-    }
-    
-    func stringForFirstLocaleElseEnglish(localeIdentifiers: [String], key: String) async -> String {
+    func stringsForKeys(keys: [String], fetchOrder: [StringLocation], shouldFallbackToKey: Bool) -> [String: String] {
 
-        for localeId in localeIdentifiers {
-            if let string = stringForLocale(localeIdentifier: localeId, key: key) {
-                return string
+        var strings: [String: String] = Dictionary()
+
+        for key in keys {
+
+            var string: String?
+
+            for stringLocation in fetchOrder {
+
+                switch stringLocation {
+
+                case .english:
+                    string = localizableStrings[Self.english.rawValue]?[key]
+
+                case .locale(let identifier):
+                    string = localizableStrings[identifier]?[key]
+
+                case .system:
+                    string = nil
+                }
+
+                if string != nil {
+                    break
+                }
+            }
+
+            if let string = string {
+                strings[key] = string
+            }
+            else if shouldFallbackToKey {
+                strings[key] = key
             }
         }
 
-        return await stringForEnglish(key: key)
+        return strings
     }
 
-    func stringForEnglish(key: String) async -> String {
+    func stringForEnglishElseKey(key: String) -> String {
 
-        return await stringForLocaleElseEnglish(localeIdentifier: "en", key: key)
+        return localizableStrings[Self.english.rawValue]?[key] ?? key
     }
 
-    func stringForSystemElseEnglish(key: String) async -> String {
+    func stringForLocale(localeIdentifier: String, key: String) -> String? {
 
-        return await stringForLocaleElseEnglish(localeIdentifier: "en", key: key)
-    }
-
-    func stringForLocaleElseEnglish(localeIdentifier: String?, key: String) async -> String {
-        
-        guard let localeIdentifier = localeIdentifier else {
-            return ""
-        }
-        
-        guard let localizedStrings = localizableStrings[localeIdentifier] else {
-            return ""
-        }
-        
-        return localizedStrings[key] ?? ""
-    }
-    
-    func stringForLocaleElseSystemElseEnglish(localeIdentifier: String?, key: String) async -> String {
-
-        return await stringForLocaleElseEnglish(localeIdentifier: localeIdentifier, key: key)
+        return localizableStrings[localeIdentifier]?[key]
     }
 }

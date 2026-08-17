@@ -101,14 +101,11 @@ final class DownloadableLanguagesViewModel: ObservableObject {
     
     private func didSetApplanguage(appLanguage: AppLanguageDomainModel) {
 
-        Task {
+        searchBarStrings = getSearchBarStringsUseCase
+            .execute(appLanguage: appLanguage)
 
-            searchBarStrings = await getSearchBarStringsUseCase
-                .execute(appLanguage: appLanguage)
-
-            strings = await getDownloadableLanguagesStringsUseCase
-                .execute(appLanguage: appLanguage)
-        }
+        strings = getDownloadableLanguagesStringsUseCase
+            .execute(appLanguage: appLanguage)
     }
     
     func getDownloadableLanguageItemViewModel(downloadableLanguage: DownloadableLanguageListItemDomainModel) -> DownloadableLanguageItemViewModel {
