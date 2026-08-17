@@ -56,7 +56,9 @@ final class TractRemoteShareSubscriber {
     }
     
     deinit {
-        unsubscribe(disconnectSocket: true)
+        
+        // TODO: Fix. ~Levi
+        //unsubscribe(disconnectSocket: true)
     }
     
     private func stopTimeoutTimer() {
@@ -100,11 +102,11 @@ final class TractRemoteShareSubscriber {
         return webSocketChannelSubscriber.isSubscribedToChannel
     }
     
-    func subscribe(channel: WebSocketChannel) {
+    func subscribe(channel: WebSocketChannel) async {
             
         log(method: "subscribe()", label: "channelId", labelValue: channel.id)
                 
-        unsubscribe(disconnectSocket: false)
+        await unsubscribe(disconnectSocket: false)
         
         isSubscribingToChannel = channel
                         
@@ -118,7 +120,7 @@ final class TractRemoteShareSubscriber {
         webSocketChannelSubscriber.subscribe(channel: channel)
     }
     
-    func unsubscribe(disconnectSocket: Bool) {
+    func unsubscribe(disconnectSocket: Bool) async {
         
         stopTimeoutTimer()
         
@@ -128,8 +130,7 @@ final class TractRemoteShareSubscriber {
         
         if disconnectSocket {
             
-            // TODO: Fix. ~Levi
-            //webSocket.disconnect()
+            await webSocket.disconnect()
         }
     }
 }

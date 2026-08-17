@@ -133,10 +133,10 @@ final class ActionCableChannelSubscriber: NSObject {
             return
         }
         
-        let event: ActionCableEventType?
+        let event: ActionCableEventCodable?
         
         do {
-            event = try JSONDecoder().decode(ActionCableEventType.self, from: data)
+            event = try JSONDecoder().decode(ActionCableEventCodable.self, from: data)
         }
         catch {
             event = nil

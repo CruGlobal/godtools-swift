@@ -7,19 +7,15 @@
 //
 
 import Foundation
-import Combine
 
-final class TractRemoteSharePublisher: Sendable {
+actor TractRemoteSharePublisher {
         
     private static let timeoutIntervalSeconds: TimeInterval = 10
     
     private let webSocket: URLSessionWebSocket
     private let webSocketChannelPublisher: ActionCableChannelPublisher
-    private let didCreateChannelSubject: PassthroughSubject<WebSocketChannel, Never> = PassthroughSubject()
-    private let didFailToCreateChannelSubject: PassthroughSubject<TractRemoteSharePublisherError, Never> = PassthroughSubject()
     private let loggingEnabled: Bool
     
-    private var cancellables: Set<AnyCancellable> = Set()
     private var timeoutTimer: Timer?
     
     private(set) var tractRemoteShareChannel: WebSocketChannel?
@@ -33,7 +29,9 @@ final class TractRemoteSharePublisher: Sendable {
         self.webSocket = webSocket
         self.webSocketChannelPublisher = webSocketChannelPublisher
         self.loggingEnabled = loggingEnabled
-                
+           
+        // TODO: Fix. ~Levi
+        /*
         webSocketChannelPublisher
             .didCreateChannelPublisher
             .sink { [weak self] (channel: WebSocketChannel) in
@@ -44,11 +42,12 @@ final class TractRemoteSharePublisher: Sendable {
                 
                 self?.didCreateChannelSubject.send(channel)
             }
-            .store(in: &cancellables)
+            .store(in: &cancellables)*/
     }
     
     deinit {
-        endPublishingSession(disconnectSocket: true)
+        // TODO: Fix. ~Levi
+        //endPublishingSession(disconnectSocket: true)
     }
     
     private func stopTimeoutTimer() {
@@ -66,16 +65,6 @@ final class TractRemoteSharePublisher: Sendable {
         }
     }
     
-    var didCreateChannelPublisher: AnyPublisher<WebSocketChannel, Never> {
-        return didCreateChannelSubject
-            .eraseToAnyPublisher()
-    }
-    
-    var didFailToCreateChannelPublisher: AnyPublisher<TractRemoteSharePublisherError, Never> {
-        return didFailToCreateChannelSubject
-            .eraseToAnyPublisher()
-    }
-    
     var webSocketIsConnected: Bool {
         
         return false
@@ -84,11 +73,15 @@ final class TractRemoteSharePublisher: Sendable {
     }
     
     var isSubscriberChannelCreatedForPublish: Bool {
-        return webSocketChannelPublisher.isSubscriberChannelCreatedForPublish
+        get async {
+            return await webSocketChannelPublisher.isSubscriberChannelCreatedForPublish
+        }
     }
     
     var subscriberChannelId: String? {
-        return webSocketChannelPublisher.subscriberChannel?.id
+        get async {
+            return await webSocketChannelPublisher.subscriberChannel?.id
+        }
     }
     
     func createChannelForPublish() async {
@@ -101,7 +94,8 @@ final class TractRemoteSharePublisher: Sendable {
             
             self?.stopTimeoutTimer()
             
-            self?.didFailToCreateChannelSubject.send(.timedOut)
+            // TODO: Fix. ~Levi
+            //self?.didFailToCreateChannelSubject.send(.timedOut)
         }
         
         await webSocketChannelPublisher.createChannel(channel: channel)
@@ -119,7 +113,7 @@ final class TractRemoteSharePublisher: Sendable {
         }
     }
     
-    func sendNavigationEvent(event: TractRemoteSharePublisherNavigationEvent) {
+    func sendNavigationEvent(event: TractRemoteSharePublisherNavigationEvent) async {
                 
         let navigationAttributes = TractRemoteShareNavigationEvent.Attributes(
             card: event.card,
@@ -143,7 +137,7 @@ final class TractRemoteSharePublisher: Sendable {
             stringData = ""
         }
                                                 
-        webSocketChannelPublisher.sendMessage(data: stringData)
+        await webSocketChannelPublisher.sendMessage(data: stringData)
         
         if loggingEnabled {
             print("\n TractRemoteSharePublisher: sendNavigationEvent()")

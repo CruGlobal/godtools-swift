@@ -1,5 +1,5 @@
 //
-//  ActionCableEventType.swift
+//  ActionCableEventCodable.swift
 //  godtools
 //
 //  Created by Levi Eggert on 8/18/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ActionCableEventType: Codable {
+struct ActionCableEventCodable: Codable {
     
     let type: String?
     

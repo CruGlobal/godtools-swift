@@ -114,9 +114,9 @@ final class TractViewModel: MobileContentRendererViewModel {
                 
         print("x deinit: \(type(of: self))")
         
-        tractRemoteSharePublisher.endPublishingSession(disconnectSocket: true)
-        
-        tractRemoteShareSubscriber.unsubscribe(disconnectSocket: true)
+        // TODO: Fix. ~Levi
+        //tractRemoteSharePublisher.endPublishingSession(disconnectSocket: true)
+        //tractRemoteShareSubscriber.unsubscribe(disconnectSocket: true)
     }
     
     private var isScreenSharing: Bool {
@@ -400,8 +400,11 @@ extension TractViewModel {
             }
             .store(in: &cancellables)
         
-        tractRemoteShareSubscriber
-            .subscribe(channel: channel)
+        Task {
+            
+            await tractRemoteShareSubscriber
+                .subscribe(channel: channel)
+        }
     }
     
     private func handleDidReceiveRemoteShareNavigationEvent(remoteShareNavigationEvent: TractRemoteShareNavigationEvent, animated: Bool) {
@@ -564,6 +567,9 @@ extension TractViewModel {
             tool: resource.abbreviation
         )
         
-        tractRemoteSharePublisher.sendNavigationEvent(event: event)
+        Task {
+            
+            await tractRemoteSharePublisher.sendNavigationEvent(event: event)
+        }
     }
 }

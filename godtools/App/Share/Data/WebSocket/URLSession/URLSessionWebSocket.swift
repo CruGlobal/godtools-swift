@@ -7,20 +7,15 @@
 //
 
 import Foundation
-import Combine
 import RequestOperation
 
 actor URLSessionWebSocket {
     
     private let session: URLSession = URLSession(configuration: CreateIgnoreCacheSessionConfig().createConfig())
     private let keepSocketAlive: KeepWebSocketAlive = KeepWebSocketAlive()
-    private let messagesObserver: WebSocketMessagesObserver = WebSocketMessagesObserver()
-    private let didConnectSubject: PassthroughSubject<Void, Never> = PassthroughSubject()
-    private let didReceiveTextSubject: PassthroughSubject<String, Never> = PassthroughSubject()
     private let consoleLogger: ConsoleLoggerInterface
     
     private var currentWebSocketTask: URLSessionWebSocketTask?
-    private var receiveMessagesTask: Task<Void, Never>?
     
     private(set) var connectionState: WebSocketConnectionState = .disconnected
        
@@ -32,30 +27,21 @@ actor URLSessionWebSocket {
         self.consoleLogger = consoleLogger
     }
     
-    deinit {
-        
-        let webSocket = self
-        
-        // TODO: Fix. ~Levi
-//        Task { @MainActor in
-//            await webSocket.disconnect()
-//        }
+    var isConnected: Bool {
+        return connectionState == .connected
     }
     
-    var didConnectPublisher: AnyPublisher<Void, Never> {
-        return didConnectSubject
-            .eraseToAnyPublisher()
+    var isConnecting: Bool {
+        return connectionState == .connecting
     }
     
-    var didReceiveTextPublisher: AnyPublisher<String, Never> {
-        return didReceiveTextSubject
-            .eraseToAnyPublisher()
-    }
-    
-    private func cancelReceiveMessagesTask() {
+    func getReceiveTextStream() async -> AsyncThrowingStream<String, any Error>? {
         
-        receiveMessagesTask?.cancel()
-        receiveMessagesTask = nil
+        guard let task = currentWebSocketTask else {
+            return nil
+        }
+        
+        return await WebSocketMessagesObserver().start(webSocketTask: task)
     }
     
     func connect() async {
@@ -83,26 +69,6 @@ actor URLSessionWebSocket {
         let webSocketTask: URLSessionWebSocketTask = session.webSocketTask(with: url)
         
         currentWebSocketTask = webSocketTask
-        
-        let messages: AsyncThrowingStream<String, any Error> = await messagesObserver.start(webSocketTask: webSocketTask)
-
-        cancelReceiveMessagesTask()
-        
-        receiveMessagesTask = Task { [weak self] in
-
-            do {
-
-                for try await text in messages {
-                    
-                    self?.consoleLogger.log(message: "did receive text: \(text)")
-                    
-                    self?.didReceiveTextSubject.send(text)
-                }
-            }
-            catch {
-
-            }
-        }
 
         webSocketTask.delegate = taskDelegate
         
@@ -118,13 +84,9 @@ actor URLSessionWebSocket {
         consoleLogger.log(message: "disconnect")
         
         connectionState = .disconnected
-        
-        cancelReceiveMessagesTask()
-        
+                
         await keepSocketAlive.stop()
         
-        await messagesObserver.stop()
-
         webSocketTask.cancel(with: .goingAway, reason: nil)
 
         currentWebSocketTask = nil
@@ -154,8 +116,6 @@ actor URLSessionWebSocket {
         consoleLogger.log(message: "did open")
 
         connectionState = .connected
-
-        didConnectSubject.send(Void())
 
         await keepSocketAlive.start(webSocketTask: webSocketTask)
 

@@ -6,18 +6,17 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
+import Foundation
 import UIKit
-import Combine
 
-final class ActionCableChannelPublisher: Sendable {
+actor ActionCableChannelPublisher {
     
     private let webSocket: URLSessionWebSocket
-    private let didCreateChannelSubject: PassthroughSubject<WebSocketChannel, Never> = PassthroughSubject()
     private let loggingEnabled: Bool
     
-    private var cancellables: Set<AnyCancellable> = Set()
     private var channelToCreate: WebSocketChannel?
     private var publishingToSubscriberChannel: WebSocketChannel?
+    private var receiveTextTask: Task<Void, Never>?
     private var appResignedActive: Bool = false
     
     private(set) var channel: WebSocketChannel?
@@ -28,41 +27,20 @@ final class ActionCableChannelPublisher: Sendable {
         self.webSocket = webSocket
         self.loggingEnabled = loggingEnabled
                 
-        NotificationCenter.default.addObserver(self, selector: #selector(appWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
-        
         // TODO: Fix. ~Levi
-        
-        /*
-        
-        webSocket
-            .didConnectPublisher
-            .sink { [weak self] _ in
-                self?.handleDidConnectToWebsocket()
-            }
-            .store(in: &cancellables)
-        
-        webSocket
-            .didReceiveTextPublisher
-            .sink(receiveValue: { [weak self] (text: String) in
-                self?.handleDidReceiveText(text: text)
-            })
-            .store(in: &cancellables)*/
+        //NotificationCenter.default.addObserver(self, selector: #selector(appWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
         
-        NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+        // TODO: Fix. ~Levi
+        //NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
+        //NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
         
         // TODO: Fix. ~Levi
         //webSocket.disconnect()
-    }
-    
-    var didCreateChannelPublisher: AnyPublisher<WebSocketChannel, Never> {
-        return didCreateChannelSubject
-            .eraseToAnyPublisher()
     }
     
     var isSubscriberChannelCreatedForPublish: Bool {
@@ -71,6 +49,35 @@ final class ActionCableChannelPublisher: Sendable {
     
     var subscriberChannel: WebSocketChannel? {
         return publishingToSubscriberChannel
+    }
+    
+    private func cancelReceiveTextTask() {
+        
+        receiveTextTask?.cancel()
+        receiveTextTask = nil
+    }
+    
+    private func startObservingText() async {
+        
+        guard let textStream = await webSocket.getReceiveTextStream() else {
+            return
+        }
+        
+        cancelReceiveTextTask()
+        
+        receiveTextTask = Task { [weak self] in
+
+            do {
+
+                for try await text in textStream {
+                    
+                    await self?.handleDidReceiveText(text: text)
+                }
+            }
+            catch {
+
+            }
+        }
     }
     
     func createChannel(channel: WebSocketChannel) async {
@@ -82,8 +89,10 @@ final class ActionCableChannelPublisher: Sendable {
         let connectionState: WebSocketConnectionState = await webSocket.connectionState
         
         if connectionState != .connected && connectionState != .connecting {
-            
+                        
             await webSocket.connect()
+            
+            await startObservingText()
             
             await handleDidConnectToWebsocket()
         }
@@ -185,12 +194,14 @@ final class ActionCableChannelPublisher: Sendable {
         
         channelToCreate = nil
         publishingToSubscriberChannel = subscriberChannel
-        didCreateChannelSubject.send(subscriberChannel)
+        
+        // TODO: Fix. ~Levi
+        //didCreateChannelSubject.send(subscriberChannel)
     }
-}
-
-extension ActionCableChannelPublisher {
     
+    // TODO: Fix. ~Levi
+    
+    /*
     @objc private func appWillResignActive() {
         
         appResignedActive = true
@@ -215,5 +226,5 @@ extension ActionCableChannelPublisher {
         Task {
             await createChannel(channel: channel)
         }
-    }
+    }*/
 }
