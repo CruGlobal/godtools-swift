@@ -17,25 +17,56 @@ final class GetOnboardingTutorialStringsUseCase: Sendable {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) async -> OnboardingTutorialStringsDomainModel {
+    func execute(appLanguage: AppLanguageDomainModel) -> OnboardingTutorialStringsDomainModel {
         
-        let localeId: String = appLanguage
-        
-        let strings = OnboardingTutorialStringsDomainModel(
-            chooseAppLanguageButtonTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorialChooseLanguageButtonTitle.key),
-            beginTutorialButtonTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorialBeginButtonTitle.key),
-            nextTutorialPageButtonTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorialNextButtonTitle.key),
-            endTutorialButtonTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorialGetStartedButtonTitle.key),
-            readyForEveryConversationTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorial0Title.key),
-            readyForEveryConversationVideoLinkTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorial0VideoLinkTitle.key),
-            prepareForMomentsThatMatterTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorial2Title.key),
-            prepareForMomentsThatMatterMessage: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorial2Message.key),
-            talkWithGodAboutAnyoneTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorial1Title.key),
-            talkWithGodAboutAnyoneMessage: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorial1Message.key),
-            helpSomeoneDiscoverJesusTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorial3Title.key),
-            helpSomeoneDiscoverJesusMessage: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.onboardingTutorial3Message.key)
+        let chooseAppLanguageButtonTitleKey: String = LocalizableStringKeys.onboardingTutorialChooseLanguageButtonTitle.key
+        let beginTutorialButtonTitleKey: String = LocalizableStringKeys.onboardingTutorialBeginButtonTitle.key
+        let nextTutorialPageButtonTitleKey: String = LocalizableStringKeys.onboardingTutorialNextButtonTitle.key
+        let endTutorialButtonTitleKey: String = LocalizableStringKeys.onboardingTutorialGetStartedButtonTitle.key
+        let readyForEveryConversationTitleKey: String = LocalizableStringKeys.onboardingTutorial0Title.key
+        let readyForEveryConversationVideoLinkTitleKey: String = LocalizableStringKeys.onboardingTutorial0VideoLinkTitle.key
+        let prepareForMomentsThatMatterTitleKey: String = LocalizableStringKeys.onboardingTutorial2Title.key
+        let prepareForMomentsThatMatterMessageKey: String = LocalizableStringKeys.onboardingTutorial2Message.key
+        let talkWithGodAboutAnyoneTitleKey: String = LocalizableStringKeys.onboardingTutorial1Title.key
+        let talkWithGodAboutAnyoneMessageKey: String = LocalizableStringKeys.onboardingTutorial1Message.key
+        let helpSomeoneDiscoverJesusTitleKey: String = LocalizableStringKeys.onboardingTutorial3Title.key
+        let helpSomeoneDiscoverJesusMessageKey: String = LocalizableStringKeys.onboardingTutorial3Message.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                chooseAppLanguageButtonTitleKey,
+                beginTutorialButtonTitleKey,
+                nextTutorialPageButtonTitleKey,
+                endTutorialButtonTitleKey,
+                readyForEveryConversationTitleKey,
+                readyForEveryConversationVideoLinkTitleKey,
+                prepareForMomentsThatMatterTitleKey,
+                prepareForMomentsThatMatterMessageKey,
+                talkWithGodAboutAnyoneTitleKey,
+                talkWithGodAboutAnyoneMessageKey,
+                helpSomeoneDiscoverJesusTitleKey,
+                helpSomeoneDiscoverJesusMessageKey
+            ],
+            fetchOrder: [
+                .locale(identifier: appLanguage),
+                .english
+            ],
+            shouldFallbackToKey: true
         )
-        
-        return strings
+
+        return OnboardingTutorialStringsDomainModel(
+            chooseAppLanguageButtonTitle: strings[chooseAppLanguageButtonTitleKey] ?? "",
+            beginTutorialButtonTitle: strings[beginTutorialButtonTitleKey] ?? "",
+            nextTutorialPageButtonTitle: strings[nextTutorialPageButtonTitleKey] ?? "",
+            endTutorialButtonTitle: strings[endTutorialButtonTitleKey] ?? "",
+            readyForEveryConversationTitle: strings[readyForEveryConversationTitleKey] ?? "",
+            readyForEveryConversationVideoLinkTitle: strings[readyForEveryConversationVideoLinkTitleKey] ?? "",
+            prepareForMomentsThatMatterTitle: strings[prepareForMomentsThatMatterTitleKey] ?? "",
+            prepareForMomentsThatMatterMessage: strings[prepareForMomentsThatMatterMessageKey] ?? "",
+            talkWithGodAboutAnyoneTitle: strings[talkWithGodAboutAnyoneTitleKey] ?? "",
+            talkWithGodAboutAnyoneMessage: strings[talkWithGodAboutAnyoneMessageKey] ?? "",
+            helpSomeoneDiscoverJesusTitle: strings[helpSomeoneDiscoverJesusTitleKey] ?? "",
+            helpSomeoneDiscoverJesusMessage: strings[helpSomeoneDiscoverJesusMessageKey] ?? ""
+        )
     }
 }
