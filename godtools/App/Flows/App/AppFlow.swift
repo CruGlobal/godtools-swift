@@ -294,8 +294,8 @@ final class AppFlow: RootFlow {
                         keys: [
                             acceptTitleKey
                         ],
-                        fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: appLanguage),
-                        shouldFallbackToKey: localizationServices.defaultFallbackToKey
+                        fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+                        shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
                     )
 
                     Task {

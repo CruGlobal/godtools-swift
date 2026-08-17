@@ -67,8 +67,8 @@ final class GetToolDetailsUseCase: Sendable {
                 totalViewsKey,
                 versionsDescriptionKey
             ],
-            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: appLanguage),
-            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         let numberOfViewsString: String = String(
@@ -197,8 +197,8 @@ final class GetToolDetailsUseCase: Sendable {
             keys: [
                 localizedNumberOfLanguagesKey
             ],
-            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: translateInLanguage),
-            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: translateInLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         let localizedNumberOfLanguages: String = strings[localizedNumberOfLanguagesKey] ?? ""

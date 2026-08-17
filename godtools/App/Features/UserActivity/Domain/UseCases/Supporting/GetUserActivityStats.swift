@@ -82,8 +82,8 @@ final class GetUserActivityStats: Sendable {
             keys: [
                 formatStringKey
             ],
-            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: translatedInAppLanguage.localeId),
-            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: translatedInAppLanguage.localeId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         let formatString: String = strings[formatStringKey] ?? ""

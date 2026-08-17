@@ -43,8 +43,8 @@ final class GetTranslatedToolCategory: Sendable {
             keys: [
                 categoryKey
             ],
-            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: localeId),
-            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: localeId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         let category: String = strings[categoryKey] ?? ""

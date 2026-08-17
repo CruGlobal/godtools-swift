@@ -38,11 +38,8 @@ final class GetAccountStringsUseCase: Sendable {
                 globalActivityButtonTitleKey,
                 globalAnalyticsTitleKey
             ],
-            fetchOrder: [
-                .locale(identifier: localeId),
-                .english
-            ],
-            shouldFallbackToKey: true
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: localeId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         return AccountStringsDomainModel(

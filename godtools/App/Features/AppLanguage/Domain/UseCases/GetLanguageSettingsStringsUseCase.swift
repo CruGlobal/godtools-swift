@@ -37,11 +37,8 @@ final class GetLanguageSettingsStringsUseCase: Sendable {
             keys: [
                 numberOfAppLanguagesAvailableKey
             ],
-            fetchOrder: [
-                .locale(identifier: localeId),
-                .english
-            ],
-            shouldFallbackToKey: true
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: localeId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         let localizedNumberOfLanguagesAvailable: String = numberOfAppLanguagesAvailableStrings[numberOfAppLanguagesAvailableKey] ?? ""
@@ -68,11 +65,8 @@ final class GetLanguageSettingsStringsUseCase: Sendable {
                 downloadToolsForOfflineMessageKey,
                 editDownloadedLanguagesButtonTitleKey
             ],
-            fetchOrder: [
-                .locale(identifier: localeId),
-                .english
-            ],
-            shouldFallbackToKey: true
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: localeId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         return LanguageSettingsStringsDomainModel(

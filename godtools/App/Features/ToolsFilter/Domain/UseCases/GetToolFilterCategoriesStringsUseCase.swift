@@ -26,11 +26,8 @@ final class GetToolFilterCategoriesStringsUseCase: Sendable {
             keys: [
                 navTitleKey
             ],
-            fetchOrder: [
-                .locale(identifier: localeId),
-                .english
-            ],
-            shouldFallbackToKey: true
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: localeId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         return ToolFilterCategoriesStringsDomainModel(

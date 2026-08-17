@@ -25,11 +25,8 @@ final class GetAllYourFavoritedToolsStringsUseCase: Sendable {
             keys: [
                 sectionTitleKey
             ],
-            fetchOrder: [
-                .locale(identifier: appLanguage),
-                .english
-            ],
-            shouldFallbackToKey: true
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         return AllYourFavoritedToolsStringsDomainModel(

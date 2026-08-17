@@ -25,11 +25,8 @@ final class GetDownloadableLanguagesStringsUseCase: Sendable {
             keys: [
                 navTitleKey
             ],
-            fetchOrder: [
-                .locale(identifier: appLanguage),
-                .english
-            ],
-            shouldFallbackToKey: true
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         return DownloadableLanguagesStringsDomainModel(

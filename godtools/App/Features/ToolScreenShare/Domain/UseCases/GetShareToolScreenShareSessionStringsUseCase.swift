@@ -27,11 +27,8 @@ final class GetShareToolScreenShareSessionStringsUseCase: Sendable {
                 shareMessageKey,
                 qrCodeActionTitleKey
             ],
-            fetchOrder: [
-                .locale(identifier: appLanguage),
-                .english
-            ],
-            shouldFallbackToKey: true
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         return ShareToolScreenShareSessionStringsDomainModel(

@@ -31,11 +31,8 @@ final class GetDeleteAccountStringsUseCase: Sendable {
                 confirmActionTitleKey,
                 cancelActionTitleKey
             ],
-            fetchOrder: [
-                .locale(identifier: appLanguage),
-                .english
-            ],
-            shouldFallbackToKey: true
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         return DeleteAccountStringsDomainModel(

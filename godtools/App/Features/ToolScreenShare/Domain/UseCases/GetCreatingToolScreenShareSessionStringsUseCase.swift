@@ -25,11 +25,8 @@ final class GetCreatingToolScreenShareSessionStringsUseCase: Sendable {
             keys: [
                 creatingSessionMessageKey
             ],
-            fetchOrder: [
-                .locale(identifier: appLanguage),
-                .english
-            ],
-            shouldFallbackToKey: true
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         return CreatingToolScreenShareSessionStringsDomainModel(

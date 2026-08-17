@@ -25,11 +25,8 @@ final class GetDeleteAccountProgressStringsUseCase: Sendable {
             keys: [
                 titleKey
             ],
-            fetchOrder: [
-                .locale(identifier: appLanguage),
-                .english
-            ],
-            shouldFallbackToKey: true
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         return DeleteAccountProgressStringsDomainModel(

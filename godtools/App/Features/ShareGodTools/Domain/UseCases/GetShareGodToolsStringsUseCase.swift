@@ -25,11 +25,8 @@ final class GetShareGodToolsStringsUseCase: Sendable {
             keys: [
                 shareMessageKey
             ],
-            fetchOrder: [
-                .locale(identifier: appLanguage),
-                .english
-            ],
-            shouldFallbackToKey: true
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         return ShareGodToolsStringsDomainModel(

@@ -28,11 +28,8 @@ final class GetLessonSwipeTutorialStringsUseCase: Sendable {
                 titleKey,
                 closeButtonTextKey
             ],
-            fetchOrder: [
-                .locale(identifier: localeId),
-                .english
-            ],
-            shouldFallbackToKey: true
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: localeId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         return LessonSwipeTutorialStringsDomainModel(

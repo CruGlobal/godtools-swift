@@ -35,11 +35,8 @@ final class GetLessonEvaluationStringsUseCase: Sendable {
                 shareFaithReadinessKey,
                 sendFeedbackActionTitleKey
             ],
-            fetchOrder: [
-                .locale(identifier: appLanguage),
-                .english
-            ],
-            shouldFallbackToKey: true
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         return LessonEvaluationStringsDomainModel(

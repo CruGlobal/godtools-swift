@@ -43,11 +43,8 @@ final class GetToolsStringsUseCase: Sendable {
                 changePersonalizedToolSettingsActionKey,
                 viewAllToolsActionKey
             ],
-            fetchOrder: [
-                .locale(identifier: translateInLanguage),
-                .english
-            ],
-            shouldFallbackToKey: true
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: translateInLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         return ToolsStringsDomainModel(

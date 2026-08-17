@@ -33,11 +33,8 @@ final class GetConfirmRemoveToolFromFavoritesStringsUseCase: Sendable {
                 confirmRemoveActionTitleKey,
                 cancelRemoveActionTitleKey
             ],
-            fetchOrder: [
-                .locale(identifier: appLanguage),
-                .english
-            ],
-            shouldFallbackToKey: true
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         let toolName: String = getTranslatedToolName.getToolName(toolId: toolId, translateInLanguage: appLanguage)

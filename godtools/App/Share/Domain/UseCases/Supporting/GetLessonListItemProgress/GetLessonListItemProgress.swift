@@ -49,8 +49,8 @@ final class GetLessonListItemProgress: Sendable {
                 keys: [
                     completeStringKey
                 ],
-                fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: appLanguage.localeId),
-                shouldFallbackToKey: localizationServices.defaultFallbackToKey
+                fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage.localeId),
+                shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
             )
 
             let completeString: String = strings[completeStringKey] ?? ""
@@ -67,8 +67,8 @@ final class GetLessonListItemProgress: Sendable {
                 keys: [
                     formatStringKey
                 ],
-                fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: appLanguage.localeId),
-                shouldFallbackToKey: localizationServices.defaultFallbackToKey
+                fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage.localeId),
+                shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
             )
 
             let formatString: String = strings[formatStringKey] ?? ""

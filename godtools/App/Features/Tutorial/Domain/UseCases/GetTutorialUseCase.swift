@@ -43,8 +43,8 @@ final class GetTutorialUseCase: Sendable {
                 LocalizableStringKeys.tutorialScreenShareMessage.key,
                 LocalizableStringKeys.tutorialFindTutorialTitle.key
             ],
-            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: appLanguage),
-            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         switch tutorialType {

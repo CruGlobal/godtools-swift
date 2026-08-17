@@ -75,8 +75,8 @@ extension GetToolFilterLanguage {
             keys: [
                 languageNameTranslatedInAppLanguageKey
             ],
-            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: translatedInAppLanguage.localeId),
-            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: translatedInAppLanguage.localeId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         let languageNameTranslatedInAppLanguage: String = strings[languageNameTranslatedInAppLanguageKey] ?? ""
@@ -104,8 +104,8 @@ extension GetToolFilterLanguage {
             keys: [
                 formatStringKey
             ],
-            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: translatedInAppLanguage.localeId),
-            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: translatedInAppLanguage.localeId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         let formatString: String = strings[formatStringKey] ?? ""

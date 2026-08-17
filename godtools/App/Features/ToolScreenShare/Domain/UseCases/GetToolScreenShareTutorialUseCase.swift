@@ -37,8 +37,8 @@ final class GetToolScreenShareTutorialUseCase: Sendable {
                 getStartedTitleKey,
                 getStartedMessageKey
             ],
-            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: localeId),
-            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: localeId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         let tutorialPages = [

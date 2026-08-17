@@ -32,8 +32,8 @@ final class GetDownloadArticlesErrorMessage: Sendable {
                 noInternetKey,
                 downloadErrorKey
             ],
-            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: appLanguage),
-            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         if error.isUrlErrorNotConnectedToInternetCode {

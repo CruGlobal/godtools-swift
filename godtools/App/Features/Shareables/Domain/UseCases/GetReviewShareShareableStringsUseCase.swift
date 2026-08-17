@@ -25,11 +25,8 @@ final class GetReviewShareShareableStringsUseCase: Sendable {
             keys: [
                 shareActionTitleKey
             ],
-            fetchOrder: [
-                .locale(identifier: appLanguage),
-                .english
-            ],
-            shouldFallbackToKey: true
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         return ReviewShareShareableStringsDomainModel(

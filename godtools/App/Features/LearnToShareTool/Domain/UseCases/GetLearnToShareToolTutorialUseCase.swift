@@ -37,8 +37,8 @@ final class GetLearnToShareToolTutorialUseCase: Sendable {
                 lightUpTheTipsTitleKey,
                 lightUpTheTipsMessageKey
             ],
-            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: localeId),
-            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: localeId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         let items = [

@@ -59,11 +59,8 @@ final class GetDownloadToolProgressStringsUseCase: Sendable {
             keys: [
                 downloadMessageKey
             ],
-            fetchOrder: [
-                .locale(identifier: appLanguage),
-                .english
-            ],
-            shouldFallbackToKey: true
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         return DownloadToolProgressStringsDomainModel(

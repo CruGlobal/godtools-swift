@@ -26,11 +26,8 @@ final class GetDeferredDeepLinkModalStringsUseCase: Sendable {
                 titleKey,
                 messageKey
             ],
-            fetchOrder: [
-                .locale(identifier: appLanguage),
-                .english
-            ],
-            shouldFallbackToKey: true
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         return DeferredDeepLinkModalStringsDomainModel(

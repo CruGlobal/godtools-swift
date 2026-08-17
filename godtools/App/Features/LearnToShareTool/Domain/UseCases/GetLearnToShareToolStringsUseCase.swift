@@ -27,11 +27,8 @@ final class GetLearnToShareToolStringsUseCase: Sendable {
                 nextTutorialItemActionTitleKey,
                 startTrainingActionTitleKey
             ],
-            fetchOrder: [
-                .locale(identifier: appLanguage),
-                .english
-            ],
-            shouldFallbackToKey: true
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         return LearnToShareToolStringsDomainModel(

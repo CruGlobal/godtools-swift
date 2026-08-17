@@ -41,11 +41,8 @@ final class GetToolSettingsStringsUseCase: Sendable {
                 chooseLanguageMessageKey,
                 shareablesTitleKey
             ],
-            fetchOrder: [
-                .locale(identifier: appLanguage),
-                .english
-            ],
-            shouldFallbackToKey: true
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         return ToolSettingsStringsDomainModel(

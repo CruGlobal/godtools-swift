@@ -131,8 +131,8 @@ final class ArticleViewModel: ObservableObject {
                 titleKey,
                 downloadActionTitleKey
             ],
-            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: appLanguage),
-            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         let title: String = strings[titleKey] ?? ""

@@ -28,11 +28,8 @@ final class GetLocalizationSettingsStringsUseCase: Sendable {
                 localizationHeaderTitleKey,
                 localizationHeaderDescriptionKey
             ],
-            fetchOrder: [
-                .locale(identifier: appLanguage),
-                .english
-            ],
-            shouldFallbackToKey: true
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         return LocalizationSettingsStringsDomainModel(

@@ -217,8 +217,8 @@ class TractFlow: GTFlow {
                     acceptTitleKey,
                     cancelTitleKey
                 ],
-                fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: appLanguage),
-                shouldFallbackToKey: localizationServices.defaultFallbackToKey
+                fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+                shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
             )
 
             Task {

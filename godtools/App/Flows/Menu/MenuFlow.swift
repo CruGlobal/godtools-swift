@@ -329,8 +329,8 @@ final class MenuFlow: GTFlow {
                         titleKey,
                         messageKey
                     ],
-                    fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: appLanguage),
-                    shouldFallbackToKey: localizationServices.defaultFallbackToKey
+                    fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+                    shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
                 )
 
                 self?.presentAlert(appLanguage: appLanguage, title: strings[titleKey] ?? "", message: strings[messageKey] ?? "")
@@ -517,8 +517,8 @@ extension MenuFlow {
                 accountAlreadyExistsMessageKey,
                 accountNotFoundMessageKey
             ],
-            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: appLanguageLocaleId),
-            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguageLocaleId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         let message: String
@@ -643,8 +643,8 @@ extension MenuFlow {
                 confirmButtonTitleKey,
                 cancelButtonTitleKey
             ],
-            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: appLanguage),
-            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         let viewController = UIAlertController(

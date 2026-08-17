@@ -38,8 +38,8 @@ final class LocalizationLanguageName: LocalizationLanguageNameInterface {
             keys: [
                 localizedNameKey
             ],
-            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: translatedInLanguage),
-            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: translatedInLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         let localizedName: String = strings[localizedNameKey] ?? ""

@@ -38,8 +38,8 @@ final class LoadingArticleViewModel: ObservableObject {
             keys: [
                 messageKey
             ],
-            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: appLanguage),
-            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         message = strings[messageKey] ?? ""
@@ -79,8 +79,8 @@ final class LoadingArticleViewModel: ObservableObject {
                     keys: [
                         errorTitleKey
                     ],
-                    fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: appLanguage),
-                    shouldFallbackToKey: localizationServices.defaultFallbackToKey
+                    fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+                    shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
                 )
 
                 let errorTitle: String = strings[errorTitleKey] ?? ""

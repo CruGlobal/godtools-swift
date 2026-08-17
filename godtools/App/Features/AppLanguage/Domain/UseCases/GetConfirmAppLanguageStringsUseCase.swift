@@ -31,11 +31,8 @@ final class GetConfirmAppLanguageStringsUseCase: Sendable {
                 changeLanguageButtonTextKey,
                 nevermindButtonTextKey
             ],
-            fetchOrder: [
-                .locale(identifier: appLanguageLocaleId),
-                .english
-            ],
-            shouldFallbackToKey: true
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguageLocaleId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         return ConfirmAppLanguageStringsDomainModel(
@@ -54,11 +51,8 @@ final class GetConfirmAppLanguageStringsUseCase: Sendable {
             keys: [
                 messageKey
             ],
-            fetchOrder: [
-                .locale(identifier: localeId),
-                .english
-            ],
-            shouldFallbackToKey: true
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: localeId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         let formatString: String = strings[messageKey] ?? ""

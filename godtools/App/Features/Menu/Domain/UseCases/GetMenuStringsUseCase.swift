@@ -82,11 +82,8 @@ final class GetMenuStringsUseCase: Sendable {
                 copyrightInfoOptionTitleKey,
                 versionTitleKey
             ],
-            fetchOrder: [
-                .locale(identifier: appLanguage),
-                .english
-            ],
-            shouldFallbackToKey: true
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         return MenuStringsDomainModel(

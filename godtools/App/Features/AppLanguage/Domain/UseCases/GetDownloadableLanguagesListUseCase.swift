@@ -119,8 +119,8 @@ extension GetDownloadableLanguagesListUseCase {
             keys: [
                 formatStringKey
             ],
-            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: localeId),
-            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: localeId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         let formatString: String = strings[formatStringKey] ?? ""

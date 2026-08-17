@@ -50,8 +50,8 @@ class AppInterfaceStringNavBarItemController: NavBarItemController {
                     keys: [
                         localizedStringKey
                     ],
-                    fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: appLanguage),
-                    shouldFallbackToKey: localizationServices.defaultFallbackToKey
+                    fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+                    shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
                 )
 
                 return strings[localizedStringKey] ?? ""

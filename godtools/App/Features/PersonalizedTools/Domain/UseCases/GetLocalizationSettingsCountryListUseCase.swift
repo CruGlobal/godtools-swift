@@ -55,8 +55,8 @@ final class GetLocalizationSettingsCountryListUseCase: Sendable {
             keys: [
                 preferNotToSayTextKey
             ],
-            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: appLanguage),
-            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         let preferNotToSayText: String = strings[preferNotToSayTextKey] ?? ""

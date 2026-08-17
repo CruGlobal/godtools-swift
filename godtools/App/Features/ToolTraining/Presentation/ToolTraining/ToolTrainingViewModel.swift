@@ -111,8 +111,8 @@ final class ToolTrainingViewModel: NSObject {
                 nextButtonTitleKey,
                 closeButtonTitleKey
             ],
-            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: renderedPageContext.language.localeId),
-            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: renderedPageContext.language.localeId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         let continueTitle: String
@@ -170,8 +170,8 @@ final class ToolTrainingViewModel: NSObject {
             keys: [
                 localizedTipTitle
             ],
-            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: renderedPageContext.language.localeId),
-            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: renderedPageContext.language.localeId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         let tipTitle: String = tipTitleStrings[localizedTipTitle] ?? ""

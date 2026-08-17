@@ -93,8 +93,8 @@ extension GetUserAccountDetailsUseCase {
             keys: [
                 localizedJoinedOnKey
             ],
-            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: translatedInAppLanguage.localeId),
-            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: translatedInAppLanguage.localeId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         let localizedJoinedOn: String = strings[localizedJoinedOnKey] ?? ""

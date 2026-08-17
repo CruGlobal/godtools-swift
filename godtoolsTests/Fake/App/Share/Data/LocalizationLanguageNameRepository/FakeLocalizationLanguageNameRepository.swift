@@ -27,8 +27,8 @@ final class FakeLocalizationLanguageNameRepository: LocalizationLanguageNameInte
             keys: [
                 languageId
             ],
-            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: translatedInLanguage),
-            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: translatedInLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         return strings[languageId] ?? ""

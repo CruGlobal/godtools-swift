@@ -72,8 +72,8 @@ extension GetToolFilterCategory {
             keys: [
                 titleKey
             ],
-            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: translatedInAppLanguage.localeId),
-            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: translatedInAppLanguage.localeId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         let title: String = strings[titleKey] ?? ""
@@ -94,8 +94,8 @@ extension GetToolFilterCategory {
             keys: [
                 translatedNameKey
             ],
-            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: translatedInAppLanguage.localeId),
-            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: translatedInAppLanguage.localeId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         let translatedName: String = strings[translatedNameKey] ?? ""
@@ -122,8 +122,8 @@ extension GetToolFilterCategory {
             keys: [
                 formatStringKey
             ],
-            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: translatedInAppLanguage.localeId),
-            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: translatedInAppLanguage.localeId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         let formatString: String = strings[formatStringKey] ?? ""

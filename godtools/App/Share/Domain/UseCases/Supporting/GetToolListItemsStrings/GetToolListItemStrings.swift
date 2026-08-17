@@ -27,8 +27,8 @@ final class GetToolListItemStrings: Sendable {
                 openToolActionTitleKey,
                 openToolDetailsActionTitleKey
             ],
-            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: appLanguage),
-            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         return ToolListItemStringsDomainModel(

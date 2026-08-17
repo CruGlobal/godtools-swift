@@ -59,8 +59,8 @@ final class GetGlobalActivityThisWeekUseCase: Sendable {
                 launchesTitleKey,
                 countriesTitleKey
             ],
-            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: localeId),
-            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: localeId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         let usersAnalytics = GlobalActivityDomainModel(

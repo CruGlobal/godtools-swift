@@ -21,17 +21,6 @@ protocol LocalizationServicesInterface: Sendable {
     func stringForLocale(localeIdentifier: String, key: String) -> String?
 }
 
-extension LocalizationServicesInterface {
-
-    var defaultFallbackToKey: Bool {
-        return true
-    }
-
-    func getDefaultFetchOrder(localeIdentifier: String) -> [StringLocation] {
-        return [.locale(identifier: localeIdentifier), .english]
-    }
-}
-
 extension LocalizationServices: LocalizationServicesInterface {
 
 }

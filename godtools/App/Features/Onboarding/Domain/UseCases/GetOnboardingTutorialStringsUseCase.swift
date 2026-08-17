@@ -47,11 +47,8 @@ final class GetOnboardingTutorialStringsUseCase: Sendable {
                 helpSomeoneDiscoverJesusTitleKey,
                 helpSomeoneDiscoverJesusMessageKey
             ],
-            fetchOrder: [
-                .locale(identifier: appLanguage),
-                .english
-            ],
-            shouldFallbackToKey: true
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         return OnboardingTutorialStringsDomainModel(

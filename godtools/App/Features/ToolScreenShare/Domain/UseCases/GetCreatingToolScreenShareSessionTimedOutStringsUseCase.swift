@@ -25,11 +25,8 @@ final class GetCreatingToolScreenShareSessionTimedOutStringsUseCase: Sendable {
             keys: [
                 acceptActionTitleKey
             ],
-            fetchOrder: [
-                .locale(identifier: appLanguage),
-                .english
-            ],
-            shouldFallbackToKey: true
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         return CreatingToolScreenShareSessionTimedOutStringsDomainModel(

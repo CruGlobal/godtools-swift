@@ -41,11 +41,8 @@ final class GetLessonsStringsUseCase: Sendable {
                 changeLocalizationSettingsActionKey,
                 viewAllLessonsActionKey
             ],
-            fetchOrder: [
-                .locale(identifier: translateInLanguage),
-                .english
-            ],
-            shouldFallbackToKey: true
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: translateInLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         return LessonsStringsDomainModel(

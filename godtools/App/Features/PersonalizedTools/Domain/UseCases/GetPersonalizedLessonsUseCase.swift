@@ -117,8 +117,8 @@ final class GetPersonalizedLessonsUseCase: Sendable {
                 titleKey,
                 messageKey
             ],
-            fetchOrder: localizationServices.getDefaultFetchOrder(localeIdentifier: appLanguage),
-            shouldFallbackToKey: localizationServices.defaultFallbackToKey
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
         return PersonalizedLessonsUnavailableDomainModel(
