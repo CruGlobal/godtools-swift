@@ -94,15 +94,24 @@ class TractPageCardViewModel: MobileContentViewModel {
         return ""
     }
     
-    private func getTranslatedStringFromToolLanguageElseAppLanguage(localizedKey: String) async -> String {
+    private func getTranslatedStringFromToolLanguageElseAppLanguage(localizedKey: String) -> String {
         
-        return await localizationServices.stringForFirstLocaleElseEnglish(
-            localeIdentifiers: [
-                renderedPageContext.language.localeId,
-                renderedPageContext.appLanguage
-            ],
+        if let localeString = localizationServices.stringForLocale(
+            localeIdentifier: renderedPageContext.language.localeId,
             key: localizedKey
-        )
+        ) {
+            
+            return localeString
+        }
+        else if let appLanguageString = localizationServices.stringForLocale(
+            localeIdentifier: renderedPageContext.appLanguage,
+            key: localizedKey
+        ) {
+            
+            return appLanguageString
+        }
+        
+        return localizationServices.stringForEnglishElseKey(key: localizedKey)
     }
     
     var title: String? {
@@ -140,12 +149,9 @@ class TractPageCardViewModel: MobileContentViewModel {
     
     var previousButtonTitle: String? {
 
-        get async {
+        let prevLocalizedKey: String = LocalizableStringKeys.cardPrevButtonTitle.key
 
-            let prevLocalizedKey: String = LocalizableStringKeys.cardPrevButtonTitle.key
-
-            return await getTranslatedStringFromToolLanguageElseAppLanguage(localizedKey: prevLocalizedKey)
-        }
+        return getTranslatedStringFromToolLanguageElseAppLanguage(localizedKey: prevLocalizedKey)
     }
     
     var previousButtonTitleColor: UIColor {
@@ -158,12 +164,9 @@ class TractPageCardViewModel: MobileContentViewModel {
     
     var nextButtonTitle: String? {
 
-        get async {
+        let nextLocalizedKey: String = LocalizableStringKeys.cardNextButtonTitle.key
 
-            let nextLocalizedKey: String = LocalizableStringKeys.cardNextButtonTitle.key
-
-            return await getTranslatedStringFromToolLanguageElseAppLanguage(localizedKey: nextLocalizedKey)
-        }
+        return getTranslatedStringFromToolLanguageElseAppLanguage(localizedKey: nextLocalizedKey)
     }
     
     var nextButtonTitleColor: UIColor {

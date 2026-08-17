@@ -17,22 +17,44 @@ final class GetToolSettingsStringsUseCase: Sendable {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) async -> ToolSettingsStringsDomainModel {
-        
-        let localeId: String = appLanguage
-        
-        let strings = ToolSettingsStringsDomainModel(
-            chooseParallelLanguageActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsChooseLanguageNoParallelLanguageTitle.key),
-            title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsTitle.key),
-            shareLinkTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsOptionShareLinkTitle.key),
-            screenShareTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsOptionScreenShareTitle.key),
-            toolOptionEnableTrainingTips: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsOptionTrainingTipsShowTitle.key),
-            toolOptionDisableTrainingTips: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsOptionTrainingTipsHideTitle.key),
-            chooseLanguageTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsChooseLanguageTitle.key),
-            chooseLanguageMessage: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsChooseLanguageToggleMessage.key),
-            shareablesTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsShareablesTitle.key)
+    func execute(appLanguage: AppLanguageDomainModel) -> ToolSettingsStringsDomainModel {
+
+        let chooseParallelLanguageActionTitleKey: String = LocalizableStringKeys.toolSettingsChooseLanguageNoParallelLanguageTitle.key
+        let titleKey: String = LocalizableStringKeys.toolSettingsTitle.key
+        let shareLinkTitleKey: String = LocalizableStringKeys.toolSettingsOptionShareLinkTitle.key
+        let screenShareTitleKey: String = LocalizableStringKeys.toolSettingsOptionScreenShareTitle.key
+        let toolOptionEnableTrainingTipsKey: String = LocalizableStringKeys.toolSettingsOptionTrainingTipsShowTitle.key
+        let toolOptionDisableTrainingTipsKey: String = LocalizableStringKeys.toolSettingsOptionTrainingTipsHideTitle.key
+        let chooseLanguageTitleKey: String = LocalizableStringKeys.toolSettingsChooseLanguageTitle.key
+        let chooseLanguageMessageKey: String = LocalizableStringKeys.toolSettingsChooseLanguageToggleMessage.key
+        let shareablesTitleKey: String = LocalizableStringKeys.toolSettingsShareablesTitle.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                chooseParallelLanguageActionTitleKey,
+                titleKey,
+                shareLinkTitleKey,
+                screenShareTitleKey,
+                toolOptionEnableTrainingTipsKey,
+                toolOptionDisableTrainingTipsKey,
+                chooseLanguageTitleKey,
+                chooseLanguageMessageKey,
+                shareablesTitleKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
-        
-        return strings
+
+        return ToolSettingsStringsDomainModel(
+            chooseParallelLanguageActionTitle: strings[chooseParallelLanguageActionTitleKey] ?? "",
+            title: strings[titleKey] ?? "",
+            shareLinkTitle: strings[shareLinkTitleKey] ?? "",
+            screenShareTitle: strings[screenShareTitleKey] ?? "",
+            toolOptionEnableTrainingTips: strings[toolOptionEnableTrainingTipsKey] ?? "",
+            toolOptionDisableTrainingTips: strings[toolOptionDisableTrainingTipsKey] ?? "",
+            chooseLanguageTitle: strings[chooseLanguageTitleKey] ?? "",
+            chooseLanguageMessage: strings[chooseLanguageMessageKey] ?? "",
+            shareablesTitle: strings[shareablesTitleKey] ?? ""
+        )
     }
 }

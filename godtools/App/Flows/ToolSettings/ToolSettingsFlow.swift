@@ -208,21 +208,18 @@ class ToolSettingsFlow: GTFlow {
                     
                 case .shareLinkTappedFromScreenShareTutorial:
                     
-                    Task {
-                        
-                        let strings = await appDiContainer.feature.toolScreenShare.domainLayer.getShareToolScreenShareSessionStringsUseCase().execute(
-                            appLanguage: appLanguage
-                        )
-                        
-                        toggleInitialView(
-                            view: getShareToolScreenShareSessionView(
-                                appLanguage: appLanguage,
-                                shareUrl: remoteShareUrl,
-                                strings: strings
-                            ),
-                            animated: true
-                        )
-                    }
+                    let strings = appDiContainer.feature.toolScreenShare.domainLayer.getShareToolScreenShareSessionStringsUseCase().execute(
+                        appLanguage: appLanguage
+                    )
+
+                    toggleInitialView(
+                        view: getShareToolScreenShareSessionView(
+                            appLanguage: appLanguage,
+                            shareUrl: remoteShareUrl,
+                            strings: strings
+                        ),
+                        animated: true
+                    )
                 }
                 
             case .failure(let error):

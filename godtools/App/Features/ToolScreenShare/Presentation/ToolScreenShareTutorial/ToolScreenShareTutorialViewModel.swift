@@ -63,12 +63,9 @@ final class ToolScreenShareTutorialViewModel: ObservableObject {
         $appLanguage
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
-                return AnyPublisher() {
-                    await getToolScreenShareTutorialUseCase
-                        .execute(appLanguage: appLanguage)
-                }
+                getToolScreenShareTutorialUseCase
+                    .execute(appLanguage: appLanguage)
             }
-            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (pages: [ToolScreenShareTutorialPageDomainModel]) in
                                 
@@ -132,11 +129,8 @@ final class ToolScreenShareTutorialViewModel: ObservableObject {
     
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
         
-        Task {
-            
-            strings = await getToolScreenShareTutorialStringsUseCase
-                .execute(appLanguage: appLanguage)
-        }
+        strings = getToolScreenShareTutorialStringsUseCase
+            .execute(appLanguage: appLanguage)
     }
     
     private func markToolScreenShareTutorialViewed() {

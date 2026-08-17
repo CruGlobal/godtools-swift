@@ -22,20 +22,40 @@ final class GetConfirmAppLanguageStringsUseCase: Sendable {
     func execute(appLanguage: AppLanguageDomainModel, selectedLanguage: AppLanguageDomainModel) async -> ConfirmAppLanguageStringsDomainModel {
         
         let appLanguageLocaleId: String = appLanguage
-        
-        let strings = ConfirmAppLanguageStringsDomainModel(
+
+        let changeLanguageButtonTextKey: String = LocalizableStringKeys.languageSettingsConfirmAppLanguageChangeLanguageButtonTitle.key
+        let nevermindButtonTextKey: String = LocalizableStringKeys.languageSettingsConfirmAppLanguageNevermindButtonTitle.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                changeLanguageButtonTextKey,
+                nevermindButtonTextKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguageLocaleId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
+        )
+
+        return ConfirmAppLanguageStringsDomainModel(
             messageInNewlySelectedLanguageHighlightModel: await getHighlightMessageStringDomainModel(selectedLanguage: selectedLanguage, localeId: selectedLanguage),
             messageInCurrentLanguageHighlightModel: await getHighlightMessageStringDomainModel(selectedLanguage: selectedLanguage, localeId: appLanguageLocaleId),
-            changeLanguageButtonText: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageLocaleId, key: LocalizableStringKeys.languageSettingsConfirmAppLanguageChangeLanguageButtonTitle.key),
-            nevermindButtonText: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageLocaleId, key: LocalizableStringKeys.languageSettingsConfirmAppLanguageNevermindButtonTitle.key)
+            changeLanguageButtonText: strings[changeLanguageButtonTextKey] ?? "",
+            nevermindButtonText: strings[nevermindButtonTextKey] ?? ""
         )
-        
-        return strings
     }
-    
+
     private func getHighlightMessageStringDomainModel(selectedLanguage: AppLanguageDomainModel, localeId: String) async -> ConfirmAppLanguageHighlightStringDomainModel {
-        
-        let formatString = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsConfirmAppLanguageMessage.key)
+
+        let messageKey: String = LocalizableStringKeys.languageSettingsConfirmAppLanguageMessage.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                messageKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: localeId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
+        )
+
+        let formatString: String = strings[messageKey] ?? ""
         let languageName = await getTranslatedLanguageName.getLanguageName(language: selectedLanguage, translatedInLanguage: localeId)
         
         let fullText = String(format: formatString, languageName)

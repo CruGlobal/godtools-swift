@@ -26,11 +26,11 @@ struct GetAllYourFavoritedToolsStringsUseCaseTests {
             TestArgument(appLanguage: LanguageCodeDomainModel.spanish.value)
         ]
     )
-    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) async {
+    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) {
 
         let useCase = getUseCase()
 
-        let strings: AllYourFavoritedToolsStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
+        let strings: AllYourFavoritedToolsStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.sectionTitle == "\(argument.appLanguage):\(LocalizableStringKeys.favoritesFavoriteToolsTitle.key)")
     }

@@ -103,17 +103,26 @@ final class ToolTrainingViewModel: NSObject {
 
         self.page = page
 
-        Task {
+        let nextButtonTitleKey: String = LocalizableStringKeys.cardNextButtonTitle.key
+        let closeButtonTitleKey: String = LocalizableStringKeys.close.key
 
-            let continueTitle: String
-            if page < (numberOfTipPages.value - 1) {
-                continueTitle = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: renderedPageContext.language.localeId, key: LocalizableStringKeys.cardNextButtonTitle.key)
-            }
-            else {
-                continueTitle = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: renderedPageContext.language.localeId, key: LocalizableStringKeys.close.key)
-            }
-            continueButtonTitle.accept(value: continueTitle)
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                nextButtonTitleKey,
+                closeButtonTitleKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: renderedPageContext.language.localeId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
+        )
+
+        let continueTitle: String
+        if page < (numberOfTipPages.value - 1) {
+            continueTitle = strings[nextButtonTitleKey] ?? ""
         }
+        else {
+            continueTitle = strings[closeButtonTitleKey] ?? ""
+        }
+        continueButtonTitle.accept(value: continueTitle)
 
         if numberOfTipPages.value > 0 {
             let trainingProgress: CGFloat = CGFloat(page + 1) / CGFloat(numberOfTipPages.value)
@@ -157,15 +166,17 @@ final class ToolTrainingViewModel: NSObject {
         trainingTipBackgroundImage.accept(value: UIImage(named: tipBackgroundImageName))
         trainingTipForegroundImage.accept(value: UIImage(named: tipImageName))
 
-        Task {
+        let tipTitleStrings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                localizedTipTitle
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: renderedPageContext.language.localeId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
+        )
 
-            let tipTitle: String = await localizationServices.stringForLocaleElseEnglish(
-                localeIdentifier: renderedPageContext.language.localeId,
-                key: localizedTipTitle
-            )
+        let tipTitle: String = tipTitleStrings[localizedTipTitle] ?? ""
 
-            title.accept(value: tipTitle)
-        }
+        title.accept(value: tipTitle)
     }
 }
 

@@ -17,12 +17,20 @@ final class GetAllYourFavoritedToolsStringsUseCase: Sendable {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) async -> AllYourFavoritedToolsStringsDomainModel {
-        
-        let strings = AllYourFavoritedToolsStringsDomainModel(
-            sectionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.favoritesFavoriteToolsTitle.key)
+    func execute(appLanguage: AppLanguageDomainModel) -> AllYourFavoritedToolsStringsDomainModel {
+
+        let sectionTitleKey: String = LocalizableStringKeys.favoritesFavoriteToolsTitle.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                sectionTitleKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
-        return strings
+        return AllYourFavoritedToolsStringsDomainModel(
+            sectionTitle: strings[sectionTitleKey] ?? ""
+        )
     }
 }

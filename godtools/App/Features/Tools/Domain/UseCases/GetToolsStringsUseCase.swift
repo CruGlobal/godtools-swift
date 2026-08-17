@@ -17,21 +17,47 @@ final class GetToolsStringsUseCase: Sendable {
         self.localizationServices = localizationServices
     }
     
-    func execute(translateInLanguage: AppLanguageDomainModel) async -> ToolsStringsDomainModel {
-        
-        let strings = ToolsStringsDomainModel(
-            favoritingToolBannerMessage: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: LocalizableStringKeys.toolOfflineFavoriteMessage.key),
-            toolSpotlightTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: LocalizableStringKeys.toolsSpotlightTitle.key),
-            toolSpotlightSubtitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: LocalizableStringKeys.toolsSpotlightSubtitle.key),
-            filterTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: LocalizableStringKeys.toolsFilterSectionTitle.key),
-            personalizedToolToggleTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: LocalizableStringKeys.dashboardPersonalizedToolTogglePersonalizedTitle.key),
-            allToolsToggleTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: LocalizableStringKeys.dashboardPersonalizedToolToggleAllToolsTitle.key),
-            personalizedToolExplanationTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: LocalizableStringKeys.dashboardPersonalizedToolFooterTitle.key),
-            personalizedToolExplanationSubtitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: LocalizableStringKeys.dashboardPersonalizedToolFooterSubtitle.key),
-            changePersonalizedToolSettingsAction: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: LocalizableStringKeys.dashboardPersonalizedToolFooterButtonTitle.key),
-            viewAllToolsAction: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: LocalizableStringKeys.toolsPersonalizationUnavailableViewAllTools.key)
+    func execute(translateInLanguage: AppLanguageDomainModel) -> ToolsStringsDomainModel {
+
+        let favoritingToolBannerMessageKey: String = LocalizableStringKeys.toolOfflineFavoriteMessage.key
+        let toolSpotlightTitleKey: String = LocalizableStringKeys.toolsSpotlightTitle.key
+        let toolSpotlightSubtitleKey: String = LocalizableStringKeys.toolsSpotlightSubtitle.key
+        let filterTitleKey: String = LocalizableStringKeys.toolsFilterSectionTitle.key
+        let personalizedToolToggleTitleKey: String = LocalizableStringKeys.dashboardPersonalizedToolTogglePersonalizedTitle.key
+        let allToolsToggleTitleKey: String = LocalizableStringKeys.dashboardPersonalizedToolToggleAllToolsTitle.key
+        let personalizedToolExplanationTitleKey: String = LocalizableStringKeys.dashboardPersonalizedToolFooterTitle.key
+        let personalizedToolExplanationSubtitleKey: String = LocalizableStringKeys.dashboardPersonalizedToolFooterSubtitle.key
+        let changePersonalizedToolSettingsActionKey: String = LocalizableStringKeys.dashboardPersonalizedToolFooterButtonTitle.key
+        let viewAllToolsActionKey: String = LocalizableStringKeys.toolsPersonalizationUnavailableViewAllTools.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                favoritingToolBannerMessageKey,
+                toolSpotlightTitleKey,
+                toolSpotlightSubtitleKey,
+                filterTitleKey,
+                personalizedToolToggleTitleKey,
+                allToolsToggleTitleKey,
+                personalizedToolExplanationTitleKey,
+                personalizedToolExplanationSubtitleKey,
+                changePersonalizedToolSettingsActionKey,
+                viewAllToolsActionKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: translateInLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
-        
-        return strings
+
+        return ToolsStringsDomainModel(
+            favoritingToolBannerMessage: strings[favoritingToolBannerMessageKey] ?? "",
+            toolSpotlightTitle: strings[toolSpotlightTitleKey] ?? "",
+            toolSpotlightSubtitle: strings[toolSpotlightSubtitleKey] ?? "",
+            filterTitle: strings[filterTitleKey] ?? "",
+            personalizedToolToggleTitle: strings[personalizedToolToggleTitleKey] ?? "",
+            allToolsToggleTitle: strings[allToolsToggleTitleKey] ?? "",
+            personalizedToolExplanationTitle: strings[personalizedToolExplanationTitleKey] ?? "",
+            personalizedToolExplanationSubtitle: strings[personalizedToolExplanationSubtitleKey] ?? "",
+            changePersonalizedToolSettingsAction: strings[changePersonalizedToolSettingsActionKey] ?? "",
+            viewAllToolsAction: strings[viewAllToolsActionKey] ?? ""
+        )
     }
 }

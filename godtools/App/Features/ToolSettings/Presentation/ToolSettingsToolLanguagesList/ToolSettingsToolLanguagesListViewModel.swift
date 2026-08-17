@@ -100,11 +100,8 @@ final class ToolSettingsToolLanguagesListViewModel: ObservableObject {
 
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
 
-        Task {
-
-            strings = await getToolSettingsToolLanguagesListStringsUseCase
-                .execute(appLanguage: appLanguage)
-        }
+        strings = getToolSettingsToolLanguagesListStringsUseCase
+            .execute(appLanguage: appLanguage)
     }
 }
 

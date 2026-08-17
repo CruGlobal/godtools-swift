@@ -26,11 +26,11 @@ struct GetLocalizationSettingsStringsUseCaseTests {
             TestArgument(appLanguage: LanguageCodeDomainModel.spanish.value)
         ]
     )
-    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) async {
+    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) {
 
         let useCase = getUseCase()
 
-        let strings: LocalizationSettingsStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
+        let strings: LocalizationSettingsStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.navTitle == "\(argument.appLanguage):\(LocalizableStringKeys.localizationSettingsNavBarTitle.key)")
         #expect(strings.localizationHeaderTitle == "\(argument.appLanguage):\(LocalizableStringKeys.localizationSettingsLocalizationHeaderTitle.key)")

@@ -26,11 +26,11 @@ struct GetToolSettingsToolLanguagesListStringsUseCaseTests {
             TestArgument(appLanguage: LanguageCodeDomainModel.spanish.value)
         ]
     )
-    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) async {
+    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) {
 
         let useCase = getUseCase()
 
-        let strings: ToolSettingsToolLanguagesListStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
+        let strings: ToolSettingsToolLanguagesListStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.deleteParallelLanguageActionTitle == "\(argument.appLanguage):\(LocalizableStringKeys.toolSettingsLanguagesListDeleteLanguageTitle.key)")
     }

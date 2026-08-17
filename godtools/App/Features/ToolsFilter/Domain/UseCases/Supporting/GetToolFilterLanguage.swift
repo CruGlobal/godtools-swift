@@ -32,9 +32,9 @@ final class GetToolFilterLanguage: Sendable {
         self.stringWithLocaleCount = stringWithLocaleCount
     }
     
-    func getAnyLanguageFilter(translatedInAppLanguage: AppLanguageDomainModel) async -> ToolFilterLanguageDomainModel {
+    func getAnyLanguageFilter(translatedInAppLanguage: AppLanguageDomainModel) -> ToolFilterLanguageDomainModel {
         
-        return await createAnyLanguageDomainModel(translatedInAppLanguage: translatedInAppLanguage, filteredByCategoryId: nil)
+        return createAnyLanguageDomainModel(translatedInAppLanguage: translatedInAppLanguage, filteredByCategoryId: nil)
     }
     
     func getLanguageFilter(languageId: String, translatedInAppLanguage: AppLanguageDomainModel) async -> ToolFilterLanguageDomainModel? {
@@ -56,7 +56,7 @@ extension GetToolFilterLanguage {
         let languageName = await getTranslatedLanguageName.getLanguageName(language: language, translatedInLanguage: language.code)
         let languageNameTranslatedInAppLanguage = await getTranslatedLanguageName.getLanguageName(language: language, translatedInLanguage: translatedInAppLanguage)
         
-        let toolsAvailable: String = await getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
+        let toolsAvailable: String = getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
         
         return ToolFilterLanguageDomainModel.createLanguage(
             id: language.id,
@@ -67,15 +67,22 @@ extension GetToolFilterLanguage {
         )
     }
     
-    func createAnyLanguageDomainModel(translatedInAppLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) async -> ToolFilterLanguageDomainModel {
+    func createAnyLanguageDomainModel(translatedInAppLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) -> ToolFilterLanguageDomainModel {
         
-        let languageNameTranslatedInAppLanguage: String = await localizationServices.stringForLocaleElseSystemElseEnglish(
-            localeIdentifier: translatedInAppLanguage.localeId,
-            key: LocalizableStringKeys.toolsFilterAnyLanguage.key
+        let languageNameTranslatedInAppLanguageKey: String = LocalizableStringKeys.toolsFilterAnyLanguage.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                languageNameTranslatedInAppLanguageKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: translatedInAppLanguage.localeId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
+
+        let languageNameTranslatedInAppLanguage: String = strings[languageNameTranslatedInAppLanguageKey] ?? ""
         
         let toolsAvailableCount: Int = getToolsAvailableCount(languageId: nil, filteredByCategoryId: filteredByCategoryId)
-        let toolsAvailable: String = await getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
+        let toolsAvailable: String = getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
         
         return ToolFilterLanguageDomainModel.createAnyLanguage(
             languageNameTranslatedInAppLanguage: languageNameTranslatedInAppLanguage,
@@ -89,12 +96,19 @@ extension GetToolFilterLanguage {
         return resourcesRepository.getAllToolsListCount(filterByCategory: filteredByCategoryId, filterByLanguageId: languageId)
     }
     
-    private func getToolsAvailableText(toolsAvailableCount: Int, translatedInAppLanguage: AppLanguageDomainModel) async -> String {
+    private func getToolsAvailableText(toolsAvailableCount: Int, translatedInAppLanguage: AppLanguageDomainModel) -> String {
         
-        let formatString = await localizationServices.stringForLocaleElseSystemElseEnglish(
-            localeIdentifier: translatedInAppLanguage.localeId,
-            key: LocalizableStringKeys.toolsFilterToolsAvailable.key
+        let formatStringKey: String = LocalizableStringKeys.toolsFilterToolsAvailable.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                formatStringKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: translatedInAppLanguage.localeId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
+
+        let formatString: String = strings[formatStringKey] ?? ""
         
         let localizedString: String = stringWithLocaleCount.getString(format: formatString, locale: Locale(identifier: translatedInAppLanguage), count: toolsAvailableCount)
         

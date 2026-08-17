@@ -21,11 +21,11 @@ struct GetMenuStringsUseCaseTests {
         Then: Each menu string is localized for the english app language
         """
     )
-    func menuStringsAreLocalizedForTheRequestedAppLanguage() async {
+    func menuStringsAreLocalizedForTheRequestedAppLanguage() {
 
         let useCase = getUseCase()
 
-        let menuStrings: MenuStringsDomainModel = await useCase.execute(appLanguage: englishAppLanguage)
+        let menuStrings: MenuStringsDomainModel = useCase.execute(appLanguage: englishAppLanguage)
 
         #expect(menuStrings.title == "en:\(LocalizableStringKeys.settings.key)")
         #expect(menuStrings.getStartedTitle == "en:\(LocalizableStringKeys.menuGetStarted.key)")
@@ -60,11 +60,11 @@ struct GetMenuStringsUseCaseTests {
         Then: Each menu string is localized for the spanish app language rather than english
         """
     )
-    func menuStringsAreLocalizedForANonEnglishAppLanguage() async {
+    func menuStringsAreLocalizedForANonEnglishAppLanguage() {
 
         let useCase = getUseCase()
 
-        let menuStrings: MenuStringsDomainModel = await useCase.execute(appLanguage: spanishAppLanguage)
+        let menuStrings: MenuStringsDomainModel = useCase.execute(appLanguage: spanishAppLanguage)
 
         #expect(menuStrings.title == "es:\(LocalizableStringKeys.settings.key)")
         #expect(menuStrings.getStartedTitle == "es:\(LocalizableStringKeys.menuGetStarted.key)")
@@ -92,14 +92,14 @@ struct GetMenuStringsUseCaseTests {
             VersionStringArgument(appVersion: nil, bundleVersion: nil, expectedVersion: "")
         ]
     )
-    func versionStringIsFormattedFromInfoPlistVersions(argument: VersionStringArgument) async {
+    func versionStringIsFormattedFromInfoPlistVersions(argument: VersionStringArgument) {
 
         let useCase = getUseCase(
             appVersion: argument.appVersion,
             bundleVersion: argument.bundleVersion
         )
 
-        let menuStrings: MenuStringsDomainModel = await useCase.execute(appLanguage: englishAppLanguage)
+        let menuStrings: MenuStringsDomainModel = useCase.execute(appLanguage: englishAppLanguage)
 
         #expect(menuStrings.version == argument.expectedVersion)
     }

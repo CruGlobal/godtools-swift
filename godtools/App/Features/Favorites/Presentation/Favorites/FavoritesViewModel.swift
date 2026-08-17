@@ -139,11 +139,8 @@ final class FavoritesViewModel: ObservableObject {
 
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
 
-        Task {
-
-            strings = await getFavoritesStringsUseCase
-                .execute(appLanguage: appLanguage)
-        }
+        strings = getFavoritesStringsUseCase
+            .execute(appLanguage: appLanguage)
     }
 
     private var analyticsScreenName: String {

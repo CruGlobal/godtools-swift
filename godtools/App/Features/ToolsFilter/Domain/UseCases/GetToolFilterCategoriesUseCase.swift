@@ -32,7 +32,7 @@ final class GetToolFilterCategoriesUseCase: Sendable {
                     let categoryIds = self.resourcesRepository
                         .getAllToolCategoryIds(filteredByLanguageId: filteredByLanguage.filterId)
 
-                    return await self.getToolFilterCategory.createCategoryFilters(
+                    return self.getToolFilterCategory.createCategoryFilters(
                         from: categoryIds,
                         translatedInAppLanguage: appLanguage,
                         filteredByLanguageId: filteredByLanguage.filterId

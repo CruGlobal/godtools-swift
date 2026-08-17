@@ -16,14 +16,22 @@ final class GetToolFilterLanguagesStringsUseCase: Sendable {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) async -> ToolFilterLanguagesStringsDomainModel {
-        
+    func execute(appLanguage: AppLanguageDomainModel) -> ToolFilterLanguagesStringsDomainModel {
+
         let localeId: String = appLanguage.localeId
-        
-        let strings = ToolFilterLanguagesStringsDomainModel(
-            navTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolsFilterLanguageNavTitle.key)
+
+        let navTitleKey: String = LocalizableStringKeys.toolsFilterLanguageNavTitle.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                navTitleKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: localeId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
-        
-        return strings
+
+        return ToolFilterLanguagesStringsDomainModel(
+            navTitle: strings[navTitleKey] ?? ""
+        )
     }
 }

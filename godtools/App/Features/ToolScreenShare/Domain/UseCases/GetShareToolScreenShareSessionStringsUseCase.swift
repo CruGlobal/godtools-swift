@@ -17,18 +17,23 @@ final class GetShareToolScreenShareSessionStringsUseCase: Sendable {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) async -> ShareToolScreenShareSessionStringsDomainModel {
-        
-        let localeId: String = appLanguage
-        
-        let shareMessage: String = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.shareToolRemoteLinkMessage.key)
-        let qrCodeActionTitle: String = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolScreenShareQrCodeTitle.key)
-        
-        let strings = ShareToolScreenShareSessionStringsDomainModel(
-            shareMessage: shareMessage,
-            qrCodeActionTitle: qrCodeActionTitle
+    func execute(appLanguage: AppLanguageDomainModel) -> ShareToolScreenShareSessionStringsDomainModel {
+
+        let shareMessageKey: String = LocalizableStringKeys.shareToolRemoteLinkMessage.key
+        let qrCodeActionTitleKey: String = LocalizableStringKeys.toolScreenShareQrCodeTitle.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                shareMessageKey,
+                qrCodeActionTitleKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
-        
-        return strings
+
+        return ShareToolScreenShareSessionStringsDomainModel(
+            shareMessage: strings[shareMessageKey] ?? "",
+            qrCodeActionTitle: strings[qrCodeActionTitleKey] ?? ""
+        )
     }
 }

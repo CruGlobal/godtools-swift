@@ -17,12 +17,20 @@ final class GetAppLanguagesStringsUseCase: Sendable {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) async -> AppLanguagesStringsDomainModel {
-                
-        let strings = AppLanguagesStringsDomainModel(
-            navTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.languageSettingsAppLanguageTitle.key)
+    func execute(appLanguage: AppLanguageDomainModel) -> AppLanguagesStringsDomainModel {
+
+        let navTitleKey: String = LocalizableStringKeys.languageSettingsAppLanguageTitle.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                navTitleKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
-        
-        return strings
+
+        return AppLanguagesStringsDomainModel(
+            navTitle: strings[navTitleKey] ?? ""
+        )
     }
 }

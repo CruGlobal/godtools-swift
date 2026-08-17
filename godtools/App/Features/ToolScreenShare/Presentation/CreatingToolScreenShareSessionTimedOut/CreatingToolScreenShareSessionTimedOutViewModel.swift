@@ -31,7 +31,7 @@ final class CreatingToolScreenShareSessionTimedOutViewModel {
         self.stepEmitter = stepEmitter
         self.appLanguage = appLanguage
         
-        let strings = await getCreatingToolScreenShareSessionTimedOutStringsUseCase
+        let strings = getCreatingToolScreenShareSessionTimedOutStringsUseCase
             .execute(appLanguage: appLanguage)
                 
         title = strings.title

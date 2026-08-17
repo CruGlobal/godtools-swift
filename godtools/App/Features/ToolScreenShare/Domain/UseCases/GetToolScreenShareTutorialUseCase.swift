@@ -17,28 +17,48 @@ final class GetToolScreenShareTutorialUseCase: Sendable {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) async -> [ToolScreenShareTutorialPageDomainModel] {
+    func execute(appLanguage: AppLanguageDomainModel) -> [ToolScreenShareTutorialPageDomainModel] {
         
         let localeId: String = appLanguage
-        
+
+        let shareYourScreenTitleKey: String = LocalizableStringKeys.shareToolScreenTutorialShareYourScreenTitle.key
+        let shareYourScreenMessageKey: String = LocalizableStringKeys.shareToolScreenTutorialShareYourScreenMessage.key
+        let mirroredExperienceTitleKey: String = LocalizableStringKeys.shareToolScreenTutorialMirroredExperienceTitle.key
+        let mirroredExperienceMessageKey: String = LocalizableStringKeys.shareToolScreenTutorialMirroredExperienceMessage.key
+        let getStartedTitleKey: String = LocalizableStringKeys.shareToolScreenTutorialGetStartedTitle.key
+        let getStartedMessageKey: String = LocalizableStringKeys.shareToolScreenTutorialGetStartedMessage.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                shareYourScreenTitleKey,
+                shareYourScreenMessageKey,
+                mirroredExperienceTitleKey,
+                mirroredExperienceMessageKey,
+                getStartedTitleKey,
+                getStartedMessageKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: localeId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
+        )
+
         let tutorialPages = [
             ToolScreenShareTutorialPageDomainModel(
-                title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.shareToolScreenTutorialShareYourScreenTitle.key),
-                message: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.shareToolScreenTutorialShareYourScreenMessage.key),
+                title: strings[shareYourScreenTitleKey] ?? "",
+                message: strings[shareYourScreenMessageKey] ?? "",
                 media: .image(name: "share_tool_tutorial_people")
             ),
             ToolScreenShareTutorialPageDomainModel(
-                title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.shareToolScreenTutorialMirroredExperienceTitle.key),
-                message: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.shareToolScreenTutorialMirroredExperienceMessage.key),
+                title: strings[mirroredExperienceTitleKey] ?? "",
+                message: strings[mirroredExperienceMessageKey] ?? "",
                 media: .animation(animatedResource: .mainBundleJsonFile(filename: "share_tool_tutorial_mirrored"))
             ),
             ToolScreenShareTutorialPageDomainModel(
-                title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.shareToolScreenTutorialGetStartedTitle.key),
-                message: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.shareToolScreenTutorialGetStartedMessage.key),
+                title: strings[getStartedTitleKey] ?? "",
+                message: strings[getStartedMessageKey] ?? "",
                 media: .animation(animatedResource: .mainBundleJsonFile(filename: "share_tool_tutorial_link"))
             )
         ]
-        
+
         return tutorialPages
     }
 }

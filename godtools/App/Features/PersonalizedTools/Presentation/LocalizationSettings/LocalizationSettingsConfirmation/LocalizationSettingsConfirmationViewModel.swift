@@ -51,14 +51,11 @@ final class LocalizationSettingsConfirmationViewModel: ObservableObject {
 
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
 
-        Task {
-
-            strings = await getLocalizationSettingsConfirmationStringsUseCase
-                .execute(
-                    appLanguage: appLanguage,
-                    selectedCountry: selectedCountry
-                )
-        }
+        strings = getLocalizationSettingsConfirmationStringsUseCase
+            .execute(
+                appLanguage: appLanguage,
+                selectedCountry: selectedCountry
+            )
     }
 }
 

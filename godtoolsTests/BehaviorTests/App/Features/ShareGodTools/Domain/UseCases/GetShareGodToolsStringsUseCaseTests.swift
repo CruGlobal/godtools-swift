@@ -26,11 +26,11 @@ struct GetShareGodToolsStringsUseCaseTests {
             TestArgument(appLanguage: LanguageCodeDomainModel.spanish.value)
         ]
     )
-    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) async {
+    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) {
 
         let useCase = getUseCase()
 
-        let strings: ShareGodToolsStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
+        let strings: ShareGodToolsStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.shareMessage == "\(argument.appLanguage):\(LocalizableStringKeys.shareGodToolsShareSheetText.key)")
     }
