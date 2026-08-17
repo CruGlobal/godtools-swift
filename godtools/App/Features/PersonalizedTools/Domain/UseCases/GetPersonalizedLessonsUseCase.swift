@@ -96,7 +96,7 @@ final class GetPersonalizedLessonsUseCase: Sendable {
                 )
 
                 let showsPersonalizationUnavailable: Bool = !hasCountry && lessons.isEmpty
-                let unavailableStrings: PersonalizedLessonsUnavailableDomainModel? = showsPersonalizationUnavailable ? await self.getLessonsUnavailable(appLanguage: appLanguage) : nil
+                let unavailableStrings: PersonalizedLessonsUnavailableDomainModel? = showsPersonalizationUnavailable ? self.getLessonsUnavailable(appLanguage: appLanguage) : nil
 
                 return PersonalizedLessonsDomainModel(
                     lessons: lessons,
@@ -107,11 +107,11 @@ final class GetPersonalizedLessonsUseCase: Sendable {
         .eraseToAnyPublisher()
     }
     
-    private func getLessonsUnavailable(appLanguage: AppLanguageDomainModel) async -> PersonalizedLessonsUnavailableDomainModel {
+    private func getLessonsUnavailable(appLanguage: AppLanguageDomainModel) -> PersonalizedLessonsUnavailableDomainModel {
 
         return PersonalizedLessonsUnavailableDomainModel(
-            title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.lessonsPersonalizationUnavailableTitle.key),
-            message: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.lessonsPersonalizationUnavailableMessage.key)
+            title: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.lessonsPersonalizationUnavailableTitle.key),
+            message: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.lessonsPersonalizationUnavailableMessage.key)
         )
     }
 }

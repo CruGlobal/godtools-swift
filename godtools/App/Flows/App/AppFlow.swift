@@ -293,7 +293,7 @@ final class AppFlow: RootFlow {
                         let view = AlertMessageView(
                             title: alertMessage.title,
                             message: alertMessage.message,
-                            acceptTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.ok.key),
+                            acceptTitle: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.ok.key),
                             cancelTitle: nil,
                             acceptTapped: nil,
                             cancelTapped: nil

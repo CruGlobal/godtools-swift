@@ -94,35 +94,32 @@ class TractPageFormViewModel: MobileContentFormViewModel {
 
         let appLanguage: AppLanguageDomainModel = renderedPageContext.appLanguage
 
-        Task {
-
-            let errorTitle: String = await localizationServices.stringForLocaleElseEnglish(
-                localeIdentifier: appLanguage,
-                key: LocalizableStringKeys.error.key
-            )
+        let errorTitle: String = localizationServices.stringForLocaleElseEnglishElseKey(
+            localeIdentifier: appLanguage,
+            key: LocalizableStringKeys.error.key
+        )
             
-            var errorMessage: String = ""
+        var errorMessage: String = ""
 
-            for index in 0 ..< missingFieldsNames.count {
+        for index in 0 ..< missingFieldsNames.count {
                 
-                let name: String = missingFieldsNames[index]
+            let name: String = missingFieldsNames[index]
 
-                if index > 0 {
-                    errorMessage += "\n"
-                }
-
-                errorMessage += String(format: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.requiredMissingField.key), name.localizedCapitalized)
+            if index > 0 {
+                errorMessage += "\n"
             }
-            
-            let acceptTitle = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.ok.key)
 
-            let errorViewModel = MobileContentErrorViewModel(
-                title: errorTitle,
-                message: errorMessage,
-                acceptTitle: acceptTitle
-            )
-
-            error.accept(value: errorViewModel)
+            errorMessage += String(format: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.requiredMissingField.key), name.localizedCapitalized)
         }
+            
+        let acceptTitle = localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.ok.key)
+
+        let errorViewModel = MobileContentErrorViewModel(
+            title: errorTitle,
+            message: errorMessage,
+            acceptTitle: acceptTitle
+        )
+
+        error.accept(value: errorViewModel)
     }
 }

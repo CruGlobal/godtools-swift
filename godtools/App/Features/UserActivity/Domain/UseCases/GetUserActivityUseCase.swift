@@ -71,11 +71,11 @@ final class GetUserActivityUseCase: Sendable {
         for badge in userActivity.badges {
 
             badges.append(
-                await getUserActivityBadge.getBadge(from: badge, translatedInAppLanguage: translatedInAppLanguage)
+                getUserActivityBadge.getBadge(from: badge, translatedInAppLanguage: translatedInAppLanguage)
             )
         }
 
-        let stats = await getUserActivityStats.getStats(from: userActivity, translatedInAppLanguage: translatedInAppLanguage)
+        let stats = getUserActivityStats.getStats(from: userActivity, translatedInAppLanguage: translatedInAppLanguage)
 
         return UserActivityDomainModel(badges: badges, stats: stats)
     }

@@ -19,27 +19,27 @@ final class GetTutorialUseCase: Sendable {
         self.getTutorialType = getTutorialType
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) async -> TutorialDomainModel {
+    func execute(appLanguage: AppLanguageDomainModel) -> TutorialDomainModel {
         
         return TutorialDomainModel(
-            pages: await getTutorialPages(
+            pages: getTutorialPages(
                 tutorialType: getTutorialType.getType(appLanguage: appLanguage),
                 appLanguage: appLanguage
             )
         )
     }
     
-    private func getTutorialPages(tutorialType: TutorialTypeDomainModel, appLanguage: AppLanguageDomainModel) async -> [TutorialPageDomainModel] {
+    private func getTutorialPages(tutorialType: TutorialTypeDomainModel, appLanguage: AppLanguageDomainModel) -> [TutorialPageDomainModel] {
         
         switch tutorialType {
         
         case .full:
             return [
-                await getLessonsPage(appLanguage: appLanguage),
-                await getToolsPage(appLanguage: appLanguage),
-                await getToolTipsPage(appLanguage: appLanguage),
-                await getScreenSharePage(appLanguage: appLanguage),
-                await getFindThisPage(appLanguage: appLanguage)
+                getLessonsPage(appLanguage: appLanguage),
+                getToolsPage(appLanguage: appLanguage),
+                getToolTipsPage(appLanguage: appLanguage),
+                getScreenSharePage(appLanguage: appLanguage),
+                getFindThisPage(appLanguage: appLanguage)
             ]
         
         case .noTutorial:
@@ -47,56 +47,56 @@ final class GetTutorialUseCase: Sendable {
         
         case .partial:
             return [
-                await getLessonsPage(appLanguage: appLanguage),
-                await getToolsPage(appLanguage: appLanguage),
-                await getScreenSharePage(appLanguage: appLanguage),
-                await getFindThisPage(appLanguage: appLanguage)
+                getLessonsPage(appLanguage: appLanguage),
+                getToolsPage(appLanguage: appLanguage),
+                getScreenSharePage(appLanguage: appLanguage),
+                getFindThisPage(appLanguage: appLanguage)
             ]
         }
     }
     
-    private func getLessonsPage(appLanguage: AppLanguageDomainModel) async -> TutorialPageDomainModel {
+    private func getLessonsPage(appLanguage: AppLanguageDomainModel) -> TutorialPageDomainModel {
         return TutorialPageDomainModel(
-            title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.tutorialLessonTitle.key),
-            message: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.tutorialLessonMessage.key),
+            title: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.tutorialLessonTitle.key),
+            message: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.tutorialLessonMessage.key),
             videoId: nil,
             animatedResource: .mainBundleJsonFile(filename: LottieJson.tutorialLessons.fileName),
             imageName: nil
         )
     }
     
-    private func getToolsPage(appLanguage: AppLanguageDomainModel) async -> TutorialPageDomainModel {
+    private func getToolsPage(appLanguage: AppLanguageDomainModel) -> TutorialPageDomainModel {
         return TutorialPageDomainModel(
-            title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.tutorialToolTitle.key),
-            message: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.tutorialToolMessage.key),
+            title: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.tutorialToolTitle.key),
+            message: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.tutorialToolMessage.key),
             videoId: nil,
             animatedResource: nil,
             imageName: ImageCatalog.tutorialTool.rawValue
         )
     }
-    private func getToolTipsPage(appLanguage: AppLanguageDomainModel) async -> TutorialPageDomainModel {
+    private func getToolTipsPage(appLanguage: AppLanguageDomainModel) -> TutorialPageDomainModel {
         return TutorialPageDomainModel(
-            title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.tutorialToolTipTitle.key),
-            message: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.tutorialToolTipMessage.key),
+            title: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.tutorialToolTipTitle.key),
+            message: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.tutorialToolTipMessage.key),
             videoId: nil,
             animatedResource: .mainBundleJsonFile(filename: LottieJson.tutorialToolTip.fileName),
             imageName: nil
         )
     }
     
-    private func getScreenSharePage(appLanguage: AppLanguageDomainModel) async -> TutorialPageDomainModel {
+    private func getScreenSharePage(appLanguage: AppLanguageDomainModel) -> TutorialPageDomainModel {
         return TutorialPageDomainModel(
-            title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.tutorialScreenShareTitle.key),
-            message: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.tutorialScreenShareMessage.key),
+            title: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.tutorialScreenShareTitle.key),
+            message: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.tutorialScreenShareMessage.key),
             videoId: nil,
             animatedResource: .mainBundleJsonFile(filename: LottieJson.tutorialScreenShare.fileName),
             imageName: nil
         )
     }
     
-    private func getFindThisPage(appLanguage: AppLanguageDomainModel) async -> TutorialPageDomainModel {
+    private func getFindThisPage(appLanguage: AppLanguageDomainModel) -> TutorialPageDomainModel {
         return TutorialPageDomainModel(
-            title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.tutorialFindTutorialTitle.key),
+            title: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.tutorialFindTutorialTitle.key),
             message: "",
             videoId: nil,
             animatedResource: nil,

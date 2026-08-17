@@ -30,40 +30,32 @@ final class GetUserAccountDetailsUseCase: Sendable {
                 requestPriority: .high
             )
             .receive(on: DispatchQueue.global())
-            .flatMap { (changedUserDetails: UserDetailsDataModel?) -> AnyPublisher<UserAccountDetailsDomainModel, Error> in
+            .tryMap { (changedUserDetails: UserDetailsDataModel?) in
 
-                return AnyPublisher() {
+                let cachedAuthUserDetails: UserDetailsDataModel? = try self.userDetailsRepository.getAuthUserDetails()
 
-                    return try await self.asyncExecute(appLanguage: appLanguage)
+                guard let cachedAuthUserDetails = cachedAuthUserDetails else {
+                    return UserAccountDetailsDomainModel.emptyValue
                 }
+
+                let accountDetails: UserAccountDetailsDomainModel = self.mapUserDetails(
+                    userDetails: cachedAuthUserDetails,
+                    translatedInAppLanguage: appLanguage
+                )
+
+                return accountDetails
             }
             .eraseToAnyPublisher()
-    }
-    
-    private func asyncExecute(appLanguage: AppLanguageDomainModel) async throws -> UserAccountDetailsDomainModel {
-        
-        let cachedAuthUserDetails: UserDetailsDataModel? = try userDetailsRepository.getAuthUserDetails()
-
-        guard let cachedAuthUserDetails = cachedAuthUserDetails else {
-            return UserAccountDetailsDomainModel.emptyValue
-        }
-
-        let accountDetails: UserAccountDetailsDomainModel = await mapUserDetails(
-            userDetails: cachedAuthUserDetails,
-            translatedInAppLanguage: appLanguage
-        )
-
-        return accountDetails
     }
 }
 
 extension GetUserAccountDetailsUseCase {
     
-    private func mapUserDetails(userDetails: UserDetailsDataModel, translatedInAppLanguage: AppLanguageDomainModel) async -> UserAccountDetailsDomainModel {
+    private func mapUserDetails(userDetails: UserDetailsDataModel, translatedInAppLanguage: AppLanguageDomainModel) -> UserAccountDetailsDomainModel {
         
         return UserAccountDetailsDomainModel(
             name: getName(userDetails: userDetails),
-            joinedOnString: await getJoinedOnDate(userDetails: userDetails, translatedInAppLanguage: translatedInAppLanguage)
+            joinedOnString: getJoinedOnDate(userDetails: userDetails, translatedInAppLanguage: translatedInAppLanguage)
         )
     }
     
@@ -82,7 +74,7 @@ extension GetUserAccountDetailsUseCase {
         return ""
     }
     
-    private func getJoinedOnDate(userDetails: UserDetailsDataModel, translatedInAppLanguage: AppLanguageDomainModel) async -> String {
+    private func getJoinedOnDate(userDetails: UserDetailsDataModel, translatedInAppLanguage: AppLanguageDomainModel) -> String {
         
         guard let createdAtDate = userDetails.createdAt else {
             return ""
@@ -95,7 +87,7 @@ extension GetUserAccountDetailsUseCase {
         
         let formattedCreatedAtDateString: String = dateFormatter.string(from: createdAtDate)
         
-        let localizedJoinedOn: String = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: translatedInAppLanguage.localeId, key: LocalizableStringKeys.accountJoinedOn.key)
+        let localizedJoinedOn: String = localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: translatedInAppLanguage.localeId, key: LocalizableStringKeys.accountJoinedOn.key)
         
         let joinedOnString: String = String.localizedStringWithFormat(localizedJoinedOn, formattedCreatedAtDateString)
         

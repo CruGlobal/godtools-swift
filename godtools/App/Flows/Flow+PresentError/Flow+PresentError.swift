@@ -20,51 +20,48 @@ extension GTFlow {
 
         let localizationServices: LocalizationServicesInterface = appDiContainer.core.dataLayer.getLocalizationServices()
 
-        Task {
+        let title: String
+        let message: String
 
-            let title: String
-            let message: String
+        if error.isUrlErrorNotConnectedToInternetCode {
 
-            if error.isUrlErrorNotConnectedToInternetCode {
+            title = localizationServices.stringForLocaleElseEnglishElseKey(
+                localeIdentifier: appLanguage,
+                key: LocalizableStringKeys.noInternetTitle.key
+            )
 
-                title = await localizationServices.stringForLocaleElseEnglish(
-                    localeIdentifier: appLanguage,
-                    key: LocalizableStringKeys.noInternetTitle.key
-                )
-
-                message = await localizationServices.stringForLocaleElseEnglish(
-                    localeIdentifier: appLanguage,
-                    key: LocalizableStringKeys.noInternet.key
-                )
-            }
-            else if error.isNetworkConnectionLost {
-
-                title = await localizationServices.stringForLocaleElseEnglish(
-                    localeIdentifier: appLanguage,
-                    key: LocalizableStringKeys.noInternetTitle.key
-                )
-
-                message = await localizationServices.stringForLocaleElseEnglish(
-                    localeIdentifier: appLanguage,
-                    key: LocalizableStringKeys.networkConnectionLost.key
-                )
-            }
-            else {
-
-                title = await localizationServices.stringForLocaleElseEnglish(
-                    localeIdentifier: appLanguage,
-                    key: LocalizableStringKeys.error.key
-                )
-
-                message = error.localizedDescription + "\n error code: \(error.code)"
-            }
-
-            presentAlert(
-                appLanguage: appLanguage,
-                title: title,
-                message: message,
-                acceptTapped: acceptTapped
+            message = localizationServices.stringForLocaleElseEnglishElseKey(
+                localeIdentifier: appLanguage,
+                key: LocalizableStringKeys.noInternet.key
             )
         }
+        else if error.isNetworkConnectionLost {
+
+            title = localizationServices.stringForLocaleElseEnglishElseKey(
+                localeIdentifier: appLanguage,
+                key: LocalizableStringKeys.noInternetTitle.key
+            )
+
+            message = localizationServices.stringForLocaleElseEnglishElseKey(
+                localeIdentifier: appLanguage,
+                key: LocalizableStringKeys.networkConnectionLost.key
+            )
+        }
+        else {
+
+            title = localizationServices.stringForLocaleElseEnglishElseKey(
+                localeIdentifier: appLanguage,
+                key: LocalizableStringKeys.error.key
+            )
+
+            message = error.localizedDescription + "\n error code: \(error.code)"
+        }
+
+        presentAlert(
+            appLanguage: appLanguage,
+            title: title,
+            message: message,
+            acceptTapped: acceptTapped
+        )
     }
 }

@@ -21,9 +21,9 @@ protocol WebContentType: Sendable {
 
 extension WebContentType {
    
-    func getLocalizedNavTitle() async -> String {
+    func getLocalizedNavTitle() -> String {
         
-        return await localizationServices.stringForLocaleElseEnglish(
+        return localizationServices.stringForLocaleElseEnglishElseKey(
             localeIdentifier: appLanguage,
             key: navTitleLocalizedKey
         )

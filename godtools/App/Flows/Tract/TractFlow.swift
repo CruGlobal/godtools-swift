@@ -211,9 +211,9 @@ class TractFlow: GTFlow {
 
                 let view = AlertMessageView(
                     title: "",
-                    message: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.exitTractRemoteShareSessionMessage.key),
-                    acceptTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.yes.key).uppercased(),
-                    cancelTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.no.key).uppercased(),
+                    message: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.exitTractRemoteShareSessionMessage.key),
+                    acceptTitle: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.yes.key).uppercased(),
+                    cancelTitle: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.no.key).uppercased(),
                     acceptTapped: { [weak self] in
 
                         self?.navigate(step: AppFlowStep.acceptTappedFromExitToolRemoteShare)

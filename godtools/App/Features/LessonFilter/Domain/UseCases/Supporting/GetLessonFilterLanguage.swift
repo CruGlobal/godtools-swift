@@ -56,7 +56,7 @@ final class GetLessonFilterLanguage: Sendable {
         let languageNameTranslatedInLanguage = await getTranslatedLanguageName.getLanguageName(language: language.code, translatedInLanguage: language.code)
         let languageNameTranslatedInAppLanguage = await getTranslatedLanguageName.getLanguageName(language: language.code, translatedInLanguage: translatedInAppLanguage)
         
-        let lessonsAvailableText: String = await getLessonsAvailableText(lessonsAvailableCount: lessonsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
+        let lessonsAvailableText: String = getLessonsAvailableText(lessonsAvailableCount: lessonsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
         
         return LessonFilterLanguageDomainModel(
             languageId: language.id,
@@ -67,9 +67,9 @@ final class GetLessonFilterLanguage: Sendable {
         )
     }
     
-    private func getLessonsAvailableText(lessonsAvailableCount: Int, translatedInAppLanguage: AppLanguageDomainModel) async -> String {
+    private func getLessonsAvailableText(lessonsAvailableCount: Int, translatedInAppLanguage: AppLanguageDomainModel) -> String {
         
-        let formatString = await localizationServices.stringForLocaleElseSystemElseEnglish(
+        let formatString = localizationServices.stringForLocaleElseEnglishElseKey(
             localeIdentifier: translatedInAppLanguage.localeId,
             key: LocalizableStringKeys.lessonsFilterLessonsAvailable.key
         )

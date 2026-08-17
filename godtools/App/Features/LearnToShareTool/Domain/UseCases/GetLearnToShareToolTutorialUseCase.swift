@@ -17,7 +17,7 @@ final class GetLearnToShareToolTutorialUseCase: Sendable {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) async -> [LearnToShareToolItemDomainModel] {
+    func execute(appLanguage: AppLanguageDomainModel) -> [LearnToShareToolItemDomainModel] {
         
         let localeId: String = appLanguage
         
@@ -25,20 +25,20 @@ final class GetLearnToShareToolTutorialUseCase: Sendable {
             LearnToShareToolItemDomainModel(
                 imageName: nil,
                 animationName: "learn_to_share_tool_with_anyone",
-                title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.learnToShareToolLearnToShareTitle.key),
-                message: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.learnToShareToolLearnToShareMessage.key)
+                title: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: localeId, key: LocalizableStringKeys.learnToShareToolLearnToShareTitle.key),
+                message: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: localeId, key: LocalizableStringKeys.learnToShareToolLearnToShareMessage.key)
             ),
             LearnToShareToolItemDomainModel(
                 imageName: nil,
                 animationName: "training_tip_callout",
-                title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.learnToShareToolTipsLightTheWayTitle.key),
-                message: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.learnToShareToolTipsLightTheWayMessage.key)
+                title: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: localeId, key: LocalizableStringKeys.learnToShareToolTipsLightTheWayTitle.key),
+                message: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: localeId, key: LocalizableStringKeys.learnToShareToolTipsLightTheWayMessage.key)
             ),
             LearnToShareToolItemDomainModel(
                 imageName: nil,
                 animationName: "training_tip_tips",
-                title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.learnToShareToolLightUpTheTipsTitle.key),
-                message: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.learnToShareToolLightUpTheTipsMessage.key)
+                title: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: localeId, key: LocalizableStringKeys.learnToShareToolLightUpTheTipsTitle.key),
+                message: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: localeId, key: LocalizableStringKeys.learnToShareToolLightUpTheTipsMessage.key)
             )
         ]
         

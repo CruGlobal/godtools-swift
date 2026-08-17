@@ -70,15 +70,12 @@ final class LocalizationSettingsViewModel: ObservableObject {
         $appLanguage
             .dropFirst()
             .map { appLanguage in
-                AnyPublisher() {
-                    await getCountryListUseCase
-                        .execute(
-                            appLanguage: appLanguage,
-                            showsPreferNotToSay: showsPreferNotToSay
-                        )
-                }
+                getCountryListUseCase
+                    .execute(
+                        appLanguage: appLanguage,
+                        showsPreferNotToSay: showsPreferNotToSay
+                    )
             }
-            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { _ in
                 

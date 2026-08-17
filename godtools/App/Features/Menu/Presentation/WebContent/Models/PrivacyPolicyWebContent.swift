@@ -24,6 +24,6 @@ struct PrivacyPolicyWebContent: WebContentType {
         self.appLanguage = appLanguage
         self.localizationServices = localizationServices
         
-        self.navTitle = await getLocalizedNavTitle()
+        self.navTitle = getLocalizedNavTitle()
     }
 }

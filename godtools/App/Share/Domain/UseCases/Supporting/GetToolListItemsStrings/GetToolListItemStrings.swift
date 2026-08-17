@@ -17,11 +17,11 @@ final class GetToolListItemStrings: Sendable {
         self.localizationServices = localizationServices
     }
     
-    func getStrings(appLanguage: AppLanguageDomainModel) async -> ToolListItemStringsDomainModel {
+    func getStrings(appLanguage: AppLanguageDomainModel) -> ToolListItemStringsDomainModel {
         
         let strings = ToolListItemStringsDomainModel(
-            openToolActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.open.key),
-            openToolDetailsActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.favoritesFavoriteLessonsDetails.key)
+            openToolActionTitle: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.open.key),
+            openToolDetailsActionTitle: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.favoritesFavoriteLessonsDetails.key)
         )
         
         return strings

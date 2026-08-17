@@ -128,6 +128,11 @@ final class FakeLocalizationServices: LocalizationServicesInterface {
         }
     }
     
+    func stringForEnglishElseKey(key: String) -> String {
+        
+        return localizableStrings[Self.english.rawValue]?[key] ?? key
+    }
+    
     private func stringForLocale(localeIdentifier: String?, key: String) -> String? {
         
         guard let localeIdentifier = localeIdentifier else {
@@ -139,33 +144,5 @@ final class FakeLocalizationServices: LocalizationServicesInterface {
         }
         
         return localizedStrings[key]
-    }
-
-    func stringForEnglish(key: String) async -> String {
-
-        return await stringForLocaleElseEnglish(localeIdentifier: "en", key: key)
-    }
-
-    func stringForSystemElseEnglish(key: String) async -> String {
-
-        return await stringForLocaleElseEnglish(localeIdentifier: "en", key: key)
-    }
-
-    func stringForLocaleElseEnglish(localeIdentifier: String?, key: String) async -> String {
-        
-        guard let localeIdentifier = localeIdentifier else {
-            return ""
-        }
-        
-        guard let localizedStrings = localizableStrings[localeIdentifier] else {
-            return ""
-        }
-        
-        return localizedStrings[key] ?? ""
-    }
-    
-    func stringForLocaleElseSystemElseEnglish(localeIdentifier: String?, key: String) async -> String {
-
-        return await stringForLocaleElseEnglish(localeIdentifier: localeIdentifier, key: key)
     }
 }

@@ -30,17 +30,14 @@ final class GetGlobalActivityThisWeekUseCase: Sendable {
 
         return globalAnalyticsRepository
             .observeCollectionChangesPublisher()
-            .flatMap { (globalAnalyticsChanged: Void) -> AnyPublisher<[GlobalActivityDomainModel], Error> in
-
-                return AnyPublisher() {
-
-                    return await self.asyncExecute(appLanguage: appLanguage)
-                }
+            .map { (globalAnalyticsChanged: Void) in
+                
+                return self.getGlobalActivity(appLanguage: appLanguage)
             }
             .eraseToAnyPublisher()
     }
     
-    private func asyncExecute(appLanguage: AppLanguageDomainModel) async -> [GlobalActivityDomainModel] {
+    private func getGlobalActivity(appLanguage: AppLanguageDomainModel) -> [GlobalActivityDomainModel] {
         
         let globalAnalytics: GlobalAnalyticsDataModel? = self.globalAnalyticsRepository.getGlobalAnalytics()
 
@@ -52,22 +49,22 @@ final class GetGlobalActivityThisWeekUseCase: Sendable {
 
         let usersAnalytics = GlobalActivityDomainModel(
             count: getTranslatedNumberCount.getTranslatedCount(count: dataModel.users, translateInLanguage: appLanguage),
-            label: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.accountActivityGlobalAnalyticsUsersTitle.key)
+            label: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: localeId, key: LocalizableStringKeys.accountActivityGlobalAnalyticsUsersTitle.key)
         )
 
         let gospelPresentationAnalytics = GlobalActivityDomainModel(
             count: getTranslatedNumberCount.getTranslatedCount(count: dataModel.gospelPresentations, translateInLanguage: appLanguage),
-            label: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.accountActivityGlobalAnalyticsGospelPresentationTitle.key)
+            label: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: localeId, key: LocalizableStringKeys.accountActivityGlobalAnalyticsGospelPresentationTitle.key)
         )
 
         let launchesAnalytics = GlobalActivityDomainModel(
             count: getTranslatedNumberCount.getTranslatedCount(count: dataModel.launches, translateInLanguage: appLanguage),
-            label: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.accountActivityGlobalAnalyticsLaunchesTitle.key)
+            label: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: localeId, key: LocalizableStringKeys.accountActivityGlobalAnalyticsLaunchesTitle.key)
         )
 
         let countriesAnalytics = GlobalActivityDomainModel(
             count: getTranslatedNumberCount.getTranslatedCount(count: dataModel.countries, translateInLanguage: appLanguage),
-            label: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.accountActivityGlobalAnalyticsCountriesTitle.key)
+            label: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: localeId, key: LocalizableStringKeys.accountActivityGlobalAnalyticsCountriesTitle.key)
         )
 
         let activityThisWeek: [GlobalActivityDomainModel] = [usersAnalytics, gospelPresentationAnalytics, launchesAnalytics, countriesAnalytics]

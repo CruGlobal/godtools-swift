@@ -32,7 +32,7 @@ final class LocalizationLanguageName: LocalizationLanguageNameInterface {
         
         let localizedKey: String = "language_name_" + languageId
         
-        let localizedName: String = await localizationServices.stringForLocaleElseEnglish(
+        let localizedName: String = localizationServices.stringForLocaleElseEnglishElseKey(
             localeIdentifier: translatedInLanguage,
             key: localizedKey
         )

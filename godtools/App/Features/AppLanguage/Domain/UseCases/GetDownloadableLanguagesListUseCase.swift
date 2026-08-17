@@ -76,7 +76,7 @@ final class GetDownloadableLanguagesListUseCase: Sendable {
                 translatedInLanguage: appLanguage
             )
 
-            let toolsAvailableText = await getToolsAvailableText(numberOfTools: numberToolsAvailable, translatedIn: appLanguage)
+            let toolsAvailableText = getToolsAvailableText(numberOfTools: numberToolsAvailable, translatedIn: appLanguage)
 
             let downloadStatus = try getDownloadStatus(for: language.id)
 
@@ -109,11 +109,11 @@ extension GetDownloadableLanguagesListUseCase {
         )
     }
     
-    private func getToolsAvailableText(numberOfTools: Int, translatedIn translationLanguage: AppLanguageDomainModel) async -> String {
+    private func getToolsAvailableText(numberOfTools: Int, translatedIn translationLanguage: AppLanguageDomainModel) -> String {
         
         let localeId = translationLanguage
         
-        let formatString = await localizationServices.stringForLocaleElseSystemElseEnglish(
+        let formatString = localizationServices.stringForLocaleElseEnglishElseKey(
             localeIdentifier: localeId,
             key: LocalizableStringKeys.toolsFilterToolsAvailable.key
         )

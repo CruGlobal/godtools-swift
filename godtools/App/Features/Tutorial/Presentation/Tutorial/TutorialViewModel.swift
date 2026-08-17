@@ -92,10 +92,7 @@ final class TutorialViewModel: ObservableObject {
 
         strings = getTutorialStringsUseCase.execute(appLanguage: appLanguage)
 
-        Task {
-
-            tutorialPages = await getTutorialUseCase.execute(appLanguage: appLanguage).pages
-        }
+        tutorialPages = getTutorialUseCase.execute(appLanguage: appLanguage).pages
     }
     
     private func getAnalyticsScreenName(tutorialItemIndex: Int) -> String {

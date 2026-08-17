@@ -23,6 +23,6 @@ final class FakeLocalizationLanguageNameRepository: LocalizationLanguageNameInte
         translatedInLanguage: BCP47LanguageIdentifier
     ) async -> String? {
         
-        return await localizationServices.stringForLocaleElseEnglish(localeIdentifier: translatedInLanguage, key: languageId)
+        return localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: translatedInLanguage, key: languageId)
     }
 }

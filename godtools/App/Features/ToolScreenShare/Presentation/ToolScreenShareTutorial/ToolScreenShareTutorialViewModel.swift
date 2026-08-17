@@ -63,12 +63,9 @@ final class ToolScreenShareTutorialViewModel: ObservableObject {
         $appLanguage
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
-                return AnyPublisher() {
-                    await getToolScreenShareTutorialUseCase
-                        .execute(appLanguage: appLanguage)
-                }
+                getToolScreenShareTutorialUseCase
+                    .execute(appLanguage: appLanguage)
             }
-            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (pages: [ToolScreenShareTutorialPageDomainModel]) in
                                 

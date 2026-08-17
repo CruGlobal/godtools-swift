@@ -37,7 +37,7 @@ final class GetTranslatedToolCategory: Sendable {
         
         let localeId = translateInLanguage.localeId
 
-        let category: String = await localizationServices.stringForLocaleElseEnglish(
+        let category: String = localizationServices.stringForLocaleElseEnglishElseKey(
             localeIdentifier: localeId,
             key: "\(Self.localizedKeyPrefix)\(resource.attrCategory)"
         )

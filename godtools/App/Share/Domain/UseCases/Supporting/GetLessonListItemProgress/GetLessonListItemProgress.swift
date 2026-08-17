@@ -43,7 +43,7 @@ final class GetLessonListItemProgress: Sendable {
         
         if try userCountersRepository.getCachedCounter(id: lessonCompletionUserCounterId) != nil || lessonProgressIsComplete {
             
-            let completeString = await localizationServices.stringForLocaleElseEnglish(
+            let completeString = localizationServices.stringForLocaleElseEnglishElseKey(
                 localeIdentifier: appLanguage.localeId,
                 key: LocalizableStringKeys.lessonsLessonCompleted.key
             )
@@ -54,7 +54,7 @@ final class GetLessonListItemProgress: Sendable {
             
             let progress: Double = lessonProgress.progress
             
-            let formatString = await localizationServices.stringForLocaleElseEnglish(
+            let formatString = localizationServices.stringForLocaleElseEnglishElseKey(
                 localeIdentifier: appLanguage.localeId,
                 key: LocalizableStringKeys.lessonsCompletionProgress.key
             )

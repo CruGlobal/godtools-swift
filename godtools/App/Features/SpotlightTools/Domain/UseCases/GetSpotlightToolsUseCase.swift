@@ -65,7 +65,7 @@ final class GetSpotlightToolsUseCase: Sendable {
         
         let languageForAvailabilityTextModel: LanguageDataModel? = getLanguage(id: languageIdForAvailabilityText)
         
-        let strings: ToolListItemStringsDomainModel = await getToolListItemStrings.getStrings(appLanguage: appLanguage)
+        let strings: ToolListItemStringsDomainModel = getToolListItemStrings.getStrings(appLanguage: appLanguage)
 
         let spotlightToolResources: [ResourceDataModel] = resourcesRepository.getSpotlightTools(
             sortByDefaultOrder: true

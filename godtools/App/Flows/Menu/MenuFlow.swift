@@ -293,7 +293,7 @@ final class MenuFlow: GTFlow {
             
             Task {
 
-                let confirmDeleteAccountView = await getConfirmDeleteAccountView()
+                let confirmDeleteAccountView = getConfirmDeleteAccountView()
 
                 dismissView(animated: true, completion: { [weak self] in
 
@@ -323,8 +323,8 @@ final class MenuFlow: GTFlow {
 
                 Task {
 
-                    let title: String = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.accountDeletedAlertTitle.key)
-                    let message: String = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.accountDeletedAlertMessage.key)
+                    let title: String = localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.accountDeletedAlertTitle.key)
+                    let message: String = localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.accountDeletedAlertMessage.key)
 
                     self?.presentAlert(appLanguage: appLanguage, title: title, message: message)
                 }
@@ -493,15 +493,12 @@ extension MenuFlow {
             return
         }
 
-        Task {
+        let alertMessage: AlertMessage = self.getAuthErrorAlertMessage(authError: authError)
 
-            let alertMessage: AlertMessage = await self.getAuthErrorAlertMessage(authError: authError)
-
-            self.presentAlertMessage(appLanguage: self.appLanguage, alertMessage: alertMessage)
-        }
+        self.presentAlertMessage(appLanguage: self.appLanguage, alertMessage: alertMessage)
     }
     
-    private func getAuthErrorAlertMessage(authError: AuthErrorDomainModel) async -> AlertMessage {
+    private func getAuthErrorAlertMessage(authError: AuthErrorDomainModel) -> AlertMessage {
         
         let localizationServices: LocalizationServicesInterface = appDiContainer.core.dataLayer.getLocalizationServices()
         let appLanguageLocaleId = appLanguage.localeId
@@ -510,10 +507,10 @@ extension MenuFlow {
         
         switch authError {
         case .accountAlreadyExists:
-            message = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageLocaleId, key: LocalizableStringKeys.authErrorUserAccountAlreadyExistsMessage.key)
+            message = localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguageLocaleId, key: LocalizableStringKeys.authErrorUserAccountAlreadyExistsMessage.key)
             
         case .accountNotFound:
-            message = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageLocaleId, key: LocalizableStringKeys.authErrorUserAccountNotFoundMessage.key)
+            message = localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguageLocaleId, key: LocalizableStringKeys.authErrorUserAccountNotFoundMessage.key)
             
         case .other(let error):
             message = error.localizedDescription
@@ -614,19 +611,19 @@ extension MenuFlow {
         return modal
     }
     
-    private func getConfirmDeleteAccountView() async -> UIViewController {
+    private func getConfirmDeleteAccountView() -> UIViewController {
         
         let localizationServices: LocalizationServicesInterface = appDiContainer.core.dataLayer.getLocalizationServices()
         
         let viewController = UIAlertController(
-            title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.confirmDeleteAccountTitle.key),
+            title: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.confirmDeleteAccountTitle.key),
             message: "",
             preferredStyle: .actionSheet
         )
         
         viewController.addAction(
             UIAlertAction(
-                title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.confirmDeleteAccountConfirmButtonTitle.key),
+                title: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.confirmDeleteAccountConfirmButtonTitle.key),
                 style: .destructive,
                 handler: { [weak self] (action: UIAlertAction) in
                     
@@ -637,7 +634,7 @@ extension MenuFlow {
         
         viewController.addAction(
             UIAlertAction(
-                title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.cancel.key),
+                title: localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: appLanguage, key: LocalizableStringKeys.cancel.key),
                 style: .cancel,
                 handler: { (action: UIAlertAction) in
                 }

@@ -103,17 +103,14 @@ final class ToolTrainingViewModel: NSObject {
 
         self.page = page
 
-        Task {
-
-            let continueTitle: String
-            if page < (numberOfTipPages.value - 1) {
-                continueTitle = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: renderedPageContext.language.localeId, key: LocalizableStringKeys.cardNextButtonTitle.key)
-            }
-            else {
-                continueTitle = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: renderedPageContext.language.localeId, key: LocalizableStringKeys.close.key)
-            }
-            continueButtonTitle.accept(value: continueTitle)
+        let continueTitle: String
+        if page < (numberOfTipPages.value - 1) {
+            continueTitle = localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: renderedPageContext.language.localeId, key: LocalizableStringKeys.cardNextButtonTitle.key)
         }
+        else {
+            continueTitle = localizationServices.stringForLocaleElseEnglishElseKey(localeIdentifier: renderedPageContext.language.localeId, key: LocalizableStringKeys.close.key)
+        }
+        continueButtonTitle.accept(value: continueTitle)
 
         if numberOfTipPages.value > 0 {
             let trainingProgress: CGFloat = CGFloat(page + 1) / CGFloat(numberOfTipPages.value)
@@ -157,15 +154,12 @@ final class ToolTrainingViewModel: NSObject {
         trainingTipBackgroundImage.accept(value: UIImage(named: tipBackgroundImageName))
         trainingTipForegroundImage.accept(value: UIImage(named: tipImageName))
 
-        Task {
+        let tipTitle: String = localizationServices.stringForLocaleElseEnglishElseKey(
+            localeIdentifier: renderedPageContext.language.localeId,
+            key: localizedTipTitle
+        )
 
-            let tipTitle: String = await localizationServices.stringForLocaleElseEnglish(
-                localeIdentifier: renderedPageContext.language.localeId,
-                key: localizedTipTitle
-            )
-
-            title.accept(value: tipTitle)
-        }
+        title.accept(value: tipTitle)
     }
 }
 
