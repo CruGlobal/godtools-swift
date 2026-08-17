@@ -17,15 +17,26 @@ final class GetShareToolQRCodeStringsUseCase: Sendable {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) async -> ShareToolQRCodeStringsDomainModel {
-        
-        let localeId: String = appLanguage
-        
-        let strings = ShareToolQRCodeStringsDomainModel(
-            message: await localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.shareToolQrCodeMessage.key),
-            closeActionTitle: await localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolScreenShareQrCodeCloseButtonTitle.key)
+    func execute(appLanguage: AppLanguageDomainModel) -> ShareToolQRCodeStringsDomainModel {
+
+        let messageKey: String = LocalizableStringKeys.shareToolQrCodeMessage.key
+        let closeActionTitleKey: String = LocalizableStringKeys.toolScreenShareQrCodeCloseButtonTitle.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                messageKey,
+                closeActionTitleKey
+            ],
+            fetchOrder: [
+                .locale(identifier: appLanguage),
+                .english
+            ],
+            shouldFallbackToKey: true
         )
-        
-        return strings
+
+        return ShareToolQRCodeStringsDomainModel(
+            message: strings[messageKey] ?? "",
+            closeActionTitle: strings[closeActionTitleKey] ?? ""
+        )
     }
 }

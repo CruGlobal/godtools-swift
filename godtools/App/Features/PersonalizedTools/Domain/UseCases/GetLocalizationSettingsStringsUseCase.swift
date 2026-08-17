@@ -16,14 +16,29 @@ final class GetLocalizationSettingsStringsUseCase: Sendable {
         self.localizationServices = localizationServices
     }
 
-    func execute(appLanguage: AppLanguageDomainModel) async -> LocalizationSettingsStringsDomainModel {
+    func execute(appLanguage: AppLanguageDomainModel) -> LocalizationSettingsStringsDomainModel {
 
-        let strings = LocalizationSettingsStringsDomainModel(
-            navTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.localizationSettingsNavBarTitle.key),
-            localizationHeaderTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.localizationSettingsLocalizationHeaderTitle.key),
-            localizationHeaderDescription: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.localizationSettingsLocalizationHeaderDescription.key)
+        let navTitleKey: String = LocalizableStringKeys.localizationSettingsNavBarTitle.key
+        let localizationHeaderTitleKey: String = LocalizableStringKeys.localizationSettingsLocalizationHeaderTitle.key
+        let localizationHeaderDescriptionKey: String = LocalizableStringKeys.localizationSettingsLocalizationHeaderDescription.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                navTitleKey,
+                localizationHeaderTitleKey,
+                localizationHeaderDescriptionKey
+            ],
+            fetchOrder: [
+                .locale(identifier: appLanguage),
+                .english
+            ],
+            shouldFallbackToKey: true
         )
 
-        return strings
+        return LocalizationSettingsStringsDomainModel(
+            navTitle: strings[navTitleKey] ?? "",
+            localizationHeaderTitle: strings[localizationHeaderTitleKey] ?? "",
+            localizationHeaderDescription: strings[localizationHeaderDescriptionKey] ?? ""
+        )
     }
 }

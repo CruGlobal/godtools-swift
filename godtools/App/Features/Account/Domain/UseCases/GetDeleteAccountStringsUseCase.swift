@@ -17,15 +17,32 @@ final class GetDeleteAccountStringsUseCase: Sendable {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) async -> DeleteAccountStringsDomainModel {
-        
-        let strings = DeleteAccountStringsDomainModel(
-            title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.deleteAccountTitle.key),
-            subtitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.deleteAccountSubtitle.key),
-            confirmActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.deleteAccountConfirmButtonTitle.key),
-            cancelActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.deleteAccountCancelButtonTitle.key)
+    func execute(appLanguage: AppLanguageDomainModel) -> DeleteAccountStringsDomainModel {
+
+        let titleKey: String = LocalizableStringKeys.deleteAccountTitle.key
+        let subtitleKey: String = LocalizableStringKeys.deleteAccountSubtitle.key
+        let confirmActionTitleKey: String = LocalizableStringKeys.deleteAccountConfirmButtonTitle.key
+        let cancelActionTitleKey: String = LocalizableStringKeys.deleteAccountCancelButtonTitle.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                titleKey,
+                subtitleKey,
+                confirmActionTitleKey,
+                cancelActionTitleKey
+            ],
+            fetchOrder: [
+                .locale(identifier: appLanguage),
+                .english
+            ],
+            shouldFallbackToKey: true
         )
-        
-        return strings
+
+        return DeleteAccountStringsDomainModel(
+            title: strings[titleKey] ?? "",
+            subtitle: strings[subtitleKey] ?? "",
+            confirmActionTitle: strings[confirmActionTitleKey] ?? "",
+            cancelActionTitle: strings[cancelActionTitleKey] ?? ""
+        )
     }
 }

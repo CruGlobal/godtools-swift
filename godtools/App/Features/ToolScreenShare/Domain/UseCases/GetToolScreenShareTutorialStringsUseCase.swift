@@ -17,16 +17,29 @@ final class GetToolScreenShareTutorialStringsUseCase: Sendable {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) async -> ToolScreenShareTutorialStringsDomainModel {
-        
-        let localeId: String = appLanguage
-        
-        let strings = ToolScreenShareTutorialStringsDomainModel(
-            generateQRCodeActionTitle: await localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.screenShareTutorialGenerateQRCodeButtonTitle.key),
-            nextTutorialPageActionTitle: await localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.tutorialContinueButtonTitleContinue.key),
-            shareLinkActionTitle: await localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.shareLink.key)
+    func execute(appLanguage: AppLanguageDomainModel) -> ToolScreenShareTutorialStringsDomainModel {
+
+        let generateQRCodeActionTitleKey: String = LocalizableStringKeys.screenShareTutorialGenerateQRCodeButtonTitle.key
+        let nextTutorialPageActionTitleKey: String = LocalizableStringKeys.tutorialContinueButtonTitleContinue.key
+        let shareLinkActionTitleKey: String = LocalizableStringKeys.shareLink.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                generateQRCodeActionTitleKey,
+                nextTutorialPageActionTitleKey,
+                shareLinkActionTitleKey
+            ],
+            fetchOrder: [
+                .locale(identifier: appLanguage),
+                .english
+            ],
+            shouldFallbackToKey: true
         )
-        
-        return strings
+
+        return ToolScreenShareTutorialStringsDomainModel(
+            generateQRCodeActionTitle: strings[generateQRCodeActionTitleKey] ?? "",
+            nextTutorialPageActionTitle: strings[nextTutorialPageActionTitleKey] ?? "",
+            shareLinkActionTitle: strings[shareLinkActionTitleKey] ?? ""
+        )
     }
 }

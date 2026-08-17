@@ -17,24 +17,34 @@ final class GetTutorialStringsUseCase: Sendable {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) async -> TutorialStringsDomainModel {
-        
-        let localeId: String = appLanguage
-        
+    func execute(appLanguage: AppLanguageDomainModel) -> TutorialStringsDomainModel {
+
+        let nextTutorialPageActionTitleKey: String = LocalizableStringKeys.tutorialContinueButtonTitleContinue.key
+
         let completeTutorialActionLocalizedStringKey: String
-        
+
         if appLanguage == LanguageCodeDomainModel.english.value {
             completeTutorialActionLocalizedStringKey = LocalizableStringKeys.tutorialContinueButtonTitleCloseTutorial.key
         }
         else {
             completeTutorialActionLocalizedStringKey = LocalizableStringKeys.tutorialContinueButtonTitleStartUsingGodTools.key
         }
-        
-        let strings = TutorialStringsDomainModel(
-            nextTutorialPageActionTitle: await localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.tutorialContinueButtonTitleContinue.key),
-            completeTutorialActionTitle: await localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: completeTutorialActionLocalizedStringKey)
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                nextTutorialPageActionTitleKey,
+                completeTutorialActionLocalizedStringKey
+            ],
+            fetchOrder: [
+                .locale(identifier: appLanguage),
+                .english
+            ],
+            shouldFallbackToKey: true
         )
-        
-        return strings
+
+        return TutorialStringsDomainModel(
+            nextTutorialPageActionTitle: strings[nextTutorialPageActionTitleKey] ?? "",
+            completeTutorialActionTitle: strings[completeTutorialActionLocalizedStringKey] ?? ""
+        )
     }
 }

@@ -17,18 +17,35 @@ final class GetSocialCreateAccountStringsUseCase: Sendable {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) async -> SocialCreateAccountStringsDomainModel {
-        
-        let localeId: String = appLanguage
-        
-        let strings = SocialCreateAccountStringsDomainModel(
-            title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.createAccountTitle.key),
-            subtitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.createAccountSubtitle.key),
-            createWithAppleActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.signInApple.key),
-            createWithFacebookActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.signInFacebook.key),
-            createWithGoogleActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.signInGoogle.key)
+    func execute(appLanguage: AppLanguageDomainModel) -> SocialCreateAccountStringsDomainModel {
+
+        let titleKey: String = LocalizableStringKeys.createAccountTitle.key
+        let subtitleKey: String = LocalizableStringKeys.createAccountSubtitle.key
+        let createWithAppleActionTitleKey: String = LocalizableStringKeys.signInApple.key
+        let createWithFacebookActionTitleKey: String = LocalizableStringKeys.signInFacebook.key
+        let createWithGoogleActionTitleKey: String = LocalizableStringKeys.signInGoogle.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                titleKey,
+                subtitleKey,
+                createWithAppleActionTitleKey,
+                createWithFacebookActionTitleKey,
+                createWithGoogleActionTitleKey
+            ],
+            fetchOrder: [
+                .locale(identifier: appLanguage),
+                .english
+            ],
+            shouldFallbackToKey: true
         )
-        
-        return strings
+
+        return SocialCreateAccountStringsDomainModel(
+            title: strings[titleKey] ?? "",
+            subtitle: strings[subtitleKey] ?? "",
+            createWithAppleActionTitle: strings[createWithAppleActionTitleKey] ?? "",
+            createWithFacebookActionTitle: strings[createWithFacebookActionTitleKey] ?? "",
+            createWithGoogleActionTitle: strings[createWithGoogleActionTitleKey] ?? ""
+        )
     }
 }

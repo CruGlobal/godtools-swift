@@ -16,14 +16,25 @@ final class GetToolFilterCategoriesStringsUseCase: Sendable {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) async -> ToolFilterCategoriesStringsDomainModel {
-        
+    func execute(appLanguage: AppLanguageDomainModel) -> ToolFilterCategoriesStringsDomainModel {
+
         let localeId: String = appLanguage.localeId
 
-        let strings = ToolFilterCategoriesStringsDomainModel(
-            navTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolsFilterCategoryNavTitle.key)
+        let navTitleKey: String = LocalizableStringKeys.toolsFilterCategoryNavTitle.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                navTitleKey
+            ],
+            fetchOrder: [
+                .locale(identifier: localeId),
+                .english
+            ],
+            shouldFallbackToKey: true
         )
-        
-        return strings
+
+        return ToolFilterCategoriesStringsDomainModel(
+            navTitle: strings[navTitleKey] ?? ""
+        )
     }
 }

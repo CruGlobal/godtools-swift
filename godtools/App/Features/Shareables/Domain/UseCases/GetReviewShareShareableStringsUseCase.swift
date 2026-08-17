@@ -17,14 +17,23 @@ final class GetReviewShareShareableStringsUseCase: Sendable {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) async -> ReviewShareShareableStringsDomainModel {
-        
-        let localeId: String = appLanguage
-        
-        let strings = ReviewShareShareableStringsDomainModel(
-            shareActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsShareImagePreviewShareImageButtonTitle.key)
+    func execute(appLanguage: AppLanguageDomainModel) -> ReviewShareShareableStringsDomainModel {
+
+        let shareActionTitleKey: String = LocalizableStringKeys.toolSettingsShareImagePreviewShareImageButtonTitle.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                shareActionTitleKey
+            ],
+            fetchOrder: [
+                .locale(identifier: appLanguage),
+                .english
+            ],
+            shouldFallbackToKey: true
         )
-        
-        return strings
+
+        return ReviewShareShareableStringsDomainModel(
+            shareActionTitle: strings[shareActionTitleKey] ?? ""
+        )
     }
 }

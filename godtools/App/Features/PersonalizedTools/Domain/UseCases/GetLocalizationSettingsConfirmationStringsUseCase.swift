@@ -16,13 +16,36 @@ final class GetLocalizationSettingsConfirmationStringsUseCase: Sendable {
         self.localizationServices = localizationServices
     }
 
-    func execute(appLanguage: AppLanguageDomainModel, selectedCountry: LocalizationSettingsCountryListItem) async -> LocalizationSettingsConfirmationStringsDomainModel {
+    func execute(appLanguage: AppLanguageDomainModel, selectedCountry: LocalizationSettingsCountryListItem) -> LocalizationSettingsConfirmationStringsDomainModel {
+
+        let titleKey: String = LocalizableStringKeys.localizationSettingsConfirmationTitle.key
+        let titleNoCountryKey: String = LocalizableStringKeys.localizationSettingsConfirmationTitleNoCountry.key
+        let descriptionKey: String = LocalizableStringKeys.localizationSettingsConfirmationDescription.key
+        let detailKey: String = LocalizableStringKeys.localizationSettingsConfirmationDetail.key
+        let cancelButtonKey: String = LocalizableStringKeys.localizationSettingsConfirmationCancelButton.key
+        let confirmButtonKey: String = LocalizableStringKeys.localizationSettingsConfirmationConfirmButton.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                titleKey,
+                titleNoCountryKey,
+                descriptionKey,
+                detailKey,
+                cancelButtonKey,
+                confirmButtonKey
+            ],
+            fetchOrder: [
+                .locale(identifier: appLanguage),
+                .english
+            ],
+            shouldFallbackToKey: true
+        )
 
         let titleHighlightModel: ConfirmAppLanguageHighlightStringDomainModel
 
         switch selectedCountry {
         case .country(let country):
-            let titleTemplate = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.localizationSettingsConfirmationTitle.key)
+            let titleTemplate: String = strings[titleKey] ?? ""
             let countryName = country.countryNameTranslatedInCurrentAppLanguage
             let titleFullText = String(format: titleTemplate, countryName)
             titleHighlightModel = ConfirmAppLanguageHighlightStringDomainModel(
@@ -31,21 +54,19 @@ final class GetLocalizationSettingsConfirmationStringsUseCase: Sendable {
             )
 
         case .preferNotToSay:
-            let titleFullText = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.localizationSettingsConfirmationTitleNoCountry.key)
+            let titleFullText: String = strings[titleNoCountryKey] ?? ""
             titleHighlightModel = ConfirmAppLanguageHighlightStringDomainModel(
                 fullText: titleFullText,
                 highlightText: ""
             )
         }
 
-        let strings = LocalizationSettingsConfirmationStringsDomainModel(
+        return LocalizationSettingsConfirmationStringsDomainModel(
             titleHighlightModel: titleHighlightModel,
-            description: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.localizationSettingsConfirmationDescription.key),
-            detail: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.localizationSettingsConfirmationDetail.key),
-            cancelButton: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.localizationSettingsConfirmationCancelButton.key),
-            confirmButton: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.localizationSettingsConfirmationConfirmButton.key)
+            description: strings[descriptionKey] ?? "",
+            detail: strings[detailKey] ?? "",
+            cancelButton: strings[cancelButtonKey] ?? "",
+            confirmButton: strings[confirmButtonKey] ?? ""
         )
-
-        return strings
     }
 }

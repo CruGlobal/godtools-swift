@@ -17,19 +17,38 @@ final class GetLessonEvaluationStringsUseCase: Sendable {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) async -> LessonEvaluationStringsDomainModel {
-        
-        let localeId: String = appLanguage
-        
-        let strings = LessonEvaluationStringsDomainModel(
-            title: await localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonEvaluationTitle.key),
-            wasThisHelpful: await localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonEvaluationWasThisHelpful.key),
-            yesActionTitle: await localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.yes.key),
-            noActionTitle: await localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.no.key),
-            shareFaithReadiness: await localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonEvaluationShareFaith.key),
-            sendFeedbackActionTitle: await localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonEvaluationSendButtonTitle.key)
+    func execute(appLanguage: AppLanguageDomainModel) -> LessonEvaluationStringsDomainModel {
+
+        let titleKey: String = LocalizableStringKeys.lessonEvaluationTitle.key
+        let wasThisHelpfulKey: String = LocalizableStringKeys.lessonEvaluationWasThisHelpful.key
+        let yesActionTitleKey: String = LocalizableStringKeys.yes.key
+        let noActionTitleKey: String = LocalizableStringKeys.no.key
+        let shareFaithReadinessKey: String = LocalizableStringKeys.lessonEvaluationShareFaith.key
+        let sendFeedbackActionTitleKey: String = LocalizableStringKeys.lessonEvaluationSendButtonTitle.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                titleKey,
+                wasThisHelpfulKey,
+                yesActionTitleKey,
+                noActionTitleKey,
+                shareFaithReadinessKey,
+                sendFeedbackActionTitleKey
+            ],
+            fetchOrder: [
+                .locale(identifier: appLanguage),
+                .english
+            ],
+            shouldFallbackToKey: true
         )
-        
-        return strings
+
+        return LessonEvaluationStringsDomainModel(
+            title: strings[titleKey] ?? "",
+            wasThisHelpful: strings[wasThisHelpfulKey] ?? "",
+            yesActionTitle: strings[yesActionTitleKey] ?? "",
+            noActionTitle: strings[noActionTitleKey] ?? "",
+            shareFaithReadiness: strings[shareFaithReadinessKey] ?? "",
+            sendFeedbackActionTitle: strings[sendFeedbackActionTitleKey] ?? ""
+        )
     }
 }

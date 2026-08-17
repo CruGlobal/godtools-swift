@@ -25,10 +25,8 @@ final class GetDownloadToolProgressStringsUseCase: Sendable {
         self.favoritedResourcesRepository = favoritedResourcesRepository
     }
     
-    func execute(toolId: String?, appLanguage: AppLanguageDomainModel) async -> DownloadToolProgressStringsDomainModel {
-                        
-        let localeId: String = appLanguage
-        
+    func execute(toolId: String?, appLanguage: AppLanguageDomainModel) -> DownloadToolProgressStringsDomainModel {
+
         let resource: ResourceDataModel?
         
         if let toolId = toolId, let resourceModel = resourcesRepository.getResourceById(id: toolId) {
@@ -48,19 +46,28 @@ final class GetDownloadToolProgressStringsUseCase: Sendable {
             toolIsFavorited = false
         }
         
-        let downloadMessage: String
-        
+        let downloadMessageKey: String
+
         if toolCanBeFavorited && !toolIsFavorited {
-            downloadMessage = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.loadingUnfavoritedTool.key)
+            downloadMessageKey = LocalizableStringKeys.loadingUnfavoritedTool.key
         }
         else {
-            downloadMessage = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.loadingFavoritedTool.key)
+            downloadMessageKey = LocalizableStringKeys.loadingFavoritedTool.key
         }
-        
-        let strings = DownloadToolProgressStringsDomainModel(
-            downloadMessage: downloadMessage
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                downloadMessageKey
+            ],
+            fetchOrder: [
+                .locale(identifier: appLanguage),
+                .english
+            ],
+            shouldFallbackToKey: true
         )
-        
-        return strings
+
+        return DownloadToolProgressStringsDomainModel(
+            downloadMessage: strings[downloadMessageKey] ?? ""
+        )
     }
 }

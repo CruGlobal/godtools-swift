@@ -17,23 +17,35 @@ final class GetOptInNotificationStringsUseCase: Sendable {
         self.localizationServices = localizationServices
     }
 
-    func execute(appLanguage: AppLanguageDomainModel) async -> OptInNotificationStringsDomainModel {
-        
-        let strings = OptInNotificationStringsDomainModel(
-            title: await localizationServices.stringForLocaleElseEnglish(
-                localeIdentifier: appLanguage, key: LocalizableStringKeys.optInNotificationTitle.key),
-            body: await localizationServices.stringForLocaleElseEnglish(
-                localeIdentifier: appLanguage, key: LocalizableStringKeys.optInNotificationBody.key),
-            allowNotificationsActionTitle:
-                await localizationServices.stringForLocaleElseEnglish(
-                    localeIdentifier: appLanguage, key: LocalizableStringKeys.optInNotificationAllowNotifications.key),
-            notificationSettingsActionTitle: await localizationServices.stringForLocaleElseEnglish(
-                localeIdentifier: appLanguage, key: LocalizableStringKeys.optInNotificationNotificationSettings.key),
-            maybeLaterActionTitle:
-                await localizationServices.stringForLocaleElseEnglish(
-                    localeIdentifier: appLanguage, key: LocalizableStringKeys.optInNotificationMaybeLater.key)
+    func execute(appLanguage: AppLanguageDomainModel) -> OptInNotificationStringsDomainModel {
+
+        let titleKey: String = LocalizableStringKeys.optInNotificationTitle.key
+        let bodyKey: String = LocalizableStringKeys.optInNotificationBody.key
+        let allowNotificationsActionTitleKey: String = LocalizableStringKeys.optInNotificationAllowNotifications.key
+        let notificationSettingsActionTitleKey: String = LocalizableStringKeys.optInNotificationNotificationSettings.key
+        let maybeLaterActionTitleKey: String = LocalizableStringKeys.optInNotificationMaybeLater.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                titleKey,
+                bodyKey,
+                allowNotificationsActionTitleKey,
+                notificationSettingsActionTitleKey,
+                maybeLaterActionTitleKey
+            ],
+            fetchOrder: [
+                .locale(identifier: appLanguage),
+                .english
+            ],
+            shouldFallbackToKey: true
         )
-        
-        return strings
+
+        return OptInNotificationStringsDomainModel(
+            title: strings[titleKey] ?? "",
+            body: strings[bodyKey] ?? "",
+            allowNotificationsActionTitle: strings[allowNotificationsActionTitleKey] ?? "",
+            notificationSettingsActionTitle: strings[notificationSettingsActionTitleKey] ?? "",
+            maybeLaterActionTitle: strings[maybeLaterActionTitleKey] ?? ""
+        )
     }
 }

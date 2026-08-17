@@ -17,20 +17,47 @@ final class GetFavoritesStringsUseCase: Sendable {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) async -> FavoritesStringsDomainModel {
-        
-        let strings = FavoritesStringsDomainModel(
-            tutorialMessage: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.openTutorialShowTutorialLabelText.key),
-            openTutorialActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.openTutorialOpenTutorialButtonTitle.key),
-            welcomeTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.favoritesPageTitle.key),
-            featuredLessonsTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.favoritesFavoriteLessonsTitle.key),
-            favoriteToolsTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.favoritesFavoriteToolsTitle.key),
-            viewAllFavoritesActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.favoritesFavoriteToolsViewAll.key),
-            noFavoritedToolsTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.favoritesNoToolsTitle.key),
-            noFavoritedToolsDescription: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.favoritesNoToolsDescription.key),
-            noFavoritedToolsActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.favoritesNoToolsButton.key)
+    func execute(appLanguage: AppLanguageDomainModel) -> FavoritesStringsDomainModel {
+
+        let tutorialMessageKey: String = LocalizableStringKeys.openTutorialShowTutorialLabelText.key
+        let openTutorialActionTitleKey: String = LocalizableStringKeys.openTutorialOpenTutorialButtonTitle.key
+        let welcomeTitleKey: String = LocalizableStringKeys.favoritesPageTitle.key
+        let featuredLessonsTitleKey: String = LocalizableStringKeys.favoritesFavoriteLessonsTitle.key
+        let favoriteToolsTitleKey: String = LocalizableStringKeys.favoritesFavoriteToolsTitle.key
+        let viewAllFavoritesActionTitleKey: String = LocalizableStringKeys.favoritesFavoriteToolsViewAll.key
+        let noFavoritedToolsTitleKey: String = LocalizableStringKeys.favoritesNoToolsTitle.key
+        let noFavoritedToolsDescriptionKey: String = LocalizableStringKeys.favoritesNoToolsDescription.key
+        let noFavoritedToolsActionTitleKey: String = LocalizableStringKeys.favoritesNoToolsButton.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                tutorialMessageKey,
+                openTutorialActionTitleKey,
+                welcomeTitleKey,
+                featuredLessonsTitleKey,
+                favoriteToolsTitleKey,
+                viewAllFavoritesActionTitleKey,
+                noFavoritedToolsTitleKey,
+                noFavoritedToolsDescriptionKey,
+                noFavoritedToolsActionTitleKey
+            ],
+            fetchOrder: [
+                .locale(identifier: appLanguage),
+                .english
+            ],
+            shouldFallbackToKey: true
         )
 
-        return strings
+        return FavoritesStringsDomainModel(
+            tutorialMessage: strings[tutorialMessageKey] ?? "",
+            openTutorialActionTitle: strings[openTutorialActionTitleKey] ?? "",
+            welcomeTitle: strings[welcomeTitleKey] ?? "",
+            featuredLessonsTitle: strings[featuredLessonsTitleKey] ?? "",
+            favoriteToolsTitle: strings[favoriteToolsTitleKey] ?? "",
+            viewAllFavoritesActionTitle: strings[viewAllFavoritesActionTitleKey] ?? "",
+            noFavoritedToolsTitle: strings[noFavoritedToolsTitleKey] ?? "",
+            noFavoritedToolsDescription: strings[noFavoritedToolsDescriptionKey] ?? "",
+            noFavoritedToolsActionTitle: strings[noFavoritedToolsActionTitleKey] ?? ""
+        )
     }
 }

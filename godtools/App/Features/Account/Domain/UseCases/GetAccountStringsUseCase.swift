@@ -18,31 +18,47 @@ final class GetAccountStringsUseCase: Sendable {
         self.dateService = dateService
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) async -> AccountStringsDomainModel {
-        
+    func execute(appLanguage: AppLanguageDomainModel) -> AccountStringsDomainModel {
+
         let localeId: String = appLanguage.localeId
-        
-        let strings = AccountStringsDomainModel(
-            navTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.accountNavTitle.key),
-            activityButtonTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.accountActivityTitle.key),
-            myActivitySectionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.accountActivitySectionTitle.key),
-            badgesSectionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.accountBadgesSectionTitle.key),
-            globalActivityButtonTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.accountGlobalActivityTitle.key),
-            globalAnalyticsTitle: await getGlobalAnalyticsTitle(localeId: localeId)
+
+        let navTitleKey: String = LocalizableStringKeys.accountNavTitle.key
+        let activityButtonTitleKey: String = LocalizableStringKeys.accountActivityTitle.key
+        let myActivitySectionTitleKey: String = LocalizableStringKeys.accountActivitySectionTitle.key
+        let badgesSectionTitleKey: String = LocalizableStringKeys.accountBadgesSectionTitle.key
+        let globalActivityButtonTitleKey: String = LocalizableStringKeys.accountGlobalActivityTitle.key
+        let globalAnalyticsTitleKey: String = LocalizableStringKeys.accountActivityGlobalAnalyticsHeaderTitle.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                navTitleKey,
+                activityButtonTitleKey,
+                myActivitySectionTitleKey,
+                badgesSectionTitleKey,
+                globalActivityButtonTitleKey,
+                globalAnalyticsTitleKey
+            ],
+            fetchOrder: [
+                .locale(identifier: localeId),
+                .english
+            ],
+            shouldFallbackToKey: true
         )
-        
-        return strings
+
+        return AccountStringsDomainModel(
+            navTitle: strings[navTitleKey] ?? "",
+            activityButtonTitle: strings[activityButtonTitleKey] ?? "",
+            myActivitySectionTitle: strings[myActivitySectionTitleKey] ?? "",
+            badgesSectionTitle: strings[badgesSectionTitleKey] ?? "",
+            globalActivityButtonTitle: strings[globalActivityButtonTitleKey] ?? "",
+            globalAnalyticsTitle: getGlobalAnalyticsTitle(localeId: localeId, localizedGlobalActivityTitle: strings[globalAnalyticsTitleKey] ?? "")
+        )
     }
-    
-    private func getGlobalAnalyticsTitle(localeId: BCP47LanguageIdentifier) async -> String {
-    
-        let localizedGlobalActivityTitle = await localizationServices.stringForLocaleElseEnglish(
-            localeIdentifier: localeId,
-            key: LocalizableStringKeys.accountActivityGlobalAnalyticsHeaderTitle.key
-        )
-                
+
+    private func getGlobalAnalyticsTitle(localeId: BCP47LanguageIdentifier, localizedGlobalActivityTitle: String) -> String {
+
         let currentYear: Int? = dateService.getCurrentYear(options: CalendarOptions(localeId: localeId))
-                
+
         if let year = currentYear {
             return "\(year) \(localizedGlobalActivityTitle)"
         }

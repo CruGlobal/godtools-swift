@@ -17,22 +17,47 @@ final class GetLessonsStringsUseCase: Sendable {
         self.localizationServices = localizationServices
     }
 
-    func execute(translateInLanguage: AppLanguageDomainModel) async -> LessonsStringsDomainModel {
+    func execute(translateInLanguage: AppLanguageDomainModel) -> LessonsStringsDomainModel {
 
-        let localeId: String = translateInLanguage
-        
-        let strings = LessonsStringsDomainModel(
-            title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsPageTitle.key),
-            subtitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsPageSubtitle.key),
-            languageFilterTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsLanguageFilterTitle.key),
-            personalizedToolToggleTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.dashboardPersonalizedToolTogglePersonalizedTitle.key),
-            allLessonsToggleTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.dashboardPersonalizedToolToggleAllLessonsTitle.key),
-            personalizedLessonExplanationTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.dashboardPersonalizedLessonFooterTitle.key),
-            personalizedLessonExplanationSubtitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.dashboardPersonalizedLessonFooterSubtitle.key),
-            changeLocalizationSettingsAction: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.dashboardPersonalizedToolFooterButtonTitle.key),
-            viewAllLessonsAction: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsPersonalizationUnavailableViewAllLessons.key)
+        let titleKey: String = LocalizableStringKeys.lessonsPageTitle.key
+        let subtitleKey: String = LocalizableStringKeys.lessonsPageSubtitle.key
+        let languageFilterTitleKey: String = LocalizableStringKeys.lessonsLanguageFilterTitle.key
+        let personalizedToolToggleTitleKey: String = LocalizableStringKeys.dashboardPersonalizedToolTogglePersonalizedTitle.key
+        let allLessonsToggleTitleKey: String = LocalizableStringKeys.dashboardPersonalizedToolToggleAllLessonsTitle.key
+        let personalizedLessonExplanationTitleKey: String = LocalizableStringKeys.dashboardPersonalizedLessonFooterTitle.key
+        let personalizedLessonExplanationSubtitleKey: String = LocalizableStringKeys.dashboardPersonalizedLessonFooterSubtitle.key
+        let changeLocalizationSettingsActionKey: String = LocalizableStringKeys.dashboardPersonalizedToolFooterButtonTitle.key
+        let viewAllLessonsActionKey: String = LocalizableStringKeys.lessonsPersonalizationUnavailableViewAllLessons.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                titleKey,
+                subtitleKey,
+                languageFilterTitleKey,
+                personalizedToolToggleTitleKey,
+                allLessonsToggleTitleKey,
+                personalizedLessonExplanationTitleKey,
+                personalizedLessonExplanationSubtitleKey,
+                changeLocalizationSettingsActionKey,
+                viewAllLessonsActionKey
+            ],
+            fetchOrder: [
+                .locale(identifier: translateInLanguage),
+                .english
+            ],
+            shouldFallbackToKey: true
         )
-        
-        return strings
+
+        return LessonsStringsDomainModel(
+            title: strings[titleKey] ?? "",
+            subtitle: strings[subtitleKey] ?? "",
+            languageFilterTitle: strings[languageFilterTitleKey] ?? "",
+            personalizedToolToggleTitle: strings[personalizedToolToggleTitleKey] ?? "",
+            allLessonsToggleTitle: strings[allLessonsToggleTitleKey] ?? "",
+            personalizedLessonExplanationTitle: strings[personalizedLessonExplanationTitleKey] ?? "",
+            personalizedLessonExplanationSubtitle: strings[personalizedLessonExplanationSubtitleKey] ?? "",
+            changeLocalizationSettingsAction: strings[changeLocalizationSettingsActionKey] ?? "",
+            viewAllLessonsAction: strings[viewAllLessonsActionKey] ?? ""
+        )
     }
 }

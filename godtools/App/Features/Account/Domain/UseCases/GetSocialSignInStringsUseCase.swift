@@ -17,18 +17,35 @@ final class GetSocialSignInStringsUseCase: Sendable {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) async -> SocialSignInStringsDomainModel {
-        
-        let localeId: String = appLanguage
-        
-        let strings = SocialSignInStringsDomainModel(
-            title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.signInTitle.key),
-            subtitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.signInSubtitle.key),
-            signInWithAppleActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.signInApple.key),
-            signInWithFacebookActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.signInFacebook.key),
-            signInWithGoogleActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.signInGoogle.key)
+    func execute(appLanguage: AppLanguageDomainModel) -> SocialSignInStringsDomainModel {
+
+        let titleKey: String = LocalizableStringKeys.signInTitle.key
+        let subtitleKey: String = LocalizableStringKeys.signInSubtitle.key
+        let signInWithAppleActionTitleKey: String = LocalizableStringKeys.signInApple.key
+        let signInWithFacebookActionTitleKey: String = LocalizableStringKeys.signInFacebook.key
+        let signInWithGoogleActionTitleKey: String = LocalizableStringKeys.signInGoogle.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                titleKey,
+                subtitleKey,
+                signInWithAppleActionTitleKey,
+                signInWithFacebookActionTitleKey,
+                signInWithGoogleActionTitleKey
+            ],
+            fetchOrder: [
+                .locale(identifier: appLanguage),
+                .english
+            ],
+            shouldFallbackToKey: true
         )
-        
-        return strings
+
+        return SocialSignInStringsDomainModel(
+            title: strings[titleKey] ?? "",
+            subtitle: strings[subtitleKey] ?? "",
+            signInWithAppleActionTitle: strings[signInWithAppleActionTitleKey] ?? "",
+            signInWithFacebookActionTitle: strings[signInWithFacebookActionTitleKey] ?? "",
+            signInWithGoogleActionTitle: strings[signInWithGoogleActionTitleKey] ?? ""
+        )
     }
 }

@@ -17,14 +17,23 @@ final class GetSearchBarStringsUseCase: Sendable {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) async -> SearchBarStringsDomainModel {
-        
-        let localeId: String = appLanguage
-        
-        let strings = SearchBarStringsDomainModel(
-            cancel: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.cancel.key)
+    func execute(appLanguage: AppLanguageDomainModel) -> SearchBarStringsDomainModel {
+
+        let cancelKey: String = LocalizableStringKeys.cancel.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                cancelKey
+            ],
+            fetchOrder: [
+                .locale(identifier: appLanguage),
+                .english
+            ],
+            shouldFallbackToKey: true
         )
-        
-        return strings
+
+        return SearchBarStringsDomainModel(
+            cancel: strings[cancelKey] ?? ""
+        )
     }
 }
