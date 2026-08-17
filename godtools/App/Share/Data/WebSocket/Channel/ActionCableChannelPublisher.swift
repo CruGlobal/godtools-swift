@@ -9,9 +9,9 @@
 import UIKit
 import Combine
 
-final class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherInterface {
+final class ActionCableChannelPublisher: Sendable {
     
-    private let webSocket: WebSocketInterface
+    private let webSocket: URLSessionWebSocket
     private let didCreateChannelSubject: PassthroughSubject<WebSocketChannel, Never> = PassthroughSubject()
     private let loggingEnabled: Bool
     
@@ -23,15 +23,17 @@ final class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherInte
     private(set) var channel: WebSocketChannel?
     private(set) var publishChannel: WebSocketChannel?
         
-    required init(webSocket: WebSocketInterface, loggingEnabled: Bool) {
+    init(webSocket: URLSessionWebSocket, loggingEnabled: Bool) {
         
         self.webSocket = webSocket
         self.loggingEnabled = loggingEnabled
-        
-        super.init()
-        
+                
         NotificationCenter.default.addObserver(self, selector: #selector(appWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+        
+        // TODO: Fix. ~Levi
+        
+        /*
         
         webSocket
             .didConnectPublisher
@@ -45,15 +47,17 @@ final class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherInte
             .sink(receiveValue: { [weak self] (text: String) in
                 self?.handleDidReceiveText(text: text)
             })
-            .store(in: &cancellables)
+            .store(in: &cancellables)*/
     }
     
     deinit {
+        print("x deinit: \(type(of: self))")
         
         NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
         
-        webSocket.disconnect()
+        // TODO: Fix. ~Levi
+        //webSocket.disconnect()
     }
     
     var didCreateChannelPublisher: AnyPublisher<WebSocketChannel, Never> {
@@ -69,23 +73,31 @@ final class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherInte
         return publishingToSubscriberChannel
     }
     
-    func createChannel(channel: WebSocketChannel) {
+    func createChannel(channel: WebSocketChannel) async {
         
         self.channel = channel
         
         channelToCreate = channel
         
-        if webSocket.connectionState != .connected && webSocket.connectionState != .connecting {
+        let connectionState: WebSocketConnectionState = await webSocket.connectionState
+        
+        if connectionState != .connected && connectionState != .connecting {
             
-            webSocket.connect()
+            await webSocket.connect()
+            
+            handleDidConnectToWebsocket()
         }
-        else if webSocket.connectionState == .connected {
+        else if connectionState == .connected {
             
             handleDidConnectToWebsocket()
         }
     }
     
     func sendMessage(data: String) {
+        
+        // TODO: Fix. ~Levi
+        
+        /*
         
         let stringMessage: String
             
@@ -104,11 +116,15 @@ final class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherInte
             stringMessage = ""
         }
                                                 
-        webSocket.write(string: stringMessage)
+        webSocket.write(string: stringMessage)*/
     }
     
     private func handleDidConnectToWebsocket() {
                
+        // TODO: Fix. ~Levi
+        
+        /*
+        
         if loggingEnabled {
             print("\n ActionCableChannelPublisher: handleDidConnectToWebsocket()")
         }
@@ -131,7 +147,7 @@ final class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherInte
             
         } catch let error {
             assertionFailure(error.localizedDescription)
-        }
+        }*/
     }
     
     private func handleDidReceiveText(text: String) {
@@ -184,8 +200,11 @@ final class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherInte
 extension ActionCableChannelPublisher {
     
     @objc private func appWillResignActive() {
+        
+        // TODO: Fix. ~Levi
+        /*
         appResignedActive = true
-        webSocket.disconnect()
+        webSocket.disconnect()*/
     }
     
     @objc private func appDidBecomeActive() {
@@ -200,6 +219,9 @@ extension ActionCableChannelPublisher {
             return
         }
         
-        createChannel(channel: channel)
+        Task {
+            
+            await createChannel(channel: channel)
+        }
     }
 }

@@ -9,9 +9,9 @@
 import Foundation
 import Combine
 
-final class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberInterface {
+final class ActionCableChannelSubscriber: NSObject {
     
-    private let webSocket: WebSocketInterface
+    private let webSocket: URLSessionWebSocket
     private let didSubscribeSubject: PassthroughSubject<WebSocketChannel, Never> = PassthroughSubject()
     private let loggingEnabled: Bool
     
@@ -20,13 +20,15 @@ final class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberIn
     private var isSubscribingToChannel: WebSocketChannel?
     private var subscribedToChannel: WebSocketChannel?
         
-    required init(webSocket: WebSocketInterface, loggingEnabled: Bool) {
+    init(webSocket: URLSessionWebSocket, loggingEnabled: Bool) {
         
         self.webSocket = webSocket
         self.loggingEnabled = loggingEnabled
         
         super.init()
         
+        // TODO: Fix. ~Levi
+        /*
         webSocket
             .didConnectPublisher
             .sink { [weak self] _ in
@@ -39,12 +41,15 @@ final class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberIn
             .sink(receiveValue: { [weak self] (text: String) in
                 self?.handleDidReceiveText(text: text)
             })
-            .store(in: &cancellables)
+            .store(in: &cancellables)*/
     }
     
     deinit {
-        unsubscribe()
-        webSocket.disconnect()
+        print("x deinit: \(type(of: self))")
+        
+        // TODO: Fix. ~Levi
+        //unsubscribe()
+        //webSocket.disconnect()
     }
     
     var didSubscribePublisher: AnyPublisher<WebSocketChannel, Never> {
@@ -60,6 +65,9 @@ final class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberIn
         
         channelToSubscribeTo = channel
         
+        // TODO: Fix. ~Levi
+        
+        /*
         if webSocket.connectionState != .connected && webSocket.connectionState != .connecting {
             
             webSocket.connect()
@@ -67,7 +75,7 @@ final class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberIn
         else if webSocket.connectionState == .connected {
             
             handleDidConnectToWebsocket()
-        }
+        }*/
     }
     
     func unsubscribe() {
@@ -86,7 +94,10 @@ final class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberIn
     }
     
     private func handleDidConnectToWebsocket() {
-               
+              
+        // TODO: Fix. ~Levi
+        
+        /*
         if loggingEnabled {
             print("\n ActionCableChannelSubscriber: handleDidConnectToWebsocket()")
         }
@@ -109,7 +120,7 @@ final class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberIn
             
         } catch let error {
             assertionFailure(error.localizedDescription)
-        }
+        }*/
     }
     
     private func handleDidReceiveText(text: String) {

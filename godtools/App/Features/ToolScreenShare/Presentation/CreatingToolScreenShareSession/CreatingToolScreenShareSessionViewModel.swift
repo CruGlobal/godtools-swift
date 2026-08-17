@@ -72,9 +72,9 @@ final class CreatingToolScreenShareSessionViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        
-        tractRemoteSharePublisher
-            .createChannelForPublish()
+        Task {
+            await tractRemoteSharePublisher.createChannelForPublish()
+        }
     }
     
     deinit {

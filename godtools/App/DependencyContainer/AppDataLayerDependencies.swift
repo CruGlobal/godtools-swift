@@ -211,6 +211,10 @@ final class AppDataLayerDependencies: Sendable {
         )
     }
     
+    func getConsoleLogger(enabled: Bool) -> ConsoleLoggerInterface {
+        return ConsoleLogger(enabled: enabled)
+    }
+    
     func getDateService() -> DateServiceInterface {
         return DateService()
     }
@@ -871,8 +875,11 @@ final class AppDataLayerDependencies: Sendable {
         )
     }
     
-    func getWebSocket(url: URL) -> WebSocketInterface {
-        return URLSessionWebSocket(url: url)
+    func getWebSocket(url: URL) -> URLSessionWebSocket {
+        return URLSessionWebSocket(
+            url: url,
+            consoleLogger: getConsoleLogger(enabled: getAppBuild().isDebug)
+        )
     }
 }
 

@@ -9,12 +9,12 @@
 import Foundation
 import Combine
 
-final class TractRemoteShareSubscriber: NSObject {
+final class TractRemoteShareSubscriber {
             
     private static let timeoutIntervalSeconds: TimeInterval = 10
     
-    private let webSocket: WebSocketInterface
-    private let webSocketChannelSubscriber: WebSocketChannelSubscriberInterface
+    private let webSocket: URLSessionWebSocket
+    private let webSocketChannelSubscriber: ActionCableChannelSubscriber
     private let didSubscribeSubject: PassthroughSubject<WebSocketChannel, Never> = PassthroughSubject()
     private let didFailToSubscribeSubject: PassthroughSubject<TractRemoteShareSubscriberError, Never> = PassthroughSubject()
     private let navigationEventSubject: PassthroughSubject<TractRemoteShareNavigationEvent, Never> = PassthroughSubject()
@@ -25,8 +25,8 @@ final class TractRemoteShareSubscriber: NSObject {
     private var isSubscribingToChannel: WebSocketChannel?
     
     init(
-        webSocket: WebSocketInterface,
-        webSocketChannelSubscriber: WebSocketChannelSubscriberInterface,
+        webSocket: URLSessionWebSocket,
+        webSocketChannelSubscriber: ActionCableChannelSubscriber,
         loggingEnabled: Bool
     ) {
         
@@ -34,8 +34,9 @@ final class TractRemoteShareSubscriber: NSObject {
         self.webSocketChannelSubscriber = webSocketChannelSubscriber
         self.loggingEnabled = loggingEnabled
         
-        super.init()
-        
+        // TODO: Fix. ~Levi
+                
+        /*
         webSocket
             .didReceiveTextPublisher
             .sink(receiveValue: { [weak self] (text: String) in
@@ -51,7 +52,7 @@ final class TractRemoteShareSubscriber: NSObject {
                 
                 self?.didSubscribeSubject.send(channel)
             }
-            .store(in: &cancellables)
+            .store(in: &cancellables)*/
     }
     
     deinit {
@@ -89,7 +90,10 @@ final class TractRemoteShareSubscriber: NSObject {
     }
     
     var webSocketIsConnected: Bool {
-        return webSocket.connectionState == .connected
+        return false
+        
+        // TODO: Fix.
+        //return webSocket.connectionState == .connected
     }
     
     var isSubscribedToChannel: Bool {
@@ -123,7 +127,9 @@ final class TractRemoteShareSubscriber: NSObject {
         webSocketChannelSubscriber.unsubscribe()
         
         if disconnectSocket {
-            webSocket.disconnect()
+            
+            // TODO: Fix. ~Levi
+            //webSocket.disconnect()
         }
     }
 }

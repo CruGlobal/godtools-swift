@@ -9,12 +9,12 @@
 import Foundation
 import Combine
 
-final class TractRemoteSharePublisher: NSObject {
+final class TractRemoteSharePublisher: Sendable {
         
     private static let timeoutIntervalSeconds: TimeInterval = 10
     
-    private let webSocket: WebSocketInterface
-    private let webSocketChannelPublisher: WebSocketChannelPublisherInterface
+    private let webSocket: URLSessionWebSocket
+    private let webSocketChannelPublisher: ActionCableChannelPublisher
     private let didCreateChannelSubject: PassthroughSubject<WebSocketChannel, Never> = PassthroughSubject()
     private let didFailToCreateChannelSubject: PassthroughSubject<TractRemoteSharePublisherError, Never> = PassthroughSubject()
     private let loggingEnabled: Bool
@@ -25,17 +25,15 @@ final class TractRemoteSharePublisher: NSObject {
     private(set) var tractRemoteShareChannel: WebSocketChannel?
         
     init(
-        webSocket: WebSocketInterface,
-        webSocketChannelPublisher: WebSocketChannelPublisherInterface,
+        webSocket: URLSessionWebSocket,
+        webSocketChannelPublisher: ActionCableChannelPublisher,
         loggingEnabled: Bool
     ) {
         
         self.webSocket = webSocket
         self.webSocketChannelPublisher = webSocketChannelPublisher
         self.loggingEnabled = loggingEnabled
-        
-        super.init()
-        
+                
         webSocketChannelPublisher
             .didCreateChannelPublisher
             .sink { [weak self] (channel: WebSocketChannel) in
@@ -79,7 +77,10 @@ final class TractRemoteSharePublisher: NSObject {
     }
     
     var webSocketIsConnected: Bool {
-        return webSocket.connectionState == .connected
+        
+        return false
+        // TODO: Fix. ~Levi
+        //return webSocket.connectionState == .connected
     }
     
     var isSubscriberChannelCreatedForPublish: Bool {
@@ -90,7 +91,7 @@ final class TractRemoteSharePublisher: NSObject {
         return webSocketChannelPublisher.subscriberChannel?.id
     }
     
-    func createChannelForPublish() {
+    func createChannelForPublish() async {
         
         endPublishingSession(disconnectSocket: false)
                 
@@ -103,7 +104,7 @@ final class TractRemoteSharePublisher: NSObject {
             self?.didFailToCreateChannelSubject.send(.timedOut)
         }
         
-        webSocketChannelPublisher.createChannel(channel: channel)
+        await webSocketChannelPublisher.createChannel(channel: channel)
     }
     
     func endPublishingSession(disconnectSocket: Bool) {
@@ -112,7 +113,9 @@ final class TractRemoteSharePublisher: NSObject {
         tractRemoteShareChannel = nil
         
         if disconnectSocket {
-            webSocket.disconnect()
+           
+            // TODO: Fix. ~Levi
+            //webSocket.disconnect()
         }
     }
     
