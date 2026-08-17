@@ -70,13 +70,19 @@ final class OnboardingTutorialViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        Publishers.CombineLatest(
+        Publishers.CombineLatest3(
             $currentPage,
-            $pages
+            $pages,
+            $strings
         )
         .receive(on: DispatchQueue.main)
-        .sink { [weak self] (currentPage: Int, pages: [OnboardingTutorialPage]) in
-            self?.didSetPage(page: currentPage, pages: pages)
+        .sink { [weak self] (
+            currentPage: Int,
+            pages: [OnboardingTutorialPage],
+            strings: OnboardingTutorialStringsDomainModel
+        ) in
+            
+            self?.didSetPage(page: currentPage, pages: pages, strings: strings)
         }
         .store(in: &cancellables)
         
@@ -104,7 +110,7 @@ final class OnboardingTutorialViewModel: ObservableObject {
         showsChooseLanguageButton = showsChooseAppLanguageButtonOnPages.contains(page)
     }
     
-    private func didSetPage(page: Int, pages: [OnboardingTutorialPage]) {
+    private func didSetPage(page: Int, pages: [OnboardingTutorialPage], strings: OnboardingTutorialStringsDomainModel) {
                 
         updateShowsChooseLanguageButtonState(page: page)
         
