@@ -132,11 +132,8 @@ final class ToolScreenShareTutorialViewModel: ObservableObject {
     
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
         
-        Task {
-            
-            strings = await getToolScreenShareTutorialStringsUseCase
-                .execute(appLanguage: appLanguage)
-        }
+        strings = getToolScreenShareTutorialStringsUseCase
+            .execute(appLanguage: appLanguage)
     }
     
     private func markToolScreenShareTutorialViewed() {

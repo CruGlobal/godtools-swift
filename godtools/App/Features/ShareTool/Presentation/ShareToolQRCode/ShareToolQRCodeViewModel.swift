@@ -48,11 +48,8 @@ final class ShareToolQRCodeViewModel: ObservableObject {
 
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
 
-        Task {
-
-            strings = await getShareToolQRCodeStringsUseCase
-                .execute(appLanguage: appLanguage)
-        }
+        strings = getShareToolQRCodeStringsUseCase
+            .execute(appLanguage: appLanguage)
     }
 }
 

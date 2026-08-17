@@ -36,7 +36,7 @@ final class ShareToolFlow: GTFlow {
         
         let getShareToolStringsUseCase = appDiContainer.feature.shareTool.domainLayer.getShareToolStringsUseCase()
         
-        let strings = await getShareToolStringsUseCase
+        let strings = getShareToolStringsUseCase
             .execute(
                 toolId: toolId,
                 toolLanguageId: toolLanguageId,

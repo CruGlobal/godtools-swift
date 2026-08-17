@@ -49,11 +49,8 @@ final class DeleteAccountViewModel: ObservableObject {
     
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
 
-        Task {
-
-            strings = await getDeleteAccountStringsUseCase
-                .execute(appLanguage: appLanguage)
-        }
+        strings = getDeleteAccountStringsUseCase
+            .execute(appLanguage: appLanguage)
     }
 }
 

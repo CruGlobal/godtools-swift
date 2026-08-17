@@ -111,14 +111,11 @@ final class LocalizationSettingsViewModel: ObservableObject {
     
     private func didSetApplanguage(appLanguage: AppLanguageDomainModel) {
 
-        Task {
+        searchBarStrings = getSearchBarStringsUseCase
+            .execute(appLanguage: appLanguage)
 
-            searchBarStrings = await getSearchBarStringsUseCase
-                .execute(appLanguage: appLanguage)
-
-            strings = await getLocalizationSettingsStringsUseCase
-                .execute(appLanguage: appLanguage)
-        }
+        strings = getLocalizationSettingsStringsUseCase
+            .execute(appLanguage: appLanguage)
     }
 }
 

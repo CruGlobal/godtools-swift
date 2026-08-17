@@ -90,9 +90,9 @@ final class TutorialViewModel: ObservableObject {
     
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
 
-        Task {
+        strings = getTutorialStringsUseCase.execute(appLanguage: appLanguage)
 
-            strings = await getTutorialStringsUseCase.execute(appLanguage: appLanguage)
+        Task {
 
             tutorialPages = await getTutorialUseCase.execute(appLanguage: appLanguage).pages
         }
