@@ -26,11 +26,11 @@ struct GetLessonSwipeTutorialStringsUseCaseTests {
             TestArgument(translateInLanguage: LanguageCodeDomainModel.spanish.value)
         ]
     )
-    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) async {
+    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) {
 
         let useCase = getUseCase()
 
-        let strings: LessonSwipeTutorialStringsDomainModel = await useCase.execute(translateInLanguage: argument.translateInLanguage)
+        let strings: LessonSwipeTutorialStringsDomainModel = useCase.execute(translateInLanguage: argument.translateInLanguage)
 
         #expect(strings.title == "\(argument.translateInLanguage):\(LocalizableStringKeys.lessonsSwipeTutorialTitle.key)")
         #expect(strings.closeButtonText == "\(argument.translateInLanguage):\(LocalizableStringKeys.lessonsSwipeTutorialButtonText.key)")

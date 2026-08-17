@@ -35,11 +35,11 @@ struct GetConfirmRemoveToolFromFavoritesStringsUseCaseTests {
             TestArgument(appLanguage: LanguageCodeDomainModel.spanish.value, expectedMessage: "¿Eliminar \(toolNameInSpanish) de favoritos?")
         ]
     )
-    func stringsAreLocalizedAndMessageContainsTranslatedToolName(argument: TestArgument) async throws {
+    func stringsAreLocalizedAndMessageContainsTranslatedToolName(argument: TestArgument) throws {
 
         let useCase = try getUseCase()
 
-        let strings: ConfirmRemoveToolFromFavoritesStringsDomainModel = await useCase.execute(
+        let strings: ConfirmRemoveToolFromFavoritesStringsDomainModel = useCase.execute(
             toolId: Self.toolId,
             appLanguage: argument.appLanguage
         )

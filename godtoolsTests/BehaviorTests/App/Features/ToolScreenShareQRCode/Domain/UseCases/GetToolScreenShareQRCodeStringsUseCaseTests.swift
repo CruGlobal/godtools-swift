@@ -26,11 +26,11 @@ struct GetToolScreenShareQRCodeStringsUseCaseTests {
             TestArgument(appLanguage: LanguageCodeDomainModel.spanish.value)
         ]
     )
-    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) async {
+    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) {
 
         let useCase = getUseCase()
 
-        let strings: ToolScreenShareQRCodeStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
+        let strings: ToolScreenShareQRCodeStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.qrCodeDescription == "\(argument.appLanguage):\(LocalizableStringKeys.toolScreenShareQrCodeDescription.key)")
         #expect(strings.closeButtonTitle == "\(argument.appLanguage):\(LocalizableStringKeys.toolScreenShareQrCodeCloseButtonTitle.key)")

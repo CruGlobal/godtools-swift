@@ -26,11 +26,11 @@ struct GetDownloadableLanguagesStringsUseCaseTests {
             TestArgument(appLanguage: LanguageCodeDomainModel.spanish.value)
         ]
     )
-    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) async {
+    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) {
 
         let useCase = getUseCase()
 
-        let strings: DownloadableLanguagesStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
+        let strings: DownloadableLanguagesStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.navTitle == "\(argument.appLanguage):\(LocalizableStringKeys.languageSettingsDownloadableLanguagesTitle.key)")
     }

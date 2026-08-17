@@ -20,7 +20,7 @@ struct GetLocalizationSettingsConfirmationStringsUseCaseTests {
         Then: The title is formatted with the selected country name and the remaining strings are localized.
         """
     )
-    func titleContainsTheSelectedCountryName() async {
+    func titleContainsTheSelectedCountryName() {
 
         let useCase = getUseCase()
 
@@ -31,7 +31,7 @@ struct GetLocalizationSettingsConfirmationStringsUseCaseTests {
             )
         )
 
-        let strings: LocalizationSettingsConfirmationStringsDomainModel = await useCase.execute(
+        let strings: LocalizationSettingsConfirmationStringsDomainModel = useCase.execute(
             appLanguage: LanguageCodeDomainModel.english.value,
             selectedCountry: selectedCountry
         )
@@ -51,7 +51,7 @@ struct GetLocalizationSettingsConfirmationStringsUseCaseTests {
         Then: The title uses the no country title and has no highlighted text.
         """
     )
-    func titleUsesNoCountryTitleWhenPreferNotToSay() async {
+    func titleUsesNoCountryTitleWhenPreferNotToSay() {
 
         let useCase = getUseCase()
 
@@ -59,7 +59,7 @@ struct GetLocalizationSettingsConfirmationStringsUseCaseTests {
             LocalizationSettingsPreferNotToSayDomainModel(preferNotToSayText: "Prefer not to say")
         )
 
-        let strings: LocalizationSettingsConfirmationStringsDomainModel = await useCase.execute(
+        let strings: LocalizationSettingsConfirmationStringsDomainModel = useCase.execute(
             appLanguage: LanguageCodeDomainModel.english.value,
             selectedCountry: selectedCountry
         )

@@ -26,11 +26,11 @@ struct GetToolScreenShareTutorialStringsUseCaseTests {
             TestArgument(appLanguage: LanguageCodeDomainModel.spanish.value)
         ]
     )
-    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) async {
+    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) {
 
         let useCase = getUseCase()
 
-        let strings: ToolScreenShareTutorialStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
+        let strings: ToolScreenShareTutorialStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.generateQRCodeActionTitle == "\(argument.appLanguage):\(LocalizableStringKeys.screenShareTutorialGenerateQRCodeButtonTitle.key)")
         #expect(strings.nextTutorialPageActionTitle == "\(argument.appLanguage):\(LocalizableStringKeys.tutorialContinueButtonTitleContinue.key)")
