@@ -18,7 +18,7 @@ actor FileCache {
     
     init(rootDirectory: URL) {
 
-        self.fileManager = FileManager()
+        self.fileManager = FileManager.default
         self.rootDirectory = rootDirectory
         self.errorDomain = "\(type(of: self))"
     }
