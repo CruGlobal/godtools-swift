@@ -57,12 +57,9 @@ final class LearnToShareToolViewModel: ObservableObject {
         $appLanguage
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
-                return AnyPublisher() {
-                    await getLearnToShareToolTutorialUseCase
-                        .execute(appLanguage: appLanguage)
-                }
+                getLearnToShareToolTutorialUseCase
+                    .execute(appLanguage: appLanguage)
             }
-            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (tutorial: [LearnToShareToolItemDomainModel]) in
                 
@@ -107,11 +104,8 @@ final class LearnToShareToolViewModel: ObservableObject {
 
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
 
-        Task {
-
-            strings = await getLearnToShareToolStringsUseCase
-                .execute(appLanguage: appLanguage)
-        }
+        strings = getLearnToShareToolStringsUseCase
+            .execute(appLanguage: appLanguage)
     }
 
     private var isOnFirstPage: Bool {

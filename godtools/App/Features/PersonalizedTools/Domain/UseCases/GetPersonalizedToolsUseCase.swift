@@ -87,7 +87,7 @@ final class GetPersonalizedToolsUseCase: Sendable {
                     )
 
                 let showsPersonalizationUnavailable: Bool = !hasCountry && tools.isEmpty
-                let unavailableStrings: PersonalizedToolsUnavailableDomainModel? = showsPersonalizationUnavailable ? await self.getToolsUnavailable(appLanguage: appLanguage) : nil
+                let unavailableStrings: PersonalizedToolsUnavailableDomainModel? = showsPersonalizationUnavailable ? self.getToolsUnavailable(appLanguage: appLanguage) : nil
 
                 return PersonalizedToolsDomainModel(
                     tools: tools,
@@ -98,11 +98,23 @@ final class GetPersonalizedToolsUseCase: Sendable {
         .eraseToAnyPublisher()
     }
 
-    private func getToolsUnavailable(appLanguage: AppLanguageDomainModel) async -> PersonalizedToolsUnavailableDomainModel {
+    private func getToolsUnavailable(appLanguage: AppLanguageDomainModel) -> PersonalizedToolsUnavailableDomainModel {
+
+        let titleKey: String = LocalizableStringKeys.toolsPersonalizationUnavailableTitle.key
+        let messageKey: String = LocalizableStringKeys.toolsPersonalizationUnavailableMessage.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                titleKey,
+                messageKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
+        )
 
         return PersonalizedToolsUnavailableDomainModel(
-            title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.toolsPersonalizationUnavailableTitle.key),
-            message: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.toolsPersonalizationUnavailableMessage.key)
+            title: strings[titleKey] ?? "",
+            message: strings[messageKey] ?? ""
         )
     }
 }

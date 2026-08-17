@@ -59,8 +59,20 @@ final class GetToolDetailsUseCase: Sendable {
             return ToolDetailsDomainModel.emptyValue
         }
         
+        let totalViewsKey: String = LocalizableStringKeys.totalViews.key
+        let versionsDescriptionKey: String = LocalizableStringKeys.toolDetailsVersionsMessage.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                totalViewsKey,
+                versionsDescriptionKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
+        )
+
         let numberOfViewsString: String = String(
-            format: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.totalViews.key).capitalized,
+            format: (strings[totalViewsKey] ?? "").capitalized,
             locale: Locale(identifier: appLanguage),
             toolDataModel.totalViews
         )
@@ -86,7 +98,7 @@ final class GetToolDetailsUseCase: Sendable {
             name: translation.translatedName,
             numberOfViews: numberOfViewsString,
             versions: toolVersions,
-            versionsDescription: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.toolDetailsVersionsMessage.key)
+            versionsDescription: strings[versionsDescriptionKey] ?? ""
         )
         
         return toolDetails
@@ -110,7 +122,12 @@ final class GetToolDetailsUseCase: Sendable {
         return languagesAvailable
     }
     
-    private func getToolVersions(toolDataModel: ResourceDataModel, translateInLanguage: BCP47LanguageIdentifier, toolPrimaryLanguage: BCP47LanguageIdentifier, toolParallelLanguage: BCP47LanguageIdentifier?) async throws -> [ToolVersionDomainModel] {
+    private func getToolVersions(
+        toolDataModel: ResourceDataModel,
+        translateInLanguage: BCP47LanguageIdentifier,
+        toolPrimaryLanguage: BCP47LanguageIdentifier,
+        toolParallelLanguage: BCP47LanguageIdentifier?
+    ) async throws -> [ToolVersionDomainModel] {
         
         guard let metaToolId = toolDataModel.metatoolId, !metaToolId.isEmpty else {
             return Array()
@@ -159,7 +176,7 @@ final class GetToolDetailsUseCase: Sendable {
                 dataModelId: resourceVariant.id,
                 description: description,
                 name: name,
-                numberOfLanguages: await getNumberOfLanguages(translateInLanguage: translateInLanguage, numberOfLanguages: resourceVariant.languageIds.count),
+                numberOfLanguages: getNumberOfLanguages(translateInLanguage: translateInLanguage, numberOfLanguages: resourceVariant.languageIds.count),
                 toolLanguageName: toolPrimaryLanguageName,
                 toolLanguageNameIsSupported: getToolSupportsLanguage(resource: resourceVariant, language: toolPrimaryLanguage),
                 toolParallelLanguageName: toolParallelLanguageName,
@@ -172,12 +189,19 @@ final class GetToolDetailsUseCase: Sendable {
         return toolVersions
     }
     
-    private func getNumberOfLanguages(translateInLanguage: BCP47LanguageIdentifier, numberOfLanguages: Int) async -> String {
+    private func getNumberOfLanguages(translateInLanguage: BCP47LanguageIdentifier, numberOfLanguages: Int) -> String {
         
-        let localizedNumberOfLanguages = await localizationServices.stringForLocaleElseSystemElseEnglish(
-            localeIdentifier: translateInLanguage,
-            key: LocalizableStringDictKeys.toolDetailsToolVersionNumberOfLanguages.key
+        let localizedNumberOfLanguagesKey: String = LocalizableStringDictKeys.toolDetailsToolVersionNumberOfLanguages.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                localizedNumberOfLanguagesKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: translateInLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
+
+        let localizedNumberOfLanguages: String = strings[localizedNumberOfLanguagesKey] ?? ""
         
         let stringLocaleFormat = String(
             format: localizedNumberOfLanguages,

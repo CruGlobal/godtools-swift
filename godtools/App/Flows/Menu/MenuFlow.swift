@@ -293,7 +293,7 @@ final class MenuFlow: GTFlow {
             
             Task {
 
-                let confirmDeleteAccountView = await getConfirmDeleteAccountView()
+                let confirmDeleteAccountView = getConfirmDeleteAccountView()
 
                 dismissView(animated: true, completion: { [weak self] in
 
@@ -321,13 +321,19 @@ final class MenuFlow: GTFlow {
             
             dismissView(animated: true, completion: { [weak self] in
 
-                Task {
+                let titleKey: String = LocalizableStringKeys.accountDeletedAlertTitle.key
+                let messageKey: String = LocalizableStringKeys.accountDeletedAlertMessage.key
 
-                    let title: String = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.accountDeletedAlertTitle.key)
-                    let message: String = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.accountDeletedAlertMessage.key)
+                let strings: [String: String] = localizationServices.stringsForKeys(
+                    keys: [
+                        titleKey,
+                        messageKey
+                    ],
+                    fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+                    shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
+                )
 
-                    self?.presentAlert(appLanguage: appLanguage, title: title, message: message)
-                }
+                self?.presentAlert(appLanguage: appLanguage, title: strings[titleKey] ?? "", message: strings[messageKey] ?? "")
             })
             
         case .didFinishAccountDeletionWithErrorFromDeleteAccountProgress(let error):
@@ -493,27 +499,36 @@ extension MenuFlow {
             return
         }
 
-        Task {
+        let alertMessage: AlertMessage = self.getAuthErrorAlertMessage(authError: authError)
 
-            let alertMessage: AlertMessage = await self.getAuthErrorAlertMessage(authError: authError)
-
-            self.presentAlertMessage(appLanguage: self.appLanguage, alertMessage: alertMessage)
-        }
+        self.presentAlertMessage(appLanguage: self.appLanguage, alertMessage: alertMessage)
     }
     
-    private func getAuthErrorAlertMessage(authError: AuthErrorDomainModel) async -> AlertMessage {
+    private func getAuthErrorAlertMessage(authError: AuthErrorDomainModel) -> AlertMessage {
         
         let localizationServices: LocalizationServicesInterface = appDiContainer.core.dataLayer.getLocalizationServices()
         let appLanguageLocaleId = appLanguage.localeId
         
+        let accountAlreadyExistsMessageKey: String = LocalizableStringKeys.authErrorUserAccountAlreadyExistsMessage.key
+        let accountNotFoundMessageKey: String = LocalizableStringKeys.authErrorUserAccountNotFoundMessage.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                accountAlreadyExistsMessageKey,
+                accountNotFoundMessageKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguageLocaleId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
+        )
+
         let message: String
         
         switch authError {
         case .accountAlreadyExists:
-            message = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageLocaleId, key: LocalizableStringKeys.authErrorUserAccountAlreadyExistsMessage.key)
+            message = strings[accountAlreadyExistsMessageKey] ?? ""
             
         case .accountNotFound:
-            message = await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageLocaleId, key: LocalizableStringKeys.authErrorUserAccountNotFoundMessage.key)
+            message = strings[accountNotFoundMessageKey] ?? ""
             
         case .other(let error):
             message = error.localizedDescription
@@ -614,19 +629,33 @@ extension MenuFlow {
         return modal
     }
     
-    private func getConfirmDeleteAccountView() async -> UIViewController {
+    private func getConfirmDeleteAccountView() -> UIViewController {
         
         let localizationServices: LocalizationServicesInterface = appDiContainer.core.dataLayer.getLocalizationServices()
-        
+
+        let titleKey: String = LocalizableStringKeys.confirmDeleteAccountTitle.key
+        let confirmButtonTitleKey: String = LocalizableStringKeys.confirmDeleteAccountConfirmButtonTitle.key
+        let cancelButtonTitleKey: String = LocalizableStringKeys.cancel.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                titleKey,
+                confirmButtonTitleKey,
+                cancelButtonTitleKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
+        )
+
         let viewController = UIAlertController(
-            title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.confirmDeleteAccountTitle.key),
+            title: strings[titleKey] ?? "",
             message: "",
             preferredStyle: .actionSheet
         )
         
         viewController.addAction(
             UIAlertAction(
-                title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.confirmDeleteAccountConfirmButtonTitle.key),
+                title: strings[confirmButtonTitleKey] ?? "",
                 style: .destructive,
                 handler: { [weak self] (action: UIAlertAction) in
                     
@@ -637,7 +666,7 @@ extension MenuFlow {
         
         viewController.addAction(
             UIAlertAction(
-                title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.cancel.key),
+                title: strings[cancelButtonTitleKey] ?? "",
                 style: .cancel,
                 handler: { (action: UIAlertAction) in
                 }

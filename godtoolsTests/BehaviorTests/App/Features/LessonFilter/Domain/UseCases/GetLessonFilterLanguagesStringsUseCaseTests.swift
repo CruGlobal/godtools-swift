@@ -26,11 +26,11 @@ struct GetLessonFilterLanguagesStringsUseCaseTests {
             TestArgument(appLanguage: LanguageCodeDomainModel.spanish.value)
         ]
     )
-    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) async {
+    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) {
 
         let useCase = getUseCase()
 
-        let strings: LessonFilterLanguagesStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
+        let strings: LessonFilterLanguagesStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.navTitle == "\(argument.appLanguage):\(LocalizableStringKeys.lessonsFilterLanguageNavTitle.key)")
     }

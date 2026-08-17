@@ -62,11 +62,8 @@ final class DownloadToolProgressViewModel: ObservableObject {
     
     private func didSetApplanguage(appLanguage: AppLanguageDomainModel) {
 
-        Task {
-
-            strings = await getDownloadToolProgressStringsUseCase
-                .execute(toolId: toolId, appLanguage: appLanguage)
-        }
+        strings = getDownloadToolProgressStringsUseCase
+            .execute(toolId: toolId, appLanguage: appLanguage)
     }
     
     func completeDownloadProgress(didCompleteProgress: @escaping (() -> Void)) {

@@ -67,31 +67,28 @@ final class SocialSignInViewModel: ObservableObject {
 
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
 
-        Task {
+        switch authenticationType {
+        case .createAccount:
 
-            switch authenticationType {
-            case .createAccount:
+            let strings = getSocialCreateAccountStringsUseCase
+                .execute(appLanguage: appLanguage)
 
-                let strings = await getSocialCreateAccountStringsUseCase
-                    .execute(appLanguage: appLanguage)
+            title = strings.title
+            subtitle = strings.subtitle
+            signInWithAppleButtonTitle = strings.createWithAppleActionTitle
+            signInWithFacebookButtonTitle = strings.createWithFacebookActionTitle
+            signInWithGoogleButtonTitle = strings.createWithGoogleActionTitle
 
-                title = strings.title
-                subtitle = strings.subtitle
-                signInWithAppleButtonTitle = strings.createWithAppleActionTitle
-                signInWithFacebookButtonTitle = strings.createWithFacebookActionTitle
-                signInWithGoogleButtonTitle = strings.createWithGoogleActionTitle
+        case .login:
 
-            case .login:
+            let strings = getSocialSignInStringsUseCase
+                .execute(appLanguage: appLanguage)
 
-                let strings = await getSocialSignInStringsUseCase
-                    .execute(appLanguage: appLanguage)
-
-                title = strings.title
-                subtitle = strings.subtitle
-                signInWithAppleButtonTitle = strings.signInWithAppleActionTitle
-                signInWithFacebookButtonTitle = strings.signInWithFacebookActionTitle
-                signInWithGoogleButtonTitle = strings.signInWithGoogleActionTitle
-            }
+            title = strings.title
+            subtitle = strings.subtitle
+            signInWithAppleButtonTitle = strings.signInWithAppleActionTitle
+            signInWithFacebookButtonTitle = strings.signInWithFacebookActionTitle
+            signInWithGoogleButtonTitle = strings.signInWithGoogleActionTitle
         }
     }
 

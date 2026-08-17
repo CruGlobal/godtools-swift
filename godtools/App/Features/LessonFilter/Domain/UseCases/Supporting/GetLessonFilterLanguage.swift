@@ -56,7 +56,7 @@ final class GetLessonFilterLanguage: Sendable {
         let languageNameTranslatedInLanguage = await getTranslatedLanguageName.getLanguageName(language: language.code, translatedInLanguage: language.code)
         let languageNameTranslatedInAppLanguage = await getTranslatedLanguageName.getLanguageName(language: language.code, translatedInLanguage: translatedInAppLanguage)
         
-        let lessonsAvailableText: String = await getLessonsAvailableText(lessonsAvailableCount: lessonsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
+        let lessonsAvailableText: String = getLessonsAvailableText(lessonsAvailableCount: lessonsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
         
         return LessonFilterLanguageDomainModel(
             languageId: language.id,
@@ -67,12 +67,19 @@ final class GetLessonFilterLanguage: Sendable {
         )
     }
     
-    private func getLessonsAvailableText(lessonsAvailableCount: Int, translatedInAppLanguage: AppLanguageDomainModel) async -> String {
+    private func getLessonsAvailableText(lessonsAvailableCount: Int, translatedInAppLanguage: AppLanguageDomainModel) -> String {
         
-        let formatString = await localizationServices.stringForLocaleElseSystemElseEnglish(
-            localeIdentifier: translatedInAppLanguage.localeId,
-            key: LocalizableStringKeys.lessonsFilterLessonsAvailable.key
+        let formatStringKey: String = LocalizableStringKeys.lessonsFilterLessonsAvailable.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                formatStringKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: translatedInAppLanguage.localeId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
+
+        let formatString: String = strings[formatStringKey] ?? ""
         
         return stringWithLocaleCount.getString(format: formatString, locale: Locale(identifier: translatedInAppLanguage), count: lessonsAvailableCount)
     }

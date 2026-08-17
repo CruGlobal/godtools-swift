@@ -44,7 +44,7 @@ final class GetToolsListItems: Sendable {
             languageForAvailabilityTextModel = nil
         }
 
-        let strings: ToolListItemStringsDomainModel = await getToolListItemStrings.getStrings(appLanguage: appLanguage)
+        let strings: ToolListItemStringsDomainModel = getToolListItemStrings.getStrings(appLanguage: appLanguage)
 
         var toolListItems: [ToolListItemDomainModel] = Array()
 

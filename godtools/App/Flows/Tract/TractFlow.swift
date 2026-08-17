@@ -207,13 +207,27 @@ class TractFlow: GTFlow {
 
             let localizationServices: LocalizationServicesInterface = appDiContainer.core.dataLayer.getLocalizationServices()
 
+            let messageKey: String = LocalizableStringKeys.exitTractRemoteShareSessionMessage.key
+            let acceptTitleKey: String = LocalizableStringKeys.yes.key
+            let cancelTitleKey: String = LocalizableStringKeys.no.key
+
+            let strings: [String: String] = localizationServices.stringsForKeys(
+                keys: [
+                    messageKey,
+                    acceptTitleKey,
+                    cancelTitleKey
+                ],
+                fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+                shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
+            )
+
             Task {
 
                 let view = AlertMessageView(
                     title: "",
-                    message: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.exitTractRemoteShareSessionMessage.key),
-                    acceptTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.yes.key).uppercased(),
-                    cancelTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.no.key).uppercased(),
+                    message: strings[messageKey] ?? "",
+                    acceptTitle: (strings[acceptTitleKey] ?? "").uppercased(),
+                    cancelTitle: (strings[cancelTitleKey] ?? "").uppercased(),
                     acceptTapped: { [weak self] in
 
                         self?.navigate(step: AppFlowStep.acceptTappedFromExitToolRemoteShare)

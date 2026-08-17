@@ -17,14 +17,20 @@ final class GetToolSettingsToolLanguagesListStringsUseCase: Sendable {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) async -> ToolSettingsToolLanguagesListStringsDomainModel {
-        
-        let localeId: String = appLanguage
-        
-        let strings = ToolSettingsToolLanguagesListStringsDomainModel(
-            deleteParallelLanguageActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsLanguagesListDeleteLanguageTitle.key)
+    func execute(appLanguage: AppLanguageDomainModel) -> ToolSettingsToolLanguagesListStringsDomainModel {
+
+        let deleteParallelLanguageActionTitleKey: String = LocalizableStringKeys.toolSettingsLanguagesListDeleteLanguageTitle.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                deleteParallelLanguageActionTitleKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
-        
-        return strings
+
+        return ToolSettingsToolLanguagesListStringsDomainModel(
+            deleteParallelLanguageActionTitle: strings[deleteParallelLanguageActionTitleKey] ?? ""
+        )
     }
 }

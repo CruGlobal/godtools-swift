@@ -17,25 +17,32 @@ final class GetDownloadArticlesErrorMessage: Sendable {
         self.localizationServices = localizationServices
     }
     
-    func getErrorMessage(appLanguage: AppLanguageDomainModel, error: Error) async -> String {
+    func getErrorMessage(appLanguage: AppLanguageDomainModel, error: Error) -> String {
         
         if error.isUrlErrorCancelledCode {
             
             return "The request was cancelled"
         }
-        else if error.isUrlErrorNotConnectedToInternetCode {
+
+        let noInternetKey: String = LocalizableStringKeys.noInternet.key
+        let downloadErrorKey: String = LocalizableStringKeys.downloadError.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                noInternetKey,
+                downloadErrorKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
+        )
+
+        if error.isUrlErrorNotConnectedToInternetCode {
             
-            return await localizationServices.stringForLocaleElseEnglish(
-                localeIdentifier: appLanguage,
-                key: LocalizableStringKeys.noInternet.key
-            )
+            return strings[noInternetKey] ?? ""
         }
         else {
             
-            return await localizationServices.stringForLocaleElseEnglish(
-                localeIdentifier: appLanguage,
-                key: LocalizableStringKeys.downloadError.key
-            )
+            return strings[downloadErrorKey] ?? ""
         }
     }
 }

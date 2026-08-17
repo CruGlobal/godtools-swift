@@ -436,10 +436,16 @@ final class AppDataLayerDependencies: Sendable {
         )
     }
     
-    func getLocalizationServices() -> LocalizationServicesInterface {
-        return LocalizationServices(
+    private func getLocalizationConfig() -> LocalizationConfig {
+        return LocalizationConfig(
             localizableStringsFilesBundle: Bundle.main,
             isUsingBaseInternationalization: false
+        )
+    }
+    
+    func getLocalizationServices() -> LocalizationServicesInterface {
+        return LocalizationServices(
+            config: getLocalizationConfig()
         )
     }
     

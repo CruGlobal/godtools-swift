@@ -11,23 +11,16 @@ import LocalizationServices
 
 protocol LocalizationServicesInterface: Sendable {
     
-    func stringForEnglish(key: String) async -> String
-    func stringForSystemElseEnglish(key: String) async -> String
-    func stringForLocaleElseEnglish(localeIdentifier: String?, key: String) async -> String
-    func stringForLocaleElseSystemElseEnglish(localeIdentifier: String?, key: String) async -> String
-    func stringForFirstLocaleElseEnglish(localeIdentifiers: [String], key: String) async -> String
+    func stringsForKeys(
+        keys: [String],
+        fetchOrder: [StringLocation],
+        shouldFallbackToKey: Bool
+    ) -> [String: String]
+    
+    func stringForEnglishElseKey(key: String) -> String
+    func stringForLocale(localeIdentifier: String, key: String) -> String?
 }
 
 extension LocalizationServices: LocalizationServicesInterface {
-    
-    func stringForFirstLocaleElseEnglish(localeIdentifiers: [String], key: String) async -> String {
-        
-        for localeId in localeIdentifiers {
-            if let string = await stringForLocale(localeIdentifier: localeId, key: key) {
-                return string
-            }
-        }
-        
-        return await stringForEnglish(key: key)
-    }
+
 }

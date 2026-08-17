@@ -28,29 +28,56 @@ final class GetLanguageSettingsStringsUseCase: Sendable {
     func execute(appLanguage: AppLanguageDomainModel) async -> LanguageSettingsStringsDomainModel {
         
         let localeId: String = appLanguage
-        
+
         let numberOfAppLanguages: Int = appLanguagesRepository.numberOfAppLanguages
-        
-        let localizedNumberOfLanguagesAvailable = await localizationServices.stringForLocaleElseSystemElseEnglish(
-            localeIdentifier: appLanguage,
-            key: LocalizableStringDictKeys.languageSettingsAppLanguageNumberAvailable.key
+
+        let numberOfAppLanguagesAvailableKey: String = LocalizableStringDictKeys.languageSettingsAppLanguageNumberAvailable.key
+
+        let numberOfAppLanguagesAvailableStrings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                numberOfAppLanguagesAvailableKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: localeId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
-        
+
+        let localizedNumberOfLanguagesAvailable: String = numberOfAppLanguagesAvailableStrings[numberOfAppLanguagesAvailableKey] ?? ""
+
         let numberOfAppLanguagesInterfaceString = String(
             format: localizedNumberOfLanguagesAvailable,
             locale: Locale(identifier: appLanguage),
             numberOfAppLanguages
         )
-        
+
+        let navTitleKey: String = LocalizableStringKeys.languageSettingsNavTitle.key
+        let appInterfaceLanguageTitleKey: String = LocalizableStringKeys.languageSettingsAppInterfaceTitle.key
+        let setAppLanguageMessageKey: String = LocalizableStringKeys.languageSettingsAppInterfaceMessage.key
+        let toolLanguagesAvailableOfflineTitleKey: String = LocalizableStringKeys.languageSettingsToolLanguagesAvailableOfflineTitle.key
+        let downloadToolsForOfflineMessageKey: String = LocalizableStringKeys.languageSettingsToolLanguagesAvailableOfflineMessage.key
+        let editDownloadedLanguagesButtonTitleKey: String = LocalizableStringKeys.languageSettingsToolLanguagesAvailableOfflineEditDownloadedLanguagesButtonTitle.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                navTitleKey,
+                appInterfaceLanguageTitleKey,
+                setAppLanguageMessageKey,
+                toolLanguagesAvailableOfflineTitleKey,
+                downloadToolsForOfflineMessageKey,
+                editDownloadedLanguagesButtonTitleKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: localeId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
+        )
+
         return LanguageSettingsStringsDomainModel(
-            navTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsNavTitle.key),
-            appInterfaceLanguageTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsAppInterfaceTitle.key),
+            navTitle: strings[navTitleKey] ?? "",
+            appInterfaceLanguageTitle: strings[appInterfaceLanguageTitleKey] ?? "",
             numberOfAppLanguagesAvailable: numberOfAppLanguagesInterfaceString,
-            setAppLanguageMessage: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsAppInterfaceMessage.key),
+            setAppLanguageMessage: strings[setAppLanguageMessageKey] ?? "",
             chooseAppLanguageButtonTitle: await getTranslatedLanguageName.getLanguageName(language: appLanguage, translatedInLanguage: appLanguage),
-            toolLanguagesAvailableOfflineTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsToolLanguagesAvailableOfflineTitle.key),
-            downloadToolsForOfflineMessage: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsToolLanguagesAvailableOfflineMessage.key),
-            editDownloadedLanguagesButtonTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsToolLanguagesAvailableOfflineEditDownloadedLanguagesButtonTitle.key)
+            toolLanguagesAvailableOfflineTitle: strings[toolLanguagesAvailableOfflineTitleKey] ?? "",
+            downloadToolsForOfflineMessage: strings[downloadToolsForOfflineMessageKey] ?? "",
+            editDownloadedLanguagesButtonTitle: strings[editDownloadedLanguagesButtonTitleKey] ?? ""
         )
     }
 }

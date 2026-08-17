@@ -16,17 +16,31 @@ final class GetResumeLessonProgressStringsUseCase: Sendable {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) async -> ResumeLessonProgressStringsDomainModel {
-        
+    func execute(appLanguage: AppLanguageDomainModel) -> ResumeLessonProgressStringsDomainModel {
+
         let localeId: String = appLanguage.localeId
-        
-        let strings = ResumeLessonProgressStringsDomainModel(
-            title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsResumeLessonModalTitle.key),
-            subtitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsResumeLessonModalSubtitle.key),
-            startOverButtonText: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsResumeLessonModalStartOverButton.key),
-            continueButtonText: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsResumeLessonModalContinueButton.key)
+
+        let titleKey: String = LocalizableStringKeys.lessonsResumeLessonModalTitle.key
+        let subtitleKey: String = LocalizableStringKeys.lessonsResumeLessonModalSubtitle.key
+        let startOverButtonTextKey: String = LocalizableStringKeys.lessonsResumeLessonModalStartOverButton.key
+        let continueButtonTextKey: String = LocalizableStringKeys.lessonsResumeLessonModalContinueButton.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                titleKey,
+                subtitleKey,
+                startOverButtonTextKey,
+                continueButtonTextKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: localeId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
-        
-        return strings
+
+        return ResumeLessonProgressStringsDomainModel(
+            title: strings[titleKey] ?? "",
+            subtitle: strings[subtitleKey] ?? "",
+            startOverButtonText: strings[startOverButtonTextKey] ?? "",
+            continueButtonText: strings[continueButtonTextKey] ?? ""
+        )
     }
 }

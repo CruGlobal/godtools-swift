@@ -17,16 +17,26 @@ final class GetDashboardStringsUseCase: Sendable {
         self.localizationServices = localizationServices
     }
     
-    func execute(translateInLanguage: AppLanguageDomainModel) async -> DashboardStringsDomainModel {
-        
-        let localeId: String = translateInLanguage
-        
-        let strings = DashboardStringsDomainModel(
-            lessonsActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolMenuItemLessons.key),
-            favoritesActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.myTools.key),
-            toolsActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolMenuItemTools.key)
+    func execute(translateInLanguage: AppLanguageDomainModel) -> DashboardStringsDomainModel {
+
+        let lessonsActionTitleKey: String = LocalizableStringKeys.toolMenuItemLessons.key
+        let favoritesActionTitleKey: String = LocalizableStringKeys.myTools.key
+        let toolsActionTitleKey: String = LocalizableStringKeys.toolMenuItemTools.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                lessonsActionTitleKey,
+                favoritesActionTitleKey,
+                toolsActionTitleKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: translateInLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
-        
-        return strings
+
+        return DashboardStringsDomainModel(
+            lessonsActionTitle: strings[lessonsActionTitleKey] ?? "",
+            favoritesActionTitle: strings[favoritesActionTitleKey] ?? "",
+            toolsActionTitle: strings[toolsActionTitleKey] ?? ""
+        )
     }
 }

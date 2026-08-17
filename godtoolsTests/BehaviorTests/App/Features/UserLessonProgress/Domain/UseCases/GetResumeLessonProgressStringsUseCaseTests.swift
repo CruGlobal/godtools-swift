@@ -26,11 +26,11 @@ struct GetResumeLessonProgressStringsUseCaseTests {
             TestArgument(appLanguage: LanguageCodeDomainModel.spanish.value)
         ]
     )
-    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) async {
+    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) {
 
         let useCase = getUseCase()
 
-        let strings: ResumeLessonProgressStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
+        let strings: ResumeLessonProgressStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.title == "\(argument.appLanguage):\(LocalizableStringKeys.lessonsResumeLessonModalTitle.key)")
         #expect(strings.subtitle == "\(argument.appLanguage):\(LocalizableStringKeys.lessonsResumeLessonModalSubtitle.key)")

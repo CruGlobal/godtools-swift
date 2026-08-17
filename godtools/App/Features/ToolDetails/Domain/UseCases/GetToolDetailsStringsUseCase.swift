@@ -17,23 +17,47 @@ final class GetToolDetailsStringsUseCase: Sendable {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: String) async -> ToolDetailsStringsDomainModel {
-                        
-        let localeId: String = appLanguage
-        
-        let strings = ToolDetailsStringsDomainModel(
-            aboutActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolDetailsAboutTitle.key),
-            addToFavoritesActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.addToFavorites.key),
-            bibleReferencesTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolDetailsBibleReferencesTitle.key),
-            conversationStartersTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolDetailsConversationStartersTitle.key),
-            languagesAvailableTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolSettingsLanguagesAvailableTitle.key),
-            learnToShareThisToolActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolDetailsLearnToShareToolButtonTitle.key),
-            openToolActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolinfoOpentool.key),
-            outlineTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolDetailsOutlineTitle.key),
-            removeFromFavoritesActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.removeFromFavorites.key),
-            versionsActionTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.toolDetailsVersionsTitle.key)
+    func execute(appLanguage: String) -> ToolDetailsStringsDomainModel {
+
+        let aboutActionTitleKey: String = LocalizableStringKeys.toolDetailsAboutTitle.key
+        let addToFavoritesActionTitleKey: String = LocalizableStringKeys.addToFavorites.key
+        let bibleReferencesTitleKey: String = LocalizableStringKeys.toolDetailsBibleReferencesTitle.key
+        let conversationStartersTitleKey: String = LocalizableStringKeys.toolDetailsConversationStartersTitle.key
+        let languagesAvailableTitleKey: String = LocalizableStringKeys.toolSettingsLanguagesAvailableTitle.key
+        let learnToShareThisToolActionTitleKey: String = LocalizableStringKeys.toolDetailsLearnToShareToolButtonTitle.key
+        let openToolActionTitleKey: String = LocalizableStringKeys.toolinfoOpentool.key
+        let outlineTitleKey: String = LocalizableStringKeys.toolDetailsOutlineTitle.key
+        let removeFromFavoritesActionTitleKey: String = LocalizableStringKeys.removeFromFavorites.key
+        let versionsActionTitleKey: String = LocalizableStringKeys.toolDetailsVersionsTitle.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                aboutActionTitleKey,
+                addToFavoritesActionTitleKey,
+                bibleReferencesTitleKey,
+                conversationStartersTitleKey,
+                languagesAvailableTitleKey,
+                learnToShareThisToolActionTitleKey,
+                openToolActionTitleKey,
+                outlineTitleKey,
+                removeFromFavoritesActionTitleKey,
+                versionsActionTitleKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
-        
-        return strings
+
+        return ToolDetailsStringsDomainModel(
+            aboutActionTitle: strings[aboutActionTitleKey] ?? "",
+            addToFavoritesActionTitle: strings[addToFavoritesActionTitleKey] ?? "",
+            bibleReferencesTitle: strings[bibleReferencesTitleKey] ?? "",
+            conversationStartersTitle: strings[conversationStartersTitleKey] ?? "",
+            languagesAvailableTitle: strings[languagesAvailableTitleKey] ?? "",
+            learnToShareThisToolActionTitle: strings[learnToShareThisToolActionTitleKey] ?? "",
+            openToolActionTitle: strings[openToolActionTitleKey] ?? "",
+            outlineTitle: strings[outlineTitleKey] ?? "",
+            removeFromFavoritesActionTitle: strings[removeFromFavoritesActionTitleKey] ?? "",
+            versionsActionTitle: strings[versionsActionTitleKey] ?? ""
+        )
     }
 }

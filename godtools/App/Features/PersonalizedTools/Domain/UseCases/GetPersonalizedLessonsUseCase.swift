@@ -96,7 +96,7 @@ final class GetPersonalizedLessonsUseCase: Sendable {
                 )
 
                 let showsPersonalizationUnavailable: Bool = !hasCountry && lessons.isEmpty
-                let unavailableStrings: PersonalizedLessonsUnavailableDomainModel? = showsPersonalizationUnavailable ? await self.getLessonsUnavailable(appLanguage: appLanguage) : nil
+                let unavailableStrings: PersonalizedLessonsUnavailableDomainModel? = showsPersonalizationUnavailable ? self.getLessonsUnavailable(appLanguage: appLanguage) : nil
 
                 return PersonalizedLessonsDomainModel(
                     lessons: lessons,
@@ -107,11 +107,23 @@ final class GetPersonalizedLessonsUseCase: Sendable {
         .eraseToAnyPublisher()
     }
     
-    private func getLessonsUnavailable(appLanguage: AppLanguageDomainModel) async -> PersonalizedLessonsUnavailableDomainModel {
+    private func getLessonsUnavailable(appLanguage: AppLanguageDomainModel) -> PersonalizedLessonsUnavailableDomainModel {
+
+        let titleKey: String = LocalizableStringKeys.lessonsPersonalizationUnavailableTitle.key
+        let messageKey: String = LocalizableStringKeys.lessonsPersonalizationUnavailableMessage.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                titleKey,
+                messageKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
+        )
 
         return PersonalizedLessonsUnavailableDomainModel(
-            title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.lessonsPersonalizationUnavailableTitle.key),
-            message: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.lessonsPersonalizationUnavailableMessage.key)
+            title: strings[titleKey] ?? "",
+            message: strings[messageKey] ?? ""
         )
     }
 }

@@ -121,21 +121,26 @@ final class ArticleViewModel: ObservableObject {
         return nil
     }
     
-    private func getArticleErrorMessage(error: Error) async -> ArticlesErrorDomainModel {
+    private func getArticleErrorMessage(error: Error) -> ArticlesErrorDomainModel {
         
-        let title: String = await localizationServices.stringForLocaleElseEnglish(
-            localeIdentifier: appLanguage,
-            key: LocalizableStringKeys.downloadError.key
+        let titleKey: String = LocalizableStringKeys.downloadError.key
+        let downloadActionTitleKey: String = LocalizableStringKeys.articlesRetryDownloadButtonTitle.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                titleKey,
+                downloadActionTitleKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
-        
-        let message: String = await getDownloadArticlesErrorMessage.getErrorMessage(
+
+        let title: String = strings[titleKey] ?? ""
+        let downloadActionTitle: String = strings[downloadActionTitleKey] ?? ""
+
+        let message: String = getDownloadArticlesErrorMessage.getErrorMessage(
             appLanguage: appLanguage,
             error: error
-        )
-        
-        let downloadActionTitle: String = await localizationServices.stringForLocaleElseEnglish(
-            localeIdentifier: appLanguage,
-            key: LocalizableStringKeys.articlesRetryDownloadButtonTitle.key
         )
         
         return ArticlesErrorDomainModel(title: title, message: message, downloadActionTitle: downloadActionTitle)
@@ -202,10 +207,7 @@ extension ArticleViewModel {
 
         if let error = error {
 
-            Task {
-
-                loadArticleError = await getArticleErrorMessage(error: error)
-            }
+            loadArticleError = getArticleErrorMessage(error: error)
         }
         else {
             loadArticleError = nil

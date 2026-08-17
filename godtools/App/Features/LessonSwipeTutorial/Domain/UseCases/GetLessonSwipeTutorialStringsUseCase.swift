@@ -16,15 +16,25 @@ final class GetLessonSwipeTutorialStringsUseCase: Sendable {
         self.localizationServices = localizationServices
     }
     
-    func execute(translateInLanguage: AppLanguageDomainModel) async -> LessonSwipeTutorialStringsDomainModel {
-        
+    func execute(translateInLanguage: AppLanguageDomainModel) -> LessonSwipeTutorialStringsDomainModel {
+
         let localeId: String = translateInLanguage.localeId
-        
-        let strings = LessonSwipeTutorialStringsDomainModel(
-            title: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsSwipeTutorialTitle.key),
-            closeButtonText: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.lessonsSwipeTutorialButtonText.key)
+
+        let titleKey: String = LocalizableStringKeys.lessonsSwipeTutorialTitle.key
+        let closeButtonTextKey: String = LocalizableStringKeys.lessonsSwipeTutorialButtonText.key
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                titleKey,
+                closeButtonTextKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: localeId),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
-        
-        return strings
+
+        return LessonSwipeTutorialStringsDomainModel(
+            title: strings[titleKey] ?? "",
+            closeButtonText: strings[closeButtonTextKey] ?? ""
+        )
     }
 }

@@ -26,11 +26,11 @@ struct GetCreatingToolScreenShareSessionStringsUseCaseTests {
             TestArgument(appLanguage: LanguageCodeDomainModel.spanish.value)
         ]
     )
-    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) async {
+    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) {
 
         let useCase = getUseCase()
 
-        let strings: CreatingToolScreenShareSessionStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
+        let strings: CreatingToolScreenShareSessionStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.creatingSessionMessage == "\(argument.appLanguage):\(LocalizableStringKeys.loadToolRemoteSessionMessage.key)")
     }

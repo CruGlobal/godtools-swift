@@ -26,11 +26,11 @@ struct GetSearchBarStringsUseCaseTests {
             TestArgument(appLanguage: LanguageCodeDomainModel.spanish.value)
         ]
     )
-    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) async {
+    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) {
 
         let useCase = getUseCase()
 
-        let strings: SearchBarStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
+        let strings: SearchBarStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.cancel == "\(argument.appLanguage):\(LocalizableStringKeys.cancel.key)")
     }

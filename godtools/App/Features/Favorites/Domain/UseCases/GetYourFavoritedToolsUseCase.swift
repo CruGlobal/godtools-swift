@@ -55,7 +55,7 @@ final class GetYourFavoritedToolsUseCase: Sendable {
         maxCount: Int?
     ) async throws -> [YourFavoritedToolDomainModel] {
 
-        let strings: ToolListItemStringsDomainModel = await getToolListItemStrings.getStrings(appLanguage: appLanguage)
+        let strings: ToolListItemStringsDomainModel = getToolListItemStrings.getStrings(appLanguage: appLanguage)
 
         let favoritedResources: [FavoritedResourceDataModel] = try await favoritedResourcesRepository.getFavoritedResourcesSortedByPosition()
 

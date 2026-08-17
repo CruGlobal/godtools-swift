@@ -26,11 +26,11 @@ struct GetFavoritesStringsUseCaseTests {
             TestArgument(appLanguage: LanguageCodeDomainModel.spanish.value)
         ]
     )
-    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) async {
+    func stringsAreLocalizedForTheRequestedAppLanguage(argument: TestArgument) {
 
         let useCase = getUseCase()
 
-        let strings: FavoritesStringsDomainModel = await useCase.execute(appLanguage: argument.appLanguage)
+        let strings: FavoritesStringsDomainModel = useCase.execute(appLanguage: argument.appLanguage)
 
         #expect(strings.tutorialMessage == "\(argument.appLanguage):\(LocalizableStringKeys.openTutorialShowTutorialLabelText.key)")
         #expect(strings.openTutorialActionTitle == "\(argument.appLanguage):\(LocalizableStringKeys.openTutorialOpenTutorialButtonTitle.key)")

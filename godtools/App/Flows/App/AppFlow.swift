@@ -288,12 +288,22 @@ final class AppFlow: RootFlow {
                 
                 dismissFlow(completion: { [weak self] in
 
+                    let acceptTitleKey: String = LocalizableStringKeys.ok.key
+
+                    let strings: [String: String] = localizationServices.stringsForKeys(
+                        keys: [
+                            acceptTitleKey
+                        ],
+                        fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+                        shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
+                    )
+
                     Task {
 
                         let view = AlertMessageView(
                             title: alertMessage.title,
                             message: alertMessage.message,
-                            acceptTitle: await localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.ok.key),
+                            acceptTitle: strings[acceptTitleKey] ?? "",
                             cancelTitle: nil,
                             acceptTapped: nil,
                             cancelTapped: nil

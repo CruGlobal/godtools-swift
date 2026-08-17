@@ -31,11 +31,11 @@ struct GetShareToolStringsUseCaseTests {
             TestArgument(appLanguage: LanguageCodeDomainModel.spanish.value)
         ]
     )
-    func stringsAreLocalizedWhenShareUrlCannotBeGenerated(argument: TestArgument) async throws {
+    func stringsAreLocalizedWhenShareUrlCannotBeGenerated(argument: TestArgument) throws {
 
         let useCase = try getUseCase()
 
-        let strings: ShareToolStringsDomainModel = await useCase.execute(
+        let strings: ShareToolStringsDomainModel = useCase.execute(
             toolId: unknownToolId,
             toolLanguageId: unknownToolLanguageId,
             pageNumber: 0,

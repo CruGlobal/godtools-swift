@@ -21,7 +21,7 @@ final class GetLocalizationSettingsCountryListUseCase: Sendable {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel, showsPreferNotToSay: Bool) async -> [LocalizationSettingsCountryListItem] {
+    func execute(appLanguage: AppLanguageDomainModel, showsPreferNotToSay: Bool) -> [LocalizationSettingsCountryListItem] {
 
         let countries: [LocalizationSettingsCountryDataModel] = countriesRepository
             .getCountries(appLanguage: appLanguage)
@@ -37,7 +37,7 @@ final class GetLocalizationSettingsCountryListUseCase: Sendable {
         
         guard !showsPreferNotToSay else {
             
-            let preferNotToSay = await createPreferNotToSayOption(
+            let preferNotToSay = createPreferNotToSayOption(
                 appLanguage: appLanguage
             )
             
@@ -47,12 +47,19 @@ final class GetLocalizationSettingsCountryListUseCase: Sendable {
         return countryListItems
     }
 
-    private func createPreferNotToSayOption(appLanguage: AppLanguageDomainModel) async -> LocalizationSettingsCountryListItem {
+    private func createPreferNotToSayOption(appLanguage: AppLanguageDomainModel) -> LocalizationSettingsCountryListItem {
 
-        let preferNotToSayText = await localizationServices.stringForLocaleElseEnglish(
-            localeIdentifier: appLanguage,
-            key: "localizationSettings.preferNotToSay"
+        let preferNotToSayTextKey: String = "localizationSettings.preferNotToSay"
+
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                preferNotToSayTextKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
+
+        let preferNotToSayText: String = strings[preferNotToSayTextKey] ?? ""
 
         return .preferNotToSay(LocalizationSettingsPreferNotToSayDomainModel(
             preferNotToSayText: preferNotToSayText

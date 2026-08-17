@@ -18,11 +18,11 @@ struct GetTutorialStringsUseCaseTests {
         Then: The complete tutorial action uses the close tutorial title localized in english.
         """
     )
-    func completeTutorialActionUsesCloseTutorialTitleForEnglish() async {
+    func completeTutorialActionUsesCloseTutorialTitleForEnglish() {
 
         let useCase = getUseCase()
 
-        let strings: TutorialStringsDomainModel = await useCase.execute(appLanguage: LanguageCodeDomainModel.english.value)
+        let strings: TutorialStringsDomainModel = useCase.execute(appLanguage: LanguageCodeDomainModel.english.value)
 
         #expect(strings.nextTutorialPageActionTitle == "en:\(LocalizableStringKeys.tutorialContinueButtonTitleContinue.key)")
         #expect(strings.completeTutorialActionTitle == "en:\(LocalizableStringKeys.tutorialContinueButtonTitleCloseTutorial.key)")
@@ -35,11 +35,11 @@ struct GetTutorialStringsUseCaseTests {
         Then: The complete tutorial action uses the start using GodTools title localized in spanish.
         """
     )
-    func completeTutorialActionUsesStartUsingGodToolsTitleForNonEnglish() async {
+    func completeTutorialActionUsesStartUsingGodToolsTitleForNonEnglish() {
 
         let useCase = getUseCase()
 
-        let strings: TutorialStringsDomainModel = await useCase.execute(appLanguage: LanguageCodeDomainModel.spanish.value)
+        let strings: TutorialStringsDomainModel = useCase.execute(appLanguage: LanguageCodeDomainModel.spanish.value)
 
         #expect(strings.nextTutorialPageActionTitle == "es:\(LocalizableStringKeys.tutorialContinueButtonTitleContinue.key)")
         #expect(strings.completeTutorialActionTitle == "es:\(LocalizableStringKeys.tutorialContinueButtonTitleStartUsingGodTools.key)")

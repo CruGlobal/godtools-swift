@@ -32,13 +32,17 @@ final class LoadingArticleViewModel: ObservableObject {
         self.articleAemRepository = articleAemRepository
         self.appLanguage = appLanguage
 
-        Task {
+        let messageKey: String = LocalizableStringKeys.downloadInProgress.key
 
-            message = await localizationServices.stringForLocaleElseEnglish(
-                localeIdentifier: appLanguage,
-                key: LocalizableStringKeys.downloadInProgress.key
-            )
-        }
+        let strings: [String: String] = localizationServices.stringsForKeys(
+            keys: [
+                messageKey
+            ],
+            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
+        )
+
+        message = strings[messageKey] ?? ""
 
         downloadArticleTask = Task {
             
@@ -69,12 +73,19 @@ final class LoadingArticleViewModel: ObservableObject {
             
             if let downloadError = downloadError {
                 
-                let errorTitle: String = await localizationServices.stringForLocaleElseEnglish(
-                    localeIdentifier: appLanguage,
-                    key: LocalizableStringKeys.error.key
+                let errorTitleKey: String = LocalizableStringKeys.error.key
+
+                let strings: [String: String] = localizationServices.stringsForKeys(
+                    keys: [
+                        errorTitleKey
+                    ],
+                    fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+                    shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
                 )
+
+                let errorTitle: String = strings[errorTitleKey] ?? ""
                 
-                let errorMessage: String = await getDownloadArticlesErrorMessage.getErrorMessage(appLanguage: appLanguage, error: downloadError)
+                let errorMessage: String = getDownloadArticlesErrorMessage.getErrorMessage(appLanguage: appLanguage, error: downloadError)
                                 
                 let alertMessage = AlertMessage(title: errorTitle, message: errorMessage)
                 
