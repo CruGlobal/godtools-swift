@@ -17,6 +17,7 @@ actor TractRemoteShareSubscriber {
     private let loggingEnabled: Bool
     
     private var isSubscribingToChannel: WebSocketChannel?
+    private var navigationEventContinuation: [UUID: AsyncStream<TractRemoteShareNavigationEvent>.Continuation] = Dictionary()
     
     init(
         connectionUrl: String,
@@ -107,6 +108,31 @@ actor TractRemoteShareSubscriber {
 
 extension TractRemoteShareSubscriber {
     
+    func getNavigationEventStream() -> AsyncStream<TractRemoteShareNavigationEvent> {
+        
+        let (stream, continuation) = AsyncStream<TractRemoteShareNavigationEvent>.makeStream()
+        let continuationId: UUID = UUID()
+        
+        navigationEventContinuation[continuationId] = continuation
+        
+        continuation.onTermination = { [weak self] _ in
+            Task { await self?.removeNavigationEventContinuation(continuationId: continuationId) }
+        }
+        
+        return stream
+    }
+    
+    private func removeNavigationEventContinuation(continuationId: UUID) {
+        
+        navigationEventContinuation[continuationId] = nil
+    }
+    
+    private func sendNavigationEvent(event: TractRemoteShareNavigationEvent) {
+        for continuation in navigationEventContinuation.values {
+            continuation.yield(event)
+        }
+    }
+    
     private func handleDidReceiveText(text: String) {
             
         log(method: "handleDidReceiveText()", label: "text", labelValue: text)
@@ -122,9 +148,7 @@ extension TractRemoteShareSubscriber {
             let object: TractRemoteShareNavigationEvent = try JsonServices().decodeObject(data: data)
             
             if object.message?.data?.type == "navigation-event" {
-                
-                // TODO: Fix. ~Levi
-                //navigationEventSubject.send(object)
+                sendNavigationEvent(event: object)
             }
         }
         catch _ {

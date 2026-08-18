@@ -416,8 +416,15 @@ extension TractViewModel {
         
         Task {
             
-            await tractRemoteShareSubscriber
-                .subscribe(channel: channel)
+            do {
+                
+                try await tractRemoteShareSubscriber
+                    .subscribe(channel: channel)
+            }
+            catch _ {
+                
+                // TODO: Handle error. ~Levi
+            }
         }
     }
     
