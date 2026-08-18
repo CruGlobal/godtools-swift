@@ -93,7 +93,7 @@ actor TractRemoteShareSubscriber {
         
         isSubscribingToChannel = channel
         
-        await channelSubscriber.subscribe(url: url, channel: channel)
+        try await channelSubscriber.subscribe(url: url, channel: channel)
     }
     
     func unsubscribe(disconnectSocket: Bool) async {

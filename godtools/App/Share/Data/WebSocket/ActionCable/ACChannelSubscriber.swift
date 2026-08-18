@@ -50,7 +50,7 @@ actor ACChannelSubscriber {
         return subscribedToChannel != nil
     }
 
-    func subscribe(url: URL, channel: WebSocketChannel) async {
+    func subscribe(url: URL, channel: WebSocketChannel) async throws {
         
         let connectionState: WebSocketConnectionState = await webSocket.connectionState
         
@@ -63,7 +63,7 @@ actor ACChannelSubscriber {
         
         await webSocket.connect(url: url)
         
-        await startObservingWebSocketText()
+        try await startObservingWebSocketText()
     }
     
     private func cancelReceiveTextTask() {
@@ -72,11 +72,9 @@ actor ACChannelSubscriber {
         receiveTextTask = nil
     }
     
-    private func startObservingWebSocketText() async {
+    private func startObservingWebSocketText() async throws {
         
-        guard let textStream = await webSocket.getReceiveTextStream() else {
-            return
-        }
+        let textStream = try await webSocket.getReceiveTextStream()
         
         cancelReceiveTextTask()
         

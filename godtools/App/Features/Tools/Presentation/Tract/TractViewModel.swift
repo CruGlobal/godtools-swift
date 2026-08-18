@@ -113,6 +113,22 @@ final class TractViewModel: MobileContentRendererViewModel {
                 isFirstRemoteShareNavigationEvent = false
             }
             .store(in: &cancellables)*/
+        
+        Task { [weak self] in
+            
+            guard let navigationEventStream = await self?.tractRemoteShareSubscriber.getNavigationEventStream() else {
+                return
+            }
+            
+            var isFirstRemoteShareNavigationEvent: Bool = true
+            
+            for await navigationEvent in navigationEventStream {
+                
+                let animated: Bool = !isFirstRemoteShareNavigationEvent
+                self?.handleDidReceiveRemoteShareNavigationEvent(remoteShareNavigationEvent: navigationEvent, animated: animated)
+                isFirstRemoteShareNavigationEvent = false
+            }
+        }
     }
     
     deinit {

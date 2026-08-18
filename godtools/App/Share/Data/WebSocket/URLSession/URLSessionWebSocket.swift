@@ -54,10 +54,10 @@ actor URLSessionWebSocket: WebSocketInterface {
         connectionStateContinuations[continuationId] = nil
     }
     
-    func getReceiveTextStream() async -> AsyncThrowingStream<String, any Error>? {
+    func getReceiveTextStream() async throws -> AsyncThrowingStream<String, any Error> {
         
         guard let task = currentWebSocketTask else {
-            return nil
+            throw NSError.errorWithDomain(domain: "URLSessionWebSocketTask", code: -1, description: "Failed to create stream.  Make sure you call connect first.")
         }
         
         return await WebSocketMessagesObserver().start(webSocketTask: task)

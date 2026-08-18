@@ -99,7 +99,7 @@ actor ACChannelPublisher {
         
         await webSocket.connect(url: url)
         
-        await startObservingWebSocketText()
+        try await startObservingWebSocketText()
     }
     
     func disconnect() async {
@@ -113,11 +113,9 @@ actor ACChannelPublisher {
         receiveTextTask = nil
     }
     
-    private func startObservingWebSocketText() async {
+    private func startObservingWebSocketText() async throws {
         
-        guard let textStream = await webSocket.getReceiveTextStream() else {
-            return
-        }
+        let textStream = try await webSocket.getReceiveTextStream()
         
         cancelReceiveTextTask()
         
