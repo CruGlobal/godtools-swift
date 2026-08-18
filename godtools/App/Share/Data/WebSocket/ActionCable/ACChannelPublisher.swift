@@ -30,11 +30,23 @@ actor ACChannelPublisher {
         // TODO: Fix. ~Levi
         //NotificationCenter.default.addObserver(self, selector: #selector(appWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
         //NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+        
+        Task { [weak self] in
+            
+            guard let connectionStateStream: AsyncStream<WebSocketConnectionState> = await self?.webSocket.getConnectionStateStream() else {
+                return
+            }
+            
+            for await connectionState in connectionStateStream {
+                
+                await self?.handleConnectionStateChanged(connectionState: connectionState)
+            }
+        }
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
-        
+                
         // TODO: Fix. ~Levi
         //NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
         //NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
@@ -122,6 +134,14 @@ actor ACChannelPublisher {
         }
                                                 
         await webSocket.write(string: stringMessage)
+    }
+    
+    private func handleConnectionStateChanged(connectionState: WebSocketConnectionState) {
+                
+        if loggingEnabled {
+            print("\n ACChannelPublisher: handleConnectionStateChanged()")
+            print("  connectionState: \(connectionState)")
+        }
     }
     
     private func handleDidConnectToWebsocket() async {
