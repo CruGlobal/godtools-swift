@@ -16,8 +16,9 @@ actor TractRemoteShareSubscriber {
     private let channelSubscriber: ACChannelSubscriber
     private let loggingEnabled: Bool
     
-    private var isSubscribingToChannel: WebSocketChannel?
     private var navigationEventContinuation: [UUID: AsyncStream<TractRemoteShareNavigationEvent>.Continuation] = Dictionary()
+    private var receiveTextTask: Task<Void, Never>?
+    private var isSubscribingToChannel: WebSocketChannel?
     
     init(
         connectionUrl: String,
@@ -28,26 +29,6 @@ actor TractRemoteShareSubscriber {
         self.connectionUrl = connectionUrl
         self.channelSubscriber = channelSubscriber
         self.loggingEnabled = loggingEnabled
-        
-        // TODO: Fix. ~Levi
-                
-        /*
-        webSocket
-            .didReceiveTextPublisher
-            .sink(receiveValue: { [weak self] (text: String) in
-                self?.handleDidReceiveText(text: text)
-            })
-            .store(in: &cancellables)
-        
-         channelSubscriber
-            .didSubscribePublisher
-            .sink { [weak self] (channel: WebSocketChannel) in
-                
-                self?.stopTimeoutTimer()
-                
-                self?.didSubscribeSubject.send(channel)
-            }
-            .store(in: &cancellables)*/
     }
     
     deinit {
@@ -76,37 +57,10 @@ actor TractRemoteShareSubscriber {
         }
     }
     
-    func subscribe(channel: WebSocketChannel) async throws {
-            
-        guard let url = URL(string: connectionUrl) else {
-            
-            throw NSError.errorWithDomain(
-                domain: "TractRemoteShareSubscriber",
-                code: -1,
-                description: "Failed to create connection url with string: \(connectionUrl)"
-            )
-        }
+    func getSubscribedStream() async -> AsyncStream<WebSocketChannel> {
         
-        log(method: "subscribe()", label: "channelId", labelValue: channel.id)
-                
-        await unsubscribe(disconnectSocket: false)
-        
-        isSubscribingToChannel = channel
-        
-        try await channelSubscriber.subscribe(url: url, channel: channel)
+        return await channelSubscriber.getSubscribedStream()
     }
-    
-    func unsubscribe(disconnectSocket: Bool) async {
-                
-        isSubscribingToChannel = nil
-                
-        await channelSubscriber.unsubscribe(disconnectSocket: disconnectSocket)
-    }
-}
-
-// MARK: - Events
-
-extension TractRemoteShareSubscriber {
     
     func getNavigationEventStream() -> AsyncStream<TractRemoteShareNavigationEvent> {
         
@@ -131,6 +85,62 @@ extension TractRemoteShareSubscriber {
         for continuation in navigationEventContinuation.values {
             continuation.yield(event)
         }
+    }
+    
+    private func cancelReceiveTextTask() {
+        
+        receiveTextTask?.cancel()
+        receiveTextTask = nil
+    }
+    
+    private func startObservingWebSocketText() async throws {
+        
+        let textStream = try await channelSubscriber.getReceiveTextStream()
+        
+        cancelReceiveTextTask()
+        
+        receiveTextTask = Task { [weak self] in
+
+            do {
+
+                for try await text in textStream {
+                    
+                    await self?.handleDidReceiveText(text: text)
+                }
+            }
+            catch {
+
+            }
+        }
+    }
+    
+    func subscribe(channel: WebSocketChannel) async throws {
+            
+        guard let url = URL(string: connectionUrl) else {
+            
+            throw NSError.errorWithDomain(
+                domain: "TractRemoteShareSubscriber",
+                code: -1,
+                description: "Failed to create connection url with string: \(connectionUrl)"
+            )
+        }
+        
+        log(method: "subscribe()", label: "channelId", labelValue: channel.id)
+                
+        await unsubscribe(disconnectSocket: false)
+        
+        isSubscribingToChannel = channel
+        
+        try await channelSubscriber.subscribe(url: url, channel: channel)
+    }
+    
+    func unsubscribe(disconnectSocket: Bool) async {
+                
+        isSubscribingToChannel = nil
+        
+        cancelReceiveTextTask()
+                
+        await channelSubscriber.unsubscribe(disconnectSocket: disconnectSocket)
     }
     
     private func handleDidReceiveText(text: String) {

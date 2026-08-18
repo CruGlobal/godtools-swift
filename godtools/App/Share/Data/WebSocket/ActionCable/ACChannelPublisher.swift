@@ -14,6 +14,7 @@ actor ACChannelPublisher {
     private let webSocket: WebSocketInterface
     private let loggingEnabled: Bool
     
+    private var createdChannelContinuations: [UUID: AsyncStream<WebSocketChannel>.Continuation] = Dictionary()
     private var channelToCreate: WebSocketChannel?
     private var publishingToSubscriberChannel: WebSocketChannel?
     private var receiveTextTask: Task<Void, Never>?
@@ -60,6 +61,35 @@ actor ACChannelPublisher {
     
     var subscriberChannel: WebSocketChannel? {
         return publishingToSubscriberChannel
+    }
+    
+    func getConnectionStateStream() async -> AsyncStream<WebSocketConnectionState> {
+        return await webSocket.getConnectionStateStream()
+    }
+    
+    func getCreatedChannelStream() -> AsyncStream<WebSocketChannel> {
+        
+        let (stream, continuation) = AsyncStream<WebSocketChannel>.makeStream()
+        let continuationId: UUID = UUID()
+        
+        createdChannelContinuations[continuationId] = continuation
+        
+        continuation.onTermination = { [weak self] _ in
+            Task { await self?.removeCreatedChannelContination(continuationId: continuationId) }
+        }
+                
+        return stream
+    }
+    
+    private func removeCreatedChannelContination(continuationId: UUID) {
+        
+        createdChannelContinuations[continuationId] = nil
+    }
+    
+    private func sendCreatedChannel(channel: WebSocketChannel) {
+        for continuation in createdChannelContinuations.values {
+            continuation.yield(channel)
+        }
     }
     
     func sendMessage(data: String) async {
@@ -216,12 +246,12 @@ actor ACChannelPublisher {
     }
     
     private func handleDidCreateSubscriberChannel(subscriberChannel: WebSocketChannel) {
-        
+                
         channelToCreate = nil
+        
         publishingToSubscriberChannel = subscriberChannel
         
-        // TODO: Fix. ~Levi
-        //didCreateChannelSubject.send(subscriberChannel)
+        sendCreatedChannel(channel: subscriberChannel)
     }
     
     // TODO: Fix. ~Levi

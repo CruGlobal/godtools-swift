@@ -226,19 +226,19 @@ class ToolSettingsFlow: GTFlow {
                 }
                 
             case .failure(let error):
-                                
+                break
+                        
+                // TODO: Fix. ~Levi
+                /*
                 switch error {
                 
                 case .timedOut:
 
-                    Task {
-
-                        presentView(
-                            view: await getCreatingToolScreenShareSessionTimedOutView(appLanguage: appLanguage),
-                            animated: true
-                        )
-                    }
-                }
+                    presentView(
+                        view: getCreatingToolScreenShareSessionTimedOutView(appLanguage: appLanguage),
+                        animated: true
+                    )
+                }*/
             }
             
         case .cancelTappedFromCreateToolScreenShareSessionTimeout:

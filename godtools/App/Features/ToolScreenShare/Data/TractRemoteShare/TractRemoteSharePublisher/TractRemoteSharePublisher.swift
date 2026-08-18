@@ -25,20 +25,6 @@ actor TractRemoteSharePublisher {
         self.connectionUrl = connectionUrl
         self.channelPublisher = channelPublisher
         self.loggingEnabled = loggingEnabled
-           
-        // TODO: Fix. ~Levi
-        /*
-         channelPublisher
-            .didCreateChannelPublisher
-            .sink { [weak self] (channel: WebSocketChannel) in
-                
-                self?.stopTimeoutTimer()
-                                
-                self?.tractRemoteShareChannel = channel
-                
-                self?.didCreateChannelSubject.send(channel)
-            }
-            .store(in: &cancellables)*/
     }
     
     deinit {
@@ -59,6 +45,14 @@ actor TractRemoteSharePublisher {
         get async {
             return await channelPublisher.connectionState
         }
+    }
+    
+    func getConnectionStateStream() async -> AsyncStream<WebSocketConnectionState> {
+        return await channelPublisher.getConnectionStateStream()
+    }
+    
+    func getCreatedChannelStream() async-> AsyncStream<WebSocketChannel> {
+        return await channelPublisher.getCreatedChannelStream()
     }
     
     var isSubscriberChannelCreatedForPublish: Bool {

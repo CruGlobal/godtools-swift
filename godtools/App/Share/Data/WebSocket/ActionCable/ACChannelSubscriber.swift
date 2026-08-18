@@ -13,6 +13,7 @@ actor ACChannelSubscriber {
     private let webSocket: WebSocketInterface
     private let loggingEnabled: Bool
     
+    private var subscribedContinuations: [UUID: AsyncStream<WebSocketChannel>.Continuation] = Dictionary()
     private var channelToSubscribeTo: WebSocketChannel?
     private var isSubscribingToChannel: WebSocketChannel?
     private var subscribedToChannel: WebSocketChannel?
@@ -43,6 +44,39 @@ actor ACChannelSubscriber {
     var connectionState: WebSocketConnectionState {
         get async {
             return await webSocket.connectionState
+        }
+    }
+    
+    func getConnectionStateStream() async -> AsyncStream<WebSocketConnectionState> {
+        return await webSocket.getConnectionStateStream()
+    }
+    
+    func getReceiveTextStream() async throws -> AsyncThrowingStream<String, any Error> {
+        return try await webSocket.getReceiveTextStream()
+    }
+    
+    func getSubscribedStream() -> AsyncStream<WebSocketChannel> {
+        
+        let (stream, continuation) = AsyncStream<WebSocketChannel>.makeStream()
+        let continuationId: UUID = UUID()
+        
+        subscribedContinuations[continuationId] = continuation
+        
+        continuation.onTermination = { [weak self] _ in
+            Task { await self?.removeSubscribedContination(continuationId: continuationId) }
+        }
+                
+        return stream
+    }
+    
+    private func removeSubscribedContination(continuationId: UUID) {
+        
+        subscribedContinuations[continuationId] = nil
+    }
+    
+    private func sendDidSubscribeToChannel(channel: WebSocketChannel) {
+        for continuation in subscribedContinuations.values {
+            continuation.yield(channel)
         }
     }
     
@@ -103,16 +137,6 @@ actor ACChannelSubscriber {
             cancelReceiveTextTask()
             await webSocket.disconnect()
         }
-    }
-    
-    private func handleDidSubscribeToChannel(channel: WebSocketChannel) {
-        
-        channelToSubscribeTo = nil
-        isSubscribingToChannel = nil
-        subscribedToChannel = channel
-        
-        // TODO: Fix. ~Levi
-        //didSubscribeSubject.send(channel)
     }
     
     private func handleConnectionStateChanged(connectionState: WebSocketConnectionState) async {
@@ -188,5 +212,14 @@ actor ACChannelSubscriber {
                 handleDidSubscribeToChannel(channel: channelToSubscribeTo)
             }
         }
+    }
+    
+    private func handleDidSubscribeToChannel(channel: WebSocketChannel) {
+        
+        channelToSubscribeTo = nil
+        isSubscribingToChannel = nil
+        subscribedToChannel = channel
+        
+        sendDidSubscribeToChannel(channel: channel)
     }
 }

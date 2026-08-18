@@ -12,6 +12,8 @@ import Combine
 @MainActor
 final class CreatingToolScreenShareSessionViewModel: ObservableObject {
             
+    private static let showCreatingSessionForMinSeconds: TimeInterval = 2
+    
     private let stepEmitter: FlowStepEmitter
     private let toolId: String
     private let createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger
@@ -20,6 +22,8 @@ final class CreatingToolScreenShareSessionViewModel: ObservableObject {
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
     private let incrementUserCounterUseCase: IncrementUserCounterUseCase
     
+    private var didCreateChannelTask: Task<Void, Never>?
+    private var creatingChannelTask: Task<Void, Error>?
     private var cancellables = Set<AnyCancellable>()
         
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
@@ -53,36 +57,41 @@ final class CreatingToolScreenShareSessionViewModel: ObservableObject {
                 self?.didSetAppLanguage(appLanguage: appLanguage)
             })
             .store(in: &cancellables)
-
-        // TODO: Fix. ~Levi
-        /*
-        tractRemoteSharePublisher
-            .didCreateChannelPublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (channel: WebSocketChannel) in
-                
-                self?.didCreateNewSubscriberChannelForPublish(result: .success(channel))
-            }
-            .store(in: &cancellables)
         
-        tractRemoteSharePublisher
-            .didFailToCreateChannelPublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (error: TractRemoteSharePublisherError) in
+        didCreateChannelTask = Task {
+            
+            let createdChannelStream: AsyncStream<WebSocketChannel> = await tractRemoteSharePublisher.getCreatedChannelStream()
+                        
+            for await channel in createdChannelStream {
                 
-                self?.didCreateNewSubscriberChannelForPublish(result: .failure(error))
+                didCreateChannelTask?.cancel()
+                creatingChannelTask?.cancel()
+                
+                stepEmitter.emit(
+                    step: AppFlowStep.didCreateSessionFromCreatingToolScreenShareSession(
+                        result: .success(channel),
+                        createSessionTrigger: createSessionTrigger
+                    )
+                )
             }
-            .store(in: &cancellables)*/
+        }
         
-        Task {
+        creatingChannelTask = Task {
             
             do {
                 
+                try await Task.sleep(for: .seconds(Self.showCreatingSessionForMinSeconds))
+                
                 try await tractRemoteSharePublisher.createChannelForPublish()
             }
-            catch _ {
+            catch let error {
                 
-                // TODO: Should handle error. ~Levi
+                stepEmitter.emit(
+                    step: AppFlowStep.didCreateSessionFromCreatingToolScreenShareSession(
+                        result: .failure(error),
+                        createSessionTrigger: createSessionTrigger
+                    )
+                )
             }
         }
     }
@@ -96,23 +105,6 @@ final class CreatingToolScreenShareSessionViewModel: ObservableObject {
         strings = getCreatingToolScreenShareSessionStringsUseCase
             .execute(appLanguage: appLanguage)
     }
-
-    private func didCreateNewSubscriberChannelForPublish(result: Result<WebSocketChannel, TractRemoteSharePublisherError>) {
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-            
-            guard let weakSelf = self else {
-                return
-            }
-            
-            weakSelf.stepEmitter.emit(
-                step: AppFlowStep.didCreateSessionFromCreatingToolScreenShareSession(
-                    result: result,
-                    createSessionTrigger: weakSelf.createSessionTrigger
-                )
-            )
-        }
-    }
 }
 
 // MARK: - Inputs
@@ -120,9 +112,13 @@ final class CreatingToolScreenShareSessionViewModel: ObservableObject {
 extension CreatingToolScreenShareSessionViewModel {
     
     @objc func closeTapped() {
+                
+        didCreateChannelTask?.cancel()
+        creatingChannelTask?.cancel()
         
-        // TODO: Fix. ~Levi
-        //tractRemoteSharePublisher.endPublishingSession(disconnectSocket: true)
+        Task {
+            await tractRemoteSharePublisher.endPublishingSession(disconnectSocket: true)
+        }
         
         stepEmitter.emit(step: AppFlowStep.closeTappedFromCreatingToolScreenShareSession)
     }

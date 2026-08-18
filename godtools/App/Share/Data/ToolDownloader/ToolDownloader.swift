@@ -279,7 +279,12 @@ extension ToolDownloader {
         }
     }
     
-    private func incrementDownloadCountAndReportProgress(toolDownload: inout ToolDownloadDataModel, downloadCount: inout Int, totalNumberOfDownloads: Int, error: Error?) async {
+    private func incrementDownloadCountAndReportProgress(
+        toolDownload: inout ToolDownloadDataModel,
+        downloadCount: inout Int,
+        totalNumberOfDownloads: Int,
+        error: Error?
+    ) async {
         
         downloadCount += 1
         
