@@ -46,13 +46,6 @@ actor ACChannelPublisher {
     
     deinit {
         print("x deinit: \(type(of: self))")
-                
-        // TODO: Fix. ~Levi
-        //NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
-        //NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
-        
-        // TODO: Fix. ~Levi
-        //webSocket.disconnect()
     }
     
     var connectionState: WebSocketConnectionState {
@@ -93,10 +86,6 @@ actor ACChannelPublisher {
     
     func createChannel(url: URL, channel: WebSocketChannel) async throws {
         
-        self.channel = channel
-        
-        channelToCreate = channel
-        
         let connectionState: WebSocketConnectionState = await webSocket.connectionState
         
         guard !connectionState.isConnected && !connectionState.isConnecting else {
@@ -104,12 +93,17 @@ actor ACChannelPublisher {
             return
         }
         
+        self.channel = channel
+        
+        channelToCreate = channel
+        
         await webSocket.connect(url: url)
         
         await startObservingWebSocketText()
     }
     
     func disconnect() async {
+        cancelReceiveTextTask()
         await webSocket.disconnect()
     }
     

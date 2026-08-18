@@ -116,12 +116,7 @@ final class TractViewModel: MobileContentRendererViewModel {
     }
     
     deinit {
-                
         print("x deinit: \(type(of: self))")
-        
-        // TODO: Fix. ~Levi
-        //tractRemoteSharePublisher.endPublishingSession(disconnectSocket: true)
-        //tractRemoteShareSubscriber.unsubscribe(disconnectSocket: true)
     }
     
     private var isScreenSharing: Bool {

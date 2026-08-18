@@ -12,16 +12,19 @@ actor TractRemoteShareSubscriber {
             
     private static let timeoutIntervalSeconds: TimeInterval = 10
     
+    private let connectionUrl: String
     private let channelSubscriber: ACChannelSubscriber
     private let loggingEnabled: Bool
     
     private var isSubscribingToChannel: WebSocketChannel?
     
     init(
+        connectionUrl: String,
         channelSubscriber: ACChannelSubscriber,
         loggingEnabled: Bool
     ) {
         
+        self.connectionUrl = connectionUrl
         self.channelSubscriber = channelSubscriber
         self.loggingEnabled = loggingEnabled
         
@@ -47,9 +50,7 @@ actor TractRemoteShareSubscriber {
     }
     
     deinit {
-        
-        // TODO: Fix. ~Levi
-        //unsubscribe(disconnectSocket: true)
+        print("x deinit: \(type(of: self))")
     }
     
     private func log(method: String, label: String?, labelValue: String?) {
@@ -74,15 +75,24 @@ actor TractRemoteShareSubscriber {
         }
     }
     
-    func subscribe(channel: WebSocketChannel) async {
+    func subscribe(channel: WebSocketChannel) async throws {
             
+        guard let url = URL(string: connectionUrl) else {
+            
+            throw NSError.errorWithDomain(
+                domain: "TractRemoteShareSubscriber",
+                code: -1,
+                description: "Failed to create connection url with string: \(connectionUrl)"
+            )
+        }
+        
         log(method: "subscribe()", label: "channelId", labelValue: channel.id)
                 
         await unsubscribe(disconnectSocket: false)
         
         isSubscribingToChannel = channel
         
-        await channelSubscriber.subscribe(channel: channel)
+        await channelSubscriber.subscribe(url: url, channel: channel)
     }
     
     func unsubscribe(disconnectSocket: Bool) async {

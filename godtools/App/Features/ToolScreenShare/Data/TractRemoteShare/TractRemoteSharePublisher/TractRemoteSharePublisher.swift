@@ -42,8 +42,7 @@ actor TractRemoteSharePublisher {
     }
     
     deinit {
-        // TODO: Fix. ~Levi
-        //endPublishingSession(disconnectSocket: true)
+        print("x deinit: \(type(of: self))")
     }
     
     private func log(method: String, label: String?, labelValue: String?) {

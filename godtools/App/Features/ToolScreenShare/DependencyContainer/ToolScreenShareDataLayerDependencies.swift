@@ -63,6 +63,7 @@ final class ToolScreenShareDataLayerDependencies: Sendable {
         let loggingEnabled: Bool = coreDataLayer.getAppBuild().isDebug
         
         return TractRemoteShareSubscriber(
+            connectionUrl: coreDataLayer.getAppConfig().getTractRemoteShareConnectionUrl(),
             channelSubscriber: ACChannelSubscriber(
                 webSocket: coreDataLayer.getWebSocket(),
                 loggingEnabled: loggingEnabled
