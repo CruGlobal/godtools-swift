@@ -16,8 +16,15 @@ actor URLSessionWebSocket {
     private let consoleLogger: ConsoleLoggerInterface
     
     private var currentWebSocketTask: URLSessionWebSocketTask?
+    private var connectionStateContinuations: [UUID: AsyncStream<WebSocketConnectionState>.Continuation] = Dictionary()
     
-    private(set) var connectionState: WebSocketConnectionState = .noState
+    private(set) var connectionState: WebSocketConnectionState = .noState {
+        didSet {
+            for continuation in connectionStateContinuations.values {
+                continuation.yield(connectionState)
+            }
+        }
+    }
            
     init(consoleLogger: ConsoleLoggerInterface) {
         
@@ -30,6 +37,27 @@ actor URLSessionWebSocket {
     
     var isConnecting: Bool {
         return connectionState.isConnecting
+    }
+    
+    func getConnectionStateStream() -> AsyncStream<WebSocketConnectionState> {
+        
+        let (stream, continuation) = AsyncStream<WebSocketConnectionState>.makeStream()
+        let continuationId: UUID = UUID()
+        
+        connectionStateContinuations[continuationId] = continuation
+        
+        continuation.onTermination = { [weak self] _ in
+            Task { await self?.removeConnectionStateContinuation(continuationId: continuationId) }
+        }
+        
+        continuation.yield(connectionState)
+        
+        return stream
+    }
+    
+    private func removeConnectionStateContinuation(continuationId: UUID) {
+        
+        connectionStateContinuations[continuationId] = nil
     }
     
     func getReceiveTextStream() async -> AsyncThrowingStream<String, any Error>? {
