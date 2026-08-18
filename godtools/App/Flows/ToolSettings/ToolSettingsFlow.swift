@@ -103,7 +103,7 @@ class ToolSettingsFlow: GTFlow {
             
             Task {
                 
-                let webSocketIsConnected: Bool = await toolSettingsObserver.tractRemoteSharePublisher.webSocketIsConnected
+                let webSocketIsConnected: Bool = await toolSettingsObserver.tractRemoteSharePublisher.connectionState.isConnected
                 
                 toggleInitialView(
                     view: getToolScreenShareTutorialView(

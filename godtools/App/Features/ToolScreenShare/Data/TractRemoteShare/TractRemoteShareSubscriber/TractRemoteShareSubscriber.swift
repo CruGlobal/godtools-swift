@@ -12,19 +12,16 @@ actor TractRemoteShareSubscriber {
             
     private static let timeoutIntervalSeconds: TimeInterval = 10
     
-    private let webSocket: URLSessionWebSocket
     private let channelSubscriber: ACChannelSubscriber
     private let loggingEnabled: Bool
     
     private var isSubscribingToChannel: WebSocketChannel?
     
     init(
-        webSocket: URLSessionWebSocket,
         channelSubscriber: ACChannelSubscriber,
         loggingEnabled: Bool
     ) {
         
-        self.webSocket = webSocket
         self.channelSubscriber = channelSubscriber
         self.loggingEnabled = loggingEnabled
         
@@ -65,9 +62,9 @@ actor TractRemoteShareSubscriber {
         }
     }
     
-    var webSocketIsConnected: Bool {
+    var connectionState: WebSocketConnectionState {
         get async {
-            return await webSocket.connectionState.isConnected
+            return await channelSubscriber.connectionState
         }
     }
     
@@ -92,12 +89,7 @@ actor TractRemoteShareSubscriber {
                 
         isSubscribingToChannel = nil
                 
-        await channelSubscriber.unsubscribe()
-        
-        if disconnectSocket {
-            
-            await webSocket.disconnect()
-        }
+        await channelSubscriber.unsubscribe(disconnectSocket: disconnectSocket)
     }
 }
 

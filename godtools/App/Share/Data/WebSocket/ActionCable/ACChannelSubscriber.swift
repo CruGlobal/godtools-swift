@@ -10,14 +10,14 @@ import Foundation
 
 actor ACChannelSubscriber {
     
-    private let webSocket: URLSessionWebSocket
+    private let webSocket: WebSocketInterface
     private let loggingEnabled: Bool
     
     private var channelToSubscribeTo: WebSocketChannel?
     private var isSubscribingToChannel: WebSocketChannel?
     private var subscribedToChannel: WebSocketChannel?
         
-    init(webSocket: URLSessionWebSocket, loggingEnabled: Bool) {
+    init(webSocket: WebSocketInterface, loggingEnabled: Bool) {
         
         self.webSocket = webSocket
         self.loggingEnabled = loggingEnabled
@@ -47,6 +47,12 @@ actor ACChannelSubscriber {
         //webSocket.disconnect()
     }
     
+    var connectionState: WebSocketConnectionState {
+        get async {
+            return await webSocket.connectionState
+        }
+    }
+    
     var isSubscribedToChannel: Bool {
         return subscribedToChannel != nil
     }
@@ -68,11 +74,15 @@ actor ACChannelSubscriber {
         }*/
     }
     
-    func unsubscribe() {
+    func unsubscribe(disconnectSocket: Bool) async {
         
         channelToSubscribeTo = nil
         isSubscribingToChannel = nil
         subscribedToChannel = nil
+        
+        if disconnectSocket {
+            await webSocket.disconnect()
+        }
     }
     
     private func handleDidSubscribeToChannel(channel: WebSocketChannel) {

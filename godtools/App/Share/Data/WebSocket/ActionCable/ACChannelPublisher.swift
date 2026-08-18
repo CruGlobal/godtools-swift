@@ -11,7 +11,7 @@ import UIKit
 
 actor ACChannelPublisher {
     
-    private let webSocket: URLSessionWebSocket
+    private let webSocket: WebSocketInterface
     private let loggingEnabled: Bool
     
     private var channelToCreate: WebSocketChannel?
@@ -22,7 +22,7 @@ actor ACChannelPublisher {
     private(set) var channel: WebSocketChannel?
     private(set) var publishChannel: WebSocketChannel?
         
-    init(webSocket: URLSessionWebSocket, loggingEnabled: Bool) {
+    init(webSocket: WebSocketInterface, loggingEnabled: Bool) {
         
         self.webSocket = webSocket
         self.loggingEnabled = loggingEnabled
@@ -53,6 +53,12 @@ actor ACChannelPublisher {
         
         // TODO: Fix. ~Levi
         //webSocket.disconnect()
+    }
+    
+    var connectionState: WebSocketConnectionState {
+        get async {
+            return await webSocket.connectionState
+        }
     }
     
     var isSubscriberChannelCreatedForPublish: Bool {
@@ -101,6 +107,10 @@ actor ACChannelPublisher {
         await webSocket.connect(url: url)
         
         await startObservingWebSocketText()
+    }
+    
+    func disconnect() async {
+        await webSocket.disconnect()
     }
     
     private func cancelReceiveTextTask() {

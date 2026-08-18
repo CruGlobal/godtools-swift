@@ -132,8 +132,8 @@ final class TractViewModel: MobileContentRendererViewModel {
         get async {
             
             let liveShareStreamChannelIdIsEmpty: Bool = (liveShareStream?.isEmpty) ?? true
-            let publisherIsConnected: Bool = await tractRemoteSharePublisher.webSocketIsConnected
-            let subscriberIsConnected: Bool = await tractRemoteShareSubscriber.webSocketIsConnected
+            let publisherIsConnected: Bool = await tractRemoteSharePublisher.connectionState.isConnected
+            let subscriberIsConnected: Bool = await tractRemoteShareSubscriber.connectionState.isConnected
             
             return publisherIsConnected || subscriberIsConnected || !liveShareStreamChannelIdIsEmpty
         }

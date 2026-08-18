@@ -45,28 +45,28 @@ final class ToolScreenShareDataLayerDependencies: Sendable {
     }
     
     func getTractRemoteSharePublisher() -> TractRemoteSharePublisher {
-        
-        let webSocket: URLSessionWebSocket = coreDataLayer.getWebSocket()
-        
+                
         let loggingEnabled: Bool = coreDataLayer.getAppBuild().isDebug
         
         return TractRemoteSharePublisher(
-            webSocket: webSocket,
             connectionUrl: coreDataLayer.getAppConfig().getTractRemoteShareConnectionUrl(),
-            channelPublisher: ACChannelPublisher(webSocket: webSocket, loggingEnabled: loggingEnabled),
+            channelPublisher: ACChannelPublisher(
+                webSocket: coreDataLayer.getWebSocket(),
+                loggingEnabled: loggingEnabled
+            ),
             loggingEnabled: loggingEnabled
         )
     }
     
     func  getTractRemoteShareSubscriber() -> TractRemoteShareSubscriber {
-        
-        let webSocket: URLSessionWebSocket = coreDataLayer.getWebSocket()
-        
+                
         let loggingEnabled: Bool = coreDataLayer.getAppBuild().isDebug
         
         return TractRemoteShareSubscriber(
-            webSocket: webSocket,
-            channelSubscriber: ACChannelSubscriber(webSocket: webSocket, loggingEnabled: loggingEnabled),
+            channelSubscriber: ACChannelSubscriber(
+                webSocket: coreDataLayer.getWebSocket(),
+                loggingEnabled: loggingEnabled
+            ),
             loggingEnabled: loggingEnabled
         )
     }

@@ -9,11 +9,10 @@
 import Foundation
 import RequestOperation
 
-actor URLSessionWebSocket {
+actor URLSessionWebSocket: WebSocketInterface {
     
     private let session: URLSession = URLSession(configuration: CreateIgnoreCacheSessionConfig().createConfig())
     private let keepSocketAlive: KeepWebSocketAlive = KeepWebSocketAlive()
-    private let consoleLogger: ConsoleLoggerInterface
     
     private var currentWebSocketTask: URLSessionWebSocketTask?
     private var connectionStateContinuations: [UUID: AsyncStream<WebSocketConnectionState>.Continuation] = Dictionary()
@@ -26,11 +25,6 @@ actor URLSessionWebSocket {
         }
     }
            
-    init(consoleLogger: ConsoleLoggerInterface) {
-        
-        self.consoleLogger = consoleLogger
-    }
-    
     var isConnected: Bool {
         return connectionState.isConnected
     }
@@ -75,8 +69,6 @@ actor URLSessionWebSocket {
             return
         }
         
-        consoleLogger.log(message: "connect")
-        
         connectionState = .connecting
         
         let taskDelegate: URLSessionWebSocketTaskDelegate = URLSessionWebSocketTaskDelegate(
@@ -100,13 +92,16 @@ actor URLSessionWebSocket {
         webSocketTask.resume()
     }
     
-    func disconnect(reason: WebSocketDisconnectedReason? = nil) async {
+    func disconnect() async {
+        
+        await disconnectWithReason(reason: .clientDisconnected)
+    }
+    
+    private func disconnectWithReason(reason: WebSocketDisconnectedReason) async {
         
         guard let webSocketTask = currentWebSocketTask else {
             return
         }
-        
-        consoleLogger.log(message: "disconnect")
         
         connectionState = .disconnected(reason: .clientDisconnected)
                 
@@ -123,8 +118,6 @@ actor URLSessionWebSocket {
             return
         }
         
-        consoleLogger.log(message: "write string: \(string)")
-        
         webSocketTask.send(.string(string), completionHandler: { (error: Error?) in
             
         })
@@ -138,8 +131,6 @@ actor URLSessionWebSocket {
             return
         }
         
-        consoleLogger.log(message: "did open")
-
         connectionState = .connected
 
         await keepSocketAlive.start(webSocketTask: webSocketTask)
@@ -151,8 +142,6 @@ actor URLSessionWebSocket {
 
     private func handleDidClose(closeCode: URLSessionWebSocketTask.CloseCode, reason: Data?) async {
         
-        consoleLogger.log(message: "did close")
-
         let reasonString: String?
         
         if let reason = reason {
@@ -162,13 +151,11 @@ actor URLSessionWebSocket {
             reasonString = nil
         }
         
-        await disconnect(reason: .didClose(reason: reasonString))
+        await disconnectWithReason(reason: .didClose(reason: reasonString))
     }
 
     private func handleDidComplete(error: (any Error)?) async {
         
-        consoleLogger.log(message: "did complete with error: \(String(describing: error))")
-
-        await disconnect(reason: .taskFinishedTransfer(failure: error?.localizedDescription))
+        await disconnectWithReason(reason: .taskFinishedTransfer(failure: error?.localizedDescription))
     }
 }

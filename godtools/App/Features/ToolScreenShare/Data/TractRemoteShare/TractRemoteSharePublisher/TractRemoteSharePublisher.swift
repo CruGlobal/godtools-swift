@@ -10,7 +10,6 @@ import Foundation
 
 actor TractRemoteSharePublisher {
             
-    private let webSocket: URLSessionWebSocket
     private let connectionUrl: String
     private let channelPublisher: ACChannelPublisher
     private let loggingEnabled: Bool
@@ -18,13 +17,11 @@ actor TractRemoteSharePublisher {
     private(set) var tractRemoteShareChannel: WebSocketChannel?
         
     init(
-        webSocket: URLSessionWebSocket,
         connectionUrl: String,
         channelPublisher: ACChannelPublisher,
         loggingEnabled: Bool
     ) {
         
-        self.webSocket = webSocket
         self.connectionUrl = connectionUrl
         self.channelPublisher = channelPublisher
         self.loggingEnabled = loggingEnabled
@@ -59,9 +56,9 @@ actor TractRemoteSharePublisher {
         }
     }
     
-    var webSocketIsConnected: Bool {
+    var connectionState: WebSocketConnectionState {
         get async {
-            return await webSocket.isConnected
+            return await channelPublisher.connectionState
         }
     }
     
@@ -101,7 +98,7 @@ actor TractRemoteSharePublisher {
         
         if disconnectSocket {
             
-            await webSocket.disconnect()
+            await channelPublisher.disconnect()
         }
     }
     

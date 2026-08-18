@@ -87,7 +87,7 @@ extension ToolSettingsFlow {
         
         Task {
             
-            let webSocketIsConnected = await tractRemoteSharePublisher.webSocketIsConnected
+            let webSocketIsConnected = await tractRemoteSharePublisher.connectionState.isConnected
             
             if webSocketIsConnected, let channel = await tractRemoteSharePublisher.tractRemoteShareChannel {
                 
