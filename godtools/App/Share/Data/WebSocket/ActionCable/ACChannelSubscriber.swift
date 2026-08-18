@@ -1,5 +1,5 @@
 //
-//  ActionCableChannelSubscriber.swift
+//  ACChannelSubscriber.swift
 //  godtools
 //
 //  Created by Levi Eggert on 7/23/20.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class ActionCableChannelSubscriber: NSObject {
+final class ACChannelSubscriber: NSObject {
     
     private let webSocket: URLSessionWebSocket
     private let didSubscribeSubject: PassthroughSubject<WebSocketChannel, Never> = PassthroughSubject()
@@ -99,7 +99,7 @@ final class ActionCableChannelSubscriber: NSObject {
         
         /*
         if loggingEnabled {
-            print("\n ActionCableChannelSubscriber: handleDidConnectToWebsocket()")
+            print("\n ACChannelSubscriber: handleDidConnectToWebsocket()")
         }
         
         guard let channel = channelToSubscribeTo else {
@@ -126,17 +126,17 @@ final class ActionCableChannelSubscriber: NSObject {
     private func handleDidReceiveText(text: String) {
         
         if loggingEnabled {
-            print("\n ActionCableChannelSubscriber: handleDidReceiveText() \(text)")
+            print("\n ACChannelSubscriber: handleDidReceiveText() \(text)")
         }
                 
         guard let data = text.data(using: .utf8) else {
             return
         }
         
-        let event: ActionCableEventCodable?
+        let event: ACEventCodable?
         
         do {
-            event = try JSONDecoder().decode(ActionCableEventCodable.self, from: data)
+            event = try JSONDecoder().decode(ACEventCodable.self, from: data)
         }
         catch {
             event = nil

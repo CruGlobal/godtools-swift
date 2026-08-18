@@ -79,6 +79,8 @@ final class TractViewModel: MobileContentRendererViewModel {
         
         super.init(renderer: renderer, initialPage: initialPage, initialPageConfig: nil, initialPageSubIndex: initialPageSubIndex, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, getTranslatedLanguageName: getTranslatedLanguageName, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase, selectedLanguageIndex: selectedLanguageIndex)
                
+        // TODO: Fix. ~Levi
+        /*
         if let remoteSharePublisherChannel = tractRemoteSharePublisher.tractRemoteShareChannel {
             
             handleRemoteSharePublisherChannelCreated(channel: remoteSharePublisherChannel)
@@ -95,7 +97,7 @@ final class TractViewModel: MobileContentRendererViewModel {
                     self?.handleRemoteSharePublisherChannelCreated(channel: channel)
                 }
                 .store(in: &cancellables)
-        }
+        }*/
 
         var isFirstRemoteShareNavigationEvent: Bool = true
         tractRemoteShareSubscriber
@@ -124,10 +126,12 @@ final class TractViewModel: MobileContentRendererViewModel {
     }
     
     private var isLiveStreaming: Bool {
-        
-        let liveShareStreamChannelIdIsEmpty: Bool = (liveShareStream?.isEmpty) ?? true
-        
-        return tractRemoteSharePublisher.webSocketIsConnected || tractRemoteShareSubscriber.webSocketIsConnected || !liveShareStreamChannelIdIsEmpty
+        get async {
+            
+            let liveShareStreamChannelIdIsEmpty: Bool = (liveShareStream?.isEmpty) ?? true
+            
+            return await tractRemoteSharePublisher.webSocketIsConnected || tractRemoteShareSubscriber.webSocketIsConnected || !liveShareStreamChannelIdIsEmpty
+        }
     }
     
     private func handleRemoteSharePublisherChannelCreated(channel: WebSocketChannel) {
@@ -137,11 +141,13 @@ final class TractViewModel: MobileContentRendererViewModel {
     
     private func reloadRemoteShareIsActive() {
         
-        let remoteShareIsActive: Bool = tractRemoteSharePublisher.isSubscriberChannelCreatedForPublish || tractRemoteShareSubscriber.isSubscribedToChannel
-        
-        self.remoteShareIsActive = remoteShareIsActive
-        
-        hidesRemoteShareIsActive = !remoteShareIsActive
+        Task {
+            let remoteShareIsActive: Bool = await tractRemoteSharePublisher.isSubscriberChannelCreatedForPublish || tractRemoteShareSubscriber.isSubscribedToChannel
+            
+            self.remoteShareIsActive = remoteShareIsActive
+            
+            hidesRemoteShareIsActive = !remoteShareIsActive
+        }
     }
     
     private var analyticsScreenName: String {
@@ -260,7 +266,8 @@ final class TractViewModel: MobileContentRendererViewModel {
     
     override func configureRendererPageContextUserInfo(userInfo: inout [String: Any], page: Int) {
         
-        userInfo[TractViewModel.isLiveShareStreamingKey] = isLiveStreaming
+        // TODO: Fix. ~Levi
+        //userInfo[TractViewModel.isLiveShareStreamingKey] = isLiveStreaming
         
         super.configureRendererPageContextUserInfo(userInfo: &userInfo, page: page)
     }
@@ -554,20 +561,20 @@ extension TractViewModel {
     
     func sendRemoteShareNavigationEvent(page: Int, pagePositions: TractPagePositions) {
         
-        guard tractRemoteSharePublisher.isSubscriberChannelCreatedForPublish else {
-            return
-        }
-                        
-        let event = TractRemoteSharePublisherNavigationEvent(
-            card: pagePositions.cardPosition,
-            locale: languages[safe: selectedLanguageIndex]?.localeId,
-            page: page,
-            parallelLocale: languages[safe: 1]?.localeId,
-            primaryLocale: languages[safe: 0]?.localeId,
-            tool: resource.abbreviation
-        )
-        
         Task {
+        
+            guard await tractRemoteSharePublisher.isSubscriberChannelCreatedForPublish else {
+                return
+            }
+            
+            let event = TractRemoteSharePublisherNavigationEvent(
+                card: pagePositions.cardPosition,
+                locale: languages[safe: selectedLanguageIndex]?.localeId,
+                page: page,
+                parallelLocale: languages[safe: 1]?.localeId,
+                primaryLocale: languages[safe: 0]?.localeId,
+                tool: resource.abbreviation
+            )
             
             await tractRemoteSharePublisher.sendNavigationEvent(event: event)
         }

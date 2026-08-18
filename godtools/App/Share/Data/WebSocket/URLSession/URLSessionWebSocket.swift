@@ -18,12 +18,9 @@ actor URLSessionWebSocket {
     private var currentWebSocketTask: URLSessionWebSocketTask?
     
     private(set) var connectionState: WebSocketConnectionState = .disconnected
-       
-    let url: URL
-    
-    init(url: URL, consoleLogger: ConsoleLoggerInterface) {
+           
+    init(consoleLogger: ConsoleLoggerInterface) {
         
-        self.url = url
         self.consoleLogger = consoleLogger
     }
     
@@ -44,7 +41,7 @@ actor URLSessionWebSocket {
         return await WebSocketMessagesObserver().start(webSocketTask: task)
     }
     
-    func connect() async {
+    func connect(url: URL) async {
 
         guard connectionState != .connected && connectionState != .connecting else {
             return

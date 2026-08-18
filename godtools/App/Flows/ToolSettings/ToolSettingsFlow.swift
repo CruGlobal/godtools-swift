@@ -104,12 +104,18 @@ class ToolSettingsFlow: GTFlow {
                 return
             }
             
-            toggleInitialView(
-                view: getToolScreenShareTutorialView(
-                    toolSettingsObserver: toolSettingsObserver
-                ),
-                animated: true
-            )
+            Task {
+                
+                let webSocketIsConnected: Bool = await toolSettingsObserver.tractRemoteSharePublisher.webSocketIsConnected
+                
+                toggleInitialView(
+                    view: getToolScreenShareTutorialView(
+                        toolId: toolSettingsObserver.toolId,
+                        tractRemoteShareWebSocketIsConnected: webSocketIsConnected
+                    ),
+                    animated: true
+                )
+            }
             
         case .closeTappedFromToolScreenShareTutorial:
             dismissInitialView(animated: true, completion: { [weak self] in

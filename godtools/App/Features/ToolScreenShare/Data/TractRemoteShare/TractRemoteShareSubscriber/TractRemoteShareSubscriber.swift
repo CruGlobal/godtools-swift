@@ -14,7 +14,7 @@ final class TractRemoteShareSubscriber {
     private static let timeoutIntervalSeconds: TimeInterval = 10
     
     private let webSocket: URLSessionWebSocket
-    private let webSocketChannelSubscriber: ActionCableChannelSubscriber
+    private let channelSubscriber: ACChannelSubscriber
     private let didSubscribeSubject: PassthroughSubject<WebSocketChannel, Never> = PassthroughSubject()
     private let didFailToSubscribeSubject: PassthroughSubject<TractRemoteShareSubscriberError, Never> = PassthroughSubject()
     private let navigationEventSubject: PassthroughSubject<TractRemoteShareNavigationEvent, Never> = PassthroughSubject()
@@ -26,12 +26,12 @@ final class TractRemoteShareSubscriber {
     
     init(
         webSocket: URLSessionWebSocket,
-        webSocketChannelSubscriber: ActionCableChannelSubscriber,
+        channelSubscriber: ACChannelSubscriber,
         loggingEnabled: Bool
     ) {
         
         self.webSocket = webSocket
-        self.webSocketChannelSubscriber = webSocketChannelSubscriber
+        self.channelSubscriber = channelSubscriber
         self.loggingEnabled = loggingEnabled
         
         // TODO: Fix. ~Levi
@@ -44,7 +44,7 @@ final class TractRemoteShareSubscriber {
             })
             .store(in: &cancellables)
         
-        webSocketChannelSubscriber
+         channelSubscriber
             .didSubscribePublisher
             .sink { [weak self] (channel: WebSocketChannel) in
                 
@@ -99,7 +99,7 @@ final class TractRemoteShareSubscriber {
     }
     
     var isSubscribedToChannel: Bool {
-        return webSocketChannelSubscriber.isSubscribedToChannel
+        return channelSubscriber.isSubscribedToChannel
     }
     
     func subscribe(channel: WebSocketChannel) async {
@@ -117,7 +117,7 @@ final class TractRemoteShareSubscriber {
             self?.didFailToSubscribeSubject.send(.timedOut)
         }
         
-        webSocketChannelSubscriber.subscribe(channel: channel)
+        channelSubscriber.subscribe(channel: channel)
     }
     
     func unsubscribe(disconnectSocket: Bool) async {
@@ -126,7 +126,7 @@ final class TractRemoteShareSubscriber {
         
         isSubscribingToChannel = nil
                 
-        webSocketChannelSubscriber.unsubscribe()
+        channelSubscriber.unsubscribe()
         
         if disconnectSocket {
             

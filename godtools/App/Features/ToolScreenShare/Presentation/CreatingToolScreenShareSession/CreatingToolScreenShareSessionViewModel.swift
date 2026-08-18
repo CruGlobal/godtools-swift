@@ -54,6 +54,8 @@ final class CreatingToolScreenShareSessionViewModel: ObservableObject {
             })
             .store(in: &cancellables)
 
+        // TODO: Fix. ~Levi
+        /*
         tractRemoteSharePublisher
             .didCreateChannelPublisher
             .receive(on: DispatchQueue.main)
@@ -70,10 +72,18 @@ final class CreatingToolScreenShareSessionViewModel: ObservableObject {
                 
                 self?.didCreateNewSubscriberChannelForPublish(result: .failure(error))
             }
-            .store(in: &cancellables)
+            .store(in: &cancellables)*/
         
         Task {
-            await tractRemoteSharePublisher.createChannelForPublish()
+            
+            do {
+                
+                try await tractRemoteSharePublisher.createChannelForPublish()
+            }
+            catch _ {
+                
+                // TODO: Should handle error. ~Levi
+            }
         }
     }
     
@@ -111,7 +121,8 @@ extension CreatingToolScreenShareSessionViewModel {
     
     @objc func closeTapped() {
         
-        tractRemoteSharePublisher.endPublishingSession(disconnectSocket: true)
+        // TODO: Fix. ~Levi
+        //tractRemoteSharePublisher.endPublishingSession(disconnectSocket: true)
         
         stepEmitter.emit(step: AppFlowStep.closeTappedFromCreatingToolScreenShareSession)
     }

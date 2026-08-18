@@ -1,5 +1,5 @@
 //
-//  ActionCableChannelPublisher.swift
+//  ACChannelPublisher.swift
 //  godtools
 //
 //  Created by Levi Eggert on 8/13/20.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-actor ActionCableChannelPublisher {
+actor ACChannelPublisher {
     
     private let webSocket: URLSessionWebSocket
     private let loggingEnabled: Bool
@@ -80,7 +80,7 @@ actor ActionCableChannelPublisher {
         }
     }
     
-    func createChannel(channel: WebSocketChannel) async {
+    func createChannel(url: URL, channel: WebSocketChannel) async {
         
         self.channel = channel
         
@@ -90,7 +90,7 @@ actor ActionCableChannelPublisher {
         
         if connectionState != .connected && connectionState != .connecting {
                         
-            await webSocket.connect()
+            await webSocket.connect(url: url)
             
             await startObservingText()
             
@@ -127,7 +127,7 @@ actor ActionCableChannelPublisher {
     private func handleDidConnectToWebsocket() async {
                
         if loggingEnabled {
-            print("\n ActionCableChannelPublisher: handleDidConnectToWebsocket()")
+            print("\n ACChannelPublisher: handleDidConnectToWebsocket()")
         }
         
         guard let channel = channelToCreate else {
@@ -154,7 +154,7 @@ actor ActionCableChannelPublisher {
     private func handleDidReceiveText(text: String) {
         
         if loggingEnabled {
-            print("\n ActionCableChannelPublisher: handleDidReceiveText() \(text)")
+            print("\n ACChannelPublisher: handleDidReceiveText() \(text)")
             print("  channelIdToCreate: \(String(describing: channelToCreate?.id))")
         }
         
