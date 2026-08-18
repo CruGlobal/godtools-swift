@@ -92,7 +92,7 @@ actor TractRemoteSharePublisher {
                 
         let channel = WebSocketChannel.createUniqueChannel()
         
-        await channelPublisher.createChannel(url: url, channel: channel)
+        try await channelPublisher.createChannel(url: url, channel: channel)
     }
     
     func endPublishingSession(disconnectSocket: Bool) async {

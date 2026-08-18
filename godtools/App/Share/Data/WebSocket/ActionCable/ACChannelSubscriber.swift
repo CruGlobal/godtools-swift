@@ -7,15 +7,12 @@
 //
 
 import Foundation
-import Combine
 
-final class ACChannelSubscriber: NSObject {
+actor ACChannelSubscriber {
     
     private let webSocket: URLSessionWebSocket
-    private let didSubscribeSubject: PassthroughSubject<WebSocketChannel, Never> = PassthroughSubject()
     private let loggingEnabled: Bool
     
-    private var cancellables: Set<AnyCancellable> = Set()
     private var channelToSubscribeTo: WebSocketChannel?
     private var isSubscribingToChannel: WebSocketChannel?
     private var subscribedToChannel: WebSocketChannel?
@@ -24,9 +21,7 @@ final class ACChannelSubscriber: NSObject {
         
         self.webSocket = webSocket
         self.loggingEnabled = loggingEnabled
-        
-        super.init()
-        
+                
         // TODO: Fix. ~Levi
         /*
         webSocket
@@ -50,11 +45,6 @@ final class ACChannelSubscriber: NSObject {
         // TODO: Fix. ~Levi
         //unsubscribe()
         //webSocket.disconnect()
-    }
-    
-    var didSubscribePublisher: AnyPublisher<WebSocketChannel, Never> {
-        return didSubscribeSubject
-            .eraseToAnyPublisher()
     }
     
     var isSubscribedToChannel: Bool {
@@ -90,7 +80,9 @@ final class ACChannelSubscriber: NSObject {
         channelToSubscribeTo = nil
         isSubscribingToChannel = nil
         subscribedToChannel = channel
-        didSubscribeSubject.send(channel)
+        
+        // TODO: Fix. ~Levi
+        //didSubscribeSubject.send(channel)
     }
     
     private func handleDidConnectToWebsocket() {

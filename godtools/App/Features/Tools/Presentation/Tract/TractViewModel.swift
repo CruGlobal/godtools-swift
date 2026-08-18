@@ -99,6 +99,9 @@ final class TractViewModel: MobileContentRendererViewModel {
                 .store(in: &cancellables)
         }*/
 
+        
+        // TODO: Fix. ~Levi
+        /*
         var isFirstRemoteShareNavigationEvent: Bool = true
         tractRemoteShareSubscriber
             .navigationEventPublisher
@@ -109,7 +112,7 @@ final class TractViewModel: MobileContentRendererViewModel {
                 self?.handleDidReceiveRemoteShareNavigationEvent(remoteShareNavigationEvent: event, animated: animated)
                 isFirstRemoteShareNavigationEvent = false
             }
-            .store(in: &cancellables)
+            .store(in: &cancellables)*/
     }
     
     deinit {
@@ -129,8 +132,10 @@ final class TractViewModel: MobileContentRendererViewModel {
         get async {
             
             let liveShareStreamChannelIdIsEmpty: Bool = (liveShareStream?.isEmpty) ?? true
+            let publisherIsConnected: Bool = await tractRemoteSharePublisher.webSocketIsConnected
+            let subscriberIsConnected: Bool = await tractRemoteShareSubscriber.webSocketIsConnected
             
-            return await tractRemoteSharePublisher.webSocketIsConnected || tractRemoteShareSubscriber.webSocketIsConnected || !liveShareStreamChannelIdIsEmpty
+            return publisherIsConnected || subscriberIsConnected || !liveShareStreamChannelIdIsEmpty
         }
     }
     
@@ -141,13 +146,17 @@ final class TractViewModel: MobileContentRendererViewModel {
     
     private func reloadRemoteShareIsActive() {
         
+        // TODO: Fix. ~Levi
+        /*
         Task {
+            
+            
             let remoteShareIsActive: Bool = await tractRemoteSharePublisher.isSubscriberChannelCreatedForPublish || tractRemoteShareSubscriber.isSubscribedToChannel
             
             self.remoteShareIsActive = remoteShareIsActive
             
             hidesRemoteShareIsActive = !remoteShareIsActive
-        }
+        }*/
     }
     
     private var analyticsScreenName: String {
@@ -397,6 +406,9 @@ extension TractViewModel {
             return
         }
         
+        
+        // TODO: Fix. ~Levi
+        /*
         tractRemoteShareSubscriber
             .didSubscribePublisher
             .receive(on: DispatchQueue.main)
@@ -405,7 +417,7 @@ extension TractViewModel {
                 self?.trackShareScreenOpened()
                 self?.reloadRemoteShareIsActive()
             }
-            .store(in: &cancellables)
+            .store(in: &cancellables)*/
         
         Task {
             

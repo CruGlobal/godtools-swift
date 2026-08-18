@@ -63,57 +63,6 @@ actor ACChannelPublisher {
         return publishingToSubscriberChannel
     }
     
-    private func cancelReceiveTextTask() {
-        
-        receiveTextTask?.cancel()
-        receiveTextTask = nil
-    }
-    
-    private func startObservingText() async {
-        
-        guard let textStream = await webSocket.getReceiveTextStream() else {
-            return
-        }
-        
-        cancelReceiveTextTask()
-        
-        receiveTextTask = Task { [weak self] in
-
-            do {
-
-                for try await text in textStream {
-                    
-                    await self?.handleDidReceiveText(text: text)
-                }
-            }
-            catch {
-
-            }
-        }
-    }
-    
-    func createChannel(url: URL, channel: WebSocketChannel) async {
-        
-        self.channel = channel
-        
-        channelToCreate = channel
-        
-        let connectionState: WebSocketConnectionState = await webSocket.connectionState
-        
-        if !connectionState.isConnected && !connectionState.isConnecting {
-                        
-            await webSocket.connect(url: url)
-            
-            await startObservingText()
-            
-            await handleDidConnectToWebsocket()
-        }
-        else if connectionState.isConnected {
-            
-            await handleDidConnectToWebsocket()
-        }
-    }
-    
     func sendMessage(data: String) async {
         
         let stringMessage: String
@@ -136,12 +85,66 @@ actor ACChannelPublisher {
         await webSocket.write(string: stringMessage)
     }
     
-    private func handleConnectionStateChanged(connectionState: WebSocketConnectionState) {
+    func createChannel(url: URL, channel: WebSocketChannel) async throws {
+        
+        self.channel = channel
+        
+        channelToCreate = channel
+        
+        let connectionState: WebSocketConnectionState = await webSocket.connectionState
+        
+        guard !connectionState.isConnected && !connectionState.isConnecting else {
+            // TODO: Should throw error that websocket is connected or connecting. ~Levi
+            return
+        }
+        
+        await webSocket.connect(url: url)
+        
+        await startObservingWebSocketText()
+    }
+    
+    private func cancelReceiveTextTask() {
+        
+        receiveTextTask?.cancel()
+        receiveTextTask = nil
+    }
+    
+    private func startObservingWebSocketText() async {
+        
+        guard let textStream = await webSocket.getReceiveTextStream() else {
+            return
+        }
+        
+        cancelReceiveTextTask()
+        
+        receiveTextTask = Task { [weak self] in
+
+            do {
+
+                for try await text in textStream {
+                    
+                    await self?.handleDidReceiveText(text: text)
+                }
+            }
+            catch {
+
+            }
+        }
+    }
+    
+    private func handleConnectionStateChanged(connectionState: WebSocketConnectionState) async {
                 
         if loggingEnabled {
             print("\n ACChannelPublisher: handleConnectionStateChanged()")
             print("  connectionState: \(connectionState)")
         }
+        
+        if connectionState.isConnected {
+            
+            await handleDidConnectToWebsocket()
+        }
+        
+        // TODO: Handle disconnected. ~Levi
     }
     
     private func handleDidConnectToWebsocket() async {

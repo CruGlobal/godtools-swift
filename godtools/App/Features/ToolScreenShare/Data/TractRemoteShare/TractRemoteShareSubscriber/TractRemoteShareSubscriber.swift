@@ -7,21 +7,15 @@
 //
 
 import Foundation
-import Combine
 
-final class TractRemoteShareSubscriber {
+actor TractRemoteShareSubscriber {
             
     private static let timeoutIntervalSeconds: TimeInterval = 10
     
     private let webSocket: URLSessionWebSocket
     private let channelSubscriber: ACChannelSubscriber
-    private let didSubscribeSubject: PassthroughSubject<WebSocketChannel, Never> = PassthroughSubject()
-    private let didFailToSubscribeSubject: PassthroughSubject<TractRemoteShareSubscriberError, Never> = PassthroughSubject()
-    private let navigationEventSubject: PassthroughSubject<TractRemoteShareNavigationEvent, Never> = PassthroughSubject()
     private let loggingEnabled: Bool
     
-    private var cancellables: Set<AnyCancellable> = Set()
-    private var timeoutTimer: Timer?
     private var isSubscribingToChannel: WebSocketChannel?
     
     init(
@@ -61,11 +55,6 @@ final class TractRemoteShareSubscriber {
         //unsubscribe(disconnectSocket: true)
     }
     
-    private func stopTimeoutTimer() {
-        timeoutTimer?.invalidate()
-        timeoutTimer = nil
-    }
-        
     private func log(method: String, label: String?, labelValue: String?) {
         
         if loggingEnabled {
@@ -76,30 +65,16 @@ final class TractRemoteShareSubscriber {
         }
     }
     
-    var didSubscribePublisher: AnyPublisher<WebSocketChannel, Never> {
-        return didSubscribeSubject
-            .eraseToAnyPublisher()
-    }
-    
-    var didFailToSubscribePublisher: AnyPublisher<TractRemoteShareSubscriberError, Never> {
-        return didFailToSubscribeSubject
-            .eraseToAnyPublisher()
-    }
-    
-    var navigationEventPublisher: AnyPublisher<TractRemoteShareNavigationEvent, Never> {
-        return navigationEventSubject
-            .eraseToAnyPublisher()
-    }
-    
     var webSocketIsConnected: Bool {
-        return false
-        
-        // TODO: Fix.
-        //return webSocket.connectionState == .connected
+        get async {
+            return await webSocket.connectionState.isConnected
+        }
     }
     
     var isSubscribedToChannel: Bool {
-        return channelSubscriber.isSubscribedToChannel
+        get async {
+            return await channelSubscriber.isSubscribedToChannel
+        }
     }
     
     func subscribe(channel: WebSocketChannel) async {
@@ -109,24 +84,15 @@ final class TractRemoteShareSubscriber {
         await unsubscribe(disconnectSocket: false)
         
         isSubscribingToChannel = channel
-                        
-        timeoutTimer = Timer.scheduledTimer(withTimeInterval: Self.timeoutIntervalSeconds, repeats: false) { [weak self] _ in
-            
-            self?.stopTimeoutTimer()
-            
-            self?.didFailToSubscribeSubject.send(.timedOut)
-        }
         
-        channelSubscriber.subscribe(channel: channel)
+        await channelSubscriber.subscribe(channel: channel)
     }
     
     func unsubscribe(disconnectSocket: Bool) async {
-        
-        stopTimeoutTimer()
-        
+                
         isSubscribingToChannel = nil
                 
-        channelSubscriber.unsubscribe()
+        await channelSubscriber.unsubscribe()
         
         if disconnectSocket {
             
@@ -155,7 +121,8 @@ extension TractRemoteShareSubscriber {
             
             if object.message?.data?.type == "navigation-event" {
                 
-                navigationEventSubject.send(object)
+                // TODO: Fix. ~Levi
+                //navigationEventSubject.send(object)
             }
         }
         catch _ {
