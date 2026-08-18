@@ -31,7 +31,7 @@ actor TractRemoteSharePublisher {
            
         // TODO: Fix. ~Levi
         /*
-        webSocketChannelPublisher
+         channelPublisher
             .didCreateChannelPublisher
             .sink { [weak self] (channel: WebSocketChannel) in
                 
@@ -80,7 +80,12 @@ actor TractRemoteSharePublisher {
     func createChannelForPublish() async throws {
                 
         guard let url = URL(string: connectionUrl) else {
-            throw NSError.errorWithDomain(domain: "TractRemoteSharePublisher", code: -1, description: "Failed to create connection url with string: \(connectionUrl)")
+            
+            throw NSError.errorWithDomain(
+                domain: "TractRemoteSharePublisher",
+                code: -1,
+                description: "Failed to create connection url with string: \(connectionUrl)"
+            )
         }
         
         await endPublishingSession(disconnectSocket: false)

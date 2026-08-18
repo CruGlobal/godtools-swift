@@ -9,7 +9,27 @@
 import Foundation
 
 enum WebSocketConnectionState: Sendable {
+    
     case connected
     case connecting
-    case disconnected
+    case disconnected(reason: WebSocketDisconnectedReason)
+    case noState
+    
+    var isConnected: Bool {
+        switch self {
+        case .connected:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    var isConnecting: Bool {
+        switch self {
+        case .connecting:
+            return true
+        default:
+            return false
+        }
+    }
 }

@@ -17,7 +17,7 @@ actor URLSessionWebSocket {
     
     private var currentWebSocketTask: URLSessionWebSocketTask?
     
-    private(set) var connectionState: WebSocketConnectionState = .disconnected
+    private(set) var connectionState: WebSocketConnectionState = .noState
            
     init(consoleLogger: ConsoleLoggerInterface) {
         
@@ -25,11 +25,11 @@ actor URLSessionWebSocket {
     }
     
     var isConnected: Bool {
-        return connectionState == .connected
+        return connectionState.isConnected
     }
     
     var isConnecting: Bool {
-        return connectionState == .connecting
+        return connectionState.isConnecting
     }
     
     func getReceiveTextStream() async -> AsyncThrowingStream<String, any Error>? {
@@ -43,7 +43,7 @@ actor URLSessionWebSocket {
     
     func connect(url: URL) async {
 
-        guard connectionState != .connected && connectionState != .connecting else {
+        guard !isConnected && !isConnecting else {
             return
         }
         
@@ -72,7 +72,7 @@ actor URLSessionWebSocket {
         webSocketTask.resume()
     }
     
-    func disconnect() async {
+    func disconnect(reason: WebSocketDisconnectedReason? = nil) async {
         
         guard let webSocketTask = currentWebSocketTask else {
             return
@@ -80,7 +80,7 @@ actor URLSessionWebSocket {
         
         consoleLogger.log(message: "disconnect")
         
-        connectionState = .disconnected
+        connectionState = .disconnected(reason: .clientDisconnected)
                 
         await keepSocketAlive.stop()
         
@@ -106,7 +106,7 @@ actor URLSessionWebSocket {
 
     private func handleDidOpen() async {
 
-        guard connectionState == .connecting, let webSocketTask = currentWebSocketTask else {
+        guard connectionState.isConnecting, let webSocketTask = currentWebSocketTask else {
             return
         }
         
@@ -116,7 +116,7 @@ actor URLSessionWebSocket {
 
         await keepSocketAlive.start(webSocketTask: webSocketTask)
 
-        if connectionState != .connected {
+        if !connectionState.isConnected {
             await keepSocketAlive.stop()
         }
     }
@@ -125,35 +125,22 @@ actor URLSessionWebSocket {
         
         consoleLogger.log(message: "did close")
 
-//        let reasonText: String?
-//
-//        if let reason = reason {
-//            reasonText = String(data: reason, encoding: .utf8)
-//        }
-//        else {
-//            reasonText = nil
-//        }
-//
-//        await disconnect(reason: .closedByServer(closeCode: closeCode, reason: reasonText))
+        let reasonString: String?
         
-        await disconnect()
+        if let reason = reason {
+            reasonString = String(data: reason, encoding: .utf8)
+        }
+        else {
+            reasonString = nil
+        }
+        
+        await disconnect(reason: .didClose(reason: reasonString))
     }
 
     private func handleDidComplete(error: (any Error)?) async {
         
         consoleLogger.log(message: "did complete with error: \(String(describing: error))")
 
-//        guard connectionState != .disconnected else {
-//            return
-//        }
-//
-//        guard let error = error else {
-//            await disconnect(reason: .closedByServer(closeCode: .invalid, reason: nil))
-//            return
-//        }
-//
-//        await disconnect(reason: .failed(error: .transportFailed(description: error.localizedDescription)))
-        
-        await disconnect()
+        await disconnect(reason: .taskFinishedTransfer(failure: error?.localizedDescription))
     }
 }

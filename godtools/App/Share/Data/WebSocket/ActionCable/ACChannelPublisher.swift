@@ -88,7 +88,7 @@ actor ACChannelPublisher {
         
         let connectionState: WebSocketConnectionState = await webSocket.connectionState
         
-        if connectionState != .connected && connectionState != .connecting {
+        if !connectionState.isConnected && !connectionState.isConnecting {
                         
             await webSocket.connect(url: url)
             
@@ -96,7 +96,7 @@ actor ACChannelPublisher {
             
             await handleDidConnectToWebsocket()
         }
-        else if connectionState == .connected {
+        else if connectionState.isConnected {
             
             await handleDidConnectToWebsocket()
         }

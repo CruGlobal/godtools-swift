@@ -72,24 +72,21 @@ class ToolSettingsFlow: GTFlow {
             
             let toolAbbreviation: String = appDiContainer.core.dataLayer.getResourcesRepository().getResourceById(id: toolSettingsObserver.toolId)?.abbreviation ?? ""
             
-            Task {
+            let shareToolFlow = ShareToolFlow(
+                appDiContainer: appDiContainer,
+                toolId: toolSettingsObserver.toolId,
+                toolLanguageId: toolSettingsObserver.languages.selectedLanguageId,
+                pageNumber: toolSettingsObserver.pageNumber,
+                appLanguage: appLanguage,
+                toolAnalyticsAbbreviation: toolAbbreviation
+            )
 
-                let shareToolFlow = await ShareToolFlow(
-                    appDiContainer: appDiContainer,
-                    toolId: toolSettingsObserver.toolId,
-                    toolLanguageId: toolSettingsObserver.languages.selectedLanguageId,
-                    pageNumber: toolSettingsObserver.pageNumber,
-                    appLanguage: appLanguage,
-                    toolAnalyticsAbbreviation: toolAbbreviation
+            dismissInitialView(animated: true, completion: { [weak self] in
+
+                self?.presentFlow(
+                    flow: shareToolFlow
                 )
-
-                dismissInitialView(animated: true, completion: { [weak self] in
-
-                    self?.presentFlow(
-                        flow: shareToolFlow
-                    )
-                })
-            }
+            })
             
         case .shareToolFlowCompleted( _):
             
