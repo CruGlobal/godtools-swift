@@ -15,7 +15,7 @@ protocol WebSocketInterface: Actor {
     var isConnecting: Bool { get }
     
     func getConnectionStateStream() -> AsyncStream<WebSocketConnectionState>
-    func getReceiveTextStream() async throws -> AsyncThrowingStream<String, any Error>
+    func getTextStream() -> AsyncStream<String>
     func connect(url: URL) async
     func disconnect() async
     func write(string: String)

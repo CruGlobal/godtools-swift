@@ -16,6 +16,8 @@ actor URLSessionWebSocket: WebSocketInterface {
     
     private var currentWebSocketTask: URLSessionWebSocketTask?
     private var connectionStateContinuations: [UUID: AsyncStream<WebSocketConnectionState>.Continuation] = Dictionary()
+    private var receiveTextContinuations: [UUID: AsyncStream<String>.Continuation] = Dictionary()
+    private var receiveTextTask: Task<Void, Never>?
     
     private(set) var connectionState: WebSocketConnectionState = .noState {
         didSet {
@@ -31,36 +33,6 @@ actor URLSessionWebSocket: WebSocketInterface {
     
     var isConnecting: Bool {
         return connectionState.isConnecting
-    }
-    
-    func getConnectionStateStream() -> AsyncStream<WebSocketConnectionState> {
-        
-        let (stream, continuation) = AsyncStream<WebSocketConnectionState>.makeStream()
-        let continuationId: UUID = UUID()
-        
-        connectionStateContinuations[continuationId] = continuation
-        
-        continuation.onTermination = { [weak self] _ in
-            Task { await self?.removeConnectionStateContinuation(continuationId: continuationId) }
-        }
-        
-        continuation.yield(connectionState)
-        
-        return stream
-    }
-    
-    private func removeConnectionStateContinuation(continuationId: UUID) {
-        
-        connectionStateContinuations[continuationId] = nil
-    }
-    
-    func getReceiveTextStream() async throws -> AsyncThrowingStream<String, any Error> {
-        
-        guard let task = currentWebSocketTask else {
-            throw NSError.errorWithDomain(domain: "URLSessionWebSocketTask", code: -1, description: "Failed to create stream.  Make sure you call connect first.")
-        }
-        
-        return await WebSocketMessagesObserver().start(webSocketTask: task)
     }
     
     func connect(url: URL) async {
@@ -85,6 +57,8 @@ actor URLSessionWebSocket: WebSocketInterface {
                         
         let webSocketTask: URLSessionWebSocketTask = session.webSocketTask(with: url)
         
+        observeTaskReceive(webSocketTask: webSocketTask)
+        
         currentWebSocketTask = webSocketTask
 
         webSocketTask.delegate = taskDelegate
@@ -104,6 +78,8 @@ actor URLSessionWebSocket: WebSocketInterface {
         }
         
         connectionState = .disconnected(reason: .clientDisconnected)
+        
+        cancelObserveTaskReceive()
                 
         await keepSocketAlive.stop()
         
@@ -157,5 +133,97 @@ actor URLSessionWebSocket: WebSocketInterface {
     private func handleDidComplete(error: (any Error)?) async {
         
         await disconnectWithReason(reason: .taskFinishedTransfer(failure: error?.localizedDescription))
+    }
+}
+
+// MARK: - Streams
+
+extension URLSessionWebSocket {
+    
+    func getConnectionStateStream() -> AsyncStream<WebSocketConnectionState> {
+        
+        let (stream, continuation) = AsyncStream<WebSocketConnectionState>.makeStream()
+        let continuationId: UUID = UUID()
+        
+        connectionStateContinuations[continuationId] = continuation
+        
+        continuation.onTermination = { [weak self] _ in
+            Task { await self?.removeConnectionStateContinuation(continuationId: continuationId) }
+        }
+        
+        continuation.yield(connectionState)
+        
+        return stream
+    }
+    
+    private func removeConnectionStateContinuation(continuationId: UUID) {
+        
+        connectionStateContinuations[continuationId] = nil
+    }
+    
+    func getTextStream() -> AsyncStream<String> {
+        
+        let (stream, continuation) = AsyncStream<String>.makeStream()
+        let continuationId: UUID = UUID()
+        
+        receiveTextContinuations[continuationId] = continuation
+        
+        continuation.onTermination = { [weak self] _ in
+            Task { await self?.removeReceiveTextContinuation(continuationId: continuationId) }
+        }
+                
+        return stream
+    }
+    
+    private func removeReceiveTextContinuation(continuationId: UUID) {
+        
+        receiveTextContinuations[continuationId] = nil
+    }
+    
+    private func sendText(text: String) {
+        
+        for continuation in receiveTextContinuations.values {
+            continuation.yield(text)
+        }
+    }
+    
+    private func cancelObserveTaskReceive() {
+        receiveTextTask?.cancel()
+        receiveTextTask = nil
+    }
+    
+    private func observeTaskReceive(webSocketTask: URLSessionWebSocketTask) {
+
+        cancelObserveTaskReceive()
+
+        receiveTextTask = Task { [weak self] in
+            
+            while !Task.isCancelled {
+                
+                do {
+                    
+                    let message: URLSessionWebSocketTask.Message = try await webSocketTask.receive()
+                    
+                    guard let text = await self?.getTextFromMessage(message: message) else {
+                        continue
+                    }
+                    
+                    await self?.sendText(text: text)
+                }
+                catch let error {
+                    
+                }
+            }
+        }
+    }
+    
+    private func getTextFromMessage(message: URLSessionWebSocketTask.Message) -> String? {
+        
+        switch message {
+        case .string(let text):
+            return text
+        default:
+            return nil
+        }
     }
 }
