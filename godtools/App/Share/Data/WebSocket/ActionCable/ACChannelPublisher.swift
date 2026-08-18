@@ -114,7 +114,7 @@ actor ACChannelPublisher {
         await webSocket.write(string: stringMessage)
     }
     
-    func createChannel(url: URL, channel: WebSocketChannel) async throws {
+    func createChannel(url: URL, channel: WebSocketChannel) async {
         
         let connectionState: WebSocketConnectionState = await webSocket.connectionState
         
@@ -129,7 +129,7 @@ actor ACChannelPublisher {
         
         await webSocket.connect(url: url)
         
-        try await startObservingWebSocketText()
+        await startObservingWebSocketText()
     }
     
     func disconnect() async {
@@ -143,23 +143,17 @@ actor ACChannelPublisher {
         receiveTextTask = nil
     }
     
-    private func startObservingWebSocketText() async throws {
+    private func startObservingWebSocketText() async {
         
-        let textStream = try await webSocket.getReceiveTextStream()
+        let textStream = await webSocket.getTextStream()
         
         cancelReceiveTextTask()
         
         receiveTextTask = Task { [weak self] in
 
-            do {
-
-                for try await text in textStream {
-                    
-                    await self?.handleDidReceiveText(text: text)
-                }
-            }
-            catch {
-
+            for await text in textStream {
+                
+                await self?.handleDidReceiveText(text: text)
             }
         }
     }

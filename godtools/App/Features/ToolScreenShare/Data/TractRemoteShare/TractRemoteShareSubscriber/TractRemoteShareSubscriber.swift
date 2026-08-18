@@ -93,23 +93,17 @@ actor TractRemoteShareSubscriber {
         receiveTextTask = nil
     }
     
-    private func startObservingWebSocketText() async throws {
+    private func startObservingWebSocketText() async {
         
-        let textStream = try await channelSubscriber.getReceiveTextStream()
+        let textStream = await channelSubscriber.getTextStream()
         
         cancelReceiveTextTask()
         
         receiveTextTask = Task { [weak self] in
 
-            do {
-
-                for try await text in textStream {
-                    
-                    await self?.handleDidReceiveText(text: text)
-                }
-            }
-            catch {
-
+            for await text in textStream {
+                
+                await self?.handleDidReceiveText(text: text)
             }
         }
     }
@@ -131,9 +125,9 @@ actor TractRemoteShareSubscriber {
         
         isSubscribingToChannel = channel
         
-        try await channelSubscriber.subscribe(url: url, channel: channel)
+        await channelSubscriber.subscribe(url: url, channel: channel)
         
-        try await startObservingWebSocketText()
+        await startObservingWebSocketText()
     }
     
     func unsubscribe(disconnectSocket: Bool) async {

@@ -51,8 +51,8 @@ actor ACChannelSubscriber {
         return await webSocket.getConnectionStateStream()
     }
     
-    func getReceiveTextStream() async throws -> AsyncThrowingStream<String, any Error> {
-        return try await webSocket.getReceiveTextStream()
+    func getTextStream() async -> AsyncStream<String> {
+        return await webSocket.getTextStream()
     }
     
     func getSubscribedStream() -> AsyncStream<WebSocketChannel> {
@@ -84,7 +84,7 @@ actor ACChannelSubscriber {
         return subscribedToChannel != nil
     }
 
-    func subscribe(url: URL, channel: WebSocketChannel) async throws {
+    func subscribe(url: URL, channel: WebSocketChannel) async {
         
         let connectionState: WebSocketConnectionState = await webSocket.connectionState
         
@@ -97,7 +97,7 @@ actor ACChannelSubscriber {
         
         await webSocket.connect(url: url)
         
-        try await startObservingWebSocketText()
+        await startObservingWebSocketText()
     }
     
     private func cancelReceiveTextTask() {
@@ -106,23 +106,17 @@ actor ACChannelSubscriber {
         receiveTextTask = nil
     }
     
-    private func startObservingWebSocketText() async throws {
+    private func startObservingWebSocketText() async {
         
-        let textStream = try await webSocket.getReceiveTextStream()
+        let textStream = await webSocket.getTextStream()
         
         cancelReceiveTextTask()
         
         receiveTextTask = Task { [weak self] in
 
-            do {
-
-                for try await text in textStream {
-                    
-                    await self?.handleDidReceiveText(text: text)
-                }
-            }
-            catch {
-
+            for await text in textStream {
+                
+                await self?.handleDidReceiveText(text: text)
             }
         }
     }
