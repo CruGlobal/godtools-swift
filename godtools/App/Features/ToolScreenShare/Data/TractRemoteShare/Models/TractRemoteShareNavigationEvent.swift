@@ -10,6 +10,8 @@ import Foundation
 
 struct TractRemoteShareNavigationEvent: Codable, Sendable {
     
+    static let type: String = "navigation-event"
+    
     let message: TractRemoteShareNavigationEvent.Message?
     let identifier: ACIdentifier?
     
@@ -46,7 +48,7 @@ struct TractRemoteShareNavigationEvent: Codable, Sendable {
             
             self.attributes = attributes
             self.id = UUID().uuidString
-            self.type = "navigation-event"
+            self.type = TractRemoteShareNavigationEvent.type
         }
     }
     

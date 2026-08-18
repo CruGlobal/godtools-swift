@@ -132,6 +132,8 @@ actor TractRemoteShareSubscriber {
         isSubscribingToChannel = channel
         
         try await channelSubscriber.subscribe(url: url, channel: channel)
+        
+        try await startObservingWebSocketText()
     }
     
     func unsubscribe(disconnectSocket: Bool) async {
@@ -157,7 +159,7 @@ actor TractRemoteShareSubscriber {
             
             let object: TractRemoteShareNavigationEvent = try JsonServices().decodeObject(data: data)
             
-            if object.message?.data?.type == "navigation-event" {
+            if object.message?.data?.type == TractRemoteShareNavigationEvent.type {
                 sendNavigationEvent(event: object)
             }
         }
