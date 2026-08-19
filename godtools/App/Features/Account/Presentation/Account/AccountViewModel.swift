@@ -133,6 +133,8 @@ final class AccountViewModel: ObservableObject {
             
             globalActivityIsEnabled = await getGlobalActivityEnabledUseCase.execute()
         }
+        
+        refreshAccount()
     }
     
     deinit {
@@ -171,6 +173,12 @@ final class AccountViewModel: ObservableObject {
             try await globalAnalyticsSync.sync(requestPriority: .high)
         }
     }
+    
+    private func refreshAccount() {
+        Task {
+            try await didPullToRefreshAccountUseCase.execute()
+        }
+    }
 }
 
 // MARK: - Inputs
@@ -183,9 +191,7 @@ extension AccountViewModel {
     
     func pullToRefresh() {
         
-        Task {
-            try await didPullToRefreshAccountUseCase.execute()
-        }
+        refreshAccount()
     }
     
     func activityViewed() {
