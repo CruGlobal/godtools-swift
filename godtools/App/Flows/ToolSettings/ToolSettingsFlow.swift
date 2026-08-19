@@ -228,7 +228,7 @@ class ToolSettingsFlow: GTFlow {
             case .failure(let error):
                 break
                         
-                // TODO: Fix. ~Levi
+                // TODO: Address in follow-up ticket.  Need to add timeout handling back in. ~Levi
                 /*
                 switch error {
                 

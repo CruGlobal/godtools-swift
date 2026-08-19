@@ -25,10 +25,6 @@ actor ACChannelPublisher: ACChannelPublisherInterface {
         
         self.webSocket = webSocket
         self.loggingEnabled = loggingEnabled
-                
-        // TODO: Fix. ~Levi
-        //NotificationCenter.default.addObserver(self, selector: #selector(appWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
-        //NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         
         Task { [weak self] in
             
@@ -251,33 +247,4 @@ actor ACChannelPublisher: ACChannelPublisherInterface {
         
         await createdChannelStream.send(value: channel)
     }
-    
-    // TODO: Fix. ~Levi
-    
-    /*
-    @objc private func appWillResignActive() {
-        
-        appResignedActive = true
-        
-        Task {
-            await webSocket.disconnect()
-        }
-    }
-    
-    @objc private func appDidBecomeActive() {
-        
-        guard appResignedActive else {
-            return
-        }
-        
-        appResignedActive = false
-        
-        guard let channel = self.channel else {
-            return
-        }
-        
-        Task {
-            await createChannel(channel: channel)
-        }
-    }*/
 }
