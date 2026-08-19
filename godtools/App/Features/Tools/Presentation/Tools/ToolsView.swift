@@ -168,7 +168,7 @@ struct AllToolsView_Preview: PreviewProvider {
             trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase(),
             getToolBannerUseCase: appDiContainer.core.domainLayer.getToolBannerUseCase(),
-            inMemoryDataCache: appDiContainer.core.dataLayer.getSharedInMemoryDataCache()
+            dataCache: appDiContainer.core.dataLayer.getSharedDataCache()
         )
         
         return viewModel

@@ -29,7 +29,7 @@ class LessonCardViewModel: ObservableObject {
     init(
         lessonListItem: LessonListItemDomainModelInterface,
         getToolBannerUseCase: GetToolBannerUseCase,
-        inMemoryDataCache: InMemoryDataCache
+        dataCache: DataCacheInterface
     ) {
         
         self.lessonListItem = lessonListItem
@@ -57,7 +57,7 @@ class LessonCardViewModel: ObservableObject {
         
         getBannerImageTask = Task {
             
-            if let imageData = await inMemoryDataCache.getData(id: attachmentId), let image = imageData.toImage() {
+            if let imageData = await dataCache.getData(id: attachmentId), let image = imageData.toImage() {
                 
                 banner = getBanner(image: image, attachmentId: attachmentId)
             }
@@ -69,7 +69,7 @@ class LessonCardViewModel: ObservableObject {
                     )
                 
                 if let imageData = imageData {
-                    inMemoryDataCache.cacheData(id: attachmentId, data: imageData)
+                    await dataCache.cacheData(id: attachmentId, data: imageData)
                 }
                 
                 banner = getBanner(image: imageData?.toImage(), attachmentId: attachmentId)

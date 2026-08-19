@@ -46,7 +46,7 @@ final class DashboardPresentationLayerDependencies {
             trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase(),
             getToolBannerUseCase: appDiContainer.core.domainLayer.getToolBannerUseCase(),
-            inMemoryDataCache: appDiContainer.core.dataLayer.getSharedInMemoryDataCache()
+            dataCache: appDiContainer.core.dataLayer.getSharedDataCache()
         )
     }
     
@@ -60,7 +60,7 @@ final class DashboardPresentationLayerDependencies {
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToolIsFavoritedUseCase(),
             getToolBannerUseCase: appDiContainer.core.domainLayer.getToolBannerUseCase(),
-            inMemoryDataCache: appDiContainer.core.dataLayer.getSharedInMemoryDataCache(),
+            dataCache: appDiContainer.core.dataLayer.getSharedDataCache(),
             disableOptInOnboardingBannerUseCase: appDiContainer.feature.tools.domainLayer.getDisableOptInOnboardingBannerUseCase(),
             getFeaturedLessonsUseCase: appDiContainer.feature.featuredLessons.domainLayer.getFeaturedLessonsUseCase(),
             getOptInOnboardingBannerEnabledUseCase: appDiContainer.feature.tools.domainLayer.getOptInOnboardingBannerEnabledUseCase(),
@@ -88,7 +88,7 @@ final class DashboardPresentationLayerDependencies {
             trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase(),
             getToolBannerUseCase: appDiContainer.core.domainLayer.getToolBannerUseCase(),
-            inMemoryDataCache: appDiContainer.core.dataLayer.getSharedInMemoryDataCache()
+            dataCache: appDiContainer.core.dataLayer.getSharedDataCache()
         )
     }
 }
