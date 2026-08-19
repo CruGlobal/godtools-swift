@@ -14,7 +14,7 @@ actor URLSessionWebSocket: WebSocketInterface {
     private let session: URLSession = URLSession(configuration: CreateIgnoreCacheSessionConfig().createConfig())
     private let keepSocketAlive: KeepWebSocketAlive = KeepWebSocketAlive()
     private let connectionStateStream: MultiBroadcastStream<WebSocketConnectionState> = MultiBroadcastStream()
-    private let receiveTextStream: MultiBroadcastStream<String> = MultiBroadcastStream()
+    private let receiveTextStream: MultiBroadcastThrowingStream<String> = MultiBroadcastThrowingStream()
     
     private var currentWebSocketTask: URLSessionWebSocketTask?
     private var receiveTextTask: Task<Void, Never>?
@@ -146,7 +146,7 @@ extension URLSessionWebSocket {
         return await connectionStateStream.getNewStream(sendValue: connectionState)
     }
     
-    func getTextStream() async -> AsyncStream<String> {
+    func getTextStream() async -> AsyncThrowingStream<String, Error> {
         
         return await receiveTextStream.getNewStream()
     }
@@ -154,6 +154,11 @@ extension URLSessionWebSocket {
     private func sendText(text: String) async {
         
         await receiveTextStream.send(value: text)
+    }
+    
+    private func sendTextError(error: Error) async {
+        
+        await receiveTextStream.send(error: error)
     }
     
     private func cancelObserveTaskReceive() {
@@ -180,7 +185,9 @@ extension URLSessionWebSocket {
                     await self?.sendText(text: text)
                 }
                 catch let error {
-                    // TODO: Handle error? ~Levi
+                    
+                    await self?.sendTextError(error: error)
+                    
                     break
                 }
             }

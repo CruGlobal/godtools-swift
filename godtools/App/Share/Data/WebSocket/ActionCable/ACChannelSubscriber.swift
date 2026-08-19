@@ -51,7 +51,7 @@ actor ACChannelSubscriber {
         return await webSocket.getConnectionStateStream()
     }
     
-    func getTextStream() async -> AsyncStream<String> {
+    func getTextStream() async -> AsyncThrowingStream<String, Error> {
         return await webSocket.getTextStream()
     }
     
@@ -99,9 +99,16 @@ actor ACChannelSubscriber {
         
         receiveTextTask = Task { [weak self] in
 
-            for await text in textStream {
+            do {
                 
-                await self?.handleDidReceiveText(text: text)
+                for try await text in textStream {
+                    
+                    await self?.handleDidReceiveText(text: text)
+                }
+            }
+            catch let error {
+                
+                await self?.handleReceiveTextError(error: error)
             }
         }
     }
@@ -190,6 +197,13 @@ actor ACChannelSubscriber {
                 
                 await handleDidSubscribeToChannel(channel: channelToSubscribeTo)
             }
+        }
+    }
+    
+    private func handleReceiveTextError(error: Error) {
+        
+        if loggingEnabled {
+            print("\n ACChannelSubscriber: handleReceiveTextError() \(error)")
         }
     }
     

@@ -136,9 +136,16 @@ actor ACChannelPublisher {
         
         receiveTextTask = Task { [weak self] in
 
-            for await text in textStream {
+            do {
                 
-                await self?.handleDidReceiveText(text: text)
+                for try await text in textStream {
+                    
+                    await self?.handleDidReceiveText(text: text)
+                }
+            }
+            catch let error {
+                
+                await self?.handleReceiveTextError(error: error)
             }
         }
     }
@@ -221,6 +228,13 @@ actor ACChannelPublisher {
             }
             
             await handleDidCreateSubscriberChannel(subscriberChannel: subscriberChannel)
+        }
+    }
+    
+    private func handleReceiveTextError(error: Error) {
+        
+        if loggingEnabled {
+            print("\n ACChannelPublisher: handleReceiveTextError() \(error)")
         }
     }
     

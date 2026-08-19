@@ -86,9 +86,16 @@ actor TractRemoteShareSubscriber {
         
         receiveTextTask = Task { [weak self] in
 
-            for await text in textStream {
+            do {
                 
-                await self?.handleDidReceiveText(text: text)
+                for try await text in textStream {
+                    
+                    await self?.handleDidReceiveText(text: text)
+                }
+            }
+            catch let error {
+                
+                await self?.handleReceiveTextError(error: error)
             }
         }
     }
@@ -122,6 +129,11 @@ actor TractRemoteShareSubscriber {
         cancelReceiveTextTask()
                 
         await channelSubscriber.unsubscribe(disconnectSocket: disconnectSocket)
+    }
+    
+    private func handleReceiveTextError(error: Error) {
+        
+        log(method: "handleReceiveTextError()", label: "error", labelValue: error.localizedDescription)
     }
     
     private func handleDidReceiveText(text: String) async {
