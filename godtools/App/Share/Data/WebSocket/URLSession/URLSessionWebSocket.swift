@@ -13,19 +13,13 @@ actor URLSessionWebSocket: WebSocketInterface {
     
     private let session: URLSession = URLSession(configuration: CreateIgnoreCacheSessionConfig().createConfig())
     private let keepSocketAlive: KeepWebSocketAlive = KeepWebSocketAlive()
+    private let connectionStateStream: MultiBroadcastStream<WebSocketConnectionState> = MultiBroadcastStream()
+    private let receiveTextStream: MultiBroadcastStream<String> = MultiBroadcastStream()
     
     private var currentWebSocketTask: URLSessionWebSocketTask?
-    private var connectionStateContinuations: [UUID: AsyncStream<WebSocketConnectionState>.Continuation] = Dictionary()
-    private var receiveTextContinuations: [UUID: AsyncStream<String>.Continuation] = Dictionary()
     private var receiveTextTask: Task<Void, Never>?
     
-    private(set) var connectionState: WebSocketConnectionState = .noState {
-        didSet {
-            for continuation in connectionStateContinuations.values {
-                continuation.yield(connectionState)
-            }
-        }
-    }
+    private(set) var connectionState: WebSocketConnectionState = .noState
            
     var isConnected: Bool {
         return connectionState.isConnected
@@ -41,7 +35,7 @@ actor URLSessionWebSocket: WebSocketInterface {
             return
         }
         
-        connectionState = .connecting
+        await setConnectionState(connectionState: .connecting)
         
         let taskDelegate: URLSessionWebSocketTaskDelegate = URLSessionWebSocketTaskDelegate(
             didOpen: { [weak self] in
@@ -77,7 +71,7 @@ actor URLSessionWebSocket: WebSocketInterface {
             return
         }
         
-        connectionState = .disconnected(reason: .clientDisconnected)
+        await setConnectionState(connectionState: .disconnected(reason: .clientDisconnected))
         
         cancelObserveTaskReceive()
                 
@@ -86,6 +80,13 @@ actor URLSessionWebSocket: WebSocketInterface {
         webSocketTask.cancel(with: .goingAway, reason: nil)
 
         currentWebSocketTask = nil
+    }
+    
+    private func setConnectionState(connectionState: WebSocketConnectionState) async {
+        
+        self.connectionState = connectionState
+        
+        await connectionStateStream.send(value: connectionState)
     }
     
     func write(string: String) {
@@ -107,7 +108,7 @@ actor URLSessionWebSocket: WebSocketInterface {
             return
         }
         
-        connectionState = .connected
+        await setConnectionState(connectionState: .connected)
 
         await keepSocketAlive.start(webSocketTask: webSocketTask)
 
@@ -140,51 +141,19 @@ actor URLSessionWebSocket: WebSocketInterface {
 
 extension URLSessionWebSocket {
     
-    func getConnectionStateStream() -> AsyncStream<WebSocketConnectionState> {
+    func getConnectionStateStream() async -> AsyncStream<WebSocketConnectionState> {
         
-        let (stream, continuation) = AsyncStream<WebSocketConnectionState>.makeStream()
-        let continuationId: UUID = UUID()
-        
-        connectionStateContinuations[continuationId] = continuation
-        
-        continuation.onTermination = { [weak self] _ in
-            Task { await self?.removeConnectionStateContinuation(continuationId: continuationId) }
-        }
-        
-        continuation.yield(connectionState)
-        
-        return stream
+        return await connectionStateStream.getNewStream(sendValue: connectionState)
     }
     
-    private func removeConnectionStateContinuation(continuationId: UUID) {
+    func getTextStream() async -> AsyncStream<String> {
         
-        connectionStateContinuations[continuationId] = nil
+        return await receiveTextStream.getNewStream()
     }
     
-    func getTextStream() -> AsyncStream<String> {
+    private func sendText(text: String) async {
         
-        let (stream, continuation) = AsyncStream<String>.makeStream()
-        let continuationId: UUID = UUID()
-        
-        receiveTextContinuations[continuationId] = continuation
-        
-        continuation.onTermination = { [weak self] _ in
-            Task { await self?.removeReceiveTextContinuation(continuationId: continuationId) }
-        }
-                
-        return stream
-    }
-    
-    private func removeReceiveTextContinuation(continuationId: UUID) {
-        
-        receiveTextContinuations[continuationId] = nil
-    }
-    
-    private func sendText(text: String) {
-        
-        for continuation in receiveTextContinuations.values {
-            continuation.yield(text)
-        }
+        await receiveTextStream.send(value: text)
     }
     
     private func cancelObserveTaskReceive() {

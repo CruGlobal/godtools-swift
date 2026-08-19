@@ -14,8 +14,8 @@ protocol WebSocketInterface: Actor {
     var isConnected: Bool { get }
     var isConnecting: Bool { get }
     
-    func getConnectionStateStream() -> AsyncStream<WebSocketConnectionState>
-    func getTextStream() -> AsyncStream<String>
+    func getConnectionStateStream() async -> AsyncStream<WebSocketConnectionState>
+    func getTextStream() async -> AsyncStream<String>
     func connect(url: URL) async
     func disconnect() async
     func write(string: String)
