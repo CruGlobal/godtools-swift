@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class InMemoryDataCache {
+actor InMemoryDataCache: DataCacheInterface {
     
     private static let oneHundredMegabytes: Int = 1024 * 1024 * 100
     
@@ -20,7 +20,7 @@ final class InMemoryDataCache {
         cache.totalCostLimit = totalCostLimit
     }
     
-    func cacheData(id: String, data: Data) {
+    func cacheData(id: String, data: Data) async {
         
         cache.setObject(data as NSData, forKey: id as NSString)
     }

@@ -33,7 +33,7 @@ final class ToolsViewModel: ObservableObject {
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let getToolBannerUseCase: GetToolBannerUseCase
-    private let inMemoryDataCache: InMemoryDataCache
+    private let dataCache: DataCacheInterface
     
     private var cancellables: Set<AnyCancellable> = Set()
     private var pullToRefreshToolsTask: Task<Void, Error>?
@@ -72,7 +72,7 @@ final class ToolsViewModel: ObservableObject {
         trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
         trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase,
         getToolBannerUseCase: GetToolBannerUseCase,
-        inMemoryDataCache: InMemoryDataCache
+        dataCache: DataCacheInterface
     ) {
         
         self.stepEmitter = stepEmitter
@@ -91,7 +91,7 @@ final class ToolsViewModel: ObservableObject {
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.getToolBannerUseCase = getToolBannerUseCase
-        self.inMemoryDataCache = inMemoryDataCache
+        self.dataCache = dataCache
         
         Task {
             
@@ -412,7 +412,7 @@ extension ToolsViewModel {
             accessibility: accessibility,
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
             getToolBannerUseCase: getToolBannerUseCase,
-            inMemoryDataCache: inMemoryDataCache
+            dataCache: dataCache
         )
     }
     

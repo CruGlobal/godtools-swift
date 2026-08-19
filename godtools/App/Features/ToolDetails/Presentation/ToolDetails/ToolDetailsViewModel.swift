@@ -25,7 +25,7 @@ final class ToolDetailsViewModel: ObservableObject {
     private let getToolDetailsLearnToShareToolIsAvailableUseCase: GetToolDetailsLearnToShareToolIsAvailableUseCase
     private let toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase
     private let getToolBannerUseCase: GetToolBannerUseCase
-    private let inMemoryDataCache: InMemoryDataCache
+    private let dataCache: DataCacheInterface
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     
@@ -71,7 +71,7 @@ final class ToolDetailsViewModel: ObservableObject {
         getToolDetailsLearnToShareToolIsAvailableUseCase: GetToolDetailsLearnToShareToolIsAvailableUseCase,
         toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase,
         getToolBannerUseCase: GetToolBannerUseCase,
-        inMemoryDataCache: InMemoryDataCache,
+        dataCache: DataCacheInterface,
         trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
         trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     ) {
@@ -85,7 +85,7 @@ final class ToolDetailsViewModel: ObservableObject {
         self.getToolDetailsLearnToShareToolIsAvailableUseCase = getToolDetailsLearnToShareToolIsAvailableUseCase
         self.toggleToolFavoritedUseCase = toggleToolFavoritedUseCase
         self.getToolBannerUseCase = getToolBannerUseCase
-        self.inMemoryDataCache = inMemoryDataCache
+        self.dataCache = dataCache
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.tool = tool
@@ -373,7 +373,7 @@ extension ToolDetailsViewModel {
         return ToolDetailsVersionsCardViewModel(
             toolVersion: toolVersion,
             getToolBannerUseCase: getToolBannerUseCase,
-            inMemoryDataCache: inMemoryDataCache,
+            dataCache: dataCache,
             isSelected: selectedToolVersion?.id == toolVersion.id
         )
     }

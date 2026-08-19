@@ -32,7 +32,7 @@ class ToolDetailsVersionsCardViewModel: ObservableObject {
     init(
         toolVersion: ToolVersionDomainModel,
         getToolBannerUseCase: GetToolBannerUseCase,
-        inMemoryDataCache: InMemoryDataCache,
+        dataCache: DataCacheInterface,
         isSelected: Bool
     ) {
         
@@ -51,7 +51,7 @@ class ToolDetailsVersionsCardViewModel: ObservableObject {
         
         getBannerImageTask = Task {
             
-            if let imageData = await inMemoryDataCache.getData(id: attachmentId), let image = imageData.toImage() {
+            if let imageData = await dataCache.getData(id: attachmentId), let image = imageData.toImage() {
                 
                 banner = getBanner(image: image, attachmentId: attachmentId)
             }
@@ -63,7 +63,7 @@ class ToolDetailsVersionsCardViewModel: ObservableObject {
                     )
                 
                 if let imageData = imageData {
-                    inMemoryDataCache.cacheData(id: attachmentId, data: imageData)
+                    await dataCache.cacheData(id: attachmentId, data: imageData)
                 }
                 
                 banner = getBanner(image: imageData?.toImage(), attachmentId: attachmentId)

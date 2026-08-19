@@ -641,12 +641,12 @@ final class AppDataLayerDependencies: Sendable {
         )
     }
     
-    func getSharedFirebaseMessaging() -> FirebaseMessaging {
-        return FirebaseMessaging.shared
+    func getSharedDataCache() -> DataCacheInterface {
+        return sharedInMemoryDataCache
     }
     
-    func getSharedInMemoryDataCache() -> InMemoryDataCache {
-        return sharedInMemoryDataCache
+    func getSharedFirebaseMessaging() -> FirebaseMessaging {
+        return FirebaseMessaging.shared
     }
     
     func getSharedUrlSessionPriority() -> URLSessionPriority {
