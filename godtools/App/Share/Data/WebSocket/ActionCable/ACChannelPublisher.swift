@@ -74,13 +74,14 @@ actor ACChannelPublisher {
         return await createdChannelStream.getNewStream(sendValue: subscriberChannel)
     }
     
-    func createChannel(url: URL, channel: WebSocketChannel) async {
+    func createChannel(url: URL, channel: WebSocketChannel) async throws(ACCreateChannelError) {
         
-        let connectionState: WebSocketConnectionState = await webSocket.connectionState
+        guard !isCreatingChannel else {
+            throw .isCreatingChannel
+        }
         
-        guard !connectionState.isConnected && !connectionState.isConnecting else {
-            // TODO: Should throw error that websocket is connected or connecting. ~Levi
-            return
+        guard !channelIsCreated else {
+            throw .channelAlreadyCreated
         }
         
         self.createChannel = channel
