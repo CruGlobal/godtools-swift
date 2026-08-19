@@ -13,8 +13,8 @@ actor ACChannelPublisher {
     
     private let webSocket: WebSocketInterface
     private let loggingEnabled: Bool
+    private let createdChannelStream: MultiBroadcastStream<WebSocketChannel> = MultiBroadcastStream()
     
-    private var createdChannelContinuations: [UUID: AsyncStream<WebSocketChannel>.Continuation] = Dictionary()
     private var channelToCreate: WebSocketChannel?
     private var publishingToSubscriberChannel: WebSocketChannel?
     private var receiveTextTask: Task<Void, Never>?
@@ -67,29 +67,14 @@ actor ACChannelPublisher {
         return await webSocket.getConnectionStateStream()
     }
     
-    func getCreatedChannelStream() -> AsyncStream<WebSocketChannel> {
+    func getCreatedChannelStream() async -> AsyncStream<WebSocketChannel> {
         
-        let (stream, continuation) = AsyncStream<WebSocketChannel>.makeStream()
-        let continuationId: UUID = UUID()
-        
-        createdChannelContinuations[continuationId] = continuation
-        
-        continuation.onTermination = { [weak self] _ in
-            Task { await self?.removeCreatedChannelContination(continuationId: continuationId) }
-        }
-                
-        return stream
+        return await createdChannelStream.getNewStream()
     }
     
-    private func removeCreatedChannelContination(continuationId: UUID) {
+    private func sendCreatedChannel(channel: WebSocketChannel) async {
         
-        createdChannelContinuations[continuationId] = nil
-    }
-    
-    private func sendCreatedChannel(channel: WebSocketChannel) {
-        for continuation in createdChannelContinuations.values {
-            continuation.yield(channel)
-        }
+        await createdChannelStream.send(value: channel)
     }
     
     func sendMessage(data: String) async {
@@ -200,7 +185,7 @@ actor ACChannelPublisher {
         }
     }
     
-    private func handleDidReceiveText(text: String) {
+    private func handleDidReceiveText(text: String) async {
         
         if loggingEnabled {
             print("\n ACChannelPublisher: handleDidReceiveText() \(text)")
@@ -235,17 +220,17 @@ actor ACChannelPublisher {
                 print("  subscriberChannelId: \(subscriberChannelId)")
             }
             
-            handleDidCreateSubscriberChannel(subscriberChannel: subscriberChannel)
+            await handleDidCreateSubscriberChannel(subscriberChannel: subscriberChannel)
         }
     }
     
-    private func handleDidCreateSubscriberChannel(subscriberChannel: WebSocketChannel) {
+    private func handleDidCreateSubscriberChannel(subscriberChannel: WebSocketChannel) async {
                 
         channelToCreate = nil
         
         publishingToSubscriberChannel = subscriberChannel
         
-        sendCreatedChannel(channel: subscriberChannel)
+        await sendCreatedChannel(channel: subscriberChannel)
     }
     
     // TODO: Fix. ~Levi

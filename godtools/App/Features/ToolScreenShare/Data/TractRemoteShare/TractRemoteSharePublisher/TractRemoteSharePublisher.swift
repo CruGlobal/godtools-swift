@@ -51,7 +51,7 @@ actor TractRemoteSharePublisher {
         return await channelPublisher.getConnectionStateStream()
     }
     
-    func getCreatedChannelStream() async-> AsyncStream<WebSocketChannel> {
+    func getCreatedChannelStream() async -> AsyncStream<WebSocketChannel> {
         return await channelPublisher.getCreatedChannelStream()
     }
     

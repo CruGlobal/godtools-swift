@@ -15,8 +15,8 @@ actor TractRemoteShareSubscriber {
     private let connectionUrl: String
     private let channelSubscriber: ACChannelSubscriber
     private let loggingEnabled: Bool
+    private let navigationEventStream: MultiBroadcastStream<TractRemoteShareNavigationEvent> = MultiBroadcastStream()
     
-    private var navigationEventContinuation: [UUID: AsyncStream<TractRemoteShareNavigationEvent>.Continuation] = Dictionary()
     private var receiveTextTask: Task<Void, Never>?
     private var isSubscribingToChannel: WebSocketChannel?
     
@@ -62,29 +62,14 @@ actor TractRemoteShareSubscriber {
         return await channelSubscriber.getSubscribedStream()
     }
     
-    func getNavigationEventStream() -> AsyncStream<TractRemoteShareNavigationEvent> {
+    func getNavigationEventStream() async -> AsyncStream<TractRemoteShareNavigationEvent> {
         
-        let (stream, continuation) = AsyncStream<TractRemoteShareNavigationEvent>.makeStream()
-        let continuationId: UUID = UUID()
-        
-        navigationEventContinuation[continuationId] = continuation
-        
-        continuation.onTermination = { [weak self] _ in
-            Task { await self?.removeNavigationEventContinuation(continuationId: continuationId) }
-        }
-        
-        return stream
+        return await navigationEventStream.getNewStream()
     }
     
-    private func removeNavigationEventContinuation(continuationId: UUID) {
+    private func sendNavigationEvent(event: TractRemoteShareNavigationEvent) async {
         
-        navigationEventContinuation[continuationId] = nil
-    }
-    
-    private func sendNavigationEvent(event: TractRemoteShareNavigationEvent) {
-        for continuation in navigationEventContinuation.values {
-            continuation.yield(event)
-        }
+        await navigationEventStream.send(value: event)
     }
     
     private func cancelReceiveTextTask() {
@@ -139,7 +124,7 @@ actor TractRemoteShareSubscriber {
         await channelSubscriber.unsubscribe(disconnectSocket: disconnectSocket)
     }
     
-    private func handleDidReceiveText(text: String) {
+    private func handleDidReceiveText(text: String) async {
             
         log(method: "handleDidReceiveText()", label: "text", labelValue: text)
         
@@ -154,7 +139,7 @@ actor TractRemoteShareSubscriber {
             let object: TractRemoteShareNavigationEvent = try JsonServices().decodeObject(data: data)
             
             if object.message?.data?.type == TractRemoteShareNavigationEvent.type {
-                sendNavigationEvent(event: object)
+                await sendNavigationEvent(event: object)
             }
         }
         catch _ {

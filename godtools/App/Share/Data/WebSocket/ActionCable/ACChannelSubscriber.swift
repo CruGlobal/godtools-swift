@@ -12,8 +12,8 @@ actor ACChannelSubscriber {
     
     private let webSocket: WebSocketInterface
     private let loggingEnabled: Bool
+    private let subscribedStream: MultiBroadcastStream<WebSocketChannel> = MultiBroadcastStream()
     
-    private var subscribedContinuations: [UUID: AsyncStream<WebSocketChannel>.Continuation] = Dictionary()
     private var channelToSubscribeTo: WebSocketChannel?
     private var isSubscribingToChannel: WebSocketChannel?
     private var subscribedToChannel: WebSocketChannel?
@@ -55,29 +55,14 @@ actor ACChannelSubscriber {
         return await webSocket.getTextStream()
     }
     
-    func getSubscribedStream() -> AsyncStream<WebSocketChannel> {
+    func getSubscribedStream() async -> AsyncStream<WebSocketChannel> {
         
-        let (stream, continuation) = AsyncStream<WebSocketChannel>.makeStream()
-        let continuationId: UUID = UUID()
-        
-        subscribedContinuations[continuationId] = continuation
-        
-        continuation.onTermination = { [weak self] _ in
-            Task { await self?.removeSubscribedContination(continuationId: continuationId) }
-        }
-                
-        return stream
+        return await subscribedStream.getNewStream()
     }
     
-    private func removeSubscribedContination(continuationId: UUID) {
+    private func sendDidSubscribeToChannel(channel: WebSocketChannel) async {
         
-        subscribedContinuations[continuationId] = nil
-    }
-    
-    private func sendDidSubscribeToChannel(channel: WebSocketChannel) {
-        for continuation in subscribedContinuations.values {
-            continuation.yield(channel)
-        }
+        await subscribedStream.send(value: channel)
     }
     
     var isSubscribedToChannel: Bool {
@@ -175,7 +160,7 @@ actor ACChannelSubscriber {
         }
     }
     
-    private func handleDidReceiveText(text: String) {
+    private func handleDidReceiveText(text: String) async {
         
         if loggingEnabled {
             print("\n ACChannelSubscriber: handleDidReceiveText() \(text)")
@@ -203,17 +188,17 @@ actor ACChannelSubscriber {
                let isSubscribingToChannel = isSubscribingToChannel,
                channelToSubscribeTo == isSubscribingToChannel {
                 
-                handleDidSubscribeToChannel(channel: channelToSubscribeTo)
+                await handleDidSubscribeToChannel(channel: channelToSubscribeTo)
             }
         }
     }
     
-    private func handleDidSubscribeToChannel(channel: WebSocketChannel) {
+    private func handleDidSubscribeToChannel(channel: WebSocketChannel) async {
         
         channelToSubscribeTo = nil
         isSubscribingToChannel = nil
         subscribedToChannel = channel
         
-        sendDidSubscribeToChannel(channel: channel)
+        await sendDidSubscribeToChannel(channel: channel)
     }
 }
