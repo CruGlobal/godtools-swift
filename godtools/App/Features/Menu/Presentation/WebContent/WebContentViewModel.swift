@@ -9,15 +9,15 @@
 import Foundation
 
 @MainActor
-final class WebContentViewModel {
+final class WebContentViewModel: ObservableObject {
     
     private let stepEmitter: FlowStepEmitter
     private let webContent: WebContentType
     private let backTappedFromWebContentStep: AppFlowStep
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
         
-    let navTitle: ObservableValue<String> = ObservableValue(value: "")
-    let url: ObservableValue<URL?> = ObservableValue(value: nil)
+    @Published private(set) var navTitle: String = ""
+    @Published private(set) var url: URL?
     
     init(
         stepEmitter: FlowStepEmitter,
@@ -31,8 +31,8 @@ final class WebContentViewModel {
         self.backTappedFromWebContentStep = backTappedFromWebContentStep
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         
-        navTitle.accept(value: webContent.navTitle)
-        url.accept(value: webContent.url)
+        navTitle = webContent.navTitle
+        url = webContent.url
     }
     
     deinit {

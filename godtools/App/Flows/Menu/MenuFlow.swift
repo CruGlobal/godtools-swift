@@ -712,7 +712,11 @@ extension MenuFlow {
 
 extension MenuFlow {
     
-    private func getWebContentView(webContent: WebContentType, screenAccessibility: AccessibilityStrings.Screen?, backTappedFromWebContentStep: AppFlowStep) -> UIViewController {
+    private func getWebContentView(
+        webContent: WebContentType,
+        screenAccessibility: AccessibilityStrings.Screen?,
+        backTappedFromWebContentStep: AppFlowStep
+    ) -> UIViewController {
         
         let viewModel = WebContentViewModel(
             stepEmitter: stepEmitter,
@@ -728,16 +732,20 @@ extension MenuFlow {
         
         let view = WebContentView(
             viewModel: viewModel,
+            screenAccessibility: screenAccessibility
+        )
+        
+        let hostingView = AppHostingController<WebContentView>(
+            rootView: view,
             navigationBar: AppNavigationBar(
                 appearance: nil,
                 backButton: backButton,
                 leadingItems: [],
                 trailingItems: []
-            ),
-            screenAccessibility: screenAccessibility
+            )
         )
         
-        return view
+        return hostingView
     }
     
     private func pushWebContentView(webContent: WebContentType, screenAccessibility: AccessibilityStrings.Screen?, backTappedFromWebContentStep: AppFlowStep) {
