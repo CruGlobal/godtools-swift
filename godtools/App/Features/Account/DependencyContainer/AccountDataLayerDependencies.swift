@@ -17,8 +17,17 @@ final class AccountDataLayerDependencies: Sendable {
         
         self.coreDataLayer = coreDataLayer
     }
+    
+    private func getUserDetailsApi() -> UserDetailsApi {
         
-    func getUserDetailsRepository() -> UserDetailsRepository {
+        return UserDetailsApi(
+            config: coreDataLayer.getAppConfig(),
+            urlSessionPriority: coreDataLayer.getSharedUrlSessionPriority(),
+            mobileContentApiAuthSession: coreDataLayer.getMobileContentApiAuthSession()
+        )
+    }
+    
+    private func getUserDetailsCache() -> UserDetailsCache {
         
         let persistence: any Persistence<UserDetailsDataModel, MobileContentApiUsersMeCodable>
         
@@ -37,20 +46,25 @@ final class AccountDataLayerDependencies: Sendable {
             )
         }
         
-        let api = UserDetailsApi(
-            config: coreDataLayer.getAppConfig(),
-            urlSessionPriority: coreDataLayer.getSharedUrlSessionPriority(),
-            mobileContentApiAuthSession: coreDataLayer.getMobileContentApiAuthSession()
-        )
-        
-        let cache = UserDetailsCache(
+        return UserDetailsCache(
             persistence: persistence
         )
+    }
+        
+    func getUserDetailsRepository() -> UserDetailsRepository {
         
         return UserDetailsRepository(
-            api: api,
-            cache: cache,
+            api: getUserDetailsApi(),
+            cache: getUserDetailsCache(),
             authTokenRepository: coreDataLayer.getMobileContentAuthTokenRepository()
+        )
+    }
+    
+    func getUserDetailsSync() -> UserDetailsSync {
+        
+        return UserDetailsSync(
+            api: getUserDetailsApi(),
+            cache: getUserDetailsCache()
         )
     }
 }
