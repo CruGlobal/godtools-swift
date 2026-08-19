@@ -118,7 +118,7 @@ final class LessonFlow: GTFlow {
             Task {
 
                 presentFlow(
-                    flow: await ShareToolFlow(
+                    flow: ShareToolFlow(
                         appDiContainer: appDiContainer,
                         toolId: lesson.id,
                         toolLanguageId: languageId,
