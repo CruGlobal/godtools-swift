@@ -9,16 +9,13 @@
 import Foundation
 
 actor TractRemoteShareSubscriber {
-            
-    private static let timeoutIntervalSeconds: TimeInterval = 10
-    
+                
+    private let navigationEventStream: MultiBroadcastStream<TractRemoteShareNavigationEvent> = MultiBroadcastStream()
     private let connectionUrl: String
     private let channelSubscriber: ACChannelSubscriber
     private let loggingEnabled: Bool
-    private let navigationEventStream: MultiBroadcastStream<TractRemoteShareNavigationEvent> = MultiBroadcastStream()
     
     private var receiveTextTask: Task<Void, Never>?
-    private var isSubscribingToChannel: WebSocketChannel?
     
     init(
         connectionUrl: String,
@@ -114,18 +111,14 @@ actor TractRemoteShareSubscriber {
         log(method: "subscribe()", label: "channelId", labelValue: channel.id)
                 
         await unsubscribe(disconnectSocket: false)
-        
-        isSubscribingToChannel = channel
-        
-        await channelSubscriber.subscribe(url: url, channel: channel)
+                
+        try await channelSubscriber.subscribe(url: url, channel: channel)
         
         await startObservingWebSocketText()
     }
     
     func unsubscribe(disconnectSocket: Bool) async {
-                
-        isSubscribingToChannel = nil
-        
+                        
         cancelReceiveTextTask()
                 
         await channelSubscriber.unsubscribe(disconnectSocket: disconnectSocket)

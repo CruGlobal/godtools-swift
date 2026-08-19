@@ -14,8 +14,7 @@ actor ACChannelSubscriber {
     private let loggingEnabled: Bool
     private let subscribedStream: MultiBroadcastStream<WebSocketChannel> = MultiBroadcastStream()
     
-    private var channelToSubscribeTo: WebSocketChannel?
-    private var isSubscribingToChannel: WebSocketChannel?
+    private var creatingChannel: WebSocketChannel?
     private var subscribedToChannel: WebSocketChannel?
     private var receiveTextTask: Task<Void, Never>?
         
@@ -39,6 +38,14 @@ actor ACChannelSubscriber {
     
     deinit {
         print("x deinit: \(type(of: self))")
+    }
+    
+    var isCreatingChannel: Bool {
+        return creatingChannel != nil
+    }
+    
+    var channelIsCreated: Bool {
+        return subscribedToChannel != nil
     }
     
     var connectionState: WebSocketConnectionState {
@@ -69,16 +76,17 @@ actor ACChannelSubscriber {
         return subscribedToChannel != nil
     }
 
-    func subscribe(url: URL, channel: WebSocketChannel) async {
+    func subscribe(url: URL, channel: WebSocketChannel) async throws(ACCreateChannelError) {
         
-        let connectionState: WebSocketConnectionState = await webSocket.connectionState
-        
-        guard !connectionState.isConnected && !connectionState.isConnecting else {
-            // TODO: Should throw error that websocket is connected or connecting. ~Levi
-            return
+        guard !isCreatingChannel else {
+            throw .isCreatingChannel
         }
         
-        channelToSubscribeTo = channel
+        guard !channelIsCreated else {
+            throw .channelAlreadyCreated
+        }
+        
+        creatingChannel = channel
         
         await webSocket.connect(url: url)
         
@@ -87,12 +95,12 @@ actor ACChannelSubscriber {
     
     func unsubscribe(disconnectSocket: Bool) async {
         
-        channelToSubscribeTo = nil
-        isSubscribingToChannel = nil
+        cancelReceiveTextTask()
+        
+        creatingChannel = nil
         subscribedToChannel = nil
         
         if disconnectSocket {
-            cancelReceiveTextTask()
             await webSocket.disconnect()
         }
     }
@@ -144,13 +152,11 @@ actor ACChannelSubscriber {
             print("\n ACChannelSubscriber: handleDidConnectToWebsocket()")
         }
         
-        guard let channel = channelToSubscribeTo else {
+        guard let creatingChannel = creatingChannel else {
             return
         }
-                
-        isSubscribingToChannel = channel
-        
-        let strChannel = "{ \"channel\": \"SubscribeChannel\",\"channelId\": \"\(channel.id)\" }"
+                        
+        let strChannel = "{ \"channel\": \"SubscribeChannel\",\"channelId\": \"\(creatingChannel.id)\" }"
         let message = ["command": "subscribe", "identifier": strChannel]
 
         do {
@@ -189,11 +195,8 @@ actor ACChannelSubscriber {
         }
         else if event?.type == "confirm_subscription" {
             
-            if let channelToSubscribeTo = channelToSubscribeTo,
-               let isSubscribingToChannel = isSubscribingToChannel,
-               channelToSubscribeTo == isSubscribingToChannel {
-                
-                await handleDidSubscribeToChannel(channel: channelToSubscribeTo)
+            if let creatingChannel = creatingChannel {
+                await handleDidSubscribeToChannel(channel: creatingChannel)
             }
         }
     }
@@ -207,8 +210,7 @@ actor ACChannelSubscriber {
     
     private func handleDidSubscribeToChannel(channel: WebSocketChannel) async {
         
-        channelToSubscribeTo = nil
-        isSubscribingToChannel = nil
+        creatingChannel = nil
         subscribedToChannel = channel
         
         await sendDidSubscribeToChannel(channel: channel)
