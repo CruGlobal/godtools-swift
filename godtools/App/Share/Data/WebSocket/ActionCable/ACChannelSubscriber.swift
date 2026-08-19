@@ -85,6 +85,18 @@ actor ACChannelSubscriber {
         await startObservingWebSocketText()
     }
     
+    func unsubscribe(disconnectSocket: Bool) async {
+        
+        channelToSubscribeTo = nil
+        isSubscribingToChannel = nil
+        subscribedToChannel = nil
+        
+        if disconnectSocket {
+            cancelReceiveTextTask()
+            await webSocket.disconnect()
+        }
+    }
+    
     private func cancelReceiveTextTask() {
         
         receiveTextTask?.cancel()
@@ -113,18 +125,6 @@ actor ACChannelSubscriber {
         }
     }
     
-    func unsubscribe(disconnectSocket: Bool) async {
-        
-        channelToSubscribeTo = nil
-        isSubscribingToChannel = nil
-        subscribedToChannel = nil
-        
-        if disconnectSocket {
-            cancelReceiveTextTask()
-            await webSocket.disconnect()
-        }
-    }
-    
     private func handleConnectionStateChanged(connectionState: WebSocketConnectionState) async {
                 
         if loggingEnabled {
@@ -136,8 +136,6 @@ actor ACChannelSubscriber {
             
             await handleDidConnectToWebsocket()
         }
-        
-        // TODO: Handle disconnected. ~Levi
     }
     
     private func handleDidConnectToWebsocket() async {
