@@ -10,8 +10,10 @@ import Foundation
 
 struct TractRemoteShareNavigationEvent: Codable, Sendable {
     
+    static let type: String = "navigation-event"
+    
     let message: TractRemoteShareNavigationEvent.Message?
-    let identifier: ActionCableIdentifier?
+    let identifier: ACIdentifier?
     
     enum RootKeys: String, CodingKey {
         
@@ -46,7 +48,7 @@ struct TractRemoteShareNavigationEvent: Codable, Sendable {
             
             self.attributes = attributes
             self.id = UUID().uuidString
-            self.type = "navigation-event"
+            self.type = TractRemoteShareNavigationEvent.type
         }
     }
     
@@ -93,7 +95,7 @@ struct TractRemoteShareNavigationEvent: Codable, Sendable {
         let data = TractRemoteShareNavigationEvent.Data(attributes: attributes)
         
         self.message = TractRemoteShareNavigationEvent.Message(data: data)
-        self.identifier = ActionCableIdentifier(channel: channel, channelId: channelId)
+        self.identifier = ACIdentifier(channel: channel, channelId: channelId)
     }
     
     init(from decoder: Decoder) throws {
@@ -104,14 +106,14 @@ struct TractRemoteShareNavigationEvent: Codable, Sendable {
         
         if let identifierString = identifierString, let data = identifierString.data(using: .utf8) {
             do {
-                identifier = try JSONDecoder().decode(ActionCableIdentifier.self, from: data)
+                identifier = try JSONDecoder().decode(ACIdentifier.self, from: data)
             }
             catch {
-                identifier = ActionCableIdentifier(channel: "", channelId: "")
+                identifier = ACIdentifier(channel: "", channelId: "")
             }
         }
         else {
-            identifier = ActionCableIdentifier(channel: "", channelId: "")
+            identifier = ACIdentifier(channel: "", channelId: "")
         }
                 
         do {

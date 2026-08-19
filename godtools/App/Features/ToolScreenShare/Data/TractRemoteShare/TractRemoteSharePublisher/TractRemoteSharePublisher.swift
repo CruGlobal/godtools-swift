@@ -7,55 +7,26 @@
 //
 
 import Foundation
-import Combine
 
-final class TractRemoteSharePublisher: NSObject {
-        
-    private static let timeoutIntervalSeconds: TimeInterval = 10
-    
-    private let webSocket: WebSocketInterface
-    private let webSocketChannelPublisher: WebSocketChannelPublisherInterface
-    private let didCreateChannelSubject: PassthroughSubject<WebSocketChannel, Never> = PassthroughSubject()
-    private let didFailToCreateChannelSubject: PassthroughSubject<TractRemoteSharePublisherError, Never> = PassthroughSubject()
+actor TractRemoteSharePublisher {
+            
+    private let connectionUrl: String
+    private let channelPublisher: ACChannelPublisherInterface
     private let loggingEnabled: Bool
-    
-    private var cancellables: Set<AnyCancellable> = Set()
-    private var timeoutTimer: Timer?
-    
-    private(set) var tractRemoteShareChannel: WebSocketChannel?
-        
+                
     init(
-        webSocket: WebSocketInterface,
-        webSocketChannelPublisher: WebSocketChannelPublisherInterface,
+        connectionUrl: String,
+        channelPublisher: ACChannelPublisherInterface,
         loggingEnabled: Bool
     ) {
         
-        self.webSocket = webSocket
-        self.webSocketChannelPublisher = webSocketChannelPublisher
+        self.connectionUrl = connectionUrl
+        self.channelPublisher = channelPublisher
         self.loggingEnabled = loggingEnabled
-        
-        super.init()
-        
-        webSocketChannelPublisher
-            .didCreateChannelPublisher
-            .sink { [weak self] (channel: WebSocketChannel) in
-                
-                self?.stopTimeoutTimer()
-                                
-                self?.tractRemoteShareChannel = channel
-                
-                self?.didCreateChannelSubject.send(channel)
-            }
-            .store(in: &cancellables)
     }
     
     deinit {
-        endPublishingSession(disconnectSocket: true)
-    }
-    
-    private func stopTimeoutTimer() {
-        timeoutTimer?.invalidate()
-        timeoutTimer = nil
+        print("x deinit: \(type(of: self))")
     }
     
     private func log(method: String, label: String?, labelValue: String?) {
@@ -68,55 +39,58 @@ final class TractRemoteSharePublisher: NSObject {
         }
     }
     
-    var didCreateChannelPublisher: AnyPublisher<WebSocketChannel, Never> {
-        return didCreateChannelSubject
-            .eraseToAnyPublisher()
+    var subscriberChannel: WebSocketChannel? {
+        get async {
+            return await channelPublisher.subscriberChannel
+        }
     }
     
-    var didFailToCreateChannelPublisher: AnyPublisher<TractRemoteSharePublisherError, Never> {
-        return didFailToCreateChannelSubject
-            .eraseToAnyPublisher()
+    var connectionState: WebSocketConnectionState {
+        get async {
+            return await channelPublisher.connectionState
+        }
     }
     
-    var webSocketIsConnected: Bool {
-        return webSocket.connectionState == .connected
+    func getCreatedChannelStream() async -> AsyncStream<WebSocketChannel> {
+        return await channelPublisher.getCreatedChannelStream()
     }
     
-    var isSubscriberChannelCreatedForPublish: Bool {
-        return webSocketChannelPublisher.isSubscriberChannelCreatedForPublish
+    var subscriberChannelCreated: Bool {
+        get async {
+            return await channelPublisher.subscriberChannelCreated
+        }
     }
     
     var subscriberChannelId: String? {
-        return webSocketChannelPublisher.subscriberChannel?.id
+        get async {
+            return await channelPublisher.subscriberChannel?.id
+        }
     }
     
-    func createChannelForPublish() {
+    func createChannelForPublish() async throws {
+                
+        guard let url = URL(string: connectionUrl) else {
+            
+            throw NSError.errorWithDomain(
+                domain: "TractRemoteSharePublisher",
+                code: -1,
+                description: "Failed to create connection url with string: \(connectionUrl)"
+            )
+        }
         
-        endPublishingSession(disconnectSocket: false)
+        await endPublishingSession(disconnectSocket: false)
                 
         let channel = WebSocketChannel.createUniqueChannel()
+        
+        try await channelPublisher.createChannel(url: url, channel: channel)
+    }
+    
+    func endPublishingSession(disconnectSocket: Bool) async {
                 
-        timeoutTimer = Timer.scheduledTimer(withTimeInterval: Self.timeoutIntervalSeconds, repeats: false) { [weak self] _ in
-            
-            self?.stopTimeoutTimer()
-            
-            self?.didFailToCreateChannelSubject.send(.timedOut)
-        }
-        
-        webSocketChannelPublisher.createChannel(channel: channel)
+        await channelPublisher.closeChannel(disconnectSocket: disconnectSocket)
     }
     
-    func endPublishingSession(disconnectSocket: Bool) {
-        
-        stopTimeoutTimer()
-        tractRemoteShareChannel = nil
-        
-        if disconnectSocket {
-            webSocket.disconnect()
-        }
-    }
-    
-    func sendNavigationEvent(event: TractRemoteSharePublisherNavigationEvent) {
+    func sendNavigationEvent(event: TractRemoteSharePublisherNavigationEvent) async {
                 
         let navigationAttributes = TractRemoteShareNavigationEvent.Attributes(
             card: event.card,
@@ -140,7 +114,7 @@ final class TractRemoteSharePublisher: NSObject {
             stringData = ""
         }
                                                 
-        webSocketChannelPublisher.sendMessage(data: stringData)
+        await channelPublisher.sendMessage(data: stringData)
         
         if loggingEnabled {
             print("\n TractRemoteSharePublisher: sendNavigationEvent()")

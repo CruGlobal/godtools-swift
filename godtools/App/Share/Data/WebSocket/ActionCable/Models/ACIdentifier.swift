@@ -1,5 +1,5 @@
 //
-//  ActionCableIdentifier.swift
+//  ACIdentifier.swift
 //  godtools
 //
 //  Created by Levi Eggert on 8/19/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ActionCableIdentifier: Codable {
+struct ACIdentifier: Codable {
     
     let channel: String
     let channelId: String

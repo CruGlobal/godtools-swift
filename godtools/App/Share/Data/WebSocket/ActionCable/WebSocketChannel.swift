@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct WebSocketChannel {
+struct WebSocketChannel: Sendable {
     
     let id: String
     

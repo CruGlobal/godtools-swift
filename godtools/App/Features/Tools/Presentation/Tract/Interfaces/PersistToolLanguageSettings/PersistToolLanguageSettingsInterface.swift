@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol PersistToolLanguageSettingsInterface {
+protocol PersistToolLanguageSettingsInterface: Sendable {
     
     func persistSettings(toolId: String, primaryLanguageId: String, parallelLanguageId: String?) async throws -> Bool
 }

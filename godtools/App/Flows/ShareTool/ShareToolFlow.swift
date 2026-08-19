@@ -27,7 +27,7 @@ final class ShareToolFlow: GTFlow {
         pageNumber: Int,
         appLanguage: AppLanguageDomainModel,
         toolAnalyticsAbbreviation: String
-    ) async {
+    ) {
         
         self.toolId = toolId
         self.toolLanguageId = toolLanguageId
