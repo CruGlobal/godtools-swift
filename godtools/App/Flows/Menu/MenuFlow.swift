@@ -138,13 +138,10 @@ final class MenuFlow: GTFlow {
 
         case .shareGodToolsTappedFromMenu:
 
-            Task {
-
-                presentView(
-                    view: await getShareGodToolsView(),
-                    animated: true
-                )
-            }
+            presentView(
+                view: getShareGodToolsView(),
+                animated: true
+            )
             
         case .dismissedShareGodToolsActivityViewController:
             // NOTE: Nothing to do here since UIActivityViewController dismisses itself. ~Levi
@@ -360,9 +357,9 @@ final class MenuFlow: GTFlow {
 
 extension MenuFlow {
     
-    private func getShareGodToolsView() async -> UIViewController {
+    private func getShareGodToolsView() -> UIViewController {
 
-        let viewModel = await ShareGodToolsViewModel(
+        let viewModel = ShareGodToolsViewModel(
             stepEmitter: stepEmitter,
             appLanguage: appLanguage,
             getShareGodToolsStringsUseCase: appDiContainer.feature.shareGodTools.domainLayer.getShareGodToolsStringsUseCase()

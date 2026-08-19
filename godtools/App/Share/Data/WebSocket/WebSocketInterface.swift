@@ -2,23 +2,21 @@
 //  WebSocketInterface.swift
 //  godtools
 //
-//  Created by Levi Eggert on 7/23/20.
-//  Copyright © 2020 Cru. All rights reserved.
+//  Created by Levi Eggert on 8/18/26.
+//  Copyright © 2026 Cru. All rights reserved.
 //
 
 import Foundation
-import Combine
 
-protocol WebSocketInterface {
-        
-    var didConnectPublisher: AnyPublisher<Void, Never> { get }
-    var didReceiveTextPublisher: AnyPublisher<String, Never> { get }
-    var url: URL { get }
-    var connectionState: WebSocketConnectionState { get }
-        
-    init(url: URL)
+protocol WebSocketInterface: Actor {
     
-    func connect()
-    func disconnect()
+    var connectionState: WebSocketConnectionState { get }
+    var isConnected: Bool { get }
+    var isConnecting: Bool { get }
+    
+    func getConnectionStateStream() async -> AsyncStream<WebSocketConnectionState>
+    func getTextStream() async -> AsyncThrowingStream<String, Error>
+    func connect(url: URL) async
+    func disconnect() async
     func write(string: String)
 }

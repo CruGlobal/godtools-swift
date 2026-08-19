@@ -72,24 +72,21 @@ class ToolSettingsFlow: GTFlow {
             
             let toolAbbreviation: String = appDiContainer.core.dataLayer.getResourcesRepository().getResourceById(id: toolSettingsObserver.toolId)?.abbreviation ?? ""
             
-            Task {
+            let shareToolFlow = ShareToolFlow(
+                appDiContainer: appDiContainer,
+                toolId: toolSettingsObserver.toolId,
+                toolLanguageId: toolSettingsObserver.languages.selectedLanguageId,
+                pageNumber: toolSettingsObserver.pageNumber,
+                appLanguage: appLanguage,
+                toolAnalyticsAbbreviation: toolAbbreviation
+            )
 
-                let shareToolFlow = await ShareToolFlow(
-                    appDiContainer: appDiContainer,
-                    toolId: toolSettingsObserver.toolId,
-                    toolLanguageId: toolSettingsObserver.languages.selectedLanguageId,
-                    pageNumber: toolSettingsObserver.pageNumber,
-                    appLanguage: appLanguage,
-                    toolAnalyticsAbbreviation: toolAbbreviation
+            dismissInitialView(animated: true, completion: { [weak self] in
+
+                self?.presentFlow(
+                    flow: shareToolFlow
                 )
-
-                dismissInitialView(animated: true, completion: { [weak self] in
-
-                    self?.presentFlow(
-                        flow: shareToolFlow
-                    )
-                })
-            }
+            })
             
         case .shareToolFlowCompleted( _):
             
@@ -104,12 +101,18 @@ class ToolSettingsFlow: GTFlow {
                 return
             }
             
-            toggleInitialView(
-                view: getToolScreenShareTutorialView(
-                    toolSettingsObserver: toolSettingsObserver
-                ),
-                animated: true
-            )
+            Task {
+                
+                let webSocketIsConnected: Bool = await toolSettingsObserver.tractRemoteSharePublisher.connectionState.isConnected
+                
+                toggleInitialView(
+                    view: getToolScreenShareTutorialView(
+                        toolId: toolSettingsObserver.toolId,
+                        tractRemoteShareWebSocketIsConnected: webSocketIsConnected
+                    ),
+                    animated: true
+                )
+            }
             
         case .closeTappedFromToolScreenShareTutorial:
             dismissInitialView(animated: true, completion: { [weak self] in
@@ -223,19 +226,19 @@ class ToolSettingsFlow: GTFlow {
                 }
                 
             case .failure(let error):
-                                
+                break
+                        
+                // TODO: Address in follow-up ticket.  Need to add timeout handling back in. ~Levi
+                /*
                 switch error {
                 
                 case .timedOut:
 
-                    Task {
-
-                        presentView(
-                            view: await getCreatingToolScreenShareSessionTimedOutView(appLanguage: appLanguage),
-                            animated: true
-                        )
-                    }
-                }
+                    presentView(
+                        view: getCreatingToolScreenShareSessionTimedOutView(appLanguage: appLanguage),
+                        animated: true
+                    )
+                }*/
             }
             
         case .cancelTappedFromCreateToolScreenShareSessionTimeout:

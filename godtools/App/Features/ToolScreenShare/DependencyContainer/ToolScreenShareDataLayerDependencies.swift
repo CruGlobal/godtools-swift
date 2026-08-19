@@ -17,6 +17,22 @@ final class ToolScreenShareDataLayerDependencies: Sendable {
         
         self.coreDataLayer = coreDataLayer
     }
+    
+    private func getACChannelPublisher() -> ACChannelPublisherInterface {
+        
+        return ACChannelPublisher(
+            webSocket: coreDataLayer.getWebSocket(),
+            loggingEnabled: coreDataLayer.getAppBuild().isDebug
+        )
+    }
+    
+    private func getACChannelSubscriber() -> ACChannelSubscriberInterface {
+        
+        return ACChannelSubscriber(
+            webSocket: coreDataLayer.getWebSocket(),
+            loggingEnabled: coreDataLayer.getAppBuild().isDebug
+        )
+    }
         
     func getToolScreenShareTutorialViewsRepository() -> ToolScreenShareTutorialViewsRepository {
         
@@ -44,37 +60,21 @@ final class ToolScreenShareDataLayerDependencies: Sendable {
         )
     }
     
-    private func getNewWebSocketForScreenShare() -> WebSocketInterface {
-        
-        // TODO: Shouldn't force unwrap url here. ~Levi
-        let url: URL = URL(string: coreDataLayer.getAppConfig().getTractRemoteShareConnectionUrl())!
-        
-        return coreDataLayer.getWebSocket(url: url)
-    }
-    
     func getTractRemoteSharePublisher() -> TractRemoteSharePublisher {
-        
-        let webSocket: WebSocketInterface = getNewWebSocketForScreenShare()
-        
-        let loggingEnabled: Bool = coreDataLayer.getAppBuild().isDebug
-        
+                
         return TractRemoteSharePublisher(
-            webSocket: webSocket,
-            webSocketChannelPublisher: ActionCableChannelPublisher(webSocket: webSocket, loggingEnabled: loggingEnabled),
-            loggingEnabled: loggingEnabled
+            connectionUrl: coreDataLayer.getAppConfig().getTractRemoteShareConnectionUrl(),
+            channelPublisher: getACChannelPublisher(),
+            loggingEnabled: coreDataLayer.getAppBuild().isDebug
         )
     }
     
     func  getTractRemoteShareSubscriber() -> TractRemoteShareSubscriber {
-        
-        let webSocket: WebSocketInterface = getNewWebSocketForScreenShare()
-        
-        let loggingEnabled: Bool = coreDataLayer.getAppBuild().isDebug
-        
+                        
         return TractRemoteShareSubscriber(
-            webSocket: webSocket,
-            webSocketChannelSubscriber: ActionCableChannelSubscriber(webSocket: webSocket, loggingEnabled: loggingEnabled),
-            loggingEnabled: loggingEnabled
+            connectionUrl: coreDataLayer.getAppConfig().getTractRemoteShareConnectionUrl(),
+            channelSubscriber: getACChannelSubscriber(),
+            loggingEnabled: coreDataLayer.getAppBuild().isDebug
         )
     }
     

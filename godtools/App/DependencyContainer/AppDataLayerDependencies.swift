@@ -875,8 +875,8 @@ final class AppDataLayerDependencies: Sendable {
         )
     }
     
-    func getWebSocket(url: URL) -> WebSocketInterface {
-        return URLSessionWebSocket(url: url)
+    func getWebSocket() -> WebSocketInterface {
+        return URLSessionWebSocket()
     }
 }
 

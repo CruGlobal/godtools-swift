@@ -11,17 +11,20 @@ import UIKit
 
 extension ToolSettingsFlow {
  
-    func getToolScreenShareTutorialView(toolSettingsObserver: ToolScreenShareSettingsObserver) -> UIViewController {
+    func getToolScreenShareTutorialView(
+        toolId: String,
+        tractRemoteShareWebSocketIsConnected: Bool
+    ) -> UIViewController {
         
         let toolScreenShareTutorialViewed = appDiContainer.feature.toolScreenShare.domainLayer
             .getToolScreenShareTutorialHasBeenViewedUseCase()
             .execute(
-                toolId: toolSettingsObserver.toolId
+                toolId: toolId
             )
         
         let showTutorialPages: ShowToolScreenShareTutorialPages
         
-        if toolScreenShareTutorialViewed || toolSettingsObserver.tractRemoteSharePublisher.webSocketIsConnected {
+        if toolScreenShareTutorialViewed || tractRemoteShareWebSocketIsConnected {
             showTutorialPages = .lastPageWithQRCodeOption
         }
         else {
@@ -30,7 +33,7 @@ extension ToolSettingsFlow {
         
         let viewModel = ToolScreenShareTutorialViewModel(
             stepEmitter: stepEmitter,
-            toolId: toolSettingsObserver.toolId,
+            toolId: toolId,
             showTutorialPages: showTutorialPages,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getToolScreenShareTutorialStringsUseCase: appDiContainer.feature.toolScreenShare.domainLayer.getToolScreenShareTutorialStringsUseCase(),
@@ -82,25 +85,30 @@ extension ToolSettingsFlow {
         
         let tractRemoteSharePublisher: TractRemoteSharePublisher = toolSettingsObserver.tractRemoteSharePublisher
         
-        if tractRemoteSharePublisher.webSocketIsConnected, let channel = tractRemoteSharePublisher.tractRemoteShareChannel {
+        Task {
             
-            navigate(
-                step: AppFlowStep.didCreateSessionFromCreatingToolScreenShareSession(
-                    result: .success(channel),
-                    createSessionTrigger: createSessionTrigger
+            let webSocketIsConnected = await tractRemoteSharePublisher.connectionState.isConnected
+            
+            if webSocketIsConnected, let channel = await tractRemoteSharePublisher.subscriberChannel {
+                
+                navigate(
+                    step: AppFlowStep.didCreateSessionFromCreatingToolScreenShareSession(
+                        result: .success(channel),
+                        createSessionTrigger: createSessionTrigger
+                    )
                 )
-            )
-            
-            return
-        }
+                
+                return
+            }
 
-        toggleInitialView(
-            view: getCreatingToolScreenShareSessionView(
-                toolSettingsObserver: toolSettingsObserver,
-                createSessionTrigger: createSessionTrigger
-            ),
-            animated: true
-        )
+            toggleInitialView(
+                view: getCreatingToolScreenShareSessionView(
+                    toolSettingsObserver: toolSettingsObserver,
+                    createSessionTrigger: createSessionTrigger
+                ),
+                animated: true
+            )
+        }
     }
     
     func getCreatingToolScreenShareSessionView(
@@ -196,9 +204,9 @@ extension ToolSettingsFlow {
         return overlayNavigationController
     }
     
-    func getCreatingToolScreenShareSessionTimedOutView(appLanguage: AppLanguageDomainModel) async -> UIViewController {
+    func getCreatingToolScreenShareSessionTimedOutView(appLanguage: AppLanguageDomainModel) -> UIViewController {
         
-        let viewModel = await CreatingToolScreenShareSessionTimedOutViewModel(
+        let viewModel = CreatingToolScreenShareSessionTimedOutViewModel(
             stepEmitter: stepEmitter,
             appLanguage: appLanguage,
             getCreatingToolScreenShareSessionTimedOutStringsUseCase: appDiContainer.feature.toolScreenShare.domainLayer.getCreatingToolScreenShareSessionTimedOutStringsUseCase()

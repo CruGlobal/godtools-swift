@@ -77,46 +77,53 @@ final class TractViewModel: MobileContentRendererViewModel {
         
         languageFont = FontLibrary.systemUIFont(size: 14, weight: .regular)
         
-        super.init(renderer: renderer, initialPage: initialPage, initialPageConfig: nil, initialPageSubIndex: initialPageSubIndex, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, getTranslatedLanguageName: getTranslatedLanguageName, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase, selectedLanguageIndex: selectedLanguageIndex)
-               
-        if let remoteSharePublisherChannel = tractRemoteSharePublisher.tractRemoteShareChannel {
+        super.init(
+            renderer: renderer,
+            initialPage: initialPage,
+            initialPageConfig: nil,
+            initialPageSubIndex: initialPageSubIndex,
+            resourcesRepository: resourcesRepository,
+            translationsRepository: translationsRepository,
+            mobileContentEventAnalytics: mobileContentEventAnalytics,
+            getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase,
+            getTranslatedLanguageName: getTranslatedLanguageName,
+            trainingTipsEnabled: trainingTipsEnabled,
+            incrementUserCounterUseCase: incrementUserCounterUseCase,
+            selectedLanguageIndex: selectedLanguageIndex
+        )
+        
+        Task { [weak self] in
+           
+            guard let createdChannelStream = await self?.tractRemoteSharePublisher.getCreatedChannelStream() else {
+                return
+            }
             
-            handleRemoteSharePublisherChannelCreated(channel: remoteSharePublisherChannel)
+            for await _ in createdChannelStream {
+                
+                self?.didSubscribeForRemoteSharePublishing.accept(value: true)
+                self?.reloadRemoteShareIsActive()
+            }
         }
-        else {
+        
+        Task { [weak self] in
             
-            tractRemoteSharePublisher
-                .didCreateChannelPublisher
-                .receive(on: DispatchQueue.main)
-                .sink { completion in
-                    
-                } receiveValue: { [weak self] (channel: WebSocketChannel) in
-                    
-                    self?.handleRemoteSharePublisherChannelCreated(channel: channel)
-                }
-                .store(in: &cancellables)
-        }
-
-        var isFirstRemoteShareNavigationEvent: Bool = true
-        tractRemoteShareSubscriber
-            .navigationEventPublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (event: TractRemoteShareNavigationEvent) in
+            guard let navigationEventStream = await self?.tractRemoteShareSubscriber.getNavigationEventStream() else {
+                return
+            }
+            
+            var isFirstRemoteShareNavigationEvent: Bool = true
+            
+            for await navigationEvent in navigationEventStream {
                 
                 let animated: Bool = !isFirstRemoteShareNavigationEvent
-                self?.handleDidReceiveRemoteShareNavigationEvent(remoteShareNavigationEvent: event, animated: animated)
+                self?.handleDidReceiveRemoteShareNavigationEvent(remoteShareNavigationEvent: navigationEvent, animated: animated)
                 isFirstRemoteShareNavigationEvent = false
             }
-            .store(in: &cancellables)
+        }
     }
     
     deinit {
-                
         print("x deinit: \(type(of: self))")
-        
-        tractRemoteSharePublisher.endPublishingSession(disconnectSocket: true)
-        
-        tractRemoteShareSubscriber.unsubscribe(disconnectSocket: true)
     }
     
     private var isScreenSharing: Bool {
@@ -124,24 +131,28 @@ final class TractViewModel: MobileContentRendererViewModel {
     }
     
     private var isLiveStreaming: Bool {
-        
-        let liveShareStreamChannelIdIsEmpty: Bool = (liveShareStream?.isEmpty) ?? true
-        
-        return tractRemoteSharePublisher.webSocketIsConnected || tractRemoteShareSubscriber.webSocketIsConnected || !liveShareStreamChannelIdIsEmpty
-    }
-    
-    private func handleRemoteSharePublisherChannelCreated(channel: WebSocketChannel) {
-        didSubscribeForRemoteSharePublishing.accept(value: true)
-        reloadRemoteShareIsActive()
+        get async {
+            
+            let liveShareStreamChannelIdIsEmpty: Bool = (liveShareStream?.isEmpty) ?? true
+            let publisherIsConnected: Bool = await tractRemoteSharePublisher.connectionState.isConnected
+            let subscriberIsConnected: Bool = await tractRemoteShareSubscriber.connectionState.isConnected
+            
+            return publisherIsConnected || subscriberIsConnected || !liveShareStreamChannelIdIsEmpty
+        }
     }
     
     private func reloadRemoteShareIsActive() {
         
-        let remoteShareIsActive: Bool = tractRemoteSharePublisher.isSubscriberChannelCreatedForPublish || tractRemoteShareSubscriber.isSubscribedToChannel
-        
-        self.remoteShareIsActive = remoteShareIsActive
-        
-        hidesRemoteShareIsActive = !remoteShareIsActive
+        Task {
+            
+            let publisherSubscriberChannelIsCreated: Bool = await tractRemoteSharePublisher.subscriberChannelCreated
+            let isSubscribedToChannel: Bool = await tractRemoteShareSubscriber.isSubscribedToChannel
+            let remoteShareIsActive: Bool = publisherSubscriberChannelIsCreated || isSubscribedToChannel
+            
+            self.remoteShareIsActive = remoteShareIsActive
+            
+            hidesRemoteShareIsActive = !remoteShareIsActive
+        }
     }
     
     private var analyticsScreenName: String {
@@ -260,7 +271,7 @@ final class TractViewModel: MobileContentRendererViewModel {
     
     override func configureRendererPageContextUserInfo(userInfo: inout [String: Any], page: Int) {
         
-        userInfo[TractViewModel.isLiveShareStreamingKey] = isLiveStreaming
+        userInfo[TractViewModel.isLiveShareStreamingKey] = liveShareStream != nil
         
         super.configureRendererPageContextUserInfo(userInfo: &userInfo, page: page)
     }
@@ -390,18 +401,24 @@ extension TractViewModel {
             return
         }
         
-        tractRemoteShareSubscriber
-            .didSubscribePublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (channel: WebSocketChannel) in
+        Task { [weak self] in
+            
+            guard let didSubscribeStream = await self?.tractRemoteShareSubscriber.getSubscribedStream() else {
+                return
+            }
+            
+            for await didSubscribe in didSubscribeStream {
                 
                 self?.trackShareScreenOpened()
                 self?.reloadRemoteShareIsActive()
             }
-            .store(in: &cancellables)
+        }
         
-        tractRemoteShareSubscriber
-            .subscribe(channel: channel)
+        Task {
+            
+            try await tractRemoteShareSubscriber
+                .subscribe(channel: channel)
+        }
     }
     
     private func handleDidReceiveRemoteShareNavigationEvent(remoteShareNavigationEvent: TractRemoteShareNavigationEvent, animated: Bool) {
@@ -551,19 +568,22 @@ extension TractViewModel {
     
     func sendRemoteShareNavigationEvent(page: Int, pagePositions: TractPagePositions) {
         
-        guard tractRemoteSharePublisher.isSubscriberChannelCreatedForPublish else {
-            return
-        }
-                        
-        let event = TractRemoteSharePublisherNavigationEvent(
-            card: pagePositions.cardPosition,
-            locale: languages[safe: selectedLanguageIndex]?.localeId,
-            page: page,
-            parallelLocale: languages[safe: 1]?.localeId,
-            primaryLocale: languages[safe: 0]?.localeId,
-            tool: resource.abbreviation
-        )
+        Task {
         
-        tractRemoteSharePublisher.sendNavigationEvent(event: event)
+            guard await tractRemoteSharePublisher.subscriberChannelCreated else {
+                return
+            }
+            
+            let event = TractRemoteSharePublisherNavigationEvent(
+                card: pagePositions.cardPosition,
+                locale: languages[safe: selectedLanguageIndex]?.localeId,
+                page: page,
+                parallelLocale: languages[safe: 1]?.localeId,
+                primaryLocale: languages[safe: 0]?.localeId,
+                tool: resource.abbreviation
+            )
+            
+            await tractRemoteSharePublisher.sendNavigationEvent(event: event)
+        }
     }
 }
