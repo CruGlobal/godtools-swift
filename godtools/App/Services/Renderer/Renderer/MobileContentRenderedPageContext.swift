@@ -17,7 +17,7 @@ class MobileContentRenderedPageContext {
     let parentPageParams: MobileContentParentPageParams?
     let safeArea: UIEdgeInsets
     let manifest: Manifest
-    let resourcesFileCache: ResourcesFileCache
+    let resourcesFileCache: MobileContentRendererFileCache
     let resource: ResourceDataModel
     let appLanguage: AppLanguageDomainModel
     let language: LanguageDataModel
@@ -41,7 +41,7 @@ class MobileContentRenderedPageContext {
         window: UIViewController,
         safeArea: UIEdgeInsets,
         manifest: Manifest,
-        resourcesFileCache: ResourcesFileCache,
+        resourcesFileCache: MobileContentRendererFileCache,
         resource: ResourceDataModel,
         appLanguage: AppLanguageDomainModel,
         language: LanguageDataModel,

@@ -30,16 +30,13 @@ class MobileContentImageView: MobileContentView {
     
     private func setupLayout() {
         
-        Task {
-            
-            let image: UIImage? = await viewModel.getImage()
-            
-            if let image = image {
-                addImage(image: image, contentViewWidth: viewModel.imageWidth)
-            }
-            else {
-                addEmptySpace()
-            }
+        let image: UIImage? = viewModel.getImage()
+
+        if let image = image {
+            addImage(image: image, contentViewWidth: viewModel.imageWidth)
+        }
+        else {
+            addEmptySpace()
         }
     }
     

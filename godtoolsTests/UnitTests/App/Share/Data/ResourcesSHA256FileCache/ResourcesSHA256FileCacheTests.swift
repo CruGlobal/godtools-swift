@@ -31,10 +31,7 @@ final class ResourcesSHA256FileCacheTests {
         self.fileManager = fileManager
         self.rootDirectory = rootDirectory
 
-        resourcesFileCache = ResourcesFileCache(
-            rootDirectory: rootDirectory,
-            fileManager: fileManager
-        )
+        resourcesFileCache = ResourcesFileCache(rootDirectory: rootDirectory)
 
         try? fileManager.removeItem(at: rootDirectory)
     }

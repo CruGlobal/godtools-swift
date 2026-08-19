@@ -10,7 +10,7 @@ import Foundation
 
 final class ResourcesFileCache: Sendable {
     
-    private static let rootDirectory: String = "godtools_resources_files"
+    static let rootDirectory: String = "godtools_resources_files"
     
     let cache: FileCache
     
@@ -19,8 +19,8 @@ final class ResourcesFileCache: Sendable {
         cache = FileCache(rootDirectoryName: Self.rootDirectory)
     }
     
-    init(rootDirectory: URL, fileManager: FileManager = FileManager.default) {
-        
-        cache = FileCache(rootDirectory: rootDirectory, fileManager: fileManager)
+    init(rootDirectory: URL) {
+
+        cache = FileCache(rootDirectory: rootDirectory)
     }
 }

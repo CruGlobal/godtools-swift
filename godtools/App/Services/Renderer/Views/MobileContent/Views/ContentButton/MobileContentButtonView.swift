@@ -37,12 +37,9 @@ class MobileContentButtonView: MobileContentView {
         
         currentFrameWidth = frame.size.width
         
-        Task {
-            
-            await setupLayout()
-            await addSubviewsAndConstraints(buttonView: buttonView, buttonTitle: buttonTitle, buttonImageView: buttonImageView)
-            setupBinding()
-        }
+        setupLayout()
+        addSubviewsAndConstraints(buttonView: buttonView, buttonTitle: buttonTitle, buttonImageView: buttonImageView)
+        setupBinding()
     }
     
     required init?(coder: NSCoder) {
@@ -55,7 +52,7 @@ class MobileContentButtonView: MobileContentView {
         layoutButtonViewWidthIfNeeded()
     }
     
-    private func setupLayout() async {
+    private func setupLayout() {
                 
         backgroundColor = .clear
                         
@@ -78,7 +75,7 @@ class MobileContentButtonView: MobileContentView {
         buttonTitle.textColor = viewModel.titleColor
         
         // buttonImageView
-        let buttonIcon = await viewModel.getButtonIcon()
+        let buttonIcon = viewModel.getButtonIcon()
         
         if let buttonIcon = buttonIcon {
             
@@ -102,7 +99,7 @@ class MobileContentButtonView: MobileContentView {
         buttonView: UIView,
         buttonTitle: UILabel,
         buttonImageView: UIImageView?
-    ) async {
+    ) {
         
         translatesAutoresizingMaskIntoConstraints = false
         
@@ -132,7 +129,7 @@ class MobileContentButtonView: MobileContentView {
         let buttonTitleTextAlignment: NSTextAlignment
         
         if let buttonImageView = buttonImageView,
-           let buttonIcon = await viewModel.getButtonIcon() {
+           let buttonIcon = viewModel.getButtonIcon() {
             
             let buttonIconSize = getButtonIconSize(buttonIcon: buttonIcon)
             

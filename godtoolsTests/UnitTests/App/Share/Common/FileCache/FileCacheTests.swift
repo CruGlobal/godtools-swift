@@ -382,8 +382,7 @@ extension FileCacheTests {
             rootDirectory: FileCache.createTempDirectoryWithDirectoryName(
                 directoryName: testsFileCacheRootDirectory,
                 fileManager: fileManager
-            ),
-            fileManager: fileManager
+            )
         )
         
         do {
