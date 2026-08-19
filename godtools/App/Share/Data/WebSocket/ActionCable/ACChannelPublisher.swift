@@ -238,6 +238,8 @@ actor ACChannelPublisher: ACChannelPublisherInterface {
     
     private func handleDidCreateSubscriberChannel(subscriberChannel: WebSocketChannel) async {
                       
+        cancelReceiveTextTask()
+        
         createChannel = nil
         
         self.subscriberChannel = subscriberChannel
