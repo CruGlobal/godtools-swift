@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol UrlOpenerInterface {
+protocol UrlOpenerInterface: Sendable {
     
-    func open(url: URL)
+    @MainActor func open(url: URL)
 }

@@ -17,7 +17,7 @@ enum LanguageDownloadIconState {
     
     var isDownloading: Bool {
         switch self {
-        case .downloading(progress: let progress):
+        case .downloading( _):
             return true
         default:
             return false

@@ -30,7 +30,7 @@ final class GetShareableImageUseCase: Sendable {
         do {
             imageData = try await resourcesFileCache.cache.getData(location: fileCacheLocation)
         }
-        catch let error {
+        catch _ {
             imageData = nil
         }
         
