@@ -211,7 +211,8 @@ extension URLSessionWebSocket {
                     await self?.sendText(text: text)
                 }
                 catch let error {
-                    
+                    // TODO: Handle error? ~Levi
+                    break
                 }
             }
         }
