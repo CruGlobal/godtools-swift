@@ -89,7 +89,7 @@ extension ToolSettingsFlow {
             
             let webSocketIsConnected = await tractRemoteSharePublisher.connectionState.isConnected
             
-            if webSocketIsConnected, let channel = await tractRemoteSharePublisher.tractRemoteShareChannel {
+            if webSocketIsConnected, let channel = await tractRemoteSharePublisher.subscriberChannel {
                 
                 navigate(
                     step: AppFlowStep.didCreateSessionFromCreatingToolScreenShareSession(

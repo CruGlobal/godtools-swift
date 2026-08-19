@@ -15,13 +15,11 @@ actor ACChannelPublisher {
     private let loggingEnabled: Bool
     private let createdChannelStream: MultiBroadcastStream<WebSocketChannel> = MultiBroadcastStream()
     
-    private var channelToCreate: WebSocketChannel?
     private var receiveTextTask: Task<Void, Never>?
-    private var appResignedActive: Bool = false
     
-    private(set) var channel: WebSocketChannel?
+    private(set) var createChannel: WebSocketChannel?
     private(set) var publishChannel: WebSocketChannel?
-    private(set) var publishingToSubscriberChannel: WebSocketChannel?
+    private(set) var subscriberChannel: WebSocketChannel?
         
     init(webSocket: WebSocketInterface, loggingEnabled: Bool) {
         
@@ -55,12 +53,8 @@ actor ACChannelPublisher {
         }
     }
     
-    var isSubscriberChannelCreatedForPublish: Bool {
-        return publishingToSubscriberChannel != nil
-    }
-    
-    var subscriberChannel: WebSocketChannel? {
-        return publishingToSubscriberChannel
+    var isSubscriberChannelCreated: Bool {
+        return subscriberChannel != nil
     }
     
     func getConnectionStateStream() async -> AsyncStream<WebSocketConnectionState> {
@@ -69,12 +63,41 @@ actor ACChannelPublisher {
     
     func getCreatedChannelStream() async -> AsyncStream<WebSocketChannel> {
         
-        return await createdChannelStream.getNewStream(sendValue: publishingToSubscriberChannel)
+        return await createdChannelStream.getNewStream(sendValue: subscriberChannel)
     }
     
     private func sendCreatedChannel(channel: WebSocketChannel) async {
         
         await createdChannelStream.send(value: channel)
+    }
+    
+    func createChannel(url: URL, channel: WebSocketChannel) async {
+        
+        let connectionState: WebSocketConnectionState = await webSocket.connectionState
+        
+        guard !connectionState.isConnected && !connectionState.isConnecting else {
+            // TODO: Should throw error that websocket is connected or connecting. ~Levi
+            return
+        }
+        
+        self.createChannel = channel
+                
+        await webSocket.connect(url: url)
+        
+        await startObservingWebSocketText()
+    }
+    
+    func closeChannel(disconnectSocket: Bool) async {
+        
+        cancelReceiveTextTask()
+        
+        self.createChannel = nil
+        self.publishChannel = nil
+        self.subscriberChannel = nil
+        
+        if disconnectSocket {
+            await webSocket.disconnect()
+        }
     }
     
     func sendMessage(data: String) async {
@@ -97,29 +120,6 @@ actor ACChannelPublisher {
         }
                                                 
         await webSocket.write(string: stringMessage)
-    }
-    
-    func createChannel(url: URL, channel: WebSocketChannel) async {
-        
-        let connectionState: WebSocketConnectionState = await webSocket.connectionState
-        
-        guard !connectionState.isConnected && !connectionState.isConnecting else {
-            // TODO: Should throw error that websocket is connected or connecting. ~Levi
-            return
-        }
-        
-        self.channel = channel
-        
-        channelToCreate = channel
-        
-        await webSocket.connect(url: url)
-        
-        await startObservingWebSocketText()
-    }
-    
-    func disconnect() async {
-        cancelReceiveTextTask()
-        await webSocket.disconnect()
     }
     
     private func cancelReceiveTextTask() {
@@ -161,8 +161,6 @@ actor ACChannelPublisher {
             
             await handleDidConnectToWebsocket()
         }
-        
-        // TODO: Handle disconnected. ~Levi
     }
     
     private func handleDidConnectToWebsocket() async {
@@ -171,11 +169,11 @@ actor ACChannelPublisher {
             print("\n ACChannelPublisher: handleDidConnectToWebsocket()")
         }
         
-        guard let channel = channelToCreate else {
+        guard let createChannel = self.createChannel else {
             return
         }
                         
-        let stringChannel: String = "{ \"channel\": \"PublishChannel\",\"channelId\": \"\(channel.id)\" }"
+        let stringChannel: String = "{ \"channel\": \"PublishChannel\",\"channelId\": \"\(createChannel.id)\" }"
         let message: [String: Any] = ["command": "subscribe", "identifier": stringChannel]
         
         publishChannel = WebSocketChannel(id: stringChannel)
@@ -196,7 +194,7 @@ actor ACChannelPublisher {
         
         if loggingEnabled {
             print("\n ACChannelPublisher: handleDidReceiveText() \(text)")
-            print("  channelIdToCreate: \(String(describing: channelToCreate?.id))")
+            print("  channelIdToCreate: \(String(describing: createChannel?.id))")
         }
         
         guard let data = text.data(using: .utf8) else {
@@ -223,7 +221,7 @@ actor ACChannelPublisher {
            let subscriberChannel = WebSocketChannel(id: subscriberChannelId) {
             
             if loggingEnabled {
-                print("  channelIdToCreate: \(String(describing: channelToCreate?.id))")
+                print("  channelIdToCreate: \(String(describing: createChannel?.id))")
                 print("  subscriberChannelId: \(subscriberChannelId)")
             }
             
@@ -239,10 +237,10 @@ actor ACChannelPublisher {
     }
     
     private func handleDidCreateSubscriberChannel(subscriberChannel: WebSocketChannel) async {
-                
-        channelToCreate = nil
+                      
+        createChannel = nil
         
-        publishingToSubscriberChannel = subscriberChannel
+        self.subscriberChannel = subscriberChannel
         
         await sendCreatedChannel(channel: subscriberChannel)
     }

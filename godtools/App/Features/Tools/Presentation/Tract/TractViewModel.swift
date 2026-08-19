@@ -149,10 +149,8 @@ final class TractViewModel: MobileContentRendererViewModel {
         
         Task {
             
-            let publisherSubscriberChannelIsCreated: Bool = await tractRemoteSharePublisher.isSubscriberChannelCreatedForPublish
+            let publisherSubscriberChannelIsCreated: Bool = await tractRemoteSharePublisher.isSubscriberChannelCreated
             let isSubscribedToChannel: Bool = await tractRemoteShareSubscriber.isSubscribedToChannel
-            
-            
             let remoteShareIsActive: Bool = publisherSubscriberChannelIsCreated || isSubscribedToChannel
             
             self.remoteShareIsActive = remoteShareIsActive
@@ -583,7 +581,7 @@ extension TractViewModel {
         
         Task {
         
-            guard await tractRemoteSharePublisher.isSubscriberChannelCreatedForPublish else {
+            guard await tractRemoteSharePublisher.isSubscriberChannelCreated else {
                 return
             }
             

@@ -39,9 +39,9 @@ actor TractRemoteSharePublisher {
         }
     }
     
-    var tractRemoteShareChannel: WebSocketChannel? {
+    var subscriberChannel: WebSocketChannel? {
         get async {
-            return await channelPublisher.publishingToSubscriberChannel
+            return await channelPublisher.subscriberChannel
         }
     }
     
@@ -59,9 +59,9 @@ actor TractRemoteSharePublisher {
         return await channelPublisher.getCreatedChannelStream()
     }
     
-    var isSubscriberChannelCreatedForPublish: Bool {
+    var isSubscriberChannelCreated: Bool {
         get async {
-            return await channelPublisher.isSubscriberChannelCreatedForPublish
+            return await channelPublisher.isSubscriberChannelCreated
         }
     }
     
@@ -91,10 +91,7 @@ actor TractRemoteSharePublisher {
     
     func endPublishingSession(disconnectSocket: Bool) async {
                 
-        if disconnectSocket {
-            
-            await channelPublisher.disconnect()
-        }
+        await channelPublisher.closeChannel(disconnectSocket: disconnectSocket)
     }
     
     func sendNavigationEvent(event: TractRemoteSharePublisherNavigationEvent) async {
