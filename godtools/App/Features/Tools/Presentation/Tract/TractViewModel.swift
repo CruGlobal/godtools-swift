@@ -98,7 +98,7 @@ final class TractViewModel: MobileContentRendererViewModel {
                 return
             }
             
-            for await channel in createdChannelStream {
+            for await _ in createdChannelStream {
                 
                 self?.didSubscribeForRemoteSharePublishing.accept(value: true)
                 self?.reloadRemoteShareIsActive()
