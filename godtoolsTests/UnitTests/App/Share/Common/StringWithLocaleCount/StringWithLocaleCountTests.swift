@@ -20,7 +20,6 @@ struct StringWithLocaleCountTests {
     }
     
     @Test(
-        "",
         arguments: [
             TestArgument(format: "count - %d", localeId: "en", count: 0, expectedFormat: "count - 0")
         ]

@@ -17,7 +17,7 @@ class FileCacheTests {
     private let testsFileCacheRootDirectory: String = "tests_file_cache"
     private let tempDirectoryName: String = "temp_directory"
     
-    @Test("")
+    @Test
     func returnsRootDirectoryUrl() async throws {
         
         let fileCache = try await getTestsFileCache()
@@ -27,7 +27,7 @@ class FileCacheTests {
         #expect(url.absoluteString.contains(testsFileCacheRootDirectory))
     }
     
-    @Test("")
+    @Test
     func returnsDirectoryUrl() async throws {
         
         let fileCache = try await getTestsFileCache()
@@ -39,7 +39,7 @@ class FileCacheTests {
         #expect(url.absoluteString.contains(testsFileCacheRootDirectory))
     }
     
-    @Test("")
+    @Test
     func isDirectory() async throws {
         
         let fileCache = try await getTestsFileCache()
@@ -55,7 +55,7 @@ class FileCacheTests {
         #expect(isDirectory == true)
     }
     
-    @Test("")
+    @Test
     func isNotDirectory() async throws {
         
         let fileCache = try await getTestsFileCache()
@@ -69,7 +69,7 @@ class FileCacheTests {
         #expect(isDirectory == false)
     }
     
-    @Test("")
+    @Test
     func isFile() async throws {
         
         let fileCache = try await getTestsFileCache()
@@ -90,7 +90,7 @@ class FileCacheTests {
         #expect(fileUrl.absoluteString.contains(fileName))
     }
     
-    @Test("")
+    @Test
     func removeDirectory() async throws {
         
         let fileCache = try await getTestsFileCache()
@@ -108,7 +108,7 @@ class FileCacheTests {
         #expect(await fileCache.getIsDirectory(url: newDiretoryUrl) == false)
     }
     
-    @Test("")
+    @Test
     func removeFile() async throws {
         
         let fileCache = try await getTestsFileCache()
@@ -127,7 +127,7 @@ class FileCacheTests {
         #expect(try await fileCache.getFileExists(location: fileLocation) == false)
     }
     
-    @Test("")
+    @Test
     func getData() async throws {
         
         let fileCache = try await getTestsFileCache()
@@ -142,7 +142,7 @@ class FileCacheTests {
         #expect(try await fileCache.getData(location: fileLocation) != nil)
     }
     
-    @Test("")
+    @Test
     func moveContentsOfDirectoryToDirectory() async throws {
         
         let fileCache = try await getTestsFileCache()
@@ -199,7 +199,7 @@ class FileCacheTests {
         }
     }
     
-    @Test("")
+    @Test
     func moveContentsOfChildDirectoryToParentDirectory() async throws {
         
         let fileCache = try await getTestsFileCache()
@@ -264,7 +264,7 @@ class FileCacheTests {
         }
     }
     
-    @Test("")
+    @Test
     func moveContentsOfChildDirectoryToParentDirectoryFailsWhenMoreContentsThanSingleDirectory() async throws {
         
         let fileCache = try await getTestsFileCache()
@@ -337,7 +337,7 @@ class FileCacheTests {
         }
     }
     
-    @Test("")
+    @Test
     func getUIImage() async throws {
         
         let fileCache = try await getTestsFileCache()
@@ -354,7 +354,7 @@ class FileCacheTests {
         #expect(try await fileCache.getUIImage(location: fileLocation) != nil)
     }
     
-    @Test("")
+    @Test
     func getImage() async throws {
         
         let fileCache = try await getTestsFileCache()
