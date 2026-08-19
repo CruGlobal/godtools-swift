@@ -47,6 +47,14 @@ actor ACChannelPublisher {
         print("x deinit: \(type(of: self))")
     }
     
+    var isCreatingChannel: Bool {
+        return createChannel != nil
+    }
+    
+    var channelIsCreated: Bool {
+        return subscriberChannel != nil
+    }
+    
     var connectionState: WebSocketConnectionState {
         get async {
             return await webSocket.connectionState
@@ -64,11 +72,6 @@ actor ACChannelPublisher {
     func getCreatedChannelStream() async -> AsyncStream<WebSocketChannel> {
         
         return await createdChannelStream.getNewStream(sendValue: subscriberChannel)
-    }
-    
-    private func sendCreatedChannel(channel: WebSocketChannel) async {
-        
-        await createdChannelStream.send(value: channel)
     }
     
     func createChannel(url: URL, channel: WebSocketChannel) async {
@@ -243,6 +246,11 @@ actor ACChannelPublisher {
         self.subscriberChannel = subscriberChannel
         
         await sendCreatedChannel(channel: subscriberChannel)
+    }
+    
+    private func sendCreatedChannel(channel: WebSocketChannel) async {
+        
+        await createdChannelStream.send(value: channel)
     }
     
     // TODO: Fix. ~Levi
