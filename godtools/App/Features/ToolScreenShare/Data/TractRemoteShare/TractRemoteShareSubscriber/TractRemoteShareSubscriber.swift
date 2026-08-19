@@ -12,14 +12,14 @@ actor TractRemoteShareSubscriber {
                 
     private let navigationEventStream: MultiBroadcastStream<TractRemoteShareNavigationEvent> = MultiBroadcastStream()
     private let connectionUrl: String
-    private let channelSubscriber: ACChannelSubscriber
+    private let channelSubscriber: ACChannelSubscriberInterface
     private let loggingEnabled: Bool
     
     private var receiveTextTask: Task<Void, Never>?
     
     init(
         connectionUrl: String,
-        channelSubscriber: ACChannelSubscriber,
+        channelSubscriber: ACChannelSubscriberInterface,
         loggingEnabled: Bool
     ) {
         

@@ -11,12 +11,12 @@ import Foundation
 actor TractRemoteSharePublisher {
             
     private let connectionUrl: String
-    private let channelPublisher: ACChannelPublisher
+    private let channelPublisher: ACChannelPublisherInterface
     private let loggingEnabled: Bool
                 
     init(
         connectionUrl: String,
-        channelPublisher: ACChannelPublisher,
+        channelPublisher: ACChannelPublisherInterface,
         loggingEnabled: Bool
     ) {
         

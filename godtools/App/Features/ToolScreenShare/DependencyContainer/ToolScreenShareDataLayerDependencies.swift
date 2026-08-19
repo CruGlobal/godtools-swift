@@ -17,6 +17,22 @@ final class ToolScreenShareDataLayerDependencies: Sendable {
         
         self.coreDataLayer = coreDataLayer
     }
+    
+    private func getACChannelPublisher() -> ACChannelPublisherInterface {
+        
+        return ACChannelPublisher(
+            webSocket: coreDataLayer.getWebSocket(),
+            loggingEnabled: coreDataLayer.getAppBuild().isDebug
+        )
+    }
+    
+    private func getACChannelSubscriber() -> ACChannelSubscriberInterface {
+        
+        return ACChannelSubscriber(
+            webSocket: coreDataLayer.getWebSocket(),
+            loggingEnabled: coreDataLayer.getAppBuild().isDebug
+        )
+    }
         
     func getToolScreenShareTutorialViewsRepository() -> ToolScreenShareTutorialViewsRepository {
         
@@ -46,29 +62,19 @@ final class ToolScreenShareDataLayerDependencies: Sendable {
     
     func getTractRemoteSharePublisher() -> TractRemoteSharePublisher {
                 
-        let loggingEnabled: Bool = coreDataLayer.getAppBuild().isDebug
-        
         return TractRemoteSharePublisher(
             connectionUrl: coreDataLayer.getAppConfig().getTractRemoteShareConnectionUrl(),
-            channelPublisher: ACChannelPublisher(
-                webSocket: coreDataLayer.getWebSocket(),
-                loggingEnabled: loggingEnabled
-            ),
-            loggingEnabled: loggingEnabled
+            channelPublisher: getACChannelPublisher(),
+            loggingEnabled: coreDataLayer.getAppBuild().isDebug
         )
     }
     
     func  getTractRemoteShareSubscriber() -> TractRemoteShareSubscriber {
-                
-        let loggingEnabled: Bool = coreDataLayer.getAppBuild().isDebug
-        
+                        
         return TractRemoteShareSubscriber(
             connectionUrl: coreDataLayer.getAppConfig().getTractRemoteShareConnectionUrl(),
-            channelSubscriber: ACChannelSubscriber(
-                webSocket: coreDataLayer.getWebSocket(),
-                loggingEnabled: loggingEnabled
-            ),
-            loggingEnabled: loggingEnabled
+            channelSubscriber: getACChannelSubscriber(),
+            loggingEnabled: coreDataLayer.getAppBuild().isDebug
         )
     }
     
