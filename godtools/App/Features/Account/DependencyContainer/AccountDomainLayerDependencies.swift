@@ -59,6 +59,7 @@ final class AccountDomainLayerDependencies: Sendable {
     
     func getDidPullToRefreshAccountUseCase() -> DidPullToRefreshAccountUseCase {
         return DidPullToRefreshAccountUseCase(
+            userDetailsSync: dataLayer.getUserDetailsSync(),
             userCountersSync: core.dataLayer.getUserCountersSync()
         )
     }
