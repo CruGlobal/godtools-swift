@@ -100,7 +100,8 @@ final class TractViewModel: MobileContentRendererViewModel {
             
             for await channel in createdChannelStream {
                 
-                self?.handleRemoteSharePublisherChannelCreated(channel: channel)
+                self?.didSubscribeForRemoteSharePublishing.accept(value: true)
+                self?.reloadRemoteShareIsActive()
             }
         }
         
@@ -138,11 +139,6 @@ final class TractViewModel: MobileContentRendererViewModel {
             
             return publisherIsConnected || subscriberIsConnected || !liveShareStreamChannelIdIsEmpty
         }
-    }
-    
-    private func handleRemoteSharePublisherChannelCreated(channel: WebSocketChannel) {
-        didSubscribeForRemoteSharePublishing.accept(value: true)
-        reloadRemoteShareIsActive()
     }
     
     private func reloadRemoteShareIsActive() {
@@ -420,15 +416,8 @@ extension TractViewModel {
         
         Task {
             
-            do {
-                
-                try await tractRemoteShareSubscriber
-                    .subscribe(channel: channel)
-            }
-            catch _ {
-                
-                // TODO: Handle error. ~Levi
-            }
+            try await tractRemoteShareSubscriber
+                .subscribe(channel: channel)
         }
     }
     
