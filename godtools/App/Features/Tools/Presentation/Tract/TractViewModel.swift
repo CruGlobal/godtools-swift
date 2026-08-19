@@ -94,22 +94,13 @@ final class TractViewModel: MobileContentRendererViewModel {
         
         Task { [weak self] in
            
-            let channel: WebSocketChannel? = await self?.tractRemoteSharePublisher.tractRemoteShareChannel
+            guard let createdChannelStream = await self?.tractRemoteSharePublisher.getCreatedChannelStream() else {
+                return
+            }
             
-            if let channel = channel {
+            for await channel in createdChannelStream {
                 
                 self?.handleRemoteSharePublisherChannelCreated(channel: channel)
-            }
-            else {
-                
-                guard let createdChannelStream = await self?.tractRemoteSharePublisher.getCreatedChannelStream() else {
-                    return
-                }
-                
-                for await channel in createdChannelStream {
-                    
-                    self?.handleRemoteSharePublisherChannelCreated(channel: channel)
-                }
             }
         }
         

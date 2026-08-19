@@ -16,12 +16,12 @@ actor ACChannelPublisher {
     private let createdChannelStream: MultiBroadcastStream<WebSocketChannel> = MultiBroadcastStream()
     
     private var channelToCreate: WebSocketChannel?
-    private var publishingToSubscriberChannel: WebSocketChannel?
     private var receiveTextTask: Task<Void, Never>?
     private var appResignedActive: Bool = false
     
     private(set) var channel: WebSocketChannel?
     private(set) var publishChannel: WebSocketChannel?
+    private(set) var publishingToSubscriberChannel: WebSocketChannel?
         
     init(webSocket: WebSocketInterface, loggingEnabled: Bool) {
         
@@ -69,7 +69,7 @@ actor ACChannelPublisher {
     
     func getCreatedChannelStream() async -> AsyncStream<WebSocketChannel> {
         
-        return await createdChannelStream.getNewStream()
+        return await createdChannelStream.getNewStream(sendValue: publishingToSubscriberChannel)
     }
     
     private func sendCreatedChannel(channel: WebSocketChannel) async {

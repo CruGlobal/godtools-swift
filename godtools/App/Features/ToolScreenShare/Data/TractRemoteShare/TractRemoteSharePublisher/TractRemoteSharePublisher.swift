@@ -13,9 +13,7 @@ actor TractRemoteSharePublisher {
     private let connectionUrl: String
     private let channelPublisher: ACChannelPublisher
     private let loggingEnabled: Bool
-        
-    private(set) var tractRemoteShareChannel: WebSocketChannel?
-        
+                
     init(
         connectionUrl: String,
         channelPublisher: ACChannelPublisher,
@@ -38,6 +36,12 @@ actor TractRemoteSharePublisher {
             if let label = label, let labelValue = labelValue {
                 print("  \(label): \(labelValue)")
             }
+        }
+    }
+    
+    var tractRemoteShareChannel: WebSocketChannel? {
+        get async {
+            return await channelPublisher.publishingToSubscriberChannel
         }
     }
     
@@ -82,13 +86,11 @@ actor TractRemoteSharePublisher {
                 
         let channel = WebSocketChannel.createUniqueChannel()
         
-        try await channelPublisher.createChannel(url: url, channel: channel)
+        await channelPublisher.createChannel(url: url, channel: channel)
     }
     
     func endPublishingSession(disconnectSocket: Bool) async {
-        
-        tractRemoteShareChannel = nil
-        
+                
         if disconnectSocket {
             
             await channelPublisher.disconnect()
