@@ -10,14 +10,18 @@ import Foundation
 
 final class DidPullToRefreshAccountUseCase: Sendable {
     
+    private let userDetailsSync: UserDetailsSync
     private let userCountersSync: UserCountersSync
     
-    init(userCountersSync: UserCountersSync) {
+    init(userDetailsSync: UserDetailsSync, userCountersSync: UserCountersSync) {
         
+        self.userDetailsSync = userDetailsSync
         self.userCountersSync = userCountersSync
     }
     
     func execute() async throws {
+        
+        try await userDetailsSync.sync(requestPriority: .high)
         
         try await userCountersSync.sync(requestPriority: .high, forceSync: true)
     }
