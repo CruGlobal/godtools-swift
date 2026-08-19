@@ -12,7 +12,7 @@ import Combine
 
 struct SwiftUITimerTests {
     
-    @Test("")
+    @Test
     @MainActor func timerStartPublisherRunsOnce() async {
                 
         let timer = SwiftUITimer(intervalSeconds: 0.1, repeats: false)
@@ -46,7 +46,7 @@ struct SwiftUITimerTests {
         #expect(timer.isRunning == false)
     }
     
-    @Test("")
+    @Test
     @MainActor func timerRunsUntilStopped() async {
                 
         let timer = SwiftUITimer(intervalSeconds: 0.1, repeats: true)
