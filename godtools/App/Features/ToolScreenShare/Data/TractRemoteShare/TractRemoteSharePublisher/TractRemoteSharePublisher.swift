@@ -55,9 +55,9 @@ actor TractRemoteSharePublisher {
         return await channelPublisher.getCreatedChannelStream()
     }
     
-    var isSubscriberChannelCreated: Bool {
+    var subscriberChannelCreated: Bool {
         get async {
-            return await channelPublisher.isSubscriberChannelCreated
+            return await channelPublisher.subscriberChannelCreated
         }
     }
     

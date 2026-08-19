@@ -8,7 +8,7 @@
 
 import Foundation
 
-actor ACChannelSubscriber {
+actor ACChannelSubscriber: ACChannelSubscriberInterface {
     
     private let webSocket: WebSocketInterface
     private let loggingEnabled: Bool
@@ -45,7 +45,7 @@ actor ACChannelSubscriber {
         return creatingChannel != nil
     }
     
-    var channelIsCreated: Bool {
+    var isSubscribedToChannel: Bool {
         return subscribedToChannel != nil
     }
     
@@ -72,10 +72,6 @@ actor ACChannelSubscriber {
         
         await subscribedStream.send(value: channel)
     }
-    
-    var isSubscribedToChannel: Bool {
-        return subscribedToChannel != nil
-    }
 
     func subscribe(url: URL, channel: WebSocketChannel) async throws(ACCreateChannelError) {
         
@@ -83,7 +79,7 @@ actor ACChannelSubscriber {
             throw .isCreatingChannel
         }
         
-        guard !channelIsCreated else {
+        guard !isSubscribedToChannel else {
             throw .channelAlreadyCreated
         }
         

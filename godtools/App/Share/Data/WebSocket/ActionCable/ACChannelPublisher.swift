@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-actor ACChannelPublisher {
+actor ACChannelPublisher: ACChannelPublisherInterface {
     
     private let webSocket: WebSocketInterface
     private let loggingEnabled: Bool
@@ -51,7 +51,7 @@ actor ACChannelPublisher {
         return createChannel != nil
     }
     
-    var channelIsCreated: Bool {
+    var subscriberChannelCreated: Bool {
         return subscriberChannel != nil
     }
     
@@ -59,10 +59,6 @@ actor ACChannelPublisher {
         get async {
             return await webSocket.connectionState
         }
-    }
-    
-    var isSubscriberChannelCreated: Bool {
-        return subscriberChannel != nil
     }
     
     func getConnectionStateStream() async -> AsyncStream<WebSocketConnectionState> {
@@ -80,7 +76,7 @@ actor ACChannelPublisher {
             throw .isCreatingChannel
         }
         
-        guard !channelIsCreated else {
+        guard !subscriberChannelCreated else {
             throw .channelAlreadyCreated
         }
         
