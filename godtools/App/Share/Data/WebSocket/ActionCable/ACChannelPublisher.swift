@@ -15,9 +15,9 @@ actor ACChannelPublisher {
     private let loggingEnabled: Bool
     private let createdChannelStream: MultiBroadcastStream<WebSocketChannel> = MultiBroadcastStream()
     
+    private var createChannel: WebSocketChannel?
     private var receiveTextTask: Task<Void, Never>?
     
-    private(set) var createChannel: WebSocketChannel?
     private(set) var publishChannel: WebSocketChannel?
     private(set) var subscriberChannel: WebSocketChannel?
         

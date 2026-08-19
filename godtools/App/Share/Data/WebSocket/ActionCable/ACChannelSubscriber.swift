@@ -15,9 +15,10 @@ actor ACChannelSubscriber {
     private let subscribedStream: MultiBroadcastStream<WebSocketChannel> = MultiBroadcastStream()
     
     private var creatingChannel: WebSocketChannel?
-    private var subscribedToChannel: WebSocketChannel?
     private var receiveTextTask: Task<Void, Never>?
         
+    private(set) var subscribedToChannel: WebSocketChannel?
+    
     init(webSocket: WebSocketInterface, loggingEnabled: Bool) {
         
         self.webSocket = webSocket
