@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class StringSearcher {
+final class StringSearcher: Sendable {
     
     func search<T: StringSearchable>(for searchText: String, in searchables: [T]) -> [T] {
         
