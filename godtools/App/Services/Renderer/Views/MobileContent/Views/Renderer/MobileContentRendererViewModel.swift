@@ -102,6 +102,11 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
         countLanguageUsage(localeId: currentPageRenderer.value.language.localeId)
     }
     
+    deinit {
+        
+        updateTranslationsTask?.cancel()
+    }
+    
     private func didSetLanguages(languages: [LanguageDataModel], appLanguage: AppLanguageDomainModel) {
         
         Task {
