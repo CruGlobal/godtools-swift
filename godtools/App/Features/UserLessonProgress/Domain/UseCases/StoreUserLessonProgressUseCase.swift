@@ -16,7 +16,12 @@ final class StoreUserLessonProgressUseCase: Sendable {
         self.lessonProgressRepository = lessonProgressRepository
     }
     
-    func execute(lessonId: String, viewedPageId: String, viewedPageNumber: Int, totalPageCount: Int) async throws -> UserLessonProgressDomainModel {
+    func execute(
+        lessonId: String,
+        viewedPageId: String,
+        viewedPageNumber: Int,
+        totalPageCount: Int
+    ) async throws -> UserLessonProgressDomainModel {
         
         let finalThingsToTryPageCount: Int = 1
         let excludedPageCount: Int = finalThingsToTryPageCount // Excludes final things to try page. ~Levi
