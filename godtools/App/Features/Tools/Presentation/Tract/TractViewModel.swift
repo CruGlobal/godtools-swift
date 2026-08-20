@@ -407,7 +407,7 @@ extension TractViewModel {
                 return
             }
             
-            for await didSubscribe in didSubscribeStream {
+            for await _ in didSubscribeStream {
                 
                 self?.trackShareScreenOpened()
                 self?.reloadRemoteShareIsActive()

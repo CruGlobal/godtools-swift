@@ -80,8 +80,11 @@ final class LaunchCountTracker {
 
         if notification.name == UIApplication.didBecomeActiveNotification {
 
-            Task {
-                await incrementLaunchCountIfNeeded()
+            let tracker: LaunchCountTracker = self
+            
+            Task.detached {
+                
+                await tracker.incrementLaunchCountIfNeeded()
             }
         }
         else if notification.name == UIApplication.didEnterBackgroundNotification {

@@ -68,7 +68,12 @@ final class MobileContentRendererAnalyticsEvent: NSObject {
         
         if let mobileContentAnalytics = mobileContentAnalytics {
             
-            Task {
+            // TODO: Extract properties from AnalyticsEvent to send across. ~Levi
+            
+            let analyticsEvent: AnalyticsEvent = self.analyticsEvent
+            let renderedPageContext: MobileContentRenderedPageContext = self.renderedPageContext
+            
+            Task.detached {
                 
                 try await mobileContentAnalytics.trackEvents(
                     events: [analyticsEvent],

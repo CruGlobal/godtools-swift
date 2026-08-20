@@ -52,7 +52,7 @@ final class ChooseAppLanguageFlow: GTFlow {
             
             let setAppLanguageUseCase: SetAppLanguageUseCase = appDiContainer.feature.appLanguage.domainLayer.getSetAppLanguageUseCase()
                         
-            Task {
+            Task.detached {
                 _ = try await setAppLanguageUseCase
                     .execute(appLanguage: appLanguage.language)
             }

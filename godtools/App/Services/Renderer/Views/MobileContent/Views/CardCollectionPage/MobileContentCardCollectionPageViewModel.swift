@@ -105,6 +105,7 @@ extension MobileContentCardCollectionPageViewModel {
     
     func cardDidAppear(card: Int) {
         
+        
         Task {
             await trackScreenViewAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(

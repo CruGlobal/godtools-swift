@@ -129,13 +129,15 @@ struct GodToolsApp: App {
         )
         
         if Self.appBuild.configuration == .release {
-            Task {
+            
+            Task.detached {
                 await Self.parserLogger.start()
             }
         }
         
         if Self.appConfig.firebaseEnabled {
-            Task {
+            
+            Task.detached {
                 await Self.firebaseAnalytics.configure()
             }
         }
@@ -256,7 +258,7 @@ extension GodToolsApp {
             
         let dynalinkHandler: DynalinkUniversalLinkHandler = appDiContainer.feature.deferredDeepLink.dataLayer.getDynalinkUniversalLinkHandler()
         
-        Task {
+        Task.detached {
             
             await dynalinkHandler.handleUniversalLink(url: url)
         }
@@ -297,7 +299,7 @@ extension GodToolsApp {
         
         let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase()
         
-        Task {
+        Task.detached {
          
             await trackActionAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(

@@ -80,7 +80,10 @@ class TractPageFormViewModel: MobileContentFormViewModel {
             languageId: languageId
         )
         
-        Task {
+        let followUpService: FollowUpsService = self.followUpService
+        
+        Task.detached {
+            
             try await followUpService.postFollowUp(
                 followUp: followUp,
                 requestPriority: .medium

@@ -310,8 +310,9 @@ extension RealmResourcesSHA256FileCache {
             
             filesToRemove.append(location)
 
-            Task {
-                try await resourcesFileCache.cache.removeFile(location: location)
+            Task { [weak self] in
+                
+                try await self?.resourcesFileCache.cache.removeFile(location: location)
             }
         }
         
