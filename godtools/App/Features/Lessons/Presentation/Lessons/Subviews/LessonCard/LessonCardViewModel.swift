@@ -13,9 +13,7 @@ import Combine
 class LessonCardViewModel: ObservableObject {
         
     private let lessonListItem: LessonListItemDomainModelInterface
-    
-    private var getBannerImageTask: Task<Void, Error>?
-    
+        
     @Published private(set) var banner: OptionalImageData?
     @Published private(set) var title: String = ""
     @Published private(set) var titleLayoutDirection: LayoutDirection = .rightToLeft
