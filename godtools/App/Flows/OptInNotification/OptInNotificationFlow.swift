@@ -58,10 +58,12 @@ final class OptInNotificationFlow: GTFlow {
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
-        Task {
+        let optInNoficationRepository = appDiContainer.feature.optInNotification.dataLayer
+            .getOptInNotificationRepository()
+        
+        Task.detached {
             
-            await appDiContainer.feature.optInNotification.dataLayer
-                .getOptInNotificationRepository()
+            await optInNoficationRepository
                 .recordPrompt()
         }
     }

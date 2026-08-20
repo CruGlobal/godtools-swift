@@ -93,12 +93,12 @@ final class LocalizationSettingsFlow: GTFlow {
     
     private func storeSelectedCountryListItem(countryListItem: LocalizationSettingsCountryListItem) {
         
-        Task {
-            try await appDiContainer
-                .feature
-                .personalizedTools
-                .domainLayer
-                .getSetLocalizationSettingsUseCase()
+        let setLocalizationSettingsStringsUseCsae = appDiContainer.feature.personalizedTools.domainLayer
+            .getSetLocalizationSettingsUseCase()
+        
+        Task.detached {
+            
+            try await setLocalizationSettingsStringsUseCsae
                 .execute(country: countryListItem.countryDomainModel)
         }
     }

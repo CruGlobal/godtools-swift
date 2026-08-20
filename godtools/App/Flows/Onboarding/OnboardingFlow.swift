@@ -147,8 +147,8 @@ final class OnboardingFlow: GTFlow {
                         page: page
                     )
                     
-                    Task {
-                        
+                    Task.detached {
+                                                
                         await trackActionAnalytics.execute(
                             properties: properties,
                             actionName: AnalyticsConstants.ActionNames.onboardingStart,

@@ -62,8 +62,9 @@ final class ToolLanguageDownloader: Sendable {
                 ToolDownloadDataModelId(toolId: $0.toolId, languages: $0.languages)
             }
             
-            Task {
-                try await downloadToolsForLanguage(tools: downloadTools, languageId: languageId)
+            Task { [weak self] in
+                
+                try await self?.downloadToolsForLanguage(tools: downloadTools, languageId: languageId)
             }
             
             return toolDownloader

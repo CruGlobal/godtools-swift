@@ -288,18 +288,15 @@ final class MenuFlow: GTFlow {
             
         case .deleteAccountTappedFromDeleteAccount:
             
-            Task {
+            let confirmDeleteAccountView = getConfirmDeleteAccountView()
 
-                let confirmDeleteAccountView = getConfirmDeleteAccountView()
+            dismissView(animated: true, completion: { [weak self] in
 
-                dismissView(animated: true, completion: { [weak self] in
-
-                    self?.presentView(
-                        view: confirmDeleteAccountView,
-                        animated: true
-                    )
-                })
-            }
+                self?.presentView(
+                    view: confirmDeleteAccountView,
+                    animated: true
+                )
+            })
 
         case .deleteAccountTappedFromConfirmDeleteAccount:
             

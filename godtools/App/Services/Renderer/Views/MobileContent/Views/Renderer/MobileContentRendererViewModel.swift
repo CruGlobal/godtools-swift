@@ -833,11 +833,13 @@ extension MobileContentRendererViewModel {
         
         let locale = Locale(identifier: localeId)
         
-        Task {
+        trackLanguageUsageCountedThisSession(localeId: localeId)
+        
+        let incrementUserCounterUseCase: IncrementUserCounterUseCase = self.incrementUserCounterUseCase
+        
+        Task.detached {
             
             _ = try await incrementUserCounterUseCase.execute(interaction: .languageUsed(locale: locale))
-            
-            trackLanguageUsageCountedThisSession(localeId: localeId)
         }
     }
     
@@ -863,7 +865,9 @@ extension MobileContentRendererViewModel {
             return
         }
         
-        Task {
+        let incrementUserCounterUseCase: IncrementUserCounterUseCase = self.incrementUserCounterUseCase
+        
+        Task.detached {
             
             _ = try await incrementUserCounterUseCase.execute(interaction: toolOpenInteraction)
         }
