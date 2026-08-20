@@ -47,6 +47,13 @@ final class ConfirmRemoveToolFromFavoritesAlertViewModel {
         print("x deinit: \(type(of: self))")
     }
     
+    
+}
+
+// MARK: - Inputs
+
+extension ConfirmRemoveToolFromFavoritesAlertViewModel {
+    
     func cancelTapped() {
         
     }
