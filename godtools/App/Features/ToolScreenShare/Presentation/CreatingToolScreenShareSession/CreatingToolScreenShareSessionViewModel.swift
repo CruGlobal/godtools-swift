@@ -116,7 +116,10 @@ extension CreatingToolScreenShareSessionViewModel {
         didCreateChannelTask?.cancel()
         creatingChannelTask?.cancel()
         
-        Task {
+        let tractRemoteSharePublisher: TractRemoteSharePublisher = self.tractRemoteSharePublisher
+        
+        Task.detached {
+            
             await tractRemoteSharePublisher.endPublishingSession(disconnectSocket: true)
         }
         

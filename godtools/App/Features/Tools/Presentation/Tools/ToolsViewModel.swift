@@ -345,9 +345,9 @@ final class ToolsViewModel: ObservableObject {
         
         Self.favoriteToolTasks[toolId]?.cancel()
         
-        Self.favoriteToolTasks[toolId] = Task {
-            
-            _ = try await toggleToolFavoritedUseCase
+        Self.favoriteToolTasks[toolId] = Task { [weak self] in
+                
+            _ = try await self?.toggleToolFavoritedUseCase
                 .execute(toolId: toolId)
         }
     }
