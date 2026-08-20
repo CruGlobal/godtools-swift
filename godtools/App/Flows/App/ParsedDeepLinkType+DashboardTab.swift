@@ -10,7 +10,7 @@ import Foundation
 
 extension ParsedDeepLinkType {
     
-    var dashboardTab: DashboardTabTypeDomainModel {
+    @MainActor var dashboardTab: DashboardTabTypeDomainModel {
         
         let defaultTab: DashboardTabTypeDomainModel = DashboardFlow.startingTab
         
@@ -20,7 +20,7 @@ extension ParsedDeepLinkType {
             return .tools
         case .appLanguagesList:
             return defaultTab
-        case .articleAemUri(aemUri: let aemUri):
+        case .articleAemUri( _):
             return defaultTab
         case .dashboard:
             return defaultTab
@@ -34,9 +34,9 @@ extension ParsedDeepLinkType {
             return .lessons
         case .menu:
             return defaultTab
-        case .onboarding(appLanguage: let appLanguage):
+        case .onboarding( _):
             return defaultTab
-        case .tool(toolDeepLink: let toolDeepLink):
+        case .tool( _):
             return defaultTab
         case .toolDetails:
             return defaultTab

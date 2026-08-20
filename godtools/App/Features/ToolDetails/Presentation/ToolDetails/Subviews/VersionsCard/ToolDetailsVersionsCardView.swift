@@ -114,7 +114,7 @@ struct ToolDetailsVersionsCardView_Preview: PreviewProvider {
         let viewModel = ToolDetailsVersionsCardViewModel(
             toolVersion: toolVersion,
             getToolBannerUseCase: appDiContainer.core.domainLayer.getToolBannerUseCase(),
-            inMemoryDataCache: appDiContainer.core.dataLayer.getSharedInMemoryDataCache(),
+            dataCache: appDiContainer.core.dataLayer.getSharedDataCache(),
             isSelected: false
         )
         

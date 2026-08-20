@@ -34,7 +34,7 @@ class ToolCardViewModel: ObservableObject {
         accessibility: AccessibilityStrings.Button,
         getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase,
         getToolBannerUseCase: GetToolBannerUseCase,
-        inMemoryDataCache: InMemoryDataCache
+        dataCache: DataCacheInterface
     ) {
         
         self.tool = tool
@@ -69,7 +69,7 @@ class ToolCardViewModel: ObservableObject {
         
         getBannerImageTask = Task {
             
-            if let imageData = await inMemoryDataCache.getData(id: attachmentId), let image = imageData.toImage() {
+            if let imageData = await dataCache.getData(id: attachmentId), let image = imageData.toImage() {
                 
                 banner = getBanner(image: image, attachmentId: attachmentId)
             }
@@ -81,7 +81,7 @@ class ToolCardViewModel: ObservableObject {
                     )
                 
                 if let imageData = imageData {
-                    inMemoryDataCache.cacheData(id: attachmentId, data: imageData)
+                    await dataCache.cacheData(id: attachmentId, data: imageData)
                 }
                 
                 banner = getBanner(image: imageData?.toImage(), attachmentId: attachmentId)

@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class ToolLanguageDownloader {
+final class ToolLanguageDownloader: Sendable {
     
     private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository

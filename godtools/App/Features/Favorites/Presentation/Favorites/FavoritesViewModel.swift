@@ -20,7 +20,7 @@ final class FavoritesViewModel: ObservableObject {
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     private let getToolBannerUseCase: GetToolBannerUseCase
-    private let inMemoryDataCache: InMemoryDataCache
+    private let dataCache: DataCacheInterface
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
     private let getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase
     private let getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase
@@ -45,7 +45,7 @@ final class FavoritesViewModel: ObservableObject {
         getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
         getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase,
         getToolBannerUseCase: GetToolBannerUseCase,
-        inMemoryDataCache: InMemoryDataCache,
+        dataCache: DataCacheInterface,
         disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase,
         getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase,
         getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase,
@@ -60,7 +60,7 @@ final class FavoritesViewModel: ObservableObject {
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.getToolBannerUseCase = getToolBannerUseCase
-        self.inMemoryDataCache = inMemoryDataCache
+        self.dataCache = dataCache
         self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
         self.getFeaturedLessonsUseCase = getFeaturedLessonsUseCase
         self.getOptInOnboardingBannerEnabledUseCase = getOptInOnboardingBannerEnabledUseCase
@@ -320,7 +320,7 @@ extension FavoritesViewModel {
         return LessonCardViewModel(
             lessonListItem: featuredLesson,
             getToolBannerUseCase: getToolBannerUseCase,
-            inMemoryDataCache: inMemoryDataCache
+            dataCache: dataCache
         )
     }
     
@@ -337,7 +337,7 @@ extension FavoritesViewModel {
             accessibility: .favoriteTool,
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
             getToolBannerUseCase: getToolBannerUseCase,
-            inMemoryDataCache: inMemoryDataCache
+            dataCache: dataCache
         )
     }
     

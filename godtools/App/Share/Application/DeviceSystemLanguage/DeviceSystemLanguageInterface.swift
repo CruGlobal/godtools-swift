@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol DeviceSystemLanguageInterface {
+protocol DeviceSystemLanguageInterface: Sendable {
     
     func getLocale() -> Locale
 }

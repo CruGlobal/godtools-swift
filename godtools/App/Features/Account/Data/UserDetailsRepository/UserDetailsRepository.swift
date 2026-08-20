@@ -16,9 +16,7 @@ final class UserDetailsRepository: Sendable {
     private let api: UserDetailsApiInterface
     private let cache: UserDetailsCache
     private let authTokenRepository: MobileContentAuthTokenRepository
-    
-    private var syncWithRemoteTask: Task<Void, Error>?
-        
+            
     init(api: UserDetailsApiInterface, cache: UserDetailsCache, authTokenRepository: MobileContentAuthTokenRepository) {
         
         self.api = api
@@ -26,14 +24,8 @@ final class UserDetailsRepository: Sendable {
         self.authTokenRepository = authTokenRepository
     }
     
-    deinit {
-        syncWithRemoteTask?.cancel()
-    }
-    
     @MainActor func getAuthUserDetailsChangedPublisher(requestPriority: RequestPriority) -> AnyPublisher<UserDetailsDataModel?, Error> {
-        
-        syncWithRemote(requestPriority: requestPriority)
-        
+                
         return cache.persistence
             .observeCollectionChangesPublisher()
             .tryMap { _ in
@@ -44,9 +36,7 @@ final class UserDetailsRepository: Sendable {
     }
     
     @MainActor func getUserDetailsChangedPublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<UserDetailsDataModel?, Error> {
-        
-        syncWithRemote(requestPriority: requestPriority)
-        
+                
         return cache.persistence
             .observeCollectionChangesPublisher()
             .tryMap { _ in
@@ -69,30 +59,5 @@ final class UserDetailsRepository: Sendable {
         
         return try cache.persistence
             .getDataModel(id: userId)
-    }
-}
-
-extension UserDetailsRepository {
-    
-    private func syncWithRemote(requestPriority: RequestPriority) {
-        
-        syncWithRemoteTask?.cancel()
-        
-        syncWithRemoteTask = Task {
-            _ = try await syncFromRemote(requestPriority: requestPriority)
-        }
-    }
-    
-    private func syncFromRemote(requestPriority: RequestPriority) async throws -> UserDetailsDataModel {
-        
-        let codable: MobileContentApiUsersMeCodable = try await api.fetchUserDetails(requestPriority: requestPriority)
-        
-        _ = try await cache.persistence.writeObjects(
-            externalObjects: [codable],
-            writeOption: nil,
-            getOption: nil
-        )
-        
-        return codable.toModel()
     }
 }
