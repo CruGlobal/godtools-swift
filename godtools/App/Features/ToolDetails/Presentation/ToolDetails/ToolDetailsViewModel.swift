@@ -275,6 +275,11 @@ final class ToolDetailsViewModel: ObservableObject {
             )
         }
     }
+    
+    private static func cancelFavoriteToolTask(toolId: String) {
+        Self.favoriteToolTasks[toolId]?.cancel()
+        Self.favoriteToolTasks[toolId] = nil
+    }
 }
 
 // MARK: - Inputs
@@ -329,9 +334,9 @@ extension ToolDetailsViewModel {
     
     func toggleFavorited() {
         
-        Self.favoriteToolTasks[toolId]?.cancel()
-        
         let toolId: String = self.toolId
+        
+        Self.cancelFavoriteToolTask(toolId: toolId)
         
         Self.favoriteToolTasks[toolId] = Task { [weak self] in
             
@@ -343,6 +348,8 @@ extension ToolDetailsViewModel {
                 .execute(toolId: toolId)
             
             self?.isFavorited = domainModel.isFavorited
+            
+            Self.favoriteToolTasks[toolId] = nil
         }
     }
     
