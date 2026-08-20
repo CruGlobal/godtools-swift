@@ -341,14 +341,21 @@ final class ToolsViewModel: ObservableObject {
         }
     }
     
+    private static func cancelFavoriteToolTask(toolId: String) {
+        Self.favoriteToolTasks[toolId]?.cancel()
+        Self.favoriteToolTasks[toolId] = nil
+    }
+    
     private func toggleToolIsFavorited(toolId: String) {
         
-        Self.favoriteToolTasks[toolId]?.cancel()
+        Self.cancelFavoriteToolTask(toolId: toolId)
         
         Self.favoriteToolTasks[toolId] = Task { [weak self] in
                 
             _ = try await self?.toggleToolFavoritedUseCase
                 .execute(toolId: toolId)
+            
+            Self.favoriteToolTasks[toolId] = nil
         }
     }
     
