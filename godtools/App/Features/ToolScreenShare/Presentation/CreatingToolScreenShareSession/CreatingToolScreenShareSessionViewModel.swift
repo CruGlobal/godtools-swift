@@ -58,14 +58,14 @@ final class CreatingToolScreenShareSessionViewModel: ObservableObject {
             })
             .store(in: &cancellables)
         
-        didCreateChannelTask = Task {
+        didCreateChannelTask = Task { [weak self] in
             
             let createdChannelStream: AsyncStream<WebSocketChannel> = await tractRemoteSharePublisher.getCreatedChannelStream()
                         
             for await channel in createdChannelStream {
                 
-                didCreateChannelTask?.cancel()
-                creatingChannelTask?.cancel()
+                self?.didCreateChannelTask?.cancel()
+                self?.creatingChannelTask?.cancel()
                 
                 stepEmitter.emit(
                     step: AppFlowStep.didCreateSessionFromCreatingToolScreenShareSession(

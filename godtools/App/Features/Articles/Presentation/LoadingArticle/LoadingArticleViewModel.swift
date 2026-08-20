@@ -44,7 +44,7 @@ final class LoadingArticleViewModel: ObservableObject {
 
         message = strings[messageKey] ?? ""
 
-        downloadArticleTask = Task {
+        Task {
             
             let downloadError: Error?
             
@@ -100,6 +100,5 @@ final class LoadingArticleViewModel: ObservableObject {
     
     deinit {
         print("x deinit: \(type(of: self))")
-        downloadArticleTask?.cancel()
     }
 }

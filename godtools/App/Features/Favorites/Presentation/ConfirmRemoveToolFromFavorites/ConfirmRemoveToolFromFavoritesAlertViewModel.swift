@@ -11,9 +11,7 @@ import Combine
 
 @MainActor
 final class ConfirmRemoveToolFromFavoritesAlertViewModel {
-    
-    private static var removeToolFromFavoritesTask: Task<Void, Error>?
-    
+        
     private let toolId: String
     private let appLanguage: AppLanguageDomainModel
     private let strings: ConfirmRemoveToolFromFavoritesStringsDomainModel
@@ -55,14 +53,13 @@ final class ConfirmRemoveToolFromFavoritesAlertViewModel {
     
     func acceptTapped() {
         
-        didConfirmToolRemovalSubject?.send(Void())
+        let removeFavoritedToolUseCase: RemoveFavoritedToolUseCase = self.removeFavoritedToolUseCase
+        let toolId: String = self.toolId
         
-        Self.removeToolFromFavoritesTask?.cancel()
-        
-        Self.removeToolFromFavoritesTask = Task {
-            
-            _ = try await removeFavoritedToolUseCase
-                .execute(toolId: toolId)
+        Task.detached {
+            _ = try await removeFavoritedToolUseCase.execute(toolId: toolId)
         }
+        
+        didConfirmToolRemovalSubject?.send(Void())
     }
 }

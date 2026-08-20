@@ -14,9 +14,7 @@ final class LessonViewModel: MobileContentRendererViewModel {
         
     private let stepEmitter: FlowStepEmitter
     private let storeLessonProgressUseCase: StoreUserLessonProgressUseCase
-    
-    private var storeLessonProgressTask: Task<Void, Error>?
-    
+        
     let progress: ObservableValue<AnimatableValue<CGFloat>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
         
     init(
@@ -75,18 +73,19 @@ final class LessonViewModel: MobileContentRendererViewModel {
             return
         }
         
+        let storeLessonProgressUseCase: StoreUserLessonProgressUseCase = self.storeLessonProgressUseCase
         let resourceId: String = currentPageRenderer.value.resource.id
-        
-        storeLessonProgressTask?.cancel()
-        
-        storeLessonProgressTask = Task {
+        let pageId: String = currentPage.id
+        let totalPageCount: Int = getPages().count
+                
+        Task.detached {
             
             _ = try await storeLessonProgressUseCase
                 .execute(
                     lessonId: resourceId,
-                    viewedPageId: currentPage.id,
+                    viewedPageId: pageId,
                     viewedPageNumber: page,
-                    totalPageCount: getPages().count
+                    totalPageCount: totalPageCount
                 )
         }
     }
