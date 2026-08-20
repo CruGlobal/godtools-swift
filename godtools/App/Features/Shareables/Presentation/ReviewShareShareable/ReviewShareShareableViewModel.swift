@@ -24,7 +24,6 @@ final class ReviewShareShareableViewModel: ObservableObject {
    
     private var imageToShare: UIImage?
     private var cancellables: Set<AnyCancellable> = Set()
-    private var getShareableImageTask: Task<Void, Error>?
         
     @Published private var appLanguage = AppLanguageDomainModel.english
     
@@ -60,25 +59,22 @@ final class ReviewShareShareableViewModel: ObservableObject {
             })
             .store(in: &cancellables)
         
-        loadShareableImage()
+        loadShareableImage(shareable: shareable)
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
-        getShareableImageTask?.cancel()
     }
     
-    private func loadShareableImage() {
-        
-        getShareableImageTask?.cancel()
-        
-        getShareableImageTask = Task {
+    private func loadShareableImage(shareable: ShareableDomainModel) {
+                
+        Task { [weak self] in
                 
             do {
                 
-                let shareableImage = try await getShareableImageUseCase.execute(shareable: shareable)
+                let shareableImage = try await self?.getShareableImageUseCase.execute(shareable: shareable)
                 
-                didRefreshShareableImage(shareableImage: shareableImage)
+                self?.didRefreshShareableImage(shareableImage: shareableImage)
             }
             catch _ {
                 

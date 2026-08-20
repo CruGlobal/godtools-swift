@@ -47,33 +47,39 @@ final class DownloadManifestArticlesObservable: ObservableObject {
         
         isDownloading = true
         
-        downloadArticlesTask = Task {
+        let manifest: Manifest = self.manifest
+        let translationId: String = translation.id
+        let languageCode: String = self.language.localeId
+        
+        downloadArticlesTask = Task { [weak self] in
             
             do {
                 
-                let download: ArticleAemDownload = try await articleManifestAemRepository.downloadAndCacheManifestAemUris(
+                // TODO: Don't inject Manifest.  Only inject data needed that is Sendable. ~Levi
+                
+                let download: ArticleAemDownload? = try await self?.articleManifestAemRepository.downloadAndCacheManifestAemUris(
                     manifest: manifest,
-                    translationId: translation.id,
-                    languageCode: language.localeId,
+                    translationId: translationId,
+                    languageCode: languageCode,
                     downloadCachePolicy: downloadCachePolicy,
                     requestPriority: .high,
                     forceFetchFromRemote: forceFetchFromRemote
                 )
                 
-                isDownloading = false
+                self?.isDownloading = false
                 
-                if let error = download.errors.firstErrorNotConnectedToInternet {
-                    downloadResult = .failure(error)
+                if let error = download?.errors.firstErrorNotConnectedToInternet {
+                    self?.downloadResult = .failure(error)
                 }
                 else {
-                    downloadResult = .success(Void())
+                    self?.downloadResult = .success(Void())
                 }
             }
             catch let error {
              
-                isDownloading = false
+                self?.isDownloading = false
                 
-                downloadResult = .failure(error)
+                self?.downloadResult = .failure(error)
             }
         }
     }

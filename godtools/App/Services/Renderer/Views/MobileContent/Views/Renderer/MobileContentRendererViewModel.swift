@@ -689,9 +689,9 @@ extension MobileContentRendererViewModel {
         
         updateTranslationsTask?.cancel()
         
-        updateTranslationsTask = Task {
+        updateTranslationsTask = Task { [weak self] in
             
-            try await asyncUpdateTranslationsIfNeeded()
+            try await self?.asyncUpdateTranslationsIfNeeded()
         }
     }
     

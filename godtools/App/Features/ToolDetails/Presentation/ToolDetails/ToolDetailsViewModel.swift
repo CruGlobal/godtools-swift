@@ -331,12 +331,18 @@ extension ToolDetailsViewModel {
         
         Self.favoriteToolTasks[toolId]?.cancel()
         
-        Self.favoriteToolTasks[toolId] = Task {
+        let toolId: String = self.toolId
+        
+        Self.favoriteToolTasks[toolId] = Task { [weak self] in
             
-            let domainModel = try await toggleToolFavoritedUseCase
+            guard let weakSelf = self else {
+                return
+            }
+            
+            let domainModel = try await weakSelf.toggleToolFavoritedUseCase
                 .execute(toolId: toolId)
             
-            isFavorited = domainModel.isFavorited
+            self?.isFavorited = domainModel.isFavorited
         }
     }
     
