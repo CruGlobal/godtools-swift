@@ -345,9 +345,9 @@ final class ToolsViewModel: ObservableObject {
         
         let toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase = self.toggleToolFavoritedUseCase
         
-        Self.favoriteToolTasks[toolId] = nil
+        Self.favoriteToolTasks[toolId]?.cancel()
         
-        Self.favoriteToolTasks[toolId] = Task.detached(priority: .background) {
+        Self.favoriteToolTasks[toolId] = Task.detached {
                 
             _ = try await toggleToolFavoritedUseCase
                 .execute(toolId: toolId)

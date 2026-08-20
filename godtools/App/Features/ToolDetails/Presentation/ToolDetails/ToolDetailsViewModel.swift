@@ -332,11 +332,11 @@ extension ToolDetailsViewModel {
         let toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase = self.toggleToolFavoritedUseCase
         let toolId: String = self.toolId
         
-        Self.favoriteToolTasks[toolId] = nil
-        
         isFavorited = !isFavorited
+        
+        Self.favoriteToolTasks[toolId]?.cancel()
                 
-        Self.favoriteToolTasks[toolId] = Task.detached(priority: .background) {
+        Self.favoriteToolTasks[toolId] = Task.detached {
             
             _ = try await toggleToolFavoritedUseCase
                 .execute(toolId: toolId)
