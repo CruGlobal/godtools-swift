@@ -186,13 +186,15 @@ extension ToolTrainingViewModel {
     
     func viewLoaded() {
         
-        Task {
-            
-            let trainingTipCompleted = TrainingTipDomainModel(
-                trainingTipId: trainingTipId,
-                resourceId: resource.id,
-                languageId: language.id
-            )
+        let trainingTipCompleted = TrainingTipDomainModel(
+            trainingTipId: trainingTipId,
+            resourceId: resource.id,
+            languageId: language.id
+        )
+        
+        let setCompletedTrainingTipUseCase: SetCompletedTrainingTipUseCase = self.setCompletedTrainingTipUseCase
+        
+        Task.detached {
             
             try await setCompletedTrainingTipUseCase
                 .execute(tip: trainingTipCompleted)

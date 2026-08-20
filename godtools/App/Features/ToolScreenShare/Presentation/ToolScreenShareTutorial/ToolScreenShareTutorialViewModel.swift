@@ -141,7 +141,11 @@ final class ToolScreenShareTutorialViewModel: ObservableObject {
         
         didMarkTutorialAsViewed = true
         
-        Task {
+        let didViewToolScreenShareTutorialUseCase: DidViewToolScreenShareTutorialUseCase = self.didViewToolScreenShareTutorialUseCase
+        let toolId: String = self.toolId
+        
+        Task.detached {
+            
             try await didViewToolScreenShareTutorialUseCase
                 .execute(toolId: toolId)
         }

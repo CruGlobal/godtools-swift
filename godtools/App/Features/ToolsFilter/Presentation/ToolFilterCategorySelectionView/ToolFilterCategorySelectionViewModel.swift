@@ -143,7 +143,10 @@ extension ToolFilterCategorySelectionViewModel {
         
         selectedCategory = category
         
-        Task {
+        let selectedToolFilterCategoryUseCase: SelectedToolFilterCategoryUseCase = self.selectedToolFilterCategoryUseCase
+        
+        Task.detached {
+            
             try await selectedToolFilterCategoryUseCase
                 .execute(category: category)
         }
