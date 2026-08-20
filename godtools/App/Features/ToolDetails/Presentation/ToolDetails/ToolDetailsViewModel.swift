@@ -275,11 +275,6 @@ final class ToolDetailsViewModel: ObservableObject {
             )
         }
     }
-    
-    private static func cancelFavoriteToolTask(toolId: String) {
-        Self.favoriteToolTasks[toolId]?.cancel()
-        Self.favoriteToolTasks[toolId] = nil
-    }
 }
 
 // MARK: - Inputs
@@ -334,22 +329,17 @@ extension ToolDetailsViewModel {
     
     func toggleFavorited() {
         
+        let toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase = self.toggleToolFavoritedUseCase
         let toolId: String = self.toolId
         
-        Self.cancelFavoriteToolTask(toolId: toolId)
+        Self.favoriteToolTasks[toolId] = nil
         
-        Self.favoriteToolTasks[toolId] = Task { [weak self] in
+        isFavorited = !isFavorited
+                
+        Self.favoriteToolTasks[toolId] = Task.detached(priority: .background) {
             
-            guard let weakSelf = self else {
-                return
-            }
-            
-            let domainModel = try await weakSelf.toggleToolFavoritedUseCase
+            _ = try await toggleToolFavoritedUseCase
                 .execute(toolId: toolId)
-            
-            self?.isFavorited = domainModel.isFavorited
-            
-            Self.favoriteToolTasks[toolId] = nil
         }
     }
     
