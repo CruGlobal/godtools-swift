@@ -91,8 +91,9 @@ final class AppLanguagesViewModel: ObservableObject {
         
         getAppLanguagesTask?.cancel()
         
-        getAppLanguagesTask = Task {
-            appLanguagesList = try await getAppLanguagesListUseCase.execute(appLanguage: appLanguage)
+        getAppLanguagesTask = Task { [weak self] in
+            
+            self?.appLanguagesList = try await self?.getAppLanguagesListUseCase.execute(appLanguage: appLanguage) ?? Array()
         }
     }
 }

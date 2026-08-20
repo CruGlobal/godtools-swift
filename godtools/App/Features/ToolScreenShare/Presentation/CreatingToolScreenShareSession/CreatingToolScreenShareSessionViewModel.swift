@@ -128,7 +128,10 @@ extension CreatingToolScreenShareSessionViewModel {
     
     func pageViewed() {
         
-        Task {
+        let incrementUserCounterUseCase: IncrementUserCounterUseCase = self.incrementUserCounterUseCase
+        let toolId: String = self.toolId
+        
+        Task.detached {
             
             _ = try await incrementUserCounterUseCase.execute(interaction: .screenShare(tool: toolId))
         }

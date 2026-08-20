@@ -282,13 +282,17 @@ final class LessonsViewModel: ObservableObject {
         
         pullToRefreshLessonsTask?.cancel()
         
-        pullToRefreshLessonsTask = Task {
+        pullToRefreshLessonsTask = Task { [weak self] in
             
-            try await pullToRefreshLessonsUseCase
+            guard let weakSelf = self else {
+                return
+            }
+            
+            try await weakSelf.pullToRefreshLessonsUseCase
                 .execute(
-                    appLanguage: appLanguage,
-                    country: localizationSettings?.selectedCountry,
-                    filterLessonsByLanguage: lessonFilterLanguageSelection
+                    appLanguage: weakSelf.appLanguage,
+                    country: weakSelf.localizationSettings?.selectedCountry,
+                    filterLessonsByLanguage: weakSelf.lessonFilterLanguageSelection
                 )
         }
     }

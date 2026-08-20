@@ -26,6 +26,7 @@ final class AccountViewModel: ObservableObject {
     private let didPullToRefreshAccountUseCase: DidPullToRefreshAccountUseCase
     
     private var syncGlobalAnalyticsTask: Task<Void, Error>?
+    private var pullToRefreshTask: Task<Void, Error>?
     private var cancellables: Set<AnyCancellable> = Set()
         
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
@@ -129,9 +130,8 @@ final class AccountViewModel: ObservableObject {
             })
             .store(in: &cancellables)
         
-        Task {
-            
-            globalActivityIsEnabled = await getGlobalActivityEnabledUseCase.execute()
+        Task { [weak self] in
+            await self?.loadGlobalActivityEnabled()
         }
         
         refreshAccount()
@@ -141,6 +141,7 @@ final class AccountViewModel: ObservableObject {
         print("x deinit: \(type(of: self))")
         
         syncGlobalAnalyticsTask?.cancel()
+        pullToRefreshTask?.cancel()
     }
     
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
@@ -151,8 +152,9 @@ final class AccountViewModel: ObservableObject {
     
     private func trackSectionViewedAnalytics(screenName: String) {
                  
-        Task {
-            await trackScreenViewAnalyticsUseCase.execute(
+        Task { [weak self] in
+            
+            await self?.trackScreenViewAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: screenName,
                     siteSection: "account",
@@ -165,18 +167,26 @@ final class AccountViewModel: ObservableObject {
         }
     }
     
+    private func loadGlobalActivityEnabled() async {
+        globalActivityIsEnabled = await getGlobalActivityEnabledUseCase.execute()
+    }
+    
     private func syncGlobalAnalytics() {
         
         syncGlobalAnalyticsTask?.cancel()
         
-        syncGlobalAnalyticsTask = Task {
-            try await globalAnalyticsSync.sync(requestPriority: .high)
+        syncGlobalAnalyticsTask = Task { [weak self] in
+            try await self?.globalAnalyticsSync.sync(requestPriority: .high)
         }
     }
     
     private func refreshAccount() {
-        Task {
-            try await didPullToRefreshAccountUseCase.execute()
+        
+        pullToRefreshTask?.cancel()
+        
+        pullToRefreshTask = Task { [weak self] in
+            
+            try await self?.didPullToRefreshAccountUseCase.execute()
         }
     }
 }

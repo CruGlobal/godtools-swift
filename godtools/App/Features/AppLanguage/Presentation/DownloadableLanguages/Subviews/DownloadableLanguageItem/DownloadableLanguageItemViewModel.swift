@@ -107,7 +107,11 @@ extension DownloadableLanguageItemViewModel {
         
         recycleState.downloadState = .notDownloaded
         
-        Task {
+        let removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase = self.removeDownloadedToolLanguageUseCase
+        let languageId: String = self.languageId
+        
+        Task.detached {
+            
             try await removeDownloadedToolLanguageUseCase.execute(languageId: languageId)
         }
     }

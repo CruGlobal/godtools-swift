@@ -249,7 +249,9 @@ extension AllYourFavoriteToolsViewModel {
             
             let newPosition: Int = index < destination ? destination - 1 : destination
             
-            Task {
+            let reorderFavoritedToolUseCase: ReorderFavoritedToolUseCase = self.reorderFavoritedToolUseCase
+            
+            Task.detached {
                 
                 try await reorderFavoritedToolUseCase
                     .execute(

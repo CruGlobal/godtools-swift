@@ -95,11 +95,11 @@ final class ToolsViewModel: ObservableObject {
         
         pullToRefreshTools()
         
-        Task {
+        Task { [weak self] in
             
             let favoritingToolMessageDisabled: Bool = await favoritingToolMessageCache.favoritingToolMessageDisabled
             
-            showsFavoritingToolBanner = !favoritingToolMessageDisabled
+            self?.showsFavoritingToolBanner = !favoritingToolMessageDisabled
         }
         
         if !GodToolsApp.showsPersonalization {
@@ -371,13 +371,17 @@ final class ToolsViewModel: ObservableObject {
         
         pullToRefreshToolsTask?.cancel()
         
-        pullToRefreshToolsTask = Task {
+        pullToRefreshToolsTask = Task { [weak self] in
+
+            guard let weakSelf = self else {
+                return
+            }
             
-            try await pullToRefreshToolsUseCase
+            try await weakSelf.pullToRefreshToolsUseCase
                 .execute(
-                    appLanguage: appLanguage,
-                    country: localizationSettings?.selectedCountry,
-                    filterToolsByLanguage: toolFilterLanguageSelection
+                    appLanguage: weakSelf.appLanguage,
+                    country: weakSelf.localizationSettings?.selectedCountry,
+                    filterToolsByLanguage: weakSelf.toolFilterLanguageSelection
                 )
         }
     }
@@ -403,7 +407,10 @@ extension ToolsViewModel {
             showsFavoritingToolBanner = false
         }
         
-        Task {
+        let favoritingToolMessageCache: FavoritingToolMessageCache = self.favoritingToolMessageCache
+        
+        Task.detached {
+            
             await favoritingToolMessageCache.disableFavoritingToolMessage()
         }
     }

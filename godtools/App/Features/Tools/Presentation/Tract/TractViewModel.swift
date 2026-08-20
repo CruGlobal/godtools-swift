@@ -143,15 +143,19 @@ final class TractViewModel: MobileContentRendererViewModel {
     
     private func reloadRemoteShareIsActive() {
         
-        Task {
+        Task { [weak self] in
             
-            let publisherSubscriberChannelIsCreated: Bool = await tractRemoteSharePublisher.subscriberChannelCreated
-            let isSubscribedToChannel: Bool = await tractRemoteShareSubscriber.isSubscribedToChannel
+            guard let weakSelf = self else {
+                return
+            }
+            
+            let publisherSubscriberChannelIsCreated: Bool = await weakSelf.tractRemoteSharePublisher.subscriberChannelCreated
+            let isSubscribedToChannel: Bool = await weakSelf.tractRemoteShareSubscriber.isSubscribedToChannel
             let remoteShareIsActive: Bool = publisherSubscriberChannelIsCreated || isSubscribedToChannel
             
-            self.remoteShareIsActive = remoteShareIsActive
+            weakSelf.remoteShareIsActive = remoteShareIsActive
             
-            hidesRemoteShareIsActive = !remoteShareIsActive
+            weakSelf.hidesRemoteShareIsActive = !remoteShareIsActive
         }
     }
     
@@ -187,9 +191,13 @@ final class TractViewModel: MobileContentRendererViewModel {
         
         subscribeToLiveShareStreamIfNeeded()
         
-        Task {
+        let resourceViewsService: ResourceViewsService = self.resourceViewsService
+        let resourceId: String = resource.id
+        
+        Task.detached {
+            
             try await resourceViewsService.postNewResourceView(
-                resourceId: resource.id,
+                resourceId: resourceId,
                 requestPriority: .medium
             )
         }
@@ -414,9 +422,9 @@ extension TractViewModel {
             }
         }
         
-        Task {
+        Task { [weak self] in
             
-            try await tractRemoteShareSubscriber
+            try await self?.tractRemoteShareSubscriber
                 .subscribe(channel: channel)
         }
     }
@@ -568,22 +576,24 @@ extension TractViewModel {
     
     func sendRemoteShareNavigationEvent(page: Int, pagePositions: TractPagePositions) {
         
-        Task {
+        let event = TractRemoteSharePublisherNavigationEvent(
+            card: pagePositions.cardPosition,
+            locale: languages[safe: selectedLanguageIndex]?.localeId,
+            page: page,
+            parallelLocale: languages[safe: 1]?.localeId,
+            primaryLocale: languages[safe: 0]?.localeId,
+            tool: resource.abbreviation
+        )
         
-            guard await tractRemoteSharePublisher.subscriberChannelCreated else {
+        Task { [weak self] in
+        
+            let subscriberCreated: Bool = await self?.tractRemoteSharePublisher.subscriberChannelCreated ?? false
+            
+            guard subscriberCreated else {
                 return
             }
             
-            let event = TractRemoteSharePublisherNavigationEvent(
-                card: pagePositions.cardPosition,
-                locale: languages[safe: selectedLanguageIndex]?.localeId,
-                page: page,
-                parallelLocale: languages[safe: 1]?.localeId,
-                primaryLocale: languages[safe: 0]?.localeId,
-                tool: resource.abbreviation
-            )
-            
-            await tractRemoteSharePublisher.sendNavigationEvent(event: event)
+            await self?.tractRemoteSharePublisher.sendNavigationEvent(event: event)
         }
     }
 }
