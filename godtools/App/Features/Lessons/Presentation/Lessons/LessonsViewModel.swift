@@ -74,6 +74,8 @@ final class LessonsViewModel: ObservableObject {
             selectedToggle = .all
         }
         
+        pullToRefreshLessons()
+        
         getCurrentAppLanguageUseCase
             .execute()
             .receive(on: DispatchQueue.main)
@@ -275,6 +277,21 @@ final class LessonsViewModel: ObservableObject {
             PersonalizationToggleOption(title: strings.allLessonsToggleTitle, selection: .all, buttonAccessibility: .allLessons)
         ]
     }
+    
+    private func pullToRefreshLessons() {
+        
+        pullToRefreshLessonsTask?.cancel()
+        
+        pullToRefreshLessonsTask = Task {
+            
+            try await pullToRefreshLessonsUseCase
+                .execute(
+                    appLanguage: appLanguage,
+                    country: localizationSettings?.selectedCountry,
+                    filterLessonsByLanguage: lessonFilterLanguageSelection
+                )
+        }
+    }
 }
 
 // MARK: - Inputs
@@ -291,16 +308,7 @@ extension LessonsViewModel {
     }
     
     func pullToRefresh() {
-        
-        pullToRefreshLessonsTask = Task {
-            
-            try await pullToRefreshLessonsUseCase
-                .execute(
-                    appLanguage: appLanguage,
-                    country: localizationSettings?.selectedCountry,
-                    filterLessonsByLanguage: lessonFilterLanguageSelection
-                )
-        }
+        pullToRefreshLessons()
     }
     
     func pageViewed() {
