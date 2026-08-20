@@ -16,19 +16,16 @@ final class PersonalizedToolsRepository: Sendable {
     private let api: PersonalizedToolsApiInterface
     private let cache: PersonalizedToolsCache
     private let resourcesRepository: ResourcesRepository
-    private let sync: PersonalizedToolsSync
     
     init(
         api: PersonalizedToolsApiInterface,
         cache: PersonalizedToolsCache,
-        resourcesRepository: ResourcesRepository,
-        sync: PersonalizedToolsSync
+        resourcesRepository: ResourcesRepository
     ) {
 
         self.api = api
         self.cache = cache
         self.resourcesRepository = resourcesRepository
-        self.sync = sync
     }
 
     @MainActor func getPersonalizedToolsChanged(
@@ -38,15 +35,6 @@ final class PersonalizedToolsRepository: Sendable {
         forceNewSync: Bool = false
     ) -> AnyPublisher<Void, Error> {
         
-        Task {
-            try await sync.syncPersonalizedTools(
-                requestPriority: requestPriority,
-                country: country,
-                language: language,
-                forceNewSync: forceNewSync
-            )
-        }
-
         return cache
             .persistence
             .observeCollectionChangesPublisher()

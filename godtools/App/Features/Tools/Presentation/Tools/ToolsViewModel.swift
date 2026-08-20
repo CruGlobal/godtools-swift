@@ -93,6 +93,8 @@ final class ToolsViewModel: ObservableObject {
         self.getToolBannerUseCase = getToolBannerUseCase
         self.dataCache = dataCache
         
+        pullToRefreshTools()
+        
         Task {
             
             let favoritingToolMessageDisabled: Bool = await favoritingToolMessageCache.favoritingToolMessageDisabled
@@ -362,13 +364,10 @@ final class ToolsViewModel: ObservableObject {
             PersonalizationToggleOption(title: strings.allToolsToggleTitle, selection: .all, buttonAccessibility: .allTools)
         ]
     }
-}
-
-// MARK: - Inputs
-
-extension ToolsViewModel {
     
-    func pullToRefresh() {
+    private func pullToRefreshTools() {
+        
+        pullToRefreshToolsTask?.cancel()
         
         pullToRefreshToolsTask = Task {
             
@@ -379,6 +378,16 @@ extension ToolsViewModel {
                     filterToolsByLanguage: toolFilterLanguageSelection
                 )
         }
+    }
+}
+
+// MARK: - Inputs
+
+extension ToolsViewModel {
+    
+    func pullToRefresh() {
+        
+        pullToRefreshTools()
     }
     
     func pageViewed() {
