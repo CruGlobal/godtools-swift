@@ -47,18 +47,19 @@ extension ShareToolScreenShareSessionViewModel {
     
     func pageViewed() {
         
+        let analyticsProperties = AnalyticsProperties(
+            screenName: "",
+            siteSection: "",
+            siteSubSection: "",
+            appLanguage: nil,
+            contentLanguage: nil,
+            secondaryContentLanguage: nil
+        )
         let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = self.trackActionAnalyticsUseCase
         
         Task.detached {
             await trackActionAnalyticsUseCase.execute(
-                properties: AnalyticsProperties(
-                    screenName: "",
-                    siteSection: "",
-                    siteSubSection: "",
-                    appLanguage: nil,
-                    contentLanguage: nil,
-                    secondaryContentLanguage: nil
-                ),
+                properties: analyticsProperties,
                 actionName: AnalyticsConstants.ActionNames.shareScreenEngaged,
                 data: [
                     AnalyticsConstants.Keys.shareScreenEngagedCountKey: 1
