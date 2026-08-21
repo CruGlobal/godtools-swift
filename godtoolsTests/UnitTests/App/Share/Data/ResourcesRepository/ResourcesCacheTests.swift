@@ -133,7 +133,7 @@ struct ResourcesCacheTests {
 
     @available(iOS 17.4, *)
     @Test
-    func getResourceByAbbreviationExists() async throws {
+    func getResourceByAbbreviationExists() throws {
 
         let cache = try getCache()
 
@@ -144,7 +144,7 @@ struct ResourcesCacheTests {
 
     @available(iOS 17.4, *)
     @Test
-    func getResourceByAbbreviationIsNil() async throws {
+    func getResourceByAbbreviationIsNil() throws {
 
         let cache = try getCache()
 
@@ -179,7 +179,7 @@ struct ResourcesCacheTests {
 
     @available(iOS 17.4, *)
     @Test(arguments: ResourcesCacheTests.resourcesByLanguageCodeArguments)
-    func getResourcesByLanguageCodeAndResourceTypes(argument: ResourcesByLanguageCodeArgument) async throws {
+    func getResourcesByLanguageCodeAndResourceTypes(argument: ResourcesByLanguageCodeArgument) throws {
 
         let cache = try getCache()
 
@@ -193,7 +193,7 @@ struct ResourcesCacheTests {
 
     @available(iOS 17.4, *)
     @Test(arguments: ResourcesCacheTests.resourcesByLanguageCodeArguments)
-    func getNumberOfResourcesAvailableByLanguageCodeAndResourceTypes(argument: ResourcesByLanguageCodeArgument) async throws {
+    func getNumberOfResourcesAvailableByLanguageCodeAndResourceTypes(argument: ResourcesByLanguageCodeArgument) throws {
 
         let cache = try getCache()
 
@@ -233,7 +233,7 @@ struct ResourcesCacheTests {
         LessonsByLanguageArgument(languageCode: .spanish, expectedLessonIds: ["lesson_1", "lesson_3"]),
         LessonsByLanguageArgument(languageCode: .vietnamese, expectedLessonIds: ["lesson_4"])
     ])
-    func getLessonsCount(argument: LessonsByLanguageArgument) async throws {
+    func getLessonsCount(argument: LessonsByLanguageArgument) throws {
 
         let cache = try getCache()
 
@@ -268,7 +268,7 @@ struct ResourcesCacheTests {
 
     @available(iOS 17.4, *)
     @Test
-    func getLessonsSupportedLanguageIds() async throws {
+    func getLessonsSupportedLanguageIds() throws {
 
         let cache = try getCache()
 
@@ -285,7 +285,7 @@ struct ResourcesCacheTests {
 
     @available(iOS 17.4, *)
     @Test
-    func getSpotlightToolsExcludesLessonsAndHiddenTools() async throws {
+    func getSpotlightToolsExcludesLessonsAndHiddenTools() throws {
 
         let cache = try getCache()
 
@@ -296,7 +296,7 @@ struct ResourcesCacheTests {
 
     @available(iOS 17.4, *)
     @Test
-    func getSpotlightToolsUnsorted() async throws {
+    func getSpotlightToolsUnsorted() throws {
 
         let cache = try getCache()
 
@@ -309,7 +309,7 @@ struct ResourcesCacheTests {
 
     @available(iOS 17.4, *)
     @Test
-    func getAllToolsListExcludesLessonsMetatoolsAndHiddenTools() async throws {
+    func getAllToolsListExcludesLessonsMetatoolsAndHiddenTools() throws {
 
         let cache = try getCache()
 
@@ -320,7 +320,7 @@ struct ResourcesCacheTests {
 
     @available(iOS 17.4, *)
     @Test
-    func getAllToolsListFilteredByCategoryAndLanguage() async throws {
+    func getAllToolsListFilteredByCategoryAndLanguage() throws {
 
         let cache = try getCache()
 
@@ -337,7 +337,7 @@ struct ResourcesCacheTests {
 
     @available(iOS 17.4, *)
     @Test
-    func getAllToolCategoryIds() async throws {
+    func getAllToolCategoryIds() throws {
 
         let cache = try getCache()
 
@@ -348,7 +348,7 @@ struct ResourcesCacheTests {
 
     @available(iOS 17.4, *)
     @Test
-    func getAllToolLanguageIds() async throws {
+    func getAllToolLanguageIds() throws {
 
         let cache = try getCache()
 

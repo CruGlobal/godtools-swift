@@ -45,7 +45,7 @@ struct LocalizationSettingsCountriesRepositoryTests {
             )
         ]
     )
-    func countriesAreReturnedWithCorrectTranslations(argument: TranslationTestArgument) async {
+    func countriesAreReturnedWithCorrectTranslations(argument: TranslationTestArgument) {
 
         let repository = LocalizationSettingsCountriesRepository()
 
@@ -75,7 +75,7 @@ struct LocalizationSettingsCountriesRepositoryTests {
         Then: Countries should be sorted alphabetically by their name in the app language
         """
     )
-    func countriesAreSortedAlphabeticallyByAppLanguage() async {
+    func countriesAreSortedAlphabeticallyByAppLanguage() {
 
         let repository = LocalizationSettingsCountriesRepository()
         let appLanguage: AppLanguageDomainModel = "en"
@@ -97,7 +97,7 @@ struct LocalizationSettingsCountriesRepositoryTests {
         Then: Only valid 2-letter ISO country codes should be included
         """
     )
-    func onlyValidTwoLetterIsoCountryCodesAreReturned() async {
+    func onlyValidTwoLetterIsoCountryCodesAreReturned() {
 
         let repository = LocalizationSettingsCountriesRepository()
         let appLanguage: AppLanguageDomainModel = "en"
@@ -120,7 +120,7 @@ struct LocalizationSettingsCountriesRepositoryTests {
         Then: All countries should have non-empty translations in both app language and own language
         """
     )
-    func allCountriesHaveNonEmptyTranslations() async {
+    func allCountriesHaveNonEmptyTranslations() {
 
         let repository = LocalizationSettingsCountriesRepository()
         let appLanguage: AppLanguageDomainModel = "en"
@@ -159,7 +159,7 @@ struct LocalizationSettingsCountriesRepositoryTests {
             AuthoritativeEndonymTestArgument(isoCode: "CF", expectedEndonym: "Ködörösêse tî Bêafrîka")
         ]
     )
-    func countriesUseAuthoritativeEndonymsFromStaticMapping(argument: AuthoritativeEndonymTestArgument) async {
+    func countriesUseAuthoritativeEndonymsFromStaticMapping(argument: AuthoritativeEndonymTestArgument) {
 
         let repository = LocalizationSettingsCountriesRepository()
         let appLanguage: AppLanguageDomainModel = "en"

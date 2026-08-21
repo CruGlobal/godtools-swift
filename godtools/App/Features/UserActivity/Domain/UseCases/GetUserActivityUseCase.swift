@@ -49,7 +49,7 @@ final class GetUserActivityUseCase: Sendable {
         
         let counters: [UserCounterDataModel] = try await userCounterRepository.getCachedCounters()
         
-        return await getUserActivityDomainModel(
+        return getUserActivityDomainModel(
             userCounters: counters,
             translatedInAppLanguage: appLanguage
         )
@@ -58,7 +58,7 @@ final class GetUserActivityUseCase: Sendable {
     private func getUserActivityDomainModel(
         userCounters: [UserCounterDataModel],
         translatedInAppLanguage: AppLanguageDomainModel
-    ) async -> UserActivityDomainModel {
+    ) -> UserActivityDomainModel {
 
         let domainModels: [UserCounterDomainModel] = getAllUserCounterDomainModels(userCounters: userCounters)
 

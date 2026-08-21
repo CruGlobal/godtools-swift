@@ -109,12 +109,10 @@ final class LessonFilterLanguageSelectionViewModel: ObservableObject {
             $allLanguages
         )
         .map { (searchText: String, languages: [LessonFilterLanguageDomainModel]) in
-            return AnyPublisher() {
-                await searchLessonFilterLanguagesUseCase
-                    .execute(searchText: searchText, lessonFilterLanguages: languages)
-            }
+            
+            searchLessonFilterLanguagesUseCase
+                .execute(searchText: searchText, lessonFilterLanguages: languages)
         }
-        .switchToLatest()
         .receive(on: DispatchQueue.main)
         .assign(to: &$languageSearchResults)
     }

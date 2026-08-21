@@ -17,7 +17,7 @@ struct LaunchCountCacheTests {
 
     @available(iOS 17.4, *)
     @Test
-    func getLaunchCountIsZeroWhenLaunchCountIsNotStored() async throws {
+    func getLaunchCountIsZeroWhenLaunchCountIsNotStored() throws {
 
         let cache = try getCache()
 

@@ -24,7 +24,7 @@ struct StringWithLocaleCountTests {
             TestArgument(format: "count - %d", localeId: "en", count: 0, expectedFormat: "count - 0")
         ]
     )
-    func stringWithCountIsFormattedCorrectly(argument: TestArgument) async {
+    func stringWithCountIsFormattedCorrectly(argument: TestArgument) {
         
         let value: String = StringWithLocaleCount()
             .getString(

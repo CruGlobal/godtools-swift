@@ -57,7 +57,7 @@ struct DeepLinkingParserManifestUrlTests {
             )
         ]
     )
-    func findsDeepLinkParserWhenSchemeAndHostAreSupported(argument: TestArgument) async {
+    func findsDeepLinkParserWhenSchemeAndHostAreSupported(argument: TestArgument) {
         
         let deepLinkingParserUrlManifest = DeepLinkingParserManifestUrl(
             scheme: argument.scheme,
@@ -121,7 +121,7 @@ struct DeepLinkingParserManifestUrlTests {
             )
         ]
     )
-    func returnsNullDeepLinkParserWhenEitherSchemeOrHostAreEmptyStrings(argument: TestArgument) async {
+    func returnsNullDeepLinkParserWhenEitherSchemeOrHostAreEmptyStrings(argument: TestArgument) {
         
         let deepLinkingParserUrlManifest = DeepLinkingParserManifestUrl(
             scheme: argument.scheme,
@@ -169,7 +169,7 @@ struct DeepLinkingParserManifestUrlTests {
             )
         ]
     )
-    func returnsNullDeepLinkParserWhenEitherSchemeOrHostAreNotSupported(argument: TestArgument) async {
+    func returnsNullDeepLinkParserWhenEitherSchemeOrHostAreNotSupported(argument: TestArgument) {
         
         let deepLinkingParserUrlManifest = DeepLinkingParserManifestUrl(
             scheme: argument.scheme,
@@ -217,7 +217,7 @@ struct DeepLinkingParserManifestUrlTests {
             )
         ]
     )
-    func findsDeepLinkParserWhenPathIsNullAndIncomingDeepLinkUrlHasAPath(argument: TestArgument) async {
+    func findsDeepLinkParserWhenPathIsNullAndIncomingDeepLinkUrlHasAPath(argument: TestArgument) {
         
         let deepLinkingParserUrlManifest = DeepLinkingParserManifestUrl(
             scheme: argument.scheme,
@@ -257,7 +257,7 @@ struct DeepLinkingParserManifestUrlTests {
             )
         ]
     )
-    func returnsDeepLinkParserWhenPathIsEmptyAndIncomingDeepLinkUrlPathIsEmpty(argument: TestArgument) async {
+    func returnsDeepLinkParserWhenPathIsEmptyAndIncomingDeepLinkUrlPathIsEmpty(argument: TestArgument) {
         
         let deepLinkingParserUrlManifest = DeepLinkingParserManifestUrl(
             scheme: argument.scheme,
@@ -297,7 +297,7 @@ struct DeepLinkingParserManifestUrlTests {
             )
         ]
     )
-    func returnsNullDeepLinkParserWhenPathIsEmptyAndIncomingDeepLinkUrlHasAPath(argument: TestArgument) async {
+    func returnsNullDeepLinkParserWhenPathIsEmptyAndIncomingDeepLinkUrlHasAPath(argument: TestArgument) {
         
         let deepLinkingParserUrlManifest = DeepLinkingParserManifestUrl(
             scheme: argument.scheme,
@@ -337,7 +337,7 @@ struct DeepLinkingParserManifestUrlTests {
             )
         ]
     )
-    func returnsNullDeepLinkParserWhenPathIsLargerThanIncomingDeepLinkUrlPath(argument: TestArgument) async {
+    func returnsNullDeepLinkParserWhenPathIsLargerThanIncomingDeepLinkUrlPath(argument: TestArgument) {
         
         let deepLinkingParserUrlManifest = DeepLinkingParserManifestUrl(
             scheme: argument.scheme,
@@ -377,7 +377,7 @@ struct DeepLinkingParserManifestUrlTests {
             )
         ]
     )
-    func returnsNullDeepLinkParserWhenPathDoesNotMatchIncomingDeepLinkUrlPath(argument: TestArgument) async {
+    func returnsNullDeepLinkParserWhenPathDoesNotMatchIncomingDeepLinkUrlPath(argument: TestArgument) {
         
         let deepLinkingParserUrlManifest = DeepLinkingParserManifestUrl(
             scheme: argument.scheme,
@@ -449,7 +449,7 @@ struct DeepLinkingParserManifestUrlTests {
             )
         ]
     )
-    func returnsDeepLinkParserWhenManifestHasAPathAndIncomingDeepLinkUrlHasAPath(argument: TestArgument) async {
+    func returnsDeepLinkParserWhenManifestHasAPathAndIncomingDeepLinkUrlHasAPath(argument: TestArgument) {
         
         let deepLinkingParserUrlManifest = DeepLinkingParserManifestUrl(
             scheme: argument.scheme,
