@@ -24,7 +24,7 @@ final class LocalizationLanguageName: LocalizationLanguageNameInterface {
     func getLanguageName(
         languageId: BCP47LanguageIdentifier,
         translatedInLanguage: BCP47LanguageIdentifier
-    ) async -> String? {
+    ) -> String? {
         
         guard LocalizationLanguageName.supportedLanguageIds.contains(languageId) else {
             return nil
