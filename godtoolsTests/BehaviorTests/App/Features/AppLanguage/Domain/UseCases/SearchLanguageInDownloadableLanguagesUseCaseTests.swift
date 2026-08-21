@@ -18,12 +18,12 @@ struct SearchLanguageInDownloadableLanguagesUseCaseTests {
         Then: I should see all languages that contain a letter 'c' whether it be in the language translated in own language or language translated in app language regardless of placement and case sensitivity.
         """
     )
-    func searchingLanguagesWithSingleLetterSearchString() async {
+    func searchingLanguagesWithSingleLetterSearchString() {
         
         let searchLanguageInDownloadableLanguagesUseCase: SearchLanguageInDownloadableLanguagesUseCase = getSearchLanguageInDownloadableLanguagesUseCase()
         let downloadableLanguagesList: [DownloadableLanguageListItemDomainModel] = getDownloadableLanguagesList()
         
-        let searchedDownloadableLanguages: [DownloadableLanguageListItemDomainModel] = await searchLanguageInDownloadableLanguagesUseCase
+        let searchedDownloadableLanguages: [DownloadableLanguageListItemDomainModel] = searchLanguageInDownloadableLanguagesUseCase
             .execute(searchText: "c", downloadableLanguages: downloadableLanguagesList)
 
         let searchedLanguages: [String] = searchedDownloadableLanguages.map({$0.languageId})
@@ -39,12 +39,12 @@ struct SearchLanguageInDownloadableLanguagesUseCaseTests {
         Then: I should see all languages that contain 'Ber' whether it be in the language translated in own language or language translated in app language regardless of placement and case sensitivity.
         """
     )
-    func searchingLanguagesWithMultiLetterSearchString() async {
+    func searchingLanguagesWithMultiLetterSearchString() {
         
         let searchLanguageInDownloadableLanguagesUseCase: SearchLanguageInDownloadableLanguagesUseCase = getSearchLanguageInDownloadableLanguagesUseCase()
         let downloadableLanguagesList: [DownloadableLanguageListItemDomainModel] = getDownloadableLanguagesList()
                 
-        let searchedDownloadableLanguages: [DownloadableLanguageListItemDomainModel] = await searchLanguageInDownloadableLanguagesUseCase
+        let searchedDownloadableLanguages: [DownloadableLanguageListItemDomainModel] = searchLanguageInDownloadableLanguagesUseCase
             .execute(searchText: "Ber", downloadableLanguages: downloadableLanguagesList)
         
         let searchedLanguages: [String] = searchedDownloadableLanguages.map({$0.languageId})
