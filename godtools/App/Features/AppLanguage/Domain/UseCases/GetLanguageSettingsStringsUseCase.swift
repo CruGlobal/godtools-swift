@@ -25,7 +25,7 @@ final class GetLanguageSettingsStringsUseCase: Sendable {
         self.appLanguagesRepository = appLanguagesRepository
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) async -> LanguageSettingsStringsDomainModel {
+    func execute(appLanguage: AppLanguageDomainModel) -> LanguageSettingsStringsDomainModel {
         
         let localeId: String = appLanguage
 
@@ -74,7 +74,7 @@ final class GetLanguageSettingsStringsUseCase: Sendable {
             appInterfaceLanguageTitle: strings[appInterfaceLanguageTitleKey] ?? "",
             numberOfAppLanguagesAvailable: numberOfAppLanguagesInterfaceString,
             setAppLanguageMessage: strings[setAppLanguageMessageKey] ?? "",
-            chooseAppLanguageButtonTitle: await getTranslatedLanguageName.getLanguageName(language: appLanguage, translatedInLanguage: appLanguage),
+            chooseAppLanguageButtonTitle: getTranslatedLanguageName.getLanguageName(language: appLanguage, translatedInLanguage: appLanguage),
             toolLanguagesAvailableOfflineTitle: strings[toolLanguagesAvailableOfflineTitleKey] ?? "",
             downloadToolsForOfflineMessage: strings[downloadToolsForOfflineMessageKey] ?? "",
             editDownloadedLanguagesButtonTitle: strings[editDownloadedLanguagesButtonTitleKey] ?? ""

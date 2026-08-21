@@ -53,7 +53,7 @@ final class GetToolsListItems: Sendable {
             let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel
 
             if let language = languageForAvailabilityTextModel {
-                toolLanguageAvailability = await self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: tool, language: language, translateInLanguage: appLanguage)
+                toolLanguageAvailability = self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: tool, language: language, translateInLanguage: appLanguage)
             }
             else {
                 toolLanguageAvailability = ToolLanguageAvailabilityDomainModel(availabilityString: "", isAvailable: false)
@@ -65,9 +65,9 @@ final class GetToolsListItems: Sendable {
                     analyticsToolAbbreviation: tool.abbreviation,
                     dataModelId: tool.id,
                     bannerImageId: tool.attrBanner,
-                    name: self.getTranslatedToolName.getToolName(resource: tool, translateInLanguage: appLanguage),
-                    category: await self.getTranslatedToolCategory.getTranslatedCategory(resource: tool, translateInLanguage: appLanguage),
-                    isFavorited: self.favoritedResourcesRepository.getResourceIsFavorited(id: tool.id),
+                    name: getTranslatedToolName.getToolName(resource: tool, translateInLanguage: appLanguage),
+                    category: await getTranslatedToolCategory.getTranslatedCategory(resource: tool, translateInLanguage: appLanguage),
+                    isFavorited: favoritedResourcesRepository.getResourceIsFavorited(id: tool.id),
                     languageAvailability: toolLanguageAvailability
                 )
             )

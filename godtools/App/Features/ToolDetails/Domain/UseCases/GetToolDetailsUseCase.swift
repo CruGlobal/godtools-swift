@@ -113,7 +113,7 @@ final class GetToolDetailsUseCase: Sendable {
         for languageDataModel in languagesDataModels {
 
             languageNamesTranslatedInToolLanguage.append(
-                await getTranslatedLanguageName.getLanguageName(language: languageDataModel, translatedInLanguage: translateInLanguage)
+                getTranslatedLanguageName.getLanguageName(language: languageDataModel, translatedInLanguage: translateInLanguage)
             )
         }
         
@@ -136,12 +136,12 @@ final class GetToolDetailsUseCase: Sendable {
         let resourceVariants: [ResourceDataModel] = try await resourcesRepository
             .getResourceVariants(resourceId: metaToolId)
         
-        let toolPrimaryLanguageName: String = await getTranslatedLanguageName.getLanguageName(language: toolPrimaryLanguage, translatedInLanguage: translateInLanguage)
+        let toolPrimaryLanguageName: String = getTranslatedLanguageName.getLanguageName(language: toolPrimaryLanguage, translatedInLanguage: translateInLanguage)
         
         let toolParallelLanguageName: String?
         
         if let toolParallelLanguage = toolParallelLanguage {
-            toolParallelLanguageName = await getTranslatedLanguageName.getLanguageName(language: toolParallelLanguage, translatedInLanguage: translateInLanguage)
+            toolParallelLanguageName = getTranslatedLanguageName.getLanguageName(language: toolParallelLanguage, translatedInLanguage: translateInLanguage)
         }
         else {
             toolParallelLanguageName = nil

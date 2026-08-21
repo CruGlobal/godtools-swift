@@ -34,8 +34,8 @@ final class GetToolSettingsUseCase: Sendable {
     ) async -> ToolSettingsDomainModel {
 
         let hasTips: Bool = await getHasTips(toolId: toolId, toolLanguageId: toolLanguageId)
-        let primaryLanguage: ToolSettingsToolLanguageDomainModel? = await getLanguage(languageId: toolPrimaryLanguageId, translateInLanguage: appLanguage)
-        let parallelLanguage: ToolSettingsToolLanguageDomainModel? = await getLanguage(languageId: toolParallelLanguageId, translateInLanguage: appLanguage)
+        let primaryLanguage: ToolSettingsToolLanguageDomainModel? = getLanguage(languageId: toolPrimaryLanguageId, translateInLanguage: appLanguage)
+        let parallelLanguage: ToolSettingsToolLanguageDomainModel? = getLanguage(languageId: toolParallelLanguageId, translateInLanguage: appLanguage)
         
         return ToolSettingsDomainModel(
             hasTips: hasTips,
@@ -64,13 +64,13 @@ final class GetToolSettingsUseCase: Sendable {
         }
     }
     
-    private func getLanguage(languageId: String?, translateInLanguage: AppLanguageDomainModel) async -> ToolSettingsToolLanguageDomainModel? {
+    private func getLanguage(languageId: String?, translateInLanguage: AppLanguageDomainModel) -> ToolSettingsToolLanguageDomainModel? {
         
         guard let languageId = languageId, let language = languagesRepository.getLanguageById(id: languageId) else {
             return nil
         }
         
-        let languageName: String = await getTranslatedLanguageName.getLanguageName(
+        let languageName: String = getTranslatedLanguageName.getLanguageName(
             language: language,
             translatedInLanguage: translateInLanguage
         )

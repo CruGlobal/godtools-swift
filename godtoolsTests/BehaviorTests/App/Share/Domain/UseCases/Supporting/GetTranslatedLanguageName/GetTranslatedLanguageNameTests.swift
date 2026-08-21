@@ -83,7 +83,7 @@ struct GetTranslatedLanguageNameTests {
             scriptCode: nil
         )
         
-        let translation: String? = await Self.getTranslatedLanguageName.getLanguageName(
+        let translation: String? = Self.getTranslatedLanguageName.getLanguageName(
             language: russianLanguage,
             translatedInLanguage: translateInLanguage
         )
@@ -111,7 +111,7 @@ struct GetTranslatedLanguageNameTests {
             scriptCode: nil
         )
         
-        let translation: String? = await Self.getTranslatedLanguageName.getLanguageName(
+        let translation: String? = Self.getTranslatedLanguageName.getLanguageName(
             language: russianLanguage,
             translatedInLanguage: LanguageCodeDomainModel.spanish.rawValue
         )
@@ -144,7 +144,7 @@ struct GetTranslatedLanguageNameTests {
             scriptCode: nil
         )
         
-        let translation: String? = await Self.getTranslatedLanguageName.getLanguageName(
+        let translation: String? = Self.getTranslatedLanguageName.getLanguageName(
             language: frenchLanguage,
             translatedInLanguage: LanguageCodeDomainModel.spanish.rawValue
         )
@@ -175,7 +175,7 @@ struct GetTranslatedLanguageNameTests {
             scriptCode: nil
         )
         
-        let translation: String? = await Self.getTranslatedLanguageName.getLanguageName(
+        let translation: String? = Self.getTranslatedLanguageName.getLanguageName(
             language: frenchLanguage,
             translatedInLanguage: LanguageCodeDomainModel.czech.rawValue
         )
@@ -209,7 +209,7 @@ struct GetTranslatedLanguageNameTests {
         let translationFromAppBundle: String? = Self.localizableStrings[LanguageCodeDomainModel.arabic.value]?[LanguageCodeDomainModel.french.value]
         let translationFromLocale: String? = Self.languageNames[LanguageCodeDomainModel.french.value]?[LanguageCodeDomainModel.arabic.value]
         
-        let translation: String? = await Self.getTranslatedLanguageName.getLanguageName(
+        let translation: String? = Self.getTranslatedLanguageName.getLanguageName(
             language: frenchLanguage,
             translatedInLanguage: LanguageCodeDomainModel.arabic.rawValue
         )
