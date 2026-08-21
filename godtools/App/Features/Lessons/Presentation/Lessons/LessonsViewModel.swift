@@ -224,6 +224,14 @@ final class LessonsViewModel: ObservableObject {
             contentLanguage: nil,
             secondaryContentLanguage: nil
         )
+        let actionAnalyticsProperties = AnalyticsProperties(
+            screenName: "",
+            siteSection: "",
+            siteSubSection: "",
+            appLanguage: nil,
+            contentLanguage: nil,
+            secondaryContentLanguage: nil
+        )
         let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase = self.trackScreenViewAnalyticsUseCase
         let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = self.trackActionAnalyticsUseCase
         
@@ -235,14 +243,7 @@ final class LessonsViewModel: ObservableObject {
         
         Task.detached {
             await trackActionAnalyticsUseCase.execute(
-                properties: AnalyticsProperties(
-                    screenName: "",
-                    siteSection: "",
-                    siteSubSection: "",
-                    appLanguage: nil,
-                    contentLanguage: nil,
-                    secondaryContentLanguage: nil
-                ),
+                properties: actionAnalyticsProperties,
                 actionName: AnalyticsConstants.ActionNames.viewedLessonsAction,
                 data: nil
             )

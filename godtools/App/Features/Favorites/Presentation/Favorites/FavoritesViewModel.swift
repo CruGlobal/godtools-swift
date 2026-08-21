@@ -165,6 +165,14 @@ final class FavoritesViewModel: ObservableObject {
             contentLanguage: nil,
             secondaryContentLanguage: nil
         )
+        let actionAnalyticsProperties = AnalyticsProperties(
+            screenName: "",
+            siteSection: "",
+            siteSubSection: "",
+            appLanguage: nil,
+            contentLanguage: nil,
+            secondaryContentLanguage: nil
+        )
         let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase = self.trackScreenViewAnalyticsUseCase
         let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = self.trackActionAnalyticsUseCase
         
@@ -176,14 +184,7 @@ final class FavoritesViewModel: ObservableObject {
             
         Task.detached {
             await trackActionAnalyticsUseCase.execute(
-                properties: AnalyticsProperties(
-                    screenName: "",
-                    siteSection: "",
-                    siteSubSection: "",
-                    appLanguage: nil,
-                    contentLanguage: nil,
-                    secondaryContentLanguage: nil
-                ),
+                properties: actionAnalyticsProperties,
                 actionName: AnalyticsConstants.ActionNames.viewedMyToolsAction,
                 data: nil
             )
@@ -301,18 +302,19 @@ extension FavoritesViewModel {
         
         disableOpenTutorialBanner()
         
+        let analyticsProperties = AnalyticsProperties(
+            screenName: "home",
+            siteSection: "",
+            siteSubSection: "",
+            appLanguage: nil,
+            contentLanguage: nil,
+            secondaryContentLanguage: nil
+        )
         let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = self.trackActionAnalyticsUseCase
         
         Task.detached {
             await trackActionAnalyticsUseCase.execute(
-                properties: AnalyticsProperties(
-                    screenName: "home",
-                    siteSection: "",
-                    siteSubSection: "",
-                    appLanguage: nil,
-                    contentLanguage: nil,
-                    secondaryContentLanguage: nil
-                ),
+                properties: analyticsProperties,
                 actionName: AnalyticsConstants.ActionNames.tutorialHomeDismiss,
                 data: [AnalyticsConstants.Keys.tutorialDismissed: 1]
             )
