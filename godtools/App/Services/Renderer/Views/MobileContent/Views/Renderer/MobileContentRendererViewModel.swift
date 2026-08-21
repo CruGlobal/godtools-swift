@@ -109,13 +109,16 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
     
     private func didSetLanguages(languages: [LanguageDataModel], appLanguage: AppLanguageDomainModel) {
         
-        Task {
+        Task { [weak self] in
+            guard let weakSelf = self else {
+                return
+            }
             
             var languageNames: [String] = Array()
             
             for language in languages {
                 
-                let name = await getTranslatedLanguageName.getLanguageName(
+                let name = await weakSelf.getTranslatedLanguageName.getLanguageName(
                     language: language,
                     translatedInLanguage: appLanguage
                 )
@@ -123,7 +126,7 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
                 languageNames.append(name)
             }
             
-            self.languageNames = languageNames
+            weakSelf.languageNames = languageNames
         }
     }
     
