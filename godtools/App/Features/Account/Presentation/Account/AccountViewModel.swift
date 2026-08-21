@@ -152,7 +152,9 @@ final class AccountViewModel: ObservableObject {
     
     private func trackSectionViewedAnalytics(screenName: String) {
                  
-        Task {
+        let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase = self.trackScreenViewAnalyticsUseCase
+        
+        Task.detached {
             
             await trackScreenViewAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(

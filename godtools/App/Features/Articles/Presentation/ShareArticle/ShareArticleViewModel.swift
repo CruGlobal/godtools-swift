@@ -48,32 +48,38 @@ final class ShareArticleViewModel {
     
     func pageViewed() {
         
-        Task {
+        let analyticsProperties = AnalyticsProperties(
+            screenName: analyticsScreenName,
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            appLanguage: nil,
+            contentLanguage: nil,
+            secondaryContentLanguage: nil
+        )
+        let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase = self.trackScreenViewAnalyticsUseCase
+        
+        Task.detached {
             await trackScreenViewAnalyticsUseCase.execute(
-                properties: AnalyticsProperties(
-                    screenName: analyticsScreenName,
-                    siteSection: analyticsSiteSection,
-                    siteSubSection: analyticsSiteSubSection,
-                    appLanguage: nil,
-                    contentLanguage: nil,
-                    secondaryContentLanguage: nil
-                )
+                properties: analyticsProperties
             )
         }
     }
     
     func articleShared() {
                 
-        Task {
+        let analyticsProperties = AnalyticsProperties(
+            screenName: analyticsScreenName,
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            appLanguage: nil,
+            contentLanguage: nil,
+            secondaryContentLanguage: nil
+        )
+        let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = self.trackActionAnalyticsUseCase
+        
+        Task.detached {
             await trackActionAnalyticsUseCase.execute(
-                properties: AnalyticsProperties(
-                    screenName: analyticsScreenName,
-                    siteSection: analyticsSiteSection,
-                    siteSubSection: analyticsSiteSubSection,
-                    appLanguage: nil,
-                    contentLanguage: nil,
-                    secondaryContentLanguage: nil
-                ),
+                properties: analyticsProperties,
                 actionName: AnalyticsConstants.ActionNames.shareIconEngaged,
                 data: [AnalyticsConstants.Keys.shareAction: 1]
             )

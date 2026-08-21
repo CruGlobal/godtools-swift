@@ -127,8 +127,10 @@ final class TutorialViewModel: ObservableObject {
         let analyticsScreenName = getAnalyticsScreenName(tutorialItemIndex: page)
         let analyticsSiteSection = analyticsSiteSection
         let analyticsSiteSubSection = analyticsSiteSubsection
+        let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase = self.trackScreenViewAnalyticsUseCase
+        let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = self.trackActionAnalyticsUseCase
         
-        Task {
+        Task.detached {
             await trackScreenViewAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: analyticsScreenName,
@@ -141,7 +143,7 @@ final class TutorialViewModel: ObservableObject {
             )
         }
         
-        Task {
+        Task.detached {
             await trackActionAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: analyticsScreenName,
@@ -194,18 +196,21 @@ extension TutorialViewModel {
             
             trackedAnalyticsForYouTubeVideoIds.append(videoId)
                         
-            Task {
+            let analyticsProperties = AnalyticsProperties(
+                screenName: getAnalyticsScreenName(tutorialItemIndex: tutorialPageIndex),
+                siteSection: "",
+                siteSubSection: "",
+                appLanguage: appLanguage,
+                contentLanguage: nil,
+                secondaryContentLanguage: nil
+            )
+            let tutorialVideoAnalytics: TutorialVideoAnalytics = self.tutorialVideoAnalytics
+            
+            Task.detached {
                 
                 await tutorialVideoAnalytics.trackVideoPlayed(
                     videoId: videoId,
-                    properties: AnalyticsProperties(
-                        screenName: getAnalyticsScreenName(tutorialItemIndex: tutorialPageIndex),
-                        siteSection: "",
-                        siteSubSection: "",
-                        appLanguage: appLanguage,
-                        contentLanguage: nil,
-                        secondaryContentLanguage: nil
-                    )
+                    properties: analyticsProperties
                 )
             }
         }

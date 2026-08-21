@@ -47,7 +47,9 @@ extension ShareToolScreenShareSessionViewModel {
     
     func pageViewed() {
         
-        Task {
+        let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = self.trackActionAnalyticsUseCase
+        
+        Task.detached {
             await trackActionAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: "",

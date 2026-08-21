@@ -216,20 +216,24 @@ final class LessonsViewModel: ObservableObject {
     
     private func trackPageViewed() {
         
-        Task {
+        let analyticsProperties = AnalyticsProperties(
+            screenName: analyticsScreenName,
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            appLanguage: nil,
+            contentLanguage: nil,
+            secondaryContentLanguage: nil
+        )
+        let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase = self.trackScreenViewAnalyticsUseCase
+        let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = self.trackActionAnalyticsUseCase
+        
+        Task.detached {
             await trackScreenViewAnalyticsUseCase.execute(
-                properties: AnalyticsProperties(
-                    screenName: analyticsScreenName,
-                    siteSection: analyticsSiteSection,
-                    siteSubSection: analyticsSiteSubSection,
-                    appLanguage: nil,
-                    contentLanguage: nil,
-                    secondaryContentLanguage: nil
-                )
+                properties: analyticsProperties
             )
         }
         
-        Task {
+        Task.detached {
             await trackActionAnalyticsUseCase.execute(
                 properties: AnalyticsProperties(
                     screenName: "",
@@ -247,20 +251,24 @@ final class LessonsViewModel: ObservableObject {
     
     private func trackLessonTappedAnalytics(lessonListItem: LessonListItemDomainModel) {
         
-        Task {
+        let analyticsProperties = AnalyticsProperties(
+            screenName: analyticsScreenName,
+            siteSection: "",
+            siteSubSection: "",
+            appLanguage: nil,
+            contentLanguage: nil,
+            secondaryContentLanguage: nil
+        )
+        let analyticsToolName: String = lessonListItem.analyticsToolName
+        let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = self.trackActionAnalyticsUseCase
+        
+        Task.detached {
             await trackActionAnalyticsUseCase.execute(
-                properties: AnalyticsProperties(
-                    screenName: analyticsScreenName,
-                    siteSection: "",
-                    siteSubSection: "",
-                    appLanguage: nil,
-                    contentLanguage: nil,
-                    secondaryContentLanguage: nil
-                ),
+                properties: analyticsProperties,
                 actionName: AnalyticsConstants.ActionNames.lessonOpenTapped,
                 data: [
                     AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.lessons,
-                    AnalyticsConstants.Keys.tool: lessonListItem.analyticsToolName
+                    AnalyticsConstants.Keys.tool: analyticsToolName
                 ]
             )
         }

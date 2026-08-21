@@ -248,7 +248,9 @@ final class ToolDetailsViewModel: ObservableObject {
             secondaryContentLanguage: nil
         )
 
-        Task {
+        let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase = self.trackScreenViewAnalyticsUseCase
+        
+        Task.detached {
             
             await trackScreenViewAnalyticsUseCase.execute(properties: analyticsProperties)
         }
@@ -256,20 +258,25 @@ final class ToolDetailsViewModel: ObservableObject {
     
     private func trackToolVersionTappedAnalytics(toolVersion: ToolVersionDomainModel) {
         
-        Task {
+        let analyticsToolAbbreviation: String = toolVersion.analyticsToolAbbreviation
+        
+        let analyticsProperties = AnalyticsProperties(
+            screenName: getAnalyticsScreenName(analyticsToolAbbreviation: analyticsToolAbbreviation),
+            siteSection: "",
+            siteSubSection: "",
+            appLanguage: nil,
+            contentLanguage: nil,
+            secondaryContentLanguage: nil
+        )
+        let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = self.trackActionAnalyticsUseCase
+        
+        Task.detached {
             await trackActionAnalyticsUseCase.execute(
-                properties: AnalyticsProperties(
-                    screenName: getAnalyticsScreenName(analyticsToolAbbreviation: toolVersion.analyticsToolAbbreviation),
-                    siteSection: "",
-                    siteSubSection: "",
-                    appLanguage: nil,
-                    contentLanguage: nil,
-                    secondaryContentLanguage: nil
-                ),
+                properties: analyticsProperties,
                 actionName: AnalyticsConstants.ActionNames.openDetails,
                 data: [
                     AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.versions,
-                    AnalyticsConstants.Keys.tool: toolVersion.analyticsToolAbbreviation
+                    AnalyticsConstants.Keys.tool: analyticsToolAbbreviation
                 ]
             )
         }
@@ -292,16 +299,21 @@ extension ToolDetailsViewModel {
     
     func openToolTapped() {
         
-        Task {
+        let analyticsToolAbbreviation: String = self.analyticsToolAbbreviation
+        
+        let analyticsProperties = AnalyticsProperties(
+            screenName: getAnalyticsScreenName(analyticsToolAbbreviation: analyticsToolAbbreviation),
+            siteSection: getAnalyticsSiteSection(analyticsToolAbbreviation: analyticsToolAbbreviation),
+            siteSubSection: analyticsSiteSubSection,
+            appLanguage: nil,
+            contentLanguage: nil,
+            secondaryContentLanguage: nil
+        )
+        let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = self.trackActionAnalyticsUseCase
+        
+        Task.detached {
             await trackActionAnalyticsUseCase.execute(
-                properties: AnalyticsProperties(
-                    screenName: getAnalyticsScreenName(analyticsToolAbbreviation: analyticsToolAbbreviation),
-                    siteSection: getAnalyticsSiteSection(analyticsToolAbbreviation: analyticsToolAbbreviation),
-                    siteSubSection: analyticsSiteSubSection,
-                    appLanguage: nil,
-                    contentLanguage: nil,
-                    secondaryContentLanguage: nil
-                ),
+                properties: analyticsProperties,
                 actionName: AnalyticsConstants.ActionNames.toolOpened,
                 data: [
                     AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.toolDetails,

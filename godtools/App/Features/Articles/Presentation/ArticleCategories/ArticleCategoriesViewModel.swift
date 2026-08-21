@@ -102,22 +102,28 @@ extension ArticleCategoriesViewModel {
         
         if pageViewCount == 0 {
             
-            Task {
+            let incrementUserCounterUseCase: IncrementUserCounterUseCase = self.incrementUserCounterUseCase
+            let resourceId: String = resource.id
+            
+            Task.detached {
                 
-                _ = try await incrementUserCounterUseCase.execute(interaction: .toolOpen(tool: resource.id))
+                _ = try await incrementUserCounterUseCase.execute(interaction: .toolOpen(tool: resourceId))
             }
         }
         
-        Task {
+        let analyticsProperties = AnalyticsProperties(
+            screenName: analyticsScreenName,
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            appLanguage: nil,
+            contentLanguage: nil,
+            secondaryContentLanguage: nil
+        )
+        let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase = self.trackScreenViewAnalyticsUseCase
+        
+        Task.detached {
             await trackScreenViewAnalyticsUseCase.execute(
-                properties: AnalyticsProperties(
-                    screenName: analyticsScreenName,
-                    siteSection: analyticsSiteSection,
-                    siteSubSection: analyticsSiteSubSection,
-                    appLanguage: nil,
-                    contentLanguage: nil,
-                    secondaryContentLanguage: nil
-                )
+                properties: analyticsProperties
             )
         }
                 
