@@ -103,11 +103,11 @@ final class SocialSignInViewModel: ObservableObject {
                         authPolicy: .renewAccessTokenElseAskUserToAuthenticate(fromViewController: presentAuthViewController)
                     )
                 
-                self.handleAuthenticationCompleted(error: nil)
+                handleAuthenticationCompleted(error: nil)
             }
             catch let error {
                 
-                self.handleAuthenticationCompleted(error: error as? AuthErrorDomainModel)
+                handleAuthenticationCompleted(error: error as? AuthErrorDomainModel)
             }
         }
     }
