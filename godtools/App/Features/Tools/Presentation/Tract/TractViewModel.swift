@@ -208,23 +208,27 @@ final class TractViewModel: MobileContentRendererViewModel {
         let primaryLanguage: LanguageDataModel = languages[0]
         let parallelLanguage: LanguageDataModel? = languages[safe: 1]
                 
-        let trackTappedLanguageData: [String: Any] = [
-            AnalyticsConstants.Keys.contentLanguageSecondary: parallelLanguage?.localeId ?? "",
-            AnalyticsConstants.ActionNames.parallelLanguageToggled: tappedLanguage.id == parallelLanguage?.id
-        ]
+        let parallelLanguageLocaleId: String? = parallelLanguage?.localeId
+        let parallelLanguageToggled: Bool = tappedLanguage.id == parallelLanguage?.id
         
-        Task {
+        let analyticsProperties = AnalyticsProperties(
+            screenName: analyticsScreenName,
+            siteSection: analyticsSiteSection,
+            siteSubSection: "",
+            appLanguage: nil,
+            contentLanguage: primaryLanguage.localeId,
+            secondaryContentLanguage: parallelLanguageLocaleId
+        )
+        let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = self.trackActionAnalyticsUseCase
+        
+        Task.detached {
             await trackActionAnalyticsUseCase.execute(
-                properties: AnalyticsProperties(
-                    screenName: analyticsScreenName,
-                    siteSection: analyticsSiteSection,
-                    siteSubSection: "",
-                    appLanguage: nil,
-                    contentLanguage: primaryLanguage.localeId,
-                    secondaryContentLanguage: parallelLanguage?.localeId
-                ),
+                properties: analyticsProperties,
                 actionName: AnalyticsConstants.ActionNames.parallelLanguageToggled,
-                data: trackTappedLanguageData
+                data: [
+                    AnalyticsConstants.Keys.contentLanguageSecondary: parallelLanguageLocaleId ?? "",
+                    AnalyticsConstants.ActionNames.parallelLanguageToggled: parallelLanguageToggled
+                ]
             )
         }
     }
@@ -307,19 +311,23 @@ extension TractViewModel {
         
         let toolSettingsObserver = setUpToolSettingsObserver()
         
-        Task {
+        let analyticsProperties = AnalyticsProperties(
+            screenName: analyticsScreenName,
+            siteSection: analyticsSiteSection,
+            siteSubSection: "",
+            appLanguage: nil,
+            contentLanguage: nil,
+            secondaryContentLanguage: nil
+        )
+        let toolSettingsActionName: String = ToolAnalyticsActionNames.shared.ACTION_SETTINGS
+        let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = self.trackActionAnalyticsUseCase
+        
+        Task.detached {
             await trackActionAnalyticsUseCase
                 .execute(
-                    properties: AnalyticsProperties(
-                        screenName: analyticsScreenName,
-                        siteSection: analyticsSiteSection,
-                        siteSubSection: "",
-                        appLanguage: nil,
-                        contentLanguage: nil,
-                        secondaryContentLanguage: nil
-                    ),
+                    properties: analyticsProperties,
                     actionName: AnalyticsConstants.ActionNames.toolSettings,
-                    data: [ToolAnalyticsActionNames.shared.ACTION_SETTINGS: 1]
+                    data: [toolSettingsActionName: 1]
                 )
         }
         
@@ -385,16 +393,19 @@ extension TractViewModel {
     
     private func trackShareScreenOpened() {
         
-        Task {
+        let analyticsProperties = AnalyticsProperties(
+            screenName: analyticsScreenName,
+            siteSection: analyticsSiteSection,
+            siteSubSection: "",
+            appLanguage: nil,
+            contentLanguage: nil,
+            secondaryContentLanguage: nil
+        )
+        let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = self.trackActionAnalyticsUseCase
+        
+        Task.detached {
             await trackActionAnalyticsUseCase.execute(
-                properties: AnalyticsProperties(
-                    screenName: analyticsScreenName,
-                    siteSection: analyticsSiteSection,
-                    siteSubSection: "",
-                    appLanguage: nil,
-                    contentLanguage: nil,
-                    secondaryContentLanguage: nil
-                ),
+                properties: analyticsProperties,
                 actionName: AnalyticsConstants.ActionNames.shareScreenOpened,
                 data: [
                     AnalyticsConstants.Keys.shareScreenOpenedCountKey: 1
