@@ -31,26 +31,38 @@ final class GetAllToolsUseCase: Sendable {
             .observeCollectionChangesPublisher()
             .receive(on: DispatchQueue.global())
             .prepend(Void())
-            .flatMap { (resourcesChanged: Void) -> AnyPublisher<[ToolListItemDomainModel], Error> in
+            .map { (resourcesChanged: Void) in
 
-                return AnyPublisher() {
-
-                    let tools: [ResourceDataModel] = self.resourcesRepository.getAllToolsList(
-                        filterByCategory: filterToolsByCategory.filterId,
-                        filterByLanguageId: filterToolsByLanguage.filterId,
-                        sortByDefaultOrder: true
-                    )
-
-                    let toolListItems = await self.getToolsListItems
-                        .mapToolsToListItems(
-                            tools: tools,
-                            appLanguage: appLanguage,
-                            languageIdForAvailabilityText: languageIdForAvailabilityText
-                        )
-
-                    return toolListItems
-                }
+                return self.getAllToolsList(
+                    appLanguage: appLanguage,
+                    languageIdForAvailabilityText: languageIdForAvailabilityText,
+                    filterToolsByCategory: filterToolsByCategory,
+                    filterToolsByLanguage: filterToolsByLanguage
+                )
             }
             .eraseToAnyPublisher()
+    }
+    
+    private func getAllToolsList(
+        appLanguage: AppLanguageDomainModel,
+        languageIdForAvailabilityText: String?,
+        filterToolsByCategory: ToolFilterCategoryDomainModel,
+        filterToolsByLanguage: ToolFilterLanguageDomainModel
+    ) -> [ToolListItemDomainModel] {
+        
+        let tools: [ResourceDataModel] = resourcesRepository.getAllToolsList(
+            filterByCategory: filterToolsByCategory.filterId,
+            filterByLanguageId: filterToolsByLanguage.filterId,
+            sortByDefaultOrder: true
+        )
+
+        let toolListItems = self.getToolsListItems
+            .mapToolsToListItems(
+                tools: tools,
+                appLanguage: appLanguage,
+                languageIdForAvailabilityText: languageIdForAvailabilityText
+            )
+
+        return toolListItems
     }
 }

@@ -73,7 +73,7 @@ final class GetFeaturedLessonsUseCase: Sendable {
                 toolLanguageAvailability = ToolLanguageAvailabilityDomainModel(availabilityString: "", isAvailable: false)
             }
 
-            let lessonProgress = try await self.getLessonListItemProgress.getLessonProgress(
+            let lessonProgress = try self.getLessonListItemProgress.getLessonProgress(
                 lesson: resource,
                 appLanguage: appLanguage
             )

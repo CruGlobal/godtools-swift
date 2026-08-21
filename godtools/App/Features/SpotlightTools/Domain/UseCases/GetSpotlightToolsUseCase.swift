@@ -46,22 +46,20 @@ final class GetSpotlightToolsUseCase: Sendable {
         return resourcesRepository
             .observeCollectionChangesPublisher()
             .receive(on: DispatchQueue.global())
-            .flatMap({ (resourcesChanged: Void) -> AnyPublisher<[SpotlightToolListItemDomainModel], Never> in
+            .map({ (resourcesChanged: Void) in
 
-                return AnyPublisher() {
-                    return await self.asyncExecute(
-                        appLanguage: appLanguage,
-                        languageIdForAvailabilityText: languageIdForAvailabilityText
-                    )
-                }
+                return self.getSpotlightTools(
+                    appLanguage: appLanguage,
+                    languageIdForAvailabilityText: languageIdForAvailabilityText
+                )
             })
             .eraseToAnyPublisher()
     }
     
-    private func asyncExecute(
+    private func getSpotlightTools(
         appLanguage: AppLanguageDomainModel,
         languageIdForAvailabilityText: String?
-    ) async -> [SpotlightToolListItemDomainModel] {
+    ) -> [SpotlightToolListItemDomainModel] {
         
         let languageForAvailabilityTextModel: LanguageDataModel? = getLanguage(id: languageIdForAvailabilityText)
         
@@ -100,7 +98,7 @@ final class GetSpotlightToolsUseCase: Sendable {
                     dataModelId: resource.id,
                     bannerImageId: resource.attrBanner,
                     name: getTranslatedToolName.getToolName(resource: resource, translateInLanguage: appLanguage),
-                    category: await getTranslatedToolCategory.getTranslatedCategory(resource: resource, translateInLanguage: appLanguage),
+                    category: getTranslatedToolCategory.getTranslatedCategory(resource: resource, translateInLanguage: appLanguage),
                     isFavorited: favoritedResourcesRepository.getResourceIsFavorited(id: resource.id),
                     languageAvailability: toolLanguageAvailability
                 )
