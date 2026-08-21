@@ -15,8 +15,6 @@ final class ToolsViewModel: ObservableObject {
     
     typealias ToolId = String
     
-    private static var favoriteToolTasks: [ToolId: Task<Void, Error>] = Dictionary()
-    
     private let stepEmitter: FlowStepEmitter
     private let pullToRefreshToolsUseCase: PullToRefreshToolsUseCase
     private let getToolsStringsUseCase: GetToolsStringsUseCase
@@ -37,6 +35,7 @@ final class ToolsViewModel: ObservableObject {
     
     private var cancellables: Set<AnyCancellable> = Set()
     private var pullToRefreshToolsTask: Task<Void, Error>?
+    private var favoriteToolTasks: [ToolId: Task<Void, Error>] = Dictionary()
     
     @Published private var appLanguage = AppLanguageDomainModel.english
     @Published private var toolFilterCategorySelection = ToolFilterCategoryDomainModel.emptyValue
@@ -345,9 +344,9 @@ final class ToolsViewModel: ObservableObject {
         
         let toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase = self.toggleToolFavoritedUseCase
         
-        Self.favoriteToolTasks[toolId]?.cancel()
+        favoriteToolTasks[toolId]?.cancel()
         
-        Self.favoriteToolTasks[toolId] = Task.detached {
+        favoriteToolTasks[toolId] = Task.detached {
                 
             _ = try await toggleToolFavoritedUseCase
                 .execute(toolId: toolId)
