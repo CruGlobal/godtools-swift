@@ -36,11 +36,11 @@ struct GetLocalizationSettingsCountryListUseCaseTests {
             )
         ]
     )
-    func shouldConditionallyIncludePreferNotToSayOption(argument: PreferNotToSayTestArgument) async {
+    func shouldConditionallyIncludePreferNotToSayOption(argument: PreferNotToSayTestArgument) {
 
         let useCase = Self.createUseCase(countries: Self.createCountries())
 
-        let countryListItems: [LocalizationSettingsCountryListItem] = await useCase
+        let countryListItems: [LocalizationSettingsCountryListItem] = useCase
             .execute(
                 appLanguage: "en",
                 showsPreferNotToSay: argument.showsPreferNotToSay
@@ -95,14 +95,14 @@ struct GetLocalizationSettingsCountryListUseCaseTests {
             LocalizationTestArgument(appLanguage: "fr", expectedPreferNotToSayText: "Je préfère ne pas le dire")
         ]
     )
-    func shouldLocalizePreferNotToSayOptionBasedOnAppLanguage(argument: LocalizationTestArgument) async {
+    func shouldLocalizePreferNotToSayOptionBasedOnAppLanguage(argument: LocalizationTestArgument) {
 
         let useCase = Self.createUseCase(
             countries: Self.createCountries(),
             appLanguage: argument.appLanguage
         )
 
-        let countryListItems: [LocalizationSettingsCountryListItem] = await useCase
+        let countryListItems: [LocalizationSettingsCountryListItem] = useCase
             .execute(
                 appLanguage: argument.appLanguage,
                 showsPreferNotToSay: true
@@ -131,11 +131,11 @@ struct GetLocalizationSettingsCountryListUseCaseTests {
             EmptyListTestArgument(showsPreferNotToSay: true, expectedCount: 1)
         ]
     )
-    func shouldHandleEmptyCountryList(argument: EmptyListTestArgument) async {
+    func shouldHandleEmptyCountryList(argument: EmptyListTestArgument) {
 
         let useCase = Self.createUseCase(countries: [])
 
-        let countryListItems: [LocalizationSettingsCountryListItem] = await useCase
+        let countryListItems: [LocalizationSettingsCountryListItem] = useCase
             .execute(
                 appLanguage: "en",
                 showsPreferNotToSay: argument.showsPreferNotToSay
