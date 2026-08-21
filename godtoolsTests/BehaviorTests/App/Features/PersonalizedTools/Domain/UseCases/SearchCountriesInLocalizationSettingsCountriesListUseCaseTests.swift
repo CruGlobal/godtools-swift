@@ -18,12 +18,12 @@ struct SearchCountriesInLocalizationSettingsCountriesListUseCaseTests {
         Then: Country names containing the letter 'e' in either translation of their country name-- translation by app language or the country's own language, ignoring case sensitivity.
         """
     )
-    func searchingCountriesWithSingleLetterSearchText() async {
+    func searchingCountriesWithSingleLetterSearchText() {
 
         let searchCountryList = Self.getSearchCountriesListUseCase()
         let countriesList = Self.getCountriesList()
 
-        let searchResults: [LocalizationSettingsCountryListItem] = await searchCountryList
+        let searchResults: [LocalizationSettingsCountryListItem] = searchCountryList
             .execute(searchText: "e", countriesList: countriesList)
 
         let searchResultNames = searchResults.compactMap { item -> String? in
@@ -42,12 +42,12 @@ struct SearchCountriesInLocalizationSettingsCountriesListUseCaseTests {
         Then: Country names containing the letters 'pan' in either translation of their country name-- translation by app language or the country's own language, ignoring case sensitivity.
         """
     )
-    func searchingCountriesWithMultiLetterSearchText() async {
+    func searchingCountriesWithMultiLetterSearchText() {
 
         let searchCountryList = Self.getSearchCountriesListUseCase()
         let countriesList = Self.getCountriesList()
 
-        let searchResults: [LocalizationSettingsCountryListItem] = await searchCountryList
+        let searchResults: [LocalizationSettingsCountryListItem] = searchCountryList
             .execute(searchText: "pan", countriesList: countriesList)
 
         let searchResultNames = searchResults.compactMap { item -> String? in

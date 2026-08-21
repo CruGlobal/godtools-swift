@@ -18,12 +18,12 @@ struct SearchAppLanguageInAppLanguagesListUseCaseTests {
         Then: I expect to see languages containing the letter e in either language name translated in own language or language name translated in app language ignoring case sensitivity.
         """
     )
-    func searchingAppLanguagesWithSingleLetterSearchString() async {
+    func searchingAppLanguagesWithSingleLetterSearchString() {
         
         let searchAppLanguageList: SearchAppLanguageInAppLanguagesListUseCase = getSearchAppLanguageInAppLanguagesListUseCase()
         let appLanguagesList: [AppLanguageListItemDomainModel] = getAppLanguagesList()
                 
-        let searchResult: [AppLanguageListItemDomainModel] = await searchAppLanguageList
+        let searchResult: [AppLanguageListItemDomainModel] = searchAppLanguageList
             .execute(searchText: "e", appLanguagesList: appLanguagesList)
         
         let searchedLanguages: [String] = searchResult.map({$0.language})
@@ -40,12 +40,12 @@ struct SearchAppLanguageInAppLanguagesListUseCaseTests {
         Then: I expect to see languages containing the letters 'Ind' in either language name translated in own language or language name translated in app language ignoring case sensitivity.
         """
     )
-    func searchingAppLanguagesWithMultiLetterSearchString() async {
+    func searchingAppLanguagesWithMultiLetterSearchString() {
         
         let searchAppLanguageList: SearchAppLanguageInAppLanguagesListUseCase = getSearchAppLanguageInAppLanguagesListUseCase()
         let appLanguagesList: [AppLanguageListItemDomainModel] = getAppLanguagesList()
                 
-        let searchResult: [AppLanguageListItemDomainModel] = await searchAppLanguageList
+        let searchResult: [AppLanguageListItemDomainModel] = searchAppLanguageList
             .execute(searchText: "Ind", appLanguagesList: appLanguagesList)
         
         let searchedLanguages: [String] = searchResult.map({$0.language})
