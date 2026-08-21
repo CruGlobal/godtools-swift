@@ -24,6 +24,10 @@ final class TractViewModel: MobileContentRendererViewModel {
     private let liveShareStream: String?
     private let persistToolLanguageSettings: PersistToolLanguageSettingsInterface?
     
+    private var didCreatePublishChannelTask: Task<Void, Error>?
+    private var didSubscribeToChannelTask: Task<Void, Never>?
+    private var subscribeToChannelTask: Task<Void, Error>?
+    private var subscriberNavigationEventsTask: Task<Void, Never>?
     private var cancellables: Set<AnyCancellable> = Set()
     private var remoteShareIsActive: Bool = false
         
@@ -92,38 +96,16 @@ final class TractViewModel: MobileContentRendererViewModel {
             selectedLanguageIndex: selectedLanguageIndex
         )
         
-        Task { [weak self] in
-           
-            guard let createdChannelStream = await self?.tractRemoteSharePublisher.getCreatedChannelStream() else {
-                return
-            }
-            
-            for await _ in createdChannelStream {
-                
-                self?.didSubscribeForRemoteSharePublishing.accept(value: true)
-                self?.reloadRemoteShareIsActive()
-            }
-        }
-        
-        Task { [weak self] in
-            
-            guard let navigationEventStream = await self?.tractRemoteShareSubscriber.getNavigationEventStream() else {
-                return
-            }
-            
-            var isFirstRemoteShareNavigationEvent: Bool = true
-            
-            for await navigationEvent in navigationEventStream {
-                
-                let animated: Bool = !isFirstRemoteShareNavigationEvent
-                self?.handleDidReceiveRemoteShareNavigationEvent(remoteShareNavigationEvent: navigationEvent, animated: animated)
-                isFirstRemoteShareNavigationEvent = false
-            }
-        }
+        observePublisherDidCreateChannel()
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+        
+        didCreatePublishChannelTask?.cancel()
+        didSubscribeToChannelTask?.cancel()
+        subscribeToChannelTask?.cancel()
+        subscriberNavigationEventsTask?.cancel()
     }
     
     private var isScreenSharing: Bool {
@@ -414,13 +396,48 @@ extension TractViewModel {
         }
     }
     
+    private func observePublisherDidCreateChannel() {
+        
+        didCreatePublishChannelTask?.cancel()
+        
+        didCreatePublishChannelTask = Task { [weak self] in
+           
+            guard let createdChannelStream = await self?.tractRemoteSharePublisher.getCreatedChannelStream() else {
+                return
+            }
+            
+            for await _ in createdChannelStream {
+                
+                self?.didSubscribeForRemoteSharePublishing.accept(value: true)
+                self?.reloadRemoteShareIsActive()
+            }
+        }
+    }
+    
     private func subscribeToLiveShareStreamIfNeeded() {
         
         guard let channelId = liveShareStream, let channel = WebSocketChannel(id: channelId) else {
             return
         }
         
-        Task { [weak self] in
+        observeSubscriberNavigationEvents()
+        
+        observeDidSubscribeToChannel()
+        
+        subscribeToChannelTask?.cancel()
+        
+        subscribeToChannelTask = Task { [weak self] in
+            
+            try await self?.tractRemoteShareSubscriber
+                .subscribe(channel: channel)
+        }
+    }
+    
+    private func observeDidSubscribeToChannel() {
+        
+        didSubscribeToChannelTask?.cancel()
+        
+        didSubscribeToChannelTask = Task { [weak self] in
             
             guard let didSubscribeStream = await self?.tractRemoteShareSubscriber.getSubscribedStream() else {
                 return
@@ -432,11 +449,26 @@ extension TractViewModel {
                 self?.reloadRemoteShareIsActive()
             }
         }
+    }
+    
+    private func observeSubscriberNavigationEvents() {
         
-        Task { [weak self] in
+        subscriberNavigationEventsTask?.cancel()
+        
+        subscriberNavigationEventsTask = Task { [weak self] in
             
-            try await self?.tractRemoteShareSubscriber
-                .subscribe(channel: channel)
+            guard let navigationEventStream = await self?.tractRemoteShareSubscriber.getNavigationEventStream() else {
+                return
+            }
+            
+            var isFirstRemoteShareNavigationEvent: Bool = true
+            
+            for await navigationEvent in navigationEventStream {
+                
+                let animated: Bool = !isFirstRemoteShareNavigationEvent
+                self?.handleDidReceiveRemoteShareNavigationEvent(remoteShareNavigationEvent: navigationEvent, animated: animated)
+                isFirstRemoteShareNavigationEvent = false
+            }
         }
     }
     
