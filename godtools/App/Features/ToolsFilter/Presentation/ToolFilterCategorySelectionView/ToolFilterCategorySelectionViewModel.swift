@@ -111,12 +111,9 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
             $allCategories
         )
         .map { (searchText: String, allCategories: [ToolFilterCategoryDomainModel]) in
-            return AnyPublisher() {
-                await searchToolFilterCategoriesUseCase
-                    .execute(searchText: searchText, toolFilterCategories: allCategories)
-            }
+            searchToolFilterCategoriesUseCase
+                .execute(searchText: searchText, toolFilterCategories: allCategories)
         }
-        .switchToLatest()
         .receive(on: DispatchQueue.main)
         .assign(to: &$categorySearchResults)
     }

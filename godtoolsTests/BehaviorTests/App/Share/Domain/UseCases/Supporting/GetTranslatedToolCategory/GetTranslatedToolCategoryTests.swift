@@ -38,7 +38,7 @@ struct GetTranslatedToolCategoryTests {
             TestArgument(translateInLanguage: LanguageCodeDomainModel.vietnamese.rawValue, expectedToolCategory: Self.toolCategoryInVietnamese)
         ]
     )
-    func testToolNameIsTranslated(argument: TestArgument) async throws {
+    func testToolNameIsTranslated(argument: TestArgument) throws {
 
         let testsDiContainer: TestsDiContainer = try getTestsDiContainer()
 
@@ -46,7 +46,7 @@ struct GetTranslatedToolCategoryTests {
             testsDiContainer: testsDiContainer
         )
 
-        let category: String = await getTranslatedToolCategory.getTranslatedCategory(
+        let category: String = getTranslatedToolCategory.getTranslatedCategory(
             toolId: Self.toolId,
             translateInLanguage: argument.translateInLanguage
         )

@@ -19,7 +19,7 @@ final class SearchCountriesInLocalizationSettingsCountriesListUseCase: Sendable 
     func execute(
         searchText: String,
         countriesList: [LocalizationSettingsCountryListItem]
-    ) async -> [LocalizationSettingsCountryListItem] {
+    ) -> [LocalizationSettingsCountryListItem] {
 
         return stringSearcher.search(for: searchText, in: countriesList)
     }

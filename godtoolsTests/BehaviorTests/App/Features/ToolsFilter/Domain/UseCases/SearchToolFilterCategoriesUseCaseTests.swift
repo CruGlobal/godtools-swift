@@ -37,11 +37,11 @@ struct SearchToolFilterCategoriesUseCaseTests {
             )
         ]
     )
-    func showsCategoriesContainingSearchString(argument: TestArgument) async {
+    func showsCategoriesContainingSearchString(argument: TestArgument) {
         
         let searchToolFilterCategoriesUseCase = getSearchToolFilterCategoriesUseCase()
                 
-        let searchedCategories: [ToolFilterCategoryDomainModel] = await searchToolFilterCategoriesUseCase
+        let searchedCategories: [ToolFilterCategoryDomainModel] = searchToolFilterCategoriesUseCase
             .execute(searchText: argument.searchString, toolFilterCategories: allCategories)
 
         #expect(argument.expectedCategories.elementsEqual(searchedCategories.map{ $0.title }))

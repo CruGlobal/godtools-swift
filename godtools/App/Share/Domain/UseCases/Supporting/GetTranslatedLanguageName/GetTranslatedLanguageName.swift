@@ -31,7 +31,7 @@ final class GetTranslatedLanguageName: Sendable {
     func getLanguageName(
         language: TranslatableLanguage,
         translatedInLanguage: BCP47LanguageIdentifier
-    ) async -> String {
+    ) -> String {
         
         if language.forceLanguageName {
             return language.fallbackName
@@ -41,7 +41,7 @@ final class GetTranslatedLanguageName: Sendable {
             return language.fallbackName
         }
         
-        if let localizedName = await localizationLanguageName.getLanguageName(languageId: language.localeId, translatedInLanguage: translatedInLanguage), !localizedName.isEmpty {
+        if let localizedName = localizationLanguageName.getLanguageName(languageId: language.localeId, translatedInLanguage: translatedInLanguage), !localizedName.isEmpty {
             
             return localizedName
         }

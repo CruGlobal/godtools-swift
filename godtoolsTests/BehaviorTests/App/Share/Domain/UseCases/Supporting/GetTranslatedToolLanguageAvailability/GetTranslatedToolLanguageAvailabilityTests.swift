@@ -49,7 +49,7 @@ struct GetTranslatedToolLanguageAvailabilityTests {
             )
         ]
     )
-    func testTranslateLanguageAvailabilityByToolIdAndLanguageModelIsAvailable(argument: TestArgument) async throws {
+    func testTranslateLanguageAvailabilityByToolIdAndLanguageModelIsAvailable(argument: TestArgument) throws {
 
         let testsDiContainer = try getTestsDiContainer()
 
@@ -57,7 +57,7 @@ struct GetTranslatedToolLanguageAvailabilityTests {
 
         let language: LanguageDataModel = try #require(queryLanguage(id: argument.availableInLanguageCode, testsDiContainer: testsDiContainer))
 
-        let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = await translatedToolLanguageAvailability.getTranslatedLanguageAvailability(
+        let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = translatedToolLanguageAvailability.getTranslatedLanguageAvailability(
             toolId: toolId,
             language: language,
             translateInLanguage: argument.translateInLanguage
@@ -96,7 +96,7 @@ struct GetTranslatedToolLanguageAvailabilityTests {
             )
         ]
     )
-    func testTranslateLanguageAvailabilityByToolIdAndLanguageModelIsNotAvailable(argument: TestArgument) async throws {
+    func testTranslateLanguageAvailabilityByToolIdAndLanguageModelIsNotAvailable(argument: TestArgument) throws {
 
         let testsDiContainer = try getTestsDiContainer()
 
@@ -104,7 +104,7 @@ struct GetTranslatedToolLanguageAvailabilityTests {
 
         let language: LanguageDataModel = try #require(queryLanguage(id: argument.availableInLanguageCode, testsDiContainer: testsDiContainer))
 
-        let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = await translatedToolLanguageAvailability.getTranslatedLanguageAvailability(
+        let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = translatedToolLanguageAvailability.getTranslatedLanguageAvailability(
             toolId: toolId,
             language: language,
             translateInLanguage: argument.translateInLanguage
@@ -137,7 +137,7 @@ struct GetTranslatedToolLanguageAvailabilityTests {
             )
         ]
     )
-    func testTranslateLanguageAvailabilityByToolIdAndAppLanguageIsAvailable(argument: TestArgument) async throws {
+    func testTranslateLanguageAvailabilityByToolIdAndAppLanguageIsAvailable(argument: TestArgument) throws {
 
         let testsDiContainer = try getTestsDiContainer()
 
@@ -145,7 +145,7 @@ struct GetTranslatedToolLanguageAvailabilityTests {
 
         let resource: ResourceDataModel = try #require(queryResource(id: toolId, testsDiContainer: testsDiContainer))
 
-        let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = await translatedToolLanguageAvailability.getTranslatedLanguageAvailability(
+        let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = translatedToolLanguageAvailability.getTranslatedLanguageAvailability(
             resource: resource,
             language: argument.availableInLanguageCode,
             translateInLanguage: argument.translateInLanguage
@@ -184,7 +184,7 @@ struct GetTranslatedToolLanguageAvailabilityTests {
             )
         ]
     )
-    func testTranslateLanguageAvailabilityByToolIdAndAppLanguageIsNotAvailable(argument: TestArgument) async throws {
+    func testTranslateLanguageAvailabilityByToolIdAndAppLanguageIsNotAvailable(argument: TestArgument) throws {
 
         let testsDiContainer = try getTestsDiContainer()
 
@@ -192,7 +192,7 @@ struct GetTranslatedToolLanguageAvailabilityTests {
 
         let resource: ResourceDataModel = try #require(queryResource(id: toolId, testsDiContainer: testsDiContainer))
 
-        let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = await translatedToolLanguageAvailability.getTranslatedLanguageAvailability(
+        let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = translatedToolLanguageAvailability.getTranslatedLanguageAvailability(
             resource: resource,
             language: argument.availableInLanguageCode,
             translateInLanguage: argument.translateInLanguage

@@ -78,7 +78,7 @@ final class GetYourFavoritedToolsUseCase: Sendable {
                     dataModelId: resource.id,
                     bannerImageId: resource.attrBanner,
                     name: getTranslatedToolName.getToolName(resource: resource, translateInLanguage: appLanguage),
-                    category: await getTranslatedToolCategory.getTranslatedCategory(resource: resource, translateInLanguage: appLanguage),
+                    category: getTranslatedToolCategory.getTranslatedCategory(resource: resource, translateInLanguage: appLanguage),
                     isFavorited: true,
                     languageAvailability: nil
                 )

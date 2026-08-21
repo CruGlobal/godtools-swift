@@ -20,7 +20,7 @@ final class SearchToolFilterCategoriesUseCase: Sendable {
     func execute(
         searchText: String,
         toolFilterCategories: [ToolFilterCategoryDomainModel]
-    ) async -> [ToolFilterCategoryDomainModel] {
+    ) -> [ToolFilterCategoryDomainModel] {
         
         return stringSearcher.search(for: searchText, in: toolFilterCategories)
     }

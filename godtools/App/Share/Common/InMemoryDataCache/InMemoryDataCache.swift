@@ -20,12 +20,12 @@ actor InMemoryDataCache: DataCacheInterface {
         cache.totalCostLimit = totalCostLimit
     }
     
-    func cacheData(id: String, data: Data) async {
+    func cacheData(id: String, data: Data) {
         
         cache.setObject(data as NSData, forKey: id as NSString)
     }
     
-    func getData(id: String) async -> Data? {
+    func getData(id: String) -> Data? {
         
         guard let nsData = cache.object(forKey: NSString(string: id)) else {
             return nil

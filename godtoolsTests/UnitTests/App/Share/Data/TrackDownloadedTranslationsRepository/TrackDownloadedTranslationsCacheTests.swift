@@ -66,7 +66,7 @@ struct TrackDownloadedTranslationsCacheTests {
 
     @available(iOS 17.4, *)
     @Test
-    func getLatestDownloadedTranslationExists() async throws {
+    func getLatestDownloadedTranslationExists() throws {
 
         let cache = try getCache()
 
@@ -81,7 +81,7 @@ struct TrackDownloadedTranslationsCacheTests {
 
     @available(iOS 17.4, *)
     @Test
-    func getLatestDownloadedTranslationIsNil() async throws {
+    func getLatestDownloadedTranslationIsNil() throws {
 
         let cache = try getCache()
 

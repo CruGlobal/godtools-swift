@@ -59,7 +59,7 @@ final class GetAllLessonsUseCase: Sendable {
                 sorted: true
             )
         
-        return try await getLessonsListItems.mapLessonsToListItems(
+        return try getLessonsListItems.mapLessonsToListItems(
             lessons: lessons,
             appLanguage: appLanguage,
             filterLessonsByLanguage: filterLessonsByLanguage

@@ -35,7 +35,7 @@ actor ArticleAemCache: ArticleAemCacheInterface, ModelActor {
         self.modelExecutor = DefaultSerialModelExecutor(modelContext: ModelContext(container))
     }
 
-    func getArticleAemDataObjects() async throws -> [ArticleAemData] {
+    func getArticleAemDataObjects() throws -> [ArticleAemData] {
 
         let objects: [SwiftArticleAemData] = try SwiftDataRead().objects(context: modelContext, query: nil)
 

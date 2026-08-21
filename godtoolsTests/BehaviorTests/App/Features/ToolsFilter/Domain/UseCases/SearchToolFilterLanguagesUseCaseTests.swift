@@ -37,11 +37,11 @@ struct SearchToolFilterLanguagesUseCaseTests {
             )
         ]
     )
-    func showsLanguagesContainingSearchStringIgnoringCase(argument: TestArgument) async {
+    func showsLanguagesContainingSearchStringIgnoringCase(argument: TestArgument) {
 
         let searchToolFilterLanguagesUseCase = getSearchToolFilterLanguagesUseCase()
 
-        let searchedLanguages: [ToolFilterLanguageDomainModel] = await searchToolFilterLanguagesUseCase
+        let searchedLanguages: [ToolFilterLanguageDomainModel] = searchToolFilterLanguagesUseCase
             .execute(searchText: argument.searchString, toolFilterLanguages: allLanguages)
 
         #expect(argument.expectedLanguages.elementsEqual(searchedLanguages.map({ $0.languageNameTranslatedInAppLanguage })))
@@ -68,11 +68,11 @@ struct SearchToolFilterLanguagesUseCaseTests {
             )
         ]
     )
-    func matchesLanguagesByNameTranslatedInTheirOwnLanguage(argument: TestArgument) async {
+    func matchesLanguagesByNameTranslatedInTheirOwnLanguage(argument: TestArgument) {
 
         let searchToolFilterLanguagesUseCase = getSearchToolFilterLanguagesUseCase()
 
-        let searchedLanguages: [ToolFilterLanguageDomainModel] = await searchToolFilterLanguagesUseCase
+        let searchedLanguages: [ToolFilterLanguageDomainModel] = searchToolFilterLanguagesUseCase
             .execute(searchText: argument.searchString, toolFilterLanguages: allLanguages)
 
         #expect(argument.expectedLanguages.elementsEqual(searchedLanguages.map({ $0.languageNameTranslatedInAppLanguage })))
@@ -99,11 +99,11 @@ struct SearchToolFilterLanguagesUseCaseTests {
             )
         ]
     )
-    func matchesLanguagesByNameTranslatedInMyAppLanguage(argument: TestArgument) async {
+    func matchesLanguagesByNameTranslatedInMyAppLanguage(argument: TestArgument) {
 
         let searchToolFilterLanguagesUseCase = getSearchToolFilterLanguagesUseCase()
 
-        let searchedLanguages: [ToolFilterLanguageDomainModel] = await searchToolFilterLanguagesUseCase
+        let searchedLanguages: [ToolFilterLanguageDomainModel] = searchToolFilterLanguagesUseCase
             .execute(searchText: argument.searchString, toolFilterLanguages: allLanguages)
 
         #expect(argument.expectedLanguages.elementsEqual(searchedLanguages.map({ $0.languageNameTranslatedInAppLanguage })))
@@ -126,11 +126,11 @@ struct SearchToolFilterLanguagesUseCaseTests {
             )
         ]
     )
-    func matchesLanguagesWithoutANameTranslatedInTheirOwnLanguage(argument: TestArgument) async {
+    func matchesLanguagesWithoutANameTranslatedInTheirOwnLanguage(argument: TestArgument) {
 
         let searchToolFilterLanguagesUseCase = getSearchToolFilterLanguagesUseCase()
 
-        let searchedLanguages: [ToolFilterLanguageDomainModel] = await searchToolFilterLanguagesUseCase
+        let searchedLanguages: [ToolFilterLanguageDomainModel] = searchToolFilterLanguagesUseCase
             .execute(searchText: argument.searchString, toolFilterLanguages: allLanguages)
 
         #expect(argument.expectedLanguages.elementsEqual(searchedLanguages.map({ $0.languageNameTranslatedInAppLanguage })))
@@ -143,11 +143,11 @@ struct SearchToolFilterLanguagesUseCaseTests {
         Then: I expect to see all languages in their original order.
         """
     )
-    func showsAllLanguagesWhenSearchStringIsEmpty() async {
+    func showsAllLanguagesWhenSearchStringIsEmpty() {
 
         let searchToolFilterLanguagesUseCase = getSearchToolFilterLanguagesUseCase()
 
-        let searchedLanguages: [ToolFilterLanguageDomainModel] = await searchToolFilterLanguagesUseCase
+        let searchedLanguages: [ToolFilterLanguageDomainModel] = searchToolFilterLanguagesUseCase
             .execute(searchText: "", toolFilterLanguages: allLanguages)
 
         #expect(searchedLanguages.map({ $0.languageNameTranslatedInAppLanguage }) == allLanguages.map({ $0.languageNameTranslatedInAppLanguage }))
@@ -160,11 +160,11 @@ struct SearchToolFilterLanguagesUseCaseTests {
         Then: I expect to see no languages.
         """
     )
-    func showsNoLanguagesWhenNoLanguageContainsTheSearchString() async {
+    func showsNoLanguagesWhenNoLanguageContainsTheSearchString() {
 
         let searchToolFilterLanguagesUseCase = getSearchToolFilterLanguagesUseCase()
 
-        let searchedLanguages: [ToolFilterLanguageDomainModel] = await searchToolFilterLanguagesUseCase
+        let searchedLanguages: [ToolFilterLanguageDomainModel] = searchToolFilterLanguagesUseCase
             .execute(searchText: "zzz", toolFilterLanguages: allLanguages)
 
         #expect(searchedLanguages.isEmpty)

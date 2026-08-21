@@ -21,19 +21,19 @@ final class GetTranslatedToolCategory: Sendable {
         self.resourcesRepository = resourcesRepository
     }
     
-    func getTranslatedCategory(toolId: String, translateInLanguage: BCP47LanguageIdentifier) async -> String {
+    func getTranslatedCategory(toolId: String, translateInLanguage: BCP47LanguageIdentifier) -> String {
         
         guard let resource = resourcesRepository.getResourceById(id: toolId) else {
             return ""
         }
         
-        return await getTranslatedCategory(resource: resource, translateInLanguage: translateInLanguage)
+        return getTranslatedCategory(resource: resource, translateInLanguage: translateInLanguage)
     }
     
     func getTranslatedCategory(
         resource: ResourceDataModel,
         translateInLanguage: BCP47LanguageIdentifier
-    ) async -> String {
+    ) -> String {
         
         let localeId = translateInLanguage.localeId
 

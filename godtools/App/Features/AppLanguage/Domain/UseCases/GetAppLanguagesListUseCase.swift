@@ -27,8 +27,8 @@ final class GetAppLanguagesListUseCase: Sendable {
 
         for languageDataModel in languages {
 
-            let languageNameTranslatedInOwnLanguage: String = await self.getTranslatedLanguageName.getLanguageName(language: languageDataModel, translatedInLanguage: languageDataModel.languageId)
-            let languageNameTranslatedInCurrentAppLanguage: String = await self.getTranslatedLanguageName.getLanguageName(language: languageDataModel, translatedInLanguage: appLanguage)
+            let languageNameTranslatedInOwnLanguage: String = self.getTranslatedLanguageName.getLanguageName(language: languageDataModel, translatedInLanguage: languageDataModel.languageId)
+            let languageNameTranslatedInCurrentAppLanguage: String = self.getTranslatedLanguageName.getLanguageName(language: languageDataModel, translatedInLanguage: appLanguage)
 
             appLanguages.append(
                 AppLanguageListItemDomainModel(

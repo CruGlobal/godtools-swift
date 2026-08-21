@@ -26,7 +26,7 @@ struct GetTutorialIsAvailableUseCaseTests {
             LanguageCodeDomainModel.vietnamese
         ]
     )
-    func tutorialIsAvailableForFullTutorialAppLanguages(languageCode: LanguageCodeDomainModel) async {
+    func tutorialIsAvailableForFullTutorialAppLanguages(languageCode: LanguageCodeDomainModel) {
 
         let useCase: GetTutorialIsAvailableUseCase = getUseCase()
 
@@ -62,7 +62,7 @@ struct GetTutorialIsAvailableUseCaseTests {
             LanguageCodeDomainModel.urdu
         ]
     )
-    func tutorialIsAvailableForPartialTutorialAppLanguages(languageCode: LanguageCodeDomainModel) async {
+    func tutorialIsAvailableForPartialTutorialAppLanguages(languageCode: LanguageCodeDomainModel) {
 
         let useCase: GetTutorialIsAvailableUseCase = getUseCase()
 
@@ -86,7 +86,7 @@ struct GetTutorialIsAvailableUseCaseTests {
             "unknown_language_code"
         ]
     )
-    func tutorialIsNotAvailableForAppLanguagesWithoutATutorial(appLanguage: AppLanguageDomainModel) async {
+    func tutorialIsNotAvailableForAppLanguagesWithoutATutorial(appLanguage: AppLanguageDomainModel) {
 
         let useCase: GetTutorialIsAvailableUseCase = getUseCase()
 

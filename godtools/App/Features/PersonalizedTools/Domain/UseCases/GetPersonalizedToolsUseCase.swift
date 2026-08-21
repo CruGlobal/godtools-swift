@@ -75,25 +75,22 @@ final class GetPersonalizedToolsUseCase: Sendable {
                     )
             }
         }
-        .flatMap { (resources: [ResourceDataModel]) -> AnyPublisher<PersonalizedToolsDomainModel, Error>  in
+        .map { (resources: [ResourceDataModel]) in
 
-            return AnyPublisher() {
-
-                let tools: [ToolListItemDomainModel] = await self.getToolsListItems
-                    .mapToolsToListItems(
-                        tools: resources,
-                        appLanguage: appLanguage,
-                        languageIdForAvailabilityText: filterToolsByLanguage.filterId
-                    )
-
-                let showsPersonalizationUnavailable: Bool = !hasCountry && tools.isEmpty
-                let unavailableStrings: PersonalizedToolsUnavailableDomainModel? = showsPersonalizationUnavailable ? self.getToolsUnavailable(appLanguage: appLanguage) : nil
-
-                return PersonalizedToolsDomainModel(
-                    tools: tools,
-                    unavailableStrings: unavailableStrings
+            let tools: [ToolListItemDomainModel] = self.getToolsListItems
+                .mapToolsToListItems(
+                    tools: resources,
+                    appLanguage: appLanguage,
+                    languageIdForAvailabilityText: filterToolsByLanguage.filterId
                 )
-            }
+
+            let showsPersonalizationUnavailable: Bool = !hasCountry && tools.isEmpty
+            let unavailableStrings: PersonalizedToolsUnavailableDomainModel? = showsPersonalizationUnavailable ? self.getToolsUnavailable(appLanguage: appLanguage) : nil
+
+            return PersonalizedToolsDomainModel(
+                tools: tools,
+                unavailableStrings: unavailableStrings
+            )
         }
         .eraseToAnyPublisher()
     }

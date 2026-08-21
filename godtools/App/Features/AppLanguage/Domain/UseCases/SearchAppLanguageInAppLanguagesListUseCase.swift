@@ -19,7 +19,7 @@ final class SearchAppLanguageInAppLanguagesListUseCase: Sendable {
     func execute(
         searchText: String,
         appLanguagesList: [AppLanguageListItemDomainModel]
-    ) async -> [AppLanguageListItemDomainModel] {
+    ) -> [AppLanguageListItemDomainModel] {
         
         return stringSearcher.search(for: searchText, in: appLanguagesList)
     }

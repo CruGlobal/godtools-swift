@@ -93,7 +93,7 @@ struct FlowToggleInitialViewTests: FlowTesting {
     }
     
     @Test()
-    func presentsToggableViewAsInitialView() async throws {
+    func presentsToggableViewAsInitialView() throws {
         
         let rootFlow = getNewRootFlow()
         

@@ -61,12 +61,10 @@ final class AppLanguagesViewModel: ObservableObject {
             $appLanguagesList.dropFirst()
         )
         .map { (searchText: String, appLanguagesList: [AppLanguageListItemDomainModel]) in
-            return AnyPublisher() {
-                await searchAppLanguageInAppLanguagesListUseCase
-                    .execute(searchText: searchText, appLanguagesList: appLanguagesList)
-            }
+            
+            searchAppLanguageInAppLanguagesListUseCase
+                .execute(searchText: searchText, appLanguagesList: appLanguagesList)
         }
-        .switchToLatest()
         .receive(on: DispatchQueue.main)
         .assign(to: &$appLanguageSearchResults)
     }

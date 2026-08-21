@@ -22,11 +22,11 @@ struct GetAccountCreationIsSupportedUseCaseTests {
             LanguageCodeDomainModel.spanish
         ]
     )
-    func accountCreationIsSupportedForSupportedAppLanguages(languageCode: LanguageCodeDomainModel) async {
+    func accountCreationIsSupportedForSupportedAppLanguages(languageCode: LanguageCodeDomainModel) {
 
         let useCase = getUseCase()
 
-        let accountCreationIsSupported: AccountCreationIsSupportedDomainModel = await useCase.execute(appLanguage: languageCode.value)
+        let accountCreationIsSupported: AccountCreationIsSupportedDomainModel = useCase.execute(appLanguage: languageCode.value)
 
         #expect(accountCreationIsSupported.isSupported == true)
     }
@@ -44,11 +44,11 @@ struct GetAccountCreationIsSupportedUseCaseTests {
             "es-419"
         ]
     )
-    func accountCreationIsSupportedForRegionVariantsOfSupportedAppLanguages(appLanguage: AppLanguageDomainModel) async {
+    func accountCreationIsSupportedForRegionVariantsOfSupportedAppLanguages(appLanguage: AppLanguageDomainModel) {
 
         let useCase = getUseCase()
 
-        let accountCreationIsSupported: AccountCreationIsSupportedDomainModel = await useCase.execute(appLanguage: appLanguage)
+        let accountCreationIsSupported: AccountCreationIsSupportedDomainModel = useCase.execute(appLanguage: appLanguage)
 
         #expect(accountCreationIsSupported.isSupported == true)
     }
@@ -92,11 +92,11 @@ struct GetAccountCreationIsSupportedUseCaseTests {
             "unknown_language_code"
         ]
     )
-    func accountCreationIsNotSupportedForUnsupportedAppLanguages(appLanguage: AppLanguageDomainModel) async {
+    func accountCreationIsNotSupportedForUnsupportedAppLanguages(appLanguage: AppLanguageDomainModel) {
 
         let useCase = getUseCase()
 
-        let accountCreationIsSupported: AccountCreationIsSupportedDomainModel = await useCase.execute(appLanguage: appLanguage)
+        let accountCreationIsSupported: AccountCreationIsSupportedDomainModel = useCase.execute(appLanguage: appLanguage)
 
         #expect(accountCreationIsSupported.isSupported == false)
     }

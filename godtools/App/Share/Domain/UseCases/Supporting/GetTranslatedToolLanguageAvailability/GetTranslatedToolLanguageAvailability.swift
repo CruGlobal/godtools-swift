@@ -39,13 +39,13 @@ final class GetTranslatedToolLanguageAvailability: Sendable {
         toolId: String,
         language: LanguageDataModel,
         translateInLanguage: AppLanguageDomainModel
-    ) async -> ToolLanguageAvailabilityDomainModel {
+    ) -> ToolLanguageAvailabilityDomainModel {
         
         guard let resource = resourcesRepository.getResourceById(id: toolId) else {
             return failedToDetermineLanguageAvailability
         }
         
-        return await getTranslatedLanguageAvailability(
+        return getTranslatedLanguageAvailability(
             resource: resource,
             language: language,
             translateInLanguage: translateInLanguage
@@ -56,13 +56,13 @@ final class GetTranslatedToolLanguageAvailability: Sendable {
         resource: ResourceDataModel,
         language: AppLanguageDomainModel,
         translateInLanguage: AppLanguageDomainModel
-    ) async -> ToolLanguageAvailabilityDomainModel {
+    ) -> ToolLanguageAvailabilityDomainModel {
         
         guard let languageModel = languagesRepository.getLanguageByCode(code: language) else {
             return failedToDetermineLanguageAvailability
         }
         
-        return await getTranslatedLanguageAvailability(
+        return getTranslatedLanguageAvailability(
             resource: resource,
             language: languageModel,
             translateInLanguage: translateInLanguage
@@ -73,13 +73,13 @@ final class GetTranslatedToolLanguageAvailability: Sendable {
         resource: ResourceDataModel,
         language: LanguageDataModel,
         translateInLanguage: AppLanguageDomainModel
-    ) async -> ToolLanguageAvailabilityDomainModel {
+    ) -> ToolLanguageAvailabilityDomainModel {
         
         guard let translateInLanguageModel = languagesRepository.getLanguageByCode(code: translateInLanguage) else {
             return failedToDetermineLanguageAvailability
         }
         
-        return await getTranslatedLanguageAvailability(
+        return getTranslatedLanguageAvailability(
             resource: resource,
             language: language,
             translateInLanguage: translateInLanguageModel
@@ -90,9 +90,9 @@ final class GetTranslatedToolLanguageAvailability: Sendable {
         resource: ResourceDataModel,
         language: LanguageDataModel,
         translateInLanguage: LanguageDataModel
-    ) async -> ToolLanguageAvailabilityDomainModel {
+    ) -> ToolLanguageAvailabilityDomainModel {
         
-        let translatedLanguageName: String = await getTranslatedLanguageName.getLanguageName(
+        let translatedLanguageName: String = getTranslatedLanguageName.getLanguageName(
             language: language,
             translatedInLanguage: translateInLanguage.code
         )

@@ -38,13 +38,13 @@ struct SearchLessonFilterLanguagesUseCaseTests {
             )
         ]
     )
-    func showsLessonFilterLanguagesContainingSearchString(argument: TestArgument) async {
+    func showsLessonFilterLanguagesContainingSearchString(argument: TestArgument) {
         
         let searchLessonFilterLanguagesUseCase = SearchLessonFilterLanguagesUseCase(
             stringSearcher: StringSearcher()
         )
                 
-        let searchedLanguages: [String] = await searchLessonFilterLanguagesUseCase
+        let searchedLanguages: [String] = searchLessonFilterLanguagesUseCase
             .execute(searchText: argument.searchString, lessonFilterLanguages: allLessonFilterLanguages)
             .map({$0.languageNameTranslatedInAppLanguage})
         

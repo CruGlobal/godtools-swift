@@ -118,7 +118,7 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
             
             for language in languages {
                 
-                let name = await weakSelf.getTranslatedLanguageName.getLanguageName(
+                let name = weakSelf.getTranslatedLanguageName.getLanguageName(
                     language: language,
                     translatedInLanguage: appLanguage
                 )

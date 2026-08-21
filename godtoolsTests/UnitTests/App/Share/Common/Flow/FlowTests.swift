@@ -15,7 +15,7 @@ import UIKit
 struct FlowTests: FlowTesting {
     
     @Test()
-    func removesAllFlows() async throws {
+    func removesAllFlows() throws {
         
         let rootFlow = getNewRootFlow()
         
