@@ -58,16 +58,43 @@ final class CreatingToolScreenShareSessionViewModel: ObservableObject {
             })
             .store(in: &cancellables)
         
+        observeDidCreateChannelStream()
+        
+        createChannel()
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
+        didCreateChannelTask?.cancel()
+        creatingChannelTask?.cancel()
+    }
+
+    private func cancelCreateChannelTasks() {
+        didCreateChannelTask?.cancel()
+        creatingChannelTask?.cancel()
+    }
+    
+    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
+
+        strings = getCreatingToolScreenShareSessionStringsUseCase
+            .execute(appLanguage: appLanguage)
+    }
+    
+    private func observeDidCreateChannelStream() {
+                
+        let createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger = self.createSessionTrigger
+        
         didCreateChannelTask = Task { [weak self] in
             
-            let createdChannelStream: AsyncStream<WebSocketChannel> = await tractRemoteSharePublisher.getCreatedChannelStream()
+            guard let createdChannelStream: AsyncStream<WebSocketChannel> = await self?.tractRemoteSharePublisher.getCreatedChannelStream() else {
+                return
+            }
                         
             for await channel in createdChannelStream {
                 
-                self?.didCreateChannelTask?.cancel()
-                self?.creatingChannelTask?.cancel()
+                self?.cancelCreateChannelTasks()
                 
-                stepEmitter.emit(
+                self?.stepEmitter.emit(
                     step: AppFlowStep.didCreateSessionFromCreatingToolScreenShareSession(
                         result: .success(channel),
                         createSessionTrigger: createSessionTrigger
@@ -75,18 +102,25 @@ final class CreatingToolScreenShareSessionViewModel: ObservableObject {
                 )
             }
         }
+    }
+    
+    private func createChannel() {
+                
+        let createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger = self.createSessionTrigger
         
-        creatingChannelTask = Task {
+        creatingChannelTask = Task { [weak self] in
             
             do {
                 
                 try await Task.sleep(for: .seconds(Self.showCreatingSessionForMinSeconds))
                 
-                try await tractRemoteSharePublisher.createChannelForPublish()
+                try await self?.tractRemoteSharePublisher.createChannelForPublish()
             }
             catch let error {
                 
-                stepEmitter.emit(
+                self?.cancelCreateChannelTasks()
+                
+                self?.stepEmitter.emit(
                     step: AppFlowStep.didCreateSessionFromCreatingToolScreenShareSession(
                         result: .failure(error),
                         createSessionTrigger: createSessionTrigger
@@ -94,16 +128,6 @@ final class CreatingToolScreenShareSessionViewModel: ObservableObject {
                 )
             }
         }
-    }
-    
-    deinit {
-        print("x deinit: \(type(of: self))")
-    }
-
-    private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
-
-        strings = getCreatingToolScreenShareSessionStringsUseCase
-            .execute(appLanguage: appLanguage)
     }
 }
 
@@ -113,8 +137,7 @@ extension CreatingToolScreenShareSessionViewModel {
     
     @objc func closeTapped() {
                 
-        didCreateChannelTask?.cancel()
-        creatingChannelTask?.cancel()
+        cancelCreateChannelTasks()
         
         let tractRemoteSharePublisher: TractRemoteSharePublisher = self.tractRemoteSharePublisher
         
