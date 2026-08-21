@@ -124,37 +124,7 @@ final class TutorialViewModel: ObservableObject {
                 
         hidesBackButton = isOnFirstPage
                                 
-        let analyticsScreenName = getAnalyticsScreenName(tutorialItemIndex: page)
-        let analyticsSiteSection = analyticsSiteSection
-        let analyticsSiteSubSection = analyticsSiteSubsection
-        
-        Task {
-            await trackScreenViewAnalyticsUseCase.execute(
-                properties: AnalyticsProperties(
-                    screenName: analyticsScreenName,
-                    siteSection: analyticsSiteSection,
-                    siteSubSection: analyticsSiteSubSection,
-                    appLanguage: nil,
-                    contentLanguage: nil,
-                    secondaryContentLanguage: nil
-                )
-            )
-        }
-        
-        Task {
-            await trackActionAnalyticsUseCase.execute(
-                properties: AnalyticsProperties(
-                    screenName: analyticsScreenName,
-                    siteSection: analyticsSiteSection,
-                    siteSubSection: analyticsSiteSubSection,
-                    appLanguage: nil,
-                    contentLanguage: nil,
-                    secondaryContentLanguage: nil
-                ),
-                actionName: analyticsScreenName,
-                data: nil
-            )
-        }
+        trackPageView(page: page)
     }
     
     private func refreshContinueTitle(strings: TutorialStringsDomainModel, tutorialPages: [TutorialPageDomainModel]) {
@@ -162,6 +132,38 @@ final class TutorialViewModel: ObservableObject {
         let isOnLastPage: Bool = getIsOnLastPage(tutorialPages: tutorialPages)
         
         continueTitle = isOnLastPage ? strings.completeTutorialActionTitle : strings.nextTutorialPageActionTitle
+    }
+    
+    private func trackPageView(page: Int) {
+        
+        let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase = self.trackScreenViewAnalyticsUseCase
+        
+        let analyticsScreenName = getAnalyticsScreenName(tutorialItemIndex: page)
+        
+        let analyticsProperties = AnalyticsProperties(
+            screenName: analyticsScreenName,
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubsection,
+            appLanguage: nil,
+            contentLanguage: nil,
+            secondaryContentLanguage: nil
+        )
+        
+        Task.detached {
+            await trackScreenViewAnalyticsUseCase.execute(
+                properties: analyticsProperties
+            )
+        }
+        
+        let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = self.trackActionAnalyticsUseCase
+        
+        Task.detached {
+            await trackActionAnalyticsUseCase.execute(
+                properties: analyticsProperties,
+                actionName: analyticsScreenName,
+                data: nil
+            )
+        }
     }
 }
 
@@ -194,18 +196,21 @@ extension TutorialViewModel {
             
             trackedAnalyticsForYouTubeVideoIds.append(videoId)
                         
-            Task {
+            let analyticsProperties = AnalyticsProperties(
+                screenName: getAnalyticsScreenName(tutorialItemIndex: tutorialPageIndex),
+                siteSection: "",
+                siteSubSection: "",
+                appLanguage: appLanguage,
+                contentLanguage: nil,
+                secondaryContentLanguage: nil
+            )
+            let tutorialVideoAnalytics: TutorialVideoAnalytics = self.tutorialVideoAnalytics
+            
+            Task.detached {
                 
                 await tutorialVideoAnalytics.trackVideoPlayed(
                     videoId: videoId,
-                    properties: AnalyticsProperties(
-                        screenName: getAnalyticsScreenName(tutorialItemIndex: tutorialPageIndex),
-                        siteSection: "",
-                        siteSubSection: "",
-                        appLanguage: appLanguage,
-                        contentLanguage: nil,
-                        secondaryContentLanguage: nil
-                    )
+                    properties: analyticsProperties
                 )
             }
         }

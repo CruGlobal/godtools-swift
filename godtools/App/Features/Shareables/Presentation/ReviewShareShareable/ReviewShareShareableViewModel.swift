@@ -104,11 +104,15 @@ final class ReviewShareShareableViewModel: ObservableObject {
 
     private func trackShareImageTappedAnalytics() {
         
-        Task {
+        let toolId: String = self.toolId
+        let shareableId: String = shareable.dataModelId
+        let trackShareShareableTapUseCase: TrackShareShareableTapUseCase = self.trackShareShareableTapUseCase
+        
+        Task.detached {
             await trackShareShareableTapUseCase
                 .execute(
                     toolId: toolId,
-                    shareableId: shareable.dataModelId
+                    shareableId: shareableId
                 )
         }
     }

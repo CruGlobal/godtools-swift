@@ -144,8 +144,9 @@ final class OnboardingTutorialViewModel: ObservableObject {
         if page >= 0 && page < pages.count {
          
             let properties = getOnboardingTutorialPageAnalyticsProperties(page: pages[page])
+            let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase = self.trackScreenViewAnalyticsUseCase
             
-            Task {
+            Task.detached {
                 
                 await trackScreenViewAnalyticsUseCase.execute(
                     properties: properties
@@ -227,8 +228,9 @@ extension OnboardingTutorialViewModel {
         stepEmitter.emit(step: AppFlowStep.skipTappedFromOnboardingTutorial)
         
         let properties = getOnboardingTutorialPageAnalyticsProperties(page: pages[currentPage])
+        let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = self.trackActionAnalyticsUseCase
         
-        Task {
+        Task.detached {
             await trackActionAnalyticsUseCase.execute(
                 properties: properties,
                 actionName: AnalyticsConstants.ActionNames.onboardingSkip,
@@ -247,8 +249,10 @@ extension OnboardingTutorialViewModel {
         stepEmitter.emit(step: AppFlowStep.videoButtonTappedFromOnboardingTutorial(youtubeVideoId: readyForEveryConversationYoutubeVideoId))
         
         let properties = getOnboardingTutorialPageAnalyticsProperties(page: .readyForEveryConversation)
+        let readyForEveryConversationYoutubeVideoId: String = self.readyForEveryConversationYoutubeVideoId
+        let trackTutorialVideoAnalytics: TutorialVideoAnalytics = self.trackTutorialVideoAnalytics
         
-        Task {
+        Task.detached {
             
             await trackTutorialVideoAnalytics.trackVideoPlayed(
                 videoId: readyForEveryConversationYoutubeVideoId,

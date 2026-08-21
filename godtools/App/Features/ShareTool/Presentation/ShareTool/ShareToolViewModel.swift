@@ -68,30 +68,27 @@ extension ShareToolViewModel {
     
     func pageViewed() {
         
-        Task {
+        let analyticsProperties = AnalyticsProperties(
+            screenName: analyticsScreenName,
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            appLanguage: nil,
+            contentLanguage: nil,
+            secondaryContentLanguage: nil
+        )
+        let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase = self.trackScreenViewAnalyticsUseCase
+        let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = self.trackActionAnalyticsUseCase
+        
+        Task.detached {
             await trackScreenViewAnalyticsUseCase.execute(
-                properties: AnalyticsProperties(
-                    screenName: analyticsScreenName,
-                    siteSection: analyticsSiteSection,
-                    siteSubSection: analyticsSiteSubSection,
-                    appLanguage: nil,
-                    contentLanguage: nil,
-                    secondaryContentLanguage: nil
-                )
+                properties: analyticsProperties
             )
         }
             
-        Task {
+        Task.detached {
             
             await trackActionAnalyticsUseCase.execute(
-                properties: AnalyticsProperties(
-                    screenName: analyticsScreenName,
-                    siteSection: analyticsSiteSection,
-                    siteSubSection: analyticsSiteSubSection,
-                    appLanguage: nil,
-                    contentLanguage: nil,
-                    secondaryContentLanguage: nil
-                ),
+                properties: analyticsProperties,
                 actionName: AnalyticsConstants.ActionNames.shareIconEngaged,
                 data: [
                     AnalyticsConstants.Keys.shareAction: 1

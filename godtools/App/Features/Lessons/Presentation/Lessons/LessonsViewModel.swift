@@ -216,29 +216,40 @@ final class LessonsViewModel: ObservableObject {
     
     private func trackPageViewed() {
         
-        Task {
+        let analyticsProperties = AnalyticsProperties(
+            screenName: analyticsScreenName,
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            appLanguage: nil,
+            contentLanguage: nil,
+            secondaryContentLanguage: nil
+        )
+    
+        let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase = self.trackScreenViewAnalyticsUseCase
+        
+        Task.detached {
             await trackScreenViewAnalyticsUseCase.execute(
-                properties: AnalyticsProperties(
-                    screenName: analyticsScreenName,
-                    siteSection: analyticsSiteSection,
-                    siteSubSection: analyticsSiteSubSection,
-                    appLanguage: nil,
-                    contentLanguage: nil,
-                    secondaryContentLanguage: nil
-                )
+                properties: analyticsProperties
             )
         }
+    }
+    
+    private func trackViewedLessons() {
         
-        Task {
+        let analyticsProperties = AnalyticsProperties(
+            screenName: "",
+            siteSection: "",
+            siteSubSection: "",
+            appLanguage: nil,
+            contentLanguage: nil,
+            secondaryContentLanguage: nil
+        )
+        
+        let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = self.trackActionAnalyticsUseCase
+        
+        Task.detached {
             await trackActionAnalyticsUseCase.execute(
-                properties: AnalyticsProperties(
-                    screenName: "",
-                    siteSection: "",
-                    siteSubSection: "",
-                    appLanguage: nil,
-                    contentLanguage: nil,
-                    secondaryContentLanguage: nil
-                ),
+                properties: analyticsProperties,
                 actionName: AnalyticsConstants.ActionNames.viewedLessonsAction,
                 data: nil
             )
@@ -247,20 +258,24 @@ final class LessonsViewModel: ObservableObject {
     
     private func trackLessonTappedAnalytics(lessonListItem: LessonListItemDomainModel) {
         
-        Task {
+        let analyticsProperties = AnalyticsProperties(
+            screenName: analyticsScreenName,
+            siteSection: "",
+            siteSubSection: "",
+            appLanguage: nil,
+            contentLanguage: nil,
+            secondaryContentLanguage: nil
+        )
+        let analyticsToolName: String = lessonListItem.analyticsToolName
+        let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = self.trackActionAnalyticsUseCase
+        
+        Task.detached {
             await trackActionAnalyticsUseCase.execute(
-                properties: AnalyticsProperties(
-                    screenName: analyticsScreenName,
-                    siteSection: "",
-                    siteSubSection: "",
-                    appLanguage: nil,
-                    contentLanguage: nil,
-                    secondaryContentLanguage: nil
-                ),
+                properties: analyticsProperties,
                 actionName: AnalyticsConstants.ActionNames.lessonOpenTapped,
                 data: [
                     AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.lessons,
-                    AnalyticsConstants.Keys.tool: lessonListItem.analyticsToolName
+                    AnalyticsConstants.Keys.tool: analyticsToolName
                 ]
             )
         }
@@ -318,6 +333,8 @@ extension LessonsViewModel {
     func pageViewed() {
         
         trackPageViewed()
+        
+        trackViewedLessons()
     }
     
     func lessonLanguageFilterTapped() {

@@ -75,16 +75,19 @@ extension DeferredDeepLinkModalViewModel {
                 incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
         else {
             
-            Task {
+            let analyticsProperties = AnalyticsProperties(
+                screenName: "Deferred DeepLink",
+                siteSection: "",
+                siteSubSection: "",
+                appLanguage: nil,
+                contentLanguage: nil,
+                secondaryContentLanguage: nil
+            )
+            let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = self.trackActionAnalyticsUseCase
+            
+            Task.detached {
                 await trackActionAnalyticsUseCase.execute(
-                    properties: AnalyticsProperties(
-                        screenName: "Deferred DeepLink",
-                        siteSection: "",
-                        siteSubSection: "",
-                        appLanguage: nil,
-                        contentLanguage: nil,
-                        secondaryContentLanguage: nil
-                    ),
+                    properties: analyticsProperties,
                     actionName: AnalyticsConstants.ActionNames.deeplinkError,
                     data: nil)
             }
