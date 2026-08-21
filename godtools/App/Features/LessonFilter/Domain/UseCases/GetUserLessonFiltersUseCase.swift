@@ -32,12 +32,9 @@ final class GetUserLessonFiltersUseCase: Sendable {
             languagesRepository.observeCollectionChangesPublisher(),
             userLessonFiltersRepository.observeCollectionChangesPublisher()
         )
-        .flatMap { (languagesChanged: Void, lessonFiltersChanged: Void) -> AnyPublisher<LessonFilterLanguageDomainModel?, Error> in
+        .map { (languagesChanged: Void, lessonFiltersChanged: Void) in
 
-            return AnyPublisher() {
-                
-                return await self.asyncExecute(appLanguage: appLanguage)
-            }
+            return self.getLessonFilterLanguage(appLanguage: appLanguage)
         }
         .map { (languageFilter: LessonFilterLanguageDomainModel?) in
 
@@ -50,17 +47,17 @@ final class GetUserLessonFiltersUseCase: Sendable {
         .eraseToAnyPublisher()
     }
     
-    private func asyncExecute(appLanguage: AppLanguageDomainModel) async -> LessonFilterLanguageDomainModel? {
+    private func getLessonFilterLanguage(appLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel? {
         
         let languageId: String? = userLessonFiltersRepository.getUserLessonLanguageFilter()?.languageId
 
         if let languageId = languageId,
-           let languageFilter = await getLessonFilterLanguage.getLessonLanguageFilterFromLanguageId(languageId: languageId, translatedInAppLanguage: appLanguage) {
+           let languageFilter = getLessonFilterLanguage.getLessonLanguageFilterFromLanguageId(languageId: languageId, translatedInAppLanguage: appLanguage) {
 
             return languageFilter
         }
 
-        return await getLessonFilterLanguage.getLessonLanguageFilterFromLanguageCode(
+        return getLessonFilterLanguage.getLessonLanguageFilterFromLanguageCode(
             languageCode: appLanguage,
             translatedInAppLanguage: appLanguage
         )

@@ -25,13 +25,13 @@ struct GetToolListItemStringsTests {
         Then: The tool card interface strings should be translated in spanish.
         """
     )
-    func testToolNameIsTranslated() async {
+    func testToolNameIsTranslated() {
                         
         let getToolListItemStrings = GetToolListItemStrings(
             localizationServices: getLocalizationServices()
         )
         
-        let strings = await getToolListItemStrings
+        let strings = getToolListItemStrings
             .getStrings(appLanguage: LanguageCodeDomainModel.spanish.rawValue)
         
         #expect(strings.openToolActionTitle == openToolInSpanish)

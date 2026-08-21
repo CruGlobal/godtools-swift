@@ -19,7 +19,7 @@ struct SendFeedbackWebContent: WebContentType {
     
     private(set) var navTitle: String = ""
     
-    init(appLanguage: AppLanguageDomainModel, localizationServices: LocalizationServicesInterface) async {
+    init(appLanguage: AppLanguageDomainModel, localizationServices: LocalizationServicesInterface) {
         
         self.appLanguage = appLanguage
         self.localizationServices = localizationServices
