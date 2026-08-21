@@ -19,7 +19,7 @@ final class GetConfirmAppLanguageStringsUseCase: Sendable {
         self.getTranslatedLanguageName = getTranslatedLanguageName
     }
     
-    func execute(appLanguage: AppLanguageDomainModel, selectedLanguage: AppLanguageDomainModel) async -> ConfirmAppLanguageStringsDomainModel {
+    func execute(appLanguage: AppLanguageDomainModel, selectedLanguage: AppLanguageDomainModel) -> ConfirmAppLanguageStringsDomainModel {
         
         let appLanguageLocaleId: String = appLanguage
 
@@ -36,14 +36,14 @@ final class GetConfirmAppLanguageStringsUseCase: Sendable {
         )
 
         return ConfirmAppLanguageStringsDomainModel(
-            messageInNewlySelectedLanguageHighlightModel: await getHighlightMessageStringDomainModel(selectedLanguage: selectedLanguage, localeId: selectedLanguage),
-            messageInCurrentLanguageHighlightModel: await getHighlightMessageStringDomainModel(selectedLanguage: selectedLanguage, localeId: appLanguageLocaleId),
+            messageInNewlySelectedLanguageHighlightModel: getHighlightMessageStringDomainModel(selectedLanguage: selectedLanguage, localeId: selectedLanguage),
+            messageInCurrentLanguageHighlightModel: getHighlightMessageStringDomainModel(selectedLanguage: selectedLanguage, localeId: appLanguageLocaleId),
             changeLanguageButtonText: strings[changeLanguageButtonTextKey] ?? "",
             nevermindButtonText: strings[nevermindButtonTextKey] ?? ""
         )
     }
 
-    private func getHighlightMessageStringDomainModel(selectedLanguage: AppLanguageDomainModel, localeId: String) async -> ConfirmAppLanguageHighlightStringDomainModel {
+    private func getHighlightMessageStringDomainModel(selectedLanguage: AppLanguageDomainModel, localeId: String) -> ConfirmAppLanguageHighlightStringDomainModel {
 
         let messageKey: String = LocalizableStringKeys.languageSettingsConfirmAppLanguageMessage.key
 
@@ -56,7 +56,7 @@ final class GetConfirmAppLanguageStringsUseCase: Sendable {
         )
 
         let formatString: String = strings[messageKey] ?? ""
-        let languageName = await getTranslatedLanguageName.getLanguageName(language: selectedLanguage, translatedInLanguage: localeId)
+        let languageName = getTranslatedLanguageName.getLanguageName(language: selectedLanguage, translatedInLanguage: localeId)
         
         let fullText = String(format: formatString, languageName)
         

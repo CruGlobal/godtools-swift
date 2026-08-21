@@ -25,7 +25,7 @@ struct GetConfirmAppLanguageStringsUseCaseTests {
 
         let useCase = getUseCase()
 
-        let strings: ConfirmAppLanguageStringsDomainModel = await useCase.execute(
+        let strings: ConfirmAppLanguageStringsDomainModel = useCase.execute(
             appLanguage: englishAppLanguage,
             selectedLanguage: spanishAppLanguage
         )

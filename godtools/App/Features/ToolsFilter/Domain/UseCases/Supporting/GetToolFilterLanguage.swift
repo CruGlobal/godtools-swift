@@ -37,24 +37,24 @@ final class GetToolFilterLanguage: Sendable {
         return createAnyLanguageDomainModel(translatedInAppLanguage: translatedInAppLanguage, filteredByCategoryId: nil)
     }
     
-    func getLanguageFilter(languageId: String, translatedInAppLanguage: AppLanguageDomainModel) async -> ToolFilterLanguageDomainModel? {
+    func getLanguageFilter(languageId: String, translatedInAppLanguage: AppLanguageDomainModel) -> ToolFilterLanguageDomainModel? {
         
         guard let language = languagesRepository.getLanguageById(id: languageId) else {
             return nil
         }
         
-        return await createLanguageFilterDomainModel(language: language, translatedInAppLanguage: translatedInAppLanguage, filteredByCategoryId: nil)
+        return createLanguageFilterDomainModel(language: language, translatedInAppLanguage: translatedInAppLanguage, filteredByCategoryId: nil)
     }
 }
 
 extension GetToolFilterLanguage {
     
-    func createLanguageFilterDomainModel(language: LanguageDataModel, translatedInAppLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) async -> ToolFilterLanguageDomainModel {
+    func createLanguageFilterDomainModel(language: LanguageDataModel, translatedInAppLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) -> ToolFilterLanguageDomainModel {
         
         let toolsAvailableCount: Int = getToolsAvailableCount(languageId: language.id, filteredByCategoryId: filteredByCategoryId)
         
-        let languageName = await getTranslatedLanguageName.getLanguageName(language: language, translatedInLanguage: language.code)
-        let languageNameTranslatedInAppLanguage = await getTranslatedLanguageName.getLanguageName(language: language, translatedInLanguage: translatedInAppLanguage)
+        let languageName = getTranslatedLanguageName.getLanguageName(language: language, translatedInLanguage: language.code)
+        let languageNameTranslatedInAppLanguage = getTranslatedLanguageName.getLanguageName(language: language, translatedInLanguage: translatedInAppLanguage)
         
         let toolsAvailable: String = getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
         

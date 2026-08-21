@@ -60,11 +60,11 @@ final class GetDownloadedLanguagesListUseCase: Sendable {
 
         for language in languages {
 
-            let languageNameInOwnLanguage = await getTranslatedLanguageName.getLanguageName(
+            let languageNameInOwnLanguage = getTranslatedLanguageName.getLanguageName(
                 language: language,
                 translatedInLanguage: language.code
             )
-            let languageNameInAppLanguage = await getTranslatedLanguageName.getLanguageName(
+            let languageNameInAppLanguage = getTranslatedLanguageName.getLanguageName(
                 language: language,
                 translatedInLanguage: appLanguage
             )

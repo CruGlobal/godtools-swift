@@ -45,7 +45,7 @@ final class GetLessonsListItems: Sendable {
                 filterLanguageModel = nil
             }
 
-            let toolLanguageAvailability = await getToolLanguageAvailability(
+            let toolLanguageAvailability = getToolLanguageAvailability(
                 appLanguage: appLanguage,
                 filterLanguageModel: filterLanguageModel,
                 resource: resource
@@ -88,7 +88,7 @@ final class GetLessonsListItems: Sendable {
         appLanguage: AppLanguageDomainModel,
         filterLanguageModel: LanguageDataModel?,
         resource: ResourceDataModel
-    ) async -> ToolLanguageAvailabilityDomainModel {
+    ) -> ToolLanguageAvailabilityDomainModel {
 
         if let appLanguageModel = languagesRepository.getLanguageByCode(code: appLanguage) {
             
@@ -100,7 +100,7 @@ final class GetLessonsListItems: Sendable {
                 language = appLanguageModel
             }
             
-            return await getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(
+            return getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(
                 resource: resource,
                 language: language,
                 translateInLanguage: appLanguageModel

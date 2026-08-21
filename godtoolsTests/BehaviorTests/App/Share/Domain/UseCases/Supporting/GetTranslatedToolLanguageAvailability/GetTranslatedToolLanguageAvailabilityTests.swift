@@ -57,7 +57,7 @@ struct GetTranslatedToolLanguageAvailabilityTests {
 
         let language: LanguageDataModel = try #require(queryLanguage(id: argument.availableInLanguageCode, testsDiContainer: testsDiContainer))
 
-        let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = await translatedToolLanguageAvailability.getTranslatedLanguageAvailability(
+        let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = translatedToolLanguageAvailability.getTranslatedLanguageAvailability(
             toolId: toolId,
             language: language,
             translateInLanguage: argument.translateInLanguage
@@ -104,7 +104,7 @@ struct GetTranslatedToolLanguageAvailabilityTests {
 
         let language: LanguageDataModel = try #require(queryLanguage(id: argument.availableInLanguageCode, testsDiContainer: testsDiContainer))
 
-        let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = await translatedToolLanguageAvailability.getTranslatedLanguageAvailability(
+        let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = translatedToolLanguageAvailability.getTranslatedLanguageAvailability(
             toolId: toolId,
             language: language,
             translateInLanguage: argument.translateInLanguage
@@ -145,7 +145,7 @@ struct GetTranslatedToolLanguageAvailabilityTests {
 
         let resource: ResourceDataModel = try #require(queryResource(id: toolId, testsDiContainer: testsDiContainer))
 
-        let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = await translatedToolLanguageAvailability.getTranslatedLanguageAvailability(
+        let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = translatedToolLanguageAvailability.getTranslatedLanguageAvailability(
             resource: resource,
             language: argument.availableInLanguageCode,
             translateInLanguage: argument.translateInLanguage
@@ -192,7 +192,7 @@ struct GetTranslatedToolLanguageAvailabilityTests {
 
         let resource: ResourceDataModel = try #require(queryResource(id: toolId, testsDiContainer: testsDiContainer))
 
-        let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = await translatedToolLanguageAvailability.getTranslatedLanguageAvailability(
+        let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = translatedToolLanguageAvailability.getTranslatedLanguageAvailability(
             resource: resource,
             language: argument.availableInLanguageCode,
             translateInLanguage: argument.translateInLanguage

@@ -62,7 +62,7 @@ final class GetToolSettingsToolLanguagesListUseCase: Sendable {
         
         for language in languages {
             
-            let languageName: String = await self.getTranslatedLanguageName.getLanguageName(
+            let languageName: String = self.getTranslatedLanguageName.getLanguageName(
                 language: language,
                 translatedInLanguage: appLanguage
             )

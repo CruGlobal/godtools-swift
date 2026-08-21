@@ -31,30 +31,30 @@ final class GetLessonFilterLanguage: Sendable {
         self.stringWithLocaleCount = stringWithLocaleCount
     }
     
-    func getLessonLanguageFilterFromLanguageCode(languageCode: String, translatedInAppLanguage: AppLanguageDomainModel) async -> LessonFilterLanguageDomainModel? {
+    func getLessonLanguageFilterFromLanguageCode(languageCode: String, translatedInAppLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel? {
         
         guard let language = languagesRepository.getLanguageByCode(code: languageCode) else {
             return nil
         }
         
-        return await mapLanguageToLessonFilterLanguageDomainModel(language: language, translatedInAppLanguage: translatedInAppLanguage)
+        return mapLanguageToLessonFilterLanguageDomainModel(language: language, translatedInAppLanguage: translatedInAppLanguage)
     }
     
-    func getLessonLanguageFilterFromLanguageId(languageId: String, translatedInAppLanguage: AppLanguageDomainModel) async -> LessonFilterLanguageDomainModel? {
+    func getLessonLanguageFilterFromLanguageId(languageId: String, translatedInAppLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel? {
         
         guard let language = languagesRepository.getLanguageById(id: languageId) else {
             return nil
         }
         
-        return await mapLanguageToLessonFilterLanguageDomainModel(language: language, translatedInAppLanguage: translatedInAppLanguage)
+        return mapLanguageToLessonFilterLanguageDomainModel(language: language, translatedInAppLanguage: translatedInAppLanguage)
     }
     
-    func mapLanguageToLessonFilterLanguageDomainModel(language: LanguageDataModel, translatedInAppLanguage: AppLanguageDomainModel) async -> LessonFilterLanguageDomainModel {
+    func mapLanguageToLessonFilterLanguageDomainModel(language: LanguageDataModel, translatedInAppLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel {
         
         let lessonsAvailableCount: Int = resourcesRepository.getLessonsCount(filterByLanguageId: language.id)
 
-        let languageNameTranslatedInLanguage = await getTranslatedLanguageName.getLanguageName(language: language.code, translatedInLanguage: language.code)
-        let languageNameTranslatedInAppLanguage = await getTranslatedLanguageName.getLanguageName(language: language.code, translatedInLanguage: translatedInAppLanguage)
+        let languageNameTranslatedInLanguage = getTranslatedLanguageName.getLanguageName(language: language.code, translatedInLanguage: language.code)
+        let languageNameTranslatedInAppLanguage = getTranslatedLanguageName.getLanguageName(language: language.code, translatedInLanguage: translatedInAppLanguage)
         
         let lessonsAvailableText: String = getLessonsAvailableText(lessonsAvailableCount: lessonsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
         

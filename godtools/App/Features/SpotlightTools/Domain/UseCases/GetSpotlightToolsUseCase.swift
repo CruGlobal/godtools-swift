@@ -79,7 +79,7 @@ final class GetSpotlightToolsUseCase: Sendable {
 
             if let language = languageForAvailabilityTextModel {
 
-                toolLanguageAvailability = await getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(
+                toolLanguageAvailability = getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(
                     resource: resource,
                     language: language,
                     translateInLanguage: appLanguage
