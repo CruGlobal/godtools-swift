@@ -84,7 +84,7 @@ final class LoadingArticleViewModel: ObservableObject {
                 downloadError = error
             }
             
-            try await Task.sleep(for: .seconds(1))
+            try? await Task.sleep(for: .seconds(1))
             
             if let downloadError = downloadError {
                 

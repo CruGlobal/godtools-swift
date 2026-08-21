@@ -78,7 +78,7 @@ final class DeleteAccountProgressViewModel: ObservableObject {
             
             let seconds = getRemainingSecondsToDisplayDeleteAccountProgress(startTime: startDeleteAccountTime)
             
-            try await Task.sleep(for: .seconds(seconds))
+            try? await Task.sleep(for: .seconds(seconds))
             
             didFinishAccountDeletion(error: error)
         }

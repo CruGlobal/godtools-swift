@@ -130,7 +130,7 @@ extension DownloadToolFlow {
                 navigationStep = .downloadToolFailed(error: error)
             }
                         
-            try await Task.sleep(for: .seconds(2))
+            try? await Task.sleep(for: .seconds(2))
             
             self?.navigate(step: navigationStep)
         }
