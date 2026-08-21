@@ -112,7 +112,7 @@ final class CreatingToolScreenShareSessionViewModel: ObservableObject {
             
             do {
                 
-                try? await Task.sleep(for: .seconds(Self.showCreatingSessionForMinSeconds))
+                try await Task.sleep(for: .seconds(Self.showCreatingSessionForMinSeconds))
                 
                 try await self?.tractRemoteSharePublisher.createChannelForPublish()
             }
