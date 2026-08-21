@@ -74,11 +74,11 @@ final class MenuViewModel: ObservableObject {
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
                 
-                Publishers.CombineLatest(
-                    AnyPublisher() {
-                        await getAccountCreationIsSupportedUseCase
-                            .execute(appLanguage: appLanguage)
-                    },
+                let accountCreationIsSupported = getAccountCreationIsSupportedUseCase
+                    .execute(appLanguage: appLanguage)
+                                
+                return Publishers.CombineLatest(
+                    Just(accountCreationIsSupported),
                     getUserIsAuthenticatedUseCase
                         .execute()
                 )

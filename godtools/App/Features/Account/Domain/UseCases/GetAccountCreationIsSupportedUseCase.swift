@@ -20,7 +20,7 @@ final class GetAccountCreationIsSupportedUseCase: Sendable {
         ]
     }
     
-    func execute(appLanguage: AppLanguageDomainModel) async -> AccountCreationIsSupportedDomainModel {
+    func execute(appLanguage: AppLanguageDomainModel) -> AccountCreationIsSupportedDomainModel {
 
         let isSupported: Bool = supportedLanguageCodes.contains(appLanguage.languageCode)
                         

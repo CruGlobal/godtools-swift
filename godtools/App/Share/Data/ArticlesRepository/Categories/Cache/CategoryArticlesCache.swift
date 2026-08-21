@@ -31,7 +31,7 @@ actor CategoryArticlesCache: CategoryArticlesCacheInterface, ModelActor {
         return filter
     }
     
-    func getCategoryArticles(categoryId: String, languageCode: String) async throws -> [CategoryArticleDataModel] {
+    func getCategoryArticles(categoryId: String, languageCode: String) throws -> [CategoryArticleDataModel] {
         
         let query = SwiftDatabaseQuery.filter(
             filter: getCategoryIdAndLanguageCodePredicate(categoryId: categoryId, languageCode: languageCode)
@@ -46,7 +46,7 @@ actor CategoryArticlesCache: CategoryArticlesCacheInterface, ModelActor {
         categories: [ManifestCategory],
         languageCode: String,
         aemDataObjects: [ArticleAemData]
-    ) async -> [Error] {
+    ) -> [Error] {
 
         typealias AemTag = String
 

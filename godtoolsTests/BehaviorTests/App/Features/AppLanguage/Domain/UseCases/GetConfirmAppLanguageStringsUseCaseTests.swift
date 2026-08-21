@@ -21,7 +21,7 @@ struct GetConfirmAppLanguageStringsUseCaseTests {
         Then: The newly selected language message is translated in the selected language and the current language message is translated in the current app language, each highlighting the selected language name.
         """
     )
-    func messagesAreTranslatedAndHighlightTheSelectedLanguageName() async {
+    func messagesAreTranslatedAndHighlightTheSelectedLanguageName() {
 
         let useCase = getUseCase()
 

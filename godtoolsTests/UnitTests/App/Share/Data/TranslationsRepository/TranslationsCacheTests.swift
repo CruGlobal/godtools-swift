@@ -61,7 +61,7 @@ struct TranslationsCacheTests {
 
     @available(iOS 17.4, *)
     @Test
-    func getEnglishTranslation() async throws {
+    func getEnglishTranslation() throws {
 
         let translationsCache = try getCache()
 
@@ -80,7 +80,7 @@ struct TranslationsCacheTests {
         TestArgument(expectedVersion: 122, languageId: spanishLanguageId),
         TestArgument(expectedVersion: 20, languageId: vietnameseLanguageId)
     ])
-    func getLatestTranslationByLanguageId(argument: TestArgument) async throws {
+    func getLatestTranslationByLanguageId(argument: TestArgument) throws {
 
         let translationsCache = try getCache()
 
@@ -100,7 +100,7 @@ struct TranslationsCacheTests {
         LanguageCodeArgument(expectedVersion: 122, languageCode: LanguageCodeDomainModel.spanish.rawValue),
         LanguageCodeArgument(expectedVersion: 20, languageCode: LanguageCodeDomainModel.vietnamese.rawValue)
     ])
-    func getLatestTranslationByLanguageCode(argument: LanguageCodeArgument) async throws {
+    func getLatestTranslationByLanguageCode(argument: LanguageCodeArgument) throws {
 
         let translationsCache = try getCache()
 
@@ -117,7 +117,7 @@ struct TranslationsCacheTests {
         LanguageCodeArgument(expectedVersion: 12, languageCode: "EN"),
         LanguageCodeArgument(expectedVersion: 122, languageCode: "Es")
     ])
-    func getLatestTranslationByLanguageCodeIgnoresCase(argument: LanguageCodeArgument) async throws {
+    func getLatestTranslationByLanguageCodeIgnoresCase(argument: LanguageCodeArgument) throws {
 
         let translationsCache = try getCache()
 
@@ -134,7 +134,7 @@ struct TranslationsCacheTests {
         MissingTranslationArgument(languageId: englishLanguageId, resourceId: "resource_does_not_exist"),
         MissingTranslationArgument(languageId: "language_does_not_exist")
     ])
-    func getLatestTranslationByLanguageIdIsNil(argument: MissingTranslationArgument) async throws {
+    func getLatestTranslationByLanguageIdIsNil(argument: MissingTranslationArgument) throws {
 
         let translationsCache = try getCache()
 
@@ -148,7 +148,7 @@ struct TranslationsCacheTests {
 
     @available(iOS 17.4, *)
     @Test
-    func getLatestTranslationByLanguageCodeIsNil() async throws {
+    func getLatestTranslationByLanguageCodeIsNil() throws {
 
         let translationsCache = try getCache()
 

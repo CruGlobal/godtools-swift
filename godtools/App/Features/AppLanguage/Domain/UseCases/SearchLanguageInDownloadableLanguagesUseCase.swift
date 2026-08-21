@@ -20,7 +20,7 @@ final class SearchLanguageInDownloadableLanguagesUseCase: Sendable {
     func execute(
         searchText: String,
         downloadableLanguages: [DownloadableLanguageListItemDomainModel]
-    ) async -> [DownloadableLanguageListItemDomainModel] {
+    ) -> [DownloadableLanguageListItemDomainModel] {
         
         return stringSearcher.search(for: searchText, in: downloadableLanguages)
     }

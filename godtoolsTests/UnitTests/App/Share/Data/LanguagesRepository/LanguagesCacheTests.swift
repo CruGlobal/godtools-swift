@@ -16,7 +16,7 @@ struct LanguagesCacheTests {
 
     @available(iOS 17.4, *)
     @Test
-    func getLanguageByCodeExists() async throws {
+    func getLanguageByCodeExists() throws {
 
         let cache = try getCache()
 
@@ -27,7 +27,7 @@ struct LanguagesCacheTests {
 
     @available(iOS 17.4, *)
     @Test
-    func getLanguageByCodeIsNil() async throws {
+    func getLanguageByCodeIsNil() throws {
 
         let cache = try getCache()
 

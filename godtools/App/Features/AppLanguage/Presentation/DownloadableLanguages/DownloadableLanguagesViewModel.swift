@@ -83,15 +83,13 @@ final class DownloadableLanguagesViewModel: ObservableObject {
             $allDownloadableLanguages.dropFirst()
         )
         .map{ (searchText: String, downloadableLanguages: [DownloadableLanguageListItemDomainModel]) in
-            return AnyPublisher() {
-                await searchLanguageInDownloadableLanguagesUseCase
-                    .execute(
-                        searchText: searchText,
-                        downloadableLanguages: downloadableLanguages
-                    )
-            }
+            
+            searchLanguageInDownloadableLanguagesUseCase
+                .execute(
+                    searchText: searchText,
+                    downloadableLanguages: downloadableLanguages
+                )
         }
-        .switchToLatest()
         .assign(to: &$displayedDownloadableLanguages)
     }
     

@@ -49,7 +49,7 @@ struct GetTranslatedToolLanguageAvailabilityTests {
             )
         ]
     )
-    func testTranslateLanguageAvailabilityByToolIdAndLanguageModelIsAvailable(argument: TestArgument) async throws {
+    func testTranslateLanguageAvailabilityByToolIdAndLanguageModelIsAvailable(argument: TestArgument) throws {
 
         let testsDiContainer = try getTestsDiContainer()
 
@@ -96,7 +96,7 @@ struct GetTranslatedToolLanguageAvailabilityTests {
             )
         ]
     )
-    func testTranslateLanguageAvailabilityByToolIdAndLanguageModelIsNotAvailable(argument: TestArgument) async throws {
+    func testTranslateLanguageAvailabilityByToolIdAndLanguageModelIsNotAvailable(argument: TestArgument) throws {
 
         let testsDiContainer = try getTestsDiContainer()
 
@@ -137,7 +137,7 @@ struct GetTranslatedToolLanguageAvailabilityTests {
             )
         ]
     )
-    func testTranslateLanguageAvailabilityByToolIdAndAppLanguageIsAvailable(argument: TestArgument) async throws {
+    func testTranslateLanguageAvailabilityByToolIdAndAppLanguageIsAvailable(argument: TestArgument) throws {
 
         let testsDiContainer = try getTestsDiContainer()
 
@@ -184,7 +184,7 @@ struct GetTranslatedToolLanguageAvailabilityTests {
             )
         ]
     )
-    func testTranslateLanguageAvailabilityByToolIdAndAppLanguageIsNotAvailable(argument: TestArgument) async throws {
+    func testTranslateLanguageAvailabilityByToolIdAndAppLanguageIsNotAvailable(argument: TestArgument) throws {
 
         let testsDiContainer = try getTestsDiContainer()
 

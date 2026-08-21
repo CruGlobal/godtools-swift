@@ -18,7 +18,7 @@ struct DidChangeScaleForSpiritualConversationReadinessUseCaseTests {
         Then: I expect the minimum value to be 1 and maximum value to be 10.
         """
     )
-    func confirmReadinessScaleMinAndMaxValuesAreCorrect() async {
+    func confirmReadinessScaleMinAndMaxValuesAreCorrect() {
         
         let didChangeSpiritualConversationReadinessScaleUseCase = getDidChangeScaleForSpiritualConversationReadinessUseCase()
         
@@ -36,7 +36,7 @@ struct DidChangeScaleForSpiritualConversationReadinessUseCaseTests {
         Then: I expect the min, max, and scale values to be translated in my app language english.
         """
     )
-    func readinessScaleIsTranslatedInEnglish() async {
+    func readinessScaleIsTranslatedInEnglish() {
         
         let didChangeSpiritualConversationReadinessScaleUseCase = getDidChangeScaleForSpiritualConversationReadinessUseCase()
         
@@ -55,7 +55,7 @@ struct DidChangeScaleForSpiritualConversationReadinessUseCaseTests {
         Then: I expect the min, max, and scale values to be translated in my app language arabic.
         """
     )
-    func readinessScaleIsTranslatedInArabic() async {
+    func readinessScaleIsTranslatedInArabic() {
         
         let didChangeSpiritualConversationReadinessScaleUseCase = getDidChangeScaleForSpiritualConversationReadinessUseCase()
         
@@ -93,7 +93,7 @@ struct DidChangeScaleForSpiritualConversationReadinessUseCaseTests {
             TestClampingScale(scaleValue: -10)
         ]
     )
-    func readinessScaleIsClampedToMin(argument: TestClampingScale) async {
+    func readinessScaleIsClampedToMin(argument: TestClampingScale) {
         
         let didChangeSpiritualConversationReadinessScaleUseCase = getDidChangeScaleForSpiritualConversationReadinessUseCase()
         
@@ -114,7 +114,7 @@ struct DidChangeScaleForSpiritualConversationReadinessUseCaseTests {
             TestClampingScale(scaleValue: 99999)
         ]
     )
-    func readinessScaleIsClampedToMax(argument: TestClampingScale) async {
+    func readinessScaleIsClampedToMax(argument: TestClampingScale) {
         
         let didChangeSpiritualConversationReadinessScaleUseCase = getDidChangeScaleForSpiritualConversationReadinessUseCase()
         

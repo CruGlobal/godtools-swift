@@ -223,7 +223,7 @@ struct FlowPushPopFlowTests: FlowTesting {
     }
     
     @Test()
-    func cannotPushFlowThatIsAlreadyPresented() async throws {
+    func cannotPushFlowThatIsAlreadyPresented() throws {
         
         let flowA = getNewFlow()
         let flowB = getNewFlow()

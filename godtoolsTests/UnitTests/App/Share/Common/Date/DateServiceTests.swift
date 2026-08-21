@@ -23,7 +23,7 @@ struct DateServiceTests {
             TestArgument(calendarIdentifier: .hebrew)
         ]
     )
-    func currentYearUsesOptionsCalendarWhenNoCalendarIsInjected(argument: TestArgument) async {
+    func currentYearUsesOptionsCalendarWhenNoCalendarIsInjected(argument: TestArgument) {
 
         let calendar: Calendar = Calendar(identifier: argument.calendarIdentifier)
 
@@ -37,7 +37,7 @@ struct DateServiceTests {
     }
 
     @Test()
-    func injectedCalendarTakesPrecedenceOverOptionsCalendar() async {
+    func injectedCalendarTakesPrecedenceOverOptionsCalendar() {
 
         let injectedCalendar: Calendar = Calendar(identifier: .buddhist)
         let optionsCalendar: Calendar = Calendar(identifier: .gregorian)
@@ -54,7 +54,7 @@ struct DateServiceTests {
     }
 
     @Test()
-    func currentYearMatchesGregorianYearForDefaultOptions() async {
+    func currentYearMatchesGregorianYearForDefaultOptions() {
 
         let dateService: DateService = DateService()
 

@@ -90,14 +90,11 @@ final class LocalizationSettingsViewModel: ObservableObject {
             $countriesList.dropFirst()
         )
         .map { (searchText, countriesList) in
-            return AnyPublisher() {
-                await searchCountriesUseCase.execute(
-                    searchText: searchText,
-                    countriesList: countriesList
-                )
-            }
+            searchCountriesUseCase.execute(
+                searchText: searchText,
+                countriesList: countriesList
+            )
         }
-        .switchToLatest()
         .receive(on: DispatchQueue.main)
         .assign(to: &$countrySearchResults)
     }

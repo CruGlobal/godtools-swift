@@ -68,7 +68,7 @@ struct GetTranslatedLanguageNameTests {
         Then: Use the fallback name.
         """
     )
-    func emptyTranslateInLanguageUsesFallback() async {
+    func emptyTranslateInLanguageUsesFallback() {
         
         let translateInLanguage: BCP47LanguageIdentifier = ""
         
@@ -98,7 +98,7 @@ struct GetTranslatedLanguageNameTests {
         Then: Translate the russian language name using the fallbackName.
         """
     )
-    func usesFallbackInsteadOfAppBundleAndLocale() async {
+    func usesFallbackInsteadOfAppBundleAndLocale() {
        
         let russianFallbackName: String = "Russian Fallback Name"
         
@@ -131,7 +131,7 @@ struct GetTranslatedLanguageNameTests {
         Then: Translate the french language name using the app bundle's string phrases.
         """
     )
-    func usesAppBundlesStringPhrases() async {
+    func usesAppBundlesStringPhrases() {
         
         let fallbackName: String = "French Fallback Name"
         
@@ -162,7 +162,7 @@ struct GetTranslatedLanguageNameTests {
         Then: Then translate the french language name using Locale.
         """
     )
-    func usesLocale() async {
+    func usesLocale() {
         
         let fallbackName: String = "French Fallback Name"
         
@@ -193,7 +193,7 @@ struct GetTranslatedLanguageNameTests {
         Then: Then translate the french language using the fallbackName.
         """
     )
-    func usesFallback() async {
+    func usesFallback() {
         
         let fallbackName: String = "French Fallback Name"
         

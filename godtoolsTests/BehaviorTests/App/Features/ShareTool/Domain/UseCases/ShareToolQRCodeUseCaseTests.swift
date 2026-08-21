@@ -74,7 +74,7 @@ struct ShareToolQRCodeUseCaseTests {
             TestToolId.unknownType
         ]
     )
-    func urlHostIsKnowgodDotCom(toolId: String) async throws {
+    func urlHostIsKnowgodDotCom(toolId: String) throws {
 
         let useCase: ShareToolQRCodeUseCase = try getUseCase()
 
@@ -124,7 +124,7 @@ struct ShareToolQRCodeUseCaseTests {
             )
         ]
     )
-    func urlPathMatchesTheToolResourceType(argument: ResourceTypeArgument) async throws {
+    func urlPathMatchesTheToolResourceType(argument: ResourceTypeArgument) throws {
 
         let useCase: ShareToolQRCodeUseCase = try getUseCase()
 
@@ -163,7 +163,7 @@ struct ShareToolQRCodeUseCaseTests {
             )
         ]
     )
-    func pageNumberIsIncludedInTheUrlOnlyWhenGreaterThanZero(argument: PageNumberArgument) async throws {
+    func pageNumberIsIncludedInTheUrlOnlyWhenGreaterThanZero(argument: PageNumberArgument) throws {
 
         let useCase: ShareToolQRCodeUseCase = try getUseCase()
 
@@ -194,7 +194,7 @@ struct ShareToolQRCodeUseCaseTests {
             )
         ]
     )
-    func urlPointsAtTheToolInTheRequestedToolLanguage(argument: ToolLanguageArgument) async throws {
+    func urlPointsAtTheToolInTheRequestedToolLanguage(argument: ToolLanguageArgument) throws {
 
         let useCase: ShareToolQRCodeUseCase = try getUseCase()
 
@@ -229,7 +229,7 @@ struct ShareToolQRCodeUseCaseTests {
             )
         ]
     )
-    func errorIsThrownWhenTheToolOrToolLanguageDoesNotExist(argument: MissingDataArgument) async throws {
+    func errorIsThrownWhenTheToolOrToolLanguageDoesNotExist(argument: MissingDataArgument) throws {
 
         let useCase: ShareToolQRCodeUseCase = try getUseCase()
 

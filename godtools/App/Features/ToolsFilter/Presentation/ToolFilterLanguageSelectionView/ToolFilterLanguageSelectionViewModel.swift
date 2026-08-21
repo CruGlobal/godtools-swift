@@ -108,12 +108,9 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
             $allLanguages
         )
         .map { (searchText: String, allLanguages: [ToolFilterLanguageDomainModel]) in
-            return AnyPublisher() {
-                await searchToolFilterLanguagesUseCase
-                    .execute(searchText: searchText, toolFilterLanguages: allLanguages)
-            }
+            searchToolFilterLanguagesUseCase
+                .execute(searchText: searchText, toolFilterLanguages: allLanguages)
         }
-        .switchToLatest()
         .receive(on: DispatchQueue.main)
         .assign(to: &$languageSearchResults)
     }

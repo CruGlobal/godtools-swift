@@ -19,7 +19,7 @@ final class SearchLessonFilterLanguagesUseCase: Sendable {
     func execute(
         searchText: String,
         lessonFilterLanguages: [LessonFilterLanguageDomainModel]
-    ) async -> [LessonFilterLanguageDomainModel] {
+    ) -> [LessonFilterLanguageDomainModel] {
         
         return stringSearcher.search(for: searchText, in: lessonFilterLanguages)
     }
