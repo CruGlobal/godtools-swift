@@ -27,21 +27,18 @@ final class GetUserToolFilterLanguageUseCase: Sendable {
         return userToolFiltersRepository
             .getUserToolLanguageFilterChangedPublisher()
             .receive(on: DispatchQueue.global())
-            .flatMap {
-                
-                return AnyPublisher() {
-                    return await self.asyncExecute(appLanguage: appLanguage)
-                }
+            .map {
+                return self.getToolFilterLanguage(appLanguage: appLanguage)
             }
             .eraseToAnyPublisher()
     }
     
-    private func asyncExecute(appLanguage: AppLanguageDomainModel) async -> ToolFilterLanguageDomainModel {
+    private func getToolFilterLanguage(appLanguage: AppLanguageDomainModel) -> ToolFilterLanguageDomainModel {
         
         let languageId: String? = userToolFiltersRepository.getUserToolLanguageFilter()?.languageId
         
         if let languageId = languageId,
-            let languageFilter = await getToolFilterLanguage.getLanguageFilter(
+            let languageFilter = getToolFilterLanguage.getLanguageFilter(
                 languageId: languageId,
                 translatedInAppLanguage: appLanguage
             ) {

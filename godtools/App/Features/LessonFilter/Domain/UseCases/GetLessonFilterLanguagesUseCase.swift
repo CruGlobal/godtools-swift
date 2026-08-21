@@ -50,7 +50,7 @@ final class GetLessonFilterLanguagesUseCase: Sendable {
 
         for language in languages {
 
-            let domainModel: LessonFilterLanguageDomainModel = await self.getLessonFilterLangauge.mapLanguageToLessonFilterLanguageDomainModel(
+            let domainModel: LessonFilterLanguageDomainModel = self.getLessonFilterLangauge.mapLanguageToLessonFilterLanguageDomainModel(
                 language: language,
                 translatedInAppLanguage: appLanguage
             )

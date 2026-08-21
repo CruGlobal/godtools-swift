@@ -148,46 +148,40 @@ final class MenuFlow: GTFlow {
             break
             
         case .sendFeedbackTappedFromMenu:
-            Task {
+            
+            let sendFeedbackWebContent = SendFeedbackWebContent(appLanguage: appLanguage, localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
 
-                let sendFeedbackWebContent = await SendFeedbackWebContent(appLanguage: appLanguage, localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
-
-                pushWebContentView(
-                    webContent: sendFeedbackWebContent,
-                    screenAccessibility: .sendFeedback,
-                    backTappedFromWebContentStep: AppFlowStep.backTappedFromSendFeedback
-                )
-            }
+            pushWebContentView(
+                webContent: sendFeedbackWebContent,
+                screenAccessibility: .sendFeedback,
+                backTappedFromWebContentStep: AppFlowStep.backTappedFromSendFeedback
+            )
             
         case .backTappedFromSendFeedback:
             navigationController.popViewController(animated: true)
             
         case .reportABugTappedFromMenu:
-            Task {
+            
+            let reportABugWebContent = ReportABugWebContent(appLanguage: appLanguage, localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
 
-                let reportABugWebContent = await ReportABugWebContent(appLanguage: appLanguage, localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
-
-                pushWebContentView(
-                    webContent: reportABugWebContent,
-                    screenAccessibility: .reportABug,
-                    backTappedFromWebContentStep: AppFlowStep.backTappedFromReportABug
-                )
-            }
+            pushWebContentView(
+                webContent: reportABugWebContent,
+                screenAccessibility: .reportABug,
+                backTappedFromWebContentStep: AppFlowStep.backTappedFromReportABug
+            )
             
         case .backTappedFromReportABug:
             navigationController.popViewController(animated: true)
             
         case .askAQuestionTappedFromMenu:
-            Task {
+            
+            let askAQuestionWebContent = AskAQuestionWebContent(appLanguage: appLanguage, localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
 
-                let askAQuestionWebContent = await AskAQuestionWebContent(appLanguage: appLanguage, localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
-
-                pushWebContentView(
-                    webContent: askAQuestionWebContent,
-                    screenAccessibility: .askAQuestion,
-                    backTappedFromWebContentStep: AppFlowStep.backTappedFromAskAQuestion
-                )
-            }
+            pushWebContentView(
+                webContent: askAQuestionWebContent,
+                screenAccessibility: .askAQuestion,
+                backTappedFromWebContentStep: AppFlowStep.backTappedFromAskAQuestion
+            )
             
         case .backTappedFromAskAQuestion:
             navigationController.popViewController(animated: true)
@@ -214,64 +208,53 @@ final class MenuFlow: GTFlow {
             navigateToURL(linkTapped: linkTapped, appLanguage: appLanguage)
             
         case .shareAStoryWithUsTappedFromMenu:
-            Task {
+            
+            let shareStoryWebContent = ShareAStoryWithUsWebContent(appLanguage: appLanguage, localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
 
-                let shareStoryWebContent = await ShareAStoryWithUsWebContent(appLanguage: appLanguage, localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
-
-                pushWebContentView(
-                    webContent: shareStoryWebContent,
-                    screenAccessibility: .shareAStoryWithUs,
-                    backTappedFromWebContentStep: AppFlowStep.backTappedFromShareAStoryWithUs
-                )
-            }
+            pushWebContentView(
+                webContent: shareStoryWebContent,
+                screenAccessibility: .shareAStoryWithUs,
+                backTappedFromWebContentStep: AppFlowStep.backTappedFromShareAStoryWithUs
+            )
             
         case .backTappedFromShareAStoryWithUs:
             navigationController.popViewController(animated: true)
             
         case .termsOfUseTappedFromMenu:
             
-            Task {
+            let termsOfUserWebContent = TermsOfUseWebContent(appLanguage: appLanguage, localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
 
-                let termsOfUserWebContent = await TermsOfUseWebContent(appLanguage: appLanguage, localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
-
-                pushWebContentView(
-                    webContent: termsOfUserWebContent,
-                    screenAccessibility: .termsOfUse,
-                    backTappedFromWebContentStep: AppFlowStep.backTappedFromTermsOfUse
-                )
-            }
+            pushWebContentView(
+                webContent: termsOfUserWebContent,
+                screenAccessibility: .termsOfUse,
+                backTappedFromWebContentStep: AppFlowStep.backTappedFromTermsOfUse
+            )
             
         case .backTappedFromTermsOfUse:
             navigationController.popViewController(animated: true)
             
         case .privacyPolicyTappedFromMenu:
             
-            Task {
+            let privacyPolicyWebContent = PrivacyPolicyWebContent(appLanguage: appLanguage, localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
 
-                let privacyPolicyWebContent = await PrivacyPolicyWebContent(appLanguage: appLanguage, localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
-
-                pushWebContentView(
-                    webContent: privacyPolicyWebContent,
-                    screenAccessibility: .privacyPolicy,
-                    backTappedFromWebContentStep: AppFlowStep.backTappedFromPrivacyPolicy
-                )
-            }
+            pushWebContentView(
+                webContent: privacyPolicyWebContent,
+                screenAccessibility: .privacyPolicy,
+                backTappedFromWebContentStep: AppFlowStep.backTappedFromPrivacyPolicy
+            )
             
         case .backTappedFromPrivacyPolicy:
             navigationController.popViewController(animated: true)
             
         case .copyrightInfoTappedFromMenu:
             
-            Task {
+            let copyrightInfoWebContent = CopyrightInfoWebContent(appLanguage: appLanguage, localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
 
-                let copyrightInfoWebContent = await CopyrightInfoWebContent(appLanguage: appLanguage, localizationServices: appDiContainer.core.dataLayer.getLocalizationServices())
-
-                pushWebContentView(
-                    webContent: copyrightInfoWebContent,
-                    screenAccessibility: .copyrightInfo,
-                    backTappedFromWebContentStep: AppFlowStep.backTappedFromCopyrightInfo
-                )
-            }
+            pushWebContentView(
+                webContent: copyrightInfoWebContent,
+                screenAccessibility: .copyrightInfo,
+                backTappedFromWebContentStep: AppFlowStep.backTappedFromCopyrightInfo
+            )
             
         case .backTappedFromCopyrightInfo:
             navigationController.popViewController(animated: true)
