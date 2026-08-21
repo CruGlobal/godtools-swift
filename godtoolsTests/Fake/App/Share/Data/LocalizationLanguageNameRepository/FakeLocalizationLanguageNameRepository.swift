@@ -21,7 +21,7 @@ final class FakeLocalizationLanguageNameRepository: LocalizationLanguageNameInte
     func getLanguageName(
         languageId: BCP47LanguageIdentifier,
         translatedInLanguage: BCP47LanguageIdentifier
-    ) async -> String? {
+    ) -> String? {
         
         return localizationServices.stringForLocale(localeIdentifier: translatedInLanguage, key: languageId)
     }
