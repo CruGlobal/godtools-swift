@@ -124,7 +124,22 @@ final class TutorialViewModel: ObservableObject {
                 
         hidesBackButton = isOnFirstPage
                                 
+        trackPageView(page: page)
+    }
+    
+    private func refreshContinueTitle(strings: TutorialStringsDomainModel, tutorialPages: [TutorialPageDomainModel]) {
+        
+        let isOnLastPage: Bool = getIsOnLastPage(tutorialPages: tutorialPages)
+        
+        continueTitle = isOnLastPage ? strings.completeTutorialActionTitle : strings.nextTutorialPageActionTitle
+    }
+    
+    private func trackPageView(page: Int) {
+        
+        let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase = self.trackScreenViewAnalyticsUseCase
+        
         let analyticsScreenName = getAnalyticsScreenName(tutorialItemIndex: page)
+        
         let analyticsProperties = AnalyticsProperties(
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
@@ -133,14 +148,14 @@ final class TutorialViewModel: ObservableObject {
             contentLanguage: nil,
             secondaryContentLanguage: nil
         )
-        let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase = self.trackScreenViewAnalyticsUseCase
-        let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = self.trackActionAnalyticsUseCase
         
         Task.detached {
             await trackScreenViewAnalyticsUseCase.execute(
                 properties: analyticsProperties
             )
         }
+        
+        let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = self.trackActionAnalyticsUseCase
         
         Task.detached {
             await trackActionAnalyticsUseCase.execute(
@@ -149,13 +164,6 @@ final class TutorialViewModel: ObservableObject {
                 data: nil
             )
         }
-    }
-    
-    private func refreshContinueTitle(strings: TutorialStringsDomainModel, tutorialPages: [TutorialPageDomainModel]) {
-        
-        let isOnLastPage: Bool = getIsOnLastPage(tutorialPages: tutorialPages)
-        
-        continueTitle = isOnLastPage ? strings.completeTutorialActionTitle : strings.nextTutorialPageActionTitle
     }
 }
 
