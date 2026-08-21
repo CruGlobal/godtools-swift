@@ -295,17 +295,10 @@ extension GetPersonalizedToolsUseCaseTests {
             )
         )
         
-        let sync = PersonalizedToolsSync(
-            api: api,
-            cache: cache,
-            syncInvalidatorPersistence: FakeSyncInvalidatorPersistence()
-        )
-        
         let personalizedToolsRepository = PersonalizedToolsRepository(
             api: api,
             cache: cache,
-            resourcesRepository: resourcesRepository,
-            sync: sync
+            resourcesRepository: resourcesRepository
         )
 
         return TestDependencies(
