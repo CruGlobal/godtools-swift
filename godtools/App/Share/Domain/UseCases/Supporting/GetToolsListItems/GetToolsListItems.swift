@@ -34,7 +34,7 @@ final class GetToolsListItems: Sendable {
         self.getTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability
     }
     
-    func mapToolsToListItems(tools: [ResourceDataModel], appLanguage: AppLanguageDomainModel, languageIdForAvailabilityText: String?) async -> [ToolListItemDomainModel] {
+    func mapToolsToListItems(tools: [ResourceDataModel], appLanguage: AppLanguageDomainModel, languageIdForAvailabilityText: String?) -> [ToolListItemDomainModel] {
 
         let languageForAvailabilityTextModel: LanguageDataModel?
 
@@ -66,7 +66,7 @@ final class GetToolsListItems: Sendable {
                     dataModelId: tool.id,
                     bannerImageId: tool.attrBanner,
                     name: getTranslatedToolName.getToolName(resource: tool, translateInLanguage: appLanguage),
-                    category: await getTranslatedToolCategory.getTranslatedCategory(resource: tool, translateInLanguage: appLanguage),
+                    category: getTranslatedToolCategory.getTranslatedCategory(resource: tool, translateInLanguage: appLanguage),
                     isFavorited: favoritedResourcesRepository.getResourceIsFavorited(id: tool.id),
                     languageAvailability: toolLanguageAvailability
                 )

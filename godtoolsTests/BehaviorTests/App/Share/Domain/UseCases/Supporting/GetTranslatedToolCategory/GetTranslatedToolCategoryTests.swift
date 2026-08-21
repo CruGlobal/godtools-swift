@@ -46,7 +46,7 @@ struct GetTranslatedToolCategoryTests {
             testsDiContainer: testsDiContainer
         )
 
-        let category: String = await getTranslatedToolCategory.getTranslatedCategory(
+        let category: String = getTranslatedToolCategory.getTranslatedCategory(
             toolId: Self.toolId,
             translateInLanguage: argument.translateInLanguage
         )

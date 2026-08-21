@@ -85,24 +85,21 @@ final class GetPersonalizedLessonsUseCase: Sendable {
                     )
             }
         })
-        .flatMap { (resources: [ResourceDataModel]) -> AnyPublisher<PersonalizedLessonsDomainModel, Error> in
+        .tryMap { (resources: [ResourceDataModel]) in
+            
+            let lessons = try self.getLessonsListItems.mapLessonsToListItems(
+                lessons: resources,
+                appLanguage: appLanguage,
+                filterLessonsByLanguage: filterLessonsByLanguage
+            )
 
-            return AnyPublisher() {
+            let showsPersonalizationUnavailable: Bool = !hasCountry && lessons.isEmpty
+            let unavailableStrings: PersonalizedLessonsUnavailableDomainModel? = showsPersonalizationUnavailable ? self.getLessonsUnavailable(appLanguage: appLanguage) : nil
 
-                let lessons = try await self.getLessonsListItems.mapLessonsToListItems(
-                    lessons: resources,
-                    appLanguage: appLanguage,
-                    filterLessonsByLanguage: filterLessonsByLanguage
-                )
-
-                let showsPersonalizationUnavailable: Bool = !hasCountry && lessons.isEmpty
-                let unavailableStrings: PersonalizedLessonsUnavailableDomainModel? = showsPersonalizationUnavailable ? self.getLessonsUnavailable(appLanguage: appLanguage) : nil
-
-                return PersonalizedLessonsDomainModel(
-                    lessons: lessons,
-                    unavailableStrings: unavailableStrings
-                )
-            }
+            return PersonalizedLessonsDomainModel(
+                lessons: lessons,
+                unavailableStrings: unavailableStrings
+            )
         }
         .eraseToAnyPublisher()
     }

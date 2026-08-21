@@ -32,7 +32,7 @@ final class GetLessonsListItems: Sendable {
         lessons: [ResourceDataModel],
         appLanguage: AppLanguageDomainModel,
         filterLessonsByLanguage: LessonFilterLanguageDomainModel?
-    ) async throws -> [LessonListItemDomainModel] {
+    ) throws -> [LessonListItemDomainModel] {
         
         var lessonList: [LessonListItemDomainModel] = Array()
 
@@ -56,7 +56,7 @@ final class GetLessonsListItems: Sendable {
                 translateInLanguage: filterLanguageModel?.code ?? appLanguage
             )
 
-            let lessonProgress = try await getLessonListItemProgress.getLessonProgress(
+            let lessonProgress = try getLessonListItemProgress.getLessonProgress(
                 lesson: resource,
                 appLanguage: appLanguage
             )

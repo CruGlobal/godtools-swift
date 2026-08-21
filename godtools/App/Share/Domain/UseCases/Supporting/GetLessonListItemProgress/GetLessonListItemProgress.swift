@@ -33,7 +33,7 @@ final class GetLessonListItemProgress: Sendable {
     func getLessonProgress(
         lesson: ResourceDataModel,
         appLanguage: AppLanguageDomainModel
-    ) async throws -> LessonListItemProgressDomainModel {
+    ) throws -> LessonListItemProgressDomainModel {
         
         let lessonId: String = lesson.id
         let lessonCompletionUserCounterId: String = UserCounterNames.shared.LESSON_COMPLETION(tool: lesson.abbreviation)
