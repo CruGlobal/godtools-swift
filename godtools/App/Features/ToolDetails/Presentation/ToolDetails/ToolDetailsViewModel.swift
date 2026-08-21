@@ -15,8 +15,6 @@ final class ToolDetailsViewModel: ObservableObject {
     
     typealias ToolId = String
 
-    private static var favoriteToolTasks: [ToolId: Task<Void, Error>] = Dictionary()
-    
     private let stepEmitter: FlowStepEmitter
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getToolDetailsStringsUseCase: GetToolDetailsStringsUseCase
@@ -40,6 +38,7 @@ final class ToolDetailsViewModel: ObservableObject {
         }
     }
     private var segmentTypes: [ToolDetailsSegmentType] = Array()
+    private var favoriteToolTasks: [ToolId: Task<Void, Error>] = Dictionary()
     private var cancellables: Set<AnyCancellable> = Set()
         
     @Published private var toolId: String {
@@ -329,14 +328,17 @@ extension ToolDetailsViewModel {
     
     func toggleFavorited() {
         
-        Self.favoriteToolTasks[toolId]?.cancel()
+        let toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase = self.toggleToolFavoritedUseCase
+        let toolId: String = self.toolId
         
-        Self.favoriteToolTasks[toolId] = Task {
+        isFavorited = !isFavorited
+        
+        favoriteToolTasks[toolId]?.cancel()
+                
+        favoriteToolTasks[toolId] = Task.detached {
             
-            let domainModel = try await toggleToolFavoritedUseCase
+            _ = try await toggleToolFavoritedUseCase
                 .execute(toolId: toolId)
-            
-            isFavorited = domainModel.isFavorited
         }
     }
     

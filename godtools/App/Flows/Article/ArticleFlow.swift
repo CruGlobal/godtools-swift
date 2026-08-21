@@ -73,6 +73,8 @@ final class ArticleFlow: GTFlow {
                         
         case .articleTappedFromArticles(let resource, let articleId):
             
+            // TODO: May need to check if article needs downloading before executing use case. ~Levi
+            
             Task {
                 
                 let getArticleUseCase = appDiContainer.feature.articles.domainLayer.getArticleUseCase()

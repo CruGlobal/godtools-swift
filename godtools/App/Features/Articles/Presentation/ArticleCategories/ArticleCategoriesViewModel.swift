@@ -81,9 +81,11 @@ final class ArticleCategoriesViewModel: ObservableObject {
         
         getCategoriesTask?.cancel()
         
-        getCategoriesTask = Task {
+        let sendableCategories = manifest.sendableCategories
+        
+        getCategoriesTask = Task { [weak self] in
             
-            categories = await getArticleCategoriesUseCase.execute(categories: manifest.sendableCategories)
+            self?.categories = await self?.getArticleCategoriesUseCase.execute(categories: sendableCategories) ?? Array()
         }
     }
 }
@@ -129,13 +131,17 @@ extension ArticleCategoriesViewModel {
     
     func pullToRefresh() {
                 
-        pullToRefreshArticlesTask = Task {
+        pullToRefreshArticlesTask = Task { [weak self] in
             
-            try await pullToRefreshArticlesUseCase
+            guard let weakSelf = self else {
+                return
+            }
+            
+            try await weakSelf.pullToRefreshArticlesUseCase
                 .execute(
-                    translation: translation,
-                    language: language,
-                    manifest: manifest
+                    translation: weakSelf.translation,
+                    language: weakSelf.language,
+                    manifest: weakSelf.manifest
                 )
         }
     }

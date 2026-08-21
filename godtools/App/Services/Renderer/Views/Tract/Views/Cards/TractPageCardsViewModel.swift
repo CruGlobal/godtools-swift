@@ -46,7 +46,10 @@ final class TractPageCardsViewModel: MobileContentViewModel, ObservableObject {
         
         showsCardJump = false
         
-        Task {
+        let cardJumpService: CardJumpService = self.cardJumpService
+        
+        Task.detached {
+            
             await cardJumpService.saveDidShowCardJump()
         }
     }

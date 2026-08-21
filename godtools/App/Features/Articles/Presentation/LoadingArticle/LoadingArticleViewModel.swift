@@ -13,10 +13,10 @@ final class LoadingArticleViewModel: ObservableObject {
     
     private let stepEmitter: FlowStepEmitter
     private let articleAemRepository: ArticleAemRepository
+    private let localizationServices: LocalizationServicesInterface
+    private let getDownloadArticlesErrorMessage: GetDownloadArticlesErrorMessage
     private let appLanguage: AppLanguageDomainModel
-    
-    private var downloadArticleTask: Task<Void, Error>?
-        
+            
     @Published private(set) var message: String = ""
 
     init(
@@ -30,6 +30,8 @@ final class LoadingArticleViewModel: ObservableObject {
         
         self.stepEmitter = stepEmitter
         self.articleAemRepository = articleAemRepository
+        self.localizationServices = localizationServices
+        self.getDownloadArticlesErrorMessage = getDownloadArticlesErrorMessage
         self.appLanguage = appLanguage
 
         let messageKey: String = LocalizableStringKeys.downloadInProgress.key
@@ -44,13 +46,26 @@ final class LoadingArticleViewModel: ObservableObject {
 
         message = strings[messageKey] ?? ""
 
-        downloadArticleTask = Task {
+        download(aemUri: aemUri)
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
+    private func download(aemUri: String) {
+        
+        Task { [weak self] in
+            
+            guard let weakSelf = self else {
+                return
+            }
             
             let downloadError: Error?
             
             do {
                 
-                let download: ArticleAemDownload = try await articleAemRepository
+                let download: ArticleAemDownload = try await weakSelf.articleAemRepository
                     .downloadAndCache(
                         aemUris: [aemUri],
                         downloadCachePolicy: .fetchFromCacheUpToNextHour,
@@ -69,37 +84,32 @@ final class LoadingArticleViewModel: ObservableObject {
                 downloadError = error
             }
             
-            try await Task.sleep(for: .seconds(1))
+            try? await Task.sleep(for: .seconds(1))
             
             if let downloadError = downloadError {
                 
                 let errorTitleKey: String = LocalizableStringKeys.error.key
 
-                let strings: [String: String] = localizationServices.stringsForKeys(
+                let strings: [String: String] = weakSelf.localizationServices.stringsForKeys(
                     keys: [
                         errorTitleKey
                     ],
-                    fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
+                    fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: weakSelf.appLanguage),
                     shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
                 )
 
                 let errorTitle: String = strings[errorTitleKey] ?? ""
                 
-                let errorMessage: String = getDownloadArticlesErrorMessage.getErrorMessage(appLanguage: appLanguage, error: downloadError)
+                let errorMessage: String = weakSelf.getDownloadArticlesErrorMessage.getErrorMessage(appLanguage: weakSelf.appLanguage, error: downloadError)
                                 
                 let alertMessage = AlertMessage(title: errorTitle, message: errorMessage)
                 
-                stepEmitter.emit(step: AppFlowStep.didFailToDownloadArticleFromLoadingArticle(alertMessage: alertMessage))
+                weakSelf.stepEmitter.emit(step: AppFlowStep.didFailToDownloadArticleFromLoadingArticle(alertMessage: alertMessage))
             }
             else {
                 
-                stepEmitter.emit(step: AppFlowStep.didDownloadArticleFromLoadingArticle(aemUri: aemUri))
+                weakSelf.stepEmitter.emit(step: AppFlowStep.didDownloadArticleFromLoadingArticle(aemUri: aemUri))
             }
         }
-    }
-    
-    deinit {
-        print("x deinit: \(type(of: self))")
-        downloadArticleTask?.cancel()
     }
 }

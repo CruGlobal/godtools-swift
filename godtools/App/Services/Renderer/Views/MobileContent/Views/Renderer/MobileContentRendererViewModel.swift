@@ -102,15 +102,23 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
         countLanguageUsage(localeId: currentPageRenderer.value.language.localeId)
     }
     
+    deinit {
+        
+        updateTranslationsTask?.cancel()
+    }
+    
     private func didSetLanguages(languages: [LanguageDataModel], appLanguage: AppLanguageDomainModel) {
         
-        Task {
+        Task { [weak self] in
+            guard let weakSelf = self else {
+                return
+            }
             
             var languageNames: [String] = Array()
             
             for language in languages {
                 
-                let name = await getTranslatedLanguageName.getLanguageName(
+                let name = await weakSelf.getTranslatedLanguageName.getLanguageName(
                     language: language,
                     translatedInLanguage: appLanguage
                 )
@@ -118,7 +126,7 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
                 languageNames.append(name)
             }
             
-            self.languageNames = languageNames
+            weakSelf.languageNames = languageNames
         }
     }
     
@@ -689,9 +697,9 @@ extension MobileContentRendererViewModel {
         
         updateTranslationsTask?.cancel()
         
-        updateTranslationsTask = Task {
+        updateTranslationsTask = Task { [weak self] in
             
-            try await asyncUpdateTranslationsIfNeeded()
+            try await self?.asyncUpdateTranslationsIfNeeded()
         }
     }
     
@@ -833,11 +841,13 @@ extension MobileContentRendererViewModel {
         
         let locale = Locale(identifier: localeId)
         
-        Task {
+        trackLanguageUsageCountedThisSession(localeId: localeId)
+        
+        let incrementUserCounterUseCase: IncrementUserCounterUseCase = self.incrementUserCounterUseCase
+        
+        Task.detached {
             
             _ = try await incrementUserCounterUseCase.execute(interaction: .languageUsed(locale: locale))
-            
-            trackLanguageUsageCountedThisSession(localeId: localeId)
         }
     }
     
@@ -863,7 +873,9 @@ extension MobileContentRendererViewModel {
             return
         }
         
-        Task {
+        let incrementUserCounterUseCase: IncrementUserCounterUseCase = self.incrementUserCounterUseCase
+        
+        Task.detached {
             
             _ = try await incrementUserCounterUseCase.execute(interaction: toolOpenInteraction)
         }

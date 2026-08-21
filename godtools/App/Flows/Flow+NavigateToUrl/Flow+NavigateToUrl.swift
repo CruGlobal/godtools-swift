@@ -14,7 +14,7 @@ extension GTFlow {
         
         let trackExitLinkAnalytics = appDiContainer.core.domainLayer.getTrackExitLinkAnalyticsUseCase()
         
-        Task {
+        Task.detached {
             
             await trackExitLinkAnalytics.execute(
                 properties: AnalyticsProperties(

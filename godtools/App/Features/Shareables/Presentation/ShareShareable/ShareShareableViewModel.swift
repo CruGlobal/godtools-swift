@@ -41,7 +41,9 @@ extension ShareShareableViewModel {
     
     func pageViewed() {
         
-        Task {
+        let incrementUserCounterUseCase: IncrementUserCounterUseCase = self.incrementUserCounterUseCase
+        
+        Task.detached {
             
             _ = try await incrementUserCounterUseCase.execute(interaction: .imageShared)
         }

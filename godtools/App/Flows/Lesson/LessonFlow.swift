@@ -115,19 +115,16 @@ final class LessonFlow: GTFlow {
             
         case .shareLessonTappedFromLesson(let pageNumber, let languageId):
 
-            Task {
-
-                presentFlow(
-                    flow: ShareToolFlow(
-                        appDiContainer: appDiContainer,
-                        toolId: lesson.id,
-                        toolLanguageId: languageId,
-                        pageNumber: pageNumber,
-                        appLanguage: appLanguage,
-                        toolAnalyticsAbbreviation: lesson.abbreviation
-                    )
+            presentFlow(
+                flow: ShareToolFlow(
+                    appDiContainer: appDiContainer,
+                    toolId: lesson.id,
+                    toolLanguageId: languageId,
+                    pageNumber: pageNumber,
+                    appLanguage: appLanguage,
+                    toolAnalyticsAbbreviation: lesson.abbreviation
                 )
-            }
+            )
             
         case .shareToolFlowCompleted( _):
             dismissFlow()
@@ -178,10 +175,12 @@ final class LessonFlow: GTFlow {
     
     private func trackSwipeTutorialViewed() {
         
-        Task {
-            await appDiContainer.feature.lessonSwipeTutorial.domainlayer
-                .getTrackViewedLessonSwipeTutorialUseCase()
-                .execute()
+        let trackViewedLessonSwipeTutorialUseCase = appDiContainer.feature.lessonSwipeTutorial.domainlayer
+            .getTrackViewedLessonSwipeTutorialUseCase()
+        
+        Task.detached {
+            
+            await trackViewedLessonSwipeTutorialUseCase.execute()
         }
     }
 }

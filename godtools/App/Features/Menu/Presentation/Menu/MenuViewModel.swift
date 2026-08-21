@@ -128,10 +128,9 @@ final class MenuViewModel: ObservableObject {
         strings = getMenuStringsUseCase
             .execute(appLanguage: appLanguage)
         
-        Task {
-
-            showsTutorialOption = getTutorialIsAvailableUseCase
-                .execute(appLanguage: appLanguage)
+        Task { [weak self] in
+            self?.showsTutorialOption = self?.getTutorialIsAvailableUseCase
+                .execute(appLanguage: appLanguage) ?? false
         }
     }
 }
@@ -187,7 +186,10 @@ extension MenuViewModel {
     
     func logoutTapped() {
         
-        Task {
+        let logOutUserUseCase: LogOutUserUseCase = self.logOutUserUseCase
+        
+        Task.detached {
+            
             _ = try await logOutUserUseCase
                 .execute()
         }

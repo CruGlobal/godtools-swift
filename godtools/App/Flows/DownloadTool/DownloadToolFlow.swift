@@ -103,8 +103,9 @@ extension DownloadToolFlow {
         
         let appDiContainer: AppDiContainer = self.appDiContainer
         let downloadToolUseCase = appDiContainer.core.domainLayer.getDownloadToolUseCase()
+        let determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface = self.determineToolTranslationsToDownload
                 
-        downloadToolTask = Task {
+        downloadToolTask = Task { [weak self] in
                         
             let navigationStep: AppFlowStep
             
@@ -129,9 +130,9 @@ extension DownloadToolFlow {
                 navigationStep = .downloadToolFailed(error: error)
             }
                         
-            try await Task.sleep(for: .seconds(2))
+            try? await Task.sleep(for: .seconds(2))
             
-            navigate(step: navigationStep)
+            self?.navigate(step: navigationStep)
         }
     }
     

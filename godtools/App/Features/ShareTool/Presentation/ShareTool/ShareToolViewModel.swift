@@ -99,7 +99,9 @@ extension ShareToolViewModel {
             )
         }
         
-        Task {
+        let incrementUserCounterUseCase: IncrementUserCounterUseCase = self.incrementUserCounterUseCase
+        
+        Task.detached {
             
             _ = try await incrementUserCounterUseCase.execute(interaction: .linkShared)
         }

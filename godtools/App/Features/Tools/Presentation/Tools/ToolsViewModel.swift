@@ -15,8 +15,6 @@ final class ToolsViewModel: ObservableObject {
     
     typealias ToolId = String
     
-    private static var favoriteToolTasks: [ToolId: Task<Void, Error>] = Dictionary()
-    
     private let stepEmitter: FlowStepEmitter
     private let pullToRefreshToolsUseCase: PullToRefreshToolsUseCase
     private let getToolsStringsUseCase: GetToolsStringsUseCase
@@ -37,6 +35,7 @@ final class ToolsViewModel: ObservableObject {
     
     private var cancellables: Set<AnyCancellable> = Set()
     private var pullToRefreshToolsTask: Task<Void, Error>?
+    private var favoriteToolTasks: [ToolId: Task<Void, Error>] = Dictionary()
     
     @Published private var appLanguage = AppLanguageDomainModel.english
     @Published private var toolFilterCategorySelection = ToolFilterCategoryDomainModel.emptyValue
@@ -93,11 +92,13 @@ final class ToolsViewModel: ObservableObject {
         self.getToolBannerUseCase = getToolBannerUseCase
         self.dataCache = dataCache
         
-        Task {
+        pullToRefreshTools()
+        
+        Task { [weak self] in
             
             let favoritingToolMessageDisabled: Bool = await favoritingToolMessageCache.favoritingToolMessageDisabled
             
-            showsFavoritingToolBanner = !favoritingToolMessageDisabled
+            self?.showsFavoritingToolBanner = !favoritingToolMessageDisabled
         }
         
         if !GodToolsApp.showsPersonalization {
@@ -341,10 +342,12 @@ final class ToolsViewModel: ObservableObject {
     
     private func toggleToolIsFavorited(toolId: String) {
         
-        Self.favoriteToolTasks[toolId]?.cancel()
+        let toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase = self.toggleToolFavoritedUseCase
         
-        Self.favoriteToolTasks[toolId] = Task {
-            
+        favoriteToolTasks[toolId]?.cancel()
+        
+        favoriteToolTasks[toolId] = Task.detached {
+                
             _ = try await toggleToolFavoritedUseCase
                 .execute(toolId: toolId)
         }
@@ -362,6 +365,25 @@ final class ToolsViewModel: ObservableObject {
             PersonalizationToggleOption(title: strings.allToolsToggleTitle, selection: .all, buttonAccessibility: .allTools)
         ]
     }
+    
+    private func pullToRefreshTools() {
+        
+        pullToRefreshToolsTask?.cancel()
+        
+        pullToRefreshToolsTask = Task { [weak self] in
+
+            guard let weakSelf = self else {
+                return
+            }
+            
+            try await weakSelf.pullToRefreshToolsUseCase
+                .execute(
+                    appLanguage: weakSelf.appLanguage,
+                    country: weakSelf.localizationSettings?.selectedCountry,
+                    filterToolsByLanguage: weakSelf.toolFilterLanguageSelection
+                )
+        }
+    }
 }
 
 // MARK: - Inputs
@@ -370,15 +392,7 @@ extension ToolsViewModel {
     
     func pullToRefresh() {
         
-        pullToRefreshToolsTask = Task {
-            
-            try await pullToRefreshToolsUseCase
-                .execute(
-                    appLanguage: appLanguage,
-                    country: localizationSettings?.selectedCountry,
-                    filterToolsByLanguage: toolFilterLanguageSelection
-                )
-        }
+        pullToRefreshTools()
     }
     
     func pageViewed() {
@@ -392,7 +406,10 @@ extension ToolsViewModel {
             showsFavoritingToolBanner = false
         }
         
-        Task {
+        let favoritingToolMessageCache: FavoritingToolMessageCache = self.favoritingToolMessageCache
+        
+        Task.detached {
+            
             await favoritingToolMessageCache.disableFavoritingToolMessage()
         }
     }

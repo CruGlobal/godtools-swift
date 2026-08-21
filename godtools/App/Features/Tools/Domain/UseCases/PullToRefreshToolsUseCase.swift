@@ -26,7 +26,11 @@ final class PullToRefreshToolsUseCase: Sendable {
         self.getLanguageElseAppLanguage = getLanguageElseAppLanguage
     }
 
-    func execute(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterToolsByLanguage: ToolFilterLanguageDomainModel) async throws {
+    func execute(
+        appLanguage: AppLanguageDomainModel,
+        country: LocalizationSettingsCountryDomainModel?,
+        filterToolsByLanguage: ToolFilterLanguageDomainModel
+    ) async throws {
 
         let requestPriority: RequestPriority = .high
         
@@ -44,7 +48,12 @@ final class PullToRefreshToolsUseCase: Sendable {
         )
     }
     
-    private func refreshPersonalizedTools(requestPriority: RequestPriority, appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterToolsByLanguage: ToolFilterLanguageDomainModel) async throws {
+    private func refreshPersonalizedTools(
+        requestPriority: RequestPriority,
+        appLanguage: AppLanguageDomainModel,
+        country: LocalizationSettingsCountryDomainModel?,
+        filterToolsByLanguage: ToolFilterLanguageDomainModel
+    ) async throws {
 
         let languageCode: String = getLanguageElseAppLanguage.getLanguageCode(
             languageId: filterToolsByLanguage.filterId,

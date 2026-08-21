@@ -152,6 +152,16 @@ final class ArticleViewModel: ObservableObject {
         loadArticleError = nil
         loadArticleRequestUrl = article.httpsUrl?.url
     }
+    
+    private func incrementUserCounterForArticle(articleId: String) {
+        
+        let incrementUserCounterUseCase: IncrementUserCounterUseCase = self.incrementUserCounterUseCase
+        
+        Task.detached {
+            
+            _ = try await incrementUserCounterUseCase.execute(interaction: .articleOpen(uri: articleId))
+        }
+    }
 }
 
 // MARK: - Inputs
@@ -190,10 +200,7 @@ extension ArticleViewModel {
             )
         }
         
-        Task {
-            
-            _ = try await incrementUserCounterUseCase.execute(interaction: .articleOpen(uri: articleId))
-        }
+        incrementUserCounterForArticle(articleId: articleId)
     }
     
     func downloadArticleTapped() {

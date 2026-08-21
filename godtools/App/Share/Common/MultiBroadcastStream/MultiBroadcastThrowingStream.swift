@@ -16,6 +16,13 @@ actor MultiBroadcastThrowingStream<Element: Sendable> {
         
     }
     
+    deinit {
+        
+        for continuation in continuations.values {
+            continuation.finish()
+        }
+    }
+    
     private func removeContinuation(continuationId: UUID) {
         
         continuations[continuationId] = nil

@@ -55,7 +55,7 @@ final class OnboardingTutorialViewModel: ObservableObject {
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         
-        Task {
+        Task.detached {
             
             await viewedOnboardingTutorialUseCase
                 .execute()

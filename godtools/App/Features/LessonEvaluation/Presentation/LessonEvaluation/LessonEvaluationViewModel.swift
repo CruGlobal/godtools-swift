@@ -97,7 +97,11 @@ extension LessonEvaluationViewModel {
     
     func closeTapped() {
         
-        Task {
+        let cancelLessonEvaluationUseCase: CancelLessonEvaluationUseCase = self.cancelLessonEvaluationUseCase
+        let lessonId: String = self.lessonId
+        
+        Task.detached {
+            
             try await cancelLessonEvaluationUseCase
                 .execute(lessonId: lessonId)
         }
@@ -137,7 +141,12 @@ extension LessonEvaluationViewModel {
             pageIndexReached: pageIndexReached
         )
         
-        Task {
+        let evaluateLessonUseCase: EvaluateLessonUseCase = self.evaluateLessonUseCase
+        let lessonId: String = self.lessonId
+        let lessonLanguage: String = self.lessonLanguage
+         
+        Task.detached {
+            
             try await evaluateLessonUseCase
                 .execute(lessonId: lessonId, feedback: feedback, lessonLanguage: lessonLanguage)
         }

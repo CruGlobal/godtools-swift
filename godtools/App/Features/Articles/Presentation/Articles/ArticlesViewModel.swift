@@ -179,16 +179,20 @@ final class ArticlesViewModel: ObservableObject {
         
         getArticlesTask?.cancel()
         
-        getArticlesTask = Task {
+        getArticlesTask = Task { [weak self] in
             
-            let articlesDomainModel: ArticlesDomainModel = try await getArticlesUseCase.execute(
-                appLanguage: appLanguage,
-                category: category,
-                languageCode: language.localeId
+            guard let weakSelf = self else {
+                return
+            }
+            
+            let articlesDomainModel: ArticlesDomainModel = try await weakSelf.getArticlesUseCase.execute(
+                appLanguage: weakSelf.appLanguage,
+                category: weakSelf.category,
+                languageCode: weakSelf.language.localeId
             )
             
-            articles = articlesDomainModel.articleListItems
-            articlesError = articlesDomainModel.error
+            weakSelf.articles = articlesDomainModel.articleListItems
+            weakSelf.articlesError = articlesDomainModel.error
         }
     }
 }

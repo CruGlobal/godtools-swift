@@ -140,7 +140,9 @@ extension ToolFilterLanguageSelectionViewModel {
         
         selectedLanguage = language
         
-        Task {
+        let selectedToolFilterLanguageUseCase: SelectedToolFilterLanguageUseCase = self.selectedToolFilterLanguageUseCase
+        
+        Task.detached {
             
             try await selectedToolFilterLanguageUseCase
                 .execute(language: language)

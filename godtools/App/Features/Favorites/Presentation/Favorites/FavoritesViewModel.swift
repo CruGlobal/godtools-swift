@@ -272,14 +272,12 @@ extension FavoritesViewModel {
         
         pullToRefreshTask?.cancel()
         
-        pullToRefreshTask = Task {
+        pullToRefreshTask = Task { [weak self] in
             
-            _ = try await resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments(
+            _ = try await self?.resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments(
                 requestPriority: .high,
                 forceFetchFromRemote: true
             )
-            
-            return Void()
         }
     }
     

@@ -60,8 +60,7 @@ final class PersonalizedToolsDataLayerDependencies: Sendable {
         return PersonalizedToolsRepository(
             api: getPersonalizedToolsApi(),
             cache: getPersonalizedToolsCache(),
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
-            sync: getPersonalizedToolsSync()
+            resourcesRepository: coreDataLayer.getResourcesRepository()
         )
     }
     

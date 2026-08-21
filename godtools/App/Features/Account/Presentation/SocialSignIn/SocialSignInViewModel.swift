@@ -21,7 +21,6 @@ final class SocialSignInViewModel: ObservableObject {
     private let getSocialSignInStringsUseCase: GetSocialSignInStringsUseCase
     private let authenticateUserUseCase: AuthenticateUserUseCase
     
-    private var authenticateUserTask: Task<Void, Error>?
     private var cancellables: Set<AnyCancellable> = Set()
         
     @Published private var appLanguage: String = LanguageCodeDomainModel.english.value
@@ -94,7 +93,7 @@ final class SocialSignInViewModel: ObservableObject {
 
     private func authenticateUser(authPlatform: AuthenticateUserAuthPlatformDomainModel) {
                 
-        authenticateUserTask = Task {
+        Task {
             
             do {
                 _ = try await authenticateUserUseCase

@@ -13,9 +13,7 @@ import Combine
 class LessonCardViewModel: ObservableObject {
         
     private let lessonListItem: LessonListItemDomainModelInterface
-    
-    private var getBannerImageTask: Task<Void, Error>?
-    
+        
     @Published private(set) var banner: OptionalImageData?
     @Published private(set) var title: String = ""
     @Published private(set) var titleLayoutDirection: LayoutDirection = .rightToLeft
@@ -55,11 +53,11 @@ class LessonCardViewModel: ObservableObject {
         
         let attachmentId: String = lessonListItem.bannerImageId
         
-        getBannerImageTask = Task {
+        Task { [weak self] in
             
             if let imageData = await dataCache.getData(id: attachmentId), let image = imageData.toImage() {
                 
-                banner = getBanner(image: image, attachmentId: attachmentId)
+                self?.banner = self?.getBanner(image: image, attachmentId: attachmentId)
             }
             else {
                 
@@ -72,13 +70,9 @@ class LessonCardViewModel: ObservableObject {
                     await dataCache.cacheData(id: attachmentId, data: imageData)
                 }
                 
-                banner = getBanner(image: imageData?.toImage(), attachmentId: attachmentId)
+                self?.banner = self?.getBanner(image: imageData?.toImage(), attachmentId: attachmentId)
             }
         }
-    }
-    
-    deinit {
-        getBannerImageTask?.cancel()
     }
     
     private func getBanner(image: Image?, attachmentId: String) -> OptionalImageData {
