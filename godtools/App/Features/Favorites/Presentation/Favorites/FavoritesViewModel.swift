@@ -157,6 +157,8 @@ final class FavoritesViewModel: ObservableObject {
     
     private func trackPageView() {
         
+        let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase = self.trackScreenViewAnalyticsUseCase
+        
         let analyticsProperties = AnalyticsProperties(
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
@@ -165,7 +167,19 @@ final class FavoritesViewModel: ObservableObject {
             contentLanguage: nil,
             secondaryContentLanguage: nil
         )
-        let actionAnalyticsProperties = AnalyticsProperties(
+        
+        Task.detached {
+            await trackScreenViewAnalyticsUseCase.execute(
+                properties: analyticsProperties
+            )
+        }
+    }
+    
+    private func trackViewedMyTools() {
+        
+        let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = self.trackActionAnalyticsUseCase
+        
+        let analyticsProperties = AnalyticsProperties(
             screenName: "",
             siteSection: "",
             siteSubSection: "",
@@ -173,18 +187,10 @@ final class FavoritesViewModel: ObservableObject {
             contentLanguage: nil,
             secondaryContentLanguage: nil
         )
-        let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase = self.trackScreenViewAnalyticsUseCase
-        let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = self.trackActionAnalyticsUseCase
-        
-        Task.detached {
-            await trackScreenViewAnalyticsUseCase.execute(
-                properties: analyticsProperties
-            )
-        }
             
         Task.detached {
             await trackActionAnalyticsUseCase.execute(
-                properties: actionAnalyticsProperties,
+                properties: analyticsProperties,
                 actionName: AnalyticsConstants.ActionNames.viewedMyToolsAction,
                 data: nil
             )
@@ -283,6 +289,8 @@ extension FavoritesViewModel {
     func pageViewed() {
         
         trackPageView()
+        
+        trackViewedMyTools()
     }
     
     func pullToRefresh() {

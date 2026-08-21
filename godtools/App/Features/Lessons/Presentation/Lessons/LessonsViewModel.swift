@@ -224,7 +224,19 @@ final class LessonsViewModel: ObservableObject {
             contentLanguage: nil,
             secondaryContentLanguage: nil
         )
-        let actionAnalyticsProperties = AnalyticsProperties(
+    
+        let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase = self.trackScreenViewAnalyticsUseCase
+        
+        Task.detached {
+            await trackScreenViewAnalyticsUseCase.execute(
+                properties: analyticsProperties
+            )
+        }
+    }
+    
+    private func trackViewedLessons() {
+        
+        let analyticsProperties = AnalyticsProperties(
             screenName: "",
             siteSection: "",
             siteSubSection: "",
@@ -232,18 +244,12 @@ final class LessonsViewModel: ObservableObject {
             contentLanguage: nil,
             secondaryContentLanguage: nil
         )
-        let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase = self.trackScreenViewAnalyticsUseCase
+        
         let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = self.trackActionAnalyticsUseCase
         
         Task.detached {
-            await trackScreenViewAnalyticsUseCase.execute(
-                properties: analyticsProperties
-            )
-        }
-        
-        Task.detached {
             await trackActionAnalyticsUseCase.execute(
-                properties: actionAnalyticsProperties,
+                properties: analyticsProperties,
                 actionName: AnalyticsConstants.ActionNames.viewedLessonsAction,
                 data: nil
             )
@@ -327,6 +333,8 @@ extension LessonsViewModel {
     func pageViewed() {
         
         trackPageViewed()
+        
+        trackViewedLessons()
     }
     
     func lessonLanguageFilterTapped() {
