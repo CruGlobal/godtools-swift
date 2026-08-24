@@ -30,7 +30,7 @@ class ToolDetailsVersionsCardViewModel: ObservableObject {
     init(
         toolVersion: ToolVersionDomainModel,
         getToolBannerUseCase: GetToolBannerUseCase,
-        dataCache: DataCacheInterface,
+        imageCache: ImageCacheInterface,
         isSelected: Bool
     ) {
         
@@ -49,18 +49,18 @@ class ToolDetailsVersionsCardViewModel: ObservableObject {
         
         loadBanner(
             getToolBannerUseCase: getToolBannerUseCase,
-            dataCache: dataCache,
+            imageCache: imageCache,
             attachmentId: attachmentId
         )
     }
     
     private func loadBanner(
         getToolBannerUseCase: GetToolBannerUseCase,
-        dataCache: DataCacheInterface,
+        imageCache: ImageCacheInterface,
         attachmentId: String
     ) {
         
-        if let cachedImage = dataCache.getData(id: attachmentId)?.toImage() {
+        if let cachedImage = imageCache.getImage(id: attachmentId) {
             
             banner = getBanner(image: cachedImage, attachmentId: attachmentId)
             
@@ -74,11 +74,13 @@ class ToolDetailsVersionsCardViewModel: ObservableObject {
                     attachmentId: attachmentId
                 )
             
-            if let imageData = imageData {
-                dataCache.cacheData(id: attachmentId, data: imageData)
+            let image: Image? = imageData?.toImage()
+            
+            if let image = image {
+                imageCache.cacheImage(id: attachmentId, image: image)
             }
             
-            self?.banner = self?.getBanner(image: imageData?.toImage(), attachmentId: attachmentId)
+            self?.banner = self?.getBanner(image: image, attachmentId: attachmentId)
         }
     }
     

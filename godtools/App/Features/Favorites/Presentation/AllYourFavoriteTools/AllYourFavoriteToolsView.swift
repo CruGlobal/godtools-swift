@@ -94,7 +94,7 @@ struct AllYourFavoriteToolsView_Preview: PreviewProvider {
             getToolIsFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToolIsFavoritedUseCase(),
             reorderFavoritedToolUseCase: appDiContainer.feature.favorites.domainLayer.getReorderFavoritedToolUseCase(),
             getToolBannerUseCase: appDiContainer.core.domainLayer.getToolBannerUseCase(),
-            dataCache: appDiContainer.core.dataLayer.getSharedDataCache(),
+            imageCache: appDiContainer.core.dataLayer.getSharedImageCache(),
             trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase()
         )
