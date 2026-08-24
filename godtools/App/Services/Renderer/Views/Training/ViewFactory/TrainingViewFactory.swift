@@ -23,7 +23,7 @@ final class TrainingViewFactory: MobileContentPageViewFactoryType {
         self.getTrainingTipCompletedUseCase = getTrainingTipCompletedUseCase
     }
     
-    func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
+    func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> LegacyMobileContentView? {
         
         let tipModel: Tip? = (renderableModel as? Tip) ?? (renderableModel as? InlineTip)?.tip
         
@@ -46,7 +46,7 @@ final class TrainingViewFactory: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
-            let view = TrainingPageView(viewModel: viewModel)
+            let view = LegacyTrainingPageView(viewModel: viewModel)
             
             return view
         }
@@ -54,7 +54,7 @@ final class TrainingViewFactory: MobileContentPageViewFactoryType {
         return nil
     }
     
-    private func getTrainingTipView(tipModel: Tip, renderedPageContext: MobileContentRenderedPageContext, trainingTipViewType: TrainingTipViewType) -> TrainingTipView? {
+    private func getTrainingTipView(tipModel: Tip, renderedPageContext: MobileContentRenderedPageContext, trainingTipViewType: TrainingTipViewType) -> LegacyTrainingTipView? {
         
         guard renderedPageContext.trainingTipsEnabled else {
             return nil
@@ -68,7 +68,7 @@ final class TrainingViewFactory: MobileContentPageViewFactoryType {
             getTrainingTipCompletedUseCase: getTrainingTipCompletedUseCase
         )
         
-        let view = TrainingTipView(viewModel: viewModel)
+        let view = LegacyTrainingTipView(viewModel: viewModel)
         
         return view
     }

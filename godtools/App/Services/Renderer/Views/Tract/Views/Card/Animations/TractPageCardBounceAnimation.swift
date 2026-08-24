@@ -28,13 +28,13 @@ final class TractPageCardBounceAnimation {
     private var currentNumberOfLargeBounces: Int = 0
     private var isRunning: Bool = false
     
-    private weak var card: TractPageCardView?
+    private weak var card: LegacyTractPageCardView?
     private weak var cardTopConstraint: NSLayoutConstraint?
     private weak var layoutView: UIView?
     private weak var delegate: TractPageCardBounceAnimationDelegate?
     
     init(
-        card: TractPageCardView,
+        card: LegacyTractPageCardView,
         cardTopConstraint: NSLayoutConstraint,
         cardStartingTopConstant: CGFloat,
         layoutView: UIView,

@@ -117,7 +117,7 @@ class MobileContentPageRenderer {
         return renderedPageContext
     }
     
-    func renderPageModel(pageModel: Page, page: Int, numberOfPages: Int, parentPageParams: MobileContentParentPageParams?, window: UIViewController, safeArea: UIEdgeInsets, trainingTipsEnabled: Bool, userInfo: [String: Any]?) -> Result<MobileContentView, Error> {
+    func renderPageModel(pageModel: Page, page: Int, numberOfPages: Int, parentPageParams: MobileContentParentPageParams?, window: UIViewController, safeArea: UIEdgeInsets, trainingTipsEnabled: Bool, userInfo: [String: Any]?) -> Result<LegacyMobileContentView, Error> {
         
         let renderedPageContext: MobileContentRenderedPageContext = getRenderedPageContext(
             pageModel: pageModel,

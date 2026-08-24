@@ -13,7 +13,7 @@ class ToolTrainingTipView: UICollectionViewCell {
     static let nibName: String = "ToolTrainingTipView"
     static let reuseIdentifier: String = "ToolTrainingTipViewReuseIdentifier"
     
-    private var mobileContentView: MobileContentView?
+    private var mobileContentView: LegacyMobileContentView?
         
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -22,7 +22,7 @@ class ToolTrainingTipView: UICollectionViewCell {
         mobileContentView = nil
     }
     
-    func configure(mobileContentView: MobileContentView) {
+    func configure(mobileContentView: LegacyMobileContentView) {
             
         let parentView: UIView = contentView
         parentView.addSubview(mobileContentView)

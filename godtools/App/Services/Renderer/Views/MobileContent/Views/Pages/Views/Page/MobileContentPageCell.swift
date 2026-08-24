@@ -13,7 +13,7 @@ class MobileContentPageCell: UICollectionViewCell {
     static let nibName: String = "MobileContentPageCell"
     static let reuseIdentifier: String = "MobileContentPageCellReuseIdentifier"
      
-    private(set) var mobileContentView: MobileContentView?
+    private(set) var mobileContentView: LegacyMobileContentView?
     
     deinit {
         print("x deinit: \(type(of: self))")
@@ -31,7 +31,7 @@ class MobileContentPageCell: UICollectionViewCell {
         mobileContentView = nil
     }
     
-    func configure(mobileContentView: MobileContentView) {
+    func configure(mobileContentView: LegacyMobileContentView) {
         
         contentView.addSubview(mobileContentView)
         mobileContentView.translatesAutoresizingMaskIntoConstraints = false

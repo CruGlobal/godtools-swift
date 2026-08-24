@@ -36,7 +36,7 @@ class TractPageHeaderViewModel: MobileContentViewModel {
         return headerModel.backgroundColor.toUIColor()
     }
     
-    func getNumber(numberLabel: UILabel) -> MobileContentTextView? {
+    func getNumber(numberLabel: UILabel) -> LegacyMobileContentTextView? {
         
         guard let numberTextModel = headerModel.number else {
             return nil
@@ -56,7 +56,7 @@ class TractPageHeaderViewModel: MobileContentViewModel {
         )
     }
     
-    func getTitle(titleLabel: UILabel) -> MobileContentTextView? {
+    func getTitle(titleLabel: UILabel) -> LegacyMobileContentTextView? {
         
         guard let titleTextModel = headerModel.title else {
             return nil

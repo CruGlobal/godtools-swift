@@ -230,7 +230,7 @@ extension ToolTrainingViewModel {
         )
     }
     
-    func tipPageWillAppear(page: Int, window: UIViewController, safeArea: UIEdgeInsets) -> MobileContentView? {
+    func tipPageWillAppear(page: Int, window: UIViewController, safeArea: UIEdgeInsets) -> LegacyMobileContentView? {
               
         guard page >= 0 && page < tipModel.pages.count else {
             return nil
