@@ -12,5 +12,5 @@ import GodToolsShared
 @MainActor
 protocol MobileContentPageViewFactoryType {
         
-    func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView?
+    func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> LegacyMobileContentView?
 }

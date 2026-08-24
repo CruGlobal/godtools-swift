@@ -24,7 +24,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
     }
     
-    func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
+    func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> LegacyMobileContentView? {
         
         if let paragraphModel = renderableModel as? Paragraph {
         
@@ -34,7 +34,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
-            let view = MobileContentParagraphView(viewModel: viewModel)
+            let view = LegacyMobileContentParagraphView(viewModel: viewModel)
             
             return view
         }
@@ -55,7 +55,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
-            let view = MobileContentImageView(viewModel: viewModel)
+            let view = LegacyMobileContentImageView(viewModel: viewModel)
             
             return view            
         }
@@ -67,7 +67,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics
             )
 
-            let view = MobileContentButtonView(viewModel: viewModel)
+            let view = LegacyMobileContentButtonView(viewModel: viewModel)
             
             return view
         }
@@ -79,7 +79,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
-            let view = MobileContentCardView(viewModel: viewModel)
+            let view = LegacyMobileContentCardView(viewModel: viewModel)
             
             return view
         }
@@ -91,7 +91,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
-            let view = MobileContentLinkView(viewModel: viewModel)
+            let view = LegacyMobileContentLinkView(viewModel: viewModel)
             
             return view
         }
@@ -103,7 +103,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
-            let view = MobileContentCardCollectionPageCardView(viewModel: viewModel)
+            let view = LegacyMobileContentCardCollectionPageCardView(viewModel: viewModel)
             
             return view
         }
@@ -116,7 +116,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase
             )
             
-            let view = MobileContentContentPageView(viewModel: viewModel)
+            let view = LegacyMobileContentContentPageView(viewModel: viewModel)
             
             return view
         }
@@ -129,7 +129,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase
             )
             
-            let view = MobileContentCardCollectionPageView(viewModel: viewModel)
+            let view = LegacyMobileContentCardCollectionPageView(viewModel: viewModel)
             
             return view
         }
@@ -141,7 +141,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
-            let view = MobileContentHeadingView(viewModel: viewModel)
+            let view = LegacyMobileContentHeadingView(viewModel: viewModel)
             
             return view
         }
@@ -153,7 +153,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
-            return MobileContentStackView(
+            return LegacyMobileContentStackView(
                 viewModel: viewModel,
                 contentInsets: contentModel.contentInsets,
                 scrollIsEnabled: contentModel.scrollIsEnabled
@@ -167,7 +167,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
-            let view = MobileContentAnimationView(viewModel: viewModel)
+            let view = LegacyMobileContentAnimationView(viewModel: viewModel)
             
             return view
         }
@@ -179,7 +179,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
-            let view = MobileContentEmbeddedVideoView(viewModel: viewModel)
+            let view = LegacyMobileContentEmbeddedVideoView(viewModel: viewModel)
             
             return view
         }
@@ -191,7 +191,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
-            let view = MobileContentTabView(viewModel: viewModel)
+            let view = LegacyMobileContentTabView(viewModel: viewModel)
             
             return view
         }
@@ -203,7 +203,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
-            let view = MobileContentTabsView(viewModel: viewModel)
+            let view = LegacyMobileContentTabsView(viewModel: viewModel)
             
             return view
         }
@@ -215,7 +215,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
-            let view = MobileContentInputView(viewModel: viewModel)
+            let view = LegacyMobileContentInputView(viewModel: viewModel)
             
             return view
         }
@@ -227,7 +227,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
-            let view = MobileContentFormView(viewModel: viewModel)
+            let view = LegacyMobileContentFormView(viewModel: viewModel)
             
             return view
         }
@@ -239,7 +239,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
-            let view = MobileContentSpacerView(viewModel: viewModel)
+            let view = LegacyMobileContentSpacerView(viewModel: viewModel)
             
             return view
         }
@@ -251,7 +251,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
-            let view = MobileContentHeaderView(viewModel: viewModel)
+            let view = LegacyMobileContentHeaderView(viewModel: viewModel)
             
             return view
         }
@@ -263,7 +263,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
-            let view = MobileContentFlowView(viewModel: viewModel)
+            let view = LegacyMobileContentFlowView(viewModel: viewModel)
             
             return view
         }
@@ -275,7 +275,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
-            let view = MobileContentFlowItemView(viewModel: viewModel)
+            let view = LegacyMobileContentFlowItemView(viewModel: viewModel)
             
             return view
         }
@@ -287,7 +287,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
-            let view = MobileContentMultiSelectOptionView(viewModel: viewModel)
+            let view = LegacyMobileContentMultiSelectOptionView(viewModel: viewModel)
             
             return view
         }
@@ -299,7 +299,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
-            let view = MobileContentMultiSelectView(viewModel: viewModel)
+            let view = LegacyMobileContentMultiSelectView(viewModel: viewModel)
             
             return view
         }
@@ -311,7 +311,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
-            let view = MobileContentAccordionSectionView(viewModel: viewModel)
+            let view = LegacyMobileContentAccordionSectionView(viewModel: viewModel)
             
             return view
         }
@@ -323,7 +323,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
-            let view = MobileContentAccordionView(viewModel: viewModel)
+            let view = LegacyMobileContentAccordionView(viewModel: viewModel)
             
             return view
         }
@@ -336,7 +336,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase
             )
             
-            let view = MobileContentPageCollectionView(viewModel: viewModel)
+            let view = LegacyMobileContentPageCollectionView(viewModel: viewModel)
             
             return view
         }
@@ -344,7 +344,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         return nil
     }
     
-    func getContentText(textModel: GodToolsShared.Text, renderedPageContext: MobileContentRenderedPageContext, viewType: MobileContentTextView.ViewType?, additionalLabelAttributes: MobileContentTextLabelAttributes?) -> MobileContentTextView {
+    func getContentText(textModel: GodToolsShared.Text, renderedPageContext: MobileContentRenderedPageContext, viewType: LegacyMobileContentTextView.ViewType?, additionalLabelAttributes: MobileContentTextLabelAttributes?) -> LegacyMobileContentTextView {
         
         let viewModel = MobileContentTextViewModel(
             textModel: textModel,
@@ -352,7 +352,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             mobileContentAnalytics: mobileContentAnalytics
         )
         
-        let view = MobileContentTextView(
+        let view = LegacyMobileContentTextView(
             viewModel: viewModel,
             viewType: viewType,
             additionalLabelAttributes: additionalLabelAttributes

@@ -302,7 +302,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     
     // MARK: - Page Life Cycle
     
-    func pageWillAppear(page: Int, pageParams: MobileContentPageWillAppearParams) -> MobileContentView? {
+    func pageWillAppear(page: Int, pageParams: MobileContentPageWillAppearParams) -> LegacyMobileContentView? {
         
         return nil
     }

@@ -50,11 +50,11 @@ class MobileContentPageCollectionPagesViewModel: MobileContentPagesViewModel {
         return nil
     }
 
-    override func pageWillAppear(page: Int, pageParams: MobileContentPageWillAppearParams) -> MobileContentView? {
+    override func pageWillAppear(page: Int, pageParams: MobileContentPageWillAppearParams) -> LegacyMobileContentView? {
 
         _ = super.pageWillAppear(page: page, pageParams: pageParams)
 
-        let view: MobileContentView? = renderedPageContext.viewRenderer.recurseAndRender(
+        let view: LegacyMobileContentView? = renderedPageContext.viewRenderer.recurseAndRender(
             renderableModel: pageCollectionPage.pages[page],
             renderableModelParent: nil,
             renderedPageContext: renderedPageContext

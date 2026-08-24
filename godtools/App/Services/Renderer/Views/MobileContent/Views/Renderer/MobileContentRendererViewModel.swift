@@ -522,7 +522,7 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
     
     // MARK: - Page Life Cycle
     
-    override func pageWillAppear(page: Int, pageParams: MobileContentPageWillAppearParams) -> MobileContentView? {
+    override func pageWillAppear(page: Int, pageParams: MobileContentPageWillAppearParams) -> LegacyMobileContentView? {
                 
         _ = super.pageWillAppear(page: page, pageParams: pageParams)
         
@@ -538,7 +538,7 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
         
         configureRendererPageContextUserInfo(userInfo: &userInfo, page: page)
                 
-        let renderPageResult: Result<MobileContentView, Error> = currentPageRenderer.value.renderPageModel(
+        let renderPageResult: Result<LegacyMobileContentView, Error> = currentPageRenderer.value.renderPageModel(
             pageModel: pageModels[page],
             page: page,
             numberOfPages: pageModels.count,

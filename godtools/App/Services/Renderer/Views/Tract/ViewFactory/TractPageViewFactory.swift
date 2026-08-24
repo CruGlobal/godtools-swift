@@ -32,7 +32,7 @@ class TractPageViewFactory: MobileContentPageViewFactoryType {
         self.followUpService = followUpService
     }
     
-    func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
+    func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> LegacyMobileContentView? {
         
         if let cardModel = renderableModel as? MultiplatformCard {
             
@@ -46,7 +46,7 @@ class TractPageViewFactory: MobileContentPageViewFactoryType {
                 trainingTipsEnabled: renderedPageContext.trainingTipsEnabled
             )
             
-            let view = TractPageCardView(viewModel: viewModel)
+            let view = LegacyTractPageCardView(viewModel: viewModel)
             
             return view
         }
@@ -65,7 +65,7 @@ class TractPageViewFactory: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics
             )
 
-            let view = TractPageHeaderView(viewModel: viewModel)
+            let view = LegacyTractPageHeaderView(viewModel: viewModel)
             
             return view
         }
@@ -77,7 +77,7 @@ class TractPageViewFactory: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
-            let view = TractPageHeroView(viewModel: viewModel)
+            let view = LegacyTractPageHeroView(viewModel: viewModel)
             
             return view
         }
@@ -90,7 +90,7 @@ class TractPageViewFactory: MobileContentPageViewFactoryType {
                 cardJumpService: cardJumpService
             )
             
-            let view = TractPageCardsView(
+            let view = LegacyTractPageCardsView(
                 viewModel: viewModel,
                 safeArea: renderedPageContext.safeArea
             )
@@ -107,7 +107,7 @@ class TractPageViewFactory: MobileContentPageViewFactoryType {
                 localizationServices: localizationServices
             )
             
-            let view = TractPageFormView(viewModel: viewModel)
+            let view = LegacyTractPageFormView(viewModel: viewModel)
             
             return view
         }
@@ -119,7 +119,7 @@ class TractPageViewFactory: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
-            let view = TractPageModalView(viewModel: viewModel)
+            let view = LegacyTractPageModalView(viewModel: viewModel)
             
             return view
         }
@@ -131,7 +131,7 @@ class TractPageViewFactory: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
-            let view = TractPageModalsView(
+            let view = LegacyTractPageModalsView(
                 viewModel: viewModel,
                 windowViewController: renderedPageContext.window
             )
@@ -147,7 +147,7 @@ class TractPageViewFactory: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
-            let view = TractPageView(
+            let view = LegacyTractPageView(
                 viewModel: viewModel,
                 safeArea: renderedPageContext.safeArea
             )
@@ -158,7 +158,7 @@ class TractPageViewFactory: MobileContentPageViewFactoryType {
         return nil
     }
     
-    func getCallToActionView(callToActionModel: CallToAction?, renderedPageContext: MobileContentRenderedPageContext) -> TractPageCallToActionView {
+    func getCallToActionView(callToActionModel: CallToAction?, renderedPageContext: MobileContentRenderedPageContext) -> LegacyTractPageCallToActionView {
         
         let viewModel = TractPageCallToActionViewModel(
             callToActionModel: callToActionModel,
@@ -166,7 +166,7 @@ class TractPageViewFactory: MobileContentPageViewFactoryType {
             mobileContentAnalytics: mobileContentAnalytics
         )
         
-        let view = TractPageCallToActionView(viewModel: viewModel)
+        let view = LegacyTractPageCallToActionView(viewModel: viewModel)
         
         return view
     }

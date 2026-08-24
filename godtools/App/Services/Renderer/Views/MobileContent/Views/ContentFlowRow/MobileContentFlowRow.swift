@@ -9,7 +9,7 @@
 import UIKit
 import GodToolsShared
 
-class MobileContentFlowRow: MobileContentView {
+class MobileContentFlowRow: LegacyMobileContentView {
     
     private let rowGravity: Gravity.Horizontal
     private let layoutDirection: UISemanticContentAttribute

@@ -110,7 +110,7 @@ protocol MobileContentRendererNavigationDelegate: AnyObject {
     
     func errorOccurred(error: MobileContentErrorViewModel) {
         
-        let view = MobileContentErrorView(viewModel: error)
+        let view = LegacyMobileContentErrorView(viewModel: error)
         
         toolFlow?.presentView(view: view.controller, animated: true)
     }

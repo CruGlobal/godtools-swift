@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ChooseYourOwnAdventureView: MobileContentRendererView {
+class ChooseYourOwnAdventureView: LegacyMobileContentRendererView {
     
     private let viewModel: ChooseYourOwnAdventureViewModel
         
