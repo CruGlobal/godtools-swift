@@ -34,11 +34,18 @@ final class TractPageCardsViewModel: MobileContentViewModel, ObservableObject {
                 
         super.init(baseModels: cards, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
         
-        Task {
+        loadShowsCardJump()
+    }
+    
+    private func loadShowsCardJump() {
+        
+        let isLiveShareStreaming: Bool = self.isLiveShareStreaming
+        
+        Task { [weak self] in
             
-            let didShowCardJump: Bool = await cardJumpService.didShowCardJump
+            let didShowCardJump: Bool = await self?.cardJumpService.didShowCardJump ?? false
             
-            showsCardJump = !didShowCardJump && !isLiveShareStreaming
+            self?.showsCardJump = !didShowCardJump && !isLiveShareStreaming
         }
     }
     
