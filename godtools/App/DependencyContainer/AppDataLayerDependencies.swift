@@ -179,8 +179,8 @@ final class AppDataLayerDependencies: Sendable {
         )
     }
     
-    func getCardJumpService() -> CardJumpService {
-        return CardJumpService(
+    func getCardJumpRepository() -> CardJumpRepository {
+        return CardJumpRepository(
             cardJumpCache: CardJumpUserDefaultsCache(userDefaultsCache: getUserDefaultsCache())
         )
     }

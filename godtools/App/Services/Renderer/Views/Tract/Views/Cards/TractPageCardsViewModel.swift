@@ -13,7 +13,7 @@ import Combine
 final class TractPageCardsViewModel: MobileContentViewModel, ObservableObject {
     
     private let cards: [TractPage.Card]
-    private let cardJumpService: CardJumpService
+    private let cardJumpRepository: CardJumpRepository
     private let isLiveShareStreaming: Bool
     
     private var cancellables: Set<AnyCancellable> = Set()
@@ -24,11 +24,11 @@ final class TractPageCardsViewModel: MobileContentViewModel, ObservableObject {
         cards: [TractPage.Card],
         renderedPageContext: MobileContentRenderedPageContext,
         mobileContentAnalytics: MobileContentRendererAnalytics,
-        cardJumpService: CardJumpService
+        cardJumpRepository: CardJumpRepository
     ) {
                 
         self.cards = cards
-        self.cardJumpService = cardJumpService
+        self.cardJumpRepository = cardJumpRepository
         
         isLiveShareStreaming = (renderedPageContext.userInfo?[TractViewModel.isLiveShareStreamingKey] as? Bool) ?? false
                 
@@ -43,7 +43,7 @@ final class TractPageCardsViewModel: MobileContentViewModel, ObservableObject {
         
         Task { [weak self] in
             
-            let didShowCardJump: Bool = await self?.cardJumpService.didShowCardJump ?? false
+            let didShowCardJump: Bool = await self?.cardJumpRepository.didShowCardJump ?? false
             
             self?.showsCardJump = !didShowCardJump && !isLiveShareStreaming
         }
@@ -53,11 +53,11 @@ final class TractPageCardsViewModel: MobileContentViewModel, ObservableObject {
         
         showsCardJump = false
         
-        let cardJumpService: CardJumpService = self.cardJumpService
+        let cardJumpRepository: CardJumpRepository = self.cardJumpRepository
         
         Task.detached {
             
-            await cardJumpService.saveDidShowCardJump()
+            await cardJumpRepository.saveDidShowCardJump()
         }
     }
 }
