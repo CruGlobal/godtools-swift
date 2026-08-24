@@ -15,11 +15,16 @@ actor FirebaseRemoteConfigWrapper: RemoteConfigRemoteDatabaseInterface {
     
     init() {
         
+        let secondsInHour: TimeInterval = 60 * 60
+        let minFetchInHours: TimeInterval = 24
+                
+        let settings = RemoteConfigSettings()
+        settings.minimumFetchInterval = secondsInHour * minFetchInHours
+        
+        remoteConfig.configSettings = settings
     }
     
     func syncFromRemoteDatabase() async throws {
-        
-        // NOTE: By default RemoteConfig fetches new data after 12 hours have elapsed. Can be configured in RemoteConfigSettings. ~Levi
         
         _ = try await fetchAndActivate()
     }
