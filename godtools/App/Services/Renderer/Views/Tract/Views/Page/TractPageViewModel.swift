@@ -77,7 +77,7 @@ class TractPageViewModel: MobileContentPageViewModel {
 
 extension TractPageViewModel {
     
-    func callToActionWillAppear() -> TractPageCallToActionView? {
+    func callToActionWillAppear() -> LegacyTractPageCallToActionView? {
 
         guard !hidesCallToAction else {
             return nil

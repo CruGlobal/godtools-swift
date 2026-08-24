@@ -92,9 +92,9 @@ class MobileContentCardCollectionPageViewModel: MobileContentPageViewModel {
 
 extension MobileContentCardCollectionPageViewModel {
     
-    func cardWillAppear(card: Int) -> MobileContentView? {
+    func cardWillAppear(card: Int) -> LegacyMobileContentView? {
         
-        let view: MobileContentView? = renderedPageContext.viewRenderer.recurseAndRender(
+        let view: LegacyMobileContentView? = renderedPageContext.viewRenderer.recurseAndRender(
             renderableModel: cardCollectionPage.cards[card],
             renderableModelParent: nil,
             renderedPageContext: renderedPageContext

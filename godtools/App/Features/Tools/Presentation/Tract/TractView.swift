@@ -9,7 +9,7 @@
 import UIKit
 import Combine
 
-class TractView: MobileContentRendererView {
+class TractView: LegacyMobileContentRendererView {
     
     private let viewModel: TractViewModel
     
@@ -72,8 +72,8 @@ class TractView: MobileContentRendererView {
             .store(in: &cancellables)
     }
     
-    override func didConfigurePageView(pageView: MobileContentPageView) {
-        if let tractPageView = pageView as? TractPageView {
+    override func didConfigurePageView(pageView: LegacyMobileContentPageView) {
+        if let tractPageView = pageView as? LegacyTractPageView {
             tractPageView.setTractPageDelegate(delegate: self)
         }
     }
@@ -103,11 +103,11 @@ class TractView: MobileContentRendererView {
     }
 }
 
-// MARK: - TractPageViewDelegate
+// MARK: - LegacyTractPageViewDelegate
 
-extension TractView: TractPageViewDelegate {
+extension TractView: LegacyTractPageViewDelegate {
     
-    func tractPageCardPositionChanged(pageView: TractPageView, page: Int, cardPosition: Int?, animated: Bool) {
+    func tractPageCardPositionChanged(pageView: LegacyTractPageView, page: Int, cardPosition: Int?, animated: Bool) {
 
         let pagePositionsForCardChange = TractPagePositions(
             cardPosition: cardPosition
@@ -116,7 +116,7 @@ extension TractView: TractPageViewDelegate {
         viewModel.pageChanged(page: page, pagePositions: pagePositionsForCardChange)
     }
     
-    func tractPageCallToActionNextButtonTapped(pageView: TractPageView, page: Int) {
+    func tractPageCallToActionNextButtonTapped(pageView: LegacyTractPageView, page: Int) {
         viewModel.navigateToNextPage(animated: true)
     }
 }

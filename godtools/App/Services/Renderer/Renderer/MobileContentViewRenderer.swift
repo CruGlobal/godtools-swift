@@ -18,9 +18,9 @@ class MobileContentViewRenderer {
         self.pageViewFactories = pageViewFactories
     }
     
-    func recurseAndRender(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
+    func recurseAndRender(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> LegacyMobileContentView? {
                    
-        let mobileContentView: MobileContentView? = pageViewFactories.viewForRenderableModel(
+        let mobileContentView: LegacyMobileContentView? = pageViewFactories.viewForRenderableModel(
             renderableModel: renderableModel,
             renderableModelParent: renderableModelParent,
             renderedPageContext: renderedPageContext
@@ -37,7 +37,7 @@ class MobileContentViewRenderer {
                         
         for childModel in childModels {
             
-            let childMobileContentView: MobileContentView? = recurseAndRender(
+            let childMobileContentView: LegacyMobileContentView? = recurseAndRender(
                 renderableModel: childModel,
                 renderableModelParent: renderableModel,
                 renderedPageContext: renderedPageContext

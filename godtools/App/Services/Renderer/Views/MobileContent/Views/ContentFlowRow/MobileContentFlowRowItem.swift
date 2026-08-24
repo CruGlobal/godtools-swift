@@ -9,7 +9,7 @@
 import UIKit
 
 @MainActor
-protocol MobileContentFlowRowItem: MobileContentView {
+protocol MobileContentFlowRowItem: LegacyMobileContentView {
     
     var itemWidth: MobileContentViewWidth { get }
     var widthConstraint: NSLayoutConstraint? { get set }

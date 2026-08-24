@@ -23,7 +23,7 @@ class LessonPageViewFactory: MobileContentPageViewFactoryType {
         self.mobileContentAnalytics = mobileContentAnalytics
     }
     
-    func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
+    func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> LegacyMobileContentView? {
         
         if let pageModel = renderableModel as? Page {
                      
@@ -34,7 +34,7 @@ class LessonPageViewFactory: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
-            let view = LessonPageView(
+            let view = LegacyLessonPageView(
                 viewModel: viewModel,
                 safeArea: renderedPageContext.safeArea
             )

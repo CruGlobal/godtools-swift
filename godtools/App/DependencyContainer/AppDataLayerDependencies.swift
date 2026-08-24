@@ -308,6 +308,10 @@ final class AppDataLayerDependencies: Sendable {
         return FirebaseNonFatalErrorReporting()
     }
     
+    private func getFirebaseRemoteConfig() -> FirebaseRemoteConfigWrapper {
+        return FirebaseRemoteConfigWrapper()
+    }
+    
     func getFollowUpsService() -> FollowUpsService {
         
         let persistence: any Persistence<FollowUpDataModel, FollowUpDataModel>
@@ -511,7 +515,7 @@ final class AppDataLayerDependencies: Sendable {
     
     func getRemoteConfigRepository() -> RemoteConfigRepository {
         return RemoteConfigRepository(
-            remoteDatabase: sharedAppConfig.firebaseEnabled ? FirebaseRemoteConfigWrapper() : DisabledRemoteConfigDatabase()
+            remoteDatabase: sharedAppConfig.firebaseEnabled ? getFirebaseRemoteConfig() : DisabledRemoteConfigDatabase()
         )
     }
     

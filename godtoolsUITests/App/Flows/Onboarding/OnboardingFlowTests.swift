@@ -130,7 +130,7 @@ final class OnboardingFlowTests: BaseFlowTests {
         
         assertIfScreenDoesNotExist(screenAccessibility: .appLanguages)
         
-        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .appLanguagesNavBack, buttonQueryType: .exactMatch)
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .back, buttonQueryType: .exactMatch)
         
         assertIfScreenDoesNotExist(screenAccessibility: .onboardingTutorial)
         
@@ -147,7 +147,7 @@ final class OnboardingFlowTests: BaseFlowTests {
         
         assertIfScreenDoesNotExist(screenAccessibility: .appLanguages)
         
-        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .appLanguagesNavBack, buttonQueryType: .exactMatch)
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .back, buttonQueryType: .exactMatch)
         
         assertIfScreenDoesNotExist(screenAccessibility: .onboardingTutorial)
         

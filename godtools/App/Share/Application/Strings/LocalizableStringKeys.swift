@@ -135,6 +135,7 @@ enum LocalizableStringKeys: String {
     case menuTutorial = "menu.tutorial"
     case menuVersion = "menu_version"
     case myTools = "my_tools"
+    case navigationBarNavigationItemSkip = "navigationBar.navigationItem.skip"
     case networkConnectionLost = "network_connection_lost"
     case no = "no"
     case noInternet = "no_internet"

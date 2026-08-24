@@ -153,7 +153,7 @@ extension DashboardFlowTests {
         
         assertIfScreenDoesNotExist(screenAccessibility: .toolDetails)
         
-        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .toolDetailsNavBack)
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .back)
         
         assertIfScreenDoesNotExist(screenAccessibility: .dashboardFavorites)
     }

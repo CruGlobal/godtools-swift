@@ -202,7 +202,7 @@ extension ToolTrainingView: PageNavigationCollectionViewDelegate {
                 return UICollectionViewCell()
             }
 
-        let mobileContentView: MobileContentView? = viewModel.tipPageWillAppear(
+        let mobileContentView: LegacyMobileContentView? = viewModel.tipPageWillAppear(
             page: indexPath.row,
             window: navigationController ?? self,
             safeArea: .zero
@@ -210,11 +210,11 @@ extension ToolTrainingView: PageNavigationCollectionViewDelegate {
         
         if let mobileContentView = mobileContentView {
             
-            if let trainingPageView = mobileContentView as? TrainingPageView {
+            if let trainingPageView = mobileContentView as? LegacyTrainingPageView {
                 trainingPageView.setDelegate(delegate: self)
             }
             else {
-                assertionFailure("Expected TrainingPageView")
+                assertionFailure("Expected LegacyTrainingPageView")
             }
             
             cell.configure(mobileContentView: mobileContentView)
@@ -232,10 +232,10 @@ extension ToolTrainingView: PageNavigationCollectionViewDelegate {
     }
 }
 
-// MARK: - TrainingPageViewDelegate
+// MARK: - LegacyTrainingPageViewDelegate
 
-extension ToolTrainingView: TrainingPageViewDelegate {
-    func trainingPageButtonWithUrlTapped(trainingPage: TrainingPageView, url: URL) {
+extension ToolTrainingView: LegacyTrainingPageViewDelegate {
+    func trainingPageButtonWithUrlTapped(trainingPage: LegacyTrainingPageView, url: URL) {
         viewModel.buttonWithUrlTapped(url: url)
     }
 }
