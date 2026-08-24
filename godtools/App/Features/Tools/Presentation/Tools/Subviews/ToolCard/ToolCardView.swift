@@ -232,7 +232,7 @@ struct ToolCardView_Previews: PreviewProvider {
             accessibility: .tool,
             getToolIsFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToolIsFavoritedUseCase(),
             getToolBannerUseCase: appDiContainer.core.domainLayer.getToolBannerUseCase(),
-            dataCache: appDiContainer.core.dataLayer.getSharedDataCache()
+            imageCache: appDiContainer.core.dataLayer.getSharedImageCache()
         )
     }
     

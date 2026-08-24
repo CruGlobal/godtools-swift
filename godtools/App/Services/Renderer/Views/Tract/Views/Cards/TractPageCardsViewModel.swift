@@ -13,7 +13,7 @@ import Combine
 final class TractPageCardsViewModel: MobileContentViewModel, ObservableObject {
     
     private let cards: [TractPage.Card]
-    private let cardJumpService: CardJumpService
+    private let cardJumpRepository: CardJumpRepository
     private let isLiveShareStreaming: Bool
     
     private var cancellables: Set<AnyCancellable> = Set()
@@ -24,21 +24,28 @@ final class TractPageCardsViewModel: MobileContentViewModel, ObservableObject {
         cards: [TractPage.Card],
         renderedPageContext: MobileContentRenderedPageContext,
         mobileContentAnalytics: MobileContentRendererAnalytics,
-        cardJumpService: CardJumpService
+        cardJumpRepository: CardJumpRepository
     ) {
                 
         self.cards = cards
-        self.cardJumpService = cardJumpService
+        self.cardJumpRepository = cardJumpRepository
         
         isLiveShareStreaming = (renderedPageContext.userInfo?[TractViewModel.isLiveShareStreamingKey] as? Bool) ?? false
                 
         super.init(baseModels: cards, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
         
-        Task {
+        loadShowsCardJump()
+    }
+    
+    private func loadShowsCardJump() {
+        
+        let isLiveShareStreaming: Bool = self.isLiveShareStreaming
+        
+        Task { [weak self] in
             
-            let didShowCardJump: Bool = await cardJumpService.didShowCardJump
+            let didShowCardJump: Bool = await self?.cardJumpRepository.didShowCardJump ?? false
             
-            showsCardJump = !didShowCardJump && !isLiveShareStreaming
+            self?.showsCardJump = !didShowCardJump && !isLiveShareStreaming
         }
     }
     
@@ -46,11 +53,11 @@ final class TractPageCardsViewModel: MobileContentViewModel, ObservableObject {
         
         showsCardJump = false
         
-        let cardJumpService: CardJumpService = self.cardJumpService
+        let cardJumpRepository: CardJumpRepository = self.cardJumpRepository
         
         Task.detached {
             
-            await cardJumpService.saveDidShowCardJump()
+            await cardJumpRepository.saveDidShowCardJump()
         }
     }
 }
