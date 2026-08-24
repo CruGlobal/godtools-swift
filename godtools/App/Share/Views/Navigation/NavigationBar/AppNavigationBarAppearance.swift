@@ -13,7 +13,7 @@ import UIKit
 class AppNavigationBarAppearance {
     
     let backgroundColor: UIColor
-    let controlColor: UIColor?
+    let controlColor: UIColor? // TODO: Control color can be removed once moving to configuring toolbar items in SwiftUI Views. ~Levi
     let titleFont: UIFont?
     let titleColor: UIColor?
     let isTranslucent: Bool
