@@ -22,7 +22,7 @@ final class AllYourFavoriteToolsViewModel: ObservableObject {
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     private let reorderFavoritedToolUseCase: ReorderFavoritedToolUseCase
     private let getToolBannerUseCase: GetToolBannerUseCase
-    private let dataCache: DataCacheInterface
+    private let imageCache: ImageCacheInterface
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let didConfirmToolRemovalSubject: PassthroughSubject<Void, Never> = PassthroughSubject()
@@ -43,7 +43,7 @@ final class AllYourFavoriteToolsViewModel: ObservableObject {
         getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase,
         reorderFavoritedToolUseCase: ReorderFavoritedToolUseCase,
         getToolBannerUseCase: GetToolBannerUseCase,
-        dataCache: DataCacheInterface,
+        imageCache: ImageCacheInterface,
         trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
         trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     ) {
@@ -55,7 +55,7 @@ final class AllYourFavoriteToolsViewModel: ObservableObject {
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.reorderFavoritedToolUseCase = reorderFavoritedToolUseCase
         self.getToolBannerUseCase = getToolBannerUseCase
-        self.dataCache = dataCache
+        self.imageCache = imageCache
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         
@@ -218,7 +218,7 @@ extension AllYourFavoriteToolsViewModel {
             accessibility: .favoriteTool,
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
             getToolBannerUseCase: getToolBannerUseCase,
-            dataCache: dataCache
+            imageCache: imageCache
         )
     }
     

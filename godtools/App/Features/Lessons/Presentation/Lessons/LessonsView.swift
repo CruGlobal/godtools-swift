@@ -160,7 +160,7 @@ struct LessonsView_Preview: PreviewProvider {
             trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase(),
             getToolBannerUseCase: appDiContainer.core.domainLayer.getToolBannerUseCase(),
-            dataCache: appDiContainer.core.dataLayer.getSharedDataCache()
+            imageCache: appDiContainer.core.dataLayer.getSharedImageCache()
         )
         
         return viewModel

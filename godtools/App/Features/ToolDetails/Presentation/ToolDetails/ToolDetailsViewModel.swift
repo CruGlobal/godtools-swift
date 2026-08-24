@@ -23,7 +23,7 @@ final class ToolDetailsViewModel: ObservableObject {
     private let getToolDetailsLearnToShareToolIsAvailableUseCase: GetToolDetailsLearnToShareToolIsAvailableUseCase
     private let toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase
     private let getToolBannerUseCase: GetToolBannerUseCase
-    private let dataCache: DataCacheInterface
+    private let imageCache: ImageCacheInterface
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     
@@ -70,7 +70,7 @@ final class ToolDetailsViewModel: ObservableObject {
         getToolDetailsLearnToShareToolIsAvailableUseCase: GetToolDetailsLearnToShareToolIsAvailableUseCase,
         toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase,
         getToolBannerUseCase: GetToolBannerUseCase,
-        dataCache: DataCacheInterface,
+        imageCache: ImageCacheInterface,
         trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
         trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     ) {
@@ -84,7 +84,7 @@ final class ToolDetailsViewModel: ObservableObject {
         self.getToolDetailsLearnToShareToolIsAvailableUseCase = getToolDetailsLearnToShareToolIsAvailableUseCase
         self.toggleToolFavoritedUseCase = toggleToolFavoritedUseCase
         self.getToolBannerUseCase = getToolBannerUseCase
-        self.dataCache = dataCache
+        self.imageCache = imageCache
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.tool = tool
@@ -387,7 +387,7 @@ extension ToolDetailsViewModel {
         return ToolDetailsVersionsCardViewModel(
             toolVersion: toolVersion,
             getToolBannerUseCase: getToolBannerUseCase,
-            dataCache: dataCache,
+            imageCache: imageCache,
             isSelected: selectedToolVersion?.id == toolVersion.id
         )
     }

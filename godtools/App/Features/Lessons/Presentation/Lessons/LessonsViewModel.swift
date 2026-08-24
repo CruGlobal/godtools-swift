@@ -24,7 +24,7 @@ final class LessonsViewModel: ObservableObject {
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let getToolBannerUseCase: GetToolBannerUseCase
-    private let dataCache: DataCacheInterface
+    private let imageCache: ImageCacheInterface
     
     private var cancellables: Set<AnyCancellable> = Set()
     private var pullToRefreshLessonsTask: Task<Void, Error>?
@@ -54,7 +54,7 @@ final class LessonsViewModel: ObservableObject {
         trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
         trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase,
         getToolBannerUseCase: GetToolBannerUseCase,
-        dataCache: DataCacheInterface
+        imageCache: ImageCacheInterface
     ) {
 
         self.stepEmitter = stepEmitter
@@ -68,7 +68,7 @@ final class LessonsViewModel: ObservableObject {
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.getToolBannerUseCase = getToolBannerUseCase
-        self.dataCache = dataCache
+        self.imageCache = imageCache
         
         if !GodToolsApp.showsPersonalization {
             selectedToggle = .all
@@ -322,7 +322,7 @@ extension LessonsViewModel {
         return LessonCardViewModel(
             lessonListItem: lessonListItem,
             getToolBannerUseCase: getToolBannerUseCase,
-            dataCache: dataCache
+            imageCache: imageCache
         )
     }
     

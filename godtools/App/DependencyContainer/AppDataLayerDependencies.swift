@@ -18,7 +18,7 @@ final class AppDataLayerDependencies: Sendable {
     private let sharedAppConfig: AppConfigInterface
     private let sharedUrlSessionPriority: URLSessionPriority = URLSessionPriority()
     private let sharedAnalytics: AnalyticsContainer
-    private let sharedInMemoryDataCache: InMemoryDataCache = InMemoryDataCache()
+    private let sharedInMemoryImageCache: InMemoryImageCache = InMemoryImageCache()
     private let sharedRealmDatabase: RealmDatabase
     private let sharedSwiftDatabase: Any? // TODO: Once RealmSwift is removed, change Any? to SwiftDatabase.
     
@@ -179,8 +179,8 @@ final class AppDataLayerDependencies: Sendable {
         )
     }
     
-    func getCardJumpService() -> CardJumpService {
-        return CardJumpService(
+    func getCardJumpRepository() -> CardJumpRepository {
+        return CardJumpRepository(
             cardJumpCache: CardJumpUserDefaultsCache(userDefaultsCache: getUserDefaultsCache())
         )
     }
@@ -645,8 +645,8 @@ final class AppDataLayerDependencies: Sendable {
         )
     }
     
-    func getSharedDataCache() -> DataCacheInterface {
-        return sharedInMemoryDataCache
+    func getSharedImageCache() -> ImageCacheInterface {
+        return sharedInMemoryImageCache
     }
     
     func getSharedFirebaseMessaging() -> FirebaseMessaging {

@@ -1,5 +1,5 @@
 //
-//  CardJumpService.swift
+//  CardJumpRepository.swift
 //  godtools
 //
 //  Created by Levi Eggert on 8/31/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class CardJumpService: Sendable {
+final class CardJumpRepository: Sendable {
     
     private let cardJumpCache: CardJumpUserDefaultsCache
         
