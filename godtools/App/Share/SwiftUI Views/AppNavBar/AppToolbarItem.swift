@@ -13,23 +13,26 @@ struct AppToolbarItem: ToolbarContent {
     enum ViewType: Sendable {
         case image(value: Image)
         case imageName(value: String)
-        case text(value: String, color: Color)
+        case text(value: String)
     }
     
     private let placement: ToolbarItemPlacement
     private let viewType: ViewType
+    private let color: Color?
     private let accessibilityId: String?
     private let tappedClosure: (() -> Void)?
     
     init(
         placement: ToolbarItemPlacement,
         viewType: ViewType,
+        color: Color?,
         accessibilityId: String?,
         tappedClosure: (() -> Void)?
     ) {
         
         self.placement = placement
         self.viewType = viewType
+        self.color = color
         self.accessibilityId = accessibilityId
         self.tappedClosure = tappedClosure
     }
@@ -46,9 +49,13 @@ struct AppToolbarItem: ToolbarContent {
                 switch viewType {
                 case .image(let value):
                     value
+                        .renderingMode(.template)
+                        .foregroundColor(color)
                 case .imageName(let value):
                     Image(value)
-                case .text(let value, let color):
+                        .renderingMode(.template)
+                        .foregroundColor(color)
+                case .text(let value):
                     Text(value)
                         .foregroundColor(color)
                 }

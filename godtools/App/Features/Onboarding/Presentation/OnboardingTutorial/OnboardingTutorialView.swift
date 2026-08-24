@@ -93,7 +93,8 @@ struct OnboardingTutorialView: View {
                  
                     AppToolbarItem(
                         placement: AppToolbarItem.trailingPlacement,
-                        viewType: .text(value: viewModel.strings.skipActionTitle, color: ColorPalette.gtBlue.color),
+                        viewType: .text(value: viewModel.strings.skipActionTitle),
+                        color: ColorPalette.gtBlue.color,
                         accessibilityId: AccessibilityStrings.Button.skip.id,
                         tappedClosure: {
                             

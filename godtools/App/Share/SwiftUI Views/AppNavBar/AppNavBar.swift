@@ -25,6 +25,7 @@ extension View {
                     AppToolbarItem(
                         placement: AppToolbarItem.leadingPlacement,
                         viewType: .image(value: ImageCatalog.navBack.image),
+                        color: ColorPalette.gtBlue.color,
                         accessibilityId: AccessibilityStrings.Button.back.id,
                         tappedClosure: {
                             backTapped?()
