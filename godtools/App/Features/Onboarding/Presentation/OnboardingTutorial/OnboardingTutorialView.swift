@@ -84,6 +84,25 @@ struct OnboardingTutorialView: View {
             .padding([.top], chooseAppLanguageButtonPosition)
             .animation(.interpolatingSpring(stiffness: 80, damping: 10), value: chooseAppLanguageButtonPosition)
         }
+        .navBar(
+            title: nil,
+            backTapped: nil,
+            toolbarContent: {
+                
+                if !viewModel.hidesSkipButton {
+                 
+                    AppToolbarItem(
+                        placement: AppToolbarItem.trailingPlacement,
+                        viewType: .text(value: viewModel.strings.skipActionTitle, color: ColorPalette.gtBlue.color),
+                        accessibilityId: AccessibilityStrings.Button.skip.id,
+                        tappedClosure: {
+                            
+                            viewModel.skipTapped()
+                        }
+                    )
+                }
+            }
+        )
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
     

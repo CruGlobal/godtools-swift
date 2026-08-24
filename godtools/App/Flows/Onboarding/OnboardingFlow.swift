@@ -241,26 +241,8 @@ extension OnboardingFlow {
                 
         let view = OnboardingTutorialView(viewModel: viewModel)
         
-        let skipButton = AppSkipBarItem(
-            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            localizationServices: appDiContainer.core.dataLayer.getLocalizationServices(),
-            target: viewModel,
-            action: #selector(viewModel.skipTapped),
-            accessibilityIdentifier: AccessibilityStrings.Button.skip.id,
-            hidesBarItemPublisher: viewModel.$hidesSkipButton.eraseToAnyPublisher()
-        )
-        
         let hostingView = AppHostingController<OnboardingTutorialView>(
-            rootView: view,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: nil,
-                leadingItems: [],
-                trailingItems: [skipButton],
-                titleView: InvisibleChooseAppLanguageButtonForNavigationBar(tappedClosure: {
-                    viewModel.chooseAppLanguageTapped()
-                })
-            )
+            rootView: view
         )
         
         return hostingView

@@ -10,6 +10,7 @@ import Foundation
 
 struct OnboardingTutorialStringsDomainModel: Sendable {
     
+    let skipActionTitle: String
     let chooseAppLanguageButtonTitle: String
     let beginTutorialButtonTitle: String
     let nextTutorialPageButtonTitle: String
@@ -24,6 +25,6 @@ struct OnboardingTutorialStringsDomainModel: Sendable {
     let helpSomeoneDiscoverJesusMessage: String
     
     static var emptyValue: OnboardingTutorialStringsDomainModel {
-        return OnboardingTutorialStringsDomainModel(chooseAppLanguageButtonTitle: "", beginTutorialButtonTitle: "", nextTutorialPageButtonTitle: "", endTutorialButtonTitle: "", readyForEveryConversationTitle: "", readyForEveryConversationVideoLinkTitle: "", prepareForMomentsThatMatterTitle: "", prepareForMomentsThatMatterMessage: "", talkWithGodAboutAnyoneTitle: "", talkWithGodAboutAnyoneMessage: "", helpSomeoneDiscoverJesusTitle: "", helpSomeoneDiscoverJesusMessage: "")
+        return OnboardingTutorialStringsDomainModel(skipActionTitle: "", chooseAppLanguageButtonTitle: "", beginTutorialButtonTitle: "", nextTutorialPageButtonTitle: "", endTutorialButtonTitle: "", readyForEveryConversationTitle: "", readyForEveryConversationVideoLinkTitle: "", prepareForMomentsThatMatterTitle: "", prepareForMomentsThatMatterMessage: "", talkWithGodAboutAnyoneTitle: "", talkWithGodAboutAnyoneMessage: "", helpSomeoneDiscoverJesusTitle: "", helpSomeoneDiscoverJesusMessage: "")
     }
 }
