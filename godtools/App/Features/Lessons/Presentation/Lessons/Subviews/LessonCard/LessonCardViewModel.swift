@@ -53,6 +53,19 @@ class LessonCardViewModel: ObservableObject {
         
         let attachmentId: String = lessonListItem.bannerImageId
         
+        loadBanner(
+            getToolBannerUseCase: getToolBannerUseCase,
+            dataCache: dataCache,
+            attachmentId: attachmentId
+        )
+    }
+    
+    private func loadBanner(
+        getToolBannerUseCase: GetToolBannerUseCase,
+        dataCache: DataCacheInterface,
+        attachmentId: String
+    ) {
+        
         Task { [weak self] in
             
             if let imageData = await dataCache.getData(id: attachmentId), let image = imageData.toImage() {
