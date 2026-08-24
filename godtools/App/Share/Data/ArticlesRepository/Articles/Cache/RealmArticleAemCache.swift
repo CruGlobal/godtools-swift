@@ -56,34 +56,23 @@ extension RealmArticleAemCache {
     
     private func getAemCacheObjects(aemUris: [String], realm: Realm) async throws -> [ArticleAemCacheObject] {
         
-        try await withThrowingTaskGroup(of: ArticleAemCacheObject?.self) { group in
+        var aemCacheObjects: [ArticleAemCacheObject] = Array()
+        
+        for aemUri in aemUris {
             
-            for aemUri in aemUris {
-                
-                group.addTask {
-                    
-                    let aemCacheObject: ArticleAemCacheObject? = try await self.getAemCacheObject(
-                        aemUri: aemUri,
-                        realm: realm
-                    )
-                    
-                    return aemCacheObject
-                }
+            let aemCacheObject: ArticleAemCacheObject? = try await self.getAemCacheObject(
+                aemUri: aemUri,
+                realm: realm
+            )
+            
+            guard let object = aemCacheObject else {
+                continue
             }
             
-            var aemCacheObjects: [ArticleAemCacheObject] = Array()
-            
-            for try await object in group {
-                
-                guard let object = object else {
-                    continue
-                }
-                
-                aemCacheObjects.append(object)
-            }
-            
-            return aemCacheObjects
+            aemCacheObjects.append(object)
         }
+        
+        return aemCacheObjects
     }
 
     private func getAemCacheObject(aemUri: String, realm: Realm) async throws -> ArticleAemCacheObject? {
