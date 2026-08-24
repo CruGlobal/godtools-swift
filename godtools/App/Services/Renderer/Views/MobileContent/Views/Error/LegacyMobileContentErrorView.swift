@@ -12,7 +12,7 @@ class LegacyMobileContentErrorView {
     
     let controller: UIAlertController
     
-    init(viewModel: MobileContentErrorViewModel) {
+    init(viewModel: LegacyMobileContentErrorViewModel) {
                         
         controller = UIAlertController(
             title: viewModel.title,

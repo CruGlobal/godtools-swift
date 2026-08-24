@@ -12,7 +12,7 @@ final class LegacyMobileContentBackgroundImageView: UIImageView {
     
     private let boundsKeyPath: String = #keyPath(UIView.bounds)
     
-    private var viewModel: MobileContentBackgroundImageViewModel?
+    private var viewModel: LegacyMobileContentBackgroundImageViewModel?
     private var lastRenderedParentBounds: CGRect = .zero
     private var isObservingParentBoundsChanges: Bool = false
     
@@ -25,7 +25,7 @@ final class LegacyMobileContentBackgroundImageView: UIImageView {
     }
     
     func configure(
-        viewModel: MobileContentBackgroundImageViewModel,
+        viewModel: LegacyMobileContentBackgroundImageViewModel,
         parentView: UIView,
         insertBackgroundAtIndex: Int?
     ) {

@@ -10,12 +10,12 @@ import UIKit
 
 class LegacyMobileContentImageView: LegacyMobileContentView {
     
-    private let viewModel: MobileContentImageViewModel
+    private let viewModel: LegacyMobileContentImageViewModel
     
     private var imageView: UIImageView?
     private var emptyView: UIView?
     
-    init(viewModel: MobileContentImageViewModel) {
+    init(viewModel: LegacyMobileContentImageViewModel) {
         
         self.viewModel = viewModel
         

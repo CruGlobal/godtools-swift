@@ -10,13 +10,13 @@ import UIKit
 
 class LegacyMobileContentCardView: LegacyMobileContentStackView {
     
-    private let viewModel: MobileContentCardViewModel
+    private let viewModel: LegacyMobileContentCardViewModel
     private let viewCornerRadius: CGFloat = 10
     
     private var shadowView: UIView?
     private var buttonOverlay: UIButton?
     
-    init(viewModel: MobileContentCardViewModel) {
+    init(viewModel: LegacyMobileContentCardViewModel) {
         
         self.viewModel = viewModel
         

@@ -21,7 +21,7 @@ protocol LegacyTractPageCardViewDelegate: AnyObject {
 
 class LegacyTractPageCardView: LegacyMobileContentView, NibBased {
         
-    private let viewModel: TractPageCardViewModel
+    private let viewModel: LegacyTractPageCardViewModel
     private let backgroundImageView: LegacyMobileContentBackgroundImageView = LegacyMobileContentBackgroundImageView()
     private let swipeUpGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer()
     private let swipeDownGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer()
@@ -54,7 +54,7 @@ class LegacyTractPageCardView: LegacyMobileContentView, NibBased {
     
     @IBOutlet weak private var headerTrainingTipTrailing: NSLayoutConstraint!
     
-    init(viewModel: TractPageCardViewModel) {
+    init(viewModel: LegacyTractPageCardViewModel) {
                 
         self.viewModel = viewModel
         self.contentStackView = LegacyMobileContentStackView(viewModel: viewModel, contentInsets: UIEdgeInsets(top: 15, left: 15, bottom: 0, right: 15), scrollIsEnabled: true)

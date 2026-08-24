@@ -10,12 +10,12 @@ import UIKit
 
 class LegacyMobileContentMultiSelectOptionView: LegacyMobileContentStackView {
     
-    private let viewModel: MobileContentMultiSelectOptionViewModel
+    private let viewModel: LegacyMobileContentMultiSelectOptionViewModel
     
     private let shadowView: UIView = UIView()
     private let overlayButton: UIButton = UIButton(type: .custom)
                     
-    init(viewModel: MobileContentMultiSelectOptionViewModel) {
+    init(viewModel: LegacyMobileContentMultiSelectOptionViewModel) {
         
         self.viewModel = viewModel
         

@@ -10,10 +10,10 @@ import UIKit
 
 class LegacyMobileContentContentPageView: LegacyMobileContentPageView {
         
-    private let viewModel: MobileContentContentPageViewModel
+    private let viewModel: LegacyMobileContentContentPageViewModel
     private var contentStackView: LegacyMobileContentStackView?
     
-    init(viewModel: MobileContentContentPageViewModel) {
+    init(viewModel: LegacyMobileContentContentPageViewModel) {
         
         self.viewModel = viewModel
         

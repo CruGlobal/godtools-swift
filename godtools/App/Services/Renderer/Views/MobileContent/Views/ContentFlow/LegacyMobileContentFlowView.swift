@@ -11,12 +11,12 @@ import GodToolsShared
 
 class LegacyMobileContentFlowView: LegacyMobileContentStackView {
     
-    private let viewModel: MobileContentFlowViewModel
+    private let viewModel: LegacyMobileContentFlowViewModel
     
     private var flowItemRows: [MobileContentFlowRow] = Array()
     private var flowItemViews: [LegacyMobileContentFlowItemView] = Array()
     
-    init(viewModel: MobileContentFlowViewModel) {
+    init(viewModel: LegacyMobileContentFlowViewModel) {
         
         self.viewModel = viewModel
         

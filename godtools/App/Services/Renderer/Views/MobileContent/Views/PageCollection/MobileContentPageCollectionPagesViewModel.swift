@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import GodToolsShared
 
-class MobileContentPageCollectionPagesViewModel: MobileContentPagesViewModel {
+class MobileContentPageCollectionPagesViewModel: LegacyMobileContentPagesViewModel {
 
     private let pageCollectionPage: PageCollectionPage
     private let renderedPageContext: MobileContentRenderedPageContext

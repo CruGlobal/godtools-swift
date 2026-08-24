@@ -16,7 +16,7 @@ protocol LegacyTractPageViewDelegate: AnyObject {
 
 class LegacyTractPageView: LegacyMobileContentPageView {
     
-    private let viewModel: TractPageViewModel
+    private let viewModel: LegacyTractPageViewModel
     private let safeArea: UIEdgeInsets
     private let panGestureToControlPageCollectionViewPanningSensitivity: UIPanGestureRecognizer = UIPanGestureRecognizer()
     
@@ -40,7 +40,7 @@ class LegacyTractPageView: LegacyMobileContentPageView {
     @IBOutlet weak private var callToActionBottom: NSLayoutConstraint!
     @IBOutlet weak private var bottomInsetBottomConstraint: NSLayoutConstraint!
     
-    init(viewModel: TractPageViewModel, safeArea: UIEdgeInsets) {
+    init(viewModel: LegacyTractPageViewModel, safeArea: UIEdgeInsets) {
         
         self.viewModel = viewModel
         self.safeArea = safeArea

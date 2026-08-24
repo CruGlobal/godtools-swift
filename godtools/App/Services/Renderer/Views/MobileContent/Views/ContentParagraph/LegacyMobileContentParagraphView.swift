@@ -13,9 +13,9 @@ class LegacyMobileContentParagraphView: LegacyMobileContentStackView {
     private static let topPadding: CGFloat = 8
     private static let bottomPadding: CGFloat = 8
     
-    private let viewModel: MobileContentParagraphViewModel
+    private let viewModel: LegacyMobileContentParagraphViewModel
     
-    init(viewModel: MobileContentParagraphViewModel) {
+    init(viewModel: LegacyMobileContentParagraphViewModel) {
         
         self.viewModel = viewModel
         

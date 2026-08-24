@@ -10,7 +10,7 @@ import UIKit
 import Combine
 
 @MainActor
-final class LessonViewModel: MobileContentRendererViewModel {
+final class LessonViewModel: LegacyMobileContentRendererViewModel {
         
     private let stepEmitter: FlowStepEmitter
     private let storeLessonProgressUseCase: StoreUserLessonProgressUseCase

@@ -11,7 +11,7 @@ import GodToolsShared
 
 class LegacyLessonPageView: LegacyMobileContentPageView {
     
-    private let viewModel: LessonPageViewModel
+    private let viewModel: LegacyLessonPageViewModel
     private let safeArea: UIEdgeInsets
     
     private var contentView: LegacyMobileContentStackView?
@@ -23,7 +23,7 @@ class LegacyLessonPageView: LegacyMobileContentPageView {
     @IBOutlet weak private var topInsetTopConstraint: NSLayoutConstraint!
     @IBOutlet weak private var bottomInsetBottomConstraint: NSLayoutConstraint!
     
-    init(viewModel: LessonPageViewModel, safeArea: UIEdgeInsets) {
+    init(viewModel: LegacyLessonPageViewModel, safeArea: UIEdgeInsets) {
         
         self.viewModel = viewModel
         self.safeArea = safeArea

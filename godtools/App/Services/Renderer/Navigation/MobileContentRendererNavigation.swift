@@ -108,7 +108,7 @@ protocol MobileContentRendererNavigationDelegate: AnyObject {
         toolFlow?.presentError(appLanguage: appLanguage, error: error)
     }
     
-    func errorOccurred(error: MobileContentErrorViewModel) {
+    func errorOccurred(error: LegacyMobileContentErrorViewModel) {
         
         let view = LegacyMobileContentErrorView(viewModel: error)
         

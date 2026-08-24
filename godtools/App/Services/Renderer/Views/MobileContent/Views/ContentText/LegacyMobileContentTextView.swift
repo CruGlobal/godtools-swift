@@ -22,7 +22,7 @@ class LegacyMobileContentTextView: LegacyMobileContentView, NibBased {
     private let viewType: ViewType
     private let additionalLabelAttributes: MobileContentTextLabelAttributes?
     
-    let viewModel: MobileContentTextViewModel
+    let viewModel: LegacyMobileContentTextViewModel
         
     @IBOutlet weak private var startImageView: UIImageView!
     @IBOutlet weak private var textLabel: UILabel!
@@ -40,7 +40,7 @@ class LegacyMobileContentTextView: LegacyMobileContentView, NibBased {
     @IBOutlet weak private var endImageViewHeight: NSLayoutConstraint!
         
     init(
-        viewModel: MobileContentTextViewModel,
+        viewModel: LegacyMobileContentTextViewModel,
         viewType: LegacyMobileContentTextView.ViewType?,
         additionalLabelAttributes: MobileContentTextLabelAttributes?
     ) {

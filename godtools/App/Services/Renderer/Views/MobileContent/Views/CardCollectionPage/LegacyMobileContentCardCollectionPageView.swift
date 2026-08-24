@@ -10,14 +10,14 @@ import UIKit
 
 class LegacyMobileContentCardCollectionPageView: LegacyMobileContentPageView {
     
-    private let viewModel: MobileContentCardCollectionPageViewModel
+    private let viewModel: LegacyMobileContentCardCollectionPageViewModel
     private let cardPageNavigationView: PageNavigationCollectionView
     private let previousCardButton: UIButton = UIButton(type: .custom)
     private let nextCardButton: UIButton = UIButton(type: .custom)
     private let previousAndNextButtonSize: CGFloat = 44
     private let previousAndNextButtonInsets: CGFloat = 20
         
-    init(viewModel: MobileContentCardCollectionPageViewModel) {
+    init(viewModel: LegacyMobileContentCardCollectionPageViewModel) {
         
         self.viewModel = viewModel
         

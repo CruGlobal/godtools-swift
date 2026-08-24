@@ -12,14 +12,14 @@ class LegacyMobileContentMultiSelectView: LegacyMobileContentStackView {
         
     private static let multiSelectOptionSpacing: CGFloat = 15
     
-    private let viewModel: MobileContentMultiSelectViewModel
+    private let viewModel: LegacyMobileContentMultiSelectViewModel
     private let itemSpacing: CGFloat
     private let isSingleColumn: Bool
     
     private var multiSelectOptionRows: [LegacyMobileContentRowView] = Array()
     private var optionViewsAdded: Bool = false
             
-    init(viewModel: MobileContentMultiSelectViewModel) {
+    init(viewModel: LegacyMobileContentMultiSelectViewModel) {
         
         let isSingleColumn: Bool = viewModel.numberOfColumnsForOptions == 1
         let itemSpacing: CGFloat = 15

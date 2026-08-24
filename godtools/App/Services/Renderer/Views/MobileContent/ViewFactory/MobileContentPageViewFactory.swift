@@ -28,7 +28,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         
         if let paragraphModel = renderableModel as? Paragraph {
         
-            let viewModel = MobileContentParagraphViewModel(
+            let viewModel = LegacyMobileContentParagraphViewModel(
                 paragraphModel: paragraphModel,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics
@@ -49,7 +49,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let imageModel = renderableModel as? GodToolsShared.Image {
             
-            let viewModel = MobileContentImageViewModel(
+            let viewModel = LegacyMobileContentImageViewModel(
                 imageModel: imageModel,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics
@@ -61,7 +61,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let buttonModel = renderableModel as? GodToolsShared.Button {
                         
-            let viewModel = MobileContentButtonViewModel(
+            let viewModel = LegacyMobileContentButtonViewModel(
                 buttonModel: buttonModel,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics
@@ -73,7 +73,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let contentCard = renderableModel as? Card {
             
-            let viewModel = MobileContentCardViewModel(
+            let viewModel = LegacyMobileContentCardViewModel(
                 cardModel: contentCard,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics
@@ -85,7 +85,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let linkModel = renderableModel as? GodToolsShared.Link {
                         
-            let viewModel = MobileContentLinkViewModel(
+            let viewModel = LegacyMobileContentLinkViewModel(
                 linkModel: linkModel,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics
@@ -97,7 +97,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let cardCollectionPageCard = renderableModel as? CardCollectionPage.Card {
             
-            let viewModel = MobileContentCardCollectionPageCardViewModel(
+            let viewModel = LegacyMobileContentCardCollectionPageCardViewModel(
                 card: cardCollectionPageCard,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics
@@ -109,7 +109,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let contentPage = renderableModel as? ContentPage {
             
-            let viewModel = MobileContentContentPageViewModel(
+            let viewModel = LegacyMobileContentContentPageViewModel(
                 contentPage: contentPage,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics,
@@ -122,7 +122,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let cardCollectionPage = renderableModel as? CardCollectionPage {
 
-            let viewModel = MobileContentCardCollectionPageViewModel(
+            let viewModel = LegacyMobileContentCardCollectionPageViewModel(
                 cardCollectionPage: cardCollectionPage,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics,
@@ -135,7 +135,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let headingModel = renderableModel as? MultiplatformHeading {
             
-            let viewModel = MobileContentHeadingViewModel(
+            let viewModel = LegacyMobileContentHeadingViewModel(
                 headingModel: headingModel.text,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics
@@ -147,7 +147,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let contentModel = renderableModel as? MultiplatformContent {
             
-            let viewModel = MobileContentViewModel(
+            let viewModel = LegacyMobileContentViewModel(
                 baseModels: contentModel.content,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics
@@ -161,7 +161,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let animationModel = renderableModel as? GodToolsShared.Animation {
             
-            let viewModel = MobileContentAnimationViewModel(
+            let viewModel = LegacyMobileContentAnimationViewModel(
                 animationModel: animationModel,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics
@@ -173,7 +173,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let videoModel = renderableModel as? Video {
             
-            let viewModel = MobileContentEmbeddedVideoViewModel(
+            let viewModel = LegacyMobileContentEmbeddedVideoViewModel(
                 videoModel: videoModel,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics
@@ -185,7 +185,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let tabModel = renderableModel as? Tabs.Tab {
             
-            let viewModel = MobileContentTabViewModel(
+            let viewModel = LegacyMobileContentTabViewModel(
                 tabModel: tabModel,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics
@@ -197,7 +197,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let tabsModel = renderableModel as? Tabs {
 
-            let viewModel = MobileContentTabsViewModel(
+            let viewModel = LegacyMobileContentTabsViewModel(
                 tabsModel: tabsModel,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics
@@ -209,7 +209,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let inputModel = renderableModel as? Input {
             
-            let viewModel = MobileContentInputViewModel(
+            let viewModel = LegacyMobileContentInputViewModel(
                 inputModel: inputModel,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics
@@ -221,7 +221,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let formModel = renderableModel as? GodToolsShared.Form {
             
-            let viewModel = MobileContentFormViewModel(
+            let viewModel = LegacyMobileContentFormViewModel(
                 formModel: formModel,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics
@@ -233,7 +233,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let spacerModel = renderableModel as? GodToolsShared.Spacer {
                 
-            let viewModel = MobileContentSpacerViewModel(
+            let viewModel = LegacyMobileContentSpacerViewModel(
                 spacerModel: spacerModel,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics
@@ -245,7 +245,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let headerModel = renderableModel as? MultiplatformContentHeader {
             
-            let viewModel = MobileContentHeaderViewModel(
+            let viewModel = LegacyMobileContentHeaderViewModel(
                 headerModel: headerModel.text,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics
@@ -257,7 +257,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let contentFlow = renderableModel as? GodToolsShared.Flow {
             
-            let viewModel = MobileContentFlowViewModel(
+            let viewModel = LegacyMobileContentFlowViewModel(
                 contentFlow: contentFlow,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics
@@ -269,7 +269,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let contentFlowItem = renderableModel as? GodToolsShared.Flow.Item {
             
-            let viewModel = MobileContentFlowItemViewModel(
+            let viewModel = LegacyMobileContentFlowItemViewModel(
                 flowItem: contentFlowItem,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics
@@ -281,7 +281,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let multiSelectOptionModel = renderableModel as? Multiselect.Option {
             
-            let viewModel = MobileContentMultiSelectOptionViewModel(
+            let viewModel = LegacyMobileContentMultiSelectOptionViewModel(
                 multiSelectOptionModel: multiSelectOptionModel,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics
@@ -293,7 +293,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let multiSelectModel = renderableModel as? Multiselect {
             
-            let viewModel = MobileContentMultiSelectViewModel(
+            let viewModel = LegacyMobileContentMultiSelectViewModel(
                 multiSelectModel: multiSelectModel,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics
@@ -305,7 +305,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let sectionModel = renderableModel as? Accordion.Section {
             
-            let viewModel = MobileContentAccordionSectionViewModel(
+            let viewModel = LegacyMobileContentAccordionSectionViewModel(
                 sectionModel: sectionModel,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics
@@ -317,7 +317,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let accordionModel = renderableModel as? Accordion {
             
-            let viewModel = MobileContentAccordionViewModel(
+            let viewModel = LegacyMobileContentAccordionViewModel(
                 accordionModel: accordionModel,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics
@@ -329,7 +329,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let pageCollection = renderableModel as? PageCollectionPage {
             
-            let viewModel = MobileContentPageCollectionViewModel(
+            let viewModel = LegacyMobileContentPageCollectionViewModel(
                 pageCollectionPage: pageCollection,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics,
@@ -346,7 +346,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
     
     func getContentText(textModel: GodToolsShared.Text, renderedPageContext: MobileContentRenderedPageContext, viewType: LegacyMobileContentTextView.ViewType?, additionalLabelAttributes: MobileContentTextLabelAttributes?) -> LegacyMobileContentTextView {
         
-        let viewModel = MobileContentTextViewModel(
+        let viewModel = LegacyMobileContentTextViewModel(
             textModel: textModel,
             renderedPageContext: renderedPageContext,
             mobileContentAnalytics: mobileContentAnalytics

@@ -13,7 +13,7 @@ class LegacyMobileContentPagesView: AppViewController {
     
     typealias PageNumber = Int
     
-    private let viewModel: MobileContentPagesViewModel
+    private let viewModel: LegacyMobileContentPagesViewModel
     
     private var initialPagePositions: [PageNumber: MobileContentViewPositionState] = Dictionary()
     private var pageInsets: UIEdgeInsets = .zero
@@ -27,7 +27,7 @@ class LegacyMobileContentPagesView: AppViewController {
     let pageNavigationView: PageNavigationCollectionView
         
     init(
-        viewModel: MobileContentPagesViewModel,
+        viewModel: LegacyMobileContentPagesViewModel,
         navigationBar: AppNavigationBar?,
         pageViewDelegate: LegacyMobileContentPageViewDelegate?,
         initialPageIndex: Int?,
