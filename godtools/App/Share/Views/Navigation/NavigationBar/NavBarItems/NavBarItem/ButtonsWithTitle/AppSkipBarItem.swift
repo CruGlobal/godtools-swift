@@ -24,7 +24,7 @@ class AppSkipBarItem: AppInterfaceStringBarItem {
         super.init(
             getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase,
             localizationServices: localizationServices,
-            localizedStringKey: "navigationBar.navigationItem.skip",
+            localizedStringKey: LocalizableStringKeys.navigationBarNavigationItemSkip.key,
             color: ColorPalette.gtBlue.uiColor,
             target: target,
             action: action,
