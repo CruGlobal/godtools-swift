@@ -33,7 +33,7 @@ class ToolCardViewModel: ObservableObject {
         accessibility: AccessibilityStrings.Button,
         getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase,
         getToolBannerUseCase: GetToolBannerUseCase,
-        dataCache: DataCacheInterface
+        imageCache: ImageCacheInterface
     ) {
         
         self.tool = tool
@@ -66,25 +66,40 @@ class ToolCardViewModel: ObservableObject {
         
         let attachmentId: String = tool.bannerImageId
         
+        loadBanner(
+            getToolBannerUseCase: getToolBannerUseCase,
+            imageCache: imageCache,
+            attachmentId: attachmentId
+        )
+    }
+    
+    private func loadBanner(
+        getToolBannerUseCase: GetToolBannerUseCase,
+        imageCache: ImageCacheInterface,
+        attachmentId: String
+    ) {
+        
+        if let cachedImage = imageCache.getImage(id: attachmentId) {
+            
+            banner = getBanner(image: cachedImage, attachmentId: attachmentId)
+            
+            return
+        }
+        
         Task { [weak self] in
             
-            if let imageData = await dataCache.getData(id: attachmentId), let image = imageData.toImage() {
-                
-                self?.banner = self?.getBanner(image: image, attachmentId: attachmentId)
+            let imageData = try await getToolBannerUseCase
+                .execute(
+                    attachmentId: attachmentId
+                )
+            
+            let image: Image? = imageData?.toImage()
+            
+            if let image = image {
+                imageCache.cacheImage(id: attachmentId, image: image)
             }
-            else {
-                
-                let imageData = try await getToolBannerUseCase
-                    .execute(
-                        attachmentId: attachmentId
-                    )
-                
-                if let imageData = imageData {
-                    await dataCache.cacheData(id: attachmentId, data: imageData)
-                }
-                
-                self?.banner = self?.getBanner(image: imageData?.toImage(), attachmentId: attachmentId)
-            }
+            
+            self?.banner = self?.getBanner(image: image, attachmentId: attachmentId)
         }
     }
     

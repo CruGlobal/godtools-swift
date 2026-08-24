@@ -14,21 +14,21 @@ class TractPageViewFactory: MobileContentPageViewFactoryType {
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let mobileContentAnalytics: MobileContentRendererAnalytics
     private let localizationServices: LocalizationServicesInterface
-    private let cardJumpService: CardJumpService
+    private let cardJumpRepository: CardJumpRepository
     private let followUpService: FollowUpsService
         
     init(
         trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
         mobileContentAnalytics: MobileContentRendererAnalytics,
         localizationServices: LocalizationServicesInterface,
-        cardJumpService: CardJumpService,
+        cardJumpRepository: CardJumpRepository,
         followUpService: FollowUpsService
     ) {
         
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.mobileContentAnalytics = mobileContentAnalytics
         self.localizationServices = localizationServices
-        self.cardJumpService = cardJumpService
+        self.cardJumpRepository = cardJumpRepository
         self.followUpService = followUpService
     }
     
@@ -87,7 +87,7 @@ class TractPageViewFactory: MobileContentPageViewFactoryType {
                 cards: cardsModel.cards,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics,
-                cardJumpService: cardJumpService
+                cardJumpRepository: cardJumpRepository
             )
             
             let view = LegacyTractPageCardsView(
