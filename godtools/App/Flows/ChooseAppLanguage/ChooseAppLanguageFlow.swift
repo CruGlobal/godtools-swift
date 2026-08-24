@@ -95,7 +95,7 @@ extension ChooseAppLanguageFlow {
         let backButton = AppBackBarItem(
             target: viewModel,
             action: #selector(viewModel.backTapped),
-            accessibilityIdentifier: AccessibilityStrings.Button.appLanguagesNavBack.id
+            accessibilityIdentifier: AccessibilityStrings.Button.back.id
         )
         
         let hostingView = AppHostingController<AppLanguagesView>(

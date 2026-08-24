@@ -923,7 +923,7 @@ extension DashboardFlow {
         let backButton = AppBackBarItem(
             target: viewModel,
             action: #selector(viewModel.backTapped),
-            accessibilityIdentifier: AccessibilityStrings.Button.toolDetailsNavBack.id
+            accessibilityIdentifier: AccessibilityStrings.Button.back.id
         )
         
         let hostingView = AppHostingController<ToolDetailsView>(
