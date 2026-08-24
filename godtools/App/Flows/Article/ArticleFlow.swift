@@ -64,7 +64,7 @@ final class ArticleFlow: GTFlow {
         
         case .articleCategoryTappedFromArticleCategories(let resource, let language, let category, let manifest):
             
-            let view = getArticles(resource: resource, language: language, category: category, manifest: manifest)
+            let view = getArticlesView(resource: resource, language: language, category: category, manifest: manifest)
             
             navigationController.pushViewController(view, animated: true)
             
@@ -157,26 +157,15 @@ extension ArticleFlow {
         )
         
         let view = ArticleCategoriesView(viewModel: viewModel)
-        
-        let backButton = AppBackBarItem(
-            target: viewModel,
-            action: #selector(viewModel.backTapped)
-        )
 
         let viewContoller = AppHostingController(
-            rootView: view,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: backButton,
-                leadingItems: [],
-                trailingItems: []
-            )
+            rootView: view
         )
         
         return viewContoller
     }
     
-    private func getArticles(resource: ResourceDataModel, language: LanguageDataModel, category: ArticleCategoryDomainModel, manifest: Manifest) -> UIViewController {
+    private func getArticlesView(resource: ResourceDataModel, language: LanguageDataModel, category: ArticleCategoryDomainModel, manifest: Manifest) -> UIViewController {
         
         let viewModel = ArticlesViewModel(
             stepEmitter: stepEmitter,
@@ -196,19 +185,7 @@ extension ArticleFlow {
             viewModel: viewModel
         )
         
-        let backButton = AppBackBarItem(
-            target: viewModel,
-            action: #selector(viewModel.backTapped)
-        )
-        
-        let navigationBar = AppNavigationBar(
-            appearance: nil,
-            backButton: backButton,
-            leadingItems: [],
-            trailingItems: []
-        )
-        
-        let hostingView = AppHostingController<ArticlesView>(rootView: view, navigationBar: navigationBar)
+        let hostingView = AppHostingController<ArticlesView>(rootView: view)
         
         return hostingView
     }
@@ -232,39 +209,12 @@ extension ArticleFlow {
             localizationServices: appDiContainer.core.dataLayer.getLocalizationServices()
         )
         
-        let backButton = AppBackBarItem(
-            target: viewModel,
-            action: #selector(viewModel.backTapped)
-        )
-        
-        let shareButton = AppShareBarItem(
-            color: nil,
-            target: viewModel,
-            action: #selector(viewModel.sharedTapped),
-            accessibilityIdentifier: nil,
-            hidesBarItemPublisher: viewModel.$hidesShareButton.eraseToAnyPublisher()
-        )
-        
-        let debugButton = AppDebugBarItem(
-            color: nil,
-            target: viewModel,
-            action: #selector(viewModel.debugTapped),
-            accessibilityIdentifier: nil,
-            hidesBarItemPublisher: viewModel.$hidesDebugButton.eraseToAnyPublisher()
-        )
-        
         let view = ArticleView(
             viewModel: viewModel
         )
         
         let hostingView = AppHostingController<ArticleView>(
-            rootView: view,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: backButton,
-                leadingItems: [],
-                trailingItems: [debugButton, shareButton]
-            )
+            rootView: view
         )
         
         return hostingView
@@ -279,20 +229,8 @@ extension ArticleFlow {
         
         let view = ArticleDebugView(viewModel: viewModel)
         
-        let closeButton = AppCloseBarItem(
-            color: nil,
-            target: viewModel,
-            action: #selector(viewModel.closeTapped)
-        )
-        
         let hostingView = AppHostingController<ArticleDebugView>(
-            rootView: view,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: nil,
-                leadingItems: [],
-                trailingItems: [closeButton]
-            )
+            rootView: view
         )
         
         let modal = ModalNavigationController.defaultModal(rootView: hostingView, statusBarStyle: .default)

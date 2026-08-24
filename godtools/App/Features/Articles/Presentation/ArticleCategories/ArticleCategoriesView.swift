@@ -43,7 +43,12 @@ struct ArticleCategoriesView: View {
         .onAppear {
             viewModel.pageViewed()
         }
-        .navigationBarBackButtonHidden(true)
+        .navBar(
+            title: nil,
+            backTapped: {
+                viewModel.backTapped()
+            }
+        )
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
 }

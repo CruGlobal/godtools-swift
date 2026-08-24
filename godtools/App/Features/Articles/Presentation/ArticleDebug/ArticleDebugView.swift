@@ -58,5 +58,22 @@ struct ArticleDebugView: View {
                 .padding(EdgeInsets(top: 0, leading: horizontalPadding, bottom: 40, trailing: 0))
             }
         }
+        .navBar(
+            title: nil,
+            backTapped: nil,
+            toolbarContent: {
+                
+                AppToolbarItem(
+                    placement: AppToolbarItem.trailingPlacement,
+                    viewType: .image(value: ImageCatalog.navClose.image),
+                    color: ColorPalette.gtBlue.color,
+                    accessibilityId: AccessibilityStrings.Button.close.id,
+                    tappedClosure: {
+                        
+                        viewModel.closeTapped()
+                    }
+                )
+            }
+        )
     }
 }
