@@ -10,6 +10,6 @@ import Foundation
 
 protocol DataCacheInterface: Sendable {
     
-    func cacheData(id: String, data: Data) async
-    func getData(id: String) async -> Data?
+    func cacheData(id: String, data: Data)
+    func getData(id: String) -> Data?
 }

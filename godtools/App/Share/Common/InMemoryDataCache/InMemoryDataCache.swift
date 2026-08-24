@@ -8,11 +8,12 @@
 
 import Foundation
 
-actor InMemoryDataCache: DataCacheInterface {
+final class InMemoryDataCache: DataCacheInterface {
     
     private static let oneHundredMegabytes: Int = 1024 * 1024 * 100
     
-    private let cache = NSCache<NSString, NSData>()
+    // Apple documents NSCache as thread safe and does its own internal locking. ~Levi
+    private nonisolated(unsafe) let cache: NSCache<NSString, NSData> = NSCache<NSString, NSData>()
     
     init(countLimit: Int = 100, totalCostLimit: Int = InMemoryDataCache.oneHundredMegabytes) {
         
