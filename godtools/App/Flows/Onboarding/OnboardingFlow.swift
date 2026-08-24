@@ -37,7 +37,7 @@ final class OnboardingFlow: GTFlow {
                     backgroundColor: .clear,
                     controlColor: ColorPalette.gtBlue.uiColor,
                     titleFont: nil,
-                    titleColor: nil,
+                    titleColor: ColorPalette.gtBlue.uiColor,
                     isTranslucent: true
                 )
             )
