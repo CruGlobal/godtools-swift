@@ -9,6 +9,7 @@
 import UIKit
 import SwiftUI
 import Combine
+import Flow
 
 @MainActor
 final class ToolDetailsViewModel: ObservableObject {
