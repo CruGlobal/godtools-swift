@@ -242,7 +242,13 @@ extension OnboardingFlow {
         let view = OnboardingTutorialView(viewModel: viewModel)
         
         let hostingView = AppHostingController<OnboardingTutorialView>(
-            rootView: view
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                appearance: nil,
+                titleView: InvisibleChooseAppLanguageButtonForNavigationBar(tappedClosure: {
+                    viewModel.chooseAppLanguageTapped()
+                })
+            )
         )
         
         return hostingView

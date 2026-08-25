@@ -32,9 +32,9 @@ final class AppNavigationBar {
     
     init(
         appearance: AppNavigationBarAppearance?,
-        backButton: AppBackBarItem?,
-        leadingItems: [NavBarItem],
-        trailingItems: [NavBarItem],
+        backButton: AppBackBarItem? = nil,
+        leadingItems: [NavBarItem] = [],
+        trailingItems: [NavBarItem] = [],
         titleView: UIView? = nil,
         title: String? = nil,
         layoutDirectionPublisher: AnyPublisher<UISemanticContentAttribute, Never>? = nil
