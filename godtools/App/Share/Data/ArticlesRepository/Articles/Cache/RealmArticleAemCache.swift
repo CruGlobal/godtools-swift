@@ -36,30 +36,34 @@ final class RealmArticleAemCache: ArticleAemCacheInterface {
 
 extension RealmArticleAemCache {
     
-    private func getAemData(aemUri: String) throws -> ArticleAemData? {
-        
-        let realm = try persistence.database.openRealm()
-        
-        guard let realmAemData = realm.object(ofType: RealmArticleAemData.self, forPrimaryKey: aemUri) else {
-            return nil
-        }
-        
-        let aemData = realmAemData.toModel()
-        
-        return aemData
-    }
-    
     func getArticleAemDataObjects() async throws -> [ArticleAemData] {
         return try await persistence.getDataModels()
     }
     
     func getAemCacheObject(aemUri: String) async throws -> ArticleAemCacheObject? {
-                
-        guard let aemData = try getAemData(aemUri: aemUri) else {
+           
+        let webArchiveFilename: String
+        let aemData: ArticleAemData?
+        
+        if let realmAemData = try persistence.database.openRealm().object(
+            ofType: RealmArticleAemData.self,
+            forPrimaryKey: aemUri
+        ) {
+         
+            webArchiveFilename = realmAemData.webArchiveFilename
+            aemData = realmAemData.toModel()
+        }
+        else {
+            
+            webArchiveFilename = ""
+            aemData = nil
+        }
+        
+        guard let aemData = aemData else {
             return nil
         }
         
-        let articleAemWebArchive = ArticleAemWebArchive(filename: aemData.webArchiveFilename)
+        let articleAemWebArchive = ArticleAemWebArchive(filename: webArchiveFilename)
         
         let url: URL = try await webArchiveFileCache.fileCache.getFile(location: articleAemWebArchive.location)
         

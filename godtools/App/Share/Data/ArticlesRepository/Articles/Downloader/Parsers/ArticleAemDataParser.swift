@@ -87,8 +87,7 @@ final class ArticleAemDataParser: Sendable {
             errorMessage: nil,
             errorCode: nil,
             httpStatusCode: nil,
-            updatedAt: Date(),
-            webArchiveFilename: ""
+            updatedAt: Date()
         )
     }
     

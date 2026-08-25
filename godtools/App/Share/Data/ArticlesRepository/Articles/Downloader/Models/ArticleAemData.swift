@@ -19,7 +19,6 @@ struct ArticleAemData: Sendable {
     let errorCode: Int?
     let httpStatusCode: Int?
     let updatedAt: Date
-    let webArchiveFilename: String
     
     init(
         aemUri: String,
@@ -29,8 +28,7 @@ struct ArticleAemData: Sendable {
         errorMessage: String?,
         errorCode: Int?,
         httpStatusCode: Int?,
-        updatedAt: Date,
-        webArchiveFilename: String
+        updatedAt: Date
     ) {
         
         let htmlExtension: String = "html"
@@ -43,7 +41,6 @@ struct ArticleAemData: Sendable {
         self.errorCode = error?.code ?? errorCode
         self.httpStatusCode = httpStatusCode
         self.updatedAt = updatedAt
-        self.webArchiveFilename = webArchiveFilename
         
         if let webUrl = webUrl, !webUrl.isEmpty {
             self.webUrl = webUrl.replacingOccurrences(of: "/.\(htmlExtension)", with: ".\(htmlExtension)")
@@ -68,8 +65,7 @@ struct ArticleAemData: Sendable {
             errorMessage: nil,
             errorCode: error.code,
             httpStatusCode: httpStatusCode,
-            updatedAt: updatedAt,
-            webArchiveFilename: ""
+            updatedAt: updatedAt
         )
     }
 }

@@ -82,8 +82,7 @@ extension SwiftArticleAemData {
             errorMessage: errorMessage,
             errorCode: errorCode,
             httpStatusCode: httpStatusCode,
-            updatedAt: updatedAt,
-            webArchiveFilename: webArchiveFilename
+            updatedAt: updatedAt
         )
     }
 }
