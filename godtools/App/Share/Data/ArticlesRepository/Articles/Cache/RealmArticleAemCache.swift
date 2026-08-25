@@ -81,11 +81,11 @@ extension RealmArticleAemCache {
             return nil
         }
         
+        let aemData = realmAemData.toModel()
+        
         let articleAemWebArchive = ArticleAemWebArchive(filename: realmAemData.webArchiveFilename)
         
         let url: URL = try await webArchiveFileCache.fileCache.getFile(location: articleAemWebArchive.location)
-        
-        let aemData = realmAemData.toModel()
         
         return ArticleAemCacheObject(
             aemUri: aemUri,
