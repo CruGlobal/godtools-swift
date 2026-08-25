@@ -10,14 +10,14 @@ import UIKit
 
 class LegacyMobileContentCardCollectionPageCardView: LegacyMobileContentView, NibBased {
     
-    private let viewModel: MobileContentCardCollectionPageCardViewModel
+    private let viewModel: LegacyMobileContentCardCollectionPageCardViewModel
     
     private var contentStackView: LegacyMobileContentStackView?
     
     @IBOutlet weak private var contentStackContainerView: UIView!
     @IBOutlet weak private var pageNumberLabel: UILabel!
     
-    init(viewModel: MobileContentCardCollectionPageCardViewModel) {
+    init(viewModel: LegacyMobileContentCardCollectionPageCardViewModel) {
         
         self.viewModel = viewModel
         

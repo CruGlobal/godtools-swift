@@ -28,7 +28,7 @@ class LegacyMobileContentStackView: LegacyMobileContentView {
     private var lastRenderedParentBounds: CGRect?
             
     init(
-        viewModel: MobileContentViewModel,
+        viewModel: LegacyMobileContentViewModel,
         contentInsets: UIEdgeInsets?,
         scrollIsEnabled: Bool,
         itemSpacing: CGFloat? = nil

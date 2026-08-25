@@ -40,7 +40,7 @@ final class TrainingViewFactory: MobileContentPageViewFactoryType {
         }
         else if let pageModel = renderableModel as? TipPage {
             
-            let viewModel = TrainingPageViewModel(
+            let viewModel = LegacyTrainingPageViewModel(
                 pageModel: pageModel,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics
@@ -60,7 +60,7 @@ final class TrainingViewFactory: MobileContentPageViewFactoryType {
             return nil
         }
         
-        let viewModel = TrainingTipViewModel(
+        let viewModel = LegacyTrainingTipViewModel(
             tipModel: tipModel,
             renderedPageContext: renderedPageContext,
             mobileContentAnalytics: mobileContentAnalytics,

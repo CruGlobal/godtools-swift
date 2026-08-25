@@ -19,7 +19,7 @@ protocol LegacyTractPageCardsViewDelegate: AnyObject {
 
 class LegacyTractPageCardsView: LegacyMobileContentView {
     
-    private let viewModel: TractPageCardsViewModel
+    private let viewModel: LegacyTractPageCardsViewModel
     private let safeArea: UIEdgeInsets
     private let keyboardObserver: KeyboardNotificationObserver = KeyboardNotificationObserver(loggingEnabled: false)
     
@@ -36,7 +36,7 @@ class LegacyTractPageCardsView: LegacyMobileContentView {
     private weak var renderedCardsParentView: UIView?
     private weak var delegate: LegacyTractPageCardsViewDelegate?
     
-    init(viewModel: TractPageCardsViewModel, safeArea: UIEdgeInsets) {
+    init(viewModel: LegacyTractPageCardsViewModel, safeArea: UIEdgeInsets) {
         
         self.viewModel = viewModel
         self.safeArea = safeArea

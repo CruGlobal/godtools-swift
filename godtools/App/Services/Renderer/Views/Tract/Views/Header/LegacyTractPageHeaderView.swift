@@ -33,9 +33,9 @@ class LegacyTractPageHeaderView: LegacyMobileContentView, NibBased {
     
     private var numberLabelWidthConstraint: NSLayoutConstraint?
     
-    let viewModel: TractPageHeaderViewModel
+    let viewModel: LegacyTractPageHeaderViewModel
                 
-    init(viewModel: TractPageHeaderViewModel) {
+    init(viewModel: LegacyTractPageHeaderViewModel) {
         
         self.viewModel = viewModel
         

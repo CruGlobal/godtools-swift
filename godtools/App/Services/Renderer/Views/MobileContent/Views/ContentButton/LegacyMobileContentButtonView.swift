@@ -14,7 +14,7 @@ class LegacyMobileContentButtonView: LegacyMobileContentView {
     private static let topPadding: CGFloat = 4
     private static let bottomPadding: CGFloat = 4
     
-    private let viewModel: MobileContentButtonViewModel
+    private let viewModel: LegacyMobileContentButtonViewModel
     private let buttonView: UIView = UIView()
     private let buttonTitle: UILabel = UILabel()
     private let buttonImagePaddingToButtonTitle: CGFloat = 12
@@ -28,7 +28,7 @@ class LegacyMobileContentButtonView: LegacyMobileContentView {
     private var buttonViewWidthConstraint: NSLayoutConstraint?
     private var buttonTitleWidthForIconConstraint: NSLayoutConstraint?
     
-    init(viewModel: MobileContentButtonViewModel) {
+    init(viewModel: LegacyMobileContentButtonViewModel) {
         
         self.viewModel = viewModel
         self.contentInsets = UIEdgeInsets(top: Self.topPadding, left: 0, bottom: Self.bottomPadding, right: 0)

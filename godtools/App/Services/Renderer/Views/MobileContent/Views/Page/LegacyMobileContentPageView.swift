@@ -17,13 +17,13 @@ protocol LegacyMobileContentPageViewDelegate: AnyObject {
 
 class LegacyMobileContentPageView: LegacyMobileContentView, NibBased {
     
-    private let viewModel: MobileContentPageViewModel
+    private let viewModel: LegacyMobileContentPageViewModel
     
     private var layeredBackgroundImages: [LegacyMobileContentBackgroundImageView] = Array()
     
     private weak var pageViewDelegate: LegacyMobileContentPageViewDelegate?
     
-    init(viewModel: MobileContentPageViewModel, nibName: String?) {
+    init(viewModel: LegacyMobileContentPageViewModel, nibName: String?) {
         
         self.viewModel = viewModel
         
@@ -98,7 +98,7 @@ class LegacyMobileContentPageView: LegacyMobileContentView, NibBased {
         addBackgroundImageBoundsChangeObserving()
     }
     
-    private func addBackgroundImageView(viewModel: MobileContentBackgroundImageViewModel, insertAtIndex: Int) -> LegacyMobileContentBackgroundImageView {
+    private func addBackgroundImageView(viewModel: LegacyMobileContentBackgroundImageViewModel, insertAtIndex: Int) -> LegacyMobileContentBackgroundImageView {
         
         let backgroundImageView: LegacyMobileContentBackgroundImageView = LegacyMobileContentBackgroundImageView()
                         
@@ -150,7 +150,7 @@ class LegacyMobileContentPageView: LegacyMobileContentView, NibBased {
         viewModel.trainingTipTapped(event: event)
     }
     
-    override func didReceiveError(error: MobileContentErrorViewModel) {
+    override func didReceiveError(error: LegacyMobileContentErrorViewModel) {
         super.didReceiveError(error: error)
         
         viewModel.errorOccurred(error: error)

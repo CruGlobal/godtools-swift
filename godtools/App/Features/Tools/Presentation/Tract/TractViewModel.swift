@@ -11,7 +11,7 @@ import GodToolsShared
 import Combine
 
 @MainActor
-final class TractViewModel: MobileContentRendererViewModel {
+final class TractViewModel: LegacyMobileContentRendererViewModel {
         
     static let isLiveShareStreamingKey: String = "TractViewModel.isLiveShareStreamKey"
     

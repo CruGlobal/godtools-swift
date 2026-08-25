@@ -18,14 +18,14 @@ protocol LegacyTractPageModalViewDelegate: AnyObject {
 
 class LegacyTractPageModalView: LegacyMobileContentView, NibBased {
     
-    private let viewModel: TractPageModalViewModel
+    private let viewModel: LegacyTractPageModalViewModel
     private let contentStackView: LegacyMobileContentStackView
     
     private weak var delegate: LegacyTractPageModalViewDelegate?
     
     @IBOutlet weak private var contentContainerView: UIView!
     
-    init(viewModel: TractPageModalViewModel) {
+    init(viewModel: LegacyTractPageModalViewModel) {
         
         self.viewModel = viewModel
         self.contentStackView = LegacyMobileContentStackView(viewModel: viewModel, contentInsets: nil, scrollIsEnabled: true)

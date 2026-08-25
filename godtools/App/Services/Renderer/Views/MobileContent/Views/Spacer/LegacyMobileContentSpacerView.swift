@@ -11,11 +11,11 @@ import GodToolsShared
 
 class LegacyMobileContentSpacerView: LegacyMobileContentView {
     
-    private let viewModel: MobileContentSpacerViewModel
+    private let viewModel: LegacyMobileContentSpacerViewModel
     
     private var heightConstraint: NSLayoutConstraint?
     
-    init(viewModel: MobileContentSpacerViewModel) {
+    init(viewModel: LegacyMobileContentSpacerViewModel) {
         
         self.viewModel = viewModel
         

@@ -11,7 +11,7 @@ import GodToolsShared
 import Combine
 
 @MainActor
-final class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
+final class ChooseYourOwnAdventureViewModel: LegacyMobileContentRendererViewModel {
                 
     private let stepEmitter: FlowStepEmitter
     

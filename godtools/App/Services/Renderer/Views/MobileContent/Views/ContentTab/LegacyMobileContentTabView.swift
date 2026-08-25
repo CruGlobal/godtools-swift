@@ -10,9 +10,9 @@ import UIKit
 
 class LegacyMobileContentTabView: LegacyMobileContentStackView {
     
-    let viewModel: MobileContentTabViewModel
+    let viewModel: LegacyMobileContentTabViewModel
     
-    init(viewModel: MobileContentTabViewModel) {
+    init(viewModel: LegacyMobileContentTabViewModel) {
         
         self.viewModel = viewModel
         

@@ -16,7 +16,7 @@ protocol LegacyMobileContentFlowItemViewDelegate: AnyObject {
 
 class LegacyMobileContentFlowItemView: LegacyMobileContentStackView, MobileContentFlowRowItem {
     
-    private let viewModel: MobileContentFlowItemViewModel
+    private let viewModel: LegacyMobileContentFlowItemViewModel
     
     private weak var delegate: LegacyMobileContentFlowItemViewDelegate?
     
@@ -25,7 +25,7 @@ class LegacyMobileContentFlowItemView: LegacyMobileContentStackView, MobileConte
     }
     var widthConstraint: NSLayoutConstraint?
     
-    init(viewModel: MobileContentFlowItemViewModel) {
+    init(viewModel: LegacyMobileContentFlowItemViewModel) {
         
         self.viewModel = viewModel
         

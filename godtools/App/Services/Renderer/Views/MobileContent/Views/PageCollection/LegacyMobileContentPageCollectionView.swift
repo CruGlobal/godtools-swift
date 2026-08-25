@@ -11,10 +11,10 @@ import GodToolsShared
 
 class LegacyMobileContentPageCollectionView: LegacyMobileContentPageView {
     
-    private let viewModel: MobileContentPageCollectionViewModel
+    private let viewModel: LegacyMobileContentPageCollectionViewModel
     private let pagesView: LegacyMobileContentPagesView
     
-    init(viewModel: MobileContentPageCollectionViewModel) {
+    init(viewModel: LegacyMobileContentPageCollectionViewModel) {
         
         self.viewModel = viewModel
         

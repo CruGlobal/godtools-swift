@@ -10,9 +10,9 @@ import UIKit
 
 class LegacyMobileContentRendererView: LegacyMobileContentPagesView {
     
-    private let viewModel: MobileContentRendererViewModel
+    private let viewModel: LegacyMobileContentRendererViewModel
     
-    init(viewModel: MobileContentRendererViewModel, navigationBar: AppNavigationBar?) {
+    init(viewModel: LegacyMobileContentRendererViewModel, navigationBar: AppNavigationBar?) {
         
         self.viewModel = viewModel
         
@@ -20,7 +20,7 @@ class LegacyMobileContentRendererView: LegacyMobileContentPagesView {
     }
     
     override init(
-        viewModel: MobileContentPagesViewModel,
+        viewModel: LegacyMobileContentPagesViewModel,
         navigationBar: AppNavigationBar?,
         pageViewDelegate: LegacyMobileContentPageViewDelegate?,
         initialPageIndex: Int?,

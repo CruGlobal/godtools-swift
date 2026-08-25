@@ -10,12 +10,12 @@ import UIKit
 
 class LegacyTrainingTipView: LegacyMobileContentView, NibBased {
     
-    private let viewModel: TrainingTipViewModel
+    private let viewModel: LegacyTrainingTipViewModel
     
     @IBOutlet weak private var tipButton: UIButton!
     @IBOutlet weak private var tipImage: UIImageView!
     
-    init(viewModel: TrainingTipViewModel) {
+    init(viewModel: LegacyTrainingTipViewModel) {
         
         self.viewModel = viewModel
         

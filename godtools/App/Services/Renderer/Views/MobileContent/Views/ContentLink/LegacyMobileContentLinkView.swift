@@ -10,11 +10,11 @@ import UIKit
 
 class LegacyMobileContentLinkView: LegacyMobileContentView {
     
-    private let viewModel: MobileContentLinkViewModel
+    private let viewModel: LegacyMobileContentLinkViewModel
     private let backgroundView: UIView = UIView(frame: .zero)
     private let titleLabel: UILabel = UILabel(frame: .zero)
     
-    init(viewModel: MobileContentLinkViewModel) {
+    init(viewModel: LegacyMobileContentLinkViewModel) {
         
         self.viewModel = viewModel
         

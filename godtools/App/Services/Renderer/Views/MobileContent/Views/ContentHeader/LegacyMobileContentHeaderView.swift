@@ -10,11 +10,11 @@ import UIKit
 
 class LegacyMobileContentHeaderView: LegacyMobileContentView {
     
-    private let viewModel: MobileContentHeaderViewModel
+    private let viewModel: LegacyMobileContentHeaderViewModel
     
     private var textView: LegacyMobileContentTextView?
     
-    init(viewModel: MobileContentHeaderViewModel) {
+    init(viewModel: LegacyMobileContentHeaderViewModel) {
         
         self.viewModel = viewModel
         
