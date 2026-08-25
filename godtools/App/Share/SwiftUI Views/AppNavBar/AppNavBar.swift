@@ -12,7 +12,8 @@ extension View {
     
     func navBar<Content: ToolbarContent>(
         title: String?,
-        backItem: BackToolbarItem?,
+        backItem: BackToolbarItem? = nil,
+        closeItem: CloseToolbarItem? = nil,
         @ToolbarContentBuilder toolbarContent: () -> Content = { AppToolbarItem?.none }
     ) -> some View {
         
@@ -23,6 +24,11 @@ extension View {
                 if let backItem = backItem {
                     
                     backItem
+                }
+                
+                if let closeItem = closeItem {
+                    
+                    closeItem
                 }
                 
                 toolbarContent()

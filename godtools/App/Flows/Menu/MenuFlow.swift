@@ -565,20 +565,8 @@ extension MenuFlow {
         
         let view = DeleteAccountView(viewModel: viewModel, backgroundColor: viewBackgroundColor)
         
-        let closeButton = AppCloseBarItem(
-            color: nil,
-            target: viewModel,
-            action: #selector(viewModel.closeTapped)
-        )
-        
         let hostingView = AppHostingController<DeleteAccountView>(
-            rootView: view,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: nil,
-                leadingItems: [],
-                trailingItems: [closeButton]
-            )
+            rootView: view
         )
                 
         hostingView.view.backgroundColor = viewBackgroundUIColor
