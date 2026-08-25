@@ -10,6 +10,8 @@ import SwiftUI
 
 struct AppToolbarItem: ToolbarContent {
     
+    private static let minSize: CGFloat = 40
+    
     enum ViewType: Sendable {
         case image(value: Image)
         case imageName(value: String)
@@ -46,19 +48,23 @@ struct AppToolbarItem: ToolbarContent {
                 tappedClosure?()
             }) {
                 
-                switch viewType {
-                case .image(let value):
-                    value
-                        .renderingMode(.template)
-                        .foregroundColor(color)
-                case .imageName(let value):
-                    Image(value)
-                        .renderingMode(.template)
-                        .foregroundColor(color)
-                case .text(let value):
-                    Text(value)
-                        .foregroundColor(color)
+                ZStack(alignment: .center) {
+                                        
+                    switch viewType {
+                    case .image(let value):
+                        value
+                            .renderingMode(.template)
+                            .foregroundColor(color)
+                    case .imageName(let value):
+                        Image(value)
+                            .renderingMode(.template)
+                            .foregroundColor(color)
+                    case .text(let value):
+                        Text(value)
+                            .foregroundColor(color)
+                    }
                 }
+                .frame(minWidth: Self.minSize, minHeight: Self.minSize)
             }
             .accessibilityIdentifier(accessibilityId ?? "")
             .buttonStyle(.borderless)
