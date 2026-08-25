@@ -12,8 +12,8 @@ import RequestOperation
 final class PersonalizedToolsApi: PersonalizedToolsApiInterface {
     
     enum QueryName: String {
-        case country = "country"
-        case language = "lang"
+        case country = "filter[country]"
+        case language = "filter[lang]"
         case resourceType = "resource_type"
     }
         
@@ -38,7 +38,7 @@ final class PersonalizedToolsApi: PersonalizedToolsApiInterface {
             ]
         )
 
-        let resourceTypeQueryItems: [URLQueryItem] = buildResourceTypeQueryItems(resourceTypes: resourceTypes)
+        let QueryItems: [URLQueryItem] = buildQueryItems(s: s)
         queryItems?.append(contentsOf: resourceTypeQueryItems)
 
         return try requestBuilder
