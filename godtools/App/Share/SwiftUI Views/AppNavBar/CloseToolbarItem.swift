@@ -13,16 +13,23 @@ struct CloseToolbarItem: ToolbarContent {
     private let tapped: (() -> Void)
     private let color: Color
     
-    init(tapped: @escaping () -> Void, color: Color = ColorPalette.gtBlue.color) {
+    let placement: ToolbarItemPlacement
+    
+    init(
+        tapped: @escaping () -> Void,
+        color: Color = ColorPalette.gtBlue.color,
+        placement: ToolbarItemPlacement = AppToolbarItem.trailingPlacement
+    ) {
         
-        self.color = color
         self.tapped = tapped
+        self.color = color
+        self.placement = placement
     }
     
     var body: some ToolbarContent {
         
         AppToolbarItem(
-            placement: AppToolbarItem.trailingPlacement,
+            placement: placement,
             viewType: .image(value: ImageCatalog.navClose.image),
             color: color,
             accessibilityId: AccessibilityStrings.Button.close.id,

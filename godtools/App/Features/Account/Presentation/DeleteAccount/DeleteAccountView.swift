@@ -86,11 +86,14 @@ struct DeleteAccountView: View {
         }
         .navBar(
             title: nil,
-            closeItem: CloseToolbarItem(
-                tapped: {
-                    viewModel.closeTapped()
-                }
-            )
+            toolbarContent: {
+                
+                CloseToolbarItem(
+                    tapped: {
+                        viewModel.closeTapped()
+                    }
+                )
+            }
         )
         .background(Color.white)
     }
