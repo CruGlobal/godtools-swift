@@ -86,7 +86,6 @@ struct OnboardingTutorialView: View {
         }
         .navBar(
             title: nil,
-            backItem: nil,
             toolbarContent: {
                 
                 if !viewModel.hidesSkipButton {
