@@ -81,52 +81,26 @@ final class ArticleCategoriesFlow: GTFlow {
                 
                 let article = try await getArticleUseCase.execute(articleId: articleId)
                 
-                let view = getArticleView(
-                    flowType: .tool(resource: resource),
-                    articleId: articleId,
-                    article: article
+                pushFlow(
+                    flow: ArticleFlow(
+                        appDiContainer: appDiContainer,
+                        flowType: .tool(resource: resource),
+                        aemUri: articleId,
+                        article: article
+                    )
                 )
-                
-                navigationController.pushViewController(view, animated: true)
             }
             
-        case .backTappedFromArticle:
-            navigationController.popViewController(animated: true)
+        case .articleFlowCompleted(let state):
             
-        case .sharedTappedFromArticle(let articleId):
-            
-            Task {
+            switch state {
                 
-                let shareArticleUseCase = appDiContainer.feature.articles.domainLayer.getShareArticleUseCase()
+            case .articleShared:
+                completeFlow(state: .articleShared)
                 
-                let shareArticle = try await shareArticleUseCase.execute(
-                    articleId: articleId
-                )
-             
-                let viewModel = ShareArticleViewModel(
-                    stepEmitter: stepEmitter,
-                    shareArticle: shareArticle,
-                    trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-                    trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase()
-                )
-                
-                let view = ShareArticleView(viewModel: viewModel)
-                
-                presentView(view: view.controller, animated: true)
+            case .closed:
+                popFlow()
             }
-            
-        case .dismissedShareArticleActivityViewController:
-            completeFlow(state: .articleShared)
-                        
-        case .debugTappedFromArticle(let articleUrl):
-            
-            presentView(
-                view: getArticleDebugView(articleUrl: articleUrl),
-                animated: true
-            )
-            
-        case .closeTappedFromArticleDebug:
-            dismissView(animated: true)
             
         default:
             break
@@ -197,53 +171,5 @@ extension ArticleCategoriesFlow {
         let hostingView = AppHostingController<ArticlesView>(rootView: view)
         
         return hostingView
-    }
-    
-    private func getArticleView(
-        flowType: ArticleViewModel.FlowType,
-        articleId: String,
-        article: ArticleDomainModel
-    ) -> UIViewController {
-        
-        let viewModel = ArticleViewModel(
-            stepEmitter: stepEmitter,
-            flowType: flowType,
-            articleId: articleId,
-            article: article,
-            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase(),
-            getAppUIDebuggingIsEnabledUseCase: appDiContainer.core.domainLayer.getAppUIDebuggingIsEnabledUseCase(),
-            trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-            getDownloadArticlesErrorMessage: appDiContainer.feature.articles.domainLayer.getDownloadArticlesErrorMessage(),
-            localizationServices: appDiContainer.core.dataLayer.getLocalizationServices()
-        )
-        
-        let view = ArticleView(
-            viewModel: viewModel
-        )
-        
-        let hostingView = AppHostingController<ArticleView>(
-            rootView: view
-        )
-        
-        return hostingView
-    }
-    
-    private func getArticleDebugView(articleUrl: ArticleUrlDomainModel) -> UIViewController {
-        
-        let viewModel = ArticleDebugViewModel(
-            stepEmitter: stepEmitter,
-            articleUrl: articleUrl
-        )
-        
-        let view = ArticleDebugView(viewModel: viewModel)
-        
-        let hostingView = AppHostingController<ArticleDebugView>(
-            rootView: view
-        )
-        
-        let modal = ModalNavigationController.defaultModal(rootView: hostingView, statusBarStyle: .default)
-        
-        return modal
     }
 }
