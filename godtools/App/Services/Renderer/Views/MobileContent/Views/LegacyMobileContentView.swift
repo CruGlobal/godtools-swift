@@ -17,7 +17,7 @@ class LegacyMobileContentView: UIView {
         case walkingUpViewHierarchy
     }
     
-    private let viewModel: MobileContentViewModel?
+    private let viewModel: LegacyMobileContentViewModel?
     
     private var tapGesture: UITapGestureRecognizer?
     
@@ -27,7 +27,7 @@ class LegacyMobileContentView: UIView {
     private(set) var visibilityState: MobileContentViewVisibilityState = .visible
     private(set) var drawsShadow: Bool = false
     
-    init(viewModel: MobileContentViewModel?, frame: CGRect?) {
+    init(viewModel: LegacyMobileContentViewModel?, frame: CGRect?) {
         
         self.viewModel = viewModel
         
@@ -295,11 +295,11 @@ class LegacyMobileContentView: UIView {
     
     // MARK: - Errors
     
-    func sendErrorToRootView(error: MobileContentErrorViewModel) {
+    func sendErrorToRootView(error: LegacyMobileContentErrorViewModel) {
         getRootView().didReceiveError(error: error)
     }
     
-    func didReceiveError(error: MobileContentErrorViewModel) {
+    func didReceiveError(error: LegacyMobileContentErrorViewModel) {
         
     }
     

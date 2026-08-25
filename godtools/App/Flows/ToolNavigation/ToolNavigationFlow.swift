@@ -13,7 +13,7 @@ import SwiftUI
 final class ToolNavigationFlow: GTFlow {
     
     enum CompletedState {
-        case articleFlowCompleted(state: ArticleFlow.CompletedState)
+        case articleCategoriesFlowCompleted(state: ArticleCategoriesFlow.CompletedState)
         case tractFlowCompleted(state: TractFlow.CompletedState)
         case lessonFlowCompleted(state: LessonFlow.CompletedState)
         case chooseYourOwnAdventureFlowCompleted(state: ChooseYourOwnAdventureFlow.CompletedState)
@@ -165,8 +165,8 @@ final class ToolNavigationFlow: GTFlow {
                 })
             }
             
-        case .articleFlowCompleted(let state):
-            completeFlow(state: .articleFlowCompleted(state: state))
+        case .articleCategoriesFlowCompleted(let state):
+            completeFlow(state: .articleCategoriesFlowCompleted(state: state))
             
         case .tractFlowCompleted(let state):
             completeFlow(state: .tractFlowCompleted(state: state))
@@ -246,7 +246,7 @@ extension ToolNavigationFlow {
         case .article:
             
             pushFlow(
-                flow: ArticleFlow(
+                flow: ArticleCategoriesFlow(
                     appDiContainer: appDiContainer,
                     toolTranslations: toolTranslations
                 )

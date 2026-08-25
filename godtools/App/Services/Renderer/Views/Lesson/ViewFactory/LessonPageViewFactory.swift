@@ -27,7 +27,7 @@ class LessonPageViewFactory: MobileContentPageViewFactoryType {
         
         if let pageModel = renderableModel as? Page {
                      
-            let viewModel = LessonPageViewModel(
+            let viewModel = LegacyLessonPageViewModel(
                 pageModel: pageModel,
                 renderedPageContext: renderedPageContext,
                 trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase,

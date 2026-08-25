@@ -37,7 +37,7 @@ final class OnboardingFlow: GTFlow {
                     backgroundColor: .clear,
                     controlColor: ColorPalette.gtBlue.uiColor,
                     titleFont: nil,
-                    titleColor: nil,
+                    titleColor: ColorPalette.gtBlue.uiColor,
                     isTranslucent: true
                 )
             )
@@ -241,22 +241,10 @@ extension OnboardingFlow {
                 
         let view = OnboardingTutorialView(viewModel: viewModel)
         
-        let skipButton = AppSkipBarItem(
-            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            localizationServices: appDiContainer.core.dataLayer.getLocalizationServices(),
-            target: viewModel,
-            action: #selector(viewModel.skipTapped),
-            accessibilityIdentifier: AccessibilityStrings.Button.skip.id,
-            hidesBarItemPublisher: viewModel.$hidesSkipButton.eraseToAnyPublisher()
-        )
-        
         let hostingView = AppHostingController<OnboardingTutorialView>(
             rootView: view,
             navigationBar: AppNavigationBar(
                 appearance: nil,
-                backButton: nil,
-                leadingItems: [],
-                trailingItems: [skipButton],
                 titleView: InvisibleChooseAppLanguageButtonForNavigationBar(tappedClosure: {
                     viewModel.chooseAppLanguageTapped()
                 })

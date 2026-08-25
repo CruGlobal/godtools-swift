@@ -92,20 +92,8 @@ extension ChooseAppLanguageFlow {
         
         let view = AppLanguagesView(viewModel: viewModel)
         
-        let backButton = AppBackBarItem(
-            target: viewModel,
-            action: #selector(viewModel.backTapped),
-            accessibilityIdentifier: AccessibilityStrings.Button.back.id
-        )
-        
         let hostingView = AppHostingController<AppLanguagesView>(
-            rootView: view,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: backButton,
-                leadingItems: [],
-                trailingItems: []
-            )
+            rootView: view
         )
         
         return hostingView
@@ -123,13 +111,7 @@ extension ChooseAppLanguageFlow {
         let view = ConfirmAppLanguageView(viewModel: viewModel)
         
         let hostingView = AppHostingController<ConfirmAppLanguageView>(
-            rootView: view,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: nil,
-                leadingItems: [],
-                trailingItems: []
-            )
+            rootView: view
         )
         
         return hostingView

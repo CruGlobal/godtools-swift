@@ -60,8 +60,12 @@ struct ArticlesView: View {
                 }
             }
         }
-        .navigationTitle(viewModel.navTitle)
-        .navigationBarBackButtonHidden(true)
+        .navBar(
+            title: viewModel.navTitle,
+            backTapped: {
+                viewModel.backTapped()
+            }
+        )
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
 }

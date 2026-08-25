@@ -10,9 +10,9 @@ import UIKit
 
 class LegacyTractPageHeroView: LegacyMobileContentStackView {
     
-    private let viewModel: TractPageHeroViewModel
+    private let viewModel: LegacyTractPageHeroViewModel
                     
-    init(viewModel: TractPageHeroViewModel) {
+    init(viewModel: LegacyTractPageHeroViewModel) {
         
         self.viewModel = viewModel
         

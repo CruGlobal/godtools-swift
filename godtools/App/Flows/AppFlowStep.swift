@@ -177,20 +177,20 @@ enum AppFlowStep: FlowStep {
     // downloaded languages
     case backTappedFromDownloadedLanguages
     
-    // article
+    // article categories
     case backTappedFromArticleCategories
     case articleCategoryTappedFromArticleCategories(resource: ResourceDataModel, language: LanguageDataModel, category: ArticleCategoryDomainModel, manifest: Manifest)
     case backTappedFromArticles
     case articleTappedFromArticles(resource: ResourceDataModel, articleId: String)
+    case articleCategoriesFlowCompleted(state: ArticleCategoriesFlow.CompletedState)
+    
+    // article
     case backTappedFromArticle
     case sharedTappedFromArticle(articleId: String)
     case dismissedShareArticleActivityViewController
     case debugTappedFromArticle(articleUrl: ArticleUrlDomainModel)
     case closeTappedFromArticleDebug
     case articleFlowCompleted(state: ArticleFlow.CompletedState)
-    
-    // article deep link
-    case articleDeepLinkFlowCompleted(state: ArticleDeepLinkFlow.CompletedState)
     
     // load article
     case didDownloadArticleFromLoadingArticle(aemUri: String)

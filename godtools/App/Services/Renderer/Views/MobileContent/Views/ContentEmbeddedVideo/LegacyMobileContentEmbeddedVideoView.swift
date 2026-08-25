@@ -11,12 +11,12 @@ import YouTubeiOSPlayerHelper
 
 class LegacyMobileContentEmbeddedVideoView: LegacyMobileContentView {
     
-    private let viewModel: MobileContentEmbeddedVideoViewModel
+    private let viewModel: LegacyMobileContentEmbeddedVideoViewModel
     private let videoView: YTPlayerView = YTPlayerView()
     private let loadingContainerView: UIView = UIView()
     private let loadingView: UIActivityIndicatorView = UIActivityIndicatorView(style: .medium)
     
-    init(viewModel: MobileContentEmbeddedVideoViewModel) {
+    init(viewModel: LegacyMobileContentEmbeddedVideoViewModel) {
         
         self.viewModel = viewModel
         

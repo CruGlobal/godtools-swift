@@ -11,14 +11,14 @@ import GodToolsShared
 
 class LegacyMobileContentTabsView: LegacyMobileContentView, NibBased {
     
-    private let viewModel: MobileContentTabsViewModel
+    private let viewModel: LegacyMobileContentTabsViewModel
     
     private var tabViews: [LegacyMobileContentTabView] = Array()
     
     @IBOutlet weak private var tabsControl: UISegmentedControl!
     @IBOutlet weak private var tabContentContainerView: UIView!
     
-    init(viewModel: MobileContentTabsViewModel) {
+    init(viewModel: LegacyMobileContentTabsViewModel) {
         
         self.viewModel = viewModel
         

@@ -16,14 +16,14 @@ protocol LegacyTractPageCallToActionViewDelegate: AnyObject {
 
 class LegacyTractPageCallToActionView: LegacyMobileContentView, NibBased {
         
-    let viewModel: TractPageCallToActionViewModel
+    let viewModel: LegacyTractPageCallToActionViewModel
         
     private weak var delegate: LegacyTractPageCallToActionViewDelegate?
     
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var nextButton: UIButton!
     
-    init(viewModel: TractPageCallToActionViewModel) {
+    init(viewModel: LegacyTractPageCallToActionViewModel) {
         
         self.viewModel = viewModel
         

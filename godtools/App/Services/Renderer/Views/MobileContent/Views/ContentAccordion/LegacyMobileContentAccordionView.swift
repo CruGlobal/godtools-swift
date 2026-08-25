@@ -16,7 +16,7 @@ protocol LegacyMobileContentAccordionViewDelegate: AnyObject {
 
 class LegacyMobileContentAccordionView: LegacyMobileContentView {
     
-    private let viewModel: MobileContentAccordionViewModel
+    private let viewModel: LegacyMobileContentAccordionViewModel
     private let allowsOnlyOneExpandedSectionAtATime: Bool = true
     
     private var sectionViews: [LegacyMobileContentAccordionSectionView] = Array()
@@ -25,7 +25,7 @@ class LegacyMobileContentAccordionView: LegacyMobileContentView {
     
     private weak var delegate: LegacyMobileContentAccordionViewDelegate?
         
-    init(viewModel: MobileContentAccordionViewModel) {
+    init(viewModel: LegacyMobileContentAccordionViewModel) {
         
         self.viewModel = viewModel
         

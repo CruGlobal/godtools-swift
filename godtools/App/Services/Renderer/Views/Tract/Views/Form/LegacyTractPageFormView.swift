@@ -11,9 +11,9 @@ import GodToolsShared
 
 class LegacyTractPageFormView: LegacyMobileContentFormView {
         
-    private let pageFormViewModel: TractPageFormViewModel
+    private let pageFormViewModel: LegacyTractPageFormViewModel
     
-    init(viewModel: TractPageFormViewModel) {
+    init(viewModel: LegacyTractPageFormViewModel) {
         
         self.pageFormViewModel = viewModel
         
@@ -42,7 +42,7 @@ class LegacyTractPageFormView: LegacyMobileContentFormView {
             }
         }
         
-        pageFormViewModel.error.addObserver(self) { [weak self] (error: MobileContentErrorViewModel?) in
+        pageFormViewModel.error.addObserver(self) { [weak self] (error: LegacyMobileContentErrorViewModel?) in
             if let error = error {
                 self?.sendErrorToRootView(error: error)
             }

@@ -19,25 +19,32 @@ struct AppLanguagesView: View {
     
     var body: some View {
         
-        VStack(spacing: 0) {
+        GeometryReader { geometry in
             
-            AccessibilityScreenElementView(screenAccessibility: .appLanguages)
+            VStack(spacing: 0) {
+                
+                AccessibilityScreenElementView(screenAccessibility: .appLanguages)
+                            
+                SearchBarView(searchText: $viewModel.searchText, strings: viewModel.searchBarStrings)
+                
+                List {
+                    ForEach(viewModel.appLanguageSearchResults) { appLanguage in
                         
-            SearchBarView(searchText: $viewModel.searchText, strings: viewModel.searchBarStrings)
-            
-            List {
-                ForEach(viewModel.appLanguageSearchResults) { appLanguage in
-                    
-                    AppLanguageItemView(appLanguage: appLanguage) {
-                        
-                        viewModel.appLanguageTapped(appLanguage: appLanguage)
+                        AppLanguageItemView(appLanguage: appLanguage) {
+                            
+                            viewModel.appLanguageTapped(appLanguage: appLanguage)
+                        }
                     }
                 }
+                .listStyle(.inset)
             }
-            .listStyle(.inset)
         }
-        .navigationBarBackButtonHidden(true)
-        .navigationTitle(viewModel.strings.navTitle)
+        .navBar(
+            title: viewModel.strings.navTitle,
+            backTapped: {
+                viewModel.backTapped()
+            }
+        )
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
 }

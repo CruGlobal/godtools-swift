@@ -16,7 +16,7 @@ protocol LegacyMobileContentAccordionSectionViewDelegate: AnyObject {
 
 class LegacyMobileContentAccordionSectionView: LegacyMobileContentView, NibBased {
  
-    private let viewModel: MobileContentAccordionSectionViewModel
+    private let viewModel: LegacyMobileContentAccordionSectionViewModel
     private let contentStack: LegacyMobileContentStackView
     private let viewCornerRadius: CGFloat = 10
     
@@ -35,7 +35,7 @@ class LegacyMobileContentAccordionSectionView: LegacyMobileContentView, NibBased
     @IBOutlet private var contentStackContainerBottomToView: NSLayoutConstraint!
     @IBOutlet weak private var textStateImageTrailing: NSLayoutConstraint!
     
-    init(viewModel: MobileContentAccordionSectionViewModel) {
+    init(viewModel: LegacyMobileContentAccordionSectionViewModel) {
         
         self.viewModel = viewModel
         

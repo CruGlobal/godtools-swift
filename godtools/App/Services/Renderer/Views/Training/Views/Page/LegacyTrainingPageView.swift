@@ -16,7 +16,7 @@ protocol LegacyTrainingPageViewDelegate: AnyObject {
 
 class LegacyTrainingPageView: LegacyMobileContentView, NibBased {
     
-    private let viewModel: TrainingPageViewModel
+    private let viewModel: LegacyTrainingPageViewModel
     private let contentStackView: LegacyMobileContentStackView
     
     private weak var delegate: LegacyTrainingPageViewDelegate?
@@ -24,7 +24,7 @@ class LegacyTrainingPageView: LegacyMobileContentView, NibBased {
     @IBOutlet weak private var contentStackContainerView: UIView!
     @IBOutlet weak private var bottomGradientView: UIView!
     
-    init(viewModel: TrainingPageViewModel) {
+    init(viewModel: LegacyTrainingPageViewModel) {
         
         self.viewModel = viewModel
         self.contentStackView = LegacyMobileContentStackView(viewModel: viewModel, contentInsets: nil, scrollIsEnabled: true)

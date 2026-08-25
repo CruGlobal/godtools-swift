@@ -10,12 +10,12 @@ import UIKit
 
 class LegacyMobileContentInputView: LegacyMobileContentView, NibBased {
     
-    let viewModel: MobileContentInputViewModel
+    let viewModel: LegacyMobileContentInputViewModel
         
     @IBOutlet weak private var inputLabel: UILabel!
     @IBOutlet weak private var inputTextField: UITextField!
     
-    init(viewModel: MobileContentInputViewModel) {
+    init(viewModel: LegacyMobileContentInputViewModel) {
         
         self.viewModel = viewModel
         

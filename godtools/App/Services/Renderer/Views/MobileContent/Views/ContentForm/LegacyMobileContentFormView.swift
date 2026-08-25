@@ -10,14 +10,14 @@ import UIKit
 
 class LegacyMobileContentFormView: LegacyMobileContentStackView {
     
-    private let viewModel: MobileContentFormViewModel
+    private let viewModel: LegacyMobileContentFormViewModel
     
     private var inputViews: [LegacyMobileContentInputView] = Array()
     private var currentEditedTextField: UITextField?
             
     @IBOutlet weak private var contentContainerView: UIView!
     
-    init(viewModel: MobileContentFormViewModel) {
+    init(viewModel: LegacyMobileContentFormViewModel) {
         
         self.viewModel = viewModel
             

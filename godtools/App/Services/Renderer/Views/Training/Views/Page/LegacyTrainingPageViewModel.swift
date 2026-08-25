@@ -1,0 +1,26 @@
+//
+//  LegacyTrainingPageViewModel.swift
+//  godtools
+//
+//  Created by Levi Eggert on 3/24/21.
+//  Copyright © 2021 Cru. All rights reserved.
+//
+
+import Foundation
+import GodToolsShared
+
+class LegacyTrainingPageViewModel: LegacyMobileContentViewModel {
+    
+    private let pageModel: TipPage
+    
+    init(
+        pageModel: TipPage,
+        renderedPageContext: MobileContentRenderedPageContext,
+        mobileContentAnalytics: MobileContentRendererAnalytics
+    ) {
+        
+        self.pageModel = pageModel
+        
+        super.init(baseModel: pageModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
+    }
+}

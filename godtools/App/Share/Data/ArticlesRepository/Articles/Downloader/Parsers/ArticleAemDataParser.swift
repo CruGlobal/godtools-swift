@@ -88,7 +88,7 @@ final class ArticleAemDataParser: Sendable {
             errorCode: nil,
             httpStatusCode: nil,
             updatedAt: Date()
-        )   
+        )
     }
     
     /*

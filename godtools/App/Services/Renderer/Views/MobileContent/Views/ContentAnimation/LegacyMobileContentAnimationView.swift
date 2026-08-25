@@ -12,12 +12,12 @@ import Combine
 
 class LegacyMobileContentAnimationView: LegacyMobileContentView {
     
-    private let viewModel: MobileContentAnimationViewModel
+    private let viewModel: LegacyMobileContentAnimationViewModel
     private let animatedView: AnimatedView?
     
     private var cancellables: Set<AnyCancellable> = Set()
     
-    init(viewModel: MobileContentAnimationViewModel) {
+    init(viewModel: LegacyMobileContentAnimationViewModel) {
         
         self.viewModel = viewModel
         

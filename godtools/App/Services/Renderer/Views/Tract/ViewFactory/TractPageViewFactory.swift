@@ -36,7 +36,7 @@ class TractPageViewFactory: MobileContentPageViewFactoryType {
         
         if let cardModel = renderableModel as? MultiplatformCard {
             
-            let viewModel = TractPageCardViewModel(
+            let viewModel = LegacyTractPageCardViewModel(
                 cardModel: cardModel.card,
                 renderedPageContext: renderedPageContext,
                 trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase,
@@ -59,7 +59,7 @@ class TractPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let headerModel = renderableModel as? Header {
             
-            let viewModel = TractPageHeaderViewModel(
+            let viewModel = LegacyTractPageHeaderViewModel(
                 headerModel: headerModel,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics
@@ -71,7 +71,7 @@ class TractPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let heroModel = renderableModel as? Hero {
             
-            let viewModel = TractPageHeroViewModel(
+            let viewModel = LegacyTractPageHeroViewModel(
                 heroModel: heroModel,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics
@@ -83,7 +83,7 @@ class TractPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let cardsModel = renderableModel as? MultiplatformCards {
             
-            let viewModel = TractPageCardsViewModel(
+            let viewModel = LegacyTractPageCardsViewModel(
                 cards: cardsModel.cards,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics,
@@ -99,7 +99,7 @@ class TractPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let formModel = renderableModel as? Form {
             
-            let viewModel = TractPageFormViewModel(
+            let viewModel = LegacyTractPageFormViewModel(
                 formModel: formModel,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics,
@@ -113,7 +113,7 @@ class TractPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let modalModel = renderableModel as? Modal {
             
-            let viewModel = TractPageModalViewModel(
+            let viewModel = LegacyTractPageModalViewModel(
                 modalModel: modalModel,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics
@@ -125,7 +125,7 @@ class TractPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let modalsModel = renderableModel as? MultiplatformModals {
             
-            let viewModel = TractPageModalsViewModel(
+            let viewModel = LegacyTractPageModalsViewModel(
                 modals: modalsModel.modals,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics
@@ -140,7 +140,7 @@ class TractPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let pageModel = renderableModel as? TractPage {
                     
-            let viewModel = TractPageViewModel(
+            let viewModel = LegacyTractPageViewModel(
                 pageModel: pageModel,
                 renderedPageContext: renderedPageContext,
                 trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase,
@@ -160,7 +160,7 @@ class TractPageViewFactory: MobileContentPageViewFactoryType {
     
     func getCallToActionView(callToActionModel: CallToAction?, renderedPageContext: MobileContentRenderedPageContext) -> LegacyTractPageCallToActionView {
         
-        let viewModel = TractPageCallToActionViewModel(
+        let viewModel = LegacyTractPageCallToActionViewModel(
             callToActionModel: callToActionModel,
             renderedPageContext: renderedPageContext,
             mobileContentAnalytics: mobileContentAnalytics

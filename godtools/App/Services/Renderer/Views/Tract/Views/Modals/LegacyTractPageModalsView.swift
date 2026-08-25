@@ -10,14 +10,14 @@ import UIKit
 
 class LegacyTractPageModalsView: LegacyMobileContentView {
     
-    private let viewModel: TractPageModalsViewModel
+    private let viewModel: LegacyTractPageModalsViewModel
     
     private var modalViews: [LegacyTractPageModalView] = Array()
     private var presentedModalView: LegacyTractPageModalView?
     
     private weak var windowViewController: UIViewController?
     
-    init(viewModel: TractPageModalsViewModel, windowViewController: UIViewController) {
+    init(viewModel: LegacyTractPageModalsViewModel, windowViewController: UIViewController) {
         
         self.viewModel = viewModel
         self.windowViewController = windowViewController

@@ -12,13 +12,13 @@ import SwiftUI
 @MainActor
 class AppHostingController<Content: View>: UIHostingController<Content>, UIViewControllerTransitioningDelegate {
         
-    private let navigationBar: AppNavigationBar?
+    private let navigationBar: AppNavigationBar? // TODO: Can remove once all SwiftUI views are configuring the nav bar items in AppNavBar. ~Levi
     private let animateInAnimatedTransitioning: UIViewControllerAnimatedTransitioning?
     private let animateOutAnimatedTransitioning: UIViewControllerAnimatedTransitioning?
     
     init(
         rootView: Content,
-        navigationBar: AppNavigationBar?,
+        navigationBar: AppNavigationBar? = nil,
         animateInAnimatedTransitioning: UIViewControllerAnimatedTransitioning? = nil,
         animateOutAnimatedTransitioning: UIViewControllerAnimatedTransitioning? = nil
     ) {
