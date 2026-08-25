@@ -187,7 +187,7 @@ enum AppFlowStep: FlowStep {
     case dismissedShareArticleActivityViewController
     case debugTappedFromArticle(articleUrl: ArticleUrlDomainModel)
     case closeTappedFromArticleDebug
-    case articleFlowCompleted(state: ArticleFlow.CompletedState)
+    case articleCategoriesFlowCompleted(state: ArticleCategoriesFlow.CompletedState)
     
     // article deep link
     case articleDeepLinkFlowCompleted(state: ArticleDeepLinkFlow.CompletedState)
