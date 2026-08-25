@@ -277,7 +277,7 @@ final class AppFlow: RootFlow {
             switch state {
             
             case .downloadSuccess(let aemUri):
-                pushArticleDeepLinkFlow(aemUri: aemUri)
+                pushArticleFlow(aemUri: aemUri)
                 
                 dismissFlow()
             
@@ -314,7 +314,7 @@ final class AppFlow: RootFlow {
                 })
             }
             
-        case .articleDeepLinkFlowCompleted( _):
+        case .articleFlowCompleted( _):
             popFlow()
                         
         default:
@@ -486,7 +486,7 @@ extension AppFlow {
                 
                 if let aemCacheObject = aemCacheObject {
                     
-                    pushArticleDeepLinkFlow(aemUri: aemCacheObject.aemUri)
+                    pushArticleFlow(aemUri: aemCacheObject.aemUri)
                 }
                 else {
                     
@@ -582,7 +582,7 @@ extension AppFlow {
         return hostingController
     }
     
-    private func pushArticleDeepLinkFlow(aemUri: String) {
+    private func pushArticleFlow(aemUri: String) {
         
         Task {
             
@@ -591,8 +591,9 @@ extension AppFlow {
             let article = try await getArticleUseCase.execute(articleId: aemUri)
                         
             pushFlow(
-                flow: ArticleDeepLinkFlow(
+                flow: ArticleFlow(
                     appDiContainer: appDiContainer,
+                    flowType: .deeplink,
                     aemUri: aemUri,
                     article: article
                 )

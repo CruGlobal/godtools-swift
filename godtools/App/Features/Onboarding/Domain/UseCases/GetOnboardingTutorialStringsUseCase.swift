@@ -19,6 +19,7 @@ final class GetOnboardingTutorialStringsUseCase: Sendable {
     
     func execute(appLanguage: AppLanguageDomainModel) -> OnboardingTutorialStringsDomainModel {
         
+        let skipActionTitleKey: String = LocalizableStringKeys.navigationBarNavigationItemSkip.key
         let chooseAppLanguageButtonTitleKey: String = LocalizableStringKeys.onboardingTutorialChooseLanguageButtonTitle.key
         let beginTutorialButtonTitleKey: String = LocalizableStringKeys.onboardingTutorialBeginButtonTitle.key
         let nextTutorialPageButtonTitleKey: String = LocalizableStringKeys.onboardingTutorialNextButtonTitle.key
@@ -34,6 +35,7 @@ final class GetOnboardingTutorialStringsUseCase: Sendable {
 
         let strings: [String: String] = localizationServices.stringsForKeys(
             keys: [
+                skipActionTitleKey,
                 chooseAppLanguageButtonTitleKey,
                 beginTutorialButtonTitleKey,
                 nextTutorialPageButtonTitleKey,
@@ -52,6 +54,7 @@ final class GetOnboardingTutorialStringsUseCase: Sendable {
         )
 
         return OnboardingTutorialStringsDomainModel(
+            skipActionTitle: strings[skipActionTitleKey] ?? "",
             chooseAppLanguageButtonTitle: strings[chooseAppLanguageButtonTitleKey] ?? "",
             beginTutorialButtonTitle: strings[beginTutorialButtonTitleKey] ?? "",
             nextTutorialPageButtonTitle: strings[nextTutorialPageButtonTitleKey] ?? "",

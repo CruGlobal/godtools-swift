@@ -341,7 +341,7 @@ final class DashboardFlow: GTFlow {
             case .userClosedDownloadTool:
                 popFlow()
                 
-            case .articleFlowCompleted( _):
+            case .articleCategoriesFlowCompleted( _):
                 popFlow(
                     popToViewController: dashboardView
                 )

@@ -47,8 +47,42 @@ struct ArticleView: View {
                 .frame(width: geometry.size.width, height: geometry.size.height)
             }
         }
-        .navigationBarBackButtonHidden(true)
-        .navigationTitle(viewModel.navTitle)
+        .navBar(
+            title: viewModel.navTitle,
+            backTapped: {
+                viewModel.backTapped()
+            },
+            toolbarContent: {
+                
+                if !viewModel.hidesShareButton {
+                    
+                    AppToolbarItem(
+                        placement: AppToolbarItem.trailingPlacement,
+                        viewType: .image(value: ImageCatalog.navShare.image),
+                        color: ColorPalette.gtBlue.color,
+                        accessibilityId: nil,
+                        tappedClosure: {
+                            
+                            viewModel.sharedTapped()
+                        }
+                    )
+                }
+                
+                if !viewModel.hidesDebugButton {
+                    
+                    AppToolbarItem(
+                        placement: AppToolbarItem.trailingPlacement,
+                        viewType: .image(value: ImageCatalog.navDebug.image),
+                        color: ColorPalette.gtBlue.color,
+                        accessibilityId: AccessibilityStrings.Button.share.id,
+                        tappedClosure: {
+                            
+                            viewModel.debugTapped()
+                        }
+                    )
+                }
+            }
+        )
         .background(Color.white)
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
         .onAppear {

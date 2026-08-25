@@ -2,226 +2,111 @@
 //  ArticleFlow.swift
 //  godtools
 //
-//  Created by Levi Eggert on 4/20/20.
-//  Copyright © 2020 Cru. All rights reserved.
+//  Created by Robert Eldredge on 3/9/21.
+//  Copyright © 2021 Cru. All rights reserved.
 //
 
 import UIKit
-import GodToolsShared
 import SwiftUI
 
 final class ArticleFlow: GTFlow {
-    
+
     enum CompletedState: Sendable {
         case articleShared
-        case userClosed
+        case closed
     }
-    
-    private let downloadArticlesObservable: DownloadManifestArticlesObservable
-                
-    init(appDiContainer: AppDiContainer, toolTranslations: ToolTranslationsDomainModel) {
-                
-        let languageTranslationManifest: MobileContentRendererLanguageTranslationManifest = toolTranslations.languageTranslationManifests[0]
-        
-        downloadArticlesObservable = DownloadManifestArticlesObservable(
-            translation: languageTranslationManifest.translation,
-            language: languageTranslationManifest.language,
-            manifest: languageTranslationManifest.manifest,
-            articleManifestAemRepository: appDiContainer.core.dataLayer.getArticleManifestAemRepository()
-        )
-        
-        downloadArticlesObservable.downloadArticles(
-            downloadCachePolicy: .fetchFromCacheUpToNextHour,
-            forceFetchFromRemote: false
-        )
-        
+
+    init(
+        appDiContainer: AppDiContainer,
+        flowType: ArticleViewModel.FlowType,
+        aemUri: String,
+        article: ArticleDomainModel
+    ) {
+
         let stepEmitter = FlowStepEmitter()
-        
-        let articleCategories = Self.getArticleCategories(
-            appDiContainer: appDiContainer,
-            stepEmitter: stepEmitter,
-            toolTranslations: toolTranslations,
-            languageTranslationManifest: languageTranslationManifest
-        )
-        
+
         super.init(
             appDiContainer: appDiContainer,
-            initialView: articleCategories,
+            initialView: Self.getArticleWebView(
+                appDiContainer: appDiContainer,
+                stepEmitter: stepEmitter,
+                flowType: flowType,
+                articleId: aemUri,
+                article: article
+            ),
             stepEmitter: stepEmitter
         )
     }
-    
+
     override func navigate(step: FlowStep) {
-        
+
         guard let appStep = step as? AppFlowStep else {
             return
         }
 
         switch appStep {
-        
-        case .backTappedFromArticleCategories:
-            completeFlow(state: .userClosed)
-        
-        case .articleCategoryTappedFromArticleCategories(let resource, let language, let category, let manifest):
-            
-            let view = getArticles(resource: resource, language: language, category: category, manifest: manifest)
-            
-            navigationController.pushViewController(view, animated: true)
-            
-        case .backTappedFromArticles:
-            navigationController.popViewController(animated: true)
-                        
-        case .articleTappedFromArticles(let resource, let articleId):
-            
-            // TODO: May need to check if article needs downloading before executing use case. ~Levi
-            
-            Task {
-                
-                let getArticleUseCase = appDiContainer.feature.articles.domainLayer.getArticleUseCase()
-                
-                let article = try await getArticleUseCase.execute(articleId: articleId)
-                
-                let view = getArticleView(resource: resource, articleId: articleId, article: article)
-                
-                navigationController.pushViewController(view, animated: true)
-            }
-            
+
         case .backTappedFromArticle:
-            navigationController.popViewController(animated: true)
-            
+            completeFlow(state: .closed)
+
         case .sharedTappedFromArticle(let articleId):
-            
+
             Task {
-                
+
                 let shareArticleUseCase = appDiContainer.feature.articles.domainLayer.getShareArticleUseCase()
-                
+
                 let shareArticle = try await shareArticleUseCase.execute(
                     articleId: articleId
                 )
-             
+
                 let viewModel = ShareArticleViewModel(
                     stepEmitter: stepEmitter,
                     shareArticle: shareArticle,
                     trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
                     trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase()
                 )
-                
+
                 let view = ShareArticleView(viewModel: viewModel)
-                
+
                 presentView(view: view.controller, animated: true)
             }
-            
+
         case .dismissedShareArticleActivityViewController:
             completeFlow(state: .articleShared)
-                        
+
         case .debugTappedFromArticle(let articleUrl):
-            
+
             presentView(
                 view: getArticleDebugView(articleUrl: articleUrl),
                 animated: true
             )
-            
+
         case .closeTappedFromArticleDebug:
             dismissView(animated: true)
-            
+
         default:
             break
         }
     }
-    
-    private func completeFlow(state: CompletedState) {
+
+    private func completeFlow(state: ArticleFlow.CompletedState) {
         parent?.stepEmitter.emit(step: AppFlowStep.articleFlowCompleted(state: state))
     }
 }
 
 extension ArticleFlow {
-    
-    private static func getArticleCategories(
+
+    private static func getArticleWebView(
         appDiContainer: AppDiContainer,
         stepEmitter: FlowStepEmitter,
-        toolTranslations: ToolTranslationsDomainModel,
-        languageTranslationManifest: MobileContentRendererLanguageTranslationManifest
-    ) -> UIViewController {
-        
-        let viewModel = ArticleCategoriesViewModel(
-            stepEmitter: stepEmitter,
-            resource: toolTranslations.tool,
-            language: languageTranslationManifest.language,
-            translation: languageTranslationManifest.translation,
-            manifest: languageTranslationManifest.manifest,
-            getArticleCategoriesUseCase: appDiContainer.feature.articles.domainLayer.getArticleCategoriesUseCase(),
-            pullToRefreshArticlesUseCase: appDiContainer.feature.articles.domainLayer.getPullToRefreshArticlesUseCase(),
-            incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase(),
-            trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-            trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase()
-        )
-        
-        let view = ArticleCategoriesView(viewModel: viewModel)
-        
-        let backButton = AppBackBarItem(
-            target: viewModel,
-            action: #selector(viewModel.backTapped)
-        )
-
-        let viewContoller = AppHostingController(
-            rootView: view,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: backButton,
-                leadingItems: [],
-                trailingItems: []
-            )
-        )
-        
-        return viewContoller
-    }
-    
-    private func getArticles(resource: ResourceDataModel, language: LanguageDataModel, category: ArticleCategoryDomainModel, manifest: Manifest) -> UIViewController {
-        
-        let viewModel = ArticlesViewModel(
-            stepEmitter: stepEmitter,
-            resource: resource,
-            language: language,
-            category: category,
-            manifest: manifest,
-            downloadArticlesObservable: downloadArticlesObservable,
-            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getArticlesUseCase: appDiContainer.feature.articles.domainLayer.getArticlesUseCase(),
-            getDownloadArticlesErrorMessage: appDiContainer.feature.articles.domainLayer.getDownloadArticlesErrorMessage(),
-            localizationServices: appDiContainer.core.dataLayer.getLocalizationServices(),
-            trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase()
-        )
-        
-        let view = ArticlesView(
-            viewModel: viewModel
-        )
-        
-        let backButton = AppBackBarItem(
-            target: viewModel,
-            action: #selector(viewModel.backTapped)
-        )
-        
-        let navigationBar = AppNavigationBar(
-            appearance: nil,
-            backButton: backButton,
-            leadingItems: [],
-            trailingItems: []
-        )
-        
-        let hostingView = AppHostingController<ArticlesView>(rootView: view, navigationBar: navigationBar)
-        
-        return hostingView
-    }
-    
-    private func getArticleView(
-        resource: ResourceDataModel,
+        flowType: ArticleViewModel.FlowType,
         articleId: String,
         article: ArticleDomainModel
     ) -> UIViewController {
-        
+
         let viewModel = ArticleViewModel(
             stepEmitter: stepEmitter,
-            flowType: .tool(resource: resource),
+            flowType: flowType,
             articleId: articleId,
             article: article,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
@@ -231,72 +116,33 @@ extension ArticleFlow {
             getDownloadArticlesErrorMessage: appDiContainer.feature.articles.domainLayer.getDownloadArticlesErrorMessage(),
             localizationServices: appDiContainer.core.dataLayer.getLocalizationServices()
         )
-        
-        let backButton = AppBackBarItem(
-            target: viewModel,
-            action: #selector(viewModel.backTapped)
-        )
-        
-        let shareButton = AppShareBarItem(
-            color: nil,
-            target: viewModel,
-            action: #selector(viewModel.sharedTapped),
-            accessibilityIdentifier: nil,
-            hidesBarItemPublisher: viewModel.$hidesShareButton.eraseToAnyPublisher()
-        )
-        
-        let debugButton = AppDebugBarItem(
-            color: nil,
-            target: viewModel,
-            action: #selector(viewModel.debugTapped),
-            accessibilityIdentifier: nil,
-            hidesBarItemPublisher: viewModel.$hidesDebugButton.eraseToAnyPublisher()
-        )
-        
+
         let view = ArticleView(
             viewModel: viewModel
         )
-        
+
         let hostingView = AppHostingController<ArticleView>(
-            rootView: view,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: backButton,
-                leadingItems: [],
-                trailingItems: [debugButton, shareButton]
-            )
+            rootView: view
         )
-        
+
         return hostingView
     }
-    
+
     private func getArticleDebugView(articleUrl: ArticleUrlDomainModel) -> UIViewController {
-        
+
         let viewModel = ArticleDebugViewModel(
             stepEmitter: stepEmitter,
             articleUrl: articleUrl
         )
-        
+
         let view = ArticleDebugView(viewModel: viewModel)
-        
-        let closeButton = AppCloseBarItem(
-            color: nil,
-            target: viewModel,
-            action: #selector(viewModel.closeTapped)
-        )
-        
+
         let hostingView = AppHostingController<ArticleDebugView>(
-            rootView: view,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: nil,
-                leadingItems: [],
-                trailingItems: [closeButton]
-            )
+            rootView: view
         )
-        
+
         let modal = ModalNavigationController.defaultModal(rootView: hostingView, statusBarStyle: .default)
-        
+
         return modal
     }
 }

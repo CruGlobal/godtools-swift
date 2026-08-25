@@ -98,6 +98,7 @@ class AccessibilityStrings {
         case privacyPolicy = "Privacy Policy"
         case reportABug = "Report A Bug"
         case sendFeedback
+        case share = "Share"
         case shareAStoryWithUs = "Share A Story With Us"
         case shareGodTools = "Share GodTools"
         case shareLink = "Share Link"
