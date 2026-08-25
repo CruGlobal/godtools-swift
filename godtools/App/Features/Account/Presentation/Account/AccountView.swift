@@ -37,9 +37,11 @@ struct AccountView: View {
         }
         .navBar(
             title: viewModel.strings.navTitle,
-            backTapped: {
-                viewModel.backTapped()
-            }
+            backItem: BackToolbarItem(
+                tapped: {
+                    viewModel.backTapped()
+                }
+            )
         )
         .background(Color.getColorWithRGB(red: 245, green: 245, blue: 245, opacity: 1))
         .edgesIgnoringSafeArea(.bottom)

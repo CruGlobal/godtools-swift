@@ -60,7 +60,7 @@ struct ArticleDebugView: View {
         }
         .navBar(
             title: nil,
-            backTapped: nil,
+            backItem: nil,
             toolbarContent: {
                 
                 AppToolbarItem(

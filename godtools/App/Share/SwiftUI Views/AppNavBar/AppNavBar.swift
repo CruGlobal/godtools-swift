@@ -12,7 +12,7 @@ extension View {
     
     func navBar<Content: ToolbarContent>(
         title: String?,
-        backTapped: (() -> Void)?,
+        backItem: BackToolbarItem?,
         @ToolbarContentBuilder toolbarContent: () -> Content = { AppToolbarItem?.none }
     ) -> some View {
         
@@ -20,17 +20,9 @@ extension View {
             .navigationBarBackButtonHidden(true)
             .toolbar {
                 
-                if backTapped != nil {
+                if let backItem = backItem {
                     
-                    AppToolbarItem(
-                        placement: AppToolbarItem.leadingPlacement,
-                        viewType: .image(value: ImageCatalog.navBack.image),
-                        color: ColorPalette.gtBlue.color,
-                        accessibilityId: AccessibilityStrings.Button.back.id,
-                        tappedClosure: {
-                            backTapped?()
-                        }
-                    )
+                    backItem
                 }
                 
                 toolbarContent()

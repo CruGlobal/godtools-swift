@@ -49,9 +49,11 @@ struct ArticleView: View {
         }
         .navBar(
             title: viewModel.navTitle,
-            backTapped: {
-                viewModel.backTapped()
-            },
+            backItem: BackToolbarItem(
+                tapped: {
+                    viewModel.backTapped()
+                }
+            ),
             toolbarContent: {
                 
                 if !viewModel.hidesShareButton {
