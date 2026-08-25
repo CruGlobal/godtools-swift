@@ -41,28 +41,47 @@ extension RealmArticleAemCache {
     }
     
     func getAemCacheObject(aemUri: String) async throws -> ArticleAemCacheObject? {
+           
+        let webArchiveFilename: String
+        let aemData: ArticleAemData?
         
-        let realm: Realm = try persistence.database.openRealm()
+        if let realmAemData = try persistence.database.openRealm().object(
+            ofType: RealmArticleAemData.self,
+            forPrimaryKey: aemUri
+        ) {
+         
+            webArchiveFilename = realmAemData.webArchiveFilename
+            aemData = realmAemData.toModel()
+        }
+        else {
+            
+            webArchiveFilename = ""
+            aemData = nil
+        }
         
-        return try await getAemCacheObject(aemUri: aemUri, realm: realm)
+        guard let aemData = aemData else {
+            return nil
+        }
+        
+        let articleAemWebArchive = ArticleAemWebArchive(filename: webArchiveFilename)
+        
+        let url: URL = try await webArchiveFileCache.fileCache.getFile(location: articleAemWebArchive.location)
+        
+        return ArticleAemCacheObject(
+            aemUri: aemUri,
+            aemData: aemData,
+            webArchiveFileUrl: url
+        )
     }
     
     func getAemCacheObjects(aemUris: [String]) async throws -> [ArticleAemCacheObject] {
-        
-        let realm: Realm = try persistence.database.openRealm()
-        
-        return try await getAemCacheObjects(aemUris: aemUris, realm: realm)
-    }
-    
-    private func getAemCacheObjects(aemUris: [String], realm: Realm) async throws -> [ArticleAemCacheObject] {
-        
+                
         var aemCacheObjects: [ArticleAemCacheObject] = Array()
         
         for aemUri in aemUris {
             
             let aemCacheObject: ArticleAemCacheObject? = try await self.getAemCacheObject(
-                aemUri: aemUri,
-                realm: realm
+                aemUri: aemUri
             )
             
             guard let object = aemCacheObject else {
@@ -74,36 +93,14 @@ extension RealmArticleAemCache {
         
         return aemCacheObjects
     }
-
-    private func getAemCacheObject(aemUri: String, realm: Realm) async throws -> ArticleAemCacheObject? {
-        
-        guard let realmAemData = realm.object(ofType: RealmArticleAemData.self, forPrimaryKey: aemUri) else {
-            return nil
-        }
-        
-        let articleAemWebArchive = ArticleAemWebArchive(filename: realmAemData.webArchiveFilename)
-        
-        let url: URL = try await webArchiveFileCache.fileCache.getFile(location: articleAemWebArchive.location)
-        
-        let aemData = realmAemData.toModel()
-        
-        return ArticleAemCacheObject(
-            aemUri: aemUri,
-            aemData: aemData,
-            webArchiveFileUrl: url
-        )
-    }
     
     func storeAemDataObjects(
         aemDataObjects: [ArticleAemData],
         requestPriority: RequestPriority
     ) async throws -> [ArticleWebArchiveData] {
      
-        let realm: Realm = try persistence.database.openRealm()
-        
         let aemDataObjectsThatNeedDownloading: ArticleAemDataObjectsThatNeedDownloading = try await filterAemDataObjectsThatNeedDownloaded(
-            aemDataObjects: aemDataObjects,
-            realm: realm
+            aemDataObjects: aemDataObjects
         )
         
         let webArchives: [ArticleWebArchiveData] = await articleWebArchiver.archive(
@@ -134,8 +131,7 @@ extension RealmArticleAemCache {
     }
     
     private func filterAemDataObjectsThatNeedDownloaded(
-        aemDataObjects: [ArticleAemData],
-        realm: Realm
+        aemDataObjects: [ArticleAemData]
     ) async throws -> ArticleAemDataObjectsThatNeedDownloading {
                 
         var aemDataDictionary: [AemUri: ArticleAemData] = Dictionary()
@@ -150,7 +146,7 @@ extension RealmArticleAemCache {
             let dataIsNotCached: Bool
             let uuidChanged: Bool
             
-            if let aemCacheObject = try await getAemCacheObject(aemUri: aemData.aemUri, realm: realm),
+            if let aemCacheObject = try await getAemCacheObject(aemUri: aemData.aemUri),
                let cachedUUID = aemCacheObject.aemData.articleJcrContent?.uuid,
                let uuid = aemData.articleJcrContent?.uuid, !cachedUUID.isEmpty, !uuid.isEmpty {
                 
