@@ -593,6 +593,7 @@ extension AppFlow {
             pushFlow(
                 flow: ArticleDeepLinkFlow(
                     appDiContainer: appDiContainer,
+                    flowType: .deeplink,
                     aemUri: aemUri,
                     article: article
                 )

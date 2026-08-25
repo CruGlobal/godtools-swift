@@ -14,7 +14,12 @@ final class ArticleDeepLinkFlow: GTFlow {
         case closed
     }
                         
-    init(appDiContainer: AppDiContainer, aemUri: String, article: ArticleDomainModel) {
+    init(
+        appDiContainer: AppDiContainer,
+        flowType: ArticleViewModel.FlowType,
+        aemUri: String,
+        article: ArticleDomainModel
+    ) {
         
         let stepEmitter = FlowStepEmitter()
         
@@ -23,6 +28,7 @@ final class ArticleDeepLinkFlow: GTFlow {
             initialView: Self.getArticleWebView(
                 appDiContainer: appDiContainer,
                 stepEmitter: stepEmitter,
+                flowType: flowType,
                 articleId: aemUri,
                 article: article
             ),
@@ -56,13 +62,16 @@ extension ArticleDeepLinkFlow {
     private static func getArticleWebView(
         appDiContainer: AppDiContainer,
         stepEmitter: FlowStepEmitter,
+        flowType: ArticleViewModel.FlowType,
         articleId: String,
         article: ArticleDomainModel
     ) -> UIViewController {
         
+        // TODO: This is also created in ArticleCategoriesFlow.  We need to align these so deep linking to an article can properly handle share logic. ~Levi
+        
         let viewModel = ArticleViewModel(
             stepEmitter: stepEmitter,
-            flowType: .deeplink,
+            flowType: flowType,
             articleId: articleId,
             article: article,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
@@ -73,23 +82,12 @@ extension ArticleDeepLinkFlow {
             localizationServices: appDiContainer.core.dataLayer.getLocalizationServices()
         )
         
-        let backButton = AppBackBarItem(
-            target: viewModel,
-            action: #selector(viewModel.backTapped)
-        )
-    
         let view = ArticleView(
             viewModel: viewModel
         )
         
         let hostingView = AppHostingController<ArticleView>(
-            rootView: view,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: backButton,
-                leadingItems: [],
-                trailingItems: []
-            )
+            rootView: view
         )
         
         return hostingView
