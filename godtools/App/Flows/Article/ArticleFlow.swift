@@ -1,5 +1,5 @@
 //
-//  ArticleDeepLinkFlow.swift
+//  ArticleFlow.swift
 //  godtools
 //
 //  Created by Robert Eldredge on 3/9/21.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class ArticleDeepLinkFlow: GTFlow {
+final class ArticleFlow: GTFlow {
     
     enum CompletedState: Sendable {
         case closed
@@ -52,12 +52,12 @@ final class ArticleDeepLinkFlow: GTFlow {
         }
     }
     
-    private func completeFlow(state: ArticleDeepLinkFlow.CompletedState) {
-        parent?.stepEmitter.emit(step: AppFlowStep.articleDeepLinkFlowCompleted(state: state))
+    private func completeFlow(state: ArticleFlow.CompletedState) {
+        parent?.stepEmitter.emit(step: AppFlowStep.articleFlowCompleted(state: state))
     }
 }
 
-extension ArticleDeepLinkFlow {
+extension ArticleFlow {
     
     private static func getArticleWebView(
         appDiContainer: AppDiContainer,
