@@ -26,12 +26,12 @@ extension View {
                     backItem
                 }
                 
+                toolbarContent()
+                
                 if let closeItem = closeItem {
                     
                     closeItem
                 }
-                
-                toolbarContent()
             }
     }
 }
