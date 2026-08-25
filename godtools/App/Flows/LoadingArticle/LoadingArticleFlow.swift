@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Flow
 
 final class LoadingArticleFlow: GTFlow {
     

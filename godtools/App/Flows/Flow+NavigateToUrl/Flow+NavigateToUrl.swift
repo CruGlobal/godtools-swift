@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Flow
 
 extension GTFlow {
     
