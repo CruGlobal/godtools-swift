@@ -35,11 +35,13 @@ open class Flow: NSObject {
     
     private var cancellables: Set<AnyCancellable> = Set()
     private var toggableInitialViewForPresentedFlows: UIViewController?
+    private var userDismissedPresentation: (() -> Void)?
+    
+    private(set) var presentedView: UIViewController?
     
     public private(set) var navigationController: UINavigationController
     public private(set) var pushedFlows: [Flow] = Array()
     public private(set) var presentedFlow: Flow?
-    private(set) var presentedView: UIViewController?
     
     public private(set) weak var parent: Flow?
     
@@ -164,6 +166,12 @@ open class Flow: NSObject {
         }
         
         return true
+    }
+    
+    // MARK: - Complete Flow
+    
+    public func completeFlow(step: FlowStep) {
+        parent?.stepEmitter.emit(step: step)
     }
     
     // MARK: - Push / Pop Flow
@@ -319,7 +327,7 @@ open class Flow: NSObject {
         }
     }
     
-    public func presentFlow(flow: Flow, animated: Bool = true) {
+    public func presentFlow(flow: Flow, animated: Bool = true, userDismissedPresentation: (() -> Void)? = nil) {
         
         guard presentedFlow == nil else {
             printWarning(message: "Cannot present flow: \(flow) because a flow \(String(describing: presentedFlow)) is already presented")
@@ -351,6 +359,10 @@ open class Flow: NSObject {
                 flow.navigationController.setViewControllers([flowInitialView], animated: false)
                 viewToPresent = flow.navigationController
             }
+            
+            self.userDismissedPresentation = userDismissedPresentation
+            
+            viewToPresent.presentationController?.delegate = self
             
             presenter.present(
                 viewToPresent,
@@ -388,6 +400,8 @@ open class Flow: NSObject {
             
             completion?()
         }
+        
+        userDismissedPresentation = nil
                 
         topFlow.onDismissed(animated: animated)
         
@@ -566,5 +580,17 @@ extension Flow {
                 completion?()
             }
         )
+    }
+}
+
+// MARK: - UIAdaptivePresentationControllerDelegate
+
+extension Flow: UIAdaptivePresentationControllerDelegate {
+    
+    public func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        
+        userDismissedPresentation?()
+        
+        dismissFlow(animated: false)
     }
 }
