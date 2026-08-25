@@ -8,6 +8,7 @@
 
 import UIKit
 import Combine
+import Flow
 
 @MainActor
 final class LessonViewModel: LegacyMobileContentRendererViewModel {

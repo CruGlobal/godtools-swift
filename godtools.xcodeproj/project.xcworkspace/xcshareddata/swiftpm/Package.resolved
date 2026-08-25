@@ -1,5 +1,5 @@
 {
-  "originHash" : "792d1a87cd00458f7d6f0bdb3cc77a90992c81bbb90dc04fdb78f89d3531f34c",
+  "originHash" : "39126d3a43a56bc9e57ed34ee65fc4efd7090627b62af72c1f001f019a4ad521",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -53,6 +53,15 @@
       "state" : {
         "revision" : "42e81d245e30e49ea6a5830cf2842d44a1591270",
         "version" : "12.15.0"
+      }
+    },
+    {
+      "identity" : "flow-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/CruGlobal/flow-ios.git",
+      "state" : {
+        "revision" : "fd0636c82ac49c27942219f36f0a082f9711b71b",
+        "version" : "0.0.1"
       }
     },
     {

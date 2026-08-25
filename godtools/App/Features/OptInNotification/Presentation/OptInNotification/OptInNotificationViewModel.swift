@@ -11,6 +11,7 @@ import Foundation
 import SwiftUI
 import UIKit
 import UserNotifications
+import Flow
 
 @MainActor
 final class OptInNotificationViewModel: ObservableObject {

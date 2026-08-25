@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import Flow
 
 @MainActor
 final class MenuViewModel: ObservableObject {
