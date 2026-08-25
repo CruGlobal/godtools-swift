@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Flow
 import UIKit
 
 open class GTFlow: Flow {
