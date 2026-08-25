@@ -39,8 +39,12 @@ struct WebContentView: View {
                 .frame(width: geometry.size.width, height: geometry.size.height)
             }
         }
-        .navigationBarBackButtonHidden(true)
-        .navigationTitle(viewModel.navTitle)
+        .navBar(
+            title: viewModel.navTitle,
+            backTapped: {
+                viewModel.backTapped()
+            }
+        )
         .background(Color.white)
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
         .onAppear {

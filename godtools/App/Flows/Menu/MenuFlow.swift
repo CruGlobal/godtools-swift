@@ -540,19 +540,8 @@ extension MenuFlow {
         
         let view = AccountView(viewModel: viewModel)
         
-        let backButton = AppBackBarItem(
-            target: viewModel,
-            action: #selector(viewModel.backTapped)
-        )
-        
         let hostingView = AppHostingController<AccountView>(
-            rootView: view,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: backButton,
-                leadingItems: [],
-                trailingItems: []
-            )
+            rootView: view
         )
         
         return hostingView
@@ -706,24 +695,13 @@ extension MenuFlow {
             trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase()
         )
         
-        let backButton = AppBackBarItem(
-            target: viewModel,
-            action: #selector(viewModel.backTapped)
-        )
-        
         let view = WebContentView(
             viewModel: viewModel,
             screenAccessibility: screenAccessibility
         )
         
         let hostingView = AppHostingController<WebContentView>(
-            rootView: view,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: backButton,
-                leadingItems: [],
-                trailingItems: []
-            )
+            rootView: view
         )
         
         return hostingView
