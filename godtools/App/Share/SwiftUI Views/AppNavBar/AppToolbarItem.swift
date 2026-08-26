@@ -48,28 +48,31 @@ struct AppToolbarItem: ToolbarContent {
                 tappedClosure?()
             }) {
                 
-                ZStack(alignment: .center) {
-                                        
-                    switch viewType {
-                    case .image(let value):
-                        value
-                            .renderingMode(.template)
-                            .foregroundColor(color)
-                    case .imageName(let value):
-                        Image(value)
-                            .renderingMode(.template)
-                            .foregroundColor(color)
-                    case .text(let value):
-                        Text(value)
-                            .foregroundColor(color)
-                    }
+                switch viewType {
+                
+                case .image(let value):
+                    renderImage(image: value)
+                
+                case .imageName(let value):
+                    renderImage(image: Image(value))
+                
+                case .text(let value):
+                    Text(value)
+                        .foregroundColor(color)
                 }
-                .frame(minWidth: Self.minSize, minHeight: Self.minSize)
             }
             .accessibilityIdentifier(accessibilityId ?? "")
             .buttonStyle(.borderless)
         }
         .ifAvailableSharedBackgroundVisibility(.hidden)
+    }
+    
+    @ViewBuilder private func renderImage(image: Image) -> some View {
+        
+        image
+            .renderingMode(.template)
+            .foregroundColor(color)
+            .frame(minWidth: Self.minSize, minHeight: Self.minSize)
     }
 }
 
