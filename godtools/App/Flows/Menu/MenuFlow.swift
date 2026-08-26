@@ -375,24 +375,8 @@ extension MenuFlow {
         
         let view = MenuView(viewModel: viewModel)
         
-        let doneButton = AppInterfaceStringBarItem(
-            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            localizationServices: appDiContainer.core.dataLayer.getLocalizationServices(),
-            localizedStringKey: "done",
-            color: nil,
-            target: viewModel,
-            action: #selector(viewModel.doneTapped),
-            accessibilityIdentifier: nil
-        )
-        
         let hostingView = AppHostingController(
-            rootView: view,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: nil,
-                leadingItems: [],
-                trailingItems: [doneButton]
-            )
+            rootView: view
         )
         
         return hostingView

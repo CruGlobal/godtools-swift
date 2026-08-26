@@ -186,8 +186,22 @@ struct MenuView: View {
                 .padding(EdgeInsets(top: 0, leading: MenuView.contentHorizontalPadding, bottom: 0, trailing: MenuView.contentHorizontalPadding))
             }
         }
-        .navigationBarBackButtonHidden(true)
-        .navigationTitle(viewModel.strings.title)
+        .navBar(
+            title: viewModel.strings.title,
+            toolbarContent: {
+                
+                AppToolbarItem(
+                    placement: AppToolbarItem.trailingPlacement,
+                    viewType: .text(value: viewModel.strings.doneActionTitle),
+                    color: ColorPalette.gtBlue.color,
+                    accessibilityId: nil,
+                    tappedClosure: {
+                        
+                        viewModel.doneTapped()
+                    }
+                )
+            }
+        )
         .background(Color.white)
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
         .onAppear {
