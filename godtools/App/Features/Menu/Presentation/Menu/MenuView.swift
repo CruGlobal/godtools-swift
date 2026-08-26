@@ -195,7 +195,7 @@ struct MenuView: View {
                     viewType: .text(value: viewModel.strings.doneActionTitle),
                     color: ColorPalette.gtBlue.color,
                     accessibilityId: nil,
-                    tappedClosure: {
+                    tapped: {
                         
                         viewModel.doneTapped()
                     }

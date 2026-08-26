@@ -63,7 +63,7 @@ struct ArticleView: View {
                         viewType: .image(value: ImageCatalog.navShare.image),
                         color: ColorPalette.gtBlue.color,
                         accessibilityId: nil,
-                        tappedClosure: {
+                        tapped: {
                             
                             viewModel.sharedTapped()
                         }
@@ -77,7 +77,7 @@ struct ArticleView: View {
                         viewType: .image(value: ImageCatalog.navDebug.image),
                         color: ColorPalette.gtBlue.color,
                         accessibilityId: AccessibilityStrings.Button.share.id,
-                        tappedClosure: {
+                        tapped: {
                             
                             viewModel.debugTapped()
                         }

@@ -95,7 +95,7 @@ struct OnboardingTutorialView: View {
                         viewType: .text(value: viewModel.strings.skipActionTitle),
                         color: ColorPalette.gtBlue.color,
                         accessibilityId: AccessibilityStrings.Button.skip.id,
-                        tappedClosure: {
+                        tapped: {
                             
                             viewModel.skipTapped()
                         }

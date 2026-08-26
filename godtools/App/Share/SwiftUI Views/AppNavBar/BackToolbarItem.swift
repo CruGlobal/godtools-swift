@@ -26,9 +26,7 @@ struct BackToolbarItem: ToolbarContent {
             viewType: .image(value: ImageCatalog.navBack.image),
             color: color,
             accessibilityId: AccessibilityStrings.Button.back.id,
-            tappedClosure: {
-                tapped()
-            }
+            tapped: tapped
         )
     }
 }

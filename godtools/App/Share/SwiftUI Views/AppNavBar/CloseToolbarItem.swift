@@ -33,9 +33,7 @@ struct CloseToolbarItem: ToolbarContent {
             viewType: .image(value: ImageCatalog.navClose.image),
             color: color,
             accessibilityId: AccessibilityStrings.Button.close.id,
-            tappedClosure: {
-                tapped()
-            }
+            tapped: tapped
         )
     }
 }

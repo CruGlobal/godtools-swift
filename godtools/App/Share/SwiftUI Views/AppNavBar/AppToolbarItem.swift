@@ -22,21 +22,21 @@ struct AppToolbarItem: ToolbarContent {
     private let viewType: ViewType
     private let color: Color?
     private let accessibilityId: String?
-    private let tappedClosure: (() -> Void)?
+    private let tapped: (() -> Void)
     
     init(
         placement: ToolbarItemPlacement,
         viewType: ViewType,
         color: Color?,
         accessibilityId: String?,
-        tappedClosure: (() -> Void)?
+        tapped: @escaping (() -> Void)
     ) {
         
         self.placement = placement
         self.viewType = viewType
         self.color = color
         self.accessibilityId = accessibilityId
-        self.tappedClosure = tappedClosure
+        self.tapped = tapped
     }
     
     var body: some ToolbarContent {
@@ -45,7 +45,7 @@ struct AppToolbarItem: ToolbarContent {
             
             Button(action: {
                 
-                tappedClosure?()
+                tapped()
             }) {
                 
                 switch viewType {
