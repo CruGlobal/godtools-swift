@@ -90,11 +90,8 @@ struct OnboardingTutorialView: View {
                 
                 if !viewModel.hidesSkipButton {
                  
-                    AppToolbarItem(
-                        placement: AppToolbarItem.trailingPlacement,
-                        viewType: .text(value: viewModel.strings.skipActionTitle),
-                        color: ColorPalette.gtBlue.color,
-                        accessibilityId: AccessibilityStrings.Button.skip.id,
+                    SkipToolbarItem(
+                        title: viewModel.strings.skipActionTitle,
                         tapped: {
                             
                             viewModel.skipTapped()
