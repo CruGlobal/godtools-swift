@@ -86,26 +86,8 @@ extension LearnToShareToolFlow {
             getLearnToShareToolTutorialUseCase: appDiContainer.feature.learnToShareTool.domainLayer.getLearnToShareToolTutorialUseCase()
         )
                 
-        let backButton = AppBackBarItem(
-            target: viewModel,
-            action: #selector(viewModel.backTapped),
-            hidesBarItemPublisher: viewModel.$hidesBackButton.eraseToAnyPublisher()
-        )
-        
-        let closeButton = AppCloseBarItem(
-            color: nil,
-            target: viewModel,
-            action: #selector(viewModel.closeTapped)
-        )
-        
         let learnToShareToolView = AppHostingController<LearnToShareToolView>(
-            rootView: LearnToShareToolView(viewModel: viewModel),
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: backButton,
-                leadingItems: [],
-                trailingItems: [closeButton]
-            )
+            rootView: LearnToShareToolView(viewModel: viewModel)
         )
         
         return learnToShareToolView
