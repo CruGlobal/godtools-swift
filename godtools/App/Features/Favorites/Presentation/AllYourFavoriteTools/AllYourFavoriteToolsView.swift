@@ -70,7 +70,14 @@ struct AllYourFavoriteToolsView: View {
                 .listStyle(.plain)
             }
         }
-        .navigationBarBackButtonHidden(true)
+        .navBar(
+            title: nil,
+            backItem: BackToolbarItem(
+                tapped: {
+                    viewModel.backTapped()
+                }
+            )
+        )
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
         .onAppear {
             viewModel.pageViewed()

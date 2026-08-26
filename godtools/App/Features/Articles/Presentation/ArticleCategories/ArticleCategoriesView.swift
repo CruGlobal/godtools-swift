@@ -45,9 +45,11 @@ struct ArticleCategoriesView: View {
         }
         .navBar(
             title: nil,
-            backTapped: {
-                viewModel.backTapped()
-            }
+            backItem: BackToolbarItem(
+                tapped: {
+                    viewModel.backTapped()
+                }
+            )
         )
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }

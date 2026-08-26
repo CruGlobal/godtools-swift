@@ -22,21 +22,21 @@ struct AppToolbarItem: ToolbarContent {
     private let viewType: ViewType
     private let color: Color?
     private let accessibilityId: String?
-    private let tappedClosure: (() -> Void)?
+    private let tapped: (() -> Void)
     
     init(
         placement: ToolbarItemPlacement,
         viewType: ViewType,
         color: Color?,
         accessibilityId: String?,
-        tappedClosure: (() -> Void)?
+        tapped: @escaping (() -> Void)
     ) {
         
         self.placement = placement
         self.viewType = viewType
         self.color = color
         self.accessibilityId = accessibilityId
-        self.tappedClosure = tappedClosure
+        self.tapped = tapped
     }
     
     var body: some ToolbarContent {
@@ -45,31 +45,34 @@ struct AppToolbarItem: ToolbarContent {
             
             Button(action: {
                 
-                tappedClosure?()
+                tapped()
             }) {
                 
-                ZStack(alignment: .center) {
-                                        
-                    switch viewType {
-                    case .image(let value):
-                        value
-                            .renderingMode(.template)
-                            .foregroundColor(color)
-                    case .imageName(let value):
-                        Image(value)
-                            .renderingMode(.template)
-                            .foregroundColor(color)
-                    case .text(let value):
-                        Text(value)
-                            .foregroundColor(color)
-                    }
+                switch viewType {
+                
+                case .image(let value):
+                    renderImage(image: value)
+                
+                case .imageName(let value):
+                    renderImage(image: Image(value))
+                
+                case .text(let value):
+                    Text(value)
+                        .foregroundColor(color)
                 }
-                .frame(minWidth: Self.minSize, minHeight: Self.minSize)
             }
             .accessibilityIdentifier(accessibilityId ?? "")
             .buttonStyle(.borderless)
         }
         .ifAvailableSharedBackgroundVisibility(.hidden)
+    }
+    
+    @ViewBuilder private func renderImage(image: Image) -> some View {
+        
+        image
+            .renderingMode(.template)
+            .foregroundColor(color)
+            .frame(minWidth: Self.minSize, minHeight: Self.minSize)
     }
 }
 

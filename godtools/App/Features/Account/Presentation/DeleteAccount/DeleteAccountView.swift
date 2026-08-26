@@ -84,6 +84,17 @@ struct DeleteAccountView: View {
                 FixedVerticalSpacer(height: contentInsets.bottom)
             }
         }
+        .navBar(
+            title: nil,
+            toolbarContent: {
+                
+                CloseToolbarItem(
+                    tapped: {
+                        viewModel.closeTapped()
+                    }
+                )
+            }
+        )
         .background(Color.white)
     }
 }

@@ -49,9 +49,11 @@ struct ArticleView: View {
         }
         .navBar(
             title: viewModel.navTitle,
-            backTapped: {
-                viewModel.backTapped()
-            },
+            backItem: BackToolbarItem(
+                tapped: {
+                    viewModel.backTapped()
+                }
+            ),
             toolbarContent: {
                 
                 if !viewModel.hidesShareButton {
@@ -61,7 +63,7 @@ struct ArticleView: View {
                         viewType: .image(value: ImageCatalog.navShare.image),
                         color: ColorPalette.gtBlue.color,
                         accessibilityId: nil,
-                        tappedClosure: {
+                        tapped: {
                             
                             viewModel.sharedTapped()
                         }
@@ -75,7 +77,7 @@ struct ArticleView: View {
                         viewType: .image(value: ImageCatalog.navDebug.image),
                         color: ColorPalette.gtBlue.color,
                         accessibilityId: AccessibilityStrings.Button.share.id,
-                        tappedClosure: {
+                        tapped: {
                             
                             viewModel.debugTapped()
                         }

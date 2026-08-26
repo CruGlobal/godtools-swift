@@ -58,6 +58,7 @@ enum LocalizableStringKeys: String {
     case deleteAccountConfirmButtonTitle = "deleteAccount.confirmButton.title"
     case deleteAccountCancelButtonTitle = "deleteAccount.cancelButton.title"
     case deleteAccountProgressTitle = "deleteAccountProgress.title"
+    case done = "done"
     case downloadError = "download_error"
     case downloadInProgress = "Download in progress"
     case error = "error"

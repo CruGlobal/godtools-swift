@@ -45,8 +45,14 @@ struct ToolFilterLanguageSelectionView: View {
             }
             .listStyle(.inset)
         }
-        .navigationBarBackButtonHidden(true)
-        .navigationTitle(viewModel.strings.navTitle)
+        .navBar(
+            title: viewModel.strings.navTitle,
+            backItem: BackToolbarItem(
+                tapped: {
+                    viewModel.backButtonTapped()
+                }
+            )
+        )
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
 }

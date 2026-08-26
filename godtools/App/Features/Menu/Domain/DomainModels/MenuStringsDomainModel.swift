@@ -11,6 +11,7 @@ import Foundation
 struct MenuStringsDomainModel: Sendable {
     
     let title: String
+    let doneActionTitle: String
     let getStartedTitle: String
     let tutorialOptionTitle: String
     let languageSettingsOptionTitle: String
@@ -37,6 +38,6 @@ struct MenuStringsDomainModel: Sendable {
     let version: String
     
     static var emptyValue: MenuStringsDomainModel {
-        return MenuStringsDomainModel(title: "", getStartedTitle: "", tutorialOptionTitle: "", languageSettingsOptionTitle: "", localizationSettingsOptionTitle: "", accountTitle: "", loginOptionTitle: "", createAccountOptionTitle: "", activityOptionTitle: "", logoutOptionTitle: "", deleteAccountOptionTitle: "", supportTitle: "", sendFeedbackOptionTitle: "", reportABugOptionTitle: "", askAQuestionOptionTitle: "", shareTitle: "", leaveAReviewOptionTitle: "", shareAStoryWithUsOptionTitle: "", shareGodToolsOptionTitle: "", aboutTitle: "", termsOfUseOptionTitle: "", privacyPolicyOptionTitle: "", copyrightInfoOptionTitle: "", versionTitle: "", version: "")
+        return MenuStringsDomainModel(title: "", doneActionTitle: "", getStartedTitle: "", tutorialOptionTitle: "", languageSettingsOptionTitle: "", localizationSettingsOptionTitle: "", accountTitle: "", loginOptionTitle: "", createAccountOptionTitle: "", activityOptionTitle: "", logoutOptionTitle: "", deleteAccountOptionTitle: "", supportTitle: "", sendFeedbackOptionTitle: "", reportABugOptionTitle: "", askAQuestionOptionTitle: "", shareTitle: "", leaveAReviewOptionTitle: "", shareAStoryWithUsOptionTitle: "", shareGodToolsOptionTitle: "", aboutTitle: "", termsOfUseOptionTitle: "", privacyPolicyOptionTitle: "", copyrightInfoOptionTitle: "", versionTitle: "", version: "")
     }
 }

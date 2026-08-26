@@ -42,8 +42,14 @@ struct LanguageSettingsView: View {
                 .padding([.top], 30)
             }
         }
-        .navigationBarBackButtonHidden(true)
-        .navigationTitle(viewModel.strings.navTitle)
+        .navBar(
+            title: viewModel.strings.navTitle,
+            backItem: BackToolbarItem(
+                tapped: {
+                    viewModel.backTapped()
+                }
+            )
+        )
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
         .onAppear {
             viewModel.pageViewed()

@@ -375,24 +375,8 @@ extension MenuFlow {
         
         let view = MenuView(viewModel: viewModel)
         
-        let doneButton = AppInterfaceStringBarItem(
-            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            localizationServices: appDiContainer.core.dataLayer.getLocalizationServices(),
-            localizedStringKey: "done",
-            color: nil,
-            target: viewModel,
-            action: #selector(viewModel.doneTapped),
-            accessibilityIdentifier: nil
-        )
-        
         let hostingView = AppHostingController(
-            rootView: view,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: nil,
-                leadingItems: [],
-                trailingItems: [doneButton]
-            )
+            rootView: view
         )
         
         return hostingView
@@ -433,20 +417,8 @@ extension MenuFlow {
             screenAccessibility: screenAccessibility
         )
         
-        let closeButton = AppCloseBarItem(
-            color: .white,
-            target: viewModel,
-            action: #selector(viewModel.closeTapped)
-        )
-        
         let hostingView = AppHostingController<SocialSignInView>(
-            rootView: view,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: nil,
-                leadingItems: [],
-                trailingItems: [closeButton]
-            )
+            rootView: view
         )
                 
         hostingView.view.backgroundColor = viewBackgroundUIColor
@@ -540,19 +512,8 @@ extension MenuFlow {
         
         let view = AccountView(viewModel: viewModel)
         
-        let backButton = AppBackBarItem(
-            target: viewModel,
-            action: #selector(viewModel.backTapped)
-        )
-        
         let hostingView = AppHostingController<AccountView>(
-            rootView: view,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: backButton,
-                leadingItems: [],
-                trailingItems: []
-            )
+            rootView: view
         )
         
         return hostingView
@@ -576,20 +537,8 @@ extension MenuFlow {
         
         let view = DeleteAccountView(viewModel: viewModel, backgroundColor: viewBackgroundColor)
         
-        let closeButton = AppCloseBarItem(
-            color: nil,
-            target: viewModel,
-            action: #selector(viewModel.closeTapped)
-        )
-        
         let hostingView = AppHostingController<DeleteAccountView>(
-            rootView: view,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: nil,
-                leadingItems: [],
-                trailingItems: [closeButton]
-            )
+            rootView: view
         )
                 
         hostingView.view.backgroundColor = viewBackgroundUIColor
@@ -706,24 +655,13 @@ extension MenuFlow {
             trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase()
         )
         
-        let backButton = AppBackBarItem(
-            target: viewModel,
-            action: #selector(viewModel.backTapped)
-        )
-        
         let view = WebContentView(
             viewModel: viewModel,
             screenAccessibility: screenAccessibility
         )
         
         let hostingView = AppHostingController<WebContentView>(
-            rootView: view,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: backButton,
-                leadingItems: [],
-                trailingItems: []
-            )
+            rootView: view
         )
         
         return hostingView

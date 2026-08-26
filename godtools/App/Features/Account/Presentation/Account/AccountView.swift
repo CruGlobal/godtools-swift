@@ -35,8 +35,14 @@ struct AccountView: View {
                 viewModel.pullToRefresh()
             }
         }
-        .navigationTitle(viewModel.strings.navTitle)
-        .navigationBarBackButtonHidden(true)
+        .navBar(
+            title: viewModel.strings.navTitle,
+            backItem: BackToolbarItem(
+                tapped: {
+                    viewModel.backTapped()
+                }
+            )
+        )
         .background(Color.getColorWithRGB(red: 245, green: 245, blue: 245, opacity: 1))
         .edgesIgnoringSafeArea(.bottom)
     }

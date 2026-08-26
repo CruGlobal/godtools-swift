@@ -86,7 +86,6 @@ struct OnboardingTutorialView: View {
         }
         .navBar(
             title: nil,
-            backTapped: nil,
             toolbarContent: {
                 
                 if !viewModel.hidesSkipButton {
@@ -96,7 +95,7 @@ struct OnboardingTutorialView: View {
                         viewType: .text(value: viewModel.strings.skipActionTitle),
                         color: ColorPalette.gtBlue.color,
                         accessibilityId: AccessibilityStrings.Button.skip.id,
-                        tappedClosure: {
+                        tapped: {
                             
                             viewModel.skipTapped()
                         }
