@@ -11,12 +11,15 @@ import UIKit
 
 actor ACChannelPublisher: ACChannelPublisherInterface {
     
+    static let timeoutIntervalSeconds: TimeInterval = 10
+    
     private let webSocket: WebSocketInterface
     private let loggingEnabled: Bool
-    private let createdChannelStream: MultiBroadcastStream<WebSocketChannel> = MultiBroadcastStream()
+    private let createdChannelStream: MultiBroadcastThrowingStream<WebSocketChannel> = MultiBroadcastThrowingStream()
     
     private var createChannel: WebSocketChannel?
     private var receiveTextTask: Task<Void, Never>?
+    private var timeoutTimer: Timer?
     
     private(set) var publishChannel: WebSocketChannel?
     private(set) var subscriberChannel: WebSocketChannel?
@@ -43,6 +46,18 @@ actor ACChannelPublisher: ACChannelPublisherInterface {
         print("x deinit: \(type(of: self))")
     }
     
+    private func stopTimeoutTimer() {
+        timeoutTimer?.invalidate()
+        timeoutTimer = nil
+    }
+    
+    private func handleDidTimeout() async {
+        
+        await closeChannel(disconnectSocket: true)
+        
+        await createdChannelStream.send(error: ACCreateChannelError.timedOut)
+    }
+    
     var isCreatingChannel: Bool {
         return createChannel != nil
     }
@@ -61,7 +76,7 @@ actor ACChannelPublisher: ACChannelPublisherInterface {
         return await webSocket.getConnectionStateStream()
     }
     
-    func getCreatedChannelStream() async -> AsyncStream<WebSocketChannel> {
+    func getCreatedChannelStream() async -> AsyncThrowingStream<WebSocketChannel, Error> {
         
         return await createdChannelStream.getNewStream(sendValue: subscriberChannel)
     }
@@ -76,6 +91,12 @@ actor ACChannelPublisher: ACChannelPublisherInterface {
             throw .channelAlreadyCreated
         }
         
+        timeoutTimer = Timer.scheduledTimer(withTimeInterval: Self.timeoutIntervalSeconds, repeats: false) { [weak self] _ in
+            Task { [weak self] in
+                await self?.handleDidTimeout()
+            }
+        }
+        
         self.createChannel = channel
                 
         await webSocket.connect(url: url)
@@ -84,6 +105,8 @@ actor ACChannelPublisher: ACChannelPublisherInterface {
     }
     
     func closeChannel(disconnectSocket: Bool) async {
+        
+        stopTimeoutTimer()
         
         cancelReceiveTextTask()
         
