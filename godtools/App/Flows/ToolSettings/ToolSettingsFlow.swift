@@ -227,19 +227,29 @@ class ToolSettingsFlow: GTFlow {
                 }
                 
             case .failure(let error):
-                break
-                        
-                // TODO: Address in follow-up ticket.  Need to add timeout handling back in. ~Levi
-                /*
-                switch error {
                 
-                case .timedOut:
-
-                    presentView(
-                        view: getCreatingToolScreenShareSessionTimedOutView(appLanguage: appLanguage),
-                        animated: true
-                    )
-                }*/
+                if let acCreateChannelError = error as? ACCreateChannelError {
+                    
+                    switch acCreateChannelError {
+                        
+                    case .channelAlreadyCreated:
+                        presentError(appLanguage: appLanguage, error: acCreateChannelError.toError())
+                        
+                    case .isCreatingChannel:
+                        presentError(appLanguage: appLanguage, error: acCreateChannelError.toError())
+                        
+                    case .timedOut:
+                        
+                        presentView(
+                            view: getCreatingToolScreenShareSessionTimedOutView(appLanguage: appLanguage),
+                            animated: true
+                        )
+                    }
+                }
+                else {
+                    
+                    presentError(appLanguage: appLanguage, error: error)
+                }
             }
             
         case .cancelTappedFromCreateToolScreenShareSessionTimeout:
