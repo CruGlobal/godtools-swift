@@ -19,7 +19,7 @@ actor ACChannelPublisher: ACChannelPublisherInterface {
     
     private var createChannel: WebSocketChannel?
     private var receiveTextTask: Task<Void, Never>?
-    private var timeoutTimer: Timer?
+    private var timeoutTask: TimeoutTask?
     
     private(set) var publishChannel: WebSocketChannel?
     private(set) var subscriberChannel: WebSocketChannel?
@@ -46,9 +46,19 @@ actor ACChannelPublisher: ACChannelPublisherInterface {
         print("x deinit: \(type(of: self))")
     }
     
-    private func stopTimeoutTimer() {
-        timeoutTimer?.invalidate()
-        timeoutTimer = nil
+    private func startTimeoutTask() {
+        
+        stopTimeoutTask()
+        
+        timeoutTask = TimeoutTask(timeoutIntervalSeconds: Self.timeoutIntervalSeconds) { [weak self] in
+            await self?.handleDidTimeout()
+        }
+    }
+    
+    private func stopTimeoutTask() {
+        
+        timeoutTask?.cancel()
+        timeoutTask = nil
     }
     
     private func handleDidTimeout() async {
@@ -91,11 +101,7 @@ actor ACChannelPublisher: ACChannelPublisherInterface {
             throw .channelAlreadyCreated
         }
         
-        timeoutTimer = Timer.scheduledTimer(withTimeInterval: Self.timeoutIntervalSeconds, repeats: false) { [weak self] _ in
-            Task { [weak self] in
-                await self?.handleDidTimeout()
-            }
-        }
+        startTimeoutTask()
         
         self.createChannel = channel
                 
@@ -106,7 +112,7 @@ actor ACChannelPublisher: ACChannelPublisherInterface {
     
     func closeChannel(disconnectSocket: Bool) async {
         
-        stopTimeoutTimer()
+        stopTimeoutTask()
         
         cancelReceiveTextTask()
         
@@ -256,7 +262,9 @@ actor ACChannelPublisher: ACChannelPublisherInterface {
     }
     
     private func handleDidCreateSubscriberChannel(subscriberChannel: WebSocketChannel) async {
-                      
+        
+        stopTimeoutTask()
+        
         cancelReceiveTextTask()
         
         createChannel = nil
