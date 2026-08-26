@@ -39,8 +39,14 @@ struct DownloadableLanguagesView: View {
             }
             .animation(.default, value: viewModel.displayedDownloadableLanguages)
         }
-        .navigationBarBackButtonHidden(true)
-        .navigationTitle(viewModel.strings.navTitle)
+        .navBar(
+            title: viewModel.strings.navTitle,
+            backItem: BackToolbarItem(
+                tapped: {
+                    viewModel.backTapped()
+                }
+            )
+        )
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
 }
