@@ -135,6 +135,28 @@ struct ToolScreenShareTutorialView: View {
             .frame(maxWidth: .infinity)
             .padding([.bottom], 20)
         }
+        .navBar(
+            title: nil,
+            toolbarContent: {
+                
+                CloseToolbarItem(
+                    tapped: {
+                        viewModel.closeTapped()
+                    },
+                    placement: AppToolbarItem.leadingPlacement
+                )
+                
+                if !viewModel.hidesSkipButton {
+                    
+                    SkipToolbarItem(
+                        title: viewModel.strings.skipActionTitle,
+                        tapped: {
+                            viewModel.skipTapped()
+                        }
+                    )
+                }
+            }
+        )
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
     
