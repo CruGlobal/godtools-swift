@@ -21,7 +21,7 @@ final class GetLocalizationSettingsCountryListUseCase: Sendable {
         self.localizationServices = localizationServices
     }
     
-    func execute(appLanguage: AppLanguageDomainModel, showsPreferNotToSay: Bool) -> [LocalizationSettingsCountryListItem] {
+    func execute(appLanguage: AppLanguageDomainModel, selectedCountryIsoRegionCode: String?, showsPreferNotToSay: Bool) -> [LocalizationSettingsCountryListItem] {
 
         let countries: [LocalizationSettingsCountryDataModel] = countriesRepository
             .getCountries(appLanguage: appLanguage)
@@ -35,16 +35,41 @@ final class GetLocalizationSettingsCountryListUseCase: Sendable {
             ))
         }
         
-        guard !showsPreferNotToSay else {
+        let listItems: [LocalizationSettingsCountryListItem]
+        
+        if showsPreferNotToSay {
             
             let preferNotToSay = createPreferNotToSayOption(
                 appLanguage: appLanguage
             )
             
-            return [preferNotToSay] + countryListItems
+            listItems = [preferNotToSay] + countryListItems
+        }
+        else {
+            
+            listItems = countryListItems
         }
         
-        return countryListItems
+        return moveSelectedCountryToTopOfList(
+            listItems: listItems,
+            selectedCountryIsoRegionCode: selectedCountryIsoRegionCode
+        )
+    }
+
+    private func moveSelectedCountryToTopOfList(listItems: [LocalizationSettingsCountryListItem], selectedCountryIsoRegionCode: String?) -> [LocalizationSettingsCountryListItem] {
+
+        guard let selectedCountryIsoRegionCode = selectedCountryIsoRegionCode else {
+            return listItems
+        }
+
+        guard let selectedIndex = listItems.firstIndex(where: { $0.isoRegionCode == selectedCountryIsoRegionCode }) else {
+            return listItems
+        }
+
+        var listItemsWithSelectedCountryRemoved = listItems
+        let selectedListItem = listItemsWithSelectedCountryRemoved.remove(at: selectedIndex)
+
+        return [selectedListItem] + listItemsWithSelectedCountryRemoved
     }
 
     private func createPreferNotToSayOption(appLanguage: AppLanguageDomainModel) -> LocalizationSettingsCountryListItem {
