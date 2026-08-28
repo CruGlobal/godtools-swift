@@ -68,7 +68,6 @@ final class LocalizationSettingsViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &$selectedCountryIsoRegionCode)
 
-
         Publishers.CombineLatest(
             $appLanguage.dropFirst(),
             $selectedCountryIsoRegionCode.dropFirst()
