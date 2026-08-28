@@ -12,8 +12,7 @@ struct CloseToolbarItem: ToolbarContent {
     
     private let tapped: (() -> Void)
     private let color: Color
-    
-    let placement: ToolbarItemPlacement
+    private let placement: ToolbarItemPlacement
     
     init(
         tapped: @escaping () -> Void,

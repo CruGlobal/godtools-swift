@@ -44,31 +44,8 @@ extension ToolSettingsFlow {
         
         let view = ToolScreenShareTutorialView(viewModel: viewModel)
         
-        let closeButton = AppCloseBarItem(
-            color: ColorPalette.gtBlue.uiColor,
-            target: viewModel,
-            action: #selector(viewModel.closeTapped)
-        )
-        
-        let skipButton = AppSkipBarItem(
-            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            localizationServices: appDiContainer.core.dataLayer.getLocalizationServices(),
-            target: viewModel,
-            action: #selector(viewModel.skipTapped),
-            accessibilityIdentifier: AccessibilityStrings.Button.skip.id,
-            hidesBarItemPublisher: viewModel.$hidesSkipButton.eraseToAnyPublisher()
-        )
-        
-        let navigationBar = AppNavigationBar(
-            appearance: nil,
-            backButton: nil,
-            leadingItems: [closeButton],
-            trailingItems: [skipButton]
-        )
-        
         let tutorialView = AppHostingController<ToolScreenShareTutorialView>(
-            rootView: view,
-            navigationBar: navigationBar
+            rootView: view
         )
         
         let modal = ModalNavigationController.defaultModal(

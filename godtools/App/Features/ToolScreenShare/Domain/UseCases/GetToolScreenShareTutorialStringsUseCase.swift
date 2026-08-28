@@ -22,12 +22,14 @@ final class GetToolScreenShareTutorialStringsUseCase: Sendable {
         let generateQRCodeActionTitleKey: String = LocalizableStringKeys.screenShareTutorialGenerateQRCodeButtonTitle.key
         let nextTutorialPageActionTitleKey: String = LocalizableStringKeys.tutorialContinueButtonTitleContinue.key
         let shareLinkActionTitleKey: String = LocalizableStringKeys.shareLink.key
+        let skipActionTitleKey: String = LocalizableStringKeys.navigationBarNavigationItemSkip.key
 
         let strings: [String: String] = localizationServices.stringsForKeys(
             keys: [
                 generateQRCodeActionTitleKey,
                 nextTutorialPageActionTitleKey,
-                shareLinkActionTitleKey
+                shareLinkActionTitleKey,
+                skipActionTitleKey
             ],
             fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
             shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
@@ -36,7 +38,8 @@ final class GetToolScreenShareTutorialStringsUseCase: Sendable {
         return ToolScreenShareTutorialStringsDomainModel(
             generateQRCodeActionTitle: strings[generateQRCodeActionTitleKey] ?? "",
             nextTutorialPageActionTitle: strings[nextTutorialPageActionTitleKey] ?? "",
-            shareLinkActionTitle: strings[shareLinkActionTitleKey] ?? ""
+            shareLinkActionTitle: strings[shareLinkActionTitleKey] ?? "",
+            skipActionTitle: strings[skipActionTitleKey] ?? ""
         )
     }
 }
