@@ -51,8 +51,6 @@ final class GetPersonalizedToolsUseCase: Sendable {
             return nil
         }()
         
-        let hasCountry: Bool = countryIsoRegionCode != nil
-        
         return Publishers.CombineLatest(
             personalizedToolsRepository
                 .getPersonalizedToolsChanged(
@@ -84,7 +82,7 @@ final class GetPersonalizedToolsUseCase: Sendable {
                     languageIdForAvailabilityText: filterToolsByLanguage.filterId
                 )
 
-            let showsPersonalizationUnavailable: Bool = !hasCountry && tools.isEmpty
+            let showsPersonalizationUnavailable: Bool = tools.isEmpty
             let unavailableStrings: PersonalizedToolsUnavailableDomainModel? = showsPersonalizationUnavailable ? self.getToolsUnavailable(appLanguage: appLanguage) : nil
 
             return PersonalizedToolsDomainModel(

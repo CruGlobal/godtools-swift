@@ -54,12 +54,11 @@ final class GetPersonalizedLessonsUseCase: Sendable {
             countryIsoRegionCode: countryIsoRegionCode,
             languageCode: languageCode,
             appLanguage: appLanguage,
-            filterLessonsByLanguage: filterLessonsByLanguage,
-            hasCountry: countryIsoRegionCode != nil
+            filterLessonsByLanguage: filterLessonsByLanguage
         )
     }
 
-    @MainActor private func getPersonalizedLessonsPublisher(countryIsoRegionCode: String?, languageCode: String, appLanguage: AppLanguageDomainModel, filterLessonsByLanguage: LessonFilterLanguageDomainModel?, hasCountry: Bool) -> AnyPublisher<PersonalizedLessonsDomainModel, Error> {
+    @MainActor private func getPersonalizedLessonsPublisher(countryIsoRegionCode: String?, languageCode: String, appLanguage: AppLanguageDomainModel, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<PersonalizedLessonsDomainModel, Error> {
 
         return Publishers.CombineLatest3(
             personalizedToolsRepository
@@ -93,7 +92,7 @@ final class GetPersonalizedLessonsUseCase: Sendable {
                 filterLessonsByLanguage: filterLessonsByLanguage
             )
 
-            let showsPersonalizationUnavailable: Bool = !hasCountry && lessons.isEmpty
+            let showsPersonalizationUnavailable: Bool = lessons.isEmpty
             let unavailableStrings: PersonalizedLessonsUnavailableDomainModel? = showsPersonalizationUnavailable ? self.getLessonsUnavailable(appLanguage: appLanguage) : nil
 
             return PersonalizedLessonsDomainModel(
