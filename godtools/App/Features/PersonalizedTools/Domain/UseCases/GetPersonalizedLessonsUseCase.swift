@@ -81,7 +81,8 @@ final class GetPersonalizedLessonsUseCase: Sendable {
                     .getPersistedPersonalizedTools(
                         country: countryIsoRegionCode,
                         language: languageCode,
-                        resourceTypes: [.lesson]
+                        resourceTypes: [.lesson],
+                        sortByResponse: true
                     )
             }
         })
