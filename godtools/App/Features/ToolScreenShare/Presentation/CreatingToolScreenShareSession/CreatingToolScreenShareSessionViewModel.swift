@@ -23,6 +23,7 @@ final class CreatingToolScreenShareSessionViewModel: ObservableObject {
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
     private let incrementUserCounterUseCase: IncrementUserCounterUseCase
     
+    private var getConnectionStateStreamTask: Task<Void, Never>?
     private var didCreateChannelTask: Task<Void, Error>?
     private var creatingChannelTask: Task<Void, Error>?
     private var cancellables = Set<AnyCancellable>()
@@ -59,18 +60,18 @@ final class CreatingToolScreenShareSessionViewModel: ObservableObject {
             })
             .store(in: &cancellables)
         
-        observeDidCreateChannelStream()
-        
-        createChannel()
+        startCreateChannel()
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+        getConnectionStateStreamTask?.cancel()
         didCreateChannelTask?.cancel()
         creatingChannelTask?.cancel()
     }
 
     private func cancelCreateChannelTasks() {
+        getConnectionStateStreamTask?.cancel()
         didCreateChannelTask?.cancel()
         creatingChannelTask?.cancel()
     }
@@ -79,6 +80,45 @@ final class CreatingToolScreenShareSessionViewModel: ObservableObject {
 
         strings = getCreatingToolScreenShareSessionStringsUseCase
             .execute(appLanguage: appLanguage)
+    }
+    
+    private func startCreateChannel() {
+        
+        observeConnectionStateStream()
+        
+        observeDidCreateChannelStream()
+        
+        createChannel()
+    }
+    
+    private func observeConnectionStateStream() {
+        
+        getConnectionStateStreamTask = Task { [weak self] in
+        
+            guard let stream = await self?.tractRemoteSharePublisher.getConnectionStateStream() else {
+                return
+            }
+            
+            for await connectionState in stream {
+                
+                switch connectionState {
+                case .disconnected(let reason):
+                    switch reason {
+                    case .clientDisconnected:
+                        break
+                    case .didClose( _):
+                        break
+                    case .taskFinishedTransfer(let error):
+                        if let error = error {
+                            self?.cancelCreateChannelTasks()
+                            self?.emitDidCreateSessionStep(result: .failure(error))
+                        }
+                    }
+                default:
+                    break
+                }
+            }
+        }
     }
     
     private func observeDidCreateChannelStream() {

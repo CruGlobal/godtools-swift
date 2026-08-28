@@ -417,7 +417,7 @@ extension TractViewModel {
             }
             catch let error {
                 
-                // TODO: Process error. ~Levi
+                // TODO: GT-3066 Handle error. ~Levi
             }
         }
     }
