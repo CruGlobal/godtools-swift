@@ -181,17 +181,4 @@ extension ToolSettingsFlow {
         
         return overlayNavigationController
     }
-    
-    func getCreatingToolScreenShareSessionTimedOutView(appLanguage: AppLanguageDomainModel) -> UIViewController {
-        
-        let viewModel = CreatingToolScreenShareSessionTimedOutViewModel(
-            stepEmitter: stepEmitter,
-            appLanguage: appLanguage,
-            getCreatingToolScreenShareSessionTimedOutStringsUseCase: appDiContainer.feature.toolScreenShare.domainLayer.getCreatingToolScreenShareSessionTimedOutStringsUseCase()
-        )
-        
-        let view = CreatingToolScreenShareSessionTimedOutView(viewModel: viewModel)
-        
-        return view.controller
-    }
 }

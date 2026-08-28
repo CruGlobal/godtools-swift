@@ -17,7 +17,7 @@ protocol ACChannelPublisherInterface: Actor {
     var connectionState: WebSocketConnectionState { get async }
     
     func getConnectionStateStream() async -> AsyncStream<WebSocketConnectionState>
-    func getCreatedChannelStream() async -> AsyncStream<WebSocketChannel>
+    func getCreatedChannelStream() async -> AsyncThrowingStream<WebSocketChannel, Error>
     func createChannel(url: URL, channel: WebSocketChannel) async throws(ACCreateChannelError)
     func closeChannel(disconnectSocket: Bool) async
     func sendMessage(data: String) async

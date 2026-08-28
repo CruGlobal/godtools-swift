@@ -19,20 +19,11 @@ final class GetCreatingToolScreenShareSessionTimedOutStringsUseCase: Sendable {
     
     func execute(appLanguage: AppLanguageDomainModel) -> CreatingToolScreenShareSessionTimedOutStringsDomainModel {
 
-        let acceptActionTitleKey: String = LocalizableStringKeys.ok.key
-
-        let strings: [String: String] = localizationServices.stringsForKeys(
-            keys: [
-                acceptActionTitleKey
-            ],
-            fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: appLanguage),
-            shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
-        )
-
+        // TODO: Need to add these strings to crowdin. ~Levi
+        
         return CreatingToolScreenShareSessionTimedOutStringsDomainModel(
             title: "Timed Out",
-            message: "Timed out creating the session for tool screen share.",
-            acceptActionTitle: strings[acceptActionTitleKey] ?? ""
+            message: "Timed out creating the session for tool screen share."
         )
     }
 }

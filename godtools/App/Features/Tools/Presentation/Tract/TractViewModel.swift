@@ -407,10 +407,17 @@ extension TractViewModel {
                 return
             }
             
-            for await _ in createdChannelStream {
+            do {
                 
-                self?.didSubscribeForRemoteSharePublishing.accept(value: true)
-                self?.reloadRemoteShareIsActive()
+                for try await _ in createdChannelStream {
+                    
+                    self?.didSubscribeForRemoteSharePublishing.accept(value: true)
+                    self?.reloadRemoteShareIsActive()
+                }
+            }
+            catch let error {
+                
+                // TODO: GT-3066 Handle error. ~Levi
             }
         }
     }

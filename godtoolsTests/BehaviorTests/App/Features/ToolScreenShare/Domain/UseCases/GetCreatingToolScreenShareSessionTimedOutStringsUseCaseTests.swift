@@ -15,7 +15,7 @@ struct GetCreatingToolScreenShareSessionTimedOutStringsUseCaseTests {
         """
         Given: Creating a tool screen share session has timed out.
         When: The timed out strings are requested.
-        Then: The title and message describe the timeout and the accept action is localized.
+        Then: The title and message describe the timeout.
         """,
         arguments: [
             LanguageCodeDomainModel.english.value,
@@ -30,7 +30,6 @@ struct GetCreatingToolScreenShareSessionTimedOutStringsUseCaseTests {
 
         #expect(strings.title == "Timed Out")
         #expect(strings.message == "Timed out creating the session for tool screen share.")
-        #expect(strings.acceptActionTitle == LocalizableStringKeys.ok.key)
     }
 }
 

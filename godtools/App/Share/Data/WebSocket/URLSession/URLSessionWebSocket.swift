@@ -71,7 +71,7 @@ actor URLSessionWebSocket: WebSocketInterface {
             return
         }
         
-        await setConnectionState(connectionState: .disconnected(reason: .clientDisconnected))
+        await setConnectionState(connectionState: .disconnected(reason: reason))
         
         cancelObserveTaskReceive()
                 
@@ -133,7 +133,7 @@ actor URLSessionWebSocket: WebSocketInterface {
 
     private func handleDidComplete(error: (any Error)?) async {
         
-        await disconnectWithReason(reason: .taskFinishedTransfer(failure: error?.localizedDescription))
+        await disconnectWithReason(reason: .taskFinishedTransfer(error: error))
     }
 }
 
