@@ -28,6 +28,7 @@ final class OnboardingTutorialViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = Set()
         
     @Published private var appLanguage = AppLanguageDomainModel.english
+    @Published private var country: LocalizationSettingsCountryDomainModel?
     
     @Published private(set) var strings = OnboardingTutorialStringsDomainModel.emptyValue
     @Published private(set) var continueButtonAccessibility: AccessibilityStrings.Button = OnboardingTutorialViewModel.continueButtonContinueAccessibility
@@ -35,6 +36,7 @@ final class OnboardingTutorialViewModel: ObservableObject {
     @Published private(set) var showsChooseLanguageButton: Bool = true
     @Published private(set) var pages: [OnboardingTutorialPage] = [.readyForEveryConversation, .talkAboutGodWithAnyone, .prepareForTheMomentsThatMatter, .helpSomeoneDiscoverJesus]
     @Published private(set) var continueButtonTitle: String = ""
+    @Published private(set) var tutorialUserInteractionEnabled: Bool = false
     
     @Published var currentPage: Int = 0
     
@@ -93,6 +95,14 @@ final class OnboardingTutorialViewModel: ObservableObject {
             }
             weakSelf.updateShowsChooseLanguageButtonState(page: weakSelf.currentPage)
         }
+        
+        Publishers.CombineLatest($appLanguage, $country)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?) in
+                
+                self?.tutorialUserInteractionEnabled = country != nil
+            }
+            .store(in: &cancellables)
     }
     
     deinit {
