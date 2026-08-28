@@ -63,7 +63,7 @@ final class PersonalizedToolsSync: Sendable {
         switch type {
 
         case .allRanked(let country, let language):
-            resourceCodables = try await api.getAllRankedResources(
+            resourceCodables = try await api.getRankedResources(
                 requestPriority: requestPriority,
                 country: country,
                 language: language,
