@@ -12,6 +12,7 @@ import GodToolsShared
 import Combine
 import Flow
 
+@MainActor
 enum AppFlowStep: FlowStep {
     
     // app
@@ -32,6 +33,7 @@ enum AppFlowStep: FlowStep {
     case videoButtonTappedFromOnboardingTutorial(youtubeVideoId: String)
     case closeVideoPlayerTappedFromOnboardingTutorial
     case videoEndedOnOnboardingTutorial
+    case continueTappedFromOnboardingTutorial(appLanguageAndCountrySelection: OnboardingAppLanguageAndCountry)
     case skipTappedFromOnboardingTutorial
     case endTutorialFromOnboardingTutorial
     

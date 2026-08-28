@@ -24,6 +24,7 @@ final class OnboardingTutorialViewModel: ObservableObject {
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let readyForEveryConversationYoutubeVideoId: String = "RvhZ_wuxAgE"
     private let showsChooseAppLanguageButtonOnPages: [Int] = [0]
+    private let appLanguageAndCountrySelection = OnboardingAppLanguageAndCountry()
     
     private var cancellables: Set<AnyCancellable> = Set()
         
@@ -96,13 +97,16 @@ final class OnboardingTutorialViewModel: ObservableObject {
             weakSelf.updateShowsChooseLanguageButtonState(page: weakSelf.currentPage)
         }
         
-        Publishers.CombineLatest($appLanguage, $country)
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?) in
-                
-                self?.tutorialUserInteractionEnabled = country != nil
-            }
-            .store(in: &cancellables)
+        Publishers.CombineLatest(
+            appLanguageAndCountrySelection.$appLanguage,
+            appLanguageAndCountrySelection.$country
+        )
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] (appLanguage: AppLanguageListItemDomainModel?, country: LocalizationSettingsCountryListItem?) in
+            
+            self?.tutorialUserInteractionEnabled = appLanguage != nil && country != nil
+        }
+        .store(in: &cancellables)
     }
     
     deinit {
@@ -252,7 +256,7 @@ extension OnboardingTutorialViewModel {
     
     func continueTapped() {
         
-        stepEmitter.emit(step: AppFlowStep.continueTappedFromTutorial)
+        stepEmitter.emit(step: AppFlowStep.continueTappedFromOnboardingTutorial(appLanguageAndCountrySelection: appLanguageAndCountrySelection))
     }
     
     func watchReadyForEveryConversationVideoTapped() {

@@ -19,8 +19,7 @@ final class OnboardingFlow: GTFlow {
         
     @Published private var currentAppLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
-    private var selectedAppLanguage: AppLanguageListItemDomainModel?
-    private var selectedCountry: LocalizationSettingsCountryListItem?
+    private var appLanguageAndCountrySelection: OnboardingAppLanguageAndCountry?
     private var cancellables: Set<AnyCancellable> = Set()
     
     init(appDiContainer: AppDiContainer) {
@@ -78,7 +77,7 @@ final class OnboardingFlow: GTFlow {
             
             case .userChoseAppLanguage(let appLanguage):
                 
-                selectedAppLanguage = appLanguage
+                appLanguageAndCountrySelection?.setAppLanguage(appLanguage: appLanguage)
                 
                 guard GodToolsApp.showsPersonalization else {
                     removeAllFlows()
@@ -100,8 +99,8 @@ final class OnboardingFlow: GTFlow {
                 
             case .userConfirmedLocalizationSetting(let country):
                 
-                selectedCountry = country
-                
+                appLanguageAndCountrySelection?.setCountry(country: country)
+                                
                 removeAllFlows()
 
                 if let tutorialVC = onboardingTutorialViewController {
@@ -121,11 +120,13 @@ final class OnboardingFlow: GTFlow {
         case .skipTappedFromOnboardingTutorial:
             completeFlow(state: .completed)
             
-        case .continueTappedFromTutorial:
+        case .continueTappedFromOnboardingTutorial(let appLanguageAndCountrySelection):
             
             guard let onboardingTutorialView = self.onboardingTutorialView else {
                 return
             }
+            
+            self.appLanguageAndCountrySelection = appLanguageAndCountrySelection
             
             let page: OnboardingTutorialPage? = onboardingTutorialView.getCurrentPage()
             let lastPage: Int = onboardingTutorialView.getPageCount() - 1
@@ -160,14 +161,14 @@ final class OnboardingFlow: GTFlow {
             }
             else {
                                 
-                if selectedAppLanguage == nil {
+                if appLanguageAndCountrySelection.appLanguage == nil {
                     
                     pushFlow(
                         flow: ChooseAppLanguageFlow(appDiContainer: appDiContainer),
                         animated: true
                     )
                 }
-                else if selectedCountry == nil {
+                else if appLanguageAndCountrySelection.country == nil {
                     
                     navigateToLocalizationSettings()
                 }
