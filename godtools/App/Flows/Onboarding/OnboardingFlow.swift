@@ -19,7 +19,8 @@ final class OnboardingFlow: GTFlow {
         
     @Published private var currentAppLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
-    private var didPromptForAppLanguage: Bool = false
+    private var selectedAppLanguage: AppLanguageListItemDomainModel?
+    private var selectedCountry: LocalizationSettingsCountryListItem?
     private var cancellables: Set<AnyCancellable> = Set()
     
     init(appDiContainer: AppDiContainer) {
@@ -75,7 +76,9 @@ final class OnboardingFlow: GTFlow {
             case .userClosedChooseAppLanguage:
                 popFlow()
             
-            case .userChoseAppLanguage( _):
+            case .userChoseAppLanguage(let appLanguage):
+                
+                selectedAppLanguage = appLanguage
                 
                 guard GodToolsApp.showsPersonalization else {
                     removeAllFlows()
@@ -85,12 +88,7 @@ final class OnboardingFlow: GTFlow {
                     return
                 }
                 
-                pushFlow(
-                    flow: LocalizationSettingsFlow(
-                        appDiContainer: appDiContainer,
-                        shouldStoreCountryWhenSelected: false
-                    )
-                )
+                navigateToLocalizationSettings()
             }
             
         case .localizationSettingsFlowCompleted(let state):
@@ -100,7 +98,9 @@ final class OnboardingFlow: GTFlow {
             case .userTappedBackFromLocalizationSettings:
                 popFlow()
                 
-            case .userConfirmedLocalizationSetting( _):
+            case .userConfirmedLocalizationSetting(let country):
+                
+                selectedCountry = country
                 
                 removeAllFlows()
 
@@ -132,10 +132,6 @@ final class OnboardingFlow: GTFlow {
             let currentPage: Int = onboardingTutorialView.getCurrentPageIndex()
             let reachedEnd = currentPage >= lastPage
             
-            if !GodToolsApp.showsPersonalization {
-                didPromptForAppLanguage = true
-            }
-            
             if reachedEnd {
                 
                 navigate(step: AppFlowStep.endTutorialFromOnboardingTutorial)
@@ -158,18 +154,27 @@ final class OnboardingFlow: GTFlow {
                     }
                 }
             }
-            else if !reachedEnd && !didPromptForAppLanguage {
-                
-                didPromptForAppLanguage = true
-                
-                pushFlow(
-                    flow: ChooseAppLanguageFlow(appDiContainer: appDiContainer),
-                    animated: true
-                )
-            }
-            else {
+            else if !GodToolsApp.showsPersonalization {
                 
                 onboardingTutorialView.setCurrentPage(page: currentPage + 1)
+            }
+            else {
+                                
+                if selectedAppLanguage == nil {
+                    
+                    pushFlow(
+                        flow: ChooseAppLanguageFlow(appDiContainer: appDiContainer),
+                        animated: true
+                    )
+                }
+                else if selectedCountry == nil {
+                    
+                    navigateToLocalizationSettings()
+                }
+                else {
+                    
+                    onboardingTutorialView.setCurrentPage(page: currentPage + 1)
+                }
             }
             
         case .endTutorialFromOnboardingTutorial:
@@ -197,6 +202,16 @@ final class OnboardingFlow: GTFlow {
         presentVideoModal(
             viewModel: viewModel,
             screenAccessibility: .watchOnboardingTutorialVideo
+        )
+    }
+    
+    private func navigateToLocalizationSettings() {
+        
+        pushFlow(
+            flow: LocalizationSettingsFlow(
+                appDiContainer: appDiContainer,
+                shouldStoreCountryWhenSelected: false
+            )
         )
     }
     
