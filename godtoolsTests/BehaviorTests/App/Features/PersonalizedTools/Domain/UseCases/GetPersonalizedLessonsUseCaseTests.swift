@@ -141,7 +141,7 @@ struct GetPersonalizedLessonsUseCaseTests {
     @available(iOS 17.4, *)
     @Test(
         """
-        Given: User has not selected a country and there are no personalized lessons.
+        Given: There are no personalized lessons.
         When: Personalized lessons are requested.
         Then: I expect to see the personalization unavailable strings translated in my app language.
         """,
@@ -158,7 +158,7 @@ struct GetPersonalizedLessonsUseCaseTests {
             )
         ]
     )
-    @MainActor func personalizationUnavailableIsShownWhenNoCountryIsSelectedAndThereAreNoLessons(argument: UnavailableArgument) async throws {
+    @MainActor func personalizationUnavailableIsShownWhenThereAreNoLessons(argument: UnavailableArgument) async throws {
 
         let personalizedLessons: PersonalizedLessonsDomainModel = try await getPersonalizedLessons(
             appLanguage: argument.appLanguage,
@@ -178,10 +178,10 @@ struct GetPersonalizedLessonsUseCaseTests {
         """
         Given: User has selected a country and there are no personalized lessons.
         When: Personalized lessons are requested.
-        Then: I expect to see no lessons and no personalization unavailable strings.
+        Then: I expect to see no lessons and the personalization unavailable strings.
         """
     )
-    @MainActor func personalizationUnavailableIsNotShownWhenACountryIsSelectedAndThereAreNoLessons() async throws {
+    @MainActor func personalizationUnavailableIsShownWhenACountryIsSelectedAndThereAreNoLessons() async throws {
 
         let personalizedLessons: PersonalizedLessonsDomainModel = try await getPersonalizedLessons(
             appLanguage: LanguageCodeDomainModel.english.value,
@@ -190,7 +190,7 @@ struct GetPersonalizedLessonsUseCaseTests {
         )
 
         #expect(personalizedLessons.lessons.isEmpty)
-        #expect(personalizedLessons.unavailableStrings == nil)
+        #expect(personalizedLessons.unavailableStrings != nil)
     }
 
     @available(iOS 17.4, *)

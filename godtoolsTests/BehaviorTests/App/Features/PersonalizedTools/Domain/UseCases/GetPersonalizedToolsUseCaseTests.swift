@@ -140,7 +140,7 @@ struct GetPersonalizedToolsUseCaseTests {
     @available(iOS 17.4, *)
     @Test(
         """
-        Given: User has not selected a country and there are no personalized tools.
+        Given: There are no personalized tools.
         When: Personalized tools are requested.
         Then: I expect to see the personalization unavailable strings translated in my app language.
         """,
@@ -157,7 +157,7 @@ struct GetPersonalizedToolsUseCaseTests {
             )
         ]
     )
-    @MainActor func personalizationUnavailableIsShownWhenNoCountryIsSelectedAndThereAreNoTools(argument: UnavailableArgument) async throws {
+    @MainActor func personalizationUnavailableIsShownWhenThereAreNoTools(argument: UnavailableArgument) async throws {
 
         let personalizedTools: PersonalizedToolsDomainModel = try await getPersonalizedTools(
             appLanguage: argument.appLanguage,
@@ -177,10 +177,10 @@ struct GetPersonalizedToolsUseCaseTests {
         """
         Given: User has selected a country and there are no personalized tools.
         When: Personalized tools are requested.
-        Then: I expect to see no tools and no personalization unavailable strings.
+        Then: I expect to see no tools and the personalization unavailable strings.
         """
     )
-    @MainActor func personalizationUnavailableIsNotShownWhenACountryIsSelectedAndThereAreNoTools() async throws {
+    @MainActor func personalizationUnavailableIsShownWhenACountryIsSelectedAndThereAreNoTools() async throws {
 
         let personalizedTools: PersonalizedToolsDomainModel = try await getPersonalizedTools(
             appLanguage: LanguageCodeDomainModel.english.value,
@@ -189,7 +189,7 @@ struct GetPersonalizedToolsUseCaseTests {
         )
 
         #expect(personalizedTools.tools.isEmpty)
-        #expect(personalizedTools.unavailableStrings == nil)
+        #expect(personalizedTools.unavailableStrings != nil)
     }
 
     @available(iOS 17.4, *)
