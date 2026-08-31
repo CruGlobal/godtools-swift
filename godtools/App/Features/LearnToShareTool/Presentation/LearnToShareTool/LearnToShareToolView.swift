@@ -82,6 +82,31 @@ struct LearnToShareToolView: View {
                 }
             }
         }
+        .navBar(
+            title: nil,
+            backItem: backItem,
+            toolbarContent: {
+                
+                CloseToolbarItem(
+                    tapped: {
+                        viewModel.closeTapped()
+                    }
+                )
+            }
+        )
+    }
+    
+    private var backItem: BackToolbarItem? {
+        
+        guard !viewModel.hidesBackButton else {
+            return nil
+        }
+        
+        return BackToolbarItem(
+            tapped: {
+                viewModel.backTapped()
+            }
+        )
     }
     
     private func getLearnToShareToolItemView(index: Int, geometry: GeometryProxy) -> LearnToShareToolItemView {

@@ -9,6 +9,7 @@
 import Foundation
 import SwiftUI
 import Combine
+import Flow
 
 @MainActor
 final class ToolsViewModel: ObservableObject {
@@ -91,9 +92,7 @@ final class ToolsViewModel: ObservableObject {
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.getToolBannerUseCase = getToolBannerUseCase
         self.imageCache = imageCache
-        
-        pullToRefreshTools()
-        
+                
         Task { [weak self] in
             
             let favoritingToolMessageDisabled: Bool = await favoritingToolMessageCache.favoritingToolMessageDisabled

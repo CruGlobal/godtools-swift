@@ -8,6 +8,7 @@
 
 import UIKit
 import Combine
+import Flow
 
 final class DashboardFlow: GTFlow {
         
@@ -502,19 +503,8 @@ extension DashboardFlow {
         
         let view = LessonFilterLanguageSelectionView(viewModel: viewModel)
         
-        let backButton = AppBackBarItem(
-            target: viewModel,
-            action: #selector(viewModel.backTapped)
-        )
-        
         let hostingView = AppHostingController<LessonFilterLanguageSelectionView>(
-            rootView: view,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: backButton,
-                leadingItems: [],
-                trailingItems: []
-            )
+            rootView: view
         )
         
         return hostingView
@@ -593,19 +583,8 @@ extension DashboardFlow {
         
         let view = AllYourFavoriteToolsView(viewModel: viewModel)
         
-        let backButton = AppBackBarItem(
-            target: viewModel,
-            action: #selector(viewModel.backTapped)
-        )
-        
         let hostingView = AppHostingController<AllYourFavoriteToolsView>(
-            rootView: view,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: backButton,
-                leadingItems: [],
-                trailingItems: []
-            )
+            rootView: view
         )
         
         return hostingView
@@ -632,19 +611,8 @@ extension DashboardFlow {
         
         let view = ToolFilterCategorySelectionView(viewModel: viewModel)
         
-        let backButton = AppBackBarItem(
-            target: viewModel,
-            action: #selector(viewModel.backButtonTapped)
-        )
-        
         let hostingView = AppHostingController<ToolFilterCategorySelectionView>(
-            rootView: view,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: backButton,
-                leadingItems: [],
-                trailingItems: []
-            )
+            rootView: view
         )
                         
         return hostingView
@@ -666,19 +634,8 @@ extension DashboardFlow {
         
         let view = ToolFilterLanguageSelectionView(viewModel: viewModel)
         
-        let backButton = AppBackBarItem(
-            target: viewModel,
-            action: #selector(viewModel.backButtonTapped)
-        )
-        
         let hostingView = AppHostingController<ToolFilterLanguageSelectionView>(
-            rootView: view,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: backButton,
-                leadingItems: [],
-                trailingItems: []
-            )
+            rootView: view
         )
                         
         return hostingView
@@ -920,20 +877,8 @@ extension DashboardFlow {
         
         let view = ToolDetailsView(viewModel: viewModel)
         
-        let backButton = AppBackBarItem(
-            target: viewModel,
-            action: #selector(viewModel.backTapped),
-            accessibilityIdentifier: AccessibilityStrings.Button.back.id
-        )
-        
         let hostingView = AppHostingController<ToolDetailsView>(
-            rootView: view,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: backButton,
-                leadingItems: [],
-                trailingItems: []
-            )
+            rootView: view
         )
         
         return hostingView

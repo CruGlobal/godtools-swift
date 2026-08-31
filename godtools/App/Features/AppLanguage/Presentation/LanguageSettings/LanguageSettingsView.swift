@@ -42,8 +42,14 @@ struct LanguageSettingsView: View {
                 .padding([.top], 30)
             }
         }
-        .navigationBarBackButtonHidden(true)
-        .navigationTitle(viewModel.strings.navTitle)
+        .navBar(
+            title: viewModel.strings.navTitle,
+            backItem: BackToolbarItem(
+                tapped: {
+                    viewModel.backTapped()
+                }
+            )
+        )
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
         .onAppear {
             viewModel.pageViewed()
@@ -58,7 +64,7 @@ struct LanguageSettingsView_Preview: PreviewProvider {
         let appDiContainer = AppDiContainer.createUITestsDiContainer()
         
         let viewModel = LanguageSettingsViewModel(
-            stepEmitter: FlowStepEmitter(),
+            stepEmitter: PreviewFlowStepEmitter.emitter,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getLanguageSettingsStringsUseCase: appDiContainer.feature.appLanguage.domainLayer.getLanguageSettingsStringsUseCase(),
             getDownloadedLanguagesListUseCase: appDiContainer.feature.appLanguage.domainLayer.getDownloadedLanguagesListUseCase(),

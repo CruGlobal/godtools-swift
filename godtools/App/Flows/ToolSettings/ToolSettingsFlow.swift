@@ -9,6 +9,7 @@
 import UIKit
 import SwiftUI
 import Combine
+import Flow
 
 class ToolSettingsFlow: GTFlow {
     
@@ -226,26 +227,51 @@ class ToolSettingsFlow: GTFlow {
                 }
                 
             case .failure(let error):
-                break
-                        
-                // TODO: Address in follow-up ticket.  Need to add timeout handling back in. ~Levi
-                /*
-                switch error {
                 
-                case .timedOut:
-
-                    presentView(
-                        view: getCreatingToolScreenShareSessionTimedOutView(appLanguage: appLanguage),
-                        animated: true
-                    )
-                }*/
+                let acceptTapped: (() -> Void) = { [weak self] in
+                    
+                    self?.dismissInitialView(animated: true)
+                    
+                    self?.completeFlow(state: .failedToCreateToolScreenShareSession)
+                }
+                
+                if let acCreateChannelError = error as? ACCreateChannelError {
+                    
+                    switch acCreateChannelError {
+                        
+                    case .channelAlreadyCreated:
+                        presentError(
+                            appLanguage: appLanguage,
+                            error: acCreateChannelError.toError(),
+                            acceptTapped: acceptTapped
+                        )
+                        
+                    case .isCreatingChannel:
+                        presentError(
+                            appLanguage: appLanguage,
+                            error: acCreateChannelError.toError(),
+                            acceptTapped: acceptTapped
+                        )
+                        
+                    case .timedOut:
+                        
+                        let strings = appDiContainer.feature.toolScreenShare.domainLayer
+                            .getCreatingToolScreenShareSessionTimedOutStringsUseCase()
+                            .execute(appLanguage: appLanguage)
+                        
+                        presentAlert(
+                            appLanguage: appLanguage,
+                            title: strings.title,
+                            message: strings.message,
+                            acceptTapped: acceptTapped
+                        )
+                    }
+                }
+                else {
+                    
+                    presentError(appLanguage: appLanguage, error: error, acceptTapped: acceptTapped)
+                }
             }
-            
-        case .cancelTappedFromCreateToolScreenShareSessionTimeout:
-            completeFlow(state: .failedToCreateToolScreenShareSession)
-            
-        case .acceptTappedFromCreateToolScreenShareSessionTimeout:
-            completeFlow(state: .failedToCreateToolScreenShareSession)
         
         case .primaryLanguageTappedFromToolSettings:
             presentView(

@@ -14,6 +14,23 @@ protocol PersonalizedToolsApiInterface: Sendable {
     typealias TwoLetterCountryCode = String
     typealias TwoLetterLanguageCode = String
     
-    func getAllRankedResources(requestPriority: RequestPriority, country: TwoLetterCountryCode?, language: TwoLetterLanguageCode?, resourceTypes: [ResourceType]?) async throws -> [ResourceCodable]
-    func getDefaultOrderResources(requestPriority: RequestPriority, language: TwoLetterLanguageCode?, resourceTypes: [ResourceType]?) async throws -> [ResourceCodable]
+    func getDefaultOrderResources(
+        requestPriority: RequestPriority,
+        language: TwoLetterLanguageCode,
+        resourceTypes: [ResourceType]?
+    ) async throws -> [ResourceCodable]
+    
+    func getFeaturedResources(
+        requestPriority: RequestPriority,
+        country: TwoLetterCountryCode,
+        language: TwoLetterLanguageCode,
+        resourceTypes: [ResourceType]?
+    ) async throws -> [ResourceCodable]
+    
+    func getRankedResources(
+        requestPriority: RequestPriority,
+        country: TwoLetterCountryCode,
+        language: TwoLetterLanguageCode,
+        resourceTypes: [ResourceType]?
+    ) async throws -> [ResourceCodable]
 }

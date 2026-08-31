@@ -130,7 +130,7 @@ import Combine
 struct DashboardView_Previews: PreviewProvider {
     
     private static let appDiContainer = AppDiContainer.createUITestsDiContainer()
-    private static let stepEmitter: FlowStepEmitter = PreviewFlowStepEmitter.emitter
+    private static let stepEmitter = PreviewFlowStepEmitter.emitter
     private static let dashboardDependencies: DashboardPresentationLayerDependencies = DashboardPresentationLayerDependencies(appDiContainer: Self.appDiContainer, stepEmitter: stepEmitter)
         
     static func getDashboardViewModel() -> DashboardViewModel {

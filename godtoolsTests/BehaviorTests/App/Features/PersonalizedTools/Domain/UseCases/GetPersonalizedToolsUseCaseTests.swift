@@ -19,9 +19,9 @@ private enum TestPersonalizedToolsLanguageId {
 }
 
 private enum TestPersonalizedToolsId {
-    static let defaultOrderEnglish: String = "en"
-    static let defaultOrderFrench: String = "fr"
-    static let unitedStatesEnglish: String = "us_en"
+    static let defaultOrderEnglish: String = "default_order_en"
+    static let defaultOrderFrench: String = "default_order_fr"
+    static let rankedUnitedStatesEnglish: String = "ranked_us_en"
 }
 
 struct GetPersonalizedToolsUseCaseTests {
@@ -140,7 +140,7 @@ struct GetPersonalizedToolsUseCaseTests {
     @available(iOS 17.4, *)
     @Test(
         """
-        Given: User has not selected a country and there are no personalized tools.
+        Given: There are no personalized tools.
         When: Personalized tools are requested.
         Then: I expect to see the personalization unavailable strings translated in my app language.
         """,
@@ -157,7 +157,7 @@ struct GetPersonalizedToolsUseCaseTests {
             )
         ]
     )
-    @MainActor func personalizationUnavailableIsShownWhenNoCountryIsSelectedAndThereAreNoTools(argument: UnavailableArgument) async throws {
+    @MainActor func personalizationUnavailableIsShownWhenThereAreNoTools(argument: UnavailableArgument) async throws {
 
         let personalizedTools: PersonalizedToolsDomainModel = try await getPersonalizedTools(
             appLanguage: argument.appLanguage,
@@ -177,10 +177,10 @@ struct GetPersonalizedToolsUseCaseTests {
         """
         Given: User has selected a country and there are no personalized tools.
         When: Personalized tools are requested.
-        Then: I expect to see no tools and no personalization unavailable strings.
+        Then: I expect to see no tools and the personalization unavailable strings.
         """
     )
-    @MainActor func personalizationUnavailableIsNotShownWhenACountryIsSelectedAndThereAreNoTools() async throws {
+    @MainActor func personalizationUnavailableIsShownWhenACountryIsSelectedAndThereAreNoTools() async throws {
 
         let personalizedTools: PersonalizedToolsDomainModel = try await getPersonalizedTools(
             appLanguage: LanguageCodeDomainModel.english.value,
@@ -189,7 +189,7 @@ struct GetPersonalizedToolsUseCaseTests {
         )
 
         #expect(personalizedTools.tools.isEmpty)
-        #expect(personalizedTools.unavailableStrings == nil)
+        #expect(personalizedTools.unavailableStrings != nil)
     }
 
     @available(iOS 17.4, *)
@@ -296,9 +296,9 @@ extension GetPersonalizedToolsUseCaseTests {
         )
         
         let personalizedToolsRepository = PersonalizedToolsRepository(
-            api: api,
             cache: cache,
-            resourcesRepository: resourcesRepository
+            resourcesRepository: resourcesRepository,
+            sync: PersonalizedToolsSync(api: api, cache: cache, syncInvalidatorPersistence: FakeSyncInvalidatorPersistence())
         )
 
         return TestDependencies(
@@ -381,7 +381,7 @@ extension GetPersonalizedToolsUseCaseTests {
         return [
             TestPersonalizedToolsId.defaultOrderEnglish: ["tool-1", "tool-2", "lesson-1"],
             TestPersonalizedToolsId.defaultOrderFrench: ["tool-4"],
-            TestPersonalizedToolsId.unitedStatesEnglish: ["tool-3", "tool-1"]
+            TestPersonalizedToolsId.rankedUnitedStatesEnglish: ["tool-3", "tool-1"]
         ]
     }
 

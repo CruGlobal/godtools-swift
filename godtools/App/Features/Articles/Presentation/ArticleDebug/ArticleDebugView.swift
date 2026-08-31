@@ -60,7 +60,6 @@ struct ArticleDebugView: View {
         }
         .navBar(
             title: nil,
-            backTapped: nil,
             toolbarContent: {
                 
                 AppToolbarItem(
@@ -68,7 +67,7 @@ struct ArticleDebugView: View {
                     viewType: .image(value: ImageCatalog.navClose.image),
                     color: ColorPalette.gtBlue.color,
                     accessibilityId: AccessibilityStrings.Button.close.id,
-                    tappedClosure: {
+                    tapped: {
                         
                         viewModel.closeTapped()
                     }

@@ -60,6 +60,7 @@ struct OnboardingTutorialView: View {
                     .environment(\.layoutDirection, .leftToRight)
                     .tabViewStyle(.page(indexDisplayMode: .never))
                     .animation(.easeOut, value: viewModel.currentPage)
+                    .highPriorityGesture(viewModel.tutorialUserInteractionEnabled ? nil : DragGesture())
                 }
                 
                 OnboardingTutorialPrimaryButton(geometry: geometry, title: viewModel.continueButtonTitle, accessibility: viewModel.continueButtonAccessibility) {
@@ -72,6 +73,7 @@ struct OnboardingTutorialView: View {
                     
                     PageControl(numberOfPages: 4, attributes: GTPageControlAttributes(), currentPage: $viewModel.currentPage)
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0))
+                        .allowsHitTesting(viewModel.tutorialUserInteractionEnabled ? true : false)
                 }
             }
             .frame(maxWidth: .infinity)
@@ -86,17 +88,13 @@ struct OnboardingTutorialView: View {
         }
         .navBar(
             title: nil,
-            backTapped: nil,
             toolbarContent: {
                 
                 if !viewModel.hidesSkipButton {
                  
-                    AppToolbarItem(
-                        placement: AppToolbarItem.trailingPlacement,
-                        viewType: .text(value: viewModel.strings.skipActionTitle),
-                        color: ColorPalette.gtBlue.color,
-                        accessibilityId: AccessibilityStrings.Button.skip.id,
-                        tappedClosure: {
+                    SkipToolbarItem(
+                        title: viewModel.strings.skipActionTitle,
+                        tapped: {
                             
                             viewModel.skipTapped()
                         }

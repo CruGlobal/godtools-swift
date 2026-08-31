@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import Combine
+import Flow
 
 final class LocalizationSettingsFlow: GTFlow {
     
@@ -121,19 +122,8 @@ extension LocalizationSettingsFlow {
         
         let view = LocalizationSettingsView(viewModel: viewModel)
         
-        let backButton = AppBackBarItem(
-            target: viewModel,
-            action: #selector(viewModel.backTapped)
-        )
-        
         let hostingView = AppHostingController<LocalizationSettingsView>(
-            rootView: view,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: backButton,
-                leadingItems: [],
-                trailingItems: []
-            )
+            rootView: view
         )
         
         return hostingView

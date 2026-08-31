@@ -92,7 +92,14 @@ struct ToolDetailsView: View {
                 }
             }
         }
-        .navigationBarBackButtonHidden(true)
+        .navBar(
+            title: nil,
+            backItem: BackToolbarItem(
+                tapped: {
+                    viewModel.backTapped()
+                }
+            )
+        )
         .background(Color(.sRGB, red: 245 / 255, green: 245 / 255, blue: 245 / 255, opacity: 1))
         .edgesIgnoringSafeArea(.bottom)
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)

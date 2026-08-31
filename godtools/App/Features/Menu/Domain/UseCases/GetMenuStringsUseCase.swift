@@ -31,6 +31,7 @@ final class GetMenuStringsUseCase: Sendable {
         }
 
         let titleKey: String = LocalizableStringKeys.settings.key
+        let doneActionTitleKey: String = LocalizableStringKeys.done.key
         let getStartedTitleKey: String = LocalizableStringKeys.menuGetStarted.key
         let tutorialOptionTitleKey: String = LocalizableStringKeys.menuTutorial.key
         let languageSettingsOptionTitleKey: String = LocalizableStringKeys.languageSettingsNavTitle.key
@@ -58,6 +59,7 @@ final class GetMenuStringsUseCase: Sendable {
         let strings: [String: String] = localizationServices.stringsForKeys(
             keys: [
                 titleKey,
+                doneActionTitleKey,
                 getStartedTitleKey,
                 tutorialOptionTitleKey,
                 languageSettingsOptionTitleKey,
@@ -88,6 +90,7 @@ final class GetMenuStringsUseCase: Sendable {
 
         return MenuStringsDomainModel(
             title: strings[titleKey] ?? "",
+            doneActionTitle: strings[doneActionTitleKey] ?? "",
             getStartedTitle: strings[getStartedTitleKey] ?? "",
             tutorialOptionTitle: strings[tutorialOptionTitleKey] ?? "",
             languageSettingsOptionTitle: strings[languageSettingsOptionTitleKey] ?? "",

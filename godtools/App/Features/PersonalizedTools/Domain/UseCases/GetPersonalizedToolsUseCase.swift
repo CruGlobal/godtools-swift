@@ -51,8 +51,6 @@ final class GetPersonalizedToolsUseCase: Sendable {
             return nil
         }()
         
-        let hasCountry: Bool = countryIsoRegionCode != nil
-        
         return Publishers.CombineLatest(
             personalizedToolsRepository
                 .getPersonalizedToolsChanged(
@@ -68,10 +66,11 @@ final class GetPersonalizedToolsUseCase: Sendable {
             
             return AnyPublisher() {
                 try await self.personalizedToolsRepository
-                    .getPersistedPersonalizedTools(
-                        country: countryIsoRegionCode,
-                        language: languageCode,
-                        resourceTypes: ResourceType.toolTypes
+                    .getTools(
+                        requestPriority: .high,
+                        type: self.getPersonalizedToolsType(countryIsoRegionCode: countryIsoRegionCode, languageCode: languageCode),
+                        resourceTypes: ResourceType.toolTypes,
+                        sortByResponse: true
                     )
             }
         }
@@ -84,7 +83,7 @@ final class GetPersonalizedToolsUseCase: Sendable {
                     languageIdForAvailabilityText: filterToolsByLanguage.filterId
                 )
 
-            let showsPersonalizationUnavailable: Bool = !hasCountry && tools.isEmpty
+            let showsPersonalizationUnavailable: Bool = tools.isEmpty
             let unavailableStrings: PersonalizedToolsUnavailableDomainModel? = showsPersonalizationUnavailable ? self.getToolsUnavailable(appLanguage: appLanguage) : nil
 
             return PersonalizedToolsDomainModel(
@@ -93,6 +92,18 @@ final class GetPersonalizedToolsUseCase: Sendable {
             )
         }
         .eraseToAnyPublisher()
+    }
+
+    private func getPersonalizedToolsType(
+        countryIsoRegionCode: String?,
+        languageCode: String
+    ) -> PersonalizedToolsType {
+
+        guard let countryIsoRegionCode = countryIsoRegionCode else {
+            return .defaultOrder(language: languageCode)
+        }
+
+        return .ranked(country: countryIsoRegionCode, language: languageCode)
     }
 
     private func getToolsUnavailable(appLanguage: AppLanguageDomainModel) -> PersonalizedToolsUnavailableDomainModel {

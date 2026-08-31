@@ -77,7 +77,18 @@ struct SocialSignInView: View {
                 }
             }
         }
-        .navigationBarBackButtonHidden(true)
+        .navBar(
+            title: nil,
+            toolbarContent: {
+                
+                CloseToolbarItem(
+                    tapped: {
+                        viewModel.closeTapped()
+                    },
+                    color: .white
+                )
+            }
+        )
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
 }

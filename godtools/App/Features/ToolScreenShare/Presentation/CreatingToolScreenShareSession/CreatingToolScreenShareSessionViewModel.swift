@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import Flow
 
 @MainActor
 final class CreatingToolScreenShareSessionViewModel: ObservableObject {
@@ -22,7 +23,8 @@ final class CreatingToolScreenShareSessionViewModel: ObservableObject {
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
     private let incrementUserCounterUseCase: IncrementUserCounterUseCase
     
-    private var didCreateChannelTask: Task<Void, Never>?
+    private var getConnectionStateStreamTask: Task<Void, Never>?
+    private var didCreateChannelTask: Task<Void, Error>?
     private var creatingChannelTask: Task<Void, Error>?
     private var cancellables = Set<AnyCancellable>()
         
@@ -58,18 +60,18 @@ final class CreatingToolScreenShareSessionViewModel: ObservableObject {
             })
             .store(in: &cancellables)
         
-        observeDidCreateChannelStream()
-        
-        createChannel()
+        startCreateChannel()
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+        getConnectionStateStreamTask?.cancel()
         didCreateChannelTask?.cancel()
         creatingChannelTask?.cancel()
     }
 
     private func cancelCreateChannelTasks() {
+        getConnectionStateStreamTask?.cancel()
         didCreateChannelTask?.cancel()
         creatingChannelTask?.cancel()
     }
@@ -80,34 +82,73 @@ final class CreatingToolScreenShareSessionViewModel: ObservableObject {
             .execute(appLanguage: appLanguage)
     }
     
-    private func observeDidCreateChannelStream() {
-                
-        let createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger = self.createSessionTrigger
+    private func startCreateChannel() {
         
-        didCreateChannelTask = Task { [weak self] in
-            
-            guard let createdChannelStream: AsyncStream<WebSocketChannel> = await self?.tractRemoteSharePublisher.getCreatedChannelStream() else {
+        observeConnectionStateStream()
+        
+        observeDidCreateChannelStream()
+        
+        createChannel()
+    }
+    
+    private func observeConnectionStateStream() {
+        
+        getConnectionStateStreamTask = Task { [weak self] in
+        
+            guard let stream = await self?.tractRemoteSharePublisher.getConnectionStateStream() else {
                 return
             }
+            
+            for await connectionState in stream {
+                
+                switch connectionState {
+                case .disconnected(let reason):
+                    switch reason {
+                    case .clientDisconnected:
+                        break
+                    case .didClose( _):
+                        break
+                    case .taskFinishedTransfer(let error):
+                        if let error = error {
+                            self?.cancelCreateChannelTasks()
+                            self?.emitDidCreateSessionStep(result: .failure(error))
+                        }
+                    }
+                default:
+                    break
+                }
+            }
+        }
+    }
+    
+    private func observeDidCreateChannelStream() {
                         
-            for await channel in createdChannelStream {
+        didCreateChannelTask = Task { [weak self] in
+            
+            guard let createdChannelStream: AsyncThrowingStream<WebSocketChannel, Error> = await self?.tractRemoteSharePublisher.getCreatedChannelStream() else {
+                return
+            }
+            
+            do {
+                
+                for try await channel in createdChannelStream {
+                    
+                    self?.cancelCreateChannelTasks()
+                    
+                    self?.emitDidCreateSessionStep(result: .success(channel))
+                }
+            }
+            catch let error {
                 
                 self?.cancelCreateChannelTasks()
                 
-                self?.stepEmitter.emit(
-                    step: AppFlowStep.didCreateSessionFromCreatingToolScreenShareSession(
-                        result: .success(channel),
-                        createSessionTrigger: createSessionTrigger
-                    )
-                )
+                self?.emitDidCreateSessionStep(result: .failure(error))
             }
         }
     }
     
     private func createChannel() {
-                
-        let createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger = self.createSessionTrigger
-        
+                        
         creatingChannelTask = Task { [weak self] in
             
             do {
@@ -120,14 +161,19 @@ final class CreatingToolScreenShareSessionViewModel: ObservableObject {
                 
                 self?.cancelCreateChannelTasks()
                 
-                self?.stepEmitter.emit(
-                    step: AppFlowStep.didCreateSessionFromCreatingToolScreenShareSession(
-                        result: .failure(error),
-                        createSessionTrigger: createSessionTrigger
-                    )
-                )
+                self?.emitDidCreateSessionStep(result: .failure(error))
             }
         }
+    }
+    
+    private func emitDidCreateSessionStep(result: Result<WebSocketChannel, Error>) {
+        
+        stepEmitter.emit(
+            step: AppFlowStep.didCreateSessionFromCreatingToolScreenShareSession(
+                result: result,
+                createSessionTrigger: createSessionTrigger
+            )
+        )
     }
 }
 

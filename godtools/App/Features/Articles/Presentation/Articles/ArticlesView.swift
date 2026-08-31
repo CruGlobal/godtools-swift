@@ -62,9 +62,11 @@ struct ArticlesView: View {
         }
         .navBar(
             title: viewModel.navTitle,
-            backTapped: {
-                viewModel.backTapped()
-            }
+            backItem: BackToolbarItem(
+                tapped: {
+                    viewModel.backTapped()
+                }
+            )
         )
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }

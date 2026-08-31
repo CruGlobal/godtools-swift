@@ -12,5 +12,5 @@ enum WebSocketDisconnectedReason: Sendable {
     
     case clientDisconnected
     case didClose(reason: String?)
-    case taskFinishedTransfer(failure: String?)
+    case taskFinishedTransfer(error: Error?)
 }

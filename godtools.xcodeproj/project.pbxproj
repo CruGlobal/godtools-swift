@@ -13,6 +13,7 @@
 		4548320B2F0C4EFC00CF9CF0 /* RepositorySync in Frameworks */ = {isa = PBXBuildFile; productRef = 4548320A2F0C4EFC00CF9CF0 /* RepositorySync */; };
 		4548320D2F0C4F0900CF9CF0 /* RepositorySync in Frameworks */ = {isa = PBXBuildFile; productRef = 4548320C2F0C4F0900CF9CF0 /* RepositorySync */; };
 		4557A2122FBC91A600BD9598 /* SwiftData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4557A2112FBC91A600BD9598 /* SwiftData.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		455AEA32303E168A00B95C19 /* Flow in Frameworks */ = {isa = PBXBuildFile; productRef = 455AEA31303E168A00B95C19 /* Flow */; };
 		4581EAA32BFBE194008115FF /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4581EAA22BFBE194008115FF /* RealmSwift */; };
 		4581EAA52BFBE257008115FF /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4581EAA42BFBE257008115FF /* RealmSwift */; };
 		4581EAA72BFBE2B9008115FF /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 4581EAA22BFBE194008115FF /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -330,6 +331,7 @@
 				4548320B2F0C4EFC00CF9CF0 /* RepositorySync in Frameworks */,
 				451176F4302D04D000D64195 /* GodToolsShared in Frameworks */,
 				45E39EDC27457E0C006A59E4 /* Lottie in Frameworks */,
+				455AEA32303E168A00B95C19 /* Flow in Frameworks */,
 				45DF964B2D386C1C00C6AE68 /* FirebaseCrashlytics in Frameworks */,
 				45D48C8629F81324004E92B1 /* SocialAuthentication in Frameworks */,
 				45DF964F2D386C1C00C6AE68 /* FirebaseInAppMessaging-Beta in Frameworks */,
@@ -514,6 +516,7 @@
 				45C15DF82F6C78F1006B9020 /* DynalinksSDK */,
 				45C832D82FF3E97D0056C475 /* GoogleTagManager */,
 				451176F3302D04D000D64195 /* GodToolsShared */,
+				455AEA31303E168A00B95C19 /* Flow */,
 			);
 			productName = godtools;
 			productReference = 4F5732891EA69CF00082035C /* godtools.app */;
@@ -678,6 +681,7 @@
 				45C15DF72F6C78F1006B9020 /* XCRemoteSwiftPackageReference "dynalinks-ios-sdk" */,
 				45C832D72FF3E97D0056C475 /* XCRemoteSwiftPackageReference "google-tag-manager-ios-sdk" */,
 				451176F2302D04D000D64195 /* XCRemoteSwiftPackageReference "godtools-shared-swift" */,
+				455AEA30303E168A00B95C19 /* XCRemoteSwiftPackageReference "flow-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4F57328A1EA69CF00082035C /* Products */;
@@ -2181,6 +2185,14 @@
 				minimumVersion = 1.4.1;
 			};
 		};
+		455AEA30303E168A00B95C19 /* XCRemoteSwiftPackageReference "flow-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CruGlobal/flow-ios.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.0.1;
+			};
+		};
 		4581EAA12BFBE194008115FF /* XCRemoteSwiftPackageReference "realm-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-swift.git";
@@ -2291,6 +2303,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 454832092F0C4EFC00CF9CF0 /* XCRemoteSwiftPackageReference "repository-sync-ios" */;
 			productName = RepositorySync;
+		};
+		455AEA31303E168A00B95C19 /* Flow */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 455AEA30303E168A00B95C19 /* XCRemoteSwiftPackageReference "flow-ios" */;
+			productName = Flow;
 		};
 		4581EAA22BFBE194008115FF /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;

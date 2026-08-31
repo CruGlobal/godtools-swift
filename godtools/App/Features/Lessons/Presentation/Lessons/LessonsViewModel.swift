@@ -9,6 +9,7 @@
 import Foundation
 import Combine
 import SwiftUI
+import Flow
 
 @MainActor
 final class LessonsViewModel: ObservableObject {
@@ -73,9 +74,7 @@ final class LessonsViewModel: ObservableObject {
         if !GodToolsApp.showsPersonalization {
             selectedToggle = .all
         }
-        
-        pullToRefreshLessons()
-        
+                
         getCurrentAppLanguageUseCase
             .execute()
             .receive(on: DispatchQueue.main)

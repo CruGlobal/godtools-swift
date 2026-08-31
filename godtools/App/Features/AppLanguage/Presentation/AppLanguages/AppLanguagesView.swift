@@ -41,9 +41,11 @@ struct AppLanguagesView: View {
         }
         .navBar(
             title: viewModel.strings.navTitle,
-            backTapped: {
-                viewModel.backTapped()
-            }
+            backItem: BackToolbarItem(
+                tapped: {
+                    viewModel.backTapped()
+                }
+            )
         )
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }

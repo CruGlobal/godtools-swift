@@ -10,7 +10,9 @@ import Foundation
 import UIKit
 import GodToolsShared
 import Combine
+import Flow
 
+@MainActor
 enum AppFlowStep: FlowStep {
     
     // app
@@ -31,6 +33,7 @@ enum AppFlowStep: FlowStep {
     case videoButtonTappedFromOnboardingTutorial(youtubeVideoId: String)
     case closeVideoPlayerTappedFromOnboardingTutorial
     case videoEndedOnOnboardingTutorial
+    case continueTappedFromOnboardingTutorial
     case skipTappedFromOnboardingTutorial
     case endTutorialFromOnboardingTutorial
     
@@ -222,8 +225,6 @@ enum AppFlowStep: FlowStep {
     case shareLinkTappedFromToolScreenShareTutorial
     case closeTappedFromCreatingToolScreenShareSession
     case didCreateSessionFromCreatingToolScreenShareSession(result: Result<WebSocketChannel, Error>, createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger)
-    case cancelTappedFromCreateToolScreenShareSessionTimeout
-    case acceptTappedFromCreateToolScreenShareSessionTimeout
     case shareQRCodeTappedFromToolScreenShareSession(shareUrl: String)
     case dismissedShareToolScreenShareActivityViewController
     case closeTappedFromShareToolScreenQRCode
