@@ -60,8 +60,8 @@ extension SwiftPersonalizedTools {
     func toModel() -> PersonalizedToolsDataModel {
         return PersonalizedToolsDataModel(
             id: id,
-            updatedAt: updatedAt,
-            resourceIds: resourceIds
+            resourceIds: resourceIds,
+            updatedAt: updatedAt
         )
     }
 }

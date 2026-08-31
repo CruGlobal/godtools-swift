@@ -10,8 +10,7 @@ import Foundation
 
 final class PersonalizedToolsDiContainer: Sendable {
 
-    private let dataLayer: PersonalizedToolsDataLayerDependencies
-
+    let dataLayer: PersonalizedToolsDataLayerDependencies
     let domainLayer: PersonalizedToolsDomainLayerDependencies
     
     init(dataLayer: PersonalizedToolsDataLayerDependencies, domainLayer: PersonalizedToolsDomainLayerDependencies) {

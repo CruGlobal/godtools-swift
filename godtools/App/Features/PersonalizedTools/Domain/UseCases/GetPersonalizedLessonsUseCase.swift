@@ -54,12 +54,11 @@ final class GetPersonalizedLessonsUseCase: Sendable {
             countryIsoRegionCode: countryIsoRegionCode,
             languageCode: languageCode,
             appLanguage: appLanguage,
-            filterLessonsByLanguage: filterLessonsByLanguage,
-            hasCountry: countryIsoRegionCode != nil
+            filterLessonsByLanguage: filterLessonsByLanguage
         )
     }
 
-    @MainActor private func getPersonalizedLessonsPublisher(countryIsoRegionCode: String?, languageCode: String, appLanguage: AppLanguageDomainModel, filterLessonsByLanguage: LessonFilterLanguageDomainModel?, hasCountry: Bool) -> AnyPublisher<PersonalizedLessonsDomainModel, Error> {
+    @MainActor private func getPersonalizedLessonsPublisher(countryIsoRegionCode: String?, languageCode: String, appLanguage: AppLanguageDomainModel, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<PersonalizedLessonsDomainModel, Error> {
 
         return Publishers.CombineLatest3(
             personalizedToolsRepository
@@ -78,10 +77,11 @@ final class GetPersonalizedLessonsUseCase: Sendable {
 
             return AnyPublisher() {
                 try await self.personalizedToolsRepository
-                    .getPersistedPersonalizedTools(
-                        country: countryIsoRegionCode,
-                        language: languageCode,
-                        resourceTypes: [.lesson]
+                    .getTools(
+                        requestPriority: .high,
+                        type: self.getPersonalizedToolsType(countryIsoRegionCode: countryIsoRegionCode, languageCode: languageCode),
+                        resourceTypes: [.lesson],
+                        sortByResponse: true
                     )
             }
         })
@@ -93,7 +93,7 @@ final class GetPersonalizedLessonsUseCase: Sendable {
                 filterLessonsByLanguage: filterLessonsByLanguage
             )
 
-            let showsPersonalizationUnavailable: Bool = !hasCountry && lessons.isEmpty
+            let showsPersonalizationUnavailable: Bool = lessons.isEmpty
             let unavailableStrings: PersonalizedLessonsUnavailableDomainModel? = showsPersonalizationUnavailable ? self.getLessonsUnavailable(appLanguage: appLanguage) : nil
 
             return PersonalizedLessonsDomainModel(
@@ -104,6 +104,18 @@ final class GetPersonalizedLessonsUseCase: Sendable {
         .eraseToAnyPublisher()
     }
     
+    private func getPersonalizedToolsType(
+        countryIsoRegionCode: String?,
+        languageCode: String
+    ) -> PersonalizedToolsType {
+
+        guard let countryIsoRegionCode = countryIsoRegionCode else {
+            return .defaultOrder(language: languageCode)
+        }
+
+        return .ranked(country: countryIsoRegionCode, language: languageCode)
+    }
+
     private func getLessonsUnavailable(appLanguage: AppLanguageDomainModel) -> PersonalizedLessonsUnavailableDomainModel {
 
         let titleKey: String = LocalizableStringKeys.lessonsPersonalizationUnavailableTitle.key

@@ -74,9 +74,7 @@ final class LessonsViewModel: ObservableObject {
         if !GodToolsApp.showsPersonalization {
             selectedToggle = .all
         }
-        
-        pullToRefreshLessons()
-        
+                
         getCurrentAppLanguageUseCase
             .execute()
             .receive(on: DispatchQueue.main)
