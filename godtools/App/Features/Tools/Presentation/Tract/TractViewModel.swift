@@ -26,6 +26,7 @@ final class TractViewModel: LegacyMobileContentRendererViewModel {
     private let persistToolLanguageSettings: PersistToolLanguageSettingsInterface?
     
     private var didCreatePublishChannelTask: Task<Void, Error>?
+    private var subscriberConnectionStateTask: Task<Void, Never>?
     private var didSubscribeToChannelTask: Task<Void, Never>?
     private var subscribeToChannelTask: Task<Void, Error>?
     private var subscriberNavigationEventsTask: Task<Void, Never>?
@@ -104,6 +105,7 @@ final class TractViewModel: LegacyMobileContentRendererViewModel {
         print("x deinit: \(type(of: self))")
         
         didCreatePublishChannelTask?.cancel()
+        subscriberConnectionStateTask?.cancel()
         didSubscribeToChannelTask?.cancel()
         subscribeToChannelTask?.cancel()
         subscriberNavigationEventsTask?.cancel()
@@ -401,6 +403,8 @@ extension TractViewModel {
         
         didCreatePublishChannelTask?.cancel()
         
+        let appLanguage: AppLanguageDomainModel = self.appLanguage
+        
         didCreatePublishChannelTask = Task { [weak self] in
            
             guard let createdChannelStream = await self?.tractRemoteSharePublisher.getCreatedChannelStream() else {
@@ -416,8 +420,8 @@ extension TractViewModel {
                 }
             }
             catch let error {
-                
-                // TODO: GT-3066 Handle error. ~Levi
+                                
+                self?.renderer.value.navigation.presentError(error: error, appLanguage: appLanguage)
             }
         }
     }
@@ -427,6 +431,8 @@ extension TractViewModel {
         guard let channelId = liveShareStream, let channel = WebSocketChannel(id: channelId) else {
             return
         }
+        
+        observeSubscriberConnectionState()
         
         observeSubscriberNavigationEvents()
         
@@ -441,6 +447,54 @@ extension TractViewModel {
         }
     }
     
+    private func cancelSubscribeToChannelTasks() {
+        
+        subscriberConnectionStateTask?.cancel()
+        didSubscribeToChannelTask?.cancel()
+        subscribeToChannelTask?.cancel()
+        subscriberNavigationEventsTask?.cancel()
+    }
+    
+    private func observeSubscriberConnectionState() {
+        
+        subscriberConnectionStateTask?.cancel()
+        
+        subscriberConnectionStateTask = Task { [weak self] in
+            
+            guard let connectionStateStream = await self?.tractRemoteShareSubscriber.getConnectionStateStream() else {
+                return
+            }
+            
+            for await connectionState in connectionStateStream {
+                
+                switch connectionState {
+                case .disconnected(let reason):
+                    switch reason {
+                    case .clientDisconnected:
+                        break
+                    case .didClose( _):
+                        break
+                    case .taskFinishedTransfer(let error):
+                        if let error = error {
+                            self?.handleSubscribeToChannelError(error: error)
+                        }
+                    }
+                default:
+                    break
+                }
+            }
+        }
+    }
+    
+    private func handleSubscribeToChannelError(error: Error) {
+        
+        cancelSubscribeToChannelTasks()
+        
+        reloadRemoteShareIsActive()
+                
+        renderer.value.navigation.presentError(error: error, appLanguage: appLanguage)
+    }
+    
     private func observeDidSubscribeToChannel() {
         
         didSubscribeToChannelTask?.cancel()
@@ -451,10 +505,17 @@ extension TractViewModel {
                 return
             }
             
-            for await _ in didSubscribeStream {
+            do {
                 
-                self?.trackShareScreenOpened()
-                self?.reloadRemoteShareIsActive()
+                for try await _ in didSubscribeStream {
+                    
+                    self?.trackShareScreenOpened()
+                    self?.reloadRemoteShareIsActive()
+                }
+            }
+            catch let error {
+                
+                self?.handleSubscribeToChannelError(error: error)
             }
         }
     }
