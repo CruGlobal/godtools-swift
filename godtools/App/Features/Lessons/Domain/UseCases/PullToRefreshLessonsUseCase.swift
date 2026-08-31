@@ -39,40 +39,18 @@ final class PullToRefreshLessonsUseCase: Sendable {
             forceFetchFromRemote: true
         )
 
-        try await refreshPersonalizedLessons(
-            requestPriority: requestPriority,
-            appLanguage: appLanguage,
-            country: country,
-            filterLessonsByLanguage: filterLessonsByLanguage
-        )
-    }
-    
-    
-    private func refreshPersonalizedLessons(
-        requestPriority: RequestPriority,
-        appLanguage: AppLanguageDomainModel,
-        country: LocalizationSettingsCountryDomainModel?,
-        filterLessonsByLanguage: LessonFilterLanguageDomainModel?
-    ) async throws {
-
-        let languageCode: String = getLanguageElseAppLanguage.getLanguageCode(
+        let language: String = getLanguageElseAppLanguage.getLanguageCode(
             languageId: filterLessonsByLanguage?.languageId,
             appLanguage: appLanguage
         )
-
-        let countryIsoRegionCode: String? = {
-            if let isoRegionCode = country?.isoRegionCode, !isoRegionCode.isEmpty {
-                return isoRegionCode
-            }
-            return nil
-        }()
         
-        _ = try await personalizedToolsSync
-            .syncPersonalizedTools(
-                requestPriority: requestPriority,
-                country: countryIsoRegionCode,
-                language: languageCode,
-                forceNewSync: true
-            )
+        let country: String? = country?.isoRegionCode
+        
+        try await personalizedToolsSync.sync(
+            requestPriority: requestPriority,
+            country: country,
+            language: language,
+            forceNewSync: true
+        )
     }
 }

@@ -33,10 +33,14 @@ final class PersonalizedToolsApi: PersonalizedToolsApiInterface {
     
     private func buildResourceTypeQueryItems(resourceTypes: [ResourceType]?) -> [URLQueryItem] {
 
-        guard let resourceTypes = resourceTypes, !resourceTypes.isEmpty else { return [] }
+        guard let resourceTypes = resourceTypes, !resourceTypes.isEmpty else {
+            return []
+        }
+        
+        let value: String = resourceTypes.map{ $0.rawValue }.joined(separator: ",")
 
         return resourceTypes.map { resourceType in
-            URLQueryItem(name: "filter[\(QueryName.resourceType.rawValue)][]", value: resourceType.rawValue)
+            URLQueryItem(name: "filter[\(QueryName.resourceType.rawValue)]", value: resourceType.rawValue)
         }
     }
     

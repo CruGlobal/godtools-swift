@@ -19,9 +19,9 @@ private enum TestPersonalizedLessonsLanguageId {
 }
 
 private enum TestPersonalizedLessonsId {
-    static let defaultOrderEnglish: String = "en"
-    static let defaultOrderFrench: String = "fr"
-    static let unitedStatesEnglish: String = "us_en"
+    static let defaultOrderEnglish: String = "default_order_en"
+    static let defaultOrderFrench: String = "default_order_fr"
+    static let rankedUnitedStatesEnglish: String = "ranked_us_en"
 }
 
 struct GetPersonalizedLessonsUseCaseTests {
@@ -298,9 +298,9 @@ extension GetPersonalizedLessonsUseCaseTests {
         )
 
         let personalizedToolsRepository = PersonalizedToolsRepository(
-            api: api,
             cache: cache,
-            resourcesRepository: resourcesRepository
+            resourcesRepository: resourcesRepository,
+            sync: PersonalizedToolsSync(api: api, cache: cache, syncInvalidatorPersistence: FakeSyncInvalidatorPersistence())
         )
 
         return TestDependencies(
@@ -384,7 +384,7 @@ extension GetPersonalizedLessonsUseCaseTests {
         return [
             TestPersonalizedLessonsId.defaultOrderEnglish: ["lesson-1", "lesson-2", "tool-1"],
             TestPersonalizedLessonsId.defaultOrderFrench: ["lesson-4"],
-            TestPersonalizedLessonsId.unitedStatesEnglish: ["lesson-3", "lesson-1"]
+            TestPersonalizedLessonsId.rankedUnitedStatesEnglish: ["lesson-3", "lesson-1"]
         ]
     }
 

@@ -68,9 +68,9 @@ final class GetPersonalizedToolsUseCase: Sendable {
             
             return AnyPublisher() {
                 try await self.personalizedToolsRepository
-                    .getPersistedPersonalizedTools(
-                        country: countryIsoRegionCode,
-                        language: languageCode,
+                    .getTools(
+                        requestPriority: .high,
+                        type: self.getPersonalizedToolsType(countryIsoRegionCode: countryIsoRegionCode, languageCode: languageCode),
                         resourceTypes: ResourceType.toolTypes,
                         sortByResponse: true
                     )
@@ -94,6 +94,18 @@ final class GetPersonalizedToolsUseCase: Sendable {
             )
         }
         .eraseToAnyPublisher()
+    }
+
+    private func getPersonalizedToolsType(
+        countryIsoRegionCode: String?,
+        languageCode: String
+    ) -> PersonalizedToolsType {
+
+        guard let countryIsoRegionCode = countryIsoRegionCode else {
+            return .defaultOrder(language: languageCode)
+        }
+
+        return .ranked(country: countryIsoRegionCode, language: languageCode)
     }
 
     private func getToolsUnavailable(appLanguage: AppLanguageDomainModel) -> PersonalizedToolsUnavailableDomainModel {

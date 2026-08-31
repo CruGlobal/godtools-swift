@@ -19,26 +19,50 @@ struct PersonalizedToolsId: Sendable {
     init(type: PersonalizedToolsType) throws {
 
         switch type {
-
-        case .allRanked(let country, let language):
-            value = try PersonalizedToolsId.createForAllRankedTools(country: country, language: language).value
-
+            
         case .defaultOrder(let language):
-            value = PersonalizedToolsId.createForDefaultOrder(language: language).value
+            value = try PersonalizedToolsId.createForDefaultOrder(language: language).value
+            
+        case .featured(let country, let language):
+            value = try PersonalizedToolsId.createForFeatured(country: country, language: language).value
+            
+        case .ranked(let country, let language):
+            value = try PersonalizedToolsId.createForRanked(country: country, language: language).value
         }
     }
+    
+    static func createForDefaultOrder(language: String) throws -> PersonalizedToolsId {
 
-    static func createForAllRankedTools(country: String, language: String) throws -> PersonalizedToolsId {
+        guard !language.isEmpty else {
+            throw NSError.errorWithDescription(description: "Language cannot be empty.")
+        }
+        
+        return PersonalizedToolsId(value: "default_order_\(language)")
+    }
+    
+    static func createForFeatured(country: String, language: String) throws -> PersonalizedToolsId {
 
         guard !country.isEmpty else {
             throw NSError.errorWithDescription(description: "Country cannot be empty.")
         }
+        
+        guard !language.isEmpty else {
+            throw NSError.errorWithDescription(description: "Language cannot be empty.")
+        }
 
-        return PersonalizedToolsId(value: "\(country)_\(language)")
+        return PersonalizedToolsId(value: "featured_\(country)_\(language)")
     }
 
-    static func createForDefaultOrder(language: String) -> PersonalizedToolsId {
+    static func createForRanked(country: String, language: String) throws -> PersonalizedToolsId {
 
-        return PersonalizedToolsId(value: language)
+        guard !country.isEmpty else {
+            throw NSError.errorWithDescription(description: "Country cannot be empty.")
+        }
+        
+        guard !language.isEmpty else {
+            throw NSError.errorWithDescription(description: "Language cannot be empty.")
+        }
+
+        return PersonalizedToolsId(value: "ranked_\(country)_\(language)")
     }
 }

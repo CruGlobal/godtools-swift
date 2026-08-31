@@ -78,9 +78,9 @@ final class GetPersonalizedLessonsUseCase: Sendable {
 
             return AnyPublisher() {
                 try await self.personalizedToolsRepository
-                    .getPersistedPersonalizedTools(
-                        country: countryIsoRegionCode,
-                        language: languageCode,
+                    .getTools(
+                        requestPriority: .high,
+                        type: self.getPersonalizedToolsType(countryIsoRegionCode: countryIsoRegionCode, languageCode: languageCode),
                         resourceTypes: [.lesson],
                         sortByResponse: true
                     )
@@ -105,6 +105,18 @@ final class GetPersonalizedLessonsUseCase: Sendable {
         .eraseToAnyPublisher()
     }
     
+    private func getPersonalizedToolsType(
+        countryIsoRegionCode: String?,
+        languageCode: String
+    ) -> PersonalizedToolsType {
+
+        guard let countryIsoRegionCode = countryIsoRegionCode else {
+            return .defaultOrder(language: languageCode)
+        }
+
+        return .ranked(country: countryIsoRegionCode, language: languageCode)
+    }
+
     private func getLessonsUnavailable(appLanguage: AppLanguageDomainModel) -> PersonalizedLessonsUnavailableDomainModel {
 
         let titleKey: String = LocalizableStringKeys.lessonsPersonalizationUnavailableTitle.key

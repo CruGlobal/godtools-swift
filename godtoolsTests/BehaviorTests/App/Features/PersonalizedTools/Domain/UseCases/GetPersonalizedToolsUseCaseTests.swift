@@ -19,9 +19,9 @@ private enum TestPersonalizedToolsLanguageId {
 }
 
 private enum TestPersonalizedToolsId {
-    static let defaultOrderEnglish: String = "en"
-    static let defaultOrderFrench: String = "fr"
-    static let unitedStatesEnglish: String = "us_en"
+    static let defaultOrderEnglish: String = "default_order_en"
+    static let defaultOrderFrench: String = "default_order_fr"
+    static let rankedUnitedStatesEnglish: String = "ranked_us_en"
 }
 
 struct GetPersonalizedToolsUseCaseTests {
@@ -296,9 +296,9 @@ extension GetPersonalizedToolsUseCaseTests {
         )
         
         let personalizedToolsRepository = PersonalizedToolsRepository(
-            api: api,
             cache: cache,
-            resourcesRepository: resourcesRepository
+            resourcesRepository: resourcesRepository,
+            sync: PersonalizedToolsSync(api: api, cache: cache, syncInvalidatorPersistence: FakeSyncInvalidatorPersistence())
         )
 
         return TestDependencies(
@@ -381,7 +381,7 @@ extension GetPersonalizedToolsUseCaseTests {
         return [
             TestPersonalizedToolsId.defaultOrderEnglish: ["tool-1", "tool-2", "lesson-1"],
             TestPersonalizedToolsId.defaultOrderFrench: ["tool-4"],
-            TestPersonalizedToolsId.unitedStatesEnglish: ["tool-3", "tool-1"]
+            TestPersonalizedToolsId.rankedUnitedStatesEnglish: ["tool-3", "tool-1"]
         ]
     }
 

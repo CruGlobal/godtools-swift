@@ -13,19 +13,19 @@ import RepositorySync
 
 final class PersonalizedToolsRepository: Sendable {
     
-    private let api: PersonalizedToolsApiInterface
     private let cache: PersonalizedToolsCache
     private let resourcesRepository: ResourcesRepository
+    private let sync: PersonalizedToolsSync
     
     init(
-        api: PersonalizedToolsApiInterface,
         cache: PersonalizedToolsCache,
-        resourcesRepository: ResourcesRepository
+        resourcesRepository: ResourcesRepository,
+        sync: PersonalizedToolsSync
     ) {
 
-        self.api = api
         self.cache = cache
         self.resourcesRepository = resourcesRepository
+        self.sync = sync
     }
 
     @MainActor func getPersonalizedToolsChanged(
@@ -45,61 +45,24 @@ final class PersonalizedToolsRepository: Sendable {
 // MARK: - Persistence
 
 extension PersonalizedToolsRepository {
-
-    func getPersistedPersonalizedTools(
-        country: String?,
-        language: String,
+    
+    func getTools(
+        requestPriority: RequestPriority,
+        type: PersonalizedToolsType,
         resourceTypes: [ResourceType]?,
         sortByResponse: Bool
     ) async throws -> [ResourceDataModel] {
 
-        let type = PersonalizedToolsType(country: country, language: language)
-
-        switch type {
-
-        case .allRanked(let country, let language):
-            return try await getPersistedAllRankedTools(
-                country: country,
-                language: language,
-                resourceTypes: resourceTypes,
-                sortByResponse: sortByResponse
-            )
-
-        case .defaultOrder(let language):
-            return try await getPersistedDefaultOrderTools(
-                language: language,
-                resourceTypes: resourceTypes,
-                sortByResponse: sortByResponse
-            )
-        }
-    }
-
-    private func getPersistedAllRankedTools(
-        country: String,
-        language: String,
-        resourceTypes: [ResourceType]?,
-        sortByResponse: Bool
-    ) async throws -> [ResourceDataModel] {
-
+        let id: String = try PersonalizedToolsId(type: type).value
+        
         let personalizedTools: PersonalizedToolsDataModel? = try cache.persistence.getDataModel(
-            id: try PersonalizedToolsId.createForAllRankedTools(country: country, language: language).value
+            id: id
         )
-
-        return try await getPersistedResources(
-            personalizedTools: personalizedTools,
-            resourceTypes: resourceTypes,
-            sortByResponse: sortByResponse
-        )
-    }
-
-    private func getPersistedDefaultOrderTools(
-        language: String,
-        resourceTypes: [ResourceType]?,
-        sortByResponse: Bool
-    ) async throws -> [ResourceDataModel] {
-
-        let personalizedTools: PersonalizedToolsDataModel? = try cache.persistence.getDataModel(
-            id: PersonalizedToolsId.createForDefaultOrder(language: language).value
+        
+        try await sync.syncType(
+            requestPriority: requestPriority,
+            type: type,
+            forceNewSync: false
         )
 
         return try await getPersistedResources(
