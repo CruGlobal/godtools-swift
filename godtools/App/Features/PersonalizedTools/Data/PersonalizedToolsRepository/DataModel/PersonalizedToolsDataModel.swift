@@ -11,17 +11,20 @@ import Foundation
 struct PersonalizedToolsDataModel: Sendable {
 
     let id: String
-    let updatedAt: Date
     let resourceIds: [String]
-
-    static func createFromCountry(country: String?, language: String, resourceIds: [String]) throws -> PersonalizedToolsDataModel {
-
-        let type = PersonalizedToolsType(country: country, language: language)
+    let updatedAt: Date
+    
+    init(type: PersonalizedToolsType, resourceIds: [String]) throws {
         
-        return PersonalizedToolsDataModel(
-            id: try PersonalizedToolsId(type: type).value,
-            updatedAt: Date(),
-            resourceIds: resourceIds
-        )
+        self.id = try PersonalizedToolsId(type: type).value
+        self.resourceIds = resourceIds
+        self.updatedAt = Date()
+    }
+    
+    init(id: String, resourceIds: [String], updatedAt: Date) {
+        
+        self.id = id
+        self.resourceIds = resourceIds
+        self.updatedAt = updatedAt
     }
 }

@@ -37,14 +37,54 @@ final class PersonalizedToolsSync: Sendable {
         )
     }
     
-    func syncPersonalizedTools(
+    func sync(
         requestPriority: RequestPriority,
         country: String?,
         language: String,
         forceNewSync: Bool
     ) async throws {
+        
+        var types: [PersonalizedToolsType] = [
+            .defaultOrder(language: language)
+        ]
+        
+        if let country = country {
+            types.append(.featured(country: country, language: language))
+            types.append(.ranked(country: country, language: language))
+        }
+        
+        try await syncTypes(requestPriority: requestPriority, types: types, forceNewSync: forceNewSync)
+    }
+    
+    func syncTypes(
+        requestPriority: RequestPriority,
+        types: [PersonalizedToolsType],
+        forceNewSync: Bool
+    ) async throws {
 
-        let type = PersonalizedToolsType(country: country, language: language)
+        try await withThrowingTaskGroup(of: Void.self) { group in
+
+            for type in types {
+
+                group.addTask {
+
+                    try await self.syncType(
+                        requestPriority: requestPriority,
+                        type: type,
+                        forceNewSync: forceNewSync
+                    )
+                }
+            }
+
+            try await group.waitForAll()
+        }
+    }
+    
+    func syncType(
+        requestPriority: RequestPriority,
+        type: PersonalizedToolsType,
+        forceNewSync: Bool
+    ) async throws {
 
         let personalizedToolId = try PersonalizedToolsId(type: type)
 
@@ -62,29 +102,36 @@ final class PersonalizedToolsSync: Sendable {
 
         switch type {
 
-        case .allRanked(let country, let language):
-            resourceCodables = try await api.getAllRankedResources(
-                requestPriority: requestPriority,
-                country: country,
-                language: language,
-                resourceTypes: nil
-            )
-
         case .defaultOrder(let language):
             resourceCodables = try await api.getDefaultOrderResources(
                 requestPriority: requestPriority,
                 language: language,
                 resourceTypes: nil
             )
+            
+        case .featured(let country, let language):
+            resourceCodables = try await api.getFeaturedResources(
+                requestPriority: requestPriority,
+                country: country,
+                language: language,
+                resourceTypes: nil
+            )
+            
+        case .ranked(let country, let language):
+            resourceCodables = try await api.getRankedResources(
+                requestPriority: requestPriority,
+                country: country,
+                language: language,
+                resourceTypes: nil
+            )
         }
-
-        let personalizedTools = try PersonalizedToolsDataModel.createFromCountry(
-            country: country,
-            language: language,
+        
+        let dataModel = try PersonalizedToolsDataModel(
+            type: type,
             resourceIds: resourceCodables.map { $0.id }
         )
 
-        _ = try await cache.persistence.writeObjects(externalObjects: [personalizedTools])
+        _ = try await cache.persistence.writeObjects(externalObjects: [dataModel])
 
         await syncInvalidator.didSync()
     }

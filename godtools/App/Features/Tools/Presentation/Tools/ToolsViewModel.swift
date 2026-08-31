@@ -92,9 +92,7 @@ final class ToolsViewModel: ObservableObject {
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.getToolBannerUseCase = getToolBannerUseCase
         self.imageCache = imageCache
-        
-        pullToRefreshTools()
-        
+                
         Task { [weak self] in
             
             let favoritingToolMessageDisabled: Bool = await favoritingToolMessageCache.favoritingToolMessageDisabled
