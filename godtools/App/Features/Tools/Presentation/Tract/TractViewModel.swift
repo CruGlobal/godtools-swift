@@ -420,9 +420,7 @@ extension TractViewModel {
                 }
             }
             catch let error {
-                
-                // TODO: GT-3066 Handle error. ~Levi
-                
+                                
                 self?.renderer.value.navigation.presentError(error: error, appLanguage: appLanguage)
             }
         }
@@ -493,9 +491,7 @@ extension TractViewModel {
         cancelSubscribeToChannelTasks()
         
         reloadRemoteShareIsActive()
-        
-        // TODO: GT-3066 Handle error. ~Levi
-        
+                
         renderer.value.navigation.presentError(error: error, appLanguage: appLanguage)
     }
     
@@ -509,10 +505,17 @@ extension TractViewModel {
                 return
             }
             
-            for await _ in didSubscribeStream {
+            do {
                 
-                self?.trackShareScreenOpened()
-                self?.reloadRemoteShareIsActive()
+                for try await _ in didSubscribeStream {
+                    
+                    self?.trackShareScreenOpened()
+                    self?.reloadRemoteShareIsActive()
+                }
+            }
+            catch let error {
+                
+                self?.handleSubscribeToChannelError(error: error)
             }
         }
     }
