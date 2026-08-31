@@ -1,5 +1,5 @@
 //
-//  OnboardingAppLanguageAndCountry.swift
+//  OnboardingUserSettings.swift
 //  godtools
 //
 //  Created by Levi Eggert on 8/28/26.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class OnboardingAppLanguageAndCountry: ObservableObject {
+final class OnboardingUserSettings: ObservableObject {
     
     @Published private(set) var appLanguage: AppLanguageListItemDomainModel?
     @Published private(set) var country: LocalizationSettingsCountryListItem?

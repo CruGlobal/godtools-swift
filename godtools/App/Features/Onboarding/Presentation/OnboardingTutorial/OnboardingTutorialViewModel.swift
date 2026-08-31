@@ -24,7 +24,7 @@ final class OnboardingTutorialViewModel: ObservableObject {
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let readyForEveryConversationYoutubeVideoId: String = "RvhZ_wuxAgE"
     private let showsChooseAppLanguageButtonOnPages: [Int] = [0]
-    private let appLanguageAndCountrySelection = OnboardingAppLanguageAndCountry()
+    private let onboardingSettings: OnboardingUserSettings
     
     private var cancellables: Set<AnyCancellable> = Set()
         
@@ -48,7 +48,8 @@ final class OnboardingTutorialViewModel: ObservableObject {
         getOnboardingTutorialStringsUseCase: GetOnboardingTutorialStringsUseCase,
         trackTutorialVideoAnalytics: TutorialVideoAnalytics,
         trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
-        trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
+        trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase,
+        onboardingSettings: OnboardingUserSettings
     ) {
         
         self.stepEmitter = stepEmitter
@@ -58,6 +59,7 @@ final class OnboardingTutorialViewModel: ObservableObject {
         self.trackTutorialVideoAnalytics = trackTutorialVideoAnalytics
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
+        self.onboardingSettings = onboardingSettings
         
         Task.detached {
             
@@ -98,8 +100,8 @@ final class OnboardingTutorialViewModel: ObservableObject {
         }
         
         Publishers.CombineLatest(
-            appLanguageAndCountrySelection.$appLanguage,
-            appLanguageAndCountrySelection.$country
+            onboardingSettings.$appLanguage,
+            onboardingSettings.$country
         )
         .receive(on: DispatchQueue.main)
         .sink { [weak self] (appLanguage: AppLanguageListItemDomainModel?, country: LocalizationSettingsCountryListItem?) in
@@ -256,7 +258,7 @@ extension OnboardingTutorialViewModel {
     
     func continueTapped() {
         
-        stepEmitter.emit(step: AppFlowStep.continueTappedFromOnboardingTutorial(appLanguageAndCountrySelection: appLanguageAndCountrySelection))
+        stepEmitter.emit(step: AppFlowStep.continueTappedFromOnboardingTutorial)
     }
     
     func watchReadyForEveryConversationVideoTapped() {

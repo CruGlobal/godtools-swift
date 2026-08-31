@@ -16,21 +16,27 @@ final class OnboardingFlow: GTFlow {
     enum CompletedState: Sendable {
         case completed
     }
+    
+    private let onboardingSettings: OnboardingUserSettings
         
     @Published private var currentAppLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
-    private var appLanguageAndCountrySelection: OnboardingAppLanguageAndCountry?
     private var cancellables: Set<AnyCancellable> = Set()
     
     init(appDiContainer: AppDiContainer) {
                 
         let stepEmitter = FlowStepEmitter()
         
+        let onboardingSettings = OnboardingUserSettings()
+        
+        self.onboardingSettings = onboardingSettings
+        
         super.init(
             appDiContainer: appDiContainer,
             initialView: OnboardingFlow.getOnboardingTutorial(
                 appDiContainer: appDiContainer,
-                stepEmitter: stepEmitter
+                stepEmitter: stepEmitter,
+                onboardingSettings: onboardingSettings
             ),
             stepEmitter: stepEmitter,
             navigationController: AppNavigationController(
@@ -77,7 +83,7 @@ final class OnboardingFlow: GTFlow {
             
             case .userChoseAppLanguage(let appLanguage):
                 
-                appLanguageAndCountrySelection?.setAppLanguage(appLanguage: appLanguage)
+                onboardingSettings.setAppLanguage(appLanguage: appLanguage)
                 
                 guard GodToolsApp.showsPersonalization else {
                     removeAllFlows()
@@ -99,7 +105,11 @@ final class OnboardingFlow: GTFlow {
                 
             case .userConfirmedLocalizationSetting(let country):
                 
-                appLanguageAndCountrySelection?.setCountry(country: country)
+                onboardingSettings.setCountry(country: country)
+                
+                if let onboardingTutorialView = self.onboardingTutorialView {
+                    navigateToNextTutorialPage(onboardingTutorialView: onboardingTutorialView)
+                }
                                 
                 removeAllFlows()
 
@@ -120,61 +130,40 @@ final class OnboardingFlow: GTFlow {
         case .skipTappedFromOnboardingTutorial:
             completeFlow(state: .completed)
             
-        case .continueTappedFromOnboardingTutorial(let appLanguageAndCountrySelection):
+        case .continueTappedFromOnboardingTutorial:
             
             guard let onboardingTutorialView = self.onboardingTutorialView else {
                 return
             }
             
-            self.appLanguageAndCountrySelection = appLanguageAndCountrySelection
-            
-            let page: OnboardingTutorialPage? = onboardingTutorialView.getCurrentPage()
-            let lastPage: Int = onboardingTutorialView.getPageCount() - 1
-            let currentPage: Int = onboardingTutorialView.getCurrentPageIndex()
-            let reachedEnd = currentPage >= lastPage
-            
+            let reachedEnd: Bool = getReachedEndOfTutorial(onboardingTutorialView: onboardingTutorialView)
+                        
             if reachedEnd {
                 
                 navigate(step: AppFlowStep.endTutorialFromOnboardingTutorial)
                 
-                if let page = page {
-                    
-                    let trackActionAnalytics = appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase()
-                    
-                    let properties = onboardingTutorialView.getOnboardingTutorialPageAnalyticsProperties(
-                        page: page
-                    )
-                    
-                    Task.detached {
-                                                
-                        await trackActionAnalytics.execute(
-                            properties: properties,
-                            actionName: AnalyticsConstants.ActionNames.onboardingStart,
-                            data: [AnalyticsConstants.Keys.onboardingStart: 1]
-                        )
-                    }
-                }
+                trackOnboardingStartAnalytics(onboardingTutorialView: onboardingTutorialView)
             }
             else if !GodToolsApp.showsPersonalization {
                 
-                onboardingTutorialView.setCurrentPage(page: currentPage + 1)
+                navigateToNextTutorialPage(onboardingTutorialView: onboardingTutorialView)
             }
             else {
                                 
-                if appLanguageAndCountrySelection.appLanguage == nil {
+                if onboardingSettings.appLanguage == nil {
                     
                     pushFlow(
                         flow: ChooseAppLanguageFlow(appDiContainer: appDiContainer),
                         animated: true
                     )
                 }
-                else if appLanguageAndCountrySelection.country == nil {
+                else if onboardingSettings.country == nil {
                     
                     navigateToLocalizationSettings()
                 }
                 else {
                     
-                    onboardingTutorialView.setCurrentPage(page: currentPage + 1)
+                    navigateToNextTutorialPage(onboardingTutorialView: onboardingTutorialView)
                 }
             }
             
@@ -184,6 +173,26 @@ final class OnboardingFlow: GTFlow {
         default:
             break
         }
+    }
+    
+    private func getReachedEndOfTutorial(onboardingTutorialView: OnboardingTutorialView) -> Bool {
+        
+        let lastPage: Int = onboardingTutorialView.getPageCount() - 1
+        let currentPage: Int = onboardingTutorialView.getCurrentPageIndex()
+        let reachedEnd = currentPage >= lastPage
+        
+        return reachedEnd
+    }
+    
+    private func navigateToNextTutorialPage(onboardingTutorialView: OnboardingTutorialView) {
+        
+        guard !getReachedEndOfTutorial(onboardingTutorialView: onboardingTutorialView) else {
+            return
+        }
+        
+        let currentPage: Int = onboardingTutorialView.getCurrentPageIndex()
+        
+        onboardingTutorialView.setCurrentPage(page: currentPage + 1)
     }
     
     private func presentWatchOnboardingTutorialVideoPlayer(youtubeVideoId: String) {
@@ -216,6 +225,28 @@ final class OnboardingFlow: GTFlow {
         )
     }
     
+    private func trackOnboardingStartAnalytics(onboardingTutorialView: OnboardingTutorialView) {
+        
+        guard let page = onboardingTutorialView.getCurrentPage() else {
+            return
+        }
+        
+        let trackActionAnalytics = appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase()
+        
+        let properties = onboardingTutorialView.getOnboardingTutorialPageAnalyticsProperties(
+            page: page
+        )
+        
+        Task.detached {
+                                    
+            await trackActionAnalytics.execute(
+                properties: properties,
+                actionName: AnalyticsConstants.ActionNames.onboardingStart,
+                data: [AnalyticsConstants.Keys.onboardingStart: 1]
+            )
+        }
+    }
+    
     private func completeFlow(state: OnboardingFlow.CompletedState) {
         parent?.stepEmitter.emit(step: AppFlowStep.onboardingFlowCompleted(state: state))
     }
@@ -244,7 +275,11 @@ extension OnboardingFlow {
 
 extension OnboardingFlow {
     
-    private static func getOnboardingTutorial(appDiContainer: AppDiContainer, stepEmitter: FlowStepEmitter) -> UIViewController {
+    private static func getOnboardingTutorial(
+        appDiContainer: AppDiContainer,
+        stepEmitter: FlowStepEmitter,
+        onboardingSettings: OnboardingUserSettings
+    ) -> UIViewController {
         
         let viewModel = OnboardingTutorialViewModel(
             stepEmitter: stepEmitter,
@@ -253,7 +288,8 @@ extension OnboardingFlow {
             getOnboardingTutorialStringsUseCase: appDiContainer.feature.onboarding.domainLayer.getOnboardingTutorialStringsUseCase(),
             trackTutorialVideoAnalytics: appDiContainer.core.dataLayer.getTutorialVideoAnalytics(),
             trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-            trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase()
+            trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase(),
+            onboardingSettings: onboardingSettings
         )
                 
         let view = OnboardingTutorialView(viewModel: viewModel)
