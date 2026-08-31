@@ -403,6 +403,8 @@ extension TractViewModel {
         
         didCreatePublishChannelTask?.cancel()
         
+        let appLanguage: AppLanguageDomainModel = self.appLanguage
+        
         didCreatePublishChannelTask = Task { [weak self] in
            
             guard let createdChannelStream = await self?.tractRemoteSharePublisher.getCreatedChannelStream() else {
@@ -420,6 +422,8 @@ extension TractViewModel {
             catch let error {
                 
                 // TODO: GT-3066 Handle error. ~Levi
+                
+                self?.renderer.value.navigation.presentError(error: error, appLanguage: appLanguage)
             }
         }
     }
@@ -491,6 +495,8 @@ extension TractViewModel {
         reloadRemoteShareIsActive()
         
         // TODO: GT-3066 Handle error. ~Levi
+        
+        renderer.value.navigation.presentError(error: error, appLanguage: appLanguage)
     }
     
     private func observeDidSubscribeToChannel() {
