@@ -26,6 +26,7 @@ final class TractViewModel: LegacyMobileContentRendererViewModel {
     private let persistToolLanguageSettings: PersistToolLanguageSettingsInterface?
     
     private var didCreatePublishChannelTask: Task<Void, Error>?
+    private var subscriberConnectionStateTask: Task<Void, Never>?
     private var didSubscribeToChannelTask: Task<Void, Never>?
     private var subscribeToChannelTask: Task<Void, Error>?
     private var subscriberNavigationEventsTask: Task<Void, Never>?
@@ -104,6 +105,7 @@ final class TractViewModel: LegacyMobileContentRendererViewModel {
         print("x deinit: \(type(of: self))")
         
         didCreatePublishChannelTask?.cancel()
+        subscriberConnectionStateTask?.cancel()
         didSubscribeToChannelTask?.cancel()
         subscribeToChannelTask?.cancel()
         subscriberNavigationEventsTask?.cancel()
@@ -428,6 +430,8 @@ extension TractViewModel {
             return
         }
         
+        observeSubscriberConnectionState()
+        
         observeSubscriberNavigationEvents()
         
         observeDidSubscribeToChannel()
@@ -439,6 +443,54 @@ extension TractViewModel {
             try await self?.tractRemoteShareSubscriber
                 .subscribe(channel: channel)
         }
+    }
+    
+    private func cancelSubscribeToChannelTasks() {
+        
+        subscriberConnectionStateTask?.cancel()
+        didSubscribeToChannelTask?.cancel()
+        subscribeToChannelTask?.cancel()
+        subscriberNavigationEventsTask?.cancel()
+    }
+    
+    private func observeSubscriberConnectionState() {
+        
+        subscriberConnectionStateTask?.cancel()
+        
+        subscriberConnectionStateTask = Task { [weak self] in
+            
+            guard let connectionStateStream = await self?.tractRemoteShareSubscriber.getConnectionStateStream() else {
+                return
+            }
+            
+            for await connectionState in connectionStateStream {
+                
+                switch connectionState {
+                case .disconnected(let reason):
+                    switch reason {
+                    case .clientDisconnected:
+                        break
+                    case .didClose( _):
+                        break
+                    case .taskFinishedTransfer(let error):
+                        if let error = error {
+                            self?.handleSubscribeToChannelError(error: error)
+                        }
+                    }
+                default:
+                    break
+                }
+            }
+        }
+    }
+    
+    private func handleSubscribeToChannelError(error: Error) {
+        
+        cancelSubscribeToChannelTasks()
+        
+        reloadRemoteShareIsActive()
+        
+        // TODO: GT-3066 Handle error. ~Levi
     }
     
     private func observeDidSubscribeToChannel() {
