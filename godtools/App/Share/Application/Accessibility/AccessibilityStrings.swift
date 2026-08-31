@@ -70,6 +70,7 @@ class AccessibilityStrings {
         case close = "Close"
         case changeLanguage = "Change Language"
         case chooseAppLanguage = "Choose App Language"
+        case confirmLocalizationSetting = "Confirm Localization Setting"
         case continueForward = "Continue"
         case copyrightInfo = "Copyright Info"
         case createAccount = "Create Account"
