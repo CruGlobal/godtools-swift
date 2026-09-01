@@ -1,5 +1,5 @@
 //
-//  SetUserLessonFiltersUseCase.swift
+//  SetUserLessonFilterLanguageUseCase.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 7/8/24.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class SetUserLessonFiltersUseCase: Sendable {
+final class SetUserLessonFilterLanguageUseCase: Sendable {
     
     private let userLessonFiltersRepository: UserLessonFiltersRepository
     

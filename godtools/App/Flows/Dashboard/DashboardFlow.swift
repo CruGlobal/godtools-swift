@@ -504,7 +504,7 @@ extension DashboardFlow {
             getLessonFilterLanguagesStringsUseCase: appDiContainer.feature.lessonFilter.domainLayer.getLessonFilterLanguagesStringsUseCase(),
             getLessonFilterLanguagesUseCase: appDiContainer.feature.lessonFilter.domainLayer.getLessonFilterLanguagesUseCase(),
             getUserLessonFilterLanguageUseCase: appDiContainer.feature.lessonFilter.domainLayer.getUserLessonFilterLanguageUseCase(),
-            setUserLessonFiltersUseCase: appDiContainer.feature.lessonFilter.domainLayer.getSetUserLessonFiltersUseCase(),
+            setUserLessonFilterLanguageUseCase: appDiContainer.feature.lessonFilter.domainLayer.getSetUserLessonFilterLanguageUseCase(),
             getSearchBarStringsUseCase: appDiContainer.core.domainLayer.getSearchBarStringsUseCase(),
             searchLessonFilterLanguagesUseCase: appDiContainer.feature.lessonFilter.domainLayer.getSearchLessonFilterLanguagesUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase()
