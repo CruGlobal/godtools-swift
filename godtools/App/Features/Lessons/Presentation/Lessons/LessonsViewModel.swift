@@ -31,7 +31,7 @@ final class LessonsViewModel: ObservableObject {
     private var pullToRefreshLessonsTask: Task<Void, Error>?
         
     @Published private var appLanguage = AppLanguageDomainModel.english
-    @Published private var lessonFilterLanguageSelection: LessonFilterLanguageDomainModel?
+    @Published private var lessonFilterLanguageSelection: ToolLanguageFilterItemDomainModel?
     @Published private var localizationSettings: UserLocalizationSettingsDomainModel?
     @Published private var allLessonsList: [LessonListItemDomainModel] = Array()
     
@@ -95,7 +95,7 @@ final class LessonsViewModel: ObservableObject {
             $localizationSettings,
             $lessonFilterLanguageSelection
         )
-        .map { (appLanguage: AppLanguageDomainModel, localizationSettings: UserLocalizationSettingsDomainModel?, languageFilter: LessonFilterLanguageDomainModel?) in
+        .map { (appLanguage: AppLanguageDomainModel, localizationSettings: UserLocalizationSettingsDomainModel?, languageFilter: ToolLanguageFilterItemDomainModel?) in
             
             getPersonalizedLessonsUseCase
                 .execute(
@@ -118,7 +118,7 @@ final class LessonsViewModel: ObservableObject {
             $appLanguage.dropFirst(),
             $lessonFilterLanguageSelection
         )
-        .map { (appLanguage: AppLanguageDomainModel, languageFilter: LessonFilterLanguageDomainModel?) in
+        .map { (appLanguage: AppLanguageDomainModel, languageFilter: ToolLanguageFilterItemDomainModel?) in
             
             getAllLessonsUseCase
                 .execute(
@@ -163,6 +163,8 @@ final class LessonsViewModel: ObservableObject {
         }
         .store(in: &cancellables)
     
+        // TODO: Fix language filter translation. ~Levi
+        /*
         $appLanguage
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
@@ -181,7 +183,7 @@ final class LessonsViewModel: ObservableObject {
                 self?.languageFilterButtonTitle = userFilters.languageFilter?.languageNameTranslatedInAppLanguage ?? ""
                 self?.lessonFilterLanguageSelection = userFilters.languageFilter
             })
-            .store(in: &cancellables)
+            .store(in: &cancellables)*/
     }
     
     deinit {

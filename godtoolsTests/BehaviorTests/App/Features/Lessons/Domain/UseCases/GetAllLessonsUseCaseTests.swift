@@ -27,12 +27,12 @@ struct GetAllLessonsUseCaseTests {
 
         let appLanguageEnglish: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
 
-        let spanishLanguageFilter = LessonFilterLanguageDomainModel(
+        let spanishLanguageFilter = ToolLanguageFilterItemDomainModel(
             languageId: spanishLanguageId,
             languageNameTranslatedInLanguage: "",
             languageNameTranslatedInAppLanguage: "",
-            lessonsAvailableText: "",
-            lessonsAvailableCount: 0
+            availableText: "",
+            availableCount: 0
         )
 
         let getAllLessonsUseCase: GetAllLessonsUseCase = try getAllLessonsUseCase()
@@ -148,12 +148,12 @@ struct GetAllLessonsUseCaseTests {
 
         let appLanguageEnglish: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
 
-        let spanishLanguageFilter = LessonFilterLanguageDomainModel(
+        let spanishLanguageFilter = ToolLanguageFilterItemDomainModel(
             languageId: LanguageCodeDomainModel.spanish.rawValue,
             languageNameTranslatedInLanguage: "",
             languageNameTranslatedInAppLanguage: "",
-            lessonsAvailableText: "",
-            lessonsAvailableCount: 0
+            availableText: "",
+            availableCount: 0
         )
 
         let getAllLessonsUseCase: GetAllLessonsUseCase = try getAllLessonsUseCase()

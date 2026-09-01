@@ -59,7 +59,7 @@ struct SetAppLanguageUseCaseTests {
         let appLanguageSpanish = LanguageCodeDomainModel.spanish.rawValue
         let spanishLanguage = allLanguages.first(where: { $0.code == appLanguageSpanish.languageCode })
                 
-        var lessonLanguageFilterRef: LessonFilterLanguageDomainModel?
+        var lessonLanguageFilterRef: ToolLanguageFilterItemDomainModel?
         
         var cancellables: Set<AnyCancellable> = Set()
         var triggerCount: Int = 0

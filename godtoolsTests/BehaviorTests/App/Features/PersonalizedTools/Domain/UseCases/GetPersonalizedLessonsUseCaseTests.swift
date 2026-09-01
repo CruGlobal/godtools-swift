@@ -125,12 +125,12 @@ struct GetPersonalizedLessonsUseCaseTests {
         let personalizedLessons: PersonalizedLessonsDomainModel = try await getPersonalizedLessons(
             appLanguage: LanguageCodeDomainModel.english.value,
             country: nil,
-            filterLessonsByLanguage: LessonFilterLanguageDomainModel(
+            filterLessonsByLanguage: ToolLanguageFilterItemDomainModel(
                 languageId: TestPersonalizedLessonsLanguageId.french,
                 languageNameTranslatedInLanguage: "",
                 languageNameTranslatedInAppLanguage: "",
-                lessonsAvailableText: "",
-                lessonsAvailableCount: 0
+                availableText: "",
+                availableCount: 0
             )
         )
 
@@ -219,7 +219,7 @@ struct GetPersonalizedLessonsUseCaseTests {
 extension GetPersonalizedLessonsUseCaseTests {
 
     @available(iOS 17.4, *)
-    @MainActor private func getPersonalizedLessons(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) async throws -> PersonalizedLessonsDomainModel {
+    @MainActor private func getPersonalizedLessons(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterLessonsByLanguage: ToolLanguageFilterItemDomainModel?) async throws -> PersonalizedLessonsDomainModel {
 
         let dependencies: TestDependencies = try getTestDependencies()
 

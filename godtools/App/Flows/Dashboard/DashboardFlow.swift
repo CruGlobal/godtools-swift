@@ -792,7 +792,7 @@ extension DashboardFlow {
     
     private func navigateToLesson(
         lessonListItem: LessonListItemDomainModel,
-        languageFilter: LessonFilterLanguageDomainModel?,
+        languageFilter: ToolLanguageFilterItemDomainModel?,
         toolOpenedFrom: ToolOpenedFrom
     ) {
         

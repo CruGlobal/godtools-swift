@@ -25,11 +25,11 @@ final class LessonFilterLanguageSelectionViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = Set()
     
     @Published private var appLanguage = AppLanguageDomainModel.english
-    @Published private var allLanguages: [LessonFilterLanguageDomainModel] = Array()
+    @Published private var allLanguages: [ToolLanguageFilterItemDomainModel] = Array()
     
     @Published private(set) var searchBarStrings = SearchBarStringsDomainModel.emptyValue
     @Published private(set) var strings = LessonFilterLanguagesStringsDomainModel.emptyValue
-    @Published private(set) var languageSearchResults: [LessonFilterLanguageDomainModel] = Array()
+    @Published private(set) var languageSearchResults: [ToolLanguageFilterItemDomainModel] = Array()
     @Published private(set) var selectedLanguageId: String?
     
     @Published var searchText: String = ""
@@ -76,28 +76,20 @@ final class LessonFilterLanguageSelectionViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { _ in
                 
-            }, receiveValue: { [weak self] (filterLanguages: [LessonFilterLanguageDomainModel]) in
+            }, receiveValue: { [weak self] (filterLanguages: [ToolLanguageFilterItemDomainModel]) in
                 
                 self?.allLanguages = filterLanguages
             })
             .store(in: &cancellables)
         
-        $appLanguage
-            .dropFirst()
-            .map { appLanguage in
-            
-                getUserLessonFilterLanguageUseCase
-                    .execute(
-                        appLanguage: appLanguage
-                    )
-            }
-            .switchToLatest()
+        getUserLessonFilterLanguageUseCase
+            .execute()
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { _ in
                 
-            }, receiveValue: { [weak self] (userFilters: UserLessonFiltersDomainModel) in
+            }, receiveValue: { [weak self] (languageId: String?) in
                 
-                self?.selectedLanguageId = userFilters.languageFilter?.languageId
+                self?.selectedLanguageId = languageId
             })
             .store(in: &cancellables)
         
@@ -105,7 +97,7 @@ final class LessonFilterLanguageSelectionViewModel: ObservableObject {
             $searchText,
             $allLanguages
         )
-        .map { (searchText: String, languages: [LessonFilterLanguageDomainModel]) in
+        .map { (searchText: String, languages: [ToolLanguageFilterItemDomainModel]) in
             
             searchLessonFilterLanguagesUseCase
                 .execute(searchText: searchText, lessonFilterLanguages: languages)

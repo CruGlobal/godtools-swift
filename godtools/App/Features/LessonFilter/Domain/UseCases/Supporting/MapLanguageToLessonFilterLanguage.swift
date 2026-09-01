@@ -34,7 +34,7 @@ final class MapLanguageToLessonFilterLanguage: Sendable {
     func map(
         language: LanguageDataModel,
         translatedInAppLanguage: AppLanguageDomainModel
-    ) -> LessonFilterLanguageDomainModel {
+    ) -> ToolLanguageFilterItemDomainModel {
         
         let lessonsAvailableCount: Int = resourcesRepository.getLessonsCount(filterByLanguageId: language.id)
 
@@ -53,12 +53,12 @@ final class MapLanguageToLessonFilterLanguage: Sendable {
             translatedInAppLanguage: translatedInAppLanguage
         )
         
-        return LessonFilterLanguageDomainModel(
+        return ToolLanguageFilterItemDomainModel(
             languageId: language.id,
             languageNameTranslatedInLanguage: languageNameTranslatedInLanguage,
             languageNameTranslatedInAppLanguage: languageNameTranslatedInAppLanguage,
-            lessonsAvailableText: lessonsAvailableText,
-            lessonsAvailableCount: lessonsAvailableCount
+            availableText: lessonsAvailableText,
+            availableCount: lessonsAvailableCount
         )
     }
     

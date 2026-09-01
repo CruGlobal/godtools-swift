@@ -41,7 +41,7 @@ struct GetUserLessonFilterLanguageUseCaseTests {
 
         let getUserLessonFilterLanguageUseCase: GetUserLessonFilterLanguageUseCase = try getUserLessonFilterLanguageUseCase(addSwiftObjects: swiftObjectsToAdd)
 
-        var lessonLanguageFilterRef: LessonFilterLanguageDomainModel?
+        var lessonLanguageFilterRef: ToolLanguageFilterItemDomainModel?
 
         var cancellables: Set<AnyCancellable> = Set()
 
@@ -107,7 +107,7 @@ struct GetUserLessonFilterLanguageUseCaseTests {
 
         let getUserLessonFilterLanguageUseCase: GetUserLessonFilterLanguageUseCase = try getUserLessonFilterLanguageUseCase(addSwiftObjects: swiftObjectsToAdd)
 
-        var lessonLanguageFilterRef: LessonFilterLanguageDomainModel?
+        var lessonLanguageFilterRef: ToolLanguageFilterItemDomainModel?
 
         var cancellables: Set<AnyCancellable> = Set()
 
@@ -165,8 +165,8 @@ struct GetUserLessonFilterLanguageUseCaseTests {
 
         let getUserLessonFilterLanguageUseCase: GetUserLessonFilterLanguageUseCase = getUserLessonFilterLanguageUseCase(testsDiContainer: testsDiContainer)
 
-        var originalLessonLanguageFilterRef: LessonFilterLanguageDomainModel?
-        var selectedLessonLanguageFilterRef: LessonFilterLanguageDomainModel?
+        var originalLessonLanguageFilterRef: ToolLanguageFilterItemDomainModel?
+        var selectedLessonLanguageFilterRef: ToolLanguageFilterItemDomainModel?
 
         var cancellables: Set<AnyCancellable> = Set()
         var triggerCount: Int = 0

@@ -26,12 +26,12 @@ final class GetLessonFilterLanguagesUseCase: Sendable {
         self.mapLanguageToLessonFilterLanguage = mapLanguageToLessonFilterLanguage
     }
     
-    @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[LessonFilterLanguageDomainModel], Error> {
+    @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[ToolLanguageFilterItemDomainModel], Error> {
             
         return resourcesRepository
             .observeCollectionChangesPublisher()
             .receive(on: DispatchQueue.global())
-            .flatMap { (resourcesChanged: Void) -> AnyPublisher<[LessonFilterLanguageDomainModel], Error> in
+            .flatMap { (resourcesChanged: Void) -> AnyPublisher<[ToolLanguageFilterItemDomainModel], Error> in
                 
                 return AnyPublisher() {
                     try await self.asyncExecute(appLanguage: appLanguage)
@@ -40,22 +40,22 @@ final class GetLessonFilterLanguagesUseCase: Sendable {
             .eraseToAnyPublisher()
     }
     
-    private func asyncExecute(appLanguage: AppLanguageDomainModel) async throws -> [LessonFilterLanguageDomainModel] {
+    private func asyncExecute(appLanguage: AppLanguageDomainModel) async throws -> [ToolLanguageFilterItemDomainModel] {
         
         let languageIds = self.resourcesRepository.getLessonsSupportedLanguageIds()
         
         let languages: [LanguageDataModel] = try await languagesRepository.getLanguagesByIds(ids: languageIds)
         
-        var domainModels: [LessonFilterLanguageDomainModel] = Array()
+        var domainModels: [ToolLanguageFilterItemDomainModel] = Array()
 
         for language in languages {
 
-            let domainModel: LessonFilterLanguageDomainModel = self.mapLanguageToLessonFilterLanguage.map(
+            let domainModel: ToolLanguageFilterItemDomainModel = self.mapLanguageToLessonFilterLanguage.map(
                 language: language,
                 translatedInAppLanguage: appLanguage
             )
 
-            guard domainModel.lessonsAvailableCount > 0 else {
+            guard let lessonsAvailableCount = domainModel.availableCount, lessonsAvailableCount > 0 else {
                 continue
             }
 
@@ -63,7 +63,7 @@ final class GetLessonFilterLanguagesUseCase: Sendable {
         }
         
         return domainModels
-            .sorted { (language1: LessonFilterLanguageDomainModel, language2: LessonFilterLanguageDomainModel) in
+            .sorted { (language1: ToolLanguageFilterItemDomainModel, language2: ToolLanguageFilterItemDomainModel) in
                 
                 return language1.languageNameTranslatedInAppLanguage.lowercased() < language2.languageNameTranslatedInAppLanguage.lowercased()
             }

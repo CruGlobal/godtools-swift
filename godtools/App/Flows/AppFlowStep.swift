@@ -40,7 +40,7 @@ enum AppFlowStep: FlowStep {
     // lessons list
     case lessonLanguageFilterTappedFromLessons
     case personalizedLessonLanguageFilterTappedFromLessons
-    case lessonTappedFromLessonsList(lessonListItem: LessonListItemDomainModel, languageFilter: LessonFilterLanguageDomainModel?)
+    case lessonTappedFromLessonsList(lessonListItem: LessonListItemDomainModel, languageFilter: ToolLanguageFilterItemDomainModel?)
     case changeLocalizationSettingsTappedFromLessons
     
     // lesson filter language

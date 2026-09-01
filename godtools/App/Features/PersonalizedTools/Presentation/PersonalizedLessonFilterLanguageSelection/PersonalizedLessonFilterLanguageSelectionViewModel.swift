@@ -82,16 +82,8 @@ final class PersonalizedLessonFilterLanguageSelectionViewModel: ObservableObject
             })
             .store(in: &cancellables)
         
-        $appLanguage
-            .dropFirst()
-            .map { appLanguage in
-            
-                getUserPersonalizedLessonFilterLanguageUseCase
-                    .execute(
-                        appLanguage: appLanguage
-                    )
-            }
-            .switchToLatest()
+        getUserPersonalizedLessonFilterLanguageUseCase
+            .execute()
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { _ in
                 
