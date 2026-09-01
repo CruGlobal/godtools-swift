@@ -87,9 +87,9 @@ final class PersonalizedLessonFilterLanguageSelectionViewModel: ObservableObject
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { _ in
                 
-            }, receiveValue: { [weak self] languageId in
+            }, receiveValue: { [weak self] (languageFilter: ToolLanguageFilterItemDomainModel?) in
                 
-                self?.selectedLanguageId = languageId
+                self?.selectedLanguageId = languageFilter?.languageId
             })
             .store(in: &cancellables)
         
