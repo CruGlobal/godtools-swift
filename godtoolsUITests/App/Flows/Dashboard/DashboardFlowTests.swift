@@ -118,9 +118,11 @@ extension DashboardFlowTests {
         assertIfButtonDoesNotExistElseTap(buttonAccessibility: .personalizedLessons)
     }
     
-    func testTappingLessonsLanguageFilterOpensLessonsLanguageFiltersList() {
+    func testTappingLessonsLanguageFilterFromAllLessonsOpensLessonsLanguageFiltersList() {
         
         launchAppToDashboardLessons()
+        
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .allLessons)
                 
         assertIfButtonDoesNotExistElseTap(buttonAccessibility: .lessonsLanguageFilter)
                 
