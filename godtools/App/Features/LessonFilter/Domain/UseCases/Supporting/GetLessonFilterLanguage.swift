@@ -31,31 +31,7 @@ final class GetLessonFilterLanguage: Sendable {
         self.stringWithLocaleCount = stringWithLocaleCount
     }
     
-    func getLessonLanguageFilterFromLanguageCode(
-        languageCode: String,
-        translatedInAppLanguage: AppLanguageDomainModel
-    ) -> LessonFilterLanguageDomainModel? {
-        
-        guard let language = languagesRepository.getLanguageByCode(code: languageCode) else {
-            return nil
-        }
-        
-        return mapLanguageToLessonFilterLanguageDomainModel(language: language, translatedInAppLanguage: translatedInAppLanguage)
-    }
-    
-    func getLessonLanguageFilterFromLanguageId(
-        languageId: String,
-        translatedInAppLanguage: AppLanguageDomainModel
-    ) -> LessonFilterLanguageDomainModel? {
-        
-        guard let language = languagesRepository.getLanguageById(id: languageId) else {
-            return nil
-        }
-        
-        return mapLanguageToLessonFilterLanguageDomainModel(language: language, translatedInAppLanguage: translatedInAppLanguage)
-    }
-    
-    func mapLanguageToLessonFilterLanguageDomainModel(
+    func mapLanguageToLessonFilterLanguage(
         language: LanguageDataModel,
         translatedInAppLanguage: AppLanguageDomainModel
     ) -> LessonFilterLanguageDomainModel {

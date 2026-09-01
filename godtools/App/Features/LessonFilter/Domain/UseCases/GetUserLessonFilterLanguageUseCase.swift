@@ -49,17 +49,22 @@ final class GetUserLessonFilterLanguageUseCase: Sendable {
     
     private func getLessonFilterLanguage(appLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel? {
         
-        let languageId: String? = userLessonFiltersRepository.getUserLessonLanguageFilter()?.languageId
-
-        if let languageId = languageId,
-           let languageFilter = getLessonFilterLanguage.getLessonLanguageFilterFromLanguageId(languageId: languageId, translatedInAppLanguage: appLanguage) {
-
-            return languageFilter
+        if let userFilterLanguageId = userLessonFiltersRepository.getUserLessonLanguageFilter()?.languageId,
+           let language = languagesRepository.getLanguageById(id: userFilterLanguageId) {
+            
+            return getLessonFilterLanguage.mapLanguageToLessonFilterLanguage(
+                language: language,
+                translatedInAppLanguage: appLanguage
+            )
         }
-
-        return getLessonFilterLanguage.getLessonLanguageFilterFromLanguageCode(
-            languageCode: appLanguage,
-            translatedInAppLanguage: appLanguage
-        )
+        else if let language = languagesRepository.getLanguageByCode(code: appLanguage) {
+            
+            return getLessonFilterLanguage.mapLanguageToLessonFilterLanguage(
+                language: language,
+                translatedInAppLanguage: appLanguage
+            )
+        }
+        
+        return nil
     }
 }
