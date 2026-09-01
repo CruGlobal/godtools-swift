@@ -13,6 +13,8 @@ enum LocalizationSettingsCountryListItem: Sendable, Identifiable, StringSearchab
     case country(LocalizationSettingsCountryDomainModel)
     case preferNotToSay(LocalizationSettingsPreferNotToSayDomainModel)
 
+    static let preferNotToSayIsoRegionCode: String = ""
+
     var id: String {
         switch self {
         case .country(let country):
@@ -45,7 +47,7 @@ enum LocalizationSettingsCountryListItem: Sendable, Identifiable, StringSearchab
         case .country(let country):
             return country.isoRegionCode
         case .preferNotToSay:
-            return ""
+            return Self.preferNotToSayIsoRegionCode
         }
     }
 
@@ -67,7 +69,7 @@ enum LocalizationSettingsCountryListItem: Sendable, Identifiable, StringSearchab
             return country
         case .preferNotToSay:
             return LocalizationSettingsCountryDomainModel(
-                isoRegionCode: "",
+                isoRegionCode: Self.preferNotToSayIsoRegionCode,
                 countryNameTranslatedInOwnLanguage: "",
                 countryNameTranslatedInCurrentAppLanguage: ""
             )

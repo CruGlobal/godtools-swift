@@ -57,16 +57,16 @@ final class LocalizationSettingsFlow: GTFlow {
             
         case .countryTappedFromLocalizationSettings(let countryListItem):
             
-            if shouldStoreCountryWhenSelected {
-                storeSelectedCountryListItem(countryListItem: countryListItem)
-            }
-            
             if userShouldConfirmSelectedCountry {
                
                 presentView(
                     view: getLocalizationSettingsConfirmationView(selectedCountry: countryListItem),
                     animated: true
                 )
+            }
+            else if shouldStoreCountryWhenSelected {
+                
+                storeSelectedCountryListItem(countryListItem: countryListItem)
             }
             
         case .closeTappedFromLocalizationConfirmation:
