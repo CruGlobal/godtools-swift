@@ -28,7 +28,7 @@ final class GetAllLessonsUseCase: Sendable {
     
     @MainActor func execute(
         appLanguage: AppLanguageDomainModel,
-        filterLessonsByLanguage: LessonFilterLanguageDomainModel?
+        filterLessonsByLanguageId: String?
     ) -> AnyPublisher<[LessonListItemDomainModel], Error> {
 
         return Publishers.CombineLatest(
@@ -41,7 +41,10 @@ final class GetAllLessonsUseCase: Sendable {
         .flatMap({ (resourcesDidChange: Void, lessonProgressDidChange: Void) -> AnyPublisher<[LessonListItemDomainModel], Error> in
 
             return AnyPublisher() {
-                try await self.asyncExecute(appLanguage: appLanguage, filterLessonsByLanguage: filterLessonsByLanguage)
+                try await self.asyncExecute(
+                    appLanguage: appLanguage,
+                    filterLessonsByLanguageId: filterLessonsByLanguageId
+                )
             }
         })
         .eraseToAnyPublisher()
@@ -50,19 +53,19 @@ final class GetAllLessonsUseCase: Sendable {
     
     private func asyncExecute(
         appLanguage: AppLanguageDomainModel,
-        filterLessonsByLanguage: LessonFilterLanguageDomainModel?
+        filterLessonsByLanguageId: String?
     ) async throws -> [LessonListItemDomainModel] {
         
         let lessons: [ResourceDataModel] = try await resourcesRepository
             .getLessons(
-                filterByLanguageId: filterLessonsByLanguage?.languageId,
+                filterByLanguageId: filterLessonsByLanguageId,
                 sorted: true
             )
         
         return try getLessonsListItems.mapLessonsToListItems(
             lessons: lessons,
             appLanguage: appLanguage,
-            filterLessonsByLanguage: filterLessonsByLanguage
+            filterLessonsByLanguageId: filterLessonsByLanguageId
         )
     }
 }

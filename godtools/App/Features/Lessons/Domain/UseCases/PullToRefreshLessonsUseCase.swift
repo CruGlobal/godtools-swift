@@ -29,7 +29,7 @@ final class PullToRefreshLessonsUseCase: Sendable {
     func execute(
         appLanguage: AppLanguageDomainModel,
         country: LocalizationSettingsCountryDomainModel?,
-        filterLessonsByLanguage: LessonFilterLanguageDomainModel?
+        languageFilterLanguageId: String?
     ) async throws {
         
         let requestPriority: RequestPriority = .high
@@ -40,7 +40,7 @@ final class PullToRefreshLessonsUseCase: Sendable {
         )
 
         let language: String = getLanguageElseAppLanguage.getLanguageCode(
-            languageId: filterLessonsByLanguage?.languageId,
+            languageId: languageFilterLanguageId,
             appLanguage: appLanguage
         )
         

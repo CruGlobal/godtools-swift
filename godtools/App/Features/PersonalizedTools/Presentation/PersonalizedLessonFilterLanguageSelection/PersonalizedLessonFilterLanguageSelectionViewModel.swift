@@ -1,9 +1,9 @@
 //
-//  LessonFilterLanguageSelectionViewModel.swift
+//  PersonalizedLessonFilterLanguageSelectionViewModel.swift
 //  godtools
 //
-//  Created by Rachael Skeath on 6/27/24.
-//  Copyright © 2024 Cru. All rights reserved.
+//  Created by Levi Eggert on 9/1/26.
+//  Copyright © 2026 Cru. All rights reserved.
 //
 
 import Foundation
@@ -11,15 +11,15 @@ import Combine
 import Flow
 
 @MainActor
-final class LessonFilterLanguageSelectionViewModel: ObservableObject {
+final class PersonalizedLessonFilterLanguageSelectionViewModel: ObservableObject {
         
     private let stepEmitter: FlowStepEmitter
-    private let getLessonFilterLanguagesStringsUseCase: GetLessonFilterLanguagesStringsUseCase
-    private let getLessonFilterLanguagesUseCase: GetLessonFilterLanguagesUseCase
-    private let getUserLessonFilterLanguageUseCase: GetUserLessonFilterLanguageUseCase
-    private let setUserLessonFilterLanguageUseCase: SetUserLessonFilterLanguageUseCase
+    private let getPersonalizedLessonFilterLanguagesStringsUseCase: GetPersonalizedLessonFilterLanguagesStringsUseCase
+    private let getPersonalizedLessonFilterLanguagesUseCase: GetPersonalizedLessonFilterLanguagesUseCase
+    private let getUserPersonalizedLessonFilterLanguageUseCase: GetUserPersonalizedLessonFilterLanguageUseCase
+    private let setUserPersonalizedLessonFilterLanguageUseCase: SetUserPersonalizedLessonFilterLanguageUseCase
     private let getSearchBarStringsUseCase: GetSearchBarStringsUseCase
-    private let searchLessonFilterLanguagesUseCase: SearchLessonFilterLanguagesUseCase
+    private let searchPersonalizedLessonFilterLanguagesUseCase: SearchPersonalizedLessonFilterLanguagesUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
@@ -28,7 +28,7 @@ final class LessonFilterLanguageSelectionViewModel: ObservableObject {
     @Published private var allLanguages: [ToolLanguageFilterItemDomainModel] = Array()
     
     @Published private(set) var searchBarStrings = SearchBarStringsDomainModel.emptyValue
-    @Published private(set) var strings = LessonFilterLanguagesStringsDomainModel.emptyValue
+    @Published private(set) var strings = PersonalizedLessonFilterLanguagesStringsDomainModel.emptyValue
     @Published private(set) var languageSearchResults: [ToolLanguageFilterItemDomainModel] = Array()
     @Published private(set) var selectedLanguageId: String?
     
@@ -36,22 +36,22 @@ final class LessonFilterLanguageSelectionViewModel: ObservableObject {
     
     init(
         stepEmitter: FlowStepEmitter,
-        getLessonFilterLanguagesStringsUseCase: GetLessonFilterLanguagesStringsUseCase,
-        getLessonFilterLanguagesUseCase: GetLessonFilterLanguagesUseCase,
-        getUserLessonFilterLanguageUseCase: GetUserLessonFilterLanguageUseCase,
-        setUserLessonFilterLanguageUseCase: SetUserLessonFilterLanguageUseCase,
+        getPersonalizedLessonFilterLanguagesStringsUseCase: GetPersonalizedLessonFilterLanguagesStringsUseCase,
+        getPersonalizedLessonFilterLanguagesUseCase: GetPersonalizedLessonFilterLanguagesUseCase,
+        getUserPersonalizedLessonFilterLanguageUseCase: GetUserPersonalizedLessonFilterLanguageUseCase,
+        setUserPersonalizedLessonFilterLanguageUseCase: SetUserPersonalizedLessonFilterLanguageUseCase,
         getSearchBarStringsUseCase: GetSearchBarStringsUseCase,
-        searchLessonFilterLanguagesUseCase: SearchLessonFilterLanguagesUseCase,
+        searchPersonalizedLessonFilterLanguagesUseCase: SearchPersonalizedLessonFilterLanguagesUseCase,
         getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     ) {
         
         self.stepEmitter = stepEmitter
-        self.getLessonFilterLanguagesStringsUseCase = getLessonFilterLanguagesStringsUseCase
-        self.getLessonFilterLanguagesUseCase = getLessonFilterLanguagesUseCase
-        self.getUserLessonFilterLanguageUseCase = getUserLessonFilterLanguageUseCase
-        self.setUserLessonFilterLanguageUseCase = setUserLessonFilterLanguageUseCase
+        self.getPersonalizedLessonFilterLanguagesStringsUseCase = getPersonalizedLessonFilterLanguagesStringsUseCase
+        self.getPersonalizedLessonFilterLanguagesUseCase = getPersonalizedLessonFilterLanguagesUseCase
+        self.getUserPersonalizedLessonFilterLanguageUseCase = getUserPersonalizedLessonFilterLanguageUseCase
+        self.setUserPersonalizedLessonFilterLanguageUseCase = setUserPersonalizedLessonFilterLanguageUseCase
         self.getSearchBarStringsUseCase = getSearchBarStringsUseCase
-        self.searchLessonFilterLanguagesUseCase = searchLessonFilterLanguagesUseCase
+        self.searchPersonalizedLessonFilterLanguagesUseCase = searchPersonalizedLessonFilterLanguagesUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         
         getCurrentAppLanguageUseCase
@@ -67,7 +67,7 @@ final class LessonFilterLanguageSelectionViewModel: ObservableObject {
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
                 
-                getLessonFilterLanguagesUseCase
+                getPersonalizedLessonFilterLanguagesUseCase
                     .execute(
                         appLanguage: appLanguage
                     )
@@ -76,22 +76,14 @@ final class LessonFilterLanguageSelectionViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { _ in
                 
-            }, receiveValue: { [weak self] (filterLanguages: [ToolLanguageFilterItemDomainModel]) in
+            }, receiveValue: { [weak self] languages in
                 
-                self?.allLanguages = filterLanguages
+                self?.allLanguages = languages
             })
             .store(in: &cancellables)
         
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                
-                getUserLessonFilterLanguageUseCase
-                    .execute(
-                        appLanguage: appLanguage
-                    )
-            }
-            .switchToLatest()
+        getUserPersonalizedLessonFilterLanguageUseCase
+            .execute()
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { _ in
                 
@@ -107,8 +99,8 @@ final class LessonFilterLanguageSelectionViewModel: ObservableObject {
         )
         .map { (searchText: String, languages: [ToolLanguageFilterItemDomainModel]) in
             
-            searchLessonFilterLanguagesUseCase
-                .execute(searchText: searchText, lessonFilterLanguages: languages)
+            searchPersonalizedLessonFilterLanguagesUseCase
+                .execute(searchText: searchText, languages: languages)
         }
         .receive(on: DispatchQueue.main)
         .assign(to: &$languageSearchResults)
@@ -123,32 +115,32 @@ final class LessonFilterLanguageSelectionViewModel: ObservableObject {
         searchBarStrings = getSearchBarStringsUseCase
             .execute(appLanguage: appLanguage)
 
-        strings = getLessonFilterLanguagesStringsUseCase
+        strings = getPersonalizedLessonFilterLanguagesStringsUseCase
             .execute(appLanguage: appLanguage)
     }
 }
 
 // MARK: - Inputs
 
-extension LessonFilterLanguageSelectionViewModel {
+extension PersonalizedLessonFilterLanguageSelectionViewModel {
     
     @objc func backTapped() {
         
-        stepEmitter.emit(step: AppFlowStep.backTappedFromLessonLanguageFilter)
+        stepEmitter.emit(step: AppFlowStep.backTappedFromPersonalizedLessonLanguageFilter)
     }
     
     func languageTapped(languageId: String) {
         
-        selectedLanguageId = languageId
+        self.selectedLanguageId = languageId
         
-        let setUserLessonFilterLanguageUseCase: SetUserLessonFilterLanguageUseCase = self.setUserLessonFilterLanguageUseCase
+        let setUserPersonalizedLessonFilterLanguageUseCase: SetUserPersonalizedLessonFilterLanguageUseCase = self.setUserPersonalizedLessonFilterLanguageUseCase
         
         Task.detached {
             
-            try await setUserLessonFilterLanguageUseCase
+            try await setUserPersonalizedLessonFilterLanguageUseCase
                 .execute(languageId: languageId)
         }
         
-        stepEmitter.emit(step: AppFlowStep.languageTappedFromLessonLanguageFilter)
+        stepEmitter.emit(step: AppFlowStep.languageTappedFromPersonalizedLanguageFilter)
     }
 }
