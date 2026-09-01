@@ -522,7 +522,7 @@ extension DashboardFlow {
         
         let viewModel = PersonalizedLessonFilterLanguageSelectionViewModel(
             stepEmitter: stepEmitter,
-            getLessonFilterLanguagesStringsUseCase: appDiContainer.feature.lessonFilter.domainLayer.getLessonFilterLanguagesStringsUseCase(),
+            getPersonalizedLessonFilterLanguagesStringsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getPersonalizedLessonFilterLanguagesStringsUseCase(),
             getPersonalizedLessonFilterLanguagesUseCase: appDiContainer.feature.personalizedTools.domainLayer.getPersonalizedLessonFilterLanguagesUseCase(),
             getUserPersonalizedLessonFilterLanguageUseCase: appDiContainer.feature.personalizedTools.domainLayer.getUserPersonalizedLessonFilterLanguageUseCase(),
             setUserPersonalizedLessonFilterLanguageUseCase: appDiContainer.feature.personalizedTools.domainLayer.getSetUserPersonalizedLessonFilterLanguageUseCase(),

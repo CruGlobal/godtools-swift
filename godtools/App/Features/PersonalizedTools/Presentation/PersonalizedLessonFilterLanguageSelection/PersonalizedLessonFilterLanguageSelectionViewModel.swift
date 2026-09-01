@@ -14,7 +14,7 @@ import Flow
 final class PersonalizedLessonFilterLanguageSelectionViewModel: ObservableObject {
         
     private let stepEmitter: FlowStepEmitter
-    private let getLessonFilterLanguagesStringsUseCase: GetLessonFilterLanguagesStringsUseCase
+    private let getPersonalizedLessonFilterLanguagesStringsUseCase: GetPersonalizedLessonFilterLanguagesStringsUseCase
     private let getPersonalizedLessonFilterLanguagesUseCase: GetPersonalizedLessonFilterLanguagesUseCase
     private let getUserPersonalizedLessonFilterLanguageUseCase: GetUserPersonalizedLessonFilterLanguageUseCase
     private let setUserPersonalizedLessonFilterLanguageUseCase: SetUserPersonalizedLessonFilterLanguageUseCase
@@ -28,7 +28,7 @@ final class PersonalizedLessonFilterLanguageSelectionViewModel: ObservableObject
     @Published private var allLanguages: [ToolLanguageFilterDomainModel] = Array()
     
     @Published private(set) var searchBarStrings = SearchBarStringsDomainModel.emptyValue
-    @Published private(set) var strings = LessonFilterLanguagesStringsDomainModel.emptyValue
+    @Published private(set) var strings = PersonalizedLessonFilterLanguagesStringsDomainModel.emptyValue
     
     @Published var searchText: String = ""
     @Published var languageSearchResults: [ToolLanguageFilterDomainModel] = Array()
@@ -36,7 +36,7 @@ final class PersonalizedLessonFilterLanguageSelectionViewModel: ObservableObject
     
     init(
         stepEmitter: FlowStepEmitter,
-        getLessonFilterLanguagesStringsUseCase: GetLessonFilterLanguagesStringsUseCase,
+        getPersonalizedLessonFilterLanguagesStringsUseCase: GetPersonalizedLessonFilterLanguagesStringsUseCase,
         getPersonalizedLessonFilterLanguagesUseCase: GetPersonalizedLessonFilterLanguagesUseCase,
         getUserPersonalizedLessonFilterLanguageUseCase: GetUserPersonalizedLessonFilterLanguageUseCase,
         setUserPersonalizedLessonFilterLanguageUseCase: SetUserPersonalizedLessonFilterLanguageUseCase,
@@ -46,7 +46,7 @@ final class PersonalizedLessonFilterLanguageSelectionViewModel: ObservableObject
     ) {
         
         self.stepEmitter = stepEmitter
-        self.getLessonFilterLanguagesStringsUseCase = getLessonFilterLanguagesStringsUseCase
+        self.getPersonalizedLessonFilterLanguagesStringsUseCase = getPersonalizedLessonFilterLanguagesStringsUseCase
         self.getPersonalizedLessonFilterLanguagesUseCase = getPersonalizedLessonFilterLanguagesUseCase
         self.getUserPersonalizedLessonFilterLanguageUseCase = getUserPersonalizedLessonFilterLanguageUseCase
         self.setUserPersonalizedLessonFilterLanguageUseCase = setUserPersonalizedLessonFilterLanguageUseCase
@@ -123,7 +123,7 @@ final class PersonalizedLessonFilterLanguageSelectionViewModel: ObservableObject
         searchBarStrings = getSearchBarStringsUseCase
             .execute(appLanguage: appLanguage)
 
-        strings = getLessonFilterLanguagesStringsUseCase
+        strings = getPersonalizedLessonFilterLanguagesStringsUseCase
             .execute(appLanguage: appLanguage)
     }
 }
