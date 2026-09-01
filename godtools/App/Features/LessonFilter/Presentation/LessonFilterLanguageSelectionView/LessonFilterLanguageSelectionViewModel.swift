@@ -17,7 +17,7 @@ final class LessonFilterLanguageSelectionViewModel: ObservableObject {
     private let getLessonFilterLanguagesStringsUseCase: GetLessonFilterLanguagesStringsUseCase
     private let getLessonFilterLanguagesUseCase: GetLessonFilterLanguagesUseCase
     private let getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase
-    private let storeUserLessonFiltersUseCase: StoreUserLessonFiltersUseCase
+    private let setUserLessonFiltersUseCase: SetUserLessonFiltersUseCase
     private let getSearchBarStringsUseCase: GetSearchBarStringsUseCase
     private let searchLessonFilterLanguagesUseCase: SearchLessonFilterLanguagesUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
@@ -39,7 +39,7 @@ final class LessonFilterLanguageSelectionViewModel: ObservableObject {
         getLessonFilterLanguagesStringsUseCase: GetLessonFilterLanguagesStringsUseCase,
         getLessonFilterLanguagesUseCase: GetLessonFilterLanguagesUseCase,
         getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase,
-        storeUserLessonFiltersUseCase: StoreUserLessonFiltersUseCase,
+        setUserLessonFiltersUseCase: SetUserLessonFiltersUseCase,
         getSearchBarStringsUseCase: GetSearchBarStringsUseCase,
         searchLessonFilterLanguagesUseCase: SearchLessonFilterLanguagesUseCase,
         getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
@@ -49,7 +49,7 @@ final class LessonFilterLanguageSelectionViewModel: ObservableObject {
         self.getLessonFilterLanguagesStringsUseCase = getLessonFilterLanguagesStringsUseCase
         self.getLessonFilterLanguagesUseCase = getLessonFilterLanguagesUseCase
         self.getUserLessonFiltersUseCase = getUserLessonFiltersUseCase
-        self.storeUserLessonFiltersUseCase = storeUserLessonFiltersUseCase
+        self.setUserLessonFiltersUseCase = setUserLessonFiltersUseCase
         self.getSearchBarStringsUseCase = getSearchBarStringsUseCase
         self.searchLessonFilterLanguagesUseCase = searchLessonFilterLanguagesUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
@@ -145,11 +145,11 @@ extension LessonFilterLanguageSelectionViewModel {
         
         selectedLanguage = language
         
-        let storeUserLessonFiltersUseCase: StoreUserLessonFiltersUseCase = self.storeUserLessonFiltersUseCase
+        let setUserLessonFiltersUseCase: SetUserLessonFiltersUseCase = self.setUserLessonFiltersUseCase
         
         Task.detached {
             
-            try await storeUserLessonFiltersUseCase
+            try await setUserLessonFiltersUseCase
                 .execute(languageFilter: language)
         }
         

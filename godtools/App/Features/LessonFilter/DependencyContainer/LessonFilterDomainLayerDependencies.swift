@@ -58,8 +58,8 @@ final class LessonFilterDomainLayerDependencies: Sendable {
         )
     }
     
-    func getStoreUserLessonFiltersUseCase() -> StoreUserLessonFiltersUseCase {
-        return StoreUserLessonFiltersUseCase(
+    func getSetUserLessonFiltersUseCase() -> SetUserLessonFiltersUseCase {
+        return SetUserLessonFiltersUseCase(
             userLessonFiltersRepository: core.dataLayer.getUserLessonFiltersRepository()
         )
     }
