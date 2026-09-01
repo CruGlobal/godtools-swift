@@ -12,10 +12,10 @@ struct ToolLanguageFilterItemView: View {
     
     private static let lightGrey = Color.getColorWithRGB(red: 151, green: 151, blue: 151, opacity: 1)
     
-    private let language: ToolLanguageFilterDomainModel
+    private let language: ToolLanguageFilterItemDomainModel
     private let isSelected: Bool
     
-    init(language: ToolLanguageFilterDomainModel, isSelected: Bool) {
+    init(language: ToolLanguageFilterItemDomainModel, isSelected: Bool) {
         
         self.language = language
         self.isSelected = isSelected

@@ -18,8 +18,8 @@ final class SearchPersonalizedLessonFilterLanguagesUseCase: Sendable {
     
     func execute(
         searchText: String,
-        languages: [ToolLanguageFilterDomainModel]
-    ) -> [ToolLanguageFilterDomainModel] {
+        languages: [ToolLanguageFilterItemDomainModel]
+    ) -> [ToolLanguageFilterItemDomainModel] {
         
         return stringSearcher.search(for: searchText, in: languages)
     }

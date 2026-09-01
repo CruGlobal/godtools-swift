@@ -25,14 +25,14 @@ final class PersonalizedLessonFilterLanguageSelectionViewModel: ObservableObject
     private var cancellables: Set<AnyCancellable> = Set()
     
     @Published private var appLanguage = AppLanguageDomainModel.english
-    @Published private var allLanguages: [ToolLanguageFilterDomainModel] = Array()
+    @Published private var allLanguages: [ToolLanguageFilterItemDomainModel] = Array()
     
     @Published private(set) var searchBarStrings = SearchBarStringsDomainModel.emptyValue
     @Published private(set) var strings = PersonalizedLessonFilterLanguagesStringsDomainModel.emptyValue
+    @Published private(set) var languageSearchResults: [ToolLanguageFilterItemDomainModel] = Array()
+    @Published private(set) var selectedLanguageId: String?
     
     @Published var searchText: String = ""
-    @Published var languageSearchResults: [ToolLanguageFilterDomainModel] = Array()
-    @Published var selectedLanguageId: String?
     
     init(
         stepEmitter: FlowStepEmitter,
@@ -105,7 +105,7 @@ final class PersonalizedLessonFilterLanguageSelectionViewModel: ObservableObject
             $searchText,
             $allLanguages
         )
-        .map { (searchText: String, languages: [ToolLanguageFilterDomainModel]) in
+        .map { (searchText: String, languages: [ToolLanguageFilterItemDomainModel]) in
             
             searchPersonalizedLessonFilterLanguagesUseCase
                 .execute(searchText: searchText, languages: languages)

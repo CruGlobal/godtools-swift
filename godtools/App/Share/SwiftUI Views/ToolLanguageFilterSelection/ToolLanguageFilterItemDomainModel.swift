@@ -1,5 +1,5 @@
 //
-//  ToolLanguageFilterDomainModel.swift
+//  ToolLanguageFilterItemDomainModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/1/26.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ToolLanguageFilterDomainModel: Sendable {
+struct ToolLanguageFilterItemDomainModel: Sendable {
     
     let languageId: String
     let languageNameTranslatedInLanguage: String
@@ -16,14 +16,14 @@ struct ToolLanguageFilterDomainModel: Sendable {
     let availableText: String?
 }
 
-extension ToolLanguageFilterDomainModel: StringSearchable {
+extension ToolLanguageFilterItemDomainModel: StringSearchable {
     
     var searchableStrings: [String] {
         return [languageNameTranslatedInLanguage, languageNameTranslatedInAppLanguage]
     }
 }
 
-extension ToolLanguageFilterDomainModel: Identifiable {
+extension ToolLanguageFilterItemDomainModel: Identifiable {
     
     var id: String {
         return languageId
