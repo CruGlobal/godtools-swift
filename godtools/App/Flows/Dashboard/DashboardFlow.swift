@@ -81,6 +81,9 @@ final class DashboardFlow: GTFlow {
         case .lessonLanguageFilterTappedFromLessons:
             navigationController.pushViewController(getLessonLanguageFilterSelection(), animated: true)
             
+        case .personalizedLessonLanguageFilterTappedFromLessons:
+            navigationController.pushViewController(getPersonalizedLessonFilterLanguageSelectionView(), animated: true)
+            
         case .backTappedFromLessonLanguageFilter:
             navigationController.popViewController(animated: true)
 
@@ -504,6 +507,33 @@ extension DashboardFlow {
         let view = LessonFilterLanguageSelectionView(viewModel: viewModel)
         
         let hostingView = AppHostingController<LessonFilterLanguageSelectionView>(
+            rootView: view
+        )
+        
+        return hostingView
+    }
+}
+
+// MARK: - Personalized Lesson Filter Language Selection
+
+extension DashboardFlow {
+    
+    private func getPersonalizedLessonFilterLanguageSelectionView() -> UIViewController {
+        
+        let viewModel = PersonalizedLessonFilterLanguageSelectionViewModel(
+            stepEmitter: stepEmitter,
+            getLessonFilterLanguagesStringsUseCase: appDiContainer.feature.lessonFilter.domainLayer.getLessonFilterLanguagesStringsUseCase(),
+            getPersonalizedLessonFilterLanguagesUseCase: appDiContainer.feature.personalizedTools.domainLayer.getPersonalizedLessonFilterLanguagesUseCase(),
+            getUserPersonalizedLessonFilterLanguageUseCase: appDiContainer.feature.personalizedTools.domainLayer.getUserPersonalizedLessonFilterLanguageUseCase(),
+            setUserPersonalizedLessonFilterLanguageUseCase: appDiContainer.feature.personalizedTools.domainLayer.getSetUserPersonalizedLessonFilterLanguageUseCase(),
+            getSearchBarStringsUseCase: appDiContainer.core.domainLayer.getSearchBarStringsUseCase(),
+            searchPersonalizedLessonFilterLanguagesUseCase: appDiContainer.feature.personalizedTools.domainLayer.getSearchPersonalizedLessonFilterLanguagesUseCase(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase()
+        )
+        
+        let view = PersonalizedLessonFilterLanguageSelectionView(viewModel: viewModel)
+        
+        let hostingView = AppHostingController<PersonalizedLessonFilterLanguageSelectionView>(
             rootView: view
         )
         

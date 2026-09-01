@@ -340,6 +340,10 @@ extension LessonsViewModel {
         stepEmitter.emit(step: AppFlowStep.lessonLanguageFilterTappedFromLessons)
     }
     
+    func personalizedLessonLanguageFilterTapped() {
+        stepEmitter.emit(step: AppFlowStep.personalizedLessonLanguageFilterTappedFromLessons)
+    }
+    
     func lessonCardTapped(lessonListItem: LessonListItemDomainModel) {
 
         stepEmitter.emit(step: AppFlowStep.lessonTappedFromLessonsList(lessonListItem: lessonListItem, languageFilter: lessonFilterLanguageSelection))

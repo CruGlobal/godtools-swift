@@ -69,7 +69,13 @@ struct LessonsView: View {
                                 title: viewModel.languageFilterButtonTitle,
                                 accessibility: .lessonsLanguageFilter
                             ) {
-                                viewModel.lessonLanguageFilterTapped()
+                                
+                                switch viewModel.selectedToggle {
+                                case .personalized:
+                                    viewModel.personalizedLessonLanguageFilterTapped()
+                                case .all:
+                                    viewModel.lessonLanguageFilterTapped()
+                                }
                             }
                         }
                         .padding(.bottom, 15)
