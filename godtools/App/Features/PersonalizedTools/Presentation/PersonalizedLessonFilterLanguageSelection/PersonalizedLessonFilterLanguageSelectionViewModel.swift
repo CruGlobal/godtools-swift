@@ -134,7 +134,7 @@ extension PersonalizedLessonFilterLanguageSelectionViewModel {
     
     @objc func backTapped() {
         
-        stepEmitter.emit(step: AppFlowStep.backTappedFromLessonLanguageFilter)
+        stepEmitter.emit(step: AppFlowStep.backTappedFromPersonalizedLessonLanguageFilter)
     }
     
     func languageTapped(languageId: String) {

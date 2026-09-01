@@ -86,6 +86,9 @@ final class DashboardFlow: GTFlow {
             
         case .backTappedFromLessonLanguageFilter:
             navigationController.popViewController(animated: true)
+            
+        case .backTappedFromPersonalizedLessonLanguageFilter:
+            navigationController.popViewController(animated: true)
 
         case .changeLocalizationSettingsTappedFromLessons:
             pushFlow(
@@ -99,6 +102,9 @@ final class DashboardFlow: GTFlow {
             popFlow()
 
         case .languageTappedFromLessonLanguageFilter:
+            navigationController.popViewController(animated: true)
+            
+        case .languageTappedFromPersonalizedLanguageFilter:
             navigationController.popViewController(animated: true)
             
         case .featuredLessonTappedFromFavorites(let featuredLesson):
