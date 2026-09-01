@@ -16,10 +16,10 @@ final class SetUserLessonFiltersUseCase: Sendable {
         self.userLessonFiltersRepository = userLessonFiltersRepository
     }
     
-    func execute(languageFilter: LessonFilterLanguageDomainModel) async throws {
+    func execute(languageId: String) async throws {
         
         try await userLessonFiltersRepository.storeUserLessonLanguageFilter(
-            languageId: languageFilter.languageId
+            languageId: languageId
         )
     }
 }

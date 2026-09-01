@@ -14,7 +14,7 @@ final class SetUserPersonalizedLessonFilterLanguageUseCase: Sendable {
 
     }
     
-    func execute(languageId: String?) async throws {
+    func execute(languageId: String) async throws {
         
         // TODO: Save personalized lesson language filter. ~Levi
     }

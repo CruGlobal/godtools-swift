@@ -1,5 +1,5 @@
 //
-//  GetUserLessonFiltersUseCase.swift
+//  GetUserLessonFilterLanguageUseCase.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 7/8/24.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class GetUserLessonFiltersUseCase: Sendable {
+final class GetUserLessonFilterLanguageUseCase: Sendable {
     
     private let languagesRepository: LanguagesRepository
     private let userLessonFiltersRepository: UserLessonFiltersRepository

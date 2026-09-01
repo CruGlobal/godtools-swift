@@ -31,7 +31,10 @@ final class GetLessonFilterLanguage: Sendable {
         self.stringWithLocaleCount = stringWithLocaleCount
     }
     
-    func getLessonLanguageFilterFromLanguageCode(languageCode: String, translatedInAppLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel? {
+    func getLessonLanguageFilterFromLanguageCode(
+        languageCode: String,
+        translatedInAppLanguage: AppLanguageDomainModel
+    ) -> LessonFilterLanguageDomainModel? {
         
         guard let language = languagesRepository.getLanguageByCode(code: languageCode) else {
             return nil
@@ -40,7 +43,10 @@ final class GetLessonFilterLanguage: Sendable {
         return mapLanguageToLessonFilterLanguageDomainModel(language: language, translatedInAppLanguage: translatedInAppLanguage)
     }
     
-    func getLessonLanguageFilterFromLanguageId(languageId: String, translatedInAppLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel? {
+    func getLessonLanguageFilterFromLanguageId(
+        languageId: String,
+        translatedInAppLanguage: AppLanguageDomainModel
+    ) -> LessonFilterLanguageDomainModel? {
         
         guard let language = languagesRepository.getLanguageById(id: languageId) else {
             return nil
@@ -49,14 +55,27 @@ final class GetLessonFilterLanguage: Sendable {
         return mapLanguageToLessonFilterLanguageDomainModel(language: language, translatedInAppLanguage: translatedInAppLanguage)
     }
     
-    func mapLanguageToLessonFilterLanguageDomainModel(language: LanguageDataModel, translatedInAppLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel {
+    func mapLanguageToLessonFilterLanguageDomainModel(
+        language: LanguageDataModel,
+        translatedInAppLanguage: AppLanguageDomainModel
+    ) -> LessonFilterLanguageDomainModel {
         
         let lessonsAvailableCount: Int = resourcesRepository.getLessonsCount(filterByLanguageId: language.id)
 
-        let languageNameTranslatedInLanguage = getTranslatedLanguageName.getLanguageName(language: language.code, translatedInLanguage: language.code)
-        let languageNameTranslatedInAppLanguage = getTranslatedLanguageName.getLanguageName(language: language.code, translatedInLanguage: translatedInAppLanguage)
+        let languageNameTranslatedInLanguage = getTranslatedLanguageName.getLanguageName(
+            language: language.code,
+            translatedInLanguage: language.code
+        )
         
-        let lessonsAvailableText: String = getLessonsAvailableText(lessonsAvailableCount: lessonsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
+        let languageNameTranslatedInAppLanguage = getTranslatedLanguageName.getLanguageName(
+            language: language.code,
+            translatedInLanguage: translatedInAppLanguage
+        )
+        
+        let lessonsAvailableText: String = getLessonsAvailableText(
+            lessonsAvailableCount: lessonsAvailableCount,
+            translatedInAppLanguage: translatedInAppLanguage
+        )
         
         return LessonFilterLanguageDomainModel(
             languageId: language.id,
@@ -67,7 +86,10 @@ final class GetLessonFilterLanguage: Sendable {
         )
     }
     
-    private func getLessonsAvailableText(lessonsAvailableCount: Int, translatedInAppLanguage: AppLanguageDomainModel) -> String {
+    private func getLessonsAvailableText(
+        lessonsAvailableCount: Int,
+        translatedInAppLanguage: AppLanguageDomainModel
+    ) -> String {
         
         let formatStringKey: String = LocalizableStringKeys.lessonsFilterLessonsAvailable.key
 
@@ -81,6 +103,10 @@ final class GetLessonFilterLanguage: Sendable {
 
         let formatString: String = strings[formatStringKey] ?? ""
         
-        return stringWithLocaleCount.getString(format: formatString, locale: Locale(identifier: translatedInAppLanguage), count: lessonsAvailableCount)
+        return stringWithLocaleCount.getString(
+            format: formatString,
+            locale: Locale(identifier: translatedInAppLanguage),
+            count: lessonsAvailableCount
+        )
     }
 }

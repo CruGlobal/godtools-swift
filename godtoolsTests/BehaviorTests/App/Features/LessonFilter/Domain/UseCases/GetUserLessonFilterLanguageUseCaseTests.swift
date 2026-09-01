@@ -1,5 +1,5 @@
 //
-//  GetUserLessonFiltersUseCaseTests.swift
+//  GetUserLessonFilterLanguageUseCaseTests.swift
 //  godtoolsTests
 //
 //  Created by Levi Eggert on 7/12/24.
@@ -13,7 +13,7 @@ import Combine
 import SwiftData
 import RepositorySync
 
-struct GetUserLessonFiltersUseCaseTests {
+struct GetUserLessonFilterLanguageUseCaseTests {
 
     @available(iOS 17.4, *)
     @Test(
@@ -39,7 +39,7 @@ struct GetUserLessonFiltersUseCaseTests {
 
         let swiftObjectsToAdd: [any PersistentModel] = [spanishLanguage, spanishLesson_0]
 
-        let getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase = try getUserLessonFiltersUseCase(addSwiftObjects: swiftObjectsToAdd)
+        let getUserLessonFilterLanguageUseCase: GetUserLessonFilterLanguageUseCase = try getUserLessonFilterLanguageUseCase(addSwiftObjects: swiftObjectsToAdd)
 
         var lessonLanguageFilterRef: LessonFilterLanguageDomainModel?
 
@@ -52,7 +52,7 @@ struct GetUserLessonFiltersUseCaseTests {
                 continuation.resume(returning: ())
             }
 
-            getUserLessonFiltersUseCase
+            getUserLessonFilterLanguageUseCase
                 .execute(appLanguage: appLanguageSpanish)
                 .sink(receiveCompletion: { _ in
 
@@ -105,7 +105,7 @@ struct GetUserLessonFiltersUseCaseTests {
 
         let swiftObjectsToAdd: [any PersistentModel] = [spanishLanguage, frenchLanguage, spanishLesson_0, frenchTract_0]
 
-        let getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase = try getUserLessonFiltersUseCase(addSwiftObjects: swiftObjectsToAdd)
+        let getUserLessonFilterLanguageUseCase: GetUserLessonFilterLanguageUseCase = try getUserLessonFilterLanguageUseCase(addSwiftObjects: swiftObjectsToAdd)
 
         var lessonLanguageFilterRef: LessonFilterLanguageDomainModel?
 
@@ -118,7 +118,7 @@ struct GetUserLessonFiltersUseCaseTests {
                 continuation.resume(returning: ())
             }
 
-            getUserLessonFiltersUseCase
+            getUserLessonFilterLanguageUseCase
                 .execute(appLanguage: appLanguageFrench)
                 .sink(receiveCompletion: { _ in
 
@@ -163,7 +163,7 @@ struct GetUserLessonFiltersUseCaseTests {
 
         let testsDiContainer: TestsDiContainer = try getTestsDiContainer(addSwiftObjects: swiftObjectsToAdd)
 
-        let getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase = getUserLessonFiltersUseCase(testsDiContainer: testsDiContainer)
+        let getUserLessonFilterLanguageUseCase: GetUserLessonFilterLanguageUseCase = getUserLessonFilterLanguageUseCase(testsDiContainer: testsDiContainer)
 
         var originalLessonLanguageFilterRef: LessonFilterLanguageDomainModel?
         var selectedLessonLanguageFilterRef: LessonFilterLanguageDomainModel?
@@ -178,7 +178,7 @@ struct GetUserLessonFiltersUseCaseTests {
                 continuation.resume(returning: ())
             }
 
-            getUserLessonFiltersUseCase
+            getUserLessonFilterLanguageUseCase
                 .execute(appLanguage: appLanguageFrench)
                 .sink(receiveCompletion: { _ in
 
@@ -216,7 +216,7 @@ struct GetUserLessonFiltersUseCaseTests {
     }
 }
 
-extension GetUserLessonFiltersUseCaseTests {
+extension GetUserLessonFilterLanguageUseCaseTests {
 
     @available(iOS 17.4, *)
     private func getTestsDiContainer(addSwiftObjects: [any PersistentModel]) throws -> TestsDiContainer {
@@ -237,16 +237,16 @@ extension GetUserLessonFiltersUseCaseTests {
     }
 
     @available(iOS 17.4, *)
-    private func getUserLessonFiltersUseCase(addSwiftObjects: [any PersistentModel]) throws -> GetUserLessonFiltersUseCase {
+    private func getUserLessonFilterLanguageUseCase(addSwiftObjects: [any PersistentModel]) throws -> GetUserLessonFilterLanguageUseCase {
 
         let testsDiContainer = try getTestsDiContainer(addSwiftObjects: addSwiftObjects)
 
-        return getUserLessonFiltersUseCase(testsDiContainer: testsDiContainer)
+        return getUserLessonFilterLanguageUseCase(testsDiContainer: testsDiContainer)
     }
 
-    private func getUserLessonFiltersUseCase(testsDiContainer: TestsDiContainer) -> GetUserLessonFiltersUseCase {
+    private func getUserLessonFilterLanguageUseCase(testsDiContainer: TestsDiContainer) -> GetUserLessonFilterLanguageUseCase {
 
-        return GetUserLessonFiltersUseCase(
+        return GetUserLessonFilterLanguageUseCase(
             languagesRepository: testsDiContainer.core.dataLayer.getLanguagesRepository(),
             userLessonFiltersRepository: testsDiContainer.core.dataLayer.getUserLessonFiltersRepository(),
             getLessonFilterLanguage: getLessonFilterLangauge(testsDiContainer: testsDiContainer)

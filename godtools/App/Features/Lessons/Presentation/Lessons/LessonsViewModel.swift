@@ -21,7 +21,7 @@ final class LessonsViewModel: ObservableObject {
     private let getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase
     private let getLessonsStringsUseCase: GetLessonsStringsUseCase
     private let getAllLessonsUseCase: GetAllLessonsUseCase
-    private let getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase
+    private let getUserLessonFilterLanguageUseCase: GetUserLessonFilterLanguageUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let getToolBannerUseCase: GetToolBannerUseCase
@@ -51,7 +51,7 @@ final class LessonsViewModel: ObservableObject {
         getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase,
         getLessonsStringsUseCase: GetLessonsStringsUseCase,
         getAllLessonsUseCase: GetAllLessonsUseCase,
-        getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase,
+        getUserLessonFilterLanguageUseCase: GetUserLessonFilterLanguageUseCase,
         trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
         trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase,
         getToolBannerUseCase: GetToolBannerUseCase,
@@ -65,7 +65,7 @@ final class LessonsViewModel: ObservableObject {
         self.getPersonalizedLessonsUseCase = getPersonalizedLessonsUseCase
         self.getLessonsStringsUseCase = getLessonsStringsUseCase
         self.getAllLessonsUseCase = getAllLessonsUseCase
-        self.getUserLessonFiltersUseCase = getUserLessonFiltersUseCase
+        self.getUserLessonFilterLanguageUseCase = getUserLessonFilterLanguageUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.getToolBannerUseCase = getToolBannerUseCase
@@ -101,7 +101,7 @@ final class LessonsViewModel: ObservableObject {
                 .execute(
                     appLanguage: appLanguage,
                     country: localizationSettings?.selectedCountry,
-                    filterLessonsByLanguage: languageFilter
+                    filterLessonsByLanguageId: languageFilter?.languageId
                 )
         }
         .switchToLatest()
@@ -123,7 +123,7 @@ final class LessonsViewModel: ObservableObject {
             getAllLessonsUseCase
                 .execute(
                     appLanguage: appLanguage,
-                    filterLessonsByLanguage: languageFilter
+                    filterLessonsByLanguageId: languageFilter?.languageId
                 )
         }
         .switchToLatest()
@@ -167,7 +167,7 @@ final class LessonsViewModel: ObservableObject {
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
             
-                getUserLessonFiltersUseCase
+                getUserLessonFilterLanguageUseCase
                     .execute(
                         appLanguage: appLanguage
                     )
