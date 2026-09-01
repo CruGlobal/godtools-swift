@@ -10,14 +10,12 @@ import Foundation
 import Combine
 
 final class GetUserPersonalizedLessonFilterLanguageUseCase: Sendable {
-        
-    typealias LanguageId = String
-    
+            
     init() {
         
     }
     
-    @MainActor func execute() -> AnyPublisher<LanguageId?, Error> {
+    @MainActor func execute() -> AnyPublisher<ToolLanguageFilterItemDomainModel?, Error> {
         
         // TODO: Get personalized lesson language filter. ~Levi
         
