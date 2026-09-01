@@ -1,5 +1,5 @@
 //
-//  GetLessonFilterLanguage.swift
+//  MapLanguageToLessonFilterLanguage.swift
 //  godtools
 //
 //  Created by Levi Eggert on 3/10/26.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GetLessonFilterLanguage: Sendable {
+final class MapLanguageToLessonFilterLanguage: Sendable {
     
     private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository
@@ -31,7 +31,7 @@ final class GetLessonFilterLanguage: Sendable {
         self.stringWithLocaleCount = stringWithLocaleCount
     }
     
-    func mapLanguageToLessonFilterLanguage(
+    func map(
         language: LanguageDataModel,
         translatedInAppLanguage: AppLanguageDomainModel
     ) -> LessonFilterLanguageDomainModel {

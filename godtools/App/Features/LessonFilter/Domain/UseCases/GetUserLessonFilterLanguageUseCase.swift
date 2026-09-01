@@ -13,17 +13,17 @@ final class GetUserLessonFilterLanguageUseCase: Sendable {
     
     private let languagesRepository: LanguagesRepository
     private let userLessonFiltersRepository: UserLessonFiltersRepository
-    private let getLessonFilterLanguage: GetLessonFilterLanguage
+    private let mapLanguageToLessonFilterLanguage: MapLanguageToLessonFilterLanguage
     
     init(
         languagesRepository: LanguagesRepository,
         userLessonFiltersRepository: UserLessonFiltersRepository,
-        getLessonFilterLanguage: GetLessonFilterLanguage
+        mapLanguageToLessonFilterLanguage: MapLanguageToLessonFilterLanguage
     ) {
         
         self.languagesRepository = languagesRepository
         self.userLessonFiltersRepository = userLessonFiltersRepository
-        self.getLessonFilterLanguage = getLessonFilterLanguage
+        self.mapLanguageToLessonFilterLanguage = mapLanguageToLessonFilterLanguage
     }
     
     @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<UserLessonFiltersDomainModel, Error> {
@@ -52,14 +52,14 @@ final class GetUserLessonFilterLanguageUseCase: Sendable {
         if let userFilterLanguageId = userLessonFiltersRepository.getUserLessonLanguageFilter()?.languageId,
            let language = languagesRepository.getLanguageById(id: userFilterLanguageId) {
             
-            return getLessonFilterLanguage.mapLanguageToLessonFilterLanguage(
+            return mapLanguageToLessonFilterLanguage.map(
                 language: language,
                 translatedInAppLanguage: appLanguage
             )
         }
         else if let language = languagesRepository.getLanguageByCode(code: appLanguage) {
             
-            return getLessonFilterLanguage.mapLanguageToLessonFilterLanguage(
+            return mapLanguageToLessonFilterLanguage.map(
                 language: language,
                 translatedInAppLanguage: appLanguage
             )

@@ -249,12 +249,12 @@ extension GetUserLessonFilterLanguageUseCaseTests {
         return GetUserLessonFilterLanguageUseCase(
             languagesRepository: testsDiContainer.core.dataLayer.getLanguagesRepository(),
             userLessonFiltersRepository: testsDiContainer.core.dataLayer.getUserLessonFiltersRepository(),
-            getLessonFilterLanguage: getLessonFilterLangauge(testsDiContainer: testsDiContainer)
+            mapLanguageToLessonFilterLanguage: mapLanguageToLessonFilterLanguage(testsDiContainer: testsDiContainer)
         )
     }
 
-    private func getLessonFilterLangauge(testsDiContainer: TestsDiContainer) -> GetLessonFilterLanguage {
-        return GetLessonFilterLanguage(
+    private func mapLanguageToLessonFilterLanguage(testsDiContainer: TestsDiContainer) -> MapLanguageToLessonFilterLanguage {
+        return MapLanguageToLessonFilterLanguage(
             resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),
             languagesRepository: testsDiContainer.core.dataLayer.getLanguagesRepository(),
             getTranslatedLanguageName: getTranslatedLanguageName(),
