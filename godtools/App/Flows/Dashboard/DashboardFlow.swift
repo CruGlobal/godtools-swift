@@ -75,8 +75,12 @@ final class DashboardFlow: GTFlow {
         case .doneTappedFromMenu:
             closeMenu(animated: true)
             
-        case .lessonTappedFromLessonsList(let lessonListItem, let languageFilter):
-            navigateToLesson(lessonListItem: lessonListItem, languageFilter: languageFilter, toolOpenedFrom: .dashboardLessons)
+        case .lessonTappedFromLessonsList(let lessonListItem, let languageFilterLanguageId):
+            navigateToLesson(
+                lessonListItem: lessonListItem,
+                languageFilterLanguageId: languageFilterLanguageId,
+                toolOpenedFrom: .dashboardLessons
+            )
             
         case .lessonLanguageFilterTappedFromLessons:
             navigationController.pushViewController(getLessonLanguageFilterSelection(), animated: true)
@@ -792,15 +796,15 @@ extension DashboardFlow {
     
     private func navigateToLesson(
         lessonListItem: LessonListItemDomainModel,
-        languageFilter: ToolLanguageFilterItemDomainModel?,
+        languageFilterLanguageId: String?,
         toolOpenedFrom: ToolOpenedFrom
     ) {
         
-        if let languageFilter = languageFilter {
+        if let languageFilterLanguageId = languageFilterLanguageId {
             
             navigateToTool(
                 toolDataModelId: lessonListItem.dataModelId,
-                languageIds: [languageFilter.languageId],
+                languageIds: [languageFilterLanguageId],
                 selectedLanguageIndex: 0,
                 trainingTipsEnabled: false,
                 toolOpenedFrom: toolOpenedFrom,

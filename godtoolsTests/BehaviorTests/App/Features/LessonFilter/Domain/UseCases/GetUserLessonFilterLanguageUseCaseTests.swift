@@ -56,9 +56,9 @@ struct GetUserLessonFilterLanguageUseCaseTests {
                 .execute(appLanguage: appLanguageSpanish)
                 .sink(receiveCompletion: { _ in
 
-                }, receiveValue: { (userLessonFilters: UserLessonFiltersDomainModel) in
+                }, receiveValue: { (userLessonFilterLanguage: ToolLanguageFilterItemDomainModel?) in
 
-                    lessonLanguageFilterRef = userLessonFilters.languageFilter
+                    lessonLanguageFilterRef = userLessonFilterLanguage
 
                     // When finished be sure to call:
                     timeoutTask.cancel()
@@ -122,9 +122,9 @@ struct GetUserLessonFilterLanguageUseCaseTests {
                 .execute(appLanguage: appLanguageFrench)
                 .sink(receiveCompletion: { _ in
 
-                }, receiveValue: { (userLessonFilters: UserLessonFiltersDomainModel) in
+                }, receiveValue: { (userLessonFilterLanguage: ToolLanguageFilterItemDomainModel?) in
 
-                    lessonLanguageFilterRef = userLessonFilters.languageFilter
+                    lessonLanguageFilterRef = userLessonFilterLanguage
 
                     // When finished be sure to call:
                     timeoutTask.cancel()
@@ -182,13 +182,13 @@ struct GetUserLessonFilterLanguageUseCaseTests {
                 .execute(appLanguage: appLanguageFrench)
                 .sink(receiveCompletion: { _ in
 
-                }, receiveValue: { (userLessonFilters: UserLessonFiltersDomainModel) in
+                }, receiveValue: { (userLessonFilterLanguage: ToolLanguageFilterItemDomainModel?) in
 
                     triggerCount += 1
 
                     if triggerCount == 1 {
 
-                        originalLessonLanguageFilterRef = userLessonFilters.languageFilter
+                        originalLessonLanguageFilterRef = userLessonFilterLanguage
 
                         Task {
                             try await testsDiContainer.core.dataLayer.getUserLessonFiltersRepository().storeUserLessonLanguageFilter(
@@ -198,7 +198,7 @@ struct GetUserLessonFilterLanguageUseCaseTests {
                     }
                     else if triggerCount == 2 {
 
-                        selectedLessonLanguageFilterRef = userLessonFilters.languageFilter
+                        selectedLessonLanguageFilterRef = userLessonFilterLanguage
 
                         // When finished be sure to call:
                         timeoutTask.cancel()

@@ -46,7 +46,9 @@ final class LessonFilterDomainLayerDependencies: Sendable {
     
     func getUserLessonFilterLanguageUseCase() -> GetUserLessonFilterLanguageUseCase {
         return GetUserLessonFilterLanguageUseCase(
-            userLessonFiltersRepository: core.dataLayer.getUserLessonFiltersRepository()
+            languagesRepository: core.dataLayer.getLanguagesRepository(),
+            userLessonFiltersRepository: core.dataLayer.getUserLessonFiltersRepository(),
+            mapLanguageToLessonFilterLanguage: getMapLanguageToLessonFilterLanguage()
         )
     }
     

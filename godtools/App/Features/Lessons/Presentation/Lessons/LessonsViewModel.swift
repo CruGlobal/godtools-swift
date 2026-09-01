@@ -31,9 +31,10 @@ final class LessonsViewModel: ObservableObject {
     private var pullToRefreshLessonsTask: Task<Void, Error>?
         
     @Published private var appLanguage = AppLanguageDomainModel.english
-    @Published private var lessonFilterLanguageSelection: ToolLanguageFilterItemDomainModel?
     @Published private var localizationSettings: UserLocalizationSettingsDomainModel?
     @Published private var allLessonsList: [LessonListItemDomainModel] = Array()
+    @Published private var selectedAllLessonsFilterLanguage: ToolLanguageFilterItemDomainModel?
+    @Published private var selectedPersonalizedLessonsFilterLanguage: ToolLanguageFilterItemDomainModel?
     
     @Published private(set) var toggleOptions: [PersonalizationToggleOption] = []
     @Published private(set) var strings: LessonsStringsDomainModel = .emptyValue
@@ -93,7 +94,7 @@ final class LessonsViewModel: ObservableObject {
         Publishers.CombineLatest3(
             $appLanguage.dropFirst(),
             $localizationSettings,
-            $lessonFilterLanguageSelection
+            $selectedAllLessonsFilterLanguage
         )
         .map { (appLanguage: AppLanguageDomainModel, localizationSettings: UserLocalizationSettingsDomainModel?, languageFilter: ToolLanguageFilterItemDomainModel?) in
             
@@ -116,7 +117,7 @@ final class LessonsViewModel: ObservableObject {
         
         Publishers.CombineLatest(
             $appLanguage.dropFirst(),
-            $lessonFilterLanguageSelection
+            $selectedAllLessonsFilterLanguage
         )
         .map { (appLanguage: AppLanguageDomainModel, languageFilter: ToolLanguageFilterItemDomainModel?) in
             
@@ -163,8 +164,6 @@ final class LessonsViewModel: ObservableObject {
         }
         .store(in: &cancellables)
     
-        // TODO: Fix language filter translation. ~Levi
-        /*
         $appLanguage
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
@@ -178,12 +177,12 @@ final class LessonsViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { _ in
                     
-            }, receiveValue: { [weak self] (userFilters: UserLessonFiltersDomainModel) in
+            }, receiveValue: { [weak self] (lessonLanguageFilter: ToolLanguageFilterItemDomainModel?) in
                 
-                self?.languageFilterButtonTitle = userFilters.languageFilter?.languageNameTranslatedInAppLanguage ?? ""
-                self?.lessonFilterLanguageSelection = userFilters.languageFilter
+                self?.selectedAllLessonsFilterLanguage = lessonLanguageFilter
+                self?.languageFilterButtonTitle = lessonLanguageFilter?.languageNameTranslatedInAppLanguage ?? ""
             })
-            .store(in: &cancellables)*/
+            .store(in: &cancellables)
     }
     
     deinit {
@@ -308,7 +307,7 @@ final class LessonsViewModel: ObservableObject {
                 .execute(
                     appLanguage: weakSelf.appLanguage,
                     country: weakSelf.localizationSettings?.selectedCountry,
-                    filterLessonsByLanguage: weakSelf.lessonFilterLanguageSelection
+                    languageFilterLanguageId: weakSelf.selectedAllLessonsFilterLanguage?.languageId
                 )
         }
     }
@@ -348,7 +347,12 @@ extension LessonsViewModel {
     
     func lessonCardTapped(lessonListItem: LessonListItemDomainModel) {
 
-        stepEmitter.emit(step: AppFlowStep.lessonTappedFromLessonsList(lessonListItem: lessonListItem, languageFilter: lessonFilterLanguageSelection))
+        stepEmitter.emit(
+            step: AppFlowStep.lessonTappedFromLessonsList(
+                lessonListItem: lessonListItem,
+                languageFilterLanguageId: selectedAllLessonsFilterLanguage?.languageId
+            )
+        )
 
         trackLessonTappedAnalytics(lessonListItem: lessonListItem)
     }

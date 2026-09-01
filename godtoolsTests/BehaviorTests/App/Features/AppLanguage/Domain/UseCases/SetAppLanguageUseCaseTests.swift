@@ -77,7 +77,7 @@ struct SetAppLanguageUseCaseTests {
                 )
                 .sink(receiveCompletion: { _ in
                     
-                }, receiveValue: { (userLessonFilters: UserLessonFiltersDomainModel) in
+                }, receiveValue: { (userLessonFilterLanguage: ToolLanguageFilterItemDomainModel?) in
                     
                     triggerCount += 1
                     
@@ -90,7 +90,7 @@ struct SetAppLanguageUseCaseTests {
                     }
                     else if triggerCount == 2 {
                         
-                        lessonLanguageFilterRef = userLessonFilters.languageFilter
+                        lessonLanguageFilterRef = userLessonFilterLanguage
                         
                         // When finished be sure to call:
                         timeoutTask.cancel()

@@ -82,14 +82,22 @@ final class LessonFilterLanguageSelectionViewModel: ObservableObject {
             })
             .store(in: &cancellables)
         
-        getUserLessonFilterLanguageUseCase
-            .execute()
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+                
+                getUserLessonFilterLanguageUseCase
+                    .execute(
+                        appLanguage: appLanguage
+                    )
+            }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { _ in
                 
-            }, receiveValue: { [weak self] (languageId: String?) in
+            }, receiveValue: { [weak self] (languageFilter: ToolLanguageFilterItemDomainModel?) in
                 
-                self?.selectedLanguageId = languageId
+                self?.selectedLanguageId = languageFilter?.languageId
             })
             .store(in: &cancellables)
         
