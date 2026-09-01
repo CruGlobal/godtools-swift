@@ -47,12 +47,6 @@ struct FavoritesView: View {
                     
                     VStack(alignment: .leading, spacing: 0) {
                         
-                        Text(viewModel.strings.welcomeTitle)
-                            .font(FontLibrary.sfProTextRegular.font(size: 30))
-                            .foregroundColor(ColorPalette.gtGrey.color)
-                            .padding([.top], 24)
-                            .padding([.leading], contentHorizontalInsets)
-                        
                         FeaturedLessonsView(
                             viewModel: viewModel,
                             geometry: geometry,
