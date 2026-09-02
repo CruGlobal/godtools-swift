@@ -26,7 +26,7 @@ final class GetUserLessonFilterLanguageUseCase: Sendable {
         self.mapLanguageToLessonFilterLanguage = mapLanguageToLessonFilterLanguage
     }
     
-    @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolLanguageFilterItemDomainModel?, Error> {
+    @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<LessonFilterLanguageDomainModel?, Error> {
         
         return Publishers.CombineLatest(
             languagesRepository.observeCollectionChangesPublisher(),
@@ -39,7 +39,7 @@ final class GetUserLessonFilterLanguageUseCase: Sendable {
         .eraseToAnyPublisher()
     }
     
-    private func getUserLessonFilterLanguage(appLanguage: AppLanguageDomainModel) -> ToolLanguageFilterItemDomainModel? {
+    private func getUserLessonFilterLanguage(appLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel? {
         
         if let userFilterLanguageId = userLessonFiltersRepository.getUserLessonLanguageFilter()?.languageId,
            let language = languagesRepository.getLanguageById(id: userFilterLanguageId) {

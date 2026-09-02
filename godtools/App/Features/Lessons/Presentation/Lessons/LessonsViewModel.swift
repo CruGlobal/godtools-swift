@@ -33,8 +33,8 @@ final class LessonsViewModel: ObservableObject {
     @Published private var appLanguage = AppLanguageDomainModel.english
     @Published private var localizationSettings: UserLocalizationSettingsDomainModel?
     @Published private var allLessonsList: [LessonListItemDomainModel] = Array()
-    @Published private var selectedAllLessonsFilterLanguage: ToolLanguageFilterItemDomainModel?
-    @Published private var selectedPersonalizedLessonsFilterLanguage: ToolLanguageFilterItemDomainModel?
+    @Published private var selectedAllLessonsFilterLanguage: LessonFilterLanguageDomainModel?
+    @Published private var selectedPersonalizedLessonsFilterLanguage: PersonalizedLessonFilterLanguageDomainModel?
     
     @Published private(set) var toggleOptions: [PersonalizationToggleOption] = []
     @Published private(set) var strings: LessonsStringsDomainModel = .emptyValue
@@ -94,9 +94,9 @@ final class LessonsViewModel: ObservableObject {
         Publishers.CombineLatest3(
             $appLanguage.dropFirst(),
             $localizationSettings,
-            $selectedAllLessonsFilterLanguage
+            $selectedPersonalizedLessonsFilterLanguage
         )
-        .map { (appLanguage: AppLanguageDomainModel, localizationSettings: UserLocalizationSettingsDomainModel?, languageFilter: ToolLanguageFilterItemDomainModel?) in
+        .map { (appLanguage: AppLanguageDomainModel, localizationSettings: UserLocalizationSettingsDomainModel?, languageFilter: PersonalizedLessonFilterLanguageDomainModel?) in
             
             getPersonalizedLessonsUseCase
                 .execute(
@@ -119,7 +119,7 @@ final class LessonsViewModel: ObservableObject {
             $appLanguage.dropFirst(),
             $selectedAllLessonsFilterLanguage
         )
-        .map { (appLanguage: AppLanguageDomainModel, languageFilter: ToolLanguageFilterItemDomainModel?) in
+        .map { (appLanguage: AppLanguageDomainModel, languageFilter: LessonFilterLanguageDomainModel?) in
             
             getAllLessonsUseCase
                 .execute(
@@ -177,7 +177,7 @@ final class LessonsViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { _ in
                     
-            }, receiveValue: { [weak self] (lessonLanguageFilter: ToolLanguageFilterItemDomainModel?) in
+            }, receiveValue: { [weak self] (lessonLanguageFilter: LessonFilterLanguageDomainModel?) in
                 
                 self?.selectedAllLessonsFilterLanguage = lessonLanguageFilter
                 self?.languageFilterButtonTitle = lessonLanguageFilter?.languageNameTranslatedInAppLanguage ?? ""

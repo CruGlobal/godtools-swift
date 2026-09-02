@@ -8,10 +8,10 @@
 
 import SwiftUI
 
-struct ToolLanguageFilterSelectionView: View {
+struct ToolLanguageFilterSelectionView<Language: ToolLanguageFilterItemDomainModelInterface>: View {
     
     private let searchBarStrings: SearchBarStringsDomainModel
-    private let languages: [ToolLanguageFilterItemDomainModel]
+    private let languages: [Language]
     private let selectedLanguageId: String?
     private let languageTapped: ((_ languageId: String) -> Void)?
     
@@ -20,7 +20,7 @@ struct ToolLanguageFilterSelectionView: View {
     init(
         searchText: Binding<String>,
         searchBarStrings: SearchBarStringsDomainModel,
-        languages: [ToolLanguageFilterItemDomainModel],
+        languages: [Language],
         selectedLanguageId: String?,
         languageTapped: ((_ languageId: String) -> Void)?
     ) {
