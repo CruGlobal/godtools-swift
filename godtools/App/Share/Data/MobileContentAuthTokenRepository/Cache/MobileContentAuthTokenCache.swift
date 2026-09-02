@@ -41,7 +41,9 @@ final class MobileContentAuthTokenCache: AuthTokenCacheInterface {
                 dataModel = nil
             }
             
-            updateHashableAuthTokenSubject(authToken: dataModel)
+            Task {
+                await Self.authTokenBroadcast.setAuthToken(authToken: dataModel)
+            }
         }
         catch let error {
             
@@ -86,8 +88,8 @@ final class MobileContentAuthTokenCache: AuthTokenCacheInterface {
         )
         
         let dataModel = cachedAuthToken.toModel()
-                
-        updateHashableAuthTokenSubject(authToken: dataModel)
+                        
+        await Self.authTokenBroadcast.setAuthToken(authToken: dataModel)
     }
     
     func getCachedAuthToken() throws -> CachedAuthToken? {
@@ -121,7 +123,7 @@ final class MobileContentAuthTokenCache: AuthTokenCacheInterface {
         keychainAccessor.deleteMobileContentAuthTokenAndUserId(userId: userId)
         
         _ = try await persistence.deleteObjectsByIds(ids: [userId], getOption: nil)
-        
-        updateHashableAuthTokenSubject(authToken: nil)
+                
+        await Self.authTokenBroadcast.setAuthToken(authToken: nil)
     }
 }
