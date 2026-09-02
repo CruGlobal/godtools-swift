@@ -38,14 +38,14 @@ struct YourFavoriteToolsView: View {
                 contentHorizontalInsets: contentHorizontalInsets
             )
             
-            if viewModel.yourFavoritedTools.count > 0 {
+            if viewModel.favoritedTools.count > 0 {
                 
                 ScrollView(.horizontal, showsIndicators: false) {
                     
                     // NOTE: We need HStack here instead of LazyHStack because our card heights have dynamic heights to them and this allows the HStack to wrap the tallest card.
                     HStack(alignment: .top, spacing: toolCardSpacing) {
                         
-                        ForEach(viewModel.yourFavoritedTools) { (tool: YourFavoritedToolDomainModel) in
+                        ForEach(viewModel.favoritedTools) { (tool: YourFavoritedToolDomainModel) in
                             
                             ToolCardView(
                                 viewModel: viewModel.getYourFavoriteToolViewModel(tool: tool),

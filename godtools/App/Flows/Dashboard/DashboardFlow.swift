@@ -118,10 +118,7 @@ final class DashboardFlow: GTFlow {
                 toolOpenedFrom: .dashboardFavoritesFeaturedLesson,
                 persistToolLanguageSettings: nil
             )
-            
-        case .viewAllFavoriteToolsTappedFromFavorites:
-            navigationController.pushViewController(getAllFavoriteTools(), animated: true)
-            
+                        
         case .toolDetailsTappedFromFavorites(let tool):
             navigateToToolDetails(toolId: tool.dataModelId)
         
@@ -149,13 +146,7 @@ final class DashboardFlow: GTFlow {
             
         case .goToToolsTappedFromFavorites:
             navigateToDashboard(startingTab: .tools)
-            
-        case .backTappedFromAllYourFavoriteTools:
-            navigationController.popViewController(animated: true)
-            
-        case .toolDetailsTappedFromAllYourFavoriteTools(let tool):
-            navigateToToolDetails(toolId: tool.dataModelId)
-        
+                                
         case .openTutorialTappedFromTools:
             presentFlow(
                 flow: TutorialFlow(appDiContainer: appDiContainer)
@@ -163,29 +154,7 @@ final class DashboardFlow: GTFlow {
             
         case .tutorialFlowCompleted( _):
             dismissFlow()
-
-        case .openToolTappedFromAllYourFavoriteTools(let tool):
-            navigateToToolWithToolLanguageSettingsAppliedForFavoritedTool(
-                toolDataModelId: tool.dataModelId,
-                trainingTipsEnabled: false,
-                toolOpenedFrom: .dashboardFavoritesFavoritedTool
-            )
-            
-        case .toolTappedFromAllYourFavoritedTools(let tool):
-            navigateToToolWithToolLanguageSettingsAppliedForFavoritedTool(
-                toolDataModelId: tool.dataModelId,
-                trainingTipsEnabled: false,
-                toolOpenedFrom: .dashboardFavoritesFavoritedTool
-            )
-            
-        case .unfavoriteToolTappedFromAllYourFavoritedTools(let tool, let didConfirmToolRemovalSubject):
-            
-            presentConfirmRemoveToolFromFavoritesAlertView(
-                toolId: tool.dataModelId,
-                didConfirmToolRemovalSubject: didConfirmToolRemovalSubject,
-                animated: true
-            )
-            
+                        
         case .toolCategoryFilterTappedFromTools:
             navigationController.pushViewController(getToolCategoryFilterSelection(), animated: true)
             
@@ -599,35 +568,6 @@ extension DashboardFlow {
         )
         
         return overlayNavigationController
-    }
-}
-
-// MARK: - Tool Favorites
-
-extension DashboardFlow {
-    
-    func getAllFavoriteTools() -> UIViewController {
-        
-        let viewModel = AllYourFavoriteToolsViewModel(
-            stepEmitter: stepEmitter,
-            getAllYourFavoritedToolsStringsUseCase: appDiContainer.feature.favorites.domainLayer.getAllYourFavoritedToolsStringsUseCase(),
-            getYourFavoritedToolsUseCase: appDiContainer.feature.favorites.domainLayer.getYourFavoritedToolsUseCase(),
-            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getToolIsFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToolIsFavoritedUseCase(),
-            reorderFavoritedToolUseCase: appDiContainer.feature.favorites.domainLayer.getReorderFavoritedToolUseCase(),
-            getToolBannerUseCase: appDiContainer.core.domainLayer.getToolBannerUseCase(),
-            imageCache: appDiContainer.core.dataLayer.getSharedImageCache(),
-            trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-            trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase()
-        )
-        
-        let view = AllYourFavoriteToolsView(viewModel: viewModel)
-        
-        let hostingView = AppHostingController<AllYourFavoriteToolsView>(
-            rootView: view
-        )
-        
-        return hostingView
     }
 }
 
