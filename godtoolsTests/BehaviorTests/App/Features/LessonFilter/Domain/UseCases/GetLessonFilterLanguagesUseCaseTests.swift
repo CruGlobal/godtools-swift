@@ -70,20 +70,20 @@ struct GetLessonFilterLanguagesUseCaseTests {
         let frenchLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.french.rawValue})
         let spanishLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.spanish.rawValue})
 
-        #expect(afrikaansLanguage?.languageNameTranslatedInLanguage == "Afrikaans")
-        #expect(afrikaansLanguage?.languageNameTranslatedInAppLanguage == "африкаанс")
+        #expect(afrikaansLanguage?.languageNamePair.nameInOwnLanguage == "Afrikaans")
+        #expect(afrikaansLanguage?.languageNamePair.nameInAppLanguage == "африкаанс")
         
-        #expect(czechLanguage?.languageNameTranslatedInLanguage == "čeština")
-        #expect(czechLanguage?.languageNameTranslatedInAppLanguage == "Чешский")
+        #expect(czechLanguage?.languageNamePair.nameInOwnLanguage == "čeština")
+        #expect(czechLanguage?.languageNamePair.nameInAppLanguage == "Чешский")
         
-        #expect(englishLanguage?.languageNameTranslatedInLanguage == "English")
-        #expect(englishLanguage?.languageNameTranslatedInAppLanguage == "Английский")
+        #expect(englishLanguage?.languageNamePair.nameInOwnLanguage == "English")
+        #expect(englishLanguage?.languageNamePair.nameInAppLanguage == "Английский")
         
-        #expect(frenchLanguage?.languageNameTranslatedInLanguage == "Français")
-        #expect(frenchLanguage?.languageNameTranslatedInAppLanguage == "Французский")
+        #expect(frenchLanguage?.languageNamePair.nameInOwnLanguage == "Français")
+        #expect(frenchLanguage?.languageNamePair.nameInAppLanguage == "Французский")
         
-        #expect(spanishLanguage?.languageNameTranslatedInLanguage == "Español")
-        #expect(spanishLanguage?.languageNameTranslatedInAppLanguage == "испанский")
+        #expect(spanishLanguage?.languageNamePair.nameInOwnLanguage == "Español")
+        #expect(spanishLanguage?.languageNamePair.nameInAppLanguage == "испанский")
     }
     
     struct TestSortingArgument {
@@ -140,7 +140,7 @@ struct GetLessonFilterLanguagesUseCaseTests {
                 .store(in: &cancellables)
         }
         
-        #expect(languagesRef.map({$0.languageNameTranslatedInAppLanguage}) == argument.expectedValue)
+        #expect(languagesRef.map({$0.languageNamePair.nameInAppLanguage}) == argument.expectedValue)
     }
     
     @available(iOS 17.4, *)

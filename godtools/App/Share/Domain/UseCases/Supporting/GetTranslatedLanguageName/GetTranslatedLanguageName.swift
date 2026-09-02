@@ -41,16 +41,43 @@ final class GetTranslatedLanguageName: Sendable {
             return language.fallbackName
         }
         
-        if let localizedName = localizationLanguageName.getLanguageName(languageId: language.localeId, translatedInLanguage: translatedInLanguage), !localizedName.isEmpty {
+        if let localizedName = localizationLanguageName.getLanguageName(
+            languageId: language.localeId,
+            translatedInLanguage: translatedInLanguage
+        ), !localizedName.isEmpty {
             
             return localizedName
         }
-        else if let localeLanguageName = getLanguageNameFromLocale(language: language, translatedInLanguage: translatedInLanguage) {
+        else if let localeLanguageName = getLanguageNameFromLocale(
+            language: language,
+            translatedInLanguage: translatedInLanguage
+        ) {
             
             return localeLanguageName
         }
         
         return language.fallbackName
+    }
+    
+    func getLanguageNamePair(
+        language: TranslatableLanguage,
+        appLanguage: AppLanguageDomainModel
+    ) -> TranslatedLanguageNamePairDomainModel {
+        
+        let nameInOwnLanguage = getLanguageName(
+            language: language,
+            translatedInLanguage: language.localeId
+        )
+        
+        let nameInAppLanguage = getLanguageName(
+            language: language,
+            translatedInLanguage: appLanguage
+        )
+        
+        return TranslatedLanguageNamePairDomainModel(
+            nameInOwnLanguage: nameInOwnLanguage,
+            nameInAppLanguage: nameInAppLanguage
+        )
     }
     
     private func getLanguageNameFromLocale(
@@ -62,11 +89,19 @@ final class GetTranslatedLanguageName: Sendable {
         
         var languageSuffixes: [String] = Array()
         
-        if let localeLanguageName = localeLanguageName.getLanguageName(forLanguageCode: language.languageCode, translatedInLanguageId: translatedInLanguage), !localeLanguageName.isEmpty {
+        if let localeLanguageName = localeLanguageName.getLanguageName(
+            forLanguageCode: language.languageCode,
+            translatedInLanguageId: translatedInLanguage
+        ), !localeLanguageName.isEmpty {
+            
             languageName = localeLanguageName
         }
         else {
-            languageName = localeLanguageName.getLanguageName(forLocaleId: language.localeId, translatedInLanguageId: translatedInLanguage)
+            
+            languageName = localeLanguageName.getLanguageName(
+                forLocaleId: language.localeId,
+                translatedInLanguageId: translatedInLanguage
+            )
         }
         
         guard let languageName = languageName else {

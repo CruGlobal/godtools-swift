@@ -11,16 +11,15 @@ import Foundation
 struct AppLanguageListItemDomainModel: Sendable {
     
     let language: AppLanguageDomainModel
-    let languageNameTranslatedInOwnLanguage: String
-    let languageNameTranslatedInCurrentAppLanguage: String
+    let languageNamePair: TranslatedLanguageNamePairDomainModel
 }
 
 extension AppLanguageListItemDomainModel: StringSearchable {
     
     var searchableStrings: [String] {
         return [
-            languageNameTranslatedInOwnLanguage,
-            languageNameTranslatedInCurrentAppLanguage
+            languageNamePair.nameInOwnLanguage,
+            languageNamePair.nameInAppLanguage
         ]
     }
 }

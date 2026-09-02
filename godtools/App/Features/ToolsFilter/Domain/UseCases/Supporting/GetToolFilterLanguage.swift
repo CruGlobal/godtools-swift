@@ -53,15 +53,16 @@ extension GetToolFilterLanguage {
         
         let toolsAvailableCount: Int = getToolsAvailableCount(languageId: language.id, filteredByCategoryId: filteredByCategoryId)
         
-        let languageName = getTranslatedLanguageName.getLanguageName(language: language, translatedInLanguage: language.code)
-        let languageNameTranslatedInAppLanguage = getTranslatedLanguageName.getLanguageName(language: language, translatedInLanguage: translatedInAppLanguage)
+        let languageNamePair: TranslatedLanguageNamePairDomainModel = getTranslatedLanguageName.getLanguageNamePair(
+            language: language,
+            appLanguage: translatedInAppLanguage
+        )
         
         let toolsAvailable: String = getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
         
         return ToolFilterLanguageDomainModel.createLanguage(
             id: language.id,
-            languageName: languageName,
-            languageNameTranslatedInAppLanguage: languageNameTranslatedInAppLanguage,
+            languageNamePair: languageNamePair,
             toolsAvailable: toolsAvailable,
             numberOfToolsAvailable: toolsAvailableCount
         )
@@ -69,23 +70,23 @@ extension GetToolFilterLanguage {
     
     func createAnyLanguageDomainModel(translatedInAppLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) -> ToolFilterLanguageDomainModel {
         
-        let languageNameTranslatedInAppLanguageKey: String = LocalizableStringKeys.toolsFilterAnyLanguage.key
+        let anyLanguageNameKey: String = LocalizableStringKeys.toolsFilterAnyLanguage.key
 
         let strings: [String: String] = localizationServices.stringsForKeys(
             keys: [
-                languageNameTranslatedInAppLanguageKey
+                anyLanguageNameKey
             ],
             fetchOrder: LocalizationServicesDefaults.getFetchOrder(localeIdentifier: translatedInAppLanguage.localeId),
             shouldFallbackToKey: LocalizationServicesDefaults.fallbackToKey
         )
 
-        let languageNameTranslatedInAppLanguage: String = strings[languageNameTranslatedInAppLanguageKey] ?? ""
+        let nameInAppLanguage: String = strings[anyLanguageNameKey] ?? ""
         
         let toolsAvailableCount: Int = getToolsAvailableCount(languageId: nil, filteredByCategoryId: filteredByCategoryId)
         let toolsAvailable: String = getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
         
         return ToolFilterLanguageDomainModel.createAnyLanguage(
-            languageNameTranslatedInAppLanguage: languageNameTranslatedInAppLanguage,
+            nameInAppLanguage: nameInAppLanguage,
             toolsAvailable: toolsAvailable,
             numberOfToolsAvailable: toolsAvailableCount
         )

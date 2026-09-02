@@ -376,8 +376,7 @@ extension GetToolFilterCategoriesUseCaseTests {
 
         return ToolFilterLanguageDomainModel.createLanguage(
             id: languageId,
-            languageName: "",
-            languageNameTranslatedInAppLanguage: "",
+            languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "", nameInAppLanguage: ""),
             toolsAvailable: "",
             numberOfToolsAvailable: 0
         )

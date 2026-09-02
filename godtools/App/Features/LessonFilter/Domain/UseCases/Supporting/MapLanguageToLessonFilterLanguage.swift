@@ -38,14 +38,9 @@ final class MapLanguageToLessonFilterLanguage: Sendable {
         
         let lessonsAvailableCount: Int = resourcesRepository.getLessonsCount(filterByLanguageId: language.id)
 
-        let languageNameTranslatedInLanguage = getTranslatedLanguageName.getLanguageName(
-            language: language.code,
-            translatedInLanguage: language.code
-        )
-        
-        let languageNameTranslatedInAppLanguage = getTranslatedLanguageName.getLanguageName(
-            language: language.code,
-            translatedInLanguage: translatedInAppLanguage
+        let languageNamePair: TranslatedLanguageNamePairDomainModel = getTranslatedLanguageName.getLanguageNamePair(
+            language: language,
+            appLanguage: translatedInAppLanguage
         )
         
         let lessonsAvailableText: String = getLessonsAvailableText(
@@ -55,8 +50,7 @@ final class MapLanguageToLessonFilterLanguage: Sendable {
         
         return LessonFilterLanguageDomainModel(
             languageId: language.id,
-            languageNameTranslatedInLanguage: languageNameTranslatedInLanguage,
-            languageNameTranslatedInAppLanguage: languageNameTranslatedInAppLanguage,
+            languageNamePair: languageNamePair,
             lessonsAvailableText: lessonsAvailableText,
             lessonsAvailableCount: lessonsAvailableCount
         )

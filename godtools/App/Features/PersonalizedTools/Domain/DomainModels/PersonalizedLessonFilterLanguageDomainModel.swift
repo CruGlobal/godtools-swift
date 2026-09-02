@@ -11,8 +11,7 @@ import Foundation
 struct PersonalizedLessonFilterLanguageDomainModel: ToolLanguageFilterItemDomainModelInterface {
     
     let languageId: String
-    let languageNameTranslatedInLanguage: String
-    let languageNameTranslatedInAppLanguage: String
+    let languageNamePair: TranslatedLanguageNamePairDomainModel
     
     var availableText: String? {
         return nil

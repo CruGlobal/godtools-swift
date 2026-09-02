@@ -30,21 +30,23 @@ struct ToolFilterLanguageSelectionRowView: View {
                     let titleFontLibrary: FontLibrary = isSelected ? FontLibrary.sfProTextBold : FontLibrary.sfProTextRegular
                     let titleFont: Font = titleFontLibrary.font(size: 15)
                     
-                    if let languageName = language.languageName, !languageName.isEmpty {
+                    let nameInOwnLanguage: String = language.languageNamePair.nameInOwnLanguage
+                    
+                    if !nameInOwnLanguage.isEmpty {
                      
                         getPrimaryText(
-                            text: languageName,
+                            text: nameInOwnLanguage,
                             font: titleFont
                         )
                         
-                        Text(language.languageNameTranslatedInAppLanguage)
+                        Text(language.languageNamePair.nameInAppLanguage)
                             .font(FontLibrary.sfProTextRegular.font(size: 15))
                             .foregroundColor(ToolFilterLanguageSelectionRowView.lightGrey)
                     }
                     else {
                         
                         getPrimaryText(
-                            text: language.languageNameTranslatedInAppLanguage,
+                            text: language.languageNamePair.nameInAppLanguage,
                             font: titleFont
                         )
                     }

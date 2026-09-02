@@ -27,21 +27,22 @@ final class GetAppLanguagesListUseCase: Sendable {
 
         for languageDataModel in languages {
 
-            let languageNameTranslatedInOwnLanguage: String = self.getTranslatedLanguageName.getLanguageName(language: languageDataModel, translatedInLanguage: languageDataModel.languageId)
-            let languageNameTranslatedInCurrentAppLanguage: String = self.getTranslatedLanguageName.getLanguageName(language: languageDataModel, translatedInLanguage: appLanguage)
+            let languageNamePair: TranslatedLanguageNamePairDomainModel = getTranslatedLanguageName.getLanguageNamePair(
+                language: languageDataModel,
+                appLanguage: appLanguage
+            )
 
             appLanguages.append(
                 AppLanguageListItemDomainModel(
                     language: languageDataModel.languageId,
-                    languageNameTranslatedInOwnLanguage: languageNameTranslatedInOwnLanguage,
-                    languageNameTranslatedInCurrentAppLanguage: languageNameTranslatedInCurrentAppLanguage
+                    languageNamePair: languageNamePair
                 )
             )
         }
 
         let appLanguagesList: [AppLanguageListItemDomainModel] = appLanguages
             .sorted { (thisAppLanguage: AppLanguageListItemDomainModel, thatAppLanguage: AppLanguageListItemDomainModel) in
-                return thisAppLanguage.languageNameTranslatedInCurrentAppLanguage < thatAppLanguage.languageNameTranslatedInCurrentAppLanguage
+                return thisAppLanguage.languageNamePair.nameInAppLanguage < thatAppLanguage.languageNamePair.nameInAppLanguage
             }
 
         return appLanguagesList

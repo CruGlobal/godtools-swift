@@ -13,14 +13,17 @@ final class GetPersonalizedLessonFilterLanguagesUseCase: Sendable {
     
     private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository
+    private let mapLanguageToPersonalizedLessonFilterLanguage: MapLanguageToPersonalizedLessonFilterLanguage
     
     init(
         resourcesRepository: ResourcesRepository,
-        languagesRepository: LanguagesRepository
+        languagesRepository: LanguagesRepository,
+        mapLanguageToPersonalizedLessonFilterLanguage: MapLanguageToPersonalizedLessonFilterLanguage
     ) {
         
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository
+        self.mapLanguageToPersonalizedLessonFilterLanguage = mapLanguageToPersonalizedLessonFilterLanguage
     }
     
     @MainActor func execute(
@@ -41,6 +44,26 @@ final class GetPersonalizedLessonFilterLanguagesUseCase: Sendable {
     
     private func asyncExecute(appLanguage: AppLanguageDomainModel) async throws -> [PersonalizedLessonFilterLanguageDomainModel] {
         
-        return Array()
+        let languageIds = self.resourcesRepository.getLessonsSupportedLanguageIds()
+        
+        let languages: [LanguageDataModel] = try await languagesRepository.getLanguagesByIds(ids: languageIds)
+        
+        var domainModels: [PersonalizedLessonFilterLanguageDomainModel] = Array()
+
+        for language in languages {
+
+            let domainModel: PersonalizedLessonFilterLanguageDomainModel = self.mapLanguageToPersonalizedLessonFilterLanguage.map(
+                language: language,
+                translatedInAppLanguage: appLanguage
+            )
+
+            domainModels.append(domainModel)
+        }
+        
+        return domainModels
+            .sorted { (language1: PersonalizedLessonFilterLanguageDomainModel, language2: PersonalizedLessonFilterLanguageDomainModel) in
+                
+                return language1.languageNamePair.nameInAppLanguage.lowercased() < language2.languageNamePair.nameInAppLanguage.lowercased()
+            }
     }
 }

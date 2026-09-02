@@ -71,73 +71,59 @@ extension SearchAppLanguageInAppLanguagesListUseCaseTests {
         let appLanguagesList: [AppLanguageListItemDomainModel] = [
             AppLanguageListItemDomainModel(
                 language: "ar",
-                languageNameTranslatedInOwnLanguage: "العربية",
-                languageNameTranslatedInCurrentAppLanguage: "Arabic"
+                languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "العربية", nameInAppLanguage: "Arabic")
             ),
             AppLanguageListItemDomainModel(
                 language: "bn",
-                languageNameTranslatedInOwnLanguage: "বাংলা",
-                languageNameTranslatedInCurrentAppLanguage: "Bangla"
+                languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "বাংলা", nameInAppLanguage: "Bangla")
             ),
             AppLanguageListItemDomainModel(
                 language: "zh-Hans",
-                languageNameTranslatedInOwnLanguage: "中文 (简体中文)",
-                languageNameTranslatedInCurrentAppLanguage: "Chinese (Simplified Han)"
+                languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "中文 (简体中文)", nameInAppLanguage: "Chinese (Simplified Han)")
             ),
             AppLanguageListItemDomainModel(
                 language: "zh-Hant",
-                languageNameTranslatedInOwnLanguage: "中文 (繁體中文",
-                languageNameTranslatedInCurrentAppLanguage: "Chinese (Traditional Han)"
+                languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "中文 (繁體中文", nameInAppLanguage: "Chinese (Traditional Han)")
             ),
             AppLanguageListItemDomainModel(
                 language: "en",
-                languageNameTranslatedInOwnLanguage: "English",
-                languageNameTranslatedInCurrentAppLanguage: "English"
+                languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "English", nameInAppLanguage: "English")
             ),
             AppLanguageListItemDomainModel(
                 language: "fr",
-                languageNameTranslatedInOwnLanguage: "français",
-                languageNameTranslatedInCurrentAppLanguage: "French"
+                languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "français", nameInAppLanguage: "French")
             ),
             AppLanguageListItemDomainModel(
                 language: "hi",
-                languageNameTranslatedInOwnLanguage: "हिन्दी",
-                languageNameTranslatedInCurrentAppLanguage: "Hindi"
+                languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "हिन्दी", nameInAppLanguage: "Hindi")
             ),
             AppLanguageListItemDomainModel(
                 language: "id",
-                languageNameTranslatedInOwnLanguage: "Indonesia",
-                languageNameTranslatedInCurrentAppLanguage: "Indonesian"
+                languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "Indonesia", nameInAppLanguage: "Indonesian")
             ),
             AppLanguageListItemDomainModel(
                 language: "lv",
-                languageNameTranslatedInOwnLanguage: "latviešu",
-                languageNameTranslatedInCurrentAppLanguage: "Latvian"
+                languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "latviešu", nameInAppLanguage: "Latvian")
             ),
             AppLanguageListItemDomainModel(
                 language: "pt",
-                languageNameTranslatedInOwnLanguage: "português",
-                languageNameTranslatedInCurrentAppLanguage: "Portuguese"
+                languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "português", nameInAppLanguage: "Portuguese")
             ),
             AppLanguageListItemDomainModel(
                 language: "ru",
-                languageNameTranslatedInOwnLanguage: "русский",
-                languageNameTranslatedInCurrentAppLanguage: "Russian"
+                languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "русский", nameInAppLanguage: "Russian")
             ),
             AppLanguageListItemDomainModel(
                 language: "es",
-                languageNameTranslatedInOwnLanguage: "español",
-                languageNameTranslatedInCurrentAppLanguage: "Spanish"
+                languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "español", nameInAppLanguage: "Spanish")
             ),
             AppLanguageListItemDomainModel(
                 language: "ur",
-                languageNameTranslatedInOwnLanguage: "اردو",
-                languageNameTranslatedInCurrentAppLanguage: "Urdu"
+                languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "اردو", nameInAppLanguage: "Urdu")
             ),
             AppLanguageListItemDomainModel(
                 language: "vi",
-                languageNameTranslatedInOwnLanguage: "Tiếng Việt",
-                languageNameTranslatedInCurrentAppLanguage: "Vietnamese"
+                languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "Tiếng Việt", nameInAppLanguage: "Vietnamese")
             )
         ]
         

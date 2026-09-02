@@ -46,7 +46,7 @@ struct SearchLessonFilterLanguagesUseCaseTests {
                 
         let searchedLanguages: [String] = searchLessonFilterLanguagesUseCase
             .execute(searchText: argument.searchString, lessonFilterLanguages: allLessonFilterLanguages)
-            .map({$0.languageNameTranslatedInAppLanguage})
+            .map({$0.languageNamePair.nameInAppLanguage})
         
         #expect(argument.expectedLanguages.elementsEqual(searchedLanguages))
     }
@@ -56,25 +56,25 @@ extension SearchLessonFilterLanguagesUseCaseTests {
     
     private var allLessonFilterLanguages: [LessonFilterLanguageDomainModel] {
         return [
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "blAnd", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "bran", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Canned", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Church", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "church", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "food", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Food", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "foody", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "land", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "may", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "pAnda", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "sanded", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "soccer", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "soCCer", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Tan", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Tanned", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "WAND", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "wander", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Yellow", lessonsAvailableText: "", lessonsAvailableCount: 0)
+            LessonFilterLanguageDomainModel(languageId: "", languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "", nameInAppLanguage: "blAnd"), lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "", languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "", nameInAppLanguage: "bran"), lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "", languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "", nameInAppLanguage: "Canned"), lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "", languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "", nameInAppLanguage: "Church"), lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "", languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "", nameInAppLanguage: "church"), lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "", languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "", nameInAppLanguage: "food"), lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "", languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "", nameInAppLanguage: "Food"), lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "", languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "", nameInAppLanguage: "foody"), lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "", languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "", nameInAppLanguage: "land"), lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "", languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "", nameInAppLanguage: "may"), lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "", languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "", nameInAppLanguage: "pAnda"), lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "", languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "", nameInAppLanguage: "sanded"), lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "", languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "", nameInAppLanguage: "soccer"), lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "", languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "", nameInAppLanguage: "soCCer"), lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "", languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "", nameInAppLanguage: "Tan"), lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "", languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "", nameInAppLanguage: "Tanned"), lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "", languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "", nameInAppLanguage: "WAND"), lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "", languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "", nameInAppLanguage: "wander"), lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "", languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "", nameInAppLanguage: "Yellow"), lessonsAvailableText: "", lessonsAvailableCount: 0)
         ]
     }
 }

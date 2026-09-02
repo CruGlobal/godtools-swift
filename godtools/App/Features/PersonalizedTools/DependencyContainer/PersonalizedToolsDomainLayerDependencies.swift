@@ -19,6 +19,12 @@ final class PersonalizedToolsDomainLayerDependencies: Sendable {
         self.dataLayer = dataLayer
     }
     
+    func getMapLanguageToPersonalizedLessonFilterLanguage() -> MapLanguageToPersonalizedLessonFilterLanguage {
+        return MapLanguageToPersonalizedLessonFilterLanguage(
+            getTranslatedLanguageName: core.domainLayer.supporting.getTranslatedLanguageName()
+        )
+    }
+    
     func getLocalizationSettingsCountryListUseCase() -> GetLocalizationSettingsCountryListUseCase {
 
         return GetLocalizationSettingsCountryListUseCase(
@@ -59,7 +65,8 @@ final class PersonalizedToolsDomainLayerDependencies: Sendable {
 
         return GetPersonalizedLessonFilterLanguagesUseCase(
             resourcesRepository: core.dataLayer.getResourcesRepository(),
-            languagesRepository: core.dataLayer.getLanguagesRepository()
+            languagesRepository: core.dataLayer.getLanguagesRepository(),
+            mapLanguageToPersonalizedLessonFilterLanguage: getMapLanguageToPersonalizedLessonFilterLanguage()
         )
     }
 

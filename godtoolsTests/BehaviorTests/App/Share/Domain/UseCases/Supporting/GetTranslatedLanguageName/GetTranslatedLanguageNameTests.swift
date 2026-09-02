@@ -17,6 +17,9 @@ struct GetTranslatedLanguageNameTests {
         let expectedValue: String
     }
     
+    private static let frenchCanadaLocaleId: BCP47LanguageIdentifier = "fr-CA"
+    private static let canadaRegionCode: String = "CA"
+    
     private static let localizableStrings: [FakeLocalizationServices.LocaleId: [FakeLocalizationServices.StringKey: String]] = [
         LanguageCodeDomainModel.spanish.value: [
             LanguageCodeDomainModel.english.rawValue: "Inglés",
@@ -54,6 +57,13 @@ struct GetTranslatedLanguageNameTests {
         ]
     ]
             
+    struct GetLanguageNamePairTestArgument {
+        let language: FakeTranslatableLanguage
+        let appLanguage: AppLanguageDomainModel
+        let expectedNameInOwnLanguage: String
+        let expectedNameInAppLanguage: String
+    }
+    
     private static let getTranslatedLanguageName = GetTranslatedLanguageName(
         localizationLanguageName: FakeLocalizationLanguageNameRepository(localizationServices: FakeLocalizationServices(localizableStrings: localizableStrings)),
         localeLanguageName: FakeLocaleLanguageName(languageNames: languageNames),
@@ -217,5 +227,121 @@ struct GetTranslatedLanguageNameTests {
         #expect(translation == fallbackName)
         #expect(translationFromAppBundle == nil)
         #expect(translationFromLocale == nil)
+    }
+    
+    @Test(
+        """
+        Given: User is viewing a list of language names.
+        When: Getting the language name pair translated in the app language.
+        Then: The pair contains the language name translated in its own language and translated in the app language.
+        """,
+        arguments: [
+            GetLanguageNamePairTestArgument(
+                language: FakeTranslatableLanguage(
+                    languageCode: LanguageCodeDomainModel.russian.rawValue,
+                    localeId: LanguageCodeDomainModel.russian.rawValue,
+                    fallbackName: "Russian Fallback Name",
+                    forceLanguageName: false,
+                    regionCode: nil,
+                    scriptCode: nil
+                ),
+                appLanguage: LanguageCodeDomainModel.spanish.rawValue,
+                expectedNameInOwnLanguage: "Русский",
+                expectedNameInAppLanguage: "Ruso"
+            ),
+            GetLanguageNamePairTestArgument(
+                language: FakeTranslatableLanguage(
+                    languageCode: LanguageCodeDomainModel.english.rawValue,
+                    localeId: LanguageCodeDomainModel.english.rawValue,
+                    fallbackName: "English Fallback Name",
+                    forceLanguageName: false,
+                    regionCode: nil,
+                    scriptCode: nil
+                ),
+                appLanguage: LanguageCodeDomainModel.spanish.rawValue,
+                expectedNameInOwnLanguage: "English",
+                expectedNameInAppLanguage: "Inglés"
+            ),
+            GetLanguageNamePairTestArgument(
+                language: FakeTranslatableLanguage(
+                    languageCode: LanguageCodeDomainModel.french.rawValue,
+                    localeId: LanguageCodeDomainModel.french.rawValue,
+                    fallbackName: "French Fallback Name",
+                    forceLanguageName: false,
+                    regionCode: nil,
+                    scriptCode: nil
+                ),
+                appLanguage: LanguageCodeDomainModel.czech.rawValue,
+                expectedNameInOwnLanguage: "French Fallback Name",
+                expectedNameInAppLanguage: "francouzština"
+            ),
+            GetLanguageNamePairTestArgument(
+                language: FakeTranslatableLanguage(
+                    languageCode: LanguageCodeDomainModel.russian.rawValue,
+                    localeId: LanguageCodeDomainModel.russian.rawValue,
+                    fallbackName: "Russian Fallback Name",
+                    forceLanguageName: true,
+                    regionCode: nil,
+                    scriptCode: nil
+                ),
+                appLanguage: LanguageCodeDomainModel.spanish.rawValue,
+                expectedNameInOwnLanguage: "Russian Fallback Name",
+                expectedNameInAppLanguage: "Russian Fallback Name"
+            )
+        ]
+    )
+    func getsLanguageNamePair(argument: GetLanguageNamePairTestArgument) {
+        
+        let namePair: TranslatedLanguageNamePairDomainModel = Self.getTranslatedLanguageName.getLanguageNamePair(
+            language: argument.language,
+            appLanguage: argument.appLanguage
+        )
+        
+        #expect(namePair.nameInOwnLanguage == argument.expectedNameInOwnLanguage)
+        #expect(namePair.nameInAppLanguage == argument.expectedNameInAppLanguage)
+    }
+    
+    @Test(
+        """
+        Given: User is viewing a language name that includes a region.
+        When: Getting the language name pair translated in the app language.
+        Then: Both names in the pair include the region suffix translated in their respective language.
+        """
+    )
+    func getsLanguageNamePairWithRegionSuffix() {
+        
+        let getTranslatedLanguageName = GetTranslatedLanguageName(
+            localizationLanguageName: FakeLocalizationLanguageNameRepository(localizationServices: FakeLocalizationServices(localizableStrings: [:])),
+            localeLanguageName: FakeLocaleLanguageName(languageNames: [
+                LanguageCodeDomainModel.french.rawValue: [
+                    Self.frenchCanadaLocaleId: "français",
+                    LanguageCodeDomainModel.spanish.rawValue: "Francés"
+                ]
+            ]),
+            localeRegionName: FakeLocaleLanguageRegionName(regionNames: [
+                Self.canadaRegionCode: [
+                    Self.frenchCanadaLocaleId: "Canada",
+                    LanguageCodeDomainModel.spanish.rawValue: "Canadá"
+                ]
+            ]),
+            localeScriptName: FakeLocaleLanguageScriptName(scriptNames: [:])
+        )
+        
+        let frenchCanadaLanguage = FakeTranslatableLanguage(
+            languageCode: LanguageCodeDomainModel.french.rawValue,
+            localeId: Self.frenchCanadaLocaleId,
+            fallbackName: "French Fallback Name",
+            forceLanguageName: false,
+            regionCode: Self.canadaRegionCode,
+            scriptCode: nil
+        )
+        
+        let namePair: TranslatedLanguageNamePairDomainModel = getTranslatedLanguageName.getLanguageNamePair(
+            language: frenchCanadaLanguage,
+            appLanguage: LanguageCodeDomainModel.spanish.rawValue
+        )
+        
+        #expect(namePair.nameInOwnLanguage == "français (Canada)")
+        #expect(namePair.nameInAppLanguage == "Francés (Canadá)")
     }
 }

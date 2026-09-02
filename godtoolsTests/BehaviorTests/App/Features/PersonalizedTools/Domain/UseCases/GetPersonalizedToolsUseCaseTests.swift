@@ -126,8 +126,7 @@ struct GetPersonalizedToolsUseCaseTests {
             country: nil,
             filterToolsByLanguage: ToolFilterLanguageDomainModel.createLanguage(
                 id: TestPersonalizedToolsLanguageId.french,
-                languageName: "",
-                languageNameTranslatedInAppLanguage: "",
+                languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "", nameInAppLanguage: ""),
                 toolsAvailable: "",
                 numberOfToolsAvailable: 0
             )
