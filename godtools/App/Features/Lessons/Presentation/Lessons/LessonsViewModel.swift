@@ -180,7 +180,7 @@ final class LessonsViewModel: ObservableObject {
             }, receiveValue: { [weak self] (lessonLanguageFilter: LessonFilterLanguageDomainModel?) in
                 
                 self?.selectedAllLessonsFilterLanguage = lessonLanguageFilter
-                self?.languageFilterButtonTitle = lessonLanguageFilter?.languageNameTranslatedInAppLanguage ?? ""
+                self?.languageFilterButtonTitle = lessonLanguageFilter?.languageNamePair.nameInAppLanguage ?? ""
             })
             .store(in: &cancellables)
     }

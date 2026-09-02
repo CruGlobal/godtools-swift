@@ -28,11 +28,11 @@ struct ToolLanguageFilterItemView<Language: ToolLanguageFilterItemDomainModelInt
                     
                     let titleFont = isSelected ? FontLibrary.sfProTextBold : FontLibrary.sfProTextRegular
                     
-                    Text(language.languageNameTranslatedInLanguage)
+                    Text(language.languageNamePair.nameInOwnLanguage)
                         .font(titleFont.font(size: 15))
                         .foregroundColor(ColorPalette.gtGrey.color)
                                             
-                    Text(language.languageNameTranslatedInAppLanguage)
+                    Text(language.languageNamePair.nameInAppLanguage)
                         .font(FontLibrary.sfProTextRegular.font(size: 15))
                         .foregroundColor(lightGrey)
                 }

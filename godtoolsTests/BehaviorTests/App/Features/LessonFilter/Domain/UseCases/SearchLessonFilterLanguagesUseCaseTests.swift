@@ -46,7 +46,7 @@ struct SearchLessonFilterLanguagesUseCaseTests {
                 
         let searchedLanguages: [String] = searchLessonFilterLanguagesUseCase
             .execute(searchText: argument.searchString, lessonFilterLanguages: allLessonFilterLanguages)
-            .map({$0.languageNameTranslatedInAppLanguage})
+            .map({$0.languageNamePair.nameInAppLanguage})
         
         #expect(argument.expectedLanguages.elementsEqual(searchedLanguages))
     }

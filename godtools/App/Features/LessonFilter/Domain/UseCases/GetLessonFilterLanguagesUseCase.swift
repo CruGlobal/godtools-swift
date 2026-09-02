@@ -65,7 +65,7 @@ final class GetLessonFilterLanguagesUseCase: Sendable {
         return domainModels
             .sorted { (language1: LessonFilterLanguageDomainModel, language2: LessonFilterLanguageDomainModel) in
                 
-                return language1.languageNameTranslatedInAppLanguage.lowercased() < language2.languageNameTranslatedInAppLanguage.lowercased()
+                return language1.languageNamePair.nameInAppLanguage.lowercased() < language2.languageNamePair.nameInAppLanguage.lowercased()
             }
     }
 }

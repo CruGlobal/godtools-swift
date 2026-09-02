@@ -67,8 +67,8 @@ struct GetUserLessonFilterLanguageUseCaseTests {
                 .store(in: &cancellables)
         }
 
-        #expect(lessonLanguageFilterRef?.languageNameTranslatedInLanguage == "Español")
-        #expect(lessonLanguageFilterRef?.languageNameTranslatedInAppLanguage == "Español")
+        #expect(lessonLanguageFilterRef?.languageNamePair.nameInOwnLanguage == "Español")
+        #expect(lessonLanguageFilterRef?.languageNamePair.nameInAppLanguage == "Español")
     }
 
     @available(iOS 17.4, *)
@@ -133,8 +133,8 @@ struct GetUserLessonFilterLanguageUseCaseTests {
                 .store(in: &cancellables)
         }
 
-        #expect(lessonLanguageFilterRef?.languageNameTranslatedInLanguage == "Français")
-        #expect(lessonLanguageFilterRef?.languageNameTranslatedInAppLanguage == "Français")
+        #expect(lessonLanguageFilterRef?.languageNamePair.nameInOwnLanguage == "Français")
+        #expect(lessonLanguageFilterRef?.languageNamePair.nameInAppLanguage == "Français")
     }
 
     @available(iOS 17.4, *)
@@ -208,11 +208,11 @@ struct GetUserLessonFilterLanguageUseCaseTests {
                 .store(in: &cancellables)
         }
 
-        #expect(originalLessonLanguageFilterRef?.languageNameTranslatedInLanguage == "Français")
-        #expect(originalLessonLanguageFilterRef?.languageNameTranslatedInAppLanguage == "Français")
+        #expect(originalLessonLanguageFilterRef?.languageNamePair.nameInOwnLanguage == "Français")
+        #expect(originalLessonLanguageFilterRef?.languageNamePair.nameInAppLanguage == "Français")
 
-        #expect(selectedLessonLanguageFilterRef?.languageNameTranslatedInLanguage == "Español")
-        #expect(selectedLessonLanguageFilterRef?.languageNameTranslatedInAppLanguage == "Espagnol")
+        #expect(selectedLessonLanguageFilterRef?.languageNamePair.nameInOwnLanguage == "Español")
+        #expect(selectedLessonLanguageFilterRef?.languageNamePair.nameInAppLanguage == "Espagnol")
     }
 }
 
