@@ -38,10 +38,13 @@ final class GetPersonalizedLessonsUseCase: Sendable {
     @MainActor func execute(
         appLanguage: AppLanguageDomainModel,
         country: LocalizationSettingsCountryDomainModel?,
-        filterLessonsByLanguage: LessonFilterLanguageDomainModel?
+        filterLessonsByLanguageId: String?
     ) -> AnyPublisher<PersonalizedLessonsDomainModel, Error> {
 
-        let languageCode: String = getLanguageElseAppLanguage.getLanguageCode(languageId: filterLessonsByLanguage?.languageId, appLanguage: appLanguage)
+        let languageCode: String = getLanguageElseAppLanguage.getLanguageCode(
+            languageId: filterLessonsByLanguageId,
+            appLanguage: appLanguage
+        )
 
         let countryIsoRegionCode: String? = {
             if let isoRegionCode = country?.isoRegionCode, !isoRegionCode.isEmpty {
@@ -54,11 +57,16 @@ final class GetPersonalizedLessonsUseCase: Sendable {
             countryIsoRegionCode: countryIsoRegionCode,
             languageCode: languageCode,
             appLanguage: appLanguage,
-            filterLessonsByLanguage: filterLessonsByLanguage
+            filterLessonsByLanguageId: filterLessonsByLanguageId
         )
     }
 
-    @MainActor private func getPersonalizedLessonsPublisher(countryIsoRegionCode: String?, languageCode: String, appLanguage: AppLanguageDomainModel, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<PersonalizedLessonsDomainModel, Error> {
+    @MainActor private func getPersonalizedLessonsPublisher(
+        countryIsoRegionCode: String?,
+        languageCode: String,
+        appLanguage: AppLanguageDomainModel,
+        filterLessonsByLanguageId: String?
+    ) -> AnyPublisher<PersonalizedLessonsDomainModel, Error> {
 
         return Publishers.CombineLatest3(
             personalizedToolsRepository
@@ -90,7 +98,7 @@ final class GetPersonalizedLessonsUseCase: Sendable {
             let lessons = try self.getLessonsListItems.mapLessonsToListItems(
                 lessons: resources,
                 appLanguage: appLanguage,
-                filterLessonsByLanguage: filterLessonsByLanguage
+                filterLessonsByLanguageId: filterLessonsByLanguageId
             )
 
             let showsPersonalizationUnavailable: Bool = lessons.isEmpty

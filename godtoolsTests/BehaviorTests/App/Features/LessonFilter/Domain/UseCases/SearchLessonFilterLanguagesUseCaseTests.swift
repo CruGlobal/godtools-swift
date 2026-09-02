@@ -54,27 +54,27 @@ struct SearchLessonFilterLanguagesUseCaseTests {
 
 extension SearchLessonFilterLanguagesUseCaseTests {
     
-    private var allLessonFilterLanguages: [LessonFilterLanguageDomainModel] {
+    private var allLessonFilterLanguages: [ToolLanguageFilterItemDomainModel] {
         return [
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "blAnd", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "bran", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Canned", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Church", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "church", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "food", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Food", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "foody", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "land", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "may", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "pAnda", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "sanded", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "soccer", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "soCCer", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Tan", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Tanned", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "WAND", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "wander", lessonsAvailableText: "", lessonsAvailableCount: 0),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Yellow", lessonsAvailableText: "", lessonsAvailableCount: 0)
+            ToolLanguageFilterItemDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "blAnd", availableText: "", availableCount: 0),
+            ToolLanguageFilterItemDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "bran", availableText: "", availableCount: 0),
+            ToolLanguageFilterItemDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Canned", availableText: "", availableCount: 0),
+            ToolLanguageFilterItemDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Church", availableText: "", availableCount: 0),
+            ToolLanguageFilterItemDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "church", availableText: "", availableCount: 0),
+            ToolLanguageFilterItemDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "food", availableText: "", availableCount: 0),
+            ToolLanguageFilterItemDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Food", availableText: "", availableCount: 0),
+            ToolLanguageFilterItemDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "foody", availableText: "", availableCount: 0),
+            ToolLanguageFilterItemDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "land", availableText: "", availableCount: 0),
+            ToolLanguageFilterItemDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "may", availableText: "", availableCount: 0),
+            ToolLanguageFilterItemDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "pAnda", availableText: "", availableCount: 0),
+            ToolLanguageFilterItemDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "sanded", availableText: "", availableCount: 0),
+            ToolLanguageFilterItemDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "soccer", availableText: "", availableCount: 0),
+            ToolLanguageFilterItemDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "soCCer", availableText: "", availableCount: 0),
+            ToolLanguageFilterItemDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Tan", availableText: "", availableCount: 0),
+            ToolLanguageFilterItemDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Tanned", availableText: "", availableCount: 0),
+            ToolLanguageFilterItemDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "WAND", availableText: "", availableCount: 0),
+            ToolLanguageFilterItemDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "wander", availableText: "", availableCount: 0),
+            ToolLanguageFilterItemDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Yellow", availableText: "", availableCount: 0)
         ]
     }
 }

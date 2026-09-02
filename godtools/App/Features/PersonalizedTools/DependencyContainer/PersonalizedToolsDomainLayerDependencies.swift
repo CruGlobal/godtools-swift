@@ -48,6 +48,38 @@ final class PersonalizedToolsDomainLayerDependencies: Sendable {
         )
     }
     
+    func getPersonalizedLessonFilterLanguagesStringsUseCase() -> GetPersonalizedLessonFilterLanguagesStringsUseCase {
+
+        return GetPersonalizedLessonFilterLanguagesStringsUseCase(
+            localizationServices: core.dataLayer.getLocalizationServices()
+        )
+    }
+
+    func getPersonalizedLessonFilterLanguagesUseCase() -> GetPersonalizedLessonFilterLanguagesUseCase {
+
+        return GetPersonalizedLessonFilterLanguagesUseCase(
+            resourcesRepository: core.dataLayer.getResourcesRepository(),
+            languagesRepository: core.dataLayer.getLanguagesRepository()
+        )
+    }
+
+    func getUserPersonalizedLessonFilterLanguageUseCase() -> GetUserPersonalizedLessonFilterLanguageUseCase {
+
+        return GetUserPersonalizedLessonFilterLanguageUseCase()
+    }
+
+    func getSearchPersonalizedLessonFilterLanguagesUseCase() -> SearchPersonalizedLessonFilterLanguagesUseCase {
+
+        return SearchPersonalizedLessonFilterLanguagesUseCase(
+            stringSearcher: StringSearcher()
+        )
+    }
+
+    func getSetUserPersonalizedLessonFilterLanguageUseCase() -> SetUserPersonalizedLessonFilterLanguageUseCase {
+
+        return SetUserPersonalizedLessonFilterLanguageUseCase()
+    }
+
     func getSearchCountriesInLocalizationSettingsCountriesListUseCase() -> SearchCountriesInLocalizationSettingsCountriesListUseCase {
         
         return SearchCountriesInLocalizationSettingsCountriesListUseCase(

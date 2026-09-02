@@ -75,13 +75,23 @@ final class DashboardFlow: GTFlow {
         case .doneTappedFromMenu:
             closeMenu(animated: true)
             
-        case .lessonTappedFromLessonsList(let lessonListItem, let languageFilter):
-            navigateToLesson(lessonListItem: lessonListItem, languageFilter: languageFilter, toolOpenedFrom: .dashboardLessons)
+        case .lessonTappedFromLessonsList(let lessonListItem, let languageFilterLanguageId):
+            navigateToLesson(
+                lessonListItem: lessonListItem,
+                languageFilterLanguageId: languageFilterLanguageId,
+                toolOpenedFrom: .dashboardLessons
+            )
             
         case .lessonLanguageFilterTappedFromLessons:
             navigationController.pushViewController(getLessonLanguageFilterSelection(), animated: true)
             
+        case .personalizedLessonLanguageFilterTappedFromLessons:
+            navigationController.pushViewController(getPersonalizedLessonFilterLanguageSelectionView(), animated: true)
+            
         case .backTappedFromLessonLanguageFilter:
+            navigationController.popViewController(animated: true)
+            
+        case .backTappedFromPersonalizedLessonLanguageFilter:
             navigationController.popViewController(animated: true)
 
         case .changeLocalizationSettingsTappedFromLessons:
@@ -96,6 +106,9 @@ final class DashboardFlow: GTFlow {
             popFlow()
 
         case .languageTappedFromLessonLanguageFilter:
+            navigationController.popViewController(animated: true)
+            
+        case .languageTappedFromPersonalizedLanguageFilter:
             navigationController.popViewController(animated: true)
             
         case .featuredLessonTappedFromFavorites(let featuredLesson):
@@ -463,8 +476,8 @@ extension DashboardFlow {
             stepEmitter: stepEmitter,
             getLessonFilterLanguagesStringsUseCase: appDiContainer.feature.lessonFilter.domainLayer.getLessonFilterLanguagesStringsUseCase(),
             getLessonFilterLanguagesUseCase: appDiContainer.feature.lessonFilter.domainLayer.getLessonFilterLanguagesUseCase(),
-            getUserLessonFiltersUseCase: appDiContainer.feature.lessonFilter.domainLayer.getUserLessonFiltersUseCase(),
-            storeUserLessonFiltersUseCase: appDiContainer.feature.lessonFilter.domainLayer.getStoreUserLessonFiltersUseCase(),
+            getUserLessonFilterLanguageUseCase: appDiContainer.feature.lessonFilter.domainLayer.getUserLessonFilterLanguageUseCase(),
+            setUserLessonFilterLanguageUseCase: appDiContainer.feature.lessonFilter.domainLayer.getSetUserLessonFilterLanguageUseCase(),
             getSearchBarStringsUseCase: appDiContainer.core.domainLayer.getSearchBarStringsUseCase(),
             searchLessonFilterLanguagesUseCase: appDiContainer.feature.lessonFilter.domainLayer.getSearchLessonFilterLanguagesUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase()
@@ -473,6 +486,33 @@ extension DashboardFlow {
         let view = LessonFilterLanguageSelectionView(viewModel: viewModel)
         
         let hostingView = AppHostingController<LessonFilterLanguageSelectionView>(
+            rootView: view
+        )
+        
+        return hostingView
+    }
+}
+
+// MARK: - Personalized Lesson Filter Language Selection
+
+extension DashboardFlow {
+    
+    private func getPersonalizedLessonFilterLanguageSelectionView() -> UIViewController {
+        
+        let viewModel = PersonalizedLessonFilterLanguageSelectionViewModel(
+            stepEmitter: stepEmitter,
+            getPersonalizedLessonFilterLanguagesStringsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getPersonalizedLessonFilterLanguagesStringsUseCase(),
+            getPersonalizedLessonFilterLanguagesUseCase: appDiContainer.feature.personalizedTools.domainLayer.getPersonalizedLessonFilterLanguagesUseCase(),
+            getUserPersonalizedLessonFilterLanguageUseCase: appDiContainer.feature.personalizedTools.domainLayer.getUserPersonalizedLessonFilterLanguageUseCase(),
+            setUserPersonalizedLessonFilterLanguageUseCase: appDiContainer.feature.personalizedTools.domainLayer.getSetUserPersonalizedLessonFilterLanguageUseCase(),
+            getSearchBarStringsUseCase: appDiContainer.core.domainLayer.getSearchBarStringsUseCase(),
+            searchPersonalizedLessonFilterLanguagesUseCase: appDiContainer.feature.personalizedTools.domainLayer.getSearchPersonalizedLessonFilterLanguagesUseCase(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase()
+        )
+        
+        let view = PersonalizedLessonFilterLanguageSelectionView(viewModel: viewModel)
+        
+        let hostingView = AppHostingController<PersonalizedLessonFilterLanguageSelectionView>(
             rootView: view
         )
         
@@ -696,15 +736,15 @@ extension DashboardFlow {
     
     private func navigateToLesson(
         lessonListItem: LessonListItemDomainModel,
-        languageFilter: LessonFilterLanguageDomainModel?,
+        languageFilterLanguageId: String?,
         toolOpenedFrom: ToolOpenedFrom
     ) {
         
-        if let languageFilter = languageFilter {
+        if let languageFilterLanguageId = languageFilterLanguageId {
             
             navigateToTool(
                 toolDataModelId: lessonListItem.dataModelId,
-                languageIds: [languageFilter.languageId],
+                languageIds: [languageFilterLanguageId],
                 selectedLanguageIndex: 0,
                 trainingTipsEnabled: false,
                 toolOpenedFrom: toolOpenedFrom,

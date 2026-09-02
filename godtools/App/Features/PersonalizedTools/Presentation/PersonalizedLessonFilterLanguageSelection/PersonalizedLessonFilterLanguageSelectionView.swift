@@ -1,18 +1,18 @@
 //
-//  LessonFilterLanguageSelectionView.swift
+//  PersonalizedLessonFilterLanguageSelectionView.swift
 //  godtools
 //
-//  Created by Rachael Skeath on 6/27/24.
-//  Copyright © 2024 Cru. All rights reserved.
+//  Created by Levi Eggert on 9/1/26.
+//  Copyright © 2026 Cru. All rights reserved.
 //
 
 import SwiftUI
 
-struct LessonFilterLanguageSelectionView: View {
+struct PersonalizedLessonFilterLanguageSelectionView: View {
     
-    @ObservedObject private var viewModel: LessonFilterLanguageSelectionViewModel
+    @ObservedObject private var viewModel: PersonalizedLessonFilterLanguageSelectionViewModel
     
-    init(viewModel: LessonFilterLanguageSelectionViewModel) {
+    init(viewModel: PersonalizedLessonFilterLanguageSelectionViewModel) {
         self.viewModel = viewModel
     }
     
@@ -20,12 +20,12 @@ struct LessonFilterLanguageSelectionView: View {
         
         VStack(spacing: 0) {
             
-            AccessibilityScreenElementView(screenAccessibility: .lessonsLanguageFilters)
+            AccessibilityScreenElementView(screenAccessibility: .personalizedLessonsLanguageFilters)
             
             ToolLanguageFilterSelectionView(
                 searchText: $viewModel.searchText,
                 searchBarStrings: viewModel.searchBarStrings,
-                languages: viewModel.languageSearchResults,
+                languages: [],
                 selectedLanguageId: viewModel.selectedLanguageId,
                 languageTapped: { (languageId: String) in
                     

@@ -1,30 +1,30 @@
 //
-//  LessonFilterLanguageDomainModel.swift
+//  ToolLanguageFilterItemDomainModel.swift
 //  godtools
 //
-//  Created by Rachael Skeath on 7/1/24.
-//  Copyright © 2024 Cru. All rights reserved.
+//  Created by Levi Eggert on 9/1/26.
+//  Copyright © 2026 Cru. All rights reserved.
 //
 
 import Foundation
 
-struct LessonFilterLanguageDomainModel: Sendable {
+struct ToolLanguageFilterItemDomainModel: Sendable {
     
     let languageId: String
     let languageNameTranslatedInLanguage: String
     let languageNameTranslatedInAppLanguage: String
-    let lessonsAvailableText: String
-    let lessonsAvailableCount: Int
+    let availableText: String?
+    let availableCount: Int?
 }
 
-extension LessonFilterLanguageDomainModel: StringSearchable {
+extension ToolLanguageFilterItemDomainModel: StringSearchable {
     
     var searchableStrings: [String] {
         return [languageNameTranslatedInLanguage, languageNameTranslatedInAppLanguage]
     }
 }
 
-extension LessonFilterLanguageDomainModel: Identifiable {
+extension ToolLanguageFilterItemDomainModel: Identifiable {
     
     var id: String {
         return languageId

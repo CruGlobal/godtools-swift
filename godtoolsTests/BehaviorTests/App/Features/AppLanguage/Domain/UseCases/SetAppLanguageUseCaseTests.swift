@@ -50,16 +50,16 @@ struct SetAppLanguageUseCaseTests {
             languagesRepository: testsDiContainer.core.dataLayer.getLanguagesRepository()
         )
         
-        let getUserLessonFiltersRepository = GetUserLessonFiltersUseCase(
+        let getUserLessonFiltersRepository = GetUserLessonFilterLanguageUseCase(
             languagesRepository: testsDiContainer.core.dataLayer.getLanguagesRepository(),
             userLessonFiltersRepository: testsDiContainer.core.dataLayer.getUserLessonFiltersRepository(),
-            getLessonFilterLanguage: testsDiContainer.feature.lessonFilter.domainLayer.getLessonFilterLangauge()
+            mapLanguageToLessonFilterLanguage: testsDiContainer.feature.lessonFilter.domainLayer.getMapLanguageToLessonFilterLanguage()
         )
         
         let appLanguageSpanish = LanguageCodeDomainModel.spanish.rawValue
         let spanishLanguage = allLanguages.first(where: { $0.code == appLanguageSpanish.languageCode })
                 
-        var lessonLanguageFilterRef: LessonFilterLanguageDomainModel?
+        var lessonLanguageFilterRef: ToolLanguageFilterItemDomainModel?
         
         var cancellables: Set<AnyCancellable> = Set()
         var triggerCount: Int = 0
@@ -77,7 +77,7 @@ struct SetAppLanguageUseCaseTests {
                 )
                 .sink(receiveCompletion: { _ in
                     
-                }, receiveValue: { (userLessonFilters: UserLessonFiltersDomainModel) in
+                }, receiveValue: { (userLessonFilterLanguage: ToolLanguageFilterItemDomainModel?) in
                     
                     triggerCount += 1
                     
@@ -90,7 +90,7 @@ struct SetAppLanguageUseCaseTests {
                     }
                     else if triggerCount == 2 {
                         
-                        lessonLanguageFilterRef = userLessonFilters.languageFilter
+                        lessonLanguageFilterRef = userLessonFilterLanguage
                         
                         // When finished be sure to call:
                         timeoutTask.cancel()

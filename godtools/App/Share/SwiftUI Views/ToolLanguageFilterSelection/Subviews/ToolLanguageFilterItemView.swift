@@ -1,21 +1,22 @@
 //
-//  LessonFilterLanguageSelectionRowView.swift
+//  ToolLanguageFilterItemView.swift
 //  godtools
 //
-//  Created by Rachael Skeath on 7/2/24.
-//  Copyright © 2024 Cru. All rights reserved.
+//  Created by Levi Eggert on 9/1/26.
+//  Copyright © 2026 Cru. All rights reserved.
 //
 
 import SwiftUI
 
-struct LessonFilterLanguageSelectionRowView: View {
+struct ToolLanguageFilterItemView: View {
     
     private static let lightGrey = Color.getColorWithRGB(red: 151, green: 151, blue: 151, opacity: 1)
     
-    private let language: LessonFilterLanguageDomainModel
+    private let language: ToolLanguageFilterItemDomainModel
     private let isSelected: Bool
     
-    init(language: LessonFilterLanguageDomainModel, isSelected: Bool) {
+    init(language: ToolLanguageFilterItemDomainModel, isSelected: Bool) {
+        
         self.language = language
         self.isSelected = isSelected
     }
@@ -34,12 +35,15 @@ struct LessonFilterLanguageSelectionRowView: View {
                                             
                     Text(language.languageNameTranslatedInAppLanguage)
                         .font(FontLibrary.sfProTextRegular.font(size: 15))
-                        .foregroundColor(LessonFilterLanguageSelectionRowView.lightGrey)
+                        .foregroundColor(Self.lightGrey)
                 }
                 
-                Text(language.lessonsAvailableText)
-                    .font(FontLibrary.sfProTextRegular.font(size: 12))
-                    .foregroundColor(LessonFilterLanguageSelectionRowView.lightGrey)
+                if let availableText = language.availableText {
+                    
+                    Text(availableText)
+                        .font(FontLibrary.sfProTextRegular.font(size: 12))
+                        .foregroundColor(Self.lightGrey)
+                }
             }
             .padding(.vertical, 7)
             

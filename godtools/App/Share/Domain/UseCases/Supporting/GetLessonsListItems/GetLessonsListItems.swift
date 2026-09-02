@@ -31,7 +31,7 @@ final class GetLessonsListItems: Sendable {
     func mapLessonsToListItems(
         lessons: [ResourceDataModel],
         appLanguage: AppLanguageDomainModel,
-        filterLessonsByLanguage: LessonFilterLanguageDomainModel?
+        filterLessonsByLanguageId: String?
     ) throws -> [LessonListItemDomainModel] {
         
         var lessonList: [LessonListItemDomainModel] = Array()
@@ -39,7 +39,7 @@ final class GetLessonsListItems: Sendable {
         for resource in lessons {
             
             let filterLanguageModel: LanguageDataModel?
-            if let filterLanguageId = filterLessonsByLanguage?.languageId {
+            if let filterLanguageId = filterLessonsByLanguageId {
                 filterLanguageModel = languagesRepository.getLanguageById(id: filterLanguageId)
             } else {
                 filterLanguageModel = nil

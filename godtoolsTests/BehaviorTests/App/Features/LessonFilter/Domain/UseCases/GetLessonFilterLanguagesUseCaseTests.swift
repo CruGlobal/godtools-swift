@@ -33,7 +33,7 @@ struct GetLessonFilterLanguagesUseCaseTests {
         
         let appLanguageRussian: AppLanguageDomainModel = LanguageCodeDomainModel.russian.rawValue
         
-        var languagesRef: [LessonFilterLanguageDomainModel] = Array()
+        var languagesRef: [ToolLanguageFilterItemDomainModel] = Array()
         var didSetLanguages: Bool = false
         
         await withCheckedContinuation { continuation in
@@ -48,7 +48,7 @@ struct GetLessonFilterLanguagesUseCaseTests {
                 .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { _ in
 
-                }, receiveValue: { (languages: [LessonFilterLanguageDomainModel]) in
+                }, receiveValue: { (languages: [ToolLanguageFilterItemDomainModel]) in
                     
                     guard languages.count > 0 && !didSetLanguages else {
                         return
@@ -64,11 +64,11 @@ struct GetLessonFilterLanguagesUseCaseTests {
                 .store(in: &cancellables)
         }
         
-        let afrikaansLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.afrikaans.rawValue})
-        let czechLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.czech.rawValue})
-        let englishLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.english.rawValue})
-        let frenchLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.french.rawValue})
-        let spanishLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.spanish.rawValue})
+        let afrikaansLanguage: ToolLanguageFilterItemDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.afrikaans.rawValue})
+        let czechLanguage: ToolLanguageFilterItemDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.czech.rawValue})
+        let englishLanguage: ToolLanguageFilterItemDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.english.rawValue})
+        let frenchLanguage: ToolLanguageFilterItemDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.french.rawValue})
+        let spanishLanguage: ToolLanguageFilterItemDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.spanish.rawValue})
 
         #expect(afrikaansLanguage?.languageNameTranslatedInLanguage == "Afrikaans")
         #expect(afrikaansLanguage?.languageNameTranslatedInAppLanguage == "африкаанс")
@@ -109,7 +109,7 @@ struct GetLessonFilterLanguagesUseCaseTests {
         
         let getLessonFilterLanguagesUseCase: GetLessonFilterLanguagesUseCase = try getLessonFilterLanguagesUseCase()
                 
-        var languagesRef: [LessonFilterLanguageDomainModel] = Array()
+        var languagesRef: [ToolLanguageFilterItemDomainModel] = Array()
         var didSetLanguages: Bool = false
         
         await withCheckedContinuation { continuation in
@@ -124,7 +124,7 @@ struct GetLessonFilterLanguagesUseCaseTests {
                 .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { _ in
                     
-                }, receiveValue: { (languages: [LessonFilterLanguageDomainModel]) in
+                }, receiveValue: { (languages: [ToolLanguageFilterItemDomainModel]) in
                     
                     guard languages.count > 0 && !didSetLanguages else {
                         return
@@ -159,7 +159,7 @@ struct GetLessonFilterLanguagesUseCaseTests {
         
         let appLanguageEnglish: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
         
-        var languagesRef: [LessonFilterLanguageDomainModel] = Array()
+        var languagesRef: [ToolLanguageFilterItemDomainModel] = Array()
         var didSetLanguages: Bool = false
 
         await withCheckedContinuation { continuation in
@@ -175,7 +175,7 @@ struct GetLessonFilterLanguagesUseCaseTests {
                 .sink(receiveCompletion: { _ in
                     
                     
-                }, receiveValue: { (languages: [LessonFilterLanguageDomainModel]) in
+                }, receiveValue: { (languages: [ToolLanguageFilterItemDomainModel]) in
                     
                     guard languages.count > 0 && !didSetLanguages else {
                         return
@@ -191,17 +191,17 @@ struct GetLessonFilterLanguagesUseCaseTests {
                 .store(in: &cancellables)
         }
 
-        let afrikaansLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.afrikaans.rawValue})
-        let czechLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.czech.rawValue})
-        let englishLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.english.rawValue})
-        let frenchLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.french.rawValue})
-        let spanishLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.spanish.rawValue})
+        let afrikaansLanguage: ToolLanguageFilterItemDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.afrikaans.rawValue})
+        let czechLanguage: ToolLanguageFilterItemDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.czech.rawValue})
+        let englishLanguage: ToolLanguageFilterItemDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.english.rawValue})
+        let frenchLanguage: ToolLanguageFilterItemDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.french.rawValue})
+        let spanishLanguage: ToolLanguageFilterItemDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.spanish.rawValue})
         
-        let afrikaansLessonsAvailable: String = try #require(afrikaansLanguage?.lessonsAvailableText)
-        let czechLessonsAvailable: String = try #require(czechLanguage?.lessonsAvailableText)
-        let englishLessonsAvailable: String = try #require(englishLanguage?.lessonsAvailableText)
-        let frenchLessonsAvailable: String = try #require(frenchLanguage?.lessonsAvailableText)
-        let spanishLessonsAvailable: String = try #require(spanishLanguage?.lessonsAvailableText)
+        let afrikaansLessonsAvailable: String = try #require(afrikaansLanguage?.availableText)
+        let czechLessonsAvailable: String = try #require(czechLanguage?.availableText)
+        let englishLessonsAvailable: String = try #require(englishLanguage?.availableText)
+        let frenchLessonsAvailable: String = try #require(frenchLanguage?.availableText)
+        let spanishLessonsAvailable: String = try #require(spanishLanguage?.availableText)
 
         #expect(afrikaansLessonsAvailable == "\(englishLessonsAvailableText) 1")
         #expect(czechLessonsAvailable == "\(englishLessonsAvailableText) 1")
@@ -233,7 +233,7 @@ extension GetLessonFilterLanguagesUseCaseTests {
         let getLessonFilterLanguagesRepository = GetLessonFilterLanguagesUseCase(
             resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),
             languagesRepository: testsDiContainer.core.dataLayer.getLanguagesRepository(),
-            getLessonFilterLangauge: getLessonFilterLangauge(testsDiContainer: testsDiContainer)
+            mapLanguageToLessonFilterLanguage: mapLanguageToLessonFilterLanguage(testsDiContainer: testsDiContainer)
         )
         
         return getLessonFilterLanguagesRepository
@@ -315,8 +315,8 @@ extension GetLessonFilterLanguagesUseCaseTests {
         return SwiftLanguage.createNewFrom(model: language.toModel())
     }
     
-    private func getLessonFilterLangauge(testsDiContainer: TestsDiContainer) -> GetLessonFilterLanguage {
-        return GetLessonFilterLanguage(
+    private func mapLanguageToLessonFilterLanguage(testsDiContainer: TestsDiContainer) -> MapLanguageToLessonFilterLanguage {
+        return MapLanguageToLessonFilterLanguage(
             resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),
             languagesRepository: testsDiContainer.core.dataLayer.getLanguagesRepository(),
             getTranslatedLanguageName: getTranslatedLanguageName(),

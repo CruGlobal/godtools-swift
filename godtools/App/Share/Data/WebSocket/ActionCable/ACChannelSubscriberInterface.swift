@@ -17,7 +17,7 @@ protocol ACChannelSubscriberInterface: Actor {
     
     func getConnectionStateStream() async -> AsyncStream<WebSocketConnectionState>
     func getTextStream() async -> AsyncThrowingStream<String, Error>
-    func getSubscribedStream() async -> AsyncStream<WebSocketChannel>
+    func getSubscribedStream() async -> AsyncThrowingStream<WebSocketChannel, Error>
     func subscribe(url: URL, channel: WebSocketChannel) async throws(ACCreateChannelError)
     func unsubscribe(disconnectSocket: Bool) async
 }
