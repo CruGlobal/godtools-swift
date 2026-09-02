@@ -43,10 +43,18 @@ struct FavoritesView: View {
                     )
                 }
                 
-                if viewModel.favoritedTools.count > 0 {
+                
+                
+                
+                List {
                     
-                    List {
-
+                    YourFavoriteToolsHeaderView(
+                        viewModel: viewModel,
+                        contentHorizontalInsets: contentHorizontalInsets
+                    )
+                    
+                    if viewModel.favoritedTools.count > 0 {
+                        
                         ForEach(viewModel.favoritedTools) { (tool: YourFavoritedToolDomainModel) in
                             ToolCardView(
                                 viewModel: viewModel.getToolViewModel(tool: tool),
@@ -77,16 +85,17 @@ struct FavoritesView: View {
                             viewModel.toolMoved(fromOffsets: from, toOffset: to)
                         }
                     }
-                    .listStyle(.plain)
-                    .refreshable {
-                        viewModel.pullToRefresh()
+                    else {
+                        
+                        NoFavoriteToolsView(viewModel: viewModel)
+                            .padding([.top], 12)
+                            .padding([.leading, .trailing], contentHorizontalInsets)
+                            .listRowSeparator(.hidden)
                     }
                 }
-                else {
-                    
-                    NoFavoriteToolsView(viewModel: viewModel)
-                        .padding([.top], 12)
-                        .padding([.leading, .trailing], contentHorizontalInsets)
+                .listStyle(.plain)
+                .refreshable {
+                    viewModel.pullToRefresh()
                 }
             }
         }//end GeometryReader

@@ -32,7 +32,7 @@ final class GetYourFavoritedToolsUseCase: Sendable {
         self.getToolListItemStrings = getToolListItemStrings
     }
     
-    @MainActor func execute(appLanguage: AppLanguageDomainModel, maxCount: Int?) -> AnyPublisher<[YourFavoritedToolDomainModel], Error> {
+    @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[YourFavoritedToolDomainModel], Error> {
 
         return Publishers.CombineLatest(
             resourcesRepository
@@ -44,15 +44,14 @@ final class GetYourFavoritedToolsUseCase: Sendable {
         .flatMap { (resourcesChanged: Void, favoritedResourcesChanged: Void) -> AnyPublisher<[YourFavoritedToolDomainModel], Error> in
 
             return AnyPublisher() {
-                try await self.asyncExecute(appLanguage: appLanguage, maxCount: maxCount)
+                try await self.asyncExecute(appLanguage: appLanguage)
             }
         }
         .eraseToAnyPublisher()
     }
 
     private func asyncExecute(
-        appLanguage: AppLanguageDomainModel,
-        maxCount: Int?
+        appLanguage: AppLanguageDomainModel
     ) async throws -> [YourFavoritedToolDomainModel] {
 
         let strings: ToolListItemStringsDomainModel = getToolListItemStrings.getStrings(appLanguage: appLanguage)
@@ -62,7 +61,6 @@ final class GetYourFavoritedToolsUseCase: Sendable {
         let numberOfFavoritedTools: Int = try favoritedResourcesRepository.getObjectCount()
 
         let prefixedFavoritedResources: [ResourceDataModel] = favoritedResources
-            .prefix(maxCount ?? numberOfFavoritedTools)
             .compactMap {
                 resourcesRepository.getResourceById(id: $0.id)
             }

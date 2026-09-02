@@ -29,25 +29,6 @@ struct YourFavoriteToolsHeaderView: View {
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .fixedSize(horizontal: false, vertical: true) // This is necessary for multiline text to push HStack height.
                 .padding(.leading, contentHorizontalInsets)
-                            
-            if viewModel.yourFavoritedTools.count > 0 {
-                
-                Spacer()
-                
-                Button(action: {
-
-                    viewModel.viewAllFavoriteToolsTapped()
-                    
-                }) {
-                    
-                    Text(viewModel.strings.viewAllFavoritesActionTitle)
-                        .font(FontLibrary.sfProTextRegular.font(size: 13))
-                        .foregroundColor(ColorPalette.gtBlue.color)
-                        .frame(alignment: .bottom)
-                }
-                .padding([.trailing], 20)
-                .padding([.bottom], 2)
-            }
         }
         .padding([.top], 6)
     }

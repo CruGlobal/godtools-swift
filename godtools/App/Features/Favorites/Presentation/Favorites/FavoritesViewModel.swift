@@ -24,7 +24,7 @@ final class FavoritesViewModel: ObservableObject {
     private let getToolBannerUseCase: GetToolBannerUseCase
     private let imageCache: ImageCacheInterface
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
-    private let getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase
+    private let getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase // TODO: Can remove in GT-2880. ~Levi
     private let getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
@@ -36,8 +36,7 @@ final class FavoritesViewModel: ObservableObject {
     
     @Published private(set) var strings = FavoritesStringsDomainModel.emptyValue
     @Published private(set) var showsOpenTutorialBanner: Bool = false
-    @Published private(set) var featuredLessons: [FeaturedLessonDomainModel] = Array()
-    @Published private(set) var yourFavoritedTools: [YourFavoritedToolDomainModel] = Array()
+    @Published private(set) var featuredLessons: [FeaturedLessonDomainModel] = Array() // TODO: Can remove in GT-2880. ~Levi
     @Published private(set) var favoritedTools: [YourFavoritedToolDomainModel] = Array()
     
     init(
@@ -104,31 +103,10 @@ final class FavoritesViewModel: ObservableObject {
         $appLanguage
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
-                
-                getYourFavoritedToolsUseCase
-                    .execute(
-                        appLanguage: appLanguage,
-                        maxCount: 5
-                    )
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { _ in
-                
-            }, receiveValue: { [weak self] (yourFavoritedTools: [YourFavoritedToolDomainModel]) in
-                
-                self?.yourFavoritedTools = yourFavoritedTools
-            })
-            .store(in: &cancellables)
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
 
                 getYourFavoritedToolsUseCase
                     .execute(
-                        appLanguage: appLanguage,
-                        maxCount: nil
+                        appLanguage: appLanguage
                     )
             }
             .switchToLatest()
@@ -224,6 +202,8 @@ final class FavoritesViewModel: ObservableObject {
     
     private func trackFeaturedLessonTappedAnalytics(featuredLesson: FeaturedLessonDomainModel) {
        
+        // TODO: This method we may want in GT-2880. ~Levi
+        
         let analyticsProperties = AnalyticsProperties(
             screenName: analyticsScreenName,
             siteSection: "",
@@ -379,6 +359,8 @@ extension FavoritesViewModel {
     
     func getFeaturedLessonViewModel(featuredLesson: FeaturedLessonDomainModel) -> LessonCardViewModel  {
                 
+        // TODO: This method we may want in GT-2880. ~Levi
+        
         return LessonCardViewModel(
             lessonListItem: featuredLesson,
             getToolBannerUseCase: getToolBannerUseCase,
@@ -388,6 +370,8 @@ extension FavoritesViewModel {
     
     func featuredLessonTapped(featuredLesson: FeaturedLessonDomainModel) {
                 
+        // TODO: This method we may want in GT-2880. Step featuredLessonTappedFromLessons. ~Levi
+        
         stepEmitter.emit(step: AppFlowStep.featuredLessonTappedFromFavorites(featuredLesson: featuredLesson))
         trackFeaturedLessonTappedAnalytics(featuredLesson: featuredLesson)
     }
@@ -401,11 +385,6 @@ extension FavoritesViewModel {
             getToolBannerUseCase: getToolBannerUseCase,
             imageCache: imageCache
         )
-    }
-    
-    func viewAllFavoriteToolsTapped() {
-        
-        stepEmitter.emit(step: AppFlowStep.viewAllFavoriteToolsTappedFromFavorites)
     }
     
     func toolDetailsTapped(tool: YourFavoritedToolDomainModel) {

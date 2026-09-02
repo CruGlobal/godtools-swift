@@ -59,20 +59,12 @@ enum AppFlowStep: FlowStep {
     
     // favorites
     case featuredLessonTappedFromFavorites(featuredLesson: FeaturedLessonDomainModel)
-    case viewAllFavoriteToolsTappedFromFavorites
     case toolDetailsTappedFromFavorites(tool: YourFavoritedToolDomainModel)
     case openToolTappedFromFavorites(tool: YourFavoritedToolDomainModel)
     case toolTappedFromFavorites(tool: YourFavoritedToolDomainModel)
     case unfavoriteToolTappedFromFavorites(tool: YourFavoritedToolDomainModel)
     case goToToolsTappedFromFavorites
-    
-    // allYourFavoritedTools
-    case backTappedFromAllYourFavoriteTools
-    case toolDetailsTappedFromAllYourFavoriteTools(tool: YourFavoritedToolDomainModel)
-    case openToolTappedFromAllYourFavoriteTools(tool: YourFavoritedToolDomainModel)
-    case toolTappedFromAllYourFavoritedTools(tool: YourFavoritedToolDomainModel)
-    case unfavoriteToolTappedFromAllYourFavoritedTools(tool: YourFavoritedToolDomainModel, didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>)
-    
+        
     // tools
     case toolCategoryFilterTappedFromTools
     case toolLanguageFilterTappedFromTools
