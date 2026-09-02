@@ -25,7 +25,7 @@ struct PersonalizedLessonFilterLanguageSelectionView: View {
             ToolLanguageFilterSelectionView(
                 searchText: $viewModel.searchText,
                 searchBarStrings: viewModel.searchBarStrings,
-                languages: [],
+                languages: viewModel.languageSearchResults,
                 selectedLanguageId: viewModel.selectedLanguageId,
                 languageTapped: { (languageId: String) in
                     

@@ -8,14 +8,13 @@
 
 import SwiftUI
 
-struct ToolLanguageFilterItemView: View {
+struct ToolLanguageFilterItemView<Language: ToolLanguageFilterItemDomainModelInterface>: View {
     
-    private static let lightGrey = Color.getColorWithRGB(red: 151, green: 151, blue: 151, opacity: 1)
-    
-    private let language: ToolLanguageFilterItemDomainModel
+    private let language: Language
     private let isSelected: Bool
+    private let lightGrey = Color.getColorWithRGB(red: 151, green: 151, blue: 151, opacity: 1)
     
-    init(language: ToolLanguageFilterItemDomainModel, isSelected: Bool) {
+    init(language: Language, isSelected: Bool) {
         
         self.language = language
         self.isSelected = isSelected
@@ -35,14 +34,14 @@ struct ToolLanguageFilterItemView: View {
                                             
                     Text(language.languageNameTranslatedInAppLanguage)
                         .font(FontLibrary.sfProTextRegular.font(size: 15))
-                        .foregroundColor(Self.lightGrey)
+                        .foregroundColor(lightGrey)
                 }
                 
                 if let availableText = language.availableText {
                     
                     Text(availableText)
                         .font(FontLibrary.sfProTextRegular.font(size: 12))
-                        .foregroundColor(Self.lightGrey)
+                        .foregroundColor(lightGrey)
                 }
             }
             .padding(.vertical, 7)

@@ -14,7 +14,6 @@ struct ToolLanguageFilterItemDomainModel: Sendable {
     let languageNameTranslatedInLanguage: String
     let languageNameTranslatedInAppLanguage: String
     let availableText: String?
-    let availableCount: Int?
 }
 
 extension ToolLanguageFilterItemDomainModel: StringSearchable {
@@ -24,7 +23,7 @@ extension ToolLanguageFilterItemDomainModel: StringSearchable {
     }
 }
 
-extension ToolLanguageFilterItemDomainModel: Identifiable {
+extension ToolLanguageFilterItemDomainModel: ToolLanguageFilterItemDomainModelInterface {
     
     var id: String {
         return languageId
