@@ -11,10 +11,17 @@ import Foundation
 struct LessonFilterLanguageDomainModel: ToolLanguageFilterItemDomainModelInterface {
     
     let languageId: String
-    let languageNameTranslatedInLanguage: String
-    let languageNameTranslatedInAppLanguage: String
+    let languageNamePair: TranslatedLanguageNamePairDomainModel
     let lessonsAvailableText: String
     let lessonsAvailableCount: Int
+    
+    var languageNameTranslatedInLanguage: String {
+        return languageNamePair.nameInOwnLanguage
+    }
+    
+    var languageNameTranslatedInAppLanguage: String {
+        return languageNamePair.nameInAppLanguage
+    }
     
     var availableText: String? {
         return lessonsAvailableText
