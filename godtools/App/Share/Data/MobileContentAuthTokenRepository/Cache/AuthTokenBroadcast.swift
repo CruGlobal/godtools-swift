@@ -12,16 +12,20 @@ actor AuthTokenBroadcast {
     
     private let stream = MultiBroadcastStream<MobileContentAuthTokenDataModel?>()
     
+    private var authToken: MobileContentAuthTokenDataModel?
+    
     init() {
         
     }
     
     func getAuthTokenStream() async -> AsyncStream<MobileContentAuthTokenDataModel?> {
         
-        return await stream.getNewStream()
+        return await stream.getNewStream(sendValue: authToken)
     }
     
     func setAuthToken(authToken: MobileContentAuthTokenDataModel?) async {
+        
+        self.authToken = authToken
         
         await stream.send(value: authToken)
     }
