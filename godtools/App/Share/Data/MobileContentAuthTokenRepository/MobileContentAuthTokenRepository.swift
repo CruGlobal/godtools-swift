@@ -45,10 +45,9 @@ final class MobileContentAuthTokenRepository: Sendable {
         return cache.getUserId()
     }
     
-    func getAuthTokenChangedPublisher() -> AnyPublisher<MobileContentAuthTokenDataModel?, Never> {
+    func getAuthTokenStream() async -> AsyncStream<MobileContentAuthTokenDataModel?> {
         
-        return cache.getAuthTokenChangedPublisher()
-            .eraseToAnyPublisher()
+        return await cache.getAuthTokenStream()
     }
     
     func getCachedAuthTokenModel() throws -> MobileContentAuthTokenDataModel? {
