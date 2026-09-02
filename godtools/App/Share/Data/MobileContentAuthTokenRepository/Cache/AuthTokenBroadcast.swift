@@ -20,7 +20,7 @@ actor AuthTokenBroadcast {
     
     func getAuthTokenStream() async -> AsyncStream<MobileContentAuthTokenDataModel?> {
         
-        return await stream.getNewStream(sendValue: authToken)
+        return await stream.getNewStream(sendValue: authToken, bufferingPolicy: .bufferingNewest(1))
     }
     
     func setAuthToken(authToken: MobileContentAuthTokenDataModel?) async {
