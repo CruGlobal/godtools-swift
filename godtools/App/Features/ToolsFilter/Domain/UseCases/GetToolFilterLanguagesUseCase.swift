@@ -74,8 +74,8 @@ final class GetToolFilterLanguagesUseCase: Sendable {
         let sortedDomainModels: [ToolFilterLanguageDomainModel] = domainModels
             .sorted { (thisLanguage: ToolFilterLanguageDomainModel, thatLanguage: ToolFilterLanguageDomainModel) in
                 
-                let thisLanguageName: String = thisLanguage.languageNameTranslatedInAppLanguage
-                let thatLanguageName: String = thatLanguage.languageNameTranslatedInAppLanguage
+                let thisLanguageName: String = thisLanguage.languageNamePair.nameInAppLanguage
+                let thatLanguageName: String = thatLanguage.languageNamePair.nameInAppLanguage
                 
                 return thisLanguageName.lowercased() < thatLanguageName.lowercased()
             }

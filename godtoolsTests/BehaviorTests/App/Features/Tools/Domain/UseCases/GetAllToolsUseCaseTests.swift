@@ -107,7 +107,7 @@ struct GetAllToolsUseCaseTests {
         
         let growthCategoryFilter = ToolFilterCategoryDomainModel.createCategory(id: categoryGrowth, title: "", toolsAvailable: "")
         
-        let anyLanguageFilter = ToolFilterLanguageDomainModel.createAnyLanguage(languageNameTranslatedInAppLanguage: "", toolsAvailable: "", numberOfToolsAvailable: 0)
+        let anyLanguageFilter = ToolFilterLanguageDomainModel.createAnyLanguage(nameInAppLanguage: "", toolsAvailable: "", numberOfToolsAvailable: 0)
         
         await withCheckedContinuation { continuation in
             
@@ -165,7 +165,7 @@ struct GetAllToolsUseCaseTests {
         
         let anyCategoryFilter = ToolFilterCategoryDomainModel.createAnyCategory(title: "", toolsAvailable: "")
         
-        let russianLanguageFilter = ToolFilterLanguageDomainModel.createLanguage(id: russianLanguageId, languageName: "", languageNameTranslatedInAppLanguage: "", toolsAvailable: "", numberOfToolsAvailable: 0)
+        let russianLanguageFilter = ToolFilterLanguageDomainModel.createLanguage(id: russianLanguageId, languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "", nameInAppLanguage: ""), toolsAvailable: "", numberOfToolsAvailable: 0)
         
         await withCheckedContinuation { continuation in
             
@@ -223,7 +223,7 @@ struct GetAllToolsUseCaseTests {
         
         let anyCategoryFilter = ToolFilterCategoryDomainModel.createAnyCategory(title: "", toolsAvailable: "")
         
-        let spanishLanguageFilter = ToolFilterLanguageDomainModel.createLanguage(id: spanishLanguageId, languageName: "", languageNameTranslatedInAppLanguage: "", toolsAvailable: "", numberOfToolsAvailable: 0)
+        let spanishLanguageFilter = ToolFilterLanguageDomainModel.createLanguage(id: spanishLanguageId, languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "", nameInAppLanguage: ""), toolsAvailable: "", numberOfToolsAvailable: 0)
         
         await withCheckedContinuation { continuation in
             

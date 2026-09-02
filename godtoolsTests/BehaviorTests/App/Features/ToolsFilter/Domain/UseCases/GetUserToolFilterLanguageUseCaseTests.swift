@@ -69,8 +69,8 @@ struct GetUserToolFilterLanguageUseCaseTests {
 
         #expect(language.languageType == .any)
         #expect(language.filterId == nil)
-        #expect(language.languageName == nil)
-        #expect(language.languageNameTranslatedInAppLanguage == englishAnyLanguageName)
+        #expect(language.languageNamePair.nameInOwnLanguage.isEmpty)
+        #expect(language.languageNamePair.nameInAppLanguage == englishAnyLanguageName)
         #expect(language.numberOfToolsAvailable == 4)
         #expect(language.toolsAvailable == "\(englishToolsAvailableText) 4")
     }
@@ -112,8 +112,8 @@ struct GetUserToolFilterLanguageUseCaseTests {
 
         #expect(language.languageType == .language)
         #expect(language.filterId == argument.storedLanguageId)
-        #expect(language.languageName == argument.expectedLanguageName)
-        #expect(language.languageNameTranslatedInAppLanguage == argument.expectedLanguageNameTranslatedInAppLanguage)
+        #expect(language.languageNamePair.nameInOwnLanguage == argument.expectedLanguageName)
+        #expect(language.languageNamePair.nameInAppLanguage == argument.expectedLanguageNameTranslatedInAppLanguage)
         #expect(language.numberOfToolsAvailable == argument.expectedToolsAvailableCount)
         #expect(language.toolsAvailable == "\(englishToolsAvailableText) \(argument.expectedToolsAvailableCount)")
     }
@@ -135,7 +135,7 @@ struct GetUserToolFilterLanguageUseCaseTests {
 
         #expect(language.languageType == .any)
         #expect(language.filterId == nil)
-        #expect(language.languageNameTranslatedInAppLanguage == englishAnyLanguageName)
+        #expect(language.languageNamePair.nameInAppLanguage == englishAnyLanguageName)
         #expect(language.numberOfToolsAvailable == 4)
     }
 
@@ -173,11 +173,11 @@ struct GetUserToolFilterLanguageUseCaseTests {
             storeLanguageId: TestUserFilterLanguageId.french
         )
 
-        #expect(anyLanguage.languageNameTranslatedInAppLanguage == argument.expectedAnyLanguageName)
+        #expect(anyLanguage.languageNamePair.nameInAppLanguage == argument.expectedAnyLanguageName)
         #expect(anyLanguage.toolsAvailable == "\(argument.expectedToolsAvailableText) 4")
 
-        #expect(frenchLanguage.languageName == "Français")
-        #expect(frenchLanguage.languageNameTranslatedInAppLanguage == argument.expectedFrenchNameTranslatedInAppLanguage)
+        #expect(frenchLanguage.languageNamePair.nameInOwnLanguage == "Français")
+        #expect(frenchLanguage.languageNamePair.nameInAppLanguage == argument.expectedFrenchNameTranslatedInAppLanguage)
         #expect(frenchLanguage.toolsAvailable == "\(argument.expectedToolsAvailableText) 2")
     }
 }
