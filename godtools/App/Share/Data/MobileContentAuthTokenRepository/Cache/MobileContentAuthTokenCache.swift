@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 import RepositorySync
 import SwiftData
 import RealmSwift
@@ -16,7 +15,7 @@ final class MobileContentAuthTokenCache: AuthTokenCacheInterface {
     
     typealias UserId = String
     
-    private static let sharedHashableAuthTokenSubject: HashableCurrentValueSubject<UserId, MobileContentAuthTokenDataModel, Never> = HashableCurrentValueSubject()
+    private static let authTokenBroadcast: AuthTokenBroadcast = AuthTokenBroadcast()
     private static let sharedAuthUserId: UserId = "shared_auth_user_id"
     
     private let keychainAccessor: MobileContentAuthTokenKeychainAccessorInterface
@@ -64,24 +63,11 @@ final class MobileContentAuthTokenCache: AuthTokenCacheInterface {
         return persistence as? RealmRepositorySyncPersistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenCodable, RealmMobileContentAuthToken>
     }
     
-    func getAuthTokenChangedPublisher() -> AnyPublisher<MobileContentAuthTokenDataModel?, Never> {
+    func getAuthTokenStream() async -> AsyncStream<MobileContentAuthTokenDataModel?> {
         
-        return MobileContentAuthTokenCache
-            .sharedHashableAuthTokenSubject
-            .getValueChangedPublisher(
-                hash: MobileContentAuthTokenCache.sharedAuthUserId
-            )
-            .eraseToAnyPublisher()
+        return await Self.authTokenBroadcast.getAuthTokenStream()
     }
-    
-    private func updateHashableAuthTokenSubject(authToken: MobileContentAuthTokenDataModel?) {
         
-        MobileContentAuthTokenCache.sharedHashableAuthTokenSubject.storeValue(
-            hash: MobileContentAuthTokenCache.sharedAuthUserId,
-            value: authToken
-        )
-    }
-    
     func storeAuthToken(authTokenCodable: MobileContentAuthTokenCodable) async throws {
         
         try keychainAccessor.saveMobileContentAuthToken(authTokenCodable: authTokenCodable)

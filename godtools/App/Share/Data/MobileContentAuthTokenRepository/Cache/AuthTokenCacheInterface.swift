@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 protocol AuthTokenCacheInterface: Sendable {
     
@@ -15,5 +14,5 @@ protocol AuthTokenCacheInterface: Sendable {
     func getCachedAuthToken() throws -> CachedAuthToken?
     func storeAuthToken(authTokenCodable: MobileContentAuthTokenCodable) async throws
     func deleteAuthToken(userId: String) async throws
-    func getAuthTokenChangedPublisher() -> AnyPublisher<MobileContentAuthTokenDataModel?, Never>
+    func getAuthTokenStream() async -> AsyncStream<MobileContentAuthTokenDataModel?>
 }
