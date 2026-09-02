@@ -20,6 +20,7 @@ final class FavoritesViewModel: ObservableObject {
     private let getYourFavoritedToolsUseCase: GetYourFavoritedToolsUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
+    private let reorderFavoritedToolUseCase: ReorderFavoritedToolUseCase
     private let getToolBannerUseCase: GetToolBannerUseCase
     private let imageCache: ImageCacheInterface
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
@@ -37,6 +38,7 @@ final class FavoritesViewModel: ObservableObject {
     @Published private(set) var showsOpenTutorialBanner: Bool = false
     @Published private(set) var featuredLessons: [FeaturedLessonDomainModel] = Array()
     @Published private(set) var yourFavoritedTools: [YourFavoritedToolDomainModel] = Array()
+    @Published private(set) var favoritedTools: [YourFavoritedToolDomainModel] = Array()
     
     init(
         stepEmitter: FlowStepEmitter,
@@ -45,6 +47,7 @@ final class FavoritesViewModel: ObservableObject {
         getYourFavoritedToolsUseCase: GetYourFavoritedToolsUseCase,
         getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
         getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase,
+        reorderFavoritedToolUseCase: ReorderFavoritedToolUseCase,
         getToolBannerUseCase: GetToolBannerUseCase,
         imageCache: ImageCacheInterface,
         disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase,
@@ -60,6 +63,7 @@ final class FavoritesViewModel: ObservableObject {
         self.resourcesRepository = resourcesRepository
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
+        self.reorderFavoritedToolUseCase = reorderFavoritedToolUseCase
         self.getToolBannerUseCase = getToolBannerUseCase
         self.imageCache = imageCache
         self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
@@ -114,6 +118,26 @@ final class FavoritesViewModel: ObservableObject {
             }, receiveValue: { [weak self] (yourFavoritedTools: [YourFavoritedToolDomainModel]) in
                 
                 self?.yourFavoritedTools = yourFavoritedTools
+            })
+            .store(in: &cancellables)
+        
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+
+                getYourFavoritedToolsUseCase
+                    .execute(
+                        appLanguage: appLanguage,
+                        maxCount: nil
+                    )
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (favoritedTools: [YourFavoritedToolDomainModel]) in
+                
+                self?.favoritedTools = favoritedTools
             })
             .store(in: &cancellables)
         
@@ -287,6 +311,17 @@ final class FavoritesViewModel: ObservableObject {
 
 extension FavoritesViewModel {
     
+    func getToolViewModel(tool: YourFavoritedToolDomainModel) -> ToolCardViewModel {
+                
+        return ToolCardViewModel(
+            tool: tool,
+            accessibility: .favoriteTool,
+            getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
+            getToolBannerUseCase: getToolBannerUseCase,
+            imageCache: imageCache
+        )
+    }
+    
     func pageViewed() {
         
         trackPageView()
@@ -397,5 +432,31 @@ extension FavoritesViewModel {
         trackOpenFavoritedToolButtonAnalytics(tool: tool)
         
         stepEmitter.emit(step: AppFlowStep.toolTappedFromFavorites(tool: tool))
+    }
+    
+    func toolMoved(fromOffsets source: IndexSet, toOffset destination: Int) {
+        
+        for index in source {
+            
+            guard index < favoritedTools.count && index >= 0 else {
+                continue
+            }
+            
+            let toolToMove: YourFavoritedToolDomainModel = favoritedTools[index]
+            
+            let newPosition: Int = index < destination ? destination - 1 : destination
+            
+            let reorderFavoritedToolUseCase: ReorderFavoritedToolUseCase = self.reorderFavoritedToolUseCase
+            
+            Task.detached {
+                
+                try await reorderFavoritedToolUseCase
+                    .execute(
+                        toolId: toolToMove.id,
+                        originalPosition: index,
+                        newPosition: newPosition
+                    )
+            }
+        }
     }
 }

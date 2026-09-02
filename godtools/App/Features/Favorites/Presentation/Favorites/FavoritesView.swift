@@ -43,39 +43,50 @@ struct FavoritesView: View {
                     )
                 }
                 
-                PullToRefreshScrollView(showsIndicators: true) {
+                if viewModel.favoritedTools.count > 0 {
                     
-                    VStack(alignment: .leading, spacing: 0) {
-                        
-                        Text(viewModel.strings.welcomeTitle)
-                            .font(FontLibrary.sfProTextRegular.font(size: 30))
-                            .foregroundColor(ColorPalette.gtGrey.color)
-                            .padding([.top], 24)
-                            .padding([.leading], contentHorizontalInsets)
-                        
-                        FeaturedLessonsView(
-                            viewModel: viewModel,
-                            geometry: geometry,
-                            contentHorizontalInsets: contentHorizontalInsets,
-                            lessonTappedClosure: { (featuredLesson: FeaturedLessonDomainModel) in
-                                
-                                viewModel.featuredLessonTapped(featuredLesson: featuredLesson)
-                            }
-                        )
-                        .padding([.top], 30)
-                        
-                        YourFavoriteToolsView(
-                            viewModel: viewModel,
-                            geometry: geometry,
-                            contentHorizontalInsets: contentHorizontalInsets
-                        )
-                        .padding([.top], 45)
-                    }
-                    .padding([.bottom], 30)
+                    List {
 
-                } refreshHandler: {
+                        ForEach(viewModel.favoritedTools) { (tool: YourFavoritedToolDomainModel) in
+                            ToolCardView(
+                                viewModel: viewModel.getToolViewModel(tool: tool),
+                                geometry: geometry,
+                                layout: .landscape,
+                                showsCategory: true,
+                                favoriteTappedClosure: {
+                                    
+                                    viewModel.unfavoriteToolTapped(tool: tool)
+                                },
+                                toolDetailsTappedClosure: {
+                                    
+                                    viewModel.toolDetailsTapped(tool: tool)
+                                },
+                                openToolTappedClosure: {
+                                    
+                                    viewModel.openToolTapped(tool: tool)
+                                },
+                                toolTappedClosure: {
+                                    
+                                    viewModel.toolTapped(tool: tool)
+                                }
+                            )
+                            .buttonStyle(.plain)
+                            .listRowSeparator(.hidden)
+                        }
+                        .onMove { from, to in
+                            viewModel.toolMoved(fromOffsets: from, toOffset: to)
+                        }
+                    }
+                    .listStyle(.plain)
+                    .refreshable {
+                        viewModel.pullToRefresh()
+                    }
+                }
+                else {
                     
-                    viewModel.pullToRefresh()
+                    NoFavoriteToolsView(viewModel: viewModel)
+                        .padding([.top], 12)
+                        .padding([.leading, .trailing], contentHorizontalInsets)
                 }
             }
         }//end GeometryReader
@@ -101,6 +112,7 @@ struct FavoritesView_Preview: PreviewProvider {
             getYourFavoritedToolsUseCase: appDiContainer.feature.favorites.domainLayer.getYourFavoritedToolsUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToolIsFavoritedUseCase(),
+            reorderFavoritedToolUseCase: appDiContainer.feature.favorites.domainLayer.getReorderFavoritedToolUseCase(),
             getToolBannerUseCase: appDiContainer.core.domainLayer.getToolBannerUseCase(),
             imageCache: appDiContainer.core.dataLayer.getSharedImageCache(),
             disableOptInOnboardingBannerUseCase: appDiContainer.feature.tools.domainLayer.getDisableOptInOnboardingBannerUseCase(),
