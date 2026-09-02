@@ -25,12 +25,12 @@ final class GetPersonalizedLessonFilterLanguagesUseCase: Sendable {
     
     @MainActor func execute(
         appLanguage: AppLanguageDomainModel
-    ) -> AnyPublisher<[ToolLanguageFilterItemDomainModel], Error> {
+    ) -> AnyPublisher<[PersonalizedLessonFilterLanguageDomainModel], Error> {
             
         return resourcesRepository
             .observeCollectionChangesPublisher()
             .receive(on: DispatchQueue.global())
-            .flatMap { (resourcesChanged: Void) -> AnyPublisher<[ToolLanguageFilterItemDomainModel], Error> in
+            .flatMap { (resourcesChanged: Void) -> AnyPublisher<[PersonalizedLessonFilterLanguageDomainModel], Error> in
                 
                 return AnyPublisher() {
                     try await self.asyncExecute(appLanguage: appLanguage)
@@ -39,7 +39,7 @@ final class GetPersonalizedLessonFilterLanguagesUseCase: Sendable {
             .eraseToAnyPublisher()
     }
     
-    private func asyncExecute(appLanguage: AppLanguageDomainModel) async throws -> [ToolLanguageFilterItemDomainModel] {
+    private func asyncExecute(appLanguage: AppLanguageDomainModel) async throws -> [PersonalizedLessonFilterLanguageDomainModel] {
         
         return Array()
     }

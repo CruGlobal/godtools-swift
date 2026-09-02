@@ -34,7 +34,7 @@ final class LessonsViewModel: ObservableObject {
     @Published private var localizationSettings: UserLocalizationSettingsDomainModel?
     @Published private var allLessonsList: [LessonListItemDomainModel] = Array()
     @Published private var selectedAllLessonsFilterLanguage: LessonFilterLanguageDomainModel?
-    @Published private var selectedPersonalizedLessonsFilterLanguage: ToolLanguageFilterItemDomainModel?
+    @Published private var selectedPersonalizedLessonsFilterLanguage: PersonalizedLessonFilterLanguageDomainModel?
     
     @Published private(set) var toggleOptions: [PersonalizationToggleOption] = []
     @Published private(set) var strings: LessonsStringsDomainModel = .emptyValue
@@ -94,9 +94,9 @@ final class LessonsViewModel: ObservableObject {
         Publishers.CombineLatest3(
             $appLanguage.dropFirst(),
             $localizationSettings,
-            $selectedAllLessonsFilterLanguage
+            $selectedPersonalizedLessonsFilterLanguage
         )
-        .map { (appLanguage: AppLanguageDomainModel, localizationSettings: UserLocalizationSettingsDomainModel?, languageFilter: LessonFilterLanguageDomainModel?) in
+        .map { (appLanguage: AppLanguageDomainModel, localizationSettings: UserLocalizationSettingsDomainModel?, languageFilter: PersonalizedLessonFilterLanguageDomainModel?) in
             
             getPersonalizedLessonsUseCase
                 .execute(

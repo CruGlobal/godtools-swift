@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ToolLanguageFilterItemDomainModelInterface: Sendable, Identifiable {
+protocol ToolLanguageFilterItemDomainModelInterface: Sendable, Identifiable, StringSearchable {
     
     var languageId: String { get }
     var languageNameTranslatedInLanguage: String { get }
@@ -19,5 +19,11 @@ protocol ToolLanguageFilterItemDomainModelInterface: Sendable, Identifiable {
 extension ToolLanguageFilterItemDomainModelInterface  {
     var id: String {
         return languageId
+    }
+}
+
+extension ToolLanguageFilterItemDomainModelInterface {
+    var searchableStrings: [String] {
+        return [languageNameTranslatedInLanguage, languageNameTranslatedInAppLanguage]
     }
 }

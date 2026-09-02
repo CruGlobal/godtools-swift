@@ -25,11 +25,11 @@ final class PersonalizedLessonFilterLanguageSelectionViewModel: ObservableObject
     private var cancellables: Set<AnyCancellable> = Set()
     
     @Published private var appLanguage = AppLanguageDomainModel.english
-    @Published private var allLanguages: [ToolLanguageFilterItemDomainModel] = Array()
+    @Published private var allLanguages: [PersonalizedLessonFilterLanguageDomainModel] = Array()
     
     @Published private(set) var searchBarStrings = SearchBarStringsDomainModel.emptyValue
     @Published private(set) var strings = PersonalizedLessonFilterLanguagesStringsDomainModel.emptyValue
-    @Published private(set) var languageSearchResults: [ToolLanguageFilterItemDomainModel] = Array()
+    @Published private(set) var languageSearchResults: [PersonalizedLessonFilterLanguageDomainModel] = Array()
     @Published private(set) var selectedLanguageId: String?
     
     @Published var searchText: String = ""
@@ -87,7 +87,7 @@ final class PersonalizedLessonFilterLanguageSelectionViewModel: ObservableObject
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { _ in
                 
-            }, receiveValue: { [weak self] (languageFilter: ToolLanguageFilterItemDomainModel?) in
+            }, receiveValue: { [weak self] (languageFilter: PersonalizedLessonFilterLanguageDomainModel?) in
                 
                 self?.selectedLanguageId = languageFilter?.languageId
             })
@@ -97,7 +97,7 @@ final class PersonalizedLessonFilterLanguageSelectionViewModel: ObservableObject
             $searchText,
             $allLanguages
         )
-        .map { (searchText: String, languages: [ToolLanguageFilterItemDomainModel]) in
+        .map { (searchText: String, languages: [PersonalizedLessonFilterLanguageDomainModel]) in
             
             searchPersonalizedLessonFilterLanguagesUseCase
                 .execute(searchText: searchText, languages: languages)

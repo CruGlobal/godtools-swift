@@ -15,7 +15,7 @@ final class GetUserPersonalizedLessonFilterLanguageUseCase: Sendable {
         
     }
     
-    @MainActor func execute() -> AnyPublisher<ToolLanguageFilterItemDomainModel?, Error> {
+    @MainActor func execute() -> AnyPublisher<PersonalizedLessonFilterLanguageDomainModel?, Error> {
         
         // TODO: Get personalized lesson language filter. ~Levi
         
