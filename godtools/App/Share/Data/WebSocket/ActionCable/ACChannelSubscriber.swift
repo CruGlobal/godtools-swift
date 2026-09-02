@@ -90,7 +90,7 @@ actor ACChannelSubscriber: ACChannelSubscriberInterface {
     
     func getSubscribedStream() async -> AsyncThrowingStream<WebSocketChannel, Error> {
         
-        return await subscribedStream.getNewStream()
+        return await subscribedStream.getNewStream(bufferingPolicy: .bufferingNewest(1))
     }
     
     private func sendDidSubscribeToChannel(channel: WebSocketChannel) async {
