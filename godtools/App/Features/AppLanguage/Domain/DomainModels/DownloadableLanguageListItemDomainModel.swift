@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct DownloadableLanguageListItemDomainModel: Sendable, Equatable {
+struct DownloadableLanguageListItemDomainModel: Sendable {
     
     let languageId: String
     let languageNamePair: TranslatedLanguageNamePairDomainModel
@@ -48,5 +48,11 @@ extension DownloadableLanguageListItemDomainModel: StringSearchable {
             languageNamePair.nameInAppLanguage,
             languageNamePair.nameInOwnLanguage
         ]
+    }
+}
+
+extension DownloadableLanguageListItemDomainModel: Equatable {
+    static func == (this: DownloadableLanguageListItemDomainModel, that: DownloadableLanguageListItemDomainModel) -> Bool {
+        return this.languageId == that.languageId
     }
 }
