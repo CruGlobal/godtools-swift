@@ -59,7 +59,7 @@ struct SetAppLanguageUseCaseTests {
         let appLanguageSpanish = LanguageCodeDomainModel.spanish.rawValue
         let spanishLanguage = allLanguages.first(where: { $0.code == appLanguageSpanish.languageCode })
                 
-        var lessonLanguageFilterRef: ToolLanguageFilterItemDomainModel?
+        var lessonLanguageFilterRef: LessonFilterLanguageDomainModel?
         
         var cancellables: Set<AnyCancellable> = Set()
         var triggerCount: Int = 0
@@ -77,7 +77,7 @@ struct SetAppLanguageUseCaseTests {
                 )
                 .sink(receiveCompletion: { _ in
                     
-                }, receiveValue: { (userLessonFilterLanguage: ToolLanguageFilterItemDomainModel?) in
+                }, receiveValue: { (userLessonFilterLanguage: LessonFilterLanguageDomainModel?) in
                     
                     triggerCount += 1
                     

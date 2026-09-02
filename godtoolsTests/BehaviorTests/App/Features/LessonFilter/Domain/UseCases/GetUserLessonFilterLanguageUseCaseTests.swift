@@ -41,7 +41,7 @@ struct GetUserLessonFilterLanguageUseCaseTests {
 
         let getUserLessonFilterLanguageUseCase: GetUserLessonFilterLanguageUseCase = try getUserLessonFilterLanguageUseCase(addSwiftObjects: swiftObjectsToAdd)
 
-        var lessonLanguageFilterRef: ToolLanguageFilterItemDomainModel?
+        var lessonLanguageFilterRef: LessonFilterLanguageDomainModel?
 
         var cancellables: Set<AnyCancellable> = Set()
 
@@ -56,7 +56,7 @@ struct GetUserLessonFilterLanguageUseCaseTests {
                 .execute(appLanguage: appLanguageSpanish)
                 .sink(receiveCompletion: { _ in
 
-                }, receiveValue: { (userLessonFilterLanguage: ToolLanguageFilterItemDomainModel?) in
+                }, receiveValue: { (userLessonFilterLanguage: LessonFilterLanguageDomainModel?) in
 
                     lessonLanguageFilterRef = userLessonFilterLanguage
 
@@ -107,7 +107,7 @@ struct GetUserLessonFilterLanguageUseCaseTests {
 
         let getUserLessonFilterLanguageUseCase: GetUserLessonFilterLanguageUseCase = try getUserLessonFilterLanguageUseCase(addSwiftObjects: swiftObjectsToAdd)
 
-        var lessonLanguageFilterRef: ToolLanguageFilterItemDomainModel?
+        var lessonLanguageFilterRef: LessonFilterLanguageDomainModel?
 
         var cancellables: Set<AnyCancellable> = Set()
 
@@ -122,7 +122,7 @@ struct GetUserLessonFilterLanguageUseCaseTests {
                 .execute(appLanguage: appLanguageFrench)
                 .sink(receiveCompletion: { _ in
 
-                }, receiveValue: { (userLessonFilterLanguage: ToolLanguageFilterItemDomainModel?) in
+                }, receiveValue: { (userLessonFilterLanguage: LessonFilterLanguageDomainModel?) in
 
                     lessonLanguageFilterRef = userLessonFilterLanguage
 
@@ -165,8 +165,8 @@ struct GetUserLessonFilterLanguageUseCaseTests {
 
         let getUserLessonFilterLanguageUseCase: GetUserLessonFilterLanguageUseCase = getUserLessonFilterLanguageUseCase(testsDiContainer: testsDiContainer)
 
-        var originalLessonLanguageFilterRef: ToolLanguageFilterItemDomainModel?
-        var selectedLessonLanguageFilterRef: ToolLanguageFilterItemDomainModel?
+        var originalLessonLanguageFilterRef: LessonFilterLanguageDomainModel?
+        var selectedLessonLanguageFilterRef: LessonFilterLanguageDomainModel?
 
         var cancellables: Set<AnyCancellable> = Set()
         var triggerCount: Int = 0
@@ -182,7 +182,7 @@ struct GetUserLessonFilterLanguageUseCaseTests {
                 .execute(appLanguage: appLanguageFrench)
                 .sink(receiveCompletion: { _ in
 
-                }, receiveValue: { (userLessonFilterLanguage: ToolLanguageFilterItemDomainModel?) in
+                }, receiveValue: { (userLessonFilterLanguage: LessonFilterLanguageDomainModel?) in
 
                     triggerCount += 1
 

@@ -33,7 +33,7 @@ struct GetLessonFilterLanguagesUseCaseTests {
         
         let appLanguageRussian: AppLanguageDomainModel = LanguageCodeDomainModel.russian.rawValue
         
-        var languagesRef: [ToolLanguageFilterItemDomainModel] = Array()
+        var languagesRef: [LessonFilterLanguageDomainModel] = Array()
         var didSetLanguages: Bool = false
         
         await withCheckedContinuation { continuation in
@@ -48,7 +48,7 @@ struct GetLessonFilterLanguagesUseCaseTests {
                 .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { _ in
 
-                }, receiveValue: { (languages: [ToolLanguageFilterItemDomainModel]) in
+                }, receiveValue: { (languages: [LessonFilterLanguageDomainModel]) in
                     
                     guard languages.count > 0 && !didSetLanguages else {
                         return
@@ -64,11 +64,11 @@ struct GetLessonFilterLanguagesUseCaseTests {
                 .store(in: &cancellables)
         }
         
-        let afrikaansLanguage: ToolLanguageFilterItemDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.afrikaans.rawValue})
-        let czechLanguage: ToolLanguageFilterItemDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.czech.rawValue})
-        let englishLanguage: ToolLanguageFilterItemDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.english.rawValue})
-        let frenchLanguage: ToolLanguageFilterItemDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.french.rawValue})
-        let spanishLanguage: ToolLanguageFilterItemDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.spanish.rawValue})
+        let afrikaansLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.afrikaans.rawValue})
+        let czechLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.czech.rawValue})
+        let englishLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.english.rawValue})
+        let frenchLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.french.rawValue})
+        let spanishLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.spanish.rawValue})
 
         #expect(afrikaansLanguage?.languageNameTranslatedInLanguage == "Afrikaans")
         #expect(afrikaansLanguage?.languageNameTranslatedInAppLanguage == "африкаанс")
@@ -109,7 +109,7 @@ struct GetLessonFilterLanguagesUseCaseTests {
         
         let getLessonFilterLanguagesUseCase: GetLessonFilterLanguagesUseCase = try getLessonFilterLanguagesUseCase()
                 
-        var languagesRef: [ToolLanguageFilterItemDomainModel] = Array()
+        var languagesRef: [LessonFilterLanguageDomainModel] = Array()
         var didSetLanguages: Bool = false
         
         await withCheckedContinuation { continuation in
@@ -124,7 +124,7 @@ struct GetLessonFilterLanguagesUseCaseTests {
                 .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { _ in
                     
-                }, receiveValue: { (languages: [ToolLanguageFilterItemDomainModel]) in
+                }, receiveValue: { (languages: [LessonFilterLanguageDomainModel]) in
                     
                     guard languages.count > 0 && !didSetLanguages else {
                         return
@@ -159,7 +159,7 @@ struct GetLessonFilterLanguagesUseCaseTests {
         
         let appLanguageEnglish: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
         
-        var languagesRef: [ToolLanguageFilterItemDomainModel] = Array()
+        var languagesRef: [LessonFilterLanguageDomainModel] = Array()
         var didSetLanguages: Bool = false
 
         await withCheckedContinuation { continuation in
@@ -175,7 +175,7 @@ struct GetLessonFilterLanguagesUseCaseTests {
                 .sink(receiveCompletion: { _ in
                     
                     
-                }, receiveValue: { (languages: [ToolLanguageFilterItemDomainModel]) in
+                }, receiveValue: { (languages: [LessonFilterLanguageDomainModel]) in
                     
                     guard languages.count > 0 && !didSetLanguages else {
                         return
@@ -191,11 +191,11 @@ struct GetLessonFilterLanguagesUseCaseTests {
                 .store(in: &cancellables)
         }
 
-        let afrikaansLanguage: ToolLanguageFilterItemDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.afrikaans.rawValue})
-        let czechLanguage: ToolLanguageFilterItemDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.czech.rawValue})
-        let englishLanguage: ToolLanguageFilterItemDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.english.rawValue})
-        let frenchLanguage: ToolLanguageFilterItemDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.french.rawValue})
-        let spanishLanguage: ToolLanguageFilterItemDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.spanish.rawValue})
+        let afrikaansLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.afrikaans.rawValue})
+        let czechLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.czech.rawValue})
+        let englishLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.english.rawValue})
+        let frenchLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.french.rawValue})
+        let spanishLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.spanish.rawValue})
         
         let afrikaansLessonsAvailable: String = try #require(afrikaansLanguage?.availableText)
         let czechLessonsAvailable: String = try #require(czechLanguage?.availableText)

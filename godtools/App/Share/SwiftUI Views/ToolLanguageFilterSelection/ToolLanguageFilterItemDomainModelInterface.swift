@@ -15,3 +15,9 @@ protocol ToolLanguageFilterItemDomainModelInterface: Sendable, Identifiable {
     var languageNameTranslatedInAppLanguage: String { get }
     var availableText: String? { get }
 }
+
+extension ToolLanguageFilterItemDomainModelInterface  {
+    var id: String {
+        return languageId
+    }
+}

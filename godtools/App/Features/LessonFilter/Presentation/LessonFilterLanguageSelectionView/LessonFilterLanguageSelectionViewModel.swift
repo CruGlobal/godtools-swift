@@ -25,11 +25,11 @@ final class LessonFilterLanguageSelectionViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = Set()
     
     @Published private var appLanguage = AppLanguageDomainModel.english
-    @Published private var allLanguages: [ToolLanguageFilterItemDomainModel] = Array()
+    @Published private var allLanguages: [LessonFilterLanguageDomainModel] = Array()
     
     @Published private(set) var searchBarStrings = SearchBarStringsDomainModel.emptyValue
     @Published private(set) var strings = LessonFilterLanguagesStringsDomainModel.emptyValue
-    @Published private(set) var languageSearchResults: [ToolLanguageFilterItemDomainModel] = Array()
+    @Published private(set) var languageSearchResults: [LessonFilterLanguageDomainModel] = Array()
     @Published private(set) var selectedLanguageId: String?
     
     @Published var searchText: String = ""
@@ -76,7 +76,7 @@ final class LessonFilterLanguageSelectionViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { _ in
                 
-            }, receiveValue: { [weak self] (filterLanguages: [ToolLanguageFilterItemDomainModel]) in
+            }, receiveValue: { [weak self] (filterLanguages: [LessonFilterLanguageDomainModel]) in
                 
                 self?.allLanguages = filterLanguages
             })
@@ -95,7 +95,7 @@ final class LessonFilterLanguageSelectionViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { _ in
                 
-            }, receiveValue: { [weak self] (languageFilter: ToolLanguageFilterItemDomainModel?) in
+            }, receiveValue: { [weak self] (languageFilter: LessonFilterLanguageDomainModel?) in
                 
                 self?.selectedLanguageId = languageFilter?.languageId
             })
@@ -105,7 +105,7 @@ final class LessonFilterLanguageSelectionViewModel: ObservableObject {
             $searchText,
             $allLanguages
         )
-        .map { (searchText: String, languages: [ToolLanguageFilterItemDomainModel]) in
+        .map { (searchText: String, languages: [LessonFilterLanguageDomainModel]) in
             
             searchLessonFilterLanguagesUseCase
                 .execute(searchText: searchText, lessonFilterLanguages: languages)

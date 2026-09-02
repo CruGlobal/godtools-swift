@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ToolLanguageFilterItemDomainModel: Sendable {
+struct ToolLanguageFilterItemDomainModel: ToolLanguageFilterItemDomainModelInterface {
     
     let languageId: String
     let languageNameTranslatedInLanguage: String
@@ -20,12 +20,5 @@ extension ToolLanguageFilterItemDomainModel: StringSearchable {
     
     var searchableStrings: [String] {
         return [languageNameTranslatedInLanguage, languageNameTranslatedInAppLanguage]
-    }
-}
-
-extension ToolLanguageFilterItemDomainModel: ToolLanguageFilterItemDomainModelInterface {
-    
-    var id: String {
-        return languageId
     }
 }
