@@ -13,6 +13,7 @@ protocol ToolLanguageFilterItemDomainModelInterface: Sendable, Identifiable, Str
     var languageId: String { get }
     var languageNamePair: TranslatedLanguageNamePairDomainModel { get }
     var availableText: String? { get }
+    var searchableStrings: [String] { get }
 }
 
 extension ToolLanguageFilterItemDomainModelInterface  {
