@@ -10,14 +10,12 @@ import Foundation
 import RepositorySync
 import SwiftData
 import RealmSwift
+import Combine
 
 final class MobileContentAuthTokenCache: AuthTokenCacheInterface {
     
     typealias UserId = String
-    
-    private static let authTokenBroadcast: AuthTokenBroadcast = AuthTokenBroadcast()
-    private static let sharedAuthUserId: UserId = "shared_auth_user_id"
-    
+        
     private let keychainAccessor: MobileContentAuthTokenKeychainAccessorInterface
     private let persistence: any Persistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenCodable>
     
@@ -28,27 +26,6 @@ final class MobileContentAuthTokenCache: AuthTokenCacheInterface {
         
         self.keychainAccessor = mobileContentAuthTokenKeychainAccessor
         self.persistence = persistence
-        
-        do {
-            
-            let cachedAuthToken: CachedAuthToken? = try getCachedAuthToken()
-            let dataModel: MobileContentAuthTokenDataModel?
-            
-            if let cachedAuthToken = cachedAuthToken {
-                dataModel = cachedAuthToken.toModel()
-            }
-            else {
-                dataModel = nil
-            }
-            
-            Task {
-                await Self.authTokenBroadcast.setAuthToken(authToken: dataModel)
-            }
-        }
-        catch let error {
-            
-            assertionFailure("\n MobileContentAuthTokenCache failed to get cached auth token with error: \(error)")
-        }
     }
     
     @available(iOS 17.4, *)
@@ -65,11 +42,11 @@ final class MobileContentAuthTokenCache: AuthTokenCacheInterface {
         return persistence as? RealmRepositorySyncPersistence<MobileContentAuthTokenDataModel, MobileContentAuthTokenCodable, RealmMobileContentAuthToken>
     }
     
-    func getAuthTokenStream() async -> AsyncStream<MobileContentAuthTokenDataModel?> {
-        
-        return await Self.authTokenBroadcast.getAuthTokenStream()
+    @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Error> {
+        return persistence
+            .observeCollectionChangesPublisher()
     }
-        
+      
     func storeAuthToken(authTokenCodable: MobileContentAuthTokenCodable) async throws {
         
         try keychainAccessor.saveMobileContentAuthToken(authTokenCodable: authTokenCodable)
@@ -79,20 +56,9 @@ final class MobileContentAuthTokenCache: AuthTokenCacheInterface {
             writeOption: nil,
             getOption: nil
         )
-        
-        let cachedAuthToken = CachedAuthToken(
-            appleRefreshToken: authTokenCodable.appleRefreshToken,
-            expirationDate: authTokenCodable.expirationDate,
-            token: authTokenCodable.token,
-            userId: authTokenCodable.userId
-        )
-        
-        let dataModel = cachedAuthToken.toModel()
-                        
-        await Self.authTokenBroadcast.setAuthToken(authToken: dataModel)
     }
     
-    func getCachedAuthToken() throws -> CachedAuthToken? {
+    func getAuthToken() throws -> CachedAuthToken? {
         
         guard let userId = getUserId(), let authToken = getMobileContentAuthToken(userId: userId) else {
             return nil
@@ -109,12 +75,10 @@ final class MobileContentAuthTokenCache: AuthTokenCacheInterface {
     }
     
     private func getMobileContentAuthToken(userId: String) -> String? {
-        
         return keychainAccessor.getMobileContentAuthToken(userId: userId)
     }
     
     func getUserId() -> String? {
-        
         return keychainAccessor.getMobileContentUserId()
     }
     
@@ -123,7 +87,5 @@ final class MobileContentAuthTokenCache: AuthTokenCacheInterface {
         keychainAccessor.deleteMobileContentAuthTokenAndUserId(userId: userId)
         
         _ = try await persistence.deleteObjectsByIds(ids: [userId], getOption: nil)
-                
-        await Self.authTokenBroadcast.setAuthToken(authToken: nil)
     }
 }

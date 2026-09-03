@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 final class MobileContentAuthTokenRepository: Sendable {
     
@@ -17,6 +18,11 @@ final class MobileContentAuthTokenRepository: Sendable {
         
         self.api = api
         self.cache = cache
+    }
+    
+    @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Error> {
+        return cache
+            .observeCollectionChangesPublisher()
     }
     
     func fetchRemoteAuthToken(providerToken: MobileContentAuthProviderToken, createUser: Bool) async throws -> Result<MobileContentAuthTokenDataModel, MobileContentApiError> {
@@ -44,23 +50,18 @@ final class MobileContentAuthTokenRepository: Sendable {
         return cache.getUserId()
     }
     
-    func getAuthTokenStream() async -> AsyncStream<MobileContentAuthTokenDataModel?> {
+    func getAuthToken() throws -> MobileContentAuthTokenDataModel? {
         
-        return await cache.getAuthTokenStream()
-    }
-    
-    func getCachedAuthTokenModel() throws -> MobileContentAuthTokenDataModel? {
-        
-        guard let cachedAuthToken =  try cache.getCachedAuthToken() else {
+        guard let cachedAuthToken =  try cache.getAuthToken() else {
             return nil
         }
         
         return cachedAuthToken.toModel()
     }
     
-    func getCachedAuthToken() throws -> String? {
+    func getAuthTokenString() throws -> String? {
         
-        return try getCachedAuthTokenModel()?.token
+        return try getAuthToken()?.token
     }
     
     func deleteCachedAuthToken() async throws {
