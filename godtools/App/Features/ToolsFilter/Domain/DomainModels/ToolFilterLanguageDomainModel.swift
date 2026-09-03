@@ -10,7 +10,7 @@ import Foundation
 
 struct ToolFilterLanguageDomainModel: ToolLanguageFilterItemDomainModelInterface {
     
-    private static let anyLanguageId: String = "any_language"
+    static let anyLanguageId: String = "any_language"
     
     enum LanguageType: Sendable {
         case any
@@ -25,6 +25,10 @@ struct ToolFilterLanguageDomainModel: ToolLanguageFilterItemDomainModelInterface
     
     var availableText: String? {
         return toolsAvailableText
+    }
+    
+    var isAny: Bool {
+        return languageType == .any
     }
     
     static func createAnyLanguage(
