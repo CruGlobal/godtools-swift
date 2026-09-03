@@ -169,6 +169,8 @@ extension DashboardFlowTests {
         
         launchAppToDashboardTools()
         
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .allTools)
+        
         assertIfButtonDoesNotExistElseTap(buttonAccessibility: .toolsCategoryFilter)
         
         assertIfScreenDoesNotExist(screenAccessibility: .toolsCategoryFilters)
@@ -177,6 +179,8 @@ extension DashboardFlowTests {
     func testTappingToolsLanguageFilterOpensToolsLanguageFiltersList() {
         
         launchAppToDashboardTools()
+        
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .allTools)
                 
         assertIfButtonDoesNotExistElseTap(buttonAccessibility: .toolsLanguageFilter)
                 

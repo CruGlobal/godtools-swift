@@ -31,7 +31,7 @@ final class ToolFilterLanguageSelectionViewModel: ObservableObject {
     @Published private(set) var searchBarStrings = SearchBarStringsDomainModel.emptyValue
     @Published private(set) var strings = ToolFilterLanguagesStringsDomainModel.emptyValue
     @Published private(set) var selectedCategory = ToolFilterCategoryDomainModel.emptyValue
-    @Published private(set) var selectedLanguageId: String?
+    @Published private(set) var selectedLanguage: ToolFilterLanguageDomainModel?
     @Published private(set) var languageSearchResults: [ToolFilterLanguageDomainModel] = Array()
     
     @Published var searchText: String = ""
@@ -81,7 +81,7 @@ final class ToolFilterLanguageSelectionViewModel: ObservableObject {
             .sink { [weak self] (categoryFilter: ToolFilterCategoryDomainModel, languageFilter: ToolFilterLanguageDomainModel) in
             
                 self?.selectedCategory = categoryFilter
-                self?.selectedLanguageId = languageFilter.languageId
+                self?.selectedLanguage = languageFilter
             }
             .store(in: &cancellables)
         
@@ -134,16 +134,16 @@ final class ToolFilterLanguageSelectionViewModel: ObservableObject {
 
 extension ToolFilterLanguageSelectionViewModel {
        
-    func languageTapped(id: String) {
+    func languageTapped(language: ToolFilterLanguageDomainModel) {
         
-        selectedLanguageId = id
+        selectedLanguage = language
         
         let selectedToolFilterLanguageUseCase: SelectedToolFilterLanguageUseCase = self.selectedToolFilterLanguageUseCase
         
         Task.detached {
             
             try await selectedToolFilterLanguageUseCase
-                .execute(languageId: id)
+                .execute(language: language)
         }
         
         stepEmitter.emit(step: AppFlowStep.languageTappedFromToolLanguageFilter)

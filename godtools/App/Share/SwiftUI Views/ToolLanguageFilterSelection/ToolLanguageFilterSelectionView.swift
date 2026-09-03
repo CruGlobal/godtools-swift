@@ -12,8 +12,8 @@ struct ToolLanguageFilterSelectionView<Language: ToolLanguageFilterItemDomainMod
     
     private let searchBarStrings: SearchBarStringsDomainModel
     private let languages: [Language]
-    private let selectedId: String?
-    private let languageTapped: ((_ id: String) -> Void)?
+    private let selectedLanguage: Language?
+    private let languageTapped: ((_ language: Language) -> Void)?
     
     @Binding private var searchText: String
     
@@ -21,14 +21,14 @@ struct ToolLanguageFilterSelectionView<Language: ToolLanguageFilterItemDomainMod
         searchText: Binding<String>,
         searchBarStrings: SearchBarStringsDomainModel,
         languages: [Language],
-        selectedId: String?,
-        languageTapped: ((_ id: String) -> Void)?
+        selectedLanguage: Language?,
+        languageTapped: ((_ language: Language) -> Void)?
     ) {
         
         self._searchText = searchText
         self.searchBarStrings = searchBarStrings
         self.languages = languages
-        self.selectedId = selectedId
+        self.selectedLanguage = selectedLanguage
         self.languageTapped = languageTapped
     }
     
@@ -43,13 +43,13 @@ struct ToolLanguageFilterSelectionView<Language: ToolLanguageFilterItemDomainMod
                     
                     Button {
                         
-                        languageTapped?(language.id)
+                        languageTapped?(language)
                         
                     } label: {
                         
                         ToolLanguageFilterItemView(
                             language: language,
-                            isSelected: selectedId == language.id
+                            isSelected: selectedLanguage?.id == language.id
                         )
                     }
                 }

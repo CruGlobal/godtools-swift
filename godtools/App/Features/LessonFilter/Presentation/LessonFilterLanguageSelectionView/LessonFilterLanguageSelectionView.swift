@@ -26,10 +26,10 @@ struct LessonFilterLanguageSelectionView: View {
                 searchText: $viewModel.searchText,
                 searchBarStrings: viewModel.searchBarStrings,
                 languages: viewModel.languageSearchResults,
-                selectedId: viewModel.selectedLanguageId,
-                languageTapped: { (id: String) in
+                selectedLanguage: viewModel.selectedLanguage,
+                languageTapped: { (language: LessonFilterLanguageDomainModel) in
                     
-                    viewModel.languageTapped(id: id)
+                    viewModel.languageTapped(language: language)
                 }
             )
         }
