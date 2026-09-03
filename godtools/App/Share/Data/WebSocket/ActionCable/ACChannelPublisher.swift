@@ -88,7 +88,7 @@ actor ACChannelPublisher: ACChannelPublisherInterface {
     
     func getCreatedChannelStream() async -> AsyncThrowingStream<WebSocketChannel, Error> {
         
-        return await createdChannelStream.getNewStream(sendValue: subscriberChannel)
+        return await createdChannelStream.getNewStream(sendValue: subscriberChannel, bufferingPolicy: .bufferingNewest(1))
     }
     
     func createChannel(url: URL, channel: WebSocketChannel) async throws(ACCreateChannelError) {

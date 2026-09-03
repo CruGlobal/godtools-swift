@@ -66,7 +66,7 @@ actor TractRemoteShareSubscriber {
     
     func getNavigationEventStream() async -> AsyncStream<TractRemoteShareNavigationEvent> {
         
-        return await navigationEventStream.getNewStream()
+        return await navigationEventStream.getNewStream(bufferingPolicy: .bufferingNewest(1))
     }
     
     private func sendNavigationEvent(event: TractRemoteShareNavigationEvent) async {
