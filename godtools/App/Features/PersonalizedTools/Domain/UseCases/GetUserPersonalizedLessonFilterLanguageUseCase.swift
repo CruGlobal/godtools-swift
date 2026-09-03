@@ -10,17 +10,42 @@ import Foundation
 import Combine
 
 final class GetUserPersonalizedLessonFilterLanguageUseCase: Sendable {
-            
-    init() {
+    
+    private let languagesRepository: LanguagesRepository
+    private let mapLanguageToPersonalizedLessonFilterLanguage: MapLanguageToPersonalizedLessonFilterLanguage
+    
+    init(
+        languagesRepository: LanguagesRepository,
+        mapLanguageToPersonalizedLessonFilterLanguage: MapLanguageToPersonalizedLessonFilterLanguage
+    ) {
         
+        self.languagesRepository = languagesRepository
+        self.mapLanguageToPersonalizedLessonFilterLanguage = mapLanguageToPersonalizedLessonFilterLanguage
     }
     
-    @MainActor func execute() -> AnyPublisher<PersonalizedLessonFilterLanguageDomainModel?, Error> {
+    @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<PersonalizedLessonFilterLanguageDomainModel?, Error> {
         
-        // TODO: Get personalized lesson language filter. ~Levi
-        
-        return Just(nil)
+        // TODO: Should observe changes similar to GetUserLessonFilterLanguageUseCase. ~Levi
+                
+        // TODO: Remove. ~Levi
+        return Just(getFilterLanguage(appLanguage: appLanguage))
             .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
+        // End Remove
+    }
+    
+    private func getFilterLanguage(appLanguage: AppLanguageDomainModel) -> PersonalizedLessonFilterLanguageDomainModel? {
+        
+        // TODO: Need to check for user persisted language id and return if exists. ~Levi
+        
+        if let language = languagesRepository.getLanguageByCode(code: appLanguage) {
+            
+            return mapLanguageToPersonalizedLessonFilterLanguage.map(
+                language: language,
+                translatedInAppLanguage: appLanguage
+            )
+        }
+        
+        return nil
     }
 }

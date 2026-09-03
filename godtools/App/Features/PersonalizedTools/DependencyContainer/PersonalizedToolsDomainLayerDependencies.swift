@@ -72,7 +72,10 @@ final class PersonalizedToolsDomainLayerDependencies: Sendable {
 
     func getUserPersonalizedLessonFilterLanguageUseCase() -> GetUserPersonalizedLessonFilterLanguageUseCase {
 
-        return GetUserPersonalizedLessonFilterLanguageUseCase()
+        return GetUserPersonalizedLessonFilterLanguageUseCase(
+            languagesRepository: core.dataLayer.getLanguagesRepository(),
+            mapLanguageToPersonalizedLessonFilterLanguage: getMapLanguageToPersonalizedLessonFilterLanguage()
+        )
     }
 
     func getSearchPersonalizedLessonFilterLanguagesUseCase() -> SearchPersonalizedLessonFilterLanguagesUseCase {
