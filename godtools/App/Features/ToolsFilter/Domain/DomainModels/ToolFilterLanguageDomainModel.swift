@@ -10,18 +10,23 @@ import Foundation
 
 struct ToolFilterLanguageDomainModel: ToolLanguageFilterItemDomainModelInterface {
     
-    static let anyLanguageId: String = "any_language"
+    static let anyId: String = "any_language"
     
     enum LanguageType: Sendable {
         case any
         case language
     }
     
-    let languageId: String
+    let id: String
+    let languageId: String?
     let languageNamePair: TranslatedLanguageNamePairDomainModel
     let toolsAvailableText: String
     let toolsAvailableCount: Int
     let languageType: LanguageType
+    
+    var filterLanguageId: String? {
+        return languageId
+    }
     
     var availableText: String? {
         return toolsAvailableText
@@ -38,7 +43,8 @@ struct ToolFilterLanguageDomainModel: ToolLanguageFilterItemDomainModelInterface
     ) -> ToolFilterLanguageDomainModel {
         
         return ToolFilterLanguageDomainModel(
-            languageId: Self.anyLanguageId,
+            id: Self.anyId,
+            languageId: nil,
             languageNamePair: TranslatedLanguageNamePairDomainModel(
                 nameInOwnLanguage: "",
                 nameInAppLanguage: nameInAppLanguage
@@ -57,6 +63,7 @@ struct ToolFilterLanguageDomainModel: ToolLanguageFilterItemDomainModelInterface
     ) -> ToolFilterLanguageDomainModel {
         
         return ToolFilterLanguageDomainModel(
+            id: languageId,
             languageId: languageId,
             languageNamePair: languageNamePair,
             toolsAvailableText: toolsAvailableText,

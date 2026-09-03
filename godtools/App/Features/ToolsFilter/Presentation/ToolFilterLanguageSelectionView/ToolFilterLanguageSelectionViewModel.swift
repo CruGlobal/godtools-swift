@@ -134,16 +134,16 @@ final class ToolFilterLanguageSelectionViewModel: ObservableObject {
 
 extension ToolFilterLanguageSelectionViewModel {
        
-    func languageTapped(languageId: String) {
+    func languageTapped(id: String) {
         
-        selectedLanguageId = languageId
+        selectedLanguageId = id
         
         let selectedToolFilterLanguageUseCase: SelectedToolFilterLanguageUseCase = self.selectedToolFilterLanguageUseCase
         
         Task.detached {
             
             try await selectedToolFilterLanguageUseCase
-                .execute(languageId: languageId)
+                .execute(languageId: id)
         }
         
         stepEmitter.emit(step: AppFlowStep.languageTappedFromToolLanguageFilter)

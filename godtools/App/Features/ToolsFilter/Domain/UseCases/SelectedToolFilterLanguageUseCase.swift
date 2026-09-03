@@ -18,8 +18,8 @@ final class SelectedToolFilterLanguageUseCase: Sendable {
     }
     
     func execute(languageId: String) async throws {
-        
-        guard languageId != ToolFilterLanguageDomainModel.anyLanguageId else {
+  
+        guard languageId != ToolFilterLanguageDomainModel.anyId else {
             try await userToolFiltersRepository.deleteUserLanguageFilter()
             return
         }

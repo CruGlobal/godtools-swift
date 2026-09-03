@@ -49,6 +49,7 @@ final class MapLanguageToLessonFilterLanguage: Sendable {
         )
         
         return LessonFilterLanguageDomainModel(
+            id: language.id,
             languageId: language.id,
             languageNamePair: languageNamePair,
             lessonsAvailableText: lessonsAvailableText,

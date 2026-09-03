@@ -27,10 +27,10 @@ struct ToolFilterLanguageSelectionView: View {
                 searchText: $viewModel.searchText,
                 searchBarStrings: viewModel.searchBarStrings,
                 languages: viewModel.languageSearchResults,
-                selectedLanguageId: viewModel.selectedLanguageId,
-                languageTapped: { (languageId: String) in
+                selectedId: viewModel.selectedLanguageId,
+                languageTapped: { (id: String) in
                     
-                    viewModel.languageTapped(languageId: languageId)
+                    viewModel.languageTapped(id: id)
                 }
             )
         }

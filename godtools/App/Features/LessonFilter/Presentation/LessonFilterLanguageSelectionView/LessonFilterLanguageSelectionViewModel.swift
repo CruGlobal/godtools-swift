@@ -137,16 +137,16 @@ extension LessonFilterLanguageSelectionViewModel {
         stepEmitter.emit(step: AppFlowStep.backTappedFromLessonLanguageFilter)
     }
     
-    func languageTapped(languageId: String) {
+    func languageTapped(id: String) {
         
-        selectedLanguageId = languageId
+        selectedLanguageId = id
         
         let setUserLessonFilterLanguageUseCase: SetUserLessonFilterLanguageUseCase = self.setUserLessonFilterLanguageUseCase
         
         Task.detached {
             
             try await setUserLessonFilterLanguageUseCase
-                .execute(languageId: languageId)
+                .execute(languageId: id)
         }
         
         stepEmitter.emit(step: AppFlowStep.languageTappedFromLessonLanguageFilter)
