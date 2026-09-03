@@ -184,8 +184,8 @@ extension SearchToolFilterLanguagesUseCaseTests {
         return [
             ToolFilterLanguageDomainModel.createAnyLanguage(
                 nameInAppLanguage: "Any language",
-                toolsAvailable: "",
-                numberOfToolsAvailable: 0
+                toolsAvailableText: "",
+                toolsAvailableCount: 0
             ),
             Self.createLanguage(id: "af", nameInOwnLanguage: "Afrikaans", nameInAppLanguage: "Afrikaans"),
             Self.createLanguage(id: "cs", nameInOwnLanguage: "čeština", nameInAppLanguage: "Czech"),
@@ -204,13 +204,13 @@ extension SearchToolFilterLanguagesUseCaseTests {
     private static func createLanguage(id: String, nameInOwnLanguage: String, nameInAppLanguage: String) -> ToolFilterLanguageDomainModel {
 
         return ToolFilterLanguageDomainModel.createLanguage(
-            id: id,
+            languageId: id,
             languageNamePair: TranslatedLanguageNamePairDomainModel(
                 nameInOwnLanguage: nameInOwnLanguage,
                 nameInAppLanguage: nameInAppLanguage
             ),
-            toolsAvailable: "",
-            numberOfToolsAvailable: 0
+            toolsAvailableText: "",
+            toolsAvailableCount: 0
         )
     }
 }

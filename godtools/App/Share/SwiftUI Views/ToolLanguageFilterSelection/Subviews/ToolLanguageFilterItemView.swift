@@ -26,15 +26,30 @@ struct ToolLanguageFilterItemView<Language: ToolLanguageFilterItemDomainModelInt
                 
                 HStack(spacing: 9.5) {
                     
-                    let titleFont = isSelected ? FontLibrary.sfProTextBold : FontLibrary.sfProTextRegular
+                    let titleFontLibrary: FontLibrary = isSelected ? FontLibrary.sfProTextBold : FontLibrary.sfProTextRegular
+                    let titleFont: Font = titleFontLibrary.font(size: 15)
                     
-                    Text(language.languageNamePair.nameInOwnLanguage)
-                        .font(titleFont.font(size: 15))
-                        .foregroundColor(ColorPalette.gtGrey.color)
-                                            
-                    Text(language.languageNamePair.nameInAppLanguage)
-                        .font(FontLibrary.sfProTextRegular.font(size: 15))
-                        .foregroundColor(lightGrey)
+                    let nameInOwnLanguage: String = language.languageNamePair.nameInOwnLanguage
+                    let nameInAppLanguage: String = language.languageNamePair.nameInAppLanguage
+                    
+                    if !nameInOwnLanguage.isEmpty {
+                                         
+                        getPrimaryText(
+                            text: nameInOwnLanguage,
+                            font: titleFont
+                        )
+                        
+                        Text(nameInAppLanguage)
+                            .font(FontLibrary.sfProTextRegular.font(size: 15))
+                            .foregroundColor(lightGrey)
+                    }
+                    else {
+                        
+                        getPrimaryText(
+                            text: nameInAppLanguage,
+                            font: titleFont
+                        )
+                    }
                 }
                 
                 if let availableText = language.availableText {
@@ -48,5 +63,11 @@ struct ToolLanguageFilterItemView<Language: ToolLanguageFilterItemDomainModelInt
             
             Spacer()
         }
+    }
+    
+    private func getPrimaryText(text: String, font: Font) -> Text {
+        Text(text)
+            .font(font)
+            .foregroundColor(ColorPalette.gtGrey.color)
     }
 }

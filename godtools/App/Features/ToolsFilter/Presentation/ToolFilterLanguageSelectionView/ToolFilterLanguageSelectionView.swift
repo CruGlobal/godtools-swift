@@ -9,9 +9,7 @@
 import SwiftUI
 
 struct ToolFilterLanguageSelectionView: View {
-    
-    private static let ultraLightGrey = Color.getColorWithRGB(red: 246, green: 246, blue: 246, opacity: 1)
-    
+        
     @ObservedObject private var viewModel: ToolFilterLanguageSelectionViewModel
     
     init(viewModel: ToolFilterLanguageSelectionViewModel) {
@@ -25,25 +23,16 @@ struct ToolFilterLanguageSelectionView: View {
             
             AccessibilityScreenElementView(screenAccessibility: .toolsLanguageFilters)
             
-            SearchBarView(searchText: $viewModel.searchText, strings: viewModel.searchBarStrings)
-            
-            List {
-                ForEach(viewModel.languageSearchResults) { language in
+            ToolLanguageFilterSelectionView(
+                searchText: $viewModel.searchText,
+                searchBarStrings: viewModel.searchBarStrings,
+                languages: viewModel.languageSearchResults,
+                selectedId: viewModel.selectedLanguageId,
+                languageTapped: { (id: String) in
                     
-                    Button {
-                        
-                        viewModel.languageTapped(language: language)
-                        
-                    } label: {
-                        
-                        ToolFilterLanguageSelectionRowView(
-                            language: language,
-                            isSelected: viewModel.selectedLanguage.id == language.id
-                        )
-                    }
+                    viewModel.languageTapped(id: id)
                 }
-            }
-            .listStyle(.inset)
+            )
         }
         .navBar(
             title: viewModel.strings.navTitle,

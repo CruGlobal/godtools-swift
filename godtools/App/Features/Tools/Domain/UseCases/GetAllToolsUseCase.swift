@@ -24,7 +24,7 @@ final class GetAllToolsUseCase: Sendable {
         appLanguage: AppLanguageDomainModel,
         languageIdForAvailabilityText: String?,
         filterToolsByCategory: ToolFilterCategoryDomainModel,
-        filterToolsByLanguage: ToolFilterLanguageDomainModel
+        filterByLanguageId: String?
     ) -> AnyPublisher<[ToolListItemDomainModel], Error> {
         
         return resourcesRepository
@@ -37,7 +37,7 @@ final class GetAllToolsUseCase: Sendable {
                     appLanguage: appLanguage,
                     languageIdForAvailabilityText: languageIdForAvailabilityText,
                     filterToolsByCategory: filterToolsByCategory,
-                    filterToolsByLanguage: filterToolsByLanguage
+                    filterByLanguageId: filterByLanguageId
                 )
             }
             .eraseToAnyPublisher()
@@ -47,12 +47,12 @@ final class GetAllToolsUseCase: Sendable {
         appLanguage: AppLanguageDomainModel,
         languageIdForAvailabilityText: String?,
         filterToolsByCategory: ToolFilterCategoryDomainModel,
-        filterToolsByLanguage: ToolFilterLanguageDomainModel
+        filterByLanguageId: String?
     ) -> [ToolListItemDomainModel] {
         
         let tools: [ResourceDataModel] = resourcesRepository.getAllToolsList(
             filterByCategory: filterToolsByCategory.filterId,
-            filterByLanguageId: filterToolsByLanguage.filterId,
+            filterByLanguageId: filterByLanguageId,
             sortByDefaultOrder: true
         )
 

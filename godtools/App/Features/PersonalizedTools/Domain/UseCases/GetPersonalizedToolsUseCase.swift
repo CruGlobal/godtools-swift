@@ -35,12 +35,12 @@ final class GetPersonalizedToolsUseCase: Sendable {
     @MainActor func execute(
         appLanguage: AppLanguageDomainModel,
         country: LocalizationSettingsCountryDomainModel?,
-        filterToolsByLanguage: ToolFilterLanguageDomainModel
+        filterByLanguageId: String?
     ) -> AnyPublisher<PersonalizedToolsDomainModel, Error> {
         
         let languageCode: String = getLanguageElseAppLanguage
             .getLanguageCode(
-                languageId: filterToolsByLanguage.filterId,
+                languageId: filterByLanguageId,
                 appLanguage: appLanguage
             )
         
@@ -80,7 +80,7 @@ final class GetPersonalizedToolsUseCase: Sendable {
                 .mapToolsToListItems(
                     tools: resources,
                     appLanguage: appLanguage,
-                    languageIdForAvailabilityText: filterToolsByLanguage.filterId
+                    languageIdForAvailabilityText: filterByLanguageId
                 )
 
             let showsPersonalizationUnavailable: Bool = tools.isEmpty

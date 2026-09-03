@@ -173,11 +173,11 @@ final class DashboardFlow: GTFlow {
         case .backTappedFromToolLanguageFilter:
             navigationController.popViewController(animated: true)
             
-        case .spotlightToolTappedFromTools(let spotlightTool, let toolFilterLanguage):
+        case .spotlightToolTappedFromTools(let spotlightTool, let toolFilterLanguageId):
             
             let toolFilterLanguageDataModel: LanguageDataModel?
             
-            if let languageId = toolFilterLanguage?.id {
+            if let languageId = toolFilterLanguageId {
                 toolFilterLanguageDataModel = appDiContainer.core.dataLayer.getLanguagesRepository().getLanguageById(id: languageId)
             }
             else {
@@ -190,11 +190,11 @@ final class DashboardFlow: GTFlow {
                 selectedLanguageIndex: 1
             )
                         
-        case .toolTappedFromTools(let tool, let toolFilterLanguage):
+        case .toolTappedFromTools(let tool, let toolFilterLanguageId):
             
             let toolFilterLanguageDataModel: LanguageDataModel?
             
-            if let languageId = toolFilterLanguage?.id {
+            if let languageId = toolFilterLanguageId {
                 toolFilterLanguageDataModel = appDiContainer.core.dataLayer.getLanguagesRepository().getLanguageById(id: languageId)
             }
             else {
