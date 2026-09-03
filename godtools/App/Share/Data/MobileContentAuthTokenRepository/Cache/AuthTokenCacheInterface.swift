@@ -11,9 +11,9 @@ import Combine
 
 protocol AuthTokenCacheInterface: Sendable {
     
+    @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Error>
     func getUserId() -> String?
-    func getCachedAuthToken() throws -> CachedAuthToken?
+    func getAuthToken() throws -> CachedAuthToken?
     func storeAuthToken(authTokenCodable: MobileContentAuthTokenCodable) async throws
     func deleteAuthToken(userId: String) async throws
-    func getAuthTokenChangedPublisher() -> AnyPublisher<MobileContentAuthTokenDataModel?, Never>
 }
