@@ -30,7 +30,7 @@ final class LessonFilterLanguageSelectionViewModel: ObservableObject {
     @Published private(set) var searchBarStrings = SearchBarStringsDomainModel.emptyValue
     @Published private(set) var strings = LessonFilterLanguagesStringsDomainModel.emptyValue
     @Published private(set) var languageSearchResults: [LessonFilterLanguageDomainModel] = Array()
-    @Published private(set) var selectedLanguageId: String?
+    @Published private(set) var selectedLanguage: LessonFilterLanguageDomainModel?
     
     @Published var searchText: String = ""
     
@@ -97,7 +97,7 @@ final class LessonFilterLanguageSelectionViewModel: ObservableObject {
                 
             }, receiveValue: { [weak self] (languageFilter: LessonFilterLanguageDomainModel?) in
                 
-                self?.selectedLanguageId = languageFilter?.languageId
+                self?.selectedLanguage = languageFilter
             })
             .store(in: &cancellables)
         
@@ -137,16 +137,16 @@ extension LessonFilterLanguageSelectionViewModel {
         stepEmitter.emit(step: AppFlowStep.backTappedFromLessonLanguageFilter)
     }
     
-    func languageTapped(id: String) {
+    func languageTapped(language: LessonFilterLanguageDomainModel) {
         
-        selectedLanguageId = id
+        selectedLanguage = language
         
         let setUserLessonFilterLanguageUseCase: SetUserLessonFilterLanguageUseCase = self.setUserLessonFilterLanguageUseCase
         
         Task.detached {
             
             try await setUserLessonFilterLanguageUseCase
-                .execute(languageId: id)
+                .execute(language: language)
         }
         
         stepEmitter.emit(step: AppFlowStep.languageTappedFromLessonLanguageFilter)
