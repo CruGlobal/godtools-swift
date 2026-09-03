@@ -41,6 +41,7 @@ final class ToolsViewModel: ObservableObject {
     @Published private var appLanguage = AppLanguageDomainModel.english
     @Published private var toolFilterCategorySelection = ToolFilterCategoryDomainModel.emptyValue
     @Published private var selectedAllToolsFilterLanguage: ToolFilterLanguageDomainModel?
+    @Published private var selectedPersonalizedToolsFilterLanguage: ToolFilterLanguageDomainModel? // TODO: This concrete type will change to Personalized type. ~Levi
     @Published private var localizationSettings: UserLocalizationSettingsDomainModel?
     @Published private var allToolsList: [ToolListItemDomainModel] = Array()
     
@@ -258,9 +259,38 @@ final class ToolsViewModel: ObservableObject {
             .sink { [weak self] (languageFilter: ToolFilterLanguageDomainModel) in
             
                 self?.selectedAllToolsFilterLanguage = languageFilter
-                self?.languageFilterActionTitle = languageFilter.languageNamePair.nameInAppLanguage
             }
             .store(in: &cancellables)
+        
+        Publishers.CombineLatest3(
+            $selectedAllToolsFilterLanguage,
+            $selectedPersonalizedToolsFilterLanguage,
+            $selectedToggle
+        )
+        .map { (
+            toolsLanguageFilter: ToolFilterLanguageDomainModel?,
+            personalizedToolsLanguageFilter: ToolFilterLanguageDomainModel?,
+            selectedToggle: PersonalizationToggleOptionValue
+        ) in
+            
+            let languageNamePair: TranslatedLanguageNamePairDomainModel?
+            
+            switch selectedToggle {
+                
+            case .personalized:
+                languageNamePair = personalizedToolsLanguageFilter?.languageNamePair
+            case .all:
+                languageNamePair = toolsLanguageFilter?.languageNamePair
+            }
+                        
+            return languageNamePair?.nameInAppLanguage ?? ""
+        }
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] (title: String) in
+            
+            self?.languageFilterActionTitle = title
+        }
+        .store(in: &cancellables)
     }
     
     deinit {
