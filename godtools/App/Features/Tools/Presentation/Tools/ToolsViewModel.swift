@@ -485,6 +485,10 @@ extension ToolsViewModel {
         stepEmitter.emit(step: AppFlowStep.toolLanguageFilterTappedFromTools)
     }
     
+    func personalizedToolLanguageFilterTapped() {
+        stepEmitter.emit(step: AppFlowStep.personalizedToolLanguageFilterTappedFromTools)
+    }
+    
     func spotlightToolFavoriteTapped(spotlightTool: SpotlightToolListItemDomainModel) {
      
         toggleToolIsFavorited(toolId: spotlightTool.dataModelId)
