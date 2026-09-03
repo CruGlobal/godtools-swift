@@ -83,7 +83,7 @@ final class PersonalizedLessonFilterLanguageSelectionViewModel: ObservableObject
             .store(in: &cancellables)
         
         getUserPersonalizedLessonFilterLanguageUseCase
-            .execute()
+            .execute(appLanguage: appLanguage)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { _ in
                 
