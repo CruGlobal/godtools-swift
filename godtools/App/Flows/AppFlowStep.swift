@@ -71,14 +71,23 @@ enum AppFlowStep: FlowStep {
     case toolTappedFromFavorites(tool: YourFavoritedToolDomainModel)
     case unfavoriteToolTappedFromFavorites(tool: YourFavoritedToolDomainModel)
     case goToToolsTappedFromFavorites
+    
+    // tool filter category
+    case categoryTappedFromToolCategoryFilter
+    case backTappedFromToolCategoryFilter
+    
+    // tool filter language
+    case backTappedFromToolLanguageFilter
+    case languageTappedFromToolLanguageFilter
+    
+    // personalized tool filter language
+    case backTappedFromPersonalizedToolLanguageFilter
+    case languageTappedFromPersonalizedToolLanguageFilter
         
-    // all tools
+    // tools list
     case toolCategoryFilterTappedFromTools
     case toolLanguageFilterTappedFromTools
-    case categoryTappedFromToolCategoryFilter
-    case languageTappedFromToolLanguageFilter
-    case backTappedFromToolCategoryFilter
-    case backTappedFromToolLanguageFilter
+    case personalizedToolLanguageFilterTappedFromTools
     case spotlightToolTappedFromTools(spotlightTool: SpotlightToolListItemDomainModel, toolFilterLanguageId: String?)
     case toolTappedFromTools(tool: ToolListItemDomainModel, toolFilterLanguageId: String?)
     case changeLocalizationSettingsTappedFromTools

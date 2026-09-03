@@ -160,6 +160,15 @@ final class DashboardFlow: GTFlow {
             
         case .toolLanguageFilterTappedFromTools:
             navigationController.pushViewController(getToolLanguageFilterSelection(), animated: true)
+            
+        case .personalizedToolLanguageFilterTappedFromTools:
+            navigationController.pushViewController(getPersonalizedToolFilterLanguageSelectionView(), animated: true)
+            
+        case .backTappedFromPersonalizedToolLanguageFilter:
+            navigationController.popViewController(animated: true)
+            
+        case .languageTappedFromPersonalizedToolLanguageFilter:
+            navigationController.popViewController(animated: true)
         
         case .categoryTappedFromToolCategoryFilter:
             navigationController.popViewController(animated: true)
@@ -513,6 +522,28 @@ extension DashboardFlow {
         let view = PersonalizedLessonFilterLanguageSelectionView(viewModel: viewModel)
         
         let hostingView = AppHostingController<PersonalizedLessonFilterLanguageSelectionView>(
+            rootView: view
+        )
+        
+        return hostingView
+    }
+    
+    private func getPersonalizedToolFilterLanguageSelectionView() -> UIViewController {
+        
+        let viewModel = PersonalizedToolFilterLanguageSelectionViewModel(
+            stepEmitter: stepEmitter,
+            getPersonalizedToolFilterLanguagesStringsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getPersonalizedToolFilterLanguagesStringsUseCase(),
+            getPersonalizedToolFilterLanguagesUseCase: appDiContainer.feature.personalizedTools.domainLayer.getPersonalizedToolFilterLanguagesUseCase(),
+            getUserPersonalizedToolFilterLanguageUseCase: appDiContainer.feature.personalizedTools.domainLayer.getUserPersonalizedToolFilterLanguageUseCase(),
+            setUserPersonalizedToolFilterLanguageUseCase: appDiContainer.feature.personalizedTools.domainLayer.getSetUserPersonalizedToolFilterLanguageUseCase(),
+            getSearchBarStringsUseCase: appDiContainer.core.domainLayer.getSearchBarStringsUseCase(),
+            searchPersonalizedToolFilterLanguagesUseCase: appDiContainer.feature.personalizedTools.domainLayer.getSearchPersonalizedToolFilterLanguagesUseCase(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase()
+        )
+        
+        let view = PersonalizedToolFilterLanguageSelectionView(viewModel: viewModel)
+        
+        let hostingView = AppHostingController<PersonalizedToolFilterLanguageSelectionView>(
             rootView: view
         )
         
