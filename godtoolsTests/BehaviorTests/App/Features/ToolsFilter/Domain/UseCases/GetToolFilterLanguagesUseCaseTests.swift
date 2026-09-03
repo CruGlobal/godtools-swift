@@ -82,7 +82,7 @@ struct GetToolFilterLanguagesUseCaseTests {
         let anyLanguage: ToolFilterLanguageDomainModel = try #require(languages.first)
 
         #expect(anyLanguage.languageType == .any)
-        #expect(anyLanguage.languageId == ToolFilterLanguageDomainModel.anyLanguageId)
+        #expect(anyLanguage.id == ToolFilterLanguageDomainModel.anyId)
         #expect(anyLanguage.languageNamePair.nameInOwnLanguage.isEmpty)
         #expect(anyLanguage.languageNamePair.nameInAppLanguage == englishAnyLanguageName)
     }
@@ -214,7 +214,7 @@ struct GetToolFilterLanguagesUseCaseTests {
 
         let languageIds: [String] = languages
             .filter({ $0.languageType == .language })
-            .map({ $0.languageId })
+            .compactMap({ $0.languageId })
             .sorted()
 
         #expect(languageIds == argument.expectedLanguageIds)
@@ -327,7 +327,7 @@ struct GetToolFilterLanguagesUseCaseTests {
 
         let languageIds: [String] = languages
             .filter({ $0.languageType == .language })
-            .map({ $0.languageId })
+            .compactMap({ $0.languageId })
 
         let anyLanguage: ToolFilterLanguageDomainModel = try #require(languages.first(where: { $0.languageType == .any }))
 

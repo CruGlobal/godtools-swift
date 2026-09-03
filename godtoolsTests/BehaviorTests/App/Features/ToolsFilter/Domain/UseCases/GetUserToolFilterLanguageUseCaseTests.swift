@@ -68,7 +68,7 @@ struct GetUserToolFilterLanguageUseCaseTests {
         )
 
         #expect(language.languageType == .any)
-        #expect(language.languageId == ToolFilterLanguageDomainModel.anyLanguageId)
+        #expect(language.id == ToolFilterLanguageDomainModel.anyId)
         #expect(language.languageNamePair.nameInOwnLanguage.isEmpty)
         #expect(language.languageNamePair.nameInAppLanguage == englishAnyLanguageName)
         #expect(language.toolsAvailableCount == 4)
@@ -134,7 +134,7 @@ struct GetUserToolFilterLanguageUseCaseTests {
         )
 
         #expect(language.languageType == .any)
-        #expect(language.languageId == ToolFilterLanguageDomainModel.anyLanguageId)
+        #expect(language.id == ToolFilterLanguageDomainModel.anyId)
         #expect(language.languageNamePair.nameInAppLanguage == englishAnyLanguageName)
         #expect(language.toolsAvailableCount == 4)
     }
