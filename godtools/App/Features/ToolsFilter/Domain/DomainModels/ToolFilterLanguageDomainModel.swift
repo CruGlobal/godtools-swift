@@ -46,7 +46,11 @@ struct ToolFilterLanguageDomainModel: Sendable, Identifiable {
         self.languageType = languageType
     }
     
-    static func createAnyLanguage(nameInAppLanguage: String, toolsAvailable: String, numberOfToolsAvailable: Int) -> ToolFilterLanguageDomainModel {
+    static func createAnyLanguage(
+        nameInAppLanguage: String,
+        toolsAvailable: String,
+        numberOfToolsAvailable: Int
+    ) -> ToolFilterLanguageDomainModel {
         
         return ToolFilterLanguageDomainModel(
             id: Self.anyLanguageId,
@@ -60,7 +64,12 @@ struct ToolFilterLanguageDomainModel: Sendable, Identifiable {
         )
     }
     
-    static func createLanguage(id: String, languageNamePair: TranslatedLanguageNamePairDomainModel, toolsAvailable: String, numberOfToolsAvailable: Int) -> ToolFilterLanguageDomainModel {
+    static func createLanguage(
+        id: String,
+        languageNamePair: TranslatedLanguageNamePairDomainModel,
+        toolsAvailable: String,
+        numberOfToolsAvailable: Int
+    ) -> ToolFilterLanguageDomainModel {
         
         return ToolFilterLanguageDomainModel(
             id: id,
@@ -80,10 +89,12 @@ extension ToolFilterLanguageDomainModel: StringSearchable {
     
     var searchableStrings: [String] {
         
-        if !languageNamePair.nameInOwnLanguage.isEmpty {
+        switch languageType {
+            
+        case .any:
+            return [languageNamePair.nameInAppLanguage]
+        case .language:
             return [languageNamePair.nameInOwnLanguage, languageNamePair.nameInAppLanguage]
         }
-        
-        return [languageNamePair.nameInAppLanguage]
     }
 }
