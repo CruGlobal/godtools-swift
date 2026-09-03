@@ -64,7 +64,7 @@ final class GetToolFilterLanguagesUseCase: Sendable {
                 filteredByCategoryId: filteredByCategoryId
             )
 
-            guard domainModel.numberOfToolsAvailable > 0 else {
+            guard domainModel.toolsAvailableCount > 0 else {
                 continue
             }
 

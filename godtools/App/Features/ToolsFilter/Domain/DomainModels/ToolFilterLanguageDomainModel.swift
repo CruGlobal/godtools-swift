@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ToolFilterLanguageDomainModel: Sendable, Identifiable {
+struct ToolFilterLanguageDomainModel: ToolLanguageFilterItemDomainModelInterface {
     
     private static let anyLanguageId: String = "any_language"
     
@@ -17,71 +17,52 @@ struct ToolFilterLanguageDomainModel: Sendable, Identifiable {
         case language
     }
     
-    let id: String
+    let languageId: String
     let languageNamePair: TranslatedLanguageNamePairDomainModel
-    let toolsAvailable: String
-    let numberOfToolsAvailable: Int
+    let toolsAvailableText: String
+    let toolsAvailableCount: Int
     let languageType: LanguageType
     
-    var filterId: String? {
-        switch languageType {
-        case .any:
-            return nil
-        case .language:
-            return id
-        }
-    }
-    
-    private init(
-        id: String,
-        languageNamePair: TranslatedLanguageNamePairDomainModel,
-        toolsAvailable: String,
-        numberOfToolsAvailable: Int,
-        languageType: LanguageType
-    ) {
-        self.id = id
-        self.languageNamePair = languageNamePair
-        self.toolsAvailable = toolsAvailable
-        self.numberOfToolsAvailable = numberOfToolsAvailable
-        self.languageType = languageType
+    var availableText: String? {
+        return toolsAvailableText
     }
     
     static func createAnyLanguage(
         nameInAppLanguage: String,
-        toolsAvailable: String,
-        numberOfToolsAvailable: Int
+        toolsAvailableText: String,
+        toolsAvailableCount: Int
     ) -> ToolFilterLanguageDomainModel {
         
         return ToolFilterLanguageDomainModel(
-            id: Self.anyLanguageId,
+            languageId: Self.anyLanguageId,
             languageNamePair: TranslatedLanguageNamePairDomainModel(
                 nameInOwnLanguage: "",
                 nameInAppLanguage: nameInAppLanguage
             ),
-            toolsAvailable: toolsAvailable,
-            numberOfToolsAvailable: numberOfToolsAvailable,
+            toolsAvailableText: toolsAvailableText,
+            toolsAvailableCount: toolsAvailableCount,
             languageType: .any
         )
     }
     
     static func createLanguage(
-        id: String,
+        languageId: String,
         languageNamePair: TranslatedLanguageNamePairDomainModel,
-        toolsAvailable: String,
-        numberOfToolsAvailable: Int
+        toolsAvailableText: String,
+        toolsAvailableCount: Int
     ) -> ToolFilterLanguageDomainModel {
         
         return ToolFilterLanguageDomainModel(
-            id: id,
+            languageId: languageId,
             languageNamePair: languageNamePair,
-            toolsAvailable: toolsAvailable,
-            numberOfToolsAvailable: numberOfToolsAvailable,
+            toolsAvailableText: toolsAvailableText,
+            toolsAvailableCount: toolsAvailableCount,
             languageType: .language
         )
     }
     
     static var emptyValue: ToolFilterLanguageDomainModel {
-        return Self.createAnyLanguage(nameInAppLanguage: "", toolsAvailable: "", numberOfToolsAvailable: 0)
+        return Self.createAnyLanguage(nameInAppLanguage: "", toolsAvailableText: "", toolsAvailableCount: 0)
     }
 }
 

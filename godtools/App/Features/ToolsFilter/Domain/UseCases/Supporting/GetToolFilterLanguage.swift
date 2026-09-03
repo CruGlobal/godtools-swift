@@ -61,10 +61,10 @@ extension GetToolFilterLanguage {
         let toolsAvailable: String = getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
         
         return ToolFilterLanguageDomainModel.createLanguage(
-            id: language.id,
+            languageId: language.id,
             languageNamePair: languageNamePair,
-            toolsAvailable: toolsAvailable,
-            numberOfToolsAvailable: toolsAvailableCount
+            toolsAvailableText: toolsAvailable,
+            toolsAvailableCount: toolsAvailableCount
         )
     }
     
@@ -87,8 +87,8 @@ extension GetToolFilterLanguage {
         
         return ToolFilterLanguageDomainModel.createAnyLanguage(
             nameInAppLanguage: nameInAppLanguage,
-            toolsAvailable: toolsAvailable,
-            numberOfToolsAvailable: toolsAvailableCount
+            toolsAvailableText: toolsAvailable,
+            toolsAvailableCount: toolsAvailableCount
         )
     }
     
