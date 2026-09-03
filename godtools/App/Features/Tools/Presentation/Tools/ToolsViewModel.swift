@@ -246,7 +246,7 @@ final class ToolsViewModel: ObservableObject {
             .sink { [weak self] (languageFilter: ToolFilterLanguageDomainModel) in
             
                 self?.toolFilterLanguageSelection = languageFilter
-                self?.languageFilterActionTitle = languageFilter.languageNameTranslatedInAppLanguage
+                self?.languageFilterActionTitle = languageFilter.languageNamePair.nameInAppLanguage
             }
             .store(in: &cancellables)
     }

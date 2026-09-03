@@ -44,7 +44,7 @@ struct SearchToolFilterLanguagesUseCaseTests {
         let searchedLanguages: [ToolFilterLanguageDomainModel] = searchToolFilterLanguagesUseCase
             .execute(searchText: argument.searchString, toolFilterLanguages: allLanguages)
 
-        #expect(argument.expectedLanguages.elementsEqual(searchedLanguages.map({ $0.languageNameTranslatedInAppLanguage })))
+        #expect(argument.expectedLanguages.elementsEqual(searchedLanguages.map({ $0.languageNamePair.nameInAppLanguage })))
     }
 
     @Test(
@@ -75,7 +75,7 @@ struct SearchToolFilterLanguagesUseCaseTests {
         let searchedLanguages: [ToolFilterLanguageDomainModel] = searchToolFilterLanguagesUseCase
             .execute(searchText: argument.searchString, toolFilterLanguages: allLanguages)
 
-        #expect(argument.expectedLanguages.elementsEqual(searchedLanguages.map({ $0.languageNameTranslatedInAppLanguage })))
+        #expect(argument.expectedLanguages.elementsEqual(searchedLanguages.map({ $0.languageNamePair.nameInAppLanguage })))
     }
 
     @Test(
@@ -106,7 +106,7 @@ struct SearchToolFilterLanguagesUseCaseTests {
         let searchedLanguages: [ToolFilterLanguageDomainModel] = searchToolFilterLanguagesUseCase
             .execute(searchText: argument.searchString, toolFilterLanguages: allLanguages)
 
-        #expect(argument.expectedLanguages.elementsEqual(searchedLanguages.map({ $0.languageNameTranslatedInAppLanguage })))
+        #expect(argument.expectedLanguages.elementsEqual(searchedLanguages.map({ $0.languageNamePair.nameInAppLanguage })))
     }
 
     @Test(
@@ -133,7 +133,7 @@ struct SearchToolFilterLanguagesUseCaseTests {
         let searchedLanguages: [ToolFilterLanguageDomainModel] = searchToolFilterLanguagesUseCase
             .execute(searchText: argument.searchString, toolFilterLanguages: allLanguages)
 
-        #expect(argument.expectedLanguages.elementsEqual(searchedLanguages.map({ $0.languageNameTranslatedInAppLanguage })))
+        #expect(argument.expectedLanguages.elementsEqual(searchedLanguages.map({ $0.languageNamePair.nameInAppLanguage })))
     }
 
     @Test(
@@ -150,7 +150,7 @@ struct SearchToolFilterLanguagesUseCaseTests {
         let searchedLanguages: [ToolFilterLanguageDomainModel] = searchToolFilterLanguagesUseCase
             .execute(searchText: "", toolFilterLanguages: allLanguages)
 
-        #expect(searchedLanguages.map({ $0.languageNameTranslatedInAppLanguage }) == allLanguages.map({ $0.languageNameTranslatedInAppLanguage }))
+        #expect(searchedLanguages.map({ $0.languageNamePair.nameInAppLanguage }) == allLanguages.map({ $0.languageNamePair.nameInAppLanguage }))
     }
 
     @Test(
@@ -183,30 +183,32 @@ extension SearchToolFilterLanguagesUseCaseTests {
 
         return [
             ToolFilterLanguageDomainModel.createAnyLanguage(
-                languageNameTranslatedInAppLanguage: "Any language",
+                nameInAppLanguage: "Any language",
                 toolsAvailable: "",
                 numberOfToolsAvailable: 0
             ),
-            Self.createLanguage(id: "af", languageName: "Afrikaans", languageNameTranslatedInAppLanguage: "Afrikaans"),
-            Self.createLanguage(id: "cs", languageName: "čeština", languageNameTranslatedInAppLanguage: "Czech"),
-            Self.createLanguage(id: "de", languageName: "Deutsch", languageNameTranslatedInAppLanguage: "German"),
-            Self.createLanguage(id: "en", languageName: "English", languageNameTranslatedInAppLanguage: "English"),
-            Self.createLanguage(id: "es", languageName: "Español", languageNameTranslatedInAppLanguage: "Spanish"),
-            Self.createLanguage(id: "fr", languageName: "Français", languageNameTranslatedInAppLanguage: "French"),
-            Self.createLanguage(id: "nl", languageName: "Nederlands", languageNameTranslatedInAppLanguage: "Dutch"),
-            Self.createLanguage(id: "pt", languageName: "Português", languageNameTranslatedInAppLanguage: "Portuguese"),
-            Self.createLanguage(id: "ru", languageName: "Русский", languageNameTranslatedInAppLanguage: "Russian"),
-            Self.createLanguage(id: "vi", languageName: "Tiếng Việt", languageNameTranslatedInAppLanguage: "Vietnamese"),
-            Self.createLanguage(id: "xx", languageName: "", languageNameTranslatedInAppLanguage: "Unknown language")
+            Self.createLanguage(id: "af", nameInOwnLanguage: "Afrikaans", nameInAppLanguage: "Afrikaans"),
+            Self.createLanguage(id: "cs", nameInOwnLanguage: "čeština", nameInAppLanguage: "Czech"),
+            Self.createLanguage(id: "de", nameInOwnLanguage: "Deutsch", nameInAppLanguage: "German"),
+            Self.createLanguage(id: "en", nameInOwnLanguage: "English", nameInAppLanguage: "English"),
+            Self.createLanguage(id: "es", nameInOwnLanguage: "Español", nameInAppLanguage: "Spanish"),
+            Self.createLanguage(id: "fr", nameInOwnLanguage: "Français", nameInAppLanguage: "French"),
+            Self.createLanguage(id: "nl", nameInOwnLanguage: "Nederlands", nameInAppLanguage: "Dutch"),
+            Self.createLanguage(id: "pt", nameInOwnLanguage: "Português", nameInAppLanguage: "Portuguese"),
+            Self.createLanguage(id: "ru", nameInOwnLanguage: "Русский", nameInAppLanguage: "Russian"),
+            Self.createLanguage(id: "vi", nameInOwnLanguage: "Tiếng Việt", nameInAppLanguage: "Vietnamese"),
+            Self.createLanguage(id: "xx", nameInOwnLanguage: "", nameInAppLanguage: "Unknown language")
         ]
     }
 
-    private static func createLanguage(id: String, languageName: String, languageNameTranslatedInAppLanguage: String) -> ToolFilterLanguageDomainModel {
+    private static func createLanguage(id: String, nameInOwnLanguage: String, nameInAppLanguage: String) -> ToolFilterLanguageDomainModel {
 
         return ToolFilterLanguageDomainModel.createLanguage(
             id: id,
-            languageName: languageName,
-            languageNameTranslatedInAppLanguage: languageNameTranslatedInAppLanguage,
+            languageNamePair: TranslatedLanguageNamePairDomainModel(
+                nameInOwnLanguage: nameInOwnLanguage,
+                nameInAppLanguage: nameInAppLanguage
+            ),
             toolsAvailable: "",
             numberOfToolsAvailable: 0
         )

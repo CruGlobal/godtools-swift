@@ -11,8 +11,7 @@ import Foundation
 protocol ToolLanguageFilterItemDomainModelInterface: Sendable, Identifiable, StringSearchable {
     
     var languageId: String { get }
-    var languageNameTranslatedInLanguage: String { get }
-    var languageNameTranslatedInAppLanguage: String { get }
+    var languageNamePair: TranslatedLanguageNamePairDomainModel { get }
     var availableText: String? { get }
 }
 
@@ -24,6 +23,6 @@ extension ToolLanguageFilterItemDomainModelInterface  {
 
 extension ToolLanguageFilterItemDomainModelInterface {
     var searchableStrings: [String] {
-        return [languageNameTranslatedInLanguage, languageNameTranslatedInAppLanguage]
+        return [languageNamePair.nameInOwnLanguage, languageNamePair.nameInAppLanguage]
     }
 }

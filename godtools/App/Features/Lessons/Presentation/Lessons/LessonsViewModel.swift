@@ -38,7 +38,7 @@ final class LessonsViewModel: ObservableObject {
     
     @Published private(set) var toggleOptions: [PersonalizationToggleOption] = []
     @Published private(set) var strings: LessonsStringsDomainModel = .emptyValue
-    @Published private(set) var languageFilterButtonTitle: String = ""
+    @Published private(set) var languageFilterActionTitle: String = ""
     @Published private(set) var personalizedLessons = PersonalizedLessonsDomainModel.emptyValue
     @Published private(set) var lessonsList: [LessonListItemDomainModel] = []
 
@@ -180,7 +180,7 @@ final class LessonsViewModel: ObservableObject {
             }, receiveValue: { [weak self] (lessonLanguageFilter: LessonFilterLanguageDomainModel?) in
                 
                 self?.selectedAllLessonsFilterLanguage = lessonLanguageFilter
-                self?.languageFilterButtonTitle = lessonLanguageFilter?.languageNameTranslatedInAppLanguage ?? ""
+                self?.languageFilterActionTitle = lessonLanguageFilter?.languageNamePair.nameInAppLanguage ?? ""
             })
             .store(in: &cancellables)
     }
