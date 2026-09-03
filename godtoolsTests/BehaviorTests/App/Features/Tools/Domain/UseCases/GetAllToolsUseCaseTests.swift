@@ -63,7 +63,7 @@ struct GetAllToolsUseCaseTests {
                     appLanguage: "",
                     languageIdForAvailabilityText: nil,
                     filterToolsByCategory: ToolFilterCategoryDomainModel.emptyValue,
-                    filterToolsByLanguage: ToolFilterLanguageDomainModel.emptyValue
+                    filterByLanguageId: nil
                 )
                 .sink(receiveCompletion: { _ in
                     
@@ -107,8 +107,6 @@ struct GetAllToolsUseCaseTests {
         
         let growthCategoryFilter = ToolFilterCategoryDomainModel.createCategory(id: categoryGrowth, title: "", toolsAvailable: "")
         
-        let anyLanguageFilter = ToolFilterLanguageDomainModel.createAnyLanguage(nameInAppLanguage: "", toolsAvailable: "", numberOfToolsAvailable: 0)
-        
         await withCheckedContinuation { continuation in
             
             let timeoutTask = Task {
@@ -121,7 +119,7 @@ struct GetAllToolsUseCaseTests {
                     appLanguage: "",
                     languageIdForAvailabilityText: nil,
                     filterToolsByCategory: growthCategoryFilter,
-                    filterToolsByLanguage: anyLanguageFilter
+                    filterByLanguageId: nil
                 )
                 .sink(receiveCompletion: { _ in
                     
@@ -165,8 +163,6 @@ struct GetAllToolsUseCaseTests {
         
         let anyCategoryFilter = ToolFilterCategoryDomainModel.createAnyCategory(title: "", toolsAvailable: "")
         
-        let russianLanguageFilter = ToolFilterLanguageDomainModel.createLanguage(id: russianLanguageId, languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "", nameInAppLanguage: ""), toolsAvailable: "", numberOfToolsAvailable: 0)
-        
         await withCheckedContinuation { continuation in
             
             let timeoutTask = Task {
@@ -179,7 +175,7 @@ struct GetAllToolsUseCaseTests {
                     appLanguage: "",
                     languageIdForAvailabilityText: nil,
                     filterToolsByCategory: anyCategoryFilter,
-                    filterToolsByLanguage: russianLanguageFilter
+                    filterByLanguageId: russianLanguageId
                 )
                 .sink(receiveCompletion: { _ in
                     
@@ -223,8 +219,6 @@ struct GetAllToolsUseCaseTests {
         
         let anyCategoryFilter = ToolFilterCategoryDomainModel.createAnyCategory(title: "", toolsAvailable: "")
         
-        let spanishLanguageFilter = ToolFilterLanguageDomainModel.createLanguage(id: spanishLanguageId, languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "", nameInAppLanguage: ""), toolsAvailable: "", numberOfToolsAvailable: 0)
-        
         await withCheckedContinuation { continuation in
             
             let timeoutTask = Task {
@@ -237,7 +231,7 @@ struct GetAllToolsUseCaseTests {
                     appLanguage: "",
                     languageIdForAvailabilityText: nil,
                     filterToolsByCategory: anyCategoryFilter,
-                    filterToolsByLanguage: spanishLanguageFilter
+                    filterByLanguageId: spanishLanguageId
                 )
                 .sink(receiveCompletion: { _ in
                     
